@@ -1,0 +1,23 @@
+/* Gramercy Park - White Theme
+================================================== */
+@import "config";
+
+//Theme Overrides
+$background-color: #fff;
+
+// Standard CSS reset stuff here
+@import "reset";
+@import "mixins";
+
+// Infor Styles
+@import "controls/typography";
+@import "controls/forms";
+@import "controls/buttons";
+@import "controls/hyperlinks";
+@import "controls/input";
+@import "controls/grid";
+@import "controls/checkboxes";
+@import "controls/switch";
+@import "controls/loader";
+@import "controls/tabs";
+@import "controls/select";

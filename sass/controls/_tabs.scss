@@ -1,0 +1,58 @@
+
+.tab-container {
+  margin: 20px;
+}
+
+/* Headers */
+.tab-list {
+    list-style: none outside none;
+    border-bottom: 1px solid #d2d2d2;
+    padding: 0;
+    height: 40px;
+    overflow: hidden;
+}
+
+.tab-list li {
+  display: inline-block;
+  height: 40px;
+  border-radius: 2px 2px 0 0;
+  border: 1px solid transparent;
+  padding: 0 25px;
+  cursor: pointer;
+}
+
+.tab-list li:hover {
+  background-color: #f2f2f2;
+  color: #333333;
+}
+
+.tab-list li a {
+  text-decoration: none;
+  color: #666666;
+  line-height: 39px;
+  font-size: 1.4em;
+  font-family: $font-stack;
+  @include font-size(14);
+  font-weight: normal;
+}
+
+.tab-list a:focus {
+    outline: 1px dotted  #FFFFFF;
+}
+
+/* Tab Body */
+.tab-panel {
+    margin-top: 20px;
+}
+
+/* States */
+.tab-list li.is-selected {
+  background-color: $accent-color;
+}
+
+.tab-list li.is-selected a {
+  color: white;
+}
+
+
+

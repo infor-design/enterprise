@@ -1,0 +1,88 @@
+
+/* Label Styling */
+.checkbox:not(:checked), .checkbox:checked {
+  position: absolute;
+  left: -9999px;
+}
+
+.checkbox:not(:checked) + label, .checkbox:checked + label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+}
+
+.checkbox:not(:checked) + label:before, .checkbox:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: -2px;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #999999;
+  border-radius: 2px;
+}
+
+.checkbox:not(:checked) + label:after, .checkbox:checked + label:after {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
+  background-repeat: no-repeat;
+  color: rgba(0, 0, 0, 0);
+  content: "_";
+  font-size: 24px;
+  left: 9px;
+  position: absolute;
+  top: 3px;
+  transition: all 0.2s ease 0s;
+}
+
+.checkbox:checked + label:before {
+  background-color: $accent-color;
+  border-color: $accent-color;
+}
+
+/* checked mark aspect changes */
+.checkbox:not(:checked) + label:after {
+  @include opacity(0);
+  transform: scale(0);
+}
+
+.checkbox:checked + label:after {
+  @include opacity(1);
+  transform: scale(1);
+}
+
+/* disabled checkbox */
+.checkbox:disabled:not(:checked) + label:before, .checkbox:disabled:checked + label:before {
+  border-color:  $accent-color;
+  cursor: default;
+}
+
+.checkbox:disabled:checked + label:after {
+  color: #fff;
+  @include opacity(.5);
+}
+
+.checkbox:disabled:not(:checked) + label:before {
+    border-color: #BBBBBB;
+    box-shadow: none;
+}
+
+.checkbox:disabled + label {
+  color: #aaa;
+}
+
+.checkbox.is-partial + label:after {
+  background-color: #FFFFFF;
+  background-image: none !important;
+  border-radius: 2px;
+  content: " ";
+  height: 11px;
+  left: 10px;
+  top: 3px;
+  width: 11px;
+}
+
+/* accessibility */
+.checkbox:checked:focus + label:before, .checkbox:not(:checked):focus + label:before {
+  border: 2px solid $accent-color;
+  box-shadow: $focus-shadow;
+}

@@ -1,0 +1,15 @@
+{
+  "browser": true,
+  "eqeqeq": true, // ===
+  "laxbreak": true, // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
+  "node": true,
+  "predef": ["define", "d3"],
+  "quotmark": "single",
+  "undef": true, // Prohibits the use of explicitly undeclared variables
+  "unused": true,
+  "jquery": true,
+  "curly": true,  //conditional statements must use {}
+  "camelcase": true,
+  "freeze": true,
+  "newcap": true  //force capitalization of variables following the new keyword
+}

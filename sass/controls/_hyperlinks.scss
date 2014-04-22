@@ -1,0 +1,41 @@
+/* #Hyperlink
+================================================== */
+
+.link {
+	color: $accent-color;
+	line-height: 25px;
+	white-space: nowrap;
+	text-decoration: none;
+	@include font-size(14);
+	cursor: pointer;
+	padding: 1px;
+	font-family: $font-stack;
+	display: block;
+}
+
+.link:visited {
+	color: $accent-color;
+}
+
+/* Mouse Over States is Same as the focus */
+.link:hover, .link:focus, .link.is-hovered, .link.is-focused  {
+	color: #0066cc;
+	text-decoration: underline;
+}
+
+.link[disabled]:hover  {
+	color:  #666666;
+	cursor: default;
+	text-decoration: none;
+}
+
+.link:active, .link.is-active {
+	color: #006699;
+	text-decoration: underline;
+}
+
+.link[disabled] {
+  color:  #666666;
+  opacity: .5;
+  filter: alpha(opacity = 50);
+}

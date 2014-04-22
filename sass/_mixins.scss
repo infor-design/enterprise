@@ -1,0 +1,14 @@
+// Mix In Functions.
+// ------------------------------------------------------------------------------
+// rem font sizing
+@mixin font-size($sizeValue) {
+  font-size: ($sizeValue) + px;
+  font-size: ($sizeValue / 10) + rem;
+}
+
+@mixin opacity($value){
+  $IEValue: $value*100;
+  opacity: $value;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity="+$IEValue+")";
+  filter: alpha(opacity=$IEValue);
+}

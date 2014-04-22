@@ -1,0 +1,76 @@
+// * Reset Browser Crap
+// *-------------------------------------------------------------------------------
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, em, img, small, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, legend, label, input, textarea, select, button, table, caption, thead, tbody, tfoot, tr, th, td {
+	border: none;
+	margin: 0;
+	padding: 0;
+	outline: 0;
+}
+
+* {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  background-color: $background-color;
+}
+
+html { height: 100%; }
+
+article, aside, figure, footer, header, hgroup, nav, section {
+  display: block;
+}
+
+// * Responsive images and other embedded objects
+img, object, embed {
+  max-width: 100%;
+}
+
+img {
+  border-style: none;
+  border-color: transparent;
+  border-width: 0;
+}
+
+// we use a lot of ULs that aren't bulleted.
+// don't forget to restore the bullets within content.
+
+ol,ul {
+  list-style: none;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-weight: inherit;
+  background-color: #fff;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+table {
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+  margin: 0;
+  width: auto;
+  overflow: visible;
+}
+
+button:focus {
+  outline: none;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+}
+

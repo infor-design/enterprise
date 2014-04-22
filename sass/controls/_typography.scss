@@ -1,0 +1,63 @@
+/* #Typography
+================================================== */
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6, p, small {
+  font-family: $font-stack;
+  color: $font-color;
+  line-height: 20px;
+}
+
+h1 {
+	@include font-size(32);
+	margin-bottom: 1rem;
+	font-weight: lighter;
+	line-height: 35px;
+  color: $data-color;
+}
+
+h2 {
+	@include font-size(24);
+	font-weight: lighter;
+  line-height: 21px;
+  margin-bottom: 10px;
+  color: $data-color;
+}
+
+h3 {
+	@include font-size(18);
+	font-weight: lighter;
+  line-height: 26px;
+  margin-bottom: 7px;
+  color: $label-color;
+}
+
+h4 {
+	@include font-size(14);
+	font-weight: bold;
+	line-height: 26px;
+  color: $label-color;
+}
+
+p {
+   @include font-size(14);
+   line-height: 22px;
+   font-weight: normal;
+   margin: 5px 0;
+   color: $label-color;
+}
+
+small {
+  @include font-size(12);
+  line-height: 20px;
+  font-weight: normal;
+  color: $label-color;
+  line-height: 35px;
+}

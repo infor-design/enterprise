@@ -1,0 +1,27 @@
+/* Gramercy Park - 508 Theme
+================================================== */
+@import "config";
+
+//Theme Overrides
+$accent-color: #0070bf;
+$btn-color: #767676;
+$positive-color: #048a00;
+$negative-color: #048a00;
+$disabled-color: #5F5F5F;
+
+// Standard CSS reset stuff here
+@import "reset";
+@import "mixins";
+
+// Infor Styles
+@import "controls/typography";
+@import "controls/forms";
+@import "controls/buttons";
+@import "controls/hyperlinks";
+@import "controls/input";
+@import "controls/grid";
+@import "controls/checkboxes";
+@import "controls/switch";
+@import "controls/loader";
+@import "controls/tabs";
+@import "controls/select";
