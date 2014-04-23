@@ -4,6 +4,7 @@
   "description": "Hook and Loop Controls Gramercy Version 4.0",
   "main": "index.js",
   "author": "Hook and Loop",
+  "private": true,
   "dependencies": {
     "express": "~3.4.8",
     "ejs": "~0.8.5"
@@ -13,12 +14,13 @@
     "grunt-sass": "^0.12.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-nodemon": "~0.2.0",
-    "dalekjs": "0.0.8",
-    "dalek-browser-chrome": "0.0.10",
     "express-ejs-layouts": "^0.3.1",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-uglify": "^0.4.0",
-    "grunt-contrib-copy": "^0.5.0"
+    "grunt-contrib-copy": "^0.5.0",
+    "mocha": "^1.18.2",
+    "zombie": "^2.0.0-alpha31",
+    "should": "^3.3.1"
   }
 }

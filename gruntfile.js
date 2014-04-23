@@ -79,5 +79,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('default', ['jshint', 'sass', 'concat', 'uglify', 'copy', 'watch']);
+  grunt.registerTask('default', ['jshint', 'sass', 'concat', 'uglify', 'copy']);
 };
