@@ -1,14 +1,90 @@
-// Mix In Functions.
+// Mix In's
 // ------------------------------------------------------------------------------
-// rem font sizing
+/* rem font sizing */
 @mixin font-size($sizeValue) {
   font-size: ($sizeValue) + px;
   font-size: ($sizeValue / 10) + rem;
 }
 
-@mixin opacity($value){
-  $IEValue: $value*100;
-  opacity: $value;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity="+$IEValue+")";
-  filter: alpha(opacity=$IEValue);
+/* vendor prefixing */
+@mixin css3($property, $value) {
+   @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+     #{$prefix}#{$property}: $value;
+   }
 }
+
+/* opacity */
+@mixin opacity($opacity) {
+  filter: alpha(opacity=$opacityIE);
+  opacity: $opacity;
+  $opacityIE: $opacity * 100;
+}
+
+/* responsive breakpoints */
+@mixin breakpoint($device) {
+  @if $device == tablet {
+    @media (max-width: 768px) { @content; }
+  }
+  @else if $device == mobile {
+    @media (max-width: 640px) { @content; }
+  }
+}
+
+/* retina image support */
+@mixin background-image($file, $type, $width, $height) {
+  background-image: url($file + '.' + $type);
+
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+    & {
+      background-image: url($file + '-2x.' + $type);
+      -webkit-background-size: $width $height;
+    }
+  }
+}
+
+/* clearfix */
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+/* fluid row */
+@mixin fluidRow($container, $numPerRow, $margin) {
+  float: left;
+  margin-bottom: $margin;
+  margin-right: (($margin / $container) * 100%);
+  width: ((100% - (($numPerRow - 1) * (($margin / $container) * 100))) / $numPerRow);
+
+  &:nth-child(#{$numPerRow}n) {
+    margin-right: 0;
+  }
+
+  &:last-child {
+    @include breakpoint(mobile) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Example:
+  .promo {
+    @include fluidRow($site-max-width, 2, 30px);
+
+    @include breakpoint(mobile) {
+      @include fluidRow($site-max-width, 1, 30px);
+    }
+  }
+*/
+

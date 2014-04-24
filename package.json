@@ -21,6 +21,8 @@
     "grunt-contrib-copy": "^0.5.0",
     "mocha": "^1.18.2",
     "zombie": "^2.0.0-alpha31",
-    "should": "^3.3.1"
+    "chai": "^1.9.1",
+    "webdriverjs": "^1.6.1",
+    "mocha-jenkins-reporter": "^0.1.0"
   }
 }
