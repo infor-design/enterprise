@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Checkbox Tests</title>
+  <link rel="stylesheet" media="all" href="../node_modules/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"><p><a href=".">Index</a></p></div>
+  <div id="messages"></div>
+  <div id="fixtures"></div>
+
+
+  <!--Imports -->
+  <script src="../node_modules/should/should.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script>mocha.setup('bdd')</script>
+
+  <!--Tests -->
+  <script src="checkboxes.js"></script>
+
+  <script>
+    onload = function(){
+        var runner = mocha.run();
+        // runner.globals(['foo', 'bar', 'baz']);
+
+        // runner.on('test end', function(test){
+        //   console.log(test.fullTitle());
+        // });
+      };
+  </script>
+</body>
+</html>
