@@ -22,7 +22,6 @@
     "mocha": "^1.18.2",
     "zombie": "^2.0.0-alpha31",
     "chai": "^1.9.1",
-    "webdriverjs": "^1.6.1",
-    "mocha-jenkins-reporter": "^0.1.0"
+    "webdriverjs": "^1.6.1"
   }
 }
