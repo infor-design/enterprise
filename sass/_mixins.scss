@@ -13,8 +13,8 @@
    }
 }
 
-/* opacity */
 @mixin opacity($opacity) {
+  $opacityIE: $opacity*100;
   filter: alpha(opacity=$opacityIE);
   opacity: $opacity;
   $opacityIE: $opacity * 100;
@@ -46,18 +46,6 @@
       -webkit-background-size: $width $height;
     }
   }
-}
-
-/* clearfix */
-@mixin clearfix() {
-    &:before,
-    &:after {
-        content: "";
-        display: table;
-    }
-    &:after {
-        clear: both;
-    }
 }
 
 /* fluid row */

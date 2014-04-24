@@ -1,3 +1,17 @@
+/* rem font sizing */
+/* vendor prefixing */
+/* responsive breakpoints */
+/* retina image support */
+/* fluid row */
+/* Example:
+  .promo {
+    @include fluidRow($site-max-width, 2, 30px);
+
+    @include breakpoint(mobile) {
+      @include fluidRow($site-max-width, 1, 30px);
+    }
+  }
+*/
 .demo-heading {
   padding-top: 50px; }
 
