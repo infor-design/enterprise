@@ -2,7 +2,9 @@
 var express = require('express'),
   app = express(),
   path = require('path'),
+  /* jshint ignore:start */
   colors = require('colors'),
+  /* jshint ignore:end */
   layouts = require('express-ejs-layouts');
 
 // views as directory for all template files
