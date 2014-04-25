@@ -106,9 +106,9 @@ h1, h2, h3, h4, h5, h6, p, small {
 h1 {
   font-size: 32px;
   font-size: 3.2rem;
-  margin-bottom: 1rem;
   font-weight: lighter;
-  line-height: 35px;
+  line-height: 80px;
+  line-height: 5rem;
   color: #ffffff; }
 
 h2 {
@@ -116,39 +116,51 @@ h2 {
   font-size: 2.4rem;
   font-weight: lighter;
   line-height: 21px;
-  margin-bottom: 10px;
   color: #ffffff; }
 
 h3 {
   font-size: 18px;
   font-size: 1.8rem;
+  line-height: 41.6px;
+  line-height: 2.6rem;
+  margin-top: 36.8px;
+  margin-top: 2.3rem;
   font-weight: lighter;
-  line-height: 26px;
-  margin-bottom: 7px;
   color: #ccc; }
 
 h4 {
   font-size: 14px;
   font-size: 1.4rem;
+  line-height: 36.8px;
+  line-height: 2.3rem;
+  margin-top: 28.8px;
+  margin-top: 1.8rem;
   font-weight: bold;
-  line-height: 26px;
   color: #ccc; }
 
 p {
   font-size: 14px;
   font-size: 1.4rem;
-  line-height: 22px;
-  font-weight: normal;
-  margin: 5px 0;
+  line-height: 38.4px;
+  line-height: 2.4rem;
+  font-weight: 200;
   color: #ccc; }
+
+.even-distribution {
+  line-height: normal;
+  margin-bottom: 19.2px;
+  margin-bottom: 1.2rem;
+  margin-top: 0; }
 
 small {
   font-size: 12px;
   font-size: 1.2rem;
-  line-height: 20px;
+  line-height: 36.8px;
+  line-height: 2.3rem;
+  margin-top: 28.8px;
+  margin-top: 1.8rem;
   font-weight: normal;
-  color: #ccc;
-  line-height: 35px; }
+  color: #ccc; }
 
 .btn, .btn-default, .btn-cancel, .btn-accept {
   width: auto;

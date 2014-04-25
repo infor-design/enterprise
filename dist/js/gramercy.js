@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 25-04-2014 48:09:05 
+ Date: 25-04-2014 00:11:26 
  Revision: undefined 
  */ 
  /**
@@ -115,15 +115,28 @@
 
       openList: function() {
         var current = this.list.find('.is-selected'),
-            self =  this;
+            self =  this,
+            isFixed = false;
 
         this.list.appendTo('body').show().attr('aria-expanded', 'true');
-        this.list.css({'top': this.input.position().top - this.input.outerHeight(), 'left': this.input.position().left});
+        this.list.css({'top': this.input.position().top , 'left': this.input.position().left});
+
+        this.input.parentsUntil('body').each(function () {
+          if ($(this).css('position') === 'fixed') {
+            isFixed = true;
+            return;
+          }
+        });
+
+        if (isFixed) {
+          this.list.css('position', 'fixed');
+        }
+
         this.list.width(this.input.outerWidth());
         this.scrollToOption(current);
         this.input.addClass('is-open');
 
-        self.list.on('click', 'li', function () {
+        self.list.on('click.list', 'li', function () {
           var idx = $(this).index(),
               cur = $(self.element[0].options[idx]);
 
@@ -132,11 +145,11 @@
           self.input.focus();
           self.closeList();
         });
-
       },
 
       closeList: function() {
         this.list.hide().attr('aria-expanded', 'false').remove();
+        this.list.off('click.list').off('mousewheel.list');
         this.input.removeClass('is-open');
       },
 
