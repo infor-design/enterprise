@@ -81,6 +81,15 @@ button::-moz-focus-inner {
     }
   }
 */
+/*
+* Defines the size of the property as rems with px as fallback.
+* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+*
+* Eg.
+*  @include rem(margin, 1rem)
+*  @include rem(padding, 1rem)
+*
+*/
 /* #Typography
 ================================================== */
 html {
@@ -305,9 +314,6 @@ input[type="text"]:disabled, input[type="text"].is-disabled, input[type="passwor
   padding-right: 20px;
   margin-bottom: 5px; }
 
-[class*='col-']:last-of-type {
-  padding-right: 0px; }
-
 .grid {
   width: 100%;
   max-width: 1140px;
@@ -322,9 +328,6 @@ input[type="text"]:disabled, input[type="text"].is-disabled, input[type="passwor
 
 .grid-pad {
   padding: 20px 0 0px 20px; }
-
-.grid-pad > [class*='col-']:last-of-type {
-  padding-right: 20px; }
 
 .push-right {
   float: right; }
@@ -814,7 +817,7 @@ input[type="text"]:disabled, input[type="text"].is-disabled, input[type="passwor
   top: 1px;
   transition: height 0.2s ease 0s, background-color 0.2s ease 0s;
   width: auto;
-  z-index: 2;
+  z-index: 6;
   -webkit-overflow-scrolling: touch; }
 
 .select-list li:hover {

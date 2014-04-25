@@ -113,7 +113,7 @@
             self =  this;
 
         this.list.appendTo('body').show().attr('aria-expanded', 'true');
-        this.list.css({'top': this.input.position().top + this.input.outerHeight(), 'left': this.input.position().left});
+        this.list.css({'top': this.input.position().top - this.input.outerHeight(), 'left': this.input.position().left});
         this.list.width(this.input.outerWidth());
         this.scrollToOption(current);
         this.input.addClass('is-open');

@@ -12,66 +12,46 @@
     }
   }
 */
+/*
+* Defines the size of the property as rems with px as fallback.
+* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+*
+* Eg.
+*  @include rem(margin, 1rem)
+*  @include rem(padding, 1rem)
+*
+*/
 pre {
-  border: 1px solid transparent;
-  word-wrap: break-word;
-  padding: 6px 10px;
-  line-height: 19px;
-  margin-bottom: 20px; }
-
-code {
-  border: 1px solid transparent;
-  margin: 0px 2px;
-  padding: 0px 5px;
+  padding: 0;
+  font-family: Courier;
   font-size: 14px;
-  font-size: 1.4rem; }
+  font-size: 1.4rem;
+  border-radius: 2px;
+  line-height: 25px;
+  box-shadow: 0 1px #d9d9d9;
+  border: solid 1px #ececec; }
 
-pre code {
-  border: 0px;
-  padding: 0px;
-  margin: 0px;
-  border-radius: 0px; }
-
-pre, code {
-  font-family: 'Source Code Pro', sans-serif;
-  color: #333;
-  background: #f8f8f8;
-  border-radius: 3px; }
-
-pre, pre code {
-  font-size: 13px; }
-
-pre .comment {
-  color: #998; }
-
-pre .support {
-  color: #0086B3; }
-
-pre .tag, pre .tag-name {
-  color: #3333CC; }
-
-pre .keyword, pre .css-property, pre .vendor-prefix, pre .sass, pre .class, pre .id, pre .css-value, pre .entity.function, pre .storage.function {
-  font-weight: bold; }
-
-pre .css-property, pre .css-value, pre .vendor-prefix, pre .support.namespace {
-  color: #333; }
-
-pre .constant.numeric, pre .keyword.unit, pre .hex-color {
-  font-weight: normal;
-  color: #099; }
-
-pre .entity.class {
-  color: #458; }
-
-pre .entity.id, pre .entity.function {
-  color: #900; }
-
-pre .attribute, pre .variable {
-  color: #008500; }
-
-pre .string, pre .support.value {
-  font-weight: normal;
-  color: #cc3366; }
-
-pre .regexp {
-  color: #009926; }
+.rainbow {
+  border-spacing: 0;
+  border-collapse: collapse; }
+  .rainbow .tag-name, .rainbow .tag {
+    color: #3333cc; }
+  .rainbow .attribute, .rainbow .operator {
+    color: #33cc33; }
+  .rainbow .quote, .rainbow .value {
+    color: #cc3366; }
+  .rainbow .comment {
+    color: #999999; }
+  .rainbow .line-number {
+    background-color: #101313; }
+  .rainbow .line .line-number {
+    text-align: right;
+    background-color: #ececec;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    color: #999999; }
+  .rainbow .line .line-number:before {
+    content: attr(data-line-number); }
+  .rainbow .line .line-code {
+    padding-left: 1em;
+    width: 100%; }

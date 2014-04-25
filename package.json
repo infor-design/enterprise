@@ -22,6 +22,7 @@
     "mocha": "^1.18.2",
     "zombie": "^2.0.0-alpha31",
     "chai": "^1.9.1",
-    "webdriverjs": "^1.6.1"
+    "webdriverjs": "^1.6.1",
+    "colors": "^0.6.2"
   }
 }

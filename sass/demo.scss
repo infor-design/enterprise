@@ -15,13 +15,20 @@
   color: #fff;
 	font-family: $font-stack;
 	padding: 23px;
+  position: fixed;
+  width: 100%;
+  z-index: 5;
 }
 
 .demo-header .grid {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAA2CAMAAADj5An2AAAABGdBTUEAALGPC/xhBQAAAJZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgvNKgAAADJ0Uk5TKCsIHCAjJgYWIi4HHzESDh0NLCQaDwkpHhshDCoEFxMvFAoLGCUQGREyMAIBFQMnMwASPEIoAAABcklEQVQ4y+2U2ZqCMAxGmVFnHDfcQFHZpBQoLabv/3LTBRj2ay8mV0nOR0j+pjX4n+Vm6D8bMTdqjyICwh6HAUgXUJrfh2eAAN2tOUD27EJ3C8FaOj7AqQtFjmnvC7K8A0XVb+15AM8OdGqIAOwmLKxw0ygLPrYrmO8zNULwKROhnucDK+g+qgFJYuJbFUAi4QngyA67V52FW5puRDHMjTvApZD1NiXKUhmZGRy5sa86z4PyO93XDCAyYgjKxn80THVkiqZHofhd2Ci70vBaS3aQDRlKy2vVUCQjm8CK6lHCexrXk2zPUZQQqVhThLbNlXzFNesjsqyFxww58bZMxzPkWXl7wbh7UpLSoe3jfC2Xb3g1RXUBX//wLSBGTL4R1GJJDzryhMVyMr0HbXiRqcuOrYbgor1YbcimIMWPcaj3ahS6E2WjeBx6Uw3FU1CJcPQSMgTVnRX3dTnYUOgk8hnId2g/dWSU1A9NH3LbY0Uz/gWGuQ8SEuSkzQAAAABJRU5ErkJggg==") no-repeat scroll 7% center #4D4D4D;
-    height: 70px;
-    margin-top: -26px;
-    padding-top: 25px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAA2CAMAAADj5An2AAAABGdBTUEAALGPC/xhBQAAAJZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgvNKgAAADJ0Uk5TKCsIHCAjJgYWIi4HHzESDh0NLCQaDwkpHhshDCoEFxMvFAoLGCUQGREyMAIBFQMnMwASPEIoAAABcklEQVQ4y+2U2ZqCMAxGmVFnHDfcQFHZpBQoLabv/3LTBRj2ay8mV0nOR0j+pjX4n+Vm6D8bMTdqjyICwh6HAUgXUJrfh2eAAN2tOUD27EJ3C8FaOj7AqQtFjmnvC7K8A0XVb+15AM8OdGqIAOwmLKxw0ygLPrYrmO8zNULwKROhnucDK+g+qgFJYuJbFUAi4QngyA67V52FW5puRDHMjTvApZD1NiXKUhmZGRy5sa86z4PyO93XDCAyYgjKxn80THVkiqZHofhd2Ci70vBaS3aQDRlKy2vVUCQjm8CK6lHCexrXk2zPUZQQqVhThLbNlXzFNesjsqyFxww58bZMxzPkWXl7wbh7UpLSoe3jfC2Xb3g1RXUBX//wLSBGTL4R1GJJDzryhMVyMr0HbXiRqcuOrYbgor1YbcimIMWPcaj3ahS6E2WjeBx6Uw3FU1CJcPQSMgTVnRX3dTnYUOgk8hnId2g/dWSU1A9NH3LbY0Uz/gWGuQ8SEuSkzQAAAABJRU5ErkJggg==") no-repeat scroll 7% center #4D4D4D;
+  height: 70px;
+  margin-top: -26px;
+  padding-top: 25px;
+}
+
+.demo .grid.grid-pad:nth-child(2) {
+  padding-top: 90px;
 }
 
 .demo .content {
@@ -52,14 +59,14 @@
 }
 
 .field.aligned {
-    margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .field.aligned .label {
-    display: inline-block;
-    margin: 0.4em 0 0 0;
-    text-align: right;
-    vertical-align: middle;
+  display: inline-block;
+  margin: 0.4em 0 0 0;
+  text-align: right;
+  vertical-align: middle;
 }
 
 .field.aligned .select {
@@ -67,4 +74,11 @@
   padding: 0.5em 0.6em;
   vertical-align: middle;
   width: 15em;
+}
+
+.doc-block {
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 1px rgba(0,0,0,.2);
+  @include rem(padding, 5);
 }

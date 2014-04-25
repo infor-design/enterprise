@@ -3,7 +3,7 @@ var chai        = require('chai'),
     expect      = chai.expect,
     webdriverjs = require('webdriverjs');
 
-describe('my webdriverjs tests', function(){
+describe('tests using webdriverjs', function(){
 
     this.timeout(99999999);
     var client = {};

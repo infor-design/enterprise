@@ -76,3 +76,43 @@
   }
 */
 
+/*
+* Defines the size of the property as rems with px as fallback.
+* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+*
+* Eg.
+*  @include rem(margin, 1rem)
+*  @include rem(padding, 1rem)
+*
+*/
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@mixin rem($property, $values...) {
+  $max: length($values);
+  $pxValues: '';
+  $remValues: '';
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $pxValues: #{$pxValues + $value*16}px;
+
+    @if $i < $max {
+      $pxValues: #{$pxValues + " "};
+    }
+  }
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $remValues: #{$remValues + $value}rem;
+
+    @if $i < $max {
+      $remValues: #{$remValues + " "};
+    }
+  }
+
+  #{$property}: $pxValues;
+  #{$property}: $remValues;
+}

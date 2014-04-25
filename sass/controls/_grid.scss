@@ -7,9 +7,6 @@
   margin-bottom: 5px;
 }
 
-[class*='col-']:last-of-type {
-	padding-right: 0px;
-}
 
 .grid {
 	width: 100%;
@@ -27,10 +24,6 @@
 
 .grid-pad {
 	padding: 20px 0 0px 20px;
-}
-
-.grid-pad > [class*='col-']:last-of-type {
-	padding-right: 20px;
 }
 
 .push-right {

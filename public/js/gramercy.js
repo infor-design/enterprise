@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 24-04-2014 27:01:13 
+ Date: 25-04-2014 09:09:17 
  Revision: undefined 
  */ 
  /**
@@ -118,7 +118,7 @@
             self =  this;
 
         this.list.appendTo('body').show().attr('aria-expanded', 'true');
-        this.list.css({'top': this.input.position().top + this.input.outerHeight(), 'left': this.input.position().left});
+        this.list.css({'top': this.input.position().top - this.input.outerHeight(), 'left': this.input.position().left});
         this.list.width(this.input.outerWidth());
         this.scrollToOption(current);
         this.input.addClass('is-open');
