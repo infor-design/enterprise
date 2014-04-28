@@ -2,7 +2,7 @@
 ================================================== */
 
 .link {
-	color: $accent-color;
+	color: $link-color;
 	line-height: 25px;
 	white-space: nowrap;
 	text-decoration: none;
@@ -18,9 +18,12 @@
 }
 
 /* Mouse Over States is Same as the focus */
-.link:hover, .link:focus, .link.is-hovered, .link.is-focused  {
-	color: #0066cc;
-	text-decoration: underline;
+.link:hover, .link.is-hovered, .link.is-focused  {
+	color: $link-hover-color;
+}
+
+.link:focus, .link.is-focused  {
+  text-decoration: underline;
 }
 
 .link[disabled]:hover  {
@@ -30,7 +33,7 @@
 }
 
 .link:active, .link.is-active {
-	color: #006699;
+	color: $link-active-color;
 	text-decoration: underline;
 }
 

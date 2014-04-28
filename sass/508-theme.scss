@@ -8,6 +8,11 @@ $btn-color: #767676;
 $positive-color: #048a00;
 $negative-color: #048a00;
 $disabled-color: #5F5F5F;
+$link-color: #0072be;
+
+.link {
+  text-decoration: underline !important;
+}
 
 // Standard CSS reset stuff here
 @import "reset";

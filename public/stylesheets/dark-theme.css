@@ -220,7 +220,7 @@ small {
 /* #Hyperlink
 ================================================== */
 .link {
-  color: #13a4f7;
+  color: #0099ff;
   line-height: 25px;
   white-space: nowrap;
   text-decoration: none;
@@ -235,8 +235,10 @@ small {
   color: #13a4f7; }
 
 /* Mouse Over States is Same as the focus */
-.link:hover, .link:focus, .link.is-hovered, .link.is-focused {
-  color: #0066cc;
+.link:hover, .link.is-hovered, .link.is-focused {
+  color: #3399ff; }
+
+.link:focus, .link.is-focused {
   text-decoration: underline; }
 
 .link[disabled]:hover {
@@ -245,7 +247,7 @@ small {
   text-decoration: none; }
 
 .link:active, .link.is-active {
-  color: #006699;
+  color: #0066cc;
   text-decoration: underline; }
 
 .link[disabled] {

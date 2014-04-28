@@ -1,5 +1,8 @@
 /* Gramercy Park - 508 Theme
 ================================================== */
+.link {
+  text-decoration: underline !important; }
+
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, em, img, small, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, legend, label, input, textarea, select, button, table, caption, thead, tbody, tfoot, tr, th, td {
   border: none;
   margin: 0;
@@ -212,7 +215,7 @@ small {
 /* #Hyperlink
 ================================================== */
 .link {
-  color: #0070bf;
+  color: #0072be;
   line-height: 25px;
   white-space: nowrap;
   text-decoration: none;
@@ -227,8 +230,10 @@ small {
   color: #0070bf; }
 
 /* Mouse Over States is Same as the focus */
-.link:hover, .link:focus, .link.is-hovered, .link.is-focused {
-  color: #0066cc;
+.link:hover, .link.is-hovered, .link.is-focused {
+  color: #3399ff; }
+
+.link:focus, .link.is-focused {
   text-decoration: underline; }
 
 .link[disabled]:hover {
@@ -237,7 +242,7 @@ small {
   text-decoration: none; }
 
 .link:active, .link.is-active {
-  color: #006699;
+  color: #0066cc;
   text-decoration: underline; }
 
 .link[disabled] {
