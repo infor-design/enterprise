@@ -9,7 +9,7 @@ body {
   font-size: 1rem;
 }
 
-h1, h2, h3, h4, h5, h6, p, small {
+h1, h2, h3, h4, h5, h6, p, small, span {
   font-family: $font-stack;
   color: $font-color;
   line-height: 20px;
@@ -29,7 +29,7 @@ h2 {
   color: $data-color;
 }
 
-h3 {
+h3, .tab-panel h2 {
 	@include font-size(18);
   @include rem(line-height, 2.6rem);
   @include rem(margin-top, 2.3rem);
@@ -45,7 +45,7 @@ h4 {
   color: $label-color;
 }
 
-p {
+p, span {
    @include font-size(14);
    @include rem(line-height, 2.4rem);
    font-weight: 200;

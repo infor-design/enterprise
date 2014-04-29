@@ -22,7 +22,15 @@
 *
 */
 .demo-heading {
-  padding-top: 50px; }
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-top: 50px;
+  text-transform: uppercase; }
+
+.demo-heading span {
+  color: #666666;
+  text-transform: none;
+  font-weight: normal; }
 
 .demo-header {
   height: 70px;
@@ -43,13 +51,18 @@
   margin-top: -26px;
   padding-top: 25px; }
 
-.demo .grid.grid-pad:nth-child(2) {
+.demo-header span {
+  color: #FFFFFF;
+  font-size: 24px;
+  font-size: 2.4rem; }
+
+.demo .grid.grid-pad:nth-child(3) {
   padding-top: 90px; }
 
 .demo .content {
   background: #DADADA;
   color: #444;
-  padding: 20px; }
+  padding: 1px 20px 20px 20px; }
 
 .demo .content:hover {
   background: #c2c2c2; }

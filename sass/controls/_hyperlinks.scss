@@ -34,7 +34,7 @@
 
 .link:active, .link.is-active {
 	color: $link-active-color;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .link[disabled] {

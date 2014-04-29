@@ -33,15 +33,16 @@ pre {
 
 .rainbow {
   border-spacing: 0;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  background-color: #F4F4F4; }
   .rainbow .tag-name, .rainbow .tag {
     color: #3333cc; }
   .rainbow .attribute, .rainbow .operator {
-    color: #33cc33; }
-  .rainbow .quote, .rainbow .value {
     color: #008100; }
+  .rainbow .quote, .rainbow .value {
+    color: #cc3366; }
   .rainbow .comment {
-    color: #999999; }
+    color: #707070; }
   .rainbow .line-number {
     background-color: #101313; }
   .rainbow .line .line-number {

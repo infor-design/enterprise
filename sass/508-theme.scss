@@ -10,15 +10,12 @@ $negative-color: #048a00;
 $disabled-color: #5F5F5F;
 $link-color: #0072be;
 
-.link {
-  text-decoration: underline !important;
-}
-
 // Standard CSS reset stuff here
 @import "reset";
 @import "mixins";
 
 // Infor Styles
+@import "controls/icons";
 @import "controls/typography";
 @import "controls/forms";
 @import "controls/buttons";
@@ -30,3 +27,17 @@ $link-color: #0072be;
 @import "controls/loader";
 @import "controls/tabs";
 @import "controls/select";
+
+
+//Other Overrides with no Settings
+.btn-accept {
+  background-color: #048a00;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+h3 {
+    color: #5F5F5F;
+}

@@ -1,11 +1,11 @@
 /* #User Input
 ================================================== */
-
+/* Labels */
 label, .label, .data {
-	color: $label-color;	/*Label Color Variable?*/
+	color: $label-color;
 	display: inline-block;
 	font-family: $font-stack;
-	@include font-size(14);
+	@include font-size(15);
 	font-weight: lighter;
 	padding: 0px 15px;
 	margin-bottom: 5px;
@@ -13,26 +13,33 @@ label, .label, .data {
 	line-height: 22px;
 }
 
-.data {
-	color: $data-color;
+.label + .data {
+  margin-top: 0px;
 }
 
+.data {
+	color: $data-color;
+  display: block;
+}
+
+/* Input Style */
 input[type="text"], input[type="password"], input[type="email"], textarea {
 	display: block;
-	color: $data-color;	/*Data Color Variable?*/
-	border: 1px solid #d9d9d9;	/*Border Color Variable?*/
-	border-radius: 2px;	/*Border Radius Variable?*/
+	color: $data-color;
+	border: 1px solid $field-border-color;
+	border-radius: 2px;
 	background-color: $field-background-color;
 	font-family: $font-stack;
 	font-weight: lighter;
-	@include font-size(14);
+	@include font-size(16);
 	padding: 15px 10px;
 	max-width: 100%;
 	width: 300px;
 }
 
 input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:focus, input[type="password"].is-focused, input[type="email"]:focus, textarea:focus, textarea.is-focused {
-	box-shadow: 0 0 5px #0095ff;
+	box-shadow: $focus-shadow;
+  border: 1px solid transparent;
 }
 
 input[type="text"]:disabled, input[type="text"].is-disabled, input[type="password"]:disabled, input[type="password"].is-disabled, input[type="email"]:focus, textarea:disabled, textarea.is-disabled {
@@ -41,6 +48,7 @@ input[type="text"]:disabled, input[type="text"].is-disabled, input[type="passwor
 	border: solid 1px #e5e5e5;
 }
 
+/* Required Indicator */
 .required:before {
 	background-color: #FF574D;
   border-radius: 25px;
@@ -53,11 +61,35 @@ input[type="text"]:disabled, input[type="text"].is-disabled, input[type="passwor
   width: 9px;
 }
 
+/* Error Text */
 .has-error {
-  box-shadow: 0 0 3px #d5000e;
   color: #d5000e !important;
 }
 
+input.has-error {
+  box-shadow: 0 0 3px #d5000e;
+}
+
+/* Place Holder Text */
+::-webkit-input-placeholder {
+   color: #b3b3b3;
+   @include font-size(16);
+   font-style: italic;
+}
+
+::-moz-placeholder {
+   color: #b3b3b3;
+   @include font-size(16);
+   font-style: italic;
+}
+
+:-ms-input-placeholder {
+   color: #b3b3b3;
+   @include font-size(16);
+   font-style: italic;
+}
+
+/* Off Screen Text */
 .scr-only {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);

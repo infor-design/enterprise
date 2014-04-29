@@ -1,0 +1,33 @@
+/* #Icons and Icon Buttons
+================================================== */
+
+.icon-btn {
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+  color: transparent;
+  width: 32px;
+  height: 32px;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  transition: .2s;
+}
+
+.icon-btn:hover .icon, .icon-btn:focus .icon  {
+  fill: #0086e6;
+}
+
+.icon {
+  display: inline-block;
+  width: inherit;
+  height: inherit;
+  fill: #000000;
+}
+
+.icon-error {
+  display: inline;
+  height: 20px;
+  position: relative;
+  top: 5px;
+  width: 20px;
+}

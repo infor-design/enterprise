@@ -3,63 +3,66 @@
 	width: auto;
 	height:  46px;
 	font-family: $font-stack;
-	@include font-size(14);
-	color: white;
+  @include font-size(15);
+	font-weight: lighter;
+  color: white;
 	background-color: $btn-color;
-	box-shadow: inset 0 -1px rgba(0,0,0,.2);
-	padding: 0 25px;
 	min-width: 155px;
   margin: 0 15px 15px 0;
+  @include rem(padding, 0.7rem, 2.5rem);
+  border-radius: 2px;
 }
 
 .btn:hover {
-	background-color: #b3b3b3;
-	box-shadow: inset 0 -2px rgba(0,0,0,.2);
+	background-color: #909090;
 }
 
-.btn:focus {
-	background-color: #999;
-	box-shadow: $focus-shadow;
+.btn:focus, .btn-cancel:focus, .btn-accept:focus, .btn-default:focus {
+	box-shadow: 0 0 1px #FFFFFF, 0 0 5px #0095FF;
 }
 
 .btn:active {
-	background-color: #bfbfbf;
-	box-shadow: inset 0 2px rgba(0,0,0,.2);
+	background-color: #ababab;
 }
 
 .btn-default {
 	background-color: $accent-color;
-	box-shadow: inset 0 -2px rgba(0,0,0,.3);
 }
 
 .btn-default:hover {
-	background-color: #4db5ff;
-	box-shadow: inset 0 2px rgba(0,0,0,.3);
+	background-color: #2b97e5;
 }
 
 .btn-default:active {
-	background-color: $accent-color;
-	box-shadow: inset 0 -2px rgba(0,0,0,.3);
-}
-
-.btn-default:focus {
-	background-color: #999;
-	box-shadow: 0 0 5px #0095ff, inset 0 -2px rgba(0,0,0,.3);
+	background-color: #53a8e6;
 }
 
 .btn:disabled, .btn-default:disabled {
 	background-color: #d9d9d9;
-	color: #999999;
+	color: #666;
 	box-shadow: none;
 	cursor: default;
 }
 
 .btn-cancel {
   background-color: #d5000e;
-  box-shadow: inset 0 -1px rgba(0,0,0,.3);
+
+  &:hover {
+    background-color: #cc3333;
+  }
+
+  &:active {
+    background-color: #cc6666;
+  }
 }
 
 .btn-accept {
   background-color: #2db329;
-  box-shadow: inset 0 -1px rgba(0,0,0,.25);
+  &:hover {
+    background-color: #33cc33;
+  }
+
+  &:active {
+    background-color: #66cc66;
+  }
 }

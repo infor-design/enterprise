@@ -16,17 +16,24 @@ $data-color: #333333;
 //Color Of Labels and Some Hs
 $label-color: #666666;
 
+//Color of Selected Objects
+$selected-color: #0086e6;
+
+//Color of Selected Objects - eg drop down
+$hover-color: #e5e5e5;
+
 //Text that is disabled
 $disabled-color: #999999;
 
 //The Focus Indicator on Fields
-$focus-shadow: 0 0 5px #2dadf7;
+$focus-shadow: 0 0 3px #0095ff;
 
 //The Normal Form Button Color
-$btn-color: #999;
+$btn-color: #666;
 
 //The Background color on Input Fields
 $field-background-color: #fff;
+$field-border-color: #e8e8e8;
 
 //The Link Styles
 $link-color: #0099ff;

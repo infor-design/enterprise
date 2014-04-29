@@ -4,7 +4,16 @@
 @import "mixins";  // Editing the config file sets the theme for the project
 
 .demo-heading {
-	padding-top: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-top: 50px;
+  text-transform: uppercase;
+}
+
+.demo-heading span {
+  color: #666666;
+  text-transform: none;
+  font-weight: normal;
 }
 
 .demo-header {
@@ -27,14 +36,19 @@
   padding-top: 25px;
 }
 
-.demo .grid.grid-pad:nth-child(2) {
+.demo-header span {
+  color: #FFFFFF;
+  @include font-size(24);
+}
+
+.demo .grid.grid-pad:nth-child(3) {
   padding-top: 90px;
 }
 
 .demo .content {
 	background: #DADADA;
 	color: #444;
-	padding: 20px;
+	padding: 1px 20px 20px 20px;
 }
 
 .demo .content:hover {
