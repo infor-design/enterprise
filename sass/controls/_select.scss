@@ -2,6 +2,7 @@
 .select {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat scroll 97% center #fff;
   cursor: pointer;
+  padding: 15px 15px 15px 10px !important;
 }
 
 .select-btn {
@@ -42,6 +43,7 @@
   width: auto;
   z-index: 6;
   -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
 }
 
 .select-list li:hover {

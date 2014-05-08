@@ -10,7 +10,6 @@
 	cursor: pointer;
 	padding: 1px;
 	font-family: $font-stack;
-	display: block;
 }
 
 .link:visited {
@@ -24,6 +23,11 @@
 
 .link:focus, .link.is-focused  {
   text-decoration: underline;
+}
+
+.link:focus {
+  outline: thin dotted $link-hover-color;
+  outline-offset: -2px;
 }
 
 .link[disabled]:hover  {

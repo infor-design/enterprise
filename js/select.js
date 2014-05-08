@@ -46,9 +46,14 @@
         label.hide();
         this.updateList();
         this.setValue();
+        this.setWidth();
         this._bindEvents();
       },
-
+      setWidth: function() {
+        if (this.element[0].style.width) {
+          this.input.width(this.element[0].style.width);
+        }
+      },
       updateList: function() {
         var self = this;
         //Keep a list generated and append it when we need to.
@@ -98,14 +103,6 @@
           self.openList();
         });
 
-        $(document).on('click.select', function(e) {
-          var target = $(e.target);
-          if (target.is('.select-option') || target.is('.select')) {
-            return;
-          }
-
-          self.closeList();
-        });
       },
 
       openList: function() {
@@ -127,7 +124,13 @@
           this.list.css('position', 'fixed');
         }
 
-        this.list.width(this.input.outerWidth());
+        //let grow or to field size.
+        if (this.list.width() > this.input.outerWidth()) {
+           this.list.css({'width': this.list.width() + 15});
+        } else {
+           this.list.width(this.input.outerWidth());
+        }
+
         this.scrollToOption(current);
         this.input.addClass('is-open');
 
@@ -140,12 +143,25 @@
           self.input.focus();
           self.closeList();
         });
+
+        $(document).on('click.select', function(e) {
+          var target = $(e.target);
+          if (target.is('.select-option') || target.is('.select')) {
+            return;
+          }
+          self.closeList();
+        }).on('resize.select', function() {
+          self.closeList();
+        }).on('scroll.select', function() {
+          self.closeList();
+        });
       },
 
       closeList: function() {
         this.list.hide().attr('aria-expanded', 'false').remove();
         this.list.off('click.list').off('mousewheel.list');
         this.input.removeClass('is-open');
+        $(document).off('click.select resize.select scroll.select');
       },
 
       scrollToOption: function(current) {

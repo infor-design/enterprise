@@ -3,7 +3,7 @@
   "eqeqeq": true, // ===
   "laxbreak": true, // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
   "node": true,
-  "predef": ["define", "d3", "describe", "it", "browser", "before", "after"],
+  "predef": ["define", "d3", "describe", "it", "browser", "before", "after", "beforeEach", "expect"],
   "quotmark": "single",
   "undef": true, // Prohibits the use of explicitly undeclared variables
   "unused": true,

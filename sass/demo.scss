@@ -11,7 +11,7 @@
 }
 
 .demo-heading span {
-  color: #666666;
+  color: $label-color;
   text-transform: none;
   font-weight: normal;
 }
@@ -85,7 +85,7 @@
 
 .field.aligned .select {
   display: inline-block;
-  padding: 0.5em 0.6em;
+  margin-top: -10px;
   vertical-align: middle;
   width: 15em;
 }

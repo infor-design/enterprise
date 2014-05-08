@@ -1,26 +1,47 @@
-var assert = require("chai").should(),
-  Browser = require("zombie");
+var app = require('../app'),
+  Browser = require('zombie');
+
+require('chai').should();
 
 //mocha -R spec
-describe('Gramercy Tests', function() {
+describe('Select Should', function() {
+  var server, browser;
 
-  beforeEach(function() {
-    // before EACH test, create a new zombie browser
-    //
-    // some useful options when things go wrong:
-    // debug: true  =  outputs debug information for zombie
-    // waitDuration: 500  =  will only wait 500 milliseconds
-    //   for the page to load before moving on
-    browser = new Browser();
+  before(function() {
+    app.locals.enableLiveReload = false;
+    server = app.listen(3001);
+    browser = new Browser({site: 'http://localhost:3001'});
+   });
+
+  after(function() {
+    server.close();
   });
 
-  it('Google.com', function(done){
+  beforeEach(function(done) {
+    browser.visit('/tests/select', done);
+  });
 
-      browser.visit('http://www.google.com', function () {
-          browser.text('title').should.equal('Google');
+  it('be in the right page', function() {
+    browser.text('title').should.equal('Infor Html Controls - Tests');
+  });
 
-          done();
-      });
+  it('have first selected', function() {
+     var item = browser.document.getElementById('country');
+     item.selectedIndex.should.equal(0);
+
+     item = browser.document.getElementById('country-shdo');
+     item.value.should.equal('Alabama');
+  });
+
+  it('support initial selection', function() {
+     var item = browser.document.getElementById('special');
+     item.selectedIndex.should.equal(8);
+  });
+
+  it('support special chars', function() {
+     var item = browser.document.getElementById('special');
+     item.options[item.selectedIndex].value.should.equal('a');
+     item.options[item.selectedIndex].text.should.equal('Apostraphe\'s');
   });
 
 });

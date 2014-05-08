@@ -10,16 +10,16 @@
 }
 
 .loader p {
- color: #666;
- font-family: Helvetica,Arial;
- font-size: 14px;
- font-weight: bold;
- left: 50%;
- margin: 0 0 0 -50px;
- position: absolute;
- text-align: center;
- top: 70px;
- width: 100px;
+  color: $label-color;
+  font-family: Helvetica,Arial;
+  font-size: 14px;
+  font-weight: normal;
+  left: 50%;
+  margin: 0 0 0 -50px;
+  position: absolute;
+  text-align: center;
+  top: 70px;
+  width: 100px;
 }
 
 .loader span {

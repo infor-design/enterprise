@@ -5,18 +5,17 @@
 
 ## New Features
 * Supports AMD (Require JS)
-* Smaller Foot Print
+* Smaller Footprint
 * Source Maps
 * More Template Friendly
 * Sass Friendly
 * Themes
 * Responsive
+* Retina Ready with SVG
+* No More IE8 Support! Booooo! IE8!
 
 
 ## Upgrade Guide (from 3.x)
 
 ### Checkboxes
-* `cd` into project folder and run `node app.js`
-* Make a new terminal cd into project folder and run `grunt watch`
-* Go to `http://localhost:4000/`
-* Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
+* New Markup

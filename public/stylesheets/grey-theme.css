@@ -247,8 +247,7 @@ small {
   font-size: 1.4rem;
   cursor: pointer;
   padding: 1px;
-  font-family: Helvetica, sans-serif, sans-serif;
-  display: block; }
+  font-family: Helvetica, sans-serif, sans-serif; }
 
 .link:visited {
   color: #0086e6; }
@@ -259,6 +258,10 @@ small {
 
 .link:focus, .link.is-focused {
   text-decoration: underline; }
+
+.link:focus {
+  outline: thin dotted #3399ff;
+  outline-offset: -2px; }
 
 .link[disabled]:hover {
   color: #666666;
@@ -309,7 +312,8 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   font-size: 1.6rem;
   padding: 15px 10px;
   max-width: 100%;
-  width: 300px; }
+  width: 300px;
+  text-align: left; }
 
 input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:focus, input[type="password"].is-focused, input[type="email"]:focus, textarea:focus, textarea.is-focused {
   box-shadow: 0 0 3px #0095ff;
@@ -655,10 +659,10 @@ input.has-error {
   z-index: 2; }
 
 .loader p {
-  color: #666;
+  color: #666666;
   font-family: Helvetica, Arial;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: normal;
   left: 50%;
   margin: 0 0 0 -50px;
   position: absolute;
@@ -848,7 +852,8 @@ input.has-error {
 
 .select {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat scroll 97% center #fff;
-  cursor: pointer; }
+  cursor: pointer;
+  padding: 15px 15px 15px 10px !important; }
 
 .select-btn {
   cursor: pointer;
@@ -886,7 +891,8 @@ input.has-error {
   transition: height 0.2s ease 0s, background-color 0.2s ease 0s;
   width: auto;
   z-index: 6;
-  -webkit-overflow-scrolling: touch; }
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap; }
 
 .select-list li:hover {
   background-color: #e5e5e5;
