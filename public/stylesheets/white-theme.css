@@ -851,16 +851,16 @@ input.has-error {
   color: white; }
 
 .select {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat scroll 97% center #fff;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff;
   cursor: pointer;
-  padding: 15px 15px 15px 10px !important; }
+  padding: 15px 24px 15px 10px !important; }
 
 .select-btn {
   cursor: pointer;
   height: 48px;
   width: 48px;
   display: inline-block;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat scroll 97% center #fff; }
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff; }
 
 .select-list:before {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADNQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZmMXptBQAAABB0Uk5T9KcB0nGkac/9Bgnusgi6AOSjwOsAAAArSURBVAjXHcGHDQAgDAOwsEdbkv+vBWGD3O5BgnGks4ic9DSi6usoBmnauC0QAeXNS3pJAAAAAElFTkSuQmCC");

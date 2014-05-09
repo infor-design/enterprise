@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 08-05-2014 11:12:52 
+ Date: 08-05-2014 44:04:09 
  Revision: undefined 
  */ 
  /**
@@ -38,25 +38,35 @@
     // Actual Select Code
     Plugin.prototype = {
       init: function() {
-        var label = this.element.hide().prev('.label'),
-            id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the select to serialize.
 
-        this.label = $('<label class="label"></label>').attr('for', id).text(label.text());
+        var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the select to serialize.
+        this.orgLabel = this.element.hide().prev('.label');
+
+        this.label = $('<label class="label"></label>').attr('for', id).text(this.orgLabel.text());
         this.input = $('<input type="text" readonly class="select" tabindex="0"/>').attr({'role': 'combobox', 'aria-labelledby': 'cidX'})
                         .attr({'aria-autocomplete': 'list', 'aria-owns': 'select-list'})
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'select-opt16'})
                         .attr('id', id);
 
         this.element.after(this.label, this.input, this.trigger);
-        label.hide();
+        this.orgLabel.hide();
         this.updateList();
         this.setValue();
         this.setWidth();
         this._bindEvents();
       },
       setWidth: function() {
-        if (this.element[0].style.width) {
-          this.input.width(this.element[0].style.width);
+        var style = this.element[0].style,
+          labelStyle = this.orgLabel[0].style;
+
+        if (style.width) {
+          this.input.width(style.width);
+        }
+        if (style.position === 'absolute') {
+          this.input.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
+        }
+        if (labelStyle.position === 'absolute') {
+          this.label.css({position: 'absolute', left: labelStyle.left, top: labelStyle.top, bottom: labelStyle.bottom, right: labelStyle.right});
         }
       },
       updateList: function() {
@@ -82,25 +92,43 @@
       },
 
       _bindEvents: function() {
-        var self = this;
+        var self = this,
+          timer, buffer = '';
 
         //Bind mouse and key events
         this.input.on('keydown.select', function(e) {
           self.handleKeyDown($(this), e);
         }).on('keypress.select', function(e) {
+          var charCode = e.charCode || e.keyCode;
+
           //Needed for browsers that use keypress events to manipulate the window.
-          if (e.altKey && (e.keyCode === 38 || e.keyCode === 40)) {
+          if (e.altKey && (charCode === 38 || charCode === 40)) {
             e.stopPropagation();
             return false;
           }
 
-          switch(e.keyCode) {
-            case 27:
-            case 13: {
+          if (charCode === 13) {
+            e.stopPropagation();
+            return false;
+          }
 
-              e.stopPropagation();
-              return false;
-            }
+          //Printable Chars Jump to first high level node with it...
+           if (e.which !== 0) {
+            var term = String.fromCharCode(e.which),
+              opts = $(self.element[0].options);
+
+            buffer += term.toLowerCase();
+            clearTimeout(timer);
+            setTimeout(function () {
+              buffer ='';
+            }, 700);
+
+            opts.each(function () {
+              if ($(this).text().substr(0, buffer.length).toLowerCase() === buffer) {
+                self.selectOption($(this));
+                return false;
+              }
+            });
           }
 
           return true;
@@ -314,6 +342,9 @@
           this.element.find('[value="' + code + '"]')[0].selected = true;
         }
         this.element.val(code).trigger('change');
+
+        this.input.focus();  //scroll to left
+        this.input[0].setSelectionRange(0, 0);
       },
       destroy: function() {
         $.removeData(this.obj, pluginName);

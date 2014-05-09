@@ -17,13 +17,13 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 ## Git The Code
 
 * First clone the repo: `https://github.com/hookandloop/gramercy.git`
-* Move into your new repo: `cd gramercy` 
+* Move into your new repo: `cd gramercy`
 * Then  `npm install` to install node package dependencies
-   
+
 ## Running The App
-* `cd` into project folder and run `node app.js` 
-* Make a new terminal cd into project folder and run `grunt watch` 
-* Go to `http://localhost:4000/` 
+* `cd` into project folder and run `node stroll` to talk a walk in Grammercy Park
+* Make a new terminal window and cd into project folder and run `grunt watch`
+* Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
 
 # Contributing to Gramercy Park
@@ -80,12 +80,12 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 ```
 Short and descriptive example bug report title
 
-### Issue Summary
+h3. Issue Summary
 
 A summary of the issue and the browser/OS environment in which it occurs. If
 suitable, include the steps required to reproduce the bug.
 
-### Steps to Reproduce
+h3. Steps to Reproduce
 
 1. This is the first step
 2. This is the second step
@@ -94,7 +94,7 @@ suitable, include the steps required to reproduce the bug.
 Any other information you want to share that is relevant to the issue being
 reported. Especially, why do you consider this to be a bug? What do you expect to happen instead?
 
-### Technical details:
+h3. Technical details:
 
 * Script/Css Version: (See Head of the File)
 * Client OS: Mac OS X 10.8.4
@@ -146,13 +146,13 @@ The documentation will be generated created inline in the pages (soon but not ye
 
 Reasons for using a naming convention (as opposed to allowing programmers to choose any character sequence) is to reduce the effort needed to read and understand source code and to enhance source code appearance (for example, by disallowing overly long names or unclear abbreviations).
 
-The choice of naming conventions can be a controversial issue these standards are given in order to give some consistency between the code and editors (For your information I'm using Sublime text presently) used to edit full stack: SASS/CSS, Html, js and node.js (backend js). 
+The choice of naming conventions can be a controversial issue these standards are given in order to give some consistency between the code and editors (For your information I'm using Sublime text presently) used to edit full stack: SASS/CSS, Html, js and node.js (backend js).
 
 #### Javascript Standards (Front and Backend)
 
-Our standards should follow a combination of Node.js and jsHint style. The one notable variation from jsHint defaults is to use tabs with 2 spaces. 
+Our standards should follow a combination of Node.js and jsHint style. The one notable variation from jsHint defaults is to use tabs with 2 spaces.
 
-https://github.com/felixge/node-style-guide 
+https://github.com/felixge/node-style-guide
 http://www.jshint.com/docs/options/
 
 #### Sass Standards
@@ -176,10 +176,10 @@ Grunt will be configure to check for jsHint with the correct rules.
 * Tester would checkout from http://usmawsoab.infor.com:8080/ci/job/Html5Controls/lastSuccessfulBuild/artifact/trunk/Controls/*zip*/Controls.zip (Generally Two Month Cycles for versions/QA). Next version is 4.0 current is 3.3
 * Tester would go through every Html example opening it in: IE8, IE9, IE10, Safari,  Chrome, Firefox, iOS (iPad), iOS, Android (tablet and mobile)
 * Cross check designs with http://soho.infor.com/the-soho-basics/design-vision/
-* Test for Accessibility. This means. 
+* Test for Accessibility. This means.
     * Run Wave Toolbar
     * Run Squizz – Html Sniffer
-    * Test for Keyboard against http://access.aol.com/dhtml-style-guide-working-group/ 
+    * Test for Keyboard against http://access.aol.com/dhtml-style-guide-working-group/
     * Test with screen readers (voice over, nvda and jaws), If only one Jaws is most critical.
 * Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
 * Create Selenium (Javascript based) scripts or similar tests (Dalek JS)

@@ -2,7 +2,7 @@ var app = require('./app');
 
 // With the express server and routes defined, we can start to listen for requests.
 var port = process.env.PORT || 4000;
-app.locals.enableLiveReload = false;
+app.locals.enableLiveReload = true;
 app.listen(port);
 
 //Show Ascii Art....

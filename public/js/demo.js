@@ -8,9 +8,9 @@ $(function($) {
   $('#theme').on('change', function() {
     theme = $(this).val();
     //swap style sheets..
-    $('body').fadeOut(function() {
+    $('body').fadeOut('fast', function() {
       $('#stylesheet').attr('href', '/stylesheets/'+ theme +'.css');
-      $(this).fadeIn();
+      $(this).fadeIn('fast');
     });
   });
 

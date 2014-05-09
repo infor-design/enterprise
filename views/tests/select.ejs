@@ -1,6 +1,7 @@
 <div class="grid grid-pad">
 	<div class="col-1-2">
 		<h1>Select</h1>
+
     <div class="field">
       <label for="country" class="label">Country</label>
       <select id="country" name="country" class="select">
@@ -35,8 +36,27 @@
        </select>
      </div>
 
-    <label for="setwidth" class="label">Set Width</label>
-      <select id="setwidth" name="setwidth" class="select" style="width: 50px">
+    <div class="field">
+      <label for="setWidth" class="label">Set Width</label>
+        <select id="setWidth" name="setWidth" class="select" style="width: 50px">
+          <option value="AL">Alabama</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+        </select>
+    </div>
+
+    <div class="field" style="left: 136px; position: absolute;top: 356px;">
+      <label for="abs1" class="label">Absolute Position (Bad Practice)</label>
+      <select id="abs1" name="abs1" class="select" style="width: 50px;">
         <option value="AL">Alabama</option>
         <option value="DE">Delaware</option>
         <option value="DC">District Of Columbia</option>
@@ -49,8 +69,24 @@
         <option value="PA">Pennsylvania</option>
         <option value="RI">Rhode Island</option>
         <option value="SC">South Carolina</option>
-        </select>
-     </div>
+      </select>
+    </div>
+
+    <label for="abs2" class="label" style="left: 136px; position: absolute;top: 442px;">Absolute Position No Field (Bad Practice)</label>
+    <select id="abs2" name="abs2" class="select" style="width: 50px;left: 136px; position: absolute;top: 488px;">
+      <option value="AL">Alabama</option>
+      <option value="DE">Delaware</option>
+      <option value="DC">District Of Columbia</option>
+      <option value="FL">Florida</option>
+      <option value="GA">Georgia</option>
+      <option value="HI">Hawaii</option>
+      <option value="ID">Idaho</option>
+      <option value="OK">Oklahoma</option>
+      <option value="OR">Oregon</option>
+      <option value="PA">Pennsylvania</option>
+      <option value="RI">Rhode Island</option>
+      <option value="SC">South Carolina</option>
+    </select>
 
 	</div>
 </div>
