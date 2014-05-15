@@ -142,33 +142,10 @@ Gramercy Park's current documentation can be found at [soho.infor.com](http://so
 
 The documentation will be generated created inline in the pages (soon but not yet). You can fork the repo and submit pull requests following the [pull-request](#pull-requests) guidelines.
 
-## Naming Conventions
+## Coding Conventions
 
-Reasons for using a naming convention (as opposed to allowing programmers to choose any character sequence) is to reduce the effort needed to read and understand source code and to enhance source code appearance (for example, by disallowing overly long names or unclear abbreviations).
+[Coding Standards are now in their own Repo](http://git.infor.com/projects/SHARED/repos/coding-standards/browse/README.md)
 
-The choice of naming conventions can be a controversial issue these standards are given in order to give some consistency between the code and editors (For your information I'm using Sublime text presently) used to edit full stack: SASS/CSS, Html, js and node.js (backend js).
-
-#### Javascript Standards (Front and Backend)
-
-Our standards should follow a combination of Node.js and jsHint style. The one notable variation from jsHint defaults is to use tabs with 2 spaces.
-
-https://github.com/felixge/node-style-guide
-http://www.jshint.com/docs/options/
-
-#### Sass Standards
-
-Adam
-
-#### Html Naming
-
-Adam
-
-
-#### Tools
-http://editorconfig.org/  (Will Create an Editor Config for this project with editor settings fx 2 spaces for a tab…)
-https://github.com/SublimeLinter/SublimeLinter-jshint – Integrated into the editor for ease of use if you use this editor.
-
-Grunt will be configure to check for jsHint with the correct rules.
 
 <a name="qa-documentation"></a>
 ## QA Documentation
