@@ -185,15 +185,15 @@ small {
 
 .btn, .btn-default, .btn-cancel, .btn-accept {
   width: auto;
-  height: 46px;
+  height: 36px;
   font-family: Helvetica, sans-serif, sans-serif;
   font-size: 15px;
   font-size: 1.5rem;
   font-weight: lighter;
   color: white;
   background-color: #767676;
-  min-width: 155px;
-  margin: 0 15px 15px 0;
+  min-width: 99px;
+  margin: 0 10px 10px 0;
   padding: 11.2px 40px;
   padding: 0.7rem 2.5rem;
   border-radius: 2px; }
@@ -246,11 +246,12 @@ small {
   font-size: 14px;
   font-size: 1.4rem;
   cursor: pointer;
-  padding: 1px;
+  padding: 0 1px 0 0;
   font-family: Helvetica, sans-serif, sans-serif; }
 
 .link:visited {
-  color: #0070bf; }
+  color: #0070bf;
+  border-bottom: 1px dashed #333333; }
 
 /* Mouse Over States is Same as the focus */
 .link:hover, .link.is-hovered, .link.is-focused {
@@ -287,9 +288,8 @@ label, .label, .data {
   font-size: 15px;
   font-size: 1.5rem;
   font-weight: lighter;
-  padding: 0px 15px;
+  padding: 0;
   margin-bottom: 5px;
-  margin-top: 22px;
   line-height: 22px; }
 
 .label + .data {
@@ -298,6 +298,9 @@ label, .label, .data {
 .data {
   color: #333333;
   display: block; }
+
+.field {
+  margin-bottom: 20px; }
 
 /* Input Style */
 input[type="text"], input[type="password"], input[type="email"], textarea {
@@ -310,10 +313,11 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   font-weight: lighter;
   font-size: 16px;
   font-size: 1.6rem;
-  padding: 15px 10px;
+  padding: 12px 10px;
   max-width: 100%;
   width: 300px;
-  text-align: left; }
+  text-align: left;
+  resize: none; }
 
 input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:focus, input[type="password"].is-focused, input[type="email"]:focus, textarea:focus, textarea.is-focused {
   box-shadow: 0 0 3px #0095ff;
@@ -853,7 +857,7 @@ input.has-error {
 .select {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff;
   cursor: pointer;
-  padding: 15px 24px 15px 10px !important; }
+  padding: 12px 24px 12px 10px !important; }
 
 .select-btn {
   cursor: pointer;
@@ -868,9 +872,9 @@ input.has-error {
   content: " ";
   height: 10px;
   left: 100%;
-  margin-left: -15px;
+  margin-left: -20px;
   position: absolute;
-  top: 16px;
+  top: 17px;
   width: 10px; }
 
 .select-list {

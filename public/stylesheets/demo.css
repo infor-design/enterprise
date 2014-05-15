@@ -24,7 +24,7 @@
 .demo-heading {
   font-size: 1.2rem;
   font-weight: bold;
-  padding-top: 50px;
+  padding-top: 30px;
   text-transform: uppercase; }
 
 .demo-heading span {
@@ -87,13 +87,14 @@
 .field.aligned .label {
   display: inline-block;
   margin: 0.4em 0 0 0;
+  padding-right: 10px;
   text-align: right;
   vertical-align: middle; }
 
 .field.aligned .select {
   display: inline-block;
-  margin-top: -5px;
-  padding: 11px 10px !important;
+  margin-top: 0;
+  padding: 6px 10px !important;
   vertical-align: middle;
   width: 12em; }
 

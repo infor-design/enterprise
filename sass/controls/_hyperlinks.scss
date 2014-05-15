@@ -8,12 +8,13 @@
 	text-decoration: none;
 	@include font-size(14);
 	cursor: pointer;
-	padding: 1px;
+	padding: 0 1px 0 0;
 	font-family: $font-stack;
 }
 
 .link:visited {
 	color: $accent-color;
+  border-bottom: 1px dashed #333333;
 }
 
 /* Mouse Over States is Same as the focus */

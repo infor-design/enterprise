@@ -2,7 +2,7 @@
 .select {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff;
   cursor: pointer;
-  padding: 15px 24px 15px 10px !important;
+  padding: 12px 24px 12px 10px !important;
 }
 
 .select-btn {
@@ -19,9 +19,9 @@
   content: " ";
   height: 10px;
   left: 100%;
-  margin-left: -15px;
+  margin-left: -20px;
   position: absolute;
-  top: 16px;
+  top: 17px;
   width: 10px;
 }
 

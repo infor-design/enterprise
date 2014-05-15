@@ -1,14 +1,14 @@
 
 .btn, .btn-default, .btn-cancel, .btn-accept {
 	width: auto;
-	height:  46px;
+	height:  36px;
 	font-family: $font-stack;
   @include font-size(15);
 	font-weight: lighter;
   color: white;
 	background-color: $btn-color;
-	min-width: 155px;
-  margin: 0 15px 15px 0;
+	min-width: 99px;
+  margin: 0 10px 10px 0;
   @include rem(padding, 0.7rem, 2.5rem);
   border-radius: 2px;
 }

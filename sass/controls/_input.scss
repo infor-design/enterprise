@@ -7,9 +7,8 @@ label, .label, .data {
 	font-family: $font-stack;
 	@include font-size(15);
 	font-weight: lighter;
-	padding: 0px 15px;
+	padding: 0;
 	margin-bottom: 5px;
-	margin-top: 22px;
 	line-height: 22px;
 }
 
@@ -22,6 +21,10 @@ label, .label, .data {
   display: block;
 }
 
+.field {
+  margin-bottom: 20px;
+}
+
 /* Input Style */
 input[type="text"], input[type="password"], input[type="email"], textarea {
 	display: block;
@@ -32,10 +35,11 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
 	font-family: $font-stack;
 	font-weight: lighter;
 	@include font-size(16);
-	padding: 15px 10px;
+	padding: 12px 10px;
 	max-width: 100%;
 	width: 300px;
   text-align: left;
+  resize: none;
 }
 
 input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:focus, input[type="password"].is-focused, input[type="email"]:focus, textarea:focus, textarea.is-focused {
