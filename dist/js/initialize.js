@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 14-05-2014 25:11:17 
+ Date: 16-05-2014 06:04:54 
  Revision: undefined 
  */ 
  /**
@@ -17,10 +17,23 @@
   }
 }(function ($) {
 
-  // Init Stuff on Document Reader
+  // Init Stuff on Document Ready
   $(function() {
+
+    //Tabs
     $('.tab-container').tabs();
+
+    //Select / DropDowns
     $('select').select();
+
+    //Modals
+    $('.modal').modal();
+
+    //Buttons Linked to Message Dialogs
+    $('button[data-message]').on('click', function () {
+      var opts = $(this).attr('data-message');
+      $('body').message(opts);
+    });
   });
 
 }));

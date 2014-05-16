@@ -1,5 +1,5 @@
-// Mix In's
-// ------------------------------------------------------------------------------
+/* Sass Mix In's
+================================================== */
 /* rem font sizing */
 @mixin font-size($sizeValue) {
   font-size: ($sizeValue) + px;
@@ -13,6 +13,7 @@
    }
 }
 
+/* set opacity cross browser */
 @mixin opacity($opacity) {
   $opacityIE: $opacity*100;
   filter: alpha(opacity=$opacityIE);
@@ -30,66 +31,12 @@
   }
 }
 
-/* retina image support */
-@mixin background-image($file, $type, $width, $height) {
-  background-image: url($file + '.' + $type);
-
-  @media
-  only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (min--moz-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-device-pixel-ratio: 2),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
-    & {
-      background-image: url($file + '-2x.' + $type);
-      -webkit-background-size: $width $height;
-    }
-  }
-}
-
-/* fluid row */
-@mixin fluidRow($container, $numPerRow, $margin) {
-  float: left;
-  margin-bottom: $margin;
-  margin-right: (($margin / $container) * 100%);
-  width: ((100% - (($numPerRow - 1) * (($margin / $container) * 100))) / $numPerRow);
-
-  &:nth-child(#{$numPerRow}n) {
-    margin-right: 0;
-  }
-
-  &:last-child {
-    @include breakpoint(mobile) {
-      margin-bottom: 0;
-    }
-  }
-}
-
-/* Example:
-  .promo {
-    @include fluidRow($site-max-width, 2, 30px);
-
-    @include breakpoint(mobile) {
-      @include fluidRow($site-max-width, 1, 30px);
-    }
-  }
-*/
-
-/*
-* Defines the size of the property as rems with px as fallback.
-* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
-*
-* Eg.
-*  @include rem(margin, 1rem)
-*  @include rem(padding, 1rem)
-*
-*/
-
+/* Util For Rem Mixin */
 @function strip-unit($num) {
   @return $num / ($num * 0 + 1);
 }
 
+/* Handle Rems with pixel fallback */
 @mixin rem($property, $values...) {
   $max: length($values);
   $pxValues: '';

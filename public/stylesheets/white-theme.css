@@ -1,4 +1,6 @@
-/* Gramercy Park - White Theme
+/* Gramercy Park - White Background Theme aka Snow
+================================================== */
+/* Variables
 ================================================== */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, em, img, small, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, legend, label, input, textarea, select, button, table, caption, thead, tbody, tfoot, tr, th, td {
   border: none;
@@ -59,30 +61,15 @@ button:focus {
 button::-moz-focus-inner {
   border: 0; }
 
+/* Sass Mix In's
+================================================== */
 /* rem font sizing */
 /* vendor prefixing */
+/* set opacity cross browser */
 /* responsive breakpoints */
-/* retina image support */
-/* fluid row */
-/* Example:
-  .promo {
-    @include fluidRow($site-max-width, 2, 30px);
-
-    @include breakpoint(mobile) {
-      @include fluidRow($site-max-width, 1, 30px);
-    }
-  }
-*/
-/*
-* Defines the size of the property as rems with px as fallback.
-* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
-*
-* Eg.
-*  @include rem(margin, 1rem)
-*  @include rem(padding, 1rem)
-*
-*/
-/* #Icons and Icon Buttons
+/* Util For Rem Mixin */
+/* Handle Rems with pixel fallback */
+/* Icons and Icon Buttons
 ================================================== */
 .icon-btn {
   cursor: pointer;
@@ -111,7 +98,7 @@ button::-moz-focus-inner {
   top: 5px;
   width: 20px; }
 
-/* #Typography
+/* Typography
 ================================================== */
 html {
   font-size: 62.5%; }
@@ -183,6 +170,10 @@ small {
   font-weight: normal;
   color: #666666; }
 
+/* Forms
+================================================== */
+/* Buttons of All Types
+================================================== */
 .btn, .btn-default, .btn-cancel, .btn-accept {
   width: auto;
   height: 36px;
@@ -191,7 +182,7 @@ small {
   font-size: 1.5rem;
   font-weight: lighter;
   color: white;
-  background-color: #666;
+  background-color: #999999;
   min-width: 99px;
   margin: 0 10px 10px 0;
   padding: 11.2px 40px;
@@ -236,7 +227,7 @@ small {
   .btn-accept:active {
     background-color: #66cc66; }
 
-/* #Hyperlink
+/* Hyperlinks
 ================================================== */
 .link {
   color: #0099ff;
@@ -278,7 +269,7 @@ small {
   opacity: 0.5;
   filter: alpha(opacity=50); }
 
-/* #User Input
+/* User Input - Labels, TextBox, TextArea
 ================================================== */
 /* Labels */
 label, .label, .data {
@@ -377,6 +368,8 @@ input.has-error {
   position: absolute;
   width: 1px; }
 
+/* Responsive 12 Column Grid Based on http://thisisdallas.github.com/Simple-Grid/
+================================================== */
 [class*='col-'] {
   float: left;
   padding-right: 20px;
@@ -470,7 +463,8 @@ input.has-error {
     padding-left: 20px;
     padding-right: 20px; } }
 
-/* Label Styling */
+/* Checkboxes
+================================================== */
 .checkbox:not(:checked), .checkbox:checked {
   position: absolute;
   left: -9999px; }
@@ -547,6 +541,8 @@ input.has-error {
   border: 2px solid #0086e6;
   box-shadow: 0 0 3px #0095ff; }
 
+/* Toggle Switches
+================================================== */
 .switch {
   position: relative;
   -webkit-user-select: none;
@@ -653,6 +649,8 @@ input.has-error {
   text-indent: 10px;
   top: -12px; }
 
+/* Css Loading Indicator
+================================================== */
 .loader {
   height: 60px;
   left: 50%;
@@ -807,6 +805,8 @@ input.has-error {
   100% {
     background-color: #FFFFFF; } }
 
+/* Tabs (Vertical and Horizontal)
+================================================== */
 .tab-container {
   margin: 20px; }
 
@@ -854,6 +854,8 @@ input.has-error {
 .tab-list li.is-selected a {
   color: white; }
 
+/* Select (DropDown)
+================================================== */
 .select {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff;
   cursor: pointer;
@@ -905,3 +907,136 @@ input.has-error {
 .select-list li.is-selected {
   color: #0086e6;
   font-weight: bold; }
+
+/* Modal Dialog and Messages
+================================================== */
+.modal {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  height: auto;
+  left: 50%;
+  max-width: 630px;
+  min-width: 200px;
+  -webkit-perspective: 1300px;
+  -moz-perspective: 1300px;
+  -ms-perspective: 1300px;
+  -o-perspective: 1300px;
+  perspective: 1300px;
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  visibility: hidden;
+  overflow: hidden;
+  width: auto;
+  z-index: 1001; }
+
+.is-visible {
+  visibility: visible; }
+
+.overlay {
+  background: #333333;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  top: 0;
+  visibility: hidden;
+  width: 100%;
+  z-index: 1000; }
+
+.modal-engaged .overlay {
+  opacity: 0.7;
+  visibility: visible; }
+
+.modal-content {
+  background: #e5e5e5;
+  color: #666666;
+  margin: 0 auto;
+  opacity: 0;
+  padding: 20px 30px;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-transform: rotateX(-60deg);
+  -moz-transform: rotateX(-60deg);
+  -ms-transform: rotateX(-60deg);
+  -o-transform: rotateX(-60deg);
+  transform: rotateX(-60deg);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 0;
+  -moz-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  -o-transform-origin: 50% 0;
+  transform-origin: 50% 0; }
+
+.is-visible .modal-content {
+  opacity: 1;
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  -ms-transform: rotateX(0deg);
+  o-transform: rotateX(0deg);
+  transform: rotateX(0deg); }
+
+/* Messages/Content */
+.modal-content h1 {
+  font-size: 22px;
+  font-size: 2.2rem;
+  color: #666666;
+  font-weight: normal;
+  text-align: left;
+  margin-bottom: 10px; }
+
+.modal-content .message {
+  font-size: 14px;
+  font-size: 1.4rem;
+  color: #666666;
+  text-align: left; }
+
+.modal-content p + p {
+  margin: -15px 30px 21px 11px; }
+
+.modal-content.has-icon .message {
+  margin: 25px 33px -6px 33px; }
+
+.modal-content input {
+  width: 100% !important; }
+
+/* Buttons */
+.modal-body > button {
+  display: block;
+  margin: 25px auto 5px auto; }
+
+.modal-buttonset button, .modal-buttonset a {
+  display: inline-block;
+  margin: 0 3px; }
+
+.modal-buttonset a {
+  margin: 0 30px; }
+
+.modal-buttonset {
+  margin: 15px auto 0 auto;
+  text-align: right; }
+
+.ui-draggable .modal-title {
+  cursor: move; }
+
+/* RTL CSS */

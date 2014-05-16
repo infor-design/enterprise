@@ -1,26 +1,15 @@
+/* Styling use in the Demo App Only
+================================================== */
+/* Variables
+================================================== */
+/* Sass Mix In's
+================================================== */
 /* rem font sizing */
 /* vendor prefixing */
+/* set opacity cross browser */
 /* responsive breakpoints */
-/* retina image support */
-/* fluid row */
-/* Example:
-  .promo {
-    @include fluidRow($site-max-width, 2, 30px);
-
-    @include breakpoint(mobile) {
-      @include fluidRow($site-max-width, 1, 30px);
-    }
-  }
-*/
-/*
-* Defines the size of the property as rems with px as fallback.
-* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
-*
-* Eg.
-*  @include rem(margin, 1rem)
-*  @include rem(padding, 1rem)
-*
-*/
+/* Util For Rem Mixin */
+/* Handle Rems with pixel fallback */
 .demo-heading {
   font-size: 1.2rem;
   font-weight: bold;
@@ -34,7 +23,7 @@
 
 .demo-header {
   height: 70px;
-  background-color: #4d4d4d;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAA2CAMAAADj5An2AAAABGdBTUEAALGPC/xhBQAAAJZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgvNKgAAADJ0Uk5TKCsIHCAjJgYWIi4HHzESDh0NLCQaDwkpHhshDCoEFxMvFAoLGCUQGREyMAIBFQMnMwASPEIoAAABcklEQVQ4y+2U2ZqCMAxGmVFnHDfcQFHZpBQoLabv/3LTBRj2ay8mV0nOR0j+pjX4n+Vm6D8bMTdqjyICwh6HAUgXUJrfh2eAAN2tOUD27EJ3C8FaOj7AqQtFjmnvC7K8A0XVb+15AM8OdGqIAOwmLKxw0ygLPrYrmO8zNULwKROhnucDK+g+qgFJYuJbFUAi4QngyA67V52FW5puRDHMjTvApZD1NiXKUhmZGRy5sa86z4PyO93XDCAyYgjKxn80THVkiqZHofhd2Ci70vBaS3aQDRlKy2vVUCQjm8CK6lHCexrXk2zPUZQQqVhThLbNlXzFNesjsqyFxww58bZMxzPkWXl7wbh7UpLSoe3jfC2Xb3g1RXUBX//wLSBGTL4R1GJJDzryhMVyMr0HbXiRqcuOrYbgor1YbcimIMWPcaj3ahS6E2WjeBx6Uw3FU1CJcPQSMgTVnRX3dTnYUOgk8hnId2g/dWSU1A9NH3LbY0Uz/gWGuQ8SEuSkzQAAAABJRU5ErkJggg==") no-repeat scroll 7% center #4D4D4D;
   border-bottom: 2px solid #363636;
   font-size: 24px;
   font-size: 2.4rem;
@@ -46,7 +35,6 @@
   z-index: 5; }
 
 .demo-header .grid {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAA2CAMAAADj5An2AAAABGdBTUEAALGPC/xhBQAAAJZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgvNKgAAADJ0Uk5TKCsIHCAjJgYWIi4HHzESDh0NLCQaDwkpHhshDCoEFxMvFAoLGCUQGREyMAIBFQMnMwASPEIoAAABcklEQVQ4y+2U2ZqCMAxGmVFnHDfcQFHZpBQoLabv/3LTBRj2ay8mV0nOR0j+pjX4n+Vm6D8bMTdqjyICwh6HAUgXUJrfh2eAAN2tOUD27EJ3C8FaOj7AqQtFjmnvC7K8A0XVb+15AM8OdGqIAOwmLKxw0ygLPrYrmO8zNULwKROhnucDK+g+qgFJYuJbFUAi4QngyA67V52FW5puRDHMjTvApZD1NiXKUhmZGRy5sa86z4PyO93XDCAyYgjKxn80THVkiqZHofhd2Ci70vBaS3aQDRlKy2vVUCQjm8CK6lHCexrXk2zPUZQQqVhThLbNlXzFNesjsqyFxww58bZMxzPkWXl7wbh7UpLSoe3jfC2Xb3g1RXUBX//wLSBGTL4R1GJJDzryhMVyMr0HbXiRqcuOrYbgor1YbcimIMWPcaj3ahS6E2WjeBx6Uw3FU1CJcPQSMgTVnRX3dTnYUOgk8hnId2g/dWSU1A9NH3LbY0Uz/gWGuQ8SEuSkzQAAAABJRU5ErkJggg==") no-repeat scroll 7% center #4D4D4D;
   height: 70px;
   margin-top: -26px;
   padding-top: 25px; }

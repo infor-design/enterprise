@@ -12,10 +12,23 @@
   }
 }(function ($) {
 
-  // Init Stuff on Document Reader
+  // Init Stuff on Document Ready
   $(function() {
+
+    //Tabs
     $('.tab-container').tabs();
+
+    //Select / DropDowns
     $('select').select();
+
+    //Modals
+    $('.modal').modal();
+
+    //Buttons Linked to Message Dialogs
+    $('button[data-message]').on('click', function () {
+      var opts = $(this).attr('data-message');
+      $('body').message(opts);
+    });
   });
 
 }));

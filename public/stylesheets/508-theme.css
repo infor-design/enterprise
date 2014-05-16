@@ -1,5 +1,7 @@
 /* Gramercy Park - 508 Theme
 ================================================== */
+/* Variables
+================================================== */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, em, img, small, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, legend, label, input, textarea, select, button, table, caption, thead, tbody, tfoot, tr, th, td {
   border: none;
   margin: 0;
@@ -59,30 +61,15 @@ button:focus {
 button::-moz-focus-inner {
   border: 0; }
 
+/* Sass Mix In's
+================================================== */
 /* rem font sizing */
 /* vendor prefixing */
+/* set opacity cross browser */
 /* responsive breakpoints */
-/* retina image support */
-/* fluid row */
-/* Example:
-  .promo {
-    @include fluidRow($site-max-width, 2, 30px);
-
-    @include breakpoint(mobile) {
-      @include fluidRow($site-max-width, 1, 30px);
-    }
-  }
-*/
-/*
-* Defines the size of the property as rems with px as fallback.
-* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
-*
-* Eg.
-*  @include rem(margin, 1rem)
-*  @include rem(padding, 1rem)
-*
-*/
-/* #Icons and Icon Buttons
+/* Util For Rem Mixin */
+/* Handle Rems with pixel fallback */
+/* Icons and Icon Buttons
 ================================================== */
 .icon-btn {
   cursor: pointer;
@@ -111,7 +98,7 @@ button::-moz-focus-inner {
   top: 5px;
   width: 20px; }
 
-/* #Typography
+/* Typography
 ================================================== */
 html {
   font-size: 62.5%; }
@@ -183,6 +170,10 @@ small {
   font-weight: normal;
   color: #666666; }
 
+/* Forms
+================================================== */
+/* Buttons of All Types
+================================================== */
 .btn, .btn-default, .btn-cancel, .btn-accept {
   width: auto;
   height: 36px;
@@ -236,7 +227,7 @@ small {
   .btn-accept:active {
     background-color: #66cc66; }
 
-/* #Hyperlink
+/* Hyperlinks
 ================================================== */
 .link {
   color: #0072be;
@@ -278,7 +269,7 @@ small {
   opacity: 0.5;
   filter: alpha(opacity=50); }
 
-/* #User Input
+/* User Input - Labels, TextBox, TextArea
 ================================================== */
 /* Labels */
 label, .label, .data {
@@ -377,6 +368,8 @@ input.has-error {
   position: absolute;
   width: 1px; }
 
+/* Responsive 12 Column Grid Based on http://thisisdallas.github.com/Simple-Grid/
+================================================== */
 [class*='col-'] {
   float: left;
   padding-right: 20px;
@@ -470,7 +463,8 @@ input.has-error {
     padding-left: 20px;
     padding-right: 20px; } }
 
-/* Label Styling */
+/* Checkboxes
+================================================== */
 .checkbox:not(:checked), .checkbox:checked {
   position: absolute;
   left: -9999px; }
@@ -547,6 +541,8 @@ input.has-error {
   border: 2px solid #0070bf;
   box-shadow: 0 0 3px #0095ff; }
 
+/* Toggle Switches
+================================================== */
 .switch {
   position: relative;
   -webkit-user-select: none;
@@ -653,6 +649,8 @@ input.has-error {
   text-indent: 10px;
   top: -12px; }
 
+/* Css Loading Indicator
+================================================== */
 .loader {
   height: 60px;
   left: 50%;
@@ -807,6 +805,8 @@ input.has-error {
   100% {
     background-color: #FFFFFF; } }
 
+/* Tabs (Vertical and Horizontal)
+================================================== */
 .tab-container {
   margin: 20px; }
 
@@ -854,6 +854,8 @@ input.has-error {
 .tab-list li.is-selected a {
   color: white; }
 
+/* Select (DropDown)
+================================================== */
 .select {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff;
   cursor: pointer;

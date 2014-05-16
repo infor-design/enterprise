@@ -1,7 +1,7 @@
 /**
-* Responsive Tab Control
+* Responsive PLugin Control
 * @name Tabs
-* @param {string} propertyName - The Name of the Property
+* @param {string} propertyName - The Name of the Property defaults to defaultValue
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -13,12 +13,12 @@
   }
 }(function ($) {
 
-  $.fn.tabs = function( options ) {
+  $.fn.pluginName = function( options ) {
 
     // Tab Settings and Options
-    var pluginName = 'tabs',
+    var pluginName = 'pluginName',
         defaults = {
-          propertyName: 'value'
+          propertyName: 'defaultValue'
         },
         settings = $.extend({}, defaults, options);
 
@@ -32,10 +32,14 @@
     Plugin.prototype = {
         init: function(){
           var self = this;
-          console.log(settings, self.element);
+          console.log(self);
         },
 
-        _private: function(){
+        _privateMethod: function(){
+
+        },
+
+        publicMethod: function(){
 
         },
 
@@ -44,7 +48,7 @@
         }
     };
 
-    // Keep the Chaining and Init the Controls or Settings
+    // Keep the Chaining while Initializing the Control (Only Once)
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {

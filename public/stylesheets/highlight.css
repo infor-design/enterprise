@@ -1,26 +1,15 @@
+/* Code Hightlight for Demos and Docs
+================================================== */
+/* Variables
+================================================== */
+/* Sass Mix In's
+================================================== */
 /* rem font sizing */
 /* vendor prefixing */
+/* set opacity cross browser */
 /* responsive breakpoints */
-/* retina image support */
-/* fluid row */
-/* Example:
-  .promo {
-    @include fluidRow($site-max-width, 2, 30px);
-
-    @include breakpoint(mobile) {
-      @include fluidRow($site-max-width, 1, 30px);
-    }
-  }
-*/
-/*
-* Defines the size of the property as rems with px as fallback.
-* http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
-*
-* Eg.
-*  @include rem(margin, 1rem)
-*  @include rem(padding, 1rem)
-*
-*/
+/* Util For Rem Mixin */
+/* Handle Rems with pixel fallback */
 pre {
   padding: 0;
   font-family: Courier;
