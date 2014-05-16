@@ -5,7 +5,7 @@
 
 For guidelines on when and where to use the controls see the [Soho Style Guide](http://soho.infor.com).
 
-This project is an open source project. If you have a contribution [submit a pull request](#pull-requests). However, your code must follow our coding guidelines as mentioned in this page and use designs and behavior approved by Hook and Loop.
+This project is an open source project. If you have a contribution please [submit a pull request](#pull-requests). However, your code must follow our coding guidelines as mentioned in this page and use designs and behavior approved by Hook and Loop.
 
 The project is a simple node project using SASS and Grunt with Grunt Watch and Live Reload to stage a serious of control examples shown on example and documentation pages.
 
