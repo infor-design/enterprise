@@ -16,13 +16,19 @@ label, .label, .data {
   margin-top: 0px;
 }
 
+
 .data {
 	color: $data-color;
   display: block;
 }
 
+/* Field Style */
 .field {
   margin-bottom: 20px;
+}
+
+.field label {
+  padding-left: 13px;
 }
 
 /* Input Style */

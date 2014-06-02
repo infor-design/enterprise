@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 16-05-2014 11:04:40 
+ Date: 02-06-2014 34:02:07 
  Revision: undefined 
  */ 
  /**
@@ -34,6 +34,9 @@
       var opts = $(this).attr('data-message');
       $('body').message(opts);
     });
+
+    //Sliders
+    $('.slider').slider();
   });
 
 }));

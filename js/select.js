@@ -38,8 +38,8 @@
         this.orgLabel = this.element.hide().prev('.label');
 
         this.label = $('<label class="label"></label>').attr('for', id).text(this.orgLabel.text());
-        this.input = $('<input type="text" readonly class="select" tabindex="0"/>').attr({'role': 'combobox', 'aria-labelledby': 'cidX'})
-                        .attr({'aria-autocomplete': 'list', 'aria-owns': 'select-list'})
+        this.input = $('<input type="text" readonly class="select" tabindex="0"/>').attr({'role': 'combobox'})
+                        .attr({'aria-autocomplete': 'none', 'aria-owns': 'select-list'})
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'select-opt16'})
                         .attr('id', id);
 
@@ -136,7 +136,8 @@
       openList: function() {
         var current = this.list.find('.is-selected'),
             self =  this,
-            isFixed = false;
+            isFixed = false,
+            isAbs = false;
 
         this.list.appendTo('body').show().attr('aria-expanded', 'true');
         this.list.css({'top': this.input.position().top , 'left': this.input.position().left});
@@ -146,7 +147,13 @@
             isFixed = true;
             return;
           }
+
         });
+
+        if (this.input.parent('.field').css('position') === 'absolute') {
+          isAbs = true;
+          this.list.css({'top': this.input.parent('.field').position().top + this.input.prev('label').height() , 'left': this.input.parent('.field').position().left});
+       }
 
         if (isFixed) {
           this.list.css('position', 'fixed');
@@ -161,6 +168,9 @@
 
         this.scrollToOption(current);
         this.input.addClass('is-open');
+
+        //TODO: Animate this.list.css('height', 0);
+        //this.list.slideUp();
 
         self.list.on('click.list', 'li', function () {
           var idx = $(this).index(),

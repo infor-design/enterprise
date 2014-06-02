@@ -290,8 +290,12 @@ label, .label, .data {
   color: #333333;
   display: block; }
 
+/* Field Style */
 .field {
   margin-bottom: 20px; }
+
+.field label {
+  padding-left: 13px; }
 
 /* Input Style */
 input[type="text"], input[type="password"], input[type="email"], textarea {
@@ -485,14 +489,14 @@ input.has-error {
   border-radius: 2px; }
 
 .checkbox:not(:checked) + label:after, .checkbox:checked + label:after {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
   background-repeat: no-repeat;
-  color: rgba(0, 0, 0, 0);
-  content: "»";
-  font-size: 24px;
-  left: 9px;
+  color: #FFFFFF;
+  content: "✔";
+  font-family: inherit;
+  font-size: 25px;
+  left: 8px;
   position: absolute;
-  top: 3px;
+  top: -1px;
   transition: all 0.2s ease 0s; }
 
 .checkbox:checked + label:before {
@@ -894,7 +898,7 @@ input.has-error {
   position: absolute;
   text-indent: 18px;
   top: 1px;
-  transition: height 0.2s ease 0s, background-color 0.2s ease 0s;
+  transition: height 0.3s ease 0s;
   width: auto;
   z-index: 6;
   -webkit-overflow-scrolling: touch;
@@ -907,6 +911,37 @@ input.has-error {
 .select-list li.is-selected {
   color: #0070bf;
   font-weight: bold; }
+
+/* Sliders
+================================================== */
+.slider {
+  background-color: #dbdbdb;
+  height: 12px;
+  margin: 10px 0;
+  width: 100%; }
+
+.slider-handle {
+  background-color: #FFFFFF;
+  border-radius: 29px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.25), 0 3px 4px rgba(0, 0, 0, 0.18);
+  color: rgba(0, 0, 0, 0);
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  margin-top: -8px;
+  position: absolute;
+  width: 28px; }
+
+.slider-handle:focus, .slider-handle:active, .slider-handle.is-active {
+  box-shadow: 0 0 3px #0095ff, 0 3px 4px rgba(0, 0, 0, 0.18); }
+
+.slider-range {
+  width: inherit;
+  height: inherit;
+  display: block;
+  position: absolute;
+  background-color: #0070bf;
+  /*1a9fff*/ }
 
 .btn-accept {
   background-color: #048a00; }

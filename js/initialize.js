@@ -29,6 +29,9 @@
       var opts = $(this).attr('data-message');
       $('body').message(opts);
     });
+
+    //Sliders
+    $('.slider').slider();
   });
 
 }));

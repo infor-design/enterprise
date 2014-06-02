@@ -19,6 +19,8 @@
           title: 'Message Title',
           message: 'Message Summary',
           width: 'auto',
+          close: null,
+          resize: null,
           button: []  //Passed through to modal
         },
         settings = $.extend({}, defaults, options);
@@ -48,7 +50,8 @@
         }
 
         this.closeBtn = $('<button type="button" class="btn-default btn-close">Close</button>').appendTo(this.content);
-        this.message.append(this.messageContent).appendTo('body').modal({trigger: 'immediate', buttons: settings.buttons, resizable: settings.resizable});
+        this.message.append(this.messageContent).appendTo('body').modal({trigger: 'immediate', buttons: settings.buttons,
+          resizable: settings.resizable, close: settings.close, resize: settings.resize});
 
         //Adjust Width if Set as a Setting
         if (settings.width !== 'auto') {

@@ -23,14 +23,14 @@
 }
 
 .checkbox:not(:checked) + label:after, .checkbox:checked + label:after {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
   background-repeat: no-repeat;
-  color: rgba(0, 0, 0, 0);
-  content: "»";
-  font-size: 24px;
-  left: 9px;
+  color: #FFFFFF;
+  content: "✔";
+  font-family: inherit;
+  font-size: 25px;
+  left: 8px;
   position: absolute;
-  top: 3px;
+  top: -1px;
   transition: all 0.2s ease 0s;
 }
 

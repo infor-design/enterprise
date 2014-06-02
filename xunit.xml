@@ -1,4 +1,0 @@
-<testsuite name="Mocha Tests" tests="2" failures="0" errors="0" skipped="0" timestamp="Thu, 24 Apr 2014 17:15:25 GMT" time="9.387">
-<testcase classname="Gramercy Tests" name="Google.com" time="0.764"/>
-<testcase classname="my webdriverjs tests" name="Github test" time="8.392"/>
-</testsuite>

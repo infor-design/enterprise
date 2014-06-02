@@ -60,6 +60,13 @@
 
         if (settings.resizable) {
           this.element.resizable();
+
+          if (settings.resize) {
+            this.element.on('resize', function (e, ui) {
+              settings.resize(e, ui);
+              });
+          }
+
           this.element.find('.ui-resizable-handle').on('mousedown', function () {
             self.revertTransition(true);
           });
@@ -104,7 +111,11 @@
             btn.addClass('btn-default');
           }
           btn.on('click.modal', function() {
-            props.click.apply(self.element[0], arguments);
+            if (props.click) {
+              props.click.apply(self.element[0], arguments);
+              return;
+            }
+            self.close();
           });
           buttonset.append(btn);
         });
@@ -113,7 +124,16 @@
         var self = this;
 
         this.overlay.appendTo('body');
+
+        //Look for other nested dialogs and adjust the zindex.
+        $('.modal').each(function (i) {
+          var modal = $(this);
+            modal.css('z-index', '100' + (i + 1));
+            modal.data('modal').overlay.css('z-index', '100' + i);
+        });
+
         this.element.addClass('is-visible').attr('role', 'dialog');
+
         setTimeout(function () {
           self.element.find('.modal-title').focus();
           self.keepFocus();
@@ -166,25 +186,8 @@
       },
 
       close: function () {
-        var numOpen = 0;
-
         this.element.removeClass('is-visible');
-
-        //Fire Events
-        //this.element.trigger('close');
-
-        //Remove Overlay if no more dialogs.
-        $('.modal:visible').not(this.element).each(function() {
-          if ($(this).css('visibility') === 'visible') {
-            numOpen++;
-          }
-        });
-
-        if (numOpen === 0) {
-          this.overlay.remove();
-          $('body > *').not(this.element).attr('aria-hidden', 'false');
-          $('body').removeClass('modal-engaged');
-        }
+        this.overlay.remove();
 
         if (this.oldActive) {
           this.oldActive.focus();
