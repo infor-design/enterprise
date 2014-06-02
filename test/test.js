@@ -26,10 +26,10 @@ describe('Select Should', function() {
   });
 
   it('have first selected', function() {
-     var item = browser.document.getElementById('country');
+     var item = browser.document.getElementById('states');
      item.selectedIndex.should.equal(0);
 
-     item = browser.document.getElementById('country-shdo');
+     item = browser.document.getElementById('states-shdo');
      item.value.should.equal('Alabama');
   });
 
