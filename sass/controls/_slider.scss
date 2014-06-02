@@ -1,0 +1,33 @@
+/* Sliders
+================================================== */
+.slider {
+  background-color: #dbdbdb;
+  height: 12px;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.slider-handle {
+  background-color: #FFFFFF;
+  border-radius: 29px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.25), 0 3px 4px rgba(0, 0, 0, 0.18);
+  color: rgba(0, 0, 0, 0);
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  margin-top: -8px;
+  position: absolute;
+  width: 28px;
+}
+
+.slider-handle:focus, .slider-handle:active, .slider-handle.is-active {
+  box-shadow: $focus-shadow, 0 3px 4px rgba(0, 0, 0, 0.18);
+}
+
+.slider-range {
+  width: inherit;
+  height: inherit;
+  display: block;
+  position: absolute;
+  background-color: $accent-color;  /*1a9fff*/
+}
