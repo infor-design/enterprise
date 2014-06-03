@@ -169,7 +169,7 @@ The documentation will be generated created inline in the pages (soon but not ye
 ## QA Documentation
 
 * Tester would grab build from from http://usmawsoab.infor.com:8080/ci/job/Gramercy%20Park/ (Generally Two Month Cycles for versions/QA). Next version is 4.0 current is 3.4
-* Tester would go through every Html page example opening it in:  ~~IE8 ~~, IE9, IE10, Safari,  Chrome, Firefox, iOS (iPad), iOS, Android (tablet and mobile)
+* Tester would go through every Html page example opening it in:  ~~IE8~~, IE9, IE10, Safari,  Chrome, Firefox, iOS (iPad), iOS, Android (tablet and mobile)
 * Cross check designs with http://soho.infor.com/the-soho-basics/design-vision/
 * Test for Accessibility. This means.
     * Run Wave Toolbar
