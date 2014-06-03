@@ -34,7 +34,7 @@ TBD
 
 ## Git The Code
 
-* First clone the repo: `https://github.com/hookandloop/gramercy.git`
+* First clone the repo: `http://git.infor.com/scm/gp/gp-controls.git`
 * Move into your new repo: `cd gramercy`
 * Then  `npm install` to install node package dependencies
 
@@ -134,14 +134,14 @@ Feature requests are welcome. Before you submit one be sure to have:
 
 Change requests cover both architectural and functional changes to how the controls work. If you have an idea for a new or different dependency, a refactor, or an improvement to a feature, etc  - please be sure to:
 
-1. **Use the GitHub and Jira search** and check someone else didn't get there first
+1. **Use the Stash and Jira search** and check someone else didn't get there first
 2. Take a moment to think about the best way to make a case for, and explain what you're thinking. Are you sure this shouldn't really be a [bug report](#bug-reports) or a [feature request](#feature-requests)? Is it really one idea or is it many? What's the context? What problem are you solving? Why is what you are suggesting better than what's already there? Does it fit with the Roadmap?
 
 
 <a name="pull-requests"></a>
 ### Submitting Pull Requests
 
-Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue, please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug. See here for information on how to submit a [pull request](https://help.github.com/articles/creating-a-pull-request)
+Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue, please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug. See here for information on how to submit a [pull request](https://confluence.atlassian.com/display/STASH/Using+pull+requests+in+Stash)
 
 <a name="testing"></a>
 ### Testing and Quality Assurance
@@ -150,7 +150,7 @@ Never underestimate just how useful quality assurance is. If you're looking to g
 
 If you want to get involved with testing Gramercy, there is a set of [QA Documentation](#qa-documentation) on the wiki.
 
-Essentially though, [check out the latest master](https://github.com/hookandloop/gramercy), take it for a spin, and if you find anything odd, please follow the [bug report guidelines](#bug-reports) and let us know!
+Essentially though, [check out the latest master](http://git.infor.com/projects/GP/repos/gp-controls/branches), take it for a spin, and if you find anything odd, please follow the [bug report guidelines](#bug-reports) and let us know!
 
 
 <a name="documentation"></a>
@@ -168,8 +168,8 @@ The documentation will be generated created inline in the pages (soon but not ye
 <a name="qa-documentation"></a>
 ## QA Documentation
 
-* Tester would checkout from http://usmawsoab.infor.com:8080/ci/job/Html5Controls/lastSuccessfulBuild/artifact/trunk/Controls/*zip*/Controls.zip (Generally Two Month Cycles for versions/QA). Next version is 4.0 current is 3.3
-* Tester would go through every Html example opening it in: IE8, IE9, IE10, Safari,  Chrome, Firefox, iOS (iPad), iOS, Android (tablet and mobile)
+* Tester would grab build from from http://usmawsoab.infor.com:8080/ci/job/Gramercy%20Park/ (Generally Two Month Cycles for versions/QA). Next version is 4.0 current is 3.4
+* Tester would go through every Html page example opening it in:  ~~IE8 ~~, IE9, IE10, Safari,  Chrome, Firefox, iOS (iPad), iOS, Android (tablet and mobile)
 * Cross check designs with http://soho.infor.com/the-soho-basics/design-vision/
 * Test for Accessibility. This means.
     * Run Wave Toolbar
