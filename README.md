@@ -1,13 +1,31 @@
 
 # Welcome to Gramercy Park
 
-[Gramercy Park](http://en.wikipedia.org/wiki/Gramercy_Park) is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, flexible and accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
+[Gramercy Park](http://en.wikipedia.org/wiki/Gramercy_Park) is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, touch friendly, more flexible and completely accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
 
 For guidelines on when and where to use the controls see the [Soho Style Guide](http://soho.infor.com).
 
 This project is an open source project. If you have a contribution please [submit a pull request](#pull-requests). However, your code must follow our coding guidelines as mentioned in this page and use designs and behavior approved by Hook and Loop.
 
 The project is a simple node project using SASS and Grunt with Grunt Watch and Live Reload to stage a serious of control examples shown on example and documentation pages.
+
+## New Features
+* Supports AMD (fx.. Require JS)
+* Smaller Footprint
+* Source Maps
+* More Template Friendly
+* Sass Friendly
+* Themes
+* Responsive
+* Touch Friendly
+* Retina Ready with SVG images and icons
+* IE8 Support not included at the moment (TBD Might not be :)
+
+## Upgrade Guide (from 3.x)
+
+TBD
+
+# Running the Development Project
 
 ## Install
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
