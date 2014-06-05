@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 02-06-2014 34:02:07 
+ Date: 05-06-2014 05:10:46 
  Revision: undefined 
  */ 
  /*
@@ -1238,7 +1238,7 @@
           self.close();
         });
 
-        if (settings.buttons.length > 0) {
+        if (settings.buttons && settings.buttons.length > 0) {
           self.addButtons(settings.buttons);
         }
       },
@@ -1291,7 +1291,10 @@
         $('.modal').each(function (i) {
           var modal = $(this);
             modal.css('z-index', '100' + (i + 1));
-            modal.data('modal').overlay.css('z-index', '100' + i);
+
+            if (modal.data('modal') && modal.data('modal').overlay) {
+              modal.data('modal').overlay.css('z-index', '100' + i);
+            }
         });
 
         this.element.addClass('is-visible').attr('role', 'dialog');
@@ -1303,6 +1306,13 @@
 
         $('body > *').not(this.element).attr('aria-hidden', 'true');
         $('body').addClass('modal-engaged');
+
+        //Handle Default button.
+        $(document).on('keypress.modal', function (e) {
+          if (e.which === 13) {
+            self.element.find('.inforFormButton.default').trigger('click');
+          }
+        });
       },
 
       keepFocus: function() {
@@ -1357,6 +1367,8 @@
         } else {
           this.trigger.focus();
         }
+
+        $(document).off('keypress.modal');
       },
 
       destroy: function(){

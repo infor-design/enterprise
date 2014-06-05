@@ -389,12 +389,14 @@ input.has-error {
   padding-right: 20px;
   margin-bottom: 5px; }
 
+/* TODO: Nice animation at breaks: https://member.theladders.com/member/saved-jobs */
 .grid {
   width: 100%;
   max-width: 1140px;
   min-width: 755px;
   margin: 0 auto;
-  overflow: hidden; }
+  overflow: hidden;
+  transition: all 0.3s ease 0s; }
 
 .grid:after {
   content: "";
