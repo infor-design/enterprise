@@ -76,7 +76,7 @@
           self.close();
         });
 
-        if (settings.buttons && settings.buttons.length > 0) {
+        if (settings.buttons) {
           self.addButtons(settings.buttons);
         }
       },

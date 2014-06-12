@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/draggable.js', 'js/message.js', 'js/modal.js', 'js/select.js', 'js/tabs.js', 'js/slider.js'],
+          'dist/js/<%= pkg.name %>.js': ['js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/message.js', 'js/modal.js', 'js/tabs.js', 'js/slider.js'],
           'dist/js/initialize.js': ['js/initialize.js']
         }
       }

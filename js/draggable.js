@@ -30,6 +30,7 @@
     start:                          function(){},
     drag:                           function(){},
     stop:                           function(){},
+    easing:                         function(){},
     rest:                           function(){},
     moveTo:                         false,
     callIfNotStarted:               ['stop', 'rest'],
@@ -203,7 +204,7 @@
 
                     // fire user's initiate event.
                     var shouldContinue = this.options.initiate.call(this, ev, this);
-                    this.$el.trigger('initiate', [ev, this]);
+                    this.$el.trigger('initiate', [this, ev, this]);
                     if (shouldContinue === false) {
                       return;
                     }
@@ -245,8 +246,16 @@
                           return;
                         }
                         self.handleMove();
-                        self.requestAnimationFrame( watchMoveLoop);
-                    })($, self);
+                        self.requestAnimationFrame( watchMoveLoop );
+                    })(self);
+
+                    (function watchEasingLoop(){
+                        if (self.easing) {
+                          self.options.easing.call(self, null, self);
+                          self.$el.trigger('easing', [self, null, self]);
+                        }
+                        self.requestAnimationFrame( watchEasingLoop );
+                    })(self);
               }
             }
   };
@@ -297,7 +306,7 @@
               this.started = true;
               this.$el.addClass('pep-start');
               this.options.start.call(this, this.startEvent, this);
-              this.$el.trigger('start', [this.startEvent, this]);
+              this.$el.trigger('start', [this, this.startEvent, this]);
             }
 
             // Calculate our drop regions
@@ -307,7 +316,7 @@
 
             // fire user's drag event.
             var continueDrag = this.options.drag.call(this, ev, this);
-            this.$el.trigger('drag', [ev, this]);
+            this.$el.trigger('drag', [this, ev, this]);
 
             if (continueDrag === false) {
               this.resetVelocityQueue();
@@ -389,6 +398,9 @@
 
     // make object inactive, so watchMoveLoop returns
     this.active = false;
+
+    // make object easing.
+    this.easing = true;
 
     // remove our start class
     this.$el.removeClass('pep-start')
@@ -475,13 +487,14 @@
         self.calculateActiveDropRegions();
       }
 
+      self.easing = false;
+
       // call users rest event.
       if (started || (!started && $.inArray('rest', self.options.callIfNotStarted) > -1)) {
         self.options.rest.call(self, ev, self);
-        self.$el.trigger('rest', [ev, self]);
+        self.$el.trigger('rest', [self, ev, self]);
       }
 
-      // revert thy self!
       if (self.options.revert && (self.options.revertAfter === 'ease' && self.options.shouldEase) && (self.options.revertIf && self.options.revertIf.call(self))) {
         self.revert();
       }

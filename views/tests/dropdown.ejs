@@ -4,7 +4,7 @@
 
     <div class="field">
       <label for="states" class="label">States</label>
-      <select id="states" name="states" class="select">
+      <select id="states" name="states" class="dropdown">
         <option value="AL">Alabama</option>
         <option value="DE">Delaware</option>
         <option value="DC">District Of Columbia</option>
@@ -22,7 +22,7 @@
 
      <div class="field">
       <label for="special" class="label">Special Chars</label>
-      <select id="special" name="special" class="select">
+      <select id="special" name="special" class="dropdown">
         <option value="a&#039;z">A&#039;rizona</option>
         <option value="<"><</option>
         <option value=">">></option>
@@ -38,7 +38,7 @@
 
     <div class="field">
       <label for="setWidth" class="label">Set Width</label>
-        <select id="setWidth" name="setWidth" class="select" style="width: 50px">
+        <select id="setWidth" name="setWidth" class="dropdown" style="width: 50px">
           <option value="AL">Alabama</option>
           <option value="DE">Delaware</option>
           <option value="DC">District Of Columbia</option>
@@ -54,9 +54,9 @@
         </select>
     </div>
 
-    <div class="field" style="left: 136px; position: absolute;top: 356px;">
+    <div class="field" style="left: 436px; position: absolute;top: 356px;">
       <label for="abs1" class="label">Absolute Position (Bad Practice)</label>
-      <select id="abs1" name="abs1" class="select" style="width: 50px;">
+      <select id="abs1" name="abs1" class="dropdown" style="width: 50px;">
         <option value="AL">Alabama</option>
         <option value="DE">Delaware</option>
         <option value="DC">District Of Columbia</option>
@@ -72,8 +72,8 @@
       </select>
     </div>
 
-    <label for="abs2" class="label" style="left: 136px; position: absolute;top: 442px;">Absolute Position No Field (Bad Practice)</label>
-    <select id="abs2" name="abs2" class="select" style="width: 50px;left: 136px; position: absolute;top: 488px;">
+    <label for="abs2" class="label" style="left: 436px; position: absolute;top: 442px;">Absolute Position No Field (Bad Practice)</label>
+    <select id="abs2" name="abs2" class="dropdown" style="width: 50px;left: 436px; position: absolute;top: 488px;">
       <option value="AL">Alabama</option>
       <option value="DE">Delaware</option>
       <option value="DC">District Of Columbia</option>
@@ -87,6 +87,12 @@
       <option value="RI">Rhode Island</option>
       <option value="SC">South Carolina</option>
     </select>
+
+    <div class="field">
+      <label for="empty" class="label">Empty List</label>
+      <select id="empty" name="empty" class="dropdown">
+      </select>
+    </div>
 
 	</div>
 </div>

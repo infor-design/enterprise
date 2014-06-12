@@ -31,7 +31,11 @@
     // Actual Plugin Code
     Plugin.prototype = {
       init: function() {
-        var self = this;
+        var self = this,
+            updateBar = function(args) {
+              var leftWidth = ($(args.el).position().left + (self.handles.width()));
+              self.value(leftWidth);
+            };
 
         self.handles = self.element.find('.slider-handle');
         self.range = self.element.find('.slider-range');
@@ -41,20 +45,12 @@
             .on('click.slider', function (e) {
               e.preventDefault(); //Prevent from jumping to top.
             })
-            .on('drag.slider', function (e, args, obj) {
-              var vals = obj.getMovementValues(),
-                leftWidth = (vals.pos.x + (self.handles.width()));
-
-              self.value(leftWidth);
+            .on('drag.slider', function (e, args) {
+              updateBar(args);
+            })
+            .on('easing.slider', function (e, args) {
+              updateBar(args);
             });
-            //TODO: Fix when you 'throw' it or remove kenetics
-           /* .on('rest.slider', function (e, args, obj) {
-
-              var vals = obj.getMovementValues(),
-                leftWidth = (vals.ev.x - (self.handles.css('left')));
-
-              self.value(leftWidth);
-            });*/
       },
       value: function(val) {
         var self = this,

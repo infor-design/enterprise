@@ -1,12 +1,12 @@
 /* Select (DropDown)
 ================================================== */
-.select {
+.dropdown {
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff;
   cursor: pointer;
   padding: 12px 24px 12px 10px !important;
 }
 
-.select-btn {
+.dropdown-btn {
   cursor: pointer;
   height: 48px;
   width: 48px;
@@ -14,19 +14,21 @@
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADlQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZm2V0SyQAAABJ0Uk5TcvKp0aT6z2+yu7EKugbuAQkABl6sYAAAACxJREFUCNcdxccRACAMAzDTO8Hef1gO9BHyTpLbAUUfYPHtDVxTaocgT6+DvCzVAhgkQJ5TAAAAAElFTkSuQmCC") no-repeat right 10px center #fff;
 }
 
-.select-list:before {
+/* Arrow Cant be positioned properly.
+.dropdown-list:before {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAADNQTFRFZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmAAAAZmZmMXptBQAAABB0Uk5T9KcB0nGkac/9Bgnusgi6AOSjwOsAAAArSURBVAjXHcGHDQAgDAOwsEdbkv+vBWGD3O5BgnGks4ic9DSi6usoBmnauC0QAeXNS3pJAAAAAElFTkSuQmCC");
   background-repeat: no-repeat;
   content: " ";
-  height: 10px;
+  height: auto;
+  min-height: 82px;
   left: 100%;
   margin-left: -20px;
   position: absolute;
   top: 17px;
   width: 10px;
-}
+}*/
 
-.select-list {
+.dropdown-list {
   background-color: $field-background-color;
   box-shadow: 0 1px 2px rgba(0,0,0,.25);
   font-family: $font-stack;
@@ -42,17 +44,17 @@
   top: 1px;
   transition: height .3s ease 0s;
   width: auto;
-  z-index: 6;
+  z-index: 8001;
   -webkit-overflow-scrolling: touch;
   white-space: nowrap;
 }
 
-.select-list li:hover {
+.dropdown-list li:hover {
   background-color: $hover-color;
   cursor: pointer;
 }
 
-.select-list li.is-selected {
+.dropdown-list li.is-selected {
   color: $accent-color;
   font-weight: bold;
 }

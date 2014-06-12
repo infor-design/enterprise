@@ -13,12 +13,10 @@
   }
 }(function ($) {
 
-  $.fn.select = function(options) {
-    //TODO: Tests
-    //   a) An empty list doesnt error
-    //
-    // Select Settings and Options
-    var pluginName = 'select',
+  $.fn.dropdown = function(options) {
+
+    // Dropdown Settings and Options
+    var pluginName = 'dropdown',
         defaults = {
           editable: 'false' //TODO
         },
@@ -30,17 +28,17 @@
         this.init();
     }
 
-    // Actual Select Code
+    // Actual DropDown Code
     Plugin.prototype = {
       init: function() {
 
-        var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the select to serialize.
+        var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
         this.orgLabel = this.element.hide().prev('.label');
 
         this.label = $('<label class="label"></label>').attr('for', id).text(this.orgLabel.text());
-        this.input = $('<input type="text" readonly class="select" tabindex="0"/>').attr({'role': 'combobox'})
-                        .attr({'aria-autocomplete': 'none', 'aria-owns': 'select-list'})
-                        .attr({'aria-readonly': 'true', 'aria-activedescendant': 'select-opt16'})
+        this.input = $('<input type="text" readonly class="dropdown" tabindex="0"/>').attr({'role': 'combobox'})
+                        .attr({'aria-autocomplete': 'none', 'aria-owns': 'dropdown-list'})
+                        .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
                         .attr('id', id);
 
         this.element.after(this.label, this.input, this.trigger);
@@ -67,11 +65,11 @@
       updateList: function() {
         var self = this;
         //Keep a list generated and append it when we need to.
-        self.list = $('<ul id="select-list" class="select-list" tabindex="-1" aria-expanded="true"></ul>');
+        self.list = $('<ul id="dropdown-list" class="dropdown-list" tabindex="-1" aria-expanded="true"></ul>');
 
         self.element.find('option').each(function(i) {
           var option = $(this),
-              listOption = $('<li id="list-option'+ i +'" role="option" class="select-option" role="listitem" tabindex="-1">'+ option.text() + '</li>');
+              listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.text() + '</li>');
           self.list.append(listOption);
           if (option.is(':selected')) {
             listOption.addClass('is-selected');
@@ -91,9 +89,9 @@
           timer, buffer = '';
 
         //Bind mouse and key events
-        this.input.on('keydown.select', function(e) {
+        this.input.on('keydown.dropdown', function(e) {
           self.handleKeyDown($(this), e);
-        }).on('keypress.select', function(e) {
+        }).on('keypress.dropdown', function(e) {
           var charCode = e.charCode || e.keyCode;
 
           //Needed for browsers that use keypress events to manipulate the window.
@@ -127,7 +125,7 @@
           }
 
           return true;
-        }).on('mouseup.select', function() {
+        }).on('mouseup.dropdown', function() {
           self.openList();
         });
 
@@ -182,15 +180,15 @@
           self.closeList();
         });
 
-        $(document).on('click.select', function(e) {
+        $(document).on('click.dropdown', function(e) {
           var target = $(e.target);
-          if (target.is('.select-option') || target.is('.select')) {
+          if (target.is('.dropdown-option') || target.is('.dropdown')) {
             return;
           }
           self.closeList();
-        }).on('resize.select', function() {
+        }).on('resize.dropdown', function() {
           self.closeList();
-        }).on('scroll.select', function() {
+        }).on('scroll.dropdown', function() {
           self.closeList();
         });
       },
@@ -199,7 +197,7 @@
         this.list.hide().attr('aria-expanded', 'false').remove();
         this.list.off('click.list').off('mousewheel.list');
         this.input.removeClass('is-open');
-        $(document).off('click.select resize.select scroll.select');
+        $(document).off('click.dropdown resize.dropdown scroll.dropdown');
       },
 
       scrollToOption: function(current) {
@@ -354,7 +352,7 @@
       destroy: function() {
         $.removeData(this.obj, pluginName);
         this.input.off().remove();
-        $(document).off('click.select');
+        $(document).off('click.dropdown');
       }
     };
 

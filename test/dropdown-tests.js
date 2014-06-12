@@ -4,7 +4,7 @@ var app = require('../app'),
 require('chai').should();
 
 //mocha -R spec
-describe('Select Should', function() {
+describe('Dropdown Should', function() {
   var server, browser;
 
   before(function() {
@@ -18,7 +18,7 @@ describe('Select Should', function() {
   });
 
   beforeEach(function(done) {
-    browser.visit('/tests/select', done);
+    browser.visit('/tests/dropdown', done);
   });
 
   it('be in the right page', function() {
@@ -42,6 +42,11 @@ describe('Select Should', function() {
      var item = browser.document.getElementById('special');
      item.options[item.selectedIndex].value.should.equal('a');
      item.options[item.selectedIndex].text.should.equal('Apostraphe\'s');
+  });
+
+  it('not error on empty list', function() {
+     var item = browser.document.getElementById('empty');
+     item.selectedIndex.should.equal(-1);
   });
 
 });

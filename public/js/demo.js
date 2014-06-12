@@ -15,7 +15,7 @@ $(function($) {
   });
 
   //Set Initial Theme
-  if (theme !== 'grey-theme') {
+  if (theme !==undefined && theme !== 'grey-theme') {
     $('#stylesheet').attr('href', '/stylesheets/'+ theme +'.css');
   }
 

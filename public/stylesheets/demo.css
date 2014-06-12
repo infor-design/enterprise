@@ -32,7 +32,10 @@
   padding: 23px;
   position: fixed;
   width: 100%;
-  z-index: 5; }
+  z-index: 8000; }
+
+.demo-header + .grid.grid-pad {
+  padding-top: 80px; }
 
 .demo-header .grid {
   height: 70px;
@@ -69,7 +72,7 @@
   position: relative;
   top: 65px; }
 
-.demo-header .label, .demo-header .select {
+.demo-header .label, .demo-header .dropdown {
   float: left;
   display: inline-block; }
 
@@ -86,7 +89,7 @@
   text-align: right;
   vertical-align: middle; }
 
-.field.aligned .select {
+.field.aligned .dropdown {
   display: inline-block;
   margin-top: 0;
   padding: 6px 10px !important;

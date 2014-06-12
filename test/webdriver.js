@@ -27,19 +27,15 @@ describe('tests using webdriverjs', function(){
 
   it('Select Tests',function(done) {
     client
-    .url('http://usmvvwdev67.infor.com:4000/')  //to do - start selenuim locally..
+    .url('http://107.170.15.202:4000//')  //to do - start selenuim locally..
     .getTitle(function(err, title) {
       expect(err).to.be.null;
       assert.strictEqual(title, 'Infor Html Controls - Gramercy Park');
     })
-    .getElementSize('#country-shdo', function(err, result) {
+    .getElementSize('#states-shdo', function(err, result) {
       expect(err).to.be.null;
-      assert.strictEqual(result.height , 48);
+      assert.strictEqual(result.height , 45);
     })
-    /*.getElementCssProperty('css selector','a[href="/plans"]', 'color', function(err, result){
-      expect(err).to.be.null;
-      assert.strictEqual(result, 'rgba(65,131,196,1)');
-    })*/
     .call(done);
   });
 

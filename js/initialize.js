@@ -19,7 +19,7 @@
     $('.tab-container').tabs();
 
     //Select / DropDowns
-    $('select').select();
+    $('select, .dropdown').dropdown();
 
     //Modals
     $('.modal').modal();
@@ -32,6 +32,9 @@
 
     //Sliders
     $('.slider').slider();
+
+    //Editors
+    $('.editor').editor();
   });
 
 }));

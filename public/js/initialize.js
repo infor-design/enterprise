@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 05-06-2014 05:10:46 
+ Date: 12-06-2014 31:03:23 
  Revision: undefined 
  */ 
  /**
@@ -24,7 +24,7 @@
     $('.tab-container').tabs();
 
     //Select / DropDowns
-    $('select').select();
+    $('select, .dropdown').dropdown();
 
     //Modals
     $('.modal').modal();
@@ -37,6 +37,9 @@
 
     //Sliders
     $('.slider').slider();
+
+    //Editors
+    $('.editor').editor();
   });
 
 }));

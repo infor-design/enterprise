@@ -1,32 +1,49 @@
 /* Icons and Icon Buttons
 ================================================== */
-.icon-btn {
-  cursor: pointer;
-  border: 0;
-  background-color: transparent;
-  color: transparent;
-  width: 32px;
-  height: 32px;
-  -webkit-transition: .2s;
-  -moz-transition: .2s;
-  transition: .2s;
-}
-
-.icon-btn:hover .icon, .icon-btn:focus .icon  {
-  fill: #0086e6;
-}
-
-.icon {
-  display: inline-block;
-  width: inherit;
-  height: inherit;
-  fill: #000000;
-}
-
 .icon-error {
   display: inline;
   height: 20px;
   position: relative;
   top: 5px;
   width: 20px;
+}
+
+.btn-icon {
+  cursor: pointer;
+  border: none;
+  height: 32px;
+  width: 32px;
+  background-color: transparent;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  color: transparent;
+  fill: #666;
+}
+
+.btn-icon span {
+  width: 0;
+  color: transparent;
+  position: absolute;
+}
+
+.btn-icon svg {
+  height: 32px;
+  margin: -2px -6px;
+  width: 32px;
+}
+
+svg.icon {
+  display: inline-block;
+  height: 32px;
+  position: relative;
+  width: 32px;
+}
+
+.btn-icon:hover, .btn-icon:active {
+  fill: #333;
+}
+
+.btn-icon:focus {
+  border: 1px solid #0099ff;
+  outline: 0;
 }
