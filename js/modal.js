@@ -155,44 +155,28 @@
 
       keepFocus: function() {
         var self = this,
-        tabbableElements = 'a[href], area[href], input:not([disabled]),' +
-        'select:not([disabled]), textarea:not([disabled]),' +
-        'button:not([disabled]), iframe, object, embed, *[tabindex],' +
-        '*[contenteditable]';
-
-        var attach = function (context) {
-          var allTabbableElements = context.querySelectorAll(tabbableElements),
+          allTabbableElements = $(self.element).find(':tabbable'),
           firstTabbableElement = allTabbableElements[0],
           lastTabbableElement = allTabbableElements[allTabbableElements.length - 1];
 
-          var keyListener = function (event) {
-            var keyCode = event.which || event.keyCode; // Get the current keycode
-
-            //Prevent the default behavior of events
-            event.preventDefault = event.preventDefault || function () {
-              event.returnValue = false;
-            };
-
-            // If it is TAB
-            if (keyCode === 9) {
-              // Move focus to first element that can be tabbed if Shift isn't used
-              if (event.target === lastTabbableElement && !event.shiftKey) {
-                event.preventDefault();
-                firstTabbableElement.focus();
-              } else if (event.target === firstTabbableElement && event.shiftKey) {
-                event.preventDefault();
-                lastTabbableElement.focus();
-              }
-            }
+          $(self.element).on('keypress.modal', function (e) {
+            var keyCode = e.which || e.keyCode;
 
             if (keyCode === 27) {
               self.close();
             }
-          };
 
-          context.addEventListener('keydown', keyListener, false);
-        };
-        attach(self.element[0]);
+            if (keyCode === 9) {
+              // Move focus to first element that can be tabbed if Shift isn't used
+              if (e.target === lastTabbableElement && !e.shiftKey) {
+                e.preventDefault();
+                firstTabbableElement.focus();
+              } else if (e.target === firstTabbableElement && e.shiftKey) {
+                e.preventDefault();
+                lastTabbableElement.focus();
+              }
+            }
+          });
       },
 
       close: function () {
