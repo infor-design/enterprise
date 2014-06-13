@@ -497,22 +497,23 @@ input.has-error {
 .checkbox:not(:checked) + label:before, .checkbox:checked + label:before {
   content: '';
   position: absolute;
-  left: 5px;
-  top: -2px;
-  width: 17px;
-  height: 17px;
+  left: 6px;
+  top: -1px;
+  width: 16px;
+  height: 16px;
   border: 2px solid #999999;
   border-radius: 2px; }
 
 .checkbox:not(:checked) + label:after, .checkbox:checked + label:after {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
   background-repeat: no-repeat;
   color: #FFFFFF;
-  content: "✔";
+  content: "_";
   font-family: inherit;
   font-size: 25px;
-  left: 8px;
+  left: 10px;
   position: absolute;
-  top: -1px;
+  top: 4px;
   transition: all 0.2s ease 0s; }
 
 .checkbox:checked + label:before {
@@ -549,12 +550,12 @@ input.has-error {
 .checkbox.is-partial + label:after {
   background-color: #FFFFFF;
   background-image: none !important;
-  border-radius: 2px;
+  border-radius: 0;
   content: " ";
-  height: 11px;
-  left: 10px;
-  top: 3px;
-  width: 11px; }
+  height: 10px;
+  left: 11px;
+  top: 4px;
+  width: 10px; }
 
 /* accessibility */
 .checkbox:checked:focus + label:before, .checkbox:not(:checked):focus + label:before {
@@ -949,11 +950,6 @@ input.has-error {
   perspective: 1300px;
   position: fixed;
   top: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -o-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
   visibility: hidden;
   overflow: hidden;
   width: auto;
