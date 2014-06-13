@@ -25,7 +25,7 @@
 .checkbox:not(:checked) + label:after, .checkbox:checked + label:after {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
   background-repeat: no-repeat;
-  color: #FFFFFF;
+  color: transparent;
   content: "_";
   font-family: inherit;
   font-size: 25px;
@@ -85,4 +85,13 @@
 .checkbox:checked:focus + label:before, .checkbox:not(:checked):focus + label:before {
   border: 2px solid $accent-color;
   box-shadow: $focus-shadow;
+}
+
+/* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */
+@media screen and (-ms-high-contrast: active) {
+  .checkbox:not(:checked), .checkbox:checked {
+    position: relative;
+    left: initial;
+  }
+  http://usmvtmcconechy:4000/
 }

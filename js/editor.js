@@ -144,6 +144,7 @@
           $('<label class="scr-only">Anchor</label>').attr('for', id).appendTo(anchor);
           $('<input type="text">').attr('placeholder', settings.anchorInputPlaceholder).attr('id', id).appendTo(anchor);
           $('<a class="link"></a>').attr('href', '#').html('&times;').appendTo(anchor);
+          //$('<button type="button">Close</button>').appendTo(anchor);
 
           return anchor;
       },

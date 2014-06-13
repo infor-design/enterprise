@@ -517,7 +517,7 @@ input.has-error {
 .checkbox:not(:checked) + label:after, .checkbox:checked + label:after {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
   background-repeat: no-repeat;
-  color: #FFFFFF;
+  color: transparent;
   content: "_";
   font-family: inherit;
   font-size: 25px;
@@ -571,6 +571,13 @@ input.has-error {
 .checkbox:checked:focus + label:before, .checkbox:not(:checked):focus + label:before {
   border: 2px solid #13a4f7;
   box-shadow: 0 0 3px #0095ff; }
+
+/* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */
+@media screen and (-ms-high-contrast: active) {
+  http: ;
+  .checkbox:not(:checked), .checkbox:checked {
+    position: relative;
+    left: initial; } }
 
 /* Toggle Switches
 ================================================== */
@@ -1276,12 +1283,27 @@ input.has-error {
   -moz-appearance: none; }
 
 .editor-toolbar-form-anchor a {
-  display: inline-block;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: bolder;
+  background-color: transparent;
+  color: #FFFFFF;
+  float: right;
+  height: 40px;
+  line-height: 25px;
+  margin: -40px 0 0;
+  padding-left: 13px;
+  padding-top: 7px;
+  position: relative;
+  width: 40px;
+  -webkit-transition: background-color 0.2s ease-in;
+  transition: background-color 0.2s ease-in;
   font-size: 24px;
   font-size: 2.4rem; }
+
+.editor-toolbar-form-anchor a:hover, .editor-toolbar-form-anchor a:active {
+  background-color: #000;
+  color: #FFF !important; }
+
+.editor-toolbar-form-anchor a:visited {
+  color: #FFF !important; }
 
 .editor-placeholder {
   position: relative; }

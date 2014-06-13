@@ -196,12 +196,30 @@
 }
 
 .editor-toolbar-form-anchor a {
-  display: inline-block;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: bolder;
+  background-color: transparent;
+  color: #FFFFFF;
+  float: right;
+  height: 40px;
+  line-height: 25px;
+  margin: -40px 0 0;
+  padding-left: 13px;
+  padding-top: 7px;
+  position: relative;
+  width: 40px;
+  -webkit-transition: background-color 0.2s ease-in;
+  transition: background-color 0.2s ease-in;
   @include font-size(24);
 }
+
+.editor-toolbar-form-anchor a:hover, .editor-toolbar-form-anchor a:active {
+  background-color: #000;
+  color: #FFF !important;
+}
+
+.editor-toolbar-form-anchor a:visited {
+  color: #FFF !important;
+}
+
 
 .editor-placeholder {
   position: relative;
