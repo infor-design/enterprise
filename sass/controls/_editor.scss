@@ -110,10 +110,6 @@
   box-sizing: border-box;
 }
 
-.editor-toolbar button svg{
-  pointer-events:none;
-}
-
 .editor-toolbar li .editor-action-underline, .editor-anchor-preview li .editor-action-underline {
   text-decoration: underline;
 }
@@ -156,6 +152,7 @@
   fill: #fff;
   height: 25px;
   width: 25px;
+  pointer-events: none;
 }
 
 .editor-action-quote .icon {

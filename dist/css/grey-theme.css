@@ -1248,7 +1248,8 @@ input.has-error {
   top: -7px;
   fill: #fff;
   height: 25px;
-  width: 25px; }
+  width: 25px;
+  pointer-events: none; }
 
 .editor-action-quote .icon {
   top: -8px; }
