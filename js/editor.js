@@ -266,9 +266,8 @@
             var btn = $(this);
 
             e.preventDefault();
-            e.stopPropagation();
             if (self.selection === undefined) {
-                self.checkSelection();
+              self.checkSelection();
             }
 
             btn.toggleClass('is-active');

@@ -110,6 +110,10 @@
   box-sizing: border-box;
 }
 
+.editor-toolbar button svg{
+  pointer-events:none;
+}
+
 .editor-toolbar li .editor-action-underline, .editor-anchor-preview li .editor-action-underline {
   text-decoration: underline;
 }

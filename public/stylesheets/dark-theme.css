@@ -277,7 +277,11 @@ small {
 
 .link:focus {
   outline: thin dotted #3399ff;
-  outline-offset: -2px; }
+  outline-offset: 3px; }
+
+.link:visited:focus {
+  outline: thin dotted #7533a6;
+  outline-offset: 3px; }
 
 .link[disabled]:hover {
   color: #666666;
@@ -366,7 +370,7 @@ input[type="text"]:disabled, input[type="text"].is-disabled, input[type="passwor
 input.has-error {
   box-shadow: 0 0 3px #d5000e; }
 
-/* Place Holder Text */
+/* Place Holders */
 ::-webkit-input-placeholder {
   color: #b3b3b3;
   font-size: 16px;
@@ -395,6 +399,15 @@ input.has-error {
   padding: 0;
   position: absolute;
   width: 1px; }
+
+/* Selection Color */
+::selection {
+  background: #13a4f7;
+  color: white; }
+
+::-moz-selection {
+  background: #13a4f7;
+  color: white; }
 
 /* Responsive 12 Column Grid Based on http://thisisdallas.github.com/Simple-Grid/
 ================================================== */
