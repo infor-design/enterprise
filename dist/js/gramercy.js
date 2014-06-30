@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 17-06-2014 28:03:13 
+ Date: 30-06-2014 55:12:25 
  Revision: undefined 
  */ 
  /*
@@ -178,26 +178,26 @@
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
             buttonTemplates = {
-              'bold': '<button class="editor-action editor-action-bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-              'italic': '<button class="editor-action editor-action-italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-              'underline': '<button class="editor-action editor-action-underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-              'strikethrough': '<button class="editor-action editor-action-strikethrough" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
-              'superscript': '<button class="editor-action editor-action-superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-              'subscript': '<button class="editor-action editor-action-subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+              'bold': '<button type="button" class="editor-action editor-action-bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+              'italic': '<button type="button" class="editor-action editor-action-italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+              'underline': '<button type="button" class="editor-action editor-action-underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+              'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+              'superscript': '<button type="button" class="editor-action editor-action-superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+              'subscript': '<button type="button" class="editor-action editor-action-subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
               'seperator': '<div class="editor-toolbar-seperator"></div>',
-              'anchor': '<button class="editor-action editor-action-anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
-              'image': '<button class="editor-action editor-action-image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
-              'header1': '<button class="editor-action editor-action-header1" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-              'header2': '<button class="editor-action editor-action-header2" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-              'quote': '<button class="editor-action editor-action-quote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-              'orderedlist': '<button class="editor-action editor-action-orderedlist" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-              'unorderedlist': '<button class="editor-action editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-              'pre': '<button class="editor-action editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
-              'indent': '<button class="editor-action editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-              'outdent': '<button class="editor-action editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-              'justifyLeft': '<button class="editor-action editor-action-indent" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-              'justifyCenter': '<button class="editor-action editor-action-outdent" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-              'justifyRight': '<button class="editor-action editor-action-outdent" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>'
+              'anchor': '<button type="button" class="editor-action editor-action-anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
+              'image': '<button type="button" class="editor-action editor-action-image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
+              'header1': '<button type="button" class="editor-action editor-action-header1" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+              'header2': '<button type="button" class="editor-action editor-action-header2" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+              'quote': '<button type="button" class="editor-action editor-action-quote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+              'orderedlist': '<button type="button" class="editor-action editor-action-orderedlist" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+              'unorderedlist': '<button type="button" class="editor-action editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+              'pre': '<button type="button" class="editor-action editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
+              'indent': '<button type="button" class="editor-action editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
+              'outdent': '<button type="button" class="editor-action editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+              'justifyLeft': '<button type="button" class="editor-action editor-action-indent" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+              'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+              'justifyRight': '<button type="button" class="editor-action editor-action-outdent" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>'
 
             };
         return buttonTemplates[btnType] || false;
@@ -1061,6 +1061,7 @@
       },
 
       setValue: function() {
+
         //Set initial value for the edit box
        this.input.val(this.element.find('option:selected').text());
       },
@@ -2514,9 +2515,6 @@
     });
   };
 
-  //Migrate
-  $.fn.inforMessageDialog = $.fn.message;
-
 }));
 /**
 * Responsive and Accessible Modal Control
@@ -2539,9 +2537,9 @@
     var pluginName = 'modal',
         defaults = {
           trigger: 'click', //TODO: supports click, immediate,  manual
-          draggable: false,  //Can Drag the Dialog around - Needs jQuery UI
-          resizable: false, //Depricated - Resizable Dialogs - Needs jQuery UI
-          buttons: []
+          draggable: true,  //Can Drag the Dialog around.
+          resizable: false, //Depricated - Resizable Dialogs.
+          buttons: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -2572,26 +2570,6 @@
           },1);
         }
 
-        if (settings.draggable) {
-          this.element.draggable({handle: '.modal-title', containment: 'document', start: function() {
-            self.revertTransition();
-          }});
-        }
-
-        if (settings.resizable) {
-          this.element.resizable();
-
-          if (settings.resize) {
-            this.element.on('resize', function (e, ui) {
-              settings.resize(e, ui);
-              });
-          }
-
-          this.element.find('.ui-resizable-handle').on('mousedown', function () {
-            self.revertTransition(true);
-          });
-        }
-
         this.element.find('.btn-close').on('click.modal', function() {
           self.close();
         });
@@ -2600,35 +2578,22 @@
           self.addButtons(settings.buttons);
         }
       },
-      revertTransition: function (doTop) {
-        //Revert the transform so drag and dropping works as expected
-        var elem = this.element,
-          parentRect = elem.parent()[0].getBoundingClientRect(),
-          rect = elem[0].getBoundingClientRect();
-
-        elem.css({'transition': 'all 0 ease 0', 'transform': 'none',
-          'left': rect.left-parentRect.left});
-
-        if (doTop) {
-          elem.css('top', rect.top-parentRect.top+11);
-        }
-      },
       addButtons: function(buttons){
         var body = this.element.find('.modal-body'),
             self = this,
             buttonset = $('<div class="modal-buttonset"></div>').appendTo(body);
 
         buttonset.find('button').remove();
-        body.find('.btn-default.btn-close').remove();
+        body.find('.inforFormButton.default.btn-close').remove();
 
         $.each(buttons, function (name, props) {
-          var btn = $('<button type="button" class="btn"></button>');
-          if (props.isLink) {
-            btn = $('<a class="link"></a>');
-          }
+          var btn = $('<button type="button" class="inforFormButton"></button>');
           btn.text(props.text);
           if (props.isDefault) {
-            btn.addClass('btn-default');
+            btn.addClass('default');
+          }
+          if (props.id) {
+            btn.attr('id', props.id);
           }
           btn.on('click.modal', function() {
             if (props.click) {
@@ -2644,29 +2609,35 @@
         var self = this;
 
         this.overlay.appendTo('body');
+        this.element.addClass('is-visible').attr('role', 'dialog');
 
         //Look for other nested dialogs and adjust the zindex.
         $('.modal').each(function (i) {
           var modal = $(this);
-            modal.css('z-index', '100' + (i + 1));
+          modal.css('z-index', '900' + (i + 1));
 
-            if (modal.data('modal') && modal.data('modal').overlay) {
-              modal.data('modal').overlay.css('z-index', '100' + i);
-            }
+          if (modal.data('modal') && modal.data('modal').overlay) {
+            modal.data('modal').overlay.css('z-index', '100' + i);
+          }
+
         });
-
-        this.element.addClass('is-visible').attr('role', 'dialog');
 
         setTimeout(function () {
           self.element.find('.modal-title').focus();
           self.keepFocus();
-        }, 400);
+        }, 300);
 
         $('body > *').not(this.element).attr('aria-hidden', 'true');
         $('body').addClass('modal-engaged');
 
         //Handle Default button.
         $(document).on('keypress.modal', function (e) {
+          var target = $(e.target);
+
+          if (target.is('textarea') || target.is(':button') || target.is('.inforDropDownList')
+              || target.is('.inforSearchField') || target.closest('.inforDataGrid').length > 0) {
+            return;
+          }
           if (e.which === 13) {
             self.element.find('.inforFormButton.default').trigger('click');
           }
@@ -2675,9 +2646,13 @@
 
       keepFocus: function() {
         var self = this,
-          allTabbableElements = $(self.element).find(':tabbable'),
+          allTabbableElements = $(self.element).find('a[href], area[href], input:not([disabled]),' +
+            'select:not([disabled]), textarea:not([disabled]),' +
+            'button:not([disabled]), iframe, object, embed, *[tabindex],' +
+            '*[contenteditable]'),
           firstTabbableElement = allTabbableElements[0],
           lastTabbableElement = allTabbableElements[allTabbableElements.length - 1];
+          console.log(allTabbableElements);
 
           $(self.element).on('keypress.modal', function (e) {
             var keyCode = e.which || e.keyCode;
@@ -2701,26 +2676,43 @@
 
       close: function () {
         this.element.removeClass('is-visible');
-        this.overlay.remove();
+        $(document).off('keypress.modal');
 
-        if (this.oldActive) {
+        this.overlay.remove();
+        $('body').removeClass('modal-engaged');
+        $('body > *').not(this.element).removeAttr('aria-hidden');
+
+        //Fire Events
+        this.element.trigger('close');
+        this.element.find('.modal-body > div').trigger('close');  //trigger on the content for messages
+
+        if (settings.close) { //Fire Event if passed as an option.
+          settings.close(this.element);
+        }
+
+        if (this.oldActive && $(this.oldActive).is('button:visible')) {
           this.oldActive.focus();
           this.oldActive = null;
         } else {
           this.trigger.focus();
         }
-
-        $(document).off('keypress.modal');
       },
 
       destroy: function(){
+        this.close();
         $.removeData(this.obj, pluginName);
       }
     };
 
     // Support Chaining and Init the Control or Set Settings
     return this.each(function() {
-      var instance = $.data(this, pluginName);
+      var instance = $.data(this, pluginName),
+        elem = $(this);
+
+      if (!elem.is('.modal')) {
+        instance = elem.closest('.modal').data(pluginName);
+      }
+
       if (instance) {
         if (typeof instance[options] === 'function') {
           instance[options]();
@@ -2731,6 +2723,7 @@
       }
     });
   };
+
 }));
 /**
 * Responsive Tab Control

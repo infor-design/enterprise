@@ -80,6 +80,7 @@
       },
 
       setValue: function() {
+
         //Set initial value for the edit box
        this.input.val(this.element.find('option:selected').text());
       },

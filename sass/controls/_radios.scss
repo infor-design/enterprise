@@ -1,0 +1,88 @@
+/* Radio Buttons
+================================================== */
+.radio:not(:checked), .radio:checked {
+  position: absolute;
+  left: -9999px;
+}
+
+.radio:not(:checked) + label, .radio:checked + label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+}
+
+.radio:not(:checked) + label:before, .radio:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: -1px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #999999;
+  border-radius: 20px;
+}
+
+.radio:not(:checked) + label:after, .radio:checked + label:after {
+  background-color: $accent-color;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  color: transparent;
+  content: "";
+  font-family: inherit;
+  font-size: 25px;
+  left: 11px;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 4px;
+  transition: all 0.2s ease 0s;
+}
+
+.radio:checked + label:before {
+  background-color: $background-color;
+  border-color: $accent-color;
+}
+
+/* checked mark aspect changes */
+.radio:not(:checked) + label:after {
+  @include opacity(0);
+  transform: scale(0);
+}
+
+.radio:checked + label:after {
+  @include opacity(1);
+  transform: scale(1);
+}
+
+/* disabled radio */
+.radio:disabled:not(:checked) + label:before, .radio:disabled:checked + label:before {
+  border-color:  $accent-color;
+  cursor: default;
+}
+
+.radio:disabled:checked + label:after {
+  @include opacity(.5);
+}
+
+.radio:disabled:not(:checked) + label:before {
+    border-color: #BBBBBB;
+    box-shadow: none;
+}
+
+.radio:disabled + label {
+  color: #aaa;
+}
+
+/* accessibility */
+.radio:checked:focus + label:before, .radio:not(:checked):focus + label:before {
+  border: 2px solid $accent-color;
+  box-shadow: $focus-shadow;
+}
+
+/* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */
+@media screen and (-ms-high-contrast: active) {
+  .radio:not(:checked), .radio:checked {
+    position: relative;
+    left: initial;
+  }
+}

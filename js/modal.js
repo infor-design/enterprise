@@ -19,9 +19,9 @@
     var pluginName = 'modal',
         defaults = {
           trigger: 'click', //TODO: supports click, immediate,  manual
-          draggable: false,  //Can Drag the Dialog around - Needs jQuery UI
-          resizable: false, //Depricated - Resizable Dialogs - Needs jQuery UI
-          buttons: []
+          draggable: true,  //Can Drag the Dialog around.
+          resizable: false, //Depricated - Resizable Dialogs.
+          buttons: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -52,26 +52,6 @@
           },1);
         }
 
-        if (settings.draggable) {
-          this.element.draggable({handle: '.modal-title', containment: 'document', start: function() {
-            self.revertTransition();
-          }});
-        }
-
-        if (settings.resizable) {
-          this.element.resizable();
-
-          if (settings.resize) {
-            this.element.on('resize', function (e, ui) {
-              settings.resize(e, ui);
-              });
-          }
-
-          this.element.find('.ui-resizable-handle').on('mousedown', function () {
-            self.revertTransition(true);
-          });
-        }
-
         this.element.find('.btn-close').on('click.modal', function() {
           self.close();
         });
@@ -80,35 +60,22 @@
           self.addButtons(settings.buttons);
         }
       },
-      revertTransition: function (doTop) {
-        //Revert the transform so drag and dropping works as expected
-        var elem = this.element,
-          parentRect = elem.parent()[0].getBoundingClientRect(),
-          rect = elem[0].getBoundingClientRect();
-
-        elem.css({'transition': 'all 0 ease 0', 'transform': 'none',
-          'left': rect.left-parentRect.left});
-
-        if (doTop) {
-          elem.css('top', rect.top-parentRect.top+11);
-        }
-      },
       addButtons: function(buttons){
         var body = this.element.find('.modal-body'),
             self = this,
             buttonset = $('<div class="modal-buttonset"></div>').appendTo(body);
 
         buttonset.find('button').remove();
-        body.find('.btn-default.btn-close').remove();
+        body.find('.inforFormButton.default.btn-close').remove();
 
         $.each(buttons, function (name, props) {
-          var btn = $('<button type="button" class="btn"></button>');
-          if (props.isLink) {
-            btn = $('<a class="link"></a>');
-          }
+          var btn = $('<button type="button" class="inforFormButton"></button>');
           btn.text(props.text);
           if (props.isDefault) {
-            btn.addClass('btn-default');
+            btn.addClass('default');
+          }
+          if (props.id) {
+            btn.attr('id', props.id);
           }
           btn.on('click.modal', function() {
             if (props.click) {
@@ -124,29 +91,35 @@
         var self = this;
 
         this.overlay.appendTo('body');
+        this.element.addClass('is-visible').attr('role', 'dialog');
 
         //Look for other nested dialogs and adjust the zindex.
         $('.modal').each(function (i) {
           var modal = $(this);
-            modal.css('z-index', '100' + (i + 1));
+          modal.css('z-index', '900' + (i + 1));
 
-            if (modal.data('modal') && modal.data('modal').overlay) {
-              modal.data('modal').overlay.css('z-index', '100' + i);
-            }
+          if (modal.data('modal') && modal.data('modal').overlay) {
+            modal.data('modal').overlay.css('z-index', '100' + i);
+          }
+
         });
-
-        this.element.addClass('is-visible').attr('role', 'dialog');
 
         setTimeout(function () {
           self.element.find('.modal-title').focus();
           self.keepFocus();
-        }, 400);
+        }, 300);
 
         $('body > *').not(this.element).attr('aria-hidden', 'true');
         $('body').addClass('modal-engaged');
 
         //Handle Default button.
         $(document).on('keypress.modal', function (e) {
+          var target = $(e.target);
+
+          if (target.is('textarea') || target.is(':button') || target.is('.inforDropDownList')
+              || target.is('.inforSearchField') || target.closest('.inforDataGrid').length > 0) {
+            return;
+          }
           if (e.which === 13) {
             self.element.find('.inforFormButton.default').trigger('click');
           }
@@ -155,9 +128,13 @@
 
       keepFocus: function() {
         var self = this,
-          allTabbableElements = $(self.element).find(':tabbable'),
+          allTabbableElements = $(self.element).find('a[href], area[href], input:not([disabled]),' +
+            'select:not([disabled]), textarea:not([disabled]),' +
+            'button:not([disabled]), iframe, object, embed, *[tabindex],' +
+            '*[contenteditable]'),
           firstTabbableElement = allTabbableElements[0],
           lastTabbableElement = allTabbableElements[allTabbableElements.length - 1];
+          console.log(allTabbableElements);
 
           $(self.element).on('keypress.modal', function (e) {
             var keyCode = e.which || e.keyCode;
@@ -181,26 +158,43 @@
 
       close: function () {
         this.element.removeClass('is-visible');
-        this.overlay.remove();
+        $(document).off('keypress.modal');
 
-        if (this.oldActive) {
+        this.overlay.remove();
+        $('body').removeClass('modal-engaged');
+        $('body > *').not(this.element).removeAttr('aria-hidden');
+
+        //Fire Events
+        this.element.trigger('close');
+        this.element.find('.modal-body > div').trigger('close');  //trigger on the content for messages
+
+        if (settings.close) { //Fire Event if passed as an option.
+          settings.close(this.element);
+        }
+
+        if (this.oldActive && $(this.oldActive).is('button:visible')) {
           this.oldActive.focus();
           this.oldActive = null;
         } else {
           this.trigger.focus();
         }
-
-        $(document).off('keypress.modal');
       },
 
       destroy: function(){
+        this.close();
         $.removeData(this.obj, pluginName);
       }
     };
 
     // Support Chaining and Init the Control or Set Settings
     return this.each(function() {
-      var instance = $.data(this, pluginName);
+      var instance = $.data(this, pluginName),
+        elem = $(this);
+
+      if (!elem.is('.modal')) {
+        instance = elem.closest('.modal').data(pluginName);
+      }
+
       if (instance) {
         if (typeof instance[options] === 'function') {
           instance[options]();
@@ -211,4 +205,5 @@
       }
     });
   };
+
 }));

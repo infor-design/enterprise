@@ -577,8 +577,85 @@ input.has-error {
 
 /* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */
 @media screen and (-ms-high-contrast: active) {
-  http: ;
   .checkbox:not(:checked), .checkbox:checked {
+    position: relative;
+    left: initial; } }
+
+/* Radio Buttons
+================================================== */
+.radio:not(:checked), .radio:checked {
+  position: absolute;
+  left: -9999px; }
+
+.radio:not(:checked) + label, .radio:checked + label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer; }
+
+.radio:not(:checked) + label:before, .radio:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: -1px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #999999;
+  border-radius: 20px; }
+
+.radio:not(:checked) + label:after, .radio:checked + label:after {
+  background-color: #0086e6;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  color: transparent;
+  content: "";
+  font-family: inherit;
+  font-size: 25px;
+  left: 11px;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 4px;
+  transition: all 0.2s ease 0s; }
+
+.radio:checked + label:before {
+  background-color: #f2f2f2;
+  border-color: #0086e6; }
+
+/* checked mark aspect changes */
+.radio:not(:checked) + label:after {
+  filter: alpha(opacity=0);
+  opacity: 0;
+  transform: scale(0); }
+
+.radio:checked + label:after {
+  filter: alpha(opacity=100);
+  opacity: 1;
+  transform: scale(1); }
+
+/* disabled radio */
+.radio:disabled:not(:checked) + label:before, .radio:disabled:checked + label:before {
+  border-color: #0086e6;
+  cursor: default; }
+
+.radio:disabled:checked + label:after {
+  filter: alpha(opacity=50);
+  opacity: 0.5; }
+
+.radio:disabled:not(:checked) + label:before {
+  border-color: #BBBBBB;
+  box-shadow: none; }
+
+.radio:disabled + label {
+  color: #aaa; }
+
+/* accessibility */
+.radio:checked:focus + label:before, .radio:not(:checked):focus + label:before {
+  border: 2px solid #0086e6;
+  box-shadow: 0 0 3px #0095ff; }
+
+/* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */
+@media screen and (-ms-high-contrast: active) {
+  .radio:not(:checked), .radio:checked {
     position: relative;
     left: initial; } }
 
@@ -970,6 +1047,11 @@ input.has-error {
   perspective: 1300px;
   position: fixed;
   top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
   visibility: hidden;
   overflow: hidden;
   width: auto;
@@ -1036,7 +1118,6 @@ input.has-error {
 
 /* Messages/Content */
 .modal-content h1 {
-  font-size: 22px;
   font-size: 2.2rem;
   color: #666666;
   font-weight: normal;
@@ -1044,9 +1125,8 @@ input.has-error {
   margin-bottom: 10px; }
 
 .modal-content .message {
-  font-size: 14px;
-  font-size: 1.4rem;
-  color: #666666;
+  font-size: 1.5rem;
+  color: #666;
   text-align: left; }
 
 .modal-content p + p {
@@ -1061,6 +1141,7 @@ input.has-error {
 /* Buttons */
 .modal-body > button {
   display: block;
+  font-size: 1.5rem;
   margin: 25px auto 5px auto; }
 
 .modal-buttonset button, .modal-buttonset a {
@@ -1204,6 +1285,7 @@ input.has-error {
   margin: 0;
   padding: 15px 5px;
   cursor: pointer;
+  outline: none;
   font-size: 14px;
   font-size: 1.4rem;
   line-height: 0;

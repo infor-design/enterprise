@@ -1,6 +1,5 @@
 /* Modal Dialog and Messages
 ================================================== */
-
 .modal {
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
@@ -18,6 +17,11 @@
   perspective: 1300px;
   position: fixed;
   top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
   visibility: hidden;
   overflow: hidden;
   width: auto;
@@ -91,16 +95,16 @@
 /* Messages/Content */
 
 .modal-content h1 {
-  @include font-size(22);
-  color: $label-color;
+  font-size: 2.2rem;
+  color: #666666;
   font-weight: normal;
   text-align: left;
   margin-bottom: 10px;
 }
 
 .modal-content .message {
-  @include font-size(14);
-  color: $label-color;
+  font-size: 1.5rem;
+  color: #666;
   text-align: left;
 }
 
@@ -120,6 +124,7 @@
 
 .modal-body > button {
   display: block;
+  font-size: 1.5rem;
   margin: 25px auto 5px auto;
 }
 

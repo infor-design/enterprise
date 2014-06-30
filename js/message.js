@@ -79,7 +79,4 @@
     });
   };
 
-  //Migrate
-  $.fn.inforMessageDialog = $.fn.message;
-
 }));
