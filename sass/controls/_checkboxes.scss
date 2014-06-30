@@ -26,12 +26,14 @@
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
   background-repeat: no-repeat;
   color: transparent;
-  content: "_";
+  content: "";
   font-family: inherit;
   font-size: 25px;
   left: 10px;
   position: absolute;
   top: 4px;
+  height: 12px;
+  width: 12px;
   transition: all 0.2s ease 0s;
 }
 
@@ -68,6 +70,7 @@
 
 .checkbox:disabled + label {
   color: #aaa;
+  cursor: default;
 }
 
 .checkbox.is-partial + label:after {

@@ -65,12 +65,13 @@
 }
 
 .radio:disabled:not(:checked) + label:before {
-    border-color: #BBBBBB;
-    box-shadow: none;
+  border-color: #BBBBBB;
+  box-shadow: none;
 }
 
 .radio:disabled + label {
   color: #aaa;
+  cursor: default;
 }
 
 /* accessibility */
