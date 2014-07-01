@@ -128,7 +128,7 @@
       createToolbar: function () {
         var toolbar = $('<div></div>').attr('class', 'editor-toolbar').attr('id', 'editor-toolbar-' + this.id);
         toolbar.append(this.toolbarButtons());
-        toolbar.append(this.toolbarFormAnchor()).appendTo('body');
+        toolbar.append(this.toolbarFormAnchor()).insertAfter(this.element);
         return toolbar;
       },
       toolbarFormAnchor: function () {
@@ -138,7 +138,6 @@
           $('<label class="scr-only">Anchor</label>').attr('for', id).appendTo(anchor);
           $('<input type="text">').attr('placeholder', settings.anchorInputPlaceholder).attr('id', id).appendTo(anchor);
           $('<a class="link"></a>').attr('href', '#').html('&times;').appendTo(anchor);
-          //$('<button type="button">Close</button>').appendTo(anchor);
 
           return anchor;
       },
@@ -232,9 +231,7 @@
             anchorPreview = $('<div class="editor-anchor-preview"></div>')
                               .attr('id', 'editor-anchor-preview-' + this.id);
 
-        anchorPreview.html(this.anchorPreviewTemplate());
-        $('body').append(anchorPreview);
-
+        anchorPreview.html(this.anchorPreviewTemplate()).insertAfter(self.element);
         anchorPreview.on('click.editor', function () {
             self.anchorPreviewClickHandler();
         });

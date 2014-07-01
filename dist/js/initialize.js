@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 01-07-2014 54:01:38 
+ Date: 01-07-2014 25:02:17 
  Revision: undefined 
  */ 
  /**
@@ -40,6 +40,9 @@
 
     //Editors
     $('.editor').editor();
+        $('#title').focus(function () {
+      $('.editor').editor();
+    });
   });
 
 }));

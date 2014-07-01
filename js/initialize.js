@@ -35,6 +35,9 @@
 
     //Editors
     $('.editor').editor();
+        $('#title').focus(function () {
+      $('.editor').editor();
+    });
   });
 
 }));
