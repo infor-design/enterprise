@@ -2,23 +2,21 @@
 * Infor (RichText) Editor
 */
 (function ($) {
-	$.fn.editor = function(options) {
+  $.fn.editor = function(options) {
 
     // Settings and Options
     var pluginName = 'editor',
         defaults = {
-          allowMultiParagraphSelection: true,
           anchorInputPlaceholder: 'Paste or type a link',
           anchorPreviewHideDelay: 600,
           buttons: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'anchor', 'quote'],
-          staticToolbar: false, //TODO: I'm a WIp
-          delay: 0,
+          staticToolbar: true,
+          delay: 200,
           diffLeft: 0,
           diffTop: -10,
           firstHeader: 'h3',
           secondHeader: 'h4',
           forcePlainText: true,
-          placeholder: 'Type your text',
           targetBlank: false,
           extensions: {}
         },
@@ -42,7 +40,6 @@
         this.initElements()
             .bindSelect()
             .bindPaste()
-            .setPlaceholders()
             .bindWindowActions();
       },
       initElements: function () {
@@ -51,9 +48,6 @@
 
         elem.attr('contentEditable', true);
 
-        if (!elem.attr('data-placeholder')) { //TODO: May Not Need
-            elem.attr('data-placeholder', settings.placeholder);
-        }
         elem.attr('data-editor', true); //TODO : Need?
         this.bindParagraphCreation(i).bindTab(i);
 
@@ -274,6 +268,10 @@
             if (btn.attr('data-action')) {
               self.execAction(btn.attr('data-action'), e);
             }
+            self.element.focus();
+            self.keepToolbarAlive = false;
+        }).on('mousedown.editor', 'button', function () {
+          self.keepToolbarAlive = true;
         });
 
         return this;
@@ -306,6 +304,7 @@
         this.savedSelection = this.saveSelection();
         this.anchorForm.show();
         this.keepToolbarAlive = true;
+
         setTimeout(function () {
           self.anchorInput.focus().select();
         }, 300);
@@ -379,6 +378,7 @@
         }
         this.restoreSelection(this.savedSelection);
         input.val(this.checkLinkFormat(input.val()));
+
         document.execCommand('createLink', false, input.val());
         if (settings.targetBlank) {
           this.setTargetBlank();
@@ -419,9 +419,16 @@
           }, settings.delay);
         };
 
-        $('html').on('mouseup.editor', this.selectionHandler);
+        this.element.on('mouseup.editor', this.selectionHandler);
         this.element.on('keyup.editor', this.selectionHandler);
-        this.element.on('blur.editor', this.selectionHandler);
+        this.element.on('blur.editor', function(e) {
+          if (settings.staticToolbar && !self.keepToolbarAlive) {
+            self.keepToolbarAlive = false;
+            self.hideToolbarActions();
+            return;
+          }
+          self.selectionHandler(e);
+        });
         return this;
       },
 
@@ -431,16 +438,22 @@
 
         if (this.keepToolbarAlive !== true) {
             newSelection = window.getSelection();
-            if (newSelection.toString().trim() === '' ||
-                (settings.allowMultiParagraphSelection === false && this.hasMultiParagraphs())) {
+            if (newSelection.toString().trim() === '') {
+
+                if (settings.staticToolbar) {
+                  this.setToolbarPosition().showToolbarActions();
+                  return;
+                }
+
+                this.hideToolbarActions();
+                return;
+            }
+
+            selectionElement = this.getSelectionElement();
+            if (!selectionElement) {
                 this.hideToolbarActions();
             } else {
-                selectionElement = this.getSelectionElement();
-                if (!selectionElement) {
-                    this.hideToolbarActions();
-                } else {
-                    this.checkSelectionElement(newSelection, selectionElement);
-                }
+                this.checkSelectionElement(newSelection, selectionElement);
             }
         }
         return this;
@@ -625,11 +638,8 @@
       this.pasteWrapper = function (e) {
           var paragraphs,
               html = '',
-              editor = $(this),
               p;
 
-          //debugger;
-          editor.removeClass('editor-placeholder');
           if (!settings.forcePlainText) {
               return this;
           }
@@ -659,28 +669,6 @@
         // This allows you to show to display the string without the browser reading it as HTML.
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     },
-
-    setPlaceholders: function () {
-          var activatePlaceholder = function (el) {
-                  if (!(el.querySelector('img')) &&
-                          !(el.querySelector('blockquote')) &&
-                          el.textContent.replace(/^\s+|\s+$/g, '') === '') {
-                      $(el).addClass('editor-placeholder');
-                  }
-              },
-              placeholderWrapper = function (e) {
-                  $(this).removeClass('editor-placeholder');
-                  if (e.type !== 'keypress') {
-                      activatePlaceholder(this);
-                  }
-              };
-
-          activatePlaceholder(this.element[0]);
-          this.element.on('blur', placeholderWrapper);
-          this.element.on('keypress', placeholderWrapper);
-
-          return this;
-      },
 
       bindWindowActions: function () {
         var timerResize,

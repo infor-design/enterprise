@@ -2,3 +2,9 @@
 node_modules/
 /designs/
 designs/
+/public/
+public/
+/dist/
+dist/
+
+
