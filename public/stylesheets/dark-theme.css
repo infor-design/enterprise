@@ -331,6 +331,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   color: #cccccc;
   border: 1px solid #556370;
   border-radius: 2px;
+  outline: none;
   background-color: #364b5d;
   font-family: Helvetica, sans-serif, sans-serif;
   font-weight: lighter;
