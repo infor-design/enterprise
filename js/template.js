@@ -1,12 +1,15 @@
 /**
-* Responsive PLugin Control
-* @name Tabs
+* XYZ PLugin Control
+* @name XYZ TODO: Test Doc Generation
 * @param {string} propertyName - The Name of the Property defaults to defaultValue
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
       define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+      //Support for Atom/CommonJS - Not Tested TODO
+      module.exports = factory;
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -35,11 +38,7 @@
           console.log(self);
         },
 
-        _privateMethod: function(){
-
-        },
-
-        publicMethod: function(){
+        someMethod: function(){
 
         },
 

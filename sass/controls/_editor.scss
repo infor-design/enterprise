@@ -1,60 +1,78 @@
 /* Editor (Rich Text)
 ================================================== */
-
-@-webkit-keyframes pop-upwards {
-  0% {
-    -webkit-transform: matrix(0.97, 0, 0, 1, 0, 12);
-    transform: matrix(0.97, 0, 0, 1, 0, 12);
-    opacity: 0; }
-
-  20% {
-    -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
-    transform: matrix(0.99, 0, 0, 1, 0, 2);
-    opacity: 0.7; }
-
-  40% {
-    -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
-    transform: matrix(1, 0, 0, 1, 0, -1);
-    opacity: 1; }
-
-  70% {
-    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
-    transform: matrix(1, 0, 0, 1, 0, 0);
-    opacity: 1; }
-
-  100% {
-    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
-    transform: matrix(1, 0, 0, 1, 0, 0);
-    opacity: 1; }
+/* Editor Div */
+.editor {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  color: $data-color;
+  font-family: $font-stack;
+  @include font-size(16);
+  height: 400px;
+  outline: none;
+  overflow: auto;
+  margin: 0 0 20px 0;
+  min-height: 200px;
+  padding: 20px;
 }
 
-@keyframes pop-upwards {
-  0% {
-    -webkit-transform: matrix(0.97, 0, 0, 1, 0, 12);
-    transform: matrix(0.97, 0, 0, 1, 0, 12);
-    opacity: 0; }
-
-  20% {
-    -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
-    transform: matrix(0.99, 0, 0, 1, 0, 2);
-    opacity: 0.7; }
-
-  40% {
-    -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
-    transform: matrix(1, 0, 0, 1, 0, -1);
-    opacity: 1; }
-
-  70% {
-    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
-    transform: matrix(1, 0, 0, 1, 0, 0);
-    opacity: 1; }
-
-  100% {
-    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
-    transform: matrix(1, 0, 0, 1, 0, 0);
-    opacity: 1; }
+.editor.is-active, .editor:focus {
+  border: 1px solid transparent;
+  box-shadow: 0 0 3px #0095FF;
 }
 
+/* Editor Elements Default Style */
+.editor p {
+  @include font-size(16);
+  color: $data-color;
+  margin-bottom: 40px;
+}
+
+.editor h3 {
+  color: $data-color;
+  @include font-size(22);
+}
+
+.editor h4 {
+  color: $data-color;
+  @include font-size(20);
+}
+
+.editor ul, .editor ol {
+  color: $data-color;
+  font-weight: 200;
+  line-height: 24px;
+  margin: 20px;
+  @include font-size(16);
+  list-style: disc;
+}
+
+.editor ol {
+  list-style: decimal;
+}
+
+.editor pre {
+  font-family: $font-stack;
+  @include font-size(16);
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 5px;
+  color: $data-color;
+}
+
+.editor blockquote {
+  border-left: 5px solid $data-color;
+  font-family: $font-stack;
+  margin-left: 7px;
+  padding-left: 15px;
+  margin-bottom: 15px;
+  font-style: normal;
+  color: $data-color;
+  font-weight: 300;
+  line-height: 22px;
+}
+
+/* Toolbar  */
 .toolbar-arrow-under:after, .toolbar-arrow-over:before {
   position: absolute;
   left: 50%;
@@ -150,14 +168,20 @@
 .editor-action .icon {
   position: relative;
   top: -7px;
-  fill: #fff;
+  fill: #f1f1f1;
   height: 25px;
   width: 25px;
   pointer-events: none;
 }
 
+.editor-action .icon-image, .editor-action .icon-video {
+  height: 34px;
+  top: -13px;
+  width: 34px;
+}
+
 .editor-action-quote .icon {
-    top: -8px;
+  top: -8px;
 }
 
 .editor-toolbar .icon:hover {
@@ -222,76 +246,6 @@
   color: #FFF !important;
 }
 
-
-.editor-placeholder {
-  position: relative;
-}
-
-.editor-placeholder:after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: attr(data-placeholder);
-  font-style: italic;
-}
-
-.editor {
-  outline: none;
-  margin: 0 0 20px 0;
-  padding: 20px;
-  @include font-size(16);
-  font-family: $font-stack;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  border-radius: 2px;
-  color: $data-color;
-  min-height: 200px;
-}
-
-.editor.is-active, .editor:focus {
-  border: 1px solid transparent;
-  box-shadow: 0 0 3px #0095FF;
-}
-
-.editor p {
-  @include font-size(16);
-  color: $data-color;
-  margin-bottom: 40px;
-}
-
-.editor h3 {
-  color: $data-color;
-  @include font-size(22);
-}
-
-.editor h3 {
-  color: $data-color;
-  @include font-size(20);
-}
-
-
-.editor pre {
-  font-family: $font-stack;
-  @include font-size(16);
-  background-color: #f0f0f0;
-  padding: 15px;
-  border-radius: 5px;
-  color: $data-color;
-}
-
-.editor blockquote {
-  border-left: 5px solid $data-color;
-  font-family: $font-stack;
-  margin-left: 7px;
-  padding-left: 15px;
-  margin-bottom: 15px;
-  font-style: normal;
-  color: $data-color;
-  font-weight: 300;
-  line-height: 22px;
-}
-
-/* Toolbar Theme */
 .toolbar-arrow-under:after {
   top: 40px;
   border-color: #333333 transparent transparent transparent;
@@ -305,7 +259,7 @@
 .editor-toolbar {
   background-color: #333333;
   border: 1px solid #989898;
-  border-radius: 4px 0;
+  border-radius: 4px 4px 0px 0;
   -webkit-transition: top 0.075s ease-out, left 0.075s ease-out;
   transition: top 0.075s ease-out, left 0.075s ease-out;
 }
@@ -364,6 +318,58 @@
   border-radius: 5px;
 }
 
-.editor-placeholder:after {
-  color: #b3b3b1;
+/* Animations  */
+@-webkit-keyframes pop-upwards {
+  0% {
+    -webkit-transform: matrix(0.97, 0, 0, 1, 0, 12);
+    transform: matrix(0.97, 0, 0, 1, 0, 12);
+    opacity: 0; }
+
+  20% {
+    -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
+    transform: matrix(0.99, 0, 0, 1, 0, 2);
+    opacity: 0.7; }
+
+  40% {
+    -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
+    transform: matrix(1, 0, 0, 1, 0, -1);
+    opacity: 1; }
+
+  70% {
+    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    opacity: 1; }
+
+  100% {
+    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    opacity: 1; }
 }
+
+@keyframes pop-upwards {
+  0% {
+    -webkit-transform: matrix(0.97, 0, 0, 1, 0, 12);
+    transform: matrix(0.97, 0, 0, 1, 0, 12);
+    opacity: 0; }
+
+  20% {
+    -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
+    transform: matrix(0.99, 0, 0, 1, 0, 2);
+    opacity: 0.7; }
+
+  40% {
+    -webkit-transform: matrix(1, 0, 0, 1, 0, -1);
+    transform: matrix(1, 0, 0, 1, 0, -1);
+    opacity: 1; }
+
+  70% {
+    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    opacity: 1; }
+
+  100% {
+    -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    opacity: 1; }
+}
+

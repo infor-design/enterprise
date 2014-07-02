@@ -9,7 +9,7 @@
         defaults = {
           anchorInputPlaceholder: 'Paste or type a link',
           anchorPreviewHideDelay: 600,
-          buttons: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'anchor', 'quote'],
+          buttons: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video'],
           staticToolbar: true,
           delay: 200,
           diffLeft: 0,
@@ -166,26 +166,27 @@
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
             buttonTemplates = {
-              'bold': '<button type="button" class="editor-action editor-action-bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-              'italic': '<button type="button" class="editor-action editor-action-italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-              'underline': '<button type="button" class="editor-action editor-action-underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-              'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
-              'superscript': '<button type="button" class="editor-action editor-action-superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-              'subscript': '<button type="button" class="editor-action editor-action-subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+              'bold': '<button type="button" class="editor-action editor-action-bold" title="Bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+              'italic': '<button type="button" class="editor-action editor-action-italic" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+              'underline': '<button type="button" class="editor-action editor-action-underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+              'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+              'superscript': '<button type="button" class="editor-action editor-action-superscript" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+              'subscript': '<button type="button" class="editor-action editor-action-subscript" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
               'seperator': '<div class="editor-toolbar-seperator"></div>',
-              'anchor': '<button type="button" class="editor-action editor-action-anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
-              'image': '<button type="button" class="editor-action editor-action-image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
-              'header1': '<button type="button" class="editor-action editor-action-header1" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-              'header2': '<button type="button" class="editor-action editor-action-header2" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-              'quote': '<button type="button" class="editor-action editor-action-quote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-              'orderedlist': '<button type="button" class="editor-action editor-action-orderedlist" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-              'unorderedlist': '<button type="button" class="editor-action editor-action-unorderedlist" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-              'pre': '<button type="button" class="editor-action editor-action-pre" data-action="append-pre" data-element="pre">' + buttonLabels.pre + '</button>',
-              'indent': '<button type="button" class="editor-action editor-action-indent" data-action="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-              'outdent': '<button type="button" class="editor-action editor-action-outdent" data-action="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-              'justifyLeft': '<button type="button" class="editor-action editor-action-indent" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-              'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-              'justifyRight': '<button type="button" class="editor-action editor-action-outdent" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>'
+              'anchor': '<button type="button" class="editor-action editor-action-anchor" title="insert anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
+              'image': '<button type="button" class="editor-action editor-action-image" title="insert image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
+              'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-element="video">' + buttonLabels.video + '</button>',
+              'header1': '<button type="button" class="editor-action editor-action-header1" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+              'header2': '<button type="button" class="editor-action editor-action-header2" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+              'quote': '<button type="button" class="editor-action editor-action-quote" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+              'orderedlist': '<button type="button" class="editor-action editor-action-orderedlist" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+              'unorderedlist': '<button type="button" class="editor-action editor-action-unorderedlist" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+              'pre': '<button type="button" class="editor-action editor-action-pre" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
+              'indent': '<button type="button" class="editor-action editor-action-indent" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
+              'outdent': '<button type="button" class="editor-action editor-action-outdent" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+              'justifyLeft': '<button type="button" class="editor-action editor-action-indent" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+              'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+              'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>'
 
             };
         return buttonTemplates[btnType] || false;
@@ -200,12 +201,13 @@
                 'superscript': '<b>x<sup>1</sup></b>',
                 'subscript': '<b>x<sub>1</sub></b>',
                 'anchor': '<svg class="icon icon-link" viewBox="0 0 32 32"><use xlink:href="#icon-link"></svg>',
-                'image': '<b>image</b>',
+                'image': '<svg class="icon icon-image" viewBox="0 0 32 32"><use xlink:href="#icon-image"></svg>',
+                'video': '<svg class="icon icon-video" viewBox="0 0 32 32"><use xlink:href="#icon-video"></svg>',
                 'header1': '<b>H3</b>',
                 'header2': '<b>H4</b>',
                 'quote': '<svg class="icon icon-blockquote" viewBox="0 0 32 32"><use xlink:href="#icon-blockquote"></svg>',
-                'orderedlist': '<b>1.</b>',
-                'unorderedlist': '<b>&bull;</b>',
+                'orderedlist': '<svg class="icon icon-orderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-orderedlist"></svg>',
+                'unorderedlist': '<svg class="icon icon-unorderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-unorderedlist"></svg>',
                 'pre': '<b>0101</b>',
                 'indent': '<b>&rarr;</b>',
                 'outdent': '<b>&larr;</b>',
@@ -667,7 +669,7 @@
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     },
 
-      bindWindowActions: function () {
+    bindWindowActions: function () {
         var timerResize,
             self = this;
 
@@ -681,6 +683,12 @@
         };
 
         $(window).on('resize.editor', this.windowResizeHandler);
+
+        //Attach Label
+        this.element.prev('.label').css('cursor', 'default').on('click.editor', function (){
+          self.element.focus();
+        });
+        self.element.attr('aria-label', this.element.prev('.label').text());
         return this;
       },
 
@@ -855,11 +863,15 @@
         } else if (action === 'anchor') {
             this.triggerAnchorAction(e);
         } else if (action === 'image') {
-            document.execCommand('insertImage', false, window.getSelection());
+            this.insertImage();
         } else {
             document.execCommand(action, false, null);
             this.setToolbarPosition();
         }
+      },
+
+      insertImage: function () {
+        document.execCommand('insertImage', false, 'http://placekitten.com/200/300');
       },
 
       execFormatBlock: function (el) {
