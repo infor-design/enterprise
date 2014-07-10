@@ -1,6 +1,6 @@
 /* Buttons of All Types
 ================================================== */
-.btn, .btn-default, .btn-cancel, .btn-accept {
+.btn, .btn-default, .btn-cancel, .btn-accept, .btn-menu {
 	width: auto;
 	height:  36px;
 	font-family: $font-stack;
@@ -10,20 +10,22 @@
 	background-color: $btn-color;
 	min-width: 99px;
   margin: 0 10px 10px 0;
-  @include rem(padding, 0.7rem, 2.5rem);
+  padding: 10px 15px;
   border-radius: 2px;
+  box-shadow: inset 0 -1px rgba(0,0,0,.2);
 }
 
-.btn:hover {
+.btn:hover, .btn-menu:hover {
 	background-color: #909090;
 }
 
-.btn:focus, .btn-cancel:focus, .btn-accept:focus, .btn-default:focus {
+.btn:focus, .btn-cancel:focus, .btn-accept:focus, .btn-default:focus, .btn-menu:focus {
 	box-shadow: 0 0 1px #FFFFFF, 0 0 5px #0095FF;
 }
 
-.btn:active {
+.btn:active, .btn-menu:active {
 	background-color: #ababab;
+  box-shadow: none;
 }
 
 .btn-default {
@@ -38,7 +40,7 @@
 	background-color: #53a8e6;
 }
 
-.btn:disabled, .btn-default:disabled {
+.btn:disabled, .btn-default:disabled, .btn-menu:disabled {
 	background-color: #d9d9d9;
 	color: #666;
 	box-shadow: none;
@@ -66,4 +68,25 @@
   &:active {
     background-color: #66cc66;
   }
+}
+
+/* Menu Buttons */
+.btn-menu .icon {
+  display: inline-block;
+  fill: white;
+  margin-top: -7px;
+  margin-left: 4px;
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
+.btn-menu {
+  padding-right: 6px;
+}
+
+.btn-menu span {
+  color: white;
+  display: inline-block;
+  float: left;
+  line-height: 19px;
 }

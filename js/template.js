@@ -33,18 +33,18 @@
 
     // Actual Plugin Code
     Plugin.prototype = {
-        init: function(){
-          var self = this;
-          console.log(self);
-        },
+      init: function(){
+        var self = this;
+        console.log(self);
+      },
 
-        someMethod: function(){
+      someMethod: function(){
 
-        },
+      },
 
-        destroy: function(){
-            $.removeData(this.obj, pluginName);
-        }
+      destroy: function() {
+        this.element.removeData(pluginName);
+      }
     };
 
     // Keep the Chaining while Initializing the Control (Only Once)

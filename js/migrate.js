@@ -3,6 +3,9 @@
 */
 
 $.fn.isEnabled = $.fn.is('enabled');
-$.fn.inforMessageDialog = $.fn.message();
+$.fn.inforMessageDialog = $.fn.message;
 $.fn.inforToolTip = $.fn.tooltip;
+
+$.fn.inforContextMenu = $.fn.popupmenu;
+$.fn.inforMenuButton = $.fn.popupmenu;
 

@@ -1,6 +1,5 @@
 /**
 * Page Bootstrapper
-* @name Bootstrapper - Initializes Elements in the page with Inline Options or Defaults
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -14,7 +13,6 @@
 
   // Init Stuff on Document Ready
   $(function() {
-
     //Tabs
     $('.tab-container').tabs();
 
@@ -35,9 +33,9 @@
 
     //Editors
     $('.editor').editor();
-        $('#title').focus(function () {
-      $('.editor').editor();
-    });
+
+    //Menu Buttons
+    $('.btn-menu').popupmenu();
   });
 
 }));

@@ -35,7 +35,7 @@ describe('Dropdown Should', function() {
 
   it('support initial selection', function() {
      var item = browser.document.getElementById('special');
-     item.selectedIndex.should.equal(8);
+     item.selectedIndex.should.equal(9);
   });
 
   it('support special chars', function() {
@@ -49,4 +49,38 @@ describe('Dropdown Should', function() {
      item.selectedIndex.should.equal(-1);
   });
 
+  it('ignore scripts', function() {
+    //One element has a script expression that will give an error. try to click it
+    browser.pressButton('#special-shdo', function () {
+      console.log('ok');
+    });
+  });
+
+  //TODO: Test Destroy
+  it('should destroy', function() {
+    //Make a select and label with display:none
+    //Call .destroy on it. Should then show just the original select
+  });
+
+  it('initialize when invisible', function() {
+    //Make a select and label with display:none
+    //Then init the control and make sure it is not shown
+  });
+
+  it('Handles Duplicate Values', function() {
+    //make an element with two duplicates
+    //then try to select each and make sure selected index is correct
+  });
+
+  it('Initializes in n ms', function() {
+    //See how long it takes to initialize and make a test on > val
+  });
+
+  it('Can be Set to blank', function() {
+    //Set value to '' and nothing should be shown. (How to prog set to blank)
+  });
+
+  it('Form Reset Works', function() {
+    //Place Drop Down In a Form. Set the value and then trigger reset. This should set the value back to the orginal
+  });
 });

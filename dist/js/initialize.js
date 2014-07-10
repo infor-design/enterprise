@@ -1,11 +1,10 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 02-07-2014 33:02:01 
+ Date: 10-07-2014 55:12:15 
  Revision: undefined 
  */ 
  /**
 * Page Bootstrapper
-* @name Bootstrapper - Initializes Elements in the page with Inline Options or Defaults
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -19,7 +18,6 @@
 
   // Init Stuff on Document Ready
   $(function() {
-
     //Tabs
     $('.tab-container').tabs();
 
@@ -40,9 +38,9 @@
 
     //Editors
     $('.editor').editor();
-        $('#title').focus(function () {
-      $('.editor').editor();
-    });
+
+    //Menu Buttons
+    $('.btn-menu').popupmenu();
   });
 
 }));

@@ -32,7 +32,7 @@
   padding: 23px;
   position: fixed;
   width: 100%;
-  z-index: 8000; }
+  z-index: 50; }
 
 .demo-header + .grid.grid-pad {
   padding-top: 80px; }

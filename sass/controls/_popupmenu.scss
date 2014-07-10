@@ -1,0 +1,87 @@
+/* Popup Menu
+================================================== */
+.popupmenu {
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,.2);
+  border-radius: 3px;
+  color: $label-color;
+  font-family: $font-stack;
+  list-style: none;
+  left: -999px;
+  padding: 20px 0;
+  position: absolute;
+  margin: 0;
+  max-height: 0;
+  visibility: hidden;
+  z-index: 9000;
+}
+
+.popupmenu.is-open {
+  visibility: visible;
+  z-index: 9000;
+  max-height: initial;
+}
+
+.submenu .popupmenu.is-open {
+  position: fixed;
+  display: block;
+  visibility: inherit;
+}
+
+.popupmenu li {
+  line-height: 50px;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+.popupmenu li:hover {
+  background-color: $hover-color;
+}
+
+.popupmenu li:hover a {
+  color: $data-color;
+}
+
+.popupmenu a {
+  border: 1px solid transparent;
+  @include font-size(14);
+  padding: 1px 20px;
+  text-decoration: none;
+  color: $label-color;
+  display: block;
+}
+
+.popupmenu li a:focus {
+  box-shadow: $focus-shadow;
+  border: 1px solid transparent;
+}
+
+/* Icon Positioning */
+.popupmenu .icon {
+  fill: $label-color;
+  left: -8px;
+  position: relative;
+  top: 9px;
+}
+
+.popupmenu li:hover .icon {
+  fill: $data-color;
+}
+
+/* Disabled */
+.popupmenu li.is-disabled a, .popupmenu li.disabled a {
+  cursor: default;
+  background-color: transparent;
+  color: $disabled-color;
+}
+
+.popupmenu li.is-disabled:hover, .popupmenu li.disabled:hover {
+  background-color: transparent;
+}
+
+.popupmenu .submenu > a {
+  background-repeat: no-repeat;
+  background-position: 94% center;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAHCAYAAAArkDztAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAOElEQVQYV2Po6en5DwQM6JghLS3tPwhv2rQJRQFcAiRZUFAAl0SRgOnevHnzf8I6QKqQHcCAy1UAAX9vzbZ/ha0AAAAASUVORK5CYII=");
+  padding: 1px 25px 1px 15px;
+}

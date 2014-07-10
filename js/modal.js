@@ -88,7 +88,13 @@
         });
       },
       open: function () {
-        var self = this;
+        var self = this,
+          elemCanOpen = this.element.triggerHandler('opening'),
+          bodyCanOpen = this.element.find('.modal-body > div').triggerHandler('opening');
+
+        if (elemCanOpen === false || bodyCanOpen === false) {
+          return false;
+        }
 
         this.overlay.appendTo('body');
         this.element.addClass('is-visible').attr('role', 'dialog');
@@ -107,6 +113,8 @@
         setTimeout(function () {
           self.element.find('.modal-title').focus();
           self.keepFocus();
+          self.element.triggerHandler('open');
+          self.element.find('.modal-body > div').triggerHandler('open');
         }, 300);
 
         $('body > *').not(this.element).attr('aria-hidden', 'true');
@@ -157,6 +165,13 @@
       },
 
       close: function () {
+        var elemCanClose = this.element.triggerHandler('closing'),
+          bodyCanClose = this.element.find('.modal-body > div').triggerHandler('closing');
+
+        if (elemCanClose === false || bodyCanClose === false) {
+          return;
+        }
+
         this.element.removeClass('is-visible');
         $(document).off('keypress.modal');
 
