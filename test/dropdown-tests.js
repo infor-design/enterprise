@@ -52,7 +52,7 @@ describe('Dropdown Should', function() {
   it('ignore scripts', function() {
     //One element has a script expression that will give an error. try to click it
     browser.pressButton('#special-shdo', function () {
-      console.log('ok');
+      //No Error happended but nothing to confirm
     });
   });
 

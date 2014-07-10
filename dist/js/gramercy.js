@@ -1,8 +1,8 @@
 /*!
- Gramercy Controls v4.0.0 
- Date: 10-07-2014 55:12:15 
- Revision: undefined 
- */ 
+ Gramercy Controls v4.0.0
+ Date: 10-07-2014 03:01:24
+ Revision: undefined
+ */
  /*
 * Infor (RichText) Editor
 */
@@ -3002,7 +3002,6 @@
             '*[contenteditable]'),
           firstTabbableElement = allTabbableElements[0],
           lastTabbableElement = allTabbableElements[allTabbableElements.length - 1];
-          console.log(allTabbableElements);
 
           $(self.element).on('keypress.modal', function (e) {
             var keyCode = e.which || e.keyCode;
