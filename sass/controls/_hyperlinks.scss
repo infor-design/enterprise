@@ -12,8 +12,7 @@
 }
 
 .link:visited {
-	color: #7533a6;
-  border-bottom: 1px dashed #333333;
+	color: $link-color; /*#7533a6*/
 }
 
 /* Mouse Over States is Same as the focus */

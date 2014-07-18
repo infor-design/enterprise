@@ -51,6 +51,10 @@
   list-style: decimal;
 }
 
+.editor b {
+  font-weight: bold;
+}
+
 .editor pre {
   font-family: $font-stack;
   @include font-size(16);
@@ -93,29 +97,29 @@
   border-width: 0 8px 8px 8px;
 }
 
-.editor-toolbar, .editor-anchor-preview {
+.editor-toolbar {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2000;
+  z-index: 40;
   visibility: hidden;
   @include font-size(16);
   font-family: $font-stack;
 }
 
-.editor-toolbar ul, .editor-anchor-preview ul {
+.editor-toolbar ul {
   margin: 0;
   padding: 0;
 }
 
-.editor-toolbar li, .editor-anchor-preview li {
+.editor-toolbar li {
   float: left;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.editor-toolbar li button, .editor-anchor-preview li button {
+.editor-toolbar li button {
   display: block;
   margin: 0;
   padding: 15px 5px;
@@ -129,26 +133,18 @@
   box-sizing: border-box;
 }
 
-.editor-toolbar li .editor-action-underline, .editor-anchor-preview li .editor-action-underline {
+.editor-toolbar li .editor-action-underline {
   text-decoration: underline;
 }
 
-.editor-toolbar li .editor-action-pre, .editor-anchor-preview li .editor-action-pre {
+.editor-toolbar li .editor-action-pre {
   padding: 15px 0;
   font-weight: 100;
   @include font-size(12);
   font-family: $font-stack;
 }
 
-.editor-anchor-preview i {
-  display: inline-block;
-  margin: 5px 5px 5px 10px;
-  text-decoration: underline;
-  font-style: normal;
-  cursor: pointer;
-}
-
-.editor-toolbar.is-active, .editor-anchor-preview.is-active {
+.editor-toolbar.is-active {
   visibility: visible;
   -webkit-animation: pop-upwards 160ms forwards linear;
   -ms-animation: pop-upwards 160ms forwards linear;
@@ -188,62 +184,12 @@
   fill: #fff;
 }
 
-.editor-toolbar-form-anchor {
-  display: none;
-}
-
-.editor-toolbar-form-anchor input, .editor-toolbar-form-anchor a {
-  font-family: $font-stack;
-}
-
-.editor-toolbar-form-anchor input {
-  margin: 0;
-  padding: 6px;
-  width: 316px;
-  border: none;
-  @include font-size(14);
-}
-
 .editor-toolbar-seperator {
   background-color: #212121;
   display: inline;
   height: 40px;
   position: absolute;
   width: 1.5px;
-}
-
-.editor-toolbar-form-anchor input:focus {
-  outline: 0;
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.editor-toolbar-form-anchor a {
-  background-color: transparent;
-  color: #FFFFFF;
-  float: right;
-  height: 40px;
-  line-height: 25px;
-  margin: -40px 0 0;
-  padding-left: 13px;
-  padding-top: 7px;
-  position: relative;
-  width: 40px;
-  -webkit-transition: background-color 0.2s ease-in;
-  transition: background-color 0.2s ease-in;
-  @include font-size(24);
-}
-
-.editor-toolbar-form-anchor a:hover, .editor-toolbar-form-anchor a:active {
-  background-color: #000;
-  color: #FFF !important;
-}
-
-.editor-toolbar-form-anchor a:visited {
-  color: #FFF !important;
 }
 
 .toolbar-arrow-under:after {
@@ -293,29 +239,16 @@
   visibility: inherit;
 }
 
-.editor-toolbar-form-anchor {
-  background: #333333;
-  color: #999;
-  border-radius: 5px;
-}
-
-.editor-toolbar-form-anchor input {
-  height: 40px;
-  background: #333333;
-  color: #ccc;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.editor-toolbar-form-anchor a {
-  color: #fff;
-}
-
 .editor-toolbar-anchor-preview {
   background: #242424;
   color: #fff;
   border-radius: 5px;
+}
+
+/* Editor Popup Dialog Styling */
+
+#editor-modal-image {
+ width: 50%;
 }
 
 /* Animations  */

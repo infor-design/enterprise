@@ -11,8 +11,8 @@
       //Support for Atom/CommonJS - Not Tested TODO
       module.exports = factory;
   } else {
-      // No AMD. Register plugin with global jQuery object.
-      factory(jQuery);
+      // Register with Browser globals
+      factory(window.jQuery || window.Zepto);
   }
 }(function ($) {
 

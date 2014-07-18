@@ -1,6 +1,6 @@
 /*!
  Gramercy Controls v4.0.0 
- Date: 10-07-2014 03:01:24 
+ Date: 18-07-2014 21:03:43 
  Revision: undefined 
  */ 
  /**
@@ -25,7 +25,7 @@
     $('select, .dropdown').dropdown();
 
     //Modals
-    $('.modal').modal();
+    $('#modal-1').modal();
 
     //Buttons Linked to Message Dialogs
     $('button[data-message]').on('click', function () {
@@ -41,6 +41,9 @@
 
     //Menu Buttons
     $('.btn-menu').popupmenu();
+
+    //Tooltips
+    $('[title]').tooltip();
   });
 
 }));

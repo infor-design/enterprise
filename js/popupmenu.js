@@ -126,7 +126,7 @@
             callback(anchor.attr('href').substr(1), self.element , self.menu.offset(), $(this));
           }
 
-          self.element.trigger('selected', [anchor]);
+          self.element.trigger('select', [anchor]);
         });
 
         $(document).on('keydown.popupmenu', function (e) {
@@ -211,10 +211,6 @@
         } else {
           this.menu.css({'left': target.offset().left, 'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
         }
-        //Handle Case where menu is off left side
-        if ((this.menu.offset().left + menuWidth) > $(window).width()) {
-          this.menu.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
-        }
 
         //Handle Case where menu is off bottom
         if ((this.menu.offset().top + menuHeight) > $(window).height()) {
@@ -233,15 +229,21 @@
             }
           }
         }
+
+        //Handle Case where menu is off left side
+        if ((this.menu.offset().left + menuWidth) > $(window).width()) {
+          this.menu.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
+        }
       },
 
       open: function(e) {
         var self = this;
 
+        this.element.trigger('beforeOpen', [this.menu]);
+
         $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
         self.position(e);
-        this.element.trigger('opening', [this.menu]);
 
         //Close on Document Click ect..
         setTimeout(function () {
@@ -260,6 +262,8 @@
           $(window).on(' scroll.popupmenu resize.popupmenu', function () {
             self.close();
           });
+
+          self.element.trigger('beforeOpen', [self.menu]);
 
         }, 400);
 
@@ -312,7 +316,7 @@
       close: function () {
         this.menu.removeClass('is-open').attr('aria-hidden', 'true');
         this.menu.css({'left': '-999px', 'height': ''});
-        this.element.trigger('closed');
+        this.element.trigger('close');
         this.element.focus().attr('aria-expanded', 'false');
         this.detach();
 

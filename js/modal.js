@@ -48,11 +48,18 @@
 
         if (settings.trigger === 'immediate') {
           setTimeout(function () {
+
             self.open();
           },1);
         }
 
+        self.isCancelled = false;
         this.element.find('.btn-close').on('click.modal', function() {
+          self.close();
+        });
+
+        this.element.find('.btn-cancel, .link-cancel').on('click.modal', function() {
+          self.isCancelled = true;
           self.close();
         });
 
@@ -66,13 +73,13 @@
             buttonset = $('<div class="modal-buttonset"></div>').appendTo(body);
 
         buttonset.find('button').remove();
-        body.find('.inforFormButton.default.btn-close').remove();
+        body.find('.btn-default.btn-close').remove();
 
         $.each(buttons, function (name, props) {
-          var btn = $('<button type="button" class="inforFormButton"></button>');
+          var btn = $('<button type="button" class="btn"></button>');
           btn.text(props.text);
           if (props.isDefault) {
-            btn.addClass('default');
+            btn.addClass('btn-default');
           }
           if (props.id) {
             btn.attr('id', props.id);
@@ -87,22 +94,38 @@
           buttonset.append(btn);
         });
       },
+      sizeInner: function () {
+        var messageArea;
+        messageArea = this.element.find('.detailed-message');
+        //Set a max width
+        var h = $(window).height() - messageArea.offset().top - 150;
+        messageArea.css({'max-height': h, 'overflow': 'auto', 'width': messageArea.width()});
+      },
       open: function () {
-        var self = this,
-          elemCanOpen = this.element.triggerHandler('opening'),
-          bodyCanOpen = this.element.find('.modal-body > div').triggerHandler('opening');
+        var self = this, messageArea,
+          elemCanOpen = this.element.triggerHandler('beforeOpen'),
+          bodyCanOpen = this.element.find('.modal-body > div').triggerHandler('beforeOpen');
+
+        self.isCancelled = false;
 
         if (elemCanOpen === false || bodyCanOpen === false) {
           return false;
         }
 
         this.overlay.appendTo('body');
+        messageArea = self.element.find('.detailed-message');
+        if (messageArea.length === 1) {
+          $(window).on('resize.modal', function () {
+            self.sizeInner();
+          });
+          self.sizeInner();
+        }
         this.element.addClass('is-visible').attr('role', 'dialog');
 
         //Look for other nested dialogs and adjust the zindex.
         $('.modal').each(function (i) {
           var modal = $(this);
-          modal.css('z-index', '900' + (i + 1));
+          modal.css('z-index', '100' + (i + 1));
 
           if (modal.data('modal') && modal.data('modal').overlay) {
             modal.data('modal').overlay.css('z-index', '100' + i);
@@ -124,14 +147,27 @@
         $(document).on('keypress.modal', function (e) {
           var target = $(e.target);
 
-          if (target.is('textarea') || target.is(':button') || target.is('.inforDropDownList')
-              || target.is('.inforSearchField') || target.closest('.inforDataGrid').length > 0) {
+          if (target.is('textarea') || target.is(':button') || target.is('.dropdown')) {
             return;
           }
-          if (e.which === 13) {
-            self.element.find('.inforFormButton.default').trigger('click');
+
+          if (e.which === 13 && self.isOnTop()) {
+            self.element.find('.btn-default').trigger('click.modal');
           }
         });
+      },
+
+      isOnTop: function () {
+        var max = 0,
+          dialog = this.element;
+
+        $('.modal.is-visible').each(function () {
+          if (max < $(this).css('z-index')) {
+            max = $(this).css('z-index');
+          }
+        });
+
+        return max === dialog.css('z-index');
       },
 
       keepFocus: function() {
@@ -142,7 +178,6 @@
             '*[contenteditable]'),
           firstTabbableElement = allTabbableElements[0],
           lastTabbableElement = allTabbableElements[allTabbableElements.length - 1];
-          console.log(allTabbableElements);
 
           $(self.element).on('keypress.modal', function (e) {
             var keyCode = e.which || e.keyCode;
@@ -165,8 +200,8 @@
       },
 
       close: function () {
-        var elemCanClose = this.element.triggerHandler('closing'),
-          bodyCanClose = this.element.find('.modal-body > div').triggerHandler('closing');
+        var elemCanClose = this.element.triggerHandler('beforeClose'),
+          bodyCanClose = this.element.find('.modal-body > div').first().triggerHandler('beforeClose');
 
         if (elemCanClose === false || bodyCanClose === false) {
           return;
@@ -180,12 +215,8 @@
         $('body > *').not(this.element).removeAttr('aria-hidden');
 
         //Fire Events
-        this.element.trigger('close');
-        this.element.find('.modal-body > div').trigger('close');  //trigger on the content for messages
-
-        if (settings.close) { //Fire Event if passed as an option.
-          settings.close(this.element);
-        }
+        this.element.trigger('close', [this.isCancelled]);
+        this.element.find('.modal-body > div').first().trigger('beforeClose', [this.isCancelled]);  //trigger on the content for messages
 
         if (this.oldActive && $(this.oldActive).is('button:visible')) {
           this.oldActive.focus();

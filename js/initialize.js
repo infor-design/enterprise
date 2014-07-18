@@ -20,7 +20,7 @@
     $('select, .dropdown').dropdown();
 
     //Modals
-    $('.modal').modal();
+    $('#modal-1').modal();
 
     //Buttons Linked to Message Dialogs
     $('button[data-message]').on('click', function () {
@@ -36,6 +36,9 @@
 
     //Menu Buttons
     $('.btn-menu').popupmenu();
+
+    //Tooltips
+    $('[title]').tooltip();
   });
 
 }));

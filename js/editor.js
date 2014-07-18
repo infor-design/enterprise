@@ -7,8 +7,6 @@
     // Settings and Options
     var pluginName = 'editor',
         defaults = {
-          anchorInputPlaceholder: 'Paste or type a link',
-          anchorPreviewHideDelay: 600,
           buttons: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video'],
           staticToolbar: true,
           delay: 200,
@@ -24,8 +22,8 @@
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Actual Plugin Code
@@ -46,14 +44,15 @@
         var i,
             elem = this.element;
 
+        //Make it an editor
         elem.attr('contentEditable', true);
 
+        //Bind functionality for Pre elements. We dont use this yet but could if we want to edit code blocks.
         elem.attr('data-editor', true); //TODO : Need?
         this.bindParagraphCreation(i).bindTab(i);
 
         this.initToolbar()
             .bindButtons()
-            .bindAnchorForm()
             .bindAnchorPreview();
 
         return this;
@@ -62,102 +61,78 @@
       bindParagraphCreation: function () {
         var self = this;
 
-        this.element.on('keypress', function (e) {
-            var node = self.getSelectionStart(),
-                tagName;
-
-            if (e.which === 32) {
-                tagName = node.tagName.toLowerCase();
+        this.element.on('keyup', function (e) {
+          var node = self.getSelectionStart(),
+              tagName;
+          if (node && node.getAttribute('data-editor') && node.children.length === 0) {
+            document.execCommand('formatBlock', false, 'p');
+          }
+          if (e.which === 13) {
+            node = self.getSelectionStart();
+            tagName = node.tagName.toLowerCase();
+            //TODO Need Data Disable Return?
+            if (tagName !== 'li' && !self.isListItemChild(node)) {
+                if (!e.shiftKey) {
+                    document.execCommand('formatBlock', false, 'p');
+                }
                 if (tagName === 'a') {
                     document.execCommand('unlink', false, null);
                 }
             }
-        });
-
-        this.element.on('keyup', function (e) {
-            var node = self.getSelectionStart(),
-                tagName;
-            if (node && node.getAttribute('data-editor') && node.children.length === 0) {
-                document.execCommand('formatBlock', false, 'p');
-            }
-            if (e.which === 13) {
-                node = self.getSelectionStart();
-                tagName = node.tagName.toLowerCase();
-                //TODO Need Data Disable Return?
-                if (tagName !== 'li' && !self.isListItemChild(node)) {
-                    if (!e.shiftKey) {
-                        document.execCommand('formatBlock', false, 'p');
-                    }
-                    if (tagName === 'a') {
-                        document.execCommand('unlink', false, null);
-                    }
-                }
-            }
+          }
         });
         return this;
       },
 
       bindTab: function () {
-          var self = this;
+        var self = this;
 
-          this.element.on('keydown', function (e) {
-              if (e.which === 9) {
-                  // Override tab only for pre nodes
-                  var tag = self.getSelectionStart().tagName.toLowerCase();
-                  if (tag === 'pre') {
-                      e.preventDefault();
-                      document.execCommand('insertHtml', null, '    ');
-                  }
-              }
-          });
-          return this;
+        this.element.on('keydown', function (e) {
+          if (e.which === 9) {
+            // Override tab only for pre nodes
+            var tag = self.getSelectionStart().tagName.toLowerCase();
+            if (tag === 'pre') {
+                e.preventDefault();
+                document.execCommand('insertHtml', null, '    ');
+            }
+          }
+        });
+        return this;
       },
       initToolbar: function () {
-          if (this.toolbar) {
-              return this;
-          }
-          this.toolbar = this.createToolbar();
-          this.keepToolbarAlive = false;
-          this.anchorForm = this.toolbar.find('.editor-toolbar-form-anchor');
-          this.anchorInput = this.anchorForm.find('input');
-          this.toolbarActions = this.toolbar.find('.editor-toolbar-actions');
-          this.anchorPreview = this.createAnchorPreview();
+        if (this.toolbar) {
+            return this;
+        }
+        this.toolbar = this.createToolbar();
+        this.keepToolbarAlive = false;
+        this.toolbarActions = this.toolbar.find('.editor-toolbar-actions');
 
-          return this;
+        return this;
       },
       createToolbar: function () {
         var toolbar = $('<div></div>').attr('class', 'editor-toolbar').attr('id', 'editor-toolbar-' + this.id);
         toolbar.append(this.toolbarButtons());
-        toolbar.append(this.toolbarFormAnchor()).insertAfter(this.element);
+        toolbar.insertAfter(this.element);
         return toolbar;
       },
-      toolbarFormAnchor: function () {
-          var anchor = $('<div class="editor-toolbar-form-anchor"></div>').attr('id', 'editor-toolbar-form-anchor'),
-            id = 'editor-toolbar-form-anchor-input'+ this.id;
 
-          $('<label class="scr-only">Anchor</label>').attr('for', id).appendTo(anchor);
-          $('<input type="text">').attr('placeholder', settings.anchorInputPlaceholder).attr('id', id).appendTo(anchor);
-          $('<a class="link"></a>').attr('href', '#').html('&times;').appendTo(anchor);
-
-          return anchor;
-      },
       toolbarButtons: function () {
         var btns = settings.buttons,
-            ul = $('<ul></ul>').attr('id','editor-toolbar-actions').attr('class', 'editor-toolbar-actions clearfix'),
+            ul = $('<ul></ul>').attr('id','editor-toolbar-actions').attr('class', 'editor-toolbar-actions'),
             li, i, btn, ext;
 
         for (i = 0; i < btns.length; i += 1) {
-            if (settings.extensions.hasOwnProperty(btns[i])) {
-                ext = settings.extensions[btns[i]];
-                btn = ext.getButton !== undefined ? ext.getButton() : null;
-            } else {
-                btn = this.buttonTemplate(btns[i]);
-            }
+          if (settings.extensions.hasOwnProperty(btns[i])) {
+              ext = settings.extensions[btns[i]];
+              btn = ext.getButton !== undefined ? ext.getButton() : null;
+          } else {
+              btn = this.buttonTemplate(btns[i]);
+          }
 
-            if (btn) {
-                li = $('<li></li>');
-                li.append(btn).appendTo(ul);
-            }
+          if (btn) {
+              li = $('<li></li>');
+              li.append(btn).appendTo(ul);
+          }
         }
 
         return ul;
@@ -165,85 +140,68 @@
 
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
-            buttonTemplates = {
-              'bold': '<button type="button" class="editor-action editor-action-bold" title="Bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-              'italic': '<button type="button" class="editor-action editor-action-italic" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-              'underline': '<button type="button" class="editor-action editor-action-underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-              'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
-              'superscript': '<button type="button" class="editor-action editor-action-superscript" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-              'subscript': '<button type="button" class="editor-action editor-action-subscript" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
-              'seperator': '<div class="editor-toolbar-seperator"></div>',
-              'anchor': '<button type="button" class="editor-action editor-action-anchor" title="insert anchor" data-action="anchor" data-element="a">' + buttonLabels.anchor + '</button>',
-              'image': '<button type="button" class="editor-action editor-action-image" title="insert image" data-action="image" data-element="img">' + buttonLabels.image + '</button>',
-              'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-element="video">' + buttonLabels.video + '</button>',
-              'header1': '<button type="button" class="editor-action editor-action-header1" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-              'header2': '<button type="button" class="editor-action editor-action-header2" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-              'quote': '<button type="button" class="editor-action editor-action-quote" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-              'orderedlist': '<button type="button" class="editor-action editor-action-orderedlist" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-              'unorderedlist': '<button type="button" class="editor-action editor-action-unorderedlist" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-              'pre': '<button type="button" class="editor-action editor-action-pre" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
-              'indent': '<button type="button" class="editor-action editor-action-indent" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-              'outdent': '<button type="button" class="editor-action editor-action-outdent" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-              'justifyLeft': '<button type="button" class="editor-action editor-action-indent" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-              'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-              'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>'
+          buttonTemplates = {
+            'bold': '<button type="button" class="editor-action editor-action-bold" title="Bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+            'italic': '<button type="button" class="editor-action editor-action-italic" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+            'underline': '<button type="button" class="editor-action editor-action-underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+            'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+            'superscript': '<button type="button" class="editor-action editor-action-superscript" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+            'subscript': '<button type="button" class="editor-action editor-action-subscript" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+            'seperator': '<div class="editor-toolbar-seperator"></div>',
+            'anchor': '<button type="button" class="editor-action editor-action-anchor" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
+            'image': '<button type="button" class="editor-action editor-action-image" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
+            'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-element="video">' + buttonLabels.video + '</button>',
+            'header1': '<button type="button" class="editor-action editor-action-header1" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+            'header2': '<button type="button" class="editor-action editor-action-header2" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+            'quote': '<button type="button" class="editor-action editor-action-quote" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+            'orderedlist': '<button type="button" class="editor-action editor-action-orderedlist" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+            'unorderedlist': '<button type="button" class="editor-action editor-action-unorderedlist" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+            'pre': '<button type="button" class="editor-action editor-action-pre" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
+            'indent': '<button type="button" class="editor-action editor-action-indent" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
+            'outdent': '<button type="button" class="editor-action editor-action-outdent" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+            'justifyLeft': '<button type="button" class="editor-action editor-action-indent" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+            'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+            'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>'
+          };
 
-            };
         return buttonTemplates[btnType] || false;
       },
       getButtonLabels: function (buttonLabelType) {
-          var customButtonLabels,
-              attrname,
-              buttonLabels = {
-                'bold': '<b>B</b>',
-                'italic': '<b><i>I</i></b>',
-                'underline': '<b><u>U</u></b>',
-                'superscript': '<b>x<sup>1</sup></b>',
-                'subscript': '<b>x<sub>1</sub></b>',
-                'anchor': '<svg class="icon icon-link" viewBox="0 0 32 32"><use xlink:href="#icon-link"></svg>',
-                'image': '<svg class="icon icon-image" viewBox="0 0 32 32"><use xlink:href="#icon-image"></svg>',
-                'video': '<svg class="icon icon-video" viewBox="0 0 32 32"><use xlink:href="#icon-video"></svg>',
-                'header1': '<b>H3</b>',
-                'header2': '<b>H4</b>',
-                'quote': '<svg class="icon icon-blockquote" viewBox="0 0 32 32"><use xlink:href="#icon-blockquote"></svg>',
-                'orderedlist': '<svg class="icon icon-orderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-orderedlist"></svg>',
-                'unorderedlist': '<svg class="icon icon-unorderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-unorderedlist"></svg>',
-                'pre': '<b>0101</b>',
-                'indent': '<b>&rarr;</b>',
-                'outdent': '<b>&larr;</b>',
-                'justifyLeft': '<svg class="icon icon-justify-left" viewBox="0 0 32 32"><use xlink:href="#icon-justify-left"></svg>',
-                'justifyCenter': '<svg class="icon icon-justify-center" viewBox="0 0 32 32"><use xlink:href="#icon-justify-center"></svg>',
-                'justifyRight': '<svg class="icon icon-justify-right" viewBox="0 0 32 32"><use xlink:href="#icon-justify-right"></svg>',
-              };
+        var customButtonLabels,
+          attrname,
+          buttonLabels = {
+            'bold': '<b>B</b>',
+            'italic': '<b><i>I</i></b>',
+            'underline': '<b><u>U</u></b>',
+            'superscript': '<b>x<sup>1</sup></b>',
+            'subscript': '<b>x<sub>1</sub></b>',
+            'anchor': '<svg class="icon icon-link" viewBox="0 0 32 32"><use xlink:href="#icon-link"></svg>',
+            'image': '<svg class="icon icon-image" viewBox="0 0 32 32"><use xlink:href="#icon-image"></svg>',
+            'video': '<svg class="icon icon-video" viewBox="0 0 32 32"><use xlink:href="#icon-video"></svg>',
+            'header1': '<b>H3</b>',
+            'header2': '<b>H4</b>',
+            'quote': '<svg class="icon icon-blockquote" viewBox="0 0 32 32"><use xlink:href="#icon-blockquote"></svg>',
+            'orderedlist': '<svg class="icon icon-orderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-orderedlist"></svg>',
+            'unorderedlist': '<svg class="icon icon-unorderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-unorderedlist"></svg>',
+            'pre': '<b>0101</b>',
+            'indent': '<b>&rarr;</b>',
+            'outdent': '<b>&larr;</b>',
+            'justifyLeft': '<svg class="icon icon-justify-left" viewBox="0 0 32 32"><use xlink:href="#icon-justify-left"></svg>',
+            'justifyCenter': '<svg class="icon icon-justify-center" viewBox="0 0 32 32"><use xlink:href="#icon-justify-center"></svg>',
+            'justifyRight': '<svg class="icon icon-justify-right" viewBox="0 0 32 32"><use xlink:href="#icon-justify-right"></svg>',
+          };
 
-          if (typeof buttonLabelType === 'object') {
-              customButtonLabels = buttonLabelType;
-          }
-          if (typeof customButtonLabels === 'object') {
-              for (attrname in customButtonLabels) {
-                  if (customButtonLabels.hasOwnProperty(attrname)) {
-                      buttonLabels[attrname] = customButtonLabels[attrname];
-                  }
+        if (typeof buttonLabelType === 'object') {
+          customButtonLabels = buttonLabelType;
+        }
+        if (typeof customButtonLabels === 'object') {
+          for (attrname in customButtonLabels) {
+              if (customButtonLabels.hasOwnProperty(attrname)) {
+                  buttonLabels[attrname] = customButtonLabels[attrname];
               }
           }
-          return buttonLabels;
-      },
-      createAnchorPreview: function () {
-        var self = this,
-            anchorPreview = $('<div class="editor-anchor-preview"></div>')
-                              .attr('id', 'editor-anchor-preview-' + this.id);
-
-        anchorPreview.html(this.anchorPreviewTemplate()).insertAfter(self.element);
-        anchorPreview.on('click.editor', function () {
-            self.anchorPreviewClickHandler();
-        });
-
-        return anchorPreview;
-      },
-      anchorPreviewTemplate: function () {
-        return '<div class="editor-toolbar-anchor-preview" id="editor-toolbar-anchor-preview">' +
-                '    <i class="editor-toolbar-anchor-preview-inner"></i>' +
-                '</div>';
+        }
+        return buttonLabels;
       },
 
       //Show the Buttons
@@ -256,138 +214,91 @@
         var self = this;
 
         this.toolbar.on('click.editor', 'button', function (e) {
-            var btn = $(this);
+          var btn = $(this),
+            action = btn.attr('data-action');
 
-            e.preventDefault();
-            if (self.selection === undefined) {
-              self.checkSelection();
-            }
+          e.preventDefault();
 
-            btn.toggleClass('is-active');
-            if (btn.attr('data-action')) {
-              self.execAction(btn.attr('data-action'), e);
-            }
-            self.element.focus();
-            self.keepToolbarAlive = false;
+          if (action === 'anchor' || action === 'image' || action === 'video') {
+            return;
+          }
+
+          if (self.selection === undefined) {
+            self.checkSelection();
+          }
+
+          btn.toggleClass('is-active');
+          if (btn.attr('data-action')) {
+            self.execAction(btn.attr('data-action'), e);
+          }
+
+          self.element.focus();
+          self.keepToolbarAlive = false;
         }).on('mousedown.editor', 'button', function () {
           self.keepToolbarAlive = true;
         });
 
-        return this;
-      },
+        $('#editor-modal-url, #editor-modal-image').modal()
+          .on('beforeOpen', function () {
+            self.savedSelection = self.saveSelection();
+            this.keepToolbarAlive = true;
 
-      //Execute Button extensions  TODO: May Not need.
-      callExtensions: function (funcName) {
-          if (arguments.length < 1) {
-              return;
-          }
-
-          var args = Array.prototype.slice.call(arguments, 1),
-              ext,
-              name;
-
-          for (name in settings.extensions) {
-              if (settings.extensions.hasOwnProperty(name)) {
-                  ext = settings.extensions[name];
-                  if (ext[funcName] !== undefined) {
-                      ext[funcName].apply(ext, args);
-                  }
+            if ($(this).attr('id') === 'editor-modal-url') {
+              if (!self.selectionRange) {
+                return false;
               }
-          }
-      },
-      //Show the Anchor Popup.
-      showAnchorForm: function (linkText) {
-        var self = this;
 
-        this.toolbarActions.hide();
-        this.savedSelection = this.saveSelection();
-        this.anchorForm.show();
-        this.keepToolbarAlive = true;
-
-        setTimeout(function () {
-          self.anchorInput.focus().select();
-        }, 300);
-        this.anchorInput.value = linkText || '';
-      },
-
-      bindAnchorForm: function () {
-        var linkCancel = this.anchorForm.find('a'),
-            self = this;
-
-        this.anchorForm.on('click.editor', function (e) {
-            e.stopPropagation();
-        });
-        this.anchorInput.on('keyup.editor', function (e) {
-          if (e.keyCode === 13) {
-            e.preventDefault();
-            self.createLink($(this));
-          }
-        });
-        this.anchorInput.on('click.editor', function (e) {
-          // make sure not to hide form when cliking into the input
-          e.stopPropagation();
-          self.keepToolbarAlive = true;
-        });
-        this.anchorInput.on('blur.editor', function () {
-          self.keepToolbarAlive = false;
-          self.checkSelection();
-        });
-
-        linkCancel.on('click.editor', function (e) {
-          e.preventDefault();
-          self.showToolbarActions();
-          self.restoreSelection(self.savedSelection);
-        });
-        return this;
-      },
-
-      anchorPreviewClickHandler: function () {
-        if (this.activeAnchor) {
-          var self = this,
-              range = document.createRange(),
-              sel = window.getSelection();
-
-          range.selectNodeContents(self.activeAnchor[0]);
-          sel.removeAllRanges();
-          sel.addRange(range);
-          setTimeout(function () {
-            if (self.activeAnchor) {
-              self.showAnchorForm(self.activeAnchor.attr('href'));
+              //Toggle linked State
+              if (self.isLinkSelected()) {
+                document.execCommand('unlink', false, null);
+                return false;
+              }
             }
+          })
+          .on('open', function () {
+            $(this).find('input:first').focus().select();
+          })
+          .on('close', function (e, isCancelled) {
             self.keepToolbarAlive = false;
-          }, 100 + settings.delay);
-        }
+            self.restoreSelection(self.savedSelection);
 
-        this.hideAnchorPreview();
+            if (isCancelled) {
+              return;
+            }
+
+            //insert image or link
+            if ($(this).attr('id') === 'editor-modal-url') {
+              self.createLink($(this).find('input:first'));
+            } else {
+              self.insertImage($('#image').val());
+            }
+          });
+
+        return this;
       },
 
       bindAnchorPreview: function () {
-        var self = this;
-        this.editorAnchorObserverWrapper = function (e) {
-            self.editorAnchorObserver(e);
-        };
-        this.element.on('mouseover.editor', this.editorAnchorObserverWrapper);
-        return this;
+        this.element.find('a').tooltip({content: function() {
+          return $(this).attr('href');
+        }});
+        return;
       },
 
       createLink: function (input) {
-        if (input.val().trim().length === 0) {
-          this.hideToolbarActions();
-          return;
-        }
+        //Restore Selection in the Editor and Variables
         this.restoreSelection(this.savedSelection);
-        input.val(this.checkLinkFormat(input.val()));
+
+        //Fix and Format the Link
+        input.val(this.fixLinkFormat(input.val()));
 
         document.execCommand('createLink', false, input.val());
         if (settings.targetBlank) {
           this.setTargetBlank();
         }
-        this.checkSelection();
-        this.showToolbarActions();
-        input.value = '';
+        this.bindAnchorPreview();
       },
 
-      checkLinkFormat: function (value) {
+      fixLinkFormat: function (value) {
         var re = /^https?:\/\//;
         if (value.match(re)) {
           return value;
@@ -401,31 +312,30 @@
             timer = '';
 
         this.selectionHandler = function (e) {
-          // Do not close the toolbar when bluring the editable area and clicking into the anchor form
-          if (e && self.clickingIntoArchorForm(e)) {
-              return false;
-          }
-
           if (settings.staticToolbar && $(e.currentTarget).hasClass('.editable') && self.toolbar.hasClass('is-active') && e.type !== 'blur') {
             self.keepToolbarAlive = true;
           } else {
             self.keepToolbarAlive = false;
           }
-
           clearTimeout(timer);
           timer = setTimeout(function () {
-              self.checkSelection();
+            self.checkSelection();
           }, settings.delay);
         };
 
         this.element.on('mouseup.editor', this.selectionHandler);
         this.element.on('keyup.editor', this.selectionHandler);
         this.element.on('blur.editor', function(e) {
-          if (settings.staticToolbar && !self.keepToolbarAlive) {
-            self.keepToolbarAlive = false;
-            self.hideToolbarActions();
+          if (self.keepToolbarAlive) {
             return;
           }
+          setTimeout(function() {
+            if (settings.staticToolbar && !self.keepToolbarAlive) {
+              self.keepToolbarAlive = false;
+              self.hideToolbarActions();
+              return;
+            }
+          }, 400);
           self.selectionHandler(e);
         });
         return this;
@@ -436,74 +346,74 @@
             selectionElement;
 
         if (this.keepToolbarAlive !== true) {
-            newSelection = window.getSelection();
-            if (newSelection.toString().trim() === '') {
+          newSelection = window.getSelection();
+          if (newSelection.toString().trim() === '') {
 
-                if (settings.staticToolbar) {
-                  this.setToolbarPosition().showToolbarActions();
-                  return;
-                }
-
-                this.hideToolbarActions();
-                return;
+            if (settings.staticToolbar) {
+              this.setToolbarPosition().showToolbarActions();
+              return;
             }
 
-            selectionElement = this.getSelectionElement();
-            if (!selectionElement) {
-                this.hideToolbarActions();
-            } else {
-                this.checkSelectionElement(newSelection, selectionElement);
-            }
+            this.hideToolbarActions();
+            return;
+          }
+
+          selectionElement = this.getSelectionElement();
+          if (!selectionElement) {
+              this.hideToolbarActions();
+          } else {
+            this.checkSelectionElement(newSelection, selectionElement);
+          }
         }
         return this;
       },
 
       getSelectionElement: function () {
         var selection = window.getSelection(),
-            range, current, parent,
-            result,
-            getElement = function (e) {
-                var localParent = e;
-                try {
-                    while (!localParent.getAttribute('data-editor')) {
-                        localParent = localParent.parentNode;
-                    }
-                } catch (errb) {
-                    return false;
+          range, current, parent,
+          result,
+          getElement = function (e) {
+            var localParent = e;
+            try {
+                while (!localParent.getAttribute('data-editor')) {
+                    localParent = localParent.parentNode;
                 }
-                return localParent;
-            };
+            } catch (errb) {
+                return false;
+            }
+            return localParent;
+          };
 
         // First try on current node
         try {
-            range = selection.getRangeAt(0);
-            current = range.commonAncestorContainer;
-            parent = current.parentNode;
+          range = selection.getRangeAt(0);
+          current = range.commonAncestorContainer;
+          parent = current.parentNode;
 
-            if (current.getAttribute('data-editor')) {
-                result = current;
-            } else {
-                result = getElement(parent);
-            }
-            // If not search in the parent nodes.
+          if (current.getAttribute('data-editor')) {
+              result = current;
+          } else {
+              result = getElement(parent);
+          }
+          // If not search in the parent nodes.
         } catch (err) {
-            result = getElement(parent);
+        result = getElement(parent);
         }
         return result;
     },
 
     //See if the Editor is Selected and Show Toolbar
     checkSelectionElement: function (newSelection, selectionElement) {
-        this.selection = newSelection;
-        this.selectionRange = this.selection.getRangeAt(0);
+      this.selection = newSelection;
+      this.selectionRange = this.selection.getRangeAt(0);
 
-        if (this.element[0] === selectionElement) {
-            this.setToolbarButtonStates()
-                .setToolbarPosition()
-                .showToolbarActions();
-            return;
-        }
-        this.hideToolbarActions();
+      if (this.element[0] === selectionElement) {
+        this.setToolbarButtonStates()
+            .setToolbarPosition()
+            .showToolbarActions();
+        return;
+      }
+      this.hideToolbarActions();
     },
 
     setToolbarPosition: function () {
@@ -537,12 +447,7 @@
         this.toolbar.css({'left': editorPos.left, 'top': editorPos.top - this.toolbar.outerHeight()});
       }
 
-      this.hideAnchorPreview();
       return this;
-    },
-
-    hideAnchorPreview: function () {
-      this.anchorPreview.removeClass('is-active');
     },
 
     //See if the Editor is Selected and Show Toolbar
@@ -564,7 +469,6 @@
 
       while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
           this.activateButton(parentNode.tagName.toLowerCase());
-          this.callExtensions('checkState', parentNode);
 
           // we can abort the search upwards if we leave the contentEditable element
           if (self.element.is(parentNode)) {
@@ -619,7 +523,6 @@
       var self = this,
           timer;
 
-      this.anchorForm.hide();
       this.toolbarActions.show();
       this.keepToolbarAlive = false;
       clearTimeout(timer);
@@ -692,49 +595,6 @@
         return this;
       },
 
-      editorAnchorObserver: function (e) {
-        var self = this,
-            overAnchor = true,
-            leaveAnchor = function () {
-                // mark the anchor as no longer hovered, and stop listening
-                overAnchor = false;
-                self.activeAnchor.off('mouseout.editor', leaveAnchor);
-            };
-
-        if (e.target && e.target.tagName.toLowerCase() === 'a') {
-          // Detect empty href attributes
-          // The browser will make href="" or href="#top"
-          // into absolute urls when accessed as e.targed.href, so check the html
-          if (!/href=["']\S+["']/.test(e.target.outerHTML) || /href=["']#\S+["']/.test(e.target.outerHTML)) {
-              return true;
-          }
-
-          // only show when hovering on anchors
-          if (this.toolbar.hasClass('is-active')) {
-              // only show when toolbar is not present
-              return true;
-          }
-
-          this.activeAnchor = $(e.target);
-          this.activeAnchor.on('mouseout.editor', leaveAnchor);
-          // show the anchor preview according to the configured delay
-          // if the mouse has not left the anchor tag in that time
-          setTimeout(function () {
-              if (overAnchor) {
-                  self.showAnchorPreview(e.target);
-              }
-          }, settings.delay);
-        }
-      },
-
-      clickingIntoArchorForm: function (e) {
-          var self = this;
-          if (e.type && e.type.toLowerCase() === 'blur' && e.relatedTarget && e.relatedTarget === self.anchorInput) {
-              return true;
-          }
-          return false;
-      },
-
       //Restore Text Selection
       restoreSelection: function(savedSel) {
         var i,
@@ -777,91 +637,27 @@
         return startNode;
       },
 
-      //Show Link in a Preview dialog. May not need.
-      showAnchorPreview: function (anchorEl) {
+      isLinkSelected: function() {
+        var node = window.getSelection(),
+          selectedParentElement = this.getSelectedParentElement();
 
-        if (this.anchorPreview.hasClass('is-active')) {
-            return true;
-        }
-
-        var self = this,
-            buttonHeight = 40,
-            boundary = anchorEl.getBoundingClientRect(),
-            middleBoundary = (boundary.left + boundary.right) / 2,
-            halfOffsetWidth,
-            defaultLeft,
-            timer;
-
-        self.anchorPreview.find('i').text(anchorEl.href);
-        halfOffsetWidth = self.anchorPreview[0].offsetWidth / 2;
-        defaultLeft = settings.diffLeft - halfOffsetWidth;
-
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            if (self.anchorPreview && !self.anchorPreview.hasClass('is-active')) {
-                self.anchorPreview.addClass('is-active');
-            }
-        }, 100);
-
-        self.observeAnchorPreview($(anchorEl));
-
-        self.anchorPreview.addClass('toolbar-arrow-over').removeClass('toolbar-arrow-under');
-        self.anchorPreview.css('top', Math.round(buttonHeight + boundary.bottom - settings.diffTop + window.pageYOffset - self.anchorPreview[0].offsetHeight) + 'px');
-        if (middleBoundary < halfOffsetWidth) {
-          self.anchorPreview.css('left', defaultLeft + halfOffsetWidth + 'px');
-        } else if ((window.innerWidth - middleBoundary) < halfOffsetWidth) {
-          self.anchorPreview.css('left', window.innerWidth + defaultLeft - halfOffsetWidth + 'px');
+        if (node && node.anchorNode && $(node.anchorNode.nextSibling).is('a')) {
+          return true;
         } else {
-          self.anchorPreview.css('left', defaultLeft + middleBoundary + 'px');
+          return (selectedParentElement.tagName && selectedParentElement.tagName.toLowerCase() === 'a');
         }
 
-        return this;
-      },
-      observeAnchorPreview: function (anchorEl) {
-        var self = this,
-            lastOver = (new Date()).getTime(),
-            over = true,
-            stamp = function () {
-              lastOver = (new Date()).getTime();
-              over = true;
-            },
-            unstamp = function (e) {
-              if (!e.relatedTarget || !/anchor-preview/.test(e.relatedTarget.className)) {
-                  over = false;
-              }
-            },
-            timer = setInterval(function () {
-              if (over) {
-                  return true;
-              }
-              var durr = (new Date()).getTime() - lastOver;
-              if (durr > settings.anchorPreviewHideDelay) {
-                // hide the preview 1/2 second after mouse leaves the link
-                self.hideAnchorPreview();
-
-                // cleanup
-                clearInterval(timer);
-                self.anchorPreview.off('mouseover', stamp);
-                self.anchorPreview.off('mouseout', unstamp);
-                anchorEl.off('mouseover', stamp);
-                anchorEl.off('mouseout', unstamp);
-              }
-            }, 200);
-
-        self.anchorPreview.on('mouseover', stamp);
-        self.anchorPreview.on('mouseout', unstamp);
-        anchorEl.on('mouseover', stamp);
-        anchorEl.on('mouseout', unstamp);
+        return false;
       },
 
       //Run the CE action.
-      execAction: function (action, e) {
+      execAction: function (action) {
         if (action.indexOf('append-') > -1) {
             this.execFormatBlock(action.replace('append-', ''));
             this.setToolbarPosition();
             this.setToolbarButtonStates();
         } else if (action === 'anchor') {
-            this.triggerAnchorAction(e);
+            //this.triggerAnchorAction(e);
         } else if (action === 'image') {
             this.insertImage();
         } else {
@@ -870,8 +666,8 @@
         }
       },
 
-      insertImage: function () {
-        document.execCommand('insertImage', false, 'http://placekitten.com/200/300');
+      insertImage: function (url) {
+        document.execCommand('insertImage', false, url);
       },
 
       execFormatBlock: function (el) {
@@ -899,22 +695,7 @@
         return document.execCommand('formatBlock', false, el);
       },
 
-      triggerAnchorAction: function () {
-        var selectedParentElement = this.getSelectedParentElement();
-        if (selectedParentElement.tagName &&
-                selectedParentElement.tagName.toLowerCase() === 'a') {
-            document.execCommand('unlink', false, null);
-        } else {
-            if (this.anchorForm.is(':visible')) {
-                this.showToolbarActions();
-            } else {
-                this.showAnchorForm();
-            }
-        }
-        return this;
-      },
-
-      //Get WHat is Selected
+      //Get What is Selected
       getSelectionData: function (el) {
         var tagName;
 
