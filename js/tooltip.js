@@ -194,7 +194,7 @@
         $(document).off('click.tooltip');
         $(window).off('resize.tooltip');
 
-        this.element.trigger('close', [this.tooltip]);
+        this.element.trigger('close.tooltip', [this.tooltip]);
       },
 
       destroy: function() {
