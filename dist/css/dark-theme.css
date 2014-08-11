@@ -211,7 +211,8 @@ small {
   margin: 0 10px 10px 0;
   padding: 10px 15px;
   border-radius: 2px;
-  box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2); }
+  box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s ease 0s; }
 
 .btn:hover, .btn-menu:hover {
   background-color: #909090; }
@@ -431,15 +432,21 @@ input.has-error {
 
 /* Responsive 12 Column Grid Based on http://thisisdallas.github.com/Simple-Grid/
 ================================================== */
-[class*='col-'] {
+[class*="col-"] {
   float: left;
-  padding-right: 20px;
+  padding-right: 30px;
   margin-bottom: 5px; }
+
+[class*="col-"]:first-child {
+  padding-left: 77px; }
+
+[class*="col-"]:last-child {
+  padding-right: 77px; }
 
 /* TODO: Improve Nice animation at breaks similar to https://member.theladders.com/member/saved-jobs */
 .grid {
   width: 100%;
-  max-width: 1140px;
+  max-width: 1480px;
   min-width: 755px;
   margin: 0 auto;
   overflow: hidden;
@@ -520,11 +527,11 @@ input.has-error {
     margin-right: 0px;
     padding-left: 0px;
     padding-right: 0px; }
-  [class*='col-'] {
+  [class*="col-"] {
     width: auto;
     float: none;
-    padding-left: 20px;
-    padding-right: 20px; } }
+    padding-left: 30px;
+    padding-right: 30px; } }
 
 /* Checkboxes
 ================================================== */
