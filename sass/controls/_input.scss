@@ -2,14 +2,14 @@
 ================================================== */
 /* Labels */
 label, .label, .data {
-	color: $label-color;
-	display: inline-block;
-	font-family: $font-stack;
-	@include font-size(15);
-	font-weight: lighter;
-	padding: 0;
-	margin-bottom: 5px;
-	line-height: 22px;
+  color: $label-color;
+  display: inline-block;
+  font-family: $font-stack;
+  @include font-size(15);
+  font-weight: lighter;
+  padding: 0;
+  margin-bottom: 5px;
+  line-height: 22px;
 }
 
 .label + .data {
@@ -17,13 +17,14 @@ label, .label, .data {
 }
 
 .data {
-	color: $data-color;
+  color: $data-color;
   display: block;
 }
 
 /* Field Style */
 .field {
   margin-bottom: 20px;
+  margin-left: 2px;
 }
 
 .field label, .field .label {
@@ -32,37 +33,37 @@ label, .label, .data {
 
 /* Input Style */
 input[type="text"], input[type="password"], input[type="email"], textarea {
-	display: block;
-	color: $data-color;
-	border: 1px solid $field-border-color;
-	border-radius: 2px;
+  display: block;
+  color: $data-color;
+  border: 1px solid $field-border-color;
+  border-radius: 2px;
   outline: none;
-	background-color: $field-background-color;
-	font-family: $font-stack;
-	font-weight: lighter;
-	@include font-size(16);
-	padding: 12px 10px;
-	max-width: 100%;
-	width: 300px;
+  background-color: $field-background-color;
+  font-family: $font-stack;
+  font-weight: lighter;
+  @include font-size(16);
+  padding: 12px 10px;
+  max-width: 100%;
+  width: 300px;
   text-align: left;
   resize: none;
 }
 
 input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:focus, input[type="password"].is-focused, input[type="email"]:focus, textarea:focus, textarea.is-focused {
-	box-shadow: $focus-shadow;
+  box-shadow: $focus-shadow;
   border: 1px solid transparent;
 }
 
 input[type="text"]:disabled, input[type="text"].is-disabled, input[type="password"]:disabled, input[type="password"].is-disabled, input[type="email"]:focus, textarea:disabled, textarea.is-disabled {
-	color: $disabled-color;
+  color: $disabled-color;
   -webkit-text-fill-color: $disabled-color;
-	background-color: #e5e5e5;
-	border: solid 1px #e5e5e5;
+  background-color: #e5e5e5;
+  border: solid 1px #e5e5e5;
 }
 
 /* Required Indicator */
 .required:before {
-	background-color: #FF574D;
+  background-color: #FF574D;
   border-radius: 25px;
   content: " ";
   display: inline-block;
@@ -84,21 +85,21 @@ input.has-error {
 
 /* Place Holders */
 ::-webkit-input-placeholder {
-   color: #b3b3b3;
-   @include font-size(16);
-   font-style: italic;
+ color: #b3b3b3;
+ @include font-size(16);
+ font-style: italic;
 }
 
 ::-moz-placeholder {
-   color: #b3b3b3;
-   @include font-size(16);
-   font-style: italic;
+ color: #b3b3b3;
+ @include font-size(16);
+ font-style: italic;
 }
 
 :-ms-input-placeholder {
-   color: #b3b3b3;
-   @include font-size(16);
-   font-style: italic;
+ color: #b3b3b3;
+ @include font-size(16);
+ font-style: italic;
 }
 
 /* Off Screen Text */

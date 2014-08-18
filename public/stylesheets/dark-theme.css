@@ -341,7 +341,8 @@ label, .label, .data {
 
 /* Field Style */
 .field {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  margin-left: 2px; }
 
 .field label, .field .label {
   padding-left: 13px; }

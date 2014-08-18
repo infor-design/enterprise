@@ -101,8 +101,7 @@
               // If Shift is down, outdent, otherwise indent
               if ( e.shiftKey ) {
                 document.execCommand('outdent', e);
-              }
-              else {
+              } else {
                 document.execCommand('indent', e);
               }
             }

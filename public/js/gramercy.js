@@ -1,6 +1,6 @@
 /*!
  Soho 2.0 Controls v4.0.0 
- Date: 18-08-2014 08:11:11 
+ Date: 18-08-2014 07:01:16 
  Revision: undefined 
  */ 
  /*
@@ -106,8 +106,7 @@
               // If Shift is down, outdent, otherwise indent
               if ( e.shiftKey ) {
                 document.execCommand('outdent', e);
-              }
-              else {
+              } else {
                 document.execCommand('indent', e);
               }
             }
@@ -783,19 +782,20 @@
   }
 }(function ($) {
 
-  $.fn.dropdown = function(options) {
+  $.fn.dropdown = function(options, args) {
 
     // Dropdown Settings and Options
     var pluginName = 'dropdown',
         defaults = {
-          editable: 'false' //TODO
+          editable: 'false',
+          source: null  //A function that can do an ajax call.
         },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Actual DropDown Code
@@ -803,7 +803,9 @@
       init: function() {
 
         var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
-        this.orgLabel = this.element.hide().prev('.label');
+        this.isHidden = this.element.is('visible');
+        this.element.hide();
+        this.orgLabel = $('label[for="' + this.element.attr('id') + '"]');
 
         this.label = $('<label class="label"></label>').attr('for', id).text(this.orgLabel.text());
         this.input = $('<input type="text" readonly class="dropdown" tabindex="0"/>').attr({'role': 'combobox'})
@@ -811,16 +813,24 @@
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
                         .attr('id', id);
 
-        this.element.after(this.label, this.input, this.trigger);
-        this.orgLabel.hide();
+        if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
+          this.element.after(this.input, this.trigger);
+          this.orgLabel.after(this.label);
+        } else if (this.orgLabel.length === 1) {
+          this.element.after(this.label, this.input, this.trigger);
+        } else {
+          this.element.after(this.input, this.trigger);
+        }
         this.updateList();
         this.setValue();
+        this.setInitial();
         this.setWidth();
-        this._bindEvents();
+        this.orgLabel.hide();
+        this.bindEvents();
       },
       setWidth: function() {
         var style = this.element[0].style,
-          labelStyle = this.orgLabel[0].style;
+          labelStyle = (this.orgLabel[0] === undefined ? null : this.orgLabel[0].style);
 
         if (style.width) {
           this.input.width(style.width);
@@ -828,7 +838,7 @@
         if (style.position === 'absolute') {
           this.input.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
         }
-        if (labelStyle.position === 'absolute') {
+        if (labelStyle && labelStyle.position === 'absolute') {
           this.label.css({position: 'absolute', left: labelStyle.left, top: labelStyle.top, bottom: labelStyle.bottom, right: labelStyle.right});
         }
       },
@@ -839,107 +849,165 @@
 
         self.element.find('option').each(function(i) {
           var option = $(this),
-              listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.text() + '</li>');
+              listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.html() + '</li>');
+
           self.list.append(listOption);
           if (option.is(':selected')) {
             listOption.addClass('is-selected');
           }
+
+          //Image Support
+          if (option.attr('class')) {
+            listOption.addClass(option.attr('class'));
+          }
+          //Special Data Attribute
+          if (option.attr('data-attr')) {
+            listOption.attr('data-attr', option.attr('data-attr'));
+          }
+          //Tooltip Support
+          if (option.attr('title') && $.fn.tooltip) {
+            listOption.attr('title', option.attr('title')).tooltip();
+          }
         });
-
-        //TODO : Call source - Ajax.
       },
-
-      setValue: function() {
-
-        //Set initial value for the edit box
+      setValue: function () {
+        //Set initial values for the edit box
        this.input.val(this.element.find('option:selected').text());
       },
+      setInitial: function() {
 
-      _bindEvents: function() {
+       if (this.element.hasClass('backgroundColor')) {
+        this.input.addClass('backgroundColor');
+       }
+       if (this.orgLabel.hasClass('noColon')) {
+        this.label.addClass('noColon');
+       }
+       if (this.orgLabel.hasClass('scr-only')) {
+        this.label.addClass('scr-only');
+       }
+       if (this.orgLabel.attr('style')) {
+        this.label.attr('style', this.orgLabel.attr('style'));
+       }
+       if (this.element.is(':disabled')) {
+        this.input.attr('disabled','');
+       }
+       if (this.element.is('[readonly]')) {
+        this.input.addClass('is-readonly');
+       }
+       if (this.isHidden) {
+        this.input.hide().prev('label').hide();
+       }
+      },
+      bindEvents: function() {
         var self = this,
           timer, buffer = '';
 
         //Bind mouse and key events
         this.input.on('keydown.dropdown', function(e) {
+          if (self.element.is(':disabled') || self.input.hasClass('is-readonly')) {
+            return;
+          }
+
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
           var charCode = e.charCode || e.keyCode;
-
           //Needed for browsers that use keypress events to manipulate the window.
           if (e.altKey && (charCode === 38 || charCode === 40)) {
             e.stopPropagation();
             return false;
           }
 
-          if (charCode === 13) {
-            e.stopPropagation();
-            return false;
-          }
-
-          //Printable Chars Jump to first high level node with it...
-           if (e.which !== 0) {
-            var term = String.fromCharCode(e.which),
-              opts = $(self.element[0].options);
-
-            buffer += term.toLowerCase();
-            clearTimeout(timer);
-            setTimeout(function () {
-              buffer ='';
-            }, 700);
-
-            opts.each(function () {
-              if ($(this).text().substr(0, buffer.length).toLowerCase() === buffer) {
-                self.selectOption($(this));
-                return false;
-              }
-            });
-          }
-
-          return true;
-        }).on('mouseup.dropdown', function() {
-          self.openList();
-        });
-
-      },
-
-      openList: function() {
-        var current = this.list.find('.is-selected'),
-            self =  this,
-            isFixed = false,
-            isAbs = false;
-
-        this.list.appendTo('body').show().attr('aria-expanded', 'true');
-        this.list.css({'top': this.input.position().top , 'left': this.input.position().left});
-
-        this.input.parentsUntil('body').each(function () {
-          if ($(this).css('position') === 'fixed') {
-            isFixed = true;
+          if (self.element.is(':disabled') || self.input.hasClass('is-readonly')) {
             return;
           }
 
+
+          //Printable Chars Jump to first high level node with it...
+          if (e.which !== 0) {
+            var term = String.fromCharCode(e.which);
+
+            buffer += term.toLowerCase();
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              $.each(self.element[0].options, function () {
+               var opt = $(this);
+               if (buffer !== '' && opt.text().substr(0, buffer.length).toLowerCase() === buffer) {
+                 buffer = '';
+                 self.selectOption(opt);
+                 return false;
+               }
+              });
+              buffer = '';
+            }, 200);
+          }
+          return true;
+        }).on('mouseup.dropdown', function(e) {
+          if (e.button === 2) {
+            return;
+          }
+          self.toggleList();
         });
 
-        if (this.input.parent('.field').css('position') === 'absolute') {
-          isAbs = true;
-          this.list.css({'top': this.input.parent('.field').position().top + this.input.prev('label').height() , 'left': this.input.parent('.field').position().left});
-       }
+        self.element.on('activate', function () {
+          self.activate();
+        }).on('updated', function () {
+          self.closeList();
+          self.updateList();
+          self.setValue();
+        });
+      },
+      activate: function () {
+        this.input.focus();
+        if (this.input[0].setSelectionRange) {
+          this.input[0].setSelectionRange(0, 0);  //scroll to left
+        }
+      },
+      open: function() {
+        //Prep for opening list,make ajax call ect...
+        var self = this;
 
-        if (isFixed) {
-          this.list.css('position', 'fixed');
+        if (this.element.is(':disabled') || this.input.hasClass('is-readonly')) {
+          return;
         }
 
-        //let grow or to field size.
-        if (this.list.width() > this.input.outerWidth()) {
-           this.list.css({'width': this.list.width() + 15});
-        } else {
-           this.list.width(this.input.outerWidth());
+        if (settings.source) {
+          var response = function (data) {
+            //to do - no results back do not open.
+            var list = '';
+
+            //populate
+            self.element.empty();
+            for (var i=0; i < data.length; i++) {
+              var id = (data[i].id === undefined ? data[i].value : data[i].id);
+              list += '<option id="' + id + '">' + data[i].label + '</option>';
+            }
+            self.element.append(list);
+            self.updateList();
+            self.input.removeClass('is-busy');
+            self.openList();
+            return;
+          };
+
+          //show indicator
+          this.input.addClass('is-busy');
+          //make ajax call
+          settings.source(this.input.val(), response);
+          return;
         }
+        this.openList();
+      },
+      openList: function () {
+      //Actually Open The List
+        var current = this.list.find('.is-selected'),
+            self =  this;
+
+        $('#dropdown-list').remove(); //remove old ones
+        this.list.appendTo('body').show().attr('aria-expanded', 'true');
+
+        this.position();
 
         this.scrollToOption(current);
         this.input.addClass('is-open');
-
-        //TODO: Animate this.list.css('height', 0);
-        //this.list.slideUp();
 
         self.list.on('click.list', 'li', function () {
           var idx = $(this).index(),
@@ -947,7 +1015,7 @@
 
           // select the clicked item
           self.selectOption(cur);
-          self.input.focus();
+          self.activate();
           self.closeList();
         });
 
@@ -963,14 +1031,49 @@
           self.closeList();
         });
       },
+      position: function() {
+        var isFixed = false, isAbs = false,
+          top = this.input[0].offsetTop + this.input.outerHeight();
 
+        this.list.css({'top': top, 'left': this.input.offset().left});
+
+        //Fixed and Absolute Positioning use cases
+        this.input.parentsUntil('body').each(function () {
+          if ($(this).css('position') === 'fixed') {
+            isFixed = true;
+            return;
+          }
+        });
+
+        if (isFixed) {
+          this.list.css('position', 'fixed');
+        }
+
+        if (this.input.parent('.field').css('position') === 'absolute') {
+          isAbs = true;
+          this.list.css({'top': this.input.parent('.field').offset().top + this.input.prev('label').height() , 'left': this.input.parent('.field').offset().left});
+        }
+
+        //Flow up if not enough room on bottom
+        //TODO Test $(window).height() vs $(document).height());
+        if (top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
+          this.list.css({'top': top - this.list.outerHeight() - this.input.outerHeight()});
+        }
+
+        //let grow or to field size.
+        if (this.list.width() > this.input.outerWidth()) {
+           this.list.css('width', '');
+           this.list.css({'width': this.list.outerWidth() + 10});
+        } else {
+           this.list.width(this.input.outerWidth());
+        }
+      },
       closeList: function() {
         this.list.hide().attr('aria-expanded', 'false').remove();
         this.list.off('click.list').off('mousewheel.list');
         this.input.removeClass('is-open');
         $(document).off('click.dropdown resize.dropdown scroll.dropdown');
       },
-
       scrollToOption: function(current) {
         var self = this;
         if (!current) {
@@ -983,7 +1086,6 @@
         self.list.scrollTop(0);
         self.list.scrollTop(current.offset().top - self.list.offset().top - self.list.scrollTop());
       },
-
       handleBlur: function() {
         var self = this;
 
@@ -1002,13 +1104,12 @@
             self = this;
 
         if (e.altKey && (e.keyCode === 38 || e.keyCode === 40)) {
-          self.toggleList(true);
+          self.toggleList();
           e.stopPropagation();
           return false;
         }
-
         switch (e.keyCode) {
-          case 8:    //backspace
+          case 8:    //backspace could clear
           case 46: { //del
             // prevent the edit box from being changed
             this.input.val(selectedText);
@@ -1018,7 +1119,7 @@
           case 9: {  //tab - save the current selection
 
             this.selectOption($(options[selectedIndex]));
-
+            this.activate();
             if (self.isOpen()) {  // Close the option list
               self.closeList(false);
             }
@@ -1038,10 +1139,10 @@
           case 13: {  //enter
 
             if (self.isOpen()) {
+              e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
               self.closeList(false);  // Close the option list
-            } else {
-              self.openList(false);
+              self.activate();
             }
 
             e.stopPropagation();
@@ -1094,11 +1195,16 @@
         if (this.isOpen()) {
           this.closeList();
         } else {
-          this.openList();
+          this.open();
         }
       },
       selectOption: function(option) {
-        var code = option.val();
+        var code = option.val(),
+          oldVal = this.input.val();
+
+        if (option === this.element[0].selectedIndex) {
+          return;
+        }
 
         if (this.isOpen()) {
           // remove the selected class from the current selection
@@ -1115,15 +1221,22 @@
         if (this.element.find('[value="' + code + '"]').length > 0) {
           this.element.find('[value="' + code + '"]')[0].selected = true;
         }
-        this.element.val(code).trigger('change');
 
-        this.input.focus();  //scroll to left
-        this.input[0].setSelectionRange(0, 0);
+        if (oldVal !== option.text()) {
+          this.element.val(code).trigger('change');
+        }
+
+      },
+      setCode: function(code) {
+        var option = this.element.find('[value="' + code + '"]');
+        this.selectOption(option);
       },
       destroy: function() {
-        $.removeData(this.obj, pluginName);
+        this.element.removeData(pluginName);
+        this.closeList();
+        this.input.prev('label').remove();
         this.input.off().remove();
-        $(document).off('click.dropdown');
+        this.element.show().prev('label').show();
       }
     };
 
@@ -1131,6 +1244,9 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
+        if (typeof instance[options] === 'function') {
+          instance[options](args);
+        }
         instance.settings = $.extend({}, defaults, options);
       } else {
         instance = $.data(this, pluginName, new Plugin(this, settings));

@@ -1,10 +1,6 @@
-/node_modules/
 node_modules/
-/designs/
 designs/
-/public/
 public/
-/dist/
-dist/
-
+dist/*/
+dist/css/508-theme.css
 

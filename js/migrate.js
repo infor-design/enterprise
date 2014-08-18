@@ -8,4 +8,4 @@ $.fn.inforDialog = $.fn.modal;
 $.fn.inforToolTip = $.fn.tooltip;
 $.fn.inforContextMenu = $.fn.popupmenu;
 $.fn.inforMenuButton = $.fn.popupmenu;
-
+$.fn.inforDropDownList = $.fn.dropdown;
