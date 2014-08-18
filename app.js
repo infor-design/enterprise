@@ -34,12 +34,21 @@ app.configure(function() {
     res.render('controls/' + end, { layout: 'controls/layout.ejs' });
   });
 
+  app.get('/patterns/*', function(req, res) {
+    var end = req.url.replace('/patterns/','');
+    res.render('patterns/' + end, { layout: 'patterns/layout.ejs' });
+  });
+
   app.get('/tests/*', function(req, res) {
     var end = req.url.replace('/tests/','');
     res.render('tests/' + end, { layout: 'tests/layout.ejs' });
   });
 
   app.use(express.static(__dirname + '/controls/'), function(req, res) {
+    res.render('index');
+  });
+
+  app.use(express.static(__dirname + '/patterns/'), function(req, res) {
     res.render('index');
   });
 });

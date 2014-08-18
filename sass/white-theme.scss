@@ -1,4 +1,4 @@
-/* Gramercy Park - White Background Theme aka Snow
+/* Soho 2.0 - White Background Theme aka Snow
 ================================================== */
 @import "config";
 
@@ -28,3 +28,9 @@ $background-color: #fff;
 @import "controls/editor";
 @import "controls/popupmenu";
 @import "controls/tooltip";
+@import "controls/masthead";
+@import "controls/navbar";
+@import "controls/hero";
+
+// Core Patterns
+@import "patterns/homepage";

@@ -1,4 +1,4 @@
-/* Gramercy Park - Default Grey Theme aka NYC
+/* Soho 2.0 - Default Grey Theme aka NYC
 ================================================== */
 /* Variables
 ================================================== */
@@ -101,6 +101,7 @@ button:focus {
 
 svg.icon {
   display: inline-block;
+  fill: #666;
   height: 32px;
   position: relative;
   width: 32px; }
@@ -359,6 +360,7 @@ input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:
 
 input[type="text"]:disabled, input[type="text"].is-disabled, input[type="password"]:disabled, input[type="password"].is-disabled, input[type="email"]:focus, textarea:disabled, textarea.is-disabled {
   color: #999999;
+  -webkit-text-fill-color: #999999;
   background-color: #e5e5e5;
   border: solid 1px #e5e5e5; }
 
@@ -427,12 +429,6 @@ input.has-error {
   padding-right: 30px;
   margin-bottom: 5px; }
 
-[class*="col-"]:first-child {
-  padding-left: 77px; }
-
-[class*="col-"]:last-child {
-  padding-right: 77px; }
-
 /* TODO: Improve Nice animation at breaks similar to https://member.theladders.com/member/saved-jobs */
 .grid {
   width: 100%;
@@ -446,12 +442,6 @@ input.has-error {
   content: "";
   display: table;
   clear: both; }
-
-.grid-pad {
-  padding: 20px 0 0px 20px; }
-
-.push-right {
-  float: right; }
 
 /* Content Columns */
 .col-1-1 {
@@ -508,6 +498,11 @@ input.has-error {
 
 .col-7-12 {
   width: 58.33%; }
+
+@media handheld, only screen and (max-width: 1480px) {
+  .grid {
+    margin-left: 30px;
+    padding-right: 30px; } }
 
 @media handheld, only screen and (max-width: 767px) {
   .grid {
@@ -1746,3 +1741,83 @@ input.has-error {
 
 .tooltip.is-error.right .arrow:after {
   border-right-color: #d5000e; }
+
+/* Mast Head
+================================================== */
+.masthead {
+  height: 34px;
+  background-color: #666; }
+
+/* Top Nav Bar
+================================================== */
+.navbar {
+  height: 47px;
+  background-color: #e5e5e5;
+  overflow: hidden; }
+
+.navbar button {
+  background-color: transparent;
+  color: #666666;
+  display: inline-block;
+  float: left;
+  font-family: Helvetica, sans-serif, sans-serif;
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: lighter;
+  padding: 18px 20px;
+  color: #666666;
+  display: inline-block; }
+
+.navbar-right {
+  float: right;
+  margin-right: 30px; }
+
+.navbar-right > * {
+  float: left; }
+
+.navbar-right .seperator {
+  border-left: 1px solid #b3b3b3;
+  display: inline-block;
+  height: 26px;
+  margin: 10px 5px;
+  width: 1px; }
+
+/* Hero Image / Banner
+================================================== */
+.hero {
+  padding: 27px 47px;
+  background-color: #1cbbb4; }
+
+.hero > h1, .hero > h2 {
+  color: #fff;
+  font-size: 24px;
+  font-size: 2.4rem;
+  font-weight: lighter; }
+
+/* Home Page Pattern
+================================================== */
+.homepage {
+  background-color: #e5e5e5;
+  border: 2px solid red;
+  height: calc(100% - 34px); }
+
+.navbar + .homepage {
+  height: calc(100% - 81px); }
+
+.widget {
+  min-height: 139px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); }
+
+.widget-container {
+  margin: 25px; }
+
+.widget-header h1 {
+  border-bottom: 1px solid #e8e8e8;
+  color: #666666;
+  font-size: 18px;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  padding-left: 25px;
+  text-overflow: ellipsis; }

@@ -1,4 +1,4 @@
-/* Gramercy Park - Dark Theme
+/* Soho 2.0 - Dark Theme
 ================================================== */
 @import "config";
 
@@ -49,6 +49,12 @@ body {
 @import "controls/editor";
 @import "controls/popupmenu";
 @import "controls/tooltip";
+@import "controls/masthead";
+@import "controls/navbar";
+@import "controls/hero";
+
+// Core Patterns
+@import "patterns/homepage";
 
 // Demo Styles
 .demo-header {

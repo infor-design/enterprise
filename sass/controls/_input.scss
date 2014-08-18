@@ -55,6 +55,7 @@ input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:
 
 input[type="text"]:disabled, input[type="text"].is-disabled, input[type="password"]:disabled, input[type="password"].is-disabled, input[type="email"]:focus, textarea:disabled, textarea.is-disabled {
 	color: $disabled-color;
+  -webkit-text-fill-color: $disabled-color;
 	background-color: #e5e5e5;
 	border: solid 1px #e5e5e5;
 }

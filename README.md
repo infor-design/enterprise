@@ -1,7 +1,7 @@
 
-# Welcome to Gramercy Park
+# Welcome to Soho 2.0
 
-[Gramercy Park](http://en.wikipedia.org/wiki/Gramercy_Park) is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, touch friendly, more flexible and completely accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
+Soho 2.0 is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, touch friendly, more flexible and completely accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
 
 For guidelines on when and where to use the controls see the [Soho Style Guide](http://soho.infor.com).
 
@@ -44,7 +44,7 @@ TBD
 * Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
 
-# Contributing to Gramercy Park
+# Contributing to Soho 2.0
 
 So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.
 
@@ -156,7 +156,7 @@ Essentially though, [check out the latest master](http://git.infor.com/projects/
 <a name="documentation"></a>
 ### Documentation
 
-Gramercy Park's current documentation can be found at [soho.infor.com](http://soho.infor.com).
+Soho 2.0's current documentation can be found at [soho.infor.com](http://soho.infor.com).
 
 The documentation will be generated created inline in the pages (soon but not yet). You can fork the repo and submit pull requests following the [pull-request](#pull-requests) guidelines.
 
@@ -178,7 +178,7 @@ The documentation will be generated created inline in the pages (soon but not ye
     * Test with screen readers (voice over, nvda and jaws), If only one Jaws is most critical.
 * Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
 * Create Selenium (Javascript based) scripts or similar tests (Dalek JS)
-* Next version will be Gramercy Park – which will be a new style guide and set of updated controls. Test that similarly just different links.
+* Next version will be Soho 2.0 – which will be a new style guide and set of updated controls. Test that similarly just different links.
 * Next version will have DelekJS or CasperJS test suites which will need to be updated.
 * Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
 

@@ -1,7 +1,7 @@
 
-# Welcome to Gramercy Park
+# Welcome to Soho 2.0
 
-[Gramercy Park](http://en.wikipedia.org/wiki/Gramercy_Park) is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, flexible and accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
+Soho 2.0 is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, flexible and accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
 
 ## New Features
 * Supports AMD (Require JS)

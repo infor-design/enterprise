@@ -1,4 +1,4 @@
-/* Gramercy Park - Default Grey Theme aka NYC
+/* Soho 2.0 - Default Grey Theme aka NYC
 ================================================== */
 @import "config";
 
@@ -6,7 +6,7 @@
 @import "reset";
 @import "mixins";
 
-// Infor Styles
+// Core Controls
 @import "controls/icons";
 @import "controls/typography";
 @import "controls/forms";
@@ -25,3 +25,9 @@
 @import "controls/editor";
 @import "controls/popupmenu";
 @import "controls/tooltip";
+@import "controls/masthead";
+@import "controls/navbar";
+@import "controls/hero";
+
+// Core Patterns
+@import "patterns/homepage";

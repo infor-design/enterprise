@@ -36,7 +36,7 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: '',
-        banner: '/*!\n Gramercy Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n '
+        banner: '/*!\n Soho 2.0 Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n '
       },
       basic: {
         files: {
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '/*!\n Gramercy Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n ',
+          banner: '/*!\n Soho 2.0 Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n ',
           sourceMap: true,
           sourceMapName: 'dist/js/gramercy.map',
           separator: ';'

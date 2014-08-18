@@ -1,0 +1,37 @@
+/* Top Nav Bar
+================================================== */
+.navbar {
+  height: 47px;
+  background-color: #e5e5e5;
+  overflow: hidden;
+}
+
+.navbar button {
+  background-color: transparent;
+  color: #666666;
+  display: inline-block;
+  float: left;
+  font-family: $font-stack;
+  @include font-size(14);
+  font-weight: lighter;
+  padding: 18px 20px;
+  color: #666666;
+  display: inline-block;
+}
+
+.navbar-right {
+  float: right;
+  margin-right: 30px
+}
+
+.navbar-right > * {
+  float: left;
+}
+
+.navbar-right .seperator {
+  border-left: 1px solid #b3b3b3;
+  display: inline-block;
+  height: 26px;
+  margin: 10px 5px;
+  width: 1px;
+}

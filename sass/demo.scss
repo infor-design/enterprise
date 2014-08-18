@@ -11,19 +11,23 @@
 }
 
 .demo-heading span {
+  font-size: 1.2rem;
+  text-transform: lowercase;
+}
+
+.demo-header span {
   color: $label-color;
-  text-transform: none;
-  font-weight: normal;
+  display: block;
+  font-size: 1.2rem;
+  line-height: 34px;
 }
 
 .demo-header {
-	height: 70px;
-	background-color: #4D4D4D;
-  border-bottom: 2px solid #363636;
-	@include font-size(24);
+  height: 34px;
+  background-color: #666666;
+  @include font-size(24);
   color: #fff;
-	font-family: $font-stack;
-	padding: 23px;
+  font-family: $font-stack;
   position: fixed;
   width: 100%;
   z-index: 50;
@@ -40,29 +44,28 @@
 }
 
 .demo-header span {
-  color: #FFFFFF;
-  @include font-size(24);
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAA2CAMAAADj5An2AAAABGdBTUEAALGPC/xhBQAAAJZQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgvNKgAAADJ0Uk5TKCsIHCAjJgYWIi4HHzESDh0NLCQaDwkpHhshDCoEFxMvFAoLGCUQGREyMAIBFQMnMwASPEIoAAABcklEQVQ4y+2U2ZqCMAxGmVFnHDfcQFHZpBQoLabv/3LTBRj2ay8mV0nOR0j+pjX4n+Vm6D8bMTdqjyICwh6HAUgXUJrfh2eAAN2tOUD27EJ3C8FaOj7AqQtFjmnvC7K8A0XVb+15AM8OdGqIAOwmLKxw0ygLPrYrmO8zNULwKROhnucDK+g+qgFJYuJbFUAi4QngyA67V52FW5puRDHMjTvApZD1NiXKUhmZGRy5sa86z4PyO93XDCAyYgjKxn80THVkiqZHofhd2Ci70vBaS3aQDRlKy2vVUCQjm8CK6lHCexrXk2zPUZQQqVhThLbNlXzFNesjsqyFxww58bZMxzPkWXl7wbh7UpLSoe3jfC2Xb3g1RXUBX//wLSBGTL4R1GJJDzryhMVyMr0HbXiRqcuOrYbgor1YbcimIMWPcaj3ahS6E2WjeBx6Uw3FU1CJcPQSMgTVnRX3dTnYUOgk8hnId2g/dWSU1A9NH3LbY0Uz/gWGuQ8SEuSkzQAAAABJRU5ErkJggg==");
-  background-position: 13px 0;
-  background-repeat: no-repeat;
+  color: #999999;
+  @include font-size(12);
   display: block;
   height: 54px;
   margin-top: -15px;
   padding-top: 16px;
 }
 
-.demo .grid.grid-pad:nth-child(3) {
-  padding-top: 90px;
+.demo .grid:nth-child(2) {
+  padding-top: 65px;
 }
 
 .demo .content {
-	background: #DADADA;
-	color: #444;
-	padding: 1px 20px 20px 20px;
+  background: none repeat scroll 0 0 #e2b7ba;
+  color: #666666;
+  padding: 20px 40px 20px 2px;
+  height: 100%;
 }
 
-.demo .content:hover {
-	background: #c2c2c2;
+.demo .content span {
+  margin: 0;
+  padding: 0;
 }
 
 .demo .loader {
@@ -96,8 +99,8 @@
 
 .field.aligned .dropdown {
   display: inline-block;
-  margin-top: 0;
-  padding: 6px 10px !important;
+  margin-top: 4px;
+  padding: 4px 10px !important;
   vertical-align: middle;
   width: 12em;
 }

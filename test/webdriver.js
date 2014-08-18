@@ -30,7 +30,7 @@ describe('tests using webdriverjs', function(){
     .url('http://107.170.15.202:4000//')  //to do - start selenuim locally..
     .getTitle(function(err, title) {
       expect(err).to.be.null;
-      assert.strictEqual(title, 'Infor Html Controls - Gramercy Park');
+      assert.strictEqual(title, 'Infor Html Controls - Soho 2.0');
     })
     .getElementSize('#states-shdo', function(err, result) {
       expect(err).to.be.null;

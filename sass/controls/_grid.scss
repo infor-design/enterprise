@@ -6,14 +6,6 @@
   margin-bottom: 5px;
 }
 
-[class*="col-"]:first-child {
-  padding-left: 77px;
-}
-
-[class*="col-"]:last-child {
-  padding-right: 77px;
-}
-
 /* TODO: Improve Nice animation at breaks similar to https://member.theladders.com/member/saved-jobs */
 .grid {
   width: 100%;
@@ -28,14 +20,6 @@
   content: "";
   display: table;
   clear: both;
-}
-
-.grid-pad {
-  padding: 20px 0 0px 20px;
-}
-
-.push-right {
-  float: right;
 }
 
 /* Content Columns */
@@ -111,6 +95,14 @@
 
 .col-7-12 {
   width: 58.33%
+}
+
+@media handheld, only screen and (max-width: 1480px) {
+  .grid {
+    margin-left: 30px;
+    padding-right: 30px;
+  }
+
 }
 
 @media handheld, only screen and (max-width: 767px) {

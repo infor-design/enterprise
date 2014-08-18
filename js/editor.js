@@ -92,8 +92,19 @@
             // Override tab only for pre nodes
             var tag = self.getSelectionStart().tagName.toLowerCase();
             if (tag === 'pre') {
-                e.preventDefault();
-                document.execCommand('insertHtml', null, '    ');
+              e.preventDefault();
+              document.execCommand('insertHtml', null, '    ');
+            }
+            // Tab to indent list structures!
+            if ( tag === 'li' ) {
+              e.preventDefault();
+              // If Shift is down, outdent, otherwise indent
+              if ( e.shiftKey ) {
+                document.execCommand('outdent', e);
+              }
+              else {
+                document.execCommand('indent', e);
+              }
             }
           }
         });
