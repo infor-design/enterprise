@@ -1,6 +1,7 @@
 node_modules/
 designs/
-public/
-dist/*/
-dist/css/508-theme.css
-
+public/js/
+public/stylesheets/
+dist/css/
+dist/js/*
+.DS_Store
