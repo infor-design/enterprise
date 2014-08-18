@@ -3,5 +3,5 @@ designs/
 public/js/
 public/stylesheets/
 dist/css/
-dist/js/*
+dist/js/
 .DS_Store
