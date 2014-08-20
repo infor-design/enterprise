@@ -1,5 +1,5 @@
-<div class="grid">
-	<div class="col-1-2">
+<div class="grid grid-pad">
+	<div id="dropdowns-container" class="col-1-2">
 		<h1>Select</h1>
 
     <div class="field">
@@ -93,6 +93,37 @@
       <label for="empty" class="label">Empty List</label>
       <select id="empty" name="empty" class="dropdown">
       </select>
+    </div>
+
+    <div class="field">
+      <label for="invisible" class="label" style="display: none;">Should be Invisible</label>
+      <select id="invisible" name="invisible" class="dropdown" style="display: none;">
+        <option value="hidden">Hidden</option>
+        <option value="missing">Missing</option>
+        <option value="cloaked">Cloaked</option>
+        <option value="stealth">Stealth</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="dupes" class="label">Duplicates Afoot!</label>
+      <select id="dupes" name="dupes" class="dropdown">
+        <option id="firstDupe" value="justAnotherNumber">Just Another Number</option>
+        <option id="secondDupe" value="justAnotherNumber">Just Another Number</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <form id="testForm" action="#" method="POST">
+        <label for="onAForm" class="label">This Dropdown's inside a Form Tag</label>
+        <select id="onAForm" name="onAForm" class="dropdown">
+          <option id="firstFormOpt" value="notSelectedByDefault">Not Selected by Default</option>
+          <option id="secondFormOpt" value="selectedByDefault" selected>Selected by Default</option>
+        </select>
+        <div class="controls">
+          <button id="onAFormReset" class="btn" type="reset">Reset</button>
+        </div>
+      </form>
     </div>
 
 	</div>
