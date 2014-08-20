@@ -185,20 +185,20 @@
             'underline': '<b><u>U</u></b>',
             'superscript': '<b>x<sup>1</sup></b>',
             'subscript': '<b>x<sub>1</sub></b>',
-            'anchor': '<svg class="icon icon-link" viewBox="0 0 32 32"><use xlink:href="#icon-link"></svg>',
-            'image': '<svg class="icon icon-image" viewBox="0 0 32 32"><use xlink:href="#icon-image"></svg>',
-            'video': '<svg class="icon icon-video" viewBox="0 0 32 32"><use xlink:href="#icon-video"></svg>',
+            'anchor': '<svg class="icon icon-link" viewBox="0 0 32 32"><use xlink:href="#icon-link"></use></svg>',
+            'image': '<svg class="icon icon-image" viewBox="0 0 32 32"><use xlink:href="#icon-image"></use></svg>',
+            'video': '<svg class="icon icon-video" viewBox="0 0 32 32"><use xlink:href="#icon-video"></use></svg>',
             'header1': '<b>H3</b>',
             'header2': '<b>H4</b>',
-            'quote': '<svg class="icon icon-blockquote" viewBox="0 0 32 32"><use xlink:href="#icon-blockquote"></svg>',
-            'orderedlist': '<svg class="icon icon-orderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-orderedlist"></svg>',
-            'unorderedlist': '<svg class="icon icon-unorderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-unorderedlist"></svg>',
+            'quote': '<svg class="icon icon-blockquote" viewBox="0 0 32 32"><use xlink:href="#icon-blockquote"></use></svg>',
+            'orderedlist': '<svg class="icon icon-orderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-orderedlist"></use></svg>',
+            'unorderedlist': '<svg class="icon icon-unorderedlist" viewBox="0 0 32 32"><use xlink:href="#icon-unorderedlist"></use></svg>',
             'pre': '<b>0101</b>',
             'indent': '<b>&rarr;</b>',
             'outdent': '<b>&larr;</b>',
-            'justifyLeft': '<svg class="icon icon-justify-left" viewBox="0 0 32 32"><use xlink:href="#icon-justify-left"></svg>',
-            'justifyCenter': '<svg class="icon icon-justify-center" viewBox="0 0 32 32"><use xlink:href="#icon-justify-center"></svg>',
-            'justifyRight': '<svg class="icon icon-justify-right" viewBox="0 0 32 32"><use xlink:href="#icon-justify-right"></svg>'
+            'justifyLeft': '<svg class="icon icon-justify-left" viewBox="0 0 32 32"><use xlink:href="#icon-justify-left"></use></svg>',
+            'justifyCenter': '<svg class="icon icon-justify-center" viewBox="0 0 32 32"><use xlink:href="#icon-justify-center"></use></svg>',
+            'justifyRight': '<svg class="icon icon-justify-right" viewBox="0 0 32 32"><use xlink:href="#icon-justify-right"></use></svg>'
           };
 
         if (typeof buttonLabelType === 'object') {

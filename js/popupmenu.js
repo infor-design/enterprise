@@ -57,7 +57,7 @@
           this.menu.attr('id', 'popupmenu-'+ (parseInt($('.popupmenu').length, 10)+1).toString());
           id = this.menu.attr('id');
         }
-        this.menu.removeClass('inforContextMenu').addClass('popupmenu')
+        this.menu.addClass('popupmenu')
           .attr('role', 'menu').attr('aria-hidden', 'true');
 
         //TODO: Follow up 'button expanded' in JAWS
@@ -75,7 +75,7 @@
 
         if (settings.trigger === 'click' || settings.trigger === 'toggle') {
           this.element.on('click.popupmenu', function (e) {
-            self.menu.addClass('is-animated');
+
             if (self.menu.hasClass('is-open')){
               self.close();
             } else {
@@ -113,20 +113,26 @@
 
         //Handle Events in Anchors
         this.menu.on('click.popmenu', 'a', function (e) {
-          var anchor = $(this);
-          e.preventDefault();
+          var anchor = $(this),
+            href = anchor.attr('href');
 
-          if (anchor.find('.inforCheckbox').length > 0) {
+          if (anchor.find('input[checkbox]').length > 0) {
             return;
           }
 
           self.close();
           //Not a very usefull call back use closed events
-          if (callback && anchor.attr('href')) {
-            callback(anchor.attr('href').substr(1), self.element , self.menu.offset(), $(this));
+          if (callback && href) {
+            callback(href.substr(1), self.element , self.menu.offset(), $(this));
           }
 
-          self.element.trigger('select', [anchor]);
+          self.element.trigger('selected', [anchor]);
+
+          if (href && href.charAt(0) !== '#') {
+            return true;
+          }
+          e.preventDefault();
+
         });
 
         $(document).on('keydown.popupmenu', function (e) {
@@ -201,7 +207,7 @@
       },
 
       position: function(e) {
-        var target = (e === undefined ? this.element : $(e.target).closest('.btn-menu')),
+        var target = (e === undefined ? this.element : $(e.target)),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 
@@ -209,11 +215,12 @@
           this.menu.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {
-          this.menu.css({'left': target.offset().left, 'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
+          this.menu.css({'left': target.offset().left - (this.menu.parent().length ===1 ? this.menu.offsetParent().offset().left : 0),
+              'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
         }
 
         //Handle Case where menu is off bottom
-        if ((this.menu.offset().top + menuHeight) > $(window).height()) {
+        if ((this.menu.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
           this.menu.css({'top': $(window).height() - menuHeight - ($(window).height() - target.offset().top)});
 
           //Did it fit?
@@ -223,9 +230,9 @@
               //fits on top
             } else {
               //shrink to bottom
-              this.menu.css({'left': target.offset().left, 'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
-              this.menu.height($(window).outerHeight() - (this.menu.offset().top + 55) + 'px').css('overflow', 'auto');
-              //Note: 32 is the top and bottom padding 25+25 and box shadow plus a 5 px offset
+              this.menu.css({'left': target.offset().left - (this.menu.parent().length ===1 ? this.menu.parent().offset().left : 0), 'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
+              this.menu.height($(window).outerHeight() - (this.menu.offset().top + 32) + 'px').css('overflow', 'auto');
+              //Note: 32 is the top and bottom padding 12+12 and box shadow plus a 2 px offset
             }
           }
         }
@@ -238,12 +245,12 @@
 
       open: function(e) {
         var self = this;
-
         this.element.trigger('beforeOpen', [this.menu]);
 
         $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
         self.position(e);
+
 
         //Close on Document Click ect..
         setTimeout(function () {
@@ -251,8 +258,6 @@
             if (e.button === 2) {
               return;
             }
-
-            self.menu.removeClass('is-animated');
 
             if ($(e.target).closest('.popupmenu').length === 0) {
               self.close();
@@ -263,7 +268,7 @@
             self.close();
           });
 
-          self.element.trigger('beforeOpen', [self.menu]);
+          self.element.trigger('open', [self.menu]);
 
         }, 400);
 
@@ -303,7 +308,11 @@
       showSubmenu: function (li) {
         var menu = li.find('ul:first');
         li.parent().find('.submenu > ul').not(li.find('ul')).removeClass('is-open');
-        menu.css({left: li.offset().left + li.width(), top: li.offset().top}).addClass('is-open');
+
+        menu.css({left: 0, top: 0}).addClass('is-open');
+        menu.css('width','');
+        menu.css('width', menu.outerWidth()+1);
+        menu.css({left: li.outerWidth(), top: li.outerHeight()*(li.parent().index()-1)});
       },
 
       detach: function () {
@@ -327,8 +336,8 @@
 
       destroy: function() {
         $.removeData(this.element[0], pluginName);
-        this.element.off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
         this.detach();
+        this.element.off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
       }
     };
 
@@ -345,5 +354,6 @@
       }
     });
   };
+
 
 }));

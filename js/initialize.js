@@ -37,6 +37,12 @@
     //Menu Buttons
     $('.btn-menu').popupmenu();
 
+    //Context Menu
+    $('[data-popupmenu]').each(function () {
+      var obj = $(this);
+      obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
+    });
+
     //Tooltips
     $('[title]').tooltip();
   });

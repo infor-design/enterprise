@@ -8,28 +8,25 @@
   font-family: $font-stack;
   list-style: none;
   left: -999px;
-  padding: 20px 0;
+  padding: 15px 0;
   position: absolute;
   margin: 0;
-  max-height: 0;
   visibility: hidden;
   z-index: 9000;
 }
 
 .popupmenu.is-open {
   visibility: visible;
-  z-index: 9000;
-  max-height: initial;
 }
 
 .submenu .popupmenu.is-open {
-  position: fixed;
   display: block;
-  visibility: inherit;
+  position: absolute;
+  visibility: visible;
 }
 
 .popupmenu li {
-  line-height: 50px;
+  line-height: 45px;
   padding: 0 2px;
   cursor: pointer;
 }
@@ -38,7 +35,7 @@
   background-color: $hover-color;
 }
 
-.popupmenu li:hover a {
+.popupmenu li:hover > a {
   color: $data-color;
 }
 
@@ -83,5 +80,6 @@
   background-repeat: no-repeat;
   background-position: 94% center;
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAHCAYAAAArkDztAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAOElEQVQYV2Po6en5DwQM6JghLS3tPwhv2rQJRQFcAiRZUFAAl0SRgOnevHnzf8I6QKqQHcCAy1UAAX9vzbZ/ha0AAAAASUVORK5CYII=");
-  padding: 1px 25px 1px 15px;
 }
+
+/*To DO RTL*/
