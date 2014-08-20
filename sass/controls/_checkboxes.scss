@@ -90,10 +90,5 @@
   box-shadow: $focus-shadow;
 }
 
-/* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */
-@media screen and (-ms-high-contrast: active) {
-  .checkbox:not(:checked), .checkbox:checked {
-    position: relative;
-    left: initial;
-  }
-}
+/* TODO: Partial, Dirty, RTL, Error, IE8 and IE7, High Contrast */
+
