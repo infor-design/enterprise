@@ -46,6 +46,10 @@ module.exports = function(grunt) {
       }
     },
 
+    concurrent: {
+      selenium: ['shell:runSeleniumServer']
+    },
+
     uglify: {
       dist: {
         options: {
@@ -67,17 +71,41 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['public/stylesheets/*-theme.css'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['dist/js/initialize.js'], dest: 'public/js/', filter: 'isFile'}
         ]
+      },
+      testLibs: {
+        files: [
+          {expand: true, flatten: true, src: ['node_modules/mocha/mocha.js'], dest: 'test/vendor/', filter: 'isFile'}
+        ]
+      }
+    },
+
+    shell: {
+      runSeleniumServer: {
+        command: 'start-selenium',
+        options: {}
+      },
+      // TODO: flesh this out to be pattern-based
+      runMochaSeleniumTests: {
+        command: 'mocha <%= shell.runMochaSeleniumTests.options.testFile %> -t 20000',
+        options: {
+          testFile: 'test/spec/dropdown/dropdown-selenium-tests.js'
+        }
       }
     }
   });
 
+  // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
+  require('load-grunt-tasks')(grunt);
+  /*
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-shell');
+  */
 
-  grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('default', ['jshint', 'sass', 'concat', 'uglify', 'copy']);
+  grunt.registerTask('test', ['jshint','concurrent:selenium', 'shell:runMochaSeleniumTests']);
+  grunt.registerTask('default', ['jshint', 'sass', 'concat', 'uglify', 'copy:main']);
 };
