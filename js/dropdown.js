@@ -330,7 +330,6 @@
       },
       handleKeyDown: function(input, e) {
         var selectedIndex = this.element[0].selectedIndex,
-            selectedText = this.element.val(),
             options = this.element[0].options,
             self = this;
 
@@ -342,8 +341,6 @@
         switch (e.keyCode) {
           case 8:    //backspace could clear
           case 46: { //del
-            // prevent the edit box from being changed
-            this.input.val(selectedText);
             e.stopPropagation();
             return false;
           }

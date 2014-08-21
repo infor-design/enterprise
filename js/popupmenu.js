@@ -325,6 +325,12 @@
       close: function () {
         this.menu.removeClass('is-open').attr('aria-hidden', 'true');
         this.menu.css({'left': '-999px', 'height': ''});
+
+        this.element.on('close.popupmenu', function (e) {
+          $(this).off('close.popupmenu');
+          e.stopPropagation();
+        }); //do not propapagate events to parent
+
         this.element.trigger('close');
         this.element.focus().attr('aria-expanded', 'false');
         this.detach();
