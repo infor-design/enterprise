@@ -1,16 +1,16 @@
 /***
- *	Wrapper for WebDriverJS and its required settings
+ *	Wrapper for WebDriverIO and its required settings
  *	@author  ecoyle;
 ***/
-process.env['TEST_BROWSER'] = 'phantomjs';
-
 var colors = require('colors');
 var path = require('path');
-var webdriver = require('webdriverjs');
+var webdriver = require('webdriverio');
 var bundle = require("webdriverjs-selenium-bundle");
 
-// Let's introduce ourselves
-console.log('SoHo 2.0 Controls - Test Suite'.green);
+console.log('Configuring the WebdriverIO Test Driver...'.green);
+
+// get the customizable Environment Variables for the test environment
+require('./test-env');
 
 // Add the Selenium ChromeDriver location to your PATH environment variable.
 // This is needed for running tests in Chrome.  ChromeDriver should be automatically
@@ -43,7 +43,7 @@ var capabilities = {
 };
 var options = {
   desiredCapabilities : capabilities,
-  host: 'localhost',
+  host: 'localhost',  // Infor Hosted Test Server: usmvvwdev67.infor.com
   port: 4444
 };
 
@@ -54,4 +54,4 @@ var driver = new webdriver.remote( options );
 // calling end().
 driver.use( bundle({autostop: true}) );
 
-module.exports = driver;
+module.exports = driver.init();
