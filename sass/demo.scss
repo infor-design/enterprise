@@ -18,8 +18,8 @@
 .demo-header span {
   color: white;
   display: block;
-  font-size: 1.2rem;
-  line-height: 34px;
+  @include font-size(14);
+  line-height: 32px;
 }
 
 .demo-header {
@@ -41,15 +41,6 @@
   height: 70px;
   margin-top: -26px;
   padding-top: 25px;
-}
-
-.demo-header span {
-  color: #999999;
-  @include font-size(12);
-  display: block;
-  height: 54px;
-  margin-top: -15px;
-  padding-top: 16px;
 }
 
 .demo .grid:nth-child(2) {
@@ -89,6 +80,7 @@
   color: #fff;
 }
 
+/* TODO: Move this to forms */
 .field.aligned {
   margin-bottom: 0.5em;
 }
@@ -103,7 +95,7 @@
 
 .field.aligned .dropdown {
   display: inline-block;
-  margin-top: 4px;
+  margin-top: 2px;
   padding: 4px 10px !important;
   vertical-align: middle;
   width: 12em;

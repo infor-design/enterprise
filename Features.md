@@ -14,7 +14,6 @@ Soho 2.0 is the next generation of Hook and Loop's Html controls for Infor Appli
 * Retina Ready with SVG
 * No More IE8 Support! Booooo! IE8!
 
-
 ## Upgrade Guide (from 3.x)
 
 ### Checkboxes
