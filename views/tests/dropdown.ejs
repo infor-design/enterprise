@@ -1,6 +1,6 @@
 <div class="grid grid-pad">
-	<div id="dropdowns-container" class="col-1-2">
-		<h1>Select</h1>
+  <div id="dropdowns-container" class="col-1-2">
+    <h1>Select</h1>
 
     <div class="field">
       <label for="states" class="label">States</label>
@@ -96,6 +96,15 @@
     </div>
 
     <div class="field">
+      <label for="blank" class="blank">Contains a Blank</label>
+      <select id="blank" name="blank" class="dropdown">
+        <option value="">Blank</option>
+        <option value="notBlank" selected>Not Blank</option>
+        <option value="alsoNotBlank">Also Not Blank</option>
+      </select>
+    </div>
+
+    <div class="field">
       <label for="invisible" class="label" style="display: none;">Should be Invisible</label>
       <select id="invisible" name="invisible" class="dropdown" style="display: none;">
         <option value="hidden">Hidden</option>
@@ -126,5 +135,5 @@
       </form>
     </div>
 
-	</div>
+  </div>
 </div>
