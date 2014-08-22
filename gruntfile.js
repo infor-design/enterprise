@@ -96,15 +96,6 @@ module.exports = function(grunt) {
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
-  /*
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-shell');
-  */
 
   grunt.registerTask('test', ['jshint','concurrent:selenium', 'shell:runMochaSeleniumTests']);
   grunt.registerTask('default', ['jshint', 'sass', 'concat', 'uglify', 'copy:main']);
