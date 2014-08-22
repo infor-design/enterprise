@@ -4,21 +4,20 @@
 *****************************/
 
 var Browser = require('zombie'),
-  chai = require('chai'),
-  expect = chai.expect,
-  should = chai.should(),
-  site = require('../../test-site-config');
+  runner;
 
 //mocha -R spec
 describe('Dropdown [zombie]', function() {
-  var browser;
+  var self = this,
+    browser;
 
   before(function() {
-    browser = new Browser({ site: site.rootUrl() });
+    runner = globals.setup(undefined, '/tests/dropdown');
+    browser = new Browser({ site: runner.site.currentUrl });
   });
 
   after(function() {
-    site.server.close();
+    //runner.site.server.close();
   });
 
   beforeEach(function(done) {

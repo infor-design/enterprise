@@ -3,22 +3,16 @@
  * These tests run using webdriverJS and Selenium, in a true browser environment
 ***************************/
 
-var chai        = require('chai'),
-    assert      = chai.assert,
-    expect      = chai.expect,
-    should      = chai.should(),
-    site = require('../../test-site-config'),
-    client = require('../../test-driver-config');
-    handleError = require('../../generic-error-handler');
+var handleError = globals.noError,
+    runner;
 
 describe('Dropdown [selenium]', function(){
   this.timeout(99999999);
 
   //Start Server - Make a Web Driver Connection
   before(function(done){
-    client
-      .init()
-      .url(site.rootUrl() + '/tests/dropdown')
+    runner = globals.setup(undefined, '/tests/dropdown');
+    runner.client
       .execute('window.hnl = {};')
       // NOTE: Had to set a specific window size to prevent failures
       // in PhantomJS regarding UI element clicks.
@@ -31,7 +25,7 @@ describe('Dropdown [selenium]', function(){
 
   // smoke test, to figure out if we're even on the right page
   it('is on the correct page', function(done) {
-    client
+    runner.client
       .getTitle(function(err, title) {
         expect(err).to.be.undefined;
         title.should.equal('Infor Html Controls - Tests');
@@ -40,7 +34,7 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should have its first item selected', function(done) {
-    client
+    runner.client
       .getAttribute('#states', 'selectedIndex', function(err, index) {
         expect(err).to.be.undefined;
         expect(index).to.equal('0');
@@ -53,7 +47,7 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should support initial selection of an option', function(done) {
-    client
+    runner.client
       .getAttribute('#special', 'value', function(err, value) {
         expect(err).to.be.undefined;
         expect(value).to.equal('a');
@@ -66,7 +60,7 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should support special characters', function(done) {
-    client
+    runner.client
       .getAttribute('#special', 'selectedIndex', function(err, index) {
         expect(err).to.be.undefined;
         expect(index).to.equal('9');
@@ -83,7 +77,7 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should not throw an error if the original <select> tag has no options', function(done) {
-    client
+    runner.client
       .getAttribute('#empty', 'selectedIndex', function(err, index) {
         expect(err).to.be.undefined;
         expect(index).to.equal('-1');
@@ -95,7 +89,7 @@ describe('Dropdown [selenium]', function(){
   // by virtue of this dropdown box initializing and opening when clicked without an error,
   // this test should pass.
   it('should ignore <script> tags that are inset as options', function(done) {
-    client
+    runner.client
       .click('#special-shdo', handleError)
       // move the scrollable dropdown list <div> down so that selenium can actually see the list option
       .execute('$("#dropdown-list").scrollTop(200);')
@@ -105,7 +99,7 @@ describe('Dropdown [selenium]', function(){
 
   // Checks the selectedIndex of the original <select> box for changes.
   it('should handle duplicate values', function(done) {
-    client
+    runner.client
       .isSelected('#secondDupe', function(err, value) {
         expect(err).to.be.undefined;
         expect(value).to.be.true;
@@ -120,7 +114,7 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should support setting its value to nothing (blank) programatically', function(done) {
-    client
+    runner.client
       .execute('$("#dupes-shdo").val("");')
       .getAttribute('#dupes-shdo', 'value', function(err, value) {
         expect(err).to.be.undefined;
@@ -134,7 +128,7 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should carry a "display:none;" CSS property from the original <select> tag, and initialize as invisible', function(done) {
-    client
+    runner.client
       .getCssProperty('#invisible-shdo', 'display', function(err, display) {
         expect(err).to.be.undefined;
         expect(display.value).to.equal('none');
@@ -145,7 +139,7 @@ describe('Dropdown [selenium]', function(){
   it('should be able to add and invoke a new dropdown', function(done) {
     var id = 'destroyThis';
 
-    client
+    runner.client
       // build the new markup containing the dropdown
       .execute('$("<div>").attr("id","destroy-container").addClass("field").prependTo("#dropdowns-container");')
       .execute('$("<label>").attr("for","' + id + '").addClass("label").text("Destroy This").appendTo("#destroy-container");')
@@ -168,7 +162,7 @@ describe('Dropdown [selenium]', function(){
   it('should be able to destroy itself and reset back to its original <select> tag', function(done) {
     var id = 'destroyThis';
 
-    client
+    runner.client
       // run the destroy method on the dropdown
       .execute('window.hnl.dd.data("dropdown").destroy();')
       .getCssProperty('#' + id, 'display', function(err, display) {
@@ -183,7 +177,7 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should work correctly with a <form> reset', function(done) {
-    client
+    runner.client
       // check that the "selected" item in the #onAForm dropdown is indeed selected.
       .isSelected('#secondFormOpt', function(err, result) {
         expect(err).to.be.undefined;
@@ -206,12 +200,12 @@ describe('Dropdown [selenium]', function(){
         expect(err).to.be.undefined;
         expect(result).to.be.true;
       })
+      // value of the SoHo dropdown box on screen should be the same as the <select> tag.
+      .getAttribute('#onAForm-shdo', 'value', function(err, value) {
+        expect(err).to.be.undefined;
+        expect(value).to.equal('Selected by Default');
+      })
       .call(done);
   });
 
-  after(function(done) {
-    client.end();
-    site.server.close();
-    done();
-  });
 });

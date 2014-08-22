@@ -7,7 +7,7 @@ var path = require('path');
 var webdriver = require('webdriverio');
 var bundle = require("webdriverjs-selenium-bundle");
 
-console.log('Configuring the WebdriverIO Test Driver...'.green);
+//console.log('Configuring the WebdriverIO Test Driver...'.green);
 
 // get the customizable Environment Variables for the test environment
 require('./test-env');
@@ -16,14 +16,14 @@ require('./test-env');
 // This is needed for running tests in Chrome.  ChromeDriver should be automatically
 // downloaded when using "npm install" via the "selenium-chromedriver" NPM package.
 var chromeDriver = path.join( __dirname, '..', 'node_modules', 'selenium-chromedriver', 'bin'); //'/Applications/chromedriver'; //__dirname + '/../node_modules/selenium-chromedriver/bin';
-console.log('Using ChromeDriver executable in path: '.yellow + '"' + chromeDriver + '"');
+//console.log('Using ChromeDriver executable in path: '.yellow + '"' + chromeDriver + '"');
 process.env['PATH'] += ':' + chromeDriver;
 
 // Add PhantomJS location to your PATH environment variable.
 // This is needed for running tests with PhantomJS.  PhantomJS should also be downloaded
 // when using "npm install" via the "phantomjs" NPM package.
 var phantomjs = path.join( __dirname, '..', 'node_modules', 'phantomjs', 'bin');
-console.log('Using PhantomJS executable in path: '.yellow + '"' + phantomjs + '"');
+//console.log('Using PhantomJS executable in path: '.yellow + '"' + phantomjs + '"');
 process.env['PATH'] += ':' + phantomjs;
 
 // Choose a Browser or Headless Browsing API to run your tests against.
@@ -36,7 +36,7 @@ for (var i in supportedTestBrowsers) {
     browser = process.env['TEST_BROWSER'];
   }
 }
-console.log('Performing tests using '.yellow + browser + ' browser environment.'.yellow);
+//console.log('Performing tests using '.yellow + browser + ' browser environment.'.yellow);
 
 var capabilities = {
   browserName: browser
@@ -54,4 +54,4 @@ var driver = new webdriver.remote( options );
 // calling end().
 driver.use( bundle({autostop: true}) );
 
-module.exports = driver.init();
+module.exports = driver;
