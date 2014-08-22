@@ -3,24 +3,21 @@
  * These tests run using Zombie, and do not need a full browsing environment to run
 *****************************/
 
-var app = require('../../../app'),
-  Browser = require('zombie'),
-  chai = require('chai'),
-  expect = chai.expect,
-  should = chai.should();
+var Browser = require('zombie'),
+  runner;
 
 //mocha -R spec
-describe('Dropdown', function() {
-  var server, browser;
+describe('Dropdown [zombie]', function() {
+  var self = this,
+    browser;
 
   before(function() {
-    app.locals.enableLiveReload = false;
-    server = app.listen(3001);
-    browser = new Browser({site: 'http://localhost:3001'});
+    runner = globals.setup(undefined, '/tests/dropdown');
+    browser = new Browser({ site: runner.site.currentUrl });
   });
 
   after(function() {
-    server.close();
+    //runner.site.server.close();
   });
 
   beforeEach(function(done) {
