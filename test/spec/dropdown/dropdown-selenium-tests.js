@@ -3,8 +3,7 @@
  * These tests run using webdriverJS and Selenium, in a true browser environment
 ***************************/
 
-var handleError = globals.noError,
-    runner;
+var runner;
 
 describe('Dropdown [selenium]', function(){
   this.timeout(99999999);
@@ -27,7 +26,7 @@ describe('Dropdown [selenium]', function(){
   it('is on the correct page', function(done) {
     runner.client
       .getTitle(function(err, title) {
-        should.not.exist(err);
+        globals.noError(err);
         title.should.equal('Infor Html Controls - Tests');
       })
       .call(done);
@@ -36,11 +35,11 @@ describe('Dropdown [selenium]', function(){
   it('should have its first item selected', function(done) {
     runner.client
       .getAttribute('#states', 'selectedIndex', function(err, index) {
-        should.not.exist(err);
+        globals.noError(err);
         index.should.equal('0');
       })
       .getAttribute('#states-shdo', 'value', function(err, value) {
-        should.not.exist(err);
+        globals.noError(err);
         value.should.equal('Alabama');
       })
       .call(done);
@@ -49,11 +48,11 @@ describe('Dropdown [selenium]', function(){
   it('should support initial selection of an option', function(done) {
     runner.client
       .getAttribute('#special', 'value', function(err, value) {
-        should.not.exist(err);
+        globals.noError(err);
         value.should.equal('a');
       })
       .getAttribute('#special', 'selectedIndex', function(err, index) {
-        should.not.exist(err);
+        globals.noError(err);
         index.should.equal('9');
       })
       .call(done);
@@ -62,15 +61,15 @@ describe('Dropdown [selenium]', function(){
   it('should support special characters', function(done) {
     runner.client
       .getAttribute('#special', 'selectedIndex', function(err, index) {
-        should.not.exist(err);
+        globals.noError(err);
         index.should.equal('9');
       })
-      .click('#special-shdo', handleError)
+      .click('#special-shdo', globals.noError)
       // move the scrollable dropdown list <div> down so that selenium can actually see the list option
       .execute('$("#dropdown-list").scrollTop(470);')
-      .click('#list-option9', handleError)
+      .click('#list-option9', globals.noError)
       .getAttribute('#special-shdo', 'value', function(err, value) {
-        should.not.exist(err);
+        globals.noError(err);
         value.should.equal('Apostraphe\'s');
       })
       .call(done);
@@ -79,7 +78,7 @@ describe('Dropdown [selenium]', function(){
   it('should not throw an error if the original <select> tag has no options', function(done) {
     runner.client
       .getAttribute('#empty', 'selectedIndex', function(err, index) {
-        should.not.exist(err);
+        globals.noError(err);
         index.should.equal('-1');
       })
       .call(done);
@@ -90,10 +89,10 @@ describe('Dropdown [selenium]', function(){
   // this test should pass.
   it('should ignore <script> tags that are inset as options', function(done) {
     runner.client
-      .click('#special-shdo', handleError)
+      .click('#special-shdo', globals.noError)
       // move the scrollable dropdown list <div> down so that selenium can actually see the list option
       .execute('$("#dropdown-list").scrollTop(200);')
-      .click('#list-option6', handleError)
+      .click('#list-option6', globals.noError)
       .call(done);
   });
 
@@ -101,13 +100,13 @@ describe('Dropdown [selenium]', function(){
   it('should handle duplicate values', function(done) {
     runner.client
       .isSelected('#secondDupe', function(err, value) {
-        should.not.exist(err);
+        globals.noError(err);
         value.should.equal(true);
       })
-      .click('#dupes-shdo', handleError)
-      .click('#list-option0', handleError)
+      .click('#dupes-shdo', globals.noError)
+      .click('#list-option0', globals.noError)
       .isSelected('#firstDupe', function(err, value) {
-        should.not.exist(err);
+        globals.noError(err);
         value.should.equal(true);
       })
       .call(done);
@@ -115,14 +114,20 @@ describe('Dropdown [selenium]', function(){
 
   it('should support setting its value to nothing (blank) programatically', function(done) {
     runner.client
-      .execute('$("#dupes-shdo").val("");')
-      .getAttribute('#dupes-shdo', 'value', function(err, value) {
-        should.not.exist(err);
+      .setValue('#blank', '', function(err) {
+        globals.noError(err);
+      })
+      .getAttribute('#blank', 'value', function(err, value) {
+        globals.noError(err);
         value.should.equal('');
       })
-      .getAttribute('#dupes', 'value', function(err, value) {
-        should.not.exist(err);
+      .getAttribute('#blank-shdo', 'value', function(err, value) {
+        globals.noError(err);
         value.should.equal('');
+      })
+      .getText('#blank-shdo', function(err, value) {
+        globals.noError(err);
+        value.should.equal('Blank');
       })
       .call(done);
   });
@@ -130,7 +135,7 @@ describe('Dropdown [selenium]', function(){
   it('should carry a "display:none;" CSS property from the original <select> tag, and initialize as invisible', function(done) {
     runner.client
       .getCssProperty('#invisible-shdo', 'display', function(err, display) {
-        should.not.exist(err);
+        globals.noError(err);
         display.value.should.equal('none');
       })
       .call(done);
@@ -152,10 +157,10 @@ describe('Dropdown [selenium]', function(){
 
       // should be able to click on the new dropdown,
       // as well as both of its options.
-      .click('#' + id + '-shdo', handleError)
-      .click('#list-option0', handleError)
-      .click('#' + id + '-shdo', handleError)
-      .click('#list-option1', handleError)
+      .click('#' + id + '-shdo', globals.noError)
+      .click('#list-option0', globals.noError)
+      .click('#' + id + '-shdo', globals.noError)
+      .click('#list-option1', globals.noError)
       .call(done);
   });
 
@@ -166,7 +171,7 @@ describe('Dropdown [selenium]', function(){
       // run the destroy method on the dropdown
       .execute('window.hnl.dd.data("dropdown").destroy();')
       .getCssProperty('#' + id, 'display', function(err, display) {
-        should.not.exist(err);
+        globals.noError(err);
         display.value.should.equal('inline-block');
       })
       // should error out
@@ -180,29 +185,29 @@ describe('Dropdown [selenium]', function(){
     runner.client
       // check that the "selected" item in the #onAForm dropdown is indeed selected.
       .isSelected('#secondFormOpt', function(err, result) {
-        should.not.exist(err);
+        globals.noError(err);
         result.should.equal(true);
       })
       // use the SoHo dropdown to change the value of the original dropdown
       // to the first option instead of the second.
-      .click('#onAForm-shdo', handleError)
-      .click('#list-option0', handleError)
+      .click('#onAForm-shdo', globals.noError)
+      .click('#list-option0', globals.noError)
       // check that the originally "selected" item is no longer selected.
       .isSelected('#secondFormOpt', function(err, result) {
-        should.not.exist(err);
+        globals.noError(err);
         result.should.equal(false);
       })
       // click on the form reset button
-      .click('#onAFormReset', handleError)
+      .click('#onAFormReset', globals.noError)
       // check that the originally "selected" item is once again selected, due
       // to the form being reset.
       .isSelected('#secondFormOpt', function(err, result) {
-        should.not.exist(err);
+        globals.noError(err);
         result.should.equal(true);
       })
       // value of the SoHo dropdown box on screen should be the same as the <select> tag.
       .getAttribute('#onAForm-shdo', 'value', function(err, value) {
-        should.not.exist(err);
+        globals.noError(err);
         value.should.equal('Selected by Default');
       })
       .call(done);
