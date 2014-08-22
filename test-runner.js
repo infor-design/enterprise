@@ -2,9 +2,7 @@
  *  Selenium Test Runner for SoHo 2.0 Controls
  *  @author  ecoyle;
 ***/
-var fs = require('fs');
 var glob = require('glob');
-var path = require('path');
 var Mocha = require('mocha');
 var site = require('./test/test-site-config');
 var client, specFiles;
@@ -35,49 +33,46 @@ if ( process.argv[2] ) {
 // use glob to pull files from the filesystem based on the pattern.
 glob(process.env._SPEC || specFiles, function(er, files) {
 
-    files.forEach(function(file) {
-        mocha.addFile(file);
-    });
+  files.forEach(function(file) {
+    mocha.addFile(file);
+  });
 
-    mocha.run(function(failures) {
-        // shut down HTTP server
-        site.server.close();
+  mocha.run(function(failures) {
+    // shut down HTTP server
+    site.server.close();
 
-        if (!client) {
-            return process.exit(failures);
-        }
-        client.end(function() {
-          process.exit(failures);
-        });
+    if (!client) {
+      return process.exit(failures);
+    }
+    client.end(function() {
+      process.exit(failures);
     });
+  });
 });
 
 // setup assertion libraries to be global for all tests
 chai = require('chai'),
-expect = chai.expect,
+/*jshint -W030 */
 should = chai.should();
-assert = chai.assert;
 
 // Setup a global object that will be used to invoke test-driver instances.
 // globals.setup is run in every test to ensure that the same Selenium instance
 // is continually used between tests, unless a test specifically requests
 // a unique instance.
 globals = {
-    noError: function(err) {
-        assert(err === undefined);
-    },
-    checkResult: function(expected) {
-        return function(err, result) {
-            globals.noError(err);
-
-            if(expected instanceof Array) {
-                expected.should.containDeep([result]);
-            } else {
-                expected.should.be.exactly(result);
-            }
-
-        };
-    }
+  noError: function(err) {
+    should.not.exist(err);
+  },
+  checkResult: function(expected) {
+    return function(err, result) {
+      globals.noError(err);
+      if(expected instanceof Array) {
+        expected.should.containDeep([result]);
+      } else {
+        expected.should.be.exactly(result);
+      }
+    };
+  }
 };
 globals.setup = function(newSession, url) {
   var wdjs = require('./test/test-driver-config');

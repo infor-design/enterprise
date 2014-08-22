@@ -27,7 +27,7 @@ describe('Dropdown [selenium]', function(){
   it('is on the correct page', function(done) {
     runner.client
       .getTitle(function(err, title) {
-        expect(err).to.be.undefined;
+        should.not.exist(err);
         title.should.equal('Infor Html Controls - Tests');
       })
       .call(done);
@@ -36,12 +36,12 @@ describe('Dropdown [selenium]', function(){
   it('should have its first item selected', function(done) {
     runner.client
       .getAttribute('#states', 'selectedIndex', function(err, index) {
-        expect(err).to.be.undefined;
-        expect(index).to.equal('0');
+        should.not.exist(err);
+        index.should.equal('0');
       })
       .getAttribute('#states-shdo', 'value', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.equal('Alabama');
+        should.not.exist(err);
+        value.should.equal('Alabama');
       })
       .call(done);
   });
@@ -49,12 +49,12 @@ describe('Dropdown [selenium]', function(){
   it('should support initial selection of an option', function(done) {
     runner.client
       .getAttribute('#special', 'value', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.equal('a');
+        should.not.exist(err);
+        value.should.equal('a');
       })
       .getAttribute('#special', 'selectedIndex', function(err, index) {
-        expect(err).to.be.undefined;
-        expect(index).to.equal('9');
+        should.not.exist(err);
+        index.should.equal('9');
       })
       .call(done);
   });
@@ -62,16 +62,16 @@ describe('Dropdown [selenium]', function(){
   it('should support special characters', function(done) {
     runner.client
       .getAttribute('#special', 'selectedIndex', function(err, index) {
-        expect(err).to.be.undefined;
-        expect(index).to.equal('9');
+        should.not.exist(err);
+        index.should.equal('9');
       })
       .click('#special-shdo', handleError)
       // move the scrollable dropdown list <div> down so that selenium can actually see the list option
       .execute('$("#dropdown-list").scrollTop(470);')
       .click('#list-option9', handleError)
       .getAttribute('#special-shdo', 'value', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.equal('Apostraphe\'s');
+        should.not.exist(err);
+        value.should.equal('Apostraphe\'s');
       })
       .call(done);
   });
@@ -79,8 +79,8 @@ describe('Dropdown [selenium]', function(){
   it('should not throw an error if the original <select> tag has no options', function(done) {
     runner.client
       .getAttribute('#empty', 'selectedIndex', function(err, index) {
-        expect(err).to.be.undefined;
-        expect(index).to.equal('-1');
+        should.not.exist(err);
+        index.should.equal('-1');
       })
       .call(done);
   });
@@ -101,14 +101,14 @@ describe('Dropdown [selenium]', function(){
   it('should handle duplicate values', function(done) {
     runner.client
       .isSelected('#secondDupe', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.be.true;
+        should.not.exist(err);
+        value.should.equal(true);
       })
       .click('#dupes-shdo', handleError)
       .click('#list-option0', handleError)
       .isSelected('#firstDupe', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.be.true;
+        should.not.exist(err);
+        value.should.equal(true);
       })
       .call(done);
   });
@@ -117,12 +117,12 @@ describe('Dropdown [selenium]', function(){
     runner.client
       .execute('$("#dupes-shdo").val("");')
       .getAttribute('#dupes-shdo', 'value', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.equal('');
+        should.not.exist(err);
+        value.should.equal('');
       })
       .getAttribute('#dupes', 'value', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.equal('');
+        should.not.exist(err);
+        value.should.equal('');
       })
       .call(done);
   });
@@ -130,8 +130,8 @@ describe('Dropdown [selenium]', function(){
   it('should carry a "display:none;" CSS property from the original <select> tag, and initialize as invisible', function(done) {
     runner.client
       .getCssProperty('#invisible-shdo', 'display', function(err, display) {
-        expect(err).to.be.undefined;
-        expect(display.value).to.equal('none');
+        should.not.exist(err);
+        display.value.should.equal('none');
       })
       .call(done);
   });
@@ -166,12 +166,12 @@ describe('Dropdown [selenium]', function(){
       // run the destroy method on the dropdown
       .execute('window.hnl.dd.data("dropdown").destroy();')
       .getCssProperty('#' + id, 'display', function(err, display) {
-        expect(err).to.be.undefined;
-        expect(display.value).to.equal('inline-block');
+        should.not.exist(err);
+        display.value.should.equal('inline-block');
       })
       // should error out
       .click('#destroyThis-shdo', function(err) {
-        expect(err).to.not.be.undefined;
+        should.exist(err);
       })
       .call(done);
   });
@@ -180,8 +180,8 @@ describe('Dropdown [selenium]', function(){
     runner.client
       // check that the "selected" item in the #onAForm dropdown is indeed selected.
       .isSelected('#secondFormOpt', function(err, result) {
-        expect(err).to.be.undefined;
-        expect(result).to.be.true;
+        should.not.exist(err);
+        result.should.equal(true);
       })
       // use the SoHo dropdown to change the value of the original dropdown
       // to the first option instead of the second.
@@ -189,21 +189,21 @@ describe('Dropdown [selenium]', function(){
       .click('#list-option0', handleError)
       // check that the originally "selected" item is no longer selected.
       .isSelected('#secondFormOpt', function(err, result) {
-        expect(err).to.be.undefined;
-        expect(result).to.be.false;
+        should.not.exist(err);
+        result.should.equal(false);
       })
       // click on the form reset button
       .click('#onAFormReset', handleError)
       // check that the originally "selected" item is once again selected, due
       // to the form being reset.
       .isSelected('#secondFormOpt', function(err, result) {
-        expect(err).to.be.undefined;
-        expect(result).to.be.true;
+        should.not.exist(err);
+        result.should.equal(true);
       })
       // value of the SoHo dropdown box on screen should be the same as the <select> tag.
       .getAttribute('#onAForm-shdo', 'value', function(err, value) {
-        expect(err).to.be.undefined;
-        expect(value).to.equal('Selected by Default');
+        should.not.exist(err);
+        value.should.equal('Selected by Default');
       })
       .call(done);
   });

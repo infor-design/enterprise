@@ -8,8 +8,7 @@ var Browser = require('zombie'),
 
 //mocha -R spec
 describe('Dropdown [zombie]', function() {
-  var self = this,
-    browser;
+  var browser;
 
   before(function() {
     runner = globals.setup(undefined, '/tests/dropdown');
