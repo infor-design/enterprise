@@ -8,8 +8,7 @@ var Browser = require('zombie'),
 
 //mocha -R spec
 describe('Dropdown [zombie]', function() {
-  var self = this,
-    browser;
+  var browser;
 
   before(function() {
     runner = globals.setup(undefined, '/tests/dropdown');
@@ -29,27 +28,27 @@ describe('Dropdown [zombie]', function() {
   });
 
   it('should have first selected', function() {
-     var item = browser.document.getElementById('states');
-     item.selectedIndex.should.equal(0);
+    var item = browser.document.getElementById('states');
+    item.selectedIndex.should.equal(0);
 
-     item = browser.document.getElementById('states-shdo');
-     item.value.should.equal('Alabama');
+    item = browser.document.getElementById('states-shdo');
+    item.value.should.equal('Alabama');
   });
 
   it('should support initial selection of an option', function() {
-     var item = browser.document.getElementById('special');
-     item.selectedIndex.should.equal(9);
+    var item = browser.document.getElementById('special');
+    item.selectedIndex.should.equal(9);
   });
 
   it('should support special characters', function() {
-     var item = browser.document.getElementById('special');
-     item.options[item.selectedIndex].value.should.equal('a');
-     item.options[item.selectedIndex].text.should.equal('Apostraphe\'s');
+    var item = browser.document.getElementById('special');
+    item.options[item.selectedIndex].value.should.equal('a');
+    item.options[item.selectedIndex].text.should.equal('Apostraphe\'s');
   });
 
   it('should not throw an error if its list is empty', function() {
-     var item = browser.document.getElementById('empty');
-     item.selectedIndex.should.equal(-1);
+    var item = browser.document.getElementById('empty');
+    item.selectedIndex.should.equal(-1);
   });
 
   it('should ignore scripts inset as options', function() {
