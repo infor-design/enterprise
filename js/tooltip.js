@@ -85,6 +85,11 @@
           });
         }
 
+        if (settings.trigger === 'immediate') {
+           timer = setTimeout(function() {
+            self.show();
+          }, delay);
+        }
 
         this.element.on('focus.tooltip, click.tooltip', function() {
           if (!self.isPopover) {
@@ -95,7 +100,7 @@
 
       setContent: function (content) {
         if (this.isPopover) {
-          this.tooltip.find('.tooltip-content').html(settings.content);
+          this.tooltip.find('.tooltip-content').html(settings.content.removeClass('hidden'));
           this.tooltip.addClass('popover');
 
           if (settings.title !== null) {
@@ -103,9 +108,11 @@
             if (title.length === 0) {
               title = $('<div class="tooltip-title"></div>').prependTo(this.tooltip);
             }
-            title.html(settings.title);
+            title.html(settings.title).show();
           }
           return;
+        } else {
+          this.tooltip.find('.tooltip-title').hide();
         }
 
         this.tooltip.removeClass('popover');
@@ -116,13 +123,18 @@
         this.tooltip.find('.tooltip-content').html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
       },
 
-      show: function() {
+      show: function(newSettings) {
         var self = this;
         this.isInPopup = false;
+
+        if (newSettings) {
+          settings = newSettings;
+        }
 
         this.setContent(this.content);
         this.element.trigger('beforeOpen', [this.tooltip]);
 
+        this.tooltip.removeAttr('style');
         this.tooltip.removeClass('bottom right left top is-error').addClass(settings.placement);
         this.position();
         if (settings.isError) {
@@ -161,7 +173,6 @@
             }
             setTimeout(function() {
               if (!self.isInPopup) {
-                console.log(e.relatedTarget);
                 self.hide();
               }
             }, 400);
@@ -170,31 +181,89 @@
       },
 
       position: function () {
-        if (settings.placement === 'bottom') {
-          this.tooltip.css({'top': this.element.offset().top + this.element.outerHeight() + settings.offset,
-                            'left': this.element.offset().left + (this.element.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+        var self = this,
+          winH = window.innerHeight,
+          // subtract 2 from the window width to account for the tooltips
+          // resizing themselves to fit within the CSS overflow boundary.
+          winW = window.innerWidth - 2;
+
+        switch(settings.placement) {
+          case 'bottom':
+            self.placeBelow();
+            var bottomOffset = self.tooltip.offset().top + self.tooltip.outerHeight();
+            if (bottomOffset >= winH) {
+              self.tooltip.removeClass('bottom').addClass('top');
+              self.placeAbove();
+            }
+            break;
+          case 'top':
+            self.placeAbove();
+            if (this.tooltip.offset().top <= 0) {
+              self.tooltip.removeClass('top').addClass('bottom');
+              self.placeBelow();
+            }
+            break;
+          case 'right':
+            self.placeToRight();
+            var rightOffset = self.tooltip.offset().left + self.tooltip.outerWidth();
+            if (rightOffset >= winW) {
+              self.tooltip.removeClass('right').addClass('left');
+              self.placeToLeft();
+            }
+            break;
+          default: //left
+            self.placeToLeft();
+            if (this.tooltip.offset().left <= 0) {
+              self.tooltip.removeClass('left').addClass('right');
+              self.placeToRight();
+            }
+            break;
         }
 
-        if (settings.placement === 'top') {
-          this.tooltip.css({'top': this.element.offset().top - settings.offset - this.tooltip.height(),
-                            'left': this.element.offset().left + (this.element.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+        // secondary check on bottom/top placements to see if the tooltip width is long enough
+        // to bleed off the edge of the page.
+        if (settings.placement === 'bottom' ||
+            settings.placement === 'top' ) {
+              if ( self.tooltip.offset().left <= 0 ) {
+                self.tooltip.removeClass('top bottom').addClass('right');
+                self.placeToRight();
+              }
+              if ( (self.tooltip.offset().left + self.tooltip.outerWidth()) >= winW ) {
+                self.tooltip.removeClass('top bottom').addClass('left');
+                self.placeToLeft();
+              }
         }
 
-        if (settings.placement === 'right') {
-          this.tooltip.css({'top': this.element.offset().top - (this.tooltip.height() / 2) + (this.element.outerHeight() / 2),
-                            'left': this.element.offset().left + this.element.outerWidth() + settings.offset});
-        }
+      },
+      placeBelow: function () {
+        this.tooltip.css({'top': this.element.offset().top + this.element.outerHeight() + settings.offset,
+                          'left': this.element.offset().left + (this.element.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+      },
+      placeAbove: function () {
+        this.tooltip.css({'top': this.element.offset().top - settings.offset - this.tooltip.outerHeight(),
+                          'left': this.element.offset().left + (this.element.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+      },
+      placeToRight: function () {
+        this.tooltip.removeAttr('style');
+        this.tooltip.css({'top': this.element.offset().top - (this.tooltip.outerHeight() / 2) + (this.element.outerHeight() / 2),
+                          'left': this.element.offset().left + this.element.outerWidth() + settings.offset});
+      },
+      placeToLeft: function () {
+        this.tooltip.removeAttr('style');
+        this.tooltip.css({'top': this.element.offset().top - (this.tooltip.outerHeight() / 2) + (this.element.outerHeight() / 2),
+                          'left': this.element.offset().left - (settings.offset + this.tooltip.outerWidth()) });
       },
 
       hide: function() {
         if (this.isInPopup) {
+          settings.content.addClass('hidden');
           return;
         }
         this.tooltip.addClass('is-hidden');
         $(document).off('click.tooltip');
         $(window).off('resize.tooltip');
 
-        this.element.trigger('close.tooltip', [this.tooltip]);
+        this.element.trigger('hide', [this.tooltip]);
       },
 
       destroy: function() {
@@ -211,15 +280,20 @@
         if (typeof instance[options] === 'function') {
           instance[options](args);
         }
+
         instance.settings = $.extend({}, defaults, options);
+
+        if (settings.trigger === 'immediate') {
+         setTimeout(function() {
+            instance.show(settings);
+          }, 100);
+        }
       } else {
         instance = $.data(this, pluginName, new Plugin(this, settings));
       }
     });
   };
 
-  //Migrate
-  $.fn.inforToolTip = $.fn.tooltip;
   $.fn.popover = $.fn.tooltip;
 
 }));

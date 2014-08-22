@@ -19,9 +19,7 @@
           title: 'Message Title',
           message: 'Message Summary',
           width: 'auto',
-          close: null,
-          resize: null,
-          button: []  //Passed through to modal
+          buttons: null //Passed through to modal
         },
         settings = $.extend({}, defaults, options);
 
@@ -34,8 +32,7 @@
     // Actual Plugin Code
     Plugin.prototype = {
       init: function() {
-        var self = this,
-            content;
+        var content;
 
         //Create the Markup
         this.message = $('<div class="modal"></div>');
@@ -51,25 +48,12 @@
 
         this.closeBtn = $('<button type="button" class="btn-default btn-close">Close</button>').appendTo(this.content);
         this.message.append(this.messageContent).appendTo('body').modal({trigger: 'immediate', buttons: settings.buttons,
-          resizable: settings.resizable, close: settings.close, resize: settings.resize});
+          resizable: settings.resizable, close: settings.close});
 
         //Adjust Width if Set as a Setting
         if (settings.width !== 'auto') {
           this.content.closest('.modal').css({'max-width': 'none', 'width': settings.width});
         }
-
-        //Call Close As an Option - For backwards Compat
-        if (settings.close) {
-          this.content.on('close', function (e) {
-            settings.close(e, self.content);
-          });
-        }
-        this.message.on('close', function () {
-          if (content) {
-            content.hide().appendTo('body');
-          }
-          self.message.remove();
-        });
       }
     };
 

@@ -11,40 +11,62 @@
   }
 }(function ($) {
 
+  $.fn.initialize = function() {
+    return this.each(function() {
+      var elem = $(this);
+
+      //Tabs
+      elem.find('.tab-container').tabs();
+
+      //Select / DropDowns
+      elem.find('select, .dropdown').dropdown();
+
+      //Modals
+      elem.find('#modal-1').modal();
+
+      //Buttons Linked to Message Dialogs
+      elem.find('button[data-message]').on('click', function () {
+        var opts = $(this).attr('data-message');
+        $('body').message(opts);
+      });
+
+      //Sliders
+      elem.find('.slider').slider();
+
+      //Editors
+      elem.find('.editor').editor();
+
+      //Menu Buttons
+      elem.find('.btn-menu').popupmenu();
+
+      //Context Menu
+      elem.find('[data-popupmenu]').each(function () {
+        var obj = $(this);
+        obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
+      });
+
+      //Tooltips
+      elem.find('[title]').tooltip();
+
+      //Popovers
+      elem.find('[data-popover]').each(function () {
+        var obj = $(this),
+          trigger = obj.attr('data-trigger'),
+          title = obj.attr('data-title');
+
+        obj.popover({content: $('#'+ obj.attr('data-popover')),
+            trigger: trigger ? trigger : 'click',
+            title: title ? title : 'Title Missing',
+            placement: 'right'
+        });
+      });
+
+    });
+  };
+
   // Init Stuff on Document Ready
   $(function() {
-    //Tabs
-    $('.tab-container').tabs();
-
-    //Select / DropDowns
-    $('select, .dropdown').dropdown();
-
-    //Modals
-    $('#modal-1').modal();
-
-    //Buttons Linked to Message Dialogs
-    $('button[data-message]').on('click', function () {
-      var opts = $(this).attr('data-message');
-      $('body').message(opts);
-    });
-
-    //Sliders
-    $('.slider').slider();
-
-    //Editors
-    $('.editor').editor();
-
-    //Menu Buttons
-    $('.btn-menu').popupmenu();
-
-    //Context Menu
-    $('[data-popupmenu]').each(function () {
-      var obj = $(this);
-      obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
-    });
-
-    //Tooltips
-    $('[title]').tooltip();
+    $('body').initialize();
   });
 
 }));
