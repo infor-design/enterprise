@@ -1,0 +1,26 @@
+/* User Input - Labels, TextBox, TextArea
+================================================== */
+.show {
+  display: block !important;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* Off Screen Text */
+.scr-only {
+  border: 0 none;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}

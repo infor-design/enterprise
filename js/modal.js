@@ -1,7 +1,7 @@
 /**
 * Responsive and Accessible Modal Control
-* @name Tabs
-* @param {string} propertyName - The Name of the Property
+* @name modal
+* @param {string} trigger - click, immediate,  manual
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -20,7 +20,6 @@
         defaults = {
           trigger: 'click', //TODO: supports click, immediate,  manual
           draggable: true,  //Can Drag the Dialog around.
-          resizable: false, //Depricated - Resizable Dialogs.
           buttons: null
         },
         settings = $.extend({}, defaults, options);
@@ -36,7 +35,12 @@
       init: function(){
         var self = this;
 
-        this.oldActive = document.activeElement;  //Save and restore focus for A11Y
+        try {
+          this.oldActive = document.activeElement;  //Save and restore focus for A11Y
+        } catch( e ) {
+          this.oldActive = parent.document.activeElement; //iframe
+        }
+
         this.trigger = $('button[ data-modal="' + this.element.attr('id') + '"]');  //Find the button with same dialog ID
         this.overlay = $('<div class="overlay"></div>');
 
@@ -48,7 +52,6 @@
 
         if (settings.trigger === 'immediate') {
           setTimeout(function () {
-
             self.open();
           },1);
         }
@@ -113,6 +116,7 @@
         }
 
         this.overlay.appendTo('body');
+
         messageArea = self.element.find('.detailed-message');
         if (messageArea.length === 1) {
           $(window).on('resize.modal', function () {
@@ -130,7 +134,6 @@
           if (modal.data('modal') && modal.data('modal').overlay) {
             modal.data('modal').overlay.css('z-index', '100' + i);
           }
-
         });
 
         setTimeout(function () {
@@ -143,8 +146,13 @@
         $('body > *').not(this.element).attr('aria-hidden', 'true');
         $('body').addClass('modal-engaged');
 
+        //Center on IE8
+        if ($('html').hasClass('ie8')) {
+          self.element.css({top:'50%',left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
+        }
+
         //Handle Default button.
-        $(document).on('keypress.modal', function (e) {
+        $(this.element).on('keypress.modal', function (e) {
           var target = $(e.target);
 
           if (target.is('textarea') || target.is(':button') || target.is('.dropdown')) {
@@ -152,6 +160,8 @@
           }
 
           if (e.which === 13 && self.isOnTop()) {
+            e.stopPropagation();
+            e.preventDefault();
             self.element.find('.btn-default').trigger('click.modal');
           }
         });
@@ -200,15 +210,14 @@
       },
 
       close: function () {
-        var elemCanClose = this.element.triggerHandler('beforeClose'),
-          bodyCanClose = this.element.find('.modal-body > div').first().triggerHandler('beforeClose');
+        var elemCanClose = this.element.triggerHandler('beforeClose');
 
-        if (elemCanClose === false || bodyCanClose === false) {
+        if (elemCanClose === false) {
           return;
         }
 
         this.element.removeClass('is-visible');
-        $(document).off('keypress.modal');
+        this.element.off('keypress.modal');
 
         this.overlay.remove();
         $('body').removeClass('modal-engaged');
@@ -224,11 +233,15 @@
         } else {
           this.trigger.focus();
         }
+
+        //close tooltips
+        $('#validation-errors, #tooltip').addClass('is-hidden');
+
       },
 
       destroy: function(){
         this.close();
-        $.removeData(this.obj, pluginName);
+        $.removeData($(this.element),'modal');
       }
     };
 
@@ -246,9 +259,14 @@
           instance[options]();
         }
         instance.settings = $.extend({}, defaults, options);
-      } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+
+        if (settings.trigger === 'immediate') {
+          instance.open();
+        }
+        return;
       }
+
+      instance = $.data(this, pluginName, new Plugin(this, settings));
     });
   };
 

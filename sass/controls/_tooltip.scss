@@ -55,6 +55,9 @@
 
 .popover p {
   color: #535353;
+  padding-right: 30px;
+  max-width: none;
+  text-align: center;
 }
 
 .tooltip-title {
@@ -117,7 +120,7 @@
 .popover.right .arrow, .tooltip.right .arrow  {
   border-left-width: 0;
   border-right-color: #D6D6D6;
-  left: -11px;
+  left: -13px;
   margin-top: -11px;
   top: 50%;
 }
