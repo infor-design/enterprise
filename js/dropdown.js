@@ -34,7 +34,7 @@
       init: function() {
 
         var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
-        this.isHidden = this.element.is('visible');
+        this.isHidden = !this.element.is(':visible');
         this.element.hide();
         this.orgLabel = $('label[for="' + this.element.attr('id') + '"]');
 
@@ -185,6 +185,13 @@
           self.closeList();
           self.updateList();
           self.setValue();
+        });
+
+        //for form resets.
+        self.element.closest('form').on('reset.dropdown', function() {
+          setTimeout(function () {
+            self.element.trigger('updated');
+          }, 1);
         });
       },
       activate: function () {

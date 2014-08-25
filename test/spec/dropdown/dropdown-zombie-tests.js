@@ -67,10 +67,6 @@ describe('Dropdown [zombie]', function() {
     //See how long it takes to initialize and make a test on > val
   });
 
-  it('can be set to blank', function() {
-    //Set value to '' and nothing should be shown. (How to prog set to blank)
-  });
-
   it('shouldn\'t be able to open two lists at the same time', function() {
     // Try to open one list, then try to open the other,
     // and check to see if the list contents match the first list opened (they should only match the second).

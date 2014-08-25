@@ -113,11 +113,9 @@ describe('Dropdown [selenium]', function(){
   });
 
   it('should support setting its value to nothing (blank) programatically', function(done) {
-    runner.client
-      .setValue('#blank', '', function(err) {
-        globals.noError(err);
-      })
-      .getAttribute('#blank', 'value', function(err, value) {
+    runner.client.execute('$("#blank").val("").trigger("updated");');
+
+    runner.client.getAttribute('#blank', 'value', function(err, value) {
         globals.noError(err);
         value.should.equal('');
       })
@@ -127,7 +125,7 @@ describe('Dropdown [selenium]', function(){
       })
       .getText('#blank-shdo', function(err, value) {
         globals.noError(err);
-        value.should.equal('Blank');
+        value.should.equal('');
       })
       .call(done);
   });

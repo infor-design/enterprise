@@ -20,15 +20,15 @@
   //      - Expand / All Collapse All
   $.fn.tree = function(options) {
     var pluginName = 'tree',
-        defaults = {
-          option1: 'false'  //None Yet
-        },
-        settings = $.extend({}, defaults, options);
+      defaults = {
+        option1: 'false'  //None Yet
+      },
+      settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Plugin Methods
@@ -43,40 +43,40 @@
             self = this;
 
         links.each(function(i) {
-            var a = $(this),
-                parentCount = 0,
-                subNode,
-                li = a.parent('li');
+          var a = $(this),
+            parentCount = 0,
+            subNode,
+            li = a.parent('li');
 
-            //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
-            a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
-            if (i === 0) {
-              self.setSelectedNode(a);
-            }
+          //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
+          a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
+          if (i === 0) {
+            self.setSelectedNode(a);
+          }
 
-            //parentCount 'aria-level' to the node's level depth
-            parentCount = a.parentsUntil(this.element, 'ul').length;
-            a.attr('aria-level', parentCount + 1);
+          //parentCount 'aria-level' to the node's level depth
+          parentCount = a.parentsUntil(this.element, 'ul').length;
+          a.attr('aria-level', parentCount + 1);
 
-            //Set the current tree item node position relative to its aria-setsize
-            var posinset = a.parent().index();
-            a.attr('aria-posinset', posinset + 1);
+          //Set the current tree item node position relative to its aria-setsize
+          var posinset = a.parent().index();
+          a.attr('aria-posinset', posinset + 1);
 
-            //adds role=group' to all subnodes
-            subNode = a.next();
-            //Inject Icons
-            if (a.children('svg').length === 0) {
-              a.prepend('<svg class="icon" viewBox="0 0 32 32"><use xlink:href="#icon-document"></use></svg>');
-            }
+          //adds role=group' to all subnodes
+          subNode = a.next();
+          //Inject Icons
+          if (a.children('svg').length === 0) {
+            a.prepend('<svg class="icon" viewBox="0 0 32 32"><use xlink:href="#icon-document"></use></svg>');
+          }
 
-            if (subNode.is('ul')) {
-              subNode.attr('role', 'group').parent().addClass('folder');
-              a.find('use').attr('xlink:href','#icon-folder');
-            }
+          if (subNode.is('ul')) {
+            subNode.attr('role', 'group').parent().addClass('folder');
+            a.find('use').attr('xlink:href','#icon-folder');
+          }
 
-            if (li.is('[class^="icon"]')) {
-              a.find('use').attr('xlink:href','#'+ li.attr('class'));
-            }
+          if (li.is('[class^="icon"]')) {
+            a.find('use').attr('xlink:href','#'+ li.attr('class'));
+          }
         });
       },
       expandAll: function() {
