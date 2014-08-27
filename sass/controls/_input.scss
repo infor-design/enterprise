@@ -32,7 +32,13 @@ label, .label, .data {
 }
 
 /* Input Style */
-input[type="text"], input[type="password"], input[type="email"], textarea {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="url"],
+textarea {
   display: block;
   color: $data-color;
   border: 1px solid $field-border-color;
@@ -49,12 +55,38 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   resize: none;
 }
 
-input[type="text"]:focus, input[type="text"].is-focused, input[type="password"]:focus, input[type="password"].is-focused, input[type="email"]:focus, textarea:focus, textarea.is-focused {
+input[type="text"]:focus,
+input[type="text"].is-focused,
+input[type="password"]:focus,
+input[type="password"].is-focused,
+input[type="email"]:focus,
+input[type="email"].is-focused,
+input[type="tel"]:focus,
+input[type="tel"].is-focused,
+input[type="number"]:focus,
+input[type="number"].is-focused,
+input[type="url"]:focus,
+input[type="url"].is-focused,
+textarea:focus,
+textarea.is-focused {
   box-shadow: $focus-shadow;
   border: 1px solid transparent;
 }
 
-input[type="text"]:disabled, input[type="text"].is-disabled, input[type="password"]:disabled, input[type="password"].is-disabled, input[type="email"]:focus, textarea:disabled, textarea.is-disabled {
+input[type="text"]:disabled,
+input[type="text"].is-disabled,
+input[type="password"]:disabled,
+input[type="password"].is-disabled,
+input[type="email"]:disabled,
+input[type="email"].is-disabled,
+input[type="tel"]:disabled,
+input[type="tel"].is-disabled,
+input[type="number"]:disabled,
+input[type="number"].is-disabled,
+input[type="url"]:disabled,
+input[type="url"].is-disabled,
+textarea:disabled,
+textarea.is-disabled {
   color: $disabled-color;
   -webkit-text-fill-color: $disabled-color;
   background-color: #e5e5e5;

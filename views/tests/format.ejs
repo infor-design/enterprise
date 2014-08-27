@@ -1,0 +1,31 @@
+<div class="grid grid-pad">
+  <div id="format-container" class="col-1-2">
+    <h1>Formatted User Input</h1>
+
+    <form id="format-form" action="#" method="POST">
+      <div class="field">
+        <label for="input-masked-phone">Phone Number</label>
+        <input type="tel" class="format" id="input-masked-phone">
+      </div>
+
+      <div class="field">
+        <label for="input-standard">Number</label>
+        <input type="number" class="format" id="input-masked-number">
+      </div>
+
+      <div class="field">
+        <label for="input-alpha-only">Only Letters</label>
+        <input type="text" class="format" id="input-alpha-only">
+      </div>
+
+      <button type="submit" class="btn">(Don't Actually) Submit</button>
+    </form>
+    <script type="text/javascript">
+      $('document').ready(function() {
+        $('#format-form button[type="submit"]').click(function(e) {
+          e.preventDefault();
+        });
+      });
+    </script>
+  </div>
+</div>

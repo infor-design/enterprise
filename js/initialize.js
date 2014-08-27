@@ -64,6 +64,9 @@
       //Tree
       $('.tree').tree();
 
+      //Format
+      elem.find('input.format').format();
+
     });
   };
 
