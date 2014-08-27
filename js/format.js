@@ -176,13 +176,31 @@
           return string.substring(0, index) + value + string.substring(index);
       },
 
+      // Writes the current value of the internal text buffer out to the Input Field.
+      // Additionally, resets the Caret to the right position.
       writeInput: function() {
         var val = this.element.val(),
-          pos = this.originalPos;
+          pos = this.originalPos,
+          buffSize = this.buffer.length,
+          pattSize = settings.pattern.length;
 
+        // insert the buffer's contents
         val = this.insertAtIndex( val, this.buffer, pos.begin );
-        val = val.substring( 0, settings.pattern.length );
+
+        // strip out the portion of the text that would be selected by the caret
+        var selectedText = val.substring( pos.begin + buffSize, pos.end + buffSize );
+        val = val.replace(selectedText, '');
+
+        // cut down the total length of the string to make it no larger than the pattern mask
+        val = val.substring( 0, pattSize );
+
+        // put it back!
         this.element.val(val);
+
+        // reposition the caret to be in the correct spot (after the content we just added).
+        var totalCaretPos = pos.begin + buffSize;
+        var actualCaretPos = totalCaretPos >= pattSize ? pattSize : totalCaretPos;
+        this.caret( actualCaretPos );
       },
 
       processMask: function( typedChar, patternChar, e ) {
@@ -226,7 +244,7 @@
           var pos = self.caret();
 
           self.writeInput();
-          self.caret( self.originalPos.begin + len, self.originalPos.end + len );
+          //self.caret( self.originalPos.begin + len, self.originalPos.end + len );
           self.resetStorage();
 
           return self.killEvent(e);
