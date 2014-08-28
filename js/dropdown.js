@@ -456,8 +456,8 @@
             //populate
             self.element.empty();
             for (var i=0; i < data.length; i++) {
-              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"',"'") + '"') +
-                       (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"',"'") + '"') + '>' + data[i].label + '</option>';
+              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"','\'') + '"') +
+                       (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"','\'') + '"') + '>' + data[i].label + '</option>';
             }
             self.element.append(list);
             self.input.removeClass('is-busy');
