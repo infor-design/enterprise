@@ -208,31 +208,12 @@
           return;
         }
 
-        if (settings.source) {
-          var response = function (data) {
-            //to do - no results back do not open.
-            var list = '';
-
-            //populate
-            self.element.empty();
-            for (var i=0; i < data.length; i++) {
-              var id = (data[i].id === undefined ? data[i].value : data[i].id);
-              list += '<option id="' + id + '">' + data[i].label + '</option>';
-            }
-            self.element.append(list);
-            self.updateList();
-            self.input.removeClass('is-busy');
-            self.openList();
-            return;
-          };
-
-          //show indicator
-          this.input.addClass('is-busy');
-          //make ajax call
-          settings.source(this.input.val(), response);
-          return;
+        if (!self.callSource(function () {
+          self.updateList();
+          self.openList();
+        })) {
+          this.openList();
         }
-        this.openList();
       },
       openList: function () {
       //Actually Open The List
@@ -453,18 +434,55 @@
         }
         this.input.val(option.text()); //set value and active descendent
 
-        if (this.element.find('[value="' + code + '"]').length > 0) {
-          this.element.find('[value="' + code + '"]')[0].selected = true;
-        }
+        this.element.find('option').each(function () {
+          if (this.value === code) {
+            this.selected = true;
+            return false;
+          }
+        });
 
         if (oldVal !== option.text()) {
           this.element.val(code).trigger('change');
         }
 
       },
+      callSource: function(callback) {
+        var self = this;
+        if (settings.source) {
+          var response = function (data) {
+            //to do - no results back do not open.
+            var list = '';
+
+            //populate
+            self.element.empty();
+            for (var i=0; i < data.length; i++) {
+              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"',"'") + '"') +
+                       (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"',"'") + '"') + '>' + data[i].label + '</option>';
+            }
+            self.element.append(list);
+            self.input.removeClass('is-busy');
+            callback();
+            return;
+          };
+
+          //show indicator
+          self.input.addClass('is-busy');
+          //make ajax call
+          settings.source(self.input.val(), response);
+          return true;
+        }
+        return false;
+      },
       setCode: function(code) {
-        var option = this.element.find('[value="' + code + '"]');
-        this.selectOption(option);
+        var self = this,
+          doSetting = function ()  {
+            var option = self.element.find('[value="' + code + '"]');
+            self.selectOption(option);
+          };
+
+        if (!self.callSource(doSetting)) {
+          doSetting();
+        }
       },
       destroy: function() {
         this.element.removeData(pluginName);

@@ -196,7 +196,7 @@ describe('Dropdown [selenium]', function(){
         result.should.equal(false);
       })
       // click on the form reset button
-      .click('#onAFormReset', globals.noError)
+      .click('#reset-button', globals.noError)
       // check that the originally "selected" item is once again selected, due
       // to the form being reset.
       .isSelected('#secondFormOpt', function(err, result) {

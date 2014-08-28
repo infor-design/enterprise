@@ -6,19 +6,19 @@
 
     // Settings and Options
     var pluginName = 'editor',
-        defaults = {
-          buttons: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video'],
-          staticToolbar: true,
-          delay: 200,
-          diffLeft: 0,
-          diffTop: -10,
-          firstHeader: 'h3',
-          secondHeader: 'h4',
-          forcePlainText: true,
-          targetBlank: false,
-          extensions: {}
-        },
-        settings = $.extend({}, defaults, options);
+      defaults = {
+        buttons: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video'],
+        staticToolbar: true,
+        delay: 200,
+        diffLeft: 0,
+        diffTop: -10,
+        firstHeader: 'h3',
+        secondHeader: 'h4',
+        forcePlainText: true,
+        targetBlank: false,
+        extensions: {}
+      },
+      settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
@@ -36,13 +36,13 @@
       setup: function () {
         this.isActive = true;
         this.initElements()
-            .bindSelect()
-            .bindPaste()
-            .bindWindowActions();
+          .bindSelect()
+          .bindPaste()
+          .bindWindowActions();
       },
       initElements: function () {
         var i,
-            elem = this.element;
+          elem = this.element;
 
         //Make it an editor
         elem.attr('contentEditable', true);
@@ -52,8 +52,8 @@
         this.bindParagraphCreation(i).bindTab(i);
 
         this.initToolbar()
-            .bindButtons()
-            .bindAnchorPreview();
+          .bindButtons()
+          .bindAnchorPreview();
 
         return this;
       },
@@ -70,14 +70,14 @@
           if (e.which === 13) {
             node = self.getSelectionStart();
             tagName = node.tagName.toLowerCase();
-            //TODO Need Data Disable Return?
+
             if (tagName !== 'li' && !self.isListItemChild(node)) {
-                if (!e.shiftKey) {
-                    document.execCommand('formatBlock', false, 'p');
-                }
-                if (tagName === 'a') {
-                    document.execCommand('unlink', false, null);
-                }
+              if (!e.shiftKey) {
+                  document.execCommand('formatBlock', false, 'p');
+              }
+              if (tagName === 'a') {
+                  document.execCommand('unlink', false, null);
+              }
             }
           }
         });
@@ -548,28 +548,28 @@
       var self = this;
 
       this.pasteWrapper = function (e) {
-          var paragraphs,
-              html = '',
-              p;
+        var paragraphs,
+          html = '',
+          p;
 
-          if (!settings.forcePlainText) {
-              return this;
-          }
+        if (!settings.forcePlainText) {
+          return this;
+        }
 
-          if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
-            e.preventDefault();
-            paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
-            for (p = 0; p < paragraphs.length; p += 1) {
-                if (paragraphs[p] !== '') {
-                    if (navigator.userAgent.match(/firefox/i) && p === 0) {
-                        html += self.htmlEntities(paragraphs[p]);
-                    } else {
-                        html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
-                    }
-                }
+        if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
+          e.preventDefault();
+          paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
+          for (p = 0; p < paragraphs.length; p += 1) {
+            if (paragraphs[p] !== '') {
+              if (navigator.userAgent.match(/firefox/i) && p === 0) {
+                html += self.htmlEntities(paragraphs[p]);
+              } else {
+                html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+              }
             }
-            document.execCommand('insertHTML', false, html);
           }
+          document.execCommand('insertHTML', false, html);
+        }
       };
 
      this.element[0].addEventListener('paste', this.pasteWrapper); //doesnt work as jQuery?

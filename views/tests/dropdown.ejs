@@ -26,6 +26,7 @@
         <option value="a&#039;z">A&#039;rizona</option>
         <option value="<"><</option>
         <option value=">">></option>
+        <option value="\\myserver\path\">\\myserver\path\</option>
         <option value="a&#039;z">A&#039;rizona</option>
         <option value="<="><=</option>
         <option value=">=">>=</option>
@@ -38,8 +39,8 @@
      </div>
 
     <div class="field">
-      <label for="setWidth" class="label">Set Width</label>
-        <select id="setWidth" name="setWidth" class="dropdown" style="width: 50px">
+      <label for="static-width" class="label">Set Width</label>
+        <select id="static-width" name="setWidth" class="dropdown" style="width: 50px">
           <option value="AL">Alabama</option>
           <option value="DE">Delaware</option>
           <option value="DC">District Of Columbia</option>
@@ -124,13 +125,13 @@
 
     <div class="field">
       <form id="testForm" action="#" method="POST">
-        <label for="onAForm" class="label">This Dropdown's inside a Form Tag</label>
-        <select id="onAForm" name="onAForm" class="dropdown">
+        <label for="form-dropdown" class="label">This Dropdown's inside a Form Tag</label>
+        <select id="form-dropdown" name="form-dropdown" class="dropdown">
           <option id="firstFormOpt" value="notSelectedByDefault">Not Selected by Default</option>
           <option id="secondFormOpt" value="selectedByDefault" selected>Selected by Default</option>
         </select>
-        <div class="controls">
-          <button id="onAFormReset" class="btn" type="reset">Reset</button>
+        <div class="form-buttons">
+          <button id="reset-button" class="btn" type="reset">Reset</button>
         </div>
       </form>
     </div>
