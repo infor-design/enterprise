@@ -5,17 +5,17 @@
     <form id="format-form" action="#" method="POST">
       <div class="field">
         <label for="input-masked-phone">Phone Number</label>
-        <input type="tel" class="format" id="input-masked-phone">
+        <input type="tel" data-format id="input-masked-phone">
       </div>
 
       <div class="field">
         <label for="input-standard">Number</label>
-        <input type="number" class="format" id="input-masked-number">
+        <input type="number" data-format="999.99" id="input-masked-number">
       </div>
 
       <div class="field">
         <label for="input-alpha-only">Only Letters</label>
-        <input type="text" class="format" id="input-alpha-only">
+        <input type="text" data-format="aaaaaaaaaa" id="input-alpha-only">
       </div>
 
       <button type="submit" class="btn">(Don't Actually) Submit</button>

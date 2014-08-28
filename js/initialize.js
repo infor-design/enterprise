@@ -65,7 +65,7 @@
       $('.tree').tree();
 
       //Format
-      elem.find('input.format').format();
+      elem.find('input[data-format]').format();
 
     });
   };

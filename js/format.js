@@ -45,8 +45,18 @@
         var self = this;
         self.buffer = '';
 
+        // environment strings
+        self.env = {
+          pasteEvent: self.getPasteEvent(),
+          ua: navigator.userAgent,
+          iPhone: /iphone/i.test(this.ua),
+          chrome: /chrome/i.test(this.ua),
+          firefox: /firefox/i.test(this.ua),
+          android: /android/i.test(this.ua)
+        };
+
         // Order of operations when choosing pattern strings:
-        // jQuery Options > HTML5 Pattern Attribute > Generic pattern string based on "type" attribute > nothing.
+        // jQuery Options > HTML5 'data-format' attribute > Generic pattern string based on "type" attribute > nothing.
         //
         // if no pattern is provided in settings, use a pre-determined pattern based
         // on element type, or grab the pattern from the element itself.
@@ -56,17 +66,24 @@
             self.getPatternForType();
           }
         }
-        self.element.on('keydown.format', null, function(e) {
-          self.keyDownEvent.apply(self, arguments);
+        self.element.on('keydown.format keypress.format ' + self.env.pasteEvent, null, function(e) {
+          self.handleKeyEvents.apply(self, arguments);
         });
-        self.element.on('keypress.format', null, function(e) {
-          self.initValue = self.element.val();
-          self.keyPressEvent.apply(self, arguments);
+        self.element.on('focus.format', null, function(e) {
+          self.focusEvent.apply( self, arguments );
         });
-        self.element.on('focus.format', null, self.focusEvent);
-        self.element.on('blur.format', null, self.blurEvent);
+        self.element.on('blur.format', null, function(e) {
+          self.handleEnter.apply( self, arguments );
+        });
 
         console.log('Input field formatter active on element #' + self.element );
+      },
+
+      getPasteEvent: function() {
+        var el = document.createElement('input'),
+            name = 'onpaste';
+        el.setAttribute(name, '');
+        return ((typeof el[name] === 'function') ? 'paste' : 'input') + '.format';
       },
 
       //Helper Function for Caret positioning
@@ -132,13 +149,13 @@
         // TODO: flesh this out
         switch(type) {
           case 'number':
-            settings.pattern = '';
+            settings.pattern = '99.99';
             break;
           case 'tel':
             settings.pattern = '(999) 999-9999';
             break;
           default:
-            settings.pattern = '';
+            settings.pattern = '**********';
         }
       },
 
@@ -150,16 +167,83 @@
         return false;
       },
 
-      keyPressEvent: function(e) {
-        var self = this;
-        var key = self.typedCode(e);
+      handleKeyEvents: function(e) {
+        var evt = e || window.event;
+        var eventType = evt.originalEvent.type;
+        var key = this.typedCode(evt);
         var typedChar = String.fromCharCode(key);
+        var patternChar = this.getCharacter();
+
+        // set the original value if it doesn't exist.
+        if (!this.initValue) {
+          this.initValue = this.element.val();
+        }
+
+        console.log( '"' + typedChar + '" from keycode "' + key + '" was pressed!' );
+
+        if ( eventType === 'keydown' ) {
+          console.log('KEYDOWN!');
+          // backspace || delete
+          if (key === 8 || key === 46 || (this.env.iPhone && key === 127)) {
+            this.handleBackspace(evt);
+          } else if (key === 13) { // enter
+            this.handleEnter(evt);
+          } else if (key === 27) { // escape
+            this.handleEscape(evt);
+          } else if (36 < key && key < 41) { // arrow keys (in Firefox)
+            return;
+          } else if ( e.shiftKey && 36 < key && key < 41 ) { // arrow keys AND shift key (for moving the cursor)
+            return;
+          }
+        }
+
+        if ( eventType === 'keypress' ) {
+          console.log('KEYPRESS!');
+          // Ignore all of these keys or combinations containing these keys
+          if (e.ctrlKey || e.altKey || e.metaKey || key < 32) {
+            return;
+          // Need to additionally check for arrow key combinations here because some browsers
+          // Will fire keydown and keypress events for arrow keys.
+          } else if ( e.shiftKey  && 36 < key && key < 41) {
+            return;
+          } else if ( 36 < key && key < 41 ) {
+            return;
+          }
+          this.processMask( typedChar, patternChar, evt );
+        }
+
+        if ( eventType === 'paste' ) {
+          console.log('PASTE!');
+        }
+
+        if ( eventType === 'input') {
+          console.log('INPUT!');
+        }
+      },
+
+      // Handles the backspace key
+      handleBackspace: function(e) {
+        var val = this.element.val();
+        if ( 0 < val.length ) {
+          var pos = this.caret();
+          var dCaret = pos.end - pos.begin;
+          var sliceLength = dCaret > 0 ? dCaret : 1;
+          this.element.val( val.slice(0, -sliceLength) );
+        }
+        return this.killEvent(e);
+      },
+
+      handleEnter: function(e) {
         var el = e.currentTarget.tagName + '#' + e.currentTarget.id;
-        var patternChar = self.getCharacter();
+        console.log('Element ' + el + ' Blurred');
+      },
 
-        console.log('Detected keypress "' + typedChar + '" + on element #' + el + '.');
-
-        self.processMask( typedChar, patternChar, e );
+      handleEscape: function(e) {
+        var self = this;
+        self.element.val( self.initValue );
+        self.caret(0, self.initValue.length);
+        delete self.initValue;
+        return self.killEvent(e);
       },
 
       isCharacterLiteral: function( patternChar ) {
@@ -240,11 +324,7 @@
           }
 
           self.buffer += typedChar;
-          var len = self.buffer.length;
-          var pos = self.caret();
-
           self.writeInput();
-          //self.caret( self.originalPos.begin + len, self.originalPos.end + len );
           self.resetStorage();
 
           return self.killEvent(e);
@@ -304,6 +384,10 @@
         }
       },
 
+      pasteEvent: function(e) {
+        console.log('Paste Intercepted on element #' + this.element.attr('id') );
+      },
+
       keyDownEvent: function(e) {
 
       },
@@ -314,16 +398,12 @@
 
       focusEvent: function(e) {
         var el = e.currentTarget.tagName + '#' + e.currentTarget.id;
+        this.initValue = this.element.val();
         console.log('Element ' + el + ' Focused');
       },
 
-      blurEvent: function(e) {
-        var el = e.currentTarget.tagName + '#' + e.currentTarget.id;
-        console.log('Element ' + el + ' Blurred');
-      },
-
       destroy: function() {
-        this.element.off('keydown keypress keyup focus blur');
+        this.element.off('keydown keypress keyup focus blur ' + this.env.pasteEvent);
         this.element.removeData(pluginName);
       }
     };
