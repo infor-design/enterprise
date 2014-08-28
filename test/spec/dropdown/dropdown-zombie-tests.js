@@ -37,7 +37,7 @@ describe('Dropdown [zombie]', function() {
 
   it('should support initial selection of an option', function() {
     var item = browser.document.getElementById('special');
-    item.selectedIndex.should.equal(9);
+    item.selectedIndex.should.equal(10);
   });
 
   it('should support special characters', function() {

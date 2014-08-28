@@ -53,7 +53,7 @@ describe('Dropdown [selenium]', function(){
       })
       .getAttribute('#special', 'selectedIndex', function(err, index) {
         globals.noError(err);
-        index.should.equal('9');
+        index.should.equal('10');
       })
       .call(done);
   });
@@ -62,7 +62,7 @@ describe('Dropdown [selenium]', function(){
     runner.client
       .getAttribute('#special', 'selectedIndex', function(err, index) {
         globals.noError(err);
-        index.should.equal('9');
+        index.should.equal('10');
       })
       .click('#special-shdo', globals.noError)
       // move the scrollable dropdown list <div> down so that selenium can actually see the list option
@@ -70,7 +70,7 @@ describe('Dropdown [selenium]', function(){
       .click('#list-option9', globals.noError)
       .getAttribute('#special-shdo', 'value', function(err, value) {
         globals.noError(err);
-        value.should.equal('Apostraphe\'s');
+        value.should.equal('Customer & Internal');
       })
       .call(done);
   });
@@ -181,17 +181,17 @@ describe('Dropdown [selenium]', function(){
 
   it('should work correctly with a <form> reset', function(done) {
     runner.client
-      // check that the "selected" item in the #onAForm dropdown is indeed selected.
-      .isSelected('#secondFormOpt', function(err, result) {
+      // check that the "selected" item in the #form-dropdown dropdown is indeed selected.
+      .isSelected('#option2', function(err, result) {
         globals.noError(err);
         result.should.equal(true);
       })
       // use the SoHo dropdown to change the value of the original dropdown
       // to the first option instead of the second.
-      .click('#onAForm-shdo', globals.noError)
-      .click('#list-option0', globals.noError)
+      .click('#form-dropdown', globals.noError)
+      .click('#option1', globals.noError)
       // check that the originally "selected" item is no longer selected.
-      .isSelected('#secondFormOpt', function(err, result) {
+      .isSelected('#option1', function(err, result) {
         globals.noError(err);
         result.should.equal(false);
       })
@@ -199,14 +199,14 @@ describe('Dropdown [selenium]', function(){
       .click('#reset-button', globals.noError)
       // check that the originally "selected" item is once again selected, due
       // to the form being reset.
-      .isSelected('#secondFormOpt', function(err, result) {
+      .isSelected('#option2', function(err, result) {
         globals.noError(err);
         result.should.equal(true);
       })
       // value of the SoHo dropdown box on screen should be the same as the <select> tag.
-      .getAttribute('#onAForm-shdo', 'value', function(err, value) {
+      .getAttribute('#form-dropdown', 'value', function(err, value) {
         globals.noError(err);
-        value.should.equal('Selected by Default');
+        value.should.equal('selectedByDefault');
       })
       .call(done);
   });
