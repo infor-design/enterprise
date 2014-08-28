@@ -16,7 +16,7 @@ console.log('SoHo 2.0 Controls - Test Suite'.green);
 // Build a new Mocha instance
 var mocha = new Mocha({
   ui: 'bdd',
-  reporter: 'spec',
+  reporter: 'spec-xunit-file',
   timeout: 30000,
   slow: 10000
 });
