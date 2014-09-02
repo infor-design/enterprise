@@ -5,17 +5,22 @@
     <form id="format-form" action="#" method="POST">
       <div class="field">
         <label for="input-masked-phone">Phone Number</label>
-        <input type="tel" data-format id="input-masked-phone">
+        <input type="tel" data-format="(999) 999-9999" id="input-masked-phone">
       </div>
 
       <div class="field">
         <label for="input-standard">Number</label>
-        <input type="number" data-format="999.99" id="input-masked-number">
+        <input type="number" data-format="999.99" min="0" max="999.99" step="0.01" id="input-masked-number">
       </div>
 
       <div class="field">
         <label for="input-alpha-only">Only Letters</label>
         <input type="text" data-format="aaaaaaaaaa" id="input-alpha-only">
+      </div>
+
+      <div class="field">
+        <label for="input-previously-filled">Previously Had Contents</label>
+        <input type="tel" data-format="(999) 999-9999" id="input-previously-filled" value="1234567890">
       </div>
 
       <button type="submit" class="btn">(Don't Actually) Submit</button>
