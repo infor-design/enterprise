@@ -44,7 +44,7 @@
         var self = this;
         self.buffer = '';
 
-        // environment strings
+        // environment strings/bools
         self.env = {
           pasteEvent: self.getPasteEvent(),
           ua: navigator.userAgent,
@@ -71,12 +71,12 @@
         });
 
         // when the element is focused, store its initial value.
-        self.element.on('focus.format', null, function(e) {
+        self.element.on('focus.format', null, function() {
           self.initValue = self.element.val();
         });
 
         // remove the value when blurred
-        self.element.on('blur.format', null, function(e) {
+        self.element.on('blur.format', null, function() {
           delete this.initValue;
         });
 
@@ -100,9 +100,11 @@
 
       // Gets rid of event firing and bubbling in all browsers.
       killEvent: function(e) {
-        e.returnValue = false;
-        if (e.preventDefault) {
-          e.preventDefault();
+        if (e) {
+          e.returnValue = false;
+          if (e.preventDefault) {
+            e.preventDefault();
+          }
         }
         return false;
       },
@@ -131,9 +133,6 @@
 
         // TODO: flesh this out
         switch(type) {
-          case 'number':
-            self.pattern = '99.99';
-            break;
           case 'tel':
             self.pattern = '(999) 999-9999';
             break;
@@ -421,7 +420,8 @@
         }
       },
 
-      // Takes an entire string of characters and runs it against the processMask() method until it's complete
+      // Takes an entire string of characters and runs each character against the processMask()
+      // method until it's complete.
       processStringAgainstMask: function( string, originalEvent ) {
         var charArray = string.split('');
         for(var i = 0; i < charArray.length; i++) {
@@ -450,7 +450,7 @@
             return mask.substring( index + 1, index + 2 );
           case 'prev':
             return mask.substring( index - 1, index );
-          default:
+          default: // current
             return mask.substring( index, index + 1 );
         }
       },
