@@ -15,21 +15,21 @@ h1, h2, h3, h4, h5, h6, p, small, span {
 }
 
 h1 {
-	@include font-size(32);
-	font-weight: lighter;
-	@include rem(line-height, 5rem);
+  @include font-size(32);
+  font-weight: lighter;
+  @include rem(line-height, 5rem);
   color: $data-color;
 }
 
 h2 {
-	@include font-size(24);
-	font-weight: lighter;
+  @include font-size(24);
+  font-weight: lighter;
   line-height: 21px;
   color: $data-color;
 }
 
 h3, .tab-panel h2 {
-	@include font-size(18);
+  @include font-size(18);
   @include rem(line-height, 2.6rem);
   @include rem(margin-top, 2.3rem);
   font-weight: lighter;
@@ -37,10 +37,10 @@ h3, .tab-panel h2 {
 }
 
 h4 {
-	@include font-size(14);
+  @include font-size(14);
   @include rem(line-height, 2.3rem);
   @include rem(margin-top, 1.8rem);
-	font-weight: bold;
+  font-weight: bold;
   color: $label-color;
 }
 

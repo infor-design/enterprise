@@ -34,7 +34,7 @@
       init: function() {
 
         var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
-        this.isHidden = !this.element.is(':visible');
+        this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
         this.orgLabel = $('label[for="' + this.element.attr('id') + '"]');
 
@@ -151,7 +151,6 @@
           if (self.element.is(':disabled') || self.input.hasClass('is-readonly')) {
             return;
           }
-
 
           //Printable Chars Jump to first high level node with it...
           if (e.which !== 0) {
@@ -414,7 +413,7 @@
           this.open();
         }
       },
-      selectOption: function(option) {
+      selectOption: function(option, noTrigger) {
         var code = option.val(),
           oldVal = this.input.val();
 
@@ -441,7 +440,7 @@
           }
         });
 
-        if (oldVal !== option.text()) {
+        if (oldVal !== option.text() && !noTrigger) {
           this.element.val(code).trigger('change');
         }
 
@@ -451,13 +450,16 @@
         if (settings.source) {
           var response = function (data) {
             //to do - no results back do not open.
-            var list = '';
+            var list = '',
+              val = self.element.val();
 
             //populate
             self.element.empty();
             for (var i=0; i < data.length; i++) {
-              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"','\'') + '"') +
-                       (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"','\'') + '"') + '>' + data[i].label + '</option>';
+              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"')
+                      + (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"')
+                      + (data[i].value === val ? ' selected ' : '')
+                      + '>'+ data[i].label + '</option>';
             }
             self.element.append(list);
             self.input.removeClass('is-busy');
@@ -477,7 +479,7 @@
         var self = this,
           doSetting = function ()  {
             var option = self.element.find('[value="' + code + '"]');
-            self.selectOption(option);
+            self.selectOption(option, true);
           };
 
         if (!self.callSource(doSetting)) {

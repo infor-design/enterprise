@@ -20,10 +20,21 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 * Touch Friendly
 * Retina Ready with SVG images and icons
 * IE8 Support not included at the moment (TBD Might not be :)
+* Rewrites: Grid / DateField
+* Globalization
+* Input Formatting
+* Validation
+* Analytics
 
 ## Upgrade Guide (from 3.x)
 
-TBD
+### Checkboxes
+* New Markup
+
+### Rewrites
+* Grid
+* DateField
+* Tabs
 
 # Running the Development Project
 
@@ -182,3 +193,42 @@ The documentation will be generated created inline in the pages (soon but not ye
 * Next version will have DelekJS or CasperJS test suites which will need to be updated.
 * Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
 
+# Teams Using
+
+| Project   |      Comments      |  Names |
+|----------|:-------------:|------:|
+| Approva Applications |  An ASP Application interested in accessibility | Shabu Kutty |
+| Business Vault |    Justin Timbers   |   A JSF based Single Page App implement with jQuery |
+| Certification Manager | ? |    Syedur Islam |
+| Certpoint LMS  | ? | Blessed Dianne Valencia |
+| CPM Applications (4) | ? | Rick Leedy, Mike Surel |
+| CLM  | ? | Michael Pendon |
+| GFC  | Lawson App | Tiffany Kai King, Jon Cadag |
+| Hansen 8  | An ASP Application interested in accessibility  | Ovidiu Petruescu |
+| Healthcare Clinical  | ?? | Charlie Price |
+| HMS  | ? | David Parisi |
+| Infinium SHCM  | ? | Joe Bockskopf |
+| Automotive Exchange  | Evaluate with AngularJS and GWT | Tien Hanh Pham, Michael Lenz |
+| Infor ERP LN - Customer Specific Utilities  | ? | Flavio Marcato |
+| Landmark  | Jetty Server Servlet | Phillip Patton |
+| Lawson S3  | Jetty Server Servlet | Phillip Patton |
+| LBI | ? | Steve Stahl, Rommel Dollison |
+| LTM App Group | ? | Jerry Drinka, David Cooper |
+| Masterpiece | ? | Tam Nav |
+| MSCM (Mobile Supply Chain Management ) | ? | Ferdinand Brian Verdejol, Larry Amisola |
+| MNT0386 - Cloud Enablement of SRS | ? | Leo Peng |
+| M3 Sales and Marketing Suite Team - Metadata Publisher | ? | Ralph Brian Mercadal, Lito Lopez |
+| MUA (M3H5 Client) | ? | Michael Quibin , Jack Rubillar |
+| Optiva | ? | Andy Koenigsberg |
+| PMServerAdmin | ? | Mike Campbell |
+| PCM | Knockout App | Tim Dunham |
+| Sales Portal | ? | Matt Defina  |
+| SmartStream | ASP | Wim Denayer |
+| Softbrands FourthShift ERP | ASP | Steve Duepner |
+| S3 Worklist | Webpart (Black) | Jeremy Spring |
+| Sunsystems Transfer Desk | Alexander Taylor | MVC3 |
+| Supply Chain Execution | Anindhya Sharma | Reviewing |
+| SupplyWeb | Chad Paulinski | Reviewing |
+| System I | ? | Richard Sankey |
+| VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  |
+| Xtreme Support | ASP| Raj S. Joshi |

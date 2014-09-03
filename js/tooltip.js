@@ -109,7 +109,10 @@
               title = $('<div class="tooltip-title"></div>').prependTo(this.tooltip);
             }
             title.html(settings.title).show();
+          } else {
+            this.tooltip.find('.tooltip-title').hide();
           }
+
           return;
         } else {
           this.tooltip.find('.tooltip-title').hide();

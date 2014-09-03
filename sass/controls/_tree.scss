@@ -63,17 +63,12 @@
   display: block;
 }
 
-.tree ul li {
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABGdBTUEAALGPC/xhBQAAAANQTFRFqqqqEX77+QAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CAII=") no-repeat scroll 0 0 / 1px 100%, url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABGdBTUEAALGPC/xhBQAAAANQTFRFqqqqEX77+QAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CAII=") no-repeat scroll 1px 14px / 9px 1px rgba(0, 0, 0, 0);
-}
-
 .tree ul li:last-child {
   background-position: 0 0px, 0 15px;
   background-size: 1px 15px, 10px 1px;
 }
 
 /* Icons */
-
 .tree li svg {
   fill: #666666;
   height: 26px;

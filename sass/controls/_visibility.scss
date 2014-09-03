@@ -16,6 +16,7 @@
 /* Off Screen Text */
 .scr-only {
   border: 0 none;
+  color: black;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;
   margin: -1px;
@@ -23,4 +24,8 @@
   padding: 0;
   position: absolute;
   width: 1px;
+}
+
+.masthead .scr-only {
+  color: white;
 }

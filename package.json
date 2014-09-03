@@ -35,6 +35,7 @@
     "webdriverjs": "^1.6.1",
     "webdriverjs-selenium-bundle": "0.0.2",
     "zombie": "^2.0.0-alpha31",
-    "spec-xunit-file": "0.0.1-1"
+    "spec-xunit-file": "0.0.1-1",
+    "jshint": "^2.5.5"
   }
 }
