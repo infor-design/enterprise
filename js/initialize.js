@@ -64,6 +64,9 @@
       //Tree
       $('.tree').tree();
 
+      //Rating
+      $('.rating').rating();
+
     });
   };
 

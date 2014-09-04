@@ -1,0 +1,90 @@
+/* Rating Control
+================================================== */
+.rating {
+  display: inline-block;
+}
+
+.rating input {
+  cursor: pointer;
+  height: 28px;
+  margin: 4px 0 0 1px;
+  opacity: 0;
+  position: absolute;
+  width: 28px;
+  z-index: 1;
+  filter: alpha(opacity=0);
+}
+
+.rating.is-readonly input {
+  cursor: default;
+}
+
+.rating-text {
+  display: inline-block;
+  font-size: 1.4em;
+  color: #666;
+  padding-left: 40px;
+  line-height: 20px;
+}
+
+.rating label {
+  cursor: pointer;
+  margin-right: 7px;
+  padding: 0;
+}
+
+.rating.is-readonly label {
+  cursor: default;
+}
+
+/* States */
+.rating:not(.is-readonly) input:hover + label > svg.icon {
+  fill: #fbc410;
+  opacity: .7;
+  transition: all 1s ease 0s;
+}
+
+.rating input:checked + label > svg.icon, .rating .is-filled + label > svg.icon {
+  fill: #fbc410;
+  stroke: #fbc410;
+  opacity: 1;
+}
+
+.rating input:checked + label > svg.icon, .rating .is-half + label > svg.icon {
+  fill: #fbc410;
+  stroke: #fbc410;
+  opacity: 1;
+}
+
+.rating input:focus + label > svg.icon {
+  stroke: #13a3f7;
+}
+
+.rating:not(.is-readonly) input:active + label > svg.icon {
+  stroke: #fbc410;
+}
+
+/* Rating Icons - Svg is Embedded */
+.rating svg.icon {
+  fill: #a4a4a4;
+  display: inline-block;
+  height: 32px;
+  position: relative;
+  stroke-width: 1px;
+  width: 32px;
+}
+
+.rating.small input {
+  height: 14px;
+  width: 14px;
+  margin-top: 13px;
+}
+
+.rating.small label {
+  margin-right: 2px;
+}
+
+.rating.small svg.icon {
+  height: 16px;
+  width: 16px;
+}

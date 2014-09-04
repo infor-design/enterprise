@@ -198,17 +198,17 @@ The documentation will be generated created inline in the pages (soon but not ye
 | Project   |      Comments      |  Names |
 |----------|:-------------:|------:|
 | Approva Applications |  An ASP Application interested in accessibility | Shabu Kutty |
+| Automotive Exchange  | Evaluate with AngularJS and GWT | Tien Hanh Pham, Michael Lenz |
 | Business Vault |    Justin Timbers   |   A JSF based Single Page App implement with jQuery |
 | Certification Manager | ? |    Syedur Islam |
 | Certpoint LMS  | ? | Blessed Dianne Valencia |
 | CPM Applications (4) | ? | Rick Leedy, Mike Surel |
-| CLM  | ? | Michael Pendon |
+| CLM Web UI | ? | Michael Pendon |
 | GFC  | Lawson App | Tiffany Kai King, Jon Cadag |
 | Hansen 8  | An ASP Application interested in accessibility  | Ovidiu Petruescu |
 | Healthcare Clinical  | ?? | Charlie Price |
 | HMS  | ? | David Parisi |
 | Infinium SHCM  | ? | Joe Bockskopf |
-| Automotive Exchange  | Evaluate with AngularJS and GWT | Tien Hanh Pham, Michael Lenz |
 | Infor ERP LN - Customer Specific Utilities  | ? | Flavio Marcato |
 | Landmark  | Jetty Server Servlet | Phillip Patton |
 | Lawson S3  | Jetty Server Servlet | Phillip Patton |
@@ -222,6 +222,7 @@ The documentation will be generated created inline in the pages (soon but not ye
 | Optiva | ? | Andy Koenigsberg |
 | PMServerAdmin | ? | Mike Campbell |
 | PCM | Knockout App | Tim Dunham |
+| Rhythm | Node Js app with Marionette | Ted Kusio |
 | Sales Portal | ? | Matt Defina  |
 | SmartStream | ASP | Wim Denayer |
 | Softbrands FourthShift ERP | ASP | Steve Duepner |
