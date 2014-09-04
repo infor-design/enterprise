@@ -62,10 +62,13 @@
       });
 
       //Tree
-      $('.tree').tree();
+      elem.find('.tree').tree();
 
       //Rating
-      $('.rating').rating();
+      elem.find('.rating').rating();
+
+      //Format
+      elem.find('input[data-mask]').mask();
 
     });
   };

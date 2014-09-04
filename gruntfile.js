@@ -40,7 +40,8 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/popupmenu.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/tabs.js', 'js/tooltip.js','js/tree.js', 'js/slider.js'],
+
+          'dist/js/<%= pkg.name %>.js': ['js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/popupmenu.js', 'js/mask.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/tabs.js', 'js/tooltip.js','js/tree.js', 'js/slider.js'],
           'dist/js/initialize.js': ['js/initialize.js']
         }
       }
@@ -70,11 +71,6 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['dist/js/gramercy.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['public/stylesheets/*-theme.css'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['dist/js/initialize.js'], dest: 'public/js/', filter: 'isFile'}
-        ]
-      },
-      testLibs: {
-        files: [
-          {expand: true, flatten: true, src: ['node_modules/mocha/mocha.js'], dest: 'test/vendor/', filter: 'isFile'}
         ]
       }
     },

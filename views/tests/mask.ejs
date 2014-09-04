@@ -1,0 +1,53 @@
+<div class="grid grid-pad">
+  <div id="format-container" class="col-1-2">
+    <h1>Formatted User Input</h1>
+
+    <form id="format-form" action="#" method="POST">
+      <div class="field">
+        <label for="input-masked-phone">Phone Number</label>
+        <input type="tel" data-mask="(###) ###-####" id="input-masked-phone" />
+      </div>
+
+      <div class="field">
+        <label for="input-masked-number">Number</label>
+        <input type="text" inputmode="numeric" data-mask="#,###.00" id="input-masked-number" />
+      </div>
+
+      <div class="field">
+        <label for="input-creditcard">Credit Card</label>
+        <input type="text" inputmode="numeric" data-mask="####-####-####-####" placeholder="####-####-####-####" id="input-creditcard" />
+      </div>
+
+      <div class="field">
+        <label for="input-alpha-only">Only Letters</label>
+        <input type="text" data-mask="aaaaaaaaaa" id="input-alpha-only" />
+      </div>
+
+      <div class="field">
+        <label for="input-previously-filled">Previously Had Contents</label>
+        <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
+      </div>
+
+      <button type="submit" class="btn">(Don't Actually) Submit</button>
+    </form>
+
+    <!-- Used for simulating form submissions without actually submitting. -->
+    <script type="text/javascript">
+      $('document').ready(function() {
+        $('#format-form button[type="submit"]').click(function(e) {
+          e.preventDefault();
+        });
+      });
+    </script>
+  </div>
+
+  <div class="col-1-2">
+
+    <!-- Used for tests where we need to use the clipboard -->
+    <div class="field">
+      <label for="copythis">For using the Clipboard</label>
+      <input type="text" id="copythis" />
+    </div>
+
+  </div>
+</div>
