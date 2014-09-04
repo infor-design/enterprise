@@ -9,7 +9,7 @@ describe('Format [selenium]', function(){
   this.timeout(99999999);
 
   before(function(done){
-    runner = globals.setup(undefined, '/tests/format');
+    runner = globals.setup(undefined, '/tests/mask');
     runner.client
       .execute('window.hnl = {};')
       // NOTE: Had to set a specific window size to prevent failures

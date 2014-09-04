@@ -18,15 +18,15 @@
   }
 }(function ($) {
 
-  $.fn.format = function( options ) {
+  $.fn.mask = function( options ) {
 
     // Tab Settings and Options
-    var pluginName = 'format',
+    var pluginName = 'mask',
         defaults = {
           pattern: '',
           placeholder: '_',
           definitions: {
-            '9': /[0-9]/,
+            '#': /[0-9]/,
             'a': /[A-Za-z]/,
             '*': /[A-Za-z0-9]/
           }
@@ -55,28 +55,28 @@
         };
 
         // Order of operations when choosing pattern strings:
-        // HTML5 'data-format' attribute > Generic pattern string based on "type" attribute > nothing.
+        // HTML5 'data-mask' attribute > Generic pattern string based on "type" attribute > nothing.
         //
         // if no pattern is provided in settings, use a pre-determined pattern based
         // on element type, or grab the pattern from the element itself.
-        self.pattern = self.element.attr('data-format') || settings.pattern || '';
+        self.pattern = self.element.attr('data-mask') || settings.pattern || '';
         if (!self.pattern || self.pattern === '') {
           self.getPatternForType();
         }
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
-        self.element.on('keydown.format keypress.format ' + self.env.pasteEvent, null, function(e) {
+        self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, null, function(e) {
           self.handleKeyEvents.apply(self, arguments);
         });
 
         // when the element is focused, store its initial value.
-        self.element.on('focus.format', null, function() {
+        self.element.on('focus.mask', null, function() {
           self.initValue = self.element.val();
         });
 
         // remove the value when blurred
-        self.element.on('blur.format', null, function() {
+        self.element.on('blur.mask', null, function() {
           delete this.initValue;
         });
 
@@ -95,7 +95,7 @@
         var el = document.createElement('input'),
             name = 'onpaste';
         el.setAttribute(name, '');
-        return ((typeof el[name] === 'function') ? 'paste' : 'input') + '.format';
+        return ((typeof el[name] === 'function') ? 'paste' : 'input') + '.mask';
       },
 
       // Gets rid of event firing and bubbling in all browsers.
@@ -126,7 +126,7 @@
       },
 
       // Uses the "type" attribute on an element to determine a default pattern.
-      // This is called when "$.format" is invoked on a field that contains an empty "data-format" attribute.
+      // This is called when "$.mask" is invoked on a field that contains an empty "data-mask" attribute.
       getPatternForType: function() {
         var self = this,
           type = self.element.attr('type');
@@ -134,7 +134,7 @@
         // TODO: flesh this out
         switch(type) {
           case 'tel':
-            self.pattern = '(999) 999-9999';
+            self.pattern = '(###) ###-####';
             break;
           default:
             self.pattern = '**********';

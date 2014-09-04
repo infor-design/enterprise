@@ -5,37 +5,31 @@
     <form id="format-form" action="#" method="POST">
       <div class="field">
         <label for="input-masked-phone">Phone Number</label>
-        <input type="tel" data-format="(999) 999-9999" id="input-masked-phone" />
+        <input type="tel" data-mask="(###) ###-####" id="input-masked-phone" />
       </div>
 
       <div class="field">
         <label for="input-masked-number">Number</label>
-        <input type="text" inputmode="numeric" data-format="999.99" id="input-masked-number" />
+        <input type="text" inputmode="numeric" data-mask="#,###.00" id="input-masked-number" />
       </div>
 
       <div class="field">
         <label for="input-creditcard">Credit Card</label>
-        <input type="text" inputmode="numeric" data-format="9999-9999-9999-9999" placeholder="####-####-####-####" id="input-creditcard" />
+        <input type="text" inputmode="numeric" data-mask="####-####-####-####" placeholder="####-####-####-####" id="input-creditcard" />
       </div>
 
       <div class="field">
         <label for="input-alpha-only">Only Letters</label>
-        <input type="text" data-format="aaaaaaaaaa" id="input-alpha-only" />
+        <input type="text" data-mask="aaaaaaaaaa" id="input-alpha-only" />
       </div>
 
       <div class="field">
         <label for="input-previously-filled">Previously Had Contents</label>
-        <input type="tel" data-format="(999) 999-9999" id="input-previously-filled" value="1234567890" />
+        <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
       </div>
 
       <button type="submit" class="btn">(Don't Actually) Submit</button>
     </form>
-
-    <!-- Used for tests where we need to use the clipboard -->
-    <div class="field" style="position: absolute; left: -9999;">
-      <label for="copythis">For the Clipboard</label>
-      <input type="text" id="copythis" />
-    </div>
 
     <!-- Used for simulating form submissions without actually submitting. -->
     <script type="text/javascript">
@@ -45,5 +39,15 @@
         });
       });
     </script>
+  </div>
+
+  <div class="col-1-2">
+
+    <!-- Used for tests where we need to use the clipboard -->
+    <div class="field">
+      <label for="copythis">For using the Clipboard</label>
+      <input type="text" id="copythis" />
+    </div>
+
   </div>
 </div>
