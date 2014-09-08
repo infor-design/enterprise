@@ -1,23 +1,23 @@
 /* Hyperlinks
 ================================================== */
 .link {
-	color: $link-color;
-	line-height: 25px;
-	white-space: nowrap;
-	text-decoration: none;
-	@include font-size(14);
-	cursor: pointer;
-	padding: 0 1px 0 0;
-	font-family: $font-stack;
+  color: $link-color;
+  line-height: 25px;
+  white-space: nowrap;
+  text-decoration: none;
+  @include font-size(14);
+  cursor: pointer;
+  padding: 0 1px 0 0;
+  font-family: $font-stack;
 }
 
 .link:visited {
-	color: $link-color; /*#7533a6*/
+  color: $link-color; /*#7533a6*/
 }
 
 /* Mouse Over States is Same as the focus */
 .link:hover, .link.is-hovered, .link.is-focused  {
-	color: $link-hover-color;
+  color: $link-hover-color;
 }
 
 .link:focus, .link.is-focused  {
@@ -34,16 +34,15 @@
   outline-offset: 3px;
 }
 
-
 .link[disabled]:hover  {
-	color:  #666666;
-	cursor: default;
-	text-decoration: none;
+  color:  #666666;
+  cursor: default;
+  text-decoration: none;
 }
 
 .link:active, .link.is-active {
-	color: $link-active-color;
-	text-decoration: none;
+  color: $link-active-color;
+  text-decoration: none;
 }
 
 .link[disabled] {

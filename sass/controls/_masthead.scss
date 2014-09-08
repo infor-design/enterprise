@@ -14,3 +14,29 @@
   margin: 0 0 3px 10px;
   vertical-align: top;
 }
+
+
+/* Skip Link */
+.skip-link {
+  background: none repeat scroll 0 0 transparent;
+  border-bottom-right-radius: 3px;
+  color: white;
+  font-family: $font-stack;
+  @include font-size(12);
+  left: 0;
+  padding: 6px;
+  position: absolute;
+  top: -40px;
+  transition: top 1s ease-out 0s, background 1s linear 0s;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  background: none repeat scroll 0 0 $accent-color;
+  left: 0;
+  outline: 0 none;
+  position: absolute;
+  top: 0;
+  transition: top 0.3s ease-in 0s, background 0.3s linear 0s;
+}
+
