@@ -38,7 +38,7 @@
         this.element.hide();
         this.orgLabel = $('label[for="' + this.element.attr('id') + '"]');
 
-        this.label = $('<label class="label"></label>').attr('for', id).text(this.orgLabel.text());
+        this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
         this.input = $('<input type="text" readonly class="dropdown" tabindex="0"/>').attr({'role': 'combobox'})
                         .attr({'aria-autocomplete': 'none', 'aria-owns': 'dropdown-list'})
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
