@@ -73,7 +73,6 @@
       //Validation
       elem.find('[data-validate]').validate();
       elem.find('[data-validate-on="submit"]').validate();
-      console.log(elem.find('[data-validate]'), elem.find('[data-validate-on="submit"]'))
     });
   };
 
