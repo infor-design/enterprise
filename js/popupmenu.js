@@ -86,7 +86,6 @@
         //settings.trigger
         if (settings.trigger === 'rightClick') {
           this.element.on('contextmenu.popupmenu', function (e) {
-            alert();
             e.preventDefault();
             return false;
           }).on('mousedown.popupmenu', function (e) {
