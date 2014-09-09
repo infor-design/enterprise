@@ -64,3 +64,8 @@ small {
   font-weight: normal;
   color: $label-color;
 }
+
+.small-text {
+  @include font-size(12);
+  text-transform: uppercase;
+}

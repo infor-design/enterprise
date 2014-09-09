@@ -1,0 +1,33 @@
+/* Sign In Page Pattern
+================================================== */
+.signin {
+  margin: 0 auto;
+  width: 300px;
+
+  h1 {
+    text-align: center;
+    @include rem(padding, 2rem);
+    @include rem(padding-top, 6rem);
+  }
+
+  .forgot {
+    float: right;
+  }
+
+  .btn-default {
+    width: 100%;
+  }
+
+  .small-text {
+    text-align: center;
+    text-transform: uppercase;
+    display: block;
+    @include rem(padding-top, 4rem);
+  }
+
+  .icon-logo {
+    margin: 0 auto;
+    display: block;
+  }
+}
+

@@ -83,9 +83,10 @@
             }
           });
         }
-
+        //settings.trigger
         if (settings.trigger === 'rightClick') {
           this.element.on('contextmenu.popupmenu', function (e) {
+            alert();
             e.preventDefault();
             return false;
           }).on('mousedown.popupmenu', function (e) {
@@ -137,7 +138,7 @@
 
         $(document).on('keydown.popupmenu', function (e) {
           var focus,
-            excludes = 'li:not(.popupmenu-seperator):not(.popupmenu-group):not(.is-disabled)';
+            excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
 
           //Close on escape
           if (e.keyCode === 27) {
@@ -302,7 +303,7 @@
           }
         });
 
-        self.menu.find('li:not(.popupmenu-seperator):not(.popupmenu-group):not(.is-disabled)').first().find('a').focus();
+        self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
       },
 
       showSubmenu: function (li) {

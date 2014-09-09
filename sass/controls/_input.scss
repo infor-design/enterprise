@@ -106,6 +106,12 @@ textarea.is-disabled {
   width: 9px;
 }
 
+/* TODO: How to Localize */
+.required:after {
+  color: transparent;
+  content: " Required";
+}
+
 /* Error Text */
 .has-error {
   color: #d5000e !important;
