@@ -63,7 +63,7 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea').filter(attribs).not('input[type=checkbox]').on('blur.validate change.validate', function (e) {
+      this.inputs.filter('input, textarea').filter(attribs).not('input[type=checkbox]').on('blur.validate change.validate', function () {
         var field = $(this);
         if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
           return;
@@ -72,7 +72,6 @@
         if (clickObj !==null && (clickObj.is('.dropdown-option') || clickObj.is('.inforTriggerButton') || clickObj.closest('.modal').length === 1)) {
           return;
         }
-        console.log(field, e)
         self.validate(field, field.closest('.modal-engaged')? false : true);
 
       });

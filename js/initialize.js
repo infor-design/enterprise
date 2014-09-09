@@ -43,7 +43,6 @@
       elem.find('[data-popupmenu]').each(function () {
         var obj = $(this);
         obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
-        console.log('x');
       });
 
       //Tooltips
