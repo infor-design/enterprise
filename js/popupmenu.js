@@ -313,6 +313,44 @@
         menu.css('width','');
         menu.css('width', menu.outerWidth()+1);
         menu.css({left: li.outerWidth(), top: li.outerHeight()*(li.parent().index()-1)});
+
+        //Handle Case where the menu is off to the right
+        var menuWidth = menu.outerWidth();
+        if ((menu.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+          menu.css('left', 0 - menuWidth);
+          //Did it fit?
+          if (menu.offset().left < 0) {
+            //No. Push the menu's left offset onto the screen
+            menu.css('left', parseInt(menu.css('left')) + Math.abs(menu.offset().left));
+            menuWidth = menu.outerWidth();
+            //Does it fit now?
+            if ((menu.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+              //No, cut off the menu's right side until it fits within the right screen boundary
+              var differenceY = (menu.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
+              menuWidth = menuWidth - differenceY;
+              menu.width(menuWidth).css('overflow', 'auto');
+            }
+          }
+        }
+
+        //Handle Case where menu is off bottom
+        var menuHeight = menu.outerHeight();
+        if ((menu.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+          menu.css('top', 0 - menuHeight);
+          //Did it fit?
+          if (menu.offset().top < 0) {
+            //No. Push the menu's top offset onto the screen
+            menu.css('top', parseInt(menu.css('top')) + Math.abs(menu.offset().top));
+            menuHeight = menu.outerHeight();
+            //Does it fit now?
+            if ((menu.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+              //No, cut off the menu's bottom edge until it fits within the bottom screen boundary
+              var differenceX = (menu.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
+              menuHeight = menuHeight - differenceX - 32;
+              menu.height(menuHeight).css('overflow', 'auto');
+            }
+          }
+        }
       },
 
       detach: function () {
@@ -325,6 +363,8 @@
       close: function () {
         this.menu.removeClass('is-open').attr('aria-hidden', 'true');
         this.menu.css({'left': '-999px', 'height': ''});
+
+        this.menu.find('.submenu > ul').css({'left': '', 'top': '', 'height': ''});
 
         this.element.on('close.popupmenu', function (e) {
           $(this).off('close.popupmenu');
