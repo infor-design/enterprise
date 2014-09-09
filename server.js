@@ -19,4 +19,4 @@ console.log(' |""""| |::|""|""""|:::::| |# # # #||"""|t|::|"""|""|"""""|'.green)
 console.log(' |""""|_|  |""|""""|:::::| |# # # #||"""|||::|"""|""""""""|'.green);
 console.log(' |""""|::::|""|""""|:::::| |# # # #||"""|||::|"""|""""""""|'.green);
 
-console.log('Soho erver is running at http://localhost:%s/. Press Ctrl+C to stop.', port);
+console.log('Soho server is running at http://localhost:%s/. Press Ctrl+C to stop.', port);

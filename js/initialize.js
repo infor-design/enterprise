@@ -43,6 +43,7 @@
       elem.find('[data-popupmenu]').each(function () {
         var obj = $(this);
         obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
+        console.log('x');
       });
 
       //Tooltips
@@ -70,6 +71,10 @@
       //Format
       elem.find('input[data-mask]').mask();
 
+      //Validation
+      elem.find('[data-validate]').validate();
+      elem.find('[data-validate-on="submit"]').validate();
+      console.log(elem.find('[data-validate]'), elem.find('[data-validate-on="submit"]'))
     });
   };
 

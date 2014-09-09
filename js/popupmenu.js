@@ -107,9 +107,9 @@
         });
       },
 
-      //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
       handleKeys: function () {
         var self = this;
+        //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
         //Handle Events in Anchors
         this.menu.on('click.popmenu', 'a', function (e) {
@@ -172,15 +172,12 @@
               self.menu.parent().find(excludes).last().find('a').focus();
               return;
             }
-
-
             focus.parent().prevAll(excludes).first().find('a').focus();
           }
 
           //Right Open Submenu
           if (e.keyCode === 39) {
             e.preventDefault();
-
             if (focus.parent().hasClass('submenu')) {
               self.showSubmenu(focus.parent());
               focus.parent().find('.popupmenu a:first').focus();
@@ -190,7 +187,6 @@
           //Down
           if (e.keyCode === 40) {
             e.preventDefault();
-
             //Go back to Top on the last one
             if (focus.parent().nextAll(excludes).length === 0) {
               if (focus.length === 0) {
@@ -200,7 +196,6 @@
               }
               return;
             }
-
             focus.parent().nextAll(excludes).first().find('a').focus();
           }
         });
@@ -251,7 +246,6 @@
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
         self.position(e);
 
-
         //Close on Document Click ect..
         setTimeout(function () {
           $(document).on('click.popupmenu', function (e) {
@@ -267,9 +261,7 @@
           $(window).on(' scroll.popupmenu resize.popupmenu', function () {
             self.close();
           });
-
           self.element.trigger('open', [self.menu]);
-
         }, 400);
 
         //Hide on iFrame Clicks

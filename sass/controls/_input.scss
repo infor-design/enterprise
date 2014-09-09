@@ -56,17 +56,11 @@ textarea {
 }
 
 input[type="text"]:focus,
-input[type="text"].is-focused,
 input[type="password"]:focus,
-input[type="password"].is-focused,
 input[type="email"]:focus,
-input[type="email"].is-focused,
 input[type="tel"]:focus,
-input[type="tel"].is-focused,
 input[type="number"]:focus,
-input[type="number"].is-focused,
 input[type="url"]:focus,
-input[type="url"].is-focused,
 textarea:focus,
 textarea.is-focused {
   box-shadow: $focus-shadow;
@@ -74,17 +68,11 @@ textarea.is-focused {
 }
 
 input[type="text"]:disabled,
-input[type="text"].is-disabled,
 input[type="password"]:disabled,
-input[type="password"].is-disabled,
 input[type="email"]:disabled,
-input[type="email"].is-disabled,
 input[type="tel"]:disabled,
-input[type="tel"].is-disabled,
 input[type="number"]:disabled,
-input[type="number"].is-disabled,
 input[type="url"]:disabled,
-input[type="url"].is-disabled,
 textarea:disabled,
 textarea.is-disabled {
   color: $disabled-color;
@@ -113,12 +101,17 @@ textarea.is-disabled {
 }
 
 /* Error Text */
-.has-error {
+.error, .error-message {
   color: #d5000e !important;
 }
 
-input.has-error {
-  box-shadow: 0 0 3px #d5000e;
+input.error {
+  /*box-shadow: 0 0 3px #d5000e;*/
+  border-color: #d5000e;
+}
+
+input.error:focus {
+  color: $data-color !important;
 }
 
 /* Place Holders */
@@ -138,6 +131,18 @@ input.has-error {
  color: #b3b3b3;
  @include font-size(16);
  font-style: italic;
+}
+
+.error::-webkit-input-placeholder {
+ color: #d5000e;
+}
+
+.error::-moz-placeholder {
+ color: #d5000e;
+}
+
+.error:-ms-input-placeholder {
+ color: #d5000e;
 }
 
 /* Selection Color */

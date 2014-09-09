@@ -16,23 +16,21 @@
 }
 
 /* Mouse Over States is Same as the focus */
-.link:hover, .link.is-hovered, .link.is-focused  {
+.link:hover {
   color: $link-hover-color;
+  text-decoration: underline;
 }
 
-.link:focus, .link.is-focused  {
+.link:hover, .link:focus {
   text-decoration: underline;
 }
 
 .link:focus {
   outline: thin dotted $link-hover-color;
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
-.link:visited:focus {
-  outline: thin dotted #7533a6;
-  outline-offset: 3px;
-}
+/* TODO: Visited */
 
 .link[disabled]:hover  {
   color:  #666666;
@@ -40,9 +38,10 @@
   text-decoration: none;
 }
 
-.link:active, .link.is-active {
+.link:active {
   color: $link-active-color;
-  text-decoration: none;
+  outline: thin dotted $link-active-color;
+  text-decoration: underline;
 }
 
 .link[disabled] {
