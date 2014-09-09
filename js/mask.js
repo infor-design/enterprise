@@ -48,10 +48,7 @@
         self.env = {
           pasteEvent: self.getPasteEvent(),
           ua: navigator.userAgent,
-          iPhone: /iphone/i.test(this.ua),
-          chrome: /chrome/i.test(this.ua),
-          firefox: /firefox/i.test(this.ua),
-          android: /android/i.test(this.ua)
+          iPhone: /iphone/i.test(this.ua)
         };
 
         // Order of operations when choosing pattern strings:
@@ -67,7 +64,7 @@
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
         self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, null, function(e) {
-          self.handleKeyEvents.apply(self, arguments);
+          self.handleKeyEvents(self, e);
         });
 
         // when the element is focused, store its initial value.
@@ -83,8 +80,8 @@
         // Test contents of the input field.  If there are characters, run them
         // against the mask and fill them in as necessary.
         var val = self.element.val();
-        if ( val.length > 0 ) {
-          self.processStringAgainstMask( val );
+        if (val.length > 0) {
+          self.processStringAgainstMask(val);
         }
 
       },
@@ -183,19 +180,19 @@
       },
 
       // Moves the text input cursor a specified distance in a specified direction
-      moveCursor: function( direction, distance ) {
-        var self = this;
-        var pos = self.caret();
+      moveCursor: function(direction, distance) {
+        var self = this,
+          pos = self.caret();
 
-        var _direction = self.evaluateDirecton(direction);
-        var _d = distance || 1;
+        direction = self.evaluateDirecton(direction);
+        distance = distance || 1;
 
-        switch(_direction) {
+        switch(direction) {
           case 'next':
-            self.caret( pos.begin + _d );
+            self.caret(pos.begin + distance);
             break;
           case 'prev':
-            self.caret( pos.begin - _d );
+            self.caret(pos.begin - distance);
             break;
           default:
             break;
@@ -204,69 +201,64 @@
 
       // Get the direction in which to position the cursor (if necessary)
       // defaults to 'current', which will not move the cursor.
-      evaluateDirecton: function( direction ) {
-        var _direction = 'current';
-        var directions = ['current', 'next', 'prev'];
-        if ( direction ) {
-          var i = $.inArray( direction, directions );
-          _direction = directions[i];
+      evaluateDirecton: function(direction) {
+        if (!direction) {
+          return 'current';
         }
-        return _direction;
+        var directions = ['current', 'next', 'prev'],
+          i = $.inArray(direction, directions);
+        return directions[i];
       },
 
       // The catch-all event for handling keyboard events within this input field. Grabs information about the keys
       // being pressed, event type, matching pattern characters, and determines what to do with them.
-      handleKeyEvents: function(e) {
-        var evt = e || window.event;
-        var eventType = evt.originalEvent.type;
-        var key = this.typedCode(evt);
-        var typedChar = String.fromCharCode(key);
-        var patternChar = this.getCharacter();
+      handleKeyEvents: function(self, e) {
+        var evt = e || window.event,
+          eventType = evt.originalEvent.type,
+          key = self.typedCode(evt),
+          typedChar = String.fromCharCode(key),
+          patternChar = self.getCharacter();
 
         // set the original value if it doesn't exist.
-        if (!this.initValue) {
-          this.initValue = this.element.val();
+        if (!self.initValue) {
+          self.initValue = self.element.val();
         }
 
-        console.log( '"' + typedChar + '" from keycode "' + key + '" was pressed!' );
-
-        if ( eventType === 'keydown' ) {
-          console.log('KEYDOWN!');
+        if (eventType === 'keydown') {
           // backspace || delete
-          if (key === 8 || key === 46 || (this.env.iPhone && key === 127)) {
-            this.handleBackspace(evt);
+          if (key === 8 || key === 46 || (self.env.iPhone && key === 127)) {
+            self.handleBackspace(evt);
           } else if (key === 13) { // enter
-            this.element.trigger('blur', evt);
+            self.element.trigger('blur', evt);
           } else if (key === 27) { // escape
-            this.handleEscape(evt);
+            self.handleEscape(evt);
           } else if (36 < key && key < 41) { // arrow keys (in Firefox)
             return;
-          } else if ( evt.shiftKey && 36 < key && key < 41 ) { // arrow keys AND shift key (for moving the cursor)
+          } else if (evt.shiftKey && 36 < key && key < 41) { // arrow keys AND shift key (for moving the cursor)
             return;
           }
         }
 
-        if ( eventType === 'keypress' ) {
-          console.log('KEYPRESS!');
+        if (eventType === 'keypress') {
           // Ignore all of these keys or combinations containing these keys
           if (evt.ctrlKey || evt.altKey || evt.metaKey || key < 32) {
             return;
           // Need to additionally check for arrow key combinations here because some browsers
           // Will fire keydown and keypress events for arrow keys.
-          } else if ( evt.shiftKey  && 36 < key && key < 41) {
+          } else if (evt.shiftKey && 36 < key && key < 41) {
             return;
-          } else if ( 36 < key && key < 41 ) {
+          } else if (36 < key && key < 41) {
             return;
           }
-          this.processMask( typedChar, patternChar, evt );
+          self.processMask(typedChar, patternChar, evt);
         }
 
-        if ( eventType === 'paste' ) {
-          this.handlePaste(evt);
+        if (eventType === 'paste') {
+          self.handlePaste(evt);
         }
 
-        if ( eventType === 'input') {
-          console.log('INPUT!');
+        if (eventType === 'input') {
+          // TODO: Handle Input Event
         }
       },
 
@@ -275,14 +267,14 @@
       handleBackspace: function(e) {
         var val = this.element.val();
         if ( 0 < val.length ) {
-          var pos = this.caret();
-          var dCaret = pos.end - pos.begin;
-          var trueCaretPosBegin = dCaret > 0 ? pos.begin : pos.begin - 1;
-          var selectedText = val.slice(trueCaretPosBegin, pos.end);
+          var pos = this.caret(),
+            dCaret = pos.end - pos.begin,
+            trueCaretPosBegin = dCaret > 0 ? pos.begin : pos.begin - 1,
+            selectedText = val.slice(trueCaretPosBegin, pos.end);
 
           val = this.deleteAtIndex(val, selectedText, trueCaretPosBegin);
-          this.element.val( val );
-          this.caret( trueCaretPosBegin );
+          this.element.val(val);
+          this.caret(trueCaretPosBegin);
         }
         return this.killEvent(e);
       },
@@ -291,7 +283,7 @@
       // back in place of the discarded edits.
       handleEscape: function(e) {
         var self = this;
-        self.element.val( self.initValue );
+        self.element.val(self.initValue);
         self.caret(0, self.initValue.length);
         delete self.initValue;
         return self.killEvent(e);
@@ -300,31 +292,25 @@
       // Intercepts the Paste event, modifies the contents of the clipboard to fit within the size
       // and character limits of the mask, and writes the result to the input field.
       handlePaste: function(e) {
-        console.log('Paste Intercepted on element #' + this.element.attr('id') );
-
         var paste = e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData ?
           e.originalEvent.clipboardData.getData('text/plain') : // Standard
           window.clipboardData && window.clipboardData.getData ?
           window.clipboardData.getData('Text') : // MS
           false;
 
-        console.log('Original Pasted Content: ' + paste);
-
         if (paste) {
           // cut down the total size of the paste input to only be as long as the pattern allows.
-          var maxPasteInput = paste.substring( 0, this.pattern.length );
-          console.log('working with subsection of pasted content: ' + maxPasteInput);
+          var maxPasteInput = paste.substring(0, this.pattern.length);
           this.processStringAgainstMask(maxPasteInput, e);
         }
-
         this.killEvent(e);
       },
 
       // Attempts to match the character provided from a pattern against the array of
       // pattern matching characters ("definitions"). If the character is not in the array,
       // it is considered "literal", and will be placed into the input field as part of the mask.
-      isCharacterLiteral: function( patternChar ) {
-        return $.inArray( patternChar, Object.keys(settings.definitions) ) === -1;
+      isCharacterLiteral: function(patternChar) {
+        return $.inArray(patternChar, Object.keys(settings.definitions)) === -1;
       },
 
       // The following methods are used for modifying the contents of strings based on caret position.
@@ -355,14 +341,14 @@
           pattSize = this.pattern.length;
 
         // insert the buffer's contents
-        val = this.insertAtIndex( val, this.buffer, pos.begin );
+        val = this.insertAtIndex(val, this.buffer, pos.begin);
 
         // strip out the portion of the text that would be selected by the caret
-        var selectedText = val.substring( pos.begin + buffSize, pos.end + buffSize );
+        var selectedText = val.substring(pos.begin + buffSize, pos.end + buffSize);
         val = val.replace(selectedText, '');
 
         // cut down the total length of the string to make it no larger than the pattern mask
-        val = val.substring( 0, pattSize );
+        val = val.substring(0, pattSize);
 
         // put it back!
         this.element.val(val);
@@ -370,24 +356,24 @@
         // reposition the caret to be in the correct spot (after the content we just added).
         var totalCaretPos = pos.begin + buffSize;
         var actualCaretPos = totalCaretPos >= pattSize ? pattSize : totalCaretPos;
-        this.caret( actualCaretPos );
+        this.caret(actualCaretPos);
       },
 
       // Filter the character that was just typed into the mask to determine if it belongs.
       // In some cases, extra characters that belong in the correctly-masked text will be added before
       // The typed character is placed.  If the character doesn't belong, stop the event and reset.
-      processMask: function( typedChar, patternChar, e ) {
+      processMask: function(typedChar, patternChar, e) {
         var self = this;
         self.originalPos = self.caret();
         self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
 
         // don't do anything if you're at the end of the pattern.  You can't type anymore.
-        if ( self.currentMaskBeginIndex >= self.pattern.length ) {
+        if (self.currentMaskBeginIndex >= self.pattern.length) {
           self.resetStorage();
           return self.killEvent(e);
         }
 
-        if ( self.isCharacterLiteral(patternChar) ) {
+        if (self.isCharacterLiteral(patternChar)) {
           // if you typed the exact character that's next in the mask, simply print the write buffer.
           if (typedChar === patternChar) {
               //self.caret( self.originalPos.begin, self.originalPos.end );
@@ -402,7 +388,7 @@
           self.buffer += patternChar;
           var newPatternChar = self.getCharacter('next', self.currentMaskBeginIndex);
           self.currentMaskBeginIndex++;
-          self.processMask( typedChar, newPatternChar, e );
+          self.processMask(typedChar, newPatternChar, e);
         }
         else {
           // Check the character against its counterpart character in the mask
@@ -422,11 +408,11 @@
 
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
-      processStringAgainstMask: function( string, originalEvent ) {
+      processStringAgainstMask: function(string, originalEvent) {
         var charArray = string.split('');
         for(var i = 0; i < charArray.length; i++) {
           var patternChar = this.getCharacter();
-          this.processMask( charArray[i], patternChar, originalEvent );
+          this.processMask(charArray[i], patternChar, originalEvent);
         }
       },
 
@@ -440,18 +426,18 @@
       // Returns the character at the current/next/previous cursor position.
       // If no direction is provided, it defaults to the current position.
       // If an optional index is provided, the cursor position will shift to that index value.
-      getCharacter: function( direction, maskIndex ) {
-        var _direction = this.evaluateDirecton(direction);
-        var mask = this.pattern;
-        var index = maskIndex ? maskIndex : this.caret().begin;
+      getCharacter: function(direction, maskIndex) {
+        var mask = this.pattern,
+          index = maskIndex ? maskIndex : this.caret().begin;
+        direction = this.evaluateDirecton(direction);
 
-        switch(_direction) {
+        switch(direction) {
           case 'next':
-            return mask.substring( index + 1, index + 2 );
+            return mask.substring(index + 1, index + 2);
           case 'prev':
-            return mask.substring( index - 1, index );
+            return mask.substring(index - 1, index);
           default: // current
-            return mask.substring( index, index + 1 );
+            return mask.substring(index, index + 1);
         }
       },
 
