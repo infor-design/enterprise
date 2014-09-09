@@ -109,13 +109,13 @@
       // used for getting the proper keyCode ID number with cross-browser compatability.
       typedCode: function(event) {
         var code=0;
-        if ( event === null && window.event ) {
+        if (event === null && window.event) {
           event = window.event;
         }
-        if( event !== null ) {
-          if ( event.keyCode ) {
+        if(event !== null) {
+          if (event.keyCode) {
             code = event.keyCode;
-          } else if ( event.which ) {
+          } else if (event.which) {
             code = event.which;
           }
         }
@@ -266,7 +266,7 @@
       // in the correct place.
       handleBackspace: function(e) {
         var val = this.element.val();
-        if ( 0 < val.length ) {
+        if (0 < val.length) {
           var pos = this.caret(),
             dCaret = pos.end - pos.begin,
             trueCaretPosBegin = dCaret > 0 ? pos.begin : pos.begin - 1,
