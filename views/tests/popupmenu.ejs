@@ -1,0 +1,31 @@
+<div class="grid">
+  <div class="col-1-2">
+    <h1 class="demo-heading">Popup Menu <span>(Right Click)</span></h1>
+
+    <div class="field" style="position: absolute; bottom: 10px; right: 10px;">
+      <label>Button should open menu that needs to shift left.</label>
+      <button class="btn" type="button" id="offset-menus" data-popupmenu="action-popupmenu">Show Offset Menu</button>
+    </div>
+
+    <div class="field">
+      <label for="input-menu">Label</label>
+      <input type="text" data-popupmenu="action-popupmenu" class="is-focused" value="Right Click Me" id="input-menu">
+    </div>
+
+    <ul id="action-popupmenu" class="popupmenu">
+      <li><a href="#">Change Available Number</a></li>
+      <li>
+        <a href="#">Sub Menu</a>
+        <ul class="popupmenu">
+          <li><a href="#">Sub Menu 1</a></li>
+          <li><a href="#">Sub Menu 2</a></li>
+          <li><a href="#">Sub Menu 3 (Long text)</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Cancel Line</a></li>
+      <li><a href="#">Cancel Requisition</a></li>
+      <li><a href="#">Close Requisition Short</a></li>
+    </ul>
+
+  </div>
+</div>
