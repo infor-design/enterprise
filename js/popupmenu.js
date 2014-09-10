@@ -75,7 +75,6 @@
 
         if (settings.trigger === 'click' || settings.trigger === 'toggle') {
           this.element.on('click.popupmenu', function (e) {
-
             if (self.menu.hasClass('is-open')){
               self.close();
             } else {
@@ -116,6 +115,10 @@
           var anchor = $(this),
             href = anchor.attr('href');
 
+          if (anchor.parent().is('.submenu')) {
+            //Do not close parent items of submenus on click
+            return;
+          }
           if (anchor.find('input[checkbox]').length > 0) {
             return;
           }
@@ -132,7 +135,6 @@
             return true;
           }
           e.preventDefault();
-
         });
 
         $(document).on('keydown.popupmenu', function (e) {
@@ -231,7 +233,6 @@
             }
           }
         }
-
         //Handle Case where menu is off left side
         if ((this.menu.offset().left + menuWidth) > $(window).width()) {
           this.menu.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
@@ -275,12 +276,18 @@
         this.element.attr('aria-expanded', 'true');
 
         //hide and decorate submenus - we use a variation on
-        var tracker = 0, startY, menuToClose;
+        var tracker = 0, startY, menuToClose, timeout;
 
         self.menu.find('.popupmenu').removeClass('is-open').parent().addClass('submenu');
         self.menu.find('.submenu').on('mouseenter', function (e) {
+          var menuitem = $(this);
           startY = e.pageX;
-          self.showSubmenu($(this));
+
+          clearTimeout(timeout);
+          timeout = setTimeout(function () {
+            self.showSubmenu(menuitem);
+          }, 300);
+
           $(document).on('mousemove.popupmenu', function (e) {
             tracker = e.pageX;
           });
@@ -292,6 +299,7 @@
           if ((tracker - startY) < 3.5) { //We are moving slopie to the menu
             menuToClose.removeClass('is-open');
           }
+          clearTimeout(timeout);
         });
 
         self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
