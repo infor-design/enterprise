@@ -1,0 +1,75 @@
+<div class="grid">
+  <div class="col-1-2">
+    <h1>Checkbox Tests</h1>
+
+    <div id="cssOnly" class="field">
+      <h2 class="demo-heading">CSS-Only</h2>
+      <input type="checkbox" class="checkbox" id="starts-unchecked">
+      <label for="starts-unchecked" class="checkbox-label">Unchecked</label><br>
+
+      <input type="checkbox" class="checkbox" id="starts-checked" checked>
+      <label for="starts-checked" class="checkbox-label" >Checked</label><br>
+
+      <input type="checkbox" class="checkbox is-dirty" id="checkbox-is-dirty" >
+      <label for="checkbox-is-dirty" class="checkbox-label" >Dirty</label><br>
+
+      <input type="checkbox" class="checkbox" id="starts-disabled" disabled>
+      <label for="starts-disabled" class="checkbox-label" >Disabled and Unchecked</label><br>
+
+      <input type="checkbox" class="checkbox" id="starts-disabled-checked" disabled checked>
+      <label for="starts-disabled-checked" class="checkbox-label">Disabled and Checked</label><br>
+
+      <input type="checkbox" class="checkbox is-partial" checked id="starts-partially-checked">
+      <label for="starts-partially-checked" class="checkbox-label" >Partial</label><br>
+    </div>
+
+    <!-- used in form serialization tests -->
+    <div id="partOfForm" class="field">
+      <h2 class="demo-heading">Form Serialization</h2>
+      <form id="checkbox-serialization-test" action="#" method="POST">
+        <input type="checkbox" class="checkbox" id="checkbox-serialized" name="checkbox-serialized" checked>
+        <label for="checkbox-serialized" class="checkbox-label">This Checkmark will be serialized on form submit</label><br>
+
+        <input type="checkbox" class="checkbox" id="checkbox-not-serialized">
+        <label for="checkbox-not-serialized" class="checkbox-label">This checkmark will NOT be serialized on form submit</label><br>
+
+        <button class="btn-default" type="submit">Submit</button>
+      </form>
+    </div>
+
+    <!-- Used in tooltip tests -->
+    <div class="field">
+      <h2 class="demo-heading">Has a tooltip</h2>
+      <input type="checkbox" class="checkbox" id="checkbox-has-tooltip">
+      <label for="checkbox-has-tooltip" class="checkbox-label">Hover this...</label>
+    </div>
+
+    <!-- Used in ASP-style Checkbox tests -->
+    <div class="field">
+      <h2 class="demo-heading">ASP-Style Checkbox Support</h2>
+
+      <label class="checkbox-label" style="width: auto"> </label>
+      <input name="checkbox-enable-ssl" class="checkbox" id="checkbox-enable-ssl" type="checkbox" value="true" data-val="true">
+      <input name="checkbox-enable-ssl" type="hidden" value="false">
+      <label class="checkbox-label" for="checkbox-enable-ssl">Enable SSL</label>
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      //needed for the form serialization test
+      $('#checkbox-serialization-test').on('submit', function(e) {
+        e.preventDefault();
+        console.log($(this).serialize());
+      });
+
+      //needed for invoking the tooltip to the right edge of the checkbox
+      $('#checkbox-has-tooltip + label').tooltip({
+        content: function() {
+          return 'This checkbox is ' + ($(this).prev().prop('checked') ? 'checked' : 'unchecked')
+        },
+        placement: 'right'
+      });
+    });
+    </script>
+
+  </div>
