@@ -1,31 +1,42 @@
 /* Checkboxes
 ================================================== */
-.checkbox:not(:checked), .checkbox:checked {
+.checkbox:not(:checked),
+.checkbox:checked {
   position: absolute;
   left: -9999px;
 }
 
-.checkbox:not(:checked) + label, .checkbox:checked + label {
+.checkbox:not(:checked) + label,
+.checkbox:checked + label,
+.checkbox:not(:checked) + input[type="hidden"] + label,
+.checkbox:checked + input[type="hidden"] + label {
   position: relative;
   padding-left: 35px;
   cursor: pointer;
 }
 
-.checkbox:not(:checked) + label:before, .checkbox:checked + label:before {
+.checkbox:not(:checked) + label:before,
+.checkbox:checked + label:before,
+.checkbox:not(:checked) + input[type="hidden"] + label:before,
+.checkbox:checked + input[type="hidden"] + label:before {
   content: '';
   position: absolute;
   left: 6px;
   width: 16px;
   height: 16px;
-  border: 2px solid #999999;
+  border: 2px solid #999;
   border-radius: 2px;
 }
 
-.checkbox + label {
+.checkbox + label,
+.checkbox + input[type="hidden"] + label {
   line-height: 24px;
 }
 
-.checkbox:not(:checked) + label:after, .checkbox:checked + label:after {
+.checkbox:not(:checked) + label:after,
+.checkbox:checked + label:after,
+.checkbox:not(:checked) + input[type="hidden"] + label:after,
+.checkbox:checked + input[type="hidden"] + label:after {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
   background-repeat: no-repeat;
   color: transparent;
@@ -40,58 +51,70 @@
   transition: all 0.2s ease 0s;
 }
 
-.checkbox:checked + label:before {
+.checkbox:checked + label:before,
+.checkbox:checked + input[type="hidden"] + label:before {
   background-color: $accent-color;
   border-color: $accent-color;
 }
 
-/* checked mark aspect changes */
-.checkbox:not(:checked) + label:after {
+// checked mark aspect changes
+.checkbox:not(:checked) + label:after,
+.checkbox:not(:checked) + input[type="hidden"] + label:after {
   @include opacity(0);
   transform: scale(0);
 }
 
-.checkbox:checked + label:after {
+.checkbox:checked + label:after,
+.checkbox:checked + input[type="hidden"] + label:after {
   @include opacity(1);
   transform: scale(1);
 }
 
-/* disabled checkbox */
-.checkbox:disabled:not(:checked) + label:before, .checkbox:disabled:checked + label:before {
-  border-color:  $accent-color;
+// disabled checkbox
+.checkbox:disabled:not(:checked) + label:before,
+.checkbox:disabled:checked + label:before,
+.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before,
+.checkbox:disabled:checked + input[type="hidden"] + label:before {
+  border-color: $accent-color;
   cursor: default;
 }
 
-.checkbox:disabled:checked + label:after {
+.checkbox:disabled:checked + label:after,
+.checkbox:disabled:checked + input[type="hidden"] + label:after {
   @include opacity(.5);
 }
 
-.checkbox:disabled:not(:checked) + label:before {
-    border-color: #BBBBBB;
-    box-shadow: none;
+.checkbox:disabled:not(:checked) + label:before,
+.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before {
+  border-color: #bbb;
+  box-shadow: none;
 }
 
-.checkbox:disabled + label {
+.checkbox:disabled + label,
+.checkbox:disabled + input[type="hidden"] + label {
   color: #aaa;
   cursor: default;
 }
 
-.checkbox.is-partial + label:after {
-  background-color: #FFFFFF;
+.checkbox.is-partial + label:after,
+.checkbox.is-partial + input[type="hidden"] + label:after {
+  background-color: #fff;
   background-image: none !important;
   border-radius: 0;
-  content: " ";
+  content: ' ';
   height: 10px;
   left: 11px;
   top: 4px;
   width: 10px;
 }
 
-/* accessibility */
-.checkbox:checked:focus + label:before, .checkbox:not(:checked):focus + label:before {
+// accessibility
+.checkbox:checked:focus + label:before,
+.checkbox:not(:checked):focus + label:before,
+.checkbox:checked:focus + input[type="hidden"] + label:before,
+.checkbox:not(:checked):focus + input[type="hidden"] + label:before {
   border: 2px solid $accent-color;
   box-shadow: $focus-shadow;
 }
 
 /* TODO: Partial, Dirty, RTL, Error, IE8 and IE7, High Contrast */
-
