@@ -112,6 +112,7 @@ input.error {
 
 input.error:focus {
   color: $data-color !important;
+  box-shadow: 0 0 3px #d5000e;
 }
 
 /* Place Holders */
