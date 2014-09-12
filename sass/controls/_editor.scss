@@ -49,6 +49,11 @@
 
 .editor ol {
   list-style: decimal;
+  @include font-size(16);
+}
+
+.editor a {
+  line-height: 2.4rem;
 }
 
 .editor b {

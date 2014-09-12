@@ -16,5 +16,4 @@ var testSite = {
 };
 app.locals.enableLiveReload = false;
 testSite.server = app.listen(testSite.port);
-
 module.exports = testSite;

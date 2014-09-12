@@ -1,18 +1,16 @@
 var app = require('./app');
-
 // With the express server and routes defined, we can start to listen for requests.
 var port = process.env.PORT || 4000;
-app.locals.enableLiveReload = true;
 app.listen(port);
 
-//Show Ascii Art....
+//Show Awesome Image Of Soho
 console.log('         .        .            |       .        .        . '.green);
 console.log('              *        .       |   .        .              '.green);
-console.log('        .                     /-\     .           .   .    '.green);
+console.log('        .                     /-\\     .           .   .    '.green);
 console.log(' .               .    .      |"""|              :        . '.green);
-console.log('         .                  /"""""\  .      *       |>.    '.green);
-console.log('                           | # # # |     .        /\|  ___ '.green);
-console.log('    __     ___   ___   .   |# # # #| ___      ___/<>\ |:::|'.green);
+console.log('         .                  /"""""\\  .      *       |>.    '.green);
+console.log('                           | # # # |     .        /\\|  ___ '.green);
+console.log('    __     ___   ___   .   |# # # #| ___      ___/<>\\ |:::|'.green);
 console.log('  / ""|  __|~~| |""|       |# # # #||"""|  __|"""|^^| |:::|'.green);
 console.log(' /""""| |::|""|~~~~||_____ |# # # #||"""|-|::|"""|""|_|   |'.green);
 console.log(' |""""| |::|""|""""|:::::| |# # # #||"""|t|::|"""|""|"""""|'.green);

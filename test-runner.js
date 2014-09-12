@@ -11,7 +11,7 @@ var client, specFiles;
 require('./test/test-env.js');
 
 // Let's introduce ourselves
-console.log('SoHo 2.0 Controls - Test Suite'.green);
+console.log('SoHo XI Controls - Test Suite'.green);
 
 // Build a new Mocha instance
 var mocha = new Mocha({
@@ -58,7 +58,7 @@ should = chai.should();
 // is continually used between tests, unless a test specifically requests
 // a unique instance.
 globals = {
-  noError: function(err) {
+  noError: function() {
     return require('./test/generic-error-handler');
   },
   checkResult: function(expected) {
@@ -72,6 +72,7 @@ globals = {
     };
   }
 };
+
 globals.setup = function(newSession, url) {
   var wdjs = require('./test/test-driver-config');
   var clientToUse, siteToUse;

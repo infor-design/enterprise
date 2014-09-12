@@ -27,7 +27,7 @@ describe('Dropdown [selenium]', function(){
     runner.client
       .getTitle(function(err, title) {
         globals.noError(err);
-        title.should.equal('Infor Html Controls - Tests');
+        title.should.equal('SoHo Controls XI - Tests');
       })
       .call(done);
   });
