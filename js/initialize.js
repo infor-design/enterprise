@@ -73,6 +73,11 @@
       //Validation
       elem.find('[data-validate]').validate();
       elem.find('[data-validate-on="submit"]').validate();
+
+      //Cardstack
+      elem.find('.cardstack').each(function () {
+        $(this).cardstack();
+      });
     });
   };
 
