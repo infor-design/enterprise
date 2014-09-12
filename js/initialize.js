@@ -76,7 +76,9 @@
 
       //Cardstack
       elem.find('.cardstack').each(function () {
-        $(this).cardstack();
+        var cs = $(this);
+        $(this).cardstack({dataset: cs.attr('data-tmpl'),
+            templateId: ''});
       });
     });
   };
