@@ -99,9 +99,26 @@ describe('Checkbox [selenium]', function(){
       .call(done);
   });
 
-  // TODO: Complete this test when we figure out how to test ASP style checkboxes
+  // TODO: Fix this test when we get a fix from the WebdriverIO Dev for testing pseudo-elements
+  // https://github.com/webdriverio/webdriverio/issues/295
   it('should operate correctly if defined as an ASP checkbox', function(done) {
     runner.client
+      /*
+      // Check the background color on the label's :before pseudo element to see if the box rendered.
+      .getCssProperty('label[for="checkbox-enable-ssl"]', 'background', function(err, result) {
+        globals.noError(err);
+        console.log(result);
+        should.exist(result);
+        result.value.should.equal('#0086e6');
+      })
+      .click('label[for="checkbox-enable-ssl"]:before', globals.noError)
+      .getCssProperty('label[for="checkbox-enable-ssl"]', 'background', function(err, result) {
+        globals.noError(err);
+        console.log(result);
+        should.exist(result);
+        result.value.should.equal('');
+      })
+      */
       .call(done);
   });
 
