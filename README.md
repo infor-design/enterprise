@@ -48,9 +48,12 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 * First clone the repo: `http://git.infor.com/scm/gp/gp-controls.git`
 * Move into your new repo: `cd gramercy`
 * Then  `npm install` to install node package dependencies
+* For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
+
+
 
 ## Running The App
-* `cd` into project folder and run `node stroll` to talk a walk in Grammercy Park
+* `cd` into project folder and run `node server` to talk a walk in Grammercy Park
 * Make a new terminal window and cd into project folder and run `grunt watch`
 * Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload

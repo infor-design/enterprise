@@ -24,7 +24,7 @@ describe('Dropdown [zombie]', function() {
   });
 
   it('should be in the right page', function() {
-    browser.text('title').should.equal('Infor Html Controls - Tests');
+    browser.text('title').should.equal('SoHo Controls XI - Tests');
   });
 
   it('should have first selected', function() {

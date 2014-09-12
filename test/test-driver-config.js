@@ -36,7 +36,6 @@ for (var i in supportedTestBrowsers) {
     browser = process.env.TEST_BROWSER;
   }
 }
-//console.log('Performing tests using '.yellow + browser + ' browser environment.'.yellow);
 
 var capabilities = {
   browserName: browser
