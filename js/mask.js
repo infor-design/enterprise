@@ -18,7 +18,7 @@
   }
 }(function ($) {
 
-  $.fn.mask = function( options ) {
+  $.fn.mask = function(options) {
 
     // Tab Settings and Options
     var pluginName = 'mask',
@@ -27,9 +27,11 @@
           placeholder: '_',
           definitions: {
             '#': /[0-9]/,
+            '0': /[0-9]/,
             'a': /[A-Za-z]/,
             '*': /[A-Za-z0-9]/
-          }
+          },
+          number: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -61,6 +63,13 @@
           self.getPatternForType();
         }
 
+        // If a "mode" is defined, special formatting rules may apply to this mask.
+        // Otherwise, the standard single-character pattern match will take place.
+        self.mode = self.element.attr('data-mask-mode') || undefined;
+        if (self.mode) {
+          self.setupModeRules();
+        }
+
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
         self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, null, function(e) {
@@ -74,7 +83,10 @@
 
         // remove the value when blurred
         self.element.on('blur.mask', null, function() {
-          delete this.initValue;
+          self.initValue = null;
+          if (self.mustComplete) {
+            self.checkCompletion();
+          }
         });
 
         // Test contents of the input field.  If there are characters, run them
@@ -108,7 +120,7 @@
 
       // used for getting the proper keyCode ID number with cross-browser compatability.
       typedCode: function(event) {
-        var code=0;
+        var code = 0;
         if (event === null && window.event) {
           event = window.event;
         }
@@ -135,6 +147,18 @@
             break;
           default:
             self.pattern = '**********';
+        }
+      },
+
+      // Used for defining special rules and flags for use with certain mask types.
+      setupModeRules: function() {
+        switch(this.mode) {
+          case 'number':
+            //this.mustComplete = true;
+            this.element.css('text-align', 'right');
+            break;
+          default:
+            break;
         }
       },
 
@@ -210,6 +234,17 @@
         return directions[i];
       },
 
+      // If the mask isn't completed to the end, erase the contents of the input field
+      // Used on Blur if the "mustComplete" flag is set
+      checkCompletion: function() {
+        var inputLength = this.element.val().length,
+          maskLength = this.pattern.length;
+
+        if (maskLength !== inputLength) {
+          this.element.val('');
+        }
+      },
+
       // The catch-all event for handling keyboard events within this input field. Grabs information about the keys
       // being pressed, event type, matching pattern characters, and determines what to do with them.
       handleKeyEvents: function(self, e) {
@@ -250,7 +285,11 @@
           } else if (36 < key && key < 41) {
             return;
           }
-          self.processMask(typedChar, patternChar, evt);
+          if (self.mode === 'number') {
+            self.processNumberMask(typedChar, patternChar, evt);
+          } else {
+            self.processMask(typedChar, patternChar, evt);
+          }
         }
 
         if (eventType === 'paste') {
@@ -285,7 +324,7 @@
         var self = this;
         self.element.val(self.initValue);
         self.caret(0, self.initValue.length);
-        delete self.initValue;
+        self.initValue = null;
         return self.killEvent(e);
       },
 
@@ -313,6 +352,12 @@
         return $.inArray(patternChar, Object.keys(settings.definitions)) === -1;
       },
 
+      // Tests the character provided against the current langauge's decimal selector
+      // TODO: Add globalization support for the decimal selector
+      isCharacterDecimal: function(patternChar) {
+        return patternChar === '.';
+      },
+
       // The following methods are used for modifying the contents of strings based on caret position.
       // TODO: Move these to a more global space for use in other plugins?
       insertAtIndex: function(string, value, index) {
@@ -327,8 +372,8 @@
 
       // Resets properties used for internal storage between keypresses to their default values
       resetStorage: function() {
-        delete this.originalPos;
-        delete this.currentMaskBeginIndex;
+        this.originalPos = null;
+        this.currentMaskBeginIndex = null;
         this.buffer = '';
       },
 
@@ -340,6 +385,13 @@
           buffSize = this.buffer.length,
           pattSize = this.pattern.length;
 
+        // remove commas from the pattern length if dealing with numbers
+        /*
+        if (this.mode === 'number') {
+          pattSize = this.pattern.replace(/,/g, '').length;
+        }
+        */
+
         // insert the buffer's contents
         val = this.insertAtIndex(val, this.buffer, pos.begin);
 
@@ -349,6 +401,26 @@
 
         // cut down the total length of the string to make it no larger than the pattern mask
         val = val.substring(0, pattSize);
+
+        // if we're dealing with numbers, figure out commas and adjust caret position accordingly.
+        if (this.mode === 'number') {
+          var parts = val.split('.'),
+            valHasDecimal = val.length - val.replace(/\./g, '').length === 1,
+            valWithoutCommas = parts[0].replace(/,/g, ''),
+            numRemovedCommas = valWithoutCommas.length,
+            reAddTheCommas = valWithoutCommas.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            numAddedCommas = reAddTheCommas.length;
+
+          parts[0] = reAddTheCommas;
+          val = parts[1] && parts[1] !== '' ? parts.join('.') : parts[0] + (valHasDecimal ? '.' : '');
+
+          if (numAddedCommas > numRemovedCommas) {
+            pos.begin = pos.begin + (numAddedCommas - numRemovedCommas);
+          }
+          if (numAddedCommas < numRemovedCommas) {
+            pos.begin = pos.begin - (numRemovedCommas - numAddedCommas);
+          }
+        }
 
         // put it back!
         this.element.val(val);
@@ -376,11 +448,10 @@
         if (self.isCharacterLiteral(patternChar)) {
           // if you typed the exact character that's next in the mask, simply print the write buffer.
           if (typedChar === patternChar) {
-              //self.caret( self.originalPos.begin, self.originalPos.end );
-              self.buffer += typedChar;
-              self.writeInput();
-              self.resetStorage();
-              return self.killEvent(e);
+            self.buffer += typedChar;
+            self.writeInput();
+            self.resetStorage();
+            return self.killEvent(e);
           }
 
           // get the character in the next position to see if it matches the regex.  If it does, print both characters
@@ -388,9 +459,12 @@
           self.buffer += patternChar;
           var newPatternChar = self.getCharacter('next', self.currentMaskBeginIndex);
           self.currentMaskBeginIndex++;
-          self.processMask(typedChar, newPatternChar, e);
-        }
-        else {
+          if (this.mode === 'number') {
+            self.processNumberMask(typedChar, patternChar, e);
+          } else {
+            self.processMask(typedChar, newPatternChar, e);
+          }
+        } else {
           // Check the character against its counterpart character in the mask
           var match = self.testCharAgainstRegex(typedChar, patternChar);
           if (!match) {
@@ -406,13 +480,117 @@
         }
       },
 
+      // Method for processing number masks
+      // TODO:  Flesh out content and docs
+      processNumberMask: function(typedChar, patternChar, e) {
+        var self = this,
+          val = self.element.val(),
+          maskWithoutInts = self.pattern.replace(/#/g, ''),
+          numMaskInts = self.pattern.length - maskWithoutInts.length;
+
+        self.originalPos = self.caret();
+        self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
+
+        // don't do anything if you're at the end of the pattern.  You can't type anymore.
+        if (self.currentMaskBeginIndex >= self.pattern.length) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // Check the character to see if it's a decimal
+        var inputWithoutDec = val.replace(/\./g, '');
+        if (self.isCharacterDecimal(typedChar)) {
+          // Stop if the decimal already exists.
+          if (val.length !== inputWithoutDec.length) {
+            self.resetStorage();
+            return self.killEvent(e);
+          }
+          // The decimal is OK to add to the string.
+          // if the current input is empty, add a leading zero
+          if (val.length === 0) {
+            self.buffer += '0';
+          }
+          self.buffer += typedChar;
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // TODO: Do a check to see if the character typed matches the mask input type.
+        // Do this against THE MASK WITHOUT COMMAS.
+        // Use any logic created to move the caret in the write buffer above.
+        // ****************************************
+        var sliceUpToCaret = val.substring(0, self.originalPos.begin),
+          commasUpToCaret = sliceUpToCaret.length - sliceUpToCaret.replace(/,/g, '').length,
+          trueMaskIndex = sliceUpToCaret.length - commasUpToCaret;
+        patternChar = self.getCharacter('current', trueMaskIndex);
+
+        // If the new pattern char is the decimal, just add it and move on
+        if (self.isCharacterDecimal(patternChar) && val.length === inputWithoutDec.length) {
+          self.buffer += patternChar;
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        var inputParts = val.split('.'),
+          inputWithoutCommas = inputParts[0].replace(/,/g, ''),
+          numInputInts = inputWithoutCommas.length;
+
+        // Does the decimal exist in the current value string?
+        // If so, the character should be tested against the "decimal" portion of the mask only.
+        // The "integer" part of the mask should be considered complete.
+        // This sets the "true" Mask index to the length that would be expected for a fully complete integer, plus
+        // the decimal and any existing input on the decimal side.
+        if (val.length !== inputWithoutDec.length) {
+          // don't modify the mask index position if the caret is a selection
+          if (self.originalPos.begin === self.originalPos.end) {
+            trueMaskIndex = numMaskInts + 1 + inputParts[1].length;
+            patternChar = self.getCharacter('current', trueMaskIndex);
+          }
+        }
+
+        // Actually test the typed character against the correct pattern character.
+        var match = self.testCharAgainstRegex(typedChar, patternChar);
+        if (!match) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // Is the "integer" portion of the mask filled?
+        if (numInputInts >= numMaskInts) {
+          if (val.length === inputWithoutDec.length) {
+            // No
+            self.buffer += '.' + typedChar;
+          } else {
+            // Yes
+            self.buffer += typedChar;
+          }
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // Add the character to the "integer" part of the mask
+        // Get the current value of the pre-decimal mask, strip out commas, add them back in the
+        // Appropriate spots, and move the caret position appropriately.
+        self.buffer += typedChar;
+        self.writeInput();
+        self.resetStorage();
+        return self.killEvent(e);
+      },
+
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
       processStringAgainstMask: function(string, originalEvent) {
         var charArray = string.split('');
         for(var i = 0; i < charArray.length; i++) {
           var patternChar = this.getCharacter();
-          this.processMask(charArray[i], patternChar, originalEvent);
+          if (this.mode === 'number') {
+            this.processNumberMask(charArray[i], patternChar, originalEvent);
+          } else {
+            this.processMask(charArray[i], patternChar, originalEvent);
+          }
         }
       },
 
@@ -420,14 +598,14 @@
       // from the definitions array in Settings, and tests the character against the Regex.
       testCharAgainstRegex: function(typedChar, patternChar) {
         var regex = settings.definitions[patternChar];
-        return regex.test(typedChar);
+        return !regex ? false : regex.test(typedChar);
       },
 
       // Returns the character at the current/next/previous cursor position.
       // If no direction is provided, it defaults to the current position.
       // If an optional index is provided, the cursor position will shift to that index value.
       getCharacter: function(direction, maskIndex) {
-        var mask = this.pattern,
+        var mask = this.mode === 'number' ? this.pattern.replace(/,/g, '') : this.pattern,
           index = maskIndex ? maskIndex : this.caret().begin;
         direction = this.evaluateDirecton(direction);
 
@@ -442,7 +620,7 @@
       },
 
       destroy: function() {
-        this.element.off('keydown keypress keyup focus blur ' + this.env.pasteEvent);
+        this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
         this.element.removeData(pluginName);
       }
     };

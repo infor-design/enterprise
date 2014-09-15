@@ -10,7 +10,12 @@
 
       <div class="field">
         <label for="input-masked-number">Number</label>
-        <input type="text" inputmode="numeric" data-mask="#,###.00" id="input-masked-number" />
+        <input type="text" inputmode="numeric" data-mask="#,###.00" data-mask-mode="number" id="input-masked-number" placeholder="#,###.00"/>
+      </div>
+
+      <div class="field">
+        <label for="input-masked-longernumber">Longer Number</label>
+        <input type="text" inputmode="numeric" data-mask="##,###,###,###.0000" data-mask-mode="number" id="input-masked-longernumber" placeholder="##,###,###,###.0000"/>
       </div>
 
       <div class="field">
