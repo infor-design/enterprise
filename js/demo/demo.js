@@ -23,12 +23,12 @@ $(function($) {
 
 //Public Variable with some sample data
 var demoTasks = [];
-demoTasks.push({task:'063001', desc: 'Special fields test - New item has been created.'});
+demoTasks.push({task:'063001', error: true, desc: 'Special fields test - New item has been created.'});
 demoTasks.push({task:'063002', desc: 'Part #4212132 has low inventory level'});
 demoTasks.push({task:'063003', desc: 'Check #112412 parts ordering.'});
 demoTasks.push({task:'063004', desc: 'Special fields test - New item has been created.'});
 demoTasks.push({task:'063005', desc: 'Call XYZ Inc at 5 PM'});
-demoTasks.push({task:'063006', desc: 'Part #4212132 has low inventory level'});
+demoTasks.push({task:'063006', error: true, desc: 'Part #4212132 has low inventory level'});
 demoTasks.push({task:'063007', desc: 'Special fields test - New item has been created.'});
 demoTasks.push({task:'063008', desc: 'Part #5212132 has low inventory level'});
 demoTasks.push({task:'063009', desc: 'Check #212412 parts ordering.'});

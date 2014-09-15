@@ -1,19 +1,17 @@
 /***************************
- * Button - Selenium Tests
+ * Tmpl - Selenium Tests
  * These tests run using webdriverJS and Selenium, in a true browser environment
 ***************************/
 
 var runner;
 
-describe('Button [selenium]', function(){
+describe('Tmpl [selenium]', function(){
   this.timeout(99999999);
 
   before(function(done){
     runner = globals.setup(undefined, '/tests/tmpl');
     runner.client
       .execute('window.hnl = {};')
-      // NOTE: Had to set a specific window size to prevent failures
-      // in PhantomJS regarding UI element clicks.
       .windowHandleSize({
           width: 1024,
           height: 768
@@ -21,29 +19,20 @@ describe('Button [selenium]', function(){
       .call(done);
   });
 
-  it('can render arrays', function(done) {
+  it('can render from json arrays', function(done) {
     runner.client
-      .getAttribute('#standard', 'type', function(err, value) {
+      .getCssProperty('#063001', 'height', function(err, height) {
         globals.noError(err);
-        value.should.equal('button');
+        height.value.should.equal('77px');
       })
       .call(done);
   });
 
-  it('can render json', function(done) {
+  it('can render ifs', function(done) {
     runner.client
-      .getAttribute('#standard', 'type', function(err, value) {
+      .getCssProperty('#063001', 'border-left-color', function(err, color) {
         globals.noError(err);
-        value.should.equal('button');
-      })
-      .call(done);
-  });
-
-  it('can render if's, function(done) {
-    runner.client
-      .getAttribute('#standard', 'type', function(err, value) {
-        globals.noError(err);
-        value.should.equal('button');
+        color.value.should.equal('rgba(213,0,14,1)');
       })
       .call(done);
   });

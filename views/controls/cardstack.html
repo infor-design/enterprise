@@ -5,7 +5,12 @@
 <script id="cardstackTemplate" type="text/html">
   <ul>
     {{#demoTasks}}
-      <li>
+      {{#error}}
+        <li class="error">
+      {{/error}}
+      {{^error}}
+        <li>
+      {{/error}}
         <p class="header">Task #{{task}}</p>
         <p>{{desc}}</p>
       </li>

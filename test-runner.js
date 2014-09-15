@@ -24,8 +24,8 @@ var mocha = new Mocha({
 // setup the files needed for the test suite.
 // if there are command-line arguments fed to the test suite, use them as directories for testing.
 specFiles = 'test/spec/**/*.js';
-if ( process.argv[2] ) {
-  specFiles = process.argv[2];
+if (process.argv[2]) {
+  specFiles = 'test/spec/*'+process.argv[2]+'*/*.js';
 }
 
 // use glob to pull files from the filesystem based on the pattern.

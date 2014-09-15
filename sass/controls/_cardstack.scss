@@ -5,6 +5,7 @@
 
   //TODO SASS Variable
   border: 1px solid #ececec;
+  border-left: 4px solid #ececec;
   font-family: $font-stack;
   overflow: auto;
   width: 100%;
@@ -27,5 +28,15 @@
 
   p {
     @include font-size(16);
+  }
+
+  .error {
+    border-left: 4px solid #d5000e;
+  }
+  .alert {
+    border-left: 4px solid #ffa800;
+  }
+  .good {
+    border-left: 4px solid #2db329;
   }
 }
