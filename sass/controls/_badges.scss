@@ -1,0 +1,30 @@
+/* Badges
+================================================== */
+.badge {
+  background-color: $azure;
+  border-radius: 3px;
+  color: white;
+  font-size: 1.1rem;
+  margin-right: 10px;
+  padding: 5px 7px;
+  vertical-align: middle;
+
+  &.graphite {
+    background-color: $graphite;
+  }
+  &.amethyst {
+    background-color: $amethyst;
+  }
+  &.emerald {
+    background-color: $emerald;
+  }
+  &.amber {
+    background-color: $amber;
+  }
+  &.red {
+    background-color: $red;
+  }
+  &.ruby {
+    background-color: $ruby;
+  }
+}

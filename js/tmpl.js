@@ -13,7 +13,7 @@
  *  limitations under the License.
  */
 
-var Tmpl = {};
+var Tmpl = {}; // jshint ignore:line
 
 (function (Tmpl) {
   Tmpl.Template = function (codeObj, text, compiler, options) {

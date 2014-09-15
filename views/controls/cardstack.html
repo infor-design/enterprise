@@ -1,14 +1,17 @@
 <h1 class="demo-heading">Cardstack <span>(Dynamic Tmpl)</span></h1>
 
-<script id="cardstackTemplate" type="text/template">
-    <p>Task #{{task}}</p>
-    <p>{{description}}</p>
+<!--This is only needed because it renders first on the server-->
+{{={{{ }}}=}}
+<script id="cardstackTemplate" type="text/html">
+  <ul>
+    {{#demoTasks}}
+      <li>
+        <p class="header">Task #{{task}}</p>
+        <p>{{desc}}</p>
+      </li>
+    {{/demoTasks}}
+  </ul>
 </script>
 
-<script>
-    alert();
-</script>
-
-<div class="cardstack" data-tmpl="cardstackTemplate" data-dataset="demoTasks">
-  Hi!!!
+<div class="cardstack" style="height: 200px;" data-tmpl="cardstackTemplate" data-dataset="demoTasks">
 </div>

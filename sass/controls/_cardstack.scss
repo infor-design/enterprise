@@ -1,0 +1,31 @@
+/* Cardstack
+================================================== */
+.cardstack {
+  background-color: white;
+
+  //TODO SASS Variable
+  border: 1px solid #ececec;
+  font-family: $font-stack;
+  overflow: auto;
+  width: 100%;
+
+  .header {
+    @include font-size(16);
+    color: #333333;
+    font-weight: normal;
+  }
+
+  li {
+    border-bottom: 1px solid #ececec;
+    padding: 14px 23px;
+  }
+
+  li:hover {
+    background-color: $hover-color;
+    transition: background-color 0.3s ease 0s;
+  }
+
+  p {
+    @include font-size(16);
+  }
+}

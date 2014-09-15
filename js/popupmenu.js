@@ -204,7 +204,7 @@
       },
 
       position: function(e) {
-        var target = (e === undefined ? this.element : $(e.target)),
+        var target = (e ? $(e.target) : this.element),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 

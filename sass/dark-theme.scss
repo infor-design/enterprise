@@ -30,35 +30,8 @@ body {
 @import "reset";
 @import "mixins";
 
-// Infor Styles
-@import "controls/icons";
-@import "controls/typography";
-@import "controls/visibility";
-@import "controls/forms";
-@import "controls/buttons";
-@import "controls/hyperlinks";
-@import "controls/input";
-@import "controls/grid";
-@import "controls/checkboxes";
-@import "controls/radios";
-@import "controls/switch";
-@import "controls/loader";
-@import "controls/tabs";
-@import "controls/dropdown";
-@import "controls/modal";
-@import "controls/slider";
-@import "controls/editor";
-@import "controls/popupmenu";
-@import "controls/tooltip";
-@import "controls/masthead";
-@import "controls/navbar";
-@import "controls/hero";
-@import "controls/tree";
-@import "controls/rating";
-
-// Core Patterns
-@import "patterns/homepage";
-@import "patterns/signin";
+// Core Controls
+@import "controls";
 
 // Demo Styles
 .demo-header {

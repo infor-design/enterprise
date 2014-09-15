@@ -18,7 +18,7 @@
     var pluginName = 'cardstack',
       defaults = {
         dataset: null,
-        templateId: null
+        template: null  //Html Template String
       },
       settings = $.extend({}, defaults, options);
 
@@ -35,8 +35,11 @@
       },
 
       render: function() {
-        if (settings.dataset && settings.templateId) {
-          console.log('rendering');
+        if (Tmpl && settings.dataset && settings.template) {
+          var compiledTmpl = Tmpl.compile(settings.template),
+            renderedTmpl = compiledTmpl.render({demoTasks: settings.dataset});
+
+          this.element.html(renderedTmpl);
         }
       },
 
@@ -47,7 +50,7 @@
     };
 
     // Initializing the Control Once or Call Methods.
-        return this.each(function() {
+    return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
