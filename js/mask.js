@@ -383,14 +383,13 @@
         var val = this.element.val(),
           pos = this.originalPos,
           buffSize = this.buffer.length,
-          pattSize = this.pattern.length;
+          pattSize = this.pattern.length,
+          decimalIndex;
 
-        // remove commas from the pattern length if dealing with numbers
-        /*
+        // if we're dealing with a number, get the index of the decimal point if it exists
         if (this.mode === 'number') {
-          pattSize = this.pattern.replace(/,/g, '').length;
+          decimalIndex = val.indexOf('.');
         }
-        */
 
         // insert the buffer's contents
         val = this.insertAtIndex(val, this.buffer, pos.begin);
@@ -404,21 +403,36 @@
 
         // if we're dealing with numbers, figure out commas and adjust caret position accordingly.
         if (this.mode === 'number') {
+          // cut any extra leading zeros.
+          var valWithoutLeadZeros = val.replace(/^0+(?!\.|$)/, ''),
+            numLeadingZeros = val.length - valWithoutLeadZeros.length;
+          val = valWithoutLeadZeros;
+
+          // Reposition all the commas before the decimal point to be in the proper order.
+          // Store the values of "added" and "removed" commas.
           var parts = val.split('.'),
             valHasDecimal = val.length - val.replace(/\./g, '').length === 1,
             valWithoutCommas = parts[0].replace(/,/g, ''),
-            numRemovedCommas = valWithoutCommas.length,
+            numRemovedCommas = parts[0].length - valWithoutCommas.length,
             reAddTheCommas = valWithoutCommas.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-            numAddedCommas = reAddTheCommas.length;
+            numAddedCommas = reAddTheCommas.length - valWithoutCommas.length;
 
+          // place the decimal point into the right spot if it already existed
+          if (valHasDecimal && decimalIndex && decimalIndex !== -1) {
+            val = val.replace(/\./g, '');
+            val = this.insertAtIndex(val, '.', decimalIndex);
+          }
+
+          // add the commas back in
           parts[0] = reAddTheCommas;
-          val = parts[1] && parts[1] !== '' ? parts.join('.') : parts[0] + (valHasDecimal ? '.' : '');
+          val = (parts[1] && parts[1] !== '') ? parts.join('.') : parts[0] + (valHasDecimal ? '.' : '');
 
+          // move the caret position to the correct spot, based on the adjustments we made.
           if (numAddedCommas > numRemovedCommas) {
-            pos.begin = pos.begin + (numAddedCommas - numRemovedCommas);
+            pos.begin = pos.begin - numLeadingZeros + (numAddedCommas - numRemovedCommas);
           }
           if (numAddedCommas < numRemovedCommas) {
-            pos.begin = pos.begin - (numRemovedCommas - numAddedCommas);
+            pos.begin = pos.begin - numLeadingZeros - (numRemovedCommas - numAddedCommas);
           }
         }
 
@@ -497,10 +511,13 @@
           return self.killEvent(e);
         }
 
+        // Get the currently typed string up to the beginning of the caret.
+        var sliceUpToCaret = val.substring(0, self.originalPos.begin),
+          inputWithoutDec = val.replace(/\./g, '');
+
         // Check the character to see if it's a decimal
-        var inputWithoutDec = val.replace(/\./g, '');
         if (self.isCharacterDecimal(typedChar)) {
-          // Stop if the decimal already exists.
+          // Stop if the decimal already exists in any space before the caret.
           if (val.length !== inputWithoutDec.length) {
             self.resetStorage();
             return self.killEvent(e);
@@ -516,16 +533,14 @@
           return self.killEvent(e);
         }
 
-        // TODO: Do a check to see if the character typed matches the mask input type.
-        // Do this against THE MASK WITHOUT COMMAS.
-        // Use any logic created to move the caret in the write buffer above.
-        // ****************************************
-        var sliceUpToCaret = val.substring(0, self.originalPos.begin),
-          commasUpToCaret = sliceUpToCaret.length - sliceUpToCaret.replace(/,/g, '').length,
+        // Do a check to see if the character typed matches the mask pattern character.
+        // This is done against the mask WITHOUT COMMAS.  The caret's position is adjusted
+        // for the difference in position.
+        var commasUpToCaret = sliceUpToCaret.length - sliceUpToCaret.replace(/,/g, '').length,
           trueMaskIndex = sliceUpToCaret.length - commasUpToCaret;
         patternChar = self.getCharacter('current', trueMaskIndex);
 
-        // If the new pattern char is the decimal, just add it and move on
+        // If the new pattern char is the decimal, just add it and end the input.
         if (self.isCharacterDecimal(patternChar) && val.length === inputWithoutDec.length) {
           self.buffer += patternChar;
           self.writeInput();
@@ -535,20 +550,23 @@
 
         var inputParts = val.split('.'),
           inputWithoutCommas = inputParts[0].replace(/,/g, ''),
-          numInputInts = inputWithoutCommas.length;
+          numInputInts = inputWithoutCommas.length,
+          decimalIndex = val.indexOf('.') !== -1 ? val.indexOf('.') : numInputInts + 1;
 
         // Does the decimal exist in the current value string?
         // If so, the character should be tested against the "decimal" portion of the mask only.
         // The "integer" part of the mask should be considered complete.
         // This sets the "true" Mask index to the length that would be expected for a fully complete integer, plus
         // the decimal and any existing input on the decimal side.
-        if (val.length !== inputWithoutDec.length) {
+        /*
+        if (val.indexOf('.') !== -1 && self.originalPos.begin > decimalIndex) {
           // don't modify the mask index position if the caret is a selection
           if (self.originalPos.begin === self.originalPos.end) {
             trueMaskIndex = numMaskInts + 1 + inputParts[1].length;
             patternChar = self.getCharacter('current', trueMaskIndex);
           }
         }
+        */
 
         // Actually test the typed character against the correct pattern character.
         var match = self.testCharAgainstRegex(typedChar, patternChar);
