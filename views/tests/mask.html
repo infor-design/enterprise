@@ -53,8 +53,13 @@
 
     <h2 class="demo-heading">Misc. Used for Functional Tests</h2>
     <div class="field">
-      <label for="input-previously-filled">Previously Had Contents</label>
+      <label for="input-previously-filled">Initialized containing "1234567890"</label>
       <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
+    </div>
+
+    <div class="field">
+      <label for="input-previously-filled">Initialized containing "123456789"</label>
+      <input type="text" inputmode="numeric" data-mask="##,###.0000" data-mask-mode="number" id="number-previously-filled" value="123456789" />
     </div>
 
     <!-- Used for tests where we need to use the clipboard -->

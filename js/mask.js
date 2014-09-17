@@ -381,18 +381,26 @@
       // Additionally, resets the Caret to the right position.
       writeInput: function() {
         var val = this.element.val(),
+          originalVal = val,
           pos = this.originalPos,
           buffSize = this.buffer.length,
           pattSize = this.pattern.length,
           decimalIndex;
 
-        // if we're dealing with a number, get the index of the decimal point if it exists
-        if (this.mode === 'number') {
-          decimalIndex = val.indexOf('.');
-        }
-
         // insert the buffer's contents
         val = this.insertAtIndex(val, this.buffer, pos.begin);
+
+        // If we're dealing with a number, get the index of the decimal point if it exists.
+        // Also check the number of 'integers' in the number.  If the 'integer' portion of the input
+        // is complete, always place the decimal point in a fixed position.
+        if (this.mode === 'number') {
+          decimalIndex = val.indexOf('.');
+          var numInputInts = val.split('.')[0].replace(/,/g, '').length,
+          numMaskInts = this.pattern.length - this.pattern.split('.')[0].replace(/,/g, '').length;
+          if (numInputInts >= numMaskInts) {
+            decimalIndex = this.pattern.indexOf('.');
+          }
+        }
 
         // strip out the portion of the text that would be selected by the caret
         var selectedText = val.substring(pos.begin + buffSize, pos.end + buffSize);
@@ -408,31 +416,41 @@
             numLeadingZeros = val.length - valWithoutLeadZeros.length;
           val = valWithoutLeadZeros;
 
-          // Reposition all the commas before the decimal point to be in the proper order.
-          // Store the values of "added" and "removed" commas.
-          var parts = val.split('.'),
-            valHasDecimal = val.length - val.replace(/\./g, '').length === 1,
-            valWithoutCommas = parts[0].replace(/,/g, ''),
-            numRemovedCommas = parts[0].length - valWithoutCommas.length,
-            reAddTheCommas = valWithoutCommas.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-            numAddedCommas = reAddTheCommas.length - valWithoutCommas.length;
-
           // place the decimal point into the right spot if it already existed
+          var valHasDecimal = val.length - val.replace(/\./g, '').length > 0;
           if (valHasDecimal && decimalIndex && decimalIndex !== -1) {
             val = val.replace(/\./g, '');
             val = this.insertAtIndex(val, '.', decimalIndex);
           }
 
+          // Reposition all the commas before the decimal point to be in the proper order.
+          // Store the values of "added" and "removed" commas.
+          var parts = valHasDecimal ? val.split('.') : [val],
+            valWithoutCommas = parts[0].replace(/,/g, ''),
+            numRemovedCommas = parts[0].length - valWithoutCommas.length,
+            reAddTheCommas = valWithoutCommas.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            numAddedCommas = reAddTheCommas.length - valWithoutCommas.length;
+
           // add the commas back in
           parts[0] = reAddTheCommas;
           val = (parts[1] && parts[1] !== '') ? parts.join('.') : parts[0] + (valHasDecimal ? '.' : '');
 
-          // move the caret position to the correct spot, based on the adjustments we made.
+          // move the caret position to the correct spot, based on the adjustments we made to commas
+          // NOTE: This needs to happen AFTER we figure out the number of commas up to the caret.
           if (numAddedCommas > numRemovedCommas) {
             pos.begin = pos.begin - numLeadingZeros + (numAddedCommas - numRemovedCommas);
           }
           if (numAddedCommas < numRemovedCommas) {
             pos.begin = pos.begin - numLeadingZeros - (numRemovedCommas - numAddedCommas);
+          }
+
+          // Get the caret position against the final value.
+          // If the next character in the string is the decimal or a comma, move the caret one spot forward
+          var commaDecRegex = /(\.|,)/,
+            nextChar = val.substring(pos.begin, pos.begin + 1);
+          while (pos.begin < val.length && commaDecRegex.test(nextChar)) {
+             pos.begin = pos.begin + 1;
+             nextChar = val.substring(pos.begin, pos.begin + 1);
           }
         }
 
@@ -513,18 +531,27 @@
 
         // Get the currently typed string up to the beginning of the caret.
         var sliceUpToCaret = val.substring(0, self.originalPos.begin),
-          inputWithoutDec = val.replace(/\./g, '');
+          sliceHasDecimal = sliceUpToCaret.length !== sliceUpToCaret.replace(/\./g, '').length,
+          inputWithoutDec = val.replace(/\./g, ''),
+          valHasDecimal = val.length !== inputWithoutDec.length;
 
         // Check the character to see if it's a decimal
         if (self.isCharacterDecimal(typedChar)) {
-          // Stop if the decimal already exists in any space before the caret.
-          if (val.length !== inputWithoutDec.length) {
+          // Don't allow the decimal to be added if the pattern doesn't contain one.
+          var patternHasDecimal = self.pattern.length !== self.pattern.replace(/\./g, '').length;
+          if (!patternHasDecimal) {
             self.resetStorage();
             return self.killEvent(e);
           }
+
+          if (valHasDecimal) {
+            self.resetStorage();
+            return self.killEvent(e);
+          }
+
           // The decimal is OK to add to the string.
-          // if the current input is empty, add a leading zero
-          if (val.length === 0) {
+          // if the current input is empty or if the caret position is at the beginning, add a leading zero
+          if (val.length === 0 || self.originalPos.begin === 0) {
             self.buffer += '0';
           }
           self.buffer += typedChar;
@@ -540,9 +567,17 @@
           trueMaskIndex = sliceUpToCaret.length - commasUpToCaret;
         patternChar = self.getCharacter('current', trueMaskIndex);
 
-        // If the new pattern char is the decimal, just add it and end the input.
-        if (self.isCharacterDecimal(patternChar) && val.length === inputWithoutDec.length) {
-          self.buffer += patternChar;
+        // If the new pattern char is the decimal, add it.
+        if (self.isCharacterDecimal(patternChar) /*&& !valHasDecimal*/) {
+          if (!valHasDecimal) {
+            self.buffer += patternChar;
+          }
+          // Test the next character in the mask to see
+          patternChar = self.getCharacter('next', trueMaskIndex);
+          var match = self.testCharAgainstRegex(typedChar, patternChar);
+          if (match) {
+            self.buffer += typedChar;
+          }
           self.writeInput();
           self.resetStorage();
           return self.killEvent(e);
@@ -550,23 +585,7 @@
 
         var inputParts = val.split('.'),
           inputWithoutCommas = inputParts[0].replace(/,/g, ''),
-          numInputInts = inputWithoutCommas.length,
-          decimalIndex = val.indexOf('.') !== -1 ? val.indexOf('.') : numInputInts + 1;
-
-        // Does the decimal exist in the current value string?
-        // If so, the character should be tested against the "decimal" portion of the mask only.
-        // The "integer" part of the mask should be considered complete.
-        // This sets the "true" Mask index to the length that would be expected for a fully complete integer, plus
-        // the decimal and any existing input on the decimal side.
-        /*
-        if (val.indexOf('.') !== -1 && self.originalPos.begin > decimalIndex) {
-          // don't modify the mask index position if the caret is a selection
-          if (self.originalPos.begin === self.originalPos.end) {
-            trueMaskIndex = numMaskInts + 1 + inputParts[1].length;
-            patternChar = self.getCharacter('current', trueMaskIndex);
-          }
-        }
-        */
+          numInputInts = inputWithoutCommas.length;
 
         // Actually test the typed character against the correct pattern character.
         var match = self.testCharAgainstRegex(typedChar, patternChar);
@@ -577,13 +596,19 @@
 
         // Is the "integer" portion of the mask filled?
         if (numInputInts >= numMaskInts) {
-          if (val.length === inputWithoutDec.length) {
-            // No
-            self.buffer += '.' + typedChar;
-          } else {
-            // Yes
-            self.buffer += typedChar;
+          // Check if the current caret position is past the total number of allowed "decimal" characters.
+          // You can't type any more if you are at this point.
+          var decimalIndex = val.indexOf('.');
+          if (valHasDecimal && self.originalPos.begin > decimalIndex) {
+            var decimalInputChars = val.substring(0, self.originalPos.begin).split('.')[1],
+              decimalPatternChars = self.pattern.split('.')[1];
+            if (decimalInputChars.length >= decimalPatternChars.length) {
+              self.resetStorage();
+              return self.killEvent(e);
+            }
           }
+          // Add the decimal if the value doesn't already have it
+          self.buffer += !valHasDecimal ? '.' + typedChar : typedChar;
           self.writeInput();
           self.resetStorage();
           return self.killEvent(e);

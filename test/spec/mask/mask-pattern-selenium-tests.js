@@ -5,7 +5,7 @@
 
 var runner;
 
-describe('Format [selenium]', function(){
+describe('Pattern Format [selenium]', function(){
   this.timeout(99999999);
 
   before(function(done){
@@ -108,7 +108,7 @@ describe('Format [selenium]', function(){
       .call(done);
   });
 
-it('should handle pasted text and format it correctly', function(done) {
+  it('should handle pasted text and format it correctly', function(done) {
     var input = '#input-masked-phone';
     var copyInput = '#copythis';
     runner.client
@@ -185,8 +185,6 @@ it('should handle pasted text and format it correctly', function(done) {
       })
       .call(done);
   });
-
-  // Tests for Number Masks
 
   // http://jira.infor.com/browse/HFC-1822 - Comment on 08/Sep/14 12:57 PM
   it('should be able to select all characters and clear them by typing a decimal point', function(done) {
