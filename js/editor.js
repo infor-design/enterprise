@@ -119,6 +119,7 @@
 
         return this;
       },
+
       createToolbar: function () {
         var toolbar = $('<div></div>').attr('class', 'editor-toolbar').attr('id', 'editor-toolbar-' + this.id);
         toolbar.append(this.toolbarButtons());
@@ -228,6 +229,7 @@
             action = btn.attr('data-action');
 
           e.preventDefault();
+          self.element.focus();
 
           if (action === 'anchor' || action === 'image' || action === 'video') {
             return;
@@ -242,8 +244,8 @@
             self.execAction(btn.attr('data-action'), e);
           }
 
-          self.element.focus();
           self.keepToolbarAlive = false;
+          return false;
         }).on('mousedown.editor', 'button', function () {
           self.keepToolbarAlive = true;
         });
