@@ -6,6 +6,7 @@
   -ms-backface-visibility: hidden;
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
+  border-radius: 3px;
   height: auto;
   left: 50%;
   max-width: 630px;
@@ -103,8 +104,9 @@
 }
 
 .modal-content .message {
-  font-size: 1.5rem;
   color: #666;
+  font-size: 1.5rem;
+  padding-bottom: 5px;
   text-align: left;
 }
 
@@ -134,7 +136,8 @@
 }
 
 .modal-buttonset a {
-  margin: 0 30px;
+  margin: 0 30px 0 0;
+  float: left;
 }
 
 .modal-buttonset {
