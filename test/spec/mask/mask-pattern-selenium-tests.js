@@ -5,7 +5,7 @@
 
 var runner;
 
-describe('Format [selenium]', function(){
+describe('Pattern Format [selenium]', function(){
   this.timeout(99999999);
 
   before(function(done){
@@ -108,7 +108,7 @@ describe('Format [selenium]', function(){
       .call(done);
   });
 
-it('should handle pasted text and format it correctly', function(done) {
+  it('should handle pasted text and format it correctly', function(done) {
     var input = '#input-masked-phone';
     var copyInput = '#copythis';
     runner.client
@@ -184,6 +184,15 @@ it('should handle pasted text and format it correctly', function(done) {
         value.should.equal('(333) 300-0003');
       })
       .call(done);
+  });
+
+  // http://jira.infor.com/browse/HFC-1822 - Comment on 08/Sep/14 12:57 PM
+  it('should be able to select all characters and clear them by typing a decimal point', function(done) {
+    // type a bunch of characters
+    // select all of them (make sure the caret highlights all of them)
+    // press the decimal key
+    // test to see that the value of the input field is '.'
+    runner.client.call(done);
   });
 
 });

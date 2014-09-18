@@ -1,16 +1,13 @@
 <div class="grid grid-pad">
   <div id="format-container" class="col-1-2">
-    <h1>Formatted User Input</h1>
+    <h1>Masked User Input</h1>
 
     <form id="format-form" action="#" method="POST">
+
+      <h2 class="demo-heading">Standard Pattern-Matching Mask</h2>
       <div class="field">
         <label for="input-masked-phone">Phone Number</label>
         <input type="tel" data-mask="(###) ###-####" id="input-masked-phone" />
-      </div>
-
-      <div class="field">
-        <label for="input-masked-number">Number</label>
-        <input type="text" inputmode="numeric" data-mask="#,###.00" id="input-masked-number" />
       </div>
 
       <div class="field">
@@ -23,9 +20,20 @@
         <input type="text" data-mask="aaaaaaaaaa" id="input-alpha-only" />
       </div>
 
+      <h2 class="demo-heading">Number Masks</h2>
       <div class="field">
-        <label for="input-previously-filled">Previously Had Contents</label>
-        <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
+        <label for="input-masked-number">Number</label>
+        <input type="text" inputmode="numeric" data-mask="#,###.00" data-mask-mode="number" id="input-masked-number" placeholder="#,###.00"/>
+      </div>
+
+      <div class="field">
+        <label for="input-masked-longernumber">Longer Number</label>
+        <input type="text" inputmode="numeric" data-mask="##,###,###,###.0000" data-mask-mode="number" id="input-masked-longernumber" placeholder="##,###,###,###.0000"/>
+      </div>
+
+      <div class="field">
+        <label for="input-number-nodecimal">Number with No Decimals</label>
+        <input type="text" inputmode="numeric" data-mask="#,###,###" data-mask-mode="number" id="input-number-nodecimal" placeholder="#,###,###"/>
       </div>
 
       <button type="submit" class="btn">(Don't Actually) Submit</button>
@@ -42,6 +50,17 @@
   </div>
 
   <div class="col-1-2">
+
+    <h2 class="demo-heading">Misc. Used for Functional Tests</h2>
+    <div class="field">
+      <label for="input-previously-filled">Initialized containing "1234567890"</label>
+      <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
+    </div>
+
+    <div class="field">
+      <label for="input-previously-filled">Initialized containing "123456789"</label>
+      <input type="text" inputmode="numeric" data-mask="##,###.0000" data-mask-mode="number" id="number-previously-filled" value="123456789" />
+    </div>
 
     <!-- Used for tests where we need to use the clipboard -->
     <div class="field">
