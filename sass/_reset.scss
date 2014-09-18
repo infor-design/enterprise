@@ -2,10 +2,13 @@
 // *-------------------------------------------------------------------------------
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, em, img, small, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, legend, label, input, textarea, select, button, table, caption, thead, tbody, tfoot, tr, th, td {
-	border: none;
-	margin: 0;
-	padding: 0;
-	outline: 0;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+a:focus, input:focus, textarea:focus, select:focus, button:focus {
+  outline: 0;
 }
 
 * {
@@ -64,10 +67,6 @@ button {
   margin: 0;
   width: auto;
   overflow: visible;
-}
-
-button:focus {
-  outline: none;
 }
 
 ::-moz-focus-inner {
