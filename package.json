@@ -1,7 +1,7 @@
 {
-  "name": "gramercy",
+  "name": "sohoxi",
   "version": "4.0.0",
-  "description": "Hook and Loop Controls Gramercy Version 4.0",
+  "description": "Hook and Loop Controls Soho XI - Version 4.0",
   "main": "index.js",
   "author": "Hook and Loop",
   "private": true,

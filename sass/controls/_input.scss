@@ -42,9 +42,9 @@ textarea {
   display: block;
   color: $data-color;
   border: 1px solid $field-border-color;
-  border-radius: 2px;
   outline: none;
   background-color: $field-background-color;
+  border-collapse: separate;
   font-family: $font-stack;
   font-weight: lighter;
   @include font-size(16);
@@ -64,8 +64,10 @@ input[type="url"]:focus,
 textarea:focus,
 textarea.is-focused {
   box-shadow: $focus-shadow;
-  border: 1px solid transparent;
 }
+
+//IE 10 9, 11 - http://jsbin.com/fewuli/3/edit
+//box-shadow: 0px 0px 1px 1px #0095ff;
 
 input[type="text"]:disabled,
 input[type="password"]:disabled,

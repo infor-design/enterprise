@@ -3,7 +3,7 @@
   "eqeqeq": true, // ===
   "laxbreak": true, // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
   "node": true,
-  "predef": ["Tmpl", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "chai", "assert", "expect", "should"],
+  "predef": ["Tmpl", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Globalize", "chai", "assert", "expect", "should"],
   "globals": {
     "globals": true,
     "chai": true,

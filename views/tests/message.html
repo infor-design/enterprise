@@ -3,13 +3,20 @@
 
    <h1 class="demo-heading">Message <span>(Dialogs)</span></h1>
    <button class="btn" type="button">Show Message</button>
+   <style>
+    .longer-message {
+      display: block;
+      width: 20px;
+    }
+   </style>
+
    <script>
     $('button').off('click').on('click', function () {
         var opts = $(this).attr('data-message');
 
         opts = {
           title: 'Delete',
-          message: 'Are you sure you want to delete this page?',
+          message: '<span class="longer-message">Are you sure you want to delete this page?</span>',
           buttons: [{
               id: 'id-cancel',
               text: 'Cancel',

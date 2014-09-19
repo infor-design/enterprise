@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 
     watch: {
       source: {
-        files: ['sass/**/*.scss', 'views/**.html', 'views/controls/**.html', 'js/*.js'],
+        files: ['sass/**/*.scss', 'views/**.html', 'views/controls/**.html', 'js/*.js', 'js/cultures/*.*'],
         tasks: ['sass', 'concat', 'uglify', 'copy'],
         options: {
           livereload: true
@@ -36,20 +36,14 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: '',
-        banner: '/*!\n Soho 2.0 Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n '
+        banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n '
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/cardstack.js','js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/popupmenu.js', 'js/mask.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/tabs.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
-          'dist/js/initialize.js': ['js/initialize.js'],
-          'dist/js/jquery-1.1.1.min.js': ['js/vendor/jquery-1.1.1.min.js'],
-          'dist/js/jquery-1.1.1.min.map': ['js/vendor/jquery-1.1.1.min.map']
+          'dist/js/<%= pkg.name %>.js': ['js/cardstack.js','js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/globalize.js', 'js/popupmenu.js', 'js/mask.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/tabs.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
+          'dist/js/initialize.js': ['js/initialize.js']
         }
       }
-    },
-
-    concurrent: {
-      selenium: ['shell:runSeleniumServer']
     },
 
     uglify: {
@@ -57,11 +51,11 @@ module.exports = function(grunt) {
         options: {
           banner: '/*!\n Soho 2.0 Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n ',
           sourceMap: true,
-          sourceMapName: 'dist/js/gramercy.map',
+          sourceMapName: 'dist/js/sohoxi.map',
           separator: ';'
         },
         files: {
-          'dist/js/gramercy.min.js': ['dist/js/gramercy.js']
+          'dist/js/sohoxi.min.js': ['dist/js/sohoxi.js']
         }
       }
     },
@@ -69,35 +63,20 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {expand: true, flatten: true, src: ['dist/js/gramercy.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['dist/js/sohoxi.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['public/stylesheets/*-theme.css'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['dist/js/initialize.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/highlight.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['dist/js/jquery-1.1.1.min.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['dist/js/jquery-1.1.1.min.map'], dest: 'public/js/', filter: 'isFile'}
+          {expand: true, flatten: true, src: ['js/vendor/jquery-1*.min.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/jquery-1*min.map'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'}
         ]
-      }
-    },
-
-    shell: {
-      runSeleniumServer: {
-        command: 'start-selenium',
-        options: {}
-      },
-      // TODO: flesh this out to be pattern-based
-      runMochaSeleniumTests: {
-        command: 'mocha <%= shell.runMochaSeleniumTests.options.testFile %> -t 20000',
-        options: {
-          testFile: 'test/spec/dropdown/dropdown-selenium-tests.js'
-        }
       }
     }
   });
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
-
-  grunt.registerTask('test', ['jshint','concurrent:selenium', 'shell:runMochaSeleniumTests']);
   grunt.registerTask('default', ['jshint', 'sass', 'concat', 'uglify', 'copy:main']);
 };
