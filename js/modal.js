@@ -70,6 +70,19 @@
           self.addButtons(settings.buttons);
         }
       },
+      revertTransition: function (doTop) {
+        //Revert the transform so drag and dropping works as expected
+        var elem = this.element,
+          parentRect = elem.parent()[0].getBoundingClientRect(),
+          rect = elem[0].getBoundingClientRect();
+
+        elem.css({'transition': 'all 0 ease 0', 'transform': 'none',
+          'left': rect.left-parentRect.left});
+
+        if (doTop) {
+          elem.css('top', rect.top-parentRect.top+11);
+        }
+      },
       addButtons: function(buttons){
         var body = this.element.find('.modal-body'),
             self = this,
@@ -152,6 +165,11 @@
         //Center on IE8
         if ($('html').hasClass('ie8')) {
           self.element.css({top:'50%',left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
+        }
+
+        //Reset the transform on IE9 to enable text-caret visibility
+        if ($('html').hasClass('ie9')) {
+          self.revertTransition(true);
         }
 
         //Handle Default button.
