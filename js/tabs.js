@@ -47,6 +47,7 @@
           header = self.container.find('ul:first')
                       .attr({'class': 'tab-list', 'role': 'tablist',
                               'aria-multiselectable': 'false'});
+          self.tablist = self.element.find('.tab-list');
 
           //for each item in the tabsList...
           self.anchors = header.find('li > a');
@@ -87,6 +88,14 @@
                   break;
               }
             });
+          });
+
+          self.moreButton = self.element.find('.tab-more');
+          self.moreButton.on('click.button', function(e) {
+            if (!(self.container.hasClass('has-more-button'))) {
+              e.stopPropagation();
+            }
+            self.buildPopupMenu();
           });
 
           self.activate(0);
@@ -131,11 +140,49 @@
 
         ui.panels.find(':first-child').filter('h3').attr('tabindex', '0');
         a.focus();
-        self._setOveflow();
+        self._setOverflow();
       },
 
-      _setOveflow: function () {
+      _setOverflow: function () {
         //TODO - Implement Overflow/Responsive
+        var self = this;
+        $(window).resize(function() {
+          if (self.tablist[0].scrollHeight > 40 ) {
+            self.element.addClass('has-more-button');
+          } else {
+            self.element.removeClass('has-more-button');
+          }
+        });
+      },
+
+      buildPopupMenu: function() {
+        var self = this;
+        if (self.moreButton.data('popupmenu')) {
+          self.moreButton.data('popupmenu').destroy();
+        }
+
+        // Build the new markup for the popupmenu if it doesn't exist.
+        // Reset it if it does exist.
+        var menuHtml = $('#tab-container-popupmenu');
+        if (menuHtml.length === 0) {
+          menuHtml = $('<ul>').attr('id', 'tab-container-popupmenu').appendTo('body');
+        } else {
+          menuHtml.html('');
+        }
+
+        // Create menu items for all of the "invisible" tabs
+        $.each(self.element.find('li'), function(i, item) {
+          var offset = $(item).offset().top - self.tablist.offset().top;
+          if (offset >= self.tablist.height()) {
+            $(item).clone().appendTo(menuHtml);
+          }
+        });
+
+        // invoke the popup menu on the button.
+        self.moreButton.popupmenu({
+          menuId: 'tab-container-popupmenu',
+          trigger: 'immediate'
+        });
       },
 
       destroy: function(){
