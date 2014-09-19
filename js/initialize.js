@@ -80,6 +80,20 @@
         $(this).cardstack({template: $('#' + cs.attr('data-tmpl') + '').html(),
             dataset: window[cs.attr('data-dataset')]});
       });
+
+      //Class-based detection for IE8/9
+      if (navigator.appVersion.indexOf('MSIE 8.0') > -1) {
+        $('html').addClass('ie8');
+      }
+      if (navigator.userAgent.indexOf('MSIE 8.0') > -1) {
+        $('html').addClass('ie8');
+      }
+      if (document.documentMode === 8) {
+        $('html').addClass('ie8');
+      }
+      if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
+        $('html').addClass('ie9');
+      }
     });
   };
 

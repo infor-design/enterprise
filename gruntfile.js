@@ -42,8 +42,8 @@ module.exports = function(grunt) {
         files: {
           'dist/js/<%= pkg.name %>.js': ['js/cardstack.js','js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/popupmenu.js', 'js/mask.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/tabs.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
           'dist/js/initialize.js': ['js/initialize.js'],
-          'dist/js/jquery-1.1.1.min.js': ['js/vendor/jquery-1.1.1.min.js'],
-          'dist/js/jquery-1.1.1.min.map': ['js/vendor/jquery-1.1.1.min.map']
+          'dist/js/jquery-1.11.1.min.js': ['js/vendor/jquery-1.11.1.min.js'],
+          'dist/js/jquery-1.11.1.min.map': ['js/vendor/jquery-1.11.1.min.map']
         }
       }
     },
@@ -74,8 +74,8 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['dist/js/initialize.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/highlight.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['dist/js/jquery-1.1.1.min.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['dist/js/jquery-1.1.1.min.map'], dest: 'public/js/', filter: 'isFile'}
+          {expand: true, flatten: true, src: ['dist/js/jquery-1.11.1.min.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['dist/js/jquery-1.11.1.min.map'], dest: 'public/js/', filter: 'isFile'}
         ]
       }
     },
