@@ -207,7 +207,7 @@ The documentation will be generated created inline in the pages (soon but not ye
 | Certpoint LMS  | ? | Blessed Dianne Valencia |
 | CPM Applications (4) | ? | Rick Leedy, Mike Surel |
 | CLM Web UI | ? | Michael Pendon |
-| Cloud Suite | ? | Adel  |
+| Cloud Suite | ? | Adel, Rick Hansen  |
 | GFC  | Lawson App | Tiffany Kai King, Jon Cadag |
 | Hansen 8  | An ASP Application interested in accessibility  | Ovidiu Petruescu |
 | Healthcare Clinical  | ?? | Charlie Price |
