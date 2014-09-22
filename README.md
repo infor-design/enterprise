@@ -46,7 +46,7 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 ## Git The Code
 
 * First clone the repo: `http://git.infor.com/scm/gp/gp-controls.git`
-* Move into your new repo: `cd gramercy`
+* Move into your new repo: `cd sohoxi`
 * Then  `npm install` to install node package dependencies
 * For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
 
@@ -68,7 +68,7 @@ There are several to get involved, this document covers:
     * [bug reports](#bugs)
     * [feature requests](#features)
     * [change requests](#changes)
-* [working on Gramercy core](#core)
+* [working on SoHo Xi core](#core)
     * [submitting pull requests](#pull-requests)
 * [testing and quality assurance](#testing)
 * [writing documentation](#documentation)
@@ -162,7 +162,7 @@ Pull requests are awesome. If you're looking to raise a PR for something which d
 
 Never underestimate just how useful quality assurance is. If you're looking to get involved with the code base and don't know where to start, checking out and testing a pull request is one of the most useful things you could do.
 
-If you want to get involved with testing Gramercy, there is a set of [QA Documentation](#qa-documentation) on the wiki.
+If you want to get involved with testing SoHo Xi, there is a set of [QA Documentation](#qa-documentation) on the wiki.
 
 Essentially though, [check out the latest master](http://git.infor.com/projects/GP/repos/gp-controls/branches), take it for a spin, and if you find anything odd, please follow the [bug report guidelines](#bug-reports) and let us know!
 
