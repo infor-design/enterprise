@@ -215,7 +215,7 @@
         }
       },
       openList: function () {
-      //Actually Open The List
+        //Actually Open The List
         var current = this.list.find('.is-selected'),
             self =  this;
 
@@ -231,7 +231,7 @@
           var idx = $(this).index(),
               cur = $(self.element[0].options[idx]);
 
-          // select the clicked item
+          //Select the clicked item
           self.selectOption(cur);
           self.activate();
           self.closeList();
@@ -475,10 +475,18 @@
         }
         return false;
       },
+
       setCode: function(code) {
         var self = this,
           doSetting = function ()  {
-            var option = self.element.find('[value="' + code + '"]');
+            var option = null;
+
+            self.element.find('option').each(function () {
+              if (this.value === code) {
+                option = $(this);
+              }
+            });
+
             self.selectOption(option, true);
           };
 
@@ -486,6 +494,7 @@
           doSetting();
         }
       },
+
       destroy: function() {
         this.element.removeData(pluginName);
         this.closeList();
