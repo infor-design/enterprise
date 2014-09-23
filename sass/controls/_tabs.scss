@@ -4,25 +4,7 @@
   margin: 20px;
 }
 
-.tab-more {
-  max-width: 102px;
-  line-height: 39px;
-  padding: 0 9px 0 25px;
-  border-bottom: 1px solid #d2d2d2;
-  background-color: transparent;
-  display: none;
-}
-
-.tab-more > * {
-  vertical-align: middle;
-}
-
-.tab-container.has-more-button > .tab-more {
-  display: inline-block;
-  float: right;
-}
-
-// Headers
+/* Headers */
 .tab-list {
   border-bottom: 1px solid #d2d2d2;
   display: inline-block;
@@ -62,7 +44,7 @@
 }
 
 .tab-list a:focus {
-    outline: 1px dotted  #FFFFFF;
+  outline: 1px dotted #fff;
 }
 
 /* Tab Body */
@@ -79,5 +61,38 @@
   color: white;
 }
 
+/* More Button */
+.tab-more {
+  border-radius: 2px 2px 0 0;
+  max-width: 102px;
+  line-height: 39px;
+  padding: 0 9px 0 25px;
+  border-bottom: 1px solid #d2d2d2;
+  background-color: transparent;
+  display: none;
+}
 
+.tab-more:focus,
+.tab-more.popup-is-open {
+  background-color: $accent-color;
+  color: #fff;
+}
 
+.tab-more.focus > span,
+.tab-more.popup-is-open > span {
+  color: #fff;
+}
+
+.tab-more:focus > .icon,
+.tab-more.popup-is-open > .icon {
+  fill: #fff;
+}
+
+.tab-more > * {
+  vertical-align: middle;
+}
+
+.tab-container.has-more-button > .tab-more {
+  display: inline-block;
+  float: right;
+}

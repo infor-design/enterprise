@@ -136,38 +136,42 @@
             return true;
           }
           e.preventDefault();
+        }).on('focus.popupmenu', 'a', function() {
+          $(this).parents('ul').find('li').removeClass('is-selected');
+          $(this).parent().addClass('is-selected');
         });
 
         $(document).on('keydown.popupmenu', function (e) {
-          var focus,
+          var key = window.event ? e.which : e.keyCode,
+            focus,
             excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
 
           //Close on escape
-          if (e.keyCode === 27) {
+          if (key === 27) {
             self.close();
           }
 
-          if (e.keyCode === 9) {
+          if (key === 9) {
             self.close();
           }
 
           //Select Checkboxes
-          if (e.keyCode === 32) {
+          if (key === 32) {
             $(e.target).find('input:checkbox').trigger('click');
           }
 
           focus = self.menu.find(':focus');
 
           //Right Close Submenu
-          if (e.keyCode === 37) {
+          if (key === 37) {
             e.preventDefault();
-            if (focus.closest('.popupmenu').length > 0) {
+            if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
               focus.closest('.popupmenu').removeClass('is-open').prev('a').focus();
             }
           }
 
           //Up on Up
-          if (e.keyCode === 38) {
+          if (key === 38) {
              e.preventDefault();
 
             //Go back to Top on the last one
@@ -179,7 +183,7 @@
           }
 
           //Right Open Submenu
-          if (e.keyCode === 39) {
+          if (key === 39) {
             e.preventDefault();
             if (focus.parent().hasClass('submenu')) {
               self.showSubmenu(focus.parent());
@@ -188,7 +192,7 @@
           }
 
           //Down
-          if (e.keyCode === 40) {
+          if (key === 40) {
             e.preventDefault();
             //Go back to Top on the last one
             if (focus.parent().nextAll(excludes).length === 0) {
