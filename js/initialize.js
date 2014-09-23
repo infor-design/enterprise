@@ -81,6 +81,9 @@
             dataset: window[cs.attr('data-dataset')]});
       });
 
+      //Auto Complete
+      elem.find('[data-autocomplete]').autocomplete();
+
       //Class-based detection for IE8/9
       if (navigator.appVersion.indexOf('MSIE 8.0') > -1) {
         $('html').addClass('ie8');

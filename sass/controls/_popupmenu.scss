@@ -88,4 +88,14 @@
   margin: 5px 10px;
 }
 
+/* Selected */
+.popupmenu li.is-selected {
+  background-color: $accent-color;
+}
+
+.popupmenu li.is-selected a {
+  color: white;
+  box-shadow: none;
+}
+
 /*To DO RTL*/

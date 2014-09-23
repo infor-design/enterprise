@@ -48,7 +48,6 @@
     },
 
     addCulture: function(locale, data) {
-      console.log('addCulture');
       this.cultures[locale]= data;
     },
 

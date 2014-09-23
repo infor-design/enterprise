@@ -18,7 +18,8 @@
     var pluginName = 'popupmenu',
       defaults = {
         menuId: null,  //Menu's Id
-        trigger: 'click'  //click, rightClick, immediate
+        trigger: 'click',  //click, rightClick, immediate
+        autoFocus: false
       },
       settings = $.extend({}, defaults, options);
 
@@ -302,7 +303,9 @@
           clearTimeout(timeout);
         });
 
-        self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+        if (settings.autoFocus) {
+          self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+        }
       },
 
       showSubmenu: function (li) {
@@ -400,6 +403,5 @@
       }
     });
   };
-
 
 }));

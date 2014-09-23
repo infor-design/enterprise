@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/cardstack.js','js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/globalize.js', 'js/popupmenu.js', 'js/mask.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/tabs.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
+          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js','js/cardstack.js','js/editor.js', 'js/dropdown.js', 'js/draggable.js', 'js/globalize.js', 'js/popupmenu.js', 'js/mask.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/tabs.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
           'dist/js/initialize.js': ['js/initialize.js']
         }
       }
