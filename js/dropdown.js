@@ -417,7 +417,7 @@
         var code = option.val(),
           oldVal = this.input.val();
 
-        if (option === this.element[0].selectedIndex) {
+        if (option.index() === this.element[0].selectedIndex) {
           return;
         }
 

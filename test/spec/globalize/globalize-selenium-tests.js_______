@@ -4,11 +4,25 @@
 ***************************/
 
 var runner;
-  //jQuery = require('../../../public/js/jquery-1.1.1.min.js'),
-  //globalize = require('../../../js/globalize');
 
 describe('Globalize [selenium]', function(){
+/*
+
   this.timeout(99999999);
+
+  var setLocale = function(locale, done) {
+    var test = function () {
+      return Globalize.locale(locale);
+    };
+
+    runner.client
+       .execute(test, function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.value.should.equal(locale);
+      })
+      .call(done);
+  };
 
   //Start Server - Make a Web Driver Connection
   before(function(done){
@@ -45,19 +59,37 @@ describe('Globalize [selenium]', function(){
       .call(done);
   });
 
-  it('get locale', function(done) {
+  it('be able to set locale', function(done) {
+    setLocale('de', done);
+  });
+
+  it('format dates - en', function(done) {
+    setLocale('en', done);
+
     var test = function () {
-      console.log('test');
-      return Globalize.locale('de');
+      return Globalize.formatDate(new Date(2000, 10, 8));
     };
 
     runner.client
        .execute(test, function(err, result) {
         globals.noError(err);
         should.exist(result);
-        result.value.should.equal('de');
-      })
-      .call(done);
+        result.value.should.equal('08/10/2000');
+      }).call(done);
   });
 
+  it('format dates - de', function(done) {
+    var test = function () {
+      Globalize.locale('de');
+      return Globalize.formatDate(new Date(2000, 10, 8));
+    };
+
+    runner.client
+       .execute(test, function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.value.should.equal('08.10.00');
+      }).call(done);
+  });
+*/
 });

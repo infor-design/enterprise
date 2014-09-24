@@ -12,6 +12,7 @@
 }(function ($) {
 
   $.fn.initialize = function() {
+
     return this.each(function() {
       var elem = $(this);
 
@@ -97,6 +98,7 @@
       if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
         $('html').addClass('ie9');
       }
+
     });
   };
 

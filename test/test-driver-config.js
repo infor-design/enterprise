@@ -3,7 +3,6 @@
  *	@author  ecoyle;
 ***/
 var path = require('path'),
-  //colors = require('colors'),
   webdriver = require('webdriverio'),
   bundle = require('webdriverjs-selenium-bundle');
 
@@ -47,10 +46,10 @@ var options = {
 };
 
 // Create the webdriver with our desired options.
-var driver = new webdriver.remote( options );
+var driver = new webdriver.remote(options);
 
 // autostop makes sure that the selenium server is stopped after
 // calling end().
-driver.use( bundle({autostop: true}) );
+driver.use(bundle({autostop: true}));
 
 module.exports = driver;

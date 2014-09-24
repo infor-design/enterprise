@@ -48,6 +48,7 @@ glob(process.env._SPEC || specFiles, function(er, files) {
   });
 });
 
+
 // setup assertion libraries to be global for all tests
 chai = require('chai'),
 /*jshint -W030 */
@@ -95,7 +96,7 @@ globals.setup = function(newSession, url) {
 
   // setup a "currentUrl" for use by tests to setup any individualized dependencies.
   siteToUse.currentUrl = url ? site.rootUrl() + url : site.rootUrl();
-  clientToUse.url( siteToUse.currentUrl );
+  clientToUse.url(siteToUse.currentUrl);
 
   return {
     site: siteToUse,
