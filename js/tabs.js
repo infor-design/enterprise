@@ -65,15 +65,18 @@
 
           // Add the markup for the "More" button if it doesn't exist.
           if (self.tablist.next('.tab-more').length === 0) {
-            $('<button>').attr({'class': 'tab-more', 'type': 'button'}).insertAfter('.tab-list');
-            $('<span>').text('More').appendTo('.tab-more');
-            $('<svg>').attr({'class': 'icon', 'viewBox': '0 0 32 32'}).appendTo('.tab-more');
-            $('<use>').attr('xlink:href', '#icon-dropdown-arrow');
+            var button = $('<button>').attr({'class': 'tab-more', 'type': 'button'});
+            button.append( $('<span>').text('More') );
+            button.append( $('<svg>').attr({'class': 'icon', 'viewBox': '0 0 32 32'}) );
+            var use = $(document.createElementNS('http://www.w3.org/2000/svg', 'use'));
+            button.find('svg').append(use);
+            self.tablist.after(button);
+            use[0].setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-dropdown-arrow');
           }
 
           //for each item in the tabsList...
           self.anchors = header.find('li > a');
-          self.anchors.each(function () {
+          self.anchors.each( function () {
             var a = $(this);
 
             a.attr({'role': 'tab', 'aria-selected': 'false', 'tabindex': '-1'})
@@ -82,6 +85,9 @@
             //Attach click events to tab and anchor
             a.parent().on('click.tabs', function () {
               self.activate($(this).index());
+              if (self.popupmenu) {
+                self.popupmenu.close();
+              }
               $(this).find('a').focus();
             });
 
@@ -95,13 +101,11 @@
                 targetLi,
                 key = window.event ? e.which : e.keyCode;
 
-              if (e.shiftKey) {
+              if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || key < 32) {
                 return;
               }
 
               switch(key) {
-                case 9:
-                  return;
                 case 37: case 38:
                   targetLi = currentLi.prev();
                   if (targetLi.length === 0) {
@@ -120,25 +124,41 @@
               if (self.isTabOverflowed(targetLi)) {
                 e.preventDefault();
                 var oldIndex = self.tablist.find(targetLi).index();
-                self.buildPopupMenu(oldIndex);
                 // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
                 setTimeout(function() {
                   self.buildPopupMenu(oldIndex);
-                }, 1);
+                }, 0);
                 return;
               }
 
               targetLi.find('a').click().focus();
+            }).on('focus.tabs', function() {
+              if (self.isTabOverflowed(a.parent())) {
+                self.findLastVisibleTab();
+              }
             });
           });
 
           // store a reference to the more button and set up events for it
           self.moreButton = self.element.find('.tab-more');
-          self.moreButton.on('click.button', function(e) {
+          self.moreButton.on('click.tabs', function(e) {
             if (!(self.container.hasClass('has-more-button'))) {
               e.stopPropagation();
             }
             self.buildPopupMenu();
+          });
+          self.moreButton.on('keydown.tabs', function(e) {
+            var key = window.event ? e.which : e.keyCode;
+            // Override Shift+Tab to show the "last visible" tab instead of the "last" tab.
+            if (e.shiftKey && key === 9) {
+              e.preventDefault();
+              self.moreButton.blur();
+              self.findLastVisibleTab();
+            }
+            // Shift+F10 or Enter will open the menu
+            if ((e.shiftKey && key === 121)) {
+              self.buildPopupMenu();
+            }
           });
 
           self.activate(0);
@@ -241,8 +261,13 @@
         });
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
+        // Otherwise, focus the first item in the list.
         if (startingIndex) {
           self.popupmenu.menu.find('li[data-original-tab-index="' + startingIndex + '"] > a').focus();
+        } else if (self.tablist.find('li.is-selected').index() !== -1) {
+          self.popupmenu.menu.find('li[data-original-tab-index="' + self.tablist.find('li.is-selected').index() + '"] > a').focus();
+        } else {
+          self.popupmenu.menu.find('li:first-child > a').focus();
         }
 
         // Overrides a similar method in the popupmenu code that controls escaping of this menu when
@@ -256,13 +281,16 @@
           // If you use Shift+Tab, close the menu and focus the last visible tab
           if (e.shiftKey && key === 9) {
             targetIndex = self.popupmenu.menu.find('li:first-child').attr('data-original-tab-index') - 1;
-            e.preventDefault();
-            self.popupmenu.close();
-            $(self.anchors[targetIndex]).click().focus();
-            e.stopPropogation();
+            $(self.anchors[targetIndex]).click();
           }
 
           switch(key) {
+            case 13: // enter
+              e.preventDefault();
+              targetIndex = self.popupmenu.menu.find('li.is-selected').attr('data-original-tab-index');
+              self.popupmenu.close();
+              $(self.panels[targetIndex]).find('h2:first-child').focus();
+              break;
             case 37: // left
               e.preventDefault();
               $(document).trigger({type: 'keydown.popupmenu', which: 38});
@@ -274,9 +302,7 @@
               if (first.length > 0) {
                 e.preventDefault();
                 targetIndex = first.attr('data-original-tab-index') - 1;
-                self.popupmenu.close();
-                $(self.anchors[targetIndex]).click().focus();
-                e.stopPropogation();
+                $(self.anchors[targetIndex]).click();
               }
               break;
             case 39: // right
@@ -288,9 +314,7 @@
               // on the first visible item in the tabs list.
               if (self.popupmenu.menu.find('li.is-selected:last-child').length > 0) {
                 e.preventDefault();
-                self.popupmenu.close();
-                $(self.anchors[targetIndex]).click().focus();
-                e.stopPropogation();
+                $(self.anchors[targetIndex]).click();
               }
               break;
           }
@@ -303,6 +327,14 @@
       isTabOverflowed: function(li) {
         var offset = $(li).offset().top - this.tablist.offset().top;
         return offset >= this.tablist.height();
+      },
+
+      findLastVisibleTab: function() {
+        var targetFocus = this.tablist.find('li:first-child');
+        while(!(this.isTabOverflowed(targetFocus))) {
+          targetFocus = targetFocus.next('li');
+        }
+        targetFocus.prev().find('a').click().focus();
       },
 
       destroy: function(){
