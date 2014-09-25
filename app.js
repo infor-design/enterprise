@@ -10,9 +10,10 @@ app.configure(function() {
   app.set('view engine', 'html');
   app.set('views', path.join(__dirname, 'views'));
   mmm.setEngine('hogan.js');
-  //app.engine('html', beardcomb);
   app.engine('html', mmm.__express);
-  app.use(express.static('public')); // instruct express to server up static assets
+
+  // instruct express to server up static assets
+  app.use(express.static('public'));
 
   var templateOpts = {
     title: 'SoHo Controls XI',
@@ -20,12 +21,14 @@ app.configure(function() {
     enableLiveReload: true
   };
 
+  //Setup All Routes
+
   //Main Index - Kitchen Sink Page
   app.get('/', function(req, res) {
     res.render('index', templateOpts);
   });
 
-  //Controls Index Page
+  //Controls Index Page and controls sub pages
   var controlOptions = {
       title: 'SoHo Controls XI - Controls Example',
       layout: 'controls/layout',
@@ -41,6 +44,7 @@ app.configure(function() {
     res.render('controls/' + end, controlOptions);
   });
 
+  //Patterns Index Page and controls sub pages
   app.get('/patterns/*', function(req, res) {
     var patternOptions = {
       title: 'SoHo Controls XI - Pattern Example',
@@ -51,6 +55,7 @@ app.configure(function() {
     res.render('patterns/' + end, patternOptions);
   });
 
+  //Tests Index Page and controls sub pages
   app.get('/tests/*', function(req, res) {
     var testOptions = {
       title: 'SoHo Controls XI - Tests',
@@ -58,9 +63,10 @@ app.configure(function() {
       enableLiveReload: false
     };
     var end = req.url.replace('/tests/','');
-    res.render('tests/' + end, testOptions);  //TODO: Tests Layout?
+    res.render('tests/' + end, testOptions);
   });
 
+  //Doc Page
   app.get('/docs', function(req, res) {
     res.render('docs', templateOpts);
   });
