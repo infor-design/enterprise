@@ -69,6 +69,7 @@
         if (settings.buttons) {
           self.addButtons(settings.buttons);
         }
+
       },
       revertTransition: function (doTop) {
         //Revert the transform so drag and dropping works as expected
@@ -186,6 +187,13 @@
             self.element.find('.btn-default').trigger('click.modal');
           }
         });
+
+        // Override this page's skip-link default functionality to instead focus the top
+        // of this element if it's clicked.
+        $('.skip-link').on('focus.modal', function(e) {
+          e.preventDefault();
+          self.getTabbableElements().first.focus();
+        });
       },
 
       isOnTop: function () {
@@ -201,16 +209,22 @@
         return max === dialog.css('z-index');
       },
 
+      getTabbableElements: function() {
+        var allTabbableElements = $(this.element).find('a[href], area[href], input:not([disabled]),' +
+          'select:not([disabled]), textarea:not([disabled]),' +
+          'button:not([disabled]), iframe, object, embed, *[tabindex],' +
+          '*[contenteditable]');
+        return {
+          first: allTabbableElements[0],
+          last: allTabbableElements[allTabbableElements.length - 1]
+        };
+      },
+
       keepFocus: function() {
         var self = this,
-          allTabbableElements = $(self.element).find('a[href], area[href], input:not([disabled]),' +
-            'select:not([disabled]), textarea:not([disabled]),' +
-            'button:not([disabled]), iframe, object, embed, *[tabindex],' +
-            '*[contenteditable]'),
-          firstTabbableElement = allTabbableElements[0],
-          lastTabbableElement = allTabbableElements[allTabbableElements.length - 1];
+          tabbableElements = self.getTabbableElements();
 
-          $(self.element).on('keypress.modal', function (e) {
+          $(self.element).on('keypress.modal keydown.modal', function (e) {
             var keyCode = e.which || e.keyCode;
 
             if (keyCode === 27) {
@@ -219,12 +233,12 @@
 
             if (keyCode === 9) {
               // Move focus to first element that can be tabbed if Shift isn't used
-              if (e.target === lastTabbableElement && !e.shiftKey) {
+              if (e.target === tabbableElements.last && !e.shiftKey) {
                 e.preventDefault();
-                firstTabbableElement.focus();
-              } else if (e.target === firstTabbableElement && e.shiftKey) {
+                tabbableElements.first.focus();
+              } else if (e.target === tabbableElements.first && e.shiftKey) {
                 e.preventDefault();
-                lastTabbableElement.focus();
+                tabbableElements.last.focus();
               }
             }
           });
@@ -258,6 +272,8 @@
         //close tooltips
         $('#validation-errors, #tooltip').addClass('is-hidden');
 
+        // remove the event that changed this page's skip-link functionality in the open event.
+        $('.skip-link').off('click');
       },
 
       destroy: function(){
