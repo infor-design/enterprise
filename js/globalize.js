@@ -56,6 +56,8 @@
       var self = this;
 
       if (locale && !this.cultures[locale]) {
+        this.currentLocale.name = locale;
+
         //fetch the local and cache it
         $.ajax({
           url: this.scriptPath('sohoxi') + 'cultures/' + this.currentLocale.name + '.js',
@@ -82,20 +84,34 @@
       }
 
       var data = this.currentLocale.data,
-        pattern = data.calendars[0].dateFormat, ret = '',
-        day = value.getDate(), month = value.getMonth(), year = value.getFullYear();
+        pattern, ret = '', cal = (data.calendars ? data.calendars[0] : null);
+
+      if (attribs.pattern) {
+        pattern = attribs.pattern;
+      }
+      if (attribs.date) {
+        pattern = cal.dateFormat[attribs.date];
+      }
+
+      if (!pattern) { //missing translations
+        return undefined;
+      }
+      var day = value.getDate(), month = value.getMonth(), year = value.getFullYear();
 
       //Day of Month
       ret = pattern.replace('dd', this.pad(day, 2));
       ret = ret.replace('d', day);
 
       //months
-      ret = ret.replace('MM', this.pad(month, 2));
-      ret = ret.replace('M', month);
+      ret = ret.replace('MMMM', cal.months.wide[month]);  //full
+      ret = ret.replace('MMM', cal.months.abbreviated[month]);  //abreviation
+      ret = ret.replace('MM', this.pad(month, 2));  //number padded
+      ret = ret.replace('M', month);                //number unpadded
 
       //years
       ret = ret.replace('yyyy', year);
       ret = ret.replace('yy', year.toString().substr(2));
+      ret = ret.replace('y', year);
 
       return ret.trim();
     },

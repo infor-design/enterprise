@@ -36,3 +36,5 @@ demoTasks.push({task:'063010', desc: 'Special fields test - New item has been cr
 demoTasks.push({task:'063011', desc: 'Call TMZ Inc at 5 PM'});
 demoTasks.push({task:'063012', desc: 'Part #6212132 has low inventory level'});
 
+//Js Function to generate design specs
+

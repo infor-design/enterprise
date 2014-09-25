@@ -36,14 +36,18 @@ describe('Globalize [mocha]', function(){
     html.getAttribute('lang').should.equal('de');
   });
 
-  it('should format dates', function(){
+  it('should format en dates', function(){
     Globalize.locale('en');    //year, month, day
     Globalize.formatDate(new Date(2000, 10, 8)).should.equal('10/8/00');
+    Globalize.formatDate(new Date(2000, 10, 8), {date: 'short'}).should.equal('10/8/00');
+    Globalize.formatDate(new Date(2000, 10, 8), {date: 'medium'}).should.equal('10/8/00');
+    Globalize.formatDate(new Date(2000, 10, 8), {date: 'long'}).should.equal('10/8/00');
+    Globalize.formatDate(new Date(2000, 10, 8), {pattern: 'M/d/yyyy'}).should.equal('10/8/2000');
   });
 
-  it('should format dates', function(){
-    Globalize.locale('en');    //year, month, day
-    Globalize.formatDate(new Date(2000, 10, 8)).should.equal('10/8/00');
+  it('should format de dates', function(){
+    Globalize.locale('de');    //year, month, day
+    Globalize.formatDate(new Date(2000, 10, 8)).should.equal('08.10.00');
   });
 
 });

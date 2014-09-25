@@ -1,14 +1,20 @@
 /* Sign In Page Pattern
 ================================================== */
-.signin {
+.wrapper {
+  display: table;
+  height: 100%;
   margin: 0 auto;
+}
+
+.signin {
   width: 300px;
-  padding-top: 12%;
+  display: table-cell;
+  vertical-align: middle;
 
   h1 {
     text-align: center;
     @include rem(padding, 2rem);
-    @include rem(padding-top, 6rem);
+    padding-top: 0;
   }
 
   .forgot {
@@ -30,5 +36,8 @@
     margin: 0 auto;
     display: block;
   }
+
 }
+
+
 

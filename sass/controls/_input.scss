@@ -107,6 +107,10 @@ textarea.is-disabled {
   color: #d5000e !important;
 }
 
+.field .error {
+  padding-left: 10px;
+}
+
 input.error {
   /*box-shadow: 0 0 3px #d5000e;*/
   border-color: #d5000e;

@@ -5,14 +5,14 @@
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
-      // AMD. Register as an anonymous module depending on jQuery.
-      define(['jquery'], factory);
+    // AMD. Register as an anonymous module depending on jQuery.
+    define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
-      //Support for Atom/CommonJS - Not Tested TODO
-      module.exports = factory;
+    //Support for Atom/CommonJS - Not Tested TODO
+    module.exports = factory;
   } else {
-      // Register with Browser globals
-      factory(window.jQuery || window.Zepto);
+    // Register with Browser globals
+    factory(window.jQuery || window.Zepto);
   }
 }(function ($) {
 

@@ -1,25 +1,27 @@
-<section class="signin" role="main">
-  <h1>Application Name</h1>
-  <form id="signin" data-validate-on="submit">
-    <div class="field">
-      <label class="scr-only" for="email">Email (Required)</label>
-      <input type="text" id="email" autocomplete="off" placeholder="Email Address" data-validate="required">
-    </div>
-    <div class="field">
-      <label class="scr-only" for="password">Password (Required)</label>
-      <input type="password" id="password" placeholder="Password" data-validate="required">
-      <!-- TODO: Caps Lock Indicator -->
-    </div>
-    <div class="field">
-      <input type="checkbox" id="stay-loggedin" checked class="checkbox">
-      <label class="checkbox-label" for="stay-loggedin">Stay Logged In</label>
-      <a class="link forgot" href="#">Forgot password?</a>
-    </div>
-    <button class="btn-default" type="submit">Sign in</button>
+<div class="wrapper">
+  <section class="signin" role="main">
+    <h1>Application Name</h1>
+    <form id="signin" data-validate-on="submit">
+      <div class="field">
+        <label class="scr-only" for="email">Email (Required)</label>
+        <input type="text" id="email" autocomplete="off" placeholder="Email Address" data-validate="required">
+      </div>
+      <div class="field">
+        <label class="scr-only" for="password">Password (Required)</label>
+        <input type="password" id="password" placeholder="Password" data-validate="required">
+        <!-- TODO: Caps Lock Indicator -->
+      </div>
+      <div class="field">
+        <input type="checkbox" id="stay-loggedin" checked class="checkbox">
+        <label class="checkbox-label" for="stay-loggedin">Stay Logged In</label>
+        <a class="link forgot" href="#">Forgot password?</a>
+      </div>
+      <button class="btn-default" type="submit">Sign in</button>
 
-    <span class="small-text">Powered By</span>
-    <svg viewBox="0 0 34 34" class="icon icon-logo" aria-label="Infor Logo" role="img">
-      <use xlink:href="#icon-logo"/>
-    </svg>
-  </form>
-</section>
+      <span class="small-text">Powered By</span>
+      <svg viewBox="0 0 34 34" class="icon icon-logo" aria-label="Infor Logo" role="img">
+        <use xlink:href="#icon-logo"/>
+      </svg>
+    </form>
+  </section>
+</div>

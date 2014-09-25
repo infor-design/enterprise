@@ -198,20 +198,9 @@
     },
     addError: function(field, message) {
       var loc = this.getField(field).addClass('error'),
-        icon = $('<i class="icon-error">&nbsp;</i>'),
-        appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
+         appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
       loc.data('data-errormessage', appendedMsg);
-
-      if (!loc.next().is('.icon-error') && !loc.is('input[type=checkbox]')) {
-        loc.after(icon);
-      }
-
-      if (!loc.next().next().is('.icon-error') && loc.is('input[type=checkbox]')) {
-        loc.next('.inforCheckboxLabel').after(icon);
-      }
-
-      icon.data('field', loc);
 
       //Add Aria Alert
       var messages = this.scrErrors.find('#message').attr('role', 'alert');

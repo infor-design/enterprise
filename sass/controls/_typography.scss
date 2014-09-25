@@ -24,14 +24,15 @@ h1 {
 h2 {
   @include font-size(24);
   font-weight: lighter;
-  line-height: 21px;
+  @include rem(line-height, 3rem);
   color: $data-color;
+  padding: 10px 0;
 }
 
 h3, .tab-panel h2 {
   @include font-size(18);
   @include rem(line-height, 2.6rem);
-  @include rem(margin-top, 2.3rem);
+  @include rem(margin-top, 1rem);
   font-weight: lighter;
   color: $label-color;
 }
@@ -49,6 +50,10 @@ p, span {
    @include rem(line-height, 2.4rem);
    font-weight: 200;
    color: $label-color;
+}
+
+h2 + p, h2 + div, p + h2, pre + h2 {
+  padding: 10px 0;
 }
 
 .even-distribution {

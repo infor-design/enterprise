@@ -4,13 +4,13 @@
 @import "mixins";
 
 pre {
-  padding: 0;
+  box-shadow: 0 1px #d9d9d9;
+  border: solid 1px #ececec;
   font-family: Courier;
   @include font-size(14);
   border-radius: 2px;
   line-height: 25px;
-  box-shadow: 0 1px #d9d9d9;
-  border: solid 1px #ececec;
+  margin: 10px 0 15px;
 }
 
 .rainbow {
@@ -51,7 +51,6 @@ pre {
   }
 
   .line .line-code {
-    padding-left: 1em;
     width: 100%;
   }
 }

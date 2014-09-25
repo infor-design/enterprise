@@ -1,10 +1,9 @@
-<div class="grid grid-pad">
+<div class="grid">
   <div id="format-container" class="col-1-2">
-    <h1>Masked User Input</h1>
 
     <form id="format-form" action="#" method="POST">
 
-      <h2 class="demo-heading">Standard Pattern-Matching Mask</h2>
+      <h1 class="demo-heading">Standard Pattern-Matching Mask</h1>
       <div class="field">
         <label for="input-masked-phone">Phone Number</label>
         <input type="tel" data-mask="(###) ###-####" id="input-masked-phone" />
@@ -20,7 +19,7 @@
         <input type="text" data-mask="aaaaaaaaaa" id="input-alpha-only" />
       </div>
 
-      <h2 class="demo-heading">Number Masks</h2>
+      <h1 class="demo-heading">Number Masks</h1>
       <div class="field">
         <label for="input-masked-number">Number</label>
         <input type="text" inputmode="numeric" data-mask="#,###.00" data-mask-mode="number" id="input-masked-number" placeholder="#,###.00"/>
@@ -40,7 +39,7 @@
     </form>
 
     <!-- Used for simulating form submissions without actually submitting. -->
-    <script type="text/javascript">
+    <script>
       $('document').ready(function() {
         $('#format-form button[type="submit"]').click(function(e) {
           e.preventDefault();
@@ -51,7 +50,7 @@
 
   <div class="col-1-2">
 
-    <h2 class="demo-heading">Misc. Used for Functional Tests</h2>
+    <h1 class="demo-heading">Misc. Used for Functional Tests</h1>
     <div class="field">
       <label for="input-previously-filled">Initialized containing "1234567890"</label>
       <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
