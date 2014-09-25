@@ -46,122 +46,116 @@
     Plugin.prototype = {
       init: function(){
         var self = this,
-              header = null;
+          header = null;
 
-          self.container = $(this.element);
+        self.container = $(this.element);
 
-          //For each tab panel set the aria roles and hide it
-          self.panels = self.container.children('div')
-              .attr({'class': 'tab-panel', 'role': 'tabpanel',
-                      'aria-hidden': 'true'}).hide();
+        //For each tab panel set the aria roles and hide it
+        self.panels = self.container.children('div')
+            .attr({'class': 'tab-panel', 'role': 'tabpanel',
+                    'aria-hidden': 'true'}).hide();
 
-          self.panels.find('h2:first').attr('tabindex', '0');
+        self.panels.find('h2:first').attr('tabindex', '0');
 
-          //Attach Tablist role and class to the tab headers container
-          header = self.container.find('ul:first')
-                      .attr({'class': 'tab-list', 'role': 'tablist',
-                              'aria-multiselectable': 'false'});
-          self.tablist = self.element.find('.tab-list');
+        //Attach Tablist role and class to the tab headers container
+        header = self.container.find('ul:first')
+                    .attr({'class': 'tab-list', 'role': 'tablist',
+                            'aria-multiselectable': 'false'});
+        self.tablist = self.element.find('.tab-list');
 
-          // Add the markup for the "More" button if it doesn't exist.
-          if (self.tablist.next('.tab-more').length === 0) {
-            var button = $('<button>').attr({'class': 'tab-more', 'type': 'button'});
-            button.append( $('<span>').text('More') );
-            button.append( $('<svg>').attr({'class': 'icon', 'viewBox': '0 0 32 32'}) );
-            var use = $(document.createElementNS('http://www.w3.org/2000/svg', 'use'));
-            button.find('svg').append(use);
-            self.tablist.after(button);
-            use[0].setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-dropdown-arrow');
+        // Add the markup for the "More" button if it doesn't exist.
+        if (self.tablist.next('.tab-more').length === 0) {
+          var button = $('<button>').attr({'class': 'tab-more', 'type': 'button'});
+          button.append( $('<span>').text('More') );
+          button.append( $('<svg>').attr({'class': 'icon', 'viewBox': '0 0 32 32'}) );
+          var use = $(document.createElementNS('http://www.w3.org/2000/svg', 'use'));
+          button.find('svg').append(use);
+          self.tablist.after(button);
+          use[0].setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-dropdown-arrow');
+        }
+
+        //for each item in the tabsList...
+        self.anchors = header.find('li > a');
+        self.anchors.each( function () {
+          var a = $(this);
+
+          a.attr({'role': 'tab', 'aria-selected': 'false', 'tabindex': '-1'})
+           .parent().attr('role', 'presentation').addClass('tab');
+
+          //Attach click events to tab and anchor
+          a.parent().on('click.tabs', function () {
+            self.activate($(this).index());
+            if (self.popupmenu) {
+              self.popupmenu.close();
+            }
+            $(this).find('a').focus();
+          });
+
+          a.on('click.tabs', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).parent().trigger('click');
+          }).on('keydown.tabs', function (e) {
+
+            var currentLi = $(this).parent(),
+              targetLi,
+              key = e.which;
+
+            if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || key < 32) {
+              return;
+            }
+
+            switch(key) {
+              case 37: case 38:
+                targetLi = currentLi.prev();
+                if (targetLi.length === 0) {
+                  targetLi = self.container.find('li:last');
+                }
+                break;
+              case 39: case 40:
+                targetLi = currentLi.next();
+                if (targetLi.length === 0) {
+                  targetLi = self.container.find('li:first');
+                }
+                break;
+            }
+
+            // Use the matching option in the popup menu if the target is hidden by overflow.
+            if (self.isTabOverflowed(targetLi)) {
+              e.preventDefault();
+              var oldIndex = self.tablist.find(targetLi).index();
+              // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
+              setTimeout(function() {
+                self.buildPopupMenu(oldIndex);
+              }, 0);
+              return;
+            }
+
+            targetLi.find('a').click().focus();
+          }).on('focus.tabs', function(e) {
+            e.preventDefault();
+            var targetLi = a.parent();
+            if (self.isTabOverflowed(targetLi)) {
+              self.buildPopupMenu(targetLi.index());
+            }
+          });
+        });
+
+        // store a reference to the more button and set up events for it
+        self.moreButton = self.element.find('.tab-more');
+        self.moreButton.on('click.tabs', function(e) {
+          if (!(self.container.hasClass('has-more-button'))) {
+            e.stopPropagation();
           }
-
-          //for each item in the tabsList...
-          self.anchors = header.find('li > a');
-          self.anchors.each( function () {
-            var a = $(this);
-
-            a.attr({'role': 'tab', 'aria-selected': 'false', 'tabindex': '-1'})
-             .parent().attr('role', 'presentation').addClass('tab');
-
-            //Attach click events to tab and anchor
-            a.parent().on('click.tabs', function () {
-              self.activate($(this).index());
-              if (self.popupmenu) {
-                self.popupmenu.close();
-              }
-              $(this).find('a').focus();
-            });
-
-            a.on('click.tabs', function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              $(this).parent().trigger('click');
-            }).on('keydown.tabs', function (e) {
-
-              var currentLi = $(this).parent(),
-                targetLi,
-                key = window.event ? e.which : e.keyCode;
-
-              if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || key < 32) {
-                return;
-              }
-
-              switch(key) {
-                case 37: case 38:
-                  targetLi = currentLi.prev();
-                  if (targetLi.length === 0) {
-                    targetLi = self.container.find('li:last');
-                  }
-                  break;
-                case 39: case 40:
-                  targetLi = currentLi.next();
-                  if (targetLi.length === 0) {
-                    targetLi = self.container.find('li:first');
-                  }
-                  break;
-              }
-
-              // Use the matching option in the popup menu if the target is hidden by overflow.
-              if (self.isTabOverflowed(targetLi)) {
-                e.preventDefault();
-                var oldIndex = self.tablist.find(targetLi).index();
-                // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
-                setTimeout(function() {
-                  self.buildPopupMenu(oldIndex);
-                }, 0);
-                return;
-              }
-
-              targetLi.find('a').click().focus();
-            }).on('focus.tabs', function() {
-              if (self.isTabOverflowed(a.parent())) {
-                self.findLastVisibleTab();
-              }
-            });
-          });
-
-          // store a reference to the more button and set up events for it
-          self.moreButton = self.element.find('.tab-more');
-          self.moreButton.on('click.tabs', function(e) {
-            if (!(self.container.hasClass('has-more-button'))) {
-              e.stopPropagation();
-            }
+          if (self.moreButton.hasClass('popup-is-open')) {
+            self.popupmenu.close();
+            self.moreButton.removeClass('popup-is-open');
+          } else {
             self.buildPopupMenu();
-          });
-          self.moreButton.on('keydown.tabs', function(e) {
-            var key = window.event ? e.which : e.keyCode;
-            // Override Shift+Tab to show the "last visible" tab instead of the "last" tab.
-            if (e.shiftKey && key === 9) {
-              e.preventDefault();
-              self.moreButton.blur();
-              self.findLastVisibleTab();
-            }
-            // Shift+F10 or Enter will open the menu
-            if ((e.shiftKey && key === 121)) {
-              self.buildPopupMenu();
-            }
-          });
+          }
+        });
 
-          self.activate(0);
+        self.activate(0);
 
         // Setup the "more" function
         $(window).on('resize.tabs', function() {
@@ -260,6 +254,12 @@
           self.moreButton.removeClass('popup-is-open');
         });
 
+        // Add the "is-selected" class to the currently focused item in this popup menu.
+        self.popupmenu.menu.on('focus.popupmenu', 'a', function() {
+          $(this).parents('ul').find('li').removeClass('is-selected');
+          $(this).parent().addClass('is-selected');
+        });
+
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
         // Otherwise, focus the first item in the list.
         if (startingIndex) {
@@ -275,13 +275,22 @@
         // are still visible (for accessiblity reasons), meaning you can use left and right to navigate the
         // popup menu options as if they were tabs.
         $(document).bindFirst('keydown.popupmenu', function(e) {
-          var key = window.event ? e.which : e.keyCode,
+          var key = e.which,
             targetIndex = 0;
 
-          // If you use Shift+Tab, close the menu and focus the last visible tab
+          // If you use Shift+Tab, close the menu and focus the last element on the page before the
+          // tablist <UL> with a tabindex.
           if (e.shiftKey && key === 9) {
-            targetIndex = self.popupmenu.menu.find('li:first-child').attr('data-original-tab-index') - 1;
-            $(self.anchors[targetIndex]).click();
+            e.preventDefault();
+            self.popupmenu.close();
+            e.stopImmediatePropagation();
+            var tabIndexes = $('[tabindex]');
+            tabIndexes.each(function(i) {
+              if ($(this)[0] === self.tablist.find('li > a')[0]) {
+                $(tabIndexes[i-1]).focus();
+                return false;
+              }
+            });
           }
 
           switch(key) {
@@ -325,6 +334,9 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
+        if (this.tablist.scrollTop() > 0) {
+          this.tablist.scrollTop(0);
+        }
         var offset = $(li).offset().top - this.tablist.offset().top;
         return offset >= this.tablist.height();
       },
@@ -341,7 +353,7 @@
         $(window).off('resize.tabs');
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
-          this.moreButton.detach();
+          this.moreButton.remove();
         }
         $.removeData(this.obj, pluginName);
       }
