@@ -252,7 +252,7 @@
         }
 
         this.element.removeClass('is-visible');
-        this.element.off('keypress.modal');
+        this.element.off('keypress.modal keydown.modal');
 
         this.overlay.remove();
         $('body').removeClass('modal-engaged');
