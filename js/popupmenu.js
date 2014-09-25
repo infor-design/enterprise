@@ -136,13 +136,10 @@
             return true;
           }
           e.preventDefault();
-        }).on('focus.popupmenu', 'a', function() {
-          $(this).parents('ul').find('li').removeClass('is-selected');
-          $(this).parent().addClass('is-selected');
         });
 
         $(document).on('keydown.popupmenu', function (e) {
-          var key = window.event ? e.which : e.keyCode,
+          var key = e.which,
             focus,
             excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
 

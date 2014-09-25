@@ -19,6 +19,7 @@ body {
   height: 100%;
   -webkit-font-smoothing: antialiased;
   background-color: $background-color;
+  font-family: $font-stack;
 }
 
 html { height: 100%; }
@@ -50,8 +51,8 @@ del {
 }
 
 input, textarea, select, button {
-  font-family: inherit;
-  font-weight: inherit;
+  /*font-family: inherit;*/
+  /*font-weight: inherit;*/
   background-color: #fff;
   border: 0;
   padding: 0;
@@ -69,7 +70,10 @@ button {
   overflow: visible;
 }
 
+/* Remove button padding in FF
+http://stackoverflow.com/questions/2954659/css-size-of-buttons-in-chrome-is-different-than-firefox
+*/
 ::-moz-focus-inner {
   border: 0;
+  padding: 0;
 }
-
