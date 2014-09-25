@@ -65,7 +65,7 @@
 
         // Add the markup for the "More" button if it doesn't exist.
         if (self.tablist.next('.tab-more').length === 0) {
-          var button = $('<button>').attr({'class': 'tab-more', 'type': 'button'});
+          var button = $('<button>').attr({'class': 'tab-more', 'type': 'button', 'tabindex': '-1'});
           button.append( $('<span>').text('More') );
           button.append( $('<svg>').attr({'class': 'icon', 'viewBox': '0 0 32 32'}) );
           var use = $(document.createElementNS('http://www.w3.org/2000/svg', 'use'));
