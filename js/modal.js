@@ -273,7 +273,7 @@
         $('#validation-errors, #tooltip').addClass('is-hidden');
 
         // remove the event that changed this page's skip-link functionality in the open event.
-        $('.skip-link').off('click');
+        $('.skip-link').off('focus.modal');
       },
 
       destroy: function(){

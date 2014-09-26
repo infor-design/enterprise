@@ -118,22 +118,6 @@
         return false;
       },
 
-      // used for getting the proper keyCode ID number with cross-browser compatability.
-      typedCode: function(event) {
-        var code = 0;
-        if (event === null && window.event) {
-          event = window.event;
-        }
-        if(event !== null) {
-          if (event.keyCode) {
-            code = event.keyCode;
-          } else if (event.which) {
-            code = event.which;
-          }
-        }
-        return code;
-      },
-
       // Uses the "type" attribute on an element to determine a default pattern.
       // This is called when "$.mask" is invoked on a field that contains an empty "data-mask" attribute.
       getPatternForType: function() {
@@ -250,7 +234,7 @@
       handleKeyEvents: function(self, e) {
         var evt = e || window.event,
           eventType = evt.originalEvent.type,
-          key = self.typedCode(evt),
+          key = e.which,
           typedChar = String.fromCharCode(key),
           patternChar = self.getCharacter();
 
@@ -580,8 +564,9 @@
             postDecSlice = sliceUpToCaret.split('.')[1]; // tests only typed characters after the decimal up to the caret
 
           // if there are as many or more characters in the slice as the mask, don't continue.
-          // The decimal place maximum has been hit.
-          if (postDecSlice.length >= postDecMask.length) {
+          // The decimal place maximum has been hit.  Only do this if the "entire" mask isn't selected.
+          var selectedChars = val.substring(self.originalPos.begin, self.originalPos.end);
+          if (selectedChars.length < val.length && postDecSlice.length >= postDecMask.length) {
             self.resetStorage();
             return self.killEvent(e);
           }
