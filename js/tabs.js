@@ -188,6 +188,8 @@
           .parent().addClass('is-selected');
 
         ui.panels.attr('aria-hidden', 'false').stop().fadeIn(function() {
+          $('#tooltip').addClass('is-hidden');
+          $('#dropdown-list, #multiselect-list').remove();
           self.element.trigger('activate', null, ui);
         });
 
