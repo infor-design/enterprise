@@ -16,8 +16,13 @@
 </div>
 
 <div class="field">
-  <label for="input-format-number">Number (Thousands)</label>
-  <input id="input-format-number" type="text" data-mask="#,###.00" placeholder="#,###.##">
+  <label for="input-format-number">Number</label>
+  <input id="input-format-number" inputmode="numeric" type="text" data-mask="###" data-mask-mode="number" placeholder="###">
+</div>
+
+<div class="field">
+  <label for="input-format-decimal">Number (Thousands &amp; Decimal)</label>
+  <input id="input-format-decimal" inputmode="numeric" type="text" data-mask="#,###.00" data-mask-mode="number" placeholder="#,###.##">
 </div>
 
 <div class="field">
