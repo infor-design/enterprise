@@ -23,7 +23,7 @@
       elem.find('select, .dropdown').not('[multiple]').dropdown();
 
       //Modals
-      elem.find('#modal-1').modal();
+      elem.find('.modal').modal();
 
       //Buttons Linked to Message Dialogs
       elem.find('button[data-message]').on('click', function () {

@@ -160,8 +160,10 @@
           self.element.find('.modal-body > div').triggerHandler('open');
         }, 300);
 
-        $('body > *').not(this.element).attr('aria-hidden', 'true');
+        $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
         $('body').addClass('modal-engaged');
+        this.element.attr('aria-hidden', 'false');
+        this.overlay.attr('aria-hidden', 'false');
 
         //Center on IE8
         if ($('html').hasClass('ie8')) {
@@ -255,8 +257,12 @@
         this.element.off('keypress.modal keydown.modal');
 
         this.overlay.remove();
-        $('body').removeClass('modal-engaged');
-        $('body > *').not(this.element).removeAttr('aria-hidden');
+        this.overlay.attr('aria-hidden', 'true');
+        this.element.attr('aria-hidden', 'true');
+        if ($('.modal[aria-hidden="false"]').length < 1) {
+          $('body').removeClass('modal-engaged');
+          $('.modal').not(this.element).removeAttr('aria-hidden');
+        }
 
         //Fire Events
         this.element.trigger('close', [this.isCancelled]);
