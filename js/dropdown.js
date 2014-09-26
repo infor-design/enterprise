@@ -416,6 +416,10 @@
         }
       },
       selectOption: function(option, noTrigger) {
+        if (!option) {
+          return option;
+        }
+
         var code = option.val(),
           oldVal = this.input.val();
 
@@ -498,7 +502,7 @@
       },
 
       destroy: function() {
-        this.element.removeData(pluginName);
+        $.removeData(this.element[0], pluginName);
         this.closeList();
         this.input.prev('label').remove();
         this.input.off().remove();
