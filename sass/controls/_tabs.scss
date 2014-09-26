@@ -37,9 +37,8 @@
   text-decoration: none;
   color: #666666;
   line-height: 39px;
-  font-size: 1.4em;
   @include font-size(14);
-  font-weight: 400;
+  font-weight: lighter;
 }
 
 .tab-list a:focus {
@@ -72,7 +71,7 @@
 }
 
 .tab-more > span {
-  font-weight: 400;
+  font-weight: lighter;
 }
 
 .tab-more.popup-is-open {

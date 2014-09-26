@@ -2,7 +2,7 @@
 ================================================== */
 
 //Fonts to Use
-$font-stack: Helvetica, sans-serif, sans-serif;
+$font-stack: Helvetica, Arial, sans-serif;
 
 //Main Text Color. Fx P's Spans ect...
 $font-color: #1a1a1a;
@@ -37,6 +37,11 @@ $btn-color: #999999;
 //The Background color on Input Fields
 $field-background-color: #fff;
 $field-border-color: #e8e8e8;
+
+@mixin field-height() {
+  height: 43px;
+  padding: 12px 10px;
+}
 
 //The Link Styles
 $link-color: #0896e9;

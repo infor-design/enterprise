@@ -22,6 +22,10 @@
   border-radius: 20px;
 }
 
+.radio-label {
+  display: inline-block;
+}
+
 .radio:not(:checked) + label:after, .radio:checked + label:after {
   background-color: $accent-color;
   background-repeat: no-repeat;

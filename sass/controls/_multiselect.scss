@@ -1,0 +1,51 @@
+/* Multi Select (DropDown)
+================================================== */
+.multiselect {
+  position: relative;
+}
+
+.multiselect .icon {
+  cursor: pointer;
+  height: 39px;
+  margin-left: -34px;
+  margin-top: 2px;
+  vertical-align: top;
+}
+
+select.multiselect {
+  display: none;
+}
+
+.multiselect textarea {
+  display: inline-block !important;
+  height: 43px;
+}
+
+.multiselect .icon:hover {
+  background-color: #e5e5e5;
+  cursor: pointer;
+}
+
+/* Tags */
+.multiselect .tag-list {
+  left: 0;
+  margin: 5px 5px 30px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+}
+
+.multiselect .tag {
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 3px 5px;
+  padding: 10px 25px 10px 10px;
+  width: auto;
+}
+
+.multiselect .tag button {
+  background-color: inherit;
+  color: #777;
+  @include font-size(12);
+}

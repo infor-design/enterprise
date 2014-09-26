@@ -20,7 +20,7 @@
       elem.find('.tab-container').tabs();
 
       //Select / DropDowns
-      elem.find('select, .dropdown').dropdown();
+      elem.find('select, .dropdown').not('[multiple]').dropdown();
 
       //Modals
       elem.find('#modal-1').modal();
@@ -84,6 +84,9 @@
 
       //Auto Complete
       elem.find('[data-autocomplete]').autocomplete();
+
+      //Multiselect
+      elem.find('select[multiple]').multiselect();
 
       //Class-based detection for IE8/9
       if (navigator.appVersion.indexOf('MSIE 8.0') > -1) {

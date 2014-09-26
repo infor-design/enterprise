@@ -44,13 +44,15 @@
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
                         .attr('id', id);
 
+        var icon = $('<svg class="icon" viewBox="0 0 32 32"><use xlink:href="#icon-dropdown-arrow"/></svg>');
+
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.element.after(this.input, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
-          this.element.after(this.label, this.input, this.trigger);
+          this.element.after(this.label, this.input, this.trigger, icon);
         } else {
-          this.element.after(this.input, this.trigger);
+          this.element.after(this.input, this.trigger, icon);
         }
         this.updateList();
         this.setValue();

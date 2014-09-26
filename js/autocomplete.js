@@ -125,7 +125,6 @@
 
       destroy: function() {
         $.removeData(this.element[0], pluginName);
-        this.detach();
         this.element.off('keypress.autocomplete focus.autocomplete');
       }
     };

@@ -3,7 +3,7 @@
 /* Labels */
 label, .label, .data {
   color: $label-color;
-  display: inline-block;
+  display: block;
   font-family: $font-stack;
   @include font-size(15);
   font-weight: lighter;

@@ -25,7 +25,7 @@
 .editor p {
   @include font-size(16);
   color: $data-color;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 }
 
 .editor h3 {
@@ -40,7 +40,7 @@
 
 .editor ul, .editor ol {
   color: $data-color;
-  font-weight: 200;
+  font-weight: lighter;
   line-height: 24px;
   margin: 20px;
   @include font-size(16);
@@ -53,6 +53,7 @@
 }
 
 .editor a {
+  color: $link-color;
   line-height: 2.4rem;
 }
 
@@ -77,7 +78,7 @@
   margin-bottom: 15px;
   font-style: normal;
   color: $data-color;
-  font-weight: 300;
+  font-weight: lighter;
   line-height: 22px;
 }
 
@@ -144,7 +145,7 @@
 
 .editor-toolbar li .editor-action-pre {
   padding: 15px 0;
-  font-weight: 100;
+  font-weight: lighter;
   @include font-size(12);
   font-family: $font-stack;
 }

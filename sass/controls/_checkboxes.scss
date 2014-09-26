@@ -31,6 +31,7 @@
 .checkbox + label,
 .checkbox + input[type="hidden"] + label {
   line-height: 24px;
+  display: inline-block;
 }
 
 .checkbox:not(:checked) + label:after,
