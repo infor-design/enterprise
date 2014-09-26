@@ -1,5 +1,6 @@
 <h1 class="demo-heading">Modal <span>(Dialogs)</span></h1>
-<button class="btn" type="button" data-modal="modal-1">Show Dialog</button>
+<button class="btn" type="button" data-modal="modal-1">Show Modal</button><br />
+<button class="btn" type="button" data-modal="modal-2">Show Nested Modal</button>
 
 <div class="modal" id="modal-1" style="width:40%">
   <div class="modal-content">
@@ -26,6 +27,47 @@
         <input id="pageDesc" name="pageDesc" type="text">
       </div>
 
+      <button type="button" class="btn-default btn-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Top Modal in the Nest</h1>
+    </div>
+
+    <div class="modal-body">
+      <p>This is the top modal in the nest!  Open another one?</p>
+      <button class="btn" type="button" data-modal="modal-3">Show Another Modal</button>
+      <button type="button" class="btn-default btn-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-3">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Middle Modal in the Nest</h1>
+    </div>
+
+    <div class="modal-body">
+      <p>This is the middle modal in the nest!  Open one more?</p>
+      <button class="btn" type="button" data-modal="modal-4">Show One More Modal</button>
+      <button type="button" class="btn-default btn-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-4">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title">Lowest Modal in the Nest</h1>
+    </div>
+
+    <div class="modal-body">
+      <p>This is the lowest modal in the nest!  Now start closing them!</p>
       <button type="button" class="btn-default btn-close">Close</button>
     </div>
   </div>
