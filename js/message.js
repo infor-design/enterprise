@@ -32,7 +32,8 @@
     // Actual Plugin Code
     Plugin.prototype = {
       init: function() {
-        var content;
+        var self = this,
+          content;
 
         //Create the Markup
         this.message = $('<div class="modal"></div>');
@@ -54,6 +55,14 @@
         if (settings.width !== 'auto') {
           this.content.closest('.modal').css({'max-width': 'none', 'width': settings.width});
         }
+
+        //Setup the destroy event to fire on close.  Needs to fire after the "close" event on the modal.
+        this.message.data('modal').element.on('afterClose', function() {
+          self.destroy();
+        });
+      },
+      destroy: function() {
+        this.message.remove();
       }
     };
 
