@@ -1,4 +1,4 @@
-/* User Input - Labels, TextBox, TextArea
+/* User Input - Labels, TextBox, TextArea, Visibility Classes
 ================================================== */
 .show {
   display: block !important;
@@ -28,4 +28,65 @@
 
 .masthead .scr-only {
   color: white;
+}
+
+/* visibility classes for different form factors */
+[class*="visible-sm-"] {
+  display: none;
+}
+
+.visible-sm-block {
+  @include respond-to(phone) { display: block; }
+}
+
+.visible-sm-inline {
+  @include respond-to(phone) { display: inline; }
+}
+
+.visible-sm-inline-block {
+  @include respond-to(phone) { display: inline-block; }
+}
+
+.hidden-sm {
+  @include respond-to(phone) { display: none; }
+}
+
+[class*="visible-md-"] {
+  display: none;
+}
+
+.visible-md-block {
+  @include respond-to(tablet) { display: block; }
+}
+
+.visible-md-inline {
+  @include respond-to(tablet) { display: inline; }
+}
+
+.visible-md-inline-block {
+  @include respond-to(tablet) { display: inline-block; }
+}
+
+.hidden-md {
+  @include respond-to(tablet) { display: none; }
+}
+
+[class*="visible-lg-"] {
+  display: none;
+}
+
+.visible-lg-block {
+  @include respond-to(desktop) { display: block; }
+}
+
+.visible-lg-inline {
+  @include respond-to(desktop) { display: inline; }
+}
+
+.visible-lg-inline-block {
+  @include respond-to(desktop) { display: inline-block; }
+}
+
+.hidden-lg {
+  @include respond-to(desktop) { display: none; }
 }

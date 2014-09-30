@@ -73,3 +73,16 @@
   #{$property}: $pxValues;
   #{$property}: $remValues;
 }
+
+/* Respond-To different device sizes (Responsive Breakpoints) */
+@mixin respond-to($media) {
+  @if $media == phone {
+    @media only screen and (max-width: $breakpoint-phone-to-tablet) { @content; }
+  }
+  @else if $media == tablet {
+    @media only screen and (min-width: $breakpoint-phone-to-tablet + 1) and (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
+  }
+  @else if $media == desktop {
+    @media only screen and (min-width: $breakpoint-tablet-to-desktop) { @content; }
+  }
+}

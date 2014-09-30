@@ -1,0 +1,90 @@
+<h1 class="demo-heading">Normal Visibility Classes <span>(Intended for use with Javascript)</span></h1>
+<table>
+  <thead>
+    <tr>
+      <th>Class Name</th>
+      <th>Description</th>
+      <th>Example (if visible)</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+    <tr>
+      <td><span class="heavy">.show</span></td>
+      <td>Should always be completely visible</td>
+      <td class="center">
+        <svg class="icon icon-logo show" viewBox="0 0 34 34">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="heavy">.hidden</span></td>
+      <td>Invisible to both browsers and SCR</td>
+      <td>
+        <svg class="icon icon-logo hidden" viewBox="0 0 34 34">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td><span class="heavy">.invisible</span></td>
+      <td>Only seen by screen readers</td>
+      <td>
+        <svg class="icon icon-logo invisible" viewBox="0 0 34 34">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+      </td>
+    </tr>
+</table>
+
+<h1 class="demo-heading">Form-Factor Visiblity Classes <span>(Badges below only show if the form factor matches)</span></h1>
+<ul>
+  <li>
+    <span class="heavy">.visible-sm-*</span>
+    <span class="amethyst badge visible-sm-inline">Only visible on Phone</span>
+  </li>
+  <li>
+    <span class="heavy">.hidden-sm</span>
+    <span class="emerald badge hidden-sm">Visible on anything BUT Phone</span>
+  </li>
+  <li>
+    <span class="heavy">.visible-md-*</span>
+    <span class="amethyst badge visible-md-inline">Only visible on Tablet</span>
+  </li>
+  <li>
+    <span class="heavy">.hidden-md</span>
+    <span class="emerald badge hidden-md">Visible on anything BUT Tablet</span>
+  </li>
+  <li>
+    <span class="heavy">.visible-lg-*</span>
+    <span class="amethyst badge visible-lg-inline">Only visible on Desktop</span>
+  </li>
+  <li>
+    <span class="heavy">.hidden-lg</span>
+    <span class="emerald badge hidden-lg">Visible on anything BUT Desktop</span>
+  </li>
+</ul>
+
+<p>When using the <span class="inline-code">.visible-*-*</span> classes, replace the last star in the className with the target display property to use when the element becomes visible.  For example:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Visibility Class</th>
+      <th>Corresponding CSS Property</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="inline-code">.visible-*-block</span></td>
+      <td><span class="inline-code">display: block;</span></td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">.visible-*-inline</span></td>
+      <td><span class="inline-code">display: inline;</span></td>
+    </tr>
+    <tr>
+      <td><span class="inline-code">.visible-*-inline-block</span></td>
+      <td><span class="inline-code">display: inline-block;</span></td>
+    </tr>
+  </tbody>
+</table>
