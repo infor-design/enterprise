@@ -2,9 +2,7 @@
 ================================================== */
 .switch {
   position: relative;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select: none;
+  @include no-select;
   display: inline-block;
   padding-left: 3px;
 }

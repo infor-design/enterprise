@@ -6,7 +6,7 @@
    <style>
     .longer-message {
       display: block;
-      width: 20px;
+      width: 100px;
     }
    </style>
 
@@ -21,7 +21,7 @@
               id: 'id-cancel',
               text: 'Cancel',
               click: function() {
-                alert('You Cancelled');
+                console.log('You Cancelled');
                 $(this).modal('close');
               },
               isLink: true,
@@ -29,7 +29,7 @@
             },{
               text: 'Remove',
               click: function() {
-                alert('Remove It');
+                console.log('Remove It');
                 $(this).modal('close');
               }
             }]

@@ -1,51 +1,105 @@
 /* Multi Select (DropDown)
 ================================================== */
 .multiselect {
-  position: relative;
+  background-color: $field-background-color;
+  border: 1px solid $field-border-color;
+  font-size: 0;
+  min-height: 43px;
+  outline: medium none;
+  overflow: hidden;
+  padding: 5px 2px 2px;
+  text-align: left;
+  width: 299px; /*inherit*/
 }
 
-.multiselect .icon {
-  cursor: pointer;
-  height: 39px;
-  margin-left: -34px;
-  margin-top: 2px;
-  vertical-align: top;
+.multiselect.is-focused {
+  box-shadow: $focus-shadow;
 }
 
+#multiselect-list {
+  max-height: 300px;
+  overflow: auto;
+}
+
+/* Hide on Initial Load */
 select.multiselect {
   display: none;
 }
 
-.multiselect textarea {
-  display: inline-block !important;
-  height: 43px;
+/* Input inside multiselect */
+.multiselect input[type="text"] {
+  background-color: transparent;
+  border: medium none;
+  box-shadow: none;
+  display: inline;
+  height: 30px;
+  margin: 0 1px;
+  max-width: inherit;
+  min-width: 80px;
+  outline: medium none;
+  padding: 0 4px;
+  vertical-align: top;
+  @include rem(width, 8rem);
 }
 
-.multiselect .icon:hover {
-  background-color: #e5e5e5;
+/* Trigger */
+.multiselect > .icon {
   cursor: pointer;
+  float: right;
+  height: 38px;
+  margin-top: -3px;
+  vertical-align: top;
+  width: 34px;
+}
+
+.multiselect > .icon:hover {
+  background-color: #e5e5e5;
+  outline: 1px solid #e5e5e5;
 }
 
 /* Tags */
-.multiselect .tag-list {
-  left: 0;
-  margin: 5px 5px 30px;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-}
-
 .multiselect .tag {
   background-color: #e0e0e0;
   border-radius: 3px;
+  color: #777;
+  cursor: default;
   display: inline-block;
+  @include font-size(12);
+  @include no-select;
+  height: 30px;
+  line-height: 11px;
   margin: 0 3px 5px;
+  overflow: hidden;
   padding: 10px 25px 10px 10px;
-  width: auto;
+  position: relative;
+  transition: all 0.15s linear 0s;
 }
 
-.multiselect .tag button {
-  background-color: inherit;
-  color: #777;
-  @include font-size(12);
+.multiselect .tag:hover {
+  background-color: #999999;
+  color: #fff;
+}
+
+.multiselect .tag:hover .icon {
+  fill: #fff;
+}
+
+.multiselect .tag > span {
+  border: none;
+  bottom: 0;
+  color: #fff;
+  cursor: pointer;
+  opacity: 1;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 25px;
+  z-index: 2;
+}
+
+.multiselect .tag .icon {
+  fill: #777;
+  height: 22px;
+  left: -5px;
+  top: 3px;
 }

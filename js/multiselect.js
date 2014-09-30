@@ -1,9 +1,7 @@
 /**
 * Multiselect (Tags) Control
-* @name Tabs
-* @param {string} propertyName - The Name of the Property
 */
-(function (factory) {
+(function(factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
       define(['jquery'], factory);
@@ -11,7 +9,7 @@
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
   }
-}(function ($) {
+}(function($) {
 
   $.fn.multiselect = function(options, args) {
 
@@ -36,100 +34,216 @@
       },
 
       //Generate the Markup and hide
-      addMarkup: function () {
+      addMarkup: function() {
+        var self = this;
+
         //generate container
         this.container = $('<div class="multiselect"></div>');
-        this.input = $('<textarea></textarea>').attr('id', this.element.attr('id')+'-textarea').appendTo(this.container);
+        this.input = $('<input type="text">').attr('id', this.element.attr('id')+'-input').appendTo(this.container);
         this.element.before(this.container).hide();
 
         //hide and create a new label
         this.orgLabel = $('label[for="' + this.element.attr('id') + '"]');
-        this.label = this.orgLabel.clone().attr('for', this.element.attr('id')+'-textarea');
+        this.label = this.orgLabel.clone().attr('for', this.element.attr('id')+'-input');
         this.container.before(this.label);
         this.orgLabel.hide();
 
         //add icon button
         this.trigger = $('<svg focusable="false" class="icon" viewBox="0 0 32 32"><use focusable="false" xlink:href="#icon-dropdown-arrow"/></svg>').insertAfter(this.input);
 
-        //Add tags
-        this.tags = $('<div class="tag-list"><ul></ul></div>').appendTo(this.container);
-        this.tags = this.tags.find('ul');
+        //Add selected items
+        var selOpts = this.element[0].selectedOptions;
+        for (var i = 0; i < selOpts.length; i++) {
+          self.addTag($(selOpts[i]));
+        }
+      },
+      //Call the source function or get the select options
+      callSource: function (term) {
+        var items = [],
+          self = this, list = '', previousSelected = this.element.val();
 
-        //TODO: Add selected items
+        if (settings.source) {
+          var response = function(data) {
+            //stuff data in the select
+            self.element.empty();
+            for (var i=0; i < data.length; i++) {
+              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"')
+                      + (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"')
+                      + (data[i].selected || $.inArray(data[i].value, previousSelected) > -1 ? ' selected ' : '')
+                      + '>'+ data[i].label + '</option>';
+            }
+
+            self.element.append(list);
+            self.input.removeClass('is-busy');  //TODO: Need style for this
+            self.openList('');
+          };
+
+          self.element.addClass('is-busy');
+          items = settings.source(term, response);
+          return true;
+        }
+        return false;
       },
 
       //Add the source to the select and/or update the popup list
       //with valid selections
-      updateList: function (term) {
+      updateList: function(term) {
         var items = [],
           self = this;
 
         //append the list
         this.list = $('#multiselect-list');
         if (this.list.length === 0) {
-          this.list = $('<ul id="multiselect-list" aria-expanded="true"></ul>').css({'width': this.input.outerWidth(), 'box-shadow': '0 5px 5px rgba(0, 0, 0, 0.2)'}).appendTo('body');
+          this.list = $('<ul id="multiselect-list" aria-expanded="true"></ul>').css({'width': this.container.outerWidth(), 'box-shadow': '0 5px 5px rgba(0, 0, 0, 0.2)'}).appendTo('body');
         }
 
+        items = this.element[0].options;
         this.list.empty();
 
-        if (settings.source) {
-          items = settings.source;
-        } else {
-          items = this.element[0].options;
-        }
+        $(items).each(function (i, item) {
+          var isDisabled = false,
+            label = (typeof item === 'string' ? item : item.label),
+            value = (typeof item === 'string' ? null : item.value),
+            id = (typeof item === 'string' ? null : item.id);
 
-        for (var i = 0; i < items.length; i++) {
-           var label = (typeof items[i] === 'string' ? items[i] : items[i].label),
-            value = (typeof items[i] === 'string' ? null : items[i].value),
-            id = (typeof items[i] === 'string' ? null : items[i].id);
+          if (self.isSelected(value || id || label)){
+            isDisabled = true;
+          }
 
           if (label.toLowerCase().indexOf(term) > -1) {
             var listOption = $('<li id="mu-list-option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + label + '</a></li>');
             listOption.find('a').attr('href', '#'+ (value || id || label));
+            listOption.addClass((isDisabled ? 'is-disabled' : ''));
             self.list.append(listOption);
           }
-        }
+        });
       },
 
       //Open the list - using source - called from keyboard or click
       //Note that there is a similar event in autocomplete. Could be more dry.
-      openList: function (term) {
+      openList: function(term) {
         var self = this;
 
         this.updateList(term);
 
-        this.input.popupmenu({menuId: 'multiselect-list', trigger: 'immediate', autoFocus: false})
+        this.container
+          .off('close.multiselect')
+          .off('selected.multiselect')
+          .popupmenu({menuId: 'multiselect-list', trigger: 'immediate', autoFocus: false})
           .on('close.multiselect', function () {
             self.list.remove();
           }).on('selected.multiselect', function (e, args) {
             self.addTag(args);
+            self.input.focus().val('');
           });
+
+        self.input.focus();
       },
 
       //Setup Events
-      handleEvents: function () {
-        var self = this;
+      handleEvents: function() {
+        var self = this, timer, buffer;
 
         this.trigger.on('click.multiselect', function () {
+          if (self.callSource('')) {
+            return;
+          }
           self.openList('');
-          self.input.focus();
+        });
+
+        this.container.on('click.multiselect, touchend.multiselect', function (e) {
+          var xIcon = $(e.target).closest('.remove');
+          if (xIcon.length > 0) {
+            self.removeTag(xIcon);
+          } else {
+            self.input.focus();
+          }
+        });
+
+        this.input.on('focusin.multiselect', function() {
+          self.container.addClass('is-focused');
+        }).on('focusout.multiselect', function() {
+          if ($('#multiselect-list').is(':visible')) {
+            return;
+          }
+          self.container.removeClass('is-focused');
+        }).on('keypress.multiselect', function(e) {
+          //Similar code in autocomplete - this is not DRY
+          var field = $(this);
+
+          clearTimeout(timer);
+
+          if (e.altKey && e.keyCode === 40) {  //open list
+            if (self.callSource('')) {
+              return;
+            }
+            self.openList('');
+            return;
+          }
+
+          if (!e.altKey && e.keyCode === 8 && self.input.val() === '') {  //remove last
+            self.removeTag(self.container.find('.tag:last'));
+            return;
+          }
+
+          timer = setTimeout(function () {
+
+            buffer = field.val();
+            if (buffer === '') {
+              return;
+            }
+
+            //This checks all printable characters
+            if (e.which === 0 || e.charCode === 0 || e.ctrlKey || e.metaKey || e.altKey) {
+              return;
+            }
+
+            if (self.callSource(buffer)) {
+              return;
+            }
+            self.openList(buffer);
+
+          }, 300);  //no pref for this lets keep it simple.
         });
       },
 
-      //Add this tag to the UI and update the select
-      addTag: function(option) {
-        var li = option.parent();
-        this.input.val(this.input.val() + ', ' + option.text()).attr('aria-activedescendant', li.attr('id'));
+      isSelected: function (val) {
+        var sel = this.element.find('option').filter(function () { return this.value === val; });
+        return (sel[0] ? sel[0].selected : false);
+      },
 
-        var sel = this.element.find('option').filter(function () { return this.value === option.attr('href').substr(1); });
+      //Add this tag to the UI and update the select
+      addTag: function(tag) {
+        var li = tag.parent(),
+          sel = tag,
+          tagSpan, val;
+
+        this.input.attr('aria-activedescendant', li.attr('id'));
+
+        if (!tag.is('option')) {
+          val = tag.attr('href').substr(1);
+          sel = this.element.find('option').filter(function () { return this.value === val; });
+        } else {
+          val = tag[0].value;
+        }
+
         sel[0].selected = true;
-        this.tags.append('<li class="tag"><button type="button">' + option.text() + '</button><em class="tag-delete">X</em></li>');
+        tagSpan = $('<span class="tag">' + tag.text() + '<span class="remove"><svg class="icon" viewBox="0 0 32 32"><use xlink:href="#icon-delete"></svg></span></span>');
+        tagSpan.attr('data-val',val);
+        this.input.before(tagSpan);
+        this.element.trigger('change');
+      },
+
+      removeTag: function(tag) {
+        var sel = this.element.find('option').filter(function () { return this.value === tag.attr('data-val'); });
+        sel[0].selected = false;
+        tag.remove();
       },
 
       //Handle Deconstruction
       destroy: function() {
-        this.element.removeData(pluginName)
-          .off('keypress.multiselect focus.multiselect');
+        $.removeData(this.element[0], pluginName);
+        this.element.off('keypress.multiselect focusin.multiselect, focusout.multiselect');
         this.container.remove();
         this.element.show();
         this.orgLabel.show();

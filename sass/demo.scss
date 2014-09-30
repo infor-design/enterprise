@@ -106,6 +106,13 @@
   height: 28px;
 }
 
+/* TODO: Hide Drop Down For Now on Smaller Res */
+@media handheld, only screen and (max-width: 767px) {
+  .demo-header .field.aligned {
+    display: none;
+  }
+}
+
 /* Documentation - Might go in its own sass later */
 .doc-block {
   border-radius: 4px;
@@ -125,5 +132,4 @@
 .doc h1:first-child {
   margin-top: 5px;
 }
-
 

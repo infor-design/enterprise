@@ -36,6 +36,16 @@
   @return $num / ($num * 0 + 1);
 }
 
+/* Util To Disable Select */
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Handle Rems with pixel fallback */
 @mixin rem($property, $values...) {
   $max: length($values);

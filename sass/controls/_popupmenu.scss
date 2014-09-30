@@ -48,9 +48,18 @@
   display: block;
 }
 
+.popupmenu a[disabled] {
+  color: $disabled-color;
+  opacity: .6;
+}
+
 .popupmenu li a:focus {
   box-shadow: $focus-shadow;
   border: 1px solid transparent;
+}
+
+.popupmenu li.is-disabled a:focus {
+  box-shadow: none;
 }
 
 /* Icon Positioning */

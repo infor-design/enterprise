@@ -15,6 +15,7 @@
 
     return this.each(function() {
       var elem = $(this);
+      elem = elem.find(':not(.no-init)');
 
       //Tabs
       elem.find('.tab-container').tabs();
@@ -86,7 +87,7 @@
       elem.find('[data-autocomplete]').autocomplete();
 
       //Multiselect
-      elem.find('select[multiple]').multiselect();
+      elem.find('select[multiple]:not([data-init])').multiselect();
 
       //Class-based detection for IE8/9
       if (navigator.appVersion.indexOf('MSIE 8.0') > -1) {

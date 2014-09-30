@@ -82,8 +82,7 @@
         var buffer = '', timer, self = this;
 
         this.element.on('keypress.autocomplete', function (e) {
-          var field = $(this),
-            isPrintable = false;
+          var field = $(this);
 
           clearTimeout(timer);
 
@@ -100,10 +99,7 @@
             }
 
             //This checks all printable characters
-            if (e.which !== 0 && e.charCode !== 0 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-              isPrintable = true;
-            }
-            if (!isPrintable) {
+            if (e.which === 0 || e.charCode === 0 || e.ctrlKey || e.metaKey || e.altKey) {
               return;
             }
 

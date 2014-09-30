@@ -1,0 +1,26 @@
+<div class="grid grid-pad">
+  <div class="col-1-2">
+    <h1 class="demo-heading">Multiselect <span>(Tags)</span></h1>
+    <div class="field">
+      <label for="states-multi" class="label">Ajax Test</label>
+      <select multiple id="states-multi" name="states" data-init="false" class="multiselect">
+      </select>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+
+    $('#states-multi').multiselect({source: function (term, response) {
+      //make an ajax call
+      $.getJSON('/api/states?term='+term, function(data) {
+        //Structure the data with val, label syntax is done on the server
+        response(data);
+      });
+    }}).on('change', function () {
+      console.log('Changed to :' + $(this).val());
+    });
+
+  });
+</script>

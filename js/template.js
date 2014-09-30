@@ -1,9 +1,7 @@
 /**
-* XYZ PLugin Control
-* @name XYZ TODO: Test Doc Generation
-* @param {string} propertyName - The Name of the Property defaults to defaultValue
+* XYZ Control (link to docs)
 */
-(function (factory) {
+(function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module depending on jQuery.
     define(['jquery'], factory);
@@ -14,9 +12,9 @@
     // Register with Browser globals
     factory(window.jQuery || window.Zepto);
   }
-}(function ($) {
+}(function($) {
 
-  $.fn.pluginName = function( options ) {
+  $.fn.pluginName = function(options) {
 
     // Tab Settings and Options
     var pluginName = 'pluginName',
@@ -33,17 +31,17 @@
 
     // Actual Plugin Code
     Plugin.prototype = {
-      init: function(){
+      init: function() {
         var self = this;
         console.log(self);
       },
 
-      someMethod: function(){
+      someMethod: function() {
 
       },
 
       destroy: function() {
-        this.element.removeData(pluginName);
+        $.removeData(this.element[0], pluginName);
       }
     };
 

@@ -116,10 +116,11 @@
           var anchor = $(this),
             href = anchor.attr('href');
 
-          if (anchor.parent().is('.submenu')) {
+          if (anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
             //Do not close parent items of submenus on click
             return;
           }
+
           if (anchor.find('input[checkbox]').length > 0) {
             return;
           }
@@ -215,7 +216,7 @@
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {
           this.menu.css({'left': target.offset().left - (this.menu.parent().length ===1 ? this.menu.offsetParent().offset().left : 0),
-              'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
+              'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight() + (target.css('box-shadow') ? 2 : 0)});
         }
 
         //Handle Case where menu is off bottom
@@ -230,8 +231,8 @@
             } else {
               //shrink to bottom
               this.menu.css({'left': target.offset().left - (this.menu.parent().length ===1 ? this.menu.parent().offset().left : 0), 'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
-              this.menu.height($(window).outerHeight() - (this.menu.offset().top + 32) + 'px').css('overflow', 'auto');
-              //Note: 32 is the top and bottom padding 12+12 and box shadow plus a 2 px offset
+              this.menu.height($(window).outerHeight() - (this.menu.offset().top + 45) + 'px').css('overflow', 'auto');
+              //Note: 45 gives some space on the bottom
             }
           }
         }
