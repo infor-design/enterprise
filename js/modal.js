@@ -74,14 +74,14 @@
       revertTransition: function (doTop) {
         //Revert the transform so drag and dropping works as expected
         var elem = this.element,
-          parentRect = elem.parent()[0].getBoundingClientRect(),
+          //parentRect = elem.parent()[0].getBoundingClientRect(),
           rect = elem[0].getBoundingClientRect();
 
         elem.css({'transition': 'all 0 ease 0', 'transform': 'none',
-          'left': rect.left-parentRect.left});
+          'left': rect.left});
 
         if (doTop) {
-          elem.css('top', rect.top-parentRect.top+11);
+          elem.css('top', rect.top);
         }
       },
       addButtons: function(buttons){
@@ -141,18 +141,18 @@
           });
           self.sizeInner();
         }
-        this.element.addClass('is-visible').attr('role', 'dialog');
 
         //Look for other nested dialogs and adjust the zindex.
         $('.modal').each(function (i) {
           var modal = $(this);
-          modal.css('z-index', '100' + (i + 1));
+          modal.css('z-index', (1000 + (i + 1)).toString());
 
           if (modal.data('modal') && modal.data('modal').overlay) {
-            modal.data('modal').overlay.css('z-index', '100' + i);
+            modal.data('modal').overlay.css('z-index', (1000 + i).toString());
           }
         });
 
+        this.element.addClass('is-visible').attr('role', 'dialog');
         setTimeout(function () {
           self.element.find('.modal-title').focus();
           self.keepFocus();
@@ -160,8 +160,10 @@
           self.element.find('.modal-body > div').triggerHandler('open');
         }, 300);
 
-        $('body > *').not(this.element).attr('aria-hidden', 'true');
+        $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
         $('body').addClass('modal-engaged');
+        this.element.attr('aria-hidden', 'false');
+        this.overlay.attr('aria-hidden', 'false');
 
         //Center on IE8
         if ($('html').hasClass('ie8')) {
@@ -255,8 +257,12 @@
         this.element.off('keypress.modal keydown.modal');
 
         this.overlay.remove();
-        $('body').removeClass('modal-engaged');
-        $('body > *').not(this.element).removeAttr('aria-hidden');
+        this.overlay.attr('aria-hidden', 'true');
+        this.element.attr('aria-hidden', 'true');
+        if ($('.modal[aria-hidden="false"]').length < 1) {
+          $('body').removeClass('modal-engaged');
+          $('.modal').not(this.element).removeAttr('aria-hidden');
+        }
 
         //Fire Events
         this.element.trigger('close', [this.isCancelled]);
@@ -274,6 +280,8 @@
 
         // remove the event that changed this page's skip-link functionality in the open event.
         $('.skip-link').off('focus.modal');
+
+        this.element.trigger('afterClose');
       },
 
       destroy: function(){
