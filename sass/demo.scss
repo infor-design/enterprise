@@ -86,6 +86,19 @@
   top: 65px;
 }
 
+.demo table {
+  width: 100%;
+}
+
+.demo table th,
+.demo table td {
+  padding: 0.5em;
+}
+
+.demo table th {
+  font-size: 1.3em;
+}
+
 .demo-header .label, .demo-header .dropdown {
   float: left;
   display: inline-block;

@@ -90,3 +90,46 @@
 .hidden-lg {
   @include respond-to(desktop) { display: none; }
 }
+
+[class*="visible-xl-"] {
+  display: none;
+}
+
+.visible-xl-block {
+  @include respond-to(extralarge) { display: block; }
+}
+
+.visible-xl-inline {
+  @include respond-to(extralarge) { display: inline; }
+}
+
+.visible-xl-inline-block {
+  @include respond-to(extralarge) { display: inline-block; }
+}
+
+.hidden-xl {
+  @include respond-to(extralarge) { display: none; }
+}
+
+/* Print Visibility Clases */
+[class*="visible-print-"] {
+  display: none !important;
+}
+
+@media print {
+  .visible-print-block {
+    display: block !important;
+  }
+
+  .visible-print-inline {
+    display: inline !important;
+  }
+
+  .visible-print-inline-block {
+    display: inline-block !important;
+  }
+
+  .hidden-print {
+    display: none !important;
+  }
+}
