@@ -73,3 +73,16 @@
   #{$property}: $pxValues;
   #{$property}: $remValues;
 }
+
+/* Respond-To different device sizes (Responsive Breakpoints) */
+@mixin respond-to($media) {
+  @if $media == phone {
+    @media (max-width: $breakpoint-phone-to-tablet - 1) { @content; }
+  } @else if $media == tablet {
+    @media (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
+  } @else if $media == desktop {
+    @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: $breakpoint-desktop-to-extralarge - 1) { @content; }
+  } @else if $media == extralarge {
+    @media (min-width: $breakpoint-desktop-to-extralarge) { @content; }
+  }
+}
