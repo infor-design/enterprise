@@ -106,13 +106,17 @@
             }
 
             switch(key) {
-              case 37: case 38:
+              case 38:
+                e.preventDefault(); // jshint ignore:line
+              case 37:
                 targetLi = currentLi.prev();
                 if (targetLi.length === 0) {
                   targetLi = self.container.find('li:last');
                 }
                 break;
-              case 39: case 40:
+              case 40:
+                e.preventDefault(); // jshint ignore:line
+              case 39:
                 targetLi = currentLi.next();
                 if (targetLi.length === 0) {
                   targetLi = self.container.find('li:first');
