@@ -74,6 +74,7 @@
       </select>
     </div>
 
+  <!-- This wont work any more
     <label for="abs2" class="label" style="left: 436px; position: absolute;top: 442px;">Absolute Position No Field (Bad Practice)</label>
     <select id="abs2" name="abs2" class="dropdown" style="width: 50px;left: 436px; position: absolute;top: 488px;">
       <option value="AL">Alabama</option>
@@ -89,6 +90,7 @@
       <option value="RI">Rhode Island</option>
       <option value="SC">South Carolina</option>
     </select>
+  -->
 
     <div class="field">
       <label for="empty" class="label">Empty List</label>
@@ -123,18 +125,16 @@
       </select>
     </div>
 
-    <div class="field">
-      <form id="testForm" action="#" method="POST">
-        <label for="form-dropdown" class="label">This Dropdown's inside a Form Tag</label>
-        <select id="form-dropdown" name="form-dropdown" class="dropdown">
-          <option id="option1" value="notSelectedByDefault">Not Selected by Default</option>
-          <option id="option2" value="selectedByDefault" selected>Selected by Default</option>
-        </select>
-        <div class="form-buttons">
+        <form id="testForm" action="#" method="POST">
+          <div class="field">
+            <label for="form-dropdown" class="label">This Dropdown's inside a Form Tag</label>
+            <select id="form-dropdown" name="form-dropdown" class="dropdown">
+              <option id="option1" value="notSelectedByDefault">Not Selected by Default</option>
+              <option id="option2" value="selectedByDefault" selected>Selected by Default</option>
+            </select>
+          </div>
           <button id="reset-button" class="btn" type="reset">Reset</button>
-        </div>
       </form>
-    </div>
 
   </div>
 </div>

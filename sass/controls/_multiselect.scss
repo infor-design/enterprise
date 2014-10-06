@@ -103,3 +103,32 @@ select.multiselect {
   left: -5px;
   top: 3px;
 }
+
+/* Layout */
+.field .multiselect {
+  margin-bottom: 20px;
+}
+
+/* States */
+.multiselect.disabled {
+  color: $disabled-color;
+  -webkit-text-fill-color: $disabled-color;
+  background-color: #e5e5e5;
+  border: solid 1px #e5e5e5;
+}
+
+.multiselect.disabled .icon {
+  display: none;
+}
+
+.multiselect.disabled .tag {
+  background-color: #f1f1f1;
+  box-shadow: none;
+  color: #666;
+  cursor: default;
+  padding: 10px 10px 10px 10px;
+}
+
+.multiselect.disabled .tag > span {
+  cursor: default;
+}

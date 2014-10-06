@@ -18,9 +18,9 @@
     direction: 'left-to-right',   //layout/orientation/@characters
     calendars: [{    //ca-gregorian
       name: 'gregorian',
-      dateFormat: {'short': 'M/d/yy',
-                   'medium': 'MMM d, y',
-                   'long': 'MMMM d, y'},   //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
+      dateFormat: {'short': 'dd.MM.yy',
+                   'medium': 'dd.MM.y',
+                   'long': 'd. MMMM y'},   //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       months: {'abbreviated': { //ca-gregorian/main/dates/calendars/gregorian/months/format/abbreviated
                   '1': 'Jan.',
                   '2': 'Feb.',

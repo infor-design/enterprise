@@ -30,18 +30,15 @@
   display: inline-block;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid #666666;
   border-radius: 17px;
-  background-color: #666666;
+  background-color: #b3b3b3;
   position: relative;
-  width: 66px;
-  height: 33px;
+  width: 45px;
+  height: 22px;
 }
 
 .switch-inner {
   width: 200%; margin-left: -100%;
-  -moz-transition: margin 0.3s ease-in 0s;
-  -webkit-transition: margin 0.3s ease-in 0s;
   transition: margin 0.3s ease-in 0s;
 }
 
@@ -55,43 +52,37 @@
   height: 33px;
   padding: 0;
   line-height: 33px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .switch-inner:before {
   content: "";
-  padding-left: 5px;
-  background-color: #2db329;
+  background-color: $accent-color;
   border-radius: 10px;
 }
 
 .switch-inner:after {
   content: "";
   padding-right: 5px;
-  background-color: #666666;
+  background-color: #b3b3b3;
   text-align: right;
 }
 
 .switch-knob {
-  width: 33px;
-  height: 33px;
+  width: 20px;
+  height: 20px;
   margin: 0;
   background: #FFFFFF;
-  border: 2px solid #666666;
   border-radius: 17px;
+  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1) inset, 0 0 0 1px hsla(0, 0%, 0%, 0.1);
+  /*  -1px 5px 1.92px 2.08px rgba(0, 0, 1, 0.05); */
   position: absolute;
-  top: -2px;
+  top: 1px;
   bottom: 0;
-  right: 31px;
-  -moz-transition: all 0.3s ease-in 0s;
-  -webkit-transition: all 0.3s ease-in 0s;
+  right: 23px;
   transition: all 0.3s ease-in 0s;
 }
 
 .switch-checkbox:checked + .switch-container > .switch-control {
-  border: 2px solid #2db329;
   margin-left: 0;
 }
 
@@ -100,8 +91,7 @@
 }
 
 .switch-checkbox:checked + .switch-container .switch-control .switch-knob {
-  right: -2px;
-  border: 2px solid #2db329;
+  right: 1px;
 }
 
 .switch-label {
@@ -110,10 +100,10 @@
   display: inline-block;
   font-family: $font-stack;
   @include font-size(14);
-  line-height: 20px;
+  line-height: 22px;
   position: relative;
   top: 0;
   position: relative;
   text-indent: 10px;
-  top: -12px;
+  top: -5px;
 }

@@ -1,121 +1,64 @@
 /* Checkboxes
 ================================================== */
-.checkbox:not(:checked),
-.checkbox:checked {
+.checkbox {
   position: absolute;
   left: -9999px;
 }
 
-.checkbox:not(:checked) + label,
-.checkbox:checked + label,
-.checkbox:not(:checked) + input[type="hidden"] + label,
-.checkbox:checked + input[type="hidden"] + label {
-  position: relative;
-  padding-left: 35px;
+.checkbox + label {
+  display: inline-block;
   cursor: pointer;
+  padding-left: 30px;
 }
 
-.checkbox:not(:checked) + label:before,
-.checkbox:checked + label:before,
-.checkbox:not(:checked) + input[type="hidden"] + label:before,
-.checkbox:checked + input[type="hidden"] + label:before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  width: 16px;
-  height: 16px;
+.checkbox + label:before {
   border: 2px solid #999;
   border-radius: 2px;
-}
-
-.checkbox + label,
-.checkbox + input[type="hidden"] + label {
-  line-height: 24px;
-  display: inline-block;
-}
-
-.checkbox:not(:checked) + label:after,
-.checkbox:checked + label:after,
-.checkbox:not(:checked) + input[type="hidden"] + label:after,
-.checkbox:checked + input[type="hidden"] + label:after {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAMAAAB8rpxtAAAABGdBTUEAALGPC/xhBQAAAGBQTFRF////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////9sf7QgAAAB90Uk5Tx03wtlDxRth9FHNbBs2o4yf23SPM0hiqLZYi6oi5AExYgakAAABWSURBVAjXRYzHDcAwDAOV3ntxF/ffMjISOHrxQOqI02lQyhn9UAYkqANyRXaM2TaoCiboCAAMCywDrzvQdhEwKfntD+nJO5nA33FMPDts56sUtcH1+R/MwQ2iGTREOwAAAABJRU5ErkJggg==");
-  background-repeat: no-repeat;
-  color: transparent;
   content: "";
-  font-family: inherit;
-  font-size: 25px;
-  left: 10px;
+  height: 14px;
+  left: 38px;
   position: absolute;
-  top: 4px;
-  height: 12px;
-  width: 12px;
-  transition: all 0.2s ease 0s;
+  width: 14px;
 }
 
-.checkbox:checked + label:before,
-.checkbox:checked + input[type="hidden"] + label:before {
+.checkbox:checked + label:before {
   background-color: $accent-color;
   border-color: $accent-color;
 }
 
-// checked mark aspect changes
-.checkbox:not(:checked) + label:after,
-.checkbox:not(:checked) + input[type="hidden"] + label:after {
-  @include opacity(0);
-  transform: scale(0);
-}
-
-.checkbox:checked + label:after,
-.checkbox:checked + input[type="hidden"] + label:after {
-  @include opacity(1);
-  transform: scale(1);
-}
-
-// disabled checkbox
-.checkbox:disabled:not(:checked) + label:before,
-.checkbox:disabled:checked + label:before,
-.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before,
-.checkbox:disabled:checked + input[type="hidden"] + label:before {
-  border-color: $accent-color;
-  cursor: default;
-}
-
-.checkbox:disabled:checked + label:after,
-.checkbox:disabled:checked + input[type="hidden"] + label:after {
-  @include opacity(.5);
-}
-
-.checkbox:disabled:not(:checked) + label:before,
-.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before {
-  border-color: #bbb;
-  box-shadow: none;
-}
-
-.checkbox:disabled + label,
-.checkbox:disabled + input[type="hidden"] + label {
-  color: #aaa;
-  cursor: default;
-}
-
-.checkbox.is-partial + label:after,
-.checkbox.is-partial + input[type="hidden"] + label:after {
-  background-color: #fff;
-  background-image: none !important;
-  border-radius: 0;
-  content: ' ';
+.checkbox:checked + label:after {
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0 3px 3px 0;
+  content: "";
   height: 10px;
-  left: 11px;
-  top: 4px;
-  width: 10px;
+  left: 44px;
+  margin-top: 1px;
+  position: absolute;
+  transform: rotate(45deg);
+  transition: all 0.2s ease 0s;
+  width: 4px;
 }
 
-// accessibility
-.checkbox:checked:focus + label:before,
-.checkbox:not(:checked):focus + label:before,
-.checkbox:checked:focus + input[type="hidden"] + label:before,
-.checkbox:not(:checked):focus + input[type="hidden"] + label:before {
-  border: 2px solid $accent-color;
+.checkbox:checked + label:after {
+  border-color: white;
+}
+
+/* Disabled State */
+.checkbox:disabled + label {
+  color: #aaa; /*$disabled-color;*/
+  cursor: default;
+}
+
+.checkbox:disabled:not(:checked) + label:before {
+  border-color: #bbb;
+}
+
+.checkbox:disabled:checked + label:before {
+  opacity: .6;
+}
+
+/* Focus State */
+.checkbox:focus + label:before {
   box-shadow: $focus-shadow;
 }
-
-/* TODO: Partial, Dirty, RTL, Error, IE8 and IE7, High Contrast */

@@ -22,8 +22,13 @@ label, .label, .data {
 }
 
 /* Field Style */
-.field {
+.field input[type="text"], .field input[type="password"] {
   margin-bottom: 20px;
+  margin-left: 2px;
+}
+
+.field .checkbox-label {
+  margin-bottom: 5px;
   margin-left: 2px;
 }
 

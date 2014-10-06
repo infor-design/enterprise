@@ -129,6 +129,7 @@
        }
        if (this.isHidden) {
         this.input.hide().prev('label').hide();
+        this.input.next('svg').hide();
        }
       },
       bindEvents: function() {
@@ -223,9 +224,7 @@
 
         $('#dropdown-list').remove(); //remove old ones
         this.list.appendTo('body').show().attr('aria-expanded', 'true');
-
         this.position();
-
         this.scrollToOption(current);
         this.input.addClass('is-open');
 
@@ -253,7 +252,7 @@
       },
       position: function() {
         var isFixed = false, isAbs = false,
-          top = this.input[0].offsetTop + this.input.outerHeight();
+          top = this.input[0].offsetTop + this.input.outerHeight() + 1;
 
         this.list.css({'top': top, 'left': this.input.offset().left});
 

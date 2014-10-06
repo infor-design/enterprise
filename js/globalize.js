@@ -1,6 +1,7 @@
 /**
 * Localization Routines
 * Data From: http://www.unicode.org/repos/cldr-aux/json/22.1/main/
+* For Docs See: http://ibm.co/1nXyNxp
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {

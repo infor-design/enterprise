@@ -1,18 +1,35 @@
 <div class="grid grid-pad">
   <div class="col-1-2">
     <h1 class="demo-heading">Multiselect <span>(Tags)</span></h1>
+
     <div class="field">
-      <label for="states-multi" class="label">Ajax Test</label>
-      <select multiple id="states-multi" name="states" data-init="false" class="multiselect">
+      <label for="states-multi" class="label">Normal Test</label>
+      <select multiple id="states-multi" name="states" class="multiselect">
+        <option value="option1" selected>Option One</option>
+        <option value="option2">Option Two</option>
+        <option value="option3">Option Three</option>
+        <option value="option4">Option Four</option>
       </select>
     </div>
+
+    <div class="field">
+      <label for="input-test" class="label">Test Input</label>
+      <input id="input-test" type="text">
+    </div>
+
+    <div class="field">
+      <label for="states-multi-ajax" class="label">Ajax Test</label>
+      <select multiple id="states-multi-ajax" name="states" data-init="false" class="multiselect">
+      </select>
+    </div>
+
+    <button id="disable-button" class="btn" type="button">Disable</button>
   </div>
 </div>
 
 <script>
   $(function () {
-
-    $('#states-multi').multiselect({source: function (term, response) {
+    $('#states-multi-ajax').multiselect({source: function (term, response) {
       //make an ajax call
       $.getJSON('/api/states?term='+term, function(data) {
         //Structure the data with val, label syntax is done on the server
@@ -22,5 +39,19 @@
       console.log('Changed to :' + $(this).val());
     });
 
+    //make an id for Test
+    $('span[data-val="option1"]').attr('id','option1-sel');
+
+    //Toggle disabled
+    $('#disable-button').on('click', function () {
+      var multi = $('#states-multi-ajax'), btn = $(this);
+      if (multi.is(':disabled')) {
+        multi.enable();
+        btn.text('Disable');
+      } else {
+        multi.disable();
+        btn.text('Enable');
+      }
+    });
   });
 </script>

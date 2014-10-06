@@ -53,6 +53,9 @@
 
         //Add selected items
         var selOpts = this.element[0].selectedOptions;
+        if (!selOpts) {
+          return;
+        }
         for (var i = 0; i < selOpts.length; i++) {
           self.addTag($(selOpts[i]));
         }
@@ -64,13 +67,17 @@
 
         if (settings.source) {
           var response = function(data) {
+
             //stuff data in the select
-            self.element.empty();
+            self.element.find('option:not(:selected)').remove();
+
             for (var i=0; i < data.length; i++) {
-              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"')
+              if (data[i].value !== undefined && self.element.find('option[value='+  data[i].value.replace('"', '\'') +']').length === 0) {
+                list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"')
                       + (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"')
                       + (data[i].selected || $.inArray(data[i].value, previousSelected) > -1 ? ' selected ' : '')
                       + '>'+ data[i].label + '</option>';
+              }
             }
 
             self.element.append(list);
@@ -111,7 +118,7 @@
           }
 
           if (label.toLowerCase().indexOf(term) > -1) {
-            var listOption = $('<li id="mu-list-option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + label + '</a></li>');
+            var listOption = $('<li id="multiselect--option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + label + '</a></li>');
             listOption.find('a').attr('href', '#'+ (value || id || label));
             listOption.addClass((isDisabled ? 'is-disabled' : ''));
             self.list.append(listOption);
@@ -145,6 +152,9 @@
         var self = this, timer, buffer;
 
         this.trigger.on('click.multiselect', function () {
+          if (self.input.prop('disabled')) {
+            return;
+          }
           if (self.callSource('')) {
             return;
           }
@@ -152,7 +162,12 @@
         });
 
         this.container.on('click.multiselect, touchend.multiselect', function (e) {
-          var xIcon = $(e.target).closest('.remove');
+          var xIcon = $(e.target).closest('.remove').parent();
+
+          if (self.input.prop('disabled')) {
+            return;
+          }
+
           if (xIcon.length > 0) {
             self.removeTag(xIcon);
           } else {
@@ -170,7 +185,9 @@
         }).on('keypress.multiselect', function(e) {
           //Similar code in autocomplete - this is not DRY
           var field = $(this);
-
+          if (self.input.prop('disabled')) {
+            return;
+          }
           clearTimeout(timer);
 
           if (e.altKey && e.keyCode === 40) {  //open list
@@ -218,6 +235,10 @@
           sel = tag,
           tagSpan, val;
 
+        if (this.input.prop('disabled')) {
+          return;
+        }
+
         this.input.attr('aria-activedescendant', li.attr('id'));
 
         if (!tag.is('option')) {
@@ -238,6 +259,16 @@
         var sel = this.element.find('option').filter(function () { return this.value === tag.attr('data-val'); });
         sel[0].selected = false;
         tag.remove();
+      },
+
+      disable: function () {
+        this.input.prop('disabled', true);
+        this.container.addClass('disabled');
+      },
+
+      enable: function () {
+        this.input.prop('disabled', false);
+        this.container.removeClass('disabled');
       },
 
       //Handle Deconstruction
