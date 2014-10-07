@@ -104,8 +104,12 @@
         });
       },
       setValue: function () {
+        var text = this.element.find('option:selected').text();
         //Set initial values for the edit box
-       this.input.val(this.element.find('option:selected').text());
+        this.input.val(text);
+        if (this.element.attr('maxlength')) {
+           this.input.val(text.substr(0, this.element.attr('maxlength')));
+        }
       },
       setInitial: function() {
 
@@ -438,6 +442,9 @@
         }
         this.input.val(option.text()); //set value and active descendent
 
+        if (this.element.attr('maxlength')) {
+          this.input.val(option.text().substr(0, this.element.attr('maxlength')));
+        }
         this.element.find('option').each(function () {
           if (this.value === code) {
             this.selected = true;
