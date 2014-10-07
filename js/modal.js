@@ -132,7 +132,7 @@
           return false;
         }
 
-        this.overlay.appendTo('body');
+        this.element.after(this.overlay);
 
         messageArea = self.element.find('.detailed-message');
         if (messageArea.length === 1) {
@@ -152,7 +152,6 @@
           }
         });
 
-        this.element.addClass('is-visible').attr('role', 'dialog');
         setTimeout(function () {
           self.element.find('.modal-title').focus();
           self.keepFocus();
@@ -162,6 +161,8 @@
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
         $('body').addClass('modal-engaged');
+        this.element.addClass('is-visible').attr('role', 'dialog');
+
         this.element.attr('aria-hidden', 'false');
         this.overlay.attr('aria-hidden', 'false');
 

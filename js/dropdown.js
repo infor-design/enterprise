@@ -256,9 +256,9 @@
       },
       position: function() {
         var isFixed = false, isAbs = false,
-          top = this.input[0].offsetTop + this.input.outerHeight() + 1;
+          top = this.input.offset().top + this.input.outerHeight() + 1;
 
-        this.list.css({'top': top, 'left': this.input.offset().left});
+       this.list.css({'top': top, 'left': this.input.offset().left});
 
         //Fixed and Absolute Positioning use cases
         this.input.parentsUntil('body').each(function () {

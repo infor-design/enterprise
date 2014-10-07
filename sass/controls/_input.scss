@@ -22,11 +22,6 @@ label, .label, .data {
 }
 
 /* Field Style */
-.field input[type="text"], .field input[type="password"] {
-  margin-bottom: 20px;
-  margin-left: 2px;
-}
-
 .field .checkbox-label {
   margin-bottom: 5px;
   margin-left: 2px;
@@ -34,6 +29,14 @@ label, .label, .data {
 
 .field label, .field .label {
   padding-left: 13px;
+}
+
+.field > *:not(.checkbox-label):last-child {
+  margin-bottom: 20px;
+}
+
+.field {
+  position: relative;
 }
 
 /* Input Style */
@@ -110,10 +113,7 @@ textarea.is-disabled {
 /* Error Text */
 .error, .error-message {
   color: #d5000e !important;
-}
-
-.field .error {
-  padding-left: 10px;
+  display: block;
 }
 
 input.error {

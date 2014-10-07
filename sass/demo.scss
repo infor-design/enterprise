@@ -32,7 +32,7 @@
   z-index: 50;
 }
 
-.demo-header + .grid {
+.demo-header + .grid, .demo-header + .svg-icons + .grid  {
   padding-top: 45px;
 }
 
@@ -52,10 +52,6 @@
   border: 1px solid #ddd;
   border-radius: 3px;
   padding: 2px 5px;
-}
-
-.demo .grid:nth-child(2) {
-  padding-top: 65px;
 }
 
 .demo .content {

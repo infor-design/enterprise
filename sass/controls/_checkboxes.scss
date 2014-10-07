@@ -8,7 +8,7 @@
 .checkbox + label {
   display: inline-block;
   cursor: pointer;
-  padding-left: 30px;
+  padding-left: 24px;
 }
 
 .checkbox + label:before {
@@ -16,7 +16,7 @@
   border-radius: 2px;
   content: "";
   height: 14px;
-  left: 38px;
+  margin-left: -26px;
   position: absolute;
   width: 14px;
 }
@@ -32,7 +32,7 @@
   border-width: 0 3px 3px 0;
   content: "";
   height: 10px;
-  left: 44px;
+  left: 5.5px;
   margin-top: 1px;
   position: absolute;
   transform: rotate(45deg);
