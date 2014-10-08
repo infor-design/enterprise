@@ -26,8 +26,8 @@
 }
 
 .popupmenu li {
-  line-height: 45px;
-  padding: 0 2px;
+  line-height: 43px;
+  padding: 0;
   cursor: pointer;
   position: static;
   white-space: nowrap;
@@ -44,7 +44,7 @@
 .popupmenu a {
   border: 1px solid transparent;
   @include font-size(14);
-  padding: 1px 20px;
+  padding: 1px 15px;
   text-decoration: none;
   color: $label-color;
   display: block;
