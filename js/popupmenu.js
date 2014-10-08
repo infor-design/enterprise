@@ -67,6 +67,8 @@
           .attr('aria-owns', id);
 
         this.menu.find('li').attr('role', 'presentation');
+        this.menu.find('.popupmenu').parent().parent().addClass('submenu');
+        this.menu.find('.submenu').children('a').after('<svg class="icon"><use xlink:href="#icon-dropdown-arrow"></svg>');
         this.menu.find('a').attr('tabindex', '-1').attr('role', 'menuitem');
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
       },
@@ -281,7 +283,7 @@
         //hide and decorate submenus - we use a variation on
         var tracker = 0, startY, menuToClose, timeout;
 
-        self.menu.find('.popupmenu').removeClass('is-open').parent().addClass('submenu');
+        self.menu.find('.popupmenu').removeClass('is-open');
         self.menu.find('.submenu').on('mouseenter', function (e) {
           var menuitem = $(this);
           startY = e.pageX;
@@ -366,10 +368,10 @@
       },
 
       close: function () {
-        this.menu.removeClass('is-open').attr('aria-hidden', 'true');
-        this.menu.css({'left': '-999px', 'height': ''});
-
-        this.menu.find('.submenu > ul').css({'left': '', 'top': '', 'height': ''});
+        this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
+        this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
+        this.menu.find('.submenu').off('mouseenter mouseleave');
+        this.menu.find('.popupmenu').css({'left': '', 'top': '', 'height': '', 'width': ''});
 
         this.element.on('close.popupmenu', function (e) {
           $(this).off('close.popupmenu');

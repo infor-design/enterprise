@@ -29,6 +29,8 @@
   line-height: 45px;
   padding: 0 2px;
   cursor: pointer;
+  position: static;
+  white-space: nowrap;
 }
 
 .popupmenu li:hover {
@@ -70,7 +72,7 @@
   top: 9px;
 }
 
-.popupmenu li:hover .icon {
+.popupmenu li:hover > .icon {
   fill: $data-color;
 }
 
@@ -85,10 +87,14 @@
   background-color: transparent;
 }
 
-.popupmenu .submenu > a {
-  background-repeat: no-repeat;
-  background-position: 94% center;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAHCAYAAAArkDztAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTAw9HKhAAAAOElEQVQYV2Po6en5DwQM6JghLS3tPwhv2rQJRQFcAiRZUFAAl0SRgOnevHnzf8I6QKqQHcCAy1UAAX9vzbZ/ha0AAAAASUVORK5CYII=");
+.popupmenu .submenu > .icon {
+  position: relative;
+  top: -41px;
+  left: 0;
+  float: right;
+  -ms-transform: rotate(-90deg); /* IE 9 */
+  -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+  transform: rotate(-90deg);
 }
 
 /* Seperator */
