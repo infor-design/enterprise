@@ -15,16 +15,12 @@ describe('Dropdown [zombie]', function() {
     browser = new Browser({ site: runner.site.currentUrl });
   });
 
-  after(function() {
-    //runner.site.server.close();
-  });
-
   beforeEach(function(done) {
     browser.visit('/tests/dropdown', done);
   });
 
   it('should be in the right page', function() {
-    browser.text('title').should.equal('SoHo Controls XI - Tests');
+    browser.text('title').should.contain('SoHo Controls XI - Tests');
   });
 
   it('should have first selected', function() {

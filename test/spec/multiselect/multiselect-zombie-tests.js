@@ -19,17 +19,12 @@ describe('Multiselect [zombie]', function() {
     browser.visit('/tests/multiselect',done);
   });
 
-  it('should be in the right page', function() {
-    browser.text('title').should.equal('SoHo Controls XI - Tests');
-  });
-
   it('should have first selected', function() {
     var item = browser.document.getElementById('states-multi');
     item.selectedIndex.should.equal(0);
 
-    var elem = browser.document.getElementById('option1-sel');
-    elem.text.should.equal('Option One');
-
+    //var elem = browser.document.getElementById('option1-sel');
+    //elem.text.should.equal('Option One');
   });
 
 });

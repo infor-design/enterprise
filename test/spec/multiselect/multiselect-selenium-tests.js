@@ -23,17 +23,6 @@ describe('Multiselect [selenium]', function(){
       .call(done);
   });
 
-  // smoke test, to figure out if we're even on the right page
-  it('should be in the right page', function(done) {
-    runner.client
-      .getTitle(function(err, title) {
-        globals.noError(err);
-        title.should.equal('SoHo Controls XI - Tests');
-      })
-      .call(done);
-
-  });
-
   //see if the plugin can be initialized
   it('be able to init without errors', function(done) {
     runner.client

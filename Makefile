@@ -16,6 +16,9 @@ test-tmpl:
 test-globalize:
 	@node test-runner.js globalize
 
+test-mask:
+	@node test-runner.js mask
+
 test-multiselect:
 	@node test-runner.js multiselect
 
