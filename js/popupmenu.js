@@ -393,8 +393,8 @@
       },
 
       close: function () {
-        this.menu.removeClass('is-open').attr('aria-hidden', 'true');
-        this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': ''});
+        this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
+        this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
         this.menu.find('.submenu').off('mouseenter mouseleave');
         this.menu.find('.popupmenu').css({'left': '', 'top': '', 'height': '', 'width': ''});
 
