@@ -144,6 +144,11 @@
             self.input.focus().val('');
           });
 
+        // remove extraneous list markup after the popupmenu has closed.
+        this.list.on('destroy.popupmenu', function() {
+          self.list.remove();
+        });
+
         self.input.focus();
       },
 
