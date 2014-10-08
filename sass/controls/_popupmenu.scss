@@ -1,13 +1,5 @@
 /* Popup Menu
 ================================================== */
-
-// Contains the main popupmenu UL for positioning.
-.popupmenu-wrapper {
-  left: -999px;
-  position: absolute;
-  display: inline-block;
-}
-
 .popupmenu {
   background-color: #fff;
   box-shadow: 0 0 5px rgba(0,0,0,.2);
@@ -15,29 +7,21 @@
   color: $label-color;
   font-family: $font-stack;
   list-style: none;
+  left: -999px;
   padding: 15px 0;
+  position: absolute;
   margin: 0;
-  display: none;
+  visibility: hidden;
   z-index: 9000;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .popupmenu.is-open {
-  display: block;
-}
-
-.submenu {
-
-  .wrapper {
-    position: absolute;
-    display: block;
-  }
-
+  visibility: visible;
 }
 
 .submenu .popupmenu.is-open {
   display: block;
+  position: absolute;
   visibility: visible;
 }
 
@@ -64,7 +48,6 @@
   text-decoration: none;
   color: $label-color;
   display: block;
-  white-space: nowrap;
 }
 
 .popupmenu a[disabled] {
