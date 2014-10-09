@@ -117,7 +117,7 @@
             isDisabled = true;
           }
 
-          if (label.toLowerCase().indexOf(term) > -1) {
+          if (label.toLowerCase().indexOf(term.toLowerCase()) > -1) {
             var listOption = $('<li id="multiselect--option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + label + '</a></li>');
             listOption.find('a').attr('href', '#'+ (value || id || label));
             listOption.addClass((isDisabled ? 'is-disabled' : ''));

@@ -52,8 +52,7 @@
 
         //For each tab panel set the aria roles and hide it
         self.panels = self.container.children('div')
-            .attr({'class': 'tab-panel', 'role': 'tabpanel',
-                    'aria-hidden': 'true'}).hide();
+            .attr({'class': 'tab-panel', 'role': 'tabpanel'}).hide();
 
         self.panels.find('h2:first').attr('tabindex', '0');
 
@@ -79,7 +78,7 @@
         self.anchors.each( function () {
           var a = $(this);
 
-          a.attr({'role': 'tab', 'aria-selected': 'false', 'tabindex': '-1'})
+          a.attr({'role': 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', 'tabindex': '-1'})
            .parent().attr('role', 'presentation').addClass('tab');
 
           //Attach click events to tab and anchor
@@ -182,16 +181,16 @@
         }
 
         //hide old tabs
-        self.anchors.attr({'aria-selected': 'false', 'tabindex': '-1'})
+        self.anchors.attr({'aria-selected': 'false', 'aria-expanded': 'false', 'tabindex': '-1'})
             .parent().removeClass('is-selected');
 
         self.panels.hide();
 
         //show current tab
-        a.attr({'aria-selected': 'true', 'tabindex': '0'})
+        a.attr({'aria-selected': 'true', 'aria-expanded': 'true', 'tabindex': '0'})
           .parent().addClass('is-selected');
 
-        ui.panels.attr('aria-hidden', 'false').stop().fadeIn(function() {
+        ui.panels.stop().fadeIn(function() {
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
           self.element.trigger('activate', null, ui);
