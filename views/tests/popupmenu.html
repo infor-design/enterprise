@@ -8,8 +8,13 @@
     </div>
 
     <div class="field">
-      <label for="input-menu">Label</label>
+      <label for="input-menu">Regular Popup Menu from an Input field</label>
       <input type="text" data-popupmenu="action-popupmenu" class="is-focused" value="Right Click Me" id="input-menu">
+    </div>
+
+    <div class="field">
+      <label for="input-menu">Really BIG Popup Menu</label>
+      <button class="btn" type="button" id="big-menus" data-popupmenu="action-big-popupmenu">Show Offset Menu</button>
     </div>
 
     <ul id="action-popupmenu" class="popupmenu">
@@ -25,6 +30,42 @@
       <li><a href="#">Cancel Line</a></li>
       <li><a href="#">Cancel Requisition</a></li>
       <li><a href="#">Close Requisition Short</a></li>
+    </ul>
+
+    <ul id="action-big-popupmenu" class="popupmenu">
+      <li><a href="#">File</a></li>
+      <li><a href="#">Edit</a></li>
+      <li>
+        <a href="#">Image</a>
+        <ul class="popupmenu">
+          <li>
+            <a href="#">Mode</a>
+            <ul class="popupmenu">
+              <li><a href="#">Bitmap</a></li>
+              <li><a href="#">Grayscale</a></li>
+              <li><a href="#">Duotone</a></li>
+              <li><a href="#">Edit</a></li>
+              <li><a href="#">Indexed Color...</a></li>
+              <li><a href="#">RGB Color</a></li>
+              <li><a href="#">CMYK Color</a></li>
+              <li><a href="#">Lab Color</a></li>
+              <li><a href="#">Multichannel</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Adjustments</a></li>
+          <li><a href="#">Image Size</a></li>
+          <li><a href="#">Canvas Size</a></li>
+          <li><a href="#">Image Rotation</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Layer</a></li>
+      <li><a href="#">Type</a></li>
+      <li><a href="#">Select</a></li>
+      <li><a href="#">Filter</a></li>
+      <li><a href="#">3D</a></li>
+      <li><a href="#">View</a></li>
+      <li><a href="#">Window</a></li>
+      <li><a href="#">Help</a></li>
     </ul>
 
   </div>

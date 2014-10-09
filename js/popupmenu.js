@@ -58,8 +58,24 @@
           this.menu.attr('id', 'popupmenu-'+ (parseInt($('.popupmenu').length, 10)+1).toString());
           id = this.menu.attr('id');
         }
+
+        // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
+        // to prevent containment issues.
+        if (this.menu.parent().not('body').length > 0) {
+          this.originalParent = this.menu.parent();
+          this.menu.detach().appendTo('body');
+        }
+
         this.menu.addClass('popupmenu')
-          .attr('role', 'menu').attr('aria-hidden', 'true');
+          .attr('role', 'menu').attr('aria-hidden', 'true')
+          .wrap('<div class="popupmenu-wrapper"></div>');
+
+        // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
+        this.menu.find('.popupmenu').each(function(i, elem) {
+          if (!($(elem).parent().hasClass('wrapper'))) {
+            $(elem).wrap('<div class="wrapper"></div>');
+          }
+        });
 
         //TODO: Follow up 'button expanded' in JAWS
         this.element.attr('aria-haspopup', true)
@@ -68,7 +84,15 @@
 
         this.menu.find('li').attr('role', 'presentation');
         this.menu.find('.popupmenu').parent().parent().addClass('submenu');
-        this.menu.find('.submenu').children('a').after('<svg class="icon"><use xlink:href="#icon-dropdown-arrow"></svg>');
+        this.menu.find('.submenu').children('a').each(function(i, item) {
+          if ($(item).find('span').length === 0) {
+            var text = $(item).text();
+            $(item).html('<span>' + text + '<span>');
+          }
+          if ($(item).find('svg.arrow').length === 0) {
+            $(item).append('<svg class="icon arrow"><use xlink:href="#icon-dropdown-arrow"></svg>');
+          }
+        });
         this.menu.find('a').attr('tabindex', '-1').attr('role', 'menuitem');
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
       },
@@ -210,37 +234,41 @@
 
       position: function(e) {
         var target = (e ? $(e.target) : this.element),
+          wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 
         if (settings.trigger === 'rightClick') {
-          this.menu.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
+          wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {
-          this.menu.css({'left': target.offset().left - (this.menu.parent().length ===1 ? this.menu.offsetParent().offset().left : 0),
-              'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight() + (target.css('box-shadow') ? 2 : 0)});
+          wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0),
+                        'top': target.offset().top - (wrapper.parent().length >1 ? wrapper.parent().offset().top: 0) + target.outerHeight() + (target.css('box-shadow') ? 2 : 0)});
         }
 
         //Handle Case where menu is off bottom
-        if ((this.menu.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          this.menu.css({'top': $(window).height() - menuHeight - ($(window).height() - target.offset().top)});
+        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+          wrapper.css({'top': $(window).height() - menuHeight - ($(window).height() - target.offset().top)});
 
           //Did it fit?
-          if (this.menu.offset().top < 0) {
+          if (wrapper.offset().top < 0) {
             //No so see if more room on top or bottom and shrink
             if (target.offset().top > $(window).height() - target.offset().top + target.outerWidth) {
               //fits on top
             } else {
               //shrink to bottom
-              this.menu.css({'left': target.offset().left - (this.menu.parent().length ===1 ? this.menu.parent().offset().left : 0), 'top': target.offset().top - (this.menu.parent().length >1 ? this.menu.parent().offset().top: 0) + target.outerHeight()});
-              this.menu.height($(window).outerHeight() - (this.menu.offset().top + 45) + 'px').css('overflow', 'auto');
+              wrapper.css({'left': target.offset().left - (wrapper.parent().length === 1 ? wrapper.parent().offset().left : 0),
+                            'top': target.offset().top - (wrapper.parent().length >1 ? wrapper.parent().offset().top: 0) + target.outerHeight()});
+              menuHeight = $(window).outerHeight() - (wrapper.offset().top + 45);
+              wrapper.height(menuHeight);
+              this.menu.height(menuHeight);
               //Note: 45 gives some space on the bottom
             }
           }
         }
         //Handle Case where menu is off left side
-        if ((this.menu.offset().left + menuWidth) > $(window).width()) {
-          this.menu.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
+        if ((wrapper.offset().left + menuWidth) > $(window).width()) {
+          wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
         }
       },
 
@@ -302,7 +330,8 @@
           menuToClose = $(this).find('ul');
 
           if ((tracker - startY) < 3.5) { //We are moving slopie to the menu
-            menuToClose.removeClass('is-open');
+            menuToClose.removeClass('is-open').removeAttr('style');
+            menuToClose.parent('.wrapper').removeAttr('style');
           }
           clearTimeout(timeout);
         });
@@ -313,48 +342,52 @@
       },
 
       showSubmenu: function (li) {
-        var menu = li.find('ul:first');
-        li.parent().find('.submenu > ul').not(li.find('ul')).removeClass('is-open');
+        var menu = li.find('ul:first'),
+          wrapper = li.children('.wrapper');
+        li.parent().find('.popupmenu').removeClass('is-open');
 
-        menu.css({left: 0, top: 0}).addClass('is-open');
-        menu.css('width','');
-        menu.css('width', menu.outerWidth()+1);
-        menu.css({left: li.outerWidth(), top: li.outerHeight()*(li.parent().index()-1)});
+        menu.addClass('is-open');
+        wrapper.css({left: 0, top: 0});
+        wrapper.css('width','');
+        wrapper.css('width', menu.outerWidth()+1);
+        wrapper.css({'left': li.outerWidth(), 'top': li.outerHeight()*(li.parent().index()-1)});
 
         //Handle Case where the menu is off to the right
         var menuWidth = menu.outerWidth();
-        if ((menu.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
-          menu.css('left', 0 - menuWidth);
+        if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+          wrapper.css('left', 0 - menuWidth);
           //Did it fit?
-          if (menu.offset().left < 0) {
+          if (wrapper.offset().left < 0) {
             //No. Push the menu's left offset onto the screen
-            menu.css('left', parseInt(menu.css('left')) + Math.abs(menu.offset().left));
+            wrapper.css('left', parseInt(wrapper.css('left')) + Math.abs(wrapper.offset().left));
             menuWidth = menu.outerWidth();
             //Does it fit now?
-            if ((menu.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+            if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
               //No, cut off the menu's right side until it fits within the right screen boundary
-              var differenceY = (menu.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
+              var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
               menuWidth = menuWidth - differenceY;
-              menu.width(menuWidth).css('overflow', 'auto');
+              menu.width(menuWidth);
+              wrapper.width(menuWidth);
             }
           }
         }
 
         //Handle Case where menu is off bottom
         var menuHeight = menu.outerHeight();
-        if ((menu.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          menu.css('top', 0 - menuHeight);
+        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+          wrapper.css('top', 0 - menuHeight);
           //Did it fit?
-          if (menu.offset().top < 0) {
+          if (wrapper.offset().top < 0) {
             //No. Push the menu's top offset onto the screen
-            menu.css('top', parseInt(menu.css('top')) + Math.abs(menu.offset().top));
+            wrapper.css('top', parseInt(wrapper.css('top')) + Math.abs(wrapper.offset().top));
             menuHeight = menu.outerHeight();
             //Does it fit now?
-            if ((menu.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+            if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
               //No, cut off the menu's bottom edge until it fits within the bottom screen boundary
-              var differenceX = (menu.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
+              var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
               menuHeight = menuHeight - differenceX - 32;
-              menu.height(menuHeight).css('overflow', 'auto');
+              menu.height(menuHeight);
+              wrapper.height(menuHeight);
             }
           }
         }
@@ -378,7 +411,7 @@
           e.stopPropagation();
         }); //do not propapagate events to parent
 
-        this.element.trigger('close');
+        this.element.trigger('close.popupmenu');
         this.element.focus().attr('aria-expanded', 'false');
         this.detach();
 
@@ -388,9 +421,19 @@
       },
 
       destroy: function() {
+        if (this.originalParent) {
+          this.menu.detach().appendTo(this.originalParent);
+        }
+        this.menu.find('.submenu').children('a').each(function(i, item) {
+          var text = $(item).find('span').text();
+          $(item).find('span, svg').remove();
+          $(item).text(text);
+        });
+        this.menu.unwrap().find('.popupmenu').unwrap();
         $.removeData(this.element[0], pluginName);
         this.detach();
         this.element.off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
+        this.menu.trigger('destroy.popupmenu');
       }
     };
 
