@@ -111,6 +111,12 @@
         }
         //settings.trigger
         if (settings.trigger === 'rightClick') {
+          this.menu.parent().on('contextmenu.popupmenu', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          });
+
           this.element.on('contextmenu.popupmenu', function (e) {
             e.preventDefault();
             return false;
