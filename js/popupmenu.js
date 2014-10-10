@@ -427,6 +427,7 @@
       },
 
       destroy: function() {
+        this.menu.parent().off('contextmenu.popupmenu');
         if (this.originalParent) {
           this.menu.detach().appendTo(this.originalParent);
         }
