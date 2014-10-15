@@ -26,19 +26,25 @@ describe('Number Format [selenium]', function(){
       .getValue('#number-previously-filled', function(err, value) {
         globals.noError(err);
         should.exist(value);
-        //TODO value.should.equal('12,345.6789');
+        value.should.equal('12,345.6789');
       })
       .call(done);
   });
 
+  // TODO: Fix this test
+  // There is a problem with how PhantomJS handles this plugin's caret positioning.
   it('should format a number while typing from start to finish', function(done) {
     var input = '#input-masked-number';
     runner.client
-      .setValue(input, '123456', globals.noError)
+      .setValue(input, '')
+      .element(input)
+      .keys(['1','2','3','4','5'])
+      .element(input)
+      .keys(['6'])
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        //TODO Works in UI value.should.equal('1,234.56');
+        //value.should.equal('1,234.56');
       })
       .call(done);
   });
@@ -90,71 +96,65 @@ describe('Number Format [selenium]', function(){
     // type a bunch of characters
     // select all of them (make sure the caret highlights all of them)
     // press the decimal key
-    // test to see that the value of the input field is '.'
+    // test to see that the value of the input field is '0.'
     // TODO: this test should work.
       runner.client
-      /*.setValue(input, '', globals.noError)
-      .setValue(input, '123456', globals.noError)
-      .addValue(input, [
-        'Shift',
-        'Left arrow',
-        'Left arrow',
-        'Left arrow',
-        'Left arrow',
-        'Left arrow',
-        'Left arrow',
-        'Left arrow',
-        'Left arrow',
-        'NULL',
-        '.'
-      ], globals.noError)
+      .setValue(input, '', globals.noError)
+      .addValue(input, ['1','2','3','4','5','6','NULL'], globals.noError)
+      .addValue(input, [globals.keys.control,'a','NULL'], globals.noError)
+      .addValue(input, ['.'], globals.noError)
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
         value.should.equal('0.');
-      })*/
+      })
       .call(done);
   });
 
-  it('should be able to replace a selected range and format the remaining number correctly', function(done) {
+  // Some of the Selenium browser drivers seem to not position the first character typed correcly when using
+  // this control. This test does a check on that to see what the problem is.
+  it('should position the numbers typed correctly', function(done) {
     var input = '#input-masked-number';
     runner.client
-     /* TODO: fixme
       .setValue(input, '', globals.noError)
-      .setValue(input, '812900', globals.noError)
-      .addValue(input, [
-        'Left arrow',
-        'Left arrow',
+      .element(input)
+      .keys(['8', '1', 'NULL'], globals.noError)
+      .getValue(input, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('81');
+      })
+      .call(done);
+  });
+
+  // TODO: Fix this test
+  // Errors with caret positioning in PhantomJS.  Passes if you run the tests in Chrome/Firefox.
+  it('should be able to replace a selected range and format the remaining number correctly', function(done) {
+    var input = '#input-masked-number';
+    // fill the number field completely.
+    // select a small range of numbers.
+    // replace them with a single number (3).
+    // test to see if the value that now exists is formatted correctly.
+    runner.client
+      .setValue(input, '', globals.noError)
+      .element(input)
+      .keys(['8','1','2','9','0','0','0'])
+      .keys(['Left arrow','Left arrow']) // Back the caret up past the decimal places
+      .keys([
         'Shift',
         'Left arrow',
         'Left arrow',
         'Left arrow',
         'Left arrow',
         'Left arrow',
-        'NULL',
-        '3'
-      ], globals.noError)
-      .getValue(input, '', function(err, value) {
-        globals.noError(err);
-        should.exist(value);
-        value.should.equal('8,129.00');
-      })*/
-      .call(done);
-  });
-
-  // Added as a test case after it was discovered typing a new number after the '3' in '8,300' after deleting
-  // a selected range resulted in the value becoming '83.100'.  This test case simply checks the mask to make
-  // sure it retains the correct formatting after typing one more number.
-  it('should continue to respect correct formatting when typing inbetween existing characters after pasting', function(done) {
-    var input = '#input-masked-number';
-    runner.client
-      /* TODO: Fixme .addValue(input, ['1'], globals.noError)
+        'NULL'
+      ]) // highlight the decimal point and the four integer places.
+      .keys(['3'])
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.not.equal('83.100');
-        value.should.equal('8,310.0');
-      })*/
+        //value.should.equal('8,300');
+      })
       .call(done);
   });
 
@@ -162,7 +162,6 @@ describe('Number Format [selenium]', function(){
     var input = '#input-masked-number';
     var copyInput = '#copythis';
     runner.client
-     /* TODO: Fixme
       .setValue(input, '', globals.noError)
       // add a combination of letters and numbers to the copy input
       .setValue(copyInput, ['x','9','x','9','x','9','x','9','x','9','x','9','x'], globals.noError)
@@ -184,14 +183,16 @@ describe('Number Format [selenium]', function(){
         'Left arrow',
         'NULL'
       ], globals.noError)
-      .addValue(copyInput, ['Control', 'x', 'NULL'], globals.noError)
+      .addValue(copyInput, [globals.keys.control, 'x', 'NULL'], globals.noError)
       // Paste the clipboard contents into the number input
-      .addValue(input, ['Control', 'v', 'NULL'], globals.noError)
+      // Need to paste twice because the size of the mask limits the amount of pasted content.
+      .addValue(input, [globals.keys.control, 'v', 'NULL'], globals.noError)
+      .addValue(input, [globals.keys.control, 'v', 'NULL'], globals.noError)
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
         value.should.equal('9,999.99');
-      })*/
+      })
       .call(done);
   });
 
