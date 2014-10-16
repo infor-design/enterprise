@@ -7,7 +7,10 @@
     // Settings and Options
     var pluginName = 'editor',
       defaults = {
-        buttons: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video'],
+        buttons: {
+          editor: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video', 'seperator', 'source'],
+          source: ['visual']
+        },
         staticToolbar: true,
         delay: 200,
         diffLeft: 0,
@@ -53,15 +56,25 @@
 
         this.initToolbar()
           .bindButtons()
+          .bindModals()
           .bindAnchorPreview();
+
+        //Build the textarea that will be used as source view and for content serialization
+        this.initTextarea();
 
         return this;
       },
 
-      bindParagraphCreation: function () {
-        var self = this;
+      // Returns the currently visible element - either the main editor window, or the source-view textarea
+      getCurrentElement: function() {
+        return this.element.hasClass('source-view-active') ? this.sourceView : this.element;
+      },
 
-        this.element.on('keyup', function (e) {
+      bindParagraphCreation: function () {
+        var self = this,
+          currentElement = self.getCurrentElement();
+
+        currentElement.on('keyup', function (e) {
           var node = self.getSelectionStart(),
               tagName;
           if (node && node.getAttribute('data-editor') && node.children.length === 0) {
@@ -85,9 +98,10 @@
       },
 
       bindTab: function () {
-        var self = this;
+        var self = this,
+          currentElement = self.getCurrentElement();
 
-        this.element.on('keydown', function (e) {
+        currentElement.on('keydown', function (e) {
           if (e.which === 9) {
             // Override tab only for pre nodes
             var tag = self.getSelectionStart().tagName.toLowerCase();
@@ -109,6 +123,7 @@
         });
         return this;
       },
+
       initToolbar: function () {
         if (this.toolbar) {
             return this;
@@ -128,7 +143,7 @@
       },
 
       toolbarButtons: function () {
-        var btns = settings.buttons,
+        var btns = this.element.hasClass('source-view-active') ? settings.buttons.source : settings.buttons.editor,
             ul = $('<ul></ul>').attr('id','editor-toolbar-actions').attr('class', 'editor-toolbar-actions'),
             li, i, btn, ext;
 
@@ -147,6 +162,85 @@
         }
 
         return ul;
+      },
+
+      switchToolbars: function(originalElement) {
+        // Unbind all events attached to the old element that involve triggering the toolbar hide/show
+        this.toolbar.off('click.editor mousedown.editor');
+        this.toolbar.remove();
+        this.toolbar = undefined;
+        originalElement[0].removeEventListener('paste');
+        originalElement.off('mouseup.editor keyup.editor blur.edtior');
+        $(window).off('resize.editor');
+
+        // Rebind everything to the new element
+        this.initToolbar().bindButtons();
+        this.bindSelect().bindPaste().bindWindowActions();
+      },
+
+      initTextarea: function() {
+        var self = this;
+        if (this.textarea) {
+          return this;
+        }
+        this.textarea = this.createTextarea();
+
+        // fill the text area with any content that may already exist within the editor DIV
+        this.textarea.text( this.element.html().toString() );
+
+        // TODO: setup the events here
+        this.element.on('input.editor keyup.editor', function() {
+          self.textarea.val( self.element.html().toString() );
+        });
+
+        this.textarea.on('input.editor keyup.editor', function() {
+          if (!(self.sourceView.hasClass('hidden'))) {
+            self.adjustSourceLineNumbers();
+          }
+        });
+
+        this.sourceView.on('click.editor', function(e) {
+          self.toolbar.trigger('click.editor', e);
+        }).on('mousedown.editor', function(e) {
+          self.toolbar.trigger('mousedown.editor', e);
+        });
+
+        return this.textarea;
+      },
+
+      createTextarea: function() {
+        this.sourceView = $('<div></div>').attr({
+          'class' : 'editor-source hidden',
+          'id' : 'editor-source-' + this.id
+        }).insertAfter(this.element);
+
+        var lineNumbers = $('<ul></ul>').addClass('line-numbers').appendTo(this.sourceView);
+        var textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView);
+        var textarea = $('<textarea></textarea>').appendTo(textareaContainer);
+        return textarea;
+      },
+
+      adjustSourceLineNumbers: function() {
+        var container = this.textarea.parent(),
+          lineHeight = parseInt(this.textarea.css('line-height')),
+          YPadding = (this.textarea.innerHeight() - this.textarea.height() );
+        this.textarea.css('height','');
+        var scrollHeight = this.textarea[0].scrollHeight,
+          lineNumberCount = Math.floor((scrollHeight - YPadding) / lineHeight),
+          numberList = this.sourceView.find('.line-numbers');
+
+        if (!this.lineNumbers || lineNumberCount !== this.lineNumbers) {
+          this.lineNumbers = lineNumberCount;
+          numberList.empty();
+          var i = 0;
+          while (i < this.lineNumbers) {
+            numberList.append('<li role="presentation"><span>' + (i + 1) + '</span></li>');
+            i++;
+          }
+          container.css('width', 'calc(100% - ' + (numberList.outerWidth() + 1) + 'px)');
+        }
+        this.textarea.css('height', numberList[0].scrollHeight + 'px');
+
       },
 
       buttonTemplate: function (btnType) {
@@ -172,7 +266,9 @@
             'outdent': '<button type="button" class="editor-action editor-action-outdent" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
             'justifyLeft': '<button type="button" class="editor-action editor-action-indent" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
             'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-            'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>'
+            'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
+            'source': '<button type="button" class="editor-action editor-action-source" title="View Source" data-action="source" >' + buttonLabels.source + '</button>',
+            'visual': '<button type="button" class="editor-action editor-action-visual" title"View Visual" data-action="visual" >' + buttonLabels.visual + '</button>'
           };
 
         return buttonTemplates[btnType] || false;
@@ -199,7 +295,9 @@
             'outdent': '<b>&larr;</b>',
             'justifyLeft': '<svg class="icon icon-justify-left" viewBox="0 0 32 32"><use xlink:href="#icon-justify-left"></use></svg>',
             'justifyCenter': '<svg class="icon icon-justify-center" viewBox="0 0 32 32"><use xlink:href="#icon-justify-center"></use></svg>',
-            'justifyRight': '<svg class="icon icon-justify-right" viewBox="0 0 32 32"><use xlink:href="#icon-justify-right"></use></svg>'
+            'justifyRight': '<svg class="icon icon-justify-right" viewBox="0 0 32 32"><use xlink:href="#icon-justify-right"></use></svg>',
+            'source': '<b>&nbsp;HTML&nbsp;</b>',
+            'visual': '<b>&nbsp;VISUAL&nbsp;</b>'
           };
 
         if (typeof buttonLabelType === 'object') {
@@ -229,7 +327,7 @@
             action = btn.attr('data-action');
 
           e.preventDefault();
-          self.element.focus();
+          (self.element.hasClass('source-view-active') ? self.textarea : self.element).focus();
 
           if (action === 'anchor' || action === 'image' || action === 'video') {
             return;
@@ -249,6 +347,12 @@
         }).on('mousedown.editor', 'button', function () {
           self.keepToolbarAlive = true;
         });
+
+        return this;
+      },
+
+      bindModals: function() {
+        var self = this;
 
         $('#editor-modal-url, #editor-modal-image').modal()
           .on('beforeOpen', function () {
@@ -335,9 +439,11 @@
           }, settings.delay);
         };
 
-        this.element.on('mouseup.editor', this.selectionHandler);
-        this.element.on('keyup.editor', this.selectionHandler);
-        this.element.on('blur.editor', function(e) {
+        var currentElement = self.getCurrentElement();
+
+        currentElement.on('mouseup.editor', this.selectionHandler);
+        currentElement.on('keyup.editor', this.selectionHandler);
+        currentElement.on('blur.editor', function(e) {
           if (self.keepToolbarAlive) {
             return;
           }
@@ -412,181 +518,194 @@
         result = getElement(parent);
         }
         return result;
-    },
+      },
 
-    //See if the Editor is Selected and Show Toolbar
-    checkSelectionElement: function (newSelection, selectionElement) {
-      this.selection = newSelection;
-      this.selectionRange = this.selection.getRangeAt(0);
+      //See if the Editor is Selected and Show Toolbar
+      checkSelectionElement: function (newSelection, selectionElement) {
+        var currentElement = this.element.hasClass('source-view-active') ? this.sourceView[0] : this.element[0];
 
-      if (this.element[0] === selectionElement) {
-        this.setToolbarButtonStates()
-            .setToolbarPosition()
-            .showToolbarActions();
-        return;
-      }
-      this.hideToolbarActions();
-    },
+        this.selection = newSelection;
+        this.selectionRange = this.selection.getRangeAt(0);
 
-    setToolbarPosition: function () {
-      var buttonHeight = 40,
-          selection = window.getSelection(),
-          range = selection.getRangeAt(0),
-          boundary = range.getBoundingClientRect(),
-          defaultLeft = (settings.diffLeft) - (this.toolbar[0].offsetWidth / 2),
-          middleBoundary = (boundary.left + boundary.right) / 2,
-          editorPos = this.element.position(),
-          halfOffsetWidth = this.toolbar[0].offsetWidth / 2;
+        if (currentElement === selectionElement) {
+          this.setToolbarButtonStates()
+              .setToolbarPosition()
+              .showToolbarActions();
+          return;
+        }
+        this.hideToolbarActions();
+      },
 
-      if (boundary.top < buttonHeight) {
-          this.toolbar.addClass('toolbar-arrow-over').removeClass('toolbar-arrow-under');
-          this.toolbar.css('top', buttonHeight + boundary.bottom - settings.diffTop + window.pageYOffset - this.toolbar[0].offsetHeight + 'px');
-      } else {
-          this.toolbar.addClass('toolbar-arrow-under').removeClass('toolbar-arrow-over');
-          this.toolbar.css('top', boundary.top + settings.diffTop + window.pageYOffset - this.toolbar[0].offsetHeight + 'px');
-      }
-      if (middleBoundary < halfOffsetWidth) {
-          this.toolbar.css('left', defaultLeft + halfOffsetWidth + 'px');
-      } else if ((window.innerWidth - middleBoundary) < halfOffsetWidth) {
-          this.toolbar.css('left', window.innerWidth + defaultLeft - halfOffsetWidth + 'px');
-      } else {
-          this.toolbar.css('left', defaultLeft + middleBoundary + 'px');
-      }
+      setToolbarPosition: function () {
+        var buttonHeight = 40,
+            selection = window.getSelection(),
+            range,
+            boundary;
 
-      //Show on the top and hide the arrow
-      if (settings.staticToolbar) {
-        this.toolbar.removeClass('toolbar-arrow-over').removeClass('toolbar-arrow-under');
-        this.toolbar.css({'left': editorPos.left, 'top': editorPos.top - this.toolbar.outerHeight()});
-      }
-
-      return this;
-    },
-
-    //See if the Editor is Selected and Show Toolbar
-    setToolbarButtonStates: function () {
-      var buttons = this.toolbarActions.find('button');
-
-      buttons.removeClass('is-active');
-      this.checkActiveButtons();
-      return this;
-    },
-
-    checkActiveButtons: function () {
-      this.checkButtonState('bold');
-      this.checkButtonState('italic');
-      this.checkButtonState('underline');
-
-      var self = this,
-          parentNode = this.getSelectedParentElement();
-
-      while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
-          this.activateButton(parentNode.tagName.toLowerCase());
-
-          // we can abort the search upwards if we leave the contentEditable element
-          if (self.element.is(parentNode)) {
-              break;
-          }
-          parentNode = parentNode.parentNode;
-      }
-    },
-
-    checkButtonState: function(command) {
-      if (!document.queryCommandState) {
-        return;
-      }
-
-      if (document.queryCommandState(command)) {
-        this.toolbar.find('[data-action="' + command + '"]').addClass('is-active');
-      } else {
-        this.toolbar.find('[data-action="' + command + '"]').removeClass('is-active');
-      }
-    },
-
-    rangeSelectsSingleNode: function (range) {
-      var startNode = range.startContainer;
-      return startNode === range.endContainer &&
-          startNode.hasChildNodes() &&
-          range.endOffset === range.startOffset + 1;
-    },
-
-    getSelectedParentElement: function () {
-      var selectedParentElement = null,
-          range = this.selectionRange;
-      if (this.rangeSelectsSingleNode(range)) {
-          selectedParentElement = range.startContainer.childNodes[range.startOffset];
-      } else if (range.startContainer.nodeType === 3) {
-          selectedParentElement = range.startContainer.parentNode;
-      } else {
-          selectedParentElement = range.startContainer;
-      }
-      return selectedParentElement;
-    },
-
-    //Hide Toolbar
-    hideToolbarActions: function () {
-      this.keepToolbarAlive = false;
-      if (this.toolbar !== undefined) {
-        this.toolbar.removeClass('is-active');
-      }
-    },
-
-    //Show Toolbar
-    showToolbarActions: function () {
-      var self = this,
-          timer;
-
-      this.toolbarActions.show();
-      this.keepToolbarAlive = false;
-      clearTimeout(timer);
-
-      timer = setTimeout(function () {
-        self.toolbar.addClass('is-active');
-      }, 100);
-    },
-
-
-    //Handle Pasted In Text
-    bindPaste: function () {
-      var self = this;
-
-      this.pasteWrapper = function (e) {
-        var paragraphs,
-          html = '',
-          p;
-
-        if (!settings.forcePlainText) {
-          return this;
+        if (selection.type !== 'None') {
+          range = selection.getRangeAt(0);
+          boundary = range.getBoundingClientRect();
+        } else {
+          boundary = this.getCurrentElement()[0].getBoundingClientRect();
         }
 
-        if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
-          e.preventDefault();
-          paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
-          for (p = 0; p < paragraphs.length; p += 1) {
-            if (paragraphs[p] !== '') {
-              if (navigator.userAgent.match(/firefox/i) && p === 0) {
-                html += self.htmlEntities(paragraphs[p]);
-              } else {
-                html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+        var defaultLeft = (settings.diffLeft) - (this.toolbar[0].offsetWidth / 2),
+            middleBoundary = (boundary.left + boundary.right) / 2,
+            editorPos = this.element.hasClass('source-view-active') ? this.sourceView.position() : this.element.position(),
+            halfOffsetWidth = this.toolbar[0].offsetWidth / 2;
+
+        if (boundary.top < buttonHeight) {
+            this.toolbar.addClass('toolbar-arrow-over').removeClass('toolbar-arrow-under');
+            this.toolbar.css('top', buttonHeight + boundary.bottom - settings.diffTop + window.pageYOffset - this.toolbar[0].offsetHeight + 'px');
+        } else {
+            this.toolbar.addClass('toolbar-arrow-under').removeClass('toolbar-arrow-over');
+            this.toolbar.css('top', boundary.top + settings.diffTop + window.pageYOffset - this.toolbar[0].offsetHeight + 'px');
+        }
+        if (middleBoundary < halfOffsetWidth) {
+            this.toolbar.css('left', defaultLeft + halfOffsetWidth + 'px');
+        } else if ((window.innerWidth - middleBoundary) < halfOffsetWidth) {
+            this.toolbar.css('left', window.innerWidth + defaultLeft - halfOffsetWidth + 'px');
+        } else {
+            this.toolbar.css('left', defaultLeft + middleBoundary + 'px');
+        }
+
+        //Show on the top and hide the arrow
+        if (settings.staticToolbar) {
+          this.toolbar.removeClass('toolbar-arrow-over').removeClass('toolbar-arrow-under');
+          this.toolbar.css({'left': editorPos.left, 'top': editorPos.top - this.toolbar.outerHeight()});
+        }
+
+        return this;
+      },
+
+      //See if the Editor is Selected and Show Toolbar
+      setToolbarButtonStates: function () {
+        var buttons = this.toolbarActions.find('button');
+
+        buttons.removeClass('is-active');
+        this.checkActiveButtons();
+        return this;
+      },
+
+      checkActiveButtons: function () {
+        this.checkButtonState('bold');
+        this.checkButtonState('italic');
+        this.checkButtonState('underline');
+
+        var self = this,
+            parentNode = this.getSelectedParentElement();
+
+        while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
+            this.activateButton(parentNode.tagName.toLowerCase());
+
+            // we can abort the search upwards if we leave the contentEditable element
+            if (self.element.is(parentNode)) {
+                break;
+            }
+            parentNode = parentNode.parentNode;
+        }
+      },
+
+      checkButtonState: function(command) {
+        if (!document.queryCommandState) {
+          return;
+        }
+
+        if (document.queryCommandState(command)) {
+          this.toolbar.find('[data-action="' + command + '"]').addClass('is-active');
+        } else {
+          this.toolbar.find('[data-action="' + command + '"]').removeClass('is-active');
+        }
+      },
+
+      rangeSelectsSingleNode: function (range) {
+        var startNode = range.startContainer;
+        return startNode === range.endContainer &&
+            startNode.hasChildNodes() &&
+            range.endOffset === range.startOffset + 1;
+      },
+
+      getSelectedParentElement: function () {
+        var selectedParentElement = null,
+            range = this.selectionRange;
+        if (this.rangeSelectsSingleNode(range)) {
+            selectedParentElement = range.startContainer.childNodes[range.startOffset];
+        } else if (range.startContainer.nodeType === 3) {
+            selectedParentElement = range.startContainer.parentNode;
+        } else {
+            selectedParentElement = range.startContainer;
+        }
+        return selectedParentElement;
+      },
+
+      //Hide Toolbar
+      hideToolbarActions: function () {
+        this.keepToolbarAlive = false;
+        if (this.toolbar !== undefined) {
+          this.toolbar.removeClass('is-active');
+        }
+      },
+
+      //Show Toolbar
+      showToolbarActions: function () {
+        var self = this,
+            timer;
+
+        this.toolbarActions.show();
+        this.keepToolbarAlive = false;
+        clearTimeout(timer);
+
+        timer = setTimeout(function () {
+          self.toolbar.addClass('is-active');
+        }, 100);
+      },
+
+
+      //Handle Pasted In Text
+      bindPaste: function () {
+        var self = this;
+
+        this.pasteWrapper = function (e) {
+          var paragraphs,
+            html = '',
+            p;
+
+          if (!settings.forcePlainText) {
+            return this;
+          }
+
+          if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
+            e.preventDefault();
+            paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
+            for (p = 0; p < paragraphs.length; p += 1) {
+              if (paragraphs[p] !== '') {
+                if (navigator.userAgent.match(/firefox/i) && p === 0) {
+                  html += self.htmlEntities(paragraphs[p]);
+                } else {
+                  html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+                }
               }
             }
+            document.execCommand('insertHTML', false, html);
           }
-          document.execCommand('insertHTML', false, html);
-        }
-      };
+        };
 
-     this.element[0].addEventListener('paste', this.pasteWrapper); //doesnt work as jQuery?
-     return this;
-    },
+       var currentElement = self.getCurrentElement();
 
-    htmlEntities: function (str) {
+       currentElement[0].addEventListener('paste', this.pasteWrapper); //doesnt work as jQuery?
+       return this;
+      },
+
+      htmlEntities: function (str) {
         // converts special characters (like <) into their escaped/encoded values (like &lt;).
         // This allows you to show to display the string without the browser reading it as HTML.
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    },
+      },
 
-    bindWindowActions: function () {
+      bindWindowActions: function () {
         var timerResize,
-            self = this;
+            self = this,
+            currentElement = self.getCurrentElement();
 
         this.windowResizeHandler = function () {
             clearTimeout(timerResize);
@@ -600,10 +719,10 @@
         $(window).on('resize.editor', this.windowResizeHandler);
 
         //Attach Label
-        this.element.prev('.label').css('cursor', 'default').on('click.editor', function (){
-          self.element.focus();
+        currentElement.prev('.label').css('cursor', 'default').on('click.editor', function (){
+          currentElement.focus();
         });
-        self.element.attr('aria-label', this.element.prev('.label').text());
+        currentElement.attr('aria-label', currentElement.prev('.label').text());
         return this;
       },
 
@@ -672,6 +791,8 @@
             //this.triggerAnchorAction(e);
         } else if (action === 'image') {
             this.insertImage();
+        } else if (action === 'source' || action === 'visual') {
+            this.toggleSource();
         } else {
             document.execCommand(action, false, null);
             this.setToolbarPosition();
@@ -680,6 +801,21 @@
 
       insertImage: function (url) {
         document.execCommand('insertImage', false, url);
+      },
+
+      toggleSource: function() {
+        var originalElement = this.getCurrentElement();
+        if (this.element.hasClass('source-view-active')) {
+          this.element.empty().html( this.textarea.val() );
+          this.element.removeClass('source-view-active hidden');
+          this.sourceView.addClass('hidden');
+        } else {
+          this.textarea.val( this.element.html().toString() );
+          this.element.addClass('source-view-active hidden');
+          this.sourceView.removeClass('hidden');
+          this.adjustSourceLineNumbers();
+        }
+        this.switchToolbars(originalElement);
       },
 
       execFormatBlock: function (el) {
