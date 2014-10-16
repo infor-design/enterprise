@@ -193,10 +193,15 @@
           self.textarea.val( self.element.html().toString() );
         });
 
+        // Adjust line numbers on input
         this.textarea.on('input.editor keyup.editor', function() {
           if (!(self.sourceView.hasClass('hidden'))) {
             self.adjustSourceLineNumbers();
           }
+        }).on('focus.editor', function() {
+          self.sourceView.addClass('is-focused');
+        }).on('blur.editor', function() {
+          self.sourceView.removeClass('is-focused');
         });
 
         this.sourceView.on('click.editor', function(e) {

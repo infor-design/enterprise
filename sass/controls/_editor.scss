@@ -280,6 +280,16 @@
     font-family: $font-stack;
     outline: none;
     overflow: visible;
+
+    &:focus,
+    &.is-focused {
+      box-shadow: none;
+    }
+  }
+
+  &.is-focused {
+    border: 1px solid transparent;
+    box-shadow: $focus-shadow;
   }
 
   > * {
