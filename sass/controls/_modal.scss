@@ -1,51 +1,33 @@
 /* Modal Dialog and Messages
 ================================================== */
 .modal {
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
   border-radius: 3px;
   height: auto;
   left: 50%;
   max-height: 100%;
   max-width: 630px;
   min-width: 200px;
-  overflow-y: auto;
-  -webkit-perspective: 1300px;
-  -moz-perspective: 1300px;
-  -ms-perspective: 1300px;
-  -o-perspective: 1300px;
-  perspective: 1300px;
   position: fixed;
   top: 50%;
-  -webkit-transform: translate3d(-50%, -50%, 0);
-  -moz-transform: translate3d(-50%, -50%, 0);
-  -ms-transform: translate3d(-50%, -50%, 0);
-  -o-transform: translate3d(-50%, -50%, 0);
-  transform: translate3d(-50%, -50%, 0);
+  @include css3(transform, translate3d(-50%, -50%, 0));
   visibility: hidden;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: auto;
   z-index: 1001;
-}
 
-.is-visible {
-  visibility: visible;
+  &.is-visible {
+    visibility: visible;
+  }
 }
 
 .overlay {
-  background: #333333;
+  background: #333;
   height: 100%;
   left: 0;
   opacity: 0;
   position: fixed;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
+  @include css3(transition, all .3s);
   top: 0;
   visibility: hidden;
   width: 100%;
@@ -59,47 +41,29 @@
 
 .modal-content {
   background: #e5e5e5;
-  color: #666666;
+  color: #666;
   margin: 0 auto;
   opacity: 0;
   padding: 20px 30px;
   position: relative;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  -webkit-transform: rotateX(-60deg);
-  -moz-transform: rotateX(-60deg);
-  -ms-transform: rotateX(-60deg);
-  -o-transform: rotateX(-60deg);
-  transform: rotateX(-60deg);
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  -ms-transform-style: preserve-3d;
-  -o-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-transform-origin: 50% 0;
-  -moz-transform-origin: 50% 0;
-  -ms-transform-origin: 50% 0;
-  -o-transform-origin: 50% 0;
-  transform-origin: 50% 0;
+  @include css3(transition, all .3s);
+  @include css3(transform, translateZ(0) rotateX(-60deg));
+  //@include css3(transform-style, preserve-3d);
+  @include css3(perspective, 300px);
+  @include css3(transform-origin, 50% 50% 0);
+  @include css3(backface-visibility, hidden);
 }
 
 .is-visible .modal-content {
   opacity: 1;
-  -webkit-transform: rotateX(0deg);
-  -moz-transform: rotateX(0deg);
-  -ms-transform: rotateX(0deg);
-  o-transform: rotateX(0deg);
-  transform: rotateX(0deg);
+  @include css3(transform, translateZ(0) rotateX(0deg));
 }
 
 /* Messages/Content */
 
 .modal-content h1 {
   font-size: 2.2rem;
-  color: #666666;
+  color: #666;
   font-weight: normal;
   text-align: left;
   margin-bottom: 10px;

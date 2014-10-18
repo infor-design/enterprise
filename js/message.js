@@ -48,7 +48,8 @@
         }
 
         this.closeBtn = $('<button type="button" class="btn-default btn-close">Close</button>').appendTo(this.content);
-        this.message.append(this.messageContent).appendTo('body').modal({trigger: 'immediate', buttons: settings.buttons,
+        this.message.append(this.messageContent).appendTo('body');
+        this.message.modal({trigger: 'immediate', buttons: settings.buttons,
           resizable: settings.resizable, close: settings.close});
 
         //Adjust Width if Set as a Setting

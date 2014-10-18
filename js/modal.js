@@ -41,7 +41,7 @@
           this.oldActive = parent.document.activeElement; //iframe
         }
 
-        this.trigger = $('button[ data-modal="' + this.element.attr('id') + '"]');  //Find the button with same dialog ID
+        this.trigger = $('button[data-modal="' + this.element.attr('id') + '"]');  //Find the button with same dialog ID
         this.overlay = $('<div class="overlay"></div>');
 
         if (settings.trigger === 'click') {
@@ -51,9 +51,9 @@
         }
 
         if (settings.trigger === 'immediate') {
-          setTimeout(function () {
+          setTimeout(function() {
             self.open();
-          },1);
+          }, 1);
         }
 
         self.isCancelled = false;
@@ -160,9 +160,7 @@
         }, 300);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
-        $('body').addClass('modal-engaged');
         this.element.addClass('is-visible').attr('role', 'dialog');
-
         this.element.attr('aria-hidden', 'false');
         this.overlay.attr('aria-hidden', 'false');
 
@@ -175,6 +173,13 @@
         if ($('html').hasClass('ie9')) {
           self.revertTransition(true);
         }
+
+        // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a chance to be established
+        // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
+        // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
+        var x = this.overlay.width();
+        $('body').addClass('modal-engaged');
+        x = null;
 
         //Handle Default button.
         $(this.element).on('keypress.modal', function (e) {
@@ -248,16 +253,15 @@
       },
 
       close: function () {
-        var elemCanClose = this.element.triggerHandler('beforeClose');
+        var self = this,
+          elemCanClose = this.element.triggerHandler('beforeClose');
 
         if (elemCanClose === false) {
           return;
         }
 
-        this.element.removeClass('is-visible');
         this.element.off('keypress.modal keydown.modal');
-
-        this.overlay.remove();
+        this.element.removeClass('is-visible');
         this.overlay.attr('aria-hidden', 'true');
         this.element.attr('aria-hidden', 'true');
         if ($('.modal[aria-hidden="false"]').length < 1) {
@@ -282,12 +286,16 @@
         // remove the event that changed this page's skip-link functionality in the open event.
         $('.skip-link').off('focus.modal');
 
-        this.element.trigger('afterClose');
+        setTimeout( function() {
+          self.overlay.remove();
+          self.element.trigger('afterClose');
+        }, 300); // should match the length of time needed for the overlay to fade out
       },
 
       destroy: function(){
         this.close();
         $.removeData($(this.element),'modal');
+        this.element.trigger('destroy.modal');
       }
     };
 
