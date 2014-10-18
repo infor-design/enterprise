@@ -9,7 +9,7 @@
       defaults = {
         buttons: {
           editor: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video', 'seperator', 'source'],
-          source: ['visual']
+          source: ['bold','italic','underline', 'seperator', 'strikethrough', 'seperator', 'visual']
         },
         staticToolbar: true,
         delay: 200,
@@ -215,11 +215,11 @@
 
       createTextarea: function() {
         this.sourceView = $('<div></div>').attr({
-          'class' : 'editor-source hidden',
+          'class' : 'editor-source editable hidden',
           'id' : 'editor-source-' + this.id
         }).insertAfter(this.element);
 
-        var lineNumbers = $('<ul></ul>').addClass('line-numbers').appendTo(this.sourceView);
+        $('<ul></ul>').addClass('line-numbers').appendTo(this.sourceView);
         var textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView);
         var textarea = $('<textarea></textarea>').appendTo(textareaContainer);
         return textarea;
@@ -247,6 +247,57 @@
         this.textarea.css('height', numberList[0].scrollHeight + 'px');
 
       },
+
+      wrapTextInTags: function(action) {
+        if (!action) { return; }
+
+        var el = this.textarea[0],
+          val = el.value,
+          sel, startPos, endPos, scrollTop,
+          tags = this.getTagsForAction(action);
+
+        if (document.selection && el.tagName === 'TEXTAREA') {
+          //IE textarea support
+          $(el).focus();
+          sel = document.selection.createRange();
+          sel.text = tags[0] + sel.text + tags[1];
+          $(el).focus();
+        } else if (el.selectionStart || el.selectionStart === '0') {
+          //MOZILLA/NETSCAPE support
+          startPos = el.selectionStart;
+          endPos = el.selectionEnd;
+          scrollTop = el.scrollTop;
+          sel = val.substring(startPos, endPos);
+          el.value = val.substring(0, startPos) + tags[0] + sel + tags[1] + val.substring(endPos, val.length);
+          $(el).focus();
+          el.selectionStart = startPos + sel.length;
+          el.selectionEnd = startPos + sel.length;
+          el.scrollTop = scrollTop;
+        } else {
+          // IE input[type=text] and other browsers
+          el.value += tags[0] + el.value + tags[1];
+          $(el).focus();
+          el.value = el.value;    // forces cursor to end
+        }
+      },
+
+      getTagsForAction: function(action) {
+        if (!action) { return; }
+
+        switch(action) {
+          case 'bold':
+            return ['<b>','</b>'];
+          case 'italic':
+            return ['<i>','</i>'];
+          case 'underline':
+            return ['<u>','</u>'];
+          case 'strikethrough':
+            return ['<strike>', '</strike>'];
+          default:
+            return ['<p>','</p>'];
+        }
+      },
+
 
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
@@ -433,7 +484,7 @@
             timer = '';
 
         this.selectionHandler = function (e) {
-          if (settings.staticToolbar && $(e.currentTarget).hasClass('.editable') && self.toolbar.hasClass('is-active') && e.type !== 'blur') {
+          if (settings.staticToolbar && $(e.currentTarget).hasClass('editable') && self.toolbar.hasClass('is-active') && e.type !== 'blur') {
             self.keepToolbarAlive = true;
           } else {
             self.keepToolbarAlive = false;
@@ -520,7 +571,7 @@
           }
           // If not search in the parent nodes.
         } catch (err) {
-        result = getElement(parent);
+          result = getElement(parent);
         }
         return result;
       },
@@ -788,20 +839,39 @@
 
       //Run the CE action.
       execAction: function (action) {
-        if (action.indexOf('append-') > -1) {
-            this.execFormatBlock(action.replace('append-', ''));
-            this.setToolbarPosition();
-            this.setToolbarButtonStates();
-        } else if (action === 'anchor') {
-            //this.triggerAnchorAction(e);
-        } else if (action === 'image') {
-            this.insertImage();
-        } else if (action === 'source' || action === 'visual') {
-            this.toggleSource();
+        var currentElement = this.getCurrentElement();
+
+        // Visual Mode
+        if (currentElement === this.element) {
+          if (action.indexOf('append-') > -1) {
+              this.execFormatBlock(action.replace('append-', ''));
+              this.setToolbarPosition();
+              this.setToolbarButtonStates();
+          } else if (action === 'anchor') {
+              //this.triggerAnchorAction(e);
+          } else if (action === 'image') {
+              this.insertImage();
+          } else if (action === 'source' || action === 'visual') {
+              this.toggleSource();
+          } else {
+              document.execCommand(action, false, null);
+              this.setToolbarPosition();
+          }
         } else {
-            document.execCommand(action, false, null);
-            this.setToolbarPosition();
+        // Source Mode
+          switch(action) {
+            case 'bold': case 'italic': case 'underline': case 'strikethrough':
+              this.wrapTextInTags(action);
+              break;
+            case 'visual':
+              this.toggleSource();
+              break;
+            default:
+              console.log('No source view action defined for "' + action + '".');
+              break;
+          }
         }
+
       },
 
       insertImage: function (url) {
