@@ -111,11 +111,15 @@ describe('Radio Button [selenium]', function(){
   });
 
   // TODO: Complete this test when we are ready to begin building sample applications
-  /*
-  it('should be compatible with KnockoutJS', function(done) {
+  it.skip('should be compatible with KnockoutJS', function(done) {
     runner.client
       .call(done);
   });
-  */
+
+  // TODO: Complete this test
+  it.skip('can be aligned on the page in any position', function(done) {
+    runner.client
+      .call(done);
+  });
 
 });

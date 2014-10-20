@@ -244,34 +244,34 @@
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 
-        if (settings.trigger === 'rightClick') {
+        if (settings.trigger === 'rightClick' || (e !== null && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {
           wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0),
-                        'top': target.offset().top - (wrapper.parent().length >1 ? wrapper.parent().offset().top: 0) + target.outerHeight() + (target.css('box-shadow') ? 2 : 0)});
+                        'top': target.offset().top - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight()});
         }
 
         //Handle Case where menu is off bottom
         if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          wrapper.css({'top': $(window).height() - menuHeight - ($(window).height() - target.offset().top)});
+          wrapper.css({'top': $(window).height() - menuHeight});
 
           //Did it fit?
           if (wrapper.offset().top < 0) {
-            //No so see if more room on top or bottom and shrink
-            if (target.offset().top > $(window).height() - target.offset().top + target.outerWidth) {
-              //fits on top
-            } else {
-              //shrink to bottom
-              wrapper.css({'left': target.offset().left - (wrapper.parent().length === 1 ? wrapper.parent().offset().left : 0),
-                            'top': target.offset().top - (wrapper.parent().length >1 ? wrapper.parent().offset().top: 0) + target.outerHeight()});
-              menuHeight = $(window).outerHeight() - (wrapper.offset().top + 45);
-              wrapper.height(menuHeight);
-              this.menu.height(menuHeight);
-              //Note: 45 gives some space on the bottom
-            }
+            wrapper.css('top', 0);
+            wrapper.css('top', (wrapper.offset().top * -1));
+            menuHeight = wrapper.outerHeight();
+          }
+
+          // Do one more check to see if the bottom edge bleeds off the screen.
+          // If it does, shrink the menu's Y size.
+          if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+            var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
+            menuHeight = menuHeight - differenceX - 32;
+            this.menu.height(menuHeight);
           }
         }
+
         //Handle Case where menu is off left side
         if ((wrapper.offset().left + menuWidth) > $(window).width()) {
           wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
@@ -348,53 +348,64 @@
       },
 
       showSubmenu: function (li) {
-        var menu = li.find('ul:first'),
-          wrapper = li.children('.wrapper');
-        li.parent().find('.popupmenu').removeClass('is-open');
+        var wrapper = li.children('.wrapper').filter(':first'),
+          menu = wrapper.children('.popupmenu'),
+          mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
+        li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
 
-        menu.addClass('is-open');
-        wrapper.css({left: 0, top: 0});
-        wrapper.css('width','');
-        wrapper.css('width', menu.outerWidth()+1);
-        wrapper.css({'left': li.outerWidth(), 'top': li.outerHeight()*(li.parent().index()-1)});
+        wrapper.css({
+          'left': li.position().left + li.outerWidth(),
+          'top': li.position().top
+        }).children('.popupmenu').addClass('is-open');
 
         //Handle Case where the menu is off to the right
         var menuWidth = menu.outerWidth();
         if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
-          wrapper.css('left', 0 - menuWidth);
+          wrapper.css('left', -9999);
+          menuWidth = menu.outerWidth();
+          wrapper.css('left', li.position().left - menuWidth);
           //Did it fit?
           if (wrapper.offset().left < 0) {
-            //No. Push the menu's left offset onto the screen
-            wrapper.css('left', parseInt(wrapper.css('left')) + Math.abs(wrapper.offset().left));
+            //No. Push the menu's left offset onto the screen.
+            wrapper.css('left', 0);
             menuWidth = menu.outerWidth();
-            //Does it fit now?
-            if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
-              //No, cut off the menu's right side until it fits within the right screen boundary
-              var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
-              menuWidth = menuWidth - differenceY;
-              menu.width(menuWidth);
-              wrapper.width(menuWidth);
-            }
+          }
+          // Do one more check to see if the right edge bleeds off the screen.
+          // If it does, shrink the menu's X size.
+          if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+            var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
+            menuWidth = menuWidth - differenceY;
+            menu.width(menuWidth);
           }
         }
 
         //Handle Case where menu is off bottom
         var menuHeight = menu.outerHeight();
         if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          wrapper.css('top', 0 - menuHeight);
-          //Did it fit?
+          // First try bumping up the menu to sit just above the bottom edge of the window.
+          var bottomEdgeCoord = wrapper.offset().top + menuHeight,
+            differenceFromBottomY = bottomEdgeCoord - $(window).height();
+          wrapper.css('top', wrapper.position().top - differenceFromBottomY);
+
+          // Does it fit?
+          if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+            // No. Bump the menu up higher based on the menu's height and the extra space from the main wrapper.
+            wrapper.css('top', $(window).height() - menuHeight - mainWrapperOffset);
+          }
+
+          // Does it fit now?
           if (wrapper.offset().top < 0) {
-            //No. Push the menu's top offset onto the screen
-            wrapper.css('top', parseInt(wrapper.css('top')) + Math.abs(wrapper.offset().top));
+            // No. Push the menu down onto the screen from the top of the window edge.
+            wrapper.css('top', 0);
+            wrapper.css('top', (wrapper.offset().top * -1));
             menuHeight = menu.outerHeight();
-            //Does it fit now?
-            if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-              //No, cut off the menu's bottom edge until it fits within the bottom screen boundary
-              var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
-              menuHeight = menuHeight - differenceX - 32;
-              menu.height(menuHeight);
-              wrapper.height(menuHeight);
-            }
+          }
+          // Do one more check to see if the bottom edge bleeds off the screen.
+          // If it does, shrink the menu's Y size and make it scrollable.
+          if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+            var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
+            menuHeight = menuHeight - differenceX - 32;
+            menu.height(menuHeight);
           }
         }
       },

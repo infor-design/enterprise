@@ -6,6 +6,7 @@
   display: inline-block;
   left: -999px;
   position: absolute;
+  z-index: 4000;
 }
 
 .popupmenu {
@@ -20,7 +21,6 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding: 15px 0;
-  z-index: 9000;
 
   &.is-open {
     display: block;
@@ -114,6 +114,7 @@
     .wrapper {
       display: block;
       position: absolute;
+      z-index: 4000;
     }
 
     .popupmenu.is-open {

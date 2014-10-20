@@ -93,7 +93,7 @@ describe('Checkbox [selenium]', function(){
   });
 
   // TODO: Complete this test when we have RTL implemented
-  it('correctly places its label to the opposite side when RTL is implemented', function(done) {
+  it.skip('correctly places its label to the opposite side when RTL is implemented', function(done) {
     // navigate to another test page with RTL enabled?
     runner.client
       .call(done);
@@ -101,9 +101,8 @@ describe('Checkbox [selenium]', function(){
 
   // TODO: Fix this test when we get a fix from the WebdriverIO Dev for testing pseudo-elements
   // https://github.com/webdriverio/webdriverio/issues/295
-  it('should operate correctly if defined as an ASP checkbox', function(done) {
+  it.skip('should operate correctly if defined as an ASP checkbox', function(done) {
     runner.client
-      /*
       // Check the background color on the label's :before pseudo element to see if the box rendered.
       .getCssProperty('label[for="checkbox-enable-ssl"]', 'background', function(err, result) {
         globals.noError(err);
@@ -118,7 +117,6 @@ describe('Checkbox [selenium]', function(){
         should.exist(result);
         result.value.should.equal('');
       })
-      */
       .call(done);
   });
 

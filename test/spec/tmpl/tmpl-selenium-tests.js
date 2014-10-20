@@ -19,11 +19,11 @@ describe('Tmpl [selenium]', function(){
       .call(done);
   });
 
-  it('can render from json arrays', function(done) {
+  it.skip('can render from json arrays', function(done) {
     runner.client.call(done);
   });
 
-  it('can render ifs', function(done) {
+  it.skip('can render ifs', function(done) {
     runner.client.call(done);
   });
 
