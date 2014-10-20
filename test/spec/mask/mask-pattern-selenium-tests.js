@@ -136,7 +136,7 @@ describe('Pattern Format [selenium]', function(){
         'Left arrow',
         'NULL'
       ], globals.noError)
-      .addValue(copyInput, ['Control', 'x', 'NULL'], globals.noError)
+      .addValue(copyInput, [globals.keys.control, 'x', 'NULL'], globals.noError)
       // Test the "copyThis" input to make sure that it's empty
       .getValue(copyInput, function(err, value) {
         globals.noError(err);
@@ -144,7 +144,7 @@ describe('Pattern Format [selenium]', function(){
         value.should.equal('');
       })
       // Paste it into the other input
-      .addValue(input, ['Control', 'v', 'NULL'], globals.noError)
+      .addValue(input, [globals.keys.control, 'v', 'NULL'], globals.noError)
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
@@ -177,22 +177,13 @@ describe('Pattern Format [selenium]', function(){
         'NULL'
       ], globals.noError)
       // Paste the clipboard contents
-      .addValue(input, ['Control', 'v', 'NULL'], global.noError)
+      .addValue(input, [globals.keys.control, 'v', 'NULL'], global.noError)
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
         value.should.equal('(333) 300-0003');
       })
       .call(done);
-  });
-
-  // http://jira.infor.com/browse/HFC-1822 - Comment on 08/Sep/14 12:57 PM
-  it('should be able to select all characters and clear them by typing a decimal point', function(done) {
-    // type a bunch of characters
-    // select all of them (make sure the caret highlights all of them)
-    // press the decimal key
-    // test to see that the value of the input field is '.'
-    runner.client.call(done);
   });
 
 });

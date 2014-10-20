@@ -93,6 +93,7 @@
         // against the mask and fill them in as necessary.
         var val = self.element.val();
         if (val.length > 0) {
+          self.element.val('');
           self.processStringAgainstMask(val);
         }
 
@@ -388,7 +389,6 @@
           val = valWithoutLeadZeros;
 
           var originalVal = val,
-            valHasDecimal = originalVal.length - originalVal.replace(/\./g, '').length > 0,
             maskParts = this.pattern.replace(/,/g, '').split('.'),
             totalLengthMinusSeparators = maskParts[0].length + (maskParts[1] ? maskParts[1].length : 0);
 
@@ -419,6 +419,11 @@
                 val = this.insertAtIndex(val, '.', val.length - maskParts[1].length);
               }
             } else {
+              // cut down the total length of the number if it's longer than the total number of integer
+              // and decimal places
+              if ( val.length > totalLengthMinusSeparators) {
+                val = val.substring(0, totalLengthMinusSeparators);
+              }
               // The decimal doesn't already exist in the value string.
               // if the current value has more characters than the "integer" portion of the mask,
               // automatically add the decimal at index of the last pre-decimal pattern character.
@@ -436,7 +441,8 @@
 
           // Reposition all the commas before the decimal point to be in the proper order.
           // Store the values of "added" and "removed" commas.
-          var parts = valHasDecimal ? val.split('.') : [val],
+          var valHasDecimal = val.length - val.replace(/\./g, '').length > 0,
+            parts = valHasDecimal ? val.split('.') : [val],
             reAddTheCommas = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
           // add the commas back in
@@ -445,7 +451,7 @@
 
           // move the caret position to the correct spot, based on the adjustments we made to commas
           // NOTE: This needs to happen AFTER we figure out the number of commas up to the caret.
-          var originalSliceUpToCaret = originalVal.substring(0, pos.begin),
+          var originalSliceUpToCaret = originalVal.substring(0, (pos.end !== pos.begin ? pos.end : pos.begin)),
             originalSliceLength = originalSliceUpToCaret.length,
             originalSliceCommas = originalSliceLength - originalSliceUpToCaret.replace(/,/g, '').length,
             currentSliceUpToCaret = val.substring(0, originalSliceLength),
@@ -561,7 +567,9 @@
         // If it is, only work with the "post-decimal" portion of the mask
         if (sliceHasDecimal) {
           var postDecMask = self.pattern.split('.')[1],  // tests all mask characters after the decimal
-            postDecSlice = sliceUpToCaret.split('.')[1]; // tests only typed characters after the decimal up to the caret
+            postDecSlice = sliceUpToCaret.split('.')[1], // tests only typed characters after the decimal up to the caret
+            distanceFromDec = (self.originalPos.begin - 1) - sliceUpToCaret.indexOf('.');
+          patternChar = postDecMask.charAt(distanceFromDec);
 
           // if there are as many or more characters in the slice as the mask, don't continue.
           // The decimal place maximum has been hit.  Only do this if the "entire" mask isn't selected.
@@ -596,6 +604,15 @@
             return self.killEvent(e);
           }
           if (valHasDecimal) {
+            var caretSlice = val.substring(self.originalPos.begin, self.originalPos.end),
+              caretSliceHasDecimal = caretSlice.length !== caretSlice.replace(/\./g, '').length;
+            if (caretSliceHasDecimal) {
+              if (caretSlice.length === val.length) {
+                self.buffer += '0';
+              }
+              self.buffer += typedChar;
+              self.writeInput();
+            }
             self.resetStorage();
             return self.killEvent(e);
           }
@@ -612,7 +629,7 @@
         }
 
         // If the new pattern char is the decimal, add it.
-        if (self.isCharacterDecimal(patternChar) /*&& !valHasDecimal*/) {
+        if (self.isCharacterDecimal(patternChar)) {
           if (!valHasDecimal) {
             self.buffer += patternChar;
           }
@@ -659,14 +676,23 @@
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
       processStringAgainstMask: function(string, originalEvent) {
-        var charArray = string.split('');
-        for(var i = 0; i < charArray.length; i++) {
-          var patternChar = this.getCharacter();
-          if (this.mode === 'number') {
-            this.processNumberMask(charArray[i], patternChar, originalEvent);
-          } else {
-            this.processMask(charArray[i], patternChar, originalEvent);
-          }
+        switch(this.mode) {
+          case 'number':
+            string = string.replace(/\D/g,'');
+            if (!this.originalPos) {
+              this.originalPos = this.caret();
+            }
+            this.buffer = string;
+            this.writeInput();
+            this.resetStorage();
+            break;
+          default:
+            var charArray = string.split('');
+            for(var i = 0; i < charArray.length; i++) {
+              var patternChar = this.getCharacter();
+              this.processMask(charArray[i], patternChar, originalEvent);
+            }
+            break;
         }
       },
 
