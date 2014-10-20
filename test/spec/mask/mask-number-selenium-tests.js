@@ -33,7 +33,7 @@ describe('Number Format [selenium]', function(){
 
   // TODO: Fix this test
   // There is a problem with how PhantomJS handles this plugin's caret positioning.
-  it('should format a number while typing from start to finish', function(done) {
+  it.skip('should format a number while typing from start to finish', function(done) {
     var input = '#input-masked-number';
     runner.client
       .setValue(input, '')
@@ -44,7 +44,7 @@ describe('Number Format [selenium]', function(){
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        //value.should.equal('1,234.56');
+        value.should.equal('1,234.56');
       })
       .call(done);
   });
@@ -97,7 +97,6 @@ describe('Number Format [selenium]', function(){
     // select all of them (make sure the caret highlights all of them)
     // press the decimal key
     // test to see that the value of the input field is '0.'
-    // TODO: this test should work.
       runner.client
       .setValue(input, '', globals.noError)
       .addValue(input, ['1','2','3','4','5','6','NULL'], globals.noError)
@@ -129,7 +128,7 @@ describe('Number Format [selenium]', function(){
 
   // TODO: Fix this test
   // Errors with caret positioning in PhantomJS.  Passes if you run the tests in Chrome/Firefox.
-  it('should be able to replace a selected range and format the remaining number correctly', function(done) {
+  it.skip('should be able to replace a selected range and format the remaining number correctly', function(done) {
     var input = '#input-masked-number';
     // fill the number field completely.
     // select a small range of numbers.
@@ -153,7 +152,7 @@ describe('Number Format [selenium]', function(){
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        //value.should.equal('8,300');
+        value.should.equal('8,300');
       })
       .call(done);
   });

@@ -59,11 +59,11 @@ describe('Dropdown [zombie]', function() {
     item.style.display.should.equal('none');
   });
 
-  it('initializes in n ms', function() {
+  it.skip('initializes in n ms', function() {
     //See how long it takes to initialize and make a test on > val
   });
 
-  it('shouldn\'t be able to open two lists at the same time', function() {
+  it.skip('shouldn\'t be able to open two lists at the same time', function() {
     // Try to open one list, then try to open the other,
     // and check to see if the list contents match the first list opened (they should only match the second).
   });
