@@ -69,6 +69,11 @@
   margin-bottom: 10px;
 }
 
+.modal-content h1:focus {
+  outline: thin dotted #666;
+  outline-offset: 2px;
+}
+
 .modal-content .message {
   color: #666;
   font-size: 1.5rem;

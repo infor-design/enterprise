@@ -99,7 +99,7 @@
             btn.addClass('btn-default');
           }
           if (props.isLink) {
-            btn = $('<a class="link"></a>').text(props.text);
+            btn = $('<a href="#" class="link"></a>').text(props.text);
           }
           if (props.id) {
             btn.attr('id', props.id);
