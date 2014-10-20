@@ -145,13 +145,24 @@
           if (self.element.is(':disabled') || self.input.hasClass('is-readonly')) {
             return;
           }
+          if (e.which === 8) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+          }
 
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
-          var charCode = e.charCode || e.keyCode;
+          var charCode = e.which;
           //Needed for browsers that use keypress events to manipulate the window.
           if (e.altKey && (charCode === 38 || charCode === 40)) {
             e.stopPropagation();
+            return false;
+          }
+          // Prevent Backspace from returning to the previous page.
+          if (charCode === 8) {
+            e.stopPropagation();
+            e.preventDefault();
             return false;
           }
 
