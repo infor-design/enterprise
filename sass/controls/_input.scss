@@ -22,7 +22,7 @@ label, .label, .data {
 }
 
 /* Field Style */
-.field .checkbox-label {
+.field .checkbox-label, .field .checkbox > label {
   margin-bottom: 5px;
   margin-left: 2px;
 }
