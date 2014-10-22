@@ -70,6 +70,9 @@
         return this.element.hasClass('source-view-active') ? this.sourceView : this.element;
       },
 
+      // Returns the currently selected text.  Used for
+
+
       bindParagraphCreation: function () {
         var self = this,
           currentElement = self.getCurrentElement();
@@ -124,6 +127,15 @@
         return this;
       },
 
+      // Builds a fake element and gets the name of the event that will be used for "paste"
+      // Used for cross-browser compatability.
+      getPasteEvent: function() {
+        var el = document.createElement('input'),
+            name = 'onpaste';
+        el.setAttribute(name, '');
+        return ((typeof el[name] === 'function') ? 'paste' : 'input') + '.editor';
+      },
+
       initToolbar: function () {
         if (this.toolbar) {
             return this;
@@ -169,8 +181,8 @@
         this.toolbar.off('click.editor mousedown.editor');
         this.toolbar.remove();
         this.toolbar = undefined;
-        originalElement[0].removeEventListener('paste');
-        originalElement.off('mouseup.editor keyup.editor blur.edtior');
+        this.keepToolbarAlive = false;
+        originalElement.off('mouseup.editor keyup.editor blur.edtior ' + this.pasteEvent);
         $(window).off('resize.editor');
 
         // Rebind everything to the new element
@@ -186,11 +198,11 @@
         this.textarea = this.createTextarea();
 
         // fill the text area with any content that may already exist within the editor DIV
-        this.textarea.text( this.element.html().toString() );
+        this.textarea.text(this.element.html().toString());
 
         // TODO: setup the events here
         this.element.on('input.editor keyup.editor', function() {
-          self.textarea.val( self.element.html().toString() );
+          self.textarea.val(self.element.html().toString());
         });
 
         // Adjust line numbers on input
@@ -202,12 +214,6 @@
           self.sourceView.addClass('is-focused');
         }).on('blur.editor', function() {
           self.sourceView.removeClass('is-focused');
-        });
-
-        this.sourceView.on('click.editor', function(e) {
-          self.toolbar.trigger('click.editor', e);
-        }).on('mousedown.editor', function(e) {
-          self.toolbar.trigger('mousedown.editor', e);
         });
 
         return this.textarea;
@@ -248,56 +254,59 @@
 
       },
 
-      wrapTextInTags: function(action) {
-        if (!action) { return; }
+      wrapTextInTags: function(text, action) {
+        var tags;
+        switch(action) {
+          case 'bold':
+            tags = ['<b>','</b>'];
+            break;
+          case 'italic':
+            tags = ['<i>','</i>'];
+            break;
+          case 'underline':
+            tags = ['<u>','</u>'];
+            break;
+          case 'strikethrough':
+            tags = ['<strike>', '</strike>'];
+            break;
+          default:
+            tags = ['',''];
+        }
+        return tags[0] + text + tags[1];
+      },
 
+      insertTextAreaContent: function(text, action) {
         var el = this.textarea[0],
           val = el.value,
-          sel, startPos, endPos, scrollTop,
-          tags = this.getTagsForAction(action);
+          sel, startPos, endPos, scrollTop;
+
+        // Always have empty text
+        text = text ? text : '';
 
         if (document.selection && el.tagName === 'TEXTAREA') {
           //IE textarea support
           $(el).focus();
           sel = document.selection.createRange();
-          sel.text = tags[0] + sel.text + tags[1];
+          sel.text = this.wrapTextInTags(text + sel.text, action);
           $(el).focus();
         } else if (el.selectionStart || el.selectionStart === '0') {
           //MOZILLA/NETSCAPE support
           startPos = el.selectionStart;
           endPos = el.selectionEnd;
           scrollTop = el.scrollTop;
-          sel = val.substring(startPos, endPos);
-          el.value = val.substring(0, startPos) + tags[0] + sel + tags[1] + val.substring(endPos, val.length);
+          sel = text + val.substring(startPos, endPos);
+          el.value = val.substring(0, startPos) + this.wrapTextInTags(sel, action) + val.substring(endPos, val.length);
           $(el).focus();
           el.selectionStart = startPos + sel.length;
           el.selectionEnd = startPos + sel.length;
           el.scrollTop = scrollTop;
         } else {
           // IE input[type=text] and other browsers
-          el.value += tags[0] + el.value + tags[1];
+          el.value += this.wrapTextInTags(text + el.value, action);
           $(el).focus();
           el.value = el.value;    // forces cursor to end
         }
       },
-
-      getTagsForAction: function(action) {
-        if (!action) { return; }
-
-        switch(action) {
-          case 'bold':
-            return ['<b>','</b>'];
-          case 'italic':
-            return ['<i>','</i>'];
-          case 'underline':
-            return ['<u>','</u>'];
-          case 'strikethrough':
-            return ['<strike>', '</strike>'];
-          default:
-            return ['<p>','</p>'];
-        }
-      },
-
 
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
@@ -520,7 +529,7 @@
             selectionElement;
 
         if (this.keepToolbarAlive !== true) {
-          newSelection = window.getSelection();
+          newSelection = this.element.hasClass('source-view-active') ? this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ) : window.getSelection();
           if (newSelection.toString().trim() === '') {
 
             if (settings.staticToolbar) {
@@ -594,11 +603,11 @@
 
       setToolbarPosition: function () {
         var buttonHeight = 40,
-            selection = window.getSelection(),
+            selection = this.element.hasClass('source-view-active') ? this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ) : window.getSelection(),
             range,
             boundary;
 
-        if (selection.type !== 'None') {
+        if (selection.type && selection.type !== 'None') {
           range = selection.getRangeAt(0);
           boundary = range.getBoundingClientRect();
         } else {
@@ -720,19 +729,27 @@
       //Handle Pasted In Text
       bindPaste: function () {
         var self = this;
+        if (!self.pasteEvent) {
+          self.pasteEvent = self.getPasteEvent();
+        }
 
         this.pasteWrapper = function (e) {
-          var paragraphs,
+          var paste = e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData ?
+            e.originalEvent.clipboardData.getData('text/plain') : // Standard
+            window.clipboardData && window.clipboardData.getData ?
+            window.clipboardData.getData('Text') : // MS
+            false,
+            paragraphs,
             html = '',
             p;
 
-          if (!settings.forcePlainText) {
+          if (!settings.forcePlainText || self.element.hasClass('source-view-active') ) {
             return this;
           }
 
-          if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
+          if (paste && !e.defaultPrevented) {
             e.preventDefault();
-            paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
+            paragraphs = paste.split(/[\r\n]/g);
             for (p = 0; p < paragraphs.length; p += 1) {
               if (paragraphs[p] !== '') {
                 if (navigator.userAgent.match(/firefox/i) && p === 0) {
@@ -742,14 +759,14 @@
                 }
               }
             }
+            // TODO: This doesn't work in Internet Explorer 11 and down... need an alternate solution.
             document.execCommand('insertHTML', false, html);
           }
         };
 
-       var currentElement = self.getCurrentElement();
-
-       currentElement[0].addEventListener('paste', this.pasteWrapper); //doesnt work as jQuery?
-       return this;
+        var currentElement = self.getCurrentElement();
+        currentElement.on(self.pasteEvent, self.pasteWrapper);
+        return this;
       },
 
       htmlEntities: function (str) {
@@ -861,7 +878,7 @@
         // Source Mode
           switch(action) {
             case 'bold': case 'italic': case 'underline': case 'strikethrough':
-              this.wrapTextInTags(action);
+              this.insertTextAreaContent(null, action);
               break;
             case 'visual':
               this.toggleSource();
@@ -906,7 +923,7 @@
             el = 'p';
         }
         // When IE we need to add <> to heading elements and
-        //  blockquote needs to be called as indent
+        // blockquote needs to be called as indent
         // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
         // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
         if (this.isIE) {
