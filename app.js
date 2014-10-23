@@ -60,7 +60,7 @@ app.configure(function() {
     var testOptions = {
       title: 'SoHo Controls XI - Tests',
       layout: 'tests/layout',
-      enableLiveReload: false
+      enableLiveReload: true
     };
     var end = req.url.replace('/tests/','');
     res.render('tests/' + end, testOptions);

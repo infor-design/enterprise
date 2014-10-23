@@ -9,7 +9,7 @@
       defaults = {
         buttons: {
           editor: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video', 'seperator', 'source'],
-          source: ['bold','italic','underline', 'seperator', 'strikethrough', 'seperator', 'visual']
+          source: ['bold','italic','underline', 'seperator', 'anchor', 'seperator', 'quote', 'seperator', 'visual']
         },
         staticToolbar: true,
         delay: 200,
@@ -38,6 +38,7 @@
       },
       setup: function () {
         this.isActive = true;
+        this.modals = {};
         this.initElements()
           .bindSelect()
           .bindPaste()
@@ -65,9 +66,14 @@
         return this;
       },
 
+      // Returns true if the source view is currently active.
+      sourceViewActive: function() {
+        return this.element.hasClass('source-view-active');
+      },
+
       // Returns the currently visible element - either the main editor window, or the source-view textarea
       getCurrentElement: function() {
-        return this.element.hasClass('source-view-active') ? this.sourceView : this.element;
+        return this.sourceViewActive() ? this.textarea : this.element;
       },
 
       bindParagraphCreation: function () {
@@ -124,6 +130,15 @@
         return this;
       },
 
+      // Builds a fake element and gets the name of the event that will be used for "paste"
+      // Used for cross-browser compatability.
+      getPasteEvent: function() {
+        var el = document.createElement('input'),
+            name = 'onpaste';
+        el.setAttribute(name, '');
+        return ((typeof el[name] === 'function') ? 'paste' : 'input') + '.editor';
+      },
+
       initToolbar: function () {
         if (this.toolbar) {
             return this;
@@ -139,11 +154,12 @@
         var toolbar = $('<div></div>').attr('class', 'editor-toolbar').attr('id', 'editor-toolbar-' + this.id);
         toolbar.append(this.toolbarButtons());
         toolbar.insertAfter(this.element);
+        toolbar.find('button').tooltip();
         return toolbar;
       },
 
       toolbarButtons: function () {
-        var btns = this.element.hasClass('source-view-active') ? settings.buttons.source : settings.buttons.editor,
+        var btns = this.sourceViewActive() ? settings.buttons.source : settings.buttons.editor,
             ul = $('<ul></ul>').attr('id','editor-toolbar-actions').attr('class', 'editor-toolbar-actions'),
             li, i, btn, ext;
 
@@ -164,17 +180,11 @@
         return ul;
       },
 
-      switchToolbars: function(originalElement) {
-        // Unbind all events attached to the old element that involve triggering the toolbar hide/show
-        this.toolbar.off('click.editor mousedown.editor');
-        this.toolbar.remove();
-        this.toolbar = undefined;
-        originalElement[0].removeEventListener('paste');
-        originalElement.off('mouseup.editor keyup.editor blur.edtior');
-        $(window).off('resize.editor');
+      switchToolbars: function() {
+        this.destroyToolbar();
 
         // Rebind everything to the new element
-        this.initToolbar().bindButtons();
+        this.setupTextareaEvents().initToolbar().bindButtons().bindModals().bindAnchorPreview();
         this.bindSelect().bindPaste().bindWindowActions();
       },
 
@@ -186,29 +196,14 @@
         this.textarea = this.createTextarea();
 
         // fill the text area with any content that may already exist within the editor DIV
-        this.textarea.text( this.element.html().toString() );
+        this.textarea.text(this.element.html().toString());
 
         // TODO: setup the events here
         this.element.on('input.editor keyup.editor', function() {
-          self.textarea.val( self.element.html().toString() );
+          self.textarea.val(self.element.html().toString());
         });
 
-        // Adjust line numbers on input
-        this.textarea.on('input.editor keyup.editor', function() {
-          if (!(self.sourceView.hasClass('hidden'))) {
-            self.adjustSourceLineNumbers();
-          }
-        }).on('focus.editor', function() {
-          self.sourceView.addClass('is-focused');
-        }).on('blur.editor', function() {
-          self.sourceView.removeClass('is-focused');
-        });
-
-        this.sourceView.on('click.editor', function(e) {
-          self.toolbar.trigger('click.editor', e);
-        }).on('mousedown.editor', function(e) {
-          self.toolbar.trigger('mousedown.editor', e);
-        });
+        this.setupTextareaEvents();
 
         return this.textarea;
       },
@@ -220,9 +215,29 @@
         }).insertAfter(this.element);
 
         $('<ul></ul>').addClass('line-numbers').appendTo(this.sourceView);
-        var textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView);
-        var textarea = $('<textarea></textarea>').appendTo(textareaContainer);
+        var textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView),
+          newTextareaID = 'source-textarea-' + ($('[id^="source-textarea-"]').length+1),
+          labelContents = this.element.prev('.label').text() + ' - HTML Source View';
+
+        $('<label class="scr-only" for="'+ newTextareaID +'">'+ labelContents +'</label>').appendTo(textareaContainer);
+        var textarea = $('<textarea id="'+ newTextareaID +'" class="editable"></textarea>').appendTo(textareaContainer);
         return textarea;
+      },
+
+      setupTextareaEvents: function() {
+        var self = this;
+        // Adjust line numbers on input
+        this.textarea.on('input.editor keyup.editor', function() {
+          if (!(self.sourceView.hasClass('hidden'))) {
+            self.adjustSourceLineNumbers();
+          }
+        }).on('focus.editor', function() {
+          self.sourceView.addClass('is-focused');
+        }).on('blur.editor', function() {
+          self.sourceView.removeClass('is-focused');
+        });
+
+        return this;
       },
 
       adjustSourceLineNumbers: function() {
@@ -232,77 +247,102 @@
         this.textarea.css('height','');
         var scrollHeight = this.textarea[0].scrollHeight,
           lineNumberCount = Math.floor((scrollHeight - YPadding) / lineHeight),
-          numberList = this.sourceView.find('.line-numbers');
+          numberList = this.sourceView.find('.line-numbers'),
+          i = 0;
 
         if (!this.lineNumbers || lineNumberCount !== this.lineNumbers) {
-          this.lineNumbers = lineNumberCount;
-          numberList.empty();
-          var i = 0;
-          while (i < this.lineNumbers) {
-            numberList.append('<li role="presentation"><span>' + (i + 1) + '</span></li>');
-            i++;
+          if (!this.lineNumbers) {
+            // Build the list of line numbers from scratch
+            this.lineNumbers = lineNumberCount;
+            while (i < this.lineNumbers) {
+              numberList.append('<li role="presentation"><span>' + (i + 1) + '</span></li>');
+              i++;
+            }
+          } else if (this.lineNumbers < lineNumberCount) {
+            // Add extra line numbers to the bottom
+            while (i < (lineNumberCount - this.lineNumbers)) {
+              numberList.append('<li role="presentation"><span>' + (numberList.find('li').length + i + 1) + '</span></li>');
+              i++;
+            }
+          } else if (this.lineNumbers > lineNumberCount) {
+            // Remove extra line numbers from the bottom
+            i = this.lineNumbers - lineNumberCount;
+            numberList.find('li').slice(-(i)).remove();
           }
+          this.lineNumbers = lineNumberCount;
           container.css('width', 'calc(100% - ' + (numberList.outerWidth() + 1) + 'px)');
         }
         this.textarea.css('height', numberList[0].scrollHeight + 'px');
-
       },
 
-      wrapTextInTags: function(action) {
-        if (!action) { return; }
+      wrapTextInTags: function(insertedText, selectedText, action) {
+        var tags,
+          finalText;
+        switch(action) {
+          case 'bold':
+            tags = ['<b>','</b>'];
+            break;
+          case 'italic':
+            tags = ['<i>','</i>'];
+            break;
+          case 'underline':
+            tags = ['<u>','</u>'];
+            break;
+          case 'strikethrough':
+            tags = ['<strike>', '</strike>'];
+            break;
+          case 'append-blockquote':
+            tags = ['<blockquote>', '</blockquote>'];
+            break;
+          default:
+            tags = ['',''];
+        }
 
+        if (action === 'anchor') {
+          finalText = '<a href="'+ insertedText +'">' + selectedText + '</a>';
+        } else {
+          finalText = tags[0] + insertedText + selectedText + tags[1];
+        }
+        return finalText;
+      },
+
+      insertTextAreaContent: function(text, action) {
         var el = this.textarea[0],
           val = el.value,
-          sel, startPos, endPos, scrollTop,
-          tags = this.getTagsForAction(action);
+          sel, startPos, endPos, scrollTop;
+
+        // Always have empty text
+        text = text ? text : '';
 
         if (document.selection && el.tagName === 'TEXTAREA') {
           //IE textarea support
           $(el).focus();
           sel = document.selection.createRange();
-          sel.text = tags[0] + sel.text + tags[1];
+          sel.text = this.wrapTextInTags(text, sel.text, action);
           $(el).focus();
         } else if (el.selectionStart || el.selectionStart === '0') {
           //MOZILLA/NETSCAPE support
           startPos = el.selectionStart;
           endPos = el.selectionEnd;
           scrollTop = el.scrollTop;
-          sel = val.substring(startPos, endPos);
-          el.value = val.substring(0, startPos) + tags[0] + sel + tags[1] + val.substring(endPos, val.length);
+          sel = this.wrapTextInTags(text, val.substring(startPos, endPos), action);
+          el.value = val.substring(0, startPos) + sel + val.substring(endPos, val.length);
           $(el).focus();
           el.selectionStart = startPos + sel.length;
           el.selectionEnd = startPos + sel.length;
           el.scrollTop = scrollTop;
         } else {
           // IE input[type=text] and other browsers
-          el.value += tags[0] + el.value + tags[1];
+          el.value += this.wrapTextInTags(text, el.value, action);
           $(el).focus();
           el.value = el.value;    // forces cursor to end
         }
       },
 
-      getTagsForAction: function(action) {
-        if (!action) { return; }
-
-        switch(action) {
-          case 'bold':
-            return ['<b>','</b>'];
-          case 'italic':
-            return ['<i>','</i>'];
-          case 'underline':
-            return ['<u>','</u>'];
-          case 'strikethrough':
-            return ['<strike>', '</strike>'];
-          default:
-            return ['<p>','</p>'];
-        }
-      },
-
-
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
           buttonTemplates = {
-            'bold': '<button type="button" class="editor-action editor-action-bold" title="Bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+            'bold': '<button type="button" class="editor-action editor-action-bold" title="bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
             'italic': '<button type="button" class="editor-action editor-action-italic" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
             'underline': '<button type="button" class="editor-action editor-action-underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
             'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
@@ -311,7 +351,7 @@
             'seperator': '<div class="editor-toolbar-seperator"></div>',
             'anchor': '<button type="button" class="editor-action editor-action-anchor" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
             'image': '<button type="button" class="editor-action editor-action-image" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
-            'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-element="video">' + buttonLabels.video + '</button>',
+            'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-modal="editor-modal-video" data-element="video">' + buttonLabels.video + '</button>',
             'header1': '<button type="button" class="editor-action editor-action-header1" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
             'header2': '<button type="button" class="editor-action editor-action-header2" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
             'quote': '<button type="button" class="editor-action editor-action-quote" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
@@ -323,8 +363,8 @@
             'justifyLeft': '<button type="button" class="editor-action editor-action-indent" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
             'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
             'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
-            'source': '<button type="button" class="editor-action editor-action-source" title="View Source" data-action="source" >' + buttonLabels.source + '</button>',
-            'visual': '<button type="button" class="editor-action editor-action-visual" title"View Visual" data-action="visual" >' + buttonLabels.visual + '</button>'
+            'source': '<button type="button" class="editor-action editor-action-source" title="view source" data-action="source" >' + buttonLabels.source + '</button>',
+            'visual': '<button type="button" class="editor-action editor-action-visual" title="view visual" data-action="visual" >' + buttonLabels.visual + '</button>'
           };
 
         return buttonTemplates[btnType] || false;
@@ -383,19 +423,18 @@
             action = btn.attr('data-action');
 
           e.preventDefault();
-          (self.element.hasClass('source-view-active') ? self.textarea : self.element).focus();
-
-          if (action === 'anchor' || action === 'image' || action === 'video') {
-            return;
-          }
+          self.getCurrentElement().focus();
 
           if (self.selection === undefined) {
             self.checkSelection();
           }
 
-          btn.toggleClass('is-active');
-          if (btn.attr('data-action')) {
-            self.execAction(btn.attr('data-action'), e);
+          if (!self.sourceViewActive()) {
+            btn.toggleClass('is-active');
+          }
+
+          if (action) {
+            self.execAction(action, e);
           }
 
           self.keepToolbarAlive = false;
@@ -409,6 +448,12 @@
 
       bindModals: function() {
         var self = this;
+
+        self.modals = {
+          url: $('#editor-modal-url'),
+          image: $('#editor-modal-image'),
+          video: $('#editor-modal-video')
+        };
 
         $('#editor-modal-url, #editor-modal-image').modal()
           .on('beforeOpen', function () {
@@ -463,11 +508,15 @@
         //Fix and Format the Link
         input.val(this.fixLinkFormat(input.val()));
 
-        document.execCommand('createLink', false, input.val());
-        if (settings.targetBlank) {
-          this.setTargetBlank();
+        if (this.sourceViewActive()) {
+          this.insertTextAreaContent(input.val(), 'anchor');
+        } else {
+          document.execCommand('createLink', false, input.val());
+          if (settings.targetBlank) {
+            this.setTargetBlank();
+          }
+          this.bindAnchorPreview();
         }
-        this.bindAnchorPreview();
       },
 
       fixLinkFormat: function (value) {
@@ -481,16 +530,18 @@
       //Setup Events For Text Selection
       bindSelect: function () {
         var self = this,
-            timer = '';
+            selectionTimer = '',
+            blurTimer;
 
         this.selectionHandler = function (e) {
           if (settings.staticToolbar && $(e.currentTarget).hasClass('editable') && self.toolbar.hasClass('is-active') && e.type !== 'blur') {
             self.keepToolbarAlive = true;
+            clearTimeout(blurTimer);
           } else {
             self.keepToolbarAlive = false;
           }
-          clearTimeout(timer);
-          timer = setTimeout(function () {
+          clearTimeout(selectionTimer);
+          selectionTimer = setTimeout(function () {
             self.checkSelection();
           }, settings.delay);
         };
@@ -503,7 +554,8 @@
           if (self.keepToolbarAlive) {
             return;
           }
-          setTimeout(function() {
+          clearTimeout(blurTimer);
+          blurTimer = setTimeout(function() {
             if (settings.staticToolbar && !self.keepToolbarAlive) {
               self.keepToolbarAlive = false;
               self.hideToolbarActions();
@@ -512,6 +564,7 @@
           }, 400);
           self.selectionHandler(e);
         });
+
         return this;
       },
 
@@ -519,11 +572,12 @@
         var newSelection,
             selectionElement;
 
-        if (this.keepToolbarAlive !== true) {
-          newSelection = window.getSelection();
-          if (newSelection.toString().trim() === '') {
+        if (this.selection === undefined || this.keepToolbarAlive !== true) {
 
-            if (settings.staticToolbar) {
+          if (this.sourceViewActive()) {
+            newSelection = this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ).toString().trim();
+
+            if (newSelection === '') {
               this.setToolbarPosition().showToolbarActions();
               return;
             }
@@ -532,11 +586,13 @@
             return;
           }
 
+          newSelection = window.getSelection();
           selectionElement = this.getSelectionElement();
           if (!selectionElement) {
               this.hideToolbarActions();
           } else {
             this.checkSelectionElement(newSelection, selectionElement);
+            this.setToolbarPosition().showToolbarActions();
           }
         }
         return this;
@@ -578,7 +634,7 @@
 
       //See if the Editor is Selected and Show Toolbar
       checkSelectionElement: function (newSelection, selectionElement) {
-        var currentElement = this.element.hasClass('source-view-active') ? this.sourceView[0] : this.element[0];
+        var currentElement = this.sourceViewActive() ? this.sourceView[0] : this.element[0];
 
         this.selection = newSelection;
         this.selectionRange = this.selection.getRangeAt(0);
@@ -594,20 +650,20 @@
 
       setToolbarPosition: function () {
         var buttonHeight = 40,
-            selection = window.getSelection(),
+            selection = this.sourceViewActive() ? this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ) : window.getSelection(),
             range,
             boundary;
 
-        if (selection.type !== 'None') {
+        if (selection.type && selection.type !== 'None') {
           range = selection.getRangeAt(0);
           boundary = range.getBoundingClientRect();
         } else {
-          boundary = this.getCurrentElement()[0].getBoundingClientRect();
+          boundary = (this.sourceViewActive() ? this.sourceView[0] : this.element[0]).getBoundingClientRect();
         }
 
         var defaultLeft = (settings.diffLeft) - (this.toolbar[0].offsetWidth / 2),
             middleBoundary = (boundary.left + boundary.right) / 2,
-            editorPos = this.element.hasClass('source-view-active') ? this.sourceView.position() : this.element.position(),
+            editorPos = this.sourceViewActive() ? this.sourceView.position() : this.element.position(),
             halfOffsetWidth = this.toolbar[0].offsetWidth / 2;
 
         if (boundary.top < buttonHeight) {
@@ -720,19 +776,27 @@
       //Handle Pasted In Text
       bindPaste: function () {
         var self = this;
+        if (!self.pasteEvent) {
+          self.pasteEvent = self.getPasteEvent();
+        }
 
         this.pasteWrapper = function (e) {
-          var paragraphs,
+          var paste = e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData ?
+            e.originalEvent.clipboardData.getData('text/plain') : // Standard
+            window.clipboardData && window.clipboardData.getData ?
+            window.clipboardData.getData('Text') : // MS
+            false,
+            paragraphs,
             html = '',
             p;
 
-          if (!settings.forcePlainText) {
+          if (!settings.forcePlainText || self.sourceViewActive() ) {
             return this;
           }
 
-          if (e.clipboardData && e.clipboardData.getData && !e.defaultPrevented) {
+          if (paste && !e.defaultPrevented) {
             e.preventDefault();
-            paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g);
+            paragraphs = paste.split(/[\r\n]/g);
             for (p = 0; p < paragraphs.length; p += 1) {
               if (paragraphs[p] !== '') {
                 if (navigator.userAgent.match(/firefox/i) && p === 0) {
@@ -742,14 +806,14 @@
                 }
               }
             }
+            // TODO: This doesn't work in Internet Explorer 11 and down... need an alternate solution.
             document.execCommand('insertHTML', false, html);
           }
         };
 
-       var currentElement = self.getCurrentElement();
-
-       currentElement[0].addEventListener('paste', this.pasteWrapper); //doesnt work as jQuery?
-       return this;
+        var currentElement = self.getCurrentElement();
+        currentElement.on(self.pasteEvent, self.pasteWrapper);
+        return this;
       },
 
       htmlEntities: function (str) {
@@ -775,7 +839,7 @@
         $(window).on('resize.editor', this.windowResizeHandler);
 
         //Attach Label
-        currentElement.prev('.label').css('cursor', 'default').on('click.editor', function (){
+        this.element.prev('.label').css('cursor', 'default').on('click.editor', function (){
           currentElement.focus();
         });
         currentElement.attr('aria-label', currentElement.prev('.label').text());
@@ -844,34 +908,36 @@
         // Visual Mode
         if (currentElement === this.element) {
           if (action.indexOf('append-') > -1) {
-              this.execFormatBlock(action.replace('append-', ''));
-              this.setToolbarPosition();
-              this.setToolbarButtonStates();
+            this.execFormatBlock(action.replace('append-', ''));
+            this.setToolbarPosition();
+            this.setToolbarButtonStates();
           } else if (action === 'anchor') {
-              //this.triggerAnchorAction(e);
+            this.modals.url.data('modal').open();
           } else if (action === 'image') {
-              this.insertImage();
+            this.modals.image.data('modal').open();
+          } else if (action === 'video') {
+            // TODO: Re-enable this when we are ready to build the video portion of this plugin.
+            //this.modals.video.data('modal').open();
           } else if (action === 'source' || action === 'visual') {
-              this.toggleSource();
+            this.toggleSource();
           } else {
-              document.execCommand(action, false, null);
-              this.setToolbarPosition();
+            document.execCommand(action, false, null);
+            this.setToolbarPosition();
           }
         } else {
         // Source Mode
           switch(action) {
-            case 'bold': case 'italic': case 'underline': case 'strikethrough':
-              this.wrapTextInTags(action);
-              break;
             case 'visual':
               this.toggleSource();
               break;
+            case 'anchor':
+              this.modals.url.data('modal').open();
+              break;
             default:
-              console.log('No source view action defined for "' + action + '".');
+              this.insertTextAreaContent(null, action);
               break;
           }
         }
-
       },
 
       insertImage: function (url) {
@@ -879,18 +945,25 @@
       },
 
       toggleSource: function() {
-        var originalElement = this.getCurrentElement();
-        if (this.element.hasClass('source-view-active')) {
+        if (this.sourceViewActive()) {
           this.element.empty().html( this.textarea.val() );
           this.element.removeClass('source-view-active hidden');
-          this.sourceView.addClass('hidden');
+          this.sourceView.addClass('hidden').removeClass('is-focused');
         } else {
-          this.textarea.val( this.element.html().toString() );
+          // Format The Text being pulled from the WYSIWYG editor
+          var val = this.element.html().toString().trim()
+            .replace(/\s+/g, ' ')
+            .replace(/<br( \/)?>/g, '<br>\n')
+            .replace(/<\/p> /g, '</p>\n\n')
+            .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
+
+          this.textarea.val(val);
+          /*this.textarea.html(val);*/
           this.element.addClass('source-view-active hidden');
           this.sourceView.removeClass('hidden');
           this.adjustSourceLineNumbers();
         }
-        this.switchToolbars(originalElement);
+        this.switchToolbars();
       },
 
       execFormatBlock: function (el) {
@@ -906,7 +979,7 @@
             el = 'p';
         }
         // When IE we need to add <> to heading elements and
-        //  blockquote needs to be called as indent
+        // blockquote needs to be called as indent
         // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
         // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
         if (this.isIE) {
@@ -956,9 +1029,27 @@
         return false;
       },
 
+      destroyToolbar: function() {
+        // Unbind all events attached to the old element that involve triggering the toolbar hide/show
+        this.toolbar.find('button').data('tooltip').destroy();
+        this.toolbar.off('click.editor mousedown.editor');
+        this.toolbar.remove();
+        this.toolbar = undefined;
+        this.element.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
+        this.textarea.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
+        this.element.prev('.label').off('click.editor');
+        $(window).off('resize.editor');
+        $.each(this.modals, function(i, item) {
+          item.off('beforeClose close open').data('modal').destroy(); // cool
+        });
+        this.modals = {};
+
+        this.element.trigger('destroy.toolbar.editor');
+      },
+
       destroy: function () {
         $('html').off('mouseup.editor');
-        $(window).on('resize.editor');
+        this.destroyToolbar();
         $.removeData(this.obj, pluginName);
       }
     };

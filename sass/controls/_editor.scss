@@ -2,17 +2,17 @@
 ================================================== */
 /* Editor Div */
 .editor {
-  background-color: white;
+  background-color: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   color: $data-color;
   font-family: $font-stack;
   @include font-size(16);
   height: 400px;
+  margin: 0 0 20px;
+  min-height: 200px;
   outline: none;
   overflow: auto;
-  margin: 0 0 20px 0;
-  min-height: 200px;
   padding: 20px;
 }
 
@@ -266,6 +266,7 @@
   margin: 0 0 20px;
   overflow-x: hidden;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   height: 400px;
   min-height: 200px;
 
@@ -278,8 +279,9 @@
     background-color: #fff;
     color: $data-color;
     font-family: $font-stack;
+    @include font-size(16);
     outline: none;
-    overflow: visible;
+    overflow: hidden;
 
     &:focus,
     &.is-focused {
@@ -312,8 +314,22 @@
     padding: 20px 15px;
 
     > li {
-      text-align: right;
+      text-align: center;
       line-height: 2.4rem;
+      @include font-size(14);
+    }
+  }
+}
+
+// Older versions of Internet Explorer incorrectly size the line number fonts,
+// So we need to adjust it slightly.
+.ie8,
+.ie9 {
+  .editor-source {
+    > .line-numbers {
+      > li {
+        font-size: 1.45rem;
+      }
     }
   }
 }
