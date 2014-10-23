@@ -247,20 +247,32 @@
         this.textarea.css('height','');
         var scrollHeight = this.textarea[0].scrollHeight,
           lineNumberCount = Math.floor((scrollHeight - YPadding) / lineHeight),
-          numberList = this.sourceView.find('.line-numbers');
+          numberList = this.sourceView.find('.line-numbers'),
+          i = 0;
 
         if (!this.lineNumbers || lineNumberCount !== this.lineNumbers) {
-          this.lineNumbers = lineNumberCount;
-          numberList.empty();
-          var i = 0;
-          while (i < this.lineNumbers) {
-            numberList.append('<li role="presentation"><span>' + (i + 1) + '</span></li>');
-            i++;
+          if (!this.lineNumbers) {
+            // Build the list of line numbers from scratch
+            this.lineNumbers = lineNumberCount;
+            while (i < this.lineNumbers) {
+              numberList.append('<li role="presentation"><span>' + (i + 1) + '</span></li>');
+              i++;
+            }
+          } else if (this.lineNumbers < lineNumberCount) {
+            // Add extra line numbers to the bottom
+            while (i < (lineNumberCount - this.lineNumbers)) {
+              numberList.append('<li role="presentation"><span>' + (numberList.find('li').length + i + 1) + '</span></li>');
+              i++;
+            }
+          } else if (this.lineNumbers > lineNumberCount) {
+            // Remove extra line numbers from the bottom
+            i = this.lineNumbers - lineNumberCount;
+            numberList.find('li').slice(-(i)).remove();
           }
+          this.lineNumbers = lineNumberCount;
           container.css('width', 'calc(100% - ' + (numberList.outerWidth() + 1) + 'px)');
         }
         this.textarea.css('height', numberList[0].scrollHeight + 'px');
-
       },
 
       wrapTextInTags: function(text, action) {
