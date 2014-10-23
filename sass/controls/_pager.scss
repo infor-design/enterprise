@@ -1,0 +1,81 @@
+/* Pager
+================================================== */
+.pager {
+
+}
+
+/* Toolbar */
+.pager-toolbar {
+  font-family: $font-stack;
+  @include font-size(15);
+  margin-bottom: 20px;
+  max-height: 38px;
+  overflow: hidden;
+
+  li {
+    display: inline-block;
+    border: 1px solid transparent;
+    cursor: pointer;
+    overflow: hidden;
+    width: auto;
+  }
+
+  li a {
+    color: $label-color;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    margin: 2px 10px 2px 2px;
+    padding: 0 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: all .2s ease;
+    width: 30px;
+  }
+
+  li.selected a {
+    background-color: $selected-color;
+    color: white;
+  }
+
+  li a:focus {
+    box-shadow: $focus-shadow;
+  }
+
+  li:not(.selected) a:hover:not([disabled]) {
+    background-color: $hover-color;
+    border-color: $hover-color;
+    color: $label-color;
+  }
+
+  li:not(.selected) a:active:not([disabled]) {
+    background-color: $hover-color;
+    border-color: $hover-color;
+    color: $label-color;
+  }
+
+  /* Disabled */
+  li a[disabled] {
+    cursor: default;
+  }
+
+  li a[disabled] svg {
+    fill: #999;
+  }
+}
+
+/* Buttons */
+.pager-prev svg, .pager-next svg {
+  height: 17px;
+  left: 1px;
+  top: 4px;
+  width: 18px;
+}
+
+.pager-toolbar li a[disabled] svg {
+  fill: #999;
+}
+
+/* Content */

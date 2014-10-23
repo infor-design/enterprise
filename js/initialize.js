@@ -89,6 +89,12 @@
       //Multiselect
       elem.find('select[multiple]:not([data-init])').multiselect();
 
+      //Pager
+      var pager = elem.find('.pager').pager();
+      pager.on('paging', function (e, args) {
+        console.log('Paging: '+ args.currentPage);
+      });
+
       //Class-based detection for IE8/9
       if (navigator.appVersion.indexOf('MSIE 8.0') > -1) {
         $('html').addClass('ie8');

@@ -194,7 +194,7 @@ The documentation will be generated created inline in the pages (soon but not ye
 * Tester would go through every Html page example opening it in:  ~~IE8~~, IE9, IE10, Safari,  Chrome, Firefox, iOS (iPad), iOS, Android (tablet and mobile)
 * Cross check designs with http://soho.infor.com/the-soho-basics/design-vision/
 * Test for Accessibility. This means.
-    * Run Wave Toolbar
+    * Run Wave Toolbar https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh/related and https://addons.mozilla.org/en-US/firefox/addon/wave-toolbar/
     * Run Squizz – Html Sniffer
     * Test for Keyboard against http://access.aol.com/dhtml-style-guide-working-group/
     * Test with screen readers (voice over, nvda and jaws), If only one Jaws is most critical.

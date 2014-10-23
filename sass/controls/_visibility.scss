@@ -14,7 +14,7 @@
 }
 
 /* Off Screen Text */
-.scr-only {
+.sr-only, .audible {
   border: 0 none;
   color: black;
   clip: rect(0px, 0px, 0px, 0px);
@@ -26,7 +26,7 @@
   width: 1px;
 }
 
-.masthead .scr-only {
+.masthead .sr-only, .masthead .audible {
   color: white;
 }
 

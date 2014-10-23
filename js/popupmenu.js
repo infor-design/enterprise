@@ -12,7 +12,7 @@
   }
 }(function ($) {
 
-  $.fn.popupmenu = function( options, callback ) {
+  $.fn.popupmenu = function(options, callback) {
 
     // Settings and Options
     var pluginName = 'popupmenu',
@@ -158,6 +158,7 @@
           }
 
           self.close();
+
           //Not a very usefull call back use closed events
           if (callback && href) {
             callback(href.substr(1), self.element , self.menu.offset(), $(this));
