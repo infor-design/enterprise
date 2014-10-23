@@ -415,12 +415,6 @@
           e.preventDefault();
           self.getCurrentElement().focus();
 
-          /*
-          if (action === 'anchor' || action === 'image' || action === 'video') {
-            return;
-          }
-          */
-
           if (self.selection === undefined) {
             self.checkSelection();
           }
@@ -429,8 +423,8 @@
             btn.toggleClass('is-active');
           }
 
-          if (btn.attr('data-action')) {
-            self.execAction(btn.attr('data-action'), e);
+          if (action) {
+            self.execAction(action, e);
           }
 
           self.keepToolbarAlive = false;
