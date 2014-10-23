@@ -16,7 +16,7 @@
 
   $.fn.pluginName = function(options) {
 
-    // Tab Settings and Options
+    // Settings and Options
     var pluginName = 'pluginName',
         defaults = {
           propertyName: 'defaultValue'
@@ -29,23 +29,24 @@
         this.init();
     }
 
-    // Actual Plugin Code
+    // Plugin Methods
     Plugin.prototype = {
+
       init: function() {
         var self = this;
         console.log(self);
       },
-
+      // Do Something in some method
       someMethod: function() {
 
       },
-
+      // Teardown
       destroy: function() {
         $.removeData(this.element[0], pluginName);
       }
     };
 
-    // Keep the Chaining while Initializing the Control (Only Once)
+    // Initialize the plugin (Once)
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {

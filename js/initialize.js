@@ -89,6 +89,12 @@
       //Multiselect
       elem.find('select[multiple]:not([data-init])').multiselect();
 
+      //Pager
+      var pager = elem.find('.pager').pager();
+      pager.on('paging', function (e, args) {
+        console.log('Paging: '+ args.currentPage);
+      });
+
       //Class-based detection for IE
       if (!!navigator.userAgent.match(/Trident/)) {
         $('html').addClass('ie');

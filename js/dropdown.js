@@ -119,8 +119,8 @@
        if (this.orgLabel.hasClass('noColon')) {
         this.label.addClass('noColon');
        }
-       if (this.orgLabel.hasClass('scr-only')) {
-        this.label.addClass('scr-only');
+       if (this.orgLabel.hasClass('sr-only')) {
+        this.label.addClass('sr-only');
        }
        if (this.orgLabel.attr('style')) {
         this.label.attr('style', this.orgLabel.attr('style'));

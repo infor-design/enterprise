@@ -12,7 +12,7 @@
   }
 }(function ($) {
 
-  $.fn.popupmenu = function( options, callback ) {
+  $.fn.popupmenu = function(options, callback) {
 
     // Settings and Options
     var pluginName = 'popupmenu',
@@ -158,6 +158,7 @@
           }
 
           self.close();
+
           //Not a very usefull call back use closed events
           if (callback && href) {
             callback(href.substr(1), self.element , self.menu.offset(), $(this));
@@ -244,7 +245,7 @@
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 
-        if (settings.trigger === 'rightClick' || (e !== null && settings.trigger === 'immediate')) {
+        if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {

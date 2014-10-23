@@ -19,15 +19,14 @@
     var pluginName = 'modal',
         defaults = {
           trigger: 'click', //TODO: supports click, immediate,  manual
-          draggable: true,  //Can Drag the Dialog around.
           buttons: null
         },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Actual Plugin Code
@@ -70,6 +69,8 @@
           self.addButtons(settings.buttons);
         }
 
+        //ensure is appended to body for new dom tree
+        this.element.appendTo('body');
       },
       revertTransition: function (doTop) {
         //Revert the transform so drag and dropping works as expected
@@ -266,7 +267,7 @@
         this.element.attr('aria-hidden', 'true');
         if ($('.modal[aria-hidden="false"]').length < 1) {
           $('body').removeClass('modal-engaged');
-          $('.modal').not(this.element).removeAttr('aria-hidden');
+          $('body > *').not(this.element).removeAttr('aria-hidden');
         }
 
         //Fire Events

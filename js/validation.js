@@ -32,7 +32,7 @@
 
       this.scrErrors = $('#scr-errors');
       if (this.scrErrors.length === 0) {
-        this.scrErrors = $('<div id="scr-errors" role="alert" class="scr-only"><span id="message"></span></div>').appendTo('body');
+        this.scrErrors = $('<div id="scr-errors" role="alert" class="sr-only"><span id="message"></span></div>').appendTo('body');
       }
       this.timeout = null;
     },
