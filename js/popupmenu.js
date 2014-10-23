@@ -245,7 +245,7 @@
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight();
 
-        if (settings.trigger === 'rightClick' || (e !== null && settings.trigger === 'immediate')) {
+        if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
                         'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
         } else {
