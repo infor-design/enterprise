@@ -2,17 +2,17 @@
 ================================================== */
 /* Editor Div */
 .editor {
-  background-color: white;
+  background-color: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
   color: $data-color;
   font-family: $font-stack;
   @include font-size(16);
   height: 400px;
+  margin: 0 0 20px;
+  min-height: 200px;
   outline: none;
   overflow: auto;
-  margin: 0 0 20px 0;
-  min-height: 200px;
   padding: 20px;
 }
 

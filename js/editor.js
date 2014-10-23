@@ -9,7 +9,7 @@
       defaults = {
         buttons: {
           editor: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video', 'seperator', 'source'],
-          source: ['bold','italic','underline', 'seperator', 'strikethrough', 'seperator', 'visual']
+          source: ['bold','italic','underline', 'seperator', 'anchor', 'seperator', 'quote', 'seperator', 'visual']
         },
         staticToolbar: true,
         delay: 200,
@@ -275,8 +275,9 @@
         this.textarea.css('height', numberList[0].scrollHeight + 'px');
       },
 
-      wrapTextInTags: function(text, action) {
-        var tags;
+      wrapTextInTags: function(insertedText, selectedText, action) {
+        var tags,
+          finalText;
         switch(action) {
           case 'bold':
             tags = ['<b>','</b>'];
@@ -290,10 +291,19 @@
           case 'strikethrough':
             tags = ['<strike>', '</strike>'];
             break;
+          case 'append-blockquote':
+            tags = ['<blockquote>', '</blockquote>'];
+            break;
           default:
             tags = ['',''];
         }
-        return tags[0] + text + tags[1];
+
+        if (action === 'anchor') {
+          finalText = '<a href="'+ insertedText +'">' + selectedText + '</a>';
+        } else {
+          finalText = tags[0] + insertedText + selectedText + tags[1];
+        }
+        return finalText;
       },
 
       insertTextAreaContent: function(text, action) {
@@ -308,14 +318,14 @@
           //IE textarea support
           $(el).focus();
           sel = document.selection.createRange();
-          sel.text = this.wrapTextInTags(text + sel.text, action);
+          sel.text = this.wrapTextInTags(text, sel.text, action);
           $(el).focus();
         } else if (el.selectionStart || el.selectionStart === '0') {
           //MOZILLA/NETSCAPE support
           startPos = el.selectionStart;
           endPos = el.selectionEnd;
           scrollTop = el.scrollTop;
-          sel = this.wrapTextInTags((text + val.substring(startPos, endPos)), action);
+          sel = this.wrapTextInTags(text, val.substring(startPos, endPos), action);
           el.value = val.substring(0, startPos) + sel + val.substring(endPos, val.length);
           $(el).focus();
           el.selectionStart = startPos + sel.length;
@@ -323,7 +333,7 @@
           el.scrollTop = scrollTop;
         } else {
           // IE input[type=text] and other browsers
-          el.value += this.wrapTextInTags(text + el.value, action);
+          el.value += this.wrapTextInTags(text, el.value, action);
           $(el).focus();
           el.value = el.value;    // forces cursor to end
         }
@@ -332,7 +342,7 @@
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
           buttonTemplates = {
-            'bold': '<button type="button" class="editor-action editor-action-bold" title="Bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+            'bold': '<button type="button" class="editor-action editor-action-bold" title="bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
             'italic': '<button type="button" class="editor-action editor-action-italic" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
             'underline': '<button type="button" class="editor-action editor-action-underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
             'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
@@ -498,11 +508,15 @@
         //Fix and Format the Link
         input.val(this.fixLinkFormat(input.val()));
 
-        document.execCommand('createLink', false, input.val());
-        if (settings.targetBlank) {
-          this.setTargetBlank();
+        if (this.sourceViewActive()) {
+          this.insertTextAreaContent(input.val(), 'anchor');
+        } else {
+          document.execCommand('createLink', false, input.val());
+          if (settings.targetBlank) {
+            this.setTargetBlank();
+          }
+          this.bindAnchorPreview();
         }
-        this.bindAnchorPreview();
       },
 
       fixLinkFormat: function (value) {
@@ -894,37 +908,36 @@
         // Visual Mode
         if (currentElement === this.element) {
           if (action.indexOf('append-') > -1) {
-              this.execFormatBlock(action.replace('append-', ''));
-              this.setToolbarPosition();
-              this.setToolbarButtonStates();
+            this.execFormatBlock(action.replace('append-', ''));
+            this.setToolbarPosition();
+            this.setToolbarButtonStates();
           } else if (action === 'anchor') {
-              this.modals.url.data('modal').open();
+            this.modals.url.data('modal').open();
           } else if (action === 'image') {
-              this.modals.image.data('modal').open();
+            this.modals.image.data('modal').open();
           } else if (action === 'video') {
-              // TODO: Re-enable this when we are ready to build the video portion of this plugin.
-              //this.modals.video.data('modal').open();
+            // TODO: Re-enable this when we are ready to build the video portion of this plugin.
+            //this.modals.video.data('modal').open();
           } else if (action === 'source' || action === 'visual') {
-              this.toggleSource();
+            this.toggleSource();
           } else {
-              document.execCommand(action, false, null);
-              this.setToolbarPosition();
+            document.execCommand(action, false, null);
+            this.setToolbarPosition();
           }
         } else {
         // Source Mode
           switch(action) {
-            case 'bold': case 'italic': case 'underline': case 'strikethrough':
-              this.insertTextAreaContent(null, action);
-              break;
             case 'visual':
               this.toggleSource();
               break;
+            case 'anchor':
+              this.modals.url.data('modal').open();
+              break;
             default:
-              console.log('No source view action defined for "' + action + '".');
+              this.insertTextAreaContent(null, action);
               break;
           }
         }
-
       },
 
       insertImage: function (url) {
