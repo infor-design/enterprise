@@ -38,6 +38,7 @@
       },
       setup: function () {
         this.isActive = true;
+        this.modals = {};
         this.initElements()
           .bindSelect()
           .bindPaste()
@@ -65,13 +66,15 @@
         return this;
       },
 
-      // Returns the currently visible element - either the main editor window, or the source-view textarea
-      getCurrentElement: function() {
-        return this.element.hasClass('source-view-active') ? this.sourceView : this.element;
+      // Returns true if the source view is currently active.
+      sourceViewActive: function() {
+        return this.element.hasClass('source-view-active');
       },
 
-      // Returns the currently selected text.  Used for
-
+      // Returns the currently visible element - either the main editor window, or the source-view textarea
+      getCurrentElement: function() {
+        return this.sourceViewActive() ? this.textarea : this.element;
+      },
 
       bindParagraphCreation: function () {
         var self = this,
@@ -151,11 +154,12 @@
         var toolbar = $('<div></div>').attr('class', 'editor-toolbar').attr('id', 'editor-toolbar-' + this.id);
         toolbar.append(this.toolbarButtons());
         toolbar.insertAfter(this.element);
+        toolbar.find('button').tooltip();
         return toolbar;
       },
 
       toolbarButtons: function () {
-        var btns = this.element.hasClass('source-view-active') ? settings.buttons.source : settings.buttons.editor,
+        var btns = this.sourceViewActive() ? settings.buttons.source : settings.buttons.editor,
             ul = $('<ul></ul>').attr('id','editor-toolbar-actions').attr('class', 'editor-toolbar-actions'),
             li, i, btn, ext;
 
@@ -176,17 +180,11 @@
         return ul;
       },
 
-      switchToolbars: function(originalElement) {
-        // Unbind all events attached to the old element that involve triggering the toolbar hide/show
-        this.toolbar.off('click.editor mousedown.editor');
-        this.toolbar.remove();
-        this.toolbar = undefined;
-        this.keepToolbarAlive = false;
-        originalElement.off('mouseup.editor keyup.editor blur.edtior ' + this.pasteEvent);
-        $(window).off('resize.editor');
+      switchToolbars: function() {
+        this.destroyToolbar();
 
         // Rebind everything to the new element
-        this.initToolbar().bindButtons();
+        this.setupTextareaEvents().initToolbar().bindButtons().bindModals().bindAnchorPreview();
         this.bindSelect().bindPaste().bindWindowActions();
       },
 
@@ -205,16 +203,7 @@
           self.textarea.val(self.element.html().toString());
         });
 
-        // Adjust line numbers on input
-        this.textarea.on('input.editor keyup.editor', function() {
-          if (!(self.sourceView.hasClass('hidden'))) {
-            self.adjustSourceLineNumbers();
-          }
-        }).on('focus.editor', function() {
-          self.sourceView.addClass('is-focused');
-        }).on('blur.editor', function() {
-          self.sourceView.removeClass('is-focused');
-        });
+        this.setupTextareaEvents();
 
         return this.textarea;
       },
@@ -226,9 +215,29 @@
         }).insertAfter(this.element);
 
         $('<ul></ul>').addClass('line-numbers').appendTo(this.sourceView);
-        var textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView);
-        var textarea = $('<textarea></textarea>').appendTo(textareaContainer);
+        var textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView),
+          newTextareaID = 'source-textarea-' + ($('[id^="source-textarea-"]').length+1),
+          labelContents = this.element.prev('.label').text() + ' - HTML Source View';
+
+        $('<label class="scr-only" for="'+ newTextareaID +'">'+ labelContents +'</label>').appendTo(textareaContainer);
+        var textarea = $('<textarea id="'+ newTextareaID +'" class="editable"></textarea>').appendTo(textareaContainer);
         return textarea;
+      },
+
+      setupTextareaEvents: function() {
+        var self = this;
+        // Adjust line numbers on input
+        this.textarea.on('input.editor keyup.editor', function() {
+          if (!(self.sourceView.hasClass('hidden'))) {
+            self.adjustSourceLineNumbers();
+          }
+        }).on('focus.editor', function() {
+          self.sourceView.addClass('is-focused');
+        }).on('blur.editor', function() {
+          self.sourceView.removeClass('is-focused');
+        });
+
+        return this;
       },
 
       adjustSourceLineNumbers: function() {
@@ -294,8 +303,8 @@
           startPos = el.selectionStart;
           endPos = el.selectionEnd;
           scrollTop = el.scrollTop;
-          sel = text + val.substring(startPos, endPos);
-          el.value = val.substring(0, startPos) + this.wrapTextInTags(sel, action) + val.substring(endPos, val.length);
+          sel = this.wrapTextInTags((text + val.substring(startPos, endPos)), action);
+          el.value = val.substring(0, startPos) + sel + val.substring(endPos, val.length);
           $(el).focus();
           el.selectionStart = startPos + sel.length;
           el.selectionEnd = startPos + sel.length;
@@ -320,7 +329,7 @@
             'seperator': '<div class="editor-toolbar-seperator"></div>',
             'anchor': '<button type="button" class="editor-action editor-action-anchor" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
             'image': '<button type="button" class="editor-action editor-action-image" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
-            'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-element="video">' + buttonLabels.video + '</button>',
+            'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-modal="editor-modal-video" data-element="video">' + buttonLabels.video + '</button>',
             'header1': '<button type="button" class="editor-action editor-action-header1" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
             'header2': '<button type="button" class="editor-action editor-action-header2" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
             'quote': '<button type="button" class="editor-action editor-action-quote" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
@@ -332,8 +341,8 @@
             'justifyLeft': '<button type="button" class="editor-action editor-action-indent" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
             'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
             'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
-            'source': '<button type="button" class="editor-action editor-action-source" title="View Source" data-action="source" >' + buttonLabels.source + '</button>',
-            'visual': '<button type="button" class="editor-action editor-action-visual" title"View Visual" data-action="visual" >' + buttonLabels.visual + '</button>'
+            'source': '<button type="button" class="editor-action editor-action-source" title="view source" data-action="source" >' + buttonLabels.source + '</button>',
+            'visual': '<button type="button" class="editor-action editor-action-visual" title="view visual" data-action="visual" >' + buttonLabels.visual + '</button>'
           };
 
         return buttonTemplates[btnType] || false;
@@ -392,17 +401,22 @@
             action = btn.attr('data-action');
 
           e.preventDefault();
-          (self.element.hasClass('source-view-active') ? self.textarea : self.element).focus();
+          self.getCurrentElement().focus();
 
+          /*
           if (action === 'anchor' || action === 'image' || action === 'video') {
             return;
           }
+          */
 
           if (self.selection === undefined) {
             self.checkSelection();
           }
 
-          btn.toggleClass('is-active');
+          if (!self.sourceViewActive()) {
+            btn.toggleClass('is-active');
+          }
+
           if (btn.attr('data-action')) {
             self.execAction(btn.attr('data-action'), e);
           }
@@ -418,6 +432,12 @@
 
       bindModals: function() {
         var self = this;
+
+        self.modals = {
+          url: $('#editor-modal-url'),
+          image: $('#editor-modal-image'),
+          video: $('#editor-modal-video')
+        };
 
         $('#editor-modal-url, #editor-modal-image').modal()
           .on('beforeOpen', function () {
@@ -490,16 +510,18 @@
       //Setup Events For Text Selection
       bindSelect: function () {
         var self = this,
-            timer = '';
+            selectionTimer = '',
+            blurTimer;
 
         this.selectionHandler = function (e) {
           if (settings.staticToolbar && $(e.currentTarget).hasClass('editable') && self.toolbar.hasClass('is-active') && e.type !== 'blur') {
             self.keepToolbarAlive = true;
+            clearTimeout(blurTimer);
           } else {
             self.keepToolbarAlive = false;
           }
-          clearTimeout(timer);
-          timer = setTimeout(function () {
+          clearTimeout(selectionTimer);
+          selectionTimer = setTimeout(function () {
             self.checkSelection();
           }, settings.delay);
         };
@@ -512,7 +534,8 @@
           if (self.keepToolbarAlive) {
             return;
           }
-          setTimeout(function() {
+          clearTimeout(blurTimer);
+          blurTimer = setTimeout(function() {
             if (settings.staticToolbar && !self.keepToolbarAlive) {
               self.keepToolbarAlive = false;
               self.hideToolbarActions();
@@ -521,6 +544,7 @@
           }, 400);
           self.selectionHandler(e);
         });
+
         return this;
       },
 
@@ -528,11 +552,12 @@
         var newSelection,
             selectionElement;
 
-        if (this.keepToolbarAlive !== true) {
-          newSelection = this.element.hasClass('source-view-active') ? this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ) : window.getSelection();
-          if (newSelection.toString().trim() === '') {
+        if (this.selection === undefined || this.keepToolbarAlive !== true) {
 
-            if (settings.staticToolbar) {
+          if (this.sourceViewActive()) {
+            newSelection = this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ).toString().trim();
+
+            if (newSelection === '') {
               this.setToolbarPosition().showToolbarActions();
               return;
             }
@@ -541,11 +566,13 @@
             return;
           }
 
+          newSelection = window.getSelection();
           selectionElement = this.getSelectionElement();
           if (!selectionElement) {
               this.hideToolbarActions();
           } else {
             this.checkSelectionElement(newSelection, selectionElement);
+            this.setToolbarPosition().showToolbarActions();
           }
         }
         return this;
@@ -587,7 +614,7 @@
 
       //See if the Editor is Selected and Show Toolbar
       checkSelectionElement: function (newSelection, selectionElement) {
-        var currentElement = this.element.hasClass('source-view-active') ? this.sourceView[0] : this.element[0];
+        var currentElement = this.sourceViewActive() ? this.sourceView[0] : this.element[0];
 
         this.selection = newSelection;
         this.selectionRange = this.selection.getRangeAt(0);
@@ -603,7 +630,7 @@
 
       setToolbarPosition: function () {
         var buttonHeight = 40,
-            selection = this.element.hasClass('source-view-active') ? this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ) : window.getSelection(),
+            selection = this.sourceViewActive() ? this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ) : window.getSelection(),
             range,
             boundary;
 
@@ -611,12 +638,12 @@
           range = selection.getRangeAt(0);
           boundary = range.getBoundingClientRect();
         } else {
-          boundary = this.getCurrentElement()[0].getBoundingClientRect();
+          boundary = (this.sourceViewActive() ? this.sourceView[0] : this.element[0]).getBoundingClientRect();
         }
 
         var defaultLeft = (settings.diffLeft) - (this.toolbar[0].offsetWidth / 2),
             middleBoundary = (boundary.left + boundary.right) / 2,
-            editorPos = this.element.hasClass('source-view-active') ? this.sourceView.position() : this.element.position(),
+            editorPos = this.sourceViewActive() ? this.sourceView.position() : this.element.position(),
             halfOffsetWidth = this.toolbar[0].offsetWidth / 2;
 
         if (boundary.top < buttonHeight) {
@@ -743,7 +770,7 @@
             html = '',
             p;
 
-          if (!settings.forcePlainText || self.element.hasClass('source-view-active') ) {
+          if (!settings.forcePlainText || self.sourceViewActive() ) {
             return this;
           }
 
@@ -792,7 +819,7 @@
         $(window).on('resize.editor', this.windowResizeHandler);
 
         //Attach Label
-        currentElement.prev('.label').css('cursor', 'default').on('click.editor', function (){
+        this.element.prev('.label').css('cursor', 'default').on('click.editor', function (){
           currentElement.focus();
         });
         currentElement.attr('aria-label', currentElement.prev('.label').text());
@@ -865,9 +892,12 @@
               this.setToolbarPosition();
               this.setToolbarButtonStates();
           } else if (action === 'anchor') {
-              //this.triggerAnchorAction(e);
+              this.modals.url.data('modal').open();
           } else if (action === 'image') {
-              this.insertImage();
+              this.modals.image.data('modal').open();
+          } else if (action === 'video') {
+              // TODO: Re-enable this when we are ready to build the video portion of this plugin.
+              //this.modals.video.data('modal').open();
           } else if (action === 'source' || action === 'visual') {
               this.toggleSource();
           } else {
@@ -896,18 +926,25 @@
       },
 
       toggleSource: function() {
-        var originalElement = this.getCurrentElement();
-        if (this.element.hasClass('source-view-active')) {
+        if (this.sourceViewActive()) {
           this.element.empty().html( this.textarea.val() );
           this.element.removeClass('source-view-active hidden');
-          this.sourceView.addClass('hidden');
+          this.sourceView.addClass('hidden').removeClass('is-focused');
         } else {
-          this.textarea.val( this.element.html().toString() );
+          // Format The Text being pulled from the WYSIWYG editor
+          var val = this.element.html().toString().trim()
+            .replace(/\s+/g, ' ')
+            .replace(/<br( \/)?>/g, '<br>\n')
+            .replace(/<\/p> /g, '</p>\n\n')
+            .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
+
+          this.textarea.val(val);
+          /*this.textarea.html(val);*/
           this.element.addClass('source-view-active hidden');
           this.sourceView.removeClass('hidden');
           this.adjustSourceLineNumbers();
         }
-        this.switchToolbars(originalElement);
+        this.switchToolbars();
       },
 
       execFormatBlock: function (el) {
@@ -973,9 +1010,27 @@
         return false;
       },
 
+      destroyToolbar: function() {
+        // Unbind all events attached to the old element that involve triggering the toolbar hide/show
+        this.toolbar.find('button').data('tooltip').destroy();
+        this.toolbar.off('click.editor mousedown.editor');
+        this.toolbar.remove();
+        this.toolbar = undefined;
+        this.element.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
+        this.textarea.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
+        this.element.prev('.label').off('click.editor');
+        $(window).off('resize.editor');
+        $.each(this.modals, function(i, item) {
+          item.off('beforeClose close open').data('modal').destroy(); // cool
+        });
+        this.modals = {};
+
+        this.element.trigger('destroy.toolbar.editor');
+      },
+
       destroy: function () {
         $('html').off('mouseup.editor');
-        $(window).on('resize.editor');
+        this.destroyToolbar();
         $.removeData(this.obj, pluginName);
       }
     };
