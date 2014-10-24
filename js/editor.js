@@ -982,6 +982,8 @@
         // blockquote needs to be called as indent
         // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
         // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
+        this.isIE = ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null)));
+
         if (this.isIE) {
           if (el === 'blockquote') {
               return document.execCommand('indent', false, el);
