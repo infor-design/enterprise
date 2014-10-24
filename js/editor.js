@@ -17,9 +17,7 @@
         diffTop: -10,
         firstHeader: 'h3',
         secondHeader: 'h4',
-        forcePlainText: true,
-        targetBlank: false,
-        extensions: {}
+        forcePlainText: true
       },
       settings = $.extend({}, defaults, options);
 
@@ -161,15 +159,10 @@
       toolbarButtons: function () {
         var btns = this.sourceViewActive() ? settings.buttons.source : settings.buttons.editor,
             ul = $('<ul></ul>').attr('id','editor-toolbar-actions').attr('class', 'editor-toolbar-actions'),
-            li, i, btn, ext;
+            li, i, btn;
 
         for (i = 0; i < btns.length; i += 1) {
-          if (settings.extensions.hasOwnProperty(btns[i])) {
-              ext = settings.extensions[btns[i]];
-              btn = ext.getButton !== undefined ? ext.getButton() : null;
-          } else {
-              btn = this.buttonTemplate(btns[i]);
-          }
+          btn = this.buttonTemplate(btns[i]);
 
           if (btn) {
               li = $('<li></li>');
@@ -512,9 +505,6 @@
           this.insertTextAreaContent(input.val(), 'anchor');
         } else {
           document.execCommand('createLink', false, input.val());
-          if (settings.targetBlank) {
-            this.setTargetBlank();
-          }
           this.bindAnchorPreview();
         }
       },
@@ -925,7 +915,7 @@
             this.setToolbarPosition();
           }
         } else {
-        // Source Mode
+          // Source Mode
           switch(action) {
             case 'visual':
               this.toggleSource();
@@ -958,7 +948,6 @@
             .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
 
           this.textarea.val(val);
-          /*this.textarea.html(val);*/
           this.element.addClass('source-view-active hidden');
           this.sourceView.removeClass('hidden');
           this.adjustSourceLineNumbers();
