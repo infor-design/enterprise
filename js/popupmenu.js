@@ -255,12 +255,12 @@
 
         //Handle Case where menu is off bottom
         if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          wrapper.css({'top': $(window).height() - menuHeight});
+          wrapper.css({'top': ($(window).height() + $(document).scrollTop()) - menuHeight});
 
           //Did it fit?
-          if (wrapper.offset().top < 0) {
+          if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
             wrapper.css('top', 0);
-            wrapper.css('top', (wrapper.offset().top * -1));
+            wrapper.css('top', $(document).scrollTop() + (wrapper.offset().top * -1));
             menuHeight = wrapper.outerHeight();
           }
 
@@ -385,17 +385,17 @@
         if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
           // First try bumping up the menu to sit just above the bottom edge of the window.
           var bottomEdgeCoord = wrapper.offset().top + menuHeight,
-            differenceFromBottomY = bottomEdgeCoord - $(window).height();
+            differenceFromBottomY = bottomEdgeCoord - ($(window).height() + $(document).scrollTop());
           wrapper.css('top', wrapper.position().top - differenceFromBottomY);
 
           // Does it fit?
           if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
             // No. Bump the menu up higher based on the menu's height and the extra space from the main wrapper.
-            wrapper.css('top', $(window).height() - menuHeight - mainWrapperOffset);
+            wrapper.css('top', ($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset);
           }
 
           // Does it fit now?
-          if (wrapper.offset().top < 0) {
+          if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
             // No. Push the menu down onto the screen from the top of the window edge.
             wrapper.css('top', 0);
             wrapper.css('top', (wrapper.offset().top * -1));

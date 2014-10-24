@@ -2,8 +2,13 @@
   <div class="col-1-2">
     <h1 class="demo-heading">Popup Menu <span>(Right Click)</span></h1>
 
+    <div class="field" style="position: fixed; top: 20px; right: 0;">
+      <label for="fixed-menus">Menu Is Fixed</label>
+      <button class="btn" type="button" id="fixed-menus" data-popupmenu="action-big-popupmenu">Show Fixed Menu</button>
+    </div>
+
     <div class="field" style="position: absolute; bottom: 10px; right: 10px;">
-      <label>Button should open menu that needs to shift left.</label>
+      <label for="offset-menus">Button should open menu that needs to shift left.</label>
       <button class="btn" type="button" id="offset-menus" data-popupmenu="action-popupmenu">Show Offset Menu</button>
     </div>
 
@@ -15,6 +20,13 @@
     <div class="field">
       <label for="input-menu">Really BIG Popup Menu</label>
       <button class="btn" type="button" id="big-menus" data-popupmenu="action-big-popupmenu">Show Offset Menu</button>
+    </div>
+
+    <div style="height: 850px;">&nbsp;</div>
+
+    <div class="field">
+      <label for="pushed-down-menu">Menu Toggler is Scrolled Off-Screen</label>
+      <button class="btn" type="button" id="pushed-down-menu" data-popupmenu="action-big-popupmenu">Show Scrolled-Off-Screen Menu</button>
     </div>
 
     <ul id="action-popupmenu" class="popupmenu">
@@ -33,6 +45,13 @@
     </ul>
 
     <ul id="action-big-popupmenu" class="popupmenu">
+      <li><a href="#">...</a></li>
+      <li><a href="#">...</a></li>
+      <li><a href="#">...</a></li>
+      <li><a href="#">...</a></li>
+      <li><a href="#">...</a></li>
+      <li><a href="#">...</a></li>
+      <li><a href="#">...</a></li>
       <li><a href="#">File</a></li>
       <li><a href="#">Edit</a></li>
       <li>
