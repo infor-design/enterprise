@@ -267,9 +267,9 @@
       },
       position: function() {
         var isFixed = false, isAbs = false,
-          top = this.input.offset().top + this.input.outerHeight() + 1;
+          top = this.input.offset().top - $(window).scrollTop() + this.input.outerHeight();
 
-       this.list.css({'top': top, 'left': this.input.offset().left});
+        this.list.css({'top': top, 'left': this.input.offset().left - $(window).scrollLeft()});
 
         //Fixed and Absolute Positioning use cases
         this.input.parentsUntil('body').each(function () {
