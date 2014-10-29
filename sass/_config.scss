@@ -29,7 +29,6 @@ $input-placeholder-color: #999999;
 $input-focus-shadow: 0 0 5px rgba(8,150,233,.2);
 $input-focus-border-color: #1d98e6;
 
-
 ///////////////////
 
 //Main Accent Color
@@ -75,3 +74,24 @@ $graphite: #b3b3b3;
 $breakpoint-phone-to-tablet: 768px;
 $breakpoint-tablet-to-desktop: 1024px;
 $breakpoint-desktop-to-extralarge: 1300px;
+
+/* Adam's Approach
+$site-width-wide: 1440px;
+$site-width-medium: 768px;
+$site-width-narrow: 640px;
+$site-width-tiny: 400px;
+
+@mixin breakpoint($device) {
+  @if $device == site-width-medium {
+    @media (max-width: $site-width-medium) { @content; }
+  }
+  @else if $device == site-width-narrow {
+    @media (max-width: $site-width-narrow) { @content; }
+  }
+  @else if $device == site-width-tiny {
+    @media (max-width: $site-width-tiny) { @content; }
+  }
+}
+*/
+
+

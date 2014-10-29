@@ -57,13 +57,21 @@ textarea.is-disabled {
 /* Required Indicator */
 .required:after {
   color: #ff3333;
-  content: "\002A";
+  content: "*";
   display: inline-block;
   font-family: $font-regular;
   @include font-size(11);
   left: 2px;
   position: relative;
   top: -1px;
+}
+
+@media reader, speech, aural {
+  .required:after {
+    content: "";
+    display: none;
+    visibility: hidden;
+  }
 }
 
 // Placeholder - Inline help
@@ -95,7 +103,7 @@ input.error {
 
 input.error:focus {
   color: $input-color !important;
-  box-shadow: box-shadow: 0 0 5px rgba(237,28,36,.2);
+  box-shadow: 0 0 5px rgba(237,28,36,.2);
 }
 
 .error::-webkit-input-placeholder {
