@@ -15,12 +15,6 @@ a:focus, input:focus, textarea:focus, select:focus, button:focus {
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
 }
 
-body {
-  height: 100%;
-  background-color: $background-color;
-  font-family: $font-stack;
-}
-
 html { height: 100%; }
 
 article, aside, figure, footer, header, hgroup, nav, section {

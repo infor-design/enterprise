@@ -1,20 +1,39 @@
 /* Variables
 ================================================== */
 
-//Fonts to Use
-$font-stack: Helvetica, Arial, sans-serif;
+// Text Color
+$font-color-dark: #333333;
+$font-color: #666666;
+$font-color-light: #999999;
+$font-color-disabled: #9d9d9d;
 
-//Main Text Color. Fx P's Spans ect...
-$font-color: #1a1a1a;
+// Form Background Color
+$body-bg-color: #f0f0f0;
+
+// The Newer Color Themes (Amethyst is default)
+$primary-color: #a352cb;
+$inverse-color: #ffffff;
+$secondary-color: #69d2ce;
+
+// Form Buttons
+$primary-button-color: #1d98e6;
+$primary-button-hover-color: #1a7cd5;
+$primary-button-focus-color: #1d98e6;
+$primary-button-active-color: #1a7cd4;
+$primary-button-disabled-color: #7fc4ea;
+
+// Input Fields
+$input-border-color: #999999;
+$input-color: #333333;
+$input-placeholder-color: #999999;
+$input-focus-shadow: 0 0 5px rgba(8,150,233,.2);
+$input-focus-border-color: #1d98e6;
+
+
+///////////////////
 
 //Main Accent Color
 $accent-color: #0086e6;
-
-//Form Background Color
-$background-color: #f2f2f2;
-
-//Color Of Data - In Fields Ect...
-$data-color: #333333;
 
 //Color Of Labels and Some Hs
 $label-color: #666666;
@@ -31,30 +50,15 @@ $disabled-color: #cccccc;
 //The Focus Indicator on Fields
 $focus-shadow: 0 0 3px #0095ff;
 
-/*Old: 0 0px 1px 1px #0095ff;
-0 0 3px hsl(205, 100%, 50%)*/
-
-//The Normal Form Button Color
-$btn-color: #999999;
-
-//The Background color on Input Fields
-$field-background-color: #fff;
-$field-border-color: #e8e8e8;
-
 @mixin field-height() {
   height: 43px;
   padding: 12px 10px;
 }
 
-//The Link Styles
+//The Link Style
 $link-color: #0896e9;
 $link-hover-color: #0c7ad8;
 $link-active-color: #004096;
-
-//The Newer Color Themes (Turqoise is default)
-$primary-color: #1cbbb4;
-$secondary-color: #69d2ce;
-$tertiary-color: #13a3f7;
 
 //Colors
 $turqoise: #00c2b4;
@@ -63,7 +67,7 @@ $emerald: #2db329;
 $amber: #ffa800;
 $ruby: #ed1c24;
 $red: #d5000e;
-$tourmaline: #00c2b4;
+$tourmaline: #a352cb;
 $amethyst: #e63262;
 $graphite: #b3b3b3;
 

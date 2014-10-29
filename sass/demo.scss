@@ -3,45 +3,6 @@
 @import "config";
 @import "mixins";
 
-.demo-heading {
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.demo-heading span {
-  font-size: 1.2rem;
-  text-transform: lowercase;
-}
-
-.demo-header span {
-  color: #f1f1f1;
-  display: block;
-  @include font-size(14);
-  line-height: 32px;
-}
-
-.demo-header {
-  height: 34px;
-  background-color: #666666;
-  @include font-size(24);
-  color: #fff;
-  font-family: $font-stack;
-  position: fixed;
-  width: 100%;
-  z-index: 50;
-}
-
-.demo-header + .grid, .demo-header + .svg-icons + .grid  {
-  padding-top: 45px;
-}
-
-.demo-header .grid {
-  height: 70px;
-  margin-top: -26px;
-  padding-top: 25px;
-}
-
 .demo .center {
   text-align: center;
 }
@@ -76,19 +37,6 @@
   margin-bottom: 21px;
   position: relative;
   top: 65px;
-}
-
-.demo table {
-  width: 100%;
-}
-
-.demo table th,
-.demo table td {
-  padding: 0.5em;
-}
-
-.demo table th {
-  font-size: 1.3em;
 }
 
 .demo-header .label, .demo-header .dropdown {
@@ -140,10 +88,6 @@
   background-color: #fff;
   box-shadow: 0 1px rgba(0,0,0,.2);
   @include rem(padding, 5);
-}
-
-.doc-code-example .demo-heading {
-  display: none;
 }
 
 .doc h1 {

@@ -89,6 +89,9 @@
       //Multiselect
       elem.find('select[multiple]:not([data-init])').multiselect();
 
+      //Button with Effects
+      elem.find('.button, .button-secondary, .button-primary, .button-destructive, .button-menu').button();
+
       //Pager
       var pager = elem.find('.pager').pager();
       pager.on('paging', function (e, args) {

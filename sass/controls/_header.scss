@@ -1,0 +1,17 @@
+/* Site/App Header
+================================================== */
+.header {
+  height: 100px;
+  background-color: $primary-color;
+  padding-top: 35px;
+}
+
+.header + .svg-icons + .grid, .header + .grid {
+  margin-top: 40px;
+}
+
+.header .title {
+  color: $inverse-color;
+  font-family: $font-semibold;
+  @include font-size(24);
+}

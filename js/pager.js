@@ -48,20 +48,23 @@
         });
 
         //Attach button click and touch
-        this.element.on('click.pager touchend.pager', '.pager-toolbar a', function () {
+        this.element.on('click.pager touchend.pager', '.pager-toolbar a', function (e) {
           var li = $(this).parent();
+          e.preventDefault();
 
           if (li.is('.pager-prev')) {
             self.currentPage(self.activePage-1);
-            return;
+            return false;
           }
 
           if (li.is('.pager-next')) {
             self.currentPage(self.activePage+1);
-            return;
+            return false;
           }
 
           self.currentPage($(this).parent().index());
+
+          return false;
         });
 
         //Toolbar functionality
@@ -102,8 +105,8 @@
         this.activePage = pageNum;
 
         //set selected Page
-        lis.filter('.selected').removeClass('selected');
-        lis.eq(pageNum-1).addClass('selected');
+        lis.filter('.selected').removeClass('selected').removeAttr('aria-selected');
+        lis.eq(pageNum-1).addClass('selected').attr('aria-selected', true);
 
         this.renderBar();
         this.renderPages();
@@ -141,6 +144,18 @@
           this.pageCount(pc);
         }
 
+        //Refresh Disabled
+        var prev = pb.find('.pager-prev a'), next = pb.find('.pager-next a');
+        prev.removeAttr('disabled');
+        next.removeAttr('disabled');
+
+        if (this.activePage === 1) {
+          prev.attr('disabled','disabled');
+        }
+        if (this.activePage === this.pageCount()) {
+          next.attr('disabled','disabled');
+        }
+
         //Remove from the front until selected is visible and we have at least howMany showing
         elems = pb.find('li:not(.pager-prev):not(.pager-next)');
         elems.show();
@@ -155,17 +170,6 @@
           }
         });
 
-        //Refresh Disabled
-        var prev = pb.find('.pager-prev a'), next = pb.find('.pager-next a');
-        prev.removeAttr('disabled');
-        next.removeAttr('disabled');
-
-        if (this.activePage === 1) {
-          prev.attr('disabled','disabled');
-        }
-        if (this.activePage === this.pageCount()) {
-          next.attr('disabled','disabled');
-        }
       },
 
       // Render Paged Items

@@ -43,7 +43,7 @@
 }
 
 .radio:checked + label:before {
-  background-color: $background-color;
+  background-color: $body-bg-color;
   border-color: $accent-color;
 }
 

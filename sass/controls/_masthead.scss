@@ -8,7 +8,7 @@
 .masthead-appname {
   color: #f1f1f1;
   display: inline-block;
-  font-family: $font-stack;
+  font-family: $font-regular;
   @include font-size(12);
   line-height: 34px;
   margin: 0 0 3px 10px;
@@ -21,7 +21,7 @@
   background: none repeat scroll 0 0 transparent;
   border-bottom-right-radius: 3px;
   color: white;
-  font-family: $font-stack;
+  font-family: $font-regular;
   @include font-size(12);
   left: 0;
   padding: 6px;

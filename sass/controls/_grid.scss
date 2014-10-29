@@ -2,9 +2,7 @@
 ================================================== */
 [class*="col-"] {
   float: left;
-  margin-bottom: 5px;
-  padding-right: 37px;
-  padding: 3px;
+  margin-bottom: 10px;
 }
 
 /* TODO: Improve Nice animation at breaks similar to https://member.theladders.com/member/saved-jobs */
@@ -15,6 +13,17 @@
   margin: 0 auto;
   overflow: hidden;
   transition: all 0.3s ease 0s;
+}
+
+.grid .content {
+  background-color: $primary-color;
+  color: $inverse-color;
+  height: 100px;
+}
+
+.grid .content h3{
+  color: $inverse-color;
+  padding: 35px 10px;
 }
 
 .grid:after {
@@ -101,7 +110,7 @@
 @media handheld, only screen and (max-width: 1480px) {
   .grid {
     padding-left: 30px;
-    padding-right: 60px;
+    padding-right: 30px;
   }
 }
 

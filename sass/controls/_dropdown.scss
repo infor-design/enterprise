@@ -19,15 +19,15 @@ input.dropdown {
 }
 
 .dropdown-list {
-  background-color: $field-background-color;
+  background-color: $input-border-color;
   box-shadow: 0 1px 2px rgba(0,0,0,.25);
-  font-family: $font-stack;
-  color: $data-color;
+  font-family: $font-regular;
+  color: $input-color;
   @include font-size(14);
   height: auto;
   left: 1px;
-  line-height: 47px;
-  min-height: 47px;
+  line-height: 34px;
+  min-height: 34px;
   max-height: 300px;
   overflow: auto;
   position: absolute;

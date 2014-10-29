@@ -1,81 +1,110 @@
 /* Buttons of All Types
 ================================================== */
-.btn, .btn-default, .btn-cancel, .btn-accept, .btn-menu {
-  width: auto;
-  height:  36px;
-  font-family: $font-stack;
-  @include font-size(15);
-  font-weight: lighter;
-  color: white;
-  background-color: $btn-color;
-  min-width: 99px;
-  margin: 0 10px 10px 0;
-  padding: 10px 15px;
-  border-radius: 2px;
-  box-shadow: inset 0 -1px rgba(0,0,0,.2);
-  transition: background 0.2s ease-in-out 0s;
-}
-
 button {
-  font-family: $font-stack;
+  font-family: $font-regular;
 }
 
-.btn:hover, .btn-menu:hover {
-  background-color: #909090;
+// Buttons - button = secondary button
+.button, .button-secondary, .button-primary, .button-destructive, .button-menu {
+  border-radius: 2px;
+  height: 34px;
+  font-family: $font-semibold;
+  @include font-size(14);
+  color: $inverse-color;
+  background-color: $primary-button-color;
+  min-width: 100px;
+  overflow: hidden;
+  padding: 0px 30px;
+  position: relative;
+  transition: background 0.2s ease-in-out 0s;
+  width: auto;
 }
 
-.btn:focus, .btn-cancel:focus, .btn-accept:focus, .btn-default:focus, .btn-menu:focus {
-  box-shadow: 0 0 1px #FFFFFF, 0 0 5px #0095FF;
+// standard, primary, destructive
+.button-primary {
+  &:hover {
+    background-color: $primary-button-hover-color;
+  }
+  &:active {
+    background-color: $primary-button-active-color;
+  }
+  &[disabled], &[disabled]:hover {
+    background-color: $primary-button-disabled-color;
+    cursor: default;
+  }
 }
 
-.btn:active, .btn-menu:active {
-  background-color: #ababab;
-  box-shadow: none;
-}
-
-.btn-default {
-  background-color: $accent-color;
-}
-
-.btn-default:hover {
-  background-color: #2b97e5;
-}
-
-.btn-default:active {
-  background-color: #53a8e6;
-}
-
-.btn:disabled, .btn-default:disabled, .btn-menu:disabled {
-  background-color: #d9d9d9;
-  color: #666;
-  box-shadow: none;
-  cursor: default;
-}
-
-.btn-cancel {
-  background-color: #d5000e;
+.button, .button-secondary {
+  background-color: #d2d2d2;
+  color: $font-color;
 
   &:hover {
-    background-color: #cc3333;
+    background-color: #b6b6b6;
   }
-
   &:active {
-    background-color: #cc6666;
+    background-color: #a8a8a8;
+  }
+  &[disabled], &[disabled]:hover {
+    background-color: #d2d2d2;
+    color: $font-color-disabled;
+    cursor: default;
   }
 }
 
-.btn-accept {
-  background-color: #2db329;
+.button-destructive, .button-tertiary {
+  background-color: transparent;
+  color: $font-color;
+
   &:hover {
-    background-color: #33cc33;
+    color: $font-color-dark;
   }
-
   &:active {
-    background-color: #66cc66;
+    color: $primary-button-color;
+  }
+  &[disabled], &[disabled]:hover {
+    color: $font-color-disabled;
+    cursor: default;
   }
 }
 
-/* Menu Buttons */
+// Ripple Effect
+.ripple {
+  overflow: hidden;
+}
+
+.ripple-effect {
+  position: absolute;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #e4ebf0;
+  animation: ripple-animation 2s;
+  -webkit-animation: ripple-animation 2s;
+}
+
+@-webkit-keyframes ripple-animation {
+  from {
+    -webkit-transform: scale(1);
+    opacity: .4;
+  }
+  to {
+    -webkit-transform: scale(100);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-animation {
+  from {
+    transform: scale(1);
+    opacity: .4;
+  }
+  to {
+    transform: scale(100);
+    opacity: 0;
+  }
+}
+
+// Menu Button
 .btn-menu .icon {
   display: inline-block;
   fill: white;

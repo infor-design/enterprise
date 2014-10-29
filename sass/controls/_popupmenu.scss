@@ -13,9 +13,9 @@
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 0 5px rgba(0, 0, 0, .2);
-  color: $label-color;
+  color: $input-color;
   display: none;
-  font-family: $font-stack;
+  font-family: $font-regular;
   list-style: none;
   margin: 0;
   overflow-x: hidden;
@@ -37,7 +37,7 @@
       background-color: $hover-color;
 
       > a {
-        color: $data-color;
+        color: $input-color;
       }
     }
 
@@ -93,7 +93,7 @@
   }
 
   li:hover > .icon {
-    fill: $data-color;
+    fill: $input-color;
   }
 
   // Disabled

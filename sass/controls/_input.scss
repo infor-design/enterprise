@@ -1,34 +1,10 @@
-/* User Input - Labels, TextBox, TextArea
+/* User Input - TextBox, TextArea
 ================================================== */
-/* Labels */
-label, .label, .data {
-  color: $label-color;
-  display: block;
-  font-family: $font-stack;
-  @include font-size(15);
-  font-weight: lighter;
-  padding: 0;
-  margin-bottom: 5px;
-  line-height: 22px;
-}
 
-.label + .data {
-  margin-top: 0px;
-}
-
-.data {
-  color: $data-color;
-  display: block;
-}
-
-/* Field Style */
+// Field Style
 .field .checkbox-label, .field .checkbox > label {
   margin-bottom: 5px;
   margin-left: 2px;
-}
-
-.field label, .field .label {
-  padding-left: 13px;
 }
 
 .field > *:not(.checkbox-label):last-child {
@@ -39,39 +15,26 @@ label, .label, .data {
   position: relative;
 }
 
-/* Input Style */
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
-input[type="number"],
-input[type="url"],
-textarea {
-  display: block;
-  color: $data-color;
-  border: 1px solid $field-border-color;
-  outline: none;
-  background-color: $field-background-color;
+// Input Style
+input, textarea {
+  background-color: transparent;
+  border: 1px solid $input-border-color;
   border-collapse: separate;
-  font-family: $font-stack;
-  font-weight: lighter;
-  @include font-size(16);
-  padding: 12px 10px;
+  border-radius: 2px;
+  color: $input-color;
+  display: block;
+  font-family: $font-regular;
+  @include font-size(14);
   max-width: 100%;
-  width: 300px;
-  text-align: left;
+  padding: 6px 10px;
   resize: none;
+  text-align: left;
+  width: 300px;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
-input[type="tel"]:focus,
-input[type="number"]:focus,
-input[type="url"]:focus,
-textarea:focus,
-textarea.is-focused {
-  box-shadow: $focus-shadow;
+input:focus, textarea:focus {
+  box-shadow: $input-focus-shadow;
+  border-color: $input-focus-border-color;
 }
 
 //IE 10 9, 11 - http://jsbin.com/fewuli/3/edit
@@ -92,25 +55,34 @@ textarea.is-disabled {
 }
 
 /* Required Indicator */
-.required:before {
-  background-color: #FF574D;
-  border-radius: 25px;
-  content: " ";
-  display: inline-block;
-  height: 9px;
-  left: -14px;
-  margin-right: -7px;
-  position: relative;
-  width: 9px;
-}
-
-/* TODO: How to Localize */
 .required:after {
-  color: transparent;
-  content: " Required";
+  color: #ff3333;
+  content: "\002A";
+  display: inline-block;
+  font-family: $font-regular;
+  @include font-size(11);
+  left: 2px;
+  position: relative;
+  top: -1px;
 }
 
-/* Error Text */
+// Placeholder - Inline help
+::-webkit-input-placeholder {
+ color: $input-placeholder-color;
+ @include font-size(14);
+}
+
+::-moz-placeholder {
+ color: $input-placeholder-color;
+ @include font-size(14);
+}
+
+:-ms-input-placeholder {
+ color: $input-placeholder-color;
+ @include font-size(14);
+}
+
+// Error Text
 .error, .error-message {
   color: #d5000e !important;
   display: block;
@@ -122,27 +94,8 @@ input.error {
 }
 
 input.error:focus {
-  color: $data-color !important;
-  box-shadow: 0 0 1px 1px #d5000e;
-}
-
-/* Place Holders */
-::-webkit-input-placeholder {
- color: #b3b3b3;
- @include font-size(16);
- font-style: italic;
-}
-
-::-moz-placeholder {
- color: #b3b3b3;
- @include font-size(16);
- font-style: italic;
-}
-
-:-ms-input-placeholder {
- color: #b3b3b3;
- @include font-size(16);
- font-style: italic;
+  color: $input-color !important;
+  box-shadow: box-shadow: 0 0 5px rgba(237,28,36,.2);
 }
 
 .error::-webkit-input-placeholder {
@@ -157,12 +110,12 @@ input.error:focus {
  color: #d5000e;
 }
 
-/* Selection Color */
+// Text Selection
 ::selection {
-  background: $accent-color;
-  color: white;
+  background: $primary-color;
+  color: $inverse-color;
 }
 ::-moz-selection {
-  background: $accent-color;
-  color: white;
+  background: $primary-color;
+  color: $inverse-color;
 }
