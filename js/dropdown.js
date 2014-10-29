@@ -294,6 +294,14 @@
           this.list.css({'top': top - this.list.outerHeight() - this.input.outerHeight()});
         }
 
+        // If the menu is off the top of the screen, cut down the size of the menu to make it fit.
+        if (this.list.offset().top < 0 ) {
+          var listHeight = this.list.outerHeight(),
+            diff = this.list.offset().top * -1;
+          this.list.css('top', 0);
+          this.list.height(listHeight - diff);
+        }
+
         //let grow or to field size.
         if (this.list.width() > this.input.outerWidth()) {
            this.list.css('width', '');
