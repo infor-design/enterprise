@@ -227,8 +227,9 @@ The documentation will be generated created inline in the pages (soon but not ye
 | LBI | ? | Steve Stahl, Rommel Dollison |
 | LTM App Group | ? | Jerry Drinka, David Cooper |
 | Masterpiece | ? | Tam Nav |
-| MSCM (Mobile Supply Chain Management ) | ? | Ferdinand Brian Verdejol, Larry Amisola |
 | MNT0386 - Cloud Enablement of SRS | ? | Leo Peng |
+| Mongoose - Demo Services | Mongoose | Lee Flaherty |
+| MSCM (Mobile Supply Chain Management ) | ? | Ferdinand Brian Verdejol, Larry Amisola |
 | M3 Sales and Marketing Suite Team - Metadata Publisher | ? | Ralph Brian Mercadal, Lito Lopez |
 | MUA (M3H5 Client) | ? | Michael Quibin , Jack Rubillar |
 | Optiva | ? | Andy Koenigsberg |

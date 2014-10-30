@@ -7,7 +7,7 @@
   margin-left: 2px;
 }
 
-.field > *:not(.checkbox-label):last-child {
+.field > input {
   margin-bottom: 20px;
 }
 
@@ -22,7 +22,7 @@ input, textarea {
   border-collapse: separate;
   border-radius: 2px;
   color: $input-color;
-  display: block;
+  display: inline-block;
   font-family: $font-regular;
   @include font-size(14);
   max-width: 100%;
@@ -32,26 +32,21 @@ input, textarea {
   width: 300px;
 }
 
+input[disabled], textarea[disabled], input[readonly], textarea[readonly] {
+  color: $input-disabled-color;
+  -webkit-text-fill-color: $disabled-color;
+  background-color: $input-disabled-bg-color;
+  border: solid 1px $input-disabled-border-color;
+}
+
+input[readonly], textarea[readonly] {
+  color: $input-color;
+  border-color: $input-readonly-border-color;
+}
+
 input:focus, textarea:focus {
   box-shadow: $input-focus-shadow;
   border-color: $input-focus-border-color;
-}
-
-//IE 10 9, 11 - http://jsbin.com/fewuli/3/edit
-//box-shadow: 0px 0px 1px 1px #0095ff;
-
-input[type="text"]:disabled,
-input[type="password"]:disabled,
-input[type="email"]:disabled,
-input[type="tel"]:disabled,
-input[type="number"]:disabled,
-input[type="url"]:disabled,
-textarea:disabled,
-textarea.is-disabled {
-  color: $disabled-color;
-  -webkit-text-fill-color: $disabled-color;
-  background-color: #e5e5e5;
-  border: solid 1px #e5e5e5;
 }
 
 /* Required Indicator */
@@ -90,15 +85,19 @@ textarea.is-disabled {
  @include font-size(14);
 }
 
-// Error Text
+// Error States
 .error, .error-message {
-  color: #d5000e !important;
-  display: block;
+  color: $error-color;
+}
+
+.field .icon-error, .field .icon-validated {
+  display: inline-block;
+  margin-left: -30px;
+  top: 3px;
 }
 
 input.error {
-  /*box-shadow: 0 0 3px #d5000e;*/
-  border-color: #d5000e;
+  border-color: $error-color;
 }
 
 input.error:focus {
@@ -107,11 +106,11 @@ input.error:focus {
 }
 
 .error::-webkit-input-placeholder {
- color: #d5000e;
+ color: $error-color;
 }
 
 .error::-moz-placeholder {
- color: #d5000e;
+ color: $error-color;
 }
 
 .error:-ms-input-placeholder {

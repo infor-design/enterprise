@@ -14,4 +14,5 @@
   color: $inverse-color;
   font-family: $font-semibold;
   @include font-size(24);
+  @include rem(line-height, 2.4rem);
 }

@@ -1,15 +1,7 @@
 /* Icons and Icon Buttons
 ================================================== */
-.icon-error {
-  display: inline;
-  height: 16px !important;
-  position: relative;
-  top: 7px;
-  left: -6px;
-  fill: $red !important;
-  width: 20px;
-}
 
+// Buttons
 .btn-icon {
   cursor: pointer;
   border: none;
@@ -34,6 +26,7 @@
   width: 32px;
 }
 
+// Svg Styles
 svg.icon {
   display: inline-block;
   fill: #666;
@@ -54,4 +47,29 @@ svg.icon-logo {
 .btn-icon:focus {
   border: 1px solid #0099ff;
   outline: 0;
+}
+
+
+// Specific Buttons
+svg.icon.icon-error, svg.icon.icon-validated {
+  display: inline;
+  fill: $red;
+  height: 16px;
+  left: -2px;
+  position: relative;
+  top: 3px;
+  width: 20px;
+}
+
+svg.icon.icon-validated {
+  fill: $emerald;
+}
+
+svg.icon.icon-dirty {
+  fill: $amber;
+  position: absolute;
+  transform: rotate(135deg);
+  margin-left: -12px;
+  margin-top: -12px;
+  pointer-events: none;
 }

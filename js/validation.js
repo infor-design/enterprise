@@ -209,13 +209,20 @@
       messages.hide().css('display','inline');
 
       //Append Error
-      var svg = '<svg class="icon icon-error" viewBox="0 0 32 32"><use xlink:href="#icon-error"></use></svg></span>',
-        span = $('<span role="alert" class="error"></span>');
+      var svg = '<svg class="icon icon-error"><use xlink:href="#icon-error"></use></svg></span>';
+      //TODO //setup tooltip with appendedMsg
+      //span = $('<span role="alert" class="error"></span>');
 
       if (loc.parent('.field').find('span.error').length === 0) {
-        field.parent('.field').append(span.html(appendedMsg + svg));
+        field.parent('.field').append(svg);
       } else {
-        loc.parent('.field').find('span.error').html(appendedMsg + svg);
+        loc.parent('.field').find('span.error').html(svg);
+      }
+
+      //setup tooltip with appendedMsg
+      if (appendedMsg === 'Required') {
+        field.attr('data-placeholder', field.attr('placeholder'));
+        field.attr('placeholder', appendedMsg);
       }
     },
     removeError: function(field) {
@@ -227,6 +234,11 @@
       loc.next('.icon-error').remove();
       loc.next('.inforCheckboxLabel').next('.icon-error').remove();
       loc.parent('.field').find('span.error').remove();
+
+      if (loc.attr('data-placeholder')) {
+        loc.attr('placeholder',loc.attr('data-placeholder'));
+        loc.removeAttr('data-placeholder');
+      }
     }
   };
 
@@ -285,7 +297,7 @@
           }
           return (value ? true : false);
         },
-        message: 'This field is required.'
+        message: 'Required' //TODO - Localize
       }
     };
   };

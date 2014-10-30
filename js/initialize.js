@@ -98,6 +98,9 @@
         console.log('Paging: '+ args.currentPage);
       });
 
+      //Track Dirty
+      elem.find('input[data-trackdirty="true"]').trackdirty();
+
       //Class-based detection for IE
       if (!!navigator.userAgent.match(/Trident/)) {
         $('html').addClass('ie');

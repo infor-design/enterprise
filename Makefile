@@ -3,13 +3,13 @@ REPORTER = spec
 
 test:
 	@node test-runner.js
-	
+
 test-button:
 	@node test-runner.js button
-	
+
 test-dropdown:
 	@node test-runner.js dropdown
-	
+
 test-tmpl:
 	@node test-runner.js tmpl
 
@@ -21,5 +21,8 @@ test-mask:
 
 test-multiselect:
 	@node test-runner.js multiselect
+
+test-form:
+	@node test-runner.js form
 
 .PHONY: test

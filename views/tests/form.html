@@ -1,0 +1,18 @@
+<div class="grid">
+  <div class="col-1-2">
+    <form id="test-form" action="#" method="POST">
+        <div class="field">
+          <label for="department-code">Department Code</label>
+          <input type="text" id="department-code" data-trackdirty="true" placeholder="Dirty Tracking">
+
+          <input id="output">
+        </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  $('#department-code').on('dirty', function () {
+    $('#output').val('changed');
+  });
+</script>

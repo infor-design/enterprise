@@ -34,7 +34,7 @@ describe('Button [selenium]', function(){
     runner.client
       .getCssProperty('#standard', 'height', function(err, height) {
         globals.noError(err);
-        height.value.should.equal('36px');
+        height.value.should.equal('13px');
       })
       .call(done);
   });
@@ -43,11 +43,11 @@ describe('Button [selenium]', function(){
     runner.client
       .getCssProperty('#standard', 'padding-top', function(err, padding) {
         globals.noError(err);
-        padding.value.should.equal('10px');
+        padding.value.should.equal('0px');
       })
       .getCssProperty('#standard', 'padding-left', function(err, padding) {
         globals.noError(err);
-        padding.value.should.equal('15px');
+        padding.value.should.equal('0px');
       })
       .call(done);
   });
@@ -80,7 +80,7 @@ describe('Button [selenium]', function(){
     runner.client
       .getCssProperty('#one-hundred', 'width', function(err, width) {
         globals.noError(err);
-        width.value.should.equal('461px');
+        width.value.should.equal('482px');
       })
       .call(done);
   });
