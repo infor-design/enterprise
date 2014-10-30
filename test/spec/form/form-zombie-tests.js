@@ -19,7 +19,7 @@ describe('Multiselect [zombie]', function() {
     browser.visit('/tests/form', done);
   });
 
-  it('can trigger dirty', function(done) {
+  it('can trigger dirty', function() {
     //type in field - make sure svg icon and
     var item = browser.document.getElementById('department-code');
     browser.fill('#department-code', 'test', null);
@@ -27,7 +27,6 @@ describe('Multiselect [zombie]', function() {
 
     var op = browser.document.getElementById('output');
     op.value.should.equal('changed');
-    runner.client.call(done);
   });
 
 });
