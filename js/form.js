@@ -39,6 +39,11 @@
         var input = $(this);
         input.data('original', input.val())
            .on('change.dirty', function () {
+            var input = $(this);
+
+            if (input.attr('data-trackdirty') !== 'true') {
+              return;
+            }
 
             //Add Class and Icon
             input.addClass('dirty');

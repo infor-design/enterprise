@@ -5,6 +5,7 @@
           <label for="department-code">Department Code</label>
           <input type="text" id="department-code" data-trackdirty="true" placeholder="Dirty Tracking">
 
+          <label for="output">Test</label>
           <input id="output">
         </div>
     </form>
@@ -13,6 +14,10 @@
 
 <script>
   $('#department-code').on('dirty', function () {
+    $('#output').val('changed');
+  });
+
+   $('body').on('dirty', function () {
     $('#output').val('changed');
   });
 </script>
