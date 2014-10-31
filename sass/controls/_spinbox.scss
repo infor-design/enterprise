@@ -1,0 +1,74 @@
+/* Spinboxes
+================================================== */
+
+// Everything inside the spinbox wrapper is aligned middle.
+.spinbox-wrapper {
+
+  > * {
+    vertical-align: middle;
+  }
+
+  &.is-focused {
+
+    > .spinbox-control {
+      box-shadow: $input-focus-shadow;
+      border-color: $input-focus-border-color;
+    }
+
+  }
+}
+
+// Overrides some basic styles from the "input".
+.spinbox {
+  border-radius: 0;
+  color: $accent-color;
+  font-weight: bolder;
+  text-align: center;
+  width: auto;
+}
+
+.field {
+  > .spinbox {
+    margin-bottom: 0;
+  }
+
+  > .spinbox-control.down {
+    margin-bottom: 20px;
+  }
+}
+
+.spinbox-control {
+  height: 3.25rem;
+  width: 3.25rem;
+
+  background-color: transparent;
+  border: 1px solid $input-border-color;
+  border-collapse: separate;
+  color: $font-color;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $font-regular;
+  font-weight: bolder;
+  line-height: 1.65rem;
+  @include font-size(16);
+  padding: 6px 10px;
+  resize: none;
+  text-align: center;
+
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
+
+  &.up {
+    border-bottom-right-radius: 2px;
+    border-left: 0;
+    border-top-right-radius: 2px;
+  }
+
+  &.down {
+    border-bottom-left-radius: 2px;
+    border-right: 0;
+    border-top-left-radius: 2px;
+  }
+}
