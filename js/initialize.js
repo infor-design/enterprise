@@ -101,6 +101,9 @@
       //Track Dirty
       elem.find('input[data-trackdirty="true"]').trackdirty();
 
+      //Text Area
+      elem.find('textarea').textarea();
+
       //Class-based detection for IE
       if (!!navigator.userAgent.match(/Trident/)) {
         $('html').addClass('ie');

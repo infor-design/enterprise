@@ -1,4 +1,4 @@
-/* User Input - TextBox, TextArea
+/* User Input - TextBox, Textarea
 ================================================== */
 
 // Field Style
@@ -7,8 +7,12 @@
   margin-left: 2px;
 }
 
-.field > input {
-  margin-bottom: 20px;
+.field > input, .field > textarea {
+    margin-bottom: 20px;
+}
+
+.field > .textarea-wordcount {
+  margin-bottom: 5px;
 }
 
 .field {
@@ -49,15 +53,58 @@ input:focus, textarea:focus {
   border-color: $input-focus-border-color;
 }
 
-/* Required Indicator */
+// Text Area
+textarea {
+  @include rem(line-height, 2rem);
+  min-height: 80px;
+  width: 362px;
+}
+
+.textarea-wordcount {
+  display: block;
+  @include font-size(11);
+  @include rem(line-height, 2rem);
+  margin-top: -15px;
+  min-height: auto;
+  text-transform: uppercase;
+  width: 362px;
+}
+
+textarea[readonly] + .textarea-wordcount, textarea[disabled] + .textarea-wordcount {
+  display: none;
+}
+
+.textarea-wordcount.empty {
+  color: $error-color;
+}
+
+.textarea-print {
+  display: none;
+  white-space: pre-line;
+}
+
+// Print Style Sheet
+@media print {
+  textarea, .textarea-wordcount {
+    display: none !important;
+  }
+  .textarea-print {
+    display: inline-block !important;
+    height: auto;
+    width: 362px;
+  }
+}
+
+// Required Indicator
 .required:after {
+  display: inline-block;
   color: #ff3333;
   content: "*";
-  display: inline-block;
   font-family: $font-regular;
   @include font-size(11);
   left: 2px;
   position: relative;
+  speak:none;
   top: -1px;
 }
 

@@ -8,33 +8,33 @@
       <div class="col-1-1">
         <div class="field">
           <label for="first-name">First Name</label>
-          <input type="text" id="first-name" placeholder="Normal text Field">
+          <input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
         </div>
 
         <div class="field">
           <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
-          <input type="text" id="email-address" data-validate="required" placeholder="Company@address.com">
+          <input type="text" id="email-address" name="email-address" data-validate="required" placeholder="Company@address.com">
         </div>
 
        <div class="field">
           <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
-          <input type="text" id="email-address-ok" value="someone@someplace.com">
+          <input type="text" id="email-address-ok" name="email-address-ok" value="someone@someplace.com">
           <svg class="icon icon-validated"><use xlink:href="#icon-validated"/></svg>
         </div>
 
         <div class="field">
           <label for="department">Department</label>
-          <input type="text" disabled value="Field not editable" id="department">
+          <input type="text" disabled value="Field not editable" id="department"name="department">
         </div>
 
         <div class="field">
           <label for="department-code">Department Code</label>
-          <input type="text" readonly value="02006" id="department-code">
+          <input type="text" readonly value="02006" id="department-code" name="department-code">
         </div>
 
         <div class="field">
           <label for="department-code-trackdirty">Department Code</label>
-          <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty">
+          <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" name="department-code-trackdirty">
         </div>
       </div>
     </div>

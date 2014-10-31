@@ -56,6 +56,11 @@ describe('Form [zombie]', function() {
     runner.client.call(done);
   });
 
+  it.skip('adds classes on parents', function(done) {
+    //Maybe needed not sure
+    runner.client.call(done);
+  });
+
   it.skip('can be cleared on a parent', function(done) {
     //right the js to reset by from the parent or body - reset all dirtys (could be jquery function resetdirty)
     runner.client.call(done);

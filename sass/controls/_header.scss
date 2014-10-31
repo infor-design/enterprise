@@ -16,3 +16,17 @@
   @include font-size(24);
   @include rem(line-height, 2.4rem);
 }
+
+//Print Style Sheet
+@media print {
+  body {
+    width: 100%;
+    background-color: transparent;
+  }
+  .header {
+    background-color: transparent !important;
+  }
+  .header .title {
+    color: #333 !important;
+  }
+}
