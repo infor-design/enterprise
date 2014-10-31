@@ -47,26 +47,39 @@
       // Attach Events
       handleEvents: function() {
         var self = this;
-        this.element.on('keyup.textarea, blur.textarea', function () {
+        this.element.on('keyup.textarea', function () {
           self.update(self);
+        }).on('focus.textarea', function () {
+          if (self.counter) {
+            self.counter.addClass('focus');
+          }
+        }).on('blur.textarea', function () {
+          self.update(self);
+          if (self.counter) {
+            self.counter.removeClass('focus');
+          }
         });
       },
 
       update: function (self) {
         var length = self.element.val().length,
           max = self.element.attr('maxlength'),
-          text = (parseInt(max)-length).toString() + ' Characters Left';
+          remaining = (parseInt(max)-length),
+          text = remaining.toString() + ' Characters Left';
 
           //TODO Localize
           if (self.counter) {
             if (length === 0) {
               text = 'Character count maximum of ' + max;
-              self.counter.removeClass('empty').text(text);
+              self.counter.text(text);
             } else {
               self.counter.text(text);
-              self.counter.addClass('empty').text(text);
+              if (remaining < 10) {
+                self.counter.addClass('almost-empty');
+              } else {
+                self.counter.removeClass('almost-empty');
+              }
             }
-
           }
 
           if (self.printarea) {

@@ -99,7 +99,7 @@
       });
 
       //Track Dirty
-      elem.find('input[data-trackdirty="true"]').trackdirty();
+      elem.find('[data-trackdirty="true"]').trackdirty();
 
       //Text Area
       elem.find('textarea').textarea();
