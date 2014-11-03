@@ -105,7 +105,7 @@ describe('Dropdown [selenium]', function(){
       })
       .click('#dupes-shdo', globals.noError)
       .click('#list-option0', globals.noError)
-      .isSelected('#firstDupe', function(err, value) {
+      .isSelected('#secondDupe', function(err, value) {
         globals.noError(err);
         value.should.equal(true);
       })

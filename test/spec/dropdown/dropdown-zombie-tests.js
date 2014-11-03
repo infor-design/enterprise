@@ -68,4 +68,9 @@ describe('Dropdown [zombie]', function() {
     // and check to see if the list contents match the first list opened (they should only match the second).
   });
 
+  it('be able to disable and enable with api', function() {
+    var item = browser.document.getElementById('dupes-shdo');
+    item.disabled.should.equal(true);
+  });
+
 });

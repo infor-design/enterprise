@@ -125,16 +125,28 @@
       </select>
     </div>
 
-        <form id="testForm" action="#" method="POST">
-          <div class="field">
-            <label for="form-dropdown" class="label">This Dropdown's inside a Form Tag</label>
-            <select id="form-dropdown" name="form-dropdown" class="dropdown">
-              <option id="option1" value="notSelectedByDefault">Not Selected by Default</option>
-              <option id="option2" value="selectedByDefault" selected>Selected by Default</option>
-            </select>
-          </div>
-          <button id="reset-button" class="btn" type="reset">Reset</button>
-      </form>
+      <form id="testForm" action="#" method="POST">
+        <div class="field">
+          <label for="form-dropdown" class="label">This Dropdown's inside a Form Tag</label>
+          <select id="form-dropdown" name="form-dropdown" class="dropdown">
+            <option id="option1" value="notSelectedByDefault">Not Selected by Default</option>
+            <option id="option2" value="selectedByDefault" selected>Selected by Default</option>
+          </select>
+        </div>
+        <button id="reset-button" class="button" type="reset">Reset</button>
+        <button id="disable-button" class="button" type="button">Disable</button>
+    </form>
 
   </div>
 </div>
+
+<script>
+  $('#disable-button').on('click', function () {
+    var field = $('#dupes');
+    if (field.is(':disabled')) {
+      field.enable();
+    } else {
+      field.disable();
+    }
+  }).trigger('click');
+</script>

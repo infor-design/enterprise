@@ -45,14 +45,14 @@
   }
 
   li:not(.selected) a:hover:not([disabled]) {
-    background-color: $hover-color;
-    border-color: $hover-color;
+    background-color: $menu-hover-color;
+    border-color: $menu-hover-color;
     color: $label-color;
   }
 
   li:not(.selected) a:active:not([disabled]) {
-    background-color: $hover-color;
-    border-color: $hover-color;
+    background-color: $menu-hover-color;
+    border-color: $menu-hover-color;
     color: $label-color;
   }
 

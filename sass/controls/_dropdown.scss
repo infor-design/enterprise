@@ -2,36 +2,52 @@
 ================================================== */
 input.dropdown {
   cursor: pointer;
+  background-color: transparent;
+  border-color: $input-border-color;
   display: inline-block;
-  padding: 12px 24px 12px 10px !important;
+  padding: 6px 24px 6px 10px;
 }
 
 .dropdown + .icon {
   cursor: pointer;
   display: inline-block;
-  fill: #666;
+  fill: $input-border-color;
   height: 32px;
-  margin-left: -30px;
-  margin-top: 6px;
+  margin-left: -32px;
+  margin-top: 2px;
   position: absolute;
   width: 32px;
   pointer-events: none;
 }
 
+input.dropdown[disabled] {
+  background-color: $dropdown-disabled-bg-color;
+  border-color: $dropdown-disabled-border-color;
+  color: $dropdown-disabled-color;
+  cursor: default;
+}
+
+input.dropdown[disabled] .dropdown + .icon {
+  fill: $dropdown-disabled-color;
+  cursor: default;
+}
+
 .dropdown-list {
-  background-color: $input-border-color;
-  box-shadow: 0 1px 2px rgba(0,0,0,.25);
+  background-color: $inverse-color;
+  border: 1px solid $menu-border-color;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(8,150,233,.2);
   font-family: $font-regular;
-  color: $input-color;
+  color: $menu-color;
   @include font-size(14);
   height: auto;
   left: 1px;
-  line-height: 34px;
-  min-height: 34px;
+  line-height: 32px;
+  min-height: 30px;
   max-height: 300px;
   overflow: auto;
   position: absolute;
-  text-indent: 18px;
+  text-indent: 31px;
   top: 1px;
   transition: height .3s ease 0s;
   width: auto;
@@ -40,12 +56,26 @@ input.dropdown {
   white-space: nowrap;
 }
 
-.dropdown-list li:hover {
-  background-color: $hover-color;
-  cursor: pointer;
+.dropdown:focus {
+  box-shadow: $input-focus-shadow;
+  border-color: $input-focus-border-color;
 }
 
-.dropdown-list li.is-selected {
-  color: $accent-color;
-  font-weight: bold;
+.dropdown-list li:hover {
+  background-color: $menu-hover-color;
+  cursor: pointer;
+  outline: none;
+}
+
+.dropdown-list li.is-selected:before {
+  border-color: #1a1a1a;
+  border-style: solid;
+  border-width: 0 3px 3px 0;
+  content: "";
+  height: 10px;
+  left: 12px;
+  margin-top: 6px;
+  position: absolute;
+  transform: rotate(45deg);
+  width: 4px;
 }

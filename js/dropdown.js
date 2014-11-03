@@ -267,7 +267,7 @@
       },
       position: function() {
         var isFixed = false, isAbs = false,
-          top = this.input.offset().top - $(window).scrollTop() + this.input.outerHeight();
+          top = (this.input.offset().top);// + $(window).scrollTop());
 
         this.list.css({'top': top, 'left': this.input.offset().left - $(window).scrollLeft()});
 
@@ -305,9 +305,9 @@
         //let grow or to field size.
         if (this.list.width() > this.input.outerWidth()) {
            this.list.css('width', '');
-           this.list.css({'width': this.list.outerWidth() + 10});
+           this.list.css({'width': this.list.outerWidth() + 35});
         } else {
-           this.list.width(this.input.outerWidth());
+           this.list.width(this.input.outerWidth()-1);
         }
       },
       closeList: function() {
@@ -344,10 +344,8 @@
             options = this.element[0].options,
             self = this;
 
-        if (e.altKey && (e.keyCode === 38 || e.keyCode === 40)) {
+        if (!self.isOpen() && (e.keyCode === 38 || e.keyCode === 40)) {
           self.toggleList();
-          e.stopPropagation();
-          return false;
         }
         switch (e.keyCode) {
           case 8:    //backspace could clear
@@ -532,7 +530,18 @@
         this.input.prev('label').remove();
         this.input.off().remove();
         this.element.show().prev('label').show();
+      },
+
+      disable: function() {
+        this.element.attr('disabled', 'disabled');
+        this.input.attr('disabled', 'disabled');
+      },
+
+      enable: function() {
+        this.element.removeAttr('disabled');
+        this.input.removeAttr('disabled');
       }
+
     };
 
     // Keep the Chaining and Init the Controls or Settings
