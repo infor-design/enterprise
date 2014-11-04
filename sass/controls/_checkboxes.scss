@@ -8,7 +8,7 @@ input.checkbox, span.checkbox > input {
 input.checkbox + label, input.checkbox + input[type="hidden"] + label, span.checkbox > label {
   display: inline-block;
   cursor: pointer;
-  padding-left: 24px;
+  padding-left: 30px;
 }
 
 input.checkbox + label:before, input.checkbox + input[type="hidden"] + label:before, span.checkbox > label:before {
@@ -16,7 +16,7 @@ input.checkbox + label:before, input.checkbox + input[type="hidden"] + label:bef
   border-radius: 2px;
   content: "";
   height: 18px;
-  margin-left: -27px;
+  margin-left: -30px;
   position: absolute;
   width: 18px;
 }
@@ -32,8 +32,8 @@ input.checkbox:checked + label:after, input.checkbox:checked + input[type="hidde
   border-width:  2px 2px 0 0;
   content: "";
   height: 10px;
-  left: 2.5px;
-  margin-top: 12px;
+  left: 4px;
+  margin-top: 11px;
   position: absolute;
   transform: scaleX(-1) rotate(135deg);
   width: 4px;
@@ -115,6 +115,6 @@ input.checkbox:focus + label:before, input.checkbox:focus + input[type="hidden"]
 }
 
 .checkbox:checked + label:after {
-  animation: 0.5s ease 0s normal none 1 running check;
-  -webkit-animation: 0.5s ease 0s normal none 1 running check;
+  animation: 0.4s ease 0s normal none 1 running check;
+  -webkit-animation: 0.4s ease 0s normal none 1 running check;
 }

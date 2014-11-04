@@ -16,13 +16,13 @@
 }
 
 .grid .content {
-  background-color: $primary-color;
-  color: $inverse-color;
+  background-color: #ffcccc;
+  border-right: 10px solid #f0f0f0;
+  color: #ffffff;
   height: 100px;
 }
 
 .grid .content h3{
-  color: $inverse-color;
   padding: 35px 10px;
 }
 

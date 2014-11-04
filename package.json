@@ -24,18 +24,17 @@
     "grunt-nodemon": "~0.2.0",
     "grunt-sass": "^0.12.1",
     "grunt-shell": "^1.0.0",
+    "jquery": "^2.1.1",
+    "jsdom": "^1.0.0-pre.7",
+    "jshint": "^2.5.5",
     "load-grunt-tasks": "^0.6.0",
+    "mmm": "^0.2.2",
     "mocha": "^1.18.2",
     "phantomjs": "^1.9.7-15",
     "selenium-chromedriver": "0.0.2",
-    "webdriverio": "^2.1.0",
-    "webdriverjs": "^1.6.1",
-    "webdriverjs-selenium-bundle": "0.0.2",
-    "zombie": "^2.0.0-alpha31",
     "spec-xunit-file": "0.0.1-1",
-    "jshint": "^2.5.5",
-    "mmm": "^0.2.2",
-    "jquery": "^2.1.1",
-    "jsdom": "^1.0.0-pre.7"
+    "webdriverio": "^2.3.0",
+    "webdriverjs-selenium-bundle": "0.0.2",
+    "zombie": "^2.0.0-alpha31"
   }
 }

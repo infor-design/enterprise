@@ -104,6 +104,9 @@
       //Text Area
       elem.find('textarea').textarea();
 
+      //Spinbox
+      elem.find('.spinbox').spinbox();
+
       //Class-based detection for IE
       if (!!navigator.userAgent.match(/Trident/)) {
         $('html').addClass('ie');

@@ -1,0 +1,37 @@
+<div class="grid">
+  <div class="col-1-1">
+    <h1>Spinbox</h1>
+    <span class="label">Desktop Controls</span>
+    <hr>
+
+    <div class="grid">
+      <div class="col-1-2">
+
+        <div class="field">
+          <label>Spinbox (no attributes)</label>
+          <input type="text" inputmode="numeric" class="spinbox"/>
+        </div>
+
+        <div class="field">
+          <label>Spinbox (init 0, min -50, max 50)</label>
+          <input id="limited-spinbox" type="text" inputmode="numeric" class="spinbox" min="-50" max="50" value="0" />
+        </div>
+
+      </div>
+      <div class="col-1-2">
+
+         <div class="field">
+          <label>Spinbox (disabled)</label>
+          <input id="disabled-spinbox" type="text" inputmode="numeric" class="spinbox" min="-50" max="50" value="0" disabled />
+        </div>
+
+        <div class="field">
+          <label>Spinbox (init 0, min -99, max 99, step 3)</label>
+          <input id="stepped-spinbox" type="text" inputmode="numeric" class="spinbox" min="-99" max="99" value="0" step="3"/>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
