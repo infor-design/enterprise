@@ -21,7 +21,7 @@ article, aside, figure, footer, header, hgroup, nav, section {
   display: block;
 }
 
-// * Responsive images and other embedded objects
+// Responsive images and other embedded objects
 img, object, embed {
   max-width: 100%;
 }
@@ -32,10 +32,7 @@ img {
   border-width: 0;
 }
 
-// we use a lot of ULs that aren't bulleted.
-// don't forget to restore the bullets within content.
-
-ol,ul {
+ol, ul {
   list-style: none;
 }
 
@@ -63,9 +60,7 @@ button {
   overflow: visible;
 }
 
-/* Remove button padding in FF
-http://stackoverflow.com/questions/2954659/css-size-of-buttons-in-chrome-is-different-than-firefox
-*/
+// Remove button padding in FF
 ::-moz-focus-inner {
   border: 0;
   padding: 0;

@@ -5,6 +5,7 @@
 .field .checkbox-label, .field .checkbox > label {
   margin-bottom: 5px;
   margin-left: 2px;
+  margin-top: 4px;
 }
 
 .field > input, .field > textarea {
@@ -79,7 +80,11 @@ textarea[readonly] + .textarea-wordcount, textarea[disabled] + .textarea-wordcou
 }
 
 .textarea-wordcount.almost-empty {
-  color: #ed1c24;
+  color: $error-color;
+}
+
+textarea.almost-empty {
+  border-color: $error-color;
 }
 
 .textarea-print {
@@ -124,16 +129,19 @@ textarea[readonly] + .textarea-wordcount, textarea[disabled] + .textarea-wordcou
 ::-webkit-input-placeholder {
  color: $input-placeholder-color;
  @include font-size(14);
+ opacity: 1;
 }
 
 ::-moz-placeholder {
  color: $input-placeholder-color;
  @include font-size(14);
+ opacity: 1;
 }
 
 :-ms-input-placeholder {
  color: $input-placeholder-color;
  @include font-size(14);
+ opacity: 1;
 }
 
 // Error States

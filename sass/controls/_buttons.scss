@@ -103,24 +103,3 @@ button {
     opacity: 0;
   }
 }
-
-// Menu Button
-.btn-menu .icon {
-  display: inline-block;
-  fill: white;
-  margin-top: -7px;
-  margin-left: 4px;
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-}
-
-.btn-menu {
-  padding-right: 6px;
-}
-
-.btn-menu span {
-  color: white;
-  display: inline-block;
-  float: left;
-  line-height: 19px;
-}

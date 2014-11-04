@@ -102,6 +102,7 @@
 
         if (settings.trigger === 'click' || settings.trigger === 'toggle') {
           this.element.on('click.popupmenu', function (e) {
+            $(this).focus();
             if (self.menu.hasClass('is-open')){
               self.close();
             } else {

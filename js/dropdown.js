@@ -44,7 +44,7 @@
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
                         .attr('id', id);
 
-        var icon = $('<svg class="icon" viewBox="0 0 32 32"><use xlink:href="#icon-dropdown-arrow"/></svg>');
+        var icon = $('<svg class="icon"><use xlink:href="#icon-dropdown-arrow"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.element.after(this.input, this.trigger);
@@ -105,6 +105,12 @@
       },
       setValue: function () {
         var text = this.element.find('option:selected').text();
+
+        if (this.element.find('option[selected]').length === 0) {
+          //initially empty
+          return;
+        }
+
         //Set initial values for the edit box
         this.input.val(text);
         if (this.element.attr('maxlength')) {
@@ -134,6 +140,9 @@
        if (this.isHidden) {
         this.input.hide().prev('label').hide();
         this.input.next('svg').hide();
+       }
+       if (this.element.attr('placeholder')) {
+        this.input.attr('placeholder', this.element.attr('placeholder'));
        }
       },
       bindEvents: function() {
@@ -267,7 +276,7 @@
       },
       position: function() {
         var isFixed = false, isAbs = false,
-          top = (this.input.offset().top);// + $(window).scrollTop());
+          top = (this.input.offset().top + this.input.outerHeight());// + $(window).scrollTop());
 
         this.list.css({'top': top, 'left': this.input.offset().left - $(window).scrollLeft()});
 
@@ -307,7 +316,7 @@
            this.list.css('width', '');
            this.list.css({'width': this.list.outerWidth() + 35});
         } else {
-           this.list.width(this.input.outerWidth()-1);
+           this.list.width(this.input.outerWidth()-2);
         }
       },
       closeList: function() {
@@ -326,7 +335,7 @@
         }
         // scroll to the currently selected option
         self.list.scrollTop(0);
-        self.list.scrollTop(current.offset().top - self.list.offset().top - self.list.scrollTop());
+        self.list.scrollTop(current.offset().top - self.list.offset().top - self.list.scrollTop() - 40);
       },
       handleBlur: function() {
         var self = this;

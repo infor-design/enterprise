@@ -6,9 +6,11 @@
 }
 
 .radio:not(:checked) + label, .radio:checked + label {
-  position: relative;
-  padding-left: 35px;
   cursor: pointer;
+  padding-left: 35px;
+  position: relative;
+  margin-bottom: 5px;
+  margin-top: 4px;
 }
 
 .radio:not(:checked) + label:before, .radio:checked + label:before {
@@ -16,9 +18,9 @@
   position: absolute;
   left: 6px;
   top: -1px;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #999999;
+  width: 18px;
+  height: 18px;
+  border: 1px solid $radio-border-color;
   border-radius: 20px;
 }
 
@@ -27,24 +29,21 @@
 }
 
 .radio:not(:checked) + label:after, .radio:checked + label:after {
-  background-color: $accent-color;
+  background-color: $radio-color;
   background-repeat: no-repeat;
-  border-radius: 20px;
-  color: transparent;
+  border-radius: 10px;
   content: "";
-  font-family: inherit;
-  font-size: 25px;
-  left: 11px;
-  width: 10px;
   height: 10px;
+  left: 11px;
   position: absolute;
   top: 4px;
   transition: all 0.2s ease 0s;
+  width: 10px;
 }
 
 .radio:checked + label:before {
   background-color: $body-bg-color;
-  border-color: $accent-color;
+  border-color: $radio-color;
 }
 
 /* checked mark aspect changes */
@@ -80,8 +79,7 @@
 
 /* accessibility */
 .radio:checked:focus + label:before, .radio:not(:checked):focus + label:before {
-  border: 2px solid $accent-color;
-  box-shadow: $focus-shadow;
+  box-shadow: $radio-focus-shadow;
 }
 
 /* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */

@@ -12,7 +12,7 @@
 .popupmenu {
   background-color: #fff;
   border-radius: 3px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
   color: $input-color;
   display: none;
   font-family: $font-regular;
@@ -20,7 +20,7 @@
   margin: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 15px 0;
+  padding: 10px 0;
 
   &.is-open {
     display: block;
@@ -28,25 +28,21 @@
 
   li {
     cursor: pointer;
-    line-height: 43px;
+    line-height: 30px;
     padding: 0;
     position: static;
     white-space: nowrap;
 
     &:hover {
       background-color: $menu-hover-color;
-
-      > a {
-        color: $input-color;
-      }
     }
 
     > a:focus {
+      background-color: $menu-hover-color;
       border: 1px solid transparent;
-      box-shadow: $focus-shadow;
     }
 
-    &.is-disabled > a:focus {
+    &.disabled > a:focus {
       box-shadow: none;
     }
 
@@ -64,15 +60,16 @@
 
   a {
     border: 1px solid transparent;
-    color: $label-color;
+    color: $input-color;
     display: block;
     @include font-size(14);
-    padding: 1px 15px;
+    padding: 0 30px 0 20px;
     position: relative;
     text-decoration: none;
     white-space: nowrap;
 
     > span {
+      color: inherit;
       font-family: inherit;
       font-weight: inherit;
     }
@@ -86,14 +83,10 @@
 
   //Icon Positioning
   .icon {
-    fill: $label-color;
+    fill: $input-color;
     left: -8px;
     position: relative;
     top: 9px;
-  }
-
-  li:hover > .icon {
-    fill: $input-color;
   }
 
   // Disabled
@@ -129,20 +122,17 @@
         left: auto;
         position: absolute;
         right: 0;
-        top: 5px;
+        top: -1px;
         @include css3(transform, rotate(-90deg));
       }
-
     }
 
   }
 
   // Seperator
-  .seperator {
-    border-bottom: 1px solid #f2f2f2;
-    margin: 5px 10px;
+  .separator {
+    border-bottom: 1px solid #d2d2d2;
+    margin: 10px 0px;
   }
 
 }
-
-// TODO: RTL

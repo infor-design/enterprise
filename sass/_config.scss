@@ -27,21 +27,37 @@ $input-border-color: #999999;
 $input-color: #333333;
 $input-disabled-bg-color: #e5e5e5;
 $input-disabled-border-color: #b6b6b6;
-$input-disabled-color: #666666;
+$input-disabled-color: #737373;
 $input-focus-shadow: 0 0 5px rgba(8,150,233,.2);
-$input-focus-border-color: #1d98e6;
+$input-focus-border-color: #0896e9;
 $input-placeholder-color: #999999;
 $input-readonly-border-color: #d2d2d2;
 
 // Context Menu
 $menu-hover-color: #ededed;
-$menu-border-color: #1d98e6;
+$menu-border-color: #0896e9;
 $menu-color: #333333;
 
 // Drop down
 $dropdown-disabled-bg-color: #e5e5e5;
 $dropdown-disabled-border-color: #d2d2d2;
-$dropdown-disabled-color: #666666;
+$dropdown-disabled-color: #737373;
+
+// Menu Button
+$menubutton-border-color: #999999;
+$menubutton-focus-border-color: #999999;
+$menubutton-height: 34px;
+
+// Checkboxes
+$checkbox-color: #0896e9;
+$checkbox-border-color: #999999;
+$checkbox-disabled-color: #d2d2d2;
+$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+
+// Radio Buttons
+$radio-border-color: #999999;
+$radio-color: #0896e9;
+$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 //States
 $error-color: #ed1c24;
