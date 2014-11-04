@@ -34,7 +34,7 @@ describe('Button [selenium]', function(){
     runner.client
       .getCssProperty('#standard', 'height', function(err, height) {
         globals.noError(err);
-        height.value.should.equal('13px');
+        height.value.should.equal('34px');
       })
       .call(done);
   });
@@ -47,7 +47,7 @@ describe('Button [selenium]', function(){
       })
       .getCssProperty('#standard', 'padding-left', function(err, padding) {
         globals.noError(err);
-        padding.value.should.equal('0px');
+        padding.value.should.equal('30px');
       })
       .call(done);
   });
