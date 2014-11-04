@@ -84,8 +84,6 @@
           self.handleKeys(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
-        }).on('input.spinbox', function() {
-          self.handleInput(self);
         });
 
         // Up Button
@@ -219,15 +217,8 @@
             self.removeButtonStyle(self.buttons.down);
             break;
         }
-      },
 
-      // Ensures that "aria-valuenow" is still modified when only typing numbers in by hand, and not using
-      // the arrow keys or button controls.
-      handleInput: function(self) {
-        if (self.isDisabled()) {
-          return;
-        }
-        self.updateAria(this.element.val());
+        self.updateAria(self.element.val());
       },
 
       increaseValue: function() {
@@ -312,7 +303,7 @@
       destroy: function() {
         this.buttons.up.off('click.spinbox mousedown.spinbox');
         this.buttons.down.off('click.spinbox mousedown.spinbox');
-        this.element.off('focus.spinbox blur.spinbox keydown.spinbox keypress.spinbox keyup.spinbox input.spinbox');
+        this.element.off('focus.spinbox blur.spinbox keydown.spinbox keypress.spinbox keyup.spinbox');
         this.element.unwrap();
         $.removeData(this.element[0], pluginName);
       }
