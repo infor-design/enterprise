@@ -1,30 +1,13 @@
 /* Spinboxes
 ================================================== */
 
-// Everything inside the spinbox wrapper is aligned middle.
-.spinbox-wrapper {
-
-  > * {
-    vertical-align: middle;
-  }
-
-  &.is-focused {
-
-    > .spinbox-control {
-      box-shadow: $input-focus-shadow;
-      border-color: $input-focus-border-color;
-    }
-
-  }
-}
-
 // Overrides some basic styles from the "input".
 .spinbox {
   border-radius: 0;
-  color: $accent-color;
-  font-weight: bolder;
+  font-weight: 400;
   text-align: center;
   width: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .field {
@@ -38,8 +21,7 @@
 }
 
 .spinbox-control {
-  height: 3.25rem;
-  width: 3.25rem;
+  width: 3.4rem;
 
   background-color: transparent;
   border: 1px solid $input-border-color;
@@ -48,9 +30,9 @@
   cursor: pointer;
   display: inline-block;
   font-family: $font-regular;
-  font-weight: bolder;
-  line-height: 1.65rem;
-  @include font-size(16);
+  font-weight: 700;
+  line-height: normal;
+  @include font-size(14);
   padding: 6px 10px;
   resize: none;
   text-align: center;
@@ -70,5 +52,63 @@
     border-bottom-left-radius: 2px;
     border-right: 0;
     border-top-left-radius: 2px;
+  }
+
+  &:hover {
+    color: $accent-color;
+  }
+
+  &.is-active {
+    color: $font-color-dark;
+    box-shadow: $spinbox-bg-shadow;
+    background-color: $spinbox-bg-color;
+  }
+}
+
+// Everything inside the spinbox wrapper is vertically-aligned middle.
+.spinbox-wrapper {
+  display: inline-block;
+
+  > * {
+    vertical-align: middle;
+  }
+
+  &:hover {
+    > .spinbox {
+      color: $accent-color;
+    }
+  }
+
+  &.is-focused {
+
+    > .spinbox {
+      color: $font-color;
+    }
+
+    > .spinbox-control {
+      box-shadow: $input-focus-shadow;
+      border-color: $input-focus-border-color;
+
+      &.is-active {
+        box-shadow: $input-focus-shadow, $spinbox-bg-shadow;
+      }
+    }
+
+  }
+
+  &.is-focused:hover {
+    > .spinbox {
+      color: $accent-color;
+    }
+  }
+
+  &.is-disabled {
+
+    > .spinbox-control {
+      background-color: $input-disabled-bg-color;
+      border-color: $input-disabled-border-color;
+      color: $input-disabled-color;
+      cursor: default;
+    }
   }
 }
