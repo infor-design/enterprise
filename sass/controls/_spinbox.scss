@@ -6,7 +6,7 @@
   border-radius: 0;
   font-weight: 400;
   text-align: center;
-  width: auto;
+  width: 84px;
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .spinbox-control {
-  width: 3.4rem;
+  width: 33px;
 
   background-color: transparent;
   border: 1px solid $input-border-color;
@@ -73,17 +73,7 @@
     vertical-align: middle;
   }
 
-  &:hover {
-    > .spinbox {
-      color: $accent-color;
-    }
-  }
-
   &.is-focused {
-
-    > .spinbox {
-      color: $font-color;
-    }
 
     > .spinbox-control {
       box-shadow: $input-focus-shadow;
@@ -94,12 +84,6 @@
       }
     }
 
-  }
-
-  &.is-focused:hover {
-    > .spinbox {
-      color: $accent-color;
-    }
   }
 
   &.is-disabled {

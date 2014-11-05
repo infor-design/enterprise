@@ -33,8 +33,17 @@
       init: function() {
         var self = this;
         self
+          .setInitialValue()
           .addMarkup()
           .bindEvents();
+      },
+
+      // Sanitize the initial value of the input field.
+      setInitialValue: function() {
+        var self = this,
+          val = this.element.val();
+        this.element.val(self.checkForNumeric(val));
+        return this;
       },
 
       addMarkup: function() {
@@ -105,6 +114,18 @@
             self.disableLongPress(e, self);
           });
         });
+
+        // Rebind events related to Dirty Tracking, if applicable
+        if (this.element.attr('data-trackdirty')) {
+          // Reset the "original" value of the dirty tracker to the current value of the input,
+          // Since it may have changed after re-invoking the input field.
+          this.element.data('original', this.element.val());
+          // Explicitly trigger the change event if the "original" value is different from its current value.
+          // Prevents an issue where changing the value with arrow keys doesn't trigger the "change" event on blur.
+          this.element.on('blur.spinbox', function() {
+            self.element.trigger('change');
+          });
+        }
 
         return this;
       },
@@ -302,7 +323,9 @@
       // Teardown
       destroy: function() {
         this.buttons.up.off('click.spinbox mousedown.spinbox');
+        this.buttons.up.remove();
         this.buttons.down.off('click.spinbox mousedown.spinbox');
+        this.buttons.down.remove();
         this.element.off('focus.spinbox blur.spinbox keydown.spinbox keypress.spinbox keyup.spinbox');
         this.element.unwrap();
         $.removeData(this.element[0], pluginName);

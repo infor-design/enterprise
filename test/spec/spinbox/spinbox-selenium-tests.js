@@ -5,6 +5,19 @@
 
 var runner;
 
+// Used in the test where we add a new spinbox to the page.
+function addNewSpinboxMarkup() {
+  var container = $('<div class="field"></div>').appendTo('#extra-spinboxes');
+  $('<label for="new-spinbox"></label>').text('New Spinbox').appendTo(container);
+  $('<input>').attr({
+    'id':'new-spinbox',
+    'name':'new-spinbox',
+    'class':'spinbox'
+  }).appendTo(container);
+
+  return $('#new-spinbox').length > 0;
+}
+
 describe('Spinbox [selenium]', function(){
   this.timeout(99999999);
 
@@ -18,6 +31,8 @@ describe('Spinbox [selenium]', function(){
       .execute('$("#regular-spinbox").next(".spinbox-control").attr("id", "regular-spinbox-up");')
       .execute('$("#disabled-spinbox").prev(".spinbox-control").attr("id", "disabled-spinbox-down");')
       .execute('$("#disabled-spinbox").next(".spinbox-control").attr("id", "disabled-spinbox-up");')
+      .execute('$("#stepped-spinbox").prev(".spinbox-control").attr("id", "stepped-spinbox-down");')
+      .execute('$("#stepped-spinbox").next(".spinbox-control").attr("id", "stepped-spinbox-up");')
       // NOTE: Had to set a specific window size to prevent failures
       // in PhantomJS regarding UI element clicks.
       .windowHandleSize({
@@ -31,6 +46,7 @@ describe('Spinbox [selenium]', function(){
     var input = '#regular-spinbox';
     runner.client
       // Check the inital value
+      .setValue(input, '', globals.noError)
       .getValue(input, function(err, results) {
         globals.noError(err);
         should.exist(results);
@@ -393,4 +409,61 @@ describe('Spinbox [selenium]', function(){
       })
       .call(done);
   });
+
+  it('can be destroyed', function(done) {
+    runner.client
+      // Run the destroy method on one of the spinboxes
+      .execute('$("#stepped-spinbox").data("spinbox").destroy();', globals.noError)
+      // Check to see if its excess markup still exists.  It should not.
+      .getTagName('#stepped-spinbox-up', function(err, tagName) {
+        globals.noError(err);
+        should.not.exist(tagName);
+      })
+      .call(done);
+  });
+
+  it('can be re-invoked', function(done) {
+    var input = '#stepped-spinbox';
+    runner.client
+      // Set an initial value that will definitely be revoked upon the plugin initialization.
+      .setValue(input, 'test', globals.noError)
+      // Invoke a spinbox on the empty input
+      .execute('$("'+ input + '").spinbox();')
+      // Check the value of the spinbox.  It should be '0' because the sanitizer that runs on initialization
+      // should have caught the alphabetic text and removed it.
+      .getValue(input, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('0');
+      })
+      .call(done);
+  });
+
+  it('should retain a valid initial value when it\'s invoked', function(done) {
+    runner.client
+      // Add a new input field and label to the page
+      .execute(addNewSpinboxMarkup, function(err, results) {
+        globals.noError(err);
+        should.exist(results);
+        results.value.should.equal(true);
+      })
+      // Make sure that it was added properly
+      .getTagName('#new-spinbox', function(err, tagName) {
+        globals.noError(err);
+        should.exist(tagName);
+        tagName.should.equal('input');
+      })
+      // Set a valid number value on the input
+      .setValue('#new-spinbox', '27', globals.noError)
+      // Invoke it as a spinbox
+      .execute('$("#new-spinbox").spinbox();')
+      // Check the value to make sure it was retained
+      .getValue('#new-spinbox', function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('27');
+      })
+      .call(done);
+  });
+
 });
