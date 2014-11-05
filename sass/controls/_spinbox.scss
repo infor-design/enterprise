@@ -4,10 +4,10 @@
 // Overrides some basic styles from the "input".
 .spinbox {
   border-radius: 0;
+  -webkit-font-smoothing: subpixel-antialiased;
   font-weight: 400;
   text-align: center;
   width: 84px;
-  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .field {
@@ -21,8 +21,6 @@
 }
 
 .spinbox-control {
-  width: 33px;
-
   background-color: transparent;
   border: 1px solid $input-border-color;
   border-collapse: separate;
@@ -36,11 +34,8 @@
   padding: 6px 10px;
   resize: none;
   text-align: center;
-
-  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
-  -moz-user-select: none; /* mozilla browsers */
-  -khtml-user-select: none; /* webkit (konqueror) browsers */
-  -ms-user-select: none; /* IE10+ */
+  @include css3(user-select, none);
+  width: 33px;
 
   &.up {
     border-bottom-right-radius: 2px;
@@ -59,9 +54,9 @@
   }
 
   &.is-active {
-    color: $font-color-dark;
-    box-shadow: $spinbox-bg-shadow;
     background-color: $spinbox-bg-color;
+    box-shadow: $spinbox-bg-shadow;
+    color: $font-color-dark;
   }
 }
 
@@ -76,8 +71,8 @@
   &.is-focused {
 
     > .spinbox-control {
-      box-shadow: $input-focus-shadow;
       border-color: $input-focus-border-color;
+      box-shadow: $input-focus-shadow;
 
       &.is-active {
         box-shadow: $input-focus-shadow, $spinbox-bg-shadow;

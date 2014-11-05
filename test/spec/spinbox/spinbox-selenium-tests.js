@@ -136,7 +136,6 @@ describe('Spinbox [selenium]', function(){
   // TODO: Figure out how to simulate a long-press in Selenium/WebdriverIO/PhantomJS
   it.skip('can be edited by holding down the mouse button while hovering the up/down spinner controls (long press)', function(done) {
     var input = '#regular-spinbox',
-      up = '#regular-spinbox-up',
       down = '#regular-spinbox-down';
 
     runner.client
@@ -347,6 +346,25 @@ describe('Spinbox [selenium]', function(){
         globals.noError(err);
         should.exist(value);
         value.should.equal('50');
+      })
+      .call(done);
+  });
+
+  it('will not accept more than one negative symbol inside the input when working with negative numbers', function(done) {
+    var input = '#regular-spinbox';
+    runner.client
+      // Set the initial value of the spinbox to empty
+      .setValue(input, '', globals.noError)
+      // Attempt to key in two negative symbols
+      .addValue(input, [
+        'Subtract',
+        'Subtract'
+      ], globals.noError)
+      // Check the value of the input to make sure that only one negative number exists inside
+      .getValue(input, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('-');
       })
       .call(done);
   });

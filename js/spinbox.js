@@ -41,8 +41,13 @@
       // Sanitize the initial value of the input field.
       setInitialValue: function() {
         var self = this,
-          val = this.element.val();
-        this.element.val(self.checkForNumeric(val));
+          val = self.checkForNumeric(self.element.val());
+        this.element.val(val);
+        // If using Dirty Tracking, reset the "original" value of the dirty tracker to the current value
+        // of the input, since it may have changed after re-invoking the input field.
+        if (this.element.attr('data-trackdirty')) {
+          this.element.data('original', val);
+        }
         return this;
       },
 
@@ -89,7 +94,10 @@
           self.element.parent('.spinbox-wrapper').addClass('is-focused');
         }).on('blur.spinbox', function() {
           self.element.parent('.spinbox-wrapper').removeClass('is-focused');
-        }).on('keydown.spinbox keypress.spinbox', function(e) {
+          // Explicitly trigger the change event if the "original" value is different from its current value.
+          // Prevents an issue where changing the value with arrow keys doesn't trigger the "change" event on blur.
+          self.element.trigger('change');
+        }).on('keydown.spinbox', function(e) {
           self.handleKeys(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
@@ -114,18 +122,6 @@
             self.disableLongPress(e, self);
           });
         });
-
-        // Rebind events related to Dirty Tracking, if applicable
-        if (this.element.attr('data-trackdirty')) {
-          // Reset the "original" value of the dirty tracker to the current value of the input,
-          // Since it may have changed after re-invoking the input field.
-          this.element.data('original', this.element.val());
-          // Explicitly trigger the change event if the "original" value is different from its current value.
-          // Prevents an issue where changing the value with arrow keys doesn't trigger the "change" event on blur.
-          this.element.on('blur.spinbox', function() {
-            self.element.trigger('change');
-          });
-        }
 
         return this;
       },
@@ -174,7 +170,7 @@
         }
 
         // Add a negative sign into the mix if its keycode is detected and no numbers are present.
-        if ($.inArray(key, [45, 109, 189]) !== -1) {
+        if ($.inArray(key, [45, 109, 173, 189]) !== -1) {
           e.preventDefault();
           var val = self.element.val();
           if (val.length === 0) {
@@ -266,6 +262,10 @@
 
       // Sanitizes the value of the input field to an integer if it isn't already established.
       checkForNumeric: function(val) {
+        // Allow for NULL
+        if (val === '') {
+          return val;
+        }
         if ($.isNumeric(val)) {
           return Number(val);
         }
@@ -326,7 +326,7 @@
         this.buttons.up.remove();
         this.buttons.down.off('click.spinbox mousedown.spinbox');
         this.buttons.down.remove();
-        this.element.off('focus.spinbox blur.spinbox keydown.spinbox keypress.spinbox keyup.spinbox');
+        this.element.off('focus.spinbox blur.spinbox keydown.spinbox keyup.spinbox');
         this.element.unwrap();
         $.removeData(this.element[0], pluginName);
       }
