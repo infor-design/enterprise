@@ -68,7 +68,7 @@ svg.icon.icon-validated {
 svg.icon.icon-dirty {
   fill: $amber;
   position: absolute;
-  transform: rotate(135deg);
+  @include css3(transform, rotate(135deg));
   margin-left: -12px;
   margin-top: -12px;
   pointer-events: none;
