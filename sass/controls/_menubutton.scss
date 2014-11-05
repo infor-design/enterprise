@@ -1,44 +1,41 @@
 /* Menu Buttons
 ================================================== */
 
-.menubutton .icon {
-  display: inline-block;
-  fill: $input-color;
-  margin-left: -22px;
-  margin-top: 1px;
-  position: absolute;
+.button-group > * {
+  position: relative;
+  float: left;
+  margin-right: 10px;
 }
 
-.menubutton {
-  padding: 0 10px;
-  background-color: transparent;
+.splitbutton, .menubutton, .splitbutton-menu {
+  background-color: $menubutton-bg-color;
   border: 1px solid $menubutton-border-color;
   border-radius: 2px;
   height: $menubutton-height;
-
+  span {
+    @include rem(padding, 1rem);
+    line-height: $menubutton-height;
+    vertical-align: top;
+  }
+  &:focus {
+    border-color: $menubutton-focus-border-color;
+    box-shadow: $menubutton-focus-shadow;
+  }
   &[disabled] {
-    background-color: $input-disabled-bg-color;
-    border-color: $input-disabled-border-color;
+    background-color: $menubutton-disabled-bg-color;
+    border-color: $menubutton-disabled-border-color;
+    color: $menubutton-disabled-color;
   }
-
-  &[disabled] span {
-    color: $input-disabled-color;
-  }
-
-  &[disabled] icon {
-    fill: $input-disabled-color;
+  .icon {
+    pointer-events: none;
   }
 }
 
-.menubutton:focus {
-  border-color: $input-focus-border-color;
-  box-shadow: $input-focus-shadow;
-}
-
-.menubutton span {
-  color: $input-color;
-  display: inline-block;
-  float: left;
-  line-height: $menubutton-height;
-  padding-right: 20px;
+.splitbutton {
+  + .splitbutton-menu {
+    margin-left: -11px;
+  }
+  &:focus + .splitbutton-menu {
+    border-left: 1px solid $menubutton-focus-border-color;
+  }
 }

@@ -28,7 +28,7 @@ $input-color: #333333;
 $input-disabled-bg-color: #e5e5e5;
 $input-disabled-border-color: #d2d2d2;
 $input-disabled-color: #737373;
-$input-focus-shadow: 0 0 5px rgba(8,150,233,.2);
+$input-focus-shadow: 0 0 5px rgba(8, 150, 233, 0.2);
 $input-focus-border-color: #0896e9;
 $input-placeholder-color: #999999;
 $input-readonly-border-color: #d2d2d2;
@@ -45,8 +45,13 @@ $dropdown-disabled-color: #737373;
 
 // Menu Button
 $menubutton-border-color: #999999;
-$menubutton-focus-border-color: #999999;
+$menubutton-bg-color: transparent;
 $menubutton-height: 34px;
+$menubutton-focus-shadow: $input-focus-shadow;
+$menubutton-focus-border-color: $input-focus-border-color;
+$menubutton-disabled-bg-color: $input-disabled-bg-color;
+$menubutton-disabled-border-color: $input-disabled-border-color;
+$menubutton-disabled-color: $input-disabled-color;
 
 // Checkboxes
 $checkbox-color: #0896e9;
@@ -82,7 +87,7 @@ $disabled-color: #cccccc;
 //The Focus Indicator on Fields
 $focus-shadow: 0 0 3px #0095ff;
 
-@mixin field-height() {
+@mixin field-height {
   height: 43px;
   padding: 12px 10px;
 }
@@ -126,5 +131,3 @@ $site-width-tiny: 400px;
   }
 }
 */
-
-

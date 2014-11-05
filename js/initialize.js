@@ -39,7 +39,7 @@
       elem.find('.editor').editor();
 
       //Menu Buttons
-      elem.find('.menubutton').popupmenu();
+      elem.find('.menubutton, .splitbutton-menu').popupmenu();
 
       //Context Menu
       elem.find('[data-popupmenu]').each(function () {
