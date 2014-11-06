@@ -181,6 +181,7 @@
 
       return dfds;
     },
+
     getField: function(field) {
       if (field.parent().is('.inforTriggerField')) {
         field = field.parent();
@@ -193,9 +194,11 @@
       }
       return field;
     },
+
     hasError: function(field) {
       return this.getField(field).hasClass('error');
     },
+
     addError: function(field, message) {
       var loc = this.getField(field).addClass('error'),
          appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
@@ -224,9 +227,28 @@
         field.attr('data-placeholder', field.attr('placeholder'));
         field.attr('placeholder', appendedMsg);
       }
+
+      // Build Tooltip
+      field.tooltip({
+        content: message,
+        placement: 'offset',
+        trigger: 'immediate',
+        isError: true
+      });
+      field.on('focus.validate', function() {
+        field.data('tooltip').show();
+      }).on('blur.validate', function() {
+        field.data('tooltip').hide();
+      });
     },
+
     removeError: function(field) {
       var loc = this.getField(field);
+
+      if (field.data('tooltip')) {
+        field.off('focus.validate blur.validate');
+        field.data('tooltip').destroy();
+      }
 
       this.inputs.filter('input, textarea').off('focus.validate');
       loc.removeClass('error');

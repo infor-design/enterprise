@@ -6,7 +6,6 @@
   color: #ffffff;
   background-clip: padding-box;
   background-color: #333333;
-  border: 1px solid #333333;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   left: -9999px;
@@ -74,7 +73,7 @@
 }
 
 .tooltip-content {
-  padding: 12px 15px;
+  padding: 10px 12px;
 }
 
 .popover-content, .tooltip-content p {
@@ -141,6 +140,11 @@
   margin-left: -11px;
   top: -11px;
 }
+.popover.bottom.offset .arrow,
+.tooltip.bottom.offset .arrow {
+  left: auto;
+  right: 18px;
+}
 .popover.bottom .arrow:after, .tooltip.bottom .arrow:after {
   border-bottom-color: #333;
   border-top-width: 0;
@@ -175,21 +179,21 @@
 }
 
 .tooltip.is-error {
-  background-color: #d5000e;
+  background-color: $red;
 }
 
 .tooltip.is-error.top .arrow:after {
-  border-top-color: #d5000e;
+  border-top-color: $red;
 }
 
 .tooltip.is-error.left .arrow:after {
-  border-left-color: #d5000e;
+  border-left-color: $red;
 }
 
 .tooltip.is-error.bottom .arrow:after {
-  border-bottom-color: #d5000e;
+  border-bottom-color: $red;
 }
 
 .tooltip.is-error.right .arrow:after {
-  border-right-color: #d5000e;
+  border-right-color: $red;
 }
