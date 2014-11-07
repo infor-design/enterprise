@@ -84,7 +84,7 @@
       });
 
       //Auto Complete
-      elem.find('[data-autocomplete]').autocomplete();
+      elem.find('[data-autocomplete]:not([data-init])').autocomplete();
 
       //Multiselect
       elem.find('select[multiple]:not([data-init])').multiselect();

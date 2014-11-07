@@ -36,7 +36,7 @@
       },
 
       addMarkup: function () {
-        this.element.attr('role', 'combobox')
+        this.element.addClass('autocomplete').attr('role', 'combobox')
           .attr('aria-owns', 'autocomplete-list')
           .attr('aria-autocomplete', 'list')
           .attr('aria-activedescendant', '');
@@ -48,26 +48,50 @@
         //append the list
         this.list = $('#autocomplete-list');
         if (this.list.length === 0) {
-          this.list = $('<ul id="autocomplete-list" aria-expanded="true"></ul>').css({'width': this.element.outerWidth(), 'box-shadow': '0 5px 5px rgba(0, 0, 0, 0.2)'}).appendTo('body');
+          this.list = $('<ul id="autocomplete-list" aria-expanded="true"></ul>').appendTo('body');
         }
 
+        this.list.css({'height': 'auto', 'width': this.element.outerWidth()}).addClass('autocomplete');
         this.list.empty();
 
         for (var i = 0; i < items.length; i++) {
           var option = (typeof items[i] === 'string' ? items[i] : items[i].label);
 
           if (option.toLowerCase().indexOf(term) > -1) {
+            //Highlight Term
+            var exp = new RegExp('(' + term + ')', 'gi') ;
+            option = option.replace(exp, '<i>$1</i>');
             var listOption = $('<li id="ac-list-option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + option + '</a></li>');
+            if (typeof items[i] !== 'string') {
+              listOption.attr('data-value', items[i].value);
+            }
             self.list.append(listOption);
           }
         }
 
-        this.element.popupmenu({menuId: 'autocomplete-list', trigger: 'immediate', autoFocus: false})
+        this.element.addClass('is-open')
+          .popupmenu({menuId: 'autocomplete-list', trigger: 'immediate', autoFocus: false})
           .on('close.autocomplete', function () {
-            self.list.remove();
-          }).on('selected.autocomplete', function (e, args) {
-            self.element.val(args.text()).attr('aria-activedescendant', args.parent().attr('id'));
+            self.list.parent('.popupmenu-wrapper').remove();
+            self.element.removeClass('is-open');
           });
+
+        self.list.one('click.autocomplete', 'a', function (e) {
+          var a = $(e.currentTarget),
+            ret = a.text();
+
+          self.element.val(a.text()).attr('aria-activedescendant', a.parent().attr('id'));
+
+          if (a.parent().attr('data-value')) {
+            for (var i = 0; i < items.length; i++) {
+              if (items[i].value === a.parent().attr('data-value')) {
+                ret = items[i];
+              }
+            }
+          }
+
+          self.element.trigger('selected', ret);
+        });
 
         var all = self.list.find('a').on('focus', function () {
           var anchor = $(this);
@@ -104,7 +128,14 @@
             }
 
             if (typeof settings.source === 'function') {
-              console.log('TO BE CODED');
+              var response = function(data) {
+                self.element.removeClass('is-busy');  //TODO: Need style for this
+                self.openList(buffer, data);
+              };
+
+              self.element.addClass('is-busy');
+              settings.source(buffer, response);
+
             } else {
               self.openList(buffer, settings.source);
             }

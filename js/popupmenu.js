@@ -165,6 +165,10 @@
             callback(href.substr(1), self.element , self.menu.offset(), $(this));
           }
 
+          if (self.element.is('.autocomplete')) {
+            return;
+          }
+
           self.element.trigger('selected', [anchor]);
 
           if (href && href.charAt(0) !== '#') {
@@ -256,13 +260,15 @@
 
         //Handle Case where menu is off bottom
         if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          wrapper.css({'top': ($(window).height() + $(document).scrollTop()) - menuHeight});
+          if (this.element.is(':not(.autocomplete)')) {
+            wrapper.css({'top': ($(window).height() + $(document).scrollTop()) - menuHeight});
 
-          //Did it fit?
-          if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
-            wrapper.css('top', 0);
-            wrapper.css('top', $(document).scrollTop() + (wrapper.offset().top * -1));
-            menuHeight = wrapper.outerHeight();
+            //Did it fit?
+            if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
+              wrapper.css('top', 0);
+              wrapper.css('top', $(document).scrollTop() + (wrapper.offset().top * -1));
+              menuHeight = wrapper.outerHeight();
+            }
           }
 
           // Do one more check to see if the bottom edge bleeds off the screen.
@@ -274,7 +280,7 @@
           }
         }
 
-        //Handle Case where menu is off left side
+        //Handle Case where menu is off the bottom
         if ((wrapper.offset().left + menuWidth) > $(window).width()) {
           wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
         }
@@ -430,7 +436,7 @@
           e.stopPropagation();
         }); //do not propapagate events to parent
 
-        this.element.trigger('close.popupmenu');
+        this.element.trigger('close');
         this.element.focus().attr('aria-expanded', 'false');
         this.detach();
 

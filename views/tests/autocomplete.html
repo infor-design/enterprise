@@ -1,0 +1,32 @@
+<div class="grid">
+  <div class="col-1-1">
+    <h1>Autocomplete</h1>
+    <span class="label">for search and textbox</span>
+    <hr>
+
+    <div class="grid">
+      <div class="col-1-1">
+
+        <div class="field">
+          <label for="input-autocomplete">Label</label>
+          <input data-init="false" type="text" data-autocomplete="source" placeholder="Type to Search" id="input-autocomplete">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $('#input-autocomplete').autocomplete({source: function (term, response) {
+      //make an ajax call
+      $.getJSON('/api/states?term='+term, function(data) {
+        //Structure the data with val, label syntax is done on the server
+        response(data);
+      });
+    }}).on('change', function () {
+      console.log('Changed to :' + $(this).val());
+    });
+  });
+</script>

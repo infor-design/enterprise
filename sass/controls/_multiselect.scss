@@ -1,19 +1,35 @@
 /* Multi Select (DropDown)
 ================================================== */
+
 .multiselect {
   background-color: transparent;
   border: 1px solid $input-border-color;
+  border-radius: 2px;
   font-size: 0;
-  min-height: 43px;
+  min-height: $multiselect-height;
   outline: medium none;
   overflow: hidden;
-  padding: 5px 2px 2px;
+  padding: 0 0px 0 5px;
   text-align: left;
-  width: 299px; /*inherit*/
+  width: 300px;
+  //Trigger Icon
+  > .icon {
+    cursor: pointer;
+    float: right;
+    height: $multiselect-height;
+    vertical-align: top;
+    width: $multiselect-height;
+  }
+  > .icon:hover {
+    background-color: #e5e5e5;
+    outline: 1px solid #e5e5e5;
+  }
 }
 
+/* Trigger */
 .multiselect.is-focused {
-  box-shadow: $focus-shadow;
+  border-color: $multiselect-focus-border-color;
+  box-shadow: $multiselect-focus-shadow;
 }
 
 #multiselect-list {
@@ -42,52 +58,35 @@ select.multiselect {
   @include rem(width, 8rem);
 }
 
-/* Trigger */
-.multiselect > .icon {
-  cursor: pointer;
-  float: right;
-  height: 38px;
-  margin-top: -3px;
-  vertical-align: top;
-  width: 34px;
-}
-
-.multiselect > .icon:hover {
-  background-color: #e5e5e5;
-  outline: 1px solid #e5e5e5;
-}
-
-/* Tags */
+// Tags
 .multiselect .tag {
-  background-color: #e0e0e0;
-  border-radius: 3px;
-  color: #777;
+  background-color: $multiselect-tag-color;
+  border-radius: 9px;
+  color: $inverse-color;
   cursor: default;
   display: inline-block;
   @include font-size(12);
   @include no-select;
-  height: 30px;
-  line-height: 11px;
-  margin: 0 3px 5px;
+  height: 22px;
+  line-height: 22px;
   overflow: hidden;
-  padding: 10px 25px 10px 10px;
+  padding: 0 20px 0 10px;
   position: relative;
   transition: all 0.15s linear 0s;
 }
 
 .multiselect .tag:hover {
-  background-color: #999999;
-  color: #fff;
+  background-color: $multiselect-tag-hover-color;
 }
 
 .multiselect .tag:hover .icon {
-  fill: #fff;
+  fill: $inverse-color;
 }
 
 .multiselect .tag > span {
   border: none;
   bottom: 0;
-  color: #fff;
+  color: $inverse-color;
   cursor: pointer;
   opacity: 1;
   padding: 0;
@@ -98,18 +97,18 @@ select.multiselect {
 }
 
 .multiselect .tag .icon {
-  fill: #777;
+  fill: $inverse-color;
   height: 22px;
   left: -5px;
   top: 3px;
 }
 
-/* Layout */
+// Layout
 .field .multiselect {
   margin-bottom: 20px;
 }
 
-/* States */
+// States
 .multiselect.disabled {
   color: $disabled-color;
   -webkit-text-fill-color: $disabled-color;

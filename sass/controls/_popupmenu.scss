@@ -21,43 +21,38 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px 0;
-
   &.is-open {
     display: block;
   }
-
   li {
     cursor: pointer;
     line-height: 30px;
     padding: 0;
     position: static;
     white-space: nowrap;
-
     &:hover {
       background-color: $menu-hover-color;
     }
-
-    > a:focus {
+    &:not(.is-selected) > a:focus {
       background-color: $menu-hover-color;
-      border: 1px solid transparent;
     }
-
     &.disabled > a:focus {
       box-shadow: none;
     }
-
     // Selected
-    &.is-selected {
-      background-color: $accent-color;
-
-      a {
-        box-shadow: none;
-        color: #fff;
-      }
+    &.is-selected a:before {
+      border-color: #1a1a1a;
+      border-style: solid;
+      border-width: 0 3px 3px 0;
+      content: "";
+      height: 10px;
+      left: 12px;
+      margin-top: 6px;
+      position: absolute;
+      @include css3(transform, rotate(45deg));
+      width: 4px;
     }
-
   }
-
   a {
     border: 1px solid transparent;
     color: $input-color;
@@ -67,20 +62,23 @@
     position: relative;
     text-decoration: none;
     white-space: nowrap;
-
     > span {
       color: inherit;
       font-family: inherit;
       font-weight: inherit;
     }
-
     &[disabled] {
       color: $disabled-color;
       opacity: .6;
     }
-
   }
-
+  //Text Underline on Terms
+  i {
+    color: $menu-underline-color;
+    font-style: normal;
+    font-family: $font-semibold;
+    text-decoration: underline;
+  }
   //Icon Positioning
   .icon {
     fill: $input-color;
@@ -88,7 +86,6 @@
     position: relative;
     top: 9px;
   }
-
   // Disabled
   li.is-disabled a,
   li.disabled a {
@@ -96,28 +93,22 @@
     color: $disabled-color;
     cursor: default;
   }
-
   li.is-disabled:hover,
   li.disabled:hover {
     background-color: transparent;
   }
-
   .submenu {
-
     .wrapper {
       display: block;
       position: absolute;
       z-index: 4000;
     }
-
     .popupmenu.is-open {
       display: block;
       visibility: visible;
     }
-
     > a {
       padding-right: 48px;
-
       > .icon.arrow {
         left: auto;
         position: absolute;
@@ -126,13 +117,10 @@
         @include css3(transform, rotate(-90deg));
       }
     }
-
   }
-
   // Seperator
   .separator {
     border-bottom: 1px solid #d2d2d2;
     margin: 10px 0px;
   }
-
 }

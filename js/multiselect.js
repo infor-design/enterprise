@@ -262,8 +262,11 @@
 
       removeTag: function(tag) {
         var sel = this.element.find('option').filter(function () { return this.value === tag.attr('data-val'); });
-        sel[0].selected = false;
-        tag.remove();
+        if (sel.length > 0) {
+          sel[0].selected = false;
+          tag.remove();
+          this.element.trigger('change');
+        }
       },
 
       disable: function () {
