@@ -14,8 +14,8 @@
   overflow-x: hidden;
   overflow-y: auto;
   width: auto;
+  -webkit-font-smoothing: antialiased;
   z-index: 1001;
-
   &.is-visible {
     visibility: visible;
   }
@@ -27,7 +27,7 @@
   left: 0;
   opacity: 0;
   position: fixed;
-  @include css3(transition, all .3s);
+  @include css3(transition, all 0.3s);
   top: 0;
   visibility: hidden;
   width: 100%;
@@ -46,7 +46,7 @@
   opacity: 0;
   padding: 20px 30px;
   position: relative;
-  @include css3(transition, all .3s);
+  @include css3(transition, all 0.3s);
   @include css3(transform, translateZ(0) rotateX(-60deg));
   //@include css3(transform-style, preserve-3d);
   @include css3(perspective, 300px);
