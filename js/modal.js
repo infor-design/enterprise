@@ -157,7 +157,7 @@
           self.element.find('.modal-title').focus();
           self.keepFocus();
           self.element.triggerHandler('open');
-          self.element.find('.modal-body > div').triggerHandler('open');
+          self.element.find('.modal-body > div').first().triggerHandler('open');
         }, 300);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
@@ -254,11 +254,12 @@
       },
 
       close: function () {
-        var self = this,
-          elemCanClose = this.element.triggerHandler('beforeClose');
+        var elemCanClose = this.element.triggerHandler('beforeClose'),
+          bodyCanClose = this.element.find('.modal-body > div').first().triggerHandler('beforeClose'),
+          self = this;
 
-        if (elemCanClose === false) {
-          return;
+        if (elemCanClose === false || bodyCanClose === false) {
+          return false;
         }
 
         this.element.off('keypress.modal keydown.modal');
@@ -271,8 +272,8 @@
         }
 
         //Fire Events
-        this.element.trigger('close', [this.isCancelled]);
-        this.element.find('.modal-body > div').first().trigger('beforeClose', [this.isCancelled]);  //trigger on the content for messages
+        this.element.find('.modal-body > div').first().trigger('close');
+        self.element.trigger('close');
 
         if (this.oldActive && $(this.oldActive).is('button:visible')) {
           this.oldActive.focus();
