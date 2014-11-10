@@ -19,7 +19,7 @@
       defaults = {
         content: null, //Takes title attribute or feed content. Can be a function or jQuery markup
         offset: 20, //how much room to leave
-        placement: 'bottom',  //can be top/left/bottom/right
+        placement: 'bottom',  //can be top/left/bottom/right/offset
         trigger: 'hover', //supports click and manual and hover (future focus)
         title: null, //Title for Infor Tips
         popover: null , //force it to be a popover (no content)
@@ -43,7 +43,7 @@
       },
 
       addAria: function() {
-        this.content =  this.element.attr('title');
+        this.content =  this.element.attr('title') || settings.content;
         this.element.removeAttr('title').attr('aria-describedby', 'tooltip');
         if (this.isPopover && settings.trigger === 'click') {
           this.element.attr('aria-haspopup', true);
@@ -91,16 +91,11 @@
           }, delay);
         }
 
-        this.element.on('focus.tooltip, click.tooltip', function() {
-          if (!self.isPopover) {
-            self.setContent(self.content);
-          }
-        });
       },
 
       setContent: function (content) {
         if (this.isPopover) {
-          this.tooltip.find('.tooltip-content').html(settings.content.removeClass('hidden'));
+          this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
           this.tooltip.addClass('popover');
 
           if (settings.title !== null) {
@@ -138,12 +133,16 @@
         this.element.trigger('beforeOpen', [this.tooltip]);
 
         this.tooltip.removeAttr('style');
-        this.tooltip.removeClass('bottom right left top is-error').addClass(settings.placement);
-        this.position();
+        this.tooltip.removeClass('bottom right left top offset is-error').addClass(settings.placement);
+
         if (settings.isError) {
           this.tooltip.addClass('is-error');
         }
+
         this.tooltip.removeClass('is-hidden');
+
+        this.position();
+
         this.element.trigger('open', [this.tooltip]);
 
         setTimeout(function () {
@@ -191,6 +190,11 @@
           winW = window.innerWidth - 2;
 
         switch(settings.placement) {
+          case 'offset':
+            // Used for error messages (validation)
+            self.tooltip.addClass('bottom');
+            self.placeBelowOffset();
+            break;
           case 'bottom':
             self.placeBelow();
             var bottomOffset = self.tooltip.offset().top + self.tooltip.outerHeight();
@@ -237,6 +241,10 @@
               }
         }
 
+      },
+      placeBelowOffset: function() {
+        this.tooltip.css({'top' : this.element.offset().top + this.element.outerHeight() + settings.offset,
+                          'left' : this.element.offset().left + (this.element.outerWidth() - this.tooltip.outerWidth()) + 10 });
       },
       placeBelow: function () {
         this.tooltip.css({'top': this.element.offset().top + this.element.outerHeight() + settings.offset,
