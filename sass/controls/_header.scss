@@ -1,31 +1,35 @@
 /* Site/App Header
 ================================================== */
+
 .header {
-  height: 100px;
   background-color: $primary-color;
+  height: 100px;
   padding-top: 35px;
+
+  .title {
+    color: $inverse-color;
+    font-family: $font-semibold;
+    @include font-size(24);
+    @include rem(line-height, 2.4rem);
+  }
 }
 
-.header + .svg-icons + .grid, .header + .grid {
+.header + .svg-icons + .grid,
+.header + .grid {
   margin-top: 40px;
 }
 
-.header .title {
-  color: $inverse-color;
-  font-family: $font-semibold;
-  @include font-size(24);
-  @include rem(line-height, 2.4rem);
-}
-
-//Print Style Sheet
+// Print Style Sheet
 @media print {
   body {
-    width: 100%;
     background-color: transparent;
+    width: 100%;
   }
+
   .header {
     background-color: transparent !important;
   }
+
   .header .title {
     color: #333 !important;
   }

@@ -1,24 +1,25 @@
 /* Tooltips
 ================================================== */
-.popover, .tooltip {
-  font-family: $font-regular;
-  @include font-size(15);
-  color: #ffffff;
+.popover,
+.tooltip {
   background-clip: padding-box;
   background-color: #333333;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
+  color: #ffffff;
+  font-family: $font-regular;
+  @include font-size(15);
   left: -9999px;
+  max-width: 315px;
+  min-width: 60px;
   opacity: 1;
   padding: 1px;
+  pointer-events: none;
   position: absolute;
-  min-width: 60px;
-  max-width: 300px;
   text-align: left;
   top: 0;
-  white-space: normal;
-  pointer-events: none;
   transition: opacity .4s ease;
+  white-space: normal;
   z-index: 5010;
 }
 
@@ -27,28 +28,24 @@
 }
 
 .popover {
-  background-color: #FFFFFF;
-  border: 1px solid #D6D6D6;
+  background-color: #ffffff;
+  border: 1px solid #d6d6d6;
   color: #666666;
   pointer-events: initial;
   z-index: 3010;
 }
 
-.popover.is-hidden, .tooltip.is-hidden {
+.popover.is-hidden,
+.tooltip.is-hidden {
   opacity: 0 !important;
   visibility: hidden;
 }
 
-.popover .alignRight, .tooltip .alignRight {
-  color: #737373;
-  float: right;
-  font-size: 0.8em;
-}
-
-.popover p, .tooltip p {
+.popover p,
+.tooltip p {
   color: #ffffff;
   line-height: 15px;
-  max-width: 150px;
+  max-width: 315px;
   text-align: center;
 }
 

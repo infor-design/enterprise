@@ -2,25 +2,28 @@
 ================================================== */
 
 // Field Style
-.field .checkbox-label, .field .checkbox > label {
+.field .checkbox-label,
+.field .checkbox > label {
   margin-bottom: 5px;
   margin-top: 4px;
 }
 
-.field > input, .field > textarea {
+.field > input,
+.field > textarea {
   margin-bottom: 20px;
-}
-
-.field > .textarea-wordcount {
-  margin-bottom: -1px;
 }
 
 .field {
   position: relative;
+
+  > .textarea-wordcount {
+    margin-bottom: 14px;
+  }
 }
 
 // Input Style
-input, textarea {
+input,
+textarea {
   background-color: transparent;
   border: 1px solid $input-border-color;
   border-collapse: separate;
@@ -36,21 +39,26 @@ input, textarea {
   width: 300px;
 }
 
-input[disabled], textarea[disabled], input[readonly], textarea[readonly] {
-  color: $input-disabled-color;
-  -webkit-text-fill-color: $disabled-color;
+input[disabled],
+textarea[disabled],
+input[readonly],
+textarea[readonly] {
   background-color: $input-disabled-bg-color;
   border: solid 1px $input-disabled-border-color;
+  color: $input-disabled-color;
+  -webkit-text-fill-color: $disabled-color;
 }
 
-input[readonly], textarea[readonly] {
-  color: $input-color;
+input[readonly],
+textarea[readonly] {
   border-color: $input-readonly-border-color;
+  color: $input-color;
 }
 
-input:focus, textarea:focus {
-  box-shadow: $input-focus-shadow;
+input:focus,
+textarea:focus {
   border-color: $input-focus-border-color;
+  box-shadow: $input-focus-shadow;
 }
 
 // Text Area
@@ -58,32 +66,37 @@ textarea {
   @include rem(line-height, 2rem);
   min-height: 80px;
   width: 362px;
+
+  &.resizable {
+    resize: vertical;
+  }
+
+  .almost-empty {
+    border-color: $error-color;
+  }
 }
 
 .textarea-wordcount {
   display: block;
-  @include font-size(11);
+  @include font-size(10);
   @include rem(line-height, 2rem);
-  margin-top: -19px;
+  margin-top: -20px;
   min-height: auto;
   text-transform: uppercase;
   width: 362px;
+
+  .focus {
+    color: $input-color;
+  }
+
+  .almost-empty {
+    color: $error-color;
+  }
 }
 
-textarea[readonly] + .textarea-wordcount, textarea[disabled] + .textarea-wordcount {
+textarea[readonly] + .textarea-wordcount,
+textarea[disabled] + .textarea-wordcount {
   display: none;
-}
-
-.textarea-wordcount.focus {
-  color: $input-color;
-}
-
-.textarea-wordcount.almost-empty {
-  color: $error-color;
-}
-
-textarea.almost-empty {
-  border-color: $error-color;
 }
 
 .textarea-print {
@@ -93,9 +106,11 @@ textarea.almost-empty {
 
 // Print Style Sheet
 @media print {
-  textarea, .textarea-wordcount {
+  textarea,
+  .textarea-wordcount {
     display: none !important;
   }
+
   .textarea-print {
     display: inline-block !important;
     height: auto;
@@ -105,20 +120,20 @@ textarea.almost-empty {
 
 // Required Indicator
 .required:after {
-  display: inline-block;
   color: #ff3333;
-  content: "*";
+  content: '*';
+  display: inline-block;
   font-family: $font-regular;
   @include font-size(11);
   left: 2px;
   position: relative;
-  speak:none;
+  speak: none;
   top: -1px;
 }
 
 @media reader, speech, aural {
   .required:after {
-    content: "";
+    content: '';
     display: none;
     visibility: hidden;
   }
@@ -126,41 +141,45 @@ textarea.almost-empty {
 
 // Placeholder - Inline help
 ::-webkit-input-placeholder {
- color: $input-placeholder-color;
- @include font-size(14);
- opacity: 1;
+  color: $input-placeholder-color;
+  @include font-size(14);
+  opacity: 1;
 }
 
 ::-moz-placeholder {
- color: $input-placeholder-color;
- @include font-size(14);
- opacity: 1;
+  color: $input-placeholder-color;
+  @include font-size(14);
+  opacity: 1;
 }
 
 :-ms-input-placeholder {
- color: $input-placeholder-color;
- @include font-size(14);
- opacity: 1;
+  color: $input-placeholder-color;
+  @include font-size(14);
+  opacity: 1;
 }
 
 // Error States
-.error, .error-message {
+.error,
+.error-message {
   color: $error-color;
 }
 
-.field .icon-error, .field .icon-validated {
+.field .icon-error,
+.field .icon-validated {
   display: inline-block;
   margin-left: -30px;
   top: 3px;
 }
 
-input.error, textarea.error {
+input.error,
+textarea.error {
   border-color: $error-color;
 }
 
-input.error:focus, textarea.error:focus {
+input.error:focus,
+textarea.error:focus {
+  box-shadow: 0 0 5px rgba(237, 28, 36, 0.2);
   color: $input-color !important;
-  box-shadow: 0 0 5px rgba(237,28,36,.2);
 }
 
 textarea + .icon-error {
@@ -169,8 +188,8 @@ textarea + .icon-error {
 }
 
 .error::-webkit-input-placeholder {
- color: $error-color;
- opacity: 1;
+  color: $error-color;
+  opacity: 1;
 }
 
 .error::-moz-placeholder {
@@ -188,6 +207,7 @@ textarea + .icon-error {
   background: $primary-color;
   color: $inverse-color;
 }
+
 ::-moz-selection {
   background: $primary-color;
   color: $inverse-color;

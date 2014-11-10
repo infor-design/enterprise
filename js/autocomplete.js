@@ -45,6 +45,8 @@
       openList: function (term, items) {
         var self = this;
 
+        term = term.toLowerCase();
+
         //append the list
         this.list = $('#autocomplete-list');
         if (this.list.length === 0) {
@@ -76,7 +78,7 @@
             self.element.removeClass('is-open');
           });
 
-        self.list.one('click.autocomplete', 'a', function (e) {
+        self.list.off('click.autocomplete').on('click.autocomplete', 'a', function (e) {
           var a = $(e.currentTarget),
             ret = a.text();
 
@@ -84,13 +86,16 @@
 
           if (a.parent().attr('data-value')) {
             for (var i = 0; i < items.length; i++) {
-              if (items[i].value === a.parent().attr('data-value')) {
+              if (items[i].value.toString() === a.parent().attr('data-value')) {
                 ret = items[i];
               }
             }
           }
 
           self.element.trigger('selected', ret);
+
+          e.preventDefault();
+          return false;
         });
 
         var all = self.list.find('a').on('focus', function () {
@@ -99,6 +104,9 @@
           anchor.parent('li').addClass('is-selected');
           self.element.val(anchor.text());
         });
+
+        this.noSelect = true;
+        this.element.focus();
       },
 
       handleEvents: function () {
@@ -121,6 +129,7 @@
             if (buffer === '') {
               return;
             }
+            buffer = buffer.toLowerCase();
 
             //This checks all printable characters
             if (e.which === 0 || e.charCode === 0 || e.ctrlKey || e.metaKey || e.altKey) {
@@ -140,9 +149,14 @@
               self.openList(buffer, settings.source);
             }
 
-          }, 300);  //no pref for this lets keep it simple.
+          }, 500);  //no pref for this lets keep it simple.
 
         }).on('focus.autocomplete', function () {
+          if (self.noSelect) {
+            self.noSelect = false;
+            return;
+          }
+
           //select all
           setTimeout(function () {
             self.element.select();

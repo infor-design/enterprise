@@ -1,5 +1,5 @@
-// * Reset Browser Crap
-// *-------------------------------------------------------------------------------
+/* Reset
+================================================== */
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, em, img, small, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, legend, label, input, textarea, select, button, table, caption, thead, tbody, tfoot, tr, th, td {
   border: none;
@@ -27,8 +27,8 @@ img, object, embed {
 }
 
 img {
-  border-style: none;
   border-color: transparent;
+  border-style: none;
   border-width: 0;
 }
 
@@ -41,10 +41,10 @@ del {
 }
 
 input, textarea, select, button {
-  font-family: inherit;
-  font-weight: inherit;
   background-color: #fff;
   border: 0;
+  font-family: inherit;
+  font-weight: inherit;
   padding: 0;
   margin: 0;
 }
@@ -56,8 +56,9 @@ table {
 button {
   cursor: pointer;
   margin: 0;
-  width: auto;
   overflow: visible;
+  width: auto;
+
 }
 
 // Remove button padding in FF

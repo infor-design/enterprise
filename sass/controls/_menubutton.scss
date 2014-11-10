@@ -2,41 +2,51 @@
 ================================================== */
 
 .button-group > * {
-  position: relative;
   float: left;
   margin-right: 10px;
+  position: relative;
 }
 
-.splitbutton, .menubutton, .splitbutton-menu {
+.splitbutton,
+.menubutton,
+.splitbutton-menu {
   background-color: $menubutton-bg-color;
   border: 1px solid $menubutton-border-color;
   border-radius: 2px;
   height: $menubutton-height;
+
   span {
     @include rem(padding, 1rem);
     line-height: $menubutton-height;
     vertical-align: top;
   }
+
   &:focus {
     border-color: $menubutton-focus-border-color;
     box-shadow: $menubutton-focus-shadow;
   }
+
   &[disabled] {
     background-color: $menubutton-disabled-bg-color;
     border-color: $menubutton-disabled-border-color;
     color: $menubutton-disabled-color;
+    cursor: default;
   }
+
   .icon {
+    fill: $menubutton-border-color;
     pointer-events: none;
   }
 }
 
 .splitbutton {
-  border-radius: 2px 0 0px 2px;
+  border-radius: 2px 0 0 2px;
+
   + .splitbutton-menu {
-    margin-left: -11px;
     border-radius: 0 2px 2px 0;
+    margin-left: -11px;
   }
+
   &:focus + .splitbutton-menu {
     border-left: 1px solid $menubutton-focus-border-color;
   }

@@ -3,36 +3,59 @@
 
 // Buttons
 .btn-icon {
-  cursor: pointer;
-  border: none;
-  height: 32px;
-  width: 32px;
   background-color: transparent;
-  border-radius: 2px;
-  border: 1px solid transparent;
+  border: 0;
   color: transparent;
-  fill: #666;
-}
-
-.btn-icon span {
-  width: 0;
-  color: transparent;
-  position: absolute;
-}
-
-.btn-icon svg {
+  cursor: pointer;
+  fill: #666666;
   height: 32px;
-  margin: -2px -6px;
   width: 32px;
+
+  span {
+    color: transparent;
+    position: absolute;
+    width: 0;
+  }
+
+  svg {
+    height: 32px;
+    margin: -2px -6px;
+    width: 32px;
+  }
 }
 
 // Svg Styles
 svg.icon {
   display: inline-block;
-  fill: #666;
+  fill: #666666;
   height: 32px;
   position: relative;
   width: 32px;
+
+  // Specific Buttons
+  &.icon-error,
+  &.icon-validated {
+    display: inline;
+    fill: $error-icon-fill;
+    height: 16px;
+    left: -2px;
+    position: relative;
+    top: 3px;
+    width: 20px;
+  }
+
+  &.icon-validated {
+    fill: $validated-icon-fill;
+  }
+
+  &.icon-dirty {
+    fill: $dirty-icon-fill;
+    margin-left: -12px;
+    margin-top: -12px;
+    pointer-events: none;
+    position: absolute;
+    @include css3(transform, rotate(135deg));
+  }
 }
 
 svg.icon-logo {
@@ -40,7 +63,8 @@ svg.icon-logo {
   width: 34px;
 }
 
-.btn-icon:hover, .btn-icon:active {
+.btn-icon:hover,
+.btn-icon:active {
   fill: #333;
 }
 
@@ -49,27 +73,3 @@ svg.icon-logo {
   outline: 0;
 }
 
-
-// Specific Buttons
-svg.icon.icon-error, svg.icon.icon-validated {
-  display: inline;
-  fill: $red;
-  height: 16px;
-  left: -2px;
-  position: relative;
-  top: 3px;
-  width: 20px;
-}
-
-svg.icon.icon-validated {
-  fill: $emerald;
-}
-
-svg.icon.icon-dirty {
-  fill: $amber;
-  position: absolute;
-  @include css3(transform, rotate(135deg));
-  margin-left: -12px;
-  margin-top: -12px;
-  pointer-events: none;
-}

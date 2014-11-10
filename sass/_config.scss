@@ -7,14 +7,14 @@ $font-color: #666666;
 $font-color-light: #999999;
 $font-color-disabled: #9d9d9d;
 
-//Labels
+// Labels
 $label-color: #666666;
 
 // Form Background Color
 $body-bg-color: #f0f0f0;
 
 // The Newer Color Themes (Amethyst is default)
-$primary-color: #a352cb;
+$primary-color: #0c7ad6;
 $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
@@ -27,11 +27,11 @@ $primary-button-disabled-color: #7fc4ea;
 
 // Input Fields
 $input-border-color: #999999;
-$input-color: #333333;
+$input-color: #1a1a1a;
 $input-disabled-bg-color: #e5e5e5;
 $input-disabled-border-color: #d2d2d2;
 $input-disabled-color: #737373;
-$input-focus-shadow: 0 0 5px rgba(8, 150, 233, 0.2);
+$input-focus-shadow: 0 0 5px rgba(8, 150, 233, .2);
 $input-focus-border-color: #0896e9;
 $input-placeholder-color: #999999;
 $input-readonly-border-color: #d2d2d2;
@@ -47,6 +47,14 @@ $dropdown-disabled-bg-color: #e5e5e5;
 $dropdown-disabled-border-color: #d2d2d2;
 $dropdown-disabled-color: #737373;
 $dropdown-focus-border-color: $input-focus-border-color;
+
+// Editor
+$editor-border-color: $input-border-color;
+$editor-focus-border-color: $input-focus-border-color;
+$editor-focus-shadow: $input-focus-shadow;
+$editor-color: $input-color;
+$editor-toolbar-bg-color: #ffffff;
+$editor-button-color: #999999;
 
 // Multiselect
 $multiselect-focus-border-color: $input-focus-border-color;
@@ -78,10 +86,24 @@ $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 //States
 $error-color: #ed1c24;
+$error-icon-fill: #d5000e;
+$dirty-icon-fill: #ffa800;
+$validated-icon-fill: #2db329;
 
 //Spinbox
-$spinbox-bg-shadow: inset 0 0 5px #aaa;
+$spinbox-bg-shadow: inset 0 0 5px #aaaaaa;
 $spinbox-bg-color: #e5e5e5;
+
+//Colors
+$turqoise: #00c2b4;
+$azure: #0896e9;
+$emerald: #2db329;
+$amber: #ffa800;
+$ruby: #ed1c24;
+$red: #d5000e;
+$tourmaline: #a352cb;
+$amethyst: #e63262;
+$graphite: #b3b3b3;
 
 ///////////////////
 
@@ -104,17 +126,6 @@ $focus-shadow: 0 0 3px #0095ff;
 $link-color: #0896e9;
 $link-hover-color: #0c7ad8;
 $link-active-color: #004096;
-
-//Colors
-$turqoise: #00c2b4;
-$azure: #0896e9;
-$emerald: #2db329;
-$amber: #ffa800;
-$ruby: #ed1c24;
-$red: #d5000e;
-$tourmaline: #a352cb;
-$amethyst: #e63262;
-$graphite: #b3b3b3;
 
 //Breakpoint sizes
 $breakpoint-phone-to-tablet: 768px;

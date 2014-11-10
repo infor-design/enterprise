@@ -7,7 +7,7 @@
 
 .radio:not(:checked) + label, .radio:checked + label {
   cursor: pointer;
-  padding-left: 30px;
+  padding-left: 35px;
   position: relative;
   margin-bottom: 5px;
   margin-top: 4px;
@@ -16,7 +16,7 @@
 .radio:not(:checked) + label:before, .radio:checked + label:before {
   content: '';
   position: absolute;
-  left: 0px;
+  left: 3px;
   top: -1px;
   width: 18px;
   height: 18px;
@@ -34,7 +34,7 @@
   border-radius: 10px;
   content: "";
   height: 10px;
-  left: 5px;
+  left: 8px;
   position: absolute;
   top: 4px;
   transition: all 0.2s ease 0s;
