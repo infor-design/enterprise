@@ -151,7 +151,7 @@
         value = self.value(field),
         manageResult = function (result) {
           if (!result) {
-            self.addError(field, rule.message);
+            self.addError(field, rule.message, rule.inline);
             errors.push(rule.msg);
             dfd.reject();
           } else if (errors.length === 0) {
@@ -199,7 +199,7 @@
       return this.getField(field).hasClass('error');
     },
 
-    addError: function(field, message) {
+    addError: function(field, message, inline) {
       var loc = this.getField(field).addClass('error'),
          appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
@@ -223,9 +223,10 @@
       }
 
       //setup tooltip with appendedMsg
-      if (appendedMsg === 'Required') {
+      if (inline) {
         field.attr('data-placeholder', field.attr('placeholder'));
         field.attr('placeholder', appendedMsg);
+        return;
       }
 
       // Build Tooltip
@@ -271,7 +272,7 @@
 
     return this.each(function() {
       var instance = new Validator(this, settings);
-      instance.addError($(this), settings.message);
+      instance.addError($(this), settings.message, settings.inline);
     });
   };
 
@@ -319,6 +320,7 @@
           }
           return (value ? true : false);
         },
+        inline: true,
         message: 'Required' //TODO - Localize
       }
     };

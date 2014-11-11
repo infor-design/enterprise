@@ -118,6 +118,11 @@
         color: #5c5c5c;
       }
 
+      &:focus {
+        border: 1px solid $editor-focus-border-color;
+        box-shadow: $editor-focus-shadow;
+      }
+
       b {
         font-weight: bold;
       }
