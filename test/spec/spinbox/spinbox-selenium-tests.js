@@ -351,7 +351,7 @@ describe('Spinbox [selenium]', function(){
   });
 
   it('will not accept more than one negative symbol inside the input when working with negative numbers', function(done) {
-    var input = '#regular-spinbox';
+    var input = '#limited-spinbox';
     runner.client
       // Set the initial value of the spinbox to empty
       .setValue(input, '', globals.noError)

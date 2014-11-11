@@ -29,19 +29,20 @@
             '#': /[0-9]/,
             '0': /[0-9]/,
             'a': /[A-Za-z]/,
-            '*': /[A-Za-z0-9]/
+            '*': /[A-Za-z0-9]/,
+            '~': /[-0-9]/,
           },
           number: false
         },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Mask(element) {
         this.element = $(element);
         this.init();
     }
 
-    Plugin.prototype = {
+    Mask.prototype = {
       init: function(){
         var self = this;
         self.buffer = '';
@@ -69,6 +70,15 @@
         if (self.mode) {
           self.setupModeRules();
         }
+
+        // If "thousands" is defined, the thousands separator for numbers (comma or decimal, based on
+        // localization) will be inserted wherever necessary during typing. Will automatically set to
+        // "true" if the localized thousands separator is detected inside the mask.
+        self.thousands = self.element.attr('data-thousands') || self.pattern.indexOf(',') !== -1 || false;
+
+        // If "negative" is defined, you can type the negative symbol in front of the number.
+        // Will automatically set to "true" if a negative symbol is detected inside the mask.
+        self.negative = self.mode === 'number' && self.pattern.indexOf('-') !== -1;
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
@@ -140,7 +150,6 @@
         switch(this.mode) {
           case 'number':
             //this.mustComplete = true;
-            this.element.css('text-align', 'right');
             break;
           default:
             break;
@@ -323,8 +332,9 @@
           false;
 
         if (paste) {
-          // cut down the total size of the paste input to only be as long as the pattern allows.
-          var maxPasteInput = paste.substring(0, this.pattern.length);
+          // cut down the total size of the paste input to only be as long as the pattern allows * 2.
+          var pasteLimiter = (this.pattern.length * 2) > paste.length ? paste.length : this.pattern.length * 2,
+            maxPasteInput = paste.substring(0, pasteLimiter);
           this.processStringAgainstMask(maxPasteInput, e);
         }
         this.killEvent(e);
@@ -380,6 +390,11 @@
         // cut down the total length of the string to make it no larger than the pattern mask
         val = val.substring(0, pattSize);
 
+        // Reduce the size of the string by one if a negative-capable mask contains a positive number
+        if (this.negative && val.indexOf('-') === -1) {
+          val = val.substring(0, (pattSize - 1));
+        }
+
         // if we're dealing with numbers, figure out commas and adjust caret position accordingly.
         if (this.mode === 'number') {
           // cut any extra leading zeros.
@@ -403,7 +418,7 @@
 
               // cut down the total length of the number if it's longer than the total number of integer
               // and decimal places
-              if ( val.length > totalLengthMinusSeparators) {
+              if (val.length > totalLengthMinusSeparators) {
                 val = val.substring(0, totalLengthMinusSeparators);
               }
 
@@ -439,40 +454,44 @@
             }
           }
 
-          // Reposition all the commas before the decimal point to be in the proper order.
-          // Store the values of "added" and "removed" commas.
-          var valHasDecimal = val.length - val.replace(/\./g, '').length > 0,
-            parts = valHasDecimal ? val.split('.') : [val],
-            reAddTheCommas = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          // Only do this part if the thousands separator should be present.
+          if (this.thousands) {
+            // Reposition all the commas before the decimal point to be in the proper order.
+            // Store the values of "added" and "removed" commas.
+            var valHasDecimal = val.length - val.replace(/\./g, '').length > 0,
+              parts = valHasDecimal ? val.split('.') : [val],
+              reAddTheCommas = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-          // add the commas back in
-          parts[0] = reAddTheCommas;
-          val = (parts[1] && parts[1] !== '') ? parts.join('.') : parts[0] + (valHasDecimal ? '.' : '');
+            // add the commas back in
+            parts[0] = reAddTheCommas;
+            val = (parts[1] && parts[1] !== '') ? parts.join('.') : parts[0] + (valHasDecimal ? '.' : '');
 
-          // move the caret position to the correct spot, based on the adjustments we made to commas
-          // NOTE: This needs to happen AFTER we figure out the number of commas up to the caret.
-          var originalSliceUpToCaret = originalVal.substring(0, (pos.end !== pos.begin ? pos.end : pos.begin)),
-            originalSliceLength = originalSliceUpToCaret.length,
-            originalSliceCommas = originalSliceLength - originalSliceUpToCaret.replace(/,/g, '').length,
-            currentSliceUpToCaret = val.substring(0, originalSliceLength),
-            currentSliceLength = currentSliceUpToCaret.length,
-            currentSliceCommas = currentSliceLength - currentSliceUpToCaret.replace(/,/g, '').length;
+            // move the caret position to the correct spot, based on the adjustments we made to commas
+            // NOTE: This needs to happen AFTER we figure out the number of commas up to the caret.
+            var originalSliceUpToCaret = originalVal.substring(0, (pos.end !== pos.begin ? pos.end : pos.begin)),
+              originalSliceLength = originalSliceUpToCaret.length,
+              originalSliceCommas = originalSliceLength - originalSliceUpToCaret.replace(/,/g, '').length,
+              currentSliceUpToCaret = val.substring(0, originalSliceLength),
+              currentSliceLength = currentSliceUpToCaret.length,
+              currentSliceCommas = currentSliceLength - currentSliceUpToCaret.replace(/,/g, '').length;
 
-          if (originalSliceCommas > currentSliceCommas) {
-            pos.begin = pos.begin - numLeadingZeros - (originalSliceCommas - currentSliceCommas);
+            if (originalSliceCommas > currentSliceCommas) {
+              pos.begin = pos.begin - numLeadingZeros - (originalSliceCommas - currentSliceCommas);
+            }
+            if (originalSliceCommas < currentSliceCommas) {
+              pos.begin = pos.begin - numLeadingZeros + (currentSliceCommas - originalSliceCommas);
+            }
+
+            // Get the caret position against the final value.
+            // If the next character in the string is the decimal or a comma, move the caret one spot forward
+            var commaDecRegex = /(\.|,)/,
+              nextChar = val.substring(pos.begin, pos.begin + 1);
+            while (pos.begin < val.length && commaDecRegex.test(nextChar)) {
+               pos.begin = pos.begin + 1;
+               nextChar = val.substring(pos.begin, pos.begin + 1);
+            }
           }
-          if (originalSliceCommas < currentSliceCommas) {
-            pos.begin = pos.begin - numLeadingZeros + (currentSliceCommas - originalSliceCommas);
-          }
 
-          // Get the caret position against the final value.
-          // If the next character in the string is the decimal or a comma, move the caret one spot forward
-          var commaDecRegex = /(\.|,)/,
-            nextChar = val.substring(pos.begin, pos.begin + 1);
-          while (pos.begin < val.length && commaDecRegex.test(nextChar)) {
-             pos.begin = pos.begin + 1;
-             nextChar = val.substring(pos.begin, pos.begin + 1);
-          }
         }
 
         // put it back!
@@ -482,6 +501,9 @@
         var totalCaretPos = pos.begin + buffSize;
         var actualCaretPos = totalCaretPos >= pattSize ? pattSize : totalCaretPos;
         this.caret(actualCaretPos);
+
+        // trigger the 'write' event
+        this.element.trigger('write.mask');
       },
 
       // Filter the character that was just typed into the mask to determine if it belongs.
@@ -644,6 +666,19 @@
           return self.killEvent(e);
         }
 
+        // Test to see if the character is the negative symbol
+        if (typedChar === '-') {
+          if (!self.negative || self.originalPos.begin > 0) {
+            self.resetStorage();
+            return self.killEvent(e);
+          }
+
+          self.buffer += typedChar;
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
         var inputParts = val.split('.'),
           inputWithoutCommas = inputParts[0].replace(/,/g, ''),
           numInputInts = inputWithoutCommas.length;
@@ -651,8 +686,12 @@
         // Actually test the typed character against the correct pattern character.
         match = self.testCharAgainstRegex(typedChar, patternChar);
         if (!match) {
-          self.resetStorage();
-          return self.killEvent(e);
+          if (self.negative && self.testCharAgainstRegex(typedChar, '~')) {
+            // Let it go
+          } else {
+            self.resetStorage();
+            return self.killEvent(e);
+          }
         }
 
         // Is the "integer" portion of the mask filled?
@@ -733,7 +772,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Mask(this, settings));
       }
     });
   };
