@@ -1,0 +1,10 @@
+/* Mask
+================================================== */
+
+[data-mask-mode="number"] {
+  text-align: right;
+
+  &.spinbox {
+    text-align: center;
+  }
+}

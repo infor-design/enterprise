@@ -22,13 +22,13 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Spinbox(element) {
         this.element = $(element);
         this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    Spinbox.prototype = {
 
       init: function() {
         var self = this;
@@ -63,20 +63,90 @@
           };
         }
 
-        // Add Aria Properties
-        var attributes = {
-          role : 'spinbutton'
-        };
-        if (this.element.attr('min')) {
-          attributes['aria-valuemin'] = this.element.attr('min');
+        // Figure out minimum/maximum and data-masking attributes.  The user can provide the spinbox
+        // plugin either the min/max or the mask, and the plugin will automatically figure out how to
+        // use them.
+        var min = this.element.attr('min'),
+          max = this.element.attr('max'),
+          mask = this.element.attr('data-mask'),
+          maskSize, maskValue = '',
+          attributes = {
+            role: 'spinbutton'
+          },
+          i = 0;
+
+        // Define a default Max value if none of these attributes exist, to ensure the mask plugin will
+        // work correctly.  Cannot define a Min value here because the plugin must be able to invoke itself
+        // with a NULL value.
+        if (!min && !max && !mask) {
+          max = '9999999';
         }
-        if (this.element.attr('max')) {
-          attributes['aria-valuemax'] = this.element.attr('max');
+
+        // If a mask doesn't exist, but min and max values do exist, create a mask that reflects those min/max values
+        if ((min || max) && !mask) {
+          var newMask = '',
+            tempMin = min ? min : '',
+            tempMax = max ? max : '',
+            longerVal = tempMin.length > tempMax.length ? tempMin : tempMax;
+          i = 0;
+
+          while (i <= longerVal.length) {
+            newMask += '#';
+            i++;
+          }
+
+          // Add a negative symbol to the mask if it exists within the longer value.
+          if (tempMin.indexOf('-') !== -1 || tempMax.indexOf('-') !== -1) {
+            newMask = '-' + newMask.substring(0, (newMask.length - 1));
+          }
+
+          attributes['data-mask'] = newMask;
+          mask = newMask;
+        }
+
+        // If a "data-mask" attribute is already defined, use it to determine missing values for min/max, if they
+        // don't already exist.
+        maskSize = mask.length;
+        i = 0;
+        while (i <= maskSize) {
+          maskValue += '9';
+          i++;
+        }
+
+        // If no negative symbol exists in the mask, the minimum value must be zero.
+        if (mask.indexOf('-') === -1) {
+          attributes.min = min ? min : 0;
+          attributes.max = max ? max : maskValue;
+        } else {
+          attributes.min = min ? min : maskValue;
+          attributes.max = max ? max : maskValue.substring(0, (maskValue.length - 1));
+        }
+
+        if (!this.element.attr('data-mask-mode') || this.element.attr('data-mask-mode') !== 'number') {
+          attributes['data-mask-mode'] = 'number';
+        }
+
+        // Destroy the Mask Plugin if it's already been invoked.  We will reinvoke it later on during
+        // initialization.  Check to make sure its the actual Mask plugin object, and not the "data-mask"
+        // pattern string.
+        if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
+          this.element.data('mask').destroy();
+        }
+
+        // Add Aria Properties for valuemin/valuemax
+        if (min) {
+          attributes['aria-valuemin'] = min;
+        }
+        if (max) {
+          attributes['aria-valuemax'] = max;
         }
         this.element.attr(attributes);
 
         // Set an initial "aria-valuenow" value.
         this.updateAria(self.element.val());
+
+        // Invoke the mask plugin
+        this.element.mask();
 
         // Disable in full if the settings have determined we need to disable on init.
         if (this.isDisabled()) {
@@ -87,7 +157,8 @@
       },
 
       bindEvents: function() {
-        var self = this;
+        var self = this,
+          preventClick = false;
 
         // Main Spinbox Input
         this.element.on('focus.spinbox', function() {
@@ -101,26 +172,24 @@
           self.handleKeys(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
+        }).on('afterPaste.mask', function() {
+          self.handleAfterPaste(self);
         });
 
-        // Up Button
-        this.buttons.up.on('click.spinbox', function(e) {
-          self.handleClick(e);
-        }).on('mousedown.spinbox', function(e) {
-          self.enableLongPress(e, self);
-          $(document).one('mouseup', function() {
-            self.disableLongPress(e, self);
-          });
-        });
-
-        // Down Button
-        this.buttons.down.on('click.spinbox', function(e) {
-          self.handleClick(e);
-        }).on('mousedown.spinbox', function(e) {
-          self.enableLongPress(e, self);
-          $(document).one('mouseup', function() {
-            self.disableLongPress(e, self);
-          });
+        // Up and Down Buttons
+        var buttons = this.buttons.up.add(this.buttons.down[0]);
+        buttons.on('mousedown.spinbox', function(e) {
+          if (e.which === 1) {
+            if (!preventClick) {
+              self.handleClick(e);
+            }
+            preventClick = true;
+            self.enableLongPress(e, self);
+            $(document).one('mouseup', function() {
+              self.disableLongPress(e, self);
+              preventClick = false;
+            });
+          }
         });
 
         return this;
@@ -143,7 +212,7 @@
 
       // Sets up the click/long press
       handleClick: function(e) {
-        if (this.isDisabled()) {
+        if (this.isDisabled() || e.which !== 1) {
           return;
         }
         var target = $(e.currentTarget);
@@ -160,28 +229,6 @@
           return;
         }
         var key = e.which;
-
-        // Allow: backspace, delete, tab, escape, and enter
-        if ($.inArray(key, [46, 8, 9, 27, 13, 110]) !== -1 ||
-          // Allow: Ctrl+A
-          (key === 65 && key === true)) {
-          // let it happen, don't do anything
-          return;
-        }
-
-        // Add a negative sign into the mix if its keycode is detected and no numbers are present.
-        if ($.inArray(key, [45, 109, 173, 189]) !== -1) {
-          e.preventDefault();
-          var val = self.element.val();
-          if (val.length === 0) {
-            self.updateVal('-');
-          }
-        }
-
-        // If the keypress isn't a number, stop the keypress
-        if ((e.shiftKey || (key < 48 || key > 57)) && (key < 96 || key > 105 )) {
-          e.preventDefault();
-        }
 
         // If the key is a number, pre-calculate the value of the number to see if it would be
         // greater than the maximum, or less than the minimum.  If it's fine, let it through.
@@ -218,7 +265,6 @@
             self.decreaseValue();
             break;
         }
-
       },
 
       handleKeyup: function(e, self) {
@@ -236,6 +282,18 @@
         }
 
         self.updateAria(self.element.val());
+      },
+
+      // Change a newly pasted value to this element's min or max values, if the pasted value goes
+      // beyond either of those limits.  Listens to an event emitted by the Mask plugin after pasted content
+      // is handled.
+      handleAfterPaste: function(self) {
+        var min = Number(self.element.attr('min')),
+          max = Number(self.element.attr('max')),
+          val = Number(self.element.val());
+
+        val = (val < min ? min : (val > max ? max : val));
+        self.updateVal(val);
       },
 
       increaseValue: function() {
@@ -322,6 +380,7 @@
 
       // Teardown
       destroy: function() {
+        this.element.data('mask').destroy();
         this.buttons.up.off('click.spinbox mousedown.spinbox');
         this.buttons.up.remove();
         this.buttons.down.off('click.spinbox mousedown.spinbox');
@@ -341,7 +400,7 @@
         }
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Spinbox(this, settings));
       }
     });
   };
