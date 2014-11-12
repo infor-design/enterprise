@@ -337,6 +337,7 @@
             maxPasteInput = paste.substring(0, pasteLimiter);
           this.processStringAgainstMask(maxPasteInput, e);
         }
+        this.element.trigger('afterPaste.mask');
         this.killEvent(e);
       },
 
@@ -397,6 +398,10 @@
 
         // if we're dealing with numbers, figure out commas and adjust caret position accordingly.
         if (this.mode === 'number') {
+
+          // cut all but the first occurence of the negative symbol and decimal
+          val = val.replace(/(?!^)-/g, '').replace(/(?!^)\./g, '');
+
           // cut any extra leading zeros.
           var valWithoutLeadZeros = val.replace(/^0+(?!\.|$)/, ''),
             numLeadingZeros = val.length - valWithoutLeadZeros.length;
@@ -715,9 +720,14 @@
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
       processStringAgainstMask: function(string, originalEvent) {
+
         switch(this.mode) {
           case 'number':
-            string = string.replace(/\D/g,'');
+            var regex = /[^0-9.-]/g;
+            if (!this.negative) {
+              regex = /[^0-9.]/g;
+            }
+            string = string.replace(regex,'');
             if (!this.originalPos) {
               this.originalPos = this.caret();
             }

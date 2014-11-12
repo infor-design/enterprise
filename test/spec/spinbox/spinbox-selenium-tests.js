@@ -387,6 +387,43 @@ describe('Spinbox [selenium]', function(){
       .call(done);
   });
 
+  it('can handle pasted content from the clipboard', function(done) {
+    var input = '#reverse-weird-spinbox';
+    var copyInput = '#regular-input';
+    runner.client
+      .setValue(input, '', globals.noError)
+      // add a combination of letters and numbers to the copy input
+      .setValue(copyInput, ['-','x','2','x','2','x'], globals.noError)
+      // select it and cut it
+      .addValue(copyInput, [
+        'Shift',
+        'Left arrow',
+        'Left arrow',
+        'Left arrow',
+        'Left arrow',
+        'Left arrow',
+        'Left arrow',
+        'NULL'
+      ], globals.noError)
+      .addValue(copyInput, [globals.keys.control, 'x', 'NULL'], globals.noError)
+      // Paste the clipboard contents into the number input
+      .addValue(input, [globals.keys.control, 'v', 'NULL'], globals.noError)
+      .getValue(input, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('-22');
+      })
+      // Paste again
+      .addValue(input, [globals.keys.control, 'v', 'NULL'], globals.noError)
+      // Check the contents.  The value should now be set to the minimum value "-23" instead of being "-2222".
+      .getValue(input, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('-23');
+      })
+      .call(done);
+  });
+
   it('should update its WAI-ARIA "valuenow" attribute whenever its value is changed', function(done) {
     var input = '#limited-spinbox';
     runner.client

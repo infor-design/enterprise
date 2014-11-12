@@ -96,7 +96,7 @@
           }
 
           // Add a negative symbol to the mask if it exists within the longer value.
-          if (longerVal.indexOf('-') !== -1) {
+          if (tempMin.indexOf('-') !== -1 || tempMax.indexOf('-') !== -1) {
             newMask = '-' + newMask.substring(0, (newMask.length - 1));
           }
 
@@ -157,7 +157,8 @@
       },
 
       bindEvents: function() {
-        var self = this;
+        var self = this,
+          preventClick = false;
 
         // Main Spinbox Input
         this.element.on('focus.spinbox', function() {
@@ -171,28 +172,22 @@
           self.handleKeys(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
+        }).on('afterPaste.mask', function() {
+          self.handleAfterPaste(self);
         });
 
-        // Up Button
-        this.buttons.up.on('click.spinbox', function(e) {
-          self.handleClick(e);
-        }).on('mousedown.spinbox', function(e) {
+        // Up and Down Buttons
+        var buttons = this.buttons.up.add(this.buttons.down[0]);
+        buttons.on('mousedown.spinbox', function(e) {
           if (e.which === 1) {
+            if (!preventClick) {
+              self.handleClick(e);
+            }
+            preventClick = true;
             self.enableLongPress(e, self);
             $(document).one('mouseup', function() {
               self.disableLongPress(e, self);
-            });
-          }
-        });
-
-        // Down Button
-        this.buttons.down.on('click.spinbox', function(e) {
-          self.handleClick(e);
-        }).on('mousedown.spinbox', function(e) {
-          if (e.which === 1) {
-            self.enableLongPress(e, self);
-            $(document).one('mouseup', function() {
-              self.disableLongPress(e, self);
+              preventClick = false;
             });
           }
         });
@@ -287,6 +282,18 @@
         }
 
         self.updateAria(self.element.val());
+      },
+
+      // Change a newly pasted value to this element's min or max values, if the pasted value goes
+      // beyond either of those limits.  Listens to an event emitted by the Mask plugin after pasted content
+      // is handled.
+      handleAfterPaste: function(self) {
+        var min = Number(self.element.attr('min')),
+          max = Number(self.element.attr('max')),
+          val = Number(self.element.val());
+
+        val = (val < min ? min : (val > max ? max : val));
+        self.updateVal(val);
       },
 
       increaseValue: function() {
