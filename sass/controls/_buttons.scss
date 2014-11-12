@@ -1,67 +1,97 @@
-/* Buttons of All Types
+/* Buttons
 ================================================== */
 button {
   font-family: $font-regular;
 }
 
 // Buttons - button = secondary button
-.button, .button-secondary, .button-primary, .button-destructive, .button-menu {
+.button,
+.button-secondary,
+.button-primary,
+.button-destructive,
+.button-menu {
+  background-color: $primary-button-bg-color;
+  border: 1px solid transparent;
   border-radius: 2px;
-  height: 34px;
-  font-family: $font-semibold;
-  @include font-size(14);
   color: $inverse-color;
-  background-color: $primary-button-color;
+  font-family: $font-semibold;
+  height: 34px;
+  margin-top: 5px;
   min-width: 100px;
   overflow: hidden;
-  padding: 0px 30px;
+  @include font-size(14);
+  padding: 0 30px;
   position: relative;
-  transition: background 0.2s ease-in-out 0s;
+  transition: background .2s ease-in-out 0s;
   width: auto;
 }
 
 // standard, primary, destructive
 .button-primary {
   &:hover {
-    background-color: $primary-button-hover-color;
+    background-color: $primary-button-hover-bg-color;
   }
+
   &:active {
-    background-color: $primary-button-active-color;
+    background-color: $primary-button-active-bg-color;
   }
-  &[disabled], &[disabled]:hover {
-    background-color: $primary-button-disabled-color;
+
+  &:focus {
+    background-color: $primary-button-bg-color;
+    border: 1px solid $primary-button-bg-color;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-button-bg-color;
+  }
+
+  &[disabled],
+  &[disabled]:hover {
+    background-color: $primary-button-disabled-bg-color;
+    border-color: 1px solid primary-button-disabled-bg-color;
     cursor: default;
   }
 }
 
-.button, .button-secondary {
-  background-color: #d2d2d2;
+.button,
+.button-secondary {
+  background-color: $button-bg-color;
   color: $font-color;
 
   &:hover {
-    background-color: #b6b6b6;
+    background-color: $button-hover-bg-color;
   }
+
   &:active {
-    background-color: #a8a8a8;
+    background-color: $button-active-bg-color;
   }
-  &[disabled], &[disabled]:hover {
-    background-color: #d2d2d2;
+
+  &:focus {
+    background-color: $button-focus-bg-color;
+    border: 1px solid $button-hover-bg-color;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $button-hover-bg-color;
+  }
+
+  &[disabled],
+  &[disabled]:hover {
+    background-color: $button-disabled-bg-color;
     color: $font-color-disabled;
     cursor: default;
   }
 }
 
-.button-destructive, .button-tertiary {
+.button-destructive,
+.button-tertiary {
   background-color: transparent;
   color: $font-color;
 
   &:hover {
     color: $font-color-dark;
   }
+
   &:active {
-    color: $primary-button-color;
+    color: $primary-button-active-bg-color;
   }
-  &[disabled], &[disabled]:hover {
+
+  &[disabled],
+  &[disabled]:hover {
     color: $font-color-disabled;
     cursor: default;
   }
@@ -73,33 +103,35 @@ button {
 }
 
 .ripple-effect {
-  position: absolute;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: #e4ebf0;
-  animation: ripple-animation 2s;
   -webkit-animation: ripple-animation 2s;
+  animation: ripple-animation 2s;
+  background-color: #e4ebf0;
+  border-radius: 50%;
+  height: 10px;
+  position: absolute;
+  width: 10px;
 }
 
 @-webkit-keyframes ripple-animation {
   from {
-    -webkit-transform: scale(1);
     opacity: .4;
+    -webkit-transform: scale(1);
   }
+
   to {
-    -webkit-transform: scale(100);
     opacity: 0;
+    -webkit-transform: scale(100);
   }
 }
 
 @keyframes ripple-animation {
   from {
-    transform: scale(1);
     opacity: .4;
+    transform: scale(1);
   }
+
   to {
-    transform: scale(100);
     opacity: 0;
+    transform: scale(100);
   }
 }

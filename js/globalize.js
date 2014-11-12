@@ -14,6 +14,9 @@
 }(function () {
 
   function Globalize(locale) {
+    if (!(this instanceof Globalize)) {
+      return new Globalize(locale);
+    }
     var self = this;
 
     this.currentLocale = {name: '', data: {}}; //default
@@ -117,8 +120,14 @@
       return ret.trim();
     },
 
+    // Overridable culture messages
     translate: function(key) {
-      return key;
+      return this.currentLocale.data.messages[key];
+    },
+
+    // Short cut function to get 'first' calendar
+    calendar: function() {
+      return this.currentLocale.data.calendars[0];
     },
 
     pad: function(n, width, z) {
@@ -129,5 +138,5 @@
   };
 
   window.Globalize = new Globalize('en');
-
+  //TODO: window.Globalize.constructor = Globalize;
 }));

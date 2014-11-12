@@ -31,6 +31,10 @@
         // Add Ripple Effect
         this.element.addClass('ripple');
         this.element.on('mousedown.button touchstart.button', function (e) {
+          if (e.button === 2) {
+            return;
+          }
+
           var btn = $(this),
               ripple = $('<div></div>').addClass('ripple-effect'),
               btnOffset = btn.offset(),

@@ -19,11 +19,19 @@ $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
 // Form Buttons
-$primary-button-color: #1d98e6;
-$primary-button-hover-color: #1a7cd5;
-$primary-button-focus-color: #1d98e6;
-$primary-button-active-color: #1a7cd4;
-$primary-button-disabled-color: #7fc4ea;
+$primary-button-bg-color: #1d98e6;
+$primary-button-hover-bg-color: #1a7cd5;
+$primary-button-focus-bg-color: #1d98e6;
+$primary-button-active-bg-color: #1a7cd4;
+$primary-button-disabled-bg-color: #69bbea;
+
+//Secondary/Normal Buttons
+$button-bg-color: #d2d2d2;
+$button-hover-bg-color: #b6b6b6;
+$button-focus-bg-color: #d2d2d2;
+$button-active-bg-color: #a8a8a8;
+$button-disabled-bg-color: #d2d2d2;
+
 
 // Input Fields
 $input-border-color: #999999;

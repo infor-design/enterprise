@@ -54,4 +54,24 @@ describe('Globalize [mocha]', function(){
     Globalize.formatDate(new Date(2000, 10, 8), {pattern: 'M.dd.yyyy'}).should.equal('10.08.2000');
   });
 
+  it('be able to return time format', function(){
+    Globalize.locale('en');
+    Globalize.calendar().timeFormat.should.equal('h:mm a');
+    Globalize.locale('de');
+    Globalize.calendar().timeFormat.should.equal('HH:mm');
+  });
+
+  it('be able to translate', function(){
+    //Normal
+    Globalize.locale('en');
+    Globalize.translate('Required').should.equal('Required');
+
+    //With Object Selector
+    Globalize.locale('de');
+    Globalize.translate('Required').should.equal('Erforderlich');
+
+    //Error
+    should.not.exist(Globalize.translate('XYZ'));
+  });
+
 });

@@ -30,9 +30,9 @@
         this.inputs = $().add(this.element);
       }
 
-      this.scrErrors = $('#scr-errors');
-      if (this.scrErrors.length === 0) {
-        this.scrErrors = $('<div id="scr-errors" role="alert" class="sr-only"><span id="message"></span></div>').appendTo('body');
+      this.srErrors = $('#sr-errors');
+      if (this.srErrors.length === 0) {
+        this.srErrors = $('<div id="sr-errors" role="alert" class="sr-only"><span id="message"></span></div>').appendTo('body');
       }
       this.timeout = null;
     },
@@ -206,8 +206,8 @@
       loc.data('data-errormessage', appendedMsg);
 
       //Add Aria Alert
-      var messages = this.scrErrors.find('#message').attr('role', 'alert');
-      this.scrErrors.css('clip','auto');
+      var messages = this.srErrors.find('#message').attr('role', 'alert');
+      this.srErrors.css('clip','auto');
       messages.html(appendedMsg);
       messages.hide().css('display','inline');
 

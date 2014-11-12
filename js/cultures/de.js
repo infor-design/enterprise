@@ -49,7 +49,10 @@
                   '12': 'Dezember'
                 }},
       timeFormat: 'HH:mm'    //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    }]
+    }],
+    currencySign: '€',  //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '#,##0.00 ¤', //numbers/currencyFormats-numberSystem-latn/standard
+    messages: {'Required': 'Erforderlich'} //Resx
   });
 
 }));

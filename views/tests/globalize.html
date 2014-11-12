@@ -7,23 +7,20 @@
     </div>
 
     <script>
-    /**/
-      var output = $('#output')
-      append = function (value) {
+
+      var output = $('#output');
+      var append = function (value) {
         output.append('<span>' + value + '</span><br>');
       };
 
       Globalize.locale('de');
-      append(Globalize.formatDate(new Date()) + '</span><br>');
-      append(Globalize.formatDate(new Date(), {date: 'medium'}) + '</span><br>');
-      append(Globalize.formatDate(new Date(), {date: 'long'}) + '</span><br>');
+      append(Globalize.formatDate(new Date()));
+      append(Globalize.formatDate(new Date(), {date: 'medium'}));
+      append(Globalize.formatDate(new Date(), {date: 'long'}));
 
-    /*
       Globalize.locale('de');
-      append(Globalize.formatDate(new Date()) + '</span><br>');
-      append(Globalize.formatDate(new Date(2001, 11, 31)) + '</span><br>');
-      append(Globalize.formatDate(new Date(2001, 11, 31)) + '</span><br>');
-    */
+      append(Globalize.translate('Required'));
+
     </script>
 
   </div>

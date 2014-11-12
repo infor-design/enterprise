@@ -268,9 +268,11 @@
             return;
           }
           self.closeList();
-        }).on('resize.dropdown', function() {
-          self.closeList();
         }).on('scroll.dropdown', function() {
+          self.closeList();
+        });
+
+        $(window).on('resize.dropdown', function() {
           self.closeList();
         });
       },
@@ -296,11 +298,12 @@
           isAbs = true;
           this.list.css({'top': this.input.parent('.field').offset().top + this.input.prev('label').height() , 'left': this.input.parent('.field').offset().left});
         }
-
         //Flow up if not enough room on bottom
-        //TODO Test $(window).height() vs $(document).height());
+        this.list.removeClass('is-ontop');
+
         if (top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
           this.list.css({'top': top - this.list.outerHeight() - this.input.outerHeight()});
+          this.list.addClass('is-ontop');
         }
 
         // If the menu is off the top of the screen, cut down the size of the menu to make it fit.
@@ -323,7 +326,8 @@
         this.list.hide().attr('aria-expanded', 'false').remove();
         this.list.off('click.list').off('mousewheel.list');
         this.input.removeClass('is-open');
-        $(document).off('click.dropdown resize.dropdown scroll.dropdown');
+        $(document).off('click.dropdown scroll.dropdown');
+        $(window).off('resize.dropdown');
       },
       scrollToOption: function(current) {
         var self = this;
