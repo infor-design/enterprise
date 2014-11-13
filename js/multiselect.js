@@ -16,7 +16,8 @@
     // Dropdown Settings and Options
     var pluginName = 'multiselect',
         defaults = {
-          source: null //Defines the data to use or uses the select
+          source: null, //Defines the data to use or uses the select
+          maxSelected: null  //Max selected - can also use max attribute data-maxselected
         },
         settings = $.extend({}, defaults, options);
 
@@ -239,6 +240,18 @@
         var li = tag.parent(),
           sel = tag,
           tagSpan, val;
+
+        if (this.element.attr('data-maxselected')) {
+          settings.maxSelected = this.element.attr('data-maxselected');
+          this.element.removeAttr('data-maxselected');
+        }
+
+        if (settings.maxSelected &&
+          (this.element.find('option:selected').length > settings.maxSelected-1)) {
+
+          this.element.trigger('maxselected');
+          return;
+        }
 
         if (this.input.prop('disabled')) {
           return;
