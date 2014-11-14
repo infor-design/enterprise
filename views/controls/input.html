@@ -5,7 +5,7 @@
     <hr>
 
     <div class="grid">
-      <div class="col-1-1">
+      <div class="col-1-2">
         <div class="field">
           <label for="first-name">First Name</label>
           <input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
@@ -35,6 +35,33 @@
         <div class="field">
           <label for="department-code-trackdirty">Department Code</label>
           <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" name="department-code-trackdirty">
+        </div>
+      </div>
+
+      <div class="col-1-2">
+        <div class="field">
+          <label for="decimal-field">Decmial Field</label>
+          <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="###.##" data-mask="###.00" data-mask-mode="number"/>
+        </div>
+
+        <div class="field">
+          <label for="phone-number">Phone Number</label>
+          <input id="phone-number" name="phone-number" type="text" placeholder="(123) 456-7890" data-mask="(###) ###-####"/>
+        </div>
+
+        <div class="field">
+          <label for="date-input">Date Input</label>
+          <input id="date-input" name="date-input" type="text" data-mask="## / ## / ##" data-mask-mode="date" data-validate="date"/>
+        </div>
+
+        <div class="field">
+          <label for="time-input">Time Input</label>
+          <input id="time-input" name="time-input" type="text" placeholder="hh : mm : ss" data-mask="## : ## : ##" />
+        </div>
+
+        <div class="field">
+          <label for="credit-card">Credit Card</label>
+          <input id="credit-card" name="credit-card" type="text" placeholder="0000 - 0000 - 0000 - 0000" data-mask="#### - #### - #### - ####" />
         </div>
       </div>
     </div>

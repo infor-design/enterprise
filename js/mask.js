@@ -281,6 +281,8 @@
           }
           if (self.mode === 'number') {
             self.processNumberMask(typedChar, patternChar, evt);
+          } else if (self.mode === 'date') {
+            self.processDateMask(typedChar, patternChar, evt);
           } else {
             self.processMask(typedChar, patternChar, evt);
           }
@@ -539,11 +541,7 @@
           self.buffer += patternChar;
           var newPatternChar = self.getCharacter('next', self.currentMaskBeginIndex);
           self.currentMaskBeginIndex++;
-          if (this.mode === 'number') {
-            self.processNumberMask(typedChar, patternChar, e);
-          } else {
-            self.processMask(typedChar, newPatternChar, e);
-          }
+          self.processMask(typedChar, newPatternChar, e);
         } else {
           // Check the character against its counterpart character in the mask
           var match = self.testCharAgainstRegex(typedChar, patternChar);
@@ -717,10 +715,77 @@
         return self.killEvent(e);
       },
 
+      processDateMask: function(typedChar, patternChar, e) {
+        var self = this,
+          match;
+        self.originalPos = self.caret();
+        self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
+
+        // don't continue at all if the character typed isn't a digit or a separator
+        match = self.testCharAgainstRegex(typedChar, '#');
+        if (!match && typedChar !== '/') {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        var patternParts = self.pattern.replace(/ /g, '').split('/'),
+          inputParts = self.element.val().replace(/ /g, '').split('/'),
+          stringUpToCaret = self.element.val().substring(0, self.originalPos.begin),
+          numSeparators = stringUpToCaret.length - stringUpToCaret.replace(/\//g, '').length,
+          // Figure out which portion of the mask to check based on the number of separators in the input
+          inputSection = inputParts[numSeparators],
+          maskSection = patternParts[numSeparators];
+
+        // If the character is a separator, make sure there wouldn't be too many separators in the date,
+        // and let it through if there wouldn't be.
+        if (typedChar === '/') {
+          if (numSeparators < (self.pattern.length - self.pattern.replace(/\//g, '').length)) {
+            self.buffer += typedChar;
+            self.writeInput();
+          }
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // Reset the pattern character
+        patternChar = maskSection.substring(inputSection.length, (inputSection.length + 1));
+
+        // If the current section is full, check to see if there is a "next section".
+        // If there isn't, we're at the end and the event should stop.
+        if (inputSection.length >= maskSection.length) {
+          if (patternParts[numSeparators + 1]) {
+            // Add the correct amount of literals in the mask plus the typed character to the buffer and process
+            patternChar = patternParts[numSeparators + 1].substring(0, 1);
+            match = self.testCharAgainstRegex(typedChar, patternChar);
+            if (!match) {
+              self.resetStorage();
+              return self.killEvent(e);
+            }
+            self.buffer += '/' + typedChar;
+            self.writeInput();
+          }
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // Add the typed character to the current section of the mask.
+        // Figure out where to place the character and what to test
+        match = self.testCharAgainstRegex(typedChar, patternChar);
+        if (!match) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        self.buffer += typedChar;
+        self.writeInput();
+        self.resetStorage();
+
+        return self.killEvent(e);
+      },
+
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
       processStringAgainstMask: function(string, originalEvent) {
-
         switch(this.mode) {
           case 'number':
             var regex = /[^0-9.-]/g;
@@ -739,7 +804,11 @@
             var charArray = string.split('');
             for(var i = 0; i < charArray.length; i++) {
               var patternChar = this.getCharacter();
-              this.processMask(charArray[i], patternChar, originalEvent);
+              if (this.mode === 'date') {
+                this.processDateMask(charArray[i], patternChar, originalEvent)
+              } else {
+                this.processMask(charArray[i], patternChar, originalEvent);
+              }
             }
             break;
         }

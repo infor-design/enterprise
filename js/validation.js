@@ -240,17 +240,14 @@
       field.on('focus.validate', function() {
         field.data('tooltip').show();
       }).on('blur.validate', function() {
-        field.data('tooltip').hide();
+        if (field.data('tooltip')) {
+          field.data('tooltip').hide();
+        }
       });
     },
 
     removeError: function(field) {
       var loc = this.getField(field);
-
-      if (field.data('tooltip')) {
-        field.off('focus.validate blur.validate');
-        field.data('tooltip').destroy();
-      }
 
       this.inputs.filter('input, textarea').off('focus.validate');
       loc.removeClass('error');
@@ -323,6 +320,24 @@
         },
         inline: true,
         message: 'Required' //TODO - Localize
+      },
+      date: {
+        check: function(value) {
+          value = value.replace(/ /g, '');
+          var dateFormat = Globalize.calendar().dateFormat.short,
+            parsedDate = Globalize.parseDate(value);
+
+          if (parsedDate === undefined && dateFormat) {
+            parsedDate = Globalize.parseDate(value, dateFormat);
+          }
+
+          if (parsedDate === undefined && value !== "") {
+            return false;
+          }
+
+          return true;
+        },
+        message: 'Invalid Date' // TODO - Localize
       }
     };
   };
