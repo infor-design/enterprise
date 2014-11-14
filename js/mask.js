@@ -80,6 +80,12 @@
         // Will automatically set to "true" if a negative symbol is detected inside the mask.
         self.negative = self.mode === 'number' && self.pattern.indexOf('-') !== -1;
 
+        // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
+        // separated pieces of "editable" and "literal" parts that are used for checking validity of mask pieces.
+        if ($.inArray(self.mode, ['date','time']) !== -1) {
+          self.maskParts = self.getPatternParts();
+        }
+
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
         self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, null, function(e) {
@@ -715,72 +721,189 @@
         return self.killEvent(e);
       },
 
+      // Processes the pattern string and returns an object that contains that string's sections of matchable patterns
+      // and its unmatchable literals.
+      getPatternParts: function() {
+        var self = this,
+          patternEditableParts = self.pattern.match(/[#]+/g) || [],
+          patternLiteralParts = [],
+          i = 0;
+
+        // check for literal characters at the beginning of the string before the first matchable pattern
+        if (patternEditableParts[0] && self.pattern.substring(0, 1) !== patternEditableParts[0].substring(0, 1)) {
+          patternLiteralParts.push( self.pattern.substring( 0, self.pattern.indexOf( patternEditableParts[0] )));
+        }
+
+        // set a starting index for our literal checking... may not be 0 if there were literals before the first match
+        var prevLiteralEndIndex = (patternLiteralParts && patternLiteralParts[0]) ? (self.pattern.indexOf(patternLiteralParts[0]) + patternLiteralParts[0].length) : 0;
+
+        // get all sets of literal characters in the pattern and store them
+        while (i < patternEditableParts.length) {
+          // start cutting the string here
+          var currLiteralStartIndex = prevLiteralEndIndex + patternEditableParts[i].length,
+            // get a fresh cut of the pattern minus the parts we've already dealt with
+            nextCut = self.pattern.substring(currLiteralStartIndex, self.pattern.length),
+            cutChars = self.pattern.length - nextCut.length,
+            // finish cutting the string at the end of the next piece of editable pattern OR the end of the pattern
+            currLiteralEndIndex = cutChars + (patternEditableParts[i+1] ? nextCut.indexOf(patternEditableParts[i+1]) : nextCut.length),
+            // should contain the next literal
+            currLiteral = self.pattern.substring(currLiteralStartIndex, currLiteralEndIndex);
+          if (currLiteral !== '') {
+            patternLiteralParts.push(currLiteral);
+          }
+          prevLiteralEndIndex = currLiteralEndIndex;
+          i++;
+        }
+
+        // build an array that contains one of each character in the literals sections for testing
+        var allLiterals = '';
+        for (var a = 0; a < patternLiteralParts.length; a++) {
+          allLiterals += patternLiteralParts[a];
+        }
+        var containedLiterals = self.removeDuplicates(allLiterals);
+
+        var allEditables = '';
+        for (var b = 0; b < patternEditableParts.length; b++) {
+          allEditables += patternEditableParts[b];
+        }
+
+        return {
+          editable: patternEditableParts,
+          literal: patternLiteralParts,
+          allLiterals: allLiterals,
+          allEditables: allEditables,
+          containedLiterals: containedLiterals
+        };
+      },
+
+      buildPatternFromParts: function() {
+        var parts = this.getPatternParts(),
+          pattern = '',
+          literalCount = 0,
+          editableCount = 0;
+
+        // there is a literal BEFORE and AFTER the first match.
+        if (parts.literal > parts.editable) {
+          pattern += parts.literal[0];
+          literalCount++;
+        }
+        // there are no literals BEFORE the first match, but there is a literal AFTER the last match.
+        if (parts.literal === parts.editable) {}
+        while (editableCount < parts.editable.length) {
+          pattern += parts.editable[editableCount];
+          if (parts.literal[literalCount]) {
+            pattern += parts.literal[literalCount];
+          }
+          editableCount++;
+          literalCount++;
+        }
+
+        return pattern;
+      },
+
+      // takes a string of character literals and returns an array containing each unique literal found.
+      removeDuplicates: function(string) {
+        var unique = [];
+        for (var i = 0; i < string.length; i++) {
+          if ($.inArray(string[i], unique) === -1) {
+            unique.push(string[i]);
+          }
+        }
+        return unique;
+      },
+
       processDateMask: function(typedChar, patternChar, e) {
         var self = this,
-          match;
+          maskEditables = self.maskParts.editable,
+          maskLiterals = self.maskParts.literal,
+          match,
+          i = 0;
+
         self.originalPos = self.caret();
         self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
 
+        var totalMaskEditables = self.maskParts.allEditables.length,
+          val = self.element.val(),
+          inputEditableString = val;
+
+        // build a string containing all the editable fields entered into the masked input
+        var inputLiteralMatches = [];
+        for (i = 0; i < maskLiterals.length; i++) {
+          var regex = new RegExp(maskLiterals[i]);
+          inputLiteralMatches.concat.apply(inputLiteralMatches, inputEditableString.match(regex));
+          inputEditableString = inputEditableString.replace(regex, '');
+        }
+
+        // If the input is full, don't continue.
+        if (inputEditableString.length >= totalMaskEditables) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
         // don't continue at all if the character typed isn't a digit or a separator
         match = self.testCharAgainstRegex(typedChar, '#');
-        if (!match && typedChar !== '/') {
+        if (!match && $.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
           self.resetStorage();
           return self.killEvent(e);
         }
 
-        var patternParts = self.pattern.replace(/ /g, '').split('/'),
-          inputParts = self.element.val().replace(/ /g, '').split('/'),
-          stringUpToCaret = self.element.val().substring(0, self.originalPos.begin),
-          numSeparators = stringUpToCaret.length - stringUpToCaret.replace(/\//g, '').length,
-          // Figure out which portion of the mask to check based on the number of separators in the input
-          inputSection = inputParts[numSeparators],
-          maskSection = patternParts[numSeparators];
-
-        // If the character is a separator, make sure there wouldn't be too many separators in the date,
-        // and let it through if there wouldn't be.
-        if (typedChar === '/') {
-          if (numSeparators < (self.pattern.length - self.pattern.replace(/\//g, '').length)) {
-            self.buffer += typedChar;
-            self.writeInput();
+        // loop through each group of editable parts in the mask to figure out where this check needs to be done
+        i = 0;
+        if (maskLiterals.length > maskEditables.length) {
+          // Only do this check if there is a set of literals BEFORE the first set of editables
+          self.checkSectionForLiterals(e, typedChar, maskLiterals[0]);
+          i = i + 1;
+        }
+        for (i; i <= maskLiterals.length; i++) {
+          // If the character typed is a literal, allow it to go through if there is still a section of unmatched literals
+          // and there has been at least one editable character entered in this section.
+          if (maskLiterals[i+1] && $.inArray(typedChar, self.maskParts.containedLiterals) !== -1 && inputEditableString.length > 0) {
+            self.checkSectionForLiterals(e, typedChar, maskLiterals[i+1]);
           }
-          self.resetStorage();
-          return self.killEvent(e);
-        }
 
-        // Reset the pattern character
-        patternChar = maskSection.substring(inputSection.length, (inputSection.length + 1));
-
-        // If the current section is full, check to see if there is a "next section".
-        // If there isn't, we're at the end and the event should stop.
-        if (inputSection.length >= maskSection.length) {
-          if (patternParts[numSeparators + 1]) {
-            // Add the correct amount of literals in the mask plus the typed character to the buffer and process
-            patternChar = patternParts[numSeparators + 1].substring(0, 1);
-            match = self.testCharAgainstRegex(typedChar, patternChar);
-            if (!match) {
-              self.resetStorage();
-              return self.killEvent(e);
+          if (inputEditableString.length < maskEditables[i].length) {
+            // do the check here
+            if (match) {
+              self.buffer += typedChar;
+              self.writeInput();
             }
-            self.buffer += '/' + typedChar;
-            self.writeInput();
+            self.resetStorage();
+            return self.killEvent(e);
+          } else if (inputEditableString.length === maskEditables[i].length) {
+            var addMaskLiterals = '';
+            if (val.substring((val.length - maskLiterals[i].length), val.length) !== maskLiterals[i]) {
+              addMaskLiterals = maskLiterals[i];
+            }
+            // do the check here
+            if (match) {
+              self.buffer += addMaskLiterals + typedChar;
+              self.writeInput();
+            }
+            self.resetStorage();
+            return self.killEvent(e);
+          } else {
+            // cut down the total number of characters in "inputEditables" and continue to loop
+            inputEditableString = inputEditableString.slice(maskEditables[i].length, inputEditableString.length);
           }
-          self.resetStorage();
-          return self.killEvent(e);
         }
-
-        // Add the typed character to the current section of the mask.
-        // Figure out where to place the character and what to test
-        match = self.testCharAgainstRegex(typedChar, patternChar);
-        if (!match) {
-          self.resetStorage();
-          return self.killEvent(e);
-        }
-
-        self.buffer += typedChar;
-        self.writeInput();
-        self.resetStorage();
 
         return self.killEvent(e);
+      },
+
+      checkSectionForLiterals: function(e, typedChar, section) {
+        var self = this;
+          //tempBuffer = '';
+
+        for (var a = 0; a < section.length; a++) {
+          if (typedChar === section[a]) {
+            self.buffer += section; /*tempBuffer + typedChar;*/
+            self.writeInput();
+            self.resetStorage();
+            return self.killEvent(e);
+          }
+          //tempBuffer += section[a];
+        }
+        // Continues on if it doesn't find anything...
       },
 
       // Takes an entire string of characters and runs each character against the processMask()
@@ -805,7 +928,7 @@
             for(var i = 0; i < charArray.length; i++) {
               var patternChar = this.getCharacter();
               if (this.mode === 'date') {
-                this.processDateMask(charArray[i], patternChar, originalEvent)
+                this.processDateMask(charArray[i], patternChar, originalEvent);
               } else {
                 this.processMask(charArray[i], patternChar, originalEvent);
               }
