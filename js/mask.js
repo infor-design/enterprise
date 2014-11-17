@@ -282,13 +282,13 @@
           // Will fire keydown and keypress events for arrow keys.
           } else if (evt.shiftKey && 36 < key && key < 41) {
             return;
-          } else if (36 < key && key < 41) {
+          } else if ((36 < key && key < 41) && typedChar !== '\'')  {
             return;
           }
           if (self.mode === 'number') {
             self.processNumberMask(typedChar, patternChar, evt);
-          } else if (self.mode === 'date') {
-            self.processDateMask(typedChar, patternChar, evt);
+          } else if (self.mode === 'date' || self.mode === 'time') {
+            self.processGroupMask(typedChar, patternChar, evt);
           } else {
             self.processMask(typedChar, patternChar, evt);
           }
@@ -812,7 +812,7 @@
         return unique;
       },
 
-      processDateMask: function(typedChar, patternChar, e) {
+      processGroupMask: function(typedChar, patternChar, e) {
         var self = this,
           maskEditables = self.maskParts.editable,
           maskLiterals = self.maskParts.literal,
@@ -835,7 +835,7 @@
         }
 
         // If the input is full, don't continue.
-        if (inputEditableString.length >= totalMaskEditables) {
+        if (self.originalPos.begin === self.originalPos.end && inputEditableString.length >= totalMaskEditables) {
           self.resetStorage();
           return self.killEvent(e);
         }
@@ -871,7 +871,7 @@
             return self.killEvent(e);
           } else if (inputEditableString.length === maskEditables[i].length) {
             var addMaskLiterals = '';
-            if (val.substring((val.length - maskLiterals[i].length), val.length) !== maskLiterals[i]) {
+            if (maskLiterals[i] && val.substring((val.length - maskLiterals[i].length), val.length) !== maskLiterals[i]) {
               addMaskLiterals = maskLiterals[i];
             }
             // do the check here
@@ -927,8 +927,8 @@
             var charArray = string.split('');
             for(var i = 0; i < charArray.length; i++) {
               var patternChar = this.getCharacter();
-              if (this.mode === 'date') {
-                this.processDateMask(charArray[i], patternChar, originalEvent);
+              if (this.mode === 'date' || this.mode === 'time') {
+                this.processGroupMask(charArray[i], patternChar, originalEvent);
               } else {
                 this.processMask(charArray[i], patternChar, originalEvent);
               }
