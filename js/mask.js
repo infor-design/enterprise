@@ -776,6 +776,93 @@
         };
       },
 
+      // Processes the current input value against the pre-processed mask, and returns an array containing the values
+      // inside of each editable piece of the group pattern.
+      analyzeInput: function(inputSlice) {
+        var self = this,
+          val = inputSlice !== undefined ? inputSlice : self.element.val(),
+          currentMaskPartIsLiteral = false,
+          editables = self.maskParts.editable,
+          literals = self.maskParts.literal,
+          totalMaskParts = editables.length + literals.length,
+          editableParts = [],
+          literalParts = [],
+          valFromLastIndex = '',
+          nextLiteralIndex = 0,
+          nextEditableIndex = 0,
+          editablePart = '',
+          literalPart = '',
+          valIndex = 0,
+          editableCount = 0,
+          literalCount = 0,
+          i = 0,
+          a = 0;
+
+        // More literals than editables means that there is a literal pattern BEFORE the first editable pattern.
+        if (editables.length < literals.length) {
+          currentMaskPartIsLiteral = true;
+        }
+
+        // Loop through all parts, and retrieve the values inside the editable parts.
+        for (i; i < totalMaskParts; i++) {
+          if (currentMaskPartIsLiteral) {
+            valFromLastIndex = val.substring(valIndex, val.length);
+            nextEditableIndex = valIndex + valFromLastIndex.length;
+            literalPart = '';
+
+            // find next literal character and grab its index.
+            for (a = 0; a < valFromLastIndex.length; a++) {
+              if ($.inArray(valFromLastIndex[a], self.maskParts.containedLiterals) === -1) {
+                nextEditableIndex = valIndex + a;
+                break;
+              }
+            }
+
+            literalPart = val.substring(valIndex, nextEditableIndex);
+            if (literalPart.length > 0) {
+              literalParts.push(literalPart);
+            }
+
+            valIndex = valIndex + literalPart.length;
+            currentMaskPartIsLiteral = false;
+            literalCount++;
+          } else {
+            valFromLastIndex = val.substring(valIndex, val.length);
+            nextLiteralIndex = valIndex + valFromLastIndex.length;
+            editablePart = '';
+
+            // find next literal character and grab its index.
+            for (a = 0; a < valFromLastIndex.length; a++) {
+              if ($.inArray(valFromLastIndex[a], self.maskParts.containedLiterals) !== -1) {
+                nextLiteralIndex = valIndex + a;
+                break;
+              }
+            }
+
+            editablePart = val.substring(valIndex, nextLiteralIndex);
+            if (editablePart.length > 0) {
+              editableParts.push(editablePart);
+            }
+
+            valIndex = valIndex + editablePart.length;
+            currentMaskPartIsLiteral = true;
+            editableCount++;
+          }
+        }
+
+        // make sure there is at least one empty entry in the array.
+        if (editableParts.length === 0) {
+          editableParts.push('');
+        }
+
+        return {
+          editables: editableParts,
+          literals: literalParts
+        };
+      },
+
+      // Returns a reconstructed pattern based on the parts dissected from the getPatternParts() method.
+      // Used for testing and sanity-checking.
       buildPatternFromParts: function() {
         var parts = this.getPatternParts(),
           pattern = '',
@@ -822,8 +909,10 @@
         self.originalPos = self.caret();
         self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
 
+        var val = self.element.val().substring(0, self.originalPos.begin),
+          input = self.analyzeInput(val);
+
         var totalMaskEditables = self.maskParts.allEditables.length,
-          val = self.element.val(),
           inputEditableString = val;
 
         // build a string containing all the editable fields entered into the masked input
@@ -854,39 +943,52 @@
           self.checkSectionForLiterals(e, typedChar, maskLiterals[0]);
           i = i + 1;
         }
-        for (i; i <= maskLiterals.length; i++) {
-          // If the character typed is a literal, allow it to go through if there is still a section of unmatched literals
-          // and there has been at least one editable character entered in this section.
-          if (maskLiterals[i+1] && $.inArray(typedChar, self.maskParts.containedLiterals) !== -1 && inputEditableString.length > 0) {
-            self.checkSectionForLiterals(e, typedChar, maskLiterals[i+1]);
+
+        // Fail out if we try to type too many characters
+        var currentSection = (input.editables.length - 1) > 0 ? input.editables.length - 1 : 0;
+        if (input.editables[currentSection].length > maskEditables.length) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // If the character typed is a literal, allow it to go through if there is still a section of unmatched literals
+        // and there has been at least one editable character entered in this section.
+        if (maskLiterals[currentSection] &&
+          $.inArray(typedChar, self.maskParts.containedLiterals) !== -1 &&
+          input.editables[currentSection].length > 0 &&
+          !(input.literals[currentSection])) {
+
+          self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection]);
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        var section = input.editables[currentSection] || '';
+
+        if (section.length < maskEditables[currentSection].length && match) {
+          if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
+            self.buffer += typedChar;
+            self.writeInput();
+          }
+        } else if (section.length === maskEditables[currentSection].length && match) {
+          if (self.originalPos.begin === self.originalPos.end &&
+              maskEditables[currentSection+1] &&
+              maskLiterals[currentSection] &&
+              !(input.literals[currentSection])) {
+
+            self.buffer += maskLiterals[currentSection];
+            if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
+              self.buffer += typedChar;
+            }
           }
 
-          if (inputEditableString.length < maskEditables[i].length) {
-            // do the check here
-            if (match) {
-              self.buffer += typedChar;
-              self.writeInput();
-            }
-            self.resetStorage();
-            return self.killEvent(e);
-          } else if (inputEditableString.length === maskEditables[i].length) {
-            var addMaskLiterals = '';
-            if (maskLiterals[i] && val.substring((val.length - maskLiterals[i].length), val.length) !== maskLiterals[i]) {
-              addMaskLiterals = maskLiterals[i];
-            }
-            // do the check here
-            if (match) {
-              self.buffer += addMaskLiterals + typedChar;
-              self.writeInput();
-            }
-            self.resetStorage();
-            return self.killEvent(e);
-          } else {
-            // cut down the total number of characters in "inputEditables" and continue to loop
-            inputEditableString = inputEditableString.slice(maskEditables[i].length, inputEditableString.length);
+          if (self.buffer.length > 0) {
+            self.writeInput();
           }
         }
 
+        self.resetStorage();
         return self.killEvent(e);
       },
 
@@ -897,9 +999,7 @@
         for (var a = 0; a < section.length; a++) {
           if (typedChar === section[a]) {
             self.buffer += section; /*tempBuffer + typedChar;*/
-            self.writeInput();
-            self.resetStorage();
-            return self.killEvent(e);
+            break;
           }
           //tempBuffer += section[a];
         }
