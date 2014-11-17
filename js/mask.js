@@ -788,6 +788,8 @@
           editableParts = [],
           literalParts = [],
           valFromLastIndex = '',
+          allEditables = '',
+          allLiterals = '',
           nextLiteralIndex = 0,
           nextEditableIndex = 0,
           editablePart = '',
@@ -823,6 +825,7 @@
               literalParts.push(literalPart);
             }
 
+            allLiterals += literalPart;
             valIndex = valIndex + literalPart.length;
             currentMaskPartIsLiteral = false;
             literalCount++;
@@ -844,6 +847,7 @@
               editableParts.push(editablePart);
             }
 
+            allEditables += editablePart;
             valIndex = valIndex + editablePart.length;
             currentMaskPartIsLiteral = true;
             editableCount++;
@@ -857,7 +861,9 @@
 
         return {
           editables: editableParts,
-          literals: literalParts
+          allEditables: allEditables,
+          literals: literalParts,
+          allLiterals: allLiterals
         };
       },
 
@@ -912,19 +918,8 @@
         var val = self.element.val().substring(0, self.originalPos.begin),
           input = self.analyzeInput(val);
 
-        var totalMaskEditables = self.maskParts.allEditables.length,
-          inputEditableString = val;
-
-        // build a string containing all the editable fields entered into the masked input
-        var inputLiteralMatches = [];
-        for (i = 0; i < maskLiterals.length; i++) {
-          var regex = new RegExp(maskLiterals[i]);
-          inputLiteralMatches.concat.apply(inputLiteralMatches, inputEditableString.match(regex));
-          inputEditableString = inputEditableString.replace(regex, '');
-        }
-
         // If the input is full, don't continue.
-        if (self.originalPos.begin === self.originalPos.end && inputEditableString.length >= totalMaskEditables) {
+        if (self.originalPos.begin === self.originalPos.end && input.allEditables.length >= self.maskParts.allEditables.length) {
           self.resetStorage();
           return self.killEvent(e);
         }
@@ -967,11 +962,13 @@
         var section = input.editables[currentSection] || '';
 
         if (section.length < maskEditables[currentSection].length && match) {
+          // Simply add the character if its a match
           if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
             self.buffer += typedChar;
             self.writeInput();
           }
         } else if (section.length === maskEditables[currentSection].length && match) {
+          // Check that conditions are right for the next set of literal characters to be added
           if (self.originalPos.begin === self.originalPos.end &&
               maskEditables[currentSection+1] &&
               maskLiterals[currentSection] &&
@@ -993,17 +990,12 @@
       },
 
       checkSectionForLiterals: function(e, typedChar, section) {
-        var self = this;
-          //tempBuffer = '';
-
         for (var a = 0; a < section.length; a++) {
           if (typedChar === section[a]) {
-            self.buffer += section; /*tempBuffer + typedChar;*/
+            this.buffer += section;
             break;
           }
-          //tempBuffer += section[a];
         }
-        // Continues on if it doesn't find anything...
       },
 
       // Takes an entire string of characters and runs each character against the processMask()
