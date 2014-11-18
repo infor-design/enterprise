@@ -60,16 +60,10 @@
         // if no pattern is provided in settings, use a pre-determined pattern based
         // on element type, or grab the pattern from the element itself.
         self.pattern = self.element.attr('data-mask') || settings.pattern || '';
-        if (!self.pattern || self.pattern === '') {
-          self.getPatternForType();
-        }
 
         // If a "mode" is defined, special formatting rules may apply to this mask.
         // Otherwise, the standard single-character pattern match will take place.
         self.mode = self.element.attr('data-mask-mode') || undefined;
-        if (self.mode) {
-          self.setupModeRules();
-        }
 
         // If "thousands" is defined, the thousands separator for numbers (comma or decimal, based on
         // localization) will be inserted wherever necessary during typing. Will automatically set to
@@ -80,16 +74,20 @@
         // Will automatically set to "true" if a negative symbol is detected inside the mask.
         self.negative = self.mode === 'number' && self.pattern.indexOf('-') !== -1;
 
+        // If 'mustComplete' is defined, you MUST complete the full mask, or the mask will revert to empty
+        // once the field is blurred.
+        self.mustComplete = self.element.attr('data-must-complete') || false;
+
         // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
         // separated pieces of "editable" and "literal" parts that are used for checking validity of mask pieces.
-        if ($.inArray(self.mode, ['group','date','time']) !== -1) {
+        if (self.mode !== 'number') {
           self.maskParts = self.getPatternParts();
         }
 
         // If 'self.groupComplete' is active, each section of the group pattern match must be full in order for the
         // literals in-between each section to be automatically added (meaning, you can't type a literal to end that
         // group until all characters in that group are entered).  This is used for some group matching and for time.
-        if (self.mode === 'group' || self.mode === 'time' || self.element.attr('data-group-complete')) {
+        if (self.mode === 'time' || self.element.attr('data-group-complete')) {
           self.groupComplete = true;
         }
 
@@ -140,33 +138,6 @@
           }
         }
         return false;
-      },
-
-      // Uses the "type" attribute on an element to determine a default pattern.
-      // This is called when "$.mask" is invoked on a field that contains an empty "data-mask" attribute.
-      getPatternForType: function() {
-        var self = this,
-          type = self.element.attr('type');
-
-        // TODO: flesh this out
-        switch(type) {
-          case 'tel':
-            self.pattern = '(###) ###-####';
-            break;
-          default:
-            self.pattern = '**********';
-        }
-      },
-
-      // Used for defining special rules and flags for use with certain mask types.
-      setupModeRules: function() {
-        switch(this.mode) {
-          case 'number':
-            //this.mustComplete = true;
-            break;
-          default:
-            break;
-        }
       },
 
       // Helper Function for Caret positioning.  If you provide "begin" and "end" arguments, the caret position
@@ -258,8 +229,7 @@
         var evt = e || window.event,
           eventType = evt.originalEvent.type,
           key = e.which,
-          typedChar = String.fromCharCode(key),
-          patternChar = self.getCharacter();
+          typedChar = String.fromCharCode(key);
 
         // set the original value if it doesn't exist.
         if (!self.initValue) {
@@ -295,11 +265,9 @@
             return;
           }
           if (self.mode === 'number') {
-            self.processNumberMask(typedChar, patternChar, evt);
-          } else if ($.inArray(self.mode, ['group','date','time']) !== -1) {
-            self.processGroupMask(typedChar, patternChar, evt);
+            self.processNumberMask(typedChar, evt);
           } else {
-            self.processMask(typedChar, patternChar, evt);
+            self.processMask(typedChar, evt);
           }
         }
 
@@ -528,59 +496,15 @@
         this.element.trigger('write.mask');
       },
 
-      // Filter the character that was just typed into the mask to determine if it belongs.
-      // In some cases, extra characters that belong in the correctly-masked text will be added before
-      // The typed character is placed.  If the character doesn't belong, stop the event and reset.
-      processMask: function(typedChar, patternChar, e) {
-        var self = this;
-        self.originalPos = self.caret();
-        self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
-
-        // don't do anything if you're at the end of the pattern.  You can't type anymore.
-        if (self.currentMaskBeginIndex >= self.pattern.length) {
-          self.resetStorage();
-          return self.killEvent(e);
-        }
-
-        if (self.isCharacterLiteral(patternChar)) {
-          // if you typed the exact character that's next in the mask, simply print the write buffer.
-          if (typedChar === patternChar) {
-            self.buffer += typedChar;
-            self.writeInput();
-            self.resetStorage();
-            return self.killEvent(e);
-          }
-
-          // get the character in the next position to see if it matches the regex.  If it does, print both characters
-          // to the input box.
-          self.buffer += patternChar;
-          var newPatternChar = self.getCharacter('next', self.currentMaskBeginIndex);
-          self.currentMaskBeginIndex++;
-          self.processMask(typedChar, newPatternChar, e);
-        } else {
-          // Check the character against its counterpart character in the mask
-          var match = self.testCharAgainstRegex(typedChar, patternChar);
-          if (!match) {
-            self.resetStorage();
-            return self.killEvent(e);
-          }
-
-          self.buffer += typedChar;
-          self.writeInput();
-          self.resetStorage();
-
-          return self.killEvent(e);
-        }
-      },
-
       // Method for processing number masks
       // TODO:  Flesh out content and docs
-      processNumberMask: function(typedChar, patternChar, e) {
+      processNumberMask: function(typedChar, e) {
         var self = this,
           val = self.element.val(),
           maskWithoutInts = self.pattern.replace(/#/g, ''),
           numMaskInts = self.pattern.length - maskWithoutInts.length,
-          match;
+          match,
+          patternChar;
 
         self.originalPos = self.caret();
         self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
@@ -931,7 +855,7 @@
         return unique;
       },
 
-      processGroupMask: function(typedChar, patternChar, e) {
+      processMask: function(typedChar, e) {
         var self = this,
           maskEditables = self.maskParts.editable,
           maskLiterals = self.maskParts.literal,
@@ -971,7 +895,7 @@
 
         // Fail out if we try to type too many characters
         var currentSection = (input.editables.length - 1) > 0 ? input.editables.length - 1 : 0;
-        if (input.editables[currentSection].length > maskEditables.length) {
+        if (input.editables[currentSection].length > maskEditables[currentSection].length) {
           self.resetStorage();
           return self.killEvent(e);
         }
@@ -1091,11 +1015,7 @@
             var charArray = string.split('');
             for(var i = 0; i < charArray.length; i++) {
               var patternChar = this.getCharacter();
-              if ($.inArray(this.mode, ['group','date','time'])) {
-                this.processGroupMask(charArray[i], patternChar, originalEvent);
-              } else {
-                this.processMask(charArray[i], patternChar, originalEvent);
-              }
+              this.processMask(charArray[i], patternChar, originalEvent);
             }
             break;
         }
