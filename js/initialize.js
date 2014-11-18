@@ -107,6 +107,9 @@
       //Spinbox
       elem.find('.spinbox').spinbox();
 
+      //Format
+      elem.find('.datepicker').datepicker();
+
       //Class-based detection for IE
       if (!!navigator.userAgent.match(/Trident/)) {
         $('html').addClass('ie');

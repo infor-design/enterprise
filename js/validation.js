@@ -69,7 +69,7 @@
           return;
         }
 
-        if (clickObj !==null && (clickObj.is('.dropdown-option') || clickObj.is('.inforTriggerButton') || clickObj.closest('.modal').length === 1)) {
+        if (clickObj !==null && (clickObj.closest('.modal').length === 1)) {
           return;
         }
         self.validate(field, field.closest('.modal-engaged')? false : true);
@@ -236,6 +236,7 @@
         trigger: 'immediate',
         isError: true
       });
+
       field.on('focus.validate', function() {
         field.data('tooltip').show();
       }).on('blur.validate', function() {

@@ -154,7 +154,7 @@
         });
 
         setTimeout(function () {
-          self.element.find('.modal-title').focus();
+          self.element.find('input:first').focus(); //.modal-title
           self.keepFocus();
           self.element.triggerHandler('open');
           self.element.find('.modal-body > div').first().triggerHandler('open');

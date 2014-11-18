@@ -30,7 +30,7 @@
       init: function() {
         // Add Ripple Effect
         this.element.addClass('ripple');
-        this.element.on('mousedown.button touchstart.button', function (e) {
+        this.element.on('mousedown.button', function (e) {
           if (e.button === 2) {
             return;
           }

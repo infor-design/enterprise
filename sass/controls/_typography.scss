@@ -26,11 +26,19 @@ body {
 
 //Text Elements
 
-h1, h2, h3, h4, label, p, span {
-  font-family: $font-regular;
-  font-weight: normal;
+h1,
+h2,
+h3,
+h4,
+label,
+p,
+span {
   color: $font-color;
+  font-family: $font-regular;
+  font-smooth:always;
+  font-weight: normal;
   line-height: 20px;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1 {

@@ -17,17 +17,32 @@
           <input type="text" id="credit-card" name="credit-card" data-validate="also-required" value="xxxx-xxxx-xxxx-xxxx">
         </div>
 
+        <div class="field">
+          <label for="states" class="label">States</label>
+          <select id="states" data-validate="also-required" name="states" class="dropdown">
+            <option value="AL" selected>Alabama</option>
+            <option value="DE">Delaware</option>
+            <option value="DC">District Of Columbia</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            </select>
+        </div>
+
       </div>
     </div>
 
     <script type="text/javascript">
       // This test adds an additional validation rule.
       $.fn.validation.rules['also-required'] = {
-        check: function (value) {
-          if (typeof value === 'string' && $.trim(value).length === 0) {
-            return false;
-          }
-          return (value ? true : false);
+        check: function () {
+          return false;
         },
         message: 'This is a custom validation rule that duplicates the functionality of the "required" rule built into the validator, but has this really long message instead.  This is testing the size of error message tooltips, as well as testing that custom rules work properly.', //TODO - Localize
         async: false

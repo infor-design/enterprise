@@ -59,7 +59,7 @@
 
 /* disabled radio */
 .radio:disabled:not(:checked) + label:before, .radio:disabled:checked + label:before {
-  border-color:  $accent-color;
+  border-color:  $primary-color;
   cursor: default;
 }
 

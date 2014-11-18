@@ -1,60 +1,48 @@
-<header class="masthead" role="banner">
-  <svg role="img" aria-label="Infor Logo" class="icon icon-logo" viewBox="0 0 34 34">
-    <use xlink:href="#icon-logo"></use>
-  </svg>
-  <h1 class="masthead-appname">Active Product Name Text</h1>
-</header>
-
-<nav class="navbar" role="navigation">
-  <div class="navbar-left">
-    <button type="button">Bookmarks</button>
-    <button type="button">Favorites</button>
-  </div>
-  <div class="navbar-right">
-    <span class="seperator"></span>
-    <button type="button">Buyer</button>
-  </div>
-</nav>
-
 <section class="homepage" role="main">
-  <div class="hero">
-    <h1>Requisition Overview</h1>
+
+  <div class="grid widget-container">
+    <div class="col-1-1">
+      <div class="widget">
+        <div class="widget-header" draggable="true" ondragstart="drag(event)"></div>
+      </div>
+    </div>
   </div>
 
   <div class="grid widget-container">
     <div class="col-1-3">
       <div class="widget">
-        <div class="widget-header">
-          <h1>My Tasks</h1>
-          <button type="button" class="widget-nav">Navigation</button>
-        </div>
-        <div class="widget-content">
-          Foo
-        </div>
+        <div class="widget-header" draggable="true" ondragstart="drag(event)"></div>
       </div>
     </div>
     <div class="col-1-3">
       <div class="widget">
-        <div class="widget-header">
-          <h1>Overview Inventory</h1>
-          <button type="button" class="widget-nav">Navigation</button>
-        </div>
-        <div class="widget-content">
-          Foo
-        </div>
+        <div class="widget-header" draggable="true" ondragstart="drag(event)"></div>
       </div>
     </div>
     <div class="col-1-3">
-      <div class="widget">
-        <div class="widget-header">
-          <h1>My Tasks</h1>
-          <button type="button" class="widget-nav">Navigation</button>
-        </div>
-        <div class="widget-content">
-          Foo
-        </div>
+      <div class="widget" draggable="true" ondragstart="drag(event)">
+        <div class="widget-header"></div>
       </div>
     </div>
   </div>
 
 </section>
+
+<script>
+alert();
+//https://raw.githubusercontent.com/RubaXa/Sortable/master/Sortable.js
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("Text", ev.target.id);
+}
+
+function drop(ev) {
+    var data = ev.dataTransfer.getData("Text");
+    ev.target.appendChild(document.getElementById(data));
+    ev.preventDefault();
+}
+</script>

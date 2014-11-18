@@ -76,13 +76,14 @@ input.dropdown[disabled] .dropdown + .icon {
   transform: rotate(180deg);
 }
 
-.dropdown.is-ontop {
-
+.dropdown.is-open.is-ontop {
+  border-radius: 0 0 2px 2px;
 }
 
 .dropdown-list.is-ontop {
   border-radius: 3px 3px 0 0;
-  border-width: 1px 1px 0;
+  border-width: 1px;
+  border-color: $input-focus-border-color;
 }
 
 .dropdown + .icon {

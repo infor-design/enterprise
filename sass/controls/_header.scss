@@ -1,7 +1,7 @@
 /* Site/App Header
 ================================================== */
 
-.header {
+header.header {
   background-color: $primary-color;
   height: 100px;
   padding-top: 35px;
@@ -26,11 +26,11 @@
     width: 100%;
   }
 
-  .header {
+  header.header {
     background-color: transparent !important;
   }
 
-  .header .title {
-    color: #333 !important;
+  header.header .title {
+    color: #333333 !important;
   }
 }

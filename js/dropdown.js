@@ -44,7 +44,7 @@
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
                         .attr('id', id);
 
-        var icon = $('<svg class="icon"><use xlink:href="#icon-dropdown-arrow"/></svg>');
+        var icon = $('<svg class="icon"><use xlink:href="#icon-dropdown"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.element.after(this.input, this.trigger);
@@ -141,8 +141,10 @@
         this.input.hide().prev('label').hide();
         this.input.next('svg').hide();
        }
+       //TODO: Empty Selection
        if (this.element.attr('placeholder')) {
         this.input.attr('placeholder', this.element.attr('placeholder'));
+        this.element.removeAttr('placeholder');
        }
       },
       bindEvents: function() {
@@ -300,10 +302,11 @@
         }
         //Flow up if not enough room on bottom
         this.list.removeClass('is-ontop');
-
+        this.input.removeClass('is-ontop');
         if (top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
           this.list.css({'top': top - this.list.outerHeight() - this.input.outerHeight()});
           this.list.addClass('is-ontop');
+          this.input.addClass('is-ontop');
         }
 
         // If the menu is off the top of the screen, cut down the size of the menu to make it fit.
@@ -318,6 +321,11 @@
         if (this.list.width() > this.input.outerWidth()) {
            this.list.css('width', '');
            this.list.css({'width': this.list.outerWidth() + 35});
+           //But not off the left side
+           var maxWidth = $(window).width() - parseInt(this.list.css('left'), 10);
+           if (this.list.width() > maxWidth) {
+            this.list.width(maxWidth - 20);
+           }
         } else {
            this.list.width(this.input.outerWidth()-2);
         }

@@ -10,6 +10,15 @@
   width: 84px;
 }
 
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 .field {
   > .spinbox {
     margin-bottom: 0;
@@ -50,7 +59,7 @@
   }
 
   &:hover {
-    color: $accent-color;
+    color: $primary-color;
   }
 
   &.is-active {

@@ -40,8 +40,11 @@ del {
   text-decoration: line-through;
 }
 
-input, textarea, select, button {
-  background-color: #fff;
+input,
+textarea,
+select,
+button,
+th {
   border: 0;
   font-family: inherit;
   font-weight: inherit;

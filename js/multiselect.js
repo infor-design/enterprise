@@ -53,13 +53,10 @@
         this.trigger = $('<svg focusable="false" class="icon" viewBox="0 0 32 32"><use focusable="false" xlink:href="#icon-dropdown-arrow"/></svg>').insertAfter(this.input);
 
         //Add selected items
-        var selOpts = this.element[0].selectedOptions;
-        if (!selOpts) {
-          return;
-        }
-        for (var i = 0; i < selOpts.length; i++) {
-          self.addTag($(selOpts[i]));
-        }
+        var selOpts = this.element.find('option:selected');
+        $.each(selOpts, function (i, item) {
+          self.addTag($(item));
+        });
       },
       //Call the source function or get the select options
       callSource: function (term) {
@@ -108,7 +105,7 @@
         items = this.element[0].options;
         this.list.empty();
 
-        $(items).each(function (i, item) {
+        $.each(items, function (i, item) {
           var isDisabled = false,
             label = (typeof item === 'string' ? item : item.label),
             value = (typeof item === 'string' ? null : item.value),
@@ -118,7 +115,7 @@
             isDisabled = true;
           }
 
-          if (label.toLowerCase().indexOf(term.toLowerCase()) > -1) {
+          if (label.toString().toLowerCase().indexOf(term.toString().toLowerCase()) > -1) {
             var listOption = $('<li id="multiselect--option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + label + '</a></li>');
             listOption.find('a').attr('href', '#'+ (value || id || label));
             listOption.addClass((isDisabled ? 'is-disabled' : ''));

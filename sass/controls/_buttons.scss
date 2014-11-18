@@ -1,6 +1,7 @@
 /* Buttons
 ================================================== */
 button {
+  background-color: transparent;
   font-family: $font-regular;
 }
 
@@ -61,6 +62,7 @@ button {
 
   &:active {
     background-color: $button-active-bg-color;
+    color: $button-active-color;
   }
 
   &:focus {
@@ -88,6 +90,12 @@ button {
 
   &:active {
     color: $primary-button-active-bg-color;
+  }
+
+  &:focus {
+    border: 1px solid $tertiary-button-focus-border-color;
+    box-shadow: none;
+    color: $tertiary-button-focus-color;
   }
 
   &[disabled],

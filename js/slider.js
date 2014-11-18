@@ -18,14 +18,14 @@
     // Settings and Options
     var pluginName = 'slider',
         defaults = {
-          value: 0
+          value: 50
         },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Actual Plugin Code
@@ -33,35 +33,38 @@
       init: function() {
         var self = this,
             updateBar = function(args) {
-              var leftWidth = ($(args.el).position().left + (self.handles.width()));
-              self.value(leftWidth);
+              var leftWidth = (args.left / self.element.parent().width());
+              self.value(leftWidth*100);
             };
 
         self.handles = self.element.find('.slider-handle');
         self.range = self.element.find('.slider-range');
         self.value(settings.value);
 
-        self.handles.draggable({constrainTo: 'parent', axis: 'x'})
-            .on('click.slider', function (e) {
-              e.preventDefault(); //Prevent from jumping to top.
-            })
-            .on('drag.slider', function (e, args) {
-              updateBar(args);
-            })
-            .on('easing.slider', function (e, args) {
-              updateBar(args);
-            });
+        self.handles.draggable({constrainTo: 'parent', axis: 'x', clone: false})
+          .on('mousedown.slider', function () {
+            $(this).focus();
+          })
+          .on('click.slider', function (e) {
+            e.preventDefault(); //Prevent from jumping to top.
+          })
+          .on('drag.slider', function (e, args) {
+            updateBar(args);
+          });
       },
+
+      // External Facing Function to set the value
+      // works as percent for now but need it on ticks
       value: function(val) {
-        var self = this,
-          leftWidth = 0;
+        var self = this;
 
         self._value = val;
-        leftWidth = ((self._value - (self.handles.width() /2)) / parseInt(self.element.css('width'), 10)) * 100;
-        self.range.css('width', leftWidth + '%');
+        self.range.css('width', val + '%');
+        self.handles.css('left', val + '%');
         //set the ranges
         return self._value;
       },
+
       destroy: function() {
         $.removeData(this.obj, pluginName);
       }

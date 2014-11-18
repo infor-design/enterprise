@@ -48,6 +48,12 @@
         if (this.element.attr('data-trackdirty')) {
           this.element.data('original', val);
         }
+
+        //allow numeric input on iOS
+        var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+        if (iOS) {
+          this.element.attr('pattern','\\d*');
+        }
         return this;
       },
 

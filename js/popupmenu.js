@@ -90,7 +90,7 @@
             $(item).html('<span>' + text + '<span>');
           }
           if ($(item).find('svg.arrow').length === 0) {
-            $(item).append('<svg class="icon arrow"><use xlink:href="#icon-dropdown-arrow"></svg>');
+            $(item).append('<svg class="icon arrow"><use xlink:href="#icon-dropdown"></svg>');
           }
         });
         this.menu.find('a').attr('tabindex', '-1').attr('role', 'menuitem');

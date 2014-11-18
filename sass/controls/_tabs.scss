@@ -52,7 +52,7 @@
 
 /* States */
 .tab-list li.is-selected {
-  background-color: $accent-color;
+  background-color: $primary-color;
 }
 
 .tab-list li.is-selected a {
@@ -75,7 +75,7 @@
 }
 
 .tab-more.popup-is-open {
-  background-color: $accent-color;
+  background-color: $primary-color;
   color: #fff;
 }
 

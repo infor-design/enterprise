@@ -67,8 +67,13 @@ app.configure(function() {
   });
 
   //Doc Page
-  app.get('/docs', function(req, res) {
-    res.render('docs', templateOpts);
+  app.get('/docs*', function(req, res) {
+    var docOpts = {
+      title: 'SoHo XI',
+      layout: null,
+      enableLiveReload: true
+    };
+    res.render('docs/index', docOpts);
   });
 
   //Sample Json call that returns States

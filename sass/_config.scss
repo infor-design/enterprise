@@ -14,12 +14,12 @@ $label-color: #666666;
 $body-bg-color: #f0f0f0;
 
 // The Newer Color Themes (Amethyst is default)
-$primary-color: #0c7ad6;
+$primary-color: #0896e9;  //0c7ad8 ??
 $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
 // Form Buttons
-$primary-button-bg-color: #1d98e6;
+$primary-button-bg-color: $primary-color;
 $primary-button-hover-bg-color: #1a7cd5;
 $primary-button-focus-bg-color: #1d98e6;
 $primary-button-active-bg-color: #1a7cd4;
@@ -30,8 +30,14 @@ $button-bg-color: #d2d2d2;
 $button-hover-bg-color: #b6b6b6;
 $button-focus-bg-color: #d2d2d2;
 $button-active-bg-color: #a8a8a8;
+$button-active-color: #333333;
 $button-disabled-bg-color: #d2d2d2;
 
+//Tertiary Buttons
+$tertiary-button-color: #666666;
+$tertiary-button-hover-color: #333333;
+$tertiary-button-focus-border-color: $primary-color;
+$tertiary-button-focus-color: $primary-color;
 
 // Input Fields
 $input-border-color: #999999;
@@ -40,15 +46,15 @@ $input-disabled-bg-color: #e5e5e5;
 $input-disabled-border-color: #d2d2d2;
 $input-disabled-color: #737373;
 $input-focus-shadow: 0 0 5px rgba(8, 150, 233, .2);
-$input-focus-border-color: #0896e9;
+$input-focus-border-color: $primary-color;
 $input-placeholder-color: #999999;
 $input-readonly-border-color: #d2d2d2;
 
 // Context Menu
 $menu-hover-color: #ededed;
-$menu-border-color: #0896e9;
+$menu-border-color: $primary-color;
 $menu-color: #333333;
-$menu-underline-color: #0896e9;
+$menu-underline-color: $primary-color;
 
 // Drop down
 $dropdown-disabled-bg-color: #e5e5e5;
@@ -68,7 +74,7 @@ $editor-button-color: #999999;
 $multiselect-focus-border-color: $input-focus-border-color;
 $multiselect-focus-shadow: $input-focus-shadow;
 $multiselect-tag-color: #999999;
-$multiselect-tag-hover-color: #0896e9;
+$multiselect-tag-hover-color: $primary-color;
 $multiselect-height: 34px;
 
 // Menu Button
@@ -82,15 +88,25 @@ $menubutton-disabled-border-color: $input-disabled-border-color;
 $menubutton-disabled-color: $input-disabled-color;
 
 // Checkboxes
-$checkbox-color: #0896e9;
+$checkbox-color: $primary-color;
 $checkbox-border-color: #999999;
 $checkbox-disabled-color: #d2d2d2;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Radio Buttons
 $radio-border-color: #999999;
-$radio-color: #0896e9;
+$radio-color: $primary-color;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+
+// Date Picker
+$datepicker-alt-month-color: #999999;
+$datepicker-selected-bg-color: $primary-color;
+$datepicker-selected-color: $inverse-color;
+$datepicker-today-color: #1a1a1a;
+
+//Slider
+$slider-bg-color: #b6b6b6;
+$slider-active-bg-color: $primary-color;
 
 //States
 $error-color: #ed1c24;
@@ -104,7 +120,7 @@ $spinbox-bg-color: #e5e5e5;
 
 //Colors
 $turqoise: #00c2b4;
-$azure: #0896e9;
+$azure: $primary-color;
 $emerald: #2db329;
 $amber: #ffa800;
 $ruby: #ed1c24;
@@ -114,9 +130,6 @@ $amethyst: #e63262;
 $graphite: #b3b3b3;
 
 ///////////////////
-
-//Main Accent Color
-$accent-color: #0086e6;
 
 //Color Of Labels and Some Hs
 $label-color: #666666;
@@ -141,10 +154,10 @@ $breakpoint-tablet-to-desktop: 1024px;
 $breakpoint-desktop-to-extralarge: 1300px;
 
 /* Adam's Approach
-$site-width-wide: 1440px;
-$site-width-medium: 768px;
-$site-width-narrow: 640px;
-$site-width-tiny: 400px;
+$site-width-wide: 1479px;
+$site-width-medium: 1240px;
+$site-width-narrow: 760px;
+$site-width-small: 360px;
 
 @mixin breakpoint($device) {
   @if $device == site-width-medium {

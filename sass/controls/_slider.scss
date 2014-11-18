@@ -1,33 +1,38 @@
-/* Sliders
-================================================== */
+// Sliders
+//================================================== //
 .slider {
-  background-color: #dbdbdb;
-  height: 12px;
+  background-color: $slider-bg-color;
+  height: 4px;
   margin: 10px 0;
+  position: relative;
   width: 100%;
 }
 
 .slider-handle {
-  background-color: #FFFFFF;
-  border-radius: 29px;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.25), 0 3px 4px rgba(0, 0, 0, 0.18);
-  color: rgba(0, 0, 0, 0);
+  background-color: $slider-active-bg-color;
+  border: 3px solid $slider-active-bg-color;
+  border-radius: 24px;
+  color: transparent;
   display: inline-block;
-  height: 28px;
-  line-height: 28px;
-  margin-top: -8px;
+  height: 24px;
+  line-height: 24px;
+  margin-left: -15px;
+  margin-top: -10px;
   position: absolute;
-  width: 28px;
-}
+  width: 24px;
 
-.slider-handle:focus, .slider-handle:active, .slider-handle.is-active {
-  box-shadow: $focus-shadow, 0 3px 4px rgba(0, 0, 0, 0.18);
+  &:focus,
+  &:active,
+  &.is-active {
+    background-color: $inverse-color;
+    border-color: $slider-active-bg-color;
+  }
 }
 
 .slider-range {
-  width: inherit;
-  height: inherit;
+  background-color: $primary-color;
   display: block;
+  height: inherit;
   position: absolute;
-  background-color: $accent-color;  /*1a9fff*/
+  width: inherit;
 }
