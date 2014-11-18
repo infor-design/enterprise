@@ -1,0 +1,10 @@
+// Drag and Drop Styling
+//================================================== //
+
+.disable-select * {
+  @include no-select;
+}
+
+.draggable {
+ // transition: all .2s ease;
+}

@@ -1,0 +1,36 @@
+// Site Styling
+//==================================================//
+
+@import 'config';
+@import 'reset';
+@import 'mixins';
+@import 'controls/grid';
+@import 'controls/typography';
+
+.site-header {
+  background-color: #fafafa;
+  display: block;
+  height: 82px;
+  position: relative;
+  width: 100%;
+
+  h1 {
+    color: $primary-color;
+    font-family: $font-light;
+    @include font-size(36);
+    line-height: 82px;
+    margin: 0 90px;
+  }
+}
+
+.site-sticky-navbar {
+  position: relative;
+  top: 1px;
+}
+
+.site-hero {
+  background-color: #055bb8;
+  background-image: linear-gradient(-41deg, #00ab9f, #005bb8);
+  background-size: cover;
+  height: 600px;
+}

@@ -1,0 +1,155 @@
+/* Date Picker
+================================================== */
+
+.datepicker {
+  width: 150px;
+
+  + .icon {
+    cursor: pointer;
+    fill: #999999;
+    height: 18px;
+    margin-left: -30px;
+    margin-top: 7px;
+    position: absolute;
+  }
+
+  &:disabled {
+    + .icon {
+      fill: #c3c3c3;
+    }
+  }
+}
+
+.calendar {
+  background-color: $inverse-color;
+  display: inline-block;
+  min-height: 300px;
+  min-width: 300px;
+  text-align: center;
+  vertical-align: middle;
+  width: auto;
+
+  tr {
+    text-align: center;
+  }
+
+  // Header
+  thead {
+    th {
+      color: $font-color-dark;
+      font-family: $font-semibold;
+      @include rem(font-size, 1.2rem);
+      margin: 20px;
+      width: 35px;
+    }
+  }
+
+  // Cells / Days
+  td {
+    border: 1px solid transparent;
+    border-radius: 35px;
+    color: $font-color-dark;
+    cursor: pointer;
+    font-family: $font-regular;
+    @include rem(font-size, 1.2rem);
+    height: 35px;
+    padding: 10px;
+    width: 35px;
+
+    //Other month color
+    &.alt {
+      color: $datepicker-alt-month-color;
+    }
+
+    //Today
+    &.today {
+      border-color: $datepicker-today-color;
+      color: $datepicker-today-color;
+      font-family: $font-semibold;
+    }
+
+    //Selecte
+    &.selected {
+      background-color: $datepicker-selected-bg-color;
+      color: $datepicker-selected-color;
+      font-family: $font-semibold;
+    }
+  }
+
+  .calendar-table {
+    margin: 17px auto 0;
+    padding: 0 10px;
+    width: 100%;
+  }
+}
+
+// Header Area of Calendar
+.calendar-header {
+  border-bottom: 1px solid #eeeeee;
+  height: 74px;
+  line-height: 85px;
+  position: relative;
+  text-align: center;
+
+  button {
+    border: 1px solid transparent;
+    color: transparent;
+    display: block;
+    height: 30px;
+    left: 20px;
+    margin-top: 11px;
+    position: absolute;
+    top: 7px;
+    width: 30px;
+
+    &:after {
+      border-left: 2px solid #999999;
+      border-top: 2px solid #999999;
+      content: '';
+      height: 10px;
+      margin-left: -24px;
+      margin-top: -2px;
+      position: absolute;
+      transform: rotate(-45deg);
+      width: 10px;
+    }
+
+    &:nth-child(1) {
+      left: initial;
+      right: 20px;
+
+      &:after {
+        margin-left: -28px;
+        transform: rotate(135deg);
+      }
+    }
+  }
+
+  .month {
+    @include font-size(20);
+    color: $font-color-dark;
+    text-transform: capitalize;
+  }
+}
+
+
+//Footer Buttons
+.calendar-footer {
+  border-top: 1px solid #eeeeee;
+  height: 40px;
+  padding-top: 10px;
+
+  .cancel {
+    color: $font-color-light;
+    float: left;
+    line-height: inherit;
+    margin-left: 20px;
+  }
+
+  .set {
+    float: right;
+    line-height: inherit;
+    margin-right: 20px;
+    text-transform: uppercase;
+  }
+}
