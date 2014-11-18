@@ -385,7 +385,8 @@
         if (this.mode === 'number') {
 
           // cut all but the first occurence of the negative symbol and decimal
-          val = val.replace(/(?!^)-/g, '').replace(/(?!^)\./g, '');
+          val = this.replaceAllButFirst(/-/g, val, '');
+          val = this.replaceAllButFirst(/\./g, val, '');
 
           // cut any extra leading zeros.
           var valWithoutLeadZeros = val.replace(/^0+(?!\.|$)/, ''),
@@ -951,7 +952,7 @@
           }
         } else if (section.length === maskEditables[currentSection].length && match) {
           // Check that conditions are right for the next set of literal characters to be added
-          if (self.originalPos.begin === self.originalPos.end &&
+          if (/*self.originalPos.begin === self.originalPos.end &&*/
               maskEditables[currentSection+1] &&
               maskLiterals[currentSection+i]) {
 
@@ -961,6 +962,8 @@
               var currVal =  self.element.val(),
                 remainder = currVal.substring(self.originalPos.begin, currVal.length);
               val = val.substring(0, (val.length - input.literals[currentSection+i].length));
+              self.caret(self.originalPos.begin - input.literals[currentSection+i].length);
+              self.originalPos = self.caret();
               self.element.val(val + remainder);
               self.buffer += maskLiterals[currentSection+i];
             }
@@ -1026,6 +1029,21 @@
       testCharAgainstRegex: function(typedChar, patternChar) {
         var regex = settings.definitions[patternChar];
         return !regex ? false : regex.test(typedChar);
+      },
+
+      // Replaces all but the first occurence of a regex with nothing.
+      replaceAllButFirst: function(regex, textString, replacement) {
+        if (!replacement) {
+          replacement = '';
+        }
+        var count = 0;
+        textString = textString.replace(regex, function(match) {
+          if (count > 0) {
+            return replacement;
+          }
+          return match;
+        });
+        return textString;
       },
 
       // Returns the character at the current/next/previous cursor position.

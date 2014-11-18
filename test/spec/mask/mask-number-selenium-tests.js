@@ -31,9 +31,7 @@ describe('Number Format [selenium]', function(){
       .call(done);
   });
 
-  // TODO: Fix this test
-  // There is a problem with how PhantomJS handles this plugin's caret positioning.
-  it.skip('should format a number while typing from start to finish', function(done) {
+  it('should format a number while typing from start to finish', function(done) {
     var input = '#input-masked-number';
     runner.client
       .setValue(input, '')
@@ -126,9 +124,7 @@ describe('Number Format [selenium]', function(){
       .call(done);
   });
 
-  // TODO: Fix this test
-  // Errors with caret positioning in PhantomJS.  Passes if you run the tests in Chrome/Firefox.
-  it.skip('should be able to replace a selected range and format the remaining number correctly', function(done) {
+  it('should be able to replace a selected range and format the remaining number correctly', function(done) {
     var input = '#input-masked-number';
     // fill the number field completely.
     // select a small range of numbers.

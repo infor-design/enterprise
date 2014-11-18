@@ -84,13 +84,14 @@ describe('Pattern Format [selenium]', function(){
 
   it('should handle deletion of a selected text range, followed by typing of a new character', function(done) {
     runner.client
-      .setValue('#input-masked-phone', '1234567890', globals.noError)
+      .setValue('#input-masked-phone', '', globals.noError)
+      .addValue('#input-masked-phone', '1234567890', globals.noError)
       .getValue('#input-masked-phone', function(err, value) {
         globals.noError(err);
         should.exist(value);
         value.should.equal('(123) 456-7890');
       })
-      .keys([
+      .addValue('#input-masked-phone', [
         'Left arrow',
         'Shift',
         'Left arrow',
