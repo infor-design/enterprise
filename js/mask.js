@@ -82,8 +82,15 @@
 
         // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
         // separated pieces of "editable" and "literal" parts that are used for checking validity of mask pieces.
-        if ($.inArray(self.mode, ['date','time']) !== -1) {
+        if ($.inArray(self.mode, ['group','date','time']) !== -1) {
           self.maskParts = self.getPatternParts();
+        }
+
+        // If 'self.groupComplete' is active, each section of the group pattern match must be full in order for the
+        // literals in-between each section to be automatically added (meaning, you can't type a literal to end that
+        // group until all characters in that group are entered).  This is used for some group matching and for time.
+        if (self.mode === 'group' || self.mode === 'time' || self.element.attr('data-group-complete')) {
+          self.groupComplete = true;
         }
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
@@ -280,14 +287,16 @@
             return;
           // Need to additionally check for arrow key combinations here because some browsers
           // Will fire keydown and keypress events for arrow keys.
-          } else if (evt.shiftKey && 36 < key && key < 41) {
+          } else if (evt.shiftKey && 36 < key && key < 41 && typedChar !== '(') {
             return;
-          } else if ((36 < key && key < 41) && typedChar !== '\'')  {
+          } else if ((36 < key && key < 41) && typedChar !== '\'' && typedChar !== '(')  {
+            // '(' is keycode 40 on some browsers
+            // '/' is keycode 39 on some browsers
             return;
           }
           if (self.mode === 'number') {
             self.processNumberMask(typedChar, patternChar, evt);
-          } else if (self.mode === 'date' || self.mode === 'time') {
+          } else if ($.inArray(self.mode, ['group','date','time']) !== -1) {
             self.processGroupMask(typedChar, patternChar, evt);
           } else {
             self.processMask(typedChar, patternChar, evt);
@@ -725,13 +734,27 @@
       // and its unmatchable literals.
       getPatternParts: function() {
         var self = this,
-          patternEditableParts = self.pattern.match(/[#]+/g) || [],
+          defKeys = Object.keys(settings.definitions),
+          patternEditableParts = [],
           patternLiteralParts = [],
-          i = 0;
+          patternStartsWithLiteral = false,
+          i = 0,
+          regexString = '',
+          regexObj;
+
+        // Build the string of "editable" matches dynamically from settings,
+        // and match it against the incoming pattern to determine each editable group.
+        $.each(defKeys, function(i, def) {
+          regexString += def;
+        });
+        regexString = '[' + regexString + ']+';
+        regexObj = new RegExp(regexString, 'g');
+        patternEditableParts = self.pattern.match(regexObj) || [];
 
         // check for literal characters at the beginning of the string before the first matchable pattern
         if (patternEditableParts[0] && self.pattern.substring(0, 1) !== patternEditableParts[0].substring(0, 1)) {
           patternLiteralParts.push( self.pattern.substring( 0, self.pattern.indexOf( patternEditableParts[0] )));
+          patternStartsWithLiteral = true;
         }
 
         // set a starting index for our literal checking... may not be 0 if there were literals before the first match
@@ -766,13 +789,16 @@
         for (var b = 0; b < patternEditableParts.length; b++) {
           allEditables += patternEditableParts[b];
         }
+        var containedEditables = self.removeDuplicates(allEditables);
 
         return {
           editable: patternEditableParts,
           literal: patternLiteralParts,
           allLiterals: allLiterals,
           allEditables: allEditables,
-          containedLiterals: containedLiterals
+          containedLiterals: containedLiterals,
+          containedEditables: containedEditables,
+          startsWithLiteral: patternStartsWithLiteral
         };
       },
 
@@ -801,7 +827,7 @@
           a = 0;
 
         // More literals than editables means that there is a literal pattern BEFORE the first editable pattern.
-        if (editables.length < literals.length) {
+        if (self.maskParts.startsWithLiteral) {
           currentMaskPartIsLiteral = true;
         }
 
@@ -876,7 +902,7 @@
           editableCount = 0;
 
         // there is a literal BEFORE and AFTER the first match.
-        if (parts.literal > parts.editable) {
+        if (parts.startsWithLiteral) {
           pattern += parts.literal[0];
           literalCount++;
         }
@@ -924,18 +950,22 @@
           return self.killEvent(e);
         }
 
-        // don't continue at all if the character typed isn't a digit or a separator
-        match = self.testCharAgainstRegex(typedChar, '#');
+        // don't continue at all if the character typed isn't a valid editable or literal in this pattern
+        for (var b = 0; b < self.maskParts.containedEditables.length; b++) {
+          match = self.testCharAgainstRegex(typedChar, self.maskParts.containedEditables[b]);
+          if (match) {
+            break;
+          }
+        }
         if (!match && $.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
           self.resetStorage();
           return self.killEvent(e);
         }
 
-        // loop through each group of editable parts in the mask to figure out where this check needs to be done
+        // "i" increments the literal section checks by one.  This is necessary if you have a literal pattern group
+        // starting the pattern.
         i = 0;
-        if (maskLiterals.length > maskEditables.length) {
-          // Only do this check if there is a set of literals BEFORE the first set of editables
-          self.checkSectionForLiterals(e, typedChar, maskLiterals[0]);
+        if (self.maskParts.startsWithLiteral) {
           i = i + 1;
         }
 
@@ -946,17 +976,45 @@
           return self.killEvent(e);
         }
 
-        // If the character typed is a literal, allow it to go through if there is still a section of unmatched literals
-        // and there has been at least one editable character entered in this section.
-        if (maskLiterals[currentSection] &&
+        // Constant boolean for checking on literals (used by the two checks below)
+        var typedLiteralsAreValid = (maskLiterals[currentSection+i] !== undefined) &&
           $.inArray(typedChar, self.maskParts.containedLiterals) !== -1 &&
-          input.editables[currentSection].length > 0 &&
-          !(input.literals[currentSection])) {
+          !(input.literals[currentSection+i]);
 
-          self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection]);
+        // If the character typed is a literal, allow it to go through if there is still a section of unmatched literals
+        // and there has been at least one editable character entered in this section.  This only works if the flag
+        // 'self.groupComplete' is set to 'false' (generally used for dates).
+        if (typedLiteralsAreValid &&
+          !self.groupComplete &&
+          input.editables[currentSection].length > 0) {
+
+          self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection+i]);
           self.writeInput();
           self.resetStorage();
           return self.killEvent(e);
+        }
+
+        // If 'self.groupComplete' is true, but all characters for this particular group have already been entered,
+        // Allow a typed literal character to pass
+        if (typedLiteralsAreValid &&
+          self.groupComplete &&
+          input.editables[currentSection].length === maskEditables[currentSection].length) {
+
+          self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection+i]);
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // If the "literals" are shifted forward due to the mask beginning with a literal pattern instead of an
+        // editable pattern, automatically append that literal character at this point, since it hasn't been typed
+        if (i > 0 && currentSection === 0 && !(input.literals[0])) {
+          self.buffer += maskLiterals[0];
+          if ($.inArray(typedChar, self.maskParts.containedLiterals) !== -1) {
+            self.writeInput();
+            self.resetStorage();
+            return self.killEvent(e);
+          }
         }
 
         var section = input.editables[currentSection] || '';
@@ -971,10 +1029,24 @@
           // Check that conditions are right for the next set of literal characters to be added
           if (self.originalPos.begin === self.originalPos.end &&
               maskEditables[currentSection+1] &&
-              maskLiterals[currentSection] &&
-              !(input.literals[currentSection])) {
+              maskLiterals[currentSection+i]) {
 
-            self.buffer += maskLiterals[currentSection];
+            // check to make sure that the existing literals in the set are correctly formed,
+            // and fix them if they aren't.
+            if (input.literals[currentSection+i] && maskLiterals[currentSection+i] !== input.literals[currentSection+i]) {
+              var currVal =  self.element.val(),
+                remainder = currVal.substring(self.originalPos.begin, currVal.length);
+              val = val.substring(0, (val.length - input.literals[currentSection+i].length));
+              self.element.val(val + remainder);
+              self.buffer += maskLiterals[currentSection+i];
+            }
+
+            // add the mask literals to the beginning of the buffer if they are not already there
+            if (!input.literals[currentSection+i]) {
+              self.buffer += maskLiterals[currentSection+i];
+            }
+
+            // add the typed character if it's valid
             if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
               self.buffer += typedChar;
             }
@@ -1019,7 +1091,7 @@
             var charArray = string.split('');
             for(var i = 0; i < charArray.length; i++) {
               var patternChar = this.getCharacter();
-              if (this.mode === 'date' || this.mode === 'time') {
+              if ($.inArray(this.mode, ['group','date','time'])) {
                 this.processGroupMask(charArray[i], patternChar, originalEvent);
               } else {
                 this.processMask(charArray[i], patternChar, originalEvent);

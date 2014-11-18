@@ -331,7 +331,7 @@
             parsedDate = Globalize.parseDate(value, dateFormat);
           }
 
-          if (parsedDate === undefined && value !== "") {
+          if (parsedDate === undefined && value !== '') {
             return false;
           }
 

@@ -126,7 +126,7 @@
         return undefined;
       }
       if (!dateFormat) {
-        dateFormat = this.calendar().dateFormat['short'];
+        dateFormat = this.calendar().dateFormat.short;
       }
 
       var formatParts = dateFormat.split('/'),
