@@ -120,6 +120,77 @@
       return ret.trim();
     },
 
+    // Take a date string written in the current locale and parse it into a Date Object
+    parseDate: function(dateString, dateFormat) {
+      if (!dateString) {
+        return undefined;
+      }
+      if (!dateFormat) {
+        dateFormat = this.calendar().dateFormat.short;
+      }
+
+      var formatParts = dateFormat.split('/'),
+        dateStringParts = dateString.split('/'),
+        dateObj = {};
+
+      if (formatParts.length !== dateStringParts.length) {
+        return undefined;
+      }
+
+      // Check the incoming date string's parts to make sure the values are valid against the localized
+      // Date pattern.
+      $.each(dateStringParts, function(i, value) {
+        var pattern = formatParts[i],
+          numberValue = parseInt(value);
+
+        switch(pattern) {
+          case 'd':
+            if (numberValue < 1 || numberValue > 31) {
+              return;
+            }
+            dateObj.day = value;
+            break;
+          case 'dd':
+            if ((numberValue < 1 || numberValue > 31) || (numberValue < 10 && value.substr(0,1) !== '0')) {
+              return;
+            }
+            dateObj.day = value;
+            break;
+          case 'M':
+            if (numberValue < 1 || numberValue > 12) {
+              return;
+            }
+            dateObj.month = value;
+            break;
+          case 'MM':
+            if ((numberValue < 1 || numberValue > 12) || (numberValue < 10 && value.substr(0,1) !== '0')) {
+              return;
+            }
+            dateObj.month = value;
+            break;
+          case 'yy':
+            if ((numberValue < 0 || numberValue > 99) || (numberValue < 10 && value.substr(0,1) !== '0')) {
+              return;
+            }
+            dateObj.year = value;
+            break;
+          case 'yyyy':
+            var lastTwo = value.substr(2,4),
+              lastTwoNumber = parseInt(lastTwo);
+            if ((lastTwoNumber < 0 || lastTwoNumber > 99) || (lastTwoNumber < 10 && lastTwo.substr(0,1) !== '0')) {
+              return;
+            }
+            dateObj.year = value;
+            break;
+        }
+      });
+
+      if (!dateObj.year || !dateObj.month || !dateObj.day) {
+        return undefined;
+      }
+      return new Date(dateObj.year, dateObj.month, dateObj.day);
+    },
+
     // Overridable culture messages
     translate: function(key) {
       return this.currentLocale.data.messages[key];

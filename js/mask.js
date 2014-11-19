@@ -28,9 +28,11 @@
           definitions: {
             '#': /[0-9]/,
             '0': /[0-9]/,
-            'a': /[A-Za-z]/,
+            'x': /[A-Za-z]/,
             '*': /[A-Za-z0-9]/,
             '~': /[-0-9]/,
+            'a': /[APap]/,
+            'm': /[Mm]/
           },
           number: false
         },
@@ -60,16 +62,10 @@
         // if no pattern is provided in settings, use a pre-determined pattern based
         // on element type, or grab the pattern from the element itself.
         self.pattern = self.element.attr('data-mask') || settings.pattern || '';
-        if (!self.pattern || self.pattern === '') {
-          self.getPatternForType();
-        }
 
         // If a "mode" is defined, special formatting rules may apply to this mask.
         // Otherwise, the standard single-character pattern match will take place.
         self.mode = self.element.attr('data-mask-mode') || undefined;
-        if (self.mode) {
-          self.setupModeRules();
-        }
 
         // If "thousands" is defined, the thousands separator for numbers (comma or decimal, based on
         // localization) will be inserted wherever necessary during typing. Will automatically set to
@@ -79,6 +75,35 @@
         // If "negative" is defined, you can type the negative symbol in front of the number.
         // Will automatically set to "true" if a negative symbol is detected inside the mask.
         self.negative = self.mode === 'number' && self.pattern.indexOf('-') !== -1;
+
+        // If 'mustComplete' is defined, you MUST complete the full mask, or the mask will revert to empty
+        // once the field is blurred.
+        self.mustComplete = self.element.attr('data-must-complete') || false;
+
+        // If 'showCurrency' is defined and the mask mode is 'number', a span will be drawn that will show the
+        // localized currency symbol.
+        self.showCurrency = self.mode === 'number' && self.element.attr('data-show-currency');
+        if (self.showCurrency) {
+          var symbol = Globalize.currentLocale.data.currencySign;
+          $('<span class="audible currency"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
+          if (this.element.parent('.input-wrapper').length === 0) {
+            this.element.wrap('<div class="input-wrapper"></div>');
+          }
+          self.currencyContainer = $('<span class="currency"></span>').text(symbol).insertBefore(self.element);
+        }
+
+        // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
+        // separated pieces of "editable" and "literal" parts that are used for checking validity of mask pieces.
+        if (self.mode !== 'number') {
+          self.maskParts = self.getPatternParts();
+        }
+
+        // If 'self.groupComplete' is active, each section of the group pattern match must be full in order for the
+        // literals in-between each section to be automatically added (meaning, you can't type a literal to end that
+        // group until all characters in that group are entered).  This is used for some group matching and for time.
+        if (self.mode === 'time' || self.element.attr('data-group-complete')) {
+          self.groupComplete = true;
+        }
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
@@ -127,33 +152,6 @@
           }
         }
         return false;
-      },
-
-      // Uses the "type" attribute on an element to determine a default pattern.
-      // This is called when "$.mask" is invoked on a field that contains an empty "data-mask" attribute.
-      getPatternForType: function() {
-        var self = this,
-          type = self.element.attr('type');
-
-        // TODO: flesh this out
-        switch(type) {
-          case 'tel':
-            self.pattern = '(###) ###-####';
-            break;
-          default:
-            self.pattern = '**********';
-        }
-      },
-
-      // Used for defining special rules and flags for use with certain mask types.
-      setupModeRules: function() {
-        switch(this.mode) {
-          case 'number':
-            //this.mustComplete = true;
-            break;
-          default:
-            break;
-        }
       },
 
       // Helper Function for Caret positioning.  If you provide "begin" and "end" arguments, the caret position
@@ -245,8 +243,7 @@
         var evt = e || window.event,
           eventType = evt.originalEvent.type,
           key = e.which,
-          typedChar = String.fromCharCode(key),
-          patternChar = self.getCharacter();
+          typedChar = String.fromCharCode(key);
 
         // set the original value if it doesn't exist.
         if (!self.initValue) {
@@ -263,6 +260,9 @@
             self.handleEscape(evt);
           } else if (36 < key && key < 41) { // arrow keys (in Firefox)
             return;
+          // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
+          } else if (evt.altKey) {
+            self.killEvent(e);
           } else if (evt.shiftKey && 36 < key && key < 41) { // arrow keys AND shift key (for moving the cursor)
             return;
           }
@@ -270,19 +270,24 @@
 
         if (eventType === 'keypress') {
           // Ignore all of these keys or combinations containing these keys
-          if (evt.ctrlKey || evt.altKey || evt.metaKey || key < 32) {
+          if (evt.ctrlKey || evt.metaKey || key < 32) {
             return;
+          // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
+          } else if (evt.altKey) {
+            self.killEvent(e);
           // Need to additionally check for arrow key combinations here because some browsers
           // Will fire keydown and keypress events for arrow keys.
-          } else if (evt.shiftKey && 36 < key && key < 41) {
+          } else if (evt.shiftKey && 36 < key && key < 41 && typedChar !== '(') {
             return;
-          } else if (36 < key && key < 41) {
+          } else if ((36 < key && key < 41) && typedChar !== '\'' && typedChar !== '(')  {
+            // '(' is keycode 40 on some browsers
+            // '/' is keycode 39 on some browsers
             return;
           }
           if (self.mode === 'number') {
-            self.processNumberMask(typedChar, patternChar, evt);
+            self.processNumberMask(typedChar, evt);
           } else {
-            self.processMask(typedChar, patternChar, evt);
+            self.processMask(typedChar, evt);
           }
         }
 
@@ -292,6 +297,8 @@
 
         if (eventType === 'input') {
           // TODO: Handle Input Event
+          console.log('Input Event Triggered!');
+          console.dir(e);
         }
       },
 
@@ -400,7 +407,8 @@
         if (this.mode === 'number') {
 
           // cut all but the first occurence of the negative symbol and decimal
-          val = val.replace(/(?!^)-/g, '').replace(/(?!^)\./g, '');
+          val = this.replaceAllButFirst(/-/g, val, '');
+          val = this.replaceAllButFirst(/\./g, val, '');
 
           // cut any extra leading zeros.
           var valWithoutLeadZeros = val.replace(/^0+(?!\.|$)/, ''),
@@ -511,63 +519,15 @@
         this.element.trigger('write.mask');
       },
 
-      // Filter the character that was just typed into the mask to determine if it belongs.
-      // In some cases, extra characters that belong in the correctly-masked text will be added before
-      // The typed character is placed.  If the character doesn't belong, stop the event and reset.
-      processMask: function(typedChar, patternChar, e) {
-        var self = this;
-        self.originalPos = self.caret();
-        self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
-
-        // don't do anything if you're at the end of the pattern.  You can't type anymore.
-        if (self.currentMaskBeginIndex >= self.pattern.length) {
-          self.resetStorage();
-          return self.killEvent(e);
-        }
-
-        if (self.isCharacterLiteral(patternChar)) {
-          // if you typed the exact character that's next in the mask, simply print the write buffer.
-          if (typedChar === patternChar) {
-            self.buffer += typedChar;
-            self.writeInput();
-            self.resetStorage();
-            return self.killEvent(e);
-          }
-
-          // get the character in the next position to see if it matches the regex.  If it does, print both characters
-          // to the input box.
-          self.buffer += patternChar;
-          var newPatternChar = self.getCharacter('next', self.currentMaskBeginIndex);
-          self.currentMaskBeginIndex++;
-          if (this.mode === 'number') {
-            self.processNumberMask(typedChar, patternChar, e);
-          } else {
-            self.processMask(typedChar, newPatternChar, e);
-          }
-        } else {
-          // Check the character against its counterpart character in the mask
-          var match = self.testCharAgainstRegex(typedChar, patternChar);
-          if (!match) {
-            self.resetStorage();
-            return self.killEvent(e);
-          }
-
-          self.buffer += typedChar;
-          self.writeInput();
-          self.resetStorage();
-
-          return self.killEvent(e);
-        }
-      },
-
       // Method for processing number masks
       // TODO:  Flesh out content and docs
-      processNumberMask: function(typedChar, patternChar, e) {
+      processNumberMask: function(typedChar, e) {
         var self = this,
           val = self.element.val(),
           maskWithoutInts = self.pattern.replace(/#/g, ''),
           numMaskInts = self.pattern.length - maskWithoutInts.length,
-          match;
+          match,
+          patternChar;
 
         self.originalPos = self.caret();
         self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
@@ -717,10 +677,385 @@
         return self.killEvent(e);
       },
 
+      // Processes the pattern string and returns an object that contains that string's sections of matchable patterns
+      // and its unmatchable literals.
+      getPatternParts: function() {
+        var self = this,
+          defKeys = Object.keys(settings.definitions),
+          patternEditableParts = [],
+          patternLiteralParts = [],
+          patternStartsWithLiteral = false,
+          i = 0,
+          regexString = '',
+          regexObj;
+
+        // Build the string of "editable" matches dynamically from settings,
+        // and match it against the incoming pattern to determine each editable group.
+        $.each(defKeys, function(i, def) {
+          regexString += def;
+        });
+        regexString = '[' + regexString + ']+';
+        regexObj = new RegExp(regexString, 'g');
+        patternEditableParts = self.pattern.match(regexObj) || [];
+
+        // check for literal characters at the beginning of the string before the first matchable pattern
+        if (patternEditableParts[0] && self.pattern.substring(0, 1) !== patternEditableParts[0].substring(0, 1)) {
+          patternLiteralParts.push( self.pattern.substring( 0, self.pattern.indexOf( patternEditableParts[0] )));
+          patternStartsWithLiteral = true;
+        }
+
+        // set a starting index for our literal checking... may not be 0 if there were literals before the first match
+        var prevLiteralEndIndex = (patternLiteralParts && patternLiteralParts[0]) ? (self.pattern.indexOf(patternLiteralParts[0]) + patternLiteralParts[0].length) : 0;
+
+        // get all sets of literal characters in the pattern and store them
+        while (i < patternEditableParts.length) {
+          // start cutting the string here
+          var currLiteralStartIndex = prevLiteralEndIndex + patternEditableParts[i].length,
+            // get a fresh cut of the pattern minus the parts we've already dealt with
+            nextCut = self.pattern.substring(currLiteralStartIndex, self.pattern.length),
+            cutChars = self.pattern.length - nextCut.length,
+            // finish cutting the string at the end of the next piece of editable pattern OR the end of the pattern
+            currLiteralEndIndex = cutChars + (patternEditableParts[i+1] ? nextCut.indexOf(patternEditableParts[i+1]) : nextCut.length),
+            // should contain the next literal
+            currLiteral = self.pattern.substring(currLiteralStartIndex, currLiteralEndIndex);
+          if (currLiteral !== '') {
+            patternLiteralParts.push(currLiteral);
+          }
+          prevLiteralEndIndex = currLiteralEndIndex;
+          i++;
+        }
+
+        // build an array that contains one of each character in the literals sections for testing
+        var allLiterals = '';
+        for (var a = 0; a < patternLiteralParts.length; a++) {
+          allLiterals += patternLiteralParts[a];
+        }
+        var containedLiterals = self.removeDuplicates(allLiterals);
+
+        var allEditables = '';
+        for (var b = 0; b < patternEditableParts.length; b++) {
+          allEditables += patternEditableParts[b];
+        }
+        var containedEditables = self.removeDuplicates(allEditables);
+
+        return {
+          editable: patternEditableParts,
+          literal: patternLiteralParts,
+          allLiterals: allLiterals,
+          allEditables: allEditables,
+          containedLiterals: containedLiterals,
+          containedEditables: containedEditables,
+          startsWithLiteral: patternStartsWithLiteral
+        };
+      },
+
+      // Processes the current input value against the pre-processed mask, and returns an array containing the values
+      // inside of each editable piece of the group pattern.
+      analyzeInput: function(inputSlice) {
+        var self = this,
+          val = inputSlice !== undefined ? inputSlice : self.element.val(),
+          currentMaskPartIsLiteral = false,
+          editables = self.maskParts.editable,
+          literals = self.maskParts.literal,
+          totalMaskParts = editables.length + literals.length,
+          editableParts = [],
+          literalParts = [],
+          valFromLastIndex = '',
+          allEditables = '',
+          allLiterals = '',
+          nextLiteralIndex = 0,
+          nextEditableIndex = 0,
+          editablePart = '',
+          literalPart = '',
+          valIndex = 0,
+          editableCount = 0,
+          literalCount = 0,
+          i = 0,
+          a = 0;
+
+        // More literals than editables means that there is a literal pattern BEFORE the first editable pattern.
+        if (self.maskParts.startsWithLiteral) {
+          currentMaskPartIsLiteral = true;
+        }
+
+        // Loop through all parts, and retrieve the values inside the editable parts.
+        for (i; i < totalMaskParts; i++) {
+          if (currentMaskPartIsLiteral) {
+            valFromLastIndex = val.substring(valIndex, val.length);
+            nextEditableIndex = valIndex + valFromLastIndex.length;
+            literalPart = '';
+
+            // find next literal character and grab its index.
+            for (a = 0; a < valFromLastIndex.length; a++) {
+              if ($.inArray(valFromLastIndex[a], self.maskParts.containedLiterals) === -1) {
+                nextEditableIndex = valIndex + a;
+                break;
+              }
+            }
+
+            literalPart = val.substring(valIndex, nextEditableIndex);
+            if (literalPart.length > 0) {
+              literalParts.push(literalPart);
+            }
+
+            allLiterals += literalPart;
+            valIndex = valIndex + literalPart.length;
+            currentMaskPartIsLiteral = false;
+            literalCount++;
+          } else {
+            valFromLastIndex = val.substring(valIndex, val.length);
+            nextLiteralIndex = valIndex + valFromLastIndex.length;
+            editablePart = '';
+
+            // find next literal character and grab its index.
+            for (a = 0; a < valFromLastIndex.length; a++) {
+              if ($.inArray(valFromLastIndex[a], self.maskParts.containedLiterals) !== -1) {
+                nextLiteralIndex = valIndex + a;
+                break;
+              }
+            }
+
+            editablePart = val.substring(valIndex, nextLiteralIndex);
+            if (editablePart.length > 0) {
+              editableParts.push(editablePart);
+            }
+
+            allEditables += editablePart;
+            valIndex = valIndex + editablePart.length;
+            currentMaskPartIsLiteral = true;
+            editableCount++;
+          }
+        }
+
+        // make sure there is at least one empty entry in the array.
+        if (editableParts.length === 0) {
+          editableParts.push('');
+        }
+
+        return {
+          editables: editableParts,
+          allEditables: allEditables,
+          literals: literalParts,
+          allLiterals: allLiterals
+        };
+      },
+
+      // Returns a reconstructed pattern based on the parts dissected from the getPatternParts() method.
+      // Used for testing and sanity-checking.
+      buildPatternFromParts: function() {
+        var parts = this.getPatternParts(),
+          pattern = '',
+          literalCount = 0,
+          editableCount = 0;
+
+        // there is a literal BEFORE and AFTER the first match.
+        if (parts.startsWithLiteral) {
+          pattern += parts.literal[0];
+          literalCount++;
+        }
+        // there are no literals BEFORE the first match, but there is a literal AFTER the last match.
+        if (parts.literal === parts.editable) {}
+        while (editableCount < parts.editable.length) {
+          pattern += parts.editable[editableCount];
+          if (parts.literal[literalCount]) {
+            pattern += parts.literal[literalCount];
+          }
+          editableCount++;
+          literalCount++;
+        }
+
+        return pattern;
+      },
+
+      // takes a string of character literals and returns an array containing each unique literal found.
+      removeDuplicates: function(string) {
+        var unique = [];
+        for (var i = 0; i < string.length; i++) {
+          if ($.inArray(string[i], unique) === -1) {
+            unique.push(string[i]);
+          }
+        }
+        return unique;
+      },
+
+      processMask: function(typedChar, e) {
+        var self = this,
+          maskEditables = self.maskParts.editable,
+          maskLiterals = self.maskParts.literal,
+          match,
+          i = 0;
+
+        self.originalPos = self.caret();
+        self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
+
+        var val = self.element.val().substring(0, self.originalPos.begin),
+          input = self.analyzeInput(val);
+
+        // If the input is full, don't continue.
+        if (self.originalPos.begin === self.originalPos.end && input.allEditables.length >= self.maskParts.allEditables.length) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // don't continue at all if the character typed isn't a valid editable or literal in this pattern
+        for (var b = 0; b < self.maskParts.containedEditables.length; b++) {
+          match = self.testCharAgainstRegex(typedChar, self.maskParts.containedEditables[b]);
+          if (match) {
+            break;
+          }
+        }
+        if (!match && $.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // "i" increments the literal section checks by one.  This is necessary if you have a literal pattern group
+        // starting the pattern.
+        i = 0;
+        if (self.maskParts.startsWithLiteral) {
+          i = i + 1;
+        }
+
+        // Fail out if we try to type too many characters
+        var currentSection = (input.editables.length - 1) > 0 ? input.editables.length - 1 : 0;
+        if (input.editables[currentSection].length > maskEditables[currentSection].length) {
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // Constant boolean for checking on literals (used by the two checks below)
+        var typedLiteralsAreValid = (maskLiterals[currentSection+i] !== undefined) &&
+          $.inArray(typedChar, self.maskParts.containedLiterals) !== -1 &&
+          !(input.literals[currentSection+i]);
+
+        // If the character typed is a literal, allow it to go through if there is still a section of unmatched literals
+        // and there has been at least one editable character entered in this section.  This only works if the flag
+        // 'self.groupComplete' is set to 'false' (generally used for dates).
+        if (typedLiteralsAreValid &&
+          !self.groupComplete &&
+          input.editables[currentSection].length > 0) {
+
+          self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection+i]);
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // If 'self.groupComplete' is true, but all characters for this particular group have already been entered,
+        // Allow a typed literal character to pass
+        if (typedLiteralsAreValid &&
+          self.groupComplete &&
+          input.editables[currentSection].length === maskEditables[currentSection].length) {
+
+          self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection+i]);
+          self.writeInput();
+          self.resetStorage();
+          return self.killEvent(e);
+        }
+
+        // If the "literals" are shifted forward due to the mask beginning with a literal pattern instead of an
+        // editable pattern, automatically append that literal character at this point, since it hasn't been typed
+        if (i > 0 && currentSection === 0 && !(input.literals[0])) {
+          self.buffer += maskLiterals[0];
+          if ($.inArray(typedChar, self.maskParts.containedLiterals) !== -1) {
+            self.writeInput();
+            self.resetStorage();
+            return self.killEvent(e);
+          }
+        }
+
+        // Define the section, as well as the correct pattern character to match against.
+        var section = input.editables[currentSection] || '',
+          currVal,
+          patternChar,
+          remainder;
+
+        if (section.length < maskEditables[currentSection].length) {
+
+          patternChar = maskEditables[currentSection].substring(input.editables[currentSection].length, (input.editables[currentSection].length + 1));
+
+          // If we're typing inside of an existing literal pattern, this editable pattern has been pre-maturely completed
+          // already, and we need to complete this literal pattern, while checking the match against the next editable group
+          if (input.literals[currentSection+i] && maskLiterals[currentSection+i] !== input.literals[currentSection+i]) {
+            currVal = self.element.val();
+            remainder = currVal.substring(self.originalPos.begin, currVal.length);
+            val = val.substring(0, (val.length - input.literals[currentSection+i].length));
+            self.caret(self.originalPos.begin - input.literals[currentSection+i].length);
+            self.originalPos = self.caret();
+            self.element.val(val + remainder);
+            self.buffer += maskLiterals[currentSection+i];
+            patternChar = maskEditables[currentSection+1].substring(0, 1);
+          }
+
+          match = self.testCharAgainstRegex(typedChar, patternChar);
+
+          // Simply add the character if its a match
+          if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1 && match) {
+            self.buffer += typedChar;
+            self.writeInput();
+          }
+        } else if (section.length === maskEditables[currentSection].length) {
+          // Check that conditions are right for the next set of literal characters to be added
+          if (maskEditables[currentSection+1] &&
+              maskLiterals[currentSection+i]) {
+
+            // check to make sure that the existing literals in the set are correctly formed,
+            // and fix them if they aren't.
+            if (input.literals[currentSection+i] && maskLiterals[currentSection+i] !== input.literals[currentSection+i]) {
+              currVal = self.element.val();
+              remainder = currVal.substring(self.originalPos.begin, currVal.length);
+              val = val.substring(0, (val.length - input.literals[currentSection+i].length));
+              self.caret(self.originalPos.begin - input.literals[currentSection+i].length);
+              self.originalPos = self.caret();
+              self.element.val(val + remainder);
+              self.buffer += maskLiterals[currentSection+i];
+            }
+
+            // add the mask literals to the beginning of the buffer if they are not already there
+            if (!input.literals[currentSection+i]) {
+              self.buffer += maskLiterals[currentSection+i];
+            }
+
+            patternChar = maskEditables[currentSection+1].substring(0, 1);
+            match = self.testCharAgainstRegex(typedChar, patternChar);
+
+            // add the typed character if it's valid
+            if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1 && match) {
+              self.buffer += typedChar;
+            }
+          } else {
+            // We've technically completed the pattern, but the pattern may be shorter if each group isn't
+            // 'complete'.  This section checks to see if we have leftover characters at the end of the input
+            // and removes them.
+            currVal = self.element.val();
+            remainder = currVal.substring(self.originalPos.begin, currVal.length);
+
+            if (remainder.length > 0) {
+              self.element.val(currVal.substring(0, self.originalPos.begin));
+            }
+          }
+
+          if (self.buffer.length > 0) {
+            self.writeInput();
+          }
+        }
+
+        self.resetStorage();
+        return self.killEvent(e);
+      },
+
+      checkSectionForLiterals: function(e, typedChar, section) {
+        for (var a = 0; a < section.length; a++) {
+          if (typedChar === section[a]) {
+            this.buffer += section;
+            break;
+          }
+        }
+      },
+
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
       processStringAgainstMask: function(string, originalEvent) {
-
         switch(this.mode) {
           case 'number':
             var regex = /[^0-9.-]/g;
@@ -752,6 +1087,21 @@
         return !regex ? false : regex.test(typedChar);
       },
 
+      // Replaces all but the first occurence of a regex with nothing.
+      replaceAllButFirst: function(regex, textString, replacement) {
+        if (!replacement) {
+          replacement = '';
+        }
+        var count = 0;
+        textString = textString.replace(regex, function(match) {
+          if (count > 0) {
+            return replacement;
+          }
+          return match;
+        });
+        return textString;
+      },
+
       // Returns the character at the current/next/previous cursor position.
       // If no direction is provided, it defaults to the current position.
       // If an optional index is provided, the cursor position will shift to that index value.
@@ -771,6 +1121,11 @@
       },
 
       destroy: function() {
+        if (this.showCurrency) {
+          this.currencyContainer.remove();
+          this.element.unwrap();
+          this.element.prev('label').find('.currency').remove();
+        }
         this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
         this.element.removeData(pluginName);
       }
