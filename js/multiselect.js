@@ -107,7 +107,7 @@
 
         $.each(items, function (i, item) {
           var isDisabled = false,
-            label = (typeof item === 'string' ? item : item.label),
+            label = (typeof item === 'string' ? item : item.text),
             value = (typeof item === 'string' ? null : item.value),
             id = (typeof item === 'string' ? null : item.id);
 

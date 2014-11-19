@@ -7,10 +7,14 @@
 @import 'controls/grid';
 @import 'controls/typography';
 
+// Variables for this file
+$header-height: 82px;
+
+// Top Header
 .site-header {
   background-color: #fafafa;
   display: block;
-  height: 82px;
+  height: $header-height;
   position: relative;
   width: 100%;
 
@@ -18,19 +22,165 @@
     color: $primary-color;
     font-family: $font-light;
     @include font-size(36);
-    line-height: 82px;
+    line-height: $header-height;
     margin: 0 90px;
   }
 }
 
-.site-sticky-navbar {
-  position: relative;
-  top: 1px;
+// Side Nav for larger screens
+.site-side-nav {
+  background-color: #ffffff;
+  //border-right: 1px solid rgba(0, 0, 0, .14);
+  bottom: 0;
+  color: #333333;
+  display: block;
+  font-family: $font-regular;
+  left: 0;
+  max-height: 900px;
+  padding-left: 40px;
+  position: fixed;
+  top: 0;
+  transform: translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform .2s cubic-bezier(.4, 0, .2, 1) .1s;
+  width: 240px;
+  z-index: 4;
+
+  a {
+    border-bottom: 1px solid #d2d2d2;
+    color: #333333;
+    display: block;
+    font-family: $font-semibold;
+    @include font-size(16);
+    line-height: 65px;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  .title {
+    border-bottom: 1px solid #d2d2d2;
+    color: $primary-color;
+    font-family: $font-light;
+    @include font-size(36);
+    line-height: 82px;
+    margin-left: -40px;
+    margin-top: 0;
+    text-indent: 40px;
+  }
+
+  .footer-text {
+    color: #999999;
+    @include font-size(18);
+    position: relative;
+    top: 564px;
+  }
+}
+
+// Gradient Image
+.site-hero-image {
+  background-color: #055bb8;
+  background-image: linear-gradient(41deg, #00ab9f, #005bb8);
+  background-size: cover;
+  height: 600px;
+  position: absolute;
+  top: $header-height;
+  width: 100%;
 }
 
 .site-hero {
-  background-color: #055bb8;
-  background-image: linear-gradient(-41deg, #00ab9f, #005bb8);
-  background-size: cover;
   height: 600px;
+
+  //Title
+  h1 {
+    color: $inverse-color;
+    font-family: $font-regular;
+    @include font-size(60);
+    @include vertical-align();
+    top: 40%;
+  }
+
+  //Sub title
+  span {
+    color: $inverse-color;
+    font-family: $font-regular;
+    @include font-size(30);
+    @include vertical-align();
+    top: 45%;
+  }
+}
+
+// Hamburger Icon
+.hamburger-menu {
+  background-color: #333333;
+  color: transparent;
+  cursor: pointer;
+  height: 2px;
+  left: 30px;
+  position: relative;
+  top: 18px;
+  width: 30px;
+
+  &:after,
+  &:before {
+    background-color: #333333;
+    content: '';
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 7px;
+    width: 100%;
+  }
+
+  &:before {
+    top: 15px;
+  }
+}
+
+// Main body Area
+.site-main {
+  background-color: none repeat scroll 0 0 #f0f0f0;
+  float: left;
+  height: 100%;
+  padding-bottom: 100px;
+  padding-left: 240px;
+  transition: padding-left .2s cubic-bezier(.4, 0, .2, 1) 0s;
+  width: 100%;
+
+  //Centers the middle content and changes size
+  .site-outer {
+    margin: auto;
+    width: 1160px;
+  }
+}
+
+// Break Point for Side Nav
+@media screen and (max-width: $breakpoint-desktop-to-extralarge) {
+  .site-side-nav {
+    transform: translateX(-241px);
+    visibility: hidden;
+  }
+
+  .site-main {
+    padding-left: 0;
+  }
+}
+
+// Break Point for Inner Size
+@media screen and (max-width: $breakpoint-tablet-to-desktop) {
+  .site-main .site-outer {
+    width: $breakpoint-phone-to-tablet;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone-to-tablet) {
+  .site-main .site-outer {
+    width: $breakpoint-phone;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .site-main .site-outer {
+    width: 100%;
+  }
 }

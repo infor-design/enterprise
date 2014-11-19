@@ -3,7 +3,7 @@
 .slider {
   background-color: $slider-bg-color;
   height: 4px;
-  margin: 10px 0;
+  margin: 25px 0;
   position: relative;
   width: 100%;
 }
@@ -12,11 +12,11 @@
   background-color: $slider-active-bg-color;
   border: 3px solid $slider-active-bg-color;
   border-radius: 24px;
+  box-shadow: 0 0 0 20px transparent; //Increase touch point
   color: transparent;
   display: inline-block;
   height: 24px;
   line-height: 24px;
-  margin-left: -15px;
   margin-top: -10px;
   position: absolute;
   width: 24px;

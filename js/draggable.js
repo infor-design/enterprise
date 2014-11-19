@@ -22,7 +22,8 @@
     var pluginName = 'draggable',
       defaults = {
         axis: null, //Constrains dragging to either axis. Possible values: 'x', 'y'
-        clone: false //Clone the object - Useful so you dont have to abs position
+        clone: false, //Clone the object - Useful so you dont have to abs position
+        containment: false //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
       },
       settings = $.extend({}, defaults, options);
 
@@ -136,6 +137,8 @@
 
       //Move the object from the event coords
       move: function(left, top) {
+        var upperXLimit, upperYLimit, lowerXLimit, lowerYLimit;
+
         //Clone
         if (!this.clone && settings.clone) {
           this.clone = this.element.clone(true);
@@ -154,6 +157,29 @@
 
         if (settings.axis === 'y') {
           delete css.left;
+        }
+
+        if (settings.containment) {
+          this.container = (settings.containment === 'parent'? this.element.parent() : (settings.containment === 'window'? $(window) : $(document)));
+          upperXLimit = this.container.width() - this.element.outerWidth();
+          upperYLimit = this.container.height() - this.element.outerHeight();
+
+          if (css.top > upperYLimit) {
+            css.top = upperYLimit;
+          }
+
+          if (css.left > upperXLimit) {
+            css.left = upperXLimit;
+          }
+
+          if (css.top < 0) {
+            css.top = 0;
+          }
+
+          if (css.left < 0) {
+            css.left = 0;
+          }
+          console.log(css.left);
         }
 
         if (this.clone) {

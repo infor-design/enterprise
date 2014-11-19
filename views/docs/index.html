@@ -22,9 +22,12 @@
 <body>
 
   <header class="site-header" role="banner">
+    <nav><button class="hamburger-menu">Show navigation</button></nav>
+
     <h1>{{title}}</h1>
     <section class="site-header-search">
-      <span>I am searching for...</span><input>
+      <label for="site-search">I am searching for...</label>
+      <input id="site-search">
     </section>
 
     <section class="site-header-alerts">
@@ -34,30 +37,27 @@
     </section>
   </header>
 
-  <nav class="site-sticky-navbar" role="navigation">
-
+  <nav class="site-side-nav" role="navigation">
+    <h1 class="title">Soho Xi</h1>
     <ul>
       <li><a href="#">Our Vision</a></li>
       <li><a href="#">Design Gallery</a></li>
       <li><a href="#">Style Guide</a></li>
     </ul>
+    <span class="footer-text">Infor Company 2014</span>
   </nav>
 
+  <div class="site-hero-image">
+  </div>
   <section class="site-main" role="main">
-    <div class="site-hero">
-      <h1>Clear Work</h1>
-      <span>Dashboard Style 1</span>
-      <img>Image Goes Here</img>
+    <div class="site-outer">
+      <div class="site-hero">
+        <h1 class="title">Soho Xi: The Vision</h1>
+        <span>Soho Xi Vision Landing Subtitle</span>
+      </div>
     </div>
-    <hr>
-
-    <div class="site-hero">
-      <h1>Clear Work</h1>
-      <span>Dashboard Style 1</span>
-      <img>Image Goes Here</img>
-    </div>
-
   </section>
+
 
 {{#enableLiveReload}}
 <!-- Script Highlighting -->

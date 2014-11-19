@@ -1,42 +1,33 @@
-/* Sass Mix In's
-================================================== */
-/* rem font sizing */
-@mixin font-size($sizeValue) {
-  font-size: ($sizeValue) + px;
-  font-size: ($sizeValue / 10) + rem;
+// Sass Mix In's
+//==================================================//
+//
+// rem font sizin
+@mixin font-size($size-value) {
+  font-size: ($size-value) + px;
+  font-size: ($size-value / 10) + rem;
 }
 
-/* vendor prefixing */
+// vendor prefixing
 @mixin css3($property, $value) {
-   @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
-     #{$prefix}#{$property}: $value;
-   }
+  @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+    #{$prefix}#{$property}: $value;
+  }
 }
 
-/* set opacity cross browser */
+// set opacity cross browser
 @mixin opacity($opacity) {
-  $opacityIE: $opacity*100;
-  filter: alpha(opacity=$opacityIE);
+  $opacity-ie: $opacity*100;
+  filter: alpha(opacity=$opacity-ie);
   opacity: $opacity;
-  $opacityIE: $opacity * 100;
+  $opacity-ie: $opacity * 100;
 }
 
-/* responsive breakpoints */
-@mixin breakpoint($device) {
-  @if $device == tablet {
-    @media (max-width: 768px) { @content; }
-  }
-  @else if $device == mobile {
-    @media (max-width: 640px) { @content; }
-  }
-}
-
-/* Util For Rem Mixin */
+// Util For Rem Mixin
 @function strip-unit($num) {
   @return $num / ($num * 0 + 1);
 }
 
-/* Util To Disable Select */
+// Util To Disable Select
 @mixin no-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -46,35 +37,35 @@
   user-select: none;
 }
 
-/* Handle Rems with pixel fallback */
+// Handle Rems with pixel fallback
 @mixin rem($property, $values...) {
   $max: length($values);
-  $pxValues: '';
-  $remValues: '';
+  $px-values: '';
+  $rem-values: '';
 
   @for $i from 1 through $max {
     $value: strip-unit(nth($values, $i));
-    $pxValues: #{$pxValues + $value*16}px;
+    $px-values: #{$px-values + $value*16}px;
 
     @if $i < $max {
-      $pxValues: #{$pxValues + " "};
+      $px-values: #{$px-values + " "};
     }
   }
 
   @for $i from 1 through $max {
     $value: strip-unit(nth($values, $i));
-    $remValues: #{$remValues + $value}rem;
+    $rem-values: #{$rem-values + $value}rem;
 
     @if $i < $max {
-      $remValues: #{$remValues + " "};
+      $rem-values: #{$rem-values + " "};
     }
   }
 
-  #{$property}: $pxValues;
-  #{$property}: $remValues;
+  #{$property}: $px-values;
+  #{$property}: $rem-values;
 }
 
-/* Respond-To different device sizes (Responsive Breakpoints) */
+// Respond-To different device sizes (Responsive Breakpoints)
 @mixin respond-to($media) {
   @if $media == phone {
     @media (max-width: $breakpoint-phone-to-tablet - 1) { @content; }
@@ -87,7 +78,7 @@
   }
 }
 
-/* Respond-To different device sizes (Responsive Breakpoints) */
+// Apply Font Face
 @mixin font-face($family, $src, $weight: normal, $style: normal) {
   @font-face {
     font-family: $family;
@@ -100,4 +91,13 @@
     font-style: $style;
     font-weight: $weight;
   }
+}
+
+// Align Vertically to Parent
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

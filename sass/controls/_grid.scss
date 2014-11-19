@@ -1,55 +1,62 @@
-/* Responsive 12 Column Grid Based on http://thisisdallas.github.com/Simple-Grid/
-================================================== */
+//* Responsive 12 Column Grid loosely
+//  based on http://thisisdallas.github.com/Simple-Grid/
+//================================================== //
 [class*="col-"] {
   float: left;
   margin-bottom: 10px;
 }
 
-/* TODO: Improve Nice animation at breaks similar to https://member.theladders.com/member/saved-jobs */
+// TODO: Improve Nice animation at breaks similar to https://member.theladders.com/member/saved-jobs
 .grid {
-  width: 100%;
-  max-width: 1480px;
-  min-width: 755px;
   margin: 0 auto;
+  max-width: $breakpoint-desktop-to-extralarge;
+  min-width: $breakpoint-phone-to-tablet;
   overflow: hidden;
-  transition: all 0.3s ease 0s;
+  transition: all .3s ease 0s;
+  width: 100%;
+
+  .content {
+    background-color: #ffcccc;
+    border-right: 10px solid #f0f0f0;
+    color: #ffffff;
+    height: 100px;
+
+    h3 {
+      padding: 35px 10px;
+    }
+  }
+
+  // Clearfix
+  &:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
 }
 
-.grid .content {
-  background-color: #ffcccc;
-  border-right: 10px solid #f0f0f0;
-  color: #ffffff;
-  height: 100px;
-}
-
-.grid .content h3{
-  padding: 35px 10px;
-}
-
-.grid:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Content Columns */
+// Content Columns
 
 .col-1-1 {
   width: 100%;
 }
-.col-2-3, .col-8-12 {
+
+.col-2-3,
+.col-8-12 {
   width: 66.66%;
 }
 
-.col-1-2, .col-6-12 {
+.col-1-2,
+.col-6-12 {
   width: 50%;
 }
 
-.col-1-3, .col-4-12 {
+.col-1-3,
+.col-4-12 {
   width: 33.33%;
 }
 
-.col-1-4, .col-3-12 {
+.col-1-4,
+.col-3-12 {
   width: 25%;
 }
 
@@ -57,7 +64,8 @@
   width: 20%;
 }
 
-.col-1-6, .col-2-12 {
+.col-1-6,
+.col-2-12 {
   width: 16.667%;
 }
 
@@ -82,13 +90,13 @@
 }
 
 .col-1-12 {
-  width: 8.33%
+  width: 8.33%;
 }
 
-/* Layout Columns */
+// Layout Columns
 
 .col-11-12 {
-  width: 91.66%
+  width: 91.66%;
 }
 
 .col-10-12 {
@@ -104,30 +112,30 @@
 }
 
 .col-7-12 {
-  width: 58.33%
+  width: 58.33%;
 }
 
-@media handheld, only screen and (max-width: 1480px) {
+@media handheld, only screen and (max-width: $breakpoint-desktop-to-extralarge) {
   .grid {
     padding-left: 30px;
     padding-right: 30px;
   }
 }
 
-@media handheld, only screen and (max-width: 767px) {
+@media handheld, only screen and (max-width: $breakpoint-phone-to-tablet) {
   .grid {
-    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
     min-width: 0;
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
   }
 
   [class*="col-"] {
-    width: auto;
     float: none;
     padding-left: 15px;
     padding-right: 15px;
+    width: auto;
   }
 }

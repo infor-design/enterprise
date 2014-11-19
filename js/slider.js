@@ -33,7 +33,7 @@
       init: function() {
         var self = this,
             updateBar = function(args) {
-              var leftWidth = (args.left / self.element.parent().width());
+              var leftWidth = ((args.left) / self.element.parent().width());
               self.value(leftWidth*100);
             };
 
@@ -41,7 +41,7 @@
         self.range = self.element.find('.slider-range');
         self.value(settings.value);
 
-        self.handles.draggable({constrainTo: 'parent', axis: 'x', clone: false})
+        self.handles.draggable({containment: 'parent', axis: 'x', clone: false})
           .on('mousedown.slider', function () {
             $(this).focus();
           })

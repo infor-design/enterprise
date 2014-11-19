@@ -28,6 +28,6 @@
 
 <script>
 
-  $('.draggable.x-only').draggable({axis: 'x'});
-  $('.draggable').draggable();
+  $('.draggable.x-only').draggable({axis: 'x', containment: 'parent'});
+  $('.draggable').draggable({containment: 'document'});
 </script>

@@ -149,9 +149,10 @@ $link-hover-color: #0c7ad8;
 $link-active-color: #004096;
 
 //Breakpoint sizes
+$breakpoint-phone: 360px;
 $breakpoint-phone-to-tablet: 768px;
-$breakpoint-tablet-to-desktop: 1024px;
-$breakpoint-desktop-to-extralarge: 1300px;
+$breakpoint-tablet-to-desktop: 1240px;
+$breakpoint-desktop-to-extralarge: 1479px;
 
 /* Adam's Approach
 $site-width-wide: 1479px;
