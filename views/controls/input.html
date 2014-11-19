@@ -40,8 +40,8 @@
 
       <div class="col-1-2">
         <div class="field">
-          <label for="decimal-field">Decmial Field</label>
-          <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="###.##" data-mask="###.00" data-mask-mode="number"/>
+          <label for="decimal-field">Currency Field</label>
+          <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask="###.00" data-mask-mode="number" data-show-currency="true"/>
         </div>
 
         <div class="field">
@@ -55,8 +55,8 @@
         </div>
 
         <div class="field">
-          <label for="time-input">Time Input</label>
-          <input id="time-input" name="time-input" type="text" placeholder="hh : mm : ss" data-mask="## : ## : ##" data-mask-mode="time" />
+          <label for="time-input">Time Input (12 hour)</label>
+          <input id="time-input" name="time-input" type="text" placeholder="hh : mm AM/PM" data-mask="## : ## am" data-mask-mode="time" data-validate="time" />
         </div>
 
         <div class="field">

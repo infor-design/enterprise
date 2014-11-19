@@ -28,9 +28,11 @@
           definitions: {
             '#': /[0-9]/,
             '0': /[0-9]/,
-            'a': /[A-Za-z]/,
+            'x': /[A-Za-z]/,
             '*': /[A-Za-z0-9]/,
             '~': /[-0-9]/,
+            'a': /[APap]/,
+            'm': /[Mm]/
           },
           number: false
         },
@@ -77,6 +79,18 @@
         // If 'mustComplete' is defined, you MUST complete the full mask, or the mask will revert to empty
         // once the field is blurred.
         self.mustComplete = self.element.attr('data-must-complete') || false;
+
+        // If 'showCurrency' is defined and the mask mode is 'number', a span will be drawn that will show the
+        // localized currency symbol.
+        self.showCurrency = self.mode === 'number' && self.element.attr('data-show-currency');
+        if (self.showCurrency) {
+          var symbol = Globalize.currentLocale.data.currencySign;
+          $('<span class="audible currency"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
+          if (this.element.parent('.input-wrapper').length === 0) {
+            this.element.wrap('<div class="input-wrapper"></div>');
+          }
+          self.currencyContainer = $('<span class="currency"></span>').text(symbol).insertBefore(self.element);
+        }
 
         // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
         // separated pieces of "editable" and "literal" parts that are used for checking validity of mask pieces.
@@ -246,6 +260,9 @@
             self.handleEscape(evt);
           } else if (36 < key && key < 41) { // arrow keys (in Firefox)
             return;
+          // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
+          } else if (evt.altKey) {
+            self.killEvent(e);
           } else if (evt.shiftKey && 36 < key && key < 41) { // arrow keys AND shift key (for moving the cursor)
             return;
           }
@@ -253,8 +270,11 @@
 
         if (eventType === 'keypress') {
           // Ignore all of these keys or combinations containing these keys
-          if (evt.ctrlKey || evt.altKey || evt.metaKey || key < 32) {
+          if (evt.ctrlKey || evt.metaKey || key < 32) {
             return;
+          // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
+          } else if (evt.altKey) {
+            self.killEvent(e);
           // Need to additionally check for arrow key combinations here because some browsers
           // Will fire keydown and keypress events for arrow keys.
           } else if (evt.shiftKey && 36 < key && key < 41 && typedChar !== '(') {
@@ -277,6 +297,8 @@
 
         if (eventType === 'input') {
           // TODO: Handle Input Event
+          console.log('Input Event Triggered!');
+          console.dir(e);
         }
       },
 
@@ -942,25 +964,46 @@
           }
         }
 
-        var section = input.editables[currentSection] || '';
+        // Define the section, as well as the correct pattern character to match against.
+        var section = input.editables[currentSection] || '',
+          currVal,
+          patternChar,
+          remainder;
 
-        if (section.length < maskEditables[currentSection].length && match) {
+        if (section.length < maskEditables[currentSection].length) {
+
+          patternChar = maskEditables[currentSection].substring(input.editables[currentSection].length, (input.editables[currentSection].length + 1));
+
+          // If we're typing inside of an existing literal pattern, this editable pattern has been pre-maturely completed
+          // already, and we need to complete this literal pattern, while checking the match against the next editable group
+          if (input.literals[currentSection+i] && maskLiterals[currentSection+i] !== input.literals[currentSection+i]) {
+            currVal = self.element.val();
+            remainder = currVal.substring(self.originalPos.begin, currVal.length);
+            val = val.substring(0, (val.length - input.literals[currentSection+i].length));
+            self.caret(self.originalPos.begin - input.literals[currentSection+i].length);
+            self.originalPos = self.caret();
+            self.element.val(val + remainder);
+            self.buffer += maskLiterals[currentSection+i];
+            patternChar = maskEditables[currentSection+1].substring(0, 1);
+          }
+
+          match = self.testCharAgainstRegex(typedChar, patternChar);
+
           // Simply add the character if its a match
-          if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
+          if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1 && match) {
             self.buffer += typedChar;
             self.writeInput();
           }
-        } else if (section.length === maskEditables[currentSection].length && match) {
+        } else if (section.length === maskEditables[currentSection].length) {
           // Check that conditions are right for the next set of literal characters to be added
-          if (/*self.originalPos.begin === self.originalPos.end &&*/
-              maskEditables[currentSection+1] &&
+          if (maskEditables[currentSection+1] &&
               maskLiterals[currentSection+i]) {
 
             // check to make sure that the existing literals in the set are correctly formed,
             // and fix them if they aren't.
             if (input.literals[currentSection+i] && maskLiterals[currentSection+i] !== input.literals[currentSection+i]) {
-              var currVal =  self.element.val(),
-                remainder = currVal.substring(self.originalPos.begin, currVal.length);
+              currVal = self.element.val();
+              remainder = currVal.substring(self.originalPos.begin, currVal.length);
               val = val.substring(0, (val.length - input.literals[currentSection+i].length));
               self.caret(self.originalPos.begin - input.literals[currentSection+i].length);
               self.originalPos = self.caret();
@@ -973,9 +1016,22 @@
               self.buffer += maskLiterals[currentSection+i];
             }
 
+            patternChar = maskEditables[currentSection+1].substring(0, 1);
+            match = self.testCharAgainstRegex(typedChar, patternChar);
+
             // add the typed character if it's valid
-            if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1) {
+            if ($.inArray(typedChar, self.maskParts.containedLiterals) === -1 && match) {
               self.buffer += typedChar;
+            }
+          } else {
+            // We've technically completed the pattern, but the pattern may be shorter if each group isn't
+            // 'complete'.  This section checks to see if we have leftover characters at the end of the input
+            // and removes them.
+            currVal = self.element.val();
+            remainder = currVal.substring(self.originalPos.begin, currVal.length);
+
+            if (remainder.length > 0) {
+              self.element.val(currVal.substring(0, self.originalPos.begin));
             }
           }
 
@@ -1065,6 +1121,11 @@
       },
 
       destroy: function() {
+        if (this.showCurrency) {
+          this.currencyContainer.remove();
+          this.element.unwrap();
+          this.element.prev('label').find('.currency').remove();
+        }
         this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
         this.element.removeData(pluginName);
       }

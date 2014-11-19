@@ -338,6 +338,43 @@
           return true;
         },
         message: 'Invalid Date' // TODO - Localize
+      },
+      time: {
+        check: function(value) {
+          value = value.replace(/ /g, '');
+          var pattern = Globalize.calendar().timeFormat,
+            is24Hour = (pattern.match('HH') || []).length,
+            maxHours = is24Hour ? 24 : 12,
+            colon = value.indexOf(':'),
+            valueHours = 0,
+            valueMins,
+            valueM;
+
+          if (value === '') {
+            return true;
+          }
+
+          valueHours = parseInt(value.substring(0, colon));
+          valueMins = parseInt(value.substring(colon + 1, colon + 3));
+
+          if (parseInt(valueHours).length < 1 || parseInt(valueHours) < 1 || parseInt(valueHours) > maxHours) {
+            return false;
+          }
+          if (parseInt(valueMins).length < 2 || parseInt(valueMins) < 1 || parseInt(valueMins) > 59) {
+            return false;
+          }
+
+          // AM/PM
+          if (!is24Hour) {
+            valueM = value.match('am') || value.match('pm') || value.match('AM') || value.match('PM') || [];
+            if (valueM.length === 0) {
+              return false;
+            }
+          }
+
+          return true;
+        },
+        message: 'Invalid Time'
       }
     };
   };

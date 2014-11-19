@@ -213,3 +213,17 @@ textarea + .icon-error {
   background: $primary-color;
   color: $inverse-color;
 }
+
+.input-wrapper {
+  display: inline-block;
+  margin-bottom: 20px;
+
+  > .currency {
+    color: $input-placeholder-color;
+    line-height: normal;
+    display: inline-block;
+    padding: 6px 10px;
+    position: absolute;
+  }
+}
+
