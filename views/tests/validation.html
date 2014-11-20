@@ -19,7 +19,8 @@
 
         <div class="field">
           <label for="states" class="label">States</label>
-          <select id="states" data-validate="also-required" name="states" class="dropdown">
+          <select id="states" data-validate="required" name="states" class="dropdown">
+            <option value="">&nbsp;</option>
             <option value="AL" selected>Alabama</option>
             <option value="DE">Delaware</option>
             <option value="DC">District Of Columbia</option>
@@ -35,6 +36,11 @@
             </select>
         </div>
 
+        <div class="field">
+          <label for="tooltipped-error-input">Name <span class="audible">Required</span></label>
+          <input type="text" id="tooltipped-error-field" name="tooltipped-error-field" data-validate="also-required" value="John A. Smith" />
+        </div>
+
       </div>
     </div>
 
@@ -47,6 +53,13 @@
         message: 'This is a custom validation rule that duplicates the functionality of the "required" rule built into the validator, but has this really long message instead.  This is testing the size of error message tooltips, as well as testing that custom rules work properly.', //TODO - Localize
         async: false
       }
+
+      // Add a tooltip to "#tooltipped-error-field"
+      $('#tooltipped-error-field').tooltip({
+        content: 'Enter Your Name Here',
+        placement: 'right',
+        trigger: 'focus'
+      });
     </script>
 
   </div>
