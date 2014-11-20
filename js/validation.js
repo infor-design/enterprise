@@ -216,11 +216,11 @@
       //TODO //setup tooltip with appendedMsg
       //span = $('<span role="alert" class="error"></span>');
 
-      if (loc.parent('.field').find('span.error').length === 0) {
+      if (loc.parent('.field').find('svg.icon-error').length === 0) {
         field.parent('.field').append(svg);
-      } else {
+      } /*else {
         loc.parent('.field').find('span.error').html(svg);
-      }
+      }*/
 
       //setup tooltip with appendedMsg
       if (inline) {
@@ -230,12 +230,17 @@
       }
 
       // Build Tooltip
-      field.tooltip({
-        content: message,
-        placement: 'offset',
-        trigger: 'immediate',
-        isError: true
-      });
+      if (!field.data('tooltip')) {
+        field.tooltip({
+          content: message,
+          placement: 'offset',
+          trigger: 'focus',
+          isError: true,
+          tooltipElement: '#validation-tooltip'
+        });
+      } else {
+        field.data('tooltip').content = message;
+      }
 
       field.on('focus.validate', function() {
         field.data('tooltip').show();

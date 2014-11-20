@@ -23,18 +23,19 @@
         trigger: 'hover', //supports click and manual and hover (future focus)
         title: null, //Title for Infor Tips
         popover: null , //force it to be a popover (no content)
-        isError: false //Add error classes
+        isError: false, //Add error classes
+        tooltipElement: null // ID selector for an alternate element to use to contain the tooltip classes
       },
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Tooltip(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Object
-    Plugin.prototype = {
+    Tooltip.prototype = {
       init: function() {
         this.appendTooltip();
         this.handleEvents();
@@ -43,17 +44,19 @@
       },
 
       addAria: function() {
+        var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
         this.content =  this.element.attr('title') || settings.content;
-        this.element.removeAttr('title').attr('aria-describedby', 'tooltip');
+        this.element.removeAttr('title').attr('aria-describedby', name);
         if (this.isPopover && settings.trigger === 'click') {
           this.element.attr('aria-haspopup', true);
         }
       },
 
       appendTooltip: function() {
-        this.tooltip = $('#tooltip');
+        this.tooltip = settings.tooltipElement ? $(settings.tooltipElement) : $('#tooltip');
         if (this.tooltip.length === 0) {
-          this.tooltip = $('<div class="tooltip bottom is-hidden" role="tooltip" id="tooltip"><div class="arrow"></div><div class="tooltip-content"><p>(Content)</p></div></div>').appendTo('body');
+          var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
+          this.tooltip = $('<div class="tooltip bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"><p>(Content)</p></div></div>').appendTo('body');
         }
       },
 
@@ -89,6 +92,15 @@
            timer = setTimeout(function() {
             self.show();
           }, delay);
+        }
+
+        if (settings.trigger === 'focus') {
+          this.element.on('focus.tooltip', function() {
+            self.show();
+          })
+          .on('blur.tooltip', function() {
+            self.hide();
+          });
         }
 
       },
@@ -280,7 +292,7 @@
       destroy: function() {
         this.element.removeData(pluginName);
         this.hide();
-        this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip');
+        this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
       }
     };
 
@@ -300,7 +312,7 @@
           }, 100);
         }
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Tooltip(this, settings));
       }
     });
   };
