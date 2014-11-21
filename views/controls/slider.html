@@ -8,13 +8,21 @@
       <div class="col-1-1">
 
       <div class="field">
-        <label for="quality-slider">Quality</label>
-        <input id="quality-slider" name="quality-slider" class="slider" type="range" />
+        <label for="quality">Quality</label>
+        <input id="quality" name="quality-slider" class="slider" type="range" list="quality-data" min="0" max="100" value="40" />
+        <datalist id="quality-data">
+          <option value="0">Very Poor</option>
+          <option value="20">Poor</option>
+          <option value="40">Adequate</option>
+          <option value="60">Good</option>
+          <option value="80">Very Good</option>
+          <option value="100">Superior</option>
+        </datalist>
       </div>
 
       <div clas="field">
-        <label for="range-example">Quality</label>
-        <input id="range-example" name="range-example" class="slider" type="range" min="-150" max="150" value="0" />
+        <label for="range-example">Range Example</label>
+        <input id="range-example" name="range-example" class="slider" type="range" min="-150" max="150" value="0" data-range="true" />
       </div>
 
       <!--

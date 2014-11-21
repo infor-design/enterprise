@@ -6,6 +6,26 @@
   margin: 25px 0;
   position: relative;
   width: 100%;
+
+    > .tick {
+    background-color: $slider-bg-color;
+    border-radius: 12px;
+    display: inline-block;
+    height: 12px;
+    line-height: 12px;
+    margin-top: -4px;
+    position: absolute;
+    width: 12px;
+
+    &.complete {
+      background-color: $slider-active-bg-color;
+    }
+  }
+
+  > label {
+    position: absolute;
+    margin: 10px 0;
+  }
 }
 
 .slider-handle {
@@ -20,6 +40,7 @@
   margin-top: -10px;
   position: absolute;
   width: 24px;
+  z-index: 20;
 
   &:focus,
   &:active,

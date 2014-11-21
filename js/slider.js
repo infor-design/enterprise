@@ -19,8 +19,9 @@
     var pluginName = 'slider',
         defaults = {
           value: [50],
-          min: undefined,
-          max: undefined
+          min: 0,
+          max: 100,
+          range: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -46,18 +47,36 @@
       },
 
       buildSettings: function() {
-        settings.value = this.element.attr('value') !== undefined ? this.element.attr('value') : this.element.val() !== '' ? this.element.val() : settings.value;
-        settings.min = this.element.attr('min') || settings.min;
-        settings.max = this.element.attr('max') || settings.max;
+        var self = this;
+        if (!this.settings) {
+          this.settings = {};
+        }
+        this.settings.value = this.element.attr('value') !== undefined ? parseInt(this.element.attr('value')) : this.element.val() !== '' ? parseInt(this.element.val()) : settings.value;
+        this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min')) : settings.min;
+        this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max')) : settings.max;
+        this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : settings.range;
 
-        if (!settings.min && settings.max) {
-          settings.min = settings.max;
-          settings.max = undefined;
+        // build tick list
+        if (this.element.attr('list')) {
+          var tickOptions = $('datalist#' + this.element.attr('list'));
+          this.ticks = [];
+          tickOptions.find('option').each(function(i, option) {
+            self.ticks.push({
+              description: $(option).text(),
+              value: parseInt($(option).val())
+            });
+            if ($(option).attr('data-color')) {
+              self.ticks[i].color = $(option).data('color');
+            }
+          });
         }
 
-        // configure the slider to deal with an array of values if we have min and max ranges
-        if (settings.min && settings.max) {
-          settings.value = [].push(settings.value);
+        // configure the slider to deal with an array of values
+        if (!isArray(this.settings.value)) {
+          this.settings.value = [this.settings.value];
+        }
+        if (this.settings.range && !this.settings.value[1]) {
+          this.settings.value.push(this.settings.max);
         }
 
         return this;
@@ -77,7 +96,7 @@
 
         // Hide the input element
         self.element.attr('type', 'hidden');
-        self.label = self.element.prev('label').addClass('hidden');
+        //self.label = self.element.prev('label').addClass('hidden');
 
         // Build the slider controls
         self.wrapper = $('<div class="slider-wrapper"></div>').attr('id', self.element.attr('id') + '-slider').insertAfter(self.element);
@@ -85,15 +104,30 @@
 
         // Handles
         self.handles = [];
-        self.handles.push($('<a href="#" class="slider-handle' + (settings.min ? ' min' : '') +'"></a>').text(settings.min ? 'Min' : 'Handle'));
-        if (settings.min && settings.max) {
-          self.handles.push($('<a href="#" class="slider-handle max"></a>').text('Max'));
+        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
+        if (self.settings.range) {
+          self.handles.push($('<a href="#" class="slider-handle higher"></a>').text('Higher'));
         }
         $.each(self.handles, function(i, handle) {
           handle.appendTo(self.wrapper);
         });
 
-        self.value(settings.value);
+        // Ticks
+        if (self.ticks) {
+          for (var i = 0; i < self.ticks.length; i++) {
+            var tickId = (self.element.attr('id') + '-tick-' + i),
+              leftTickPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - 6px)';
+            self.ticks[i].element = $('<a href="#" id="'+ tickId +'" class="tick" data-value="'+ self.ticks[i].value +'" ></a>');
+            self.ticks[i].label = $('<label for="' + tickId + '">' + self.ticks[i].description + '</label>');
+            self.ticks[i].element.css('left', leftTickPos);
+            self.wrapper.append(self.ticks[i].label).append(self.ticks[i].element);
+
+            var leftLabelPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - '+ self.ticks[i].label.outerWidth()/2 +'px)';
+            self.ticks[i].label.css('left', leftLabelPos);
+          }
+        }
+
+        self.value(self.settings.value);
         self.updateRange();
 
         return self;
@@ -102,15 +136,29 @@
       bindEvents: function() {
         var self = this;
 
-        function updateHandleFromDraggable(handle, args) {
-          var leftWidth = ((args.left) / self.element.parent().width());
-          if (handle.hasClass('max')) {
-            self.value([null, leftWidth*100]);
-          } else {
-            self.value([leftWidth*100]);
+        function updateHandleFromDraggable(e, handle, args) {
+          var val = ((args.left) / self.element.parent().width() * 100),
+            rangeVal = self.convertPercentageToValue(val);
+
+          // Ranged values need to check to make sure that the higher-value handle doesn't drag past the
+          // lower-value handle, and vice-versa.
+          if (self.settings.range) {
+            var originalVal = self.value().slice(0);
+            if (handle.hasClass('higher') && rangeVal <= originalVal[0]) {
+              e.preventDefault();
+              return;
+            }
+            if (handle.hasClass('lower') && rangeVal >= originalVal[1]) {
+              e.preventDefault();
+              return;
+            }
           }
 
-          self.updateRange();
+          if (!e.defaultPrevented) {
+            self.value(handle.hasClass('higher') ? [null, rangeVal] : [rangeVal]);
+            self.updateRange();
+          }
+          return;
         }
 
         $.each(self.handles, function(i, handle) {
@@ -122,16 +170,44 @@
             e.preventDefault(); //Prevent from jumping to top.
           })
           .on('drag.slider', function (e, args) {
-            updateHandleFromDraggable($(e.currentTarget), args);
+            updateHandleFromDraggable(e, $(e.currentTarget), args);
           });
         });
 
         return self;
       },
 
+      convertValueToPercentage: function(value) {
+        return (((value - this.settings.min) / (this.settings.max - this.settings.min)) * 100);
+      },
+
+      convertPercentageToValue: function(percentage) {
+        return (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
+      },
+
       // Changes the position of the bar and handles based on their values.
       updateRange: function() {
-        var newVal = this.value();
+        var val = this.value(),
+          newVal = val.slice(0);
+
+        if (this.ticks) {
+          for (var i = 0; i < this.ticks.length; i++) {
+            var condition = !this.settings.range ? this.ticks[i].value <= newVal[0] : newVal[0] < this.ticks[i].value && this.ticks[i].value <= newVal[1];
+            if (condition) {
+              this.ticks[i].element.addClass('complete');
+            } else {
+              this.ticks[i].element.removeClass('complete');
+            }
+          }
+        }
+
+        // Convert the stored values from ranged to percentage
+        newVal[0] = this.convertValueToPercentage(newVal[0]);
+        if (newVal[1]) {
+          newVal[1] = this.convertValueToPercentage(newVal[1]);
+        }
+
+        // If no arguments are provided, update both handles with the latest stored values.
         if (!this.handles[1]) {
           this.range.css('width', newVal[0] + '%');
         } else {
@@ -172,9 +248,10 @@
           maxVal = self._value[1];
         }
 
-        //set the ranges
+        //set the internal value and the element's retrievable value.
         self._value = [minVal, maxVal];
-        return self._value;
+        self.element.val( maxVal ? self._value : self._value[0] );
+        return self._value.slice(0);
       },
 
       destroy: function() {
