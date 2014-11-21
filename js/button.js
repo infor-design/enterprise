@@ -41,14 +41,16 @@
               xPos = e.pageX - btnOffset.left,
               yPos = e.pageY - btnOffset.top;
 
-         ripple.css({
+          ripple.css({
               top: yPos - (ripple.height()/2),
               left: xPos - (ripple.width()/2)
             }).appendTo(btn);
 
-          setTimeout(function(){
-            ripple.remove();
-          }, 1000);
+        }).on('mouseup.button, mouseleave.button', function () {
+          var btn = $(this).find('.ripple-effect');
+          setTimeout(function () {
+            btn.remove();
+          }, 100);
         });
       }
     };

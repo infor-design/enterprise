@@ -1,5 +1,5 @@
-/* Variables
-================================================== */
+// Variables
+//================================================== //
 
 // Text Color
 $font-color-dark: #333333;
@@ -26,6 +26,7 @@ $primary-button-active-bg-color: #1a7cd4;
 $primary-button-disabled-bg-color: #69bbea;
 
 //Secondary/Normal Buttons
+$button-color: #5a5a5a;
 $button-bg-color: #d2d2d2;
 $button-hover-bg-color: #b6b6b6;
 $button-focus-bg-color: #d2d2d2;
@@ -61,6 +62,7 @@ $dropdown-disabled-bg-color: #e5e5e5;
 $dropdown-disabled-border-color: #d2d2d2;
 $dropdown-disabled-color: #737373;
 $dropdown-focus-border-color: $input-focus-border-color;
+$dropdown-filter-color: #0099ff;
 
 // Editor
 $editor-border-color: $input-border-color;
@@ -153,22 +155,3 @@ $breakpoint-phone: 360px;
 $breakpoint-phone-to-tablet: 768px;
 $breakpoint-tablet-to-desktop: 1240px;
 $breakpoint-desktop-to-extralarge: 1479px;
-
-/* Adam's Approach
-$site-width-wide: 1479px;
-$site-width-medium: 1240px;
-$site-width-narrow: 760px;
-$site-width-small: 360px;
-
-@mixin breakpoint($device) {
-  @if $device == site-width-medium {
-    @media (max-width: $site-width-medium) { @content; }
-  }
-  @else if $device == site-width-narrow {
-    @media (max-width: $site-width-narrow) { @content; }
-  }
-  @else if $device == site-width-tiny {
-    @media (max-width: $site-width-tiny) { @content; }
-  }
-}
-*/

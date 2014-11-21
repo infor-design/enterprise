@@ -1,111 +1,123 @@
-/* Select (DropDown)
-================================================== */
+// Select (DropDown)
+//================================================== //
+
 input.dropdown {
-  cursor: pointer;
   background-color: transparent;
   border-color: $input-border-color;
   color: $input-color;
-  -webkit-text-fill-color: $input-color;
-  display: inline-block;
-  padding: 6px 24px 6px 10px;
-}
-
-.dropdown + .icon {
   cursor: pointer;
   display: inline-block;
-  fill: $input-border-color;
-  height: 32px;
-  margin-left: -32px;
-  margin-top: 2px;
-  position: absolute;
-  width: 32px;
-  pointer-events: none;
+  padding: 6px 24px 6px 10px;
+  -webkit-text-fill-color: $input-color;
+
+  &[disabled] {
+    background-color: $dropdown-disabled-bg-color;
+    border-color: $dropdown-disabled-border-color;
+    color: $dropdown-disabled-color;
+    cursor: default;
+
+    &.dropdown + .icon {
+      cursor: default;
+      fill: #999999;
+    }
+  }
+
+  // Icon States
+  + .icon {
+    cursor: pointer;
+    display: inline-block;
+    fill: $input-border-color;
+    height: 32px;
+    margin-left: -32px;
+    margin-top: 2px;
+    pointer-events: none;
+    position: absolute;
+    transition: all .2s ease 0s;
+    width: 32px;
+  }
+
+  &:focus {
+    border-color: $input-focus-border-color;
+    box-shadow: $input-focus-shadow;
+  }
 }
 
-input.dropdown[disabled] {
-  background-color: $dropdown-disabled-bg-color;
-  border-color: $dropdown-disabled-border-color;
-  color: $dropdown-disabled-color;
-  cursor: default;
-}
-
-input.dropdown[disabled] .dropdown + .icon {
-  fill: $dropdown-disabled-color;
-  cursor: default;
-}
-
+// The List
 .dropdown-list {
   background-color: $inverse-color;
   border: 1px solid $menu-border-color;
-  border-top: 1px solid white;
-  border-radius: 0 0 3px 3px;
-  box-shadow: 0px 0px 5px -2px rgba(8, 150, 233, 0.2);
-  font-family: $font-regular;
-  color: $menu-color;
-  @include font-size(14);
-  height: auto;
-  left: 1px;
-  line-height: 32px;
-  min-height: 30px;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(8, 150, 233, .2);
   max-height: 300px;
-  overflow: auto;
-  padding-top: 5px;
+  min-height: 30px;
+  -webkit-overflow-scrolling: touch;
   position: absolute;
-  text-indent: 31px;
-  top: 1px;
   transition: height .3s ease 0s;
+  white-space: nowrap;
   width: auto;
   z-index: 2001;
-  -webkit-overflow-scrolling: touch;
-  white-space: nowrap;
+
+  ul {
+    color: $menu-color;
+    font-family: $font-regular;
+    @include font-size(14);
+    height: auto;
+    line-height: 32px;
+    max-height: 260px;
+    min-height: inherit;
+    overflow: auto;
+    position: relative;
+    text-indent: 31px;
+  }
+
+  li:hover {
+    background-color: $menu-hover-color;
+    cursor: pointer;
+    outline: none;
+  }
+
+  li.selected:before {
+    border-color: #1a1a1a;
+    border-style: solid;
+    border-width: 0 3px 3px 0;
+    content: '';
+    height: 10px;
+    left: 12px;
+    margin-top: 6px;
+    position: absolute;
+    transform: rotate(45deg);
+    width: 4px;
+  }
+
+  li b {
+    color: $dropdown-filter-color;
+    font-style: normal;
+    letter-spacing: 1px;
+    text-decoration: underline;
+  }
+
+  .icon {
+    fill: #999999;
+    margin-left: -32px;
+    position: absolute;
+    transform: rotate(180deg);
+  }
 }
 
-.dropdown:focus {
-  box-shadow: $input-focus-shadow;
-  border-color: $input-focus-border-color;
+.dropdown-search {
+  border: 0;
+  border-bottom: 1px solid #d2d2d2;
+  border-radius: 0;
+  width: 100%;
+
+  &:focus {
+    border: 0;
+    border-bottom: 1px solid #d2d2d2;
+    box-shadow: none;
+  }
 }
 
-.dropdown-list li:hover {
-  background-color: $menu-hover-color;
-  cursor: pointer;
-  outline: none;
-}
-
-// Open States
-.dropdown.is-open + .icon {
-  transform: rotate(180deg);
-}
-
-.dropdown.is-open.is-ontop {
-  border-radius: 0 0 2px 2px;
-}
-
-.dropdown-list.is-ontop {
-  border-radius: 3px 3px 0 0;
-  border-width: 1px;
-  border-color: $input-focus-border-color;
-}
-
-.dropdown + .icon {
-  transition: all .2s ease 0s;
-}
-
-.dropdown.is-open {
-  background-color: #ffffff;
-  border-bottom-color: #d2d2d2;
-  border-color: $input-focus-border-color;
-  border-radius: 2px 2px 0 0;
-}
-
-.dropdown-list li.is-selected:before {
-  border-color: #1a1a1a;
-  border-style: solid;
-  border-width: 0 3px 3px 0;
-  content: ''""'';
-  height: 10px;
-  left: 12px;
-  margin-top: 6px;
-  position: absolute;
-  transform: rotate(45deg);
-  width: 4px;
+.is-ontop .dropdown-search {
+  border-bottom: 0;
+  border-top: 1px solid #d2d2d2;
 }

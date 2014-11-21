@@ -75,6 +75,11 @@ textarea {
   .almost-empty {
     border-color: $error-color;
   }
+
+  + .icon-error {
+    left: 1px !important;
+    top: -75px !important;
+  }
 }
 
 .textarea-wordcount {
@@ -179,13 +184,8 @@ textarea.error {
 
 input.error:focus,
 textarea.error:focus {
-  box-shadow: 0 0 5px rgba(237, 28, 36, 0.2);
+  box-shadow: 0 0 5px rgba(237, 28, 36, .2);
   color: $input-color !important;
-}
-
-textarea + .icon-error {
-  left: 1px !important;
-  top: -75px !important;
 }
 
 .error::-webkit-input-placeholder {
@@ -207,6 +207,7 @@ textarea + .icon-error {
 ::selection {
   background: $primary-color;
   color: $inverse-color;
+  -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
@@ -220,8 +221,8 @@ textarea + .icon-error {
 
   > .currency {
     color: $input-placeholder-color;
-    line-height: normal;
     display: inline-block;
+    line-height: normal;
     padding: 6px 10px;
     position: absolute;
   }

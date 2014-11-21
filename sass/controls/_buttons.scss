@@ -1,5 +1,6 @@
-/* Buttons
-================================================== */
+// Buttons
+//================================================== //
+
 button {
   background-color: transparent;
   font-family: $font-regular;
@@ -23,7 +24,7 @@ button {
   @include font-size(14);
   padding: 0 30px;
   position: relative;
-  transition: background .2s ease-in-out 0s;
+  transition: all .2s ease-in-out 0s;
   width: auto;
 }
 
@@ -49,12 +50,17 @@ button {
     border-color: 1px solid primary-button-disabled-bg-color;
     cursor: default;
   }
+
+  .ripple-effect {
+    background-color: #ffffff;
+  }
 }
 
+// Normal / Secondary Button
 .button,
 .button-secondary {
   background-color: $button-bg-color;
-  color: $font-color;
+  color: $button-color;
 
   &:hover {
     background-color: $button-hover-bg-color;
@@ -77,8 +83,13 @@ button {
     color: $font-color-disabled;
     cursor: default;
   }
+
+  .ripple-effect {
+    background-color: #efefef;
+  }
 }
 
+// Destructive Actions / Third Level Button
 .button-destructive,
 .button-tertiary {
   background-color: transparent;
@@ -103,6 +114,10 @@ button {
     color: $font-color-disabled;
     cursor: default;
   }
+
+  .ripple-effect {
+    background-color: #8dd2fb;
+  }
 }
 
 // Ripple Effect
@@ -111,35 +126,38 @@ button {
 }
 
 .ripple-effect {
-  -webkit-animation: ripple-animation 2s;
-  animation: ripple-animation 2s;
-  background-color: #e4ebf0;
+  -webkit-animation: ripple-animation .5s;
+  animation: ripple-animation .5s;
+  background-color: #cccccc;
   border-radius: 50%;
   height: 10px;
+  opacity: .2;
   position: absolute;
+  -webkit-transform: scale(6);
+  transform: scale(6);
   width: 10px;
 }
 
 @-webkit-keyframes ripple-animation {
   from {
-    opacity: .4;
+    opacity: 0;
     -webkit-transform: scale(1);
   }
 
   to {
-    opacity: 0;
-    -webkit-transform: scale(100);
+    opacity: .2;
+    -webkit-transform: scale(6);
   }
 }
 
 @keyframes ripple-animation {
   from {
-    opacity: .4;
+    opacity: 0;
     transform: scale(1);
   }
 
   to {
-    opacity: 0;
-    transform: scale(100);
+    opacity: .2;
+    transform: scale(6);
   }
 }

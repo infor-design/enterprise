@@ -1,5 +1,5 @@
-/* Checkboxes
-================================================== */
+// Checkboxes
+//================================================== //
 
 input.checkbox, span.checkbox > input {
   left: -9999px;
@@ -120,6 +120,6 @@ input.checkbox:focus + label:before, input.checkbox:focus + input[type="hidden"]
 }
 
 .checkbox:not(.isPartial):checked + label:after {
-  -webkit-animation: 0.25s ease 0s normal none 1 running check;
-  animation: 0.25s ease 0s normal none 1 running check;
+  -webkit-animation: .15s ease 0s normal none 1 running check;
+  animation: .15s ease 0s normal none 1 running check;
 }
