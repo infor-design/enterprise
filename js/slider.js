@@ -21,7 +21,8 @@
           value: [50],
           min: 0,
           max: 100,
-          range: false
+          range: false,
+          step: undefined
         },
         settings = $.extend({}, defaults, options);
 
@@ -55,6 +56,7 @@
         this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min')) : settings.min;
         this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max')) : settings.max;
         this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : settings.range;
+        this.settings.step = !isNaN(this.element.attr('step')) ? Number(this.element.attr('step')) : settings.step;
 
         // build tick list
         if (this.element.attr('list')) {
@@ -77,10 +79,6 @@
         }
         if (this.settings.range && !this.settings.value[1]) {
           this.settings.value.push(this.settings.max);
-        }
-
-        if (this.element.prop('disabled') === true) {
-          this.disable();
         }
 
         return this;
@@ -141,6 +139,10 @@
         self.value(self.settings.value);
         self.updateRange();
 
+        if (this.element.prop('disabled') === true) {
+          this.disable();
+        }
+
         return self;
       },
 
@@ -148,13 +150,13 @@
         var self = this;
 
         function updateHandleFromDraggable(e, handle, args) {
-          var val = ((args.left) / self.element.parent().outerWidth() * 100),
+          var val = (args.left / (self.element.parent().width() - handle.outerWidth())) * 100,
             rangeVal = self.convertPercentageToValue(val);
 
-          // Ranged values need to check to make sure that the higher-value handle doesn't drag past the
+          // Ranged values need to check to make sure that the higher-value handle doesn't drawindowg past the
           // lower-value handle, and vice-versa.
           if (self.settings.range) {
-            var originalVal = self.value().slice(0);
+            var originalVal = self.value();
             if (handle.hasClass('higher') && rangeVal <= originalVal[0]) {
               e.preventDefault();
               return;
@@ -163,6 +165,11 @@
               e.preventDefault();
               return;
             }
+          }
+
+          // Round the value to the nearest step, if the step is defined
+          if (self.settings.step) {
+            rangeVal = Math.round(rangeVal / self.settings.step) * self.settings.step;
           }
 
           if (!e.defaultPrevented) {
@@ -187,7 +194,8 @@
 
         if (this.ticks) {
           $.each(self.ticks, function(i, tick) {
-            tick.element.on('click', function () {
+            $(tick.element, tick.label).on('click', function (e) {
+              e.preventDefault();
               if (!self.handles[1]) {
                 self.value([tick.value]);
               }
@@ -211,8 +219,7 @@
 
       // Changes the position of the bar and handles based on their values.
       updateRange: function() {
-        var val = this.value(),
-          newVal = val.slice(0),
+        var newVal = this.value(),
           percentages = [];
 
         if (this.ticks) {
@@ -259,10 +266,10 @@
             'left': percentages[0] + '%'
           });
         }
-        this.handles[0].css('left', percentages[0] + '%').attr('aria-valuenow', newVal[0]);
+        this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)').attr('aria-valuenow', newVal[0]);
 
         if (this.handles[1]) {
-          this.handles[1].css('left', percentages[1] + '%').attr('aria-valuenow', newVal[1]);
+          this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)').attr('aria-valuenow', newVal[1]);
         }
       },
 
@@ -311,7 +318,7 @@
         //set the internal value and the element's retrievable value.
         self._value = [minVal, maxVal];
         self.element.val(maxVal ? self._value : self._value[0]);
-        return self._value.slice(0);
+        return self._value;
       },
 
       enable: function() {

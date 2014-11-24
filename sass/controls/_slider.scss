@@ -3,7 +3,7 @@
 .slider-wrapper {
   background-color: $slider-bg-color;
   height: 4px;
-  margin: 25px 0;
+  margin: 25px 6px;
   position: relative;
   width: 100%;
 
@@ -15,6 +15,9 @@
     line-height: 12px;
     margin-top: -4px;
     position: absolute;
+    -webkit-touch-callout: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
     width: 12px;
 
     &.complete {
