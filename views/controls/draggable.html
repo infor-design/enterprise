@@ -23,11 +23,24 @@
     <span class="label">Draggable - only on x or y axis</span>
     <div class="draggable x-only" style="position:absolute; top:380px; width:50px; height:50px; background:#ffffff;">X Only</div>
 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <span class="label">Draggable - with collision detection</span>
+    <div class="draggable x-only collision" style="border: 1px solid #999999; position:absolute; top: 480px; width:50px; height:50px; background:#ffffff;">X Only Left</div>
+    <div class="draggable x-only collision" style="border: 1px solid #999999; position:absolute; left: 500px; top: 480px; width:50px; height:50px; background:#ffffff;">X Only Right</div>
+
   </div>
 </div>
 
 <script>
 
+  $('.draggable.x-only.collision').draggable({axis: 'x', containment: 'parent', obstacle: '.collision'});
   $('.draggable.x-only').draggable({axis: 'x', containment: 'parent'});
-  $('.draggable').draggable({containment: 'document'});
+  $('.draggable').draggable({containment: 'document', clone: 'true'});
+
 </script>

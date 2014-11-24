@@ -16,6 +16,7 @@
 
 
   //TODO: Resize: http://stackoverflow.com/questions/8258232/resize-an-html-element-using-touches
+  // Similar: https://github.com/desandro/draggabilly
   $.fn.draggable = function(options) {
 
     // Settings and Options
@@ -23,7 +24,8 @@
       defaults = {
         axis: null, //Constrains dragging to either axis. Possible values: 'x', 'y'
         clone: false, //Clone the object - Useful so you dont have to abs position
-        containment: false //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
+        containment: false, //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
+        obstacle: false //Selector of object(s) that you cannot drag into
       },
       settings = $.extend({}, defaults, options);
 
@@ -55,6 +57,8 @@
               x:  orig.changedTouches[0].pageX - pos.left,
               y:  orig.changedTouches[0].pageY - pos.top
             };
+
+            self.originalPos = pos;
             self.element.trigger('dragstart', pos);
           })
           .on('touchmove.draggable MSPointerMove.draggable pointermove.draggable gesturechange.draggable', function(e) {
@@ -77,6 +81,8 @@
               x: e.pageX - pos.left,
               y: e.pageY - pos.top
             };
+
+            self.originalPos = pos;
 
             //Prevent Text Selection
             $('body').addClass('disable-select');
@@ -132,12 +138,17 @@
           this.clone = null;
         }
 
+        if (this.obstacle) {
+          this.obstacle = null;
+        }
+
         $('body').removeClass('disable-select');
       },
 
       //Move the object from the event coords
       move: function(left, top) {
-        var upperXLimit, upperYLimit, lowerXLimit, lowerYLimit;
+        var upperXLimit, upperYLimit,
+          self = this;
 
         //Clone
         if (!this.clone && settings.clone) {
@@ -179,7 +190,29 @@
           if (css.left < 0) {
             css.left = 0;
           }
-          console.log(css.left);
+        }
+
+        if (settings.obstacle) {
+          var elemOffset = (this.clone ? this.clone.offset() : this.element.offset()),
+            elemWidth = (this.clone ? this.clone.outerWidth() : this.element.outerWidth()),
+            movingRight = css.left > elemOffset.left;
+
+          // Caching this so drag is not jaggie
+          if (!this.obstacle) {
+            this.obstacle = $(settings.obstacle).not(this.element);
+            this.constraints = {top: this.obstacle.offset().top, left: this.obstacle.offset().left,
+              bottom: this.obstacle.offset().top + this.obstacle.outerHeight(), right: this.obstacle.offset().left + this.obstacle.outerWidth()};
+          }
+
+          if (!movingRight && self.originalPos.left > this.constraints.left && css.left <= this.constraints.right) {
+            css.left = this.constraints.right;
+          }
+
+          if (movingRight && self.originalPos.left + elemWidth <= this.constraints.left && css.left + elemWidth >= this.constraints.left) {
+            css.left = (this.constraints.left - this.obstacle.outerWidth());
+          }
+
+          //TODO: Moving Down
         }
 
         if (this.clone) {
