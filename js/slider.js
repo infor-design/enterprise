@@ -107,11 +107,19 @@
 
         // Handles
         self.handles = [];
-        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
+        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
         if (self.settings.range) {
-          self.handles.push($('<a href="#" class="slider-handle higher"></a>').text('Higher'));
+          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="1"></a>').text('Higher'));
         }
         $.each(self.handles, function(i, handle) {
+          // Add WAI-ARIA to the handles
+          self.element.attr({
+            'role' : 'slider',
+            'aria-orientation' : 'horizontal',
+            'aria-valuemin' : self.settings.min,
+            'aria-valuemax' : self.settings.max,
+            'aria-label' : self.element.prev('label').text()
+          });
           handle.appendTo(self.wrapper);
         });
 
@@ -140,7 +148,7 @@
         var self = this;
 
         function updateHandleFromDraggable(e, handle, args) {
-          var val = ((args.left) / self.element.parent().width() * 100),
+          var val = ((args.left) / self.element.parent().outerWidth() * 100),
             rangeVal = self.convertPercentageToValue(val);
 
           // Ranged values need to check to make sure that the higher-value handle doesn't drag past the
@@ -158,13 +166,13 @@
           }
 
           if (!e.defaultPrevented) {
-            self.value(handle.hasClass('higher') ? [null, rangeVal] : [rangeVal]);
+            self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
             self.updateRange();
           }
           return;
         }
 
-        $.each(self.handles, function(i, handle) {
+        $.each(self.handles, function (i, handle) {
           handle.draggable({containment: 'parent', axis: 'x', clone: false})
           .on('mousedown.slider', function () {
             $(this).focus();
@@ -176,6 +184,19 @@
             updateHandleFromDraggable(e, $(e.currentTarget), args);
           });
         });
+
+        if (this.ticks) {
+          $.each(self.ticks, function(i, tick) {
+            tick.element.on('click', function () {
+              if (!self.handles[1]) {
+                self.value([tick.value]);
+              }
+              // TODO: Support for Ranged Value
+              // Need to set closest handle to the correct value.
+              self.updateRange();
+            });
+          });
+        }
 
         return self;
       },
@@ -191,7 +212,8 @@
       // Changes the position of the bar and handles based on their values.
       updateRange: function() {
         var val = this.value(),
-          newVal = val.slice(0);
+          newVal = val.slice(0),
+          percentages = [];
 
         if (this.ticks) {
           var color = this.getColorClosestToValue();
@@ -223,23 +245,24 @@
         }
 
         // Convert the stored values from ranged to percentage
-        newVal[0] = this.convertValueToPercentage(newVal[0]);
+        percentages[0] = this.convertValueToPercentage(newVal[0]);
         if (newVal[1]) {
-          newVal[1] = this.convertValueToPercentage(newVal[1]);
+          percentages[1] = this.convertValueToPercentage(newVal[1]);
         }
 
         // If no arguments are provided, update both handles with the latest stored values.
         if (!this.handles[1]) {
-          this.range.css('width', newVal[0] + '%');
+          this.range.css('width', percentages[0] + '%');
         } else {
           this.range.css({
-            'width': (newVal[1] - newVal[0]) + '%',
-            'left': newVal[0] + '%'
+            'width': (percentages[1] - percentages[0]) + '%',
+            'left': percentages[0] + '%'
           });
         }
-        this.handles[0].css('left', newVal[0] + '%');
+        this.handles[0].css('left', percentages[0] + '%').attr('aria-valuenow', newVal[0]);
+
         if (this.handles[1]) {
-          this.handles[1].css('left', newVal[1] + '%');
+          this.handles[1].css('left', percentages[1] + '%').attr('aria-valuenow', newVal[1]);
         }
       },
 
@@ -265,7 +288,7 @@
         var self = this;
 
         // if both options are absent, act as a getter and return the current value
-        if (!minVal && !maxVal) {
+        if (minVal === undefined && maxVal === undefined) {
           return self._value;
         }
 
@@ -278,16 +301,16 @@
         }
 
         // set the values back to the existing one if they aren't passed.
-        if (!minVal && isArray(self._value) && self._value[0]) {
+        if (minVal === undefined && isArray(self._value) && self._value[0]) {
           minVal = self._value[0];
         }
-        if (!maxVal && isArray(self._value) && self._value[1]) {
+        if (maxVal === undefined && isArray(self._value) && self._value[1]) {
           maxVal = self._value[1];
         }
 
         //set the internal value and the element's retrievable value.
         self._value = [minVal, maxVal];
-        self.element.val( maxVal ? self._value : self._value[0] );
+        self.element.val(maxVal ? self._value : self._value[0]);
         return self._value.slice(0);
       },
 
@@ -304,6 +327,15 @@
       },
 
       destroy: function() {
+        var self = this;
+        $.each(self.handles, function (i, handle) {
+          handle.off('mousedown.slider click.slider drag.slider');
+        });
+        if (this.ticks) {
+          $.each(self.ticks, function(i, tick) {
+            tick.off('click.slider');
+          });
+        }
         this.wrapper.remove();
         this.element.attr('type', this.originalElement.type);
         $.removeData(this.obj, pluginName);
