@@ -340,7 +340,7 @@
         });
         if (this.ticks) {
           $.each(self.ticks, function(i, tick) {
-            tick.off('click.slider');
+            $(tick.element, tick.label).off('click.slider');
           });
         }
         this.wrapper.remove();
