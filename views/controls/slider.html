@@ -8,29 +8,27 @@
       <div class="col-1-1">
 
       <div class="field">
-        <label for="quality">Quality</label>
-        <input id="quality" name="quality-slider" class="slider" type="range" list="quality-data" min="0" max="100" value="40" />
+        <label for="slider-regular">Regular Slider</label>
+        <input id="slider-regular" name="slider-regular" class="slider" type="range" />
+      </div>
+
+      <div class="field">
+        <label for="slider-quality">Slider with Ticks &amp; Colors</label>
+        <input id="slider-quality" name="slider-quality" class="slider" type="range" list="quality-data" min="0" max="100" value="40" />
         <datalist id="quality-data">
-          <option value="0">Very Poor</option>
-          <option value="20">Poor</option>
-          <option value="40">Adequate</option>
-          <option value="60">Good</option>
-          <option value="80">Very Good</option>
-          <option value="100">Superior</option>
+          <option value="0" data-color="#ed1c24">Very Poor</option>
+          <option value="20" data-color="#ed1c24">Poor</option>
+          <option value="40" data-color="#faa719">Adequate</option>
+          <option value="60" data-color="#4fb521">Good</option>
+          <option value="80" data-color="#4fb521">Very Good</option>
+          <option value="100" data-color="#157a13">Superior</option>
         </datalist>
       </div>
 
       <div clas="field">
-        <label for="range-example">Range Example</label>
+        <label for="range-example">"Ranged" (Multiple Handles) Example</label>
         <input id="range-example" name="range-example" class="slider" type="range" min="-150" max="150" value="0" data-range="true" />
       </div>
-
-      <!--
-      <div class="slider">
-        <div class="slider-range"></div>
-        <a href="#" class="slider-handle">Handle</a>
-      </div>
-      -->
 
       </div>
     </div>

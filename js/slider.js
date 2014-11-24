@@ -66,7 +66,7 @@
               value: parseInt($(option).val())
             });
             if ($(option).attr('data-color')) {
-              self.ticks[i].color = $(option).data('color');
+              self.ticks[i].color = $(option).attr('data-color');
             }
           });
         }
@@ -77,6 +77,10 @@
         }
         if (this.settings.range && !this.settings.value[1]) {
           this.settings.value.push(this.settings.max);
+        }
+
+        if (this.element.prop('disabled') === true) {
+          this.disable();
         }
 
         return this;
@@ -96,7 +100,6 @@
 
         // Hide the input element
         self.element.attr('type', 'hidden');
-        //self.label = self.element.prev('label').addClass('hidden');
 
         // Build the slider controls
         self.wrapper = $('<div class="slider-wrapper"></div>').attr('id', self.element.attr('id') + '-slider').insertAfter(self.element);
@@ -191,13 +194,31 @@
           newVal = val.slice(0);
 
         if (this.ticks) {
+          var color = this.getColorClosestToValue();
+
           for (var i = 0; i < this.ticks.length; i++) {
             var condition = !this.settings.range ? this.ticks[i].value <= newVal[0] : newVal[0] < this.ticks[i].value && this.ticks[i].value <= newVal[1];
             if (condition) {
               this.ticks[i].element.addClass('complete');
+              if (color) {
+                this.ticks[i].element.css('background-color', color);
+              }
             } else {
               this.ticks[i].element.removeClass('complete');
+              if (color) {
+                this.ticks[i].element.css('background-color', '');
+              }
             }
+          }
+
+          if (color) {
+            this.range.css('background-color', color);
+            $.each(this.handles, function(i, handle) {
+              handle.css({
+                'background-color' : color,
+                'border-color' : color
+              });
+            });
           }
         }
 
@@ -220,6 +241,22 @@
         if (this.handles[1]) {
           this.handles[1].css('left', newVal[1] + '%');
         }
+      },
+
+      getColorClosestToValue: function() {
+        if (!this.ticks) {
+          return undefined;
+        }
+
+        var val = this.value()[0],
+          highestTickColor;
+        for (var i = 0; i < this.ticks.length; i++) {
+          if (this.ticks[i].color && val >= this.ticks[i].value) {
+            highestTickColor = this.ticks[i].color;
+          }
+        }
+
+        return highestTickColor;
       },
 
       // External Facing Function to set the value
@@ -254,9 +291,20 @@
         return self._value.slice(0);
       },
 
+      enable: function() {
+        this.disabled = false;
+        this.element.prop('disabled', false);
+        this.wrapper.removeClass('is-disabled');
+      },
+
+      disable: function() {
+        this.disabled = true;
+        this.element.prop('disabled', true);
+        this.wrapper.addClass('is-disabled');
+      },
+
       destroy: function() {
         this.wrapper.remove();
-        this.label.removeClass('hidden');
         this.element.attr('type', this.originalElement.type);
         $.removeData(this.obj, pluginName);
       }

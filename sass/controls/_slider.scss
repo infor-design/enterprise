@@ -45,7 +45,7 @@
   &:focus,
   &:active,
   &.is-active {
-    background-color: $inverse-color;
+    background-color: $inverse-color !important; // Needs !important to override inline CSS for background color on active state.
     border-color: $slider-active-bg-color;
   }
 }
