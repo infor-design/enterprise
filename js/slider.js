@@ -234,6 +234,7 @@
         return (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
       },
 
+      // Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
       getIncrement: function() {
         return 0.1 * (this.settings.max - this.settings.min);
       },
@@ -402,6 +403,7 @@
         //set the internal value and the element's retrievable value.
         self._value = [minVal, maxVal];
         self.element.val(maxVal !== undefined ? self._value : self._value[0]);
+        self.element.trigger('change');
         return self._value;
       },
 
@@ -431,7 +433,7 @@
         }
         this.wrapper.remove();
         this.element.attr('type', this.originalElement.type);
-        $.removeData(this.obj, pluginName);
+        $.removeData(this.element[0], pluginName);
       }
     };
 
