@@ -29,6 +29,24 @@
     position: absolute;
     margin: 10px 0;
   }
+
+  &.is-disabled {
+    background-color: #d2d2d2 !important;
+
+    > .tick {
+      background-color: #d2d2d2 !important;
+      cursor: default;
+    }
+
+    > .slider-range {
+      visibility: hidden;
+    }
+
+    > .slider-handle {
+      cursor: default;
+      visibility: hidden;
+    }
+  }
 }
 
 .slider-handle {

@@ -107,7 +107,7 @@
         self.handles = [];
         self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
         if (self.settings.range) {
-          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="1"></a>').text('Higher'));
+          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0"></a>').text('Higher'));
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles
@@ -126,7 +126,7 @@
           for (var i = 0; i < self.ticks.length; i++) {
             var tickId = (self.element.attr('id') + '-tick-' + i),
               leftTickPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - 6px)';
-            self.ticks[i].element = $('<a href="#" id="'+ tickId +'" class="tick" data-value="'+ self.ticks[i].value +'" ></a>');
+            self.ticks[i].element = $('<a href="#" id="'+ tickId +'" class="tick" data-value="'+ self.ticks[i].value +'" tabindex="-1"></a>');
             self.ticks[i].label = $('<label for="' + tickId + '">' + self.ticks[i].description + '</label>');
             self.ticks[i].element.css('left', leftTickPos);
             self.wrapper.append(self.ticks[i].label).append(self.ticks[i].element);
@@ -150,6 +150,10 @@
         var self = this;
 
         function updateHandleFromDraggable(e, handle, args) {
+          if (self.isDisabled()) {
+            return;
+          }
+
           var val = (args.left / (self.element.parent().width() - handle.outerWidth())) * 100,
             rangeVal = self.convertPercentageToValue(val);
 
@@ -182,6 +186,9 @@
         $.each(self.handles, function (i, handle) {
           handle.draggable({containment: 'parent', axis: 'x', clone: false})
           .on('mousedown.slider', function () {
+            if (self.isDisabled()) {
+              return;
+            }
             $(this).focus();
           })
           .on('click.slider', function (e) {
@@ -189,13 +196,23 @@
           })
           .on('drag.slider', function (e, args) {
             updateHandleFromDraggable(e, $(e.currentTarget), args);
+          })
+          .on('keydown.slider', function(e) {
+            self.handleKeys(e, self);
           });
         });
 
         if (this.ticks) {
           $.each(self.ticks, function(i, tick) {
-            $(tick.element, tick.label).on('click', function (e) {
+            $(tick.element, tick.label).on('touchend.slider touchcancel.slider', function(e) {
               e.preventDefault();
+              e.target.click();
+            })
+            .on('click.slider', function (e) {
+              e.preventDefault();
+              if (self.isDisabled()) {
+                return;
+              }
               if (!self.handles[1]) {
                 self.value([tick.value]);
               }
@@ -215,6 +232,73 @@
 
       convertPercentageToValue: function(percentage) {
         return (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
+      },
+
+      getIncrement: function() {
+        return 0.1 * (this.settings.max - this.settings.min);
+      },
+
+      handleKeys: function(e, self) {
+        if (self.isDisabled()) {
+          return;
+        }
+
+        var key = e.which,
+          handle = $(e.currentTarget);
+
+        // If the keycode got this far, it's an arrow key, HOME, or END.
+        switch(key) {
+          case 35: // End key sets the handle to its lowest possible value (either minimum value or as low as the "lower" handle)
+            self.decreaseValue(handle, this.settings.min);
+            break;
+          case 36: // Home key sets the spinbox to its maximum value
+            self.increaseValue(handle, this.settings.max);
+            break;
+          case 38: case 39: // Right and Up increase the spinbox value
+            self.increaseValue(handle);
+            break;
+          case 37: case 40: // Left and Down decrease the spinbox value
+            self.decreaseValue(handle);
+            break;
+        }
+      },
+
+      increaseValue: function(handle, value) {
+        var val = this.value().slice(0),
+          incrementBy = this.settings.step !== undefined ? this.settings.step : this.getIncrement(),
+          testVal,
+          updatedVal;
+
+        if (handle.hasClass('higher')) {
+          testVal = value !== undefined ? value : val[1];
+          updatedVal = testVal + incrementBy < this.settings.max ? testVal + incrementBy : this.settings.max;
+          this.value([undefined, updatedVal]);
+        } else {
+          testVal = value !== undefined ? value : val[0];
+          var maxValue = val[1] === undefined ? this.settings.max : val[1];
+          updatedVal = testVal + incrementBy < maxValue ? testVal + incrementBy : maxValue;
+          this.value([updatedVal]);
+        }
+        this.updateRange();
+      },
+
+      decreaseValue: function(handle, value) {
+        var val = this.value(),
+          decrementBy = this.settings.step !== undefined ? this.settings.step : this.getIncrement(),
+          testVal,
+          updatedVal;
+
+        if (handle.hasClass('higher')) {
+          testVal = value !== undefined ? value : val[1];
+          var minValue = val[0] === undefined ? this.settings.min : val[0];
+          updatedVal = testVal - decrementBy > minValue ? testVal - decrementBy : minValue;
+          this.value([undefined, updatedVal]);
+        } else {
+          testVal = value !== undefined ? value : val[0];
+          updatedVal = testVal - decrementBy > this.settings.min ? testVal - decrementBy : this.settings.min;
+          this.value([updatedVal]);
+        }
+        this.updateRange();
       },
 
       // Changes the position of the bar and handles based on their values.
@@ -253,7 +337,7 @@
 
         // Convert the stored values from ranged to percentage
         percentages[0] = this.convertValueToPercentage(newVal[0]);
-        if (newVal[1]) {
+        if (newVal[1] !== undefined) {
           percentages[1] = this.convertValueToPercentage(newVal[1]);
         }
 
@@ -301,46 +385,48 @@
 
         // if an array is passed as the first argument, break it apart
         if (minVal && isArray(minVal)) {
-          if (minVal[1]) {
+          if (minVal[1] !== undefined) {
             maxVal = minVal[1];
           }
           minVal = minVal[0];
         }
 
         // set the values back to the existing one if they aren't passed.
-        if (minVal === undefined && isArray(self._value) && self._value[0]) {
+        if (minVal === undefined && isArray(self._value) && self._value[0] !== undefined) {
           minVal = self._value[0];
         }
-        if (maxVal === undefined && isArray(self._value) && self._value[1]) {
+        if (maxVal === undefined && isArray(self._value) && self._value[1] !== undefined) {
           maxVal = self._value[1];
         }
 
         //set the internal value and the element's retrievable value.
         self._value = [minVal, maxVal];
-        self.element.val(maxVal ? self._value : self._value[0]);
+        self.element.val(maxVal !== undefined ? self._value : self._value[0]);
         return self._value;
       },
 
       enable: function() {
-        this.disabled = false;
         this.element.prop('disabled', false);
         this.wrapper.removeClass('is-disabled');
       },
 
       disable: function() {
-        this.disabled = true;
         this.element.prop('disabled', true);
         this.wrapper.addClass('is-disabled');
+      },
+
+      isDisabled: function() {
+        return this.element.prop('disabled');
       },
 
       destroy: function() {
         var self = this;
         $.each(self.handles, function (i, handle) {
-          handle.off('mousedown.slider click.slider drag.slider');
+          handle.off('mousedown.slider click.slider drag.slider keydown.slider');
         });
         if (this.ticks) {
           $.each(self.ticks, function(i, tick) {
-            $(tick.element, tick.label).off('click.slider');
+            $(tick.element, tick.label).off('click.slider touchend.slider touchcancel.slider');
           });
         }
         this.wrapper.remove();
