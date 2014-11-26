@@ -105,9 +105,10 @@
 
         // Handles
         self.handles = [];
-        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
+        var firstHandleId = self.element.attr('id') + '-slider-handle-' + (self.settings.range ? 'lower' : '');
+        self.handles.push($('<a href="#" id="' + firstHandleId + '" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
         if (self.settings.range) {
-          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0"></a>').text('Higher'));
+          self.handles.push($('<a href="#" id="' + self.element.attr('id') + '-slider-handle-higher" class="slider-handle higher" tabindex="0"></a>').text('Higher'));
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles
@@ -162,12 +163,10 @@
           if (self.settings.range) {
             var originalVal = self.value();
             if (handle.hasClass('higher') && rangeVal <= originalVal[0]) {
-              e.preventDefault();
-              return;
+              rangeVal = originalVal[0];
             }
             if (handle.hasClass('lower') && rangeVal >= originalVal[1]) {
-              e.preventDefault();
-              return;
+              rangeVal = originalVal[1];
             }
           }
 
@@ -184,7 +183,13 @@
         }
 
         $.each(self.handles, function (i, handle) {
-          handle.draggable({containment: 'parent', axis: 'x', clone: false})
+          var draggableOptions = {
+            containment: 'parent',
+            axis: 'x',
+            clone: false
+          };
+
+          handle.draggable(draggableOptions)
           .on('mousedown.slider', function () {
             if (self.isDisabled()) {
               return;
