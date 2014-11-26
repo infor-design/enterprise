@@ -52,7 +52,7 @@
         if (!this.settings) {
           this.settings = {};
         }
-        this.settings.value = this.element.attr('value') !== undefined ? parseInt(this.element.attr('value')) : this.element.val() !== '' ? parseInt(this.element.val()) : settings.value;
+        this.settings.value = this.element.attr('value') !== undefined ? this.element.attr('value') : this.element.val() !== '' ? this.element.val() : settings.value;
         this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min')) : settings.min;
         this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max')) : settings.max;
         this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : settings.range;
@@ -73,9 +73,18 @@
           });
         }
 
-        // configure the slider to deal with an array of values
+        // configure the slider to deal with an array of values, and normalize the values to make sure they are numbers.
         if (!isArray(this.settings.value)) {
-          this.settings.value = [this.settings.value];
+          if (this.settings.value.indexOf(',') === -1) {
+            this.settings.value = [isNaN(this.settings.value) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value)];
+          } else {
+            var vals = this.settings.value.split[','];
+            vals[0] = isNaN(vals[0]) ? this.settings.min : parseInt(vals[0]);
+            vals[1] = isNaN(vals[1]) ? this.settings.max : parseInt(vals[1]);
+            this.settings.value = vals;
+          }
+        } else {
+          this.settings.value[0] = isNaN(this.settings.value[0]) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value[0]);
         }
         if (this.settings.range && !this.settings.value[1]) {
           this.settings.value.push(this.settings.max);
@@ -105,7 +114,7 @@
 
         // Handles
         self.handles = [];
-        var firstHandleId = self.element.attr('id') + '-slider-handle-' + (self.settings.range ? 'lower' : '');
+        var firstHandleId = self.element.attr('id') + '-slider-handle' + (self.settings.range ? '-lower' : '');
         self.handles.push($('<a href="#" id="' + firstHandleId + '" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
         if (self.settings.range) {
           self.handles.push($('<a href="#" id="' + self.element.attr('id') + '-slider-handle-higher" class="slider-handle higher" tabindex="0"></a>').text('Higher'));
@@ -356,10 +365,10 @@
             'left': percentages[0] + '%'
           });
         }
-        this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)').attr('aria-valuenow', newVal[0]);
+        this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)');
 
         if (this.handles[1]) {
-          this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)').attr('aria-valuenow', newVal[1]);
+          this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)');
         }
       },
 
@@ -408,6 +417,9 @@
         //set the internal value and the element's retrievable value.
         self._value = [minVal, maxVal];
         self.element.val(maxVal !== undefined ? self._value : self._value[0]);
+        $.each(self.handles, function(i, handle) {
+          handle.attr('aria-valuenow', self._value[i]);
+        });
         self.element.trigger('change');
         return self._value;
       },
@@ -415,11 +427,13 @@
       enable: function() {
         this.element.prop('disabled', false);
         this.wrapper.removeClass('is-disabled');
+        return this;
       },
 
       disable: function() {
         this.element.prop('disabled', true);
         this.wrapper.addClass('is-disabled');
+        return this;
       },
 
       isDisabled: function() {
