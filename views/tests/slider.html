@@ -1,0 +1,63 @@
+<div class="grid">
+  <div class="col-1-1">
+    <h1>Sliders</h1>
+    <span class="label">Touch enabled</span>
+    <hr>
+
+    <div class="grid">
+      <div class="col-1-1">
+
+      <div class="field">
+        <label for="regular">Regular Slider</label>
+        <input id="regular" name="regular" class="slider" type="range" />
+      </div>
+
+      <div class="field">
+        <label for="simple-step">Simple Stepped Slider (min 0, max 5, step 1)</label>
+        <input id="simple-step" name="simple-step" class="slider" type="range" list="simple-steps" min="0" max="5" value="0" step="1" />
+        <datalist id="simple-steps">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </datalist>
+      </div>
+
+      <div class="field">
+        <label for="quality">Slider with Ticks &amp; Colors</label>
+        <input id="quality" name="quality" class="slider" type="range" list="quality-data" min="0" max="100" value="40" />
+        <datalist id="quality-data">
+          <option value="0" data-color="#ed1c24">Very Poor</option>
+          <option value="20" data-color="#ed1c24">Poor</option>
+          <option value="40" data-color="#faa719">Adequate</option>
+          <option value="60" data-color="#4fb521">Good</option>
+          <option value="80" data-color="#4fb521">Very Good</option>
+          <option value="100" data-color="#157a13">Superior</option>
+        </datalist>
+      </div>
+
+      <div clas="field">
+        <label for="range">"Ranged" (Multiple Handles) Slider</label>
+        <input id="range" name="range" class="slider" type="range" min="-150" max="150" value="0" data-range="true" />
+      </div>
+
+      <div class="field">
+        <label for="stepped">Stepped Slider (min 0, max 100, step 5)</label>
+        <input id="stepped" name="stepped" class="slider" type="range" step="5" list="stepped-data"/>
+        <datalist id="stepped-data">
+          <option value="0">Min</option>
+          <option value="100">Max</option>
+        </datalist>
+      </div>
+
+      <div class="field">
+        <label for="disabled">Disabled Slider</label>
+        <input id="disabled" name="disabled" class="slider" type="range" list="quality-data" min="0" max="100" step="20" value="40" disabled/>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,7 +33,7 @@
       });
 
       //Sliders
-      elem.find('.slider').slider();
+      elem.find('input[type="range"], .slider').slider();
 
       //Editors
       elem.find('.editor').editor();
