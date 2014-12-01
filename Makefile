@@ -13,8 +13,8 @@ test-dropdown:
 test-tmpl:
 	@node test-runner.js tmpl
 
-test-globalize:
-	@node test-runner.js globalize
+test-locale:
+	@node test-runner.js locale
 
 test-mask:
 	@node test-runner.js mask

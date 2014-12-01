@@ -243,7 +243,7 @@
       }
 
       field.on('focus.validate', function() {
-        field.data('tooltip').show();
+       field.data('tooltip').show();
       }).on('blur.validate', function() {
         if (field.data('tooltip')) {
           field.data('tooltip').hide();
@@ -255,11 +255,16 @@
       var loc = this.getField(field);
 
       this.inputs.filter('input, textarea').off('focus.validate');
-      loc.removeClass('error');
-      loc.removeData('data-errormessage');
-      loc.next('.icon-error').remove();
-      loc.next('.inforCheckboxLabel').next('.icon-error').remove();
-      loc.parent('.field').find('span.error').remove();
+      field.removeClass('error');
+      field.removeData('data-errormessage');
+      field.next('.icon-error').remove();
+      field.next().next('.icon-error').remove();
+      field.next('.inforCheckboxLabel').next('.icon-error').remove();
+      field.parent('.field').find('span.error').remove();
+      field.off('focus.validate focus.tooltip');
+      if (field.data('tooltip')) {
+        field.data('tooltip').destroy();
+      }
 
       if (loc.attr('data-placeholder')) {
         loc.attr('placeholder',loc.attr('data-placeholder'));
@@ -329,11 +334,11 @@
       date: {
         check: function(value) {
           value = value.replace(/ /g, '');
-          var dateFormat = Globalize.calendar().dateFormat.short,
-            parsedDate = Globalize.parseDate(value);
+          var dateFormat = Locale.calendar().dateFormat.short,
+            parsedDate = Locale.parseDate(value);
 
           if (parsedDate === undefined && dateFormat) {
-            parsedDate = Globalize.parseDate(value, dateFormat);
+            parsedDate = Locale.parseDate(value, dateFormat);
           }
 
           if (parsedDate === undefined && value !== '') {
@@ -347,7 +352,7 @@
       time: {
         check: function(value) {
           value = value.replace(/ /g, '');
-          var pattern = Globalize.calendar().timeFormat,
+          var pattern = Locale.calendar().timeFormat,
             is24Hour = (pattern.match('HH') || []).length,
             maxHours = is24Hour ? 24 : 12,
             colon = value.indexOf(':'),

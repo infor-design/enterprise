@@ -84,7 +84,7 @@
         // localized currency symbol.
         self.showCurrency = self.mode === 'number' && self.element.attr('data-show-currency');
         if (self.showCurrency) {
-          var symbol = Globalize.currentLocale.data.currencySign;
+          var symbol = Locale.currentLocale.data.currencySign;
           $('<span class="audible currency"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
           if (this.element.parent('.input-wrapper').length === 0) {
             this.element.wrap('<div class="input-wrapper"></div>');

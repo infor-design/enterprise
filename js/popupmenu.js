@@ -32,19 +32,8 @@
     // Plugin Object
     Plugin.prototype = {
       init: function() {
-        this.configureOptions();
         this.addMarkup();
         this.handleEvents();
-      },
-
-      configureOptions: function () {
-        //Backwards Compat
-        if (settings.invokeMethod) {
-          settings.trigger = settings.invokeMethod;
-        }
-        if (settings.menu) {
-          settings.menuId = settings.menu;
-        }
       },
 
       //Add markip including Aria
@@ -202,7 +191,7 @@
           if (key === 37) {
             e.preventDefault();
             if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
-              focus.closest('.popupmenu').removeClass('is-open').prev('a').focus();
+              focus.closest('.popupmenu').removeClass('is-open').parent().prev('a').focus();
             }
           }
 
@@ -326,7 +315,7 @@
         var tracker = 0, startY, menuToClose, timeout;
 
         self.menu.find('.popupmenu').removeClass('is-open');
-        self.menu.find('.submenu').on('mouseenter', function (e) {
+        self.menu.on('mouseenter', '.submenu', function (e) {
           var menuitem = $(this);
           startY = e.pageX;
 
@@ -338,7 +327,7 @@
           $(document).on('mousemove.popupmenu', function (e) {
             tracker = e.pageX;
           });
-        }).on('mouseleave', function () {
+        }).on('mouseleave', '.submenu', function () {
           $(document).off('mousemove.popupmenu');
 
           menuToClose = $(this).find('ul');
@@ -356,8 +345,16 @@
       },
 
       showSubmenu: function (li) {
-        var wrapper = li.children('.wrapper').filter(':first'),
-          menu = wrapper.children('.popupmenu'),
+        var wrapper = li.children('.wrapper').filter(':first');
+
+        // Wrap if not wrapped (dynamic menu situation)
+        if (wrapper.length === 0) {
+          var ul = li.children('ul').filter(':first');
+          ul.wrap('<div class="wrapper"></div>');
+          wrapper = ul.parent();
+        }
+
+        var menu = wrapper.children('.popupmenu'),
           mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
         li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
 

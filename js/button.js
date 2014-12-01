@@ -50,7 +50,7 @@
           var btn = $(this).find('.ripple-effect');
           setTimeout(function () {
             btn.remove();
-          }, 100);
+          }, 400);
         });
       }
     };

@@ -203,6 +203,11 @@ textarea.error:focus {
   opacity: 1;
 }
 
+// Trigger Fields
+.icon + .icon-error {
+  left: -19px !important;
+}
+
 // Text Selection
 ::selection {
   background: $primary-color;

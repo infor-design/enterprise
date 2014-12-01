@@ -4,7 +4,7 @@
 // Text Color
 $font-color-dark: #333333;
 $font-color: #666666;
-$font-color-light: #999999;
+$font-color-light: #767676; //Was 999 in design
 $font-color-disabled: #9d9d9d;
 
 // Labels
@@ -14,12 +14,12 @@ $label-color: #666666;
 $body-bg-color: #f0f0f0;
 
 // The Newer Color Themes (Amethyst is default)
-$primary-color: #0896e9;  //0c7ad8 ??
+$primary-color: #0c7ad8;  //0896e9 or 0c7ad8 ??
 $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
 // Form Buttons
-$primary-button-bg-color: $primary-color;
+$primary-button-bg-color: #0896e9;
 $primary-button-hover-bg-color: #1a7cd5;
 $primary-button-focus-bg-color: #1d98e6;
 $primary-button-active-bg-color: #1a7cd4;
@@ -101,10 +101,11 @@ $radio-color: $primary-color;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Date Picker
-$datepicker-alt-month-color: #999999;
-$datepicker-selected-bg-color: $primary-color;
+$datepicker-alt-month-color: #999999; //Was 999999 in design but 767676 passes in design
+$datepicker-selected-bg-color: #007bc4;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: #1a1a1a;
+$datepicker-hover-bg-color: #ededed;
 
 //Slider
 $slider-bg-color: #b6b6b6;

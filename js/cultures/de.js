@@ -8,52 +8,40 @@
   }
 }(function () {
 
-  if (!Globalize) {
+  if (!Locale) {
     return;
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Globalize.addCulture('de', {
-    language: 'de',   //layout/language
-    direction: 'left-to-right',   //layout/orientation/@characters
-    calendars: [{    //ca-gregorian
+  Locale.addCulture('de', {
+    //layout/language
+    language: 'de',
+    //layout/orientation/@characters
+    direction: 'left-to-right',
+    //ca-gregorian
+    calendars: [{
       name: 'gregorian',
+      //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '.', //Infered
-                   'short': 'dd.MM.yy',
-                   'medium': 'dd.MM.y',
-                   'long': 'd. MMMM y'},   //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      months: {'abbreviated': { //ca-gregorian/main/dates/calendars/gregorian/months/format/abbreviated
-                  '1': 'Jan.',
-                  '2': 'Feb.',
-                  '3': 'März',
-                  '4': 'Apr.',
-                  '5': 'Mai',
-                  '6': 'Juni',
-                  '7': 'Juli',
-                  '8': 'Aug.',
-                  '9': 'Sep.',
-                  '10': 'Okt.',
-                  '11': 'Nov.',
-                  '12': 'Dez.'},
-                'wide': { //ca-gregorian/main/dates/calendars/gregorian/months/format/abbreviated
-                  '1': 'Januar',
-                  '2': 'Februar',
-                  '3': 'März',
-                  '4': 'April',
-                  '5': 'Mai',
-                  '6': 'Juni',
-                  '7': 'Juli',
-                  '8': 'August',
-                  '9': 'September',
-                  '10': 'Oktober',
-                  '11': 'November',
-                  '12': 'Dezember'
-                }},
-      timeFormat: 'HH:mm'    //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
+                   'short': 'dd.MM.yyyy', //use four digit year
+                   'medium': 'dd.MM.yyyy',
+                   'long': 'd. MMMM yyyy'},
+      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
+      days: ['So', 'Mo', 'Tu', 'Di', 'Mi', 'Fr','Sa'],
+      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
+            //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
+      months: {
+        wide: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        abbreviated: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
+      },
+      //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
+      timeFormat: 'HH:mm'
     }],
+    //numbers/currencyFormats-numberSystem-latn/standard
     currencySign: '€',  //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '#,##0.00 ¤', //numbers/currencyFormats-numberSystem-latn/standard
-    messages: {'Required': 'Erforderlich'} //Resx
+    currencyFormat: '#,##0.00 ¤',
+    //Resx
+    messages: {'Required': 'Erforderlich'}
   });
 
 }));
