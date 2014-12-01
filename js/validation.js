@@ -323,13 +323,14 @@
     this.rules = {
       required: {
         check: function (value) {
+          this.message = Locale.translate('Required');
           if (typeof value === 'string' && $.trim(value).length === 0) {
             return false;
           }
           return (value ? true : false);
         },
         inline: true,
-        message: 'Required' //TODO - Localize
+        message: 'Required'
       },
       date: {
         check: function(value) {
