@@ -1,11 +1,52 @@
 // Sliders
 //================================================== //
-.slider {
+.slider-wrapper {
   background-color: $slider-bg-color;
   height: 4px;
-  margin: 25px 0;
+  margin: 25px 6px;
   position: relative;
   width: 100%;
+
+    > .tick {
+    background-color: $slider-bg-color;
+    border-radius: 12px;
+    display: inline-block;
+    height: 12px;
+    line-height: 12px;
+    margin-top: -4px;
+    position: absolute;
+    -webkit-touch-callout: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    width: 12px;
+
+    &.complete {
+      background-color: $slider-active-bg-color;
+    }
+  }
+
+  > label {
+    position: absolute;
+    margin: 10px 0;
+  }
+
+  &.is-disabled {
+    background-color: #d2d2d2 !important;
+
+    > .tick {
+      background-color: #d2d2d2 !important;
+      cursor: default;
+    }
+
+    > .slider-range {
+      visibility: hidden;
+    }
+
+    > .slider-handle {
+      cursor: default;
+      visibility: hidden;
+    }
+  }
 }
 
 .slider-handle {
@@ -20,11 +61,12 @@
   margin-top: -10px;
   position: absolute;
   width: 24px;
+  z-index: 20;
 
   &:focus,
   &:active,
   &.is-active {
-    background-color: $inverse-color;
+    background-color: $inverse-color !important; // Needs !important to override inline CSS for background color on active state.
     border-color: $slider-active-bg-color;
   }
 }

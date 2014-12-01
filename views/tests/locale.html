@@ -1,0 +1,27 @@
+<div class="grid grid-pad">
+  <div class="col-1-2">
+    <h1>Locale Tests</h1>
+
+    <div id="output" class="output" style="background-color: white; display: block; line-height: 15px;height: 80%; width: 100%">
+      <span>Test Conversions</span><br><br>
+    </div>
+
+    <script>
+
+      var output = $('#output');
+      var append = function (value) {
+        output.append('<span>' + value + '</span><br>');
+      };
+
+      Locale.set('de');
+      append(Locale.formatDate(new Date()));
+      append(Locale.formatDate(new Date(), {date: 'medium'}));
+      append(Locale.formatDate(new Date(), {date: 'long'}));
+
+      Locale.set('de');
+      append(Locale.translate('Required'));
+
+    </script>
+
+  </div>
+</div>
