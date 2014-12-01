@@ -1,34 +1,36 @@
-/* Modal Dialog and Messages
-================================================== */
+//* Modal Dialog and Messages
+//================================================== //
+
 .modal {
   border-radius: 3px;
+  -webkit-font-smoothing: antialiased;
   height: auto;
   left: 50%;
   max-height: 100%;
   max-width: 630px;
   min-width: 200px;
-  position: fixed;
-  top: 50%;
-  @include css3(transform, translate3d(-50%, -50%, 0));
-  visibility: hidden;
   overflow-x: hidden;
   overflow-y: auto;
+  position: fixed;
+  top: 50%;
+  //@include css3(transform, translate3d(-50%, -50%, 0));
+  visibility: hidden;
   width: auto;
-  -webkit-font-smoothing: antialiased;
   z-index: 1001;
+
   &.is-visible {
     visibility: visible;
   }
 }
 
 .overlay {
-  background: #333;
+  background: #333333;
   height: 100%;
   left: 0;
   opacity: 0;
   position: fixed;
-  @include css3(transition, all 0.3s);
   top: 0;
+  @include css3(transition, all .3s);
   visibility: hidden;
   width: 100%;
   z-index: 1000;
@@ -41,16 +43,15 @@
 
 .modal-content {
   background: #e5e5e5;
-  color: #666;
+  color: #666666;
   margin: 0 auto;
   opacity: 0;
   padding: 20px 30px;
   position: relative;
-  @include css3(transition, all 0.3s);
-  @include css3(transform, translateZ(0) rotateX(-60deg));
-  //@include css3(transform-style, preserve-3d);
   @include css3(perspective, 300px);
+  @include css3(transform, translateZ(0) rotateX(-60deg));
   @include css3(transform-origin, 50% 50% 0);
+  @include css3(transition, all .3s);
   @include css3(backface-visibility, hidden);
 }
 
@@ -59,11 +60,11 @@
   @include css3(transform, translateZ(0) rotateX(0deg));
 }
 
-/* Messages/Content */
+// Messages/Content
 
 .modal-content h1 {
   font-size: 2.2rem;
-  color: #666;
+  color: #666666;
   font-weight: normal;
   text-align: left;
   margin-bottom: 10px;
@@ -93,7 +94,7 @@
   width: 100% !important;
 }
 
-/* Buttons */
+// Modal Buttons
 
 .modal-body > button {
   display: block;

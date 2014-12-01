@@ -165,15 +165,8 @@
         this.element.attr('aria-hidden', 'false');
         this.overlay.attr('aria-hidden', 'false');
 
-        //Center on IE8
-        if ($('html').hasClass('ie8')) {
-          self.element.css({top:'50%',left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
-        }
-
-        //Reset the transform on IE9 to enable text-caret visibility
-        if ($('html').hasClass('ie9')) {
-          self.revertTransition(true);
-        }
+        //Center
+        self.element.css({top:'50%',left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
 
         // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a chance to be established
         // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
