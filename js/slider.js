@@ -23,7 +23,8 @@
           max: 100,
           range: false,
           step: undefined,
-          ticks: []
+          ticks: [],
+          tooltipContent: undefined
         },
         settings = $.extend(true, {}, defaults, options);
 
@@ -61,12 +62,34 @@
 
         // build tick list
         this.settings.ticks = settings.ticks;
-        if (this.element.attr('data-ticks')) {
+        if (this.element.attr('data-ticks') !== undefined) {
           try {
             self.settings.ticks = JSON.parse(self.element.attr('data-ticks'));
           } catch (e) {
             console.warn('"data-ticks" attribute for element #' + self.element.attr('id') + ' did not contain properly formed JSON, and cannot be used');
           }
+        }
+
+        // build tooltip content
+        this.settings.tooltip = settings.tooltipContent;
+        if (this.element.attr('data-tooltip-content') !== undefined) {
+          try {
+            self.settings.tooltip = JSON.parse(self.element.attr('data-tooltip-content'));
+          } catch (e) {
+            console.warn('"data-tooltip-content" attribute for element #' + self.element.attr('id') + ' did not contain properly formed JSON, and cannot be used');
+          }
+        }
+        if (typeof this.settings.tooltip === 'string') {
+          if (this.settings.tooltip.indexOf(',') === -1) {
+            this.settings.tooltip = [this.settings.tooltip, ''];
+          } else {
+            var strings = this.settings.tooltip.split(',');
+            this.settings.tooltip = [strings[0]];
+            this.settings.tooltip.push( strings[1] ? strings[1] : '');
+          }
+        }
+        if (this.settings.tooltip[1] === undefined) {
+          this.settings.tooltip.push('');
         }
 
         if (this.settings.ticks) {
@@ -96,7 +119,7 @@
           if (this.settings.value.indexOf(',') === -1) {
             this.settings.value = [isNaN(this.settings.value) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value)];
           } else {
-            var vals = this.settings.value.split[','];
+            var vals = this.settings.value.split(',');
             vals[0] = isNaN(vals[0]) ? this.settings.min : parseInt(vals[0]);
             vals[1] = isNaN(vals[1]) ? this.settings.max : parseInt(vals[1]);
             this.settings.value = vals;
@@ -132,10 +155,9 @@
 
         // Handles
         self.handles = [];
-        var firstHandleId = self.element.attr('id') + '-slider-handle' + (self.settings.range ? '-lower' : '');
-        self.handles.push($('<a href="#" id="' + firstHandleId + '" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower' : 'Handle'));
+        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower Handle' : 'Handle'));
         if (self.settings.range) {
-          self.handles.push($('<a href="#" id="' + self.element.attr('id') + '-slider-handle-higher" class="slider-handle higher" tabindex="0"></a>').text('Higher'));
+          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0"></a>').text('Higher Handle'));
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles
@@ -152,20 +174,30 @@
         // Ticks
         if (self.ticks) {
           for (var i = 0; i < self.ticks.length; i++) {
-            var tickId = (self.element.attr('id') + '-tick-' + i),
-              leftTickPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - 6px)';
-            self.ticks[i].element = $('<a href="#" id="'+ tickId +'" class="tick" data-value="'+ self.ticks[i].value +'" tabindex="-1"></a>');
-            self.ticks[i].label = $('<label for="' + tickId + '">' + self.ticks[i].description + '</label>');
-            self.ticks[i].element.css('left', leftTickPos);
-            self.wrapper.append(self.ticks[i].label).append(self.ticks[i].element);
-
-            var leftLabelPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - '+ self.ticks[i].label.outerWidth()/2 +'px)';
-            self.ticks[i].label.css('left', leftLabelPos);
+            var leftTickPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - 6px)';
+            self.ticks[i].element = $('<a href="#" class="tick" data-value="'+ self.ticks[i].value +'" tabindex="-1">&nbsp;<br></a>');
+            self.ticks[i].label = $('<span class="label">' + self.ticks[i].description + '</span>');
+            self.ticks[i].element.css('left', leftTickPos).append(self.ticks[i].label);
+            self.wrapper.append(self.ticks[i].element);
+            self.ticks[i].label.css('left', '-' + (self.ticks[i].label.outerWidth()/2 - 8) + 'px');
           }
         }
 
         self.value(self.settings.value);
         self.updateRange();
+
+        // Tooltip on handle needs to update later
+        $.each(self.handles, function(i, handle) {
+          if (self.settings.tooltip) {
+            handle.tooltip({
+              content: function() {
+                return '' + self.settings.tooltip[0] + Math.floor(self.value()[i]) + self.settings.tooltip[1];
+              },
+              placement: 'top',
+              trigger: 'focus'
+            });
+          }
+        });
 
         if (this.element.prop('disabled') === true) {
           this.disable();
@@ -182,7 +214,7 @@
             return;
           }
 
-          var val = (args.left / (self.element.parent().width() - handle.outerWidth())) * 100,
+          var val = (args.left / (self.wrapper.width() - handle.outerWidth())) * 100,
             rangeVal = self.convertPercentageToValue(val);
 
           // Ranged values need to check to make sure that the higher-value handle doesn't drawindowg past the
@@ -205,6 +237,7 @@
           if (!e.defaultPrevented) {
             self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
             self.updateRange();
+            self.updateTooltip(handle, rangeVal);
           }
           return;
         }
@@ -245,7 +278,7 @@
 
         if (this.ticks) {
           $.each(self.ticks, function(i, tick) {
-            $(tick.element, tick.label).on('touchend.slider touchcancel.slider', function(e) {
+            $(tick.element).on('touchend.slider touchcancel.slider', function(e) {
               e.preventDefault();
               e.target.click();
             })
@@ -330,6 +363,7 @@
           this.value([updatedVal]);
         }
         this.updateRange();
+        this.updateTooltip(handle, updatedVal);
       },
 
       decreaseValue: function(e, handle, value, decrement) {
@@ -351,6 +385,7 @@
           this.value([updatedVal]);
         }
         this.updateRange();
+        this.updateTooltip(handle, updatedVal);
       },
 
       // Changes the position of the bar and handles based on their values.
@@ -407,6 +442,15 @@
         if (this.handles[1]) {
           this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)');
         }
+      },
+
+      updateTooltip: function(handle, value) {
+        if (!this.settings.tooltip) {
+          return;
+        }
+        var tooltip = handle.data('tooltip');
+        tooltip.setContent();
+        tooltip.position();
       },
 
       getColorClosestToValue: function() {
