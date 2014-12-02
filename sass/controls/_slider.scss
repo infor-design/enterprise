@@ -7,7 +7,7 @@
   position: relative;
   width: 100%;
 
-    > .tick {
+  > .tick {
     background-color: $slider-bg-color;
     border-radius: 12px;
     display: inline-block;
@@ -26,8 +26,8 @@
   }
 
   > label {
-    position: absolute;
     margin: 10px 0;
+    position: absolute;
   }
 
   &.is-disabled {
@@ -47,6 +47,7 @@
       visibility: hidden;
     }
   }
+
 }
 
 .slider-handle {
@@ -62,6 +63,7 @@
   position: absolute;
   width: 24px;
   z-index: 20;
+  @include css3(transition, left 200ms, top 200ms);
 
   &:focus,
   &:active,
@@ -69,6 +71,11 @@
     background-color: $inverse-color !important; // Needs !important to override inline CSS for background color on active state.
     border-color: $slider-active-bg-color;
   }
+
+  &.is-dragging {
+    @include css3(transition, none);
+  }
+
 }
 
 .slider-range {
@@ -77,4 +84,9 @@
   height: inherit;
   position: absolute;
   width: inherit;
+  @include css3(transition, width 200ms);
+
+  &.is-dragging {
+    @include css3(transition, none);
+  }
 }

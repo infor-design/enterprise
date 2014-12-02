@@ -7,42 +7,59 @@
     <div class="grid">
       <div class="col-1-1">
 
-      <div class="field">
-        <label for="slider-regular">Regular Slider</label>
-        <input id="slider-regular" name="slider-regular" class="slider" type="range" />
-      </div>
+        <div class="field">
+          <label for="slider-regular">Regular Slider</label>
+          <input id="slider-regular" name="slider-regular" class="slider" type="range" />
+        </div>
 
-      <div class="field">
-        <label for="slider-quality">Slider with Ticks &amp; Colors</label>
-        <input id="slider-quality" name="slider-quality" class="slider" type="range" list="quality-data" min="0" max="100" value="40" />
-        <datalist id="quality-data">
-          <option value="0" data-color="#ed1c24">Very Poor</option>
-          <option value="20" data-color="#ed1c24">Poor</option>
-          <option value="40" data-color="#faa719">Adequate</option>
-          <option value="60" data-color="#4fb521">Good</option>
-          <option value="80" data-color="#4fb521">Very Good</option>
-          <option value="100" data-color="#157a13">Superior</option>
-        </datalist>
-      </div>
+        <div class="field">
+          <label for="slider-quality">Slider with Ticks &amp; Colors</label>
+          <input id="slider-quality" name="slider-quality" class="slider" type="range" min="0" max="5" value="2" step="1" data-ticks='[
+            {"value": 0, "description": "Very Poor", "color": "#ed1c24"},
+            {"value": 1, "description": "Poor", "color": "#ed1c24"},
+            {"value": 2, "description": "Adequate", "color": "#faa719"},
+            {"value": 3, "description": "Good", "color": "#4fb521"},
+            {"value": 4, "description": "Very Good", "color": "#4fb521"},
+            {"value": 5, "description": "Superior", "color": "#157a13"}
+          ]'/>
+        </div>
 
-      <div clas="field">
-        <label for="range-example">"Ranged" (Multiple Handles) Slider</label>
-        <input id="range-example" name="range-example" class="slider" type="range" min="-150" max="150" value="0" data-range="true" />
-      </div>
+        <div clas="field">
+          <label for="range-example">"Ranged" (Multiple Handles) Slider</label>
+          <input id="range-example" name="range-example" class="slider" type="range" min="-150" max="150" value="-150" data-range="true" />
+        </div>
 
-      <div class="field">
-        <label for="slider-stepped">Stepped Slider (min 0, max 100, step 5)</label>
-        <input id="slider-stepped" name="slider-stepped" class="slider" type="range" step="5" list="stepped-data"/>
-        <datalist id="stepped-data">
-          <option value="0">Min</option>
-          <option value="100">Max</option>
-        </datalist>
-      </div>
+        <div class="field">
+          <label for="slider-stepped">Stepped Slider (min 0, max 100, step 5)</label>
+          <input id="slider-stepped" name="slider-stepped" class="slider" type="range" step="5" data-ticks='[
+            {"value": 0, "description": "Min"},
+            {"value": 100, "description": "Max"}
+          ]'/>
+        </div>
 
-      <div class="field">
-        <label for="slider-disabled">Disabled Slider</label>
-        <input id="slider-disabled" name="slider-disabled" class="slider" type="range" list="quality-data" min="0" max="100" step="20" value="40" disabled/>
-      </div>
+        <div class="field">
+          <label for="slider-disabled">Disabled Slider</label>
+          <input id="slider-disabled" name="slider-disabled" class="slider" type="range" disabled/>
+        </div>
+
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#slider-disabled').slider({
+              min: 0,
+              max: 5,
+              step: 1,
+              ticks: [
+                {value: 0, description: 'Very Poor', color: '#ed1c24'},
+                {value: 1, description: 'Poor', color: '#ed1c24'},
+                {value: 2, description: 'Adequate', color: '#faa719'},
+                {value: 3, description: 'Good', color: '#4fb521'},
+                {value: 4, description: 'Very Good', color: '#4fb521'},
+                {value: 5, description: 'Superior', color: '#157a13'}
+              ],
+              value: 2
+            });
+          });
+        </script>
 
       </div>
     </div>

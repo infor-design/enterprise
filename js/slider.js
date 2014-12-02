@@ -22,9 +22,10 @@
           min: 0,
           max: 100,
           range: false,
-          step: undefined
+          step: undefined,
+          ticks: []
         },
-        settings = $.extend({}, defaults, options);
+        settings = $.extend(true, {}, defaults, options);
 
     // Plugin Constructor
     function Slider(element) {
@@ -52,29 +53,46 @@
         if (!this.settings) {
           this.settings = {};
         }
-        this.settings.value = this.element.attr('value') !== undefined ? this.element.attr('value') : this.element.val() !== '' ? this.element.val() : settings.value;
+        this.settings.value = this.element.attr('value') !== undefined ? this.element.attr('value') : settings.value;
         this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min')) : settings.min;
         this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max')) : settings.max;
         this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : settings.range;
         this.settings.step = !isNaN(this.element.attr('step')) ? Number(this.element.attr('step')) : settings.step;
 
         // build tick list
-        if (this.element.attr('list')) {
-          var tickOptions = $('datalist#' + this.element.attr('list'));
+        this.settings.ticks = settings.ticks;
+        if (this.element.attr('data-ticks')) {
+          try {
+            self.settings.ticks = JSON.parse(self.element.attr('data-ticks'));
+          } catch (e) {
+            console.warn('"data-ticks" attribute for element #' + self.element.attr('id') + ' did not contain properly formed JSON, and cannot be used');
+          }
+        }
+
+        if (this.settings.ticks) {
+          // Check the type of the data-ticks.  If it's not a complete array and doesn't have at least one option, ignore it
+          var ticks = self.settings.ticks;
           this.ticks = [];
-          tickOptions.find('option').each(function(i, option) {
-            self.ticks.push({
-              description: $(option).text(),
-              value: parseInt($(option).val())
-            });
-            if ($(option).attr('data-color')) {
-              self.ticks[i].color = $(option).attr('data-color');
+          if (isArray(ticks) && ticks.length > 0) {
+            for (var i = 0; i < ticks.length; i++) {
+              var tick = {};
+              if (ticks[i].value !== undefined) {
+                tick.value = ticks[i].value;
+                tick.description = ticks[i].description !== undefined ? ticks[i].description : '';
+                tick.color = ticks[i].color;
+                self.ticks.push(tick);
+              }
             }
-          });
+          }
         }
 
         // configure the slider to deal with an array of values, and normalize the values to make sure they are numbers.
-        if (!isArray(this.settings.value)) {
+        if (isArray(this.settings.value)) {
+          this.settings.value[0] = isNaN(this.settings.value[0]) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value[0]);
+        } else if (typeof this.settings.value === 'number') {
+          this.settings.value = [this.settings.value];
+        } else {
+          // String
           if (this.settings.value.indexOf(',') === -1) {
             this.settings.value = [isNaN(this.settings.value) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value)];
           } else {
@@ -83,9 +101,9 @@
             vals[1] = isNaN(vals[1]) ? this.settings.max : parseInt(vals[1]);
             this.settings.value = vals;
           }
-        } else {
-          this.settings.value[0] = isNaN(this.settings.value[0]) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value[0]);
         }
+
+        // Add a second value to the array if we're dealing with a range.
         if (this.settings.range && !this.settings.value[1]) {
           this.settings.value.push(this.settings.max);
         }
@@ -213,6 +231,15 @@
           })
           .on('keydown.slider', function(e) {
             self.handleKeys(e, self);
+          })
+          // Add/Remove Classes for canceling animation of handles on the draggable's events.
+          .on('dragstart', function() {
+            $(this).addClass('is-dragging');
+            self.range.addClass('is-dragging');
+          })
+          .on('dragend', function() {
+            $(this).removeClass('is-dragging');
+            self.range.removeClass('is-dragging');
           });
         });
 
@@ -261,26 +288,34 @@
         var key = e.which,
           handle = $(e.currentTarget);
 
-        // If the keycode got this far, it's an arrow key, HOME, or END.
+        // If the keycode got this far, it's an arrow key, Page Up, Page Down, HOME, or END.
         switch(key) {
+          case 33: // Page Up increases the value by 10%
+            self.increaseValue(e, handle, undefined, this.getIncrement());
+            break;
+          case 34: // Page Down decreases the value by 10%
+            self.decreaseValue(e, handle, undefined, this.getIncrement());
+            break;
           case 35: // End key sets the handle to its lowest possible value (either minimum value or as low as the "lower" handle)
-            self.decreaseValue(handle, this.settings.min);
+            self.decreaseValue(e, handle, this.settings.min);
             break;
           case 36: // Home key sets the spinbox to its maximum value
-            self.increaseValue(handle, this.settings.max);
+            self.increaseValue(e, handle, this.settings.max);
             break;
           case 38: case 39: // Right and Up increase the spinbox value
-            self.increaseValue(handle);
+            self.increaseValue(e, handle);
             break;
           case 37: case 40: // Left and Down decrease the spinbox value
-            self.decreaseValue(handle);
+            self.decreaseValue(e, handle);
             break;
         }
       },
 
-      increaseValue: function(handle, value) {
+      increaseValue: function(e, handle, value, increment) {
+        e.preventDefault();
+
         var val = this.value().slice(0),
-          incrementBy = this.settings.step !== undefined ? this.settings.step : this.getIncrement(),
+          incrementBy = increment !== undefined ? increment : this.settings.step !== undefined ? this.settings.step : 1,
           testVal,
           updatedVal;
 
@@ -297,9 +332,11 @@
         this.updateRange();
       },
 
-      decreaseValue: function(handle, value) {
+      decreaseValue: function(e, handle, value, decrement) {
+        e.preventDefault();
+
         var val = this.value(),
-          decrementBy = this.settings.step !== undefined ? this.settings.step : this.getIncrement(),
+          decrementBy = decrement !== undefined ? decrement : this.settings.step !== undefined ? this.settings.step : 1,
           testVal,
           updatedVal;
 
@@ -464,6 +501,11 @@
           instance[options]();
         }
         instance.settings = $.extend({}, defaults, options);
+        // Settings and markup are complicated in the slider so we just destroy and re-invoke it
+        // with fresh settings.
+        instance.element.removeAttr('value');
+        instance.destroy();
+        instance.element.slider(instance.settings);
       } else {
         instance = $.data(this, pluginName, new Slider(this, settings));
       }
