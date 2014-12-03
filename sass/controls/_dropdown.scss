@@ -110,6 +110,10 @@ input.dropdown {
   border-radius: 0;
   width: 100%;
 
+  &::-ms-clear {
+    display: none;
+  }
+
   &:focus {
     border: 0;
     border-bottom: 1px solid #d2d2d2;

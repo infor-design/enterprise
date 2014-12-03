@@ -63,17 +63,25 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea').filter(attribs).not('input[type=checkbox]').on('blur.validate change.validate', function () {
-        var field = $(this);
-        if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
-          return;
-        }
+      this.inputs.filter('input, textarea').filter(attribs).not('input[type=checkbox]').each(function () {
+        var field = $(this),
+        attribs = field.attr('data-validation-events'),
+        events = (attribs ? attribs : 'blur.validate change.validate');
 
-        if (clickObj !==null && (clickObj.closest('.modal').length === 1)) {
-          return;
-        }
-        self.validate(field, field.closest('.modal-engaged')? false : true);
+        field.on(events, function () {
+          var field = $(this);
+          if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
+            return;
+          }
 
+          if (clickObj !== null && (clickObj.is('.dropdown-option') || clickObj.closest('.modal').length === 1)) {
+            return;
+          }
+
+          setTimeout(function () {
+            self.validate(field, field.closest('.modal-engaged').length === 1 ? false : true);
+          }, 150);
+        });
       });
 
       this.inputs.filter('input[type=checkbox]').filter(attribs).on('click.validate', function () {
@@ -140,7 +148,7 @@
       }
       return field.attr('data-validate').split(' ');
     },
-    validate: function (field) {
+    validate: function (field, showTooltip) {
       //call the validation function inline on the element
       var self = this,
         types = self.getTypes(field),
@@ -149,9 +157,9 @@
         errors = [],
         i,
         value = self.value(field),
-        manageResult = function (result) {
+        manageResult = function (result, showTooltip) {
           if (!result) {
-            self.addError(field, rule.message, rule.inline);
+            self.addError(field, rule.message, rule.inline, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
           } else if (errors.length === 0) {
@@ -174,7 +182,7 @@
         if (rule.async) {
           rule.check(value, manageResult, field);
         } else {
-          manageResult(rule.check(value, field));
+          manageResult(rule.check(value, field), showTooltip);
         }
         dfds.push(dfd);
       }
@@ -199,7 +207,7 @@
       return this.getField(field).hasClass('error');
     },
 
-    addError: function(field, message, inline) {
+    addError: function(field, message, inline, showTooltip) {
       var loc = this.getField(field).addClass('error'),
          appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
@@ -218,9 +226,7 @@
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
         field.parent('.field').append(svg);
-      } /*else {
-        loc.parent('.field').find('span.error').html(svg);
-      }*/
+      }
 
       //setup tooltip with appendedMsg
       if (inline) {
@@ -249,6 +255,10 @@
           field.data('tooltip').hide();
         }
       });
+
+      if (showTooltip) {
+        field.data('tooltip').show();
+      }
     },
 
     removeError: function(field) {

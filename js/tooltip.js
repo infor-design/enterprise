@@ -166,8 +166,8 @@
             if (settings.isError) {
              return;
             }
-            if ($(e.target).closest('.popover').length === 0
-                && $(e.target).closest('.dropdown-list').length === 0) {
+            if ($(e.target).closest('.popover').length === 0 &&
+                $(e.target).closest('.dropdown-list').length === 0) {
               self.hide();
             }
           })

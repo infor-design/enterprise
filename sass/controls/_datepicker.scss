@@ -11,6 +11,10 @@
     margin-left: -30px;
     margin-top: 7px;
     position: absolute;
+
+    &:hover {
+      fill: #666666;
+    }
   }
 
   &:disabled {

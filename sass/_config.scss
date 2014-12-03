@@ -107,6 +107,9 @@ $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: #1a1a1a;
 $datepicker-hover-bg-color: #ededed;
 
+//Pager
+$pager-selected-color: #0086e6;
+
 //Slider
 $slider-bg-color: #b6b6b6;
 $slider-active-bg-color: $primary-color;
@@ -128,18 +131,16 @@ $azure: $primary-color;
 $emerald: #2db329;
 $amber: #ffa800;
 $ruby: #ed1c24;
+$error: #ed1c24;
 $red: #d5000e;
 $tourmaline: #a352cb;
 $amethyst: #e63262;
-$graphite: #b3b3b3;
+$graphite: #999999;
 
 ///////////////////
 
 //Color Of Labels and Some Hs
 $label-color: #666666;
-
-//Color of Selected Objects
-$selected-color: #0086e6;
 
 //Text that is disabled
 $disabled-color: #cccccc;

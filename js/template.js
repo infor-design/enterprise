@@ -1,6 +1,8 @@
 /**
 * XYZ Control (link to docs)
 */
+
+
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module depending on jQuery.
@@ -13,6 +15,8 @@
     factory(window.jQuery || window.Zepto);
   }
 }(function($) {
+
+  'use strict';
 
   $.fn.pluginName = function(options) {
 

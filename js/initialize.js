@@ -15,7 +15,7 @@
 
     return this.each(function() {
       //Test Set Locale
-      Locale.set('es-ES');
+      //Locale.set('es-ES');
 
       var elem = $(this);
       elem = elem.find(':not(.no-init)');

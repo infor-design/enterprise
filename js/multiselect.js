@@ -71,10 +71,10 @@
 
             for (var i=0; i < data.length; i++) {
               if (data[i].value !== undefined && self.element.find('option[value='+  data[i].value.replace('"', '\'') +']').length === 0) {
-                list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"')
-                      + (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"')
-                      + (data[i].selected || $.inArray(data[i].value, previousSelected) > -1 ? ' selected ' : '')
-                      + '>'+ data[i].label + '</option>';
+                list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"') +
+                      (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"') +
+                      (data[i].selected || $.inArray(data[i].value, previousSelected) > -1 ? ' selected ' : '') +
+                      '>'+ data[i].label + '</option>';
               }
             }
 

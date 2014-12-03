@@ -16,6 +16,7 @@
 var Tmpl = {}; // jshint ignore:line
 
 (function (Tmpl) {
+
   Tmpl.Template = function (codeObj, text, compiler, options) {
     codeObj = codeObj || {};
     this.r = codeObj.code || this.r;
@@ -26,6 +27,29 @@ var Tmpl = {}; // jshint ignore:line
     this.subs = codeObj.subs || {};
     this.buf = '';
   };
+
+  var rAmp = /&/g,
+      rLt = /</g,
+      rGt = />/g,
+      rApos = /\'/g,
+      rQuot = /\"/g,
+      hChars = /[&<>\"\']/;
+
+  function coerceToString(val) {
+    return String((val === null || val === undefined) ? '' : val);
+  }
+
+  function TmplEscape(str) {
+    str = coerceToString(str);
+    return hChars.test(str) ?
+      str
+        .replace(rAmp, '&amp;')
+        .replace(rLt, '&lt;')
+        .replace(rGt, '&gt;')
+        .replace(rApos, '&#39;')
+        .replace(rQuot, '&quot;') :
+      str;
+  }
 
   Tmpl.Template.prototype = {
     // render: replaced by generated code.
@@ -314,29 +338,6 @@ var Tmpl = {}; // jshint ignore:line
     }
 
     return partial;
-  }
-
-  var rAmp = /&/g,
-      rLt = /</g,
-      rGt = />/g,
-      rApos = /\'/g,
-      rQuot = /\"/g,
-      hChars = /[&<>\"\']/;
-
-  function coerceToString(val) {
-    return String((val === null || val === undefined) ? '' : val);
-  }
-
-  function TmplEscape(str) {
-    str = coerceToString(str);
-    return hChars.test(str) ?
-      str
-        .replace(rAmp, '&amp;')
-        .replace(rLt, '&lt;')
-        .replace(rGt, '&gt;')
-        .replace(rApos, '&#39;')
-        .replace(rQuot, '&quot;') :
-      str;
   }
 
   var isArray = Array.isArray || function(a) {
@@ -656,6 +657,10 @@ var Tmpl = {}; // jshint ignore:line
     return sym;
   }
 
+  function tripleStache(node, context) {
+    context.code += 't.b(t.t(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,0)));';
+  }
+
   Tmpl.codegen = {
     '#': function(node, context) {
       context.code += 'if(t.s(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,1),' +
@@ -705,10 +710,6 @@ var Tmpl = {}; // jshint ignore:line
 
     '&': tripleStache
   };
-
-  function tripleStache(node, context) {
-    context.code += 't.b(t.t(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,0)));';
-  }
 
   function write(s) {
     return 't.b(' + s + ');';

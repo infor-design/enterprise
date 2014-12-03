@@ -202,6 +202,7 @@
         //Needed for browsers that use keypress events to manipulate the window.
         if (e.altKey && (charCode === 38 || charCode === 40)) {
           e.stopPropagation();
+          e.preventDefault();
           return false;
         }
 
@@ -618,10 +619,10 @@
             //populate
             self.element.empty();
             for (var i=0; i < data.length; i++) {
-              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"')
-                      + (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"')
-                      + (data[i].value === val ? ' selected ' : '')
-                      + '>'+ data[i].label + '</option>';
+              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"') +
+                      (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"') +
+                      (data[i].value === val ? ' selected ' : '') +
+                      '>'+ data[i].label + '</option>';
             }
             self.element.append(list);
             self.input.removeClass('is-busy');

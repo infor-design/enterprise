@@ -2,6 +2,8 @@
 * Datepicker Control (link to docs)
 */
 (function(factory) {
+  'use strict';
+
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module depending on jQuery.
     define(['jquery'], factory);
@@ -14,12 +16,16 @@
   }
 }(function($) {
 
+  'use strict';
+
   $.fn.datepicker = function(options) {
 
     // Settings and Options
     var pluginName = 'datepicker',
         defaults = {
-          dateFormat: (typeof Locale === 'object' ? Locale.calendar().dateFormat.short : '## /##/ ####')
+          dateFormat: (typeof Locale === 'object' ?
+                        Locale.calendar().dateFormat.short :
+                        '## /##/ ####')
         },
         settings = $.extend({}, defaults, options);
 
@@ -28,6 +34,8 @@
       this.element = $(element);
       this.init();
     }
+
+    //
 
     // Plugin Methods
     Plugin.prototype = {
@@ -40,9 +48,15 @@
       //Add any markup
       build: function() {
         //Append a Button
-        this.trigger = $('<svg class="icon"><use xlink:href="#icon-datepicker"/></svg>').insertAfter(this.element);
+        this.trigger = $('<svg class="icon">' +
+                         '<use xlink:href="#icon-datepicker"/>' +
+                         '</svg>').insertAfter(this.element);
         this.trigger.attr('title', 'Open Calendar View').tooltip();
-        //this.mask();
+
+        // Add Aria
+        this.element.attr('aria-haspopup', true);
+        //.attr('aria-label', 'to change the date use the arrow keys');
+        //aria-describedby
       },
 
       //Attach Events used by the Control
@@ -56,18 +70,52 @@
         this.element.on('focus.datepicker', function () {
           self.mask();
         });
+
+        this.handleKeys();
+      },
+
+      // Handle Keyboard Stuff
+      handleKeys: function () {
+        var self = this;
+
+        this.element.on('keydown.datepicker', function (e) {
+          var handled = false;
+          //Arrow Down or Alt first opens the dialog
+          if (e.keyCode === 40 && !self.isOpen()) {
+            handled = true;
+            self.openCalendar();
+          }
+
+          if (handled) {
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+          }
+
+        });
       },
 
       // Add masking with the mask function
       mask: function () {
-        settings.dateFormat = (typeof Locale === 'object' ? Locale.calendar().dateFormat.short : settings.dateFormat);
+        settings.dateFormat = (typeof Locale === 'object' ?
+                              Locale.calendar().dateFormat.short :
+                              settings.dateFormat);
         if (this.element.data('mask')) {
           this.element.data('mask').destroy();
         }
-        this.element.attr('data-mask', settings.dateFormat.toLowerCase().replace(/[a-z]/g, '#'))
+
+        var mask = settings.dateFormat.toLowerCase().replace(/[a-z]/g, '#');
+        this.element
+          .attr('data-mask', mask)
           .attr('data-validate', 'date')
           .attr('data-mask-mode', 'date')
           .mask().validate();
+      },
+
+      // Return whether or not the calendar div is open.
+      isOpen: function () {
+        return (this.popup && this.popup.is(':visible') &&
+          !this.popup.hasClass('is-hidden'));
       },
 
       // Open the calendar in a popup
@@ -90,7 +138,8 @@
         this.currentDate = new Date();
         this.currentMonth = 9;
         this.currentYear = 2014;
-        this.showMonth(this.currentMonth, this.currentYear); //TODO: this.currentDate.getMonth(), 2014);
+        //TODO: this.currentDate.getMonth(), 2014);
+        this.showMonth(this.currentMonth, this.currentYear);
         this.popup = $('#calendar-popup');
         this.originalDate = this.element.val();
 
@@ -129,6 +178,21 @@
 
       // Update the calendar to show the month (month is zero based)
       showMonth: function (month, year) {
+
+        if (month === 12) {
+          year ++;
+          this.currentMonth = month = 0;
+          this.currentYear = year;
+          this.header.find('.year').text(' ' + year);
+        }
+
+        if (month < 0) {
+          year --;
+          this.currentMonth = month = 11;
+          this.currentYear = year;
+          this.header.find('.year').text(' ' + year);
+        }
+
         var days = Locale.calendar().days,
           monthName = Locale.calendar().months.wide[month];
 

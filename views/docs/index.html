@@ -22,9 +22,11 @@
 <body>
 
   <header class="site-header" role="banner">
-    <nav><button class="hamburger-menu">Show navigation</button></nav>
+    <nav class="site-header-nav">
+      <button class="hamburger-menu">Show navigation</button>
+      <h1>{{title}}</h1>
+    </nav>
 
-    <h1>{{title}}</h1>
     <section class="site-header-search">
       <label for="site-search">I am searching for...</label>
       <input id="site-search">
@@ -53,8 +55,12 @@
     <div class="site-outer">
       <div class="site-hero">
         <h1 class="title">Soho Xi: The Vision</h1>
-        <span>Soho Xi Vision Landing Subtitle</span>
+        <span class="subtitle">Soho Xi Vision Landing Subtitle</span>
+        <p class="callout">
+          Creative technology often demands that user experience designers “think outside the box” to come up with new exciting ways of engaging the user. Incredible innovation happens this way new standards are set, new experiences are defined. Our applications help turn information into decisions, and decisions into actions — faster.
+        </p>
       </div>
+
     </div>
   </section>
 
