@@ -314,8 +314,6 @@
                   self.value([undefined, tick.value]);
                 }
               }
-              // TODO: Support for Ranged Value
-              // Need to set closest handle to the correct value.
               self.updateRange();
             });
           });
@@ -454,11 +452,14 @@
 
         // If no arguments are provided, update both handles with the latest stored values.
         if (!this.handles[1]) {
-          this.range.css('width', percentages[0] + '%');
+          this.range.css({
+            'left' : '0%',
+            'right' : (100 - percentages[0]) + '%'
+          });
         } else {
           this.range.css({
-            'width': (percentages[1] - percentages[0]) + '%',
-            'left': percentages[0] + '%'
+            'left': percentages[0] + '%',
+            'right': (100 - percentages[1]) + '%'
           });
         }
         this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)');

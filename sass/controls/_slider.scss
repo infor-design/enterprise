@@ -92,8 +92,7 @@
   display: block;
   height: inherit;
   position: absolute;
-  width: inherit;
-  @include css3(transition, width 200ms);
+  @include css3(transition, left 200ms, right 200ms);
 
   &.is-dragging {
     @include css3(transition, none);
