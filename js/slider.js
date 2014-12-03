@@ -329,6 +329,12 @@
               self.checkHandleDifference(clickedHandle, clickedOldVal, tick.value);
               self.updateRange();
               self.updateTooltip(clickedHandle);
+
+              // Tooltip repositioner will focus the handle after positioning occurs, but if we are clicking a tick
+              // on a slider with no tooltip, we need to focus it manually.
+              if (!self.settings.tooltip) {
+                clickedHandle.focus();
+              }
             });
           });
         }
