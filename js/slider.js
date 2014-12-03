@@ -346,7 +346,11 @@
 
       // Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
       getIncrement: function() {
-        return 0.1 * (this.settings.max - this.settings.min);
+        var increment = 0.1 * (this.settings.max - this.settings.min);
+        if (this.settings.step !== undefined && increment <= this.settings.step) {
+          increment = this.settings.step;
+        }
+        return increment;
       },
 
       handleKeys: function(e, self) {
@@ -503,6 +507,10 @@
       // Allows a handle to animate to a new position if the difference in value is greater
       // than 3% of the size of the range.
       checkHandleDifference: function(handle, originalVal, updatedVal) {
+        // IE9 doesn't support animation so return immediately.
+        if ($('html').hasClass('ie9')) {
+          return;
+        }
         var origPercent = this.convertValueToPercentage(originalVal),
           updatedPercent = this.convertValueToPercentage(updatedVal);
 
