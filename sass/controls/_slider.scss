@@ -72,7 +72,10 @@
   position: absolute;
   width: 24px;
   z-index: 20;
-  @include css3(transition, left 200ms, top 200ms);
+
+  &.is-animated {
+    @include css3(transition, left 200ms, right 200ms);
+  }
 
   &:focus,
   &:active,
@@ -92,7 +95,10 @@
   display: block;
   height: inherit;
   position: absolute;
-  @include css3(transition, left 200ms, right 200ms);
+
+  &.is-animated {
+    @include css3(transition, left 200ms, right 200ms);
+  }
 
   &.is-dragging {
     @include css3(transition, none);

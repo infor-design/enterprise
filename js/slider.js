@@ -297,8 +297,15 @@
               if (self.isDisabled()) {
                 return;
               }
+              var oldVal = self.value(),
+                clickedOldVal,
+                clickedHandle;
+
               if (!self.handles[1]) {
+                clearTimeout(self.handles[0].data('animationTimeout'));
                 self.value([tick.value]);
+                clickedHandle = self.handles[0];
+                clickedOldVal = oldVal[0];
               } else {
                 // For ranged values, we need to get the distance between both handles and the clicked tick.
                 // The handle closest to the tick is the one that gets its value adjusted.
@@ -310,11 +317,18 @@
 
                 if (dFromLower <= dFromHigher) {
                   self.value([tick.value]);
+                  clickedHandle = self.handles[0];
+                  clickedOldVal = oldVal[0];
                 } else {
                   self.value([undefined, tick.value]);
+                  clickedHandle = self.handles[1];
+                  clickedOldVal = oldVal[1];
                 }
               }
+
+              self.checkHandleDifference(clickedHandle, clickedOldVal, tick.value);
               self.updateRange();
+              self.updateTooltip(clickedHandle);
             });
           });
         }
@@ -368,6 +382,7 @@
 
       increaseValue: function(e, handle, value, increment) {
         e.preventDefault();
+        clearTimeout(handle.data('animationTimeout'));
 
         var val = this.value().slice(0),
           incrementBy = increment !== undefined ? increment : this.settings.step !== undefined ? this.settings.step : 1,
@@ -384,12 +399,14 @@
           updatedVal = testVal + incrementBy < maxValue ? testVal + incrementBy : maxValue;
           this.value([updatedVal]);
         }
+        this.checkHandleDifference(handle, (handle.hasClass('higher') ? val[1] : val[0]), updatedVal);
         this.updateRange();
         this.updateTooltip(handle);
       },
 
       decreaseValue: function(e, handle, value, decrement) {
         e.preventDefault();
+        clearTimeout(handle.data('animationTimeout'));
 
         var val = this.value(),
           decrementBy = decrement !== undefined ? decrement : this.settings.step !== undefined ? this.settings.step : 1,
@@ -406,13 +423,15 @@
           updatedVal = testVal - decrementBy > this.settings.min ? testVal - decrementBy : this.settings.min;
           this.value([updatedVal]);
         }
+        this.checkHandleDifference(handle, (handle.hasClass('higher') ? val[1] : val[0]), updatedVal);
         this.updateRange();
         this.updateTooltip(handle);
       },
 
       // Changes the position of the bar and handles based on their values.
       updateRange: function() {
-        var newVal = this.value(),
+        var self = this,
+          newVal = this.value(),
           percentages = [];
 
         if (this.ticks) {
@@ -463,9 +482,33 @@
           });
         }
         this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)');
+        if (this.handles[0].hasClass('is-animated')) {
+          this.handles[0].data('animationTimeout', setTimeout( function() {
+            self.handles[0].removeClass('is-animated').trigger('slide-animation-end');
+            self.range.removeClass('is-animated');
+          }, 201));
+        }
 
         if (this.handles[1]) {
           this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)');
+          if (this.handles[1].hasClass('is-animated')) {
+            this.handles[1].data('animationTimeout', setTimeout( function() {
+              self.handles[1].removeClass('is-animated').trigger('slide-animation-end');
+              self.range.removeClass('is-animated');
+            }, 201));
+          }
+        }
+      },
+
+      // Allows a handle to animate to a new position if the difference in value is greater
+      // than 3% of the size of the range.
+      checkHandleDifference: function(handle, originalVal, updatedVal) {
+        var origPercent = this.convertValueToPercentage(originalVal),
+          updatedPercent = this.convertValueToPercentage(updatedVal);
+
+        if (Math.abs(origPercent - updatedPercent) > 3) {
+          handle.addClass('is-animated');
+          this.range.addClass('is-animated');
         }
       },
 
@@ -474,8 +517,23 @@
           return;
         }
         var tooltip = handle.data('tooltip');
-        tooltip.setContent();
-        tooltip.position();
+        function update() {
+          tooltip.setContent();
+          tooltip.position();
+          handle.focus();
+        }
+
+        // NOTE: This is a bit hacky because it depends on the setTimeout() method for animation that is triggered
+        // inside the self.updateRange() method to have not fired yet.  If you put a breakpoint anywhere in there you
+        // may see strange results with animation.
+        if (handle.hasClass('is-animated')) {
+          tooltip.hide();
+          handle.one('slide-animation-end', function() {
+            update();
+          });
+        } else {
+          update();
+        }
       },
 
       getColorClosestToValue: function() {

@@ -172,7 +172,7 @@
             }
           })
           .on('keydown.tooltip', function (e) {
-            if (e.which === 27 || settings.isError || settings.trigger === 'focus') {
+            if (e.which === 27 || settings.isError) {
               self.hide();
             }
           });
