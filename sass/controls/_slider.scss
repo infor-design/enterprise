@@ -3,11 +3,11 @@
 .slider-wrapper {
   background-color: $slider-bg-color;
   height: 4px;
-  margin: 25px 6px;
+  margin: 25px 4% 50px;
   position: relative;
-  width: 100%;
+  width: 92%;
 
-    > .tick {
+  > .tick {
     background-color: $slider-bg-color;
     border-radius: 12px;
     display: inline-block;
@@ -15,6 +15,8 @@
     line-height: 12px;
     margin-top: -4px;
     position: absolute;
+    text-align: center;
+    text-decoration: none;
     -webkit-touch-callout: none;
     -ms-user-select: none;
     -webkit-user-select: none;
@@ -23,11 +25,18 @@
     &.complete {
       background-color: $slider-active-bg-color;
     }
-  }
 
-  > label {
-    position: absolute;
-    margin: 10px 0;
+    > .label {
+      margin: 14px 0 0;
+      position: absolute;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
   }
 
   &.is-disabled {
@@ -47,6 +56,7 @@
       visibility: hidden;
     }
   }
+
 }
 
 .slider-handle {
@@ -63,12 +73,21 @@
   width: 24px;
   z-index: 20;
 
+  &.is-animated {
+    @include css3(transition, left 200ms, right 200ms);
+  }
+
   &:focus,
   &:active,
   &.is-active {
     background-color: $inverse-color !important; // Needs !important to override inline CSS for background color on active state.
     border-color: $slider-active-bg-color;
   }
+
+  &.is-dragging {
+    @include css3(transition, none);
+  }
+
 }
 
 .slider-range {
@@ -76,5 +95,26 @@
   display: block;
   height: inherit;
   position: absolute;
-  width: inherit;
+
+  &.is-animated {
+    @include css3(transition, left 200ms, right 200ms);
+  }
+
+  &.is-dragging {
+    @include css3(transition, none);
+  }
+}
+
+@include respond-to(large) {
+  .slider-wrapper {
+    margin: 25px 3% 50px;
+    width: 94%;
+  }
+}
+
+@include respond-to(extralarge) {
+  .slider-wrapper {
+    margin: 25px 2.5% 50px;
+    width: 95%;
+  }
 }

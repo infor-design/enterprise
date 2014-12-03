@@ -8,54 +8,82 @@
       <div class="col-1-1">
 
       <div class="field">
-        <label for="regular">Regular Slider</label>
+        <label for="regular"><b>#regular:</b> Regular Slider</label>
         <input id="regular" name="regular" class="slider" type="range" />
       </div>
 
       <div class="field">
-        <label for="simple-step">Simple Stepped Slider (min 0, max 5, step 1)</label>
-        <input id="simple-step" name="simple-step" class="slider" type="range" list="simple-steps" min="0" max="5" value="0" step="1" />
-        <datalist id="simple-steps">
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </datalist>
+        <label for="simple-step"><b>#simple-step:</b> Simple Stepped Slider (min 0, max 5, step 1)</label>
+        <input id="simple-step" name="simple-step" class="slider" type="range" min="0" max="5" value="0" step="1" data-ticks='[
+          {"value": 0, "description" : "0"},
+          {"value": 1, "description" : "1"},
+          {"value": 2, "description" : "2"},
+          {"value": 3, "description" : "3"},
+          {"value": 4, "description" : "4"},
+          {"value": 5, "description" : "5"}
+        ]'/>
       </div>
 
       <div class="field">
-        <label for="quality">Slider with Ticks &amp; Colors</label>
-        <input id="quality" name="quality" class="slider" type="range" list="quality-data" min="0" max="100" value="40" />
-        <datalist id="quality-data">
-          <option value="0" data-color="#ed1c24">Very Poor</option>
-          <option value="20" data-color="#ed1c24">Poor</option>
-          <option value="40" data-color="#faa719">Adequate</option>
-          <option value="60" data-color="#4fb521">Good</option>
-          <option value="80" data-color="#4fb521">Very Good</option>
-          <option value="100" data-color="#157a13">Superior</option>
-        </datalist>
+        <label for="quality"><b>#quality:</b> Slider with Ticks &amp; Colors</label>
+        <input id="quality" name="quality" class="slider" type="range" min="0" max="5" value="2" step="1" data-ticks='[
+          {"value": 0, "description": "Very Poor", "color": "#ed1c24"},
+          {"value": 1, "description": "Poor", "color": "#ed1c24"},
+          {"value": 2, "description": "Adequate", "color": "#faa719"},
+          {"value": 3, "description": "Good", "color": "#4fb521"},
+          {"value": 4, "description": "Very Good", "color": "#4fb521"},
+          {"value": 5, "description": "Superior", "color": "#157a13"}
+        ]'/>
       </div>
 
       <div clas="field">
-        <label for="range">"Ranged" (Multiple Handles) Slider</label>
-        <input id="range" name="range" class="slider" type="range" min="-150" max="150" value="0" data-range="true" />
+        <label for="range"><b>#range:</b> "Ranged" (Multiple Handles) Slider</label>
+        <input id="range" name="range" class="slider" type="range" min="-150" max="150" value="-150" data-range="true" />
       </div>
 
       <div class="field">
-        <label for="stepped">Stepped Slider (min 0, max 100, step 5)</label>
-        <input id="stepped" name="stepped" class="slider" type="range" step="5" list="stepped-data"/>
-        <datalist id="stepped-data">
-          <option value="0">Min</option>
-          <option value="100">Max</option>
-        </datalist>
+        <label for="stepped"><b>#stepped:</b> Stepped Slider (min 0, max 100, step 5)</label>
+        <input id="stepped" name="stepped" class="slider" type="range" step="5" data-ticks='[
+          {"value": 0, "description": "Min"},
+          {"value": 100, "description": "Max"}
+        ]'/>
       </div>
 
       <div class="field">
-        <label for="disabled">Disabled Slider</label>
-        <input id="disabled" name="disabled" class="slider" type="range" list="quality-data" min="0" max="100" step="20" value="40" disabled/>
+        <label for="disabled"><b>#disabled:</b> Disabled Slider</label>
+        <input id="disabled" name="disabled" class="slider" type="range" disabled/>
       </div>
+
+      <div class="field">
+        <label for="tooltips"><b>#tooltips:</b> Slider with Tooltips</label>
+        <input id="tooltips" name="tooltips" class="slider" type="range" min="0" max="100" value="30,80" data-range="true" data-ticks='[
+          {"value": 0, "description": "$0"},
+          {"value": 25, "description": "$25"},
+          {"value": 50, "description": "$50"},
+          {"value": 75, "description": "$75"},
+          {"value": 100, "description": "$100"}
+        ]' data-tooltip-content='["$"]' />
+      </div>
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $('#disabled').slider({
+            min: 0,
+            max: 5,
+            step: 1,
+            ticks: [
+              {value: 0, description: 'Very Poor', color: '#ed1c24'},
+              {value: 1, description: 'Poor', color: '#ed1c24'},
+              {value: 2, description: 'Adequate', color: '#faa719'},
+              {value: 3, description: 'Good', color: '#4fb521'},
+              {value: 4, description: 'Very Good', color: '#4fb521'},
+              {value: 5, description: 'Superior', color: '#157a13'}
+            ],
+            value: 2
+          });
+        });
+      </script>
+
 
       </div>
     </div>

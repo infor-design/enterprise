@@ -163,7 +163,7 @@
 
         setTimeout(function () {
           $(document).on('mouseup.tooltip', function (e) {
-            if (settings.isError) {
+            if (settings.isError || settings.trigger === 'focus') {
              return;
             }
             if ($(e.target).closest('.popover').length === 0 &&
