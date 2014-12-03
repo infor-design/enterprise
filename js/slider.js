@@ -39,6 +39,16 @@
       return Object.prototype.toString.call(obj) === '[object Array]';
     }
 
+    // Get the distance between two points.
+    // PointA & PointB are both arrays containing X and Y coordinates of two points.
+    // Distance Formula:  http://www.purplemath.com/modules/distform.htm
+    function getDistance(pointA, pointB) {
+      var aX = pointA[0], aY = pointA[1],
+        bX = pointB[0], bY = pointB[1];
+
+      return Math.sqrt( Math.pow(bX - aX, 2) + Math.pow(bY - aY, 2) );
+    }
+
     // Actual Plugin Code
     Slider.prototype = {
 
@@ -88,7 +98,7 @@
             this.settings.tooltip.push( strings[1] ? strings[1] : '');
           }
         }
-        if (this.settings.tooltip[1] === undefined) {
+        if (this.settings.tooltip && this.settings.tooltip.length === 1) {
           this.settings.tooltip.push('');
         }
 
@@ -237,7 +247,7 @@
           if (!e.defaultPrevented) {
             self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
             self.updateRange();
-            self.updateTooltip(handle, rangeVal);
+            self.updateTooltip(handle);
           }
           return;
         }
@@ -289,6 +299,20 @@
               }
               if (!self.handles[1]) {
                 self.value([tick.value]);
+              } else {
+                // For ranged values, we need to get the distance between both handles and the clicked tick.
+                // The handle closest to the tick is the one that gets its value adjusted.
+                var tickCoords = [ $(this).offset().left + ($(this).width()/2), $(this).offset().top + ($(this).height()/2) ],
+                  lowerCoords = [ self.handles[0].offset().left + (self.handles[0].width()/2), self.handles[0].offset().top + (self.handles[0].height()/2) ],
+                  higherCoords = [ self.handles[1].offset().left + (self.handles[1].width()/2), self.handles[1].offset().top + (self.handles[1].height()/2) ],
+                  dFromLower = getDistance(tickCoords, lowerCoords),
+                  dFromHigher = getDistance(tickCoords, higherCoords);
+
+                if (dFromLower <= dFromHigher) {
+                  self.value([tick.value]);
+                } else {
+                  self.value([undefined, tick.value]);
+                }
               }
               // TODO: Support for Ranged Value
               // Need to set closest handle to the correct value.
@@ -363,7 +387,7 @@
           this.value([updatedVal]);
         }
         this.updateRange();
-        this.updateTooltip(handle, updatedVal);
+        this.updateTooltip(handle);
       },
 
       decreaseValue: function(e, handle, value, decrement) {
@@ -385,7 +409,7 @@
           this.value([updatedVal]);
         }
         this.updateRange();
-        this.updateTooltip(handle, updatedVal);
+        this.updateTooltip(handle);
       },
 
       // Changes the position of the bar and handles based on their values.
@@ -444,7 +468,7 @@
         }
       },
 
-      updateTooltip: function(handle, value) {
+      updateTooltip: function(handle) {
         if (!this.settings.tooltip) {
           return;
         }
