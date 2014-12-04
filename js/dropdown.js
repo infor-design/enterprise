@@ -473,9 +473,12 @@
           this.list.css({'top': this.input.parent('.field').offset().top + this.input.prev('label').height() , 'left': this.input.parent('.field').offset().left});
         }
 
-        //Flow up if not enough room on bottom
         this.list.removeClass('is-ontop');
-        if (top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
+
+        //Flow up if not enough room on bottom
+        var roomTop = top,
+          roomBottom = $(window).height() - top - this.input.outerHeight();
+        if (roomTop > roomBottom && top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
           this.list.css({'top': top - this.list.outerHeight() + this.input.outerHeight()});
           this.list.addClass('is-ontop');
           this.listUl.prependTo(this.list);
@@ -486,7 +489,13 @@
           var listHeight = this.list.outerHeight(),
             diff = this.list.offset().top * -1;
           this.list.css('top', 0);
-          this.list.height(listHeight - diff);
+          this.list.height(listHeight - diff - 5);
+        }
+
+        // If the menu is off the bottom of the screen, cut up the size
+        if (this.list.offset().top + this.list.outerHeight() >  $(window).height()) {
+          var newHeight = $(window).height() - this.list.offset().top - 5;
+          this.list.height(newHeight);
         }
 
         //let grow or to field size.
