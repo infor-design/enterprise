@@ -147,6 +147,8 @@
             return;
           }
 
+          self.element.trigger('selected', [anchor]);
+
           self.close();
 
           //Not a very usefull call back use closed events
@@ -157,8 +159,6 @@
           if (self.element.is('.autocomplete')) {
             return;
           }
-
-          self.element.trigger('selected', [anchor]);
 
           if (href && href.charAt(0) !== '#') {
             return true;
