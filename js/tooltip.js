@@ -156,9 +156,7 @@
         }
 
         this.tooltip.removeClass('is-hidden');
-
         this.position();
-
         this.element.trigger('open', [this.tooltip]);
 
         setTimeout(function () {
@@ -176,9 +174,17 @@
               self.hide();
             }
           });
+
           $(window).on('resize.tooltip', function() {
             self.hide();
           });
+
+          // Click to close
+          if (settings.isError) {
+            self.tooltip.on('click.tooltip', function () {
+              self.hide();
+            });
+          }
         }, 400);
 
       },
@@ -247,8 +253,10 @@
 
       },
       placeBelowOffset: function() {
+        var extraOffset = (this.element.parent().find('.icon').length === 2 ? -7 : 10);
+
         this.tooltip.css({'top' : this.element.offset().top + this.element.outerHeight() + settings.offset.top,
-                          'left' : this.element.offset().left + settings.offset.left + (this.element.outerWidth() - this.tooltip.outerWidth()) + 10 });
+                          'left' : this.element.offset().left + settings.offset.left + (this.element.outerWidth() - this.tooltip.outerWidth()) + extraOffset });
       },
       placeBelow: function () {
         this.tooltip.css({'top': this.element.offset().top + this.element.outerHeight() + settings.offset.top,
@@ -276,6 +284,7 @@
         }
 
         this.tooltip.addClass('is-hidden');
+        this.tooltip.off('click.tooltip');
         if ($('.popover:visible').length === 0) {
           $(document).off('mouseup.tooltip');
           $(window).off('resize.tooltip');
@@ -297,7 +306,7 @@
       var instance = $.data(this, pluginName);
 
       //Allow one tooltip and one popover
-      if (instance && instance.settings.popover !== settings.popover) {
+      if (instance && (instance.settings.popover == null || instance.settings.popover !== settings.popover)) {
         if (typeof instance[options] === 'function') {
           instance[options](args);
         }

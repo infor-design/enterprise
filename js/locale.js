@@ -193,7 +193,7 @@
         }
       });
 
-      if (!dateObj.year || !dateObj.month || !dateObj.day) {
+      if (!dateObj.year || (!dateObj.month && dateObj.month !==0) || !dateObj.day) {
         return undefined;
       }
       return new Date(dateObj.year, dateObj.month, dateObj.day);

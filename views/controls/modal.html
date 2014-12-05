@@ -1,33 +1,39 @@
-<h1>Modal <span>(Dialogs)</span></h1>
-<button class="button" type="button" data-modal="modal-1">Show Dialog</button>
+<div class="grid">
+  <div class="col-1-1">
+    <h1>Dialogs</h1>
+    <span class="label">Modal</span>
+    <hr>
 
-<div class="modal" id="modal-1" style="width:40%">
-  <div class="modal-content">
+    <button class="button" type="button" data-modal="modal-1">Show Dialog</button>
+    <div class="modal" id="modal-1" style="width:40%">
+      <div class="modal-content">
 
-    <div class="modal-header">
-      <h1 class="modal-title" tabindex="0">Page Settings</h1>
+        <div class="modal-header">
+          <h1 class="modal-title" tabindex="0">Page Settings</h1>
+        </div>
+
+        <div class="modal-body">
+          <div class="field">
+            <label for="navTitle">Navigation Title</label>
+            <input id="navTitle" name="navTitle" type="text">
+          </div>
+          <div class="field">
+            <label for="navUrl">URL</label>
+            <input id="navUrl" name="navUrl" type="text">
+          </div>
+          <div class="field">
+            <label for="pageTitle">Page Title</label>
+            <input id="pageTitle" name="pageTitle" type="text">
+          </div>
+          <div class="field">
+            <label for="pageDesc">Page Description</label>
+            <input id="pageDesc" name="pageDesc" type="text">
+          </div>
+
+          <button type="button" class="button-primary button-close">Close</button>
+        </div>
+      </div>
     </div>
 
-    <div class="modal-body">
-      <div class="field">
-        <label for="navTitle">Navigation Title</label>
-        <input id="navTitle" name="navTitle" type="text">
-      </div>
-      <div class="field">
-        <label for="navUrl">URL</label>
-        <input id="navUrl" name="navUrl" type="text">
-      </div>
-      <div class="field">
-        <label for="pageTitle">Page Title</label>
-        <input id="pageTitle" name="pageTitle" type="text">
-      </div>
-      <div class="field">
-        <label for="pageDesc">Page Description</label>
-        <input id="pageDesc" name="pageDesc" type="text">
-      </div>
-
-      <button type="button" class="btn-default btn-close">Close</button>
-    </div>
   </div>
 </div>
-

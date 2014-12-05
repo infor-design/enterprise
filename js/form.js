@@ -48,7 +48,7 @@
             //Add Class and Icon
             input.addClass('dirty');
             if (!input.prev().is('.icon-dirty')) {
-              input.before('<svg class="icon icon-dirty"><use xlink:href="#icon-dropdown-arrow"></svg>');
+              input.before('<svg class="icon icon-dirty"><use xlink:href="#icon-dropdown"></svg>');
             }
 
             //Trigger Event

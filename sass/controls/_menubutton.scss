@@ -1,9 +1,10 @@
-/* Menu Buttons
-================================================== */
+// Menu Buttons
+//================================================== */
 
 .button-group > * {
   float: left;
-  margin-right: 10px;
+  margin-right: 20px;
+  margin-top: 20px;
   position: relative;
 }
 
@@ -44,7 +45,7 @@
 
   + .splitbutton-menu {
     border-radius: 0 2px 2px 0;
-    margin-left: -11px;
+    margin-left: -21px;
   }
 
   &:focus + .splitbutton-menu {

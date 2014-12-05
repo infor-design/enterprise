@@ -1,5 +1,6 @@
-/* Tooltips
-================================================== */
+// Tooltips
+//================================================== /
+
 .popover,
 .tooltip {
   background-clip: padding-box;
@@ -33,6 +34,21 @@
   color: #666666;
   pointer-events: initial;
   z-index: 3010;
+
+  &.top .arrow:after {
+    border-top-color: #ffffff;
+  }
+
+  p {
+    color: #535353;
+    max-width: none;
+    padding-right: 30px;
+    text-align: center;
+  }
+
+  &.right .arrow:after {
+    border-right-color: #ffffff;
+  }
 }
 
 .popover.is-hidden,
@@ -49,20 +65,13 @@
   text-align: center;
 }
 
-.popover p {
-  color: #535353;
-  padding-right: 30px;
-  max-width: none;
-  text-align: center;
-}
-
 .tooltip-title {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-radius: 5px 5px 0 0;
+  color: #1a1a1a;
   font-family: $font-regular;
   @include font-size(15);
-  color: #1a1a1a;
   font-weight: normal;
   line-height: 18px;
   margin: 0;
@@ -73,11 +82,15 @@
   padding: 10px 12px;
 }
 
-.popover-content, .tooltip-content p {
+.popover-content,
+.tooltip-content p {
   margin-left: 0;
 }
 
-.popover .arrow, .popover .arrow:after, .tooltip .arrow, .tooltip .arrow:after {
+.popover .arrow,
+.popover .arrow:after,
+.tooltip .arrow,
+.tooltip .arrow:after {
   border-color: rgba(0, 0, 0, 0);
   border-style: solid;
   display: block;
@@ -86,97 +99,111 @@
   width: 0;
 }
 
-.popover .arrow, .tooltip .arrow {
+.popover .arrow,
+.tooltip .arrow {
   border-width: 11px;
 }
 
-.popover .arrow:after, .tooltip .arrow:after {
+.popover .arrow:after,
+.tooltip .arrow:after {
   border-width: 10px;
-  content: "";
+  content: '';
 }
 
-.popover.top .arrow, .tooltip.top .arrow {
+.popover.top .arrow,
+.tooltip.top .arrow {
   border-bottom-width: 0;
-  border-top-color: #D6D6D6;
+  border-top-color: #d6d6d6;
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
 }
 
-.popover.top .arrow:after, .tooltip.top .arrow:after {
+.popover.top .arrow:after,
+.tooltip.top .arrow:after {
   border-bottom-width: 0;
-  border-top-color: #333;
+  border-top-color: #333333;
   bottom: 3px;
-  content: " ";
+  content: ' ';
   margin-left: -10px;
 }
-.popover.top .arrow:after {
-  border-top-color: #FFF;
-}
-.popover.right .arrow, .tooltip.right .arrow  {
+
+.popover.right .arrow,
+.tooltip.right .arrow {
   border-left-width: 0;
-  border-right-color: #D6D6D6;
+  border-right-color: #d6d6d6;
   left: -12px;
   margin-top: -11px;
   top: 50%;
 }
-.popover.right .arrow:after, .tooltip.right .arrow:after {
+
+.popover.right .arrow:after,
+.tooltip.right .arrow:after {
   border-left-width: 0;
-  border-right-color: #333;
+  border-right-color: #333333;
   bottom: -10px;
-  content: " ";
+  content: ' ';
   left: 2px;
 }
-.popover.right .arrow:after {
-  border-right-color: #FFF;
-}
-.popover.bottom .arrow, .tooltip.bottom .arrow {
-  border-bottom-color: #D6D6D6;
+
+.popover.bottom .arrow,
+.tooltip.bottom .arrow {
+  border-bottom-color: #d6d6d6;
   border-top-width: 0;
   left: 50%;
   margin-left: -11px;
   top: -11px;
 }
+
 .popover.bottom.offset .arrow,
 .tooltip.bottom.offset .arrow {
   left: auto;
   right: 18px;
 }
-.popover.bottom .arrow:after, .tooltip.bottom .arrow:after {
+
+.popover.bottom .arrow:after,
+.tooltip.bottom .arrow:after {
   border-bottom-color: #333;
   border-top-width: 0;
   content: " ";
   margin-left: -10px;
   top: 1px;
 }
+
 .popover.bottom .arrow:after {
   border-bottom-color: #FFF;
 }
-.popover.left .arrow, .tooltip.left .arrow {
+
+.popover.left .arrow,
+.tooltip.left .arrow {
   border-left-color: #D6D6D6;
   border-right-width: 0;
   margin-top: -11px;
   right: -11px;
   top: 50%;
 }
-.popover.left .arrow:after, .tooltip.left .arrow:after {
-  border-left-color: #333;
+
+.popover.left .arrow:after,
+.tooltip.left .arrow:after {
+  border-left-color: #333333;
   border-right-width: 0;
   bottom: -10px;
-  content: " ";
+  content: ' ';
   right: 1px;
 }
+
 .popover.left .arrow:after {
-  border-left-color: #FFF;
+  border-left-color: #ffffff;
 }
 
-/* Error Tooltip Styling */
+// Error Tooltip Styling
 .tooltip-content li {
   list-style: none outside none;
 }
 
 .tooltip.is-error {
   background-color: $red;
+  pointer-events: auto;
 }
 
 .tooltip.is-error.top .arrow:after {

@@ -56,11 +56,11 @@
         }
 
         self.isCancelled = false;
-        this.element.find('.btn-close').on('click.modal', function() {
+        this.element.find('.button-close').on('click.modal', function() {
           self.close();
         });
 
-        this.element.find('.btn-cancel, .link-cancel').on('click.modal', function() {
+        this.element.find('.button-cancel, .link-cancel').on('click.modal', function() {
           self.isCancelled = true;
           self.close();
         });
@@ -91,13 +91,13 @@
             buttonset = $('<div class="modal-buttonset"></div>').appendTo(body);
 
         buttonset.find('button').remove();
-        body.find('.btn-default.btn-close').remove();
+        body.find('.button-default.button-close').remove();
 
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button" class="btn"></button>');
           btn.text(props.text);
           if (props.isDefault) {
-            btn.addClass('btn-default');
+            btn.addClass('button-default');
           }
           if (props.isLink) {
             btn = $('<a href="#" class="link"></a>').text(props.text);
@@ -186,7 +186,7 @@
           if (e.which === 13 && self.isOnTop()) {
             e.stopPropagation();
             e.preventDefault();
-            self.element.find('.btn-default').trigger('click.modal');
+            self.element.find('.button-default').trigger('click.modal');
           }
         });
 

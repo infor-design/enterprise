@@ -1,77 +1,96 @@
 // Checkboxes
 //================================================== //
 
-input.checkbox, span.checkbox > input {
+input.checkbox,
+span.checkbox > input {
   left: -9999px;
   position: absolute;
 }
 
-input.checkbox + label, input.checkbox + input[type="hidden"] + label, span.checkbox > label {
+input.checkbox + label,
+input.checkbox + input[type="hidden"] + label,
+span.checkbox > label {
   cursor: pointer;
   display: inline-block;
   padding-left: 35px;
 }
 
-input.checkbox + label:before, input.checkbox + input[type="hidden"] + label:before, span.checkbox > label:before {
+input.checkbox + label:before,
+input.checkbox + input[type="hidden"] + label:before,
+span.checkbox > label:before {
   border: 1px solid $checkbox-border-color;
   border-radius: 2px;
-  content: "";
+  content: '';
   height: 18px;
   margin-left: -31px;
   position: absolute;
   width: 18px;
 }
 
-input.checkbox:checked + label:before, input.checkbox:checked + input[type="hidden"] + label:before, span.checkbox > input:checked + label:before {
+input.checkbox:checked + label:before,
+input.checkbox:checked + input[type="hidden"] + label:before,
+span.checkbox > input:checked + label:before {
   background-color: transparent;
   border-color: $checkbox-color;
 }
 
-input.checkbox:checked + label:after, input.checkbox:checked + input[type="hidden"] + label:after, span.checkbox > input:checked + label:after {
-  border-color: transparent;
+input.checkbox:checked + label:after,
+input.checkbox:checked + input[type="hidden"] + label:after,
+span.checkbox > input:checked + label:after {
+  border-color: $checkbox-color;
   border-style: solid;
-  border-width:  2px 2px 0 0;
-  content: "";
+  border-width: 2px 2px 0 0;
+  content: '';
   height: 10px;
   left: 8px;
   margin-top: 11px;
   position: absolute;
+  -webkit-transform: scaleX(-1) rotate(135deg);
   transform: scaleX(-1) rotate(135deg);
   width: 4px;
 }
 
-input.checkbox.partial:checked + label:after, input.checkbox.partial:checked + input[type="hidden"] + label:after, span.checkbox.partial > input:checked + label:after {
+input.checkbox.partial:checked + label:after,
+input.checkbox.partial:checked + input[type="hidden"] + label:after,
+span.checkbox.partial > input:checked + label:after {
   border-width: 0 0 3px;
   margin-left: 0;
   margin-top: -1px;
+  -webkit-transform: none;
   transform: none;
   width: 12px;
 }
 
-input.checkbox:checked + label:after, input.checkbox:checked + input[type="hidden"] + label:after, span.checkbox > input:checked + label:after {
-  border-color: $checkbox-color;
-}
-
 // Disabled State
-input.checkbox:disabled + label, input.checkbox:disabled + input[type="hidden"] + label, span.checkbox > input:disabled + label {
-  color: #aaa;
+input.checkbox:disabled + label,
+input.checkbox:disabled + input[type="hidden"] + label,
+span.checkbox > input:disabled + label {
+  color: #aaaaaa;
   cursor: default;
 }
 
-input.checkbox:disabled:not(:checked) + label:before, input.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before, span.checkbox > input:disabled:not(:checked) + label:before {
+input.checkbox:disabled:not(:checked) + label:before,
+input.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before,
+span.checkbox > input:disabled:not(:checked) + label:before {
   border-color: $checkbox-disabled-color;
 }
 
-input.checkbox:disabled:checked + label:before, input.checkbox:disabled:checked + input[type="hidden"] + label:before, span.checkbox > input:disabled:checked + label:before {
+input.checkbox:disabled:checked + label:before,
+input.checkbox:disabled:checked + input[type="hidden"] + label:before,
+span.checkbox > input:disabled:checked + label:before {
   border-color: $checkbox-disabled-color;
 }
 
-input.checkbox:disabled:checked + label:after, input.checkbox:disabled:checked + input[type="hidden"] + label:after, span.checkbox > input:disabled:checked + label:after {
+input.checkbox:disabled:checked + label:after,
+input.checkbox:disabled:checked + input[type="hidden"] + label:after,
+span.checkbox > input:disabled:checked + label:after {
   border-color: $checkbox-disabled-color;
 }
 
 // Focus State
-input.checkbox:focus + label:before, input.checkbox:focus + input[type="hidden"] + label:before, span.checkbox > input:focus + label:before {
+input.checkbox:focus + label:before,
+input.checkbox:focus + input[type="hidden"] + label:before,
+span.checkbox > input:focus + label:before {
   box-shadow: $checkbox-focus-shadow;
 }
 
@@ -116,6 +135,7 @@ input.checkbox:focus + label:before, input.checkbox:focus + input[type="hidden"]
 }
 
 .checkbox + label:after {
+  -webkit-transform-origin: left top 0;
   transform-origin: left top 0;
 }
 

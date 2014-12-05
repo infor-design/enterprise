@@ -19,6 +19,7 @@
 
   &:disabled {
     + .icon {
+      cursor: default;
       fill: #c3c3c3;
     }
   }
@@ -169,7 +170,7 @@
     margin-left: 20px;
   }
 
-  .set {
+  .today {
     float: right;
     line-height: inherit;
     margin-right: 20px;

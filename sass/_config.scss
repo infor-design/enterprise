@@ -19,7 +19,7 @@ $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
 // Form Buttons
-$primary-button-bg-color: #0896e9;
+$primary-button-bg-color: #0977d5; //Was #0896e9 in design
 $primary-button-hover-bg-color: #1a7cd5;
 $primary-button-focus-bg-color: #1d98e6;
 $primary-button-active-bg-color: #1a7cd4;
@@ -45,7 +45,7 @@ $input-border-color: #999999;
 $input-color: #1a1a1a;
 $input-disabled-bg-color: #e5e5e5;
 $input-disabled-border-color: #d2d2d2;
-$input-disabled-color: #737373;
+$input-disabled-color: #666666; //Was #737373 in design
 $input-focus-shadow: 0 0 5px rgba(8, 150, 233, .2);
 $input-focus-border-color: $primary-color;
 $input-placeholder-color: #999999;
@@ -101,7 +101,7 @@ $radio-color: $primary-color;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Date Picker
-$datepicker-alt-month-color: #999999; //Was 999999 in design but 767676 passes in design
+$datepicker-alt-month-color: #999999; //Was 999999 in design but 767676 passes
 $datepicker-selected-bg-color: #007bc4;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: #1a1a1a;

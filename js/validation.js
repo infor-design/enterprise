@@ -400,8 +400,6 @@
     };
   };
 
-  //TODO: We will extend this with other settings like accessibility.
-  //$.fn.settings = {};
   $.fn.validation = new Validation();
 
   $.fn.isValid = function() {

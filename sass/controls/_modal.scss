@@ -1,8 +1,9 @@
-//* Modal Dialog and Messages
+// Modal Dialog and Messages
 //================================================== //
 
 .modal {
   border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
   -webkit-font-smoothing: antialiased;
   height: auto;
   left: 50%;
@@ -13,7 +14,6 @@
   overflow-y: auto;
   position: fixed;
   top: 50%;
-  //@include css3(transform, translate3d(-50%, -50%, 0));
   visibility: hidden;
   width: auto;
   z-index: 1001;
@@ -37,12 +37,12 @@
 }
 
 .modal-engaged .overlay {
-  opacity: .7;
+  opacity: .65;
   visibility: visible;
 }
 
 .modal-content {
-  background: #e5e5e5;
+  background: #ffffff;
   color: #666666;
   margin: 0 auto;
   opacity: 0;
@@ -53,6 +53,40 @@
   @include css3(transform-origin, 50% 50% 0);
   @include css3(transition, all .3s);
   @include css3(backface-visibility, hidden);
+
+  // Messages/Content
+  h1 {
+    color: #666666;
+    @include font-size(22);
+    font-weight: normal;
+    margin-bottom: 10px;
+    text-align: left;
+
+    &:focus {
+      outline: thin dotted #666666;
+      outline-offset: 2px;
+    }
+  }
+
+  .message {
+    color: #666666;
+    font-size: 1.5rem;
+    padding-bottom: 5px;
+    text-align: left;
+  }
+
+  p + p {
+    margin: -15px 30px 21px 11px;
+  }
+
+  input {
+    width: 100% !important;
+  }
+
+  &.has-icon .message {
+    margin: 25px 33px -6px;
+  }
+
 }
 
 .is-visible .modal-content {
@@ -60,63 +94,25 @@
   @include css3(transform, translateZ(0) rotateX(0deg));
 }
 
-// Messages/Content
-
-.modal-content h1 {
-  font-size: 2.2rem;
-  color: #666666;
-  font-weight: normal;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.modal-content h1:focus {
-  outline: thin dotted #666;
-  outline-offset: 2px;
-}
-
-.modal-content .message {
-  color: #666;
-  font-size: 1.5rem;
-  padding-bottom: 5px;
-  text-align: left;
-}
-
-.modal-content p + p {
-  margin: -15px 30px 21px 11px;
-}
-
-.modal-content.has-icon .message {
-  margin: 25px 33px -6px 33px;
-}
-
-.modal-content input {
-  width: 100% !important;
-}
-
 // Modal Buttons
-
 .modal-body > button {
   display: block;
   font-size: 1.5rem;
-  margin: 25px auto 5px auto;
+  margin: 25px auto 5px;
 }
 
-.modal-buttonset button, .modal-buttonset a {
+.modal-buttonset button,
+.modal-buttonset a {
   display: inline-block;
   margin: 0 3px;
 }
 
-.modal-buttonset a {
-  margin: 0 30px 0 0;
-  float: left;
-}
-
 .modal-buttonset {
-  margin: 15px auto 0 auto;
+  margin: 15px auto 0;
   text-align: right;
-}
 
-.ui-draggable .modal-title {
-  cursor: move;
+  a {
+    float: left;
+    margin: 0 30px 0 0;
+  }
 }

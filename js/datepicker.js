@@ -23,9 +23,7 @@
     // Settings and Options
     var pluginName = 'datepicker',
         defaults = {
-          dateFormat: (typeof Locale === 'object' ?
-                        Locale.calendar().dateFormat.short :
-                        '## /##/ ####')
+          dateFormat: 'M/d/yyyy'
         },
         settings = $.extend({}, defaults, options);
 
@@ -34,8 +32,6 @@
       this.element = $(element);
       this.init();
     }
-
-    //
 
     // Plugin Methods
     Plugin.prototype = {
@@ -51,7 +47,10 @@
         this.trigger = $('<svg class="icon">' +
                          '<use xlink:href="#icon-datepicker"/>' +
                          '</svg>').insertAfter(this.element);
-        this.trigger.attr('title', 'Open Calendar View').tooltip();
+
+        /*if (!this.element.is(':disabled')) {
+          this.trigger.attr('title', 'Open Calendar View').tooltip();
+        }*/
 
         // Add Aria
         this.element.attr('aria-haspopup', true);
@@ -86,6 +85,14 @@
             self.openCalendar();
           }
 
+          //Arrow Down select same day of the week in the previous or next week
+          if (e.keyCode === 40 && self.isOpen()) {
+            handled = true;
+            self.currentDate.setDate(self.currentDate.getDate() + 7);
+            alert(self.currentDate);
+            self.insertDate(self.currentDate);
+          }
+
           if (handled) {
             e.stopPropagation();
             e.preventDefault();
@@ -97,14 +104,19 @@
 
       // Add masking with the mask function
       mask: function () {
+        var dateFormat = Locale.calendar().dateFormat,
+            sep = dateFormat.seperator;
+
         settings.dateFormat = (typeof Locale === 'object' ?
-                              Locale.calendar().dateFormat.short :
+                              dateFormat.short :
                               settings.dateFormat);
+
         if (this.element.data('mask')) {
           this.element.data('mask').destroy();
         }
 
-        var mask = settings.dateFormat.toLowerCase().replace(/[a-z]/g, '#');
+        var mask = '## / ## / ####'.replace('/', sep);
+
         this.element
           .attr('data-mask', mask)
           .attr('data-validate', 'date')
@@ -122,12 +134,20 @@
       openCalendar: function () {
         var self = this;
 
+        if (this.element.is(':disabled')) {
+          return;
+        }
+
+        if (this.popup && this.popup.is(':visible')) {
+          self.popup.hide();
+        }
+
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table"></table>');
         this.header = $('<div class="calendar-header"><button type="button" class="prev">Previous Month</button><span class="month">november</span><span class="year"> 2014</span><button type="button" class="next">Next Month</button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="selected">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
-        this.footer = $('<div class="calendar-footer"> <a href="#" class="link cancel">Clear</a> <a href="#" class="link set">Set Date</a> </div>');
+        this.footer = $('<div class="calendar-footer"> <a href="#" class="link cancel">Clear</a> <a href="#" class="link today">Today</a> </div>');
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
         this.trigger.popover({content: this.calendar, trigger: 'immediate',
@@ -144,30 +164,34 @@
         this.originalDate = this.element.val();
 
         // Calendar Day Events
-        this.days.on('click.datepicker', 'td', function () {
+        this.days.off('click.datepicker').on('click.datepicker', 'td', function () {
           self.days.find('.selected').removeClass('selected');
 
           var month = self.header.find('.month').attr('data-month'),
             day = $(this).addClass('selected').text();
 
-          self.currentDate = new Date(2014, month, day);
+          self.currentDate = new Date(new Date().getFullYear(), month, day);
         });
 
         // Calendar Footer Events
-        this.footer.on('click.datepicker', 'a', function () {
-          if ($(this).hasClass('cancel')) {
+        this.footer.off('click.datepicker').on('click.datepicker', 'a', function () {
+          var btn = $(this);
+
+          if (btn.hasClass('cancel')) {
             self.element.val('');
             self.currentDate = null;
             self.popup.hide();
-          } else {
-            self.insertDate(self.currentDate);
+          }
+
+          if (btn.hasClass('today')) {
+            self.insertDate(new Date());
             self.popup.hide();
           }
           self.element.focus();
         });
 
         // Change Month Events
-        this.header.on('click.datepicker', 'button', function () {
+        this.header.off('click.datepicker').on('click.datepicker', 'button', function () {
           if ($(this).attr('class') === 'next') {
             self.showMonth(self.currentMonth + 1, self.currentYear);
           } else {
@@ -235,7 +259,7 @@
         });
       },
 
-      // Put the date in the field
+      // Put the date in the field and select on the calendar
       insertDate: function (date) {
         this.element.val(Locale.formatDate(date));
       }

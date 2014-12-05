@@ -1,5 +1,5 @@
-/* User Input - TextBox, Textarea
-================================================== */
+// User Input - TextBox, Textarea
+//================================================== //
 
 // Field Style
 .field .checkbox-label,
@@ -24,6 +24,7 @@
 // Input Style
 input,
 textarea {
+  -webkit-appearance: none;
   background-color: transparent;
   border: 1px solid $input-border-color;
   border-collapse: separate;
@@ -37,8 +38,8 @@ textarea {
   resize: none;
   text-align: left;
   width: 300px;
-  -webkit-appearance: none;
 }
+
 
 input[disabled],
 textarea[disabled],

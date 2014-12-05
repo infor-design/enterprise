@@ -478,6 +478,7 @@
         //Flow up if not enough room on bottom
         var roomTop = top,
           roomBottom = $(window).height() - top - this.input.outerHeight();
+
         if (roomTop > roomBottom && top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
           this.list.css({'top': top - this.list.outerHeight() + this.input.outerHeight()});
           this.list.addClass('is-ontop');
@@ -493,7 +494,7 @@
         }
 
         // If the menu is off the bottom of the screen, cut up the size
-        if (this.list.offset().top + this.list.outerHeight() >  $(window).height()) {
+        if (this.list.offset().top - $(window).scrollTop() + this.list.outerHeight() >  $(window).height()) {
           var newHeight = $(window).height() - this.list.offset().top - 5;
           this.list.height(newHeight);
         }

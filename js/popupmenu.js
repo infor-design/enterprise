@@ -44,7 +44,7 @@
         //Use Next Element if no Id
         if (!settings.menuId) {
           this.menu = this.element.next('.popupmenu');
-          this.menu.attr('id', 'popupmenu-'+ (parseInt($('.popupmenu').length, 10)+1).toString());
+          this.menu.attr('id', 'popupmenu-'+ (parseInt($('.popupmenu-wrapper').length, 10)+1).toString());
           id = this.menu.attr('id');
         }
 
