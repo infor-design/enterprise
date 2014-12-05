@@ -98,7 +98,7 @@
       // Update List Values
       updateList: function() {
         var self = this;
-        //Keep a list generated and append it when we need to.x
+        //Keep a list generated and append as needed
         self.list = $('<div class="dropdown-list" id="dropdown-list">');
         self.listUl =$('<ul tabindex="-1" aria-expanded="true"></ul>').appendTo(self.list);
         self.list.prepend('<svg class="icon"><use xlink:href="#icon-dropdown"></svg>');

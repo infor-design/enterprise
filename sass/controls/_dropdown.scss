@@ -1,6 +1,10 @@
 // Select (DropDown)
 //================================================== //
 
+select.dropdown {
+  font-size: 50px;
+}
+
 input.dropdown {
   background-color: transparent;
   border-color: $input-border-color;
