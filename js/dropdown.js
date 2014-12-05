@@ -23,6 +23,22 @@
         },
         settings = $.extend({}, defaults, options);
 
+    // Test the current browser for a mobile UA string.
+    function isMobile() {
+      // Adapted from http://www.detectmobilebrowsers.com
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
+
+      // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
+      // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
+      return (/iPhone|iPod|iPad/).test(ua);
+    }
+
+    // Need to specifically test for Android to keep the Menu open and allow for touch scrolling
+    function isAndroid() {
+      var ua = navigator.userAgent || navigator.vendor || window.opera;
+      return (/Android/).test(ua);
+    }
+
     // Plugin Constructor
     function Plugin(element) {
       this.element = $(element);
@@ -82,7 +98,7 @@
       // Update List Values
       updateList: function() {
         var self = this;
-        //Keep a list generated and append it when we need to.
+        //Keep a list generated and append it when we need to.x
         self.list = $('<div class="dropdown-list" id="dropdown-list">');
         self.listUl =$('<ul tabindex="-1" aria-expanded="true"></ul>').appendTo(self.list);
         self.list.prepend('<svg class="icon"><use xlink:href="#icon-dropdown"></svg>');
@@ -418,13 +434,40 @@
             self =  this;
 
         $('#dropdown-list').remove(); //remove old ones
+
+        // On mobile devices, don't use the HTML5 dropdown and trigger
+        // the native one instead.
+        if (isMobile()) {
+          self.element.css({
+            'position':'absolute',
+            'left': '-999px'
+          }).show().focus().click();
+
+          self.element.off('change.dropdown').one('change.dropdown', function() {
+            var idx = self.element.find('option:selected').index(),
+              cur = $(self.element[0].options[idx]);
+
+            //Select the clicked item
+            self.selectOption(cur);
+
+            self.element.hide().css({'position': '', 'left': ''});
+            setTimeout(function() {
+              self.input.focus();
+            });
+          });
+          return;
+        }
+
         this.list.appendTo('body').show().attr('aria-expanded', 'true');
         this.position();
         this.scrollToOption(current);
         this.searchInput.val(this.element.find('option:selected').text()).focus();
         this.handleSearchEvents();
 
-        self.list.on('click.list', 'li', function () {
+        self.list.on('touchend.list touchcancel.list', function(e) {
+          e.preventDefault();
+          e.target.click();
+        }).on('click.list', 'li', function () {
           var idx = $(this).index(),
               cur = $(self.element[0].options[idx]);
 
@@ -434,14 +477,19 @@
           self.closeList();
         });
 
-        $(document).on('click.dropdown', function(e) {
+        $(document).on('touchend.dropdown touchcancel.dropdown', function(e) {
+          e.preventDefault();
+          e.target.click();
+        }).on('click.dropdown', function(e) {
           var target = $(e.target);
           if (target.is('.dropdown-option') || target.is('.dropdown')) {
             return;
           }
           self.closeList();
         }).on('scroll.dropdown', function() {
-          self.closeList();
+          if (!isAndroid()) {
+            self.closeList();
+          }
         });
 
         $(window).on('resize.dropdown', function() {
@@ -515,10 +563,10 @@
       //Close list and detch events
       closeList: function() {
         this.list.hide().attr('aria-expanded', 'false').remove();
-        this.list.off('click.list').off('mousewheel.list');
+        this.list.off('click.list touchend.list touchcancel.list').off('mousewheel.list');
         this.listUl.find('li').show();
         this.input.removeClass('is-open');
-        $(document).off('click.dropdown scroll.dropdown');
+        $(document).off('click.dropdown scroll.dropdown touchend.dropdown touchcancel.dropdown');
         $(window).off('resize.dropdown');
       },
 
@@ -557,7 +605,9 @@
       // Hide or Show list
       toggleList: function() {
         if (this.isOpen()) {
-          this.closeList();
+          if (!isAndroid()) {
+            this.closeList();
+          }
         } else {
           this.open();
         }
@@ -578,7 +628,7 @@
           text = option.text(),
           trimmed;
 
-        if (option.index() === this.element[0].selectedIndex) {
+        if (!isMobile() && option.index() === this.element[0].selectedIndex) {
           return;
         }
 
