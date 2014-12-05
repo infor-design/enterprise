@@ -25,7 +25,6 @@ button {
   @include font-size(14);
   padding: 0 30px;
   position: relative;
-  transition: all .2s ease-in-out 0s;
   width: auto;
 }
 
@@ -52,7 +51,7 @@ button {
     cursor: default;
   }
 
-  .ripple-effect {
+  .ripple {
     background-color: #ffffff;
   }
 }
@@ -85,8 +84,8 @@ button {
     cursor: default;
   }
 
-  .ripple-effect {
-    background-color: #efefef;
+  .ripple {
+    background: #efefef;
   }
 }
 
@@ -116,49 +115,52 @@ button {
     cursor: default;
   }
 
-  .ripple-effect {
+  .ripple {
     background-color: #8dd2fb;
   }
 }
 
 // Ripple Effect
-.ripple {
+
+.ripple-wrapper {
+  border-radius: inherit;
+  height: 100%;
+  left: 0;
   overflow: hidden;
-}
-
-.ripple-effect {
-  -webkit-animation: ripple-animation .5s;
-  animation: ripple-animation .5s;
-  background-color: #cccccc;
-  border-radius: 50%;
-  height: 10px;
-  opacity: .2;
+  pointer-events: none;
   position: absolute;
-  -webkit-transform: scale(6);
-  transform: scale(6);
-  width: 10px;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
-@-webkit-keyframes ripple-animation {
-  from {
+
+.ripple {
+  background-color: #2286db;
+  border-radius: 100%;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  -ms-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -ms-transform-origin: 50%;
+  -webkit-transform-origin: 50%;
+  transform-origin: 50%;
+  width: 20px;
+
+  &.ripple-on {
+    opacity: .15;
+    -webkit-transition: opacity .15s ease-in 0s, -webkit-transform 1s cubic-bezier(.4, 0, .2, 1) .1s;
+    transition: opacity .15s ease-in 0s, transform 1s cubic-bezier(.4, 0, .2, 1) .1s;
+  }
+
+  &.ripple-out {
     opacity: 0;
-    -webkit-transform: scale(1);
-  }
-
-  to {
-    opacity: .2;
-    -webkit-transform: scale(6);
-  }
-}
-
-@keyframes ripple-animation {
-  from {
-    opacity: 0;
-    transform: scale(1);
-  }
-
-  to {
-    opacity: .2;
-    transform: scale(6);
+    -webkit-transition: opacity .2s linear 0s !important;
+    transition: opacity .2s linear 0s !important;
   }
 }
