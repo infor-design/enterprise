@@ -290,7 +290,7 @@
         this.tooltip.addClass('is-hidden');
         this.tooltip.off('click.tooltip');
         if ($('.popover:visible').length === 0) {
-          $(document).off('mouseup.tooltip');
+          $(document).off('mouseup.tooltip keydown.tooltip');
           $(window).off('resize.tooltip');
         }
 
