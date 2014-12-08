@@ -129,3 +129,13 @@ input.dropdown {
   border-bottom: 0;
   border-top: 1px solid #d2d2d2;
 }
+
+.dropdown.error {
+  border-color: $error-color;
+}
+
+.dropdown.error:focus {
+  border-color: $error-color !important;
+  box-shadow: 0 0 5px rgba(237, 28, 36, .2);
+  color: $input-color !important;
+}

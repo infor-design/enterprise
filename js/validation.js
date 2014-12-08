@@ -220,7 +220,7 @@
       messages.hide().css('display','inline');
 
       //Append Error
-      var svg = '<svg class="icon icon-error"><use xlink:href="#icon-error"></use></svg></span>';
+      var svg = $('<svg class="icon icon-error"><use xlink:href="#icon-error"></use></svg>');
       //TODO //setup tooltip with appendedMsg
       //span = $('<span role="alert" class="error"></span>');
 
@@ -256,6 +256,10 @@
         }
       });
 
+      svg.on('click.validate', function() {
+        field.data('tooltip').show();
+      });
+
       if (showTooltip) {
         field.data('tooltip').show();
       }
@@ -267,7 +271,11 @@
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass('error');
       field.removeData('data-errormessage');
-      field.next('.icon-error').remove();
+      field.next('.icon-error').off('click.validate').remove();
+      if (field.hasClass('dropdown')) {
+        field.next().next().removeClass('error') // #shdo
+          .next().next().off('click.validate').remove(); // SVG Error Icon
+      }
       field.next().next('.icon-error').remove();
       field.next('.inforCheckboxLabel').next('.icon-error').remove();
       field.parent('.field').find('span.error').remove();
@@ -381,12 +389,16 @@
           if (parseInt(valueHours).length < 1 || parseInt(valueHours) < 1 || parseInt(valueHours) > maxHours) {
             return false;
           }
-          if (parseInt(valueMins).length < 2 || parseInt(valueMins) < 1 || parseInt(valueMins) > 59) {
+          if (parseInt(valueMins).length < 2 || parseInt(valueMins) < 0 || parseInt(valueMins) > 59) {
             return false;
           }
 
           // AM/PM
           if (!is24Hour) {
+            if (parseInt(valueHours) < 1) {
+              return false;
+            }
+
             valueM = value.match('am') || value.match('pm') || value.match('AM') || value.match('PM') || [];
             if (valueM.length === 0) {
               return false;
