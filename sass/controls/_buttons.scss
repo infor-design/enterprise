@@ -18,6 +18,7 @@ button {
   color: $inverse-color;
   font-family: $font-semibold;
   height: 34px;
+  line-height: 34px;
   margin-left: 5px;
   margin-top: 5px;
   min-width: 100px;
@@ -25,6 +26,7 @@ button {
   @include font-size(14);
   padding: 0 30px;
   position: relative;
+  text-transform: uppercase;
   width: auto;
 }
 

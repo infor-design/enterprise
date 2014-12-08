@@ -25,8 +25,8 @@
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Actual Plugin Code
@@ -47,7 +47,7 @@
           this.content.empty().append(content.show());
         }
 
-        this.closeBtn = $('<button type="button" class="btn-default btn-close">Close</button>').appendTo(this.content);
+        this.closeBtn = $('<button type="button" class="button-primary button-close">Close</button>').appendTo(this.content);
         this.message.append(this.messageContent).appendTo('body');
         this.message.modal({trigger: 'immediate', buttons: settings.buttons,
           resizable: settings.resizable, close: settings.close});
