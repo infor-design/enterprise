@@ -1,51 +1,58 @@
-/* Hyperlinks
-================================================== */
+// Hyperlinks
+//================================================== //
+
 .link {
   color: $link-color;
-  line-height: 25px;
-  white-space: nowrap;
-  text-decoration: none;
-  @include font-size(14);
   cursor: pointer;
-  padding: 0 1px 0 0;
   font-family: $font-regular;
-}
-
-.link:visited {
-  color: $link-color; /*#7533a6*/
-}
-
-/* Mouse Over States is Same as the focus */
-.link:hover {
-  color: $link-hover-color;
-  text-decoration: underline;
-}
-
-.link:hover, .link:focus {
-  text-decoration: underline;
-}
-
-.link:focus {
-  outline: thin dotted $link-hover-color;
-  outline-offset: 2px;
-}
-
-/* TODO: Visited */
-
-.link[disabled]:hover  {
-  color:  #666666;
-  cursor: default;
+  @include font-size(14);
+  line-height: 25px;
+  margin-left: 5px;
+  padding: 0 1px 0 0;
   text-decoration: none;
+  white-space: nowrap;
+
+  &:visited {
+    color: $link-color; //#7533a6
+  }
+
+  // Mouse Over States is Same as the focus
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: underline;
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: thin dotted $link-hover-color;
+    outline-offset: 2px;
+  }
+
+  // TODO: Visited Style
+
+  //Disabled
+  &[disabled] {
+    color: #666666;
+    filter: alpha(opacity = 50);
+    opacity: .5;
+
+    &:hover {
+      color: #666666;
+      cursor: default;
+      text-decoration: none;
+    }
+
+    &:active {
+      color: $link-active-color;
+      outline: thin dotted $link-active-color;
+      text-decoration: underline;
+    }
+  }
 }
 
-.link:active {
-  color: $link-active-color;
-  outline: thin dotted $link-active-color;
-  text-decoration: underline;
-}
 
-.link[disabled] {
-  color:  #666666;
-  opacity: .5;
-  filter: alpha(opacity = 50);
-}
+

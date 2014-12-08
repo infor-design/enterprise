@@ -7,9 +7,12 @@
 @include font-face('opensans-semibold', '/fonts/opensans-semibold');
 
 //Font Variables
-$font-light: opensans-light, Helvetica, Arial;
-$font-regular: opensans-regular, Helvetica, Arial;
-$font-semibold: opensans-semibold, Helvetica, Arial;
+//$font-light: opensans-light, Helvetica, Arial;
+//$font-regular: opensans-regular, Helvetica, Arial;
+//$font-semibold: opensans-semibold, Helvetica, Arial;
+$font-light: Helvetica, Arial;
+$font-regular: Helvetica, Arial;
+$font-semibold: Helvetica, Arial;
 
 // Body Sizes and Color
 html {

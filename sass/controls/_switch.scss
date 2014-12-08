@@ -1,109 +1,84 @@
-/* Toggle Switches
-================================================== */
+//Toggle Switches
+//================================================== //
+
 .switch {
+  margin: 4px;
   position: relative;
+  width: 44px;
   @include no-select;
-  display: inline-block;
-  padding-left: 3px;
 }
 
 .switch-checkbox {
+  display: none;
+}
+
+.switch-label {
+  border: 2px solid #999999;
+  cursor: pointer;
   display: block;
-  opacity: 0;
-  position: absolute;
-  cursor: pointer;
-}
-
-.switch-checkbox:disabled + .switch-container .switch-control,
-.switch-checkbox:disabled + .switch-container .switch-label {
-  cursor: default;
-  opacity: .5;
-}
-
-.switch .switch-container {
-  display: inline-block;
-  font-size: inherit;
-  padding: 0 15px 0 0;
-}
-
-.switch-control {
-  display: inline-block;
   overflow: hidden;
-  cursor: pointer;
-  border-radius: 17px;
-  background-color: #b3b3b3;
-  position: relative;
-  width: 45px;
-  height: 22px;
 }
 
 .switch-inner {
-  width: 200%; margin-left: -100%;
-  transition: margin 0.3s ease-in 0s;
+  display: block;
+  margin-left: -100%;
+  @include css3(transition, margin .3s ease-in 0s);
+  width: 200%;
 }
 
-.switch-checkbox:focus + .switch-container > .switch-control {
-  box-shadow: $focus-shadow;
-}
-
-.switch-inner:before, .switch-inner:after {
-  display: inline-block;
-  width: 100%;
-  height: 33px;
+.switch-inner:before,
+.switch-inner:after {
+  color: #ffffff;
+  display: block;
+  float: left;
+  height: 10px;
+  line-height: 10px;
   padding: 0;
-  line-height: 33px;
+  width: 50%;
 }
 
 .switch-inner:before {
-  content: "";
-  background-color: $primary-color;
-  border-radius: 10px;
+  background-color: #34a7c1;
+  color: #ffffff;
+  content: '';
+  padding-left: 10px;
 }
 
 .switch-inner:after {
-  content: "";
-  padding-right: 5px;
-  background-color: #b3b3b3;
+  background-color: #eeeeee;
+  color: #999999;
+  content: '';
+  padding-right: 10px;
   text-align: right;
 }
 
 .switch-knob {
-  width: 20px;
-  height: 20px;
-  margin: 0;
-  background: #FFFFFF;
-  border-radius: 17px;
-  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1) inset, 0 0 0 1px hsla(0, 0%, 0%, 0.1);
-  /*  -1px 5px 1.92px 2.08px rgba(0, 0, 1, 0.05); */
-  position: absolute;
-  top: 1px;
+  background: #ffffff;
+  border: 2px solid #999999;
+  border-radius: 50px;
   bottom: 0;
-  right: 23px;
-  transition: all 0.3s ease-in 0s;
-}
-
-.switch-checkbox:checked + .switch-container > .switch-control {
-  margin-left: 0;
-}
-
-.switch-checkbox:checked + .switch-container .switch-control .switch-inner {
-  margin-left: 0;
-}
-
-.switch-checkbox:checked + .switch-container .switch-control .switch-knob {
-  right: 1px;
-}
-
-.switch-label {
-  cursor: pointer;
-  text-align: left;
-  display: inline-block;
-  font-family: $font-regular;
-  @include font-size(14);
-  line-height: 22px;
-  position: relative;
+  display: block;
+  height: 20px;
+  margin: -5px;
+  position: absolute;
+  right: 46px;
+  @include css3(transition, all .3s ease-in 0s);
   top: 0;
-  position: relative;
-  text-indent: 10px;
-  top: -5px;
+  width: 20px;
+}
+
+.switch-checkbox:checked + .switch-label .switch-inner {
+  margin-left: 0;
+}
+
+.switch-checkbox:checked + .switch-label .switch-knob {
+  right: 0;
+}
+
+.switch-text {
+  display: inline;
+  height: 33px;
+  left: 100%;
+  position: absolute;
+  width: auto;
 }

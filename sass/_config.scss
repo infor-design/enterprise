@@ -11,15 +11,15 @@ $font-color-disabled: #9d9d9d;
 $label-color: #666666;
 
 // Form Background Color
-$body-bg-color: #f0f0f0;
+$body-bg-color: #f5f5f5;
 
 // The Newer Color Themes (Amethyst is default)
-$primary-color: #0c7ad8;  //0896e9 or 0c7ad8 ??
+$primary-color: #454545;  //0896e9 or 0c7ad8 ??
 $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
 // Form Buttons
-$primary-button-bg-color: #0977d5; //Was #0896e9 in design
+$primary-button-bg-color: #0c7ad8; //Was #0896e9 in design
 $primary-button-hover-bg-color: #1a7cd5;
 $primary-button-focus-bg-color: #1d98e6;
 $primary-button-active-bg-color: #1a7cd4;
@@ -70,7 +70,7 @@ $editor-focus-border-color: $input-focus-border-color;
 $editor-focus-shadow: $input-focus-shadow;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: #ffffff;
-$editor-button-color: #999999;
+$editor-button-color: #767676;  //Was #999999  in design
 
 // Multiselect
 $multiselect-focus-border-color: $input-focus-border-color;
@@ -140,7 +140,7 @@ $graphite: #999999;
 ///////////////////
 
 //Color Of Labels and Some Hs
-$label-color: #666666;
+$label-color: #666666;  //Was #6666666
 
 //Text that is disabled
 $disabled-color: #cccccc;
@@ -149,7 +149,7 @@ $disabled-color: #cccccc;
 $focus-shadow: 0 0 3px #0095ff;
 
 //The Link Style
-$link-color: #0896e9;
+$link-color: #0c7ad8; // Design has #0896e9 but #0072b5 is accessible
 $link-hover-color: #0c7ad8;
 $link-active-color: #004096;
 

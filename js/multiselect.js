@@ -50,7 +50,7 @@
         this.orgLabel.hide();
 
         //add icon button
-        this.trigger = $('<svg focusable="false" class="icon" viewBox="0 0 32 32"><use focusable="false" xlink:href="#icon-dropdown-arrow"/></svg>').insertAfter(this.input);
+        this.trigger = $('<svg focusable="false" class="icon" viewBox="0 0 32 32"><use focusable="false" xlink:href="#icon-dropdown"/></svg>').insertAfter(this.input);
 
         //Add selected items
         var selOpts = this.element.find('option:selected');

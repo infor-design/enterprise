@@ -107,6 +107,10 @@
           });
         }
 
+        this.element.filter('button, a').on('focus.tooltip', function() {
+          self.setContent(self.content);
+        });
+
       },
 
       setContent: function (content) {
