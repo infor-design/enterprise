@@ -61,7 +61,7 @@ select.multiselect {
 // Tags
 .multiselect .tag {
   background-color: $multiselect-tag-color;
-  border-radius: 9px;
+  border-radius: 14px;
   color: $inverse-color;
   cursor: default;
   display: inline-block;
@@ -69,10 +69,15 @@ select.multiselect {
   @include no-select;
   height: 22px;
   line-height: 22px;
+  margin: 6px 6px 0 0;
   overflow: hidden;
-  padding: 0 20px 0 10px;
+  padding: 0 30px 0 10px;
   position: relative;
   transition: all 0.15s linear 0s;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 }
 
 .multiselect .tag:hover {
