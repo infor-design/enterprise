@@ -5,12 +5,18 @@
     <hr>
 
     <div class="switch">
-      <input type="checkbox" name="onOff1" class="switch-checkbox" id="onOff1" checked>
-      <label class="switch-label" for="onOff1">
-        <span class="switch-inner"></span>
-        <span class="switch-knob"></span>
-        <span class="switch-text">On Switch</span>
-      </label>
+      <input type="checkbox" id="notifications" name="notifications" class="switch" />
+      <label for="notifications">Allow notifications</label>
+    </div>
+
+    <div class="switch">
+      <input type="checkbox" id="requests" name="requests" disabled class="switch" />
+      <label for="requests">Automatically approve requests</label>
+    </div>
+
+    <div class="switch">
+      <input type="checkbox" id="searched" name="searched" class="switch" />
+      <label for="searched">Allow my profile to be searched</label>
     </div>
 
   </div>

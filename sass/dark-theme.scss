@@ -1,49 +1,49 @@
-/* Soho 2.0 - Dark Theme
-================================================== */
-@import "config";
+// Soho XI - Dark UI Theme
+//================================================== */
+@import 'config';
 
-//Theme Overrides
-$background-color: #fff;
-$accent-color: #13a4f7;
-$font-color: #fff;
-$data-color: #cccccc;
-$label-color: #ccc;
-$field-background-color: #364b5d;
-$field-border-color: #556370;
-$hover-color: #4a5d6d;
-$link-color: #0099ff;
-$link-active-color: #0066cc;
-$link-hover-color: #3399ff;
+//Theme Config Overrides
+$body-bg-color: #333333;
+$header-color: #454545;
 
-body {
-  background-color: #407AA3 !important;
-  background-image: -webkit-linear-gradient(top, #0E2344, #407AA3);
-  background-image: -moz-linear-gradient(top, #0E2344, #407AA3);
-  background-image: -o-linear-gradient(top, #0E2344, #407AA3);
-  background-image: linear-gradient(to bottom, #0E2344, #407AA3);
-  background-image: -ms-linear-gradient(to bottom, #0E2344, #407AA3);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+$inverse-color: #ffffff;
+$primary-color: #47b2f0;
+$primary-button-bg-color: #47b2f0;
+
+// Text Color
+$font-color-dark: #ffffff;
+$font-color: #ffffff;
+$font-color-light: #999999; //Was 999999 in design
+$font-color-disabled: #999999;
+$label-color: #999999;
+
+$hr-top-color: #282828;
+$hr-bottom-color: #595858;
+
+// Input Fields
+$input-border-color: #737373;
+$input-disabled-bg-color: #666666;
+$input-disabled-border-color: #999999;
+$input-color: #ffffff;
+
+// Specific overrides
+.header .field.aligned input {
+  color: $body-bg-color;
+}
+
+.dropdown-search {
+  color: $body-bg-color;
 }
 
 // Standard CSS reset stuff here
-@import "reset";
-@import "mixins";
+@import 'reset';
+@import 'mixins';
 
 // Core Controls
-@import "controls";
+@import 'controls';
 
-// Demo Styles
-.demo-header {
-  background-color: #44607e !important;
-  background-image: -webkit-linear-gradient(top, #435e7c, #44607e) !important;
-  background-image: -moz-linear-gradient(top, #435e7c, #44607e) !important;
-  background-image: -o-linear-gradient(top, #435e7c, #44607e) !important;
-  background-image: linear-gradient(to bottom, #435e7c, #44607e) !important;
-  background-image: -ms-linear-gradient(to bottom, #435e7c, #44607e) !important;
-  border-bottom: 2px solid #44607e  !important;
-}
-.demo-heading span {
-  color: #CCCCCC !important;
+//Other Overrides with no Settings
+.link {
+  text-decoration: underline;
 }
 

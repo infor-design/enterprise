@@ -4,7 +4,24 @@
     <span class="label">Popup Messages</span>
     <hr>
 
-    <button class="button" type="button" data-message="{title: 'Test Title', message: 'This is a Test Message}">Show Message</button>
-
+    <button class="button" type="button" id="show-message-button">Show Message</button>
+    <script>
+      $('#show-message-button').on('click', function () {
+        $('body').message({title: 'Confirmation',
+                          message: 'Do you want to save your changes?',
+                          buttons: [{text: 'Ok',
+                                      click: function() {
+                                        $(this).modal('close');
+                                      },
+                                      isDefault: true
+                                    },{
+                                      text: 'Cancel',
+                                      click: function() {
+                                        $(this).modal('close');
+                                      }
+                                    }]
+        });
+      });
+    </script>
   </div>
 </div>

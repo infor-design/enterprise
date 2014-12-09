@@ -1,23 +1,25 @@
 // Variables
 //================================================== //
 
+// Form Background Color
+$body-bg-color: #f5f5f5;
+
+// Base Colors
+$header-color: #454545;
+$primary-color: #0c7ad8;  //0896e9 or 0c7ad8 ??
+$inverse-color: #ffffff;
+$secondary-color: #69d2ce;
+
 // Text Color
 $font-color-dark: #333333;
 $font-color: #666666;
 $font-color-light: #767676; //Was 999999 in design
 $font-color-disabled: #9d9d9d;
-
-// Labels
 $label-color: #666666;
 
-// Form Background Color
-$body-bg-color: #f5f5f5;
-
-// The Newer Color Themes (Amethyst is default)
-$header-color: #454545;
-$primary-color: #0c7ad8;  //0896e9 or 0c7ad8 ??
-$inverse-color: #ffffff;
-$secondary-color: #69d2ce;
+// Rules
+$hr-top-color: #b6b6b6;
+$hr-bottom-color: #ffffff;
 
 // Form Buttons
 $primary-button-bg-color: #0c7ad8; //Was #0896e9 in design
@@ -34,6 +36,12 @@ $button-focus-bg-color: #d2d2d2;
 $button-active-bg-color: #a8a8a8;
 $button-active-color: #333333;
 $button-disabled-bg-color: #d2d2d2;
+
+//Switch
+$switch-checked-color: #6ec90d;
+$switch-unchecked-color: #999999;
+$switch-disabled-color: #d2d2d2;
+$switch-disabled-label-color: #aaaaaa;
 
 //Tertiary Buttons
 $tertiary-button-color: #666666;

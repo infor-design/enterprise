@@ -1,5 +1,6 @@
-/* User Input - Labels, TextBox, TextArea, Visibility Classes
-================================================== */
+// User Input - Labels, TextBox, TextArea, Visibility Classes
+//================================================== //
+
 .show {
   display: block !important;
 }
@@ -13,24 +14,21 @@
   visibility: hidden;
 }
 
-/* Off Screen Text */
-.sr-only, .audible {
+// Off Screen Text
+.sr-only,
+.audible {
   border: 0 none;
-  color: black;
-  clip: rect(0px, 0px, 0px, 0px);
-  height: 1px;
+  clip: rect(0, 0, 0p, 0p);
+  color: #000000;
+  height: 0;
   margin: -1px;
   overflow: hidden;
   padding: 0;
   position: absolute;
-  width: 1px;
+  width: 0;
 }
 
-.masthead .sr-only, .masthead .audible {
-  color: white;
-}
-
-/* visibility classes for different form factors */
+// visibility classes for different form factors
 [class*="visible-sm-"] {
   display: none;
 }
@@ -111,7 +109,7 @@
   @include respond-to(extralarge) { display: none; }
 }
 
-/* Print Visibility Clases */
+// Print Visibility Clases
 [class*="visible-print-"] {
   display: none !important;
 }

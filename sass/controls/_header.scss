@@ -12,6 +12,11 @@ header.header {
     @include font-size(24);
     @include rem(line-height, 2.4rem);
   }
+
+  // Change invisible Label color to trick 508 checkers
+  .audible {
+    color: #ffffff;
+  }
 }
 
 .header + .svg-icons + .grid,
@@ -32,5 +37,17 @@ header.header {
 
   header.header .title {
     color: #333333 !important;
+  }
+}
+
+//TODO: Remove was for demo only - will have a switcher
+.header .field.aligned {
+  position: absolute;
+  right: 50px;
+  top: 28px;
+
+  input {
+    background-color: #ffffff;
+    width: 202px;
   }
 }

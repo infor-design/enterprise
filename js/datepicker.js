@@ -89,7 +89,7 @@
           if (e.keyCode === 40 && self.isOpen()) {
             handled = true;
             self.currentDate.setDate(self.currentDate.getDate() + 7);
-            alert(self.currentDate);
+            console.log(self.currentDate);
             self.insertDate(self.currentDate);
           }
 

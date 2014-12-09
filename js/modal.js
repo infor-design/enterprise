@@ -90,15 +90,19 @@
             self = this,
             buttonset = $('<div class="modal-buttonset"></div>').appendTo(body);
 
-        buttonset.find('button').remove();
+        body.find('button').remove();
         body.find('.button-default.button-close').remove();
 
         $.each(buttons, function (name, props) {
-          var btn = $('<button type="button" class="btn"></button>');
+          var btn = $('<button type="button"></button>');
           btn.text(props.text);
+
           if (props.isDefault) {
-            btn.addClass('button-default');
+            btn.addClass('button-primary');
+          } else {
+            btn.addClass('button');
           }
+
           if (props.isLink) {
             btn = $('<a href="#" class="link"></a>').text(props.text);
           }
@@ -154,7 +158,7 @@
         });
 
         setTimeout(function () {
-          self.element.find('input:first').focus(); //.modal-title
+          self.element.find((self.element.find('input:first').length > 1 ? 'input:first' : '.modal-title')).focus();
           self.keepFocus();
           self.element.triggerHandler('open');
           self.element.find('.modal-body > div').first().triggerHandler('open');

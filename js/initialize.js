@@ -29,13 +29,6 @@
       //Modals
       elem.find('.modal').modal();
 
-      //Buttons Linked to Message Dialogs
-      elem.find('button[data-message]').on('click', function () {
-        var opts = $(this).attr('data-message');
-        console.log(opts);
-        $('body').message(opts);
-      });
-
       //Sliders
       elem.find('input[type="range"], .slider').slider();
 

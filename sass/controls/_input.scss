@@ -33,15 +33,12 @@ textarea {
   display: inline-block;
   font-family: $font-regular;
   @include font-size(14);
-  height: 34px;
-  line-height: 34px;
   max-width: 100%;
-  padding: 6px 10px;
+  padding: 9px 10px;
   resize: none;
   text-align: left;
   width: 300px;
 }
-
 
 input[disabled],
 textarea[disabled],
@@ -152,18 +149,21 @@ textarea[disabled] + .textarea-wordcount {
 ::-webkit-input-placeholder {
   color: $input-placeholder-color;
   @include font-size(14);
+  line-height: 16px;
   opacity: 1;
 }
 
 ::-moz-placeholder {
   color: $input-placeholder-color;
   @include font-size(14);
+  line-height: 16px;
   opacity: 1;
 }
 
 :-ms-input-placeholder {
   color: $input-placeholder-color;
   @include font-size(14);
+  line-height: 16px;
   opacity: 1;
 }
 
@@ -177,7 +177,7 @@ textarea[disabled] + .textarea-wordcount {
 .field .icon-validated {
   display: inline-block;
   margin-left: -30px;
-  top: 3px;
+  top: 4px;
 }
 
 input.error,
@@ -230,8 +230,7 @@ textarea.error:focus {
   > .currency {
     color: $input-placeholder-color;
     display: inline-block;
-    line-height: normal;
-    padding: 6px 10px;
+    padding: 10px;
     position: absolute;
   }
 }

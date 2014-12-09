@@ -1,12 +1,12 @@
 // Typography
 //================================================== */
 
-//Font Imports
+// Font Imports
 @include font-face('opensans-light', '/fonts/opensans-light');
 @include font-face('opensans-regular', '/fonts/opensans-regular');
 @include font-face('opensans-semibold', '/fonts/opensans-semibold');
 
-//Font Variables
+// Font Variables
 //$font-light: opensans-light, Helvetica, Arial;
 //$font-regular: opensans-regular, Helvetica, Arial;
 //$font-semibold: opensans-semibold, Helvetica, Arial;
@@ -26,13 +26,14 @@ body {
   height: 100%;
 }
 
-//Text Elements
+// Text Elements
 h1,
 h2,
 h3,
 h4,
 label,
 p,
+small,
 span {
   color: $font-color;
   font-family: $font-regular;
@@ -44,11 +45,11 @@ span {
 h1 {
   @include font-size(24);
   color: $font-color-dark;
-  @include rem(margin-top, 1.5rem);
+  @include rem(margin-top, 2.5rem);
 
   + span,
   + label {
-    @include rem(margin-top, 1.5rem);
+    @include rem(margin-top, 1rem);
   }
 }
 
@@ -94,10 +95,10 @@ small,
 
 // Rules
 hr {
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid $hr-bottom-color;
   border-left: 0;
   border-right: 0;
-  border-top: 1px solid #b6b6b6;
+  border-top: 1px solid $hr-top-color;
   height: 2px;
   @include rem(margin-top, 2rem);
   @include rem(margin-bottom, 2rem);

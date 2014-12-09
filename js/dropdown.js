@@ -148,37 +148,36 @@
         }
       },
 
+      copyClass: function(from, to, prop) {
+        if (from.hasClass(prop)) {
+          to.addClass(prop);
+        }
+      },
+
       // Copy initial stuff from the drop down.
       setInitial: function() {
+        this.copyClass(this.orgLabel, this.label, 'sr-only');
+        this.copyClass(this.orgLabel, this.label, 'audible');
 
-       if (this.element.hasClass('backgroundColor')) {
-        this.input.addClass('backgroundColor');
-       }
-       if (this.orgLabel.hasClass('noColon')) {
-        this.label.addClass('noColon');
-       }
-       if (this.orgLabel.hasClass('sr-only')) {
-        this.label.addClass('sr-only');
-       }
-       if (this.orgLabel.attr('style')) {
-        this.label.attr('style', this.orgLabel.attr('style'));
-       }
-       if (this.element.is(':disabled')) {
-        this.input.attr('disabled','');
-       }
-       if (this.element.is('[readonly]')) {
-        this.input.addClass('is-readonly');
-       }
-       if (this.isHidden) {
-        this.input.hide().prev('label').hide();
-        this.input.next('svg').hide();
-       }
+        if (this.orgLabel.attr('style')) {
+          this.label.attr('style', this.orgLabel.attr('style'));
+        }
+        if (this.element.is(':disabled')) {
+          this.input.attr('disabled','');
+        }
+        if (this.element.is('[readonly]')) {
+          this.input.addClass('is-readonly');
+        }
+        if (this.isHidden) {
+          this.input.hide().prev('label').hide();
+          this.input.next('svg').hide();
+        }
 
-       //TODO: Empty Selection
-       if (this.element.attr('placeholder')) {
+        //TODO: Empty Selection
+        if (this.element.attr('placeholder')) {
         this.input.attr('placeholder', this.element.attr('placeholder'));
         this.element.removeAttr('placeholder');
-       }
+        }
       },
 
       //Bind mouse and key events

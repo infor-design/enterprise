@@ -40,7 +40,7 @@ input::-webkit-inner-spin-button {
   font-weight: 700;
   line-height: normal;
   @include font-size(14);
-  padding: 6px 10px;
+  padding: 9px 10px;
   resize: none;
   text-align: center;
   @include css3(user-select, none);
@@ -64,7 +64,6 @@ input::-webkit-inner-spin-button {
 
   &.is-active {
     background-color: $spinbox-bg-color;
-    box-shadow: $spinbox-bg-shadow;
     color: $font-color-dark;
   }
 }
@@ -84,7 +83,7 @@ input::-webkit-inner-spin-button {
       box-shadow: $input-focus-shadow;
 
       &.is-active {
-        box-shadow: $input-focus-shadow, $spinbox-bg-shadow;
+        box-shadow: $input-focus-shadow;
       }
     }
 

@@ -1,5 +1,10 @@
-/* Multi Select (DropDown)
-================================================== */
+// Multi Select (DropDown)
+//================================================== //
+
+// Hide on Initial Load
+select.multiselect {
+  display: none;
+}
 
 .multiselect {
   background-color: transparent;
@@ -9,9 +14,10 @@
   min-height: $multiselect-height;
   outline: medium none;
   overflow: hidden;
-  padding: 0 0px 0 5px;
+  padding: 0 0 0 5px;
   text-align: left;
   width: 300px;
+
   //Trigger Icon
   > .icon {
     cursor: pointer;
@@ -20,13 +26,13 @@
     vertical-align: top;
     width: $multiselect-height;
   }
+
   > .icon:hover {
     background-color: #e5e5e5;
     outline: 1px solid #e5e5e5;
   }
 }
 
-/* Trigger */
 .multiselect.is-focused {
   border-color: $multiselect-focus-border-color;
   box-shadow: $multiselect-focus-shadow;
@@ -37,12 +43,7 @@
   overflow: auto;
 }
 
-/* Hide on Initial Load */
-select.multiselect {
-  display: none;
-}
-
-/* Input inside multiselect */
+// Input inside multiselect
 .multiselect input[type="text"] {
   background-color: transparent;
   border: medium none;
@@ -68,7 +69,7 @@ select.multiselect {
   @include font-size(12);
   @include no-select;
   height: 22px;
-  line-height: 22px;
+  line-height: 24px;
   margin: 6px 6px 0 0;
   overflow: hidden;
   padding: 0 30px 0 10px;
