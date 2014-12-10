@@ -30,8 +30,11 @@
   &[disabled] {
     background-color: $menubutton-disabled-bg-color;
     border-color: $menubutton-disabled-border-color;
-    color: $menubutton-disabled-color;
     cursor: default;
+
+    span {
+      color: $menubutton-disabled-color;
+    }
   }
 
   .icon {

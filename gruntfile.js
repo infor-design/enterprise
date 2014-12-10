@@ -65,8 +65,6 @@ module.exports = function(grunt) {
         files: [
           {expand: true, flatten: true, src: ['dist/js/sohoxi.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['public/stylesheets/*-theme.css'], dest: 'dist/css/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['fonts/opensans*'], dest: 'dist/fonts/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['fonts/opensans*'], dest: 'public/fonts/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['dist/js/initialize.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/highlight.js'], dest: 'public/js/', filter: 'isFile'},

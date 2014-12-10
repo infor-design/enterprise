@@ -28,7 +28,7 @@ $primary-button-focus-bg-color: #1d98e6;
 $primary-button-active-bg-color: #1a7cd4;
 $primary-button-disabled-bg-color: #69bbea;
 
-//Secondary/Normal Buttons
+// Secondary/Normal Buttons
 $button-color: #5a5a5a;
 $button-bg-color: #d2d2d2;
 $button-hover-bg-color: #b6b6b6;
@@ -37,13 +37,13 @@ $button-active-bg-color: #a8a8a8;
 $button-active-color: #333333;
 $button-disabled-bg-color: #d2d2d2;
 
-//Switch
+// Switch
 $switch-checked-color: #6ec90d;
 $switch-unchecked-color: #999999;
 $switch-disabled-color: #d2d2d2;
 $switch-disabled-label-color: #aaaaaa;
 
-//Tertiary Buttons
+// Tertiary Buttons
 $tertiary-button-color: #666666;
 $tertiary-button-hover-color: #333333;
 $tertiary-button-focus-border-color: $primary-color;
@@ -67,11 +67,13 @@ $menu-color: #333333;
 $menu-underline-color: $primary-color;
 
 // Drop down
+$dropdown-bg-color: transparent;
 $dropdown-disabled-bg-color: #e5e5e5;
 $dropdown-disabled-border-color: #d2d2d2;
 $dropdown-disabled-color: #737373;
 $dropdown-focus-border-color: $input-focus-border-color;
 $dropdown-filter-color: #0099ff;
+$dropdown-color: $input-color;
 
 // Editor
 $editor-border-color: $input-border-color;
@@ -98,10 +100,14 @@ $menubutton-disabled-bg-color: $input-disabled-bg-color;
 $menubutton-disabled-border-color: $input-disabled-border-color;
 $menubutton-disabled-color: $input-disabled-color;
 
+// popupmenu Button
+$popupmenu-color: #444444;
+
 // Checkboxes
 $checkbox-color: $primary-color;
 $checkbox-border-color: #999999;
 $checkbox-disabled-color: #d2d2d2;
+$checkbox-disabled-font-color: #aaaaaa;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Radio Buttons
@@ -133,6 +139,10 @@ $validated-icon-fill: #2db329;
 //Spinbox
 $spinbox-bg-shadow: inset 0 0 5px #aaaaaa;
 $spinbox-bg-color: #e5e5e5;
+
+// Tree
+$tree-border-color: #e0e0e0;
+$tree-selected-color: $primary-color;
 
 //Colors
 $turqoise: #00c2b4;

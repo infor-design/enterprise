@@ -3,11 +3,11 @@
 @import 'config';
 
 //Theme Config Overrides
-$body-bg-color: #333333;
+$body-bg-color: #323232;
 $header-color: #454545;
 
 $inverse-color: #ffffff;
-$primary-color: #47b2f0;
+$primary-color: #47b2f0;  // 117cba Would Be awesome
 $primary-button-bg-color: #47b2f0;
 
 // Text Color
@@ -22,13 +22,51 @@ $hr-bottom-color: #595858;
 
 // Input Fields
 $input-border-color: #737373;
-$input-disabled-bg-color: #666666;
-$input-disabled-border-color: #999999;
+$input-disabled-color: #999999;
+$input-disabled-bg-color: #444444;
+$input-disabled-border-color: #444444;
 $input-color: #ffffff;
+$input-placeholder-color: #666666;
+$input-readonly-border-color: #444444;
+
+// Drop Down
+$dropdown-disabled-border-color: #444444;
+$dropdown-disabled-bg-color: #444444;
+$dropdown-disabled-border-color: #444444;
+
+// Checkboxes
+$checkbox-color: $primary-color;
+$checkbox-border-color: #999999;
+$checkbox-disabled-color: #666666;
+$checkbox-disabled-font-color: #666666;
+
+// Switch
+$switch-checked-color: #6ec90d;
+$switch-unchecked-color: #999999;
+$switch-disabled-color: #444444;
+$switch-disabled-label-color: #666666;
+
+// Menu Button
+$menubutton-disabled-bg-color: #444444;
+$menubutton-disabled-border-color: #444444;
+$menubutton-disabled-color: #737373;
+
+// popupmenu Button
+$popupmenu-color: #333333;
+
+// Tree
+$tree-selected-color: $primary-color;
+
+//Slider
+$slider-bg-color: #737373;
+$slider-active-bg-color: $primary-color;
+$slider-disabled-color: #444444;
 
 // Specific overrides
 .header .field.aligned input {
+  background-color: #ffffff;
   color: $body-bg-color;
+  -webkit-text-fill-color: $body-bg-color;
 }
 
 .dropdown-search {

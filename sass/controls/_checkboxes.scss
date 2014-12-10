@@ -76,7 +76,7 @@ span.checkbox.partial > input:checked + label:after {
 input.checkbox:disabled + label,
 input.checkbox:disabled + input[type="hidden"] + label,
 span.checkbox > input:disabled + label {
-  color: #aaaaaa;
+  color: $checkbox-disabled-font-color;
   cursor: default;
 }
 

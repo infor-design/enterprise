@@ -163,20 +163,20 @@
 
 .popover.bottom .arrow:after,
 .tooltip.bottom .arrow:after {
-  border-bottom-color: #333;
+  content: ' ';
+  border-bottom-color: #333333;
   border-top-width: 0;
-  content: " ";
   margin-left: -10px;
   top: 1px;
 }
 
 .popover.bottom .arrow:after {
-  border-bottom-color: #FFF;
+  border-bottom-color: #ffffff;
 }
 
 .popover.left .arrow,
 .tooltip.left .arrow {
-  border-left-color: #D6D6D6;
+  border-left-color: #d6d6d6;
   border-right-width: 0;
   margin-top: -11px;
   right: -11px;
