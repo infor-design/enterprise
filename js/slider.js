@@ -252,6 +252,7 @@
             self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
             self.updateRange();
             self.updateTooltip(handle);
+            self.element.trigger('sliding', handle, rangeVal);
           }
           return;
         }
@@ -283,10 +284,12 @@
           .on('dragstart', function() {
             $(this).addClass('is-dragging');
             self.range.addClass('is-dragging');
+            self.element.trigger('slidestart', handle);
           })
           .on('dragend', function() {
             $(this).removeClass('is-dragging');
             self.range.removeClass('is-dragging');
+            self.element.trigger('slidestop', handle);
           });
         });
 
