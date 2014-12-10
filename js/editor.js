@@ -81,9 +81,11 @@
         currentElement.on('keyup', function (e) {
           var node = self.getSelectionStart(),
               tagName;
+          /*
           if (node && node.getAttribute('data-editor') && node.children.length === 0) {
             document.execCommand('formatBlock', false, 'p');
           }
+          */
           if (e.which === 13) {
             node = self.getSelectionStart();
             tagName = node.tagName.toLowerCase();

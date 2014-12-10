@@ -125,7 +125,8 @@ textarea[disabled] + .textarea-wordcount {
 }
 
 // Required Indicator
-.required:after {
+label.required:after,
+.label.required:after {
   color: #ff3333;
   content: '*';
   display: inline-block;
@@ -181,14 +182,17 @@ textarea[disabled] + .textarea-wordcount {
 }
 
 input.error,
-textarea.error {
+textarea.error,
+.editor.error {
   border-color: $error-color;
 }
 
 input.error:focus,
-textarea.error:focus {
+textarea.error:focus,
+.editor.error:focus {
   box-shadow: 0 0 5px rgba(237, 28, 36, .2);
   color: $input-color !important;
+  border-color: $error-color !important;
 }
 
 .error::-webkit-input-placeholder {

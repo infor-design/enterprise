@@ -20,7 +20,7 @@
   // Plugin Object
   Validator.prototype = {
     init: function() {
-      var fields = 'input, textarea, select';
+      var fields = 'input, textarea, select, div[data-validate], div[data-validation]';
 
       //If we initialize with a form find all inputs
       this.inputs = this.element.find(fields);
@@ -63,7 +63,7 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea').filter(attribs).not('input[type=checkbox]').each(function () {
+      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate');
@@ -130,6 +130,9 @@
     value: function(field) {
       if (field.is('input[type=checkbox]')) {
         return field.prop('checked');
+      }
+      if (field.is('div')) { // contentEditable div (Rich Text)
+        return field[0].innerHTML;
       }
       return field.val();
     },
@@ -342,8 +345,13 @@
       required: {
         check: function (value) {
           this.message = Locale.translate('Required');
-          if (typeof value === 'string' && $.trim(value).length === 0) {
-            return false;
+          if (typeof value === 'string') {
+            // strip out any HTML tags and focus only on text content.
+            value = $.trim(value.replace(/<\/?[^>]*>/g, ''));
+            if ($.trim(value).length === 0) {
+              return false;
+            }
+            return true;
           }
           return (value ? true : false);
         },
