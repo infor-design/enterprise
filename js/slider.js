@@ -24,7 +24,8 @@
           range: false,
           step: undefined,
           ticks: [],
-          tooltipContent: undefined
+          tooltipContent: undefined,
+          persistTooltip: false
         },
         settings = $.extend(true, {}, defaults, options);
 
@@ -81,6 +82,8 @@
         }
 
         // build tooltip content
+        var isTooltipPersist = (this.element.attr('data-tooltip-persist') === 'true' || this.element.attr('data-tooltip-persist') === true);
+        this.settings.persistTooltip = this.element.attr('data-tooltip-persist') !== undefined ? isTooltipPersist : settings.persistTooltip;
         this.settings.tooltip = settings.tooltipContent;
         if (this.element.attr('data-tooltip-content') !== undefined) {
           try {
@@ -204,7 +207,8 @@
                 return '' + self.settings.tooltip[0] + Math.floor(self.value()[i]) + self.settings.tooltip[1];
               },
               placement: 'top',
-              trigger: 'focus'
+              trigger: 'focus',
+              keepOpen: self.settings.persistTooltip
             });
           }
         });
