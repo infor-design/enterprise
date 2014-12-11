@@ -22,13 +22,13 @@
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Editor(element) {
       this.element = $(element);
       this.init();
     }
 
     // Actual Plugin Code
-    Plugin.prototype = {
+    Editor.prototype = {
       init: function() {
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
@@ -81,11 +81,11 @@
         currentElement.on('keyup', function (e) {
           var node = self.getSelectionStart(),
               tagName;
-          /*
+
           if (node && node.getAttribute('data-editor') && node.children.length === 0) {
             document.execCommand('formatBlock', false, 'p');
           }
-          */
+
           if (e.which === 13) {
             node = self.getSelectionStart();
             tagName = node.tagName.toLowerCase();
@@ -229,6 +229,10 @@
           self.sourceView.addClass('is-focused');
         }).on('blur.editor', function() {
           self.sourceView.removeClass('is-focused');
+          self.element.empty().html(self.textarea.val());
+          if (self.element.data('validate')) {
+            self.element.data('validate').validate(self.element);
+          }
         });
 
         return this;
@@ -441,9 +445,9 @@
         var self = this;
 
         self.modals = {
-          url: $('#editor-modal-url'),
-          image: $('#editor-modal-image'),
-          video: $('#editor-modal-video')
+          url: self.createURLModal(),
+          image: self.createImageModal(),
+          video: self.createVideoModal()
         };
 
         $('#editor-modal-url, #editor-modal-image').modal()
@@ -481,6 +485,71 @@
           });
 
         return this;
+      },
+
+      createURLModal: function() {
+        var urlModal = $('#editor-modal-url');
+        if (urlModal.length > 0) {
+          return urlModal;
+        }
+        return $('<div class="modal editor-modal-url" id="editor-modal-url"></div>')
+          .html('<div class="modal-content">' +
+            '<div class="modal-header">' +
+              '<h1 class="modal-title" tabindex="0">Insert Url</h1>' +
+            '</div>' +
+            '<div class="modal-body">' +
+              '<div class="field">' +
+                '<label for="url">URL</label>' +
+                '<input id="url" name="url" type="text" value="http://www.example.com">' +
+              '</div>' +
+              '<div class="modal-buttonset">' +
+                '<a href="#" class="link link-cancel">Cancel</a>' +
+                '<button type="button" class="button-primary button-close">Insert</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>').appendTo('body');
+      },
+
+      createImageModal: function() {
+        var imageModal = $('#editor-modal-image');
+        if (imageModal.length > 0) {
+          return imageModal;
+        }
+        return $('<div class="modal editor-modal-image" id="editor-modal-image"></div>')
+          .html('<div class="modal-content">' +
+            '<div class="modal-header">' +
+              '<h1 class="modal-title" tabindex="0">Insert Image</h1>' +
+            '</div>' +
+            '<div class="modal-body">' +
+              '<div class="field">' +
+                '<label for="image">URL</label>' +
+                '<input id="image" name="image" type="text" value="http://images2.fanpop.com/image/photos/12900000/Cute-kittens-12929201-1600-1200.jpg">' +
+              '</div>' +
+              '<div class="modal-buttonset">' +
+                '<a href="#" class="link link-cancel">Cancel</a>' +
+                '<button type="button" class="button-primary button-close">Insert</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>').appendTo('body');
+      },
+
+      createVideoModal: function() {
+        var videoModal = $('#editor-modal-video');
+        if (videoModal.length > 0) {
+          return videoModal;
+        }
+        return $('<div class="modal editor-modal-video" id="editor-modal-video"></div>')
+          .html('<div class="modal-content">' +
+            '<div class="modal-header">' +
+              '<h1 class="modal-title" tabindex="0">Insert Video</h1>' +
+            '</div>' +
+            '<div class="modal-body">' +
+              '<p>Todo</p>' +
+              '<div class="modal-buttonset">' +
+                '<a href="#" class="link link-cancel">Cancel</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>').appendTo('body');
       },
 
       bindAnchorPreview: function () {
@@ -902,15 +971,15 @@
         var parentNode = node.parentNode,
             tagName = parentNode.tagName.toLowerCase();
         while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
-            if (tagName === 'li') {
-                return true;
-            }
-            parentNode = parentNode.parentNode;
-            if (parentNode && parentNode.tagName) {
-                tagName = parentNode.tagName.toLowerCase();
-            } else {
-                return false;
-            }
+          if (tagName === 'li') {
+              return true;
+          }
+          parentNode = parentNode.parentNode;
+          if (parentNode && parentNode.tagName) {
+              tagName = parentNode.tagName.toLowerCase();
+          } else {
+              return false;
+          }
         }
         return false;
       },
@@ -925,8 +994,8 @@
         this.textarea.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
         this.element.prev('.label').off('click.editor');
         $(window).off('resize.editor');
-        $.each(this.modals, function(i, item) {
-          item.off('beforeClose close open').data('modal').destroy(); // cool
+        $.each(this.modals, function(i, modal) {
+          modal.off('beforeClose close open');
         });
         this.modals = {};
 
@@ -936,6 +1005,11 @@
       destroy: function () {
         $('html').off('mouseup.editor');
         this.destroyToolbar();
+        $.each(this.modals, function(i, modal) {
+          if (modal.data('modal')) {
+            modal.destroy();
+          }
+        });
         $.removeData(this.obj, pluginName);
       }
     };
@@ -946,7 +1020,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Editor(this, settings));
       }
     });
 

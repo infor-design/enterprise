@@ -19,6 +19,7 @@
 
   // Plugin Object
   Validator.prototype = {
+
     init: function() {
       var fields = 'input, textarea, select, div[data-validate], div[data-validation]';
 
@@ -36,6 +37,7 @@
       }
       this.timeout = null;
     },
+
     attachEvents: function () {
       var self = this,
         attribs = '[data-validate],[data-validation]',
@@ -110,6 +112,7 @@
         this.element.on('submit.validate',submitHandler);
       }
     },
+
     validateForm: function (callback) {
       var self = this,
         deferreds = [];
@@ -127,6 +130,7 @@
         callback(false);
       });
     },
+
     value: function(field) {
       if (field.is('input[type=checkbox]')) {
         return field.prop('checked');
@@ -136,6 +140,7 @@
       }
       return field.val();
     },
+
     getTypes: function(field) {
       if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validate')) {
         return field.prev().prev('select').attr('data-validate').split(' ');
@@ -151,6 +156,7 @@
       }
       return field.attr('data-validate').split(' ');
     },
+
     validate: function (field, showTooltip) {
       //call the validation function inline on the element
       var self = this,
@@ -229,6 +235,8 @@
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
         field.parent('.field').append(svg);
+
+
       }
 
       //setup tooltip with appendedMsg
