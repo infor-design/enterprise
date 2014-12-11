@@ -1,0 +1,62 @@
+// Color Picker
+//================================================== //
+
+.colorpicker {
+  width: 150px; //Small Size
+
+  // Color Piece
+  + .swatch {
+    background-color: $primary-color;
+    border-left: 1px solid $input-border-color;
+    cursor: pointer;
+    display: inline-block;
+    height: 33px;
+    left: -69px;
+    position: relative;
+    top: 1px;
+    vertical-align: top;
+    width: 40px;
+    @include css3(transition, background-color .5s ease);
+
+    // Trigger Button
+    .icon {
+      background-color: transparent;
+      height: 32px;
+      left: 36px;
+      width: 34px;
+    }
+  }
+
+  &:disabled + .swatch {
+    cursor: default;
+  }
+
+  //Open/Focus State is in the input
+  &.is-open {
+    border-color: $input-focus-border-color;
+    box-shadow: $input-focus-shadow;
+
+    + .swatch {
+      border-left-color: transparent;
+    }
+  }
+
+  &.popupmenu {
+    border: 1px solid $input-focus-border-color;
+    border-radius: 0 0 3px 3px;
+    box-shadow: $input-focus-shadow;
+    max-height: 160px;
+    width: auto;
+
+    li a {
+      padding: 0 6px 2px 0;
+    }
+
+    .swatch {
+      background-color: #333333;
+      display: block;
+      height: 33px;
+      width: 56px;
+    }
+  }
+}
