@@ -24,7 +24,8 @@
           range: false,
           step: undefined,
           ticks: [],
-          tooltipContent: undefined
+          tooltipContent: undefined,
+          persistTooltip: false
         },
         settings = $.extend(true, {}, defaults, options);
 
@@ -81,6 +82,8 @@
         }
 
         // build tooltip content
+        var isTooltipPersist = (this.element.attr('data-tooltip-persist') === 'true' || this.element.attr('data-tooltip-persist') === true);
+        this.settings.persistTooltip = this.element.attr('data-tooltip-persist') !== undefined ? isTooltipPersist : settings.persistTooltip;
         this.settings.tooltip = settings.tooltipContent;
         if (this.element.attr('data-tooltip-content') !== undefined) {
           try {
@@ -204,7 +207,8 @@
                 return '' + self.settings.tooltip[0] + Math.floor(self.value()[i]) + self.settings.tooltip[1];
               },
               placement: 'top',
-              trigger: 'focus'
+              trigger: 'focus',
+              keepOpen: self.settings.persistTooltip
             });
           }
         });
@@ -248,6 +252,7 @@
             self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
             self.updateRange();
             self.updateTooltip(handle);
+            self.element.trigger('sliding', handle, rangeVal);
           }
           return;
         }
@@ -279,10 +284,12 @@
           .on('dragstart', function() {
             $(this).addClass('is-dragging');
             self.range.addClass('is-dragging');
+            self.element.trigger('slidestart', handle);
           })
           .on('dragend', function() {
             $(this).removeClass('is-dragging');
             self.range.removeClass('is-dragging');
+            self.element.trigger('slidestop', handle);
           });
         });
 

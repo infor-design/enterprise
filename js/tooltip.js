@@ -24,7 +24,8 @@
         title: null, //Title for Infor Tips
         popover: null , //force it to be a popover (no content)
         isError: false, //Add error classes
-        tooltipElement: null // ID selector for an alternate element to use to contain the tooltip classes
+        tooltipElement: null, // ID selector for an alternate element to use to contain the tooltip classes
+        keepOpen: false // Forces the tooltip to stay open in situations where it would normally close.
       },
       settings = $.extend({}, defaults, options);
 
@@ -282,6 +283,10 @@
       },
 
       hide: function() {
+        if (settings.keepOpen) {
+          return;
+        }
+
         if (this.isInPopup) {
           settings.content.addClass('hidden');
           return;

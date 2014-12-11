@@ -72,6 +72,13 @@
     padding-left: 15px;
   }
 
+  + svg.icon.icon-error {
+    left: auto;
+    position: absolute;
+    right: 5px;
+    top: 65px;
+  }
+
 }
 
 // Toolbar
