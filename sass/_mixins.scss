@@ -101,18 +101,3 @@
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-
-// Rules for Required Indicator
-// Sometimes needs to move around to other surrounding elements based on the target element's type
-@mixin required-indicator-rules {
-  color: #ff3333;
-  content: '*';
-  display: inline-block;
-  font-family: $font-regular;
-  @include font-size(11);
-  left: 2px;
-  position: relative;
-  speak: none;
-  top: -1px;
-}
-
