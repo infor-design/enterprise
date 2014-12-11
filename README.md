@@ -211,6 +211,7 @@ The documentation will be generated created inline in the pages (soon but not ye
 | Approva Applications |  An ASP Application interested in accessibility | Shabu Kutty |
 | Automotive Exchange  | Evaluate with AngularJS and GWT | Tien Hanh Pham, Michael Lenz |
 | Business Vault |    Justin Timbers   |   A JSF based Single Page App implement with jQuery |
+| Care Assignments | ? | Michael Welborn |
 | Certification Manager | ? |    Syedur Islam |
 | Certpoint LMS  | ? | Blessed Dianne Valencia |
 | CPM Applications (4) | ? | Rick Leedy, Mike Surel |

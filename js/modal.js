@@ -17,11 +17,11 @@
 
     // Settings and Options
     var pluginName = 'modal',
-        defaults = {
-          trigger: 'click', //TODO: supports click, immediate,  manual
-          buttons: null
-        },
-        settings = $.extend({}, defaults, options);
+      defaults = {
+        trigger: 'click', //TODO: supports click, immediate,  manual
+        buttons: null
+      },
+      settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
@@ -175,9 +175,7 @@
         // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a chance to be established
         // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
         // http://stackoverflow.com/questions/12088819/css-transitions-on-new-elements
-        var x = this.overlay.width();
         $('body').addClass('modal-engaged');
-        x = null;
 
         //Handle Default button.
         $(this.element).on('keypress.modal', function (e) {

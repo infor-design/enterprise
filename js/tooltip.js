@@ -18,8 +18,8 @@
     var pluginName = 'tooltip',
       defaults = {
         content: null, //Takes title attribute or feed content. Can be a function or jQuery markup
-        offset: {top: 20, left: 0}, //how much room to leave
-        placement: 'bottom',  //can be top/left/bottom/right/offset
+        offset: {top: 15, left: 0}, //how much room to leave
+        placement: 'top',  //can be top/left/bottom/right/offset
         trigger: 'hover', //supports click and manual and hover (future focus)
         title: null, //Title for Infor Tips
         popover: null , //force it to be a popover (no content)
@@ -257,7 +257,7 @@
 
       },
       placeBelowOffset: function() {
-        var extraOffset = (this.element.parent().find('.icon').length === 2 ? -7 : 10);
+        var extraOffset = (this.element.parent().find('.icon').length === 2 ? -7 : 9);
 
         this.tooltip.css({'top' : this.element.offset().top + this.element.outerHeight() + settings.offset.top,
                           'left' : this.element.offset().left + settings.offset.left + (this.element.outerWidth() - this.tooltip.outerWidth()) + extraOffset });

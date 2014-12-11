@@ -4,9 +4,8 @@
 .popover,
 .tooltip {
   background-clip: padding-box;
-  background-color: #333333;
+  background-color: $tooltip-bg-color;
   border-radius: 2px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   color: #ffffff;
   font-family: $font-regular;
   @include font-size(15);
@@ -30,7 +29,7 @@
 
 .popover {
   background-color: #ffffff;
-  border: 1px solid #d6d6d6;
+  border: 1px solid $tooltip-bg-color;
   color: #666666;
   pointer-events: initial;
   z-index: 3010;
@@ -79,7 +78,7 @@
 }
 
 .tooltip-content {
-  padding: 10px 12px;
+  padding: 7px 13px;
 }
 
 .popover-content,
@@ -91,7 +90,7 @@
 .popover .arrow:after,
 .tooltip .arrow,
 .tooltip .arrow:after {
-  border-color: rgba(0, 0, 0, 0);
+  border-color: transparent;
   border-style: solid;
   display: block;
   height: 0;
@@ -113,8 +112,8 @@
 .popover.top .arrow,
 .tooltip.top .arrow {
   border-bottom-width: 0;
-  border-top-color: #d6d6d6;
-  bottom: -11px;
+  border-top-color: $tooltip-bg-color;
+  bottom: -9px;
   left: 50%;
   margin-left: -11px;
 }
@@ -122,7 +121,7 @@
 .popover.top .arrow:after,
 .tooltip.top .arrow:after {
   border-bottom-width: 0;
-  border-top-color: #333333;
+  border-top-color: $tooltip-bg-color;
   bottom: 3px;
   content: ' ';
   margin-left: -10px;
@@ -131,28 +130,19 @@
 .popover.right .arrow,
 .tooltip.right .arrow {
   border-left-width: 0;
-  border-right-color: #d6d6d6;
-  left: -12px;
+  border-right-color: $tooltip-bg-color;
+  left: -9px;
   margin-top: -11px;
   top: 50%;
 }
 
-.popover.right .arrow:after,
-.tooltip.right .arrow:after {
-  border-left-width: 0;
-  border-right-color: #333333;
-  bottom: -10px;
-  content: ' ';
-  left: 2px;
-}
-
 .popover.bottom .arrow,
 .tooltip.bottom .arrow {
-  border-bottom-color: #d6d6d6;
+  border-bottom-color: $tooltip-bg-color;
   border-top-width: 0;
   left: 50%;
   margin-left: -11px;
-  top: -11px;
+  top: -8px;
 }
 
 .popover.bottom.offset .arrow,
@@ -161,39 +151,21 @@
   right: 18px;
 }
 
-.popover.bottom .arrow:after,
-.tooltip.bottom .arrow:after {
-  content: ' ';
-  border-bottom-color: #333333;
-  border-top-width: 0;
-  margin-left: -10px;
-  top: 1px;
-}
-
 .popover.bottom .arrow:after {
-  border-bottom-color: #ffffff;
+  border-bottom-color: $tooltip-bg-color;
 }
 
 .popover.left .arrow,
 .tooltip.left .arrow {
-  border-left-color: #d6d6d6;
+  border-left-color: $tooltip-bg-color;
   border-right-width: 0;
   margin-top: -11px;
-  right: -11px;
+  right: -10px;
   top: 50%;
 }
 
-.popover.left .arrow:after,
-.tooltip.left .arrow:after {
-  border-left-color: #333333;
-  border-right-width: 0;
-  bottom: -10px;
-  content: ' ';
-  right: 1px;
-}
-
 .popover.left .arrow:after {
-  border-left-color: #ffffff;
+  border-left-color: $tooltip-bg-color;
 }
 
 // Error Tooltip Styling
@@ -202,22 +174,22 @@
 }
 
 .tooltip.is-error {
-  background-color: $red;
+  background-color: $error-color;
   pointer-events: auto;
 }
 
-.tooltip.is-error.top .arrow:after {
-  border-top-color: $red;
+.tooltip.is-error.top .arrow {
+  border-top-color: $error-color;
 }
 
-.tooltip.is-error.left .arrow:after {
-  border-left-color: $red;
+.tooltip.is-error.left .arrow {
+  border-left-color: $error-color;
 }
 
-.tooltip.is-error.bottom .arrow:after {
-  border-bottom-color: $red;
+.tooltip.is-error.bottom .arrow {
+  border-bottom-color: $error-color;
 }
 
-.tooltip.is-error.right .arrow:after {
-  border-right-color: $red;
+.tooltip.is-error.right .arrow {
+  border-right-color: $error-color;
 }

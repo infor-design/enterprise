@@ -25,4 +25,7 @@ test-multiselect:
 test-form:
 	@node test-runner.js form
 
+test-colorpicker:
+	@node test-runner.js colorpicker
+
 .PHONY: test

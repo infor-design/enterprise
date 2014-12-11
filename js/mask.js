@@ -2,8 +2,6 @@
 * Inline Field Formatter (Mask) Control
 * Adds a text-based formatting "mask" to input fields that displays how data should be entered into the field.
 * Does not allow text entry that does not match the provided mask.
-* @name XYZ TODO: Test Doc Generation
-* @param {string} propertyName - The Name of the Property defaults to defaultValue
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -40,8 +38,8 @@
 
     // Plugin Constructor
     function Mask(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     Mask.prototype = {
@@ -107,20 +105,23 @@
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
-        self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, null, function(e) {
+        self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, function(e) {
           self.handleKeyEvents(self, e);
         });
 
         // when the element is focused, store its initial value.
-        self.element.on('focus.mask', null, function() {
+        self.element.on('focus.mask', function() {
           self.initValue = self.element.val();
         });
 
         // remove the value when blurred
-        self.element.on('blur.mask', null, function() {
+        self.element.on('blur.mask', function() {
           self.initValue = null;
           if (self.mustComplete) {
             self.checkCompletion();
+          }
+          if (self.initValue !== self.element.val()) {
+            self.element.trigger('change');
           }
         });
 
@@ -284,21 +285,17 @@
             // '/' is keycode 39 on some browsers
             return;
           }
+
           if (self.mode === 'number') {
             self.processNumberMask(typedChar, evt);
           } else {
             self.processMask(typedChar, evt);
           }
+
         }
 
         if (eventType === 'paste') {
           self.handlePaste(evt);
-        }
-
-        if (eventType === 'input') {
-          // TODO: Handle Input Event
-          console.log('Input Event Triggered!');
-          console.dir(e);
         }
       },
 
@@ -504,15 +501,14 @@
                nextChar = val.substring(pos.begin, pos.begin + 1);
             }
           }
-
         }
 
         // put it back!
         this.element.val(val);
 
         // reposition the caret to be in the correct spot (after the content we just added).
-        var totalCaretPos = pos.begin + buffSize;
-        var actualCaretPos = totalCaretPos >= pattSize ? pattSize : totalCaretPos;
+        var totalCaretPos = pos.begin + buffSize,
+          actualCaretPos = totalCaretPos >= pattSize ? pattSize : totalCaretPos;
         this.caret(actualCaretPos);
 
         // trigger the 'write' event
@@ -915,6 +911,7 @@
         if (self.maskParts.startsWithLiteral) {
           i = i + 1;
         }
+
 
         // Fail out if we try to type too many characters
         var currentSection = (input.editables.length - 1) > 0 ? input.editables.length - 1 : 0;

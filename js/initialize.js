@@ -104,7 +104,10 @@
       //Spinbox
       elem.find('.spinbox').spinbox();
 
-      //Format
+      //Color Picker
+      elem.find('.colorpicker').colorpicker();
+
+      //Date Picker
       elem.find('.datepicker').datepicker();
 
       //Class-based detection for IE

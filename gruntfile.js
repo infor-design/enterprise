@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js', 'js/button.js', 'js/cardstack.js', 'js/datepicker.js', 'js/editor.js', 'js/datagrid.js', 'js/dropdown.js', 'js/draggable.js', 'js/form.js', 'js/locale.js', 'js/pager.js', 'js/popupmenu.js', 'js/mask.js', 'js/multiselect.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/spinbox.js', 'js/tabs.js', 'js/textarea.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
+          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js', 'js/button.js', 'js/cardstack.js', 'js/colorpicker.js', 'js/datepicker.js', 'js/editor.js', 'js/datagrid.js', 'js/dropdown.js', 'js/draggable.js', 'js/form.js', 'js/locale.js', 'js/pager.js', 'js/popupmenu.js', 'js/mask.js', 'js/multiselect.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/spinbox.js', 'js/tabs.js', 'js/textarea.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
           'dist/js/initialize.js': ['js/initialize.js']
         }
       }
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '/*!\n Soho 2.0 Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n ',
+          banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n ',
           sourceMap: true,
           sourceMapName: 'dist/js/sohoxi.map',
           separator: ';'

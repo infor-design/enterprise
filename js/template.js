@@ -1,5 +1,5 @@
 /**
-* XYZ Control (link to docs)
+* XYZ Control (TODO: bitly link to docs)
 */
 
 (function(factory) {

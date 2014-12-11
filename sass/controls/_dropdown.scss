@@ -8,11 +8,11 @@ select.dropdown {
 input.dropdown {
   background-color: transparent;
   border-color: $input-border-color;
-  color: $input-color;
+  color: $dropdown-color;
   cursor: pointer;
   display: inline-block;
   padding: 9px 24px 9px 10px;
-  -webkit-text-fill-color: $input-color;
+  -webkit-text-fill-color: $dropdown-color;
 
   &[disabled] {
     background-color: $dropdown-disabled-bg-color;
@@ -112,6 +112,7 @@ input.dropdown {
   border: 0;
   border-bottom: 1px solid #d2d2d2;
   border-radius: 0;
+  color: $dropdown-color;
   width: 100%;
 
   &::-ms-clear {

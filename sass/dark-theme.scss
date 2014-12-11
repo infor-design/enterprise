@@ -33,6 +33,7 @@ $input-readonly-border-color: #444444;
 $dropdown-disabled-border-color: #444444;
 $dropdown-disabled-bg-color: #444444;
 $dropdown-disabled-border-color: #444444;
+$dropdown-color: $body-bg-color;
 
 // Checkboxes
 $checkbox-color: $primary-color;
@@ -64,13 +65,9 @@ $slider-disabled-color: #444444;
 
 // Specific overrides
 .header .field.aligned input {
-  background-color: #ffffff;
-  color: $body-bg-color;
-  -webkit-text-fill-color: $body-bg-color;
-}
-
-.dropdown-search {
-  color: $body-bg-color;
+  background-color: transparent !important;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
 }
 
 // Standard CSS reset stuff here
