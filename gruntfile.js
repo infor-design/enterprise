@@ -36,7 +36,8 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: '',
-        banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n '
+        banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: ' + process.env.SVN_REVISION + ' \n */ \n ',
+        footer: '//# sourceURL=<%= pkg.name %>.js'
       },
       basic: {
         files: {
