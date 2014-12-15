@@ -57,7 +57,7 @@
         this.tooltip = settings.tooltipElement ? $(settings.tooltipElement) : $('#tooltip');
         if (this.tooltip.length === 0) {
           var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
-          this.tooltip = $('<div class="tooltip bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"><p>(Content)</p></div></div>').appendTo('body');
+          this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"><p>(Content)</p></div></div>').appendTo('body');
         }
       },
 
@@ -114,10 +114,10 @@
 
       },
 
-      setContent: function (content) {
+      setContent: function(content) {
         if (this.isPopover) {
           this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
-          this.tooltip.addClass('popover');
+          this.tooltip.removeClass('tooltip').addClass('popover');
 
           if (settings.title !== null) {
             var title = this.tooltip.find('.tooltip-title');
@@ -134,7 +134,7 @@
           this.tooltip.find('.tooltip-title').hide();
         }
 
-        this.tooltip.removeClass('popover');
+        this.tooltip.removeClass('popover').addClass('tooltip');
         if (typeof settings.content === 'function') {
           content = this.content = settings.content.call(this.element);
         }
@@ -320,7 +320,7 @@
           instance[options](args);
         }
 
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend(instance.settings, options);
 
         if (settings.trigger === 'immediate') {
          setTimeout(function() {

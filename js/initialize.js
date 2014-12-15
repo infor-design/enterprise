@@ -110,6 +110,9 @@
       //Date Picker
       elem.find('.datepicker').datepicker();
 
+      //Time Picker
+      elem.find('.timepicker').timepicker();
+
       //Class-based detection for IE
       if (!!navigator.userAgent.match(/Trident/)) {
         $('html').addClass('ie');
