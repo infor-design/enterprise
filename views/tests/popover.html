@@ -1,30 +1,37 @@
-<h1>Popover <span>(Tooltip with Title)</span></h1>
+<div class="grid">
+  <div class="col-1-1">
 
-<div style="position: absolute; left: 50%; top: 50%;">
-  <button class="button" id="bottom" data-popover="popover-contents" data-placement="bottom" data-title="Popover Bottom" data-trigger="click" type="button">Open Bottom-Positioned Popover</button>
-  <button class="button" id="left" data-popover="popover-contents" data-placement="left" data-title="Popover Left" data-trigger="click" type="button">Open Left-Positioned Popover</button>
-  <button class="button" id="right" data-popover="popover-contents" data-placement="right" data-title="Popover Right" data-trigger="click" type="button">Open Right-Positioned Popover</button>
-  <button class="button" id="top" data-popover="popover-contents" data-placement="top" data-title="Popover Top" data-trigger="click" type="button">Open Top-Positioned Popover</button>
+    <h1>Popover</h1>
+    <span class="label">(Tooltip with Title)</span>
+    <hr>
+
+    <div style="position: absolute; left: 50%; top: 50%;">
+      <button class="button" id="bottom" data-popover="popover-contents" data-placement="bottom" data-title="Popover Bottom" data-trigger="click" type="button">Open Bottom-Positioned Popover</button>
+      <button class="button" id="left" data-popover="popover-contents" data-placement="left" data-title="Popover Left" data-trigger="click" type="button">Open Left-Positioned Popover</button>
+      <button class="button" id="right" data-popover="popover-contents" data-placement="right" data-title="Popover Right" data-trigger="click" type="button">Open Right-Positioned Popover</button>
+      <button class="button" id="top" data-popover="popover-contents" data-placement="top" data-title="Popover Top" data-trigger="click" type="button">Open Top-Positioned Popover</button>
+    </div>
+
+    <div id="popover-contents">
+      <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#bottom').popover({
+          popover: true,
+          placement: 'bottom'
+        });
+        $('#top').popover({
+          popover: true,
+          placement: 'top'
+        });
+        $('#right').popover({
+          popover: true,
+          placement: 'right'
+        });
+      });
+    </script>
+
+  </div>
 </div>
-
-<div id="popover-contents">
-  <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-</div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#bottom').popover({
-      popover: true,
-      placement: 'bottom'
-    });
-    $('#top').popover({
-      popover: true,
-      placement: 'top'
-    });
-    $('#right').popover({
-      popover: true,
-      placement: 'right'
-    });
-  });
-</script>
-

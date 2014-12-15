@@ -1,0 +1,26 @@
+// TimePicker
+// ==================================================
+
+.timepicker {
+  width: 150px;
+
+  + .icon {
+    cursor: pointer;
+    fill: #999999;
+    height: 18px;
+    margin-left: -30px;
+    margin-top: 9px;
+    position: absolute;
+
+    &:hover {
+      fill: #666666;
+    }
+  }
+
+  &:disabled {
+    + .icon {
+      cursor: default;
+      fill: #c3c3c3;
+    }
+  }
+}
