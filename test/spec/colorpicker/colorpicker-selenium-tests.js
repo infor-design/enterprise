@@ -65,7 +65,7 @@ describe('Colorpicker [selenium]', function(){
       .call(done);
   });
 
- it('canclicking the drop down buttons', function(done) {
+  it('can click the drop down button', function(done) {
     var input = '#background-color',
       down = '#background-color-button';
 
@@ -138,7 +138,6 @@ describe('Colorpicker [selenium]', function(){
       .execute(addNewMarkup, function(err, results) {
         globals.noError(err);
         should.exist(results);
-        console.log(err);
         results.value.should.equal(true);
       })
       // Make sure that it was added properly
@@ -152,10 +151,31 @@ describe('Colorpicker [selenium]', function(){
       // Invoke it as a spinbox
       .execute('$("#new-colorpicker").colorpicker();')
       // Check the value to make sure it was retained
-      .getValue('#new-spinbox', function(err, value) {
+      .getValue('#new-colorpicker', function(err, value) {
         globals.noError(err);
         should.exist(value);
         value.should.equal('#ffffff');
+      })
+      .call(done);
+  });
+
+  it('can get value', function(done) {
+    runner.client
+      .getValue('#new-colorpicker', function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('#ffffff');
+      })
+      .call(done);
+  });
+
+  it('can set value', function(done) {
+    runner.client
+      .setValue('#new-colorpicker', '#000000', globals.noError)
+      .getValue('#new-colorpicker', function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('#000000');
       })
       .call(done);
   });

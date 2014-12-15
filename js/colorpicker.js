@@ -51,19 +51,25 @@
 
       // Add the extra markup
       build: function() {
-        var colorpicker = this.element;
+        var colorpicker = this.element,
+          initialValue = this.element.val();
 
         //Add Button
         this.swatch = $('<span class="swatch"></span>');
         this.icon = $('<svg class="icon"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.swatch);
         colorpicker.parent().append(this.swatch);
 
-        if (this.element.val().substr(0,1) !== '#') {
-          this.element.val('#' + this.element.val());
-        }
-
         //Add Masking to show the #
         colorpicker.attr('data-mask', '*******').mask();
+
+        if (initialValue.substr(0,1) !== '#') {
+          initialValue = '#' + initialValue;
+          this.element.val(initialValue);
+        }
+
+         if (initialValue.length === 7) {
+          this.setColor(initialValue);
+        }
      },
 
       // Attach Control Events
@@ -102,9 +108,19 @@
           if (val.substr(0,1) !== '#') {
             input.val('#'+val);
           }
+
+          if (val.length === 7) {
+          }
         });
       },
 
+      // Set the Visible Color
+      setColor: function (hex) {
+        this.swatch.css('background-color', hex);
+        this.element.val(hex);
+      },
+
+      // Refresh and Append the Color Menu
       updateColorMenu: function () {
         var menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
         for (var i = 0; i < settings.colors.length; i++) {

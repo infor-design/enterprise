@@ -120,9 +120,9 @@
       if (navigator.userAgent.indexOf('MSIE 8.0') > -1) {
         $('html').addClass('ie8');
       }
-      if (document.documentMode === 8) {
-        $('html').addClass('ie8');
-      }
+      if (document.documentMode === 8) {
+        $('html').addClass('ie8');
+      }
       if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
         $('html').addClass('ie9');
       }

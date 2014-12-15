@@ -127,15 +127,16 @@ textarea[disabled] + .textarea-wordcount {
 // Required Indicator
 label.required:after,
 .label.required:after {
-  color: #ff3333;
+  color: $error-color;
   content: '*';
   display: inline-block;
   font-family: $font-regular;
-  @include font-size(11);
-  left: 2px;
+  @include font-size(17);
+  left: -2px;
+  line-height: 0;
   position: relative;
   speak: none;
-  top: -1px;
+  top: 2px;
 }
 
 @media reader, speech, aural {
