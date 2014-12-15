@@ -13,6 +13,7 @@ span.checkbox > label {
   cursor: pointer;
   display: inline-block;
   padding-left: 35px;
+  @include no-select();
 }
 
 input.checkbox + label:before,

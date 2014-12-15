@@ -67,57 +67,84 @@
           this.element.val(initialValue);
         }
 
-         if (initialValue.length === 7) {
+        if (initialValue.length === 7) {
           this.setColor(initialValue);
+          this.element.val(initialValue);
         }
-     },
+
+        this.addAria();
+      },
+
+      // Add/Update Aria
+      addAria: function () {
+        this.element.attr('aria-haspopup', true);
+
+        //TODO: Localize
+        $('label[for="'+ this.element.attr('id') + '"]')
+          .append('<span class="audible">use down arrow to open color picker</span>');
+      },
 
       // Attach Control Events
       handleEvents: function () {
         var self = this;
         this.swatch.on('click.colorpicker', function () {
-
-          if (self.element.is(':disabled')) {
-            return;
-          }
-
-          //Append Color Menu
-          self.updateColorMenu();
-
-          // Show Menu
-          $(this).popupmenu({trigger: 'immediate', menuId: 'colorpicker-menu'})
-          .on('beforeOpen.colorpicker', function () {
-            self.element.addClass('is-open');
-          })
-          .on('close.colorpicker', function () {
-            $('#colorpicker-menu').parent('.popupmenu-wrapper').remove();
-            self.element.removeClass('is-open');
-          })
-          .on('selected.colorpicker', function (e, item) {
-            self.element.val('#'+item.data('value'));
-            self.swatch.css('background-color', '#' + item.data('value'));
-            self.element.focus();
-          });
+          self.toggleList();
         });
 
-        // Make sure there is always a hash
         this.element.on('keypress.colorpicker', function () {
           var input = $(this),
             val = input.val();
 
+          // Make sure there is always a hash
           if (val.substr(0,1) !== '#') {
             input.val('#'+val);
           }
 
           if (val.length === 7) {
+            self.setColor(val);
+          }
+
+        });
+
+        //Handle Key Down to open
+        this.element.on('keydown.colorpicker', function (e) {
+          if (e.keyCode === 38 || e.keyCode === 40) {
+            self.toggleList();
           }
         });
       },
 
+      // Toggle / Open the List
+      toggleList: function () {
+        var self = this;
+        if (self.element.is(':disabled')) {
+          return;
+        }
+
+        //Append Color Menu
+        self.updateColorMenu();
+
+        // Show Menu
+        self.swatch.popupmenu({trigger: 'immediate', menuId: 'colorpicker-menu'})
+        .on('beforeOpen.colorpicker', function () {
+          self.element.addClass('is-open');
+        })
+        .on('close.colorpicker', function () {
+          $('#colorpicker-menu').parent('.popupmenu-wrapper').remove();
+          self.element.removeClass('is-open');
+          self.element.focus();
+        })
+        .on('selected.colorpicker', function (e, item) {
+          self.element.val('#'+item.data('value'));
+          self.swatch.css('background-color', '#' + item.data('value'));
+          self.element.focus();
+        });
+      },
+
       // Set the Visible Color
-      setColor: function (hex) {
+      setColor: function (hex, text) {
         this.swatch.css('background-color', hex);
-        this.element.val(hex);
+        this.element.attr('aria-describedby', text);
       },
 
       // Refresh and Append the Color Menu
@@ -127,7 +154,7 @@
           var li = $('<li></li>'),
               a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
 
-          a.attr('title', settings.colors[i].label);
+          a.attr('title', settings.colors[i].label + ' #' + settings.colors[i].value );
           a.find('.swatch').css('background-color', '#' + settings.colors[i].value);
           a.data('label', settings.colors[i].label);
           a.data('value', settings.colors[i].value);
