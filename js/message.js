@@ -58,12 +58,24 @@
         }
 
         //Setup the destroy event to fire on close.  Needs to fire after the "close" event on the modal.
+        this.message.on('beforeClose', function () {
+          var ok = self.element.triggerHandler('beforeClose');
+          return ok;
+        });
+        this.message.on('beforeOpen', function () {
+          var ok = self.element.triggerHandler('beforeOpen');
+          return ok;
+        });
+        this.message.on('open', function () {
+          self.element.trigger('open');
+        });
         this.message.data('modal').element.on('afterClose', function() {
           self.destroy();
         });
       },
       destroy: function() {
         this.message.remove();
+        $('body').off('beforeClose close beforeOpen open afterClose');
       }
     };
 

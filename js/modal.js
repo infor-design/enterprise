@@ -18,7 +18,7 @@
     // Settings and Options
     var pluginName = 'modal',
       defaults = {
-        trigger: 'click', //TODO: supports click, immediate,  manual
+        trigger: 'click', //Supports click, immediate
         buttons: null
       },
       settings = $.extend({}, defaults, options);
@@ -128,12 +128,11 @@
       },
       open: function () {
         var self = this, messageArea,
-          elemCanOpen = this.element.triggerHandler('beforeOpen'),
-          bodyCanOpen = this.element.find('.modal-body > div').triggerHandler('beforeOpen');
+          elemCanOpen = this.element.triggerHandler('beforeOpen');
 
         self.isCancelled = false;
 
-        if (elemCanOpen === false || bodyCanOpen === false) {
+        if (elemCanOpen === false) {
           return false;
         }
 
@@ -161,7 +160,6 @@
           self.element.find((self.element.find('input:first').length > 1 ? 'input:first' : '.modal-title')).focus();
           self.keepFocus();
           self.element.triggerHandler('open');
-          self.element.find('.modal-body > div').first().triggerHandler('open');
         }, 300);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
@@ -250,10 +248,9 @@
 
       close: function () {
         var elemCanClose = this.element.triggerHandler('beforeClose'),
-          bodyCanClose = this.element.find('.modal-body > div').first().triggerHandler('beforeClose'),
           self = this;
 
-        if (elemCanClose === false || bodyCanClose === false) {
+        if (elemCanClose === false) {
           return false;
         }
 
@@ -267,7 +264,6 @@
         }
 
         //Fire Events
-        this.element.find('.modal-body > div').first().trigger('close');
         self.element.trigger('close');
 
         if (this.oldActive && $(this.oldActive).is('button:visible')) {
