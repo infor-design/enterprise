@@ -114,6 +114,17 @@
           self.initValue = self.element.val();
         });
 
+        // listen for an event called "updated" that can be triggered by other plugins, that forces the mask
+        // to completely re-evaluate itself.
+        self.element.on('updated', function() {
+          var e = $.Event(),
+            currVal = self.element.val();
+
+          self.element.val('');
+          self.caret(0);
+          self.processStringAgainstMask(currVal, e);
+        });
+
         // remove the value when blurred
         self.element.on('blur.mask', function() {
           self.initValue = null;
