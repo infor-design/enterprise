@@ -226,6 +226,7 @@ or eventually the SoHo XI site pages
     3. Test for Keyboard against http://access.aol.com/dhtml-style-guide-working-group/
     4. Test with screen readers (voice over, nvda and jaws), If only one Jaws is most critical
      [Jaws](http://www.freedomscientific.com/Products/Blindness/JAWS) can be downloaded and used for 40 minutes before a reboot. It runs on windows and works best on newer IE browsers. This is the primary screen reader to learn and test.
+     Secondary Screen readers are [Voice over](https://www.apple.com/voiceover/info/guide/) for use on IOS and Mac and [NVDA](http://www.nvaccess.org/) for use in windows Firefox.
 - Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
 - Create Selenium (Javascript based) scripts or similar tests (see tests folder in git project)
 - Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
@@ -273,4 +274,5 @@ or eventually the SoHo XI site pages
 | System I |   | Richard Sankey |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  |
 | Xtreme Support | ASP| Raj S. Joshi |
+
 
