@@ -547,9 +547,12 @@
         }
 
         //let grow or to field size.
+        this.list.find('input').outerWidth(this.input.outerWidth()-2);
         if (this.list.width() > this.input.outerWidth()) {
            this.list.css('width', '');
            this.list.css({'width': this.list.outerWidth() + 35});
+           this.list.find('input').css({'width': this.list.outerWidth() + 35});
+
            //But not off the left side
            var maxWidth = $(window).width() - parseInt(this.list.css('left'), 10);
            if (this.list.width() > maxWidth) {
