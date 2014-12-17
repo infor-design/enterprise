@@ -1,7 +1,7 @@
 
-# Welcome to Soho 2.0
+# Welcome to Soho XI
 
-Soho 2.0 is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, touch friendly, more flexible and completely accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
+Soho XI is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, touch friendly, more flexible and completely accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
 
 For guidelines on when and where to use the controls see the [Soho Style Guide](http://soho.infor.com).
 
@@ -66,7 +66,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 * Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
 
-# Contributing to Soho 2.0
+# Contributing to Soho XI
 
 So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.
 
@@ -178,74 +178,99 @@ Essentially though, [check out the latest master](http://git.infor.com/projects/
 <a name="documentation"></a>
 ### Documentation
 
-Soho 2.0's current documentation can be found at [soho.infor.com](http://soho.infor.com).
+Soho XI's current documentation can be found at [soho.infor.com](http://soho.infor.com).
 
 The documentation will be generated created inline in the pages (soon but not yet). You can fork the repo and submit pull requests following the [pull-request](#pull-requests) guidelines.
 
-## Coding Conventions
+## Coding Standards and Conventions
 
 [Coding Standards are now in their own Repo](http://git.infor.com/projects/SHARED/repos/coding-standards/browse/README.md)
-
 
 <a name="qa-documentation"></a>
 ## QA Documentation
 
-We are trying to conform to WCAG 2.0 AA standards.
+Test Page:
+http://107.170.15.202:4000/
+(Note that each control can be accessed on its own url `http://107.170.15.202:4000/controls/<name>` for example:
+http://107.170.15.202:4000/controls/slider)
 
-* Tester would grab build from from http://usmawsoab.infor.com:8080/ci/job/Gramercy%20Park/ (Generally Two Month Cycles for versions/QA). Next version is 4.0 current is 3.4
-* Tester would go through every Html page example opening it in:  ~~IE8~~, IE9, IE10, Safari,  Chrome, Firefox, iOS (iPad), iOS, Android (tablet and mobile)
-* Cross check designs with http://soho.infor.com/the-soho-basics/design-vision/
-* Test for Accessibility. This means.
-    * Run Wave Toolbar https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh/related and https://addons.mozilla.org/en-US/firefox/addon/wave-toolbar/
-    * Run Squizz – Html Sniffer
-    * Test for Keyboard against http://access.aol.com/dhtml-style-guide-working-group/
-    * Test with screen readers (voice over, nvda and jaws), If only one Jaws is most critical.
-* Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
-* Create Selenium (Javascript based) scripts or similar tests (Dalek JS)
-* Next version will be Soho 2.0 – which will be a new style guide and set of updated controls. Test that similarly just different links.
-* Next version will have DelekJS or CasperJS test suites which will need to be updated.
-* Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
+Jira: For Reporting Issues..
+http://jira.infor.com/browse/HFC
+
+RoadMap:
+https://docs.google.com/spreadsheets/d/1nxSEfNoKtQ9i3R7hgokj8VTdAJ95J8SXfhJ7IrtrOf0/edit?pli=1#gid=345637423
+
+Requirements:
+https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm98A/edit?pli=1#gid=989468169
+
+### Things to Test
+
+The controls should be tested in several ways:
+
+ - Browser Testing - IE9, IE10, IE11, Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
+ - Touch Device Support Testing
+ - Accessibility Testing according to [WCAG Accessibility Standards](http://www.w3.org/TR/WCAG20/)
+ - Developer Testing - Can the Controls be easily coded from the documentation, developer Web Driver.IO tests ect.
+ -  Testing against requirements
+
+### Related Testing Tools
+
+- Tester can grab latest code from http://git.infor.com/projects/SOHO/repos/controls/browse  (Generally Two Month Cycles for versions/QA). Current Jira version is 4.0 for reporting
+- tester would go through every Html page example opening it in:  IE9, IE10, IE11, Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
+- Cross check designs with https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm98A/edit?pli=1#gid=989468169
+or eventually the SoHo XI site pages
+- Tests for Accessibility
+
+    1. Run Wave Toolbar https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh/related and https://addons.mozilla.org/en-US/firefox/addon/wave-toolbar/
+    2. Run Squizz – Html Sniffer http://squizlabs.github.io/HTML_CodeSniffer/
+    3. Test for Keyboard against http://access.aol.com/dhtml-style-guide-working-group/
+    4. Test with screen readers (voice over, nvda and jaws), If only one Jaws is most critical
+     [Jaws](http://www.freedomscientific.com/Products/Blindness/JAWS) can be downloaded and used for 40 minutes before a reboot. It runs on windows and works best on newer IE browsers. This is the primary screen reader to learn and test.
+- Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
+- Create Selenium (Javascript based) scripts or similar tests (see tests folder in git project)
+- Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
 
 # Teams Using
 
-| Project   |      Comments      |  Names |
-|----------|:-------------:|------:|
-| Approva Applications |  An ASP Application interested in accessibility | Shabu Kutty |
+| Project            | Comments      |  Names |
+|--------------------|-------------|------|
+| Approva Applications |An ASP Application interested in accessibility | Shabu Kutty |
 | Automotive Exchange  | Evaluate with AngularJS and GWT | Tien Hanh Pham, Michael Lenz |
 | Business Vault |    Justin Timbers   |   A JSF based Single Page App implement with jQuery |
-| Care Assignments | ? | Michael Welborn |
-| Certification Manager | ? |    Syedur Islam |
-| Certpoint LMS  | ? | Blessed Dianne Valencia |
-| CPM Applications (4) | ? | Rick Leedy, Mike Surel |
-| CLM Web UI | ? | Michael Pendon |
-| Cloud Suite | ? | Adel, Rick Hansen  |
+| Care Assignments |   | Michael Welborn |
+| Certification Manager |   |    Syedur Islam |
+| Certpoint LMS  |   | Blessed Dianne Valencia |
+| CPM Applications (4) |   | Rick Leedy, Mike Surel |
+| CLM Web UI |   | Michael Pendon |
+| Cloud Suite |   | Adel, Rick Hansen  |
 | GFC  | Lawson App | Tiffany Kai King, Jon Cadag |
 | Hansen 8  | An ASP Application interested in accessibility  | Ovidiu Petruescu |
-| Healthcare Clinical  | ?? | Charlie Price |
-| HMS  | ? | David Parisi |
-| Infinium SHCM  | ? | Joe Bockskopf |
-| Infor ERP LN - Customer Specific Utilities  | ? | Flavio Marcato |
+| Healthcare Clinical  |   | Charlie Price |
+| HMS  |   | David Parisi |
+| Infinium SHCM  |   | Joe Bockskopf |
+| Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato |
 | Landmark  | Jetty Server Servlet | Phillip Patton |
-| Lawson S3  | Jetty Server Servlet | Phillip Patton |
-| LBI | ? | Steve Stahl, Rommel Dollison |
-| LTM App Group | ? | Jerry Drinka, David Cooper |
-| Masterpiece | ? | Tam Nav |
-| MNT0386 - Cloud Enablement of SRS | ? | Leo Peng |
+| Lawson S3  |   | Andy Buboltz |
+| LBI |   | Steve Stahl, Rommel Dollison |
+| LTM App Group |   | Jerry Drinka, David Cooper |
+| Masterpiece |   | Tam Nav |
+| MNT0386 - Cloud Enablement of SRS |   | Leo Peng |
 | Mongoose - Demo Services | Mongoose | Lee Flaherty |
-| MSCM (Mobile Supply Chain Management ) | ? | Ferdinand Brian Verdejol, Larry Amisola |
-| M3 Sales and Marketing Suite Team - Metadata Publisher | ? | Ralph Brian Mercadal, Lito Lopez |
-| MUA (M3H5 Client) | ? | Michael Quibin , Jack Rubillar |
-| Optiva | ? | Andy Koenigsberg |
-| PMServerAdmin | ? | Mike Campbell |
+| MSCM (Mobile Supply Chain Management ) |   | Ferdinand Brian Verdejol, Larry Amisola |
+| M3 Sales and Marketing Suite Team - Metadata Publisher |   | Ralph Brian Mercadal, Lito Lopez |
+| MUA (M3H5 Client) |   | Michael Quibin , Jack Rubillar |
+| Optiva |   | Andy Koenigsberg |
+| PMServerAdmin |   | Mike Campbell |
 | PCM | Knockout App | Tim Dunham |
 | Rhythm | Node Js app with Marionette | Ted Kusio |
-| Sales Portal | ? | Matt Defina  |
+| Sales Portal |   | Matt Defina  |
 | SmartStream | ASP | Wim Denayer |
 | Softbrands FourthShift ERP | ASP | Steve Duepner |
 | S3 Worklist | Webpart (Black) | Jeremy Spring |
 | Sunsystems Transfer Desk | Alexander Taylor | MVC3 |
 | Supply Chain Execution | Anindhya Sharma | Reviewing |
 | SupplyWeb | Chad Paulinski | Reviewing |
-| System I | ? | Richard Sankey |
+| System I |   | Richard Sankey |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  |
 | Xtreme Support | ASP| Raj S. Joshi |
+
