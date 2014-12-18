@@ -100,7 +100,7 @@
         // literals in-between each section to be automatically added (meaning, you can't type a literal to end that
         // group until all characters in that group are entered).  This is used for some group matching and for time.
         if (self.mode === 'time' || self.element.attr('data-group-complete')) {
-          self.groupComplete = true;
+          //self.groupComplete = true;
         }
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
