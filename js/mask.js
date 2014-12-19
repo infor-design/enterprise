@@ -1135,7 +1135,7 @@
           this.element.prev('label').find('.currency').remove();
         }
         this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
-        this.element.removeData(pluginName);
+        $.removeData(this.element[0], pluginName);
       }
     };
 

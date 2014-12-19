@@ -127,15 +127,18 @@
 
       // Add masking with the mask function
       mask: function () {
-        if (this.element.data('mask')) {
+        if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
           this.element.data('mask').destroy();
         }
+        this.element.data('mask', undefined);
 
         this.element
           .attr('data-mask', (this.show24Hours ? '## : ##' : '## : ## am'))
           .attr('data-mask-mode', 'time')
           .attr('data-validate', 'time')
-          .mask().validate();
+          .mask()
+          .validate()
+          .trigger('updated');
       },
 
       // Return whether or not the calendar div is open.
@@ -371,14 +374,16 @@
       destroy: function() {
         this.trigger.off('keydown.timepicker');
         this.element.off('focus.timepicker keydown.timepicker');
-        this.popup.off('touchend.timepicker touchcancel.timepicker click.timepicker');
+        if (this.popup) {
+          this.popup.hide(); // closes the timepicker popup
+        }
 
         this.trigger.remove();
         this.element.data('mask').destroy();
-        this.element.data('validate').destroy();
         if (this.origTimeFormat) {
           this.element.attr('data-time-format', this.originalTimeFormat);
         }
+        $.removeData(this.element[0], 'validate');
         $.removeData(this.element[0], pluginName);
       }
     };
