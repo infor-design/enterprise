@@ -14,7 +14,6 @@ $secondary-color: #69d2ce;
 $font-color-dark: #333333;
 $font-color: #666666;
 $font-color-light: #767676; //Was 999999 in design
-$font-color-disabled: #9d9d9d;
 $label-color: #666666;
 
 // Rules
@@ -22,20 +21,19 @@ $hr-top-color: #b6b6b6;
 $hr-bottom-color: #ffffff;
 
 // Form Buttons
-$primary-button-bg-color: #0c7ad8; //Was #0896e9 in design
-$primary-button-hover-bg-color: #1a7cd5;
-$primary-button-focus-bg-color: #1d98e6;
-$primary-button-active-bg-color: #1a7cd4;
-$primary-button-disabled-bg-color: #69bbea;
+$primary-btn-bg-color: #0c7ad8; //Was #0896e9 in design
+$primary-btn-hover-bg-color: #0977d5;
+$primary-btn-focus-bg-color: #1d98e6;
+$primary-btn-active-bg-color: #1a7cd4;
 
 // Secondary/Normal Buttons
-$button-color: #5a5a5a;
-$button-bg-color: #d2d2d2;
-$button-hover-bg-color: #b6b6b6;
-$button-focus-bg-color: #d2d2d2;
-$button-active-bg-color: #a8a8a8;
-$button-active-color: #333333;
-$button-disabled-bg-color: #d2d2d2;
+$btn-color: #5a5a5a;
+$btn-bg-color: #d2d2d2;
+$btn-hover-bg-color: #b6b6b6;
+$btn-focus-bg-color: #d2d2d2;
+$btn-active-bg-color: #a8a8a8;
+$btn-active-color: #333333;
+$btn-disabled-opacity: .6;
 
 // Switch
 $switch-checked-color: #6ec90d;
@@ -44,10 +42,10 @@ $switch-disabled-color: #d2d2d2;
 $switch-disabled-label-color: #aaaaaa;
 
 // Tertiary Buttons
-$tertiary-button-color: #666666;
-$tertiary-button-hover-color: #333333;
-$tertiary-button-focus-border-color: $primary-color;
-$tertiary-button-focus-color: $primary-color;
+$tertiary-btn-color: #666666;
+$tertiary-btn-hover-color: #333333;
+$tertiary-btn-focus-border-color: $primary-color;
+$tertiary-btn-focus-color: $primary-color;
 
 // Input Fields
 $input-border-color: #999999;
@@ -81,7 +79,7 @@ $editor-focus-border-color: $input-focus-border-color;
 $editor-focus-shadow: $input-focus-shadow;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: #ffffff;
-$editor-button-color: #767676;  //Was #999999  in design
+$editor-btn-color: #767676;  //Was #999999  in design
 
 // Multiselect
 $multiselect-focus-border-color: $input-focus-border-color;
@@ -130,8 +128,8 @@ $tooltip-bg-color: #5e5e5e;
 
 // Popovers
 $popover-bg-color: #ffffff;
-$popover-border-color: #ececec;
-$popover-box-shadow: 0 0 5px 0 #aaaaaa;
+$popover-border-color: #e8e8e8;
+$popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
 
 //Slider
@@ -186,6 +184,6 @@ $link-active-color: #004096;
 
 //Breakpoint sizes
 $breakpoint-phone: 360px;
-$breakpoint-phone-to-tablet: 768px;
+$breakpoint-phone-to-tablet: 980px;
 $breakpoint-tablet-to-desktop: 1240px;
-$breakpoint-desktop-to-extralarge: 1479px;
+$breakpoint-desktop-to-extralarge: 1440px;

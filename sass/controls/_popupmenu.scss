@@ -10,9 +10,9 @@
 }
 
 .popupmenu {
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 3px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
   color: $input-color;
   display: none;
   font-family: $font-regular;
@@ -21,12 +21,15 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px 0;
+
   &.checkmark a {
-    padding: 0 30px 0 30px;
+    padding: 0 30px;
   }
+
   &.is-open {
     display: block;
   }
+
   li {
     cursor: pointer;
     line-height: 30px;
@@ -113,6 +116,7 @@
     > a {
       padding-right: 48px;
       > .icon.arrow {
+        border-width: 0;
         left: auto;
         position: absolute;
         right: 0;

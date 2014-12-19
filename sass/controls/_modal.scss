@@ -48,11 +48,15 @@
   opacity: 0;
   padding: 20px 30px;
   position: relative;
-  @include css3(perspective, 300px);
-  @include css3(transform, translateZ(0) rotateX(-60deg));
-  @include css3(transform-origin, 50% 50% 0);
   @include css3(transition, all .3s);
-  @include css3(backface-visibility, hidden);
+  @include css3(transform, scale(.7));
+
+//
+//3D sign Effect
+//@include css3(transform-origin, 50% 50% 0);
+//@include css3(transition, all .3s);
+//@include css3(backface-visibility, hidden);
+//
 
   // Messages/Content
   h1 {
@@ -87,7 +91,11 @@
 
 .is-visible .modal-content {
   opacity: 1;
-  @include css3(transform, translateZ(0) rotateX(0deg));
+  @include css3(transform, scale(1));
+
+  // 3d Sign Effect
+  //opacity: 1;
+  //@include css3(transform, translateZ(0) rotateX(0deg));
 }
 
 // Modal Buttons

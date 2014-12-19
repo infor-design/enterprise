@@ -83,7 +83,8 @@
 
 .popover {
   background-color: $popover-bg-color;
-  border: 1px solid $popover-border-color;
+  border: 0;
+  box-shadow: $popover-box-shadow;
   color: $popover-color;
   pointer-events: initial;
   z-index: 3010;
@@ -101,10 +102,12 @@
   &.bottom {
     .arrow {
       border-bottom-color: $popover-border-color;
+      top: -12px;
     }
 
     .arrow:after {
       border-bottom-color: $popover-bg-color;
+      top: 2px;
     }
   }
 

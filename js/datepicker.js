@@ -47,29 +47,33 @@
         this.trigger = $('<svg class="icon">' +
                          '<use xlink:href="#icon-datepicker"/>' +
                          '</svg>').insertAfter(this.element);
+        this.addAria();
+      },
 
-        /*if (!this.element.is(':disabled')) {
-          this.trigger.attr('title', 'Open Calendar View').tooltip();
-        }*/
-
-        // Add Aria
+      addAria: function () {
         this.element.attr('aria-haspopup', true);
-        //.attr('aria-label', 'to change the date use the arrow keys');
-        //aria-describedby
+
+        //TODO: Confirm this with Accessibility Team
+        this.label = $('label[for="'+ this.element.attr('id') + '"]');
+        this.label.append('<span class="audible">' + Locale.translate('UseArrowDate') + '</span>');
+
+        //TODO: Do We Need This?
+        //this.ariaDayOfWeek = $('<span class="dayofweek audible"></span>');
       },
 
       //Attach Events used by the Control
       handleEvents: function () {
         var self = this;
         this.trigger.on('click.datepicker', function () {
-          self.openCalendar();
+          if (self.isOpen()) {
+            self.closeCalendar();
+          } else {
+            self.openCalendar();
+          }
           self.element.focus();
         });
 
-        this.element.on('focus.datepicker', function () {
-          self.mask();
-        });
-
+        self.mask();
         this.handleKeys();
       },
 
@@ -78,19 +82,54 @@
         var self = this;
 
         this.element.on('keydown.datepicker', function (e) {
-          var handled = false;
+          var handled = false,
+            key = e.which;
+
           //Arrow Down or Alt first opens the dialog
-          if (e.keyCode === 40 && !self.isOpen()) {
+          if (key === 40 && !self.isOpen()) {
             handled = true;
             self.openCalendar();
           }
 
-          //Arrow Down select same day of the week in the previous or next week
-          if (e.keyCode === 40 && self.isOpen()) {
+          //Arrow Down: select same day of the week in the next week
+          if (key === 40 && self.isOpen()) {
             handled = true;
             self.currentDate.setDate(self.currentDate.getDate() + 7);
-            console.log(self.currentDate);
             self.insertDate(self.currentDate);
+          }
+
+          //Arrow Up: select same day of the week in the previous week
+          if (key === 38 && self.isOpen()) {
+            handled = true;
+            self.currentDate.setDate(self.currentDate.getDate() - 7);
+            self.insertDate(self.currentDate);
+          }
+
+          //Arrow Left or - : select prev day
+          if (key === 37 && self.isOpen() || key === 61 && !self.isOpen()) {
+            handled = true;
+            self.currentDate.setDate(self.currentDate.getDate() - 1);
+            self.insertDate(self.currentDate);
+          }
+
+          //Arrow Right or - : select prev day
+          if (key === 39 && self.isOpen() || key === 173 && !self.isOpen()) {
+            handled = true;
+            self.currentDate.setDate(self.currentDate.getDate() + 1);
+            self.insertDate(self.currentDate);
+          }
+
+          // 't' selects today
+          if (key === 84) {
+            handled = true;
+            self.currentDate = new Date();
+            self.insertDate(self.currentDate);
+          }
+
+          // Space closes Date Picker, selecting the Date
+          if (key === 32 && self.isOpen()) {
+            self.closeCalendar();
+            self.element.focus();
           }
 
           if (handled) {
@@ -104,6 +143,8 @@
 
       // Add masking with the mask function
       mask: function () {
+
+        console.log(Locale);
         var dateFormat = Locale.calendar().dateFormat,
             sep = dateFormat.seperator;
 
@@ -115,13 +156,18 @@
           this.element.data('mask').destroy();
         }
 
-        var mask = '## / ## / ####'.replace('/', sep);
+        var mask = '##/##/####'.replace(new RegExp('/', 'g'), sep);
 
         this.element
           .attr('data-mask', mask)
           .attr('data-validate', 'date')
           .attr('data-mask-mode', 'date')
           .mask().validate();
+
+        //TODO: Test - should add placeholder if there is one
+        if (this.element.attr('placeholder') !== undefined) {
+          this.element.attr('placeholder', settings.dateFormat);
+        }
       },
 
       // Return whether or not the calendar div is open.
@@ -139,26 +185,39 @@
         }
 
         if (this.popup && this.popup.is(':visible')) {
-          self.popup.hide();
+          self.closeCalendar();
         }
+
+        this.element.addClass('is-active');
 
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table"></table>');
-        this.header = $('<div class="calendar-header"><button type="button" class="prev">Previous Month</button><span class="month">november</span><span class="year"> 2014</span><button type="button" class="next">Next Month</button></div>');
+        this.header = $('<div class="calendar-header"><button class="btn-icon prev"><svg class="icon"><use xlink:href="#icon-caret-left"></use></svg><span>Previous Month</span></button><span class="month">november</span><span class="year"> 2014</span><button class="btn-icon next"><svg class="icon"><use xlink:href="#icon-caret-right"></use></svg><span>Next Month</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="selected">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
         this.footer = $('<div class="calendar-footer"> <a href="#" class="link cancel">Clear</a> <a href="#" class="link today">Today</a> </div>');
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
         this.trigger.popover({content: this.calendar, trigger: 'immediate',
-            placement: 'offset', offset: {top: 20, left: 140}, width: '200',
-            tooltipElement: '#calendar-popup'});
+            placement: 'offset', offset: {top: 27, left: 141}, width: '200',
+            tooltipElement: '#calendar-popup'})
+            .on('hide.datepicker', function () {
+              self.closeCalendar();
+            });
 
         // Show Month
-        this.currentDate = new Date();
-        this.currentMonth = 9;
-        this.currentYear = 2014;
-        //TODO: this.currentDate.getMonth(), 2014);
+        var currentVal = this.element.val();
+
+        this.currentDate = (currentVal ? Locale.parseDate(this.element.val()) : new Date());
+        this.currentMonth = this.currentDate.getMonth();
+        this.currentYear = this.currentDate.getFullYear();
+        this.currentDay = this.currentDate.getDate();
+
+        this.todayDate = new Date();
+        this.todayMonth = this.todayDate.getMonth();
+        this.todayYear = this.todayDate.getFullYear();
+        this.todayDay = this.todayDate.getDate();
+
         this.showMonth(this.currentMonth, this.currentYear);
         this.popup = $('#calendar-popup');
         this.originalDate = this.element.val();
@@ -171,6 +230,8 @@
             day = $(this).addClass('selected').text();
 
           self.currentDate = new Date(new Date().getFullYear(), month, day);
+          self.insertDate(self.currentDate);
+          self.closeCalendar();
         });
 
         // Calendar Footer Events
@@ -180,12 +241,12 @@
           if (btn.hasClass('cancel')) {
             self.element.val('');
             self.currentDate = null;
-            self.popup.hide();
+            self.closeCalendar();
           }
 
           if (btn.hasClass('today')) {
             self.insertDate(new Date());
-            self.popup.hide();
+            self.closeCalendar();
           }
           self.element.focus();
         });
@@ -200,8 +261,15 @@
         });
       },
 
+      // Open the calendar in a popup
+      closeCalendar: function () {
+        this.popup.hide();
+        this.element.removeClass('is-active');
+      },
+
       // Update the calendar to show the month (month is zero based)
       showMonth: function (month, year) {
+        var self = this;
 
         if (month === 12) {
           year ++;
@@ -239,7 +307,8 @@
           dayCnt = 1, nextMonthDayCnt = 1;
 
         this.days.find('td').each(function (i) {
-          var th = $(this).removeClass('alt');
+          var th = $(this).removeClass('alt selected today');
+          th.attr('tabindex', 0);
 
           if (i < leadDays) {
             th.addClass('alt').text(lastMonthDays - leadDays + 1 + i);
@@ -247,6 +316,15 @@
 
           if (i >= leadDays && dayCnt <= thisMonthDays) {
             th.text(dayCnt);
+
+            if (dayCnt === self.currentDay) {
+              th.addClass('selected');
+            }
+
+            if (dayCnt === self.todayDay && self.currentMonth === self.todayMonth) {
+              th.addClass('today');
+            }
+
             dayCnt++;
             return;
           }
@@ -261,7 +339,25 @@
 
       // Put the date in the field and select on the calendar
       insertDate: function (date) {
-        this.element.val(Locale.formatDate(date));
+        var input = this.element;
+        input.val(Locale.formatDate(date)).trigger('updated');
+
+        // Make sure Calendar is showing that month
+        if (this.currentMonth !== date.getMonth()) {
+          this.showMonth(date.getMonth(), date.getFullYear());
+        }
+
+        if (!this.isOpen()) {
+          return;
+        }
+
+        // Show the Date in the UI
+        var dateTd = this.days.find('td:not(.alt)').filter(function(){
+                        return $(this).text().toLowerCase() === date.getDate().toString();
+                      });
+
+        this.days.find('.selected').removeClass('selected');
+        dateTd.addClass('selected');  //.focus();
       }
     };
 

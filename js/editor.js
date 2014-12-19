@@ -143,34 +143,30 @@
             return this;
         }
         this.toolbar = this.createToolbar();
-        this.toolbarActions = this.toolbar.find('.editor-toolbar-actions');
+        this.toolbarActions = this.toolbar;
 
         return this;
       },
 
       createToolbar: function () {
         var toolbar = $('<div></div>').attr('class', 'editor-toolbar').attr('id', 'editor-toolbar-' + this.id);
-        toolbar.append(this.toolbarButtons());
+        this.toolbarButtons(toolbar);
         toolbar.insertBefore(this.sourceViewActive() ? this.element.prev() : this.element);
         toolbar.find('button').tooltip();
         return toolbar;
       },
 
-      toolbarButtons: function () {
+      toolbarButtons: function (toolbar) {
         var btns = this.sourceViewActive() ? settings.buttons.source : settings.buttons.editor,
-            ul = $('<ul></ul>').attr('id','editor-toolbar-actions').attr('class', 'editor-toolbar-actions'),
-            li, i, btn;
+            i, btn;
 
         for (i = 0; i < btns.length; i += 1) {
           btn = this.buttonTemplate(btns[i]);
 
           if (btn) {
-              li = $('<li></li>');
-              li.append(btn).appendTo(ul);
+            toolbar.append(btn);
           }
         }
-
-        return ul;
       },
 
       switchToolbars: function() {
@@ -338,30 +334,30 @@
 
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
-          buttonTemplates = {
-            'bold': '<button type="button" class="editor-action editor-action-bold" title="bold" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-            'italic': '<button type="button" class="editor-action editor-action-italic" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-            'underline': '<button type="button" class="editor-action editor-action-underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-            'strikethrough': '<button type="button" class="editor-action editor-action-strikethrough" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
-            'superscript': '<button type="button" class="editor-action editor-action-superscript" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-            'subscript': '<button type="button" class="editor-action editor-action-subscript" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+          buttonTemplates = { //TODO: Localize Text
+            'bold': '<button type="button" class="btn-editor" title="Toggle Bold Text" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+            'italic': '<button type="button" class="btn-editor" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+            'underline': '<button type="button" class="btn-editor underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+            'strikethrough': '<button type="button" class="btn-editor" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+            'superscript': '<button type="button" class="btn-editor" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+            'subscript': '<button type="button" class="btn-editor" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
             'seperator': '<div class="seperator"></div>',
-            'anchor': '<button type="button" class="editor-action editor-action-anchor" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
-            'image': '<button type="button" class="editor-action editor-action-image" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
-            'video': '<button type="button" class="editor-action editor-action-video" title="insert video" data-action="video" data-modal="editor-modal-video" data-element="video">' + buttonLabels.video + '</button>',
-            'header1': '<button type="button" class="editor-action editor-action-header1" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-            'header2': '<button type="button" class="editor-action editor-action-header2" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-            'quote': '<button type="button" class="editor-action editor-action-quote" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-            'orderedlist': '<button type="button" class="editor-action editor-action-orderedlist" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-            'unorderedlist': '<button type="button" class="editor-action editor-action-unorderedlist" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-            'pre': '<button type="button" class="editor-action editor-action-pre" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
-            'indent': '<button type="button" class="editor-action editor-action-indent" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-            'outdent': '<button type="button" class="editor-action editor-action-outdent" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-            'justifyLeft': '<button type="button" class="editor-action editor-action-indent" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-            'justifyCenter': '<button type="button" class="editor-action editor-action-outdent" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-            'justifyRight': '<button type="button" class="editor-action editor-action-outdent" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
-            'source': '<button type="button" class="editor-action editor-action-source" title="view source" data-action="source" >' + buttonLabels.source + '</button>',
-            'visual': '<button type="button" class="editor-action editor-action-visual" title="view visual" data-action="visual" >' + buttonLabels.visual + '</button>'
+            'anchor': '<button type="button" class="btn-editor" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
+            'image': '<button type="button" class="btn-editor" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
+            'video': '<button type="button" class="btn-editor" title="insert video" data-action="video" data-modal="editor-modal-video" data-element="video">' + buttonLabels.video + '</button>',
+            'header1': '<button type="button" class="btn-editor" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+            'header2': '<button type="button" class="btn-editor" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+            'quote': '<button type="button" class="btn-editor" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+            'orderedlist': '<button type="button" class="btn-editor" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+            'unorderedlist': '<button type="button" class="btn-editor" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+            'pre': '<button type="button" class="btn-editor" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
+            'indent': '<button type="button" class="btn-editor" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
+            'outdent': '<button type="button" class="btn-editor" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+            'justifyLeft': '<button type="button" class="btn-editor" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+            'justifyCenter': '<button type="button" class="btn-editor" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+            'justifyRight': '<button type="button" class="btn-editor" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
+            'source': '<button type="button" class="btn-editor" title="view source" data-action="source" >' + buttonLabels.source + '</button>',
+            'visual': '<button type="button" class="btn-editor" title="view visual" data-action="visual" >' + buttonLabels.visual + '</button>'
           };
 
         return buttonTemplates[btnType] || false;
@@ -369,26 +365,26 @@
       getButtonLabels: function (buttonLabelType) {
         var customButtonLabels,
           attrname,
-          buttonLabels = {
-            'bold': '<b>B</b>',
-            'italic': '<b><i>I</i></b>',
-            'underline': '<b><u>U</u></b>',
-            'superscript': '<b>x<sup>1</sup></b>',
-            'subscript': '<b>x<sub>1</sub></b>',
-            'anchor': '<svg class="icon icon-link"><use xlink:href="#icon-link"></use></svg>',
-            'image': '<svg class="icon icon-image"><use xlink:href="#icon-image"></use></svg>',
-            'video': '<svg class="icon icon-video"><use xlink:href="#icon-video"></use></svg>',
-            'header1': '<b>H3</b>',
-            'header2': '<b>H4</b>',
-            'quote': '<svg class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
-            'orderedlist': '<svg class="icon icon-orderedlist"><use xlink:href="#icon-orderedlist"></use></svg>',
-            'unorderedlist': '<svg class="icon icon-unorderedlist"><use xlink:href="#icon-unorderedlist"></use></svg>',
+          buttonLabels = {    //TODO: Localize
+            'bold': '<span class="audible">Bold</span><b aria-hidden="true">B</b>',
+            'italic': '<span class="audible">Italic</span><b aria-hidden="true"><i>I</i></b>',
+            'underline': '<span class="audible">Underline</span><b aria-hidden="true"><u>U</u></b>',
+            'superscript': '<span class="audible">Superscript</span><b aria-hidden="true">x<sup>1</sup></b>',
+            'subscript': '<span class="audible">Subscript</span><b aria-hidden="true">x<sub>1</sub></b>',
+            'anchor': '<span class="audible">Anchor</span><svg class="icon icon-link"><use xlink:href="#icon-link"></use></svg>',
+            'image': '<span class="audible">Image</span><svg class="icon icon-image"><use xlink:href="#icon-image"></use></svg>',
+            'video': '<span class="audible">Video</span><svg class="icon icon-video"><use xlink:href="#icon-video"></use></svg>',
+            'header1': '<span class="audible">Heading 3</span><b aria-hidden="true">H3</b>',
+            'header2': '<span class="audible">Heading 4</span><b aria-hidden="true">H4</b>',
+            'quote': '<span class="audible">Block Quote</span><svg class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
+            'orderedlist': '<span class="audible">Ordered List</span><svg class="icon icon-orderedlist"><use xlink:href="#icon-orderedlist"></use></svg>',
+            'unorderedlist': '<span class="audible">Un-Ordered List</span><svg class="icon icon-unorderedlist"><use xlink:href="#icon-unorderedlist"></use></svg>',
             'pre': '<b>0101</b>',
             'indent': '<b>&rarr;</b>',
             'outdent': '<b>&larr;</b>',
-            'justifyLeft': '<svg class="icon icon-justify-left"><use xlink:href="#icon-justify-left"></use></svg>',
-            'justifyCenter': '<svg class="icon icon-justify-center"><use xlink:href="#icon-justify-center"></use></svg>',
-            'justifyRight': '<svg class="icon icon-justify-right"><use xlink:href="#icon-justify-right"></use></svg>',
+            'justifyLeft': '<span class="audible">Justify Left</span><svg class="icon icon-justify-left"><use xlink:href="#icon-justify-left"></use></svg>',
+            'justifyCenter': '<span class="audible">Justify Center</span><svg class="icon icon-justify-center"><use xlink:href="#icon-justify-center"></use></svg>',
+            'justifyRight': '<span class="audible">Justify Right</span><svg class="icon icon-justify-right"><use xlink:href="#icon-justify-right"></use></svg>',
             'source': '<b>&nbsp;HTML&nbsp;</b>',
             'visual': '<b>&nbsp;VISUAL&nbsp;</b>'
           };
@@ -398,9 +394,9 @@
         }
         if (typeof customButtonLabels === 'object') {
           for (attrname in customButtonLabels) {
-              if (customButtonLabels.hasOwnProperty(attrname)) {
-                  buttonLabels[attrname] = customButtonLabels[attrname];
-              }
+            if (customButtonLabels.hasOwnProperty(attrname)) {
+              buttonLabels[attrname] = customButtonLabels[attrname];
+            }
           }
         }
         return buttonLabels;

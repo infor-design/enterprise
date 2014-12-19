@@ -1,6 +1,5 @@
 /**
-* Responsive Tooltip and Popover Control
-* @name tooltip
+* Tooltip and Popover Control
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -47,7 +46,11 @@
       addAria: function() {
         var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
         this.content =  this.element.attr('title') || settings.content;
-        this.element.removeAttr('title').attr('aria-describedby', name);
+
+        if (!this.isPopover) {
+          this.element.removeAttr('title').attr('aria-describedby', name);
+        }
+
         if (this.isPopover && settings.trigger === 'click') {
           this.element.attr('aria-haspopup', true);
         }
@@ -166,12 +169,18 @@
 
         setTimeout(function () {
           $(document).on('mouseup.tooltip', function (e) {
+
             if (settings.isError || settings.trigger === 'focus') {
              return;
             }
+
+            if ($(e.target).is(self.element) && $(e.target).is('svg.icon')) {
+              return;
+            }
+
             if ($(e.target).closest('.popover').length === 0 &&
                 $(e.target).closest('.dropdown-list').length === 0) {
-              self.hide();
+              self.hide(e);
             }
           })
           .on('keydown.tooltip', function (e) {
@@ -294,6 +303,7 @@
 
         this.tooltip.addClass('is-hidden');
         this.tooltip.off('click.tooltip');
+
         if ($('.popover:visible').length === 0) {
           $(document).off('mouseup.tooltip keydown.tooltip');
           $(window).off('resize.tooltip');

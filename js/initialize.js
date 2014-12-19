@@ -15,7 +15,7 @@
 
     return this.each(function() {
       //Test Set Locale
-      //Locale.set('es-ES');
+      //Locale.set('de-DE');
 
       var elem = $(this);
       elem = elem.find(':not(.no-init)');
@@ -35,8 +35,8 @@
       //Editors
       elem.find('.editor').editor();
 
-      //Menu Buttons
-      elem.find('.menubutton, .splitbutton-menu').popupmenu();
+      //Menu/Split Buttons
+      elem.find('.btn-menu').popupmenu();
 
       //Context Menu
       elem.find('[data-popupmenu]').each(function () {
@@ -87,7 +87,7 @@
       elem.find('select[multiple]:not([data-init])').multiselect();
 
       //Button with Effects
-      elem.find('.button, .button-secondary, .button-primary, .button-destructive, .button-menu').button();
+      elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive').button();
 
       //Pager
       var pager = elem.find('.pager').pager();

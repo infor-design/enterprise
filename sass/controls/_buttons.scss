@@ -7,12 +7,11 @@ button {
 }
 
 // Buttons - button = secondary button
-.button,
-.button-secondary,
-.button-primary,
-.button-destructive,
-.button-menu {
-  background-color: $primary-button-bg-color;
+.btn,
+.btn-secondary,
+.btn-primary,
+.btn-destructive {
+  background-color: $primary-btn-bg-color;
   border: 1px solid transparent;
   border-radius: 2px;
   color: $inverse-color;
@@ -31,25 +30,26 @@ button {
 }
 
 // standard, primary, destructive
-.button-primary {
+.btn-primary {
   &:hover {
-    background-color: $primary-button-hover-bg-color;
+    background-color: $primary-btn-hover-bg-color;
   }
 
   &:active {
-    background-color: $primary-button-active-bg-color;
+    background-color: $primary-btn-active-bg-color;
   }
 
   &:focus {
-    background-color: $primary-button-bg-color;
-    border: 1px solid $primary-button-bg-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-button-bg-color;
+    background-color: $primary-btn-bg-color;
+    border: 1px solid $primary-btn-bg-color;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
   }
 
   &[disabled],
-  &[disabled]:hover {
-    background-color: $primary-button-disabled-bg-color;
-    border-color: 1px solid primary-button-disabled-bg-color;
+  &[disabled]:hover,
+  &[disabled]:active {
+    background-color: $primary-btn-bg-color;
+    @include opacity($btn-disabled-opacity);
     cursor: default;
   }
 
@@ -59,31 +59,32 @@ button {
 }
 
 // Normal / Secondary Button
-.button,
-.button-secondary {
-  background-color: $button-bg-color;
-  color: $button-color;
+.btn,
+.btn-secondary {
+  background-color: $btn-bg-color;
+  color: $btn-color;
 
   &:hover {
-    background-color: $button-hover-bg-color;
+    background-color: $btn-hover-bg-color;
   }
 
   &:active {
-    background-color: $button-active-bg-color;
-    color: $button-active-color;
+    background-color: $btn-active-bg-color;
+    color: $btn-active-color;
   }
 
   &:focus {
-    background-color: $button-focus-bg-color;
-    border: 1px solid $button-hover-bg-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $button-hover-bg-color;
+    background-color: $btn-focus-bg-color;
+    border: 1px solid $btn-hover-bg-color;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-hover-bg-color;
   }
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $button-disabled-bg-color;
-    color: $font-color-disabled;
+    background-color: $btn-bg-color;
+    color: $btn-color;
     cursor: default;
+    @include opacity($btn-disabled-opacity);
   }
 
   .ripple {
@@ -92,8 +93,8 @@ button {
 }
 
 // Destructive Actions / Third Level Button
-.button-destructive,
-.button-tertiary {
+.btn-destructive,
+.btn-tertiary {
   background-color: transparent;
   color: $font-color;
 
@@ -102,18 +103,19 @@ button {
   }
 
   &:active {
-    color: $primary-button-active-bg-color;
+    color: $primary-btn-active-bg-color;
   }
 
   &:focus {
-    border: 1px solid $tertiary-button-focus-border-color;
+    border: 1px solid $tertiary-btn-focus-border-color;
     box-shadow: none;
-    color: $tertiary-button-focus-color;
+    color: $tertiary-btn-focus-color;
   }
 
   &[disabled],
   &[disabled]:hover {
-    color: $font-color-disabled;
+    @include opacity($btn-disabled-opacity);
+    color: $font-color;
     cursor: default;
   }
 

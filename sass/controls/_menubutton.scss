@@ -1,16 +1,15 @@
 // Menu Buttons
 //================================================== */
 
-.button-group > * {
+.btn-group > * {
   float: left;
   margin-right: 20px;
   margin-top: 20px;
   position: relative;
 }
 
-.splitbutton,
-.menubutton,
-.splitbutton-menu {
+.btn-split,
+.btn-menu {
   background-color: $menubutton-bg-color;
   border: 1px solid $menubutton-border-color;
   border-radius: 2px;
@@ -43,15 +42,15 @@
   }
 }
 
-.splitbutton {
+.btn-split {
   border-radius: 2px 0 0 2px;
 
-  + .splitbutton-menu {
+  + .btn-menu {
     border-radius: 0 2px 2px 0;
     margin-left: -21px;
   }
 
-  &:focus + .splitbutton-menu {
+  &:focus + .btn-menu {
     border-left: 1px solid $menubutton-focus-border-color;
   }
 }

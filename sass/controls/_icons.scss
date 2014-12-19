@@ -1,13 +1,14 @@
-/* Icons and Icon Buttons
-================================================== */
+// Icons and Icon Buttons
+//================================================== //
 
 // Buttons
 .btn-icon {
   background-color: transparent;
-  border: 0;
+  border: 1px solid transparent;
+  border-radius: 2px;
   color: transparent;
   cursor: pointer;
-  fill: #666666;
+  fill: #999999;
   height: 32px;
   width: 32px;
 
@@ -27,7 +28,7 @@
 // Svg Styles
 svg.icon {
   display: inline-block;
-  fill: #666666;
+  fill: #999999;
   height: 32px;
   position: relative;
   width: 32px;
@@ -63,13 +64,14 @@ svg.icon-logo {
   width: 34px;
 }
 
-.btn-icon:hover,
-.btn-icon:active {
-  fill: #333;
+.btn-icon:hover  svg,
+.btn-icon:active svg {
+  fill: #333333;
 }
 
 .btn-icon:focus {
-  border: 1px solid #0099ff;
+  border: 1px solid #0896e9;
   outline: 0;
 }
+
 

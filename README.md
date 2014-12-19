@@ -203,6 +203,9 @@ https://docs.google.com/spreadsheets/d/1nxSEfNoKtQ9i3R7hgokj8VTdAJ95J8SXfhJ7Irtr
 Requirements:
 https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm98A/edit?pli=1#gid=989468169
 
+Usefull Links:
+http://accessibility.psu.edu/protocol
+
 ### Things to Test
 
 The controls should be tested in several ways:
@@ -263,7 +266,7 @@ or eventually the SoHo XI site pages
 | Optiva |   | Andy Koenigsberg |
 | PMServerAdmin |   | Mike Campbell |
 | PCM | Knockout App | Tim Dunham |
-| Rhythm | Node Js app with Marionette | Ted Kusio |
+| Rhythm | Node Js app with Marionette | Thim Orskov |
 | Sales Portal |   | Matt Defina  |
 | SmartStream | ASP | Wim Denayer |
 | Softbrands FourthShift ERP | ASP | Steve Duepner |

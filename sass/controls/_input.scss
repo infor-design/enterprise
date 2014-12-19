@@ -57,7 +57,8 @@ textarea[readonly] {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+input.is-active {
   border-color: $input-focus-border-color;
   box-shadow: $input-focus-shadow;
 }
@@ -132,7 +133,7 @@ label.required:after,
   display: inline-block;
   font-family: $font-regular;
   @include font-size(17);
-  left: -2px;
+  left: 3px;
   line-height: 0;
   position: relative;
   speak: none;
@@ -233,7 +234,7 @@ textarea.error:focus,
   margin-bottom: 20px;
 
   > .currency {
-    color: $input-placeholder-color;
+    color: #707070;
     display: inline-block;
     padding: 10px;
     position: absolute;

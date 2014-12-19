@@ -40,7 +40,7 @@
      currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
      currencyFormat: '¤#,##0.00',
      //Resx
-     messages: {'Required': 'Required'}
+     messages: {'Required': 'Required', 'UseArrowColor': 'Use arrow keys to select a color', 'UseArrowDate': 'Use arrow keys to select a date'}
   });
 
 }));

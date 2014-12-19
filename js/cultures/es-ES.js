@@ -23,8 +23,8 @@
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'd/M/yyyy', //use four digit year
-                   'medium': 'd/M/yyy',
+                   'short': 'd / M / yyyy', //use four digit year
+                   'medium': 'd / M / yyy',
                    'long': 'd \'de\' MMMM \'de\' y'},
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
       days: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],

@@ -17,7 +17,7 @@ Locale = window.Locale; // jshint ignore:line
 
 //Load the Locales because Ajax doesnt work
 require('../../../js/cultures/en.js');
-require('../../../js/cultures/de.js');
+require('../../../js/cultures/de-DE.js');
 
 //Tests
 describe('Locale [mocha]', function(){
@@ -58,6 +58,7 @@ describe('Locale [mocha]', function(){
   it('should be able to parse dates', function(){
     Locale.set('en');    //year, month, day
     Locale.parseDate('11/8/2000').getTime().should.equal(new Date(2000, 10, 8).getTime());
+    Locale.parseDate('10 / 15 / 2014').getTime().should.equal(new Date(2014, 9, 15).getTime());
     Locale.set('de');    //year, month, day
     Locale.parseDate('08.11.2000').getTime().should.equal(new Date(2000, 10, 8).getTime());
   });

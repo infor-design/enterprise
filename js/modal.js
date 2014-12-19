@@ -56,11 +56,11 @@
         }
 
         self.isCancelled = false;
-        this.element.find('.button-close').on('click.modal', function() {
+        this.element.find('.btn-close').on('click.modal', function() {
           self.close();
         });
 
-        this.element.find('.button-cancel, .link-cancel').on('click.modal', function() {
+        this.element.find('.btn-cancel, .link-cancel').on('click.modal', function() {
           self.isCancelled = true;
           self.close();
         });
@@ -91,16 +91,16 @@
             buttonset = $('<div class="modal-buttonset"></div>').appendTo(body);
 
         body.find('button').remove();
-        body.find('.button-default.button-close').remove();
+        body.find('.btn-default.btn-close').remove();
 
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
 
           if (props.isDefault) {
-            btn.addClass('button-primary');
+            btn.addClass('btn-primary');
           } else {
-            btn.addClass('button');
+            btn.addClass('btn');
           }
 
           if (props.isLink) {
@@ -186,7 +186,7 @@
           if (e.which === 13 && self.isOnTop()) {
             e.stopPropagation();
             e.preventDefault();
-            self.element.find('.button-default').trigger('click.modal');
+            self.element.find('.btn-default').trigger('click.modal');
           }
         });
 

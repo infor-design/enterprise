@@ -79,9 +79,9 @@
       addAria: function () {
         this.element.attr('aria-haspopup', true);
 
-        //TODO: Localize
+        //TODO: Test
         $('label[for="'+ this.element.attr('id') + '"]')
-          .append('<span class="audible">use down arrow to open color picker</span>');
+          .append('<span class="audible">' + Locale.translate('UseArrowColor') + '</span>');
       },
 
       // Attach Control Events

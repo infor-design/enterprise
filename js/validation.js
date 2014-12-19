@@ -188,8 +188,8 @@
           continue;
         }
 
-        if (rule.async) {
-          rule.check(value, manageResult, field);
+        if (rule.async) { //TODO: Document Breaking Change - swapped params
+          rule.check(value, field, manageResult);
         } else {
           manageResult(rule.check(value, field), showTooltip);
         }

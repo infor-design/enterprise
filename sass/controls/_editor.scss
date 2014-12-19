@@ -1,6 +1,6 @@
-/* Editor (Rich Text)
-================================================== */
-// Editor
+// Editor (Rich Text)
+//================================================== //
+
 .editor {
   background-color: transparent;
   border: 1px solid $editor-border-color;
@@ -90,73 +90,73 @@
   display: block;
   float: left;
   font-family: $font-regular;
-  height: 40px;
+  height: auto;
   margin-top: 3px;
+  min-height: 40px;
   padding: 0 10px;
   @include font-size(14);
+  width: 100%;
 
-  li {
+  button {
+    background-color: $editor-toolbar-bg-color;
+    border: 1px solid transparent;
+    color: $editor-btn-color;
+    cursor: pointer;
+    display: block;
+    fill: $editor-btn-color;
     float: left;
-    list-style: none;
+    height: 30px;
+    line-height: 0;
+    margin: 5px 2px;
+    min-width: 30px;
+    outline: none;
+    padding: 8px 5px;
+    @include font-size(16);
+    text-decoration: none;
+    -webkit-transition: background-color .2s ease-in;
+    transition: background-color .2s ease-in;
 
-    button {
-      background-color: $editor-toolbar-bg-color;
-      border: 1px solid transparent;
-      color: $editor-button-color;
-      cursor: pointer;
-      display: block;
-      fill: $editor-button-color;
-      height: 30px;
-      line-height: 0;
-      margin: 5px 2px;
-      min-width: 30px;
-      outline: none;
-      padding: 8px 5px;
-      @include font-size(16);
-      text-decoration: none;
-      -webkit-transition: background-color .2s ease-in;
-      transition: background-color .2s ease-in;
-
-      &:hover,
-      &:active,
-      &.is-active {
-        background-color: #e5e5e5;
-        border-color: #d2d2d2;
-        color: #5c5c5c;
-      }
-
-      &:focus {
-        border: 1px solid $editor-focus-border-color;
-        box-shadow: $editor-focus-shadow;
-      }
-
-      b {
-        font-weight: bold;
-      }
+    &:hover,
+    &:active,
+    &.is-active {
+      background-color: #e5e5e5;
+      border-color: #d2d2d2;
+      color: #5c5c5c;
     }
 
-    .editor-action-underline {
-      text-decoration: underline;
+    &:focus {
+      border: 1px solid $editor-focus-border-color;
+      box-shadow: $editor-focus-shadow;
     }
 
-    .icon {
-      fill: $editor-button-color;
-      height: 25px;
-      pointer-events: none;
-      position: relative;
-      top: -7px;
-      width: 25px;
+    b {
+      font-weight: bold;
+      line-height: 14px;
     }
-
-    .seperator {
-      background-color: #b6b6b6;
-      display: block;
-      height: 20px;
-      margin: 9px 15px;
-      width: 1px;
-    }
-
   }
+
+  .editor-btn.underline {
+    text-decoration: underline;
+  }
+
+  .icon {
+    fill: $editor-btn-color;
+    height: 25px;
+    pointer-events: none;
+    position: relative;
+    top: -7px;
+    width: 25px;
+  }
+
+  .seperator {
+    background-color: #b6b6b6;
+    display: block;
+    float: left;
+    height: 20px;
+    margin: 9px 15px;
+    width: 1px;
+  }
+
 }
 
 // Dialog Styling
@@ -171,10 +171,10 @@
   height: 400px;
   margin: 0 0 10px;
   min-height: 88px;
+  -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
   overflow-y: scroll;
   width: 100%;
-  -webkit-overflow-scrolling: touch;
 
   textarea {
     background-color: transparent;

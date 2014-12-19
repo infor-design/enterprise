@@ -9,7 +9,7 @@
     fill: #999999;
     height: 18px;
     margin-left: -30px;
-    margin-top: 7px;
+    margin-top: 8px;
     position: absolute;
 
     &:hover {
@@ -87,6 +87,17 @@
       font-family: $font-semibold;
     }
 
+    &:focus {
+      border-color: $datepicker-selected-bg-color;
+      outline: none;
+      -moz-outline-style: none;
+    }
+
+    &:active {
+      background-color: $datepicker-selected-bg-color;
+      color: $datepicker-selected-color;
+    }
+
   }
 
   .calendar-table {
@@ -117,34 +128,9 @@
     transition: border-color .3s ease;
     width: 30px;
 
-    &:after {
-      border-left: 2px solid #999999;
-      border-top: 2px solid #999999;
-      content: '';
-      height: 10px;
-      margin-left: -24px;
-      margin-top: -8px;
-      position: absolute;
-      transform: rotate(-45deg);
-      width: 10px;
-    }
-
-    &:hover:after {
-      border-color: #333333;
-    }
-
-    &:focus {
-      border-color: #0896e9;
-    }
-
     &.next {
       left: initial;
       right: 20px;
-
-      &:after {
-        margin-left: -28px;
-        transform: rotate(135deg);
-      }
     }
   }
 
