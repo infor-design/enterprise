@@ -385,10 +385,10 @@
         message: 'Invalid Date' // TODO - Localize
       },
       time: {
-        check: function(value) {
+        check: function(value, field) {
           value = value.replace(/ /g, '');
-          var pattern = Locale.calendar().timeFormat,
-            is24Hour = (pattern.match('HH') || []).length,
+          var pattern = field && field.attr('data-time-format') !== undefined ? field.attr('data-time-format') : Locale.calendar().timeFormat,
+            is24Hour = (pattern.match('HH') || []).length > 0,
             maxHours = is24Hour ? 24 : 12,
             colon = value.indexOf(':'),
             valueHours = 0,

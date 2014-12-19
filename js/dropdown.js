@@ -331,10 +331,12 @@
               // Close the option list
               self.closeList(true);
               self.input.focus();
+              e.stopPropagation();
+              return false;
             }
-
-            e.stopPropagation();
-            return false;
+            // Allow Esc to propagate if the menu was closed, since some other Controls
+            // that rely on dropdown may need to trigger routines when the Esc key is pressed.
+            break;
           }
           case 13: {  //enter
 
