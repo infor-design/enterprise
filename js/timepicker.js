@@ -105,8 +105,14 @@
         this.element.on('keydown.timepicker', function (e) {
           var handled = false;
 
+          // Esc closes an open popup with no action
+          if (e.which === 27 && self.isOpen()) {
+            handled = true;
+            self.closeTimePopup();
+          }
+
           //Arrow Down or Alt first opens the dialog
-          if (e.keyCode === 40 && !self.isOpen()) {
+          if (e.which === 40 && !self.isOpen()) {
             handled = true;
             self.openTimePopup();
           }
@@ -206,12 +212,12 @@
         periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
         if (!this.show24Hours) {
           timeParts.append($('<span class="label">&nbsp;&nbsp;&nbsp;</span>'));
-          periodSelect.append($('<option value="am">am</option><option value="pm">pm</option>'));
+          periodSelect.append($('<option value="am">am</option><option value="pm">pm</option>')); // TODO: Localize AM/PM With the Locale Plugin
           timeParts.append($('<label for="timepicker-period" class="audible">Period</label>'));
           timeParts.append(periodSelect);
         }
 
-        popupContent.append('<div class="controls"><a href="#" class="set-time link">Set Time</a></div>');
+        popupContent.append('<div class="controls"><a href="#" class="set-time link">Set Time</a></div>'); // TODO: Localize
 
         this.trigger.popover({content: popupContent, trigger: 'immediate',
             placement: 'bottom', offset: {top: 27, left: 0}, width: '200',
@@ -252,13 +258,28 @@
           e.preventDefault();
           self.setTimeOnField();
           self.popup.hide();
+        }).on('keydown.timepicker', 'input.dropdown', function(e) {
+          var handled = false;
+
+          // Pressing Esc when focused on a closed dropdown menu causes the entire popup to close.
+          if (e.which === 27) {
+            handled = true;
+            self.popup.hide();
+            self.element.focus();
+          }
+
+          if (handled) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
         });
 
         // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
         self.trigger.one('hide', function() {
           self.closeTimePopup();
-        }).one('show', function() {
-          self.popup.find('').data('dropdown').element.trigger('focus');
+        }).one('open', function() {
+          self.popup.find('#timepicker-hours-shdo').focus();
         });
       },
 
@@ -316,8 +337,11 @@
           period = $('#timepicker-period').val() || '',
           timeString = '' + hours + ':' + minutes + ' ' + period;
 
-        this.element.val(timeString).trigger('updated');
-        this.element.validate();
+        this.element.val(timeString)
+          .trigger('change')
+          .trigger('updated')
+          .focus()
+          .validate();
       },
 
       closeTimePopup: function() {
@@ -327,7 +351,7 @@
           if (!this.show24Hours) {
             $('#timepicker-period').data('dropdown').destroy();
           }
-          this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker');
+          this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
         }
       },
 
