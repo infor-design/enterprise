@@ -205,10 +205,10 @@
 
       position: function () {
         var self = this,
-          winH = window.innerHeight,
+          winH = window.innerHeight + $(document).scrollTop(),
           // subtract 2 from the window width to account for the tooltips
           // resizing themselves to fit within the CSS overflow boundary.
-          winW = window.innerWidth - 2;
+          winW = (window.innerWidth - 2) + $(document).scrollLeft();
 
         switch(settings.placement) {
           case 'offset':

@@ -133,7 +133,7 @@
         this.element.data('mask', undefined);
 
         this.element
-          .attr('data-mask', (this.show24Hours ? '## : ##' : '## : ## am'))
+          .attr('data-mask', (this.show24Hours ? '##:##' : '##:## am'))
           .attr('data-mask-mode', 'time')
           .attr('data-validate', 'time')
           .mask()
