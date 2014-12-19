@@ -139,7 +139,7 @@ describe('Dropdown [selenium]', function(){
       .call(done);
   });
 
-  it('should be able to add and invoke a new dropdown', function(done) {
+  it.skip('should be able to add and invoke a new dropdown', function(done) {
     var id = 'destroyThis';
 
     runner.client
@@ -162,7 +162,7 @@ describe('Dropdown [selenium]', function(){
       .call(done);
   });
 
-  it('should be able to destroy itself and reset back to its original <select> tag', function(done) {
+  it.skip('should be able to destroy itself and reset back to its original <select> tag', function(done) {
     var id = 'destroyThis';
 
     runner.client
@@ -179,7 +179,7 @@ describe('Dropdown [selenium]', function(){
       .call(done);
   });
 
-  it('should work correctly with a <form> reset', function(done) {
+  it.skip('should work correctly with a <form> reset', function(done) {
     runner.client
       // check that the "selected" item in the #form-dropdown dropdown is indeed selected.
       .isSelected('#option2', function(err, result) {

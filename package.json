@@ -33,8 +33,8 @@
     "phantomjs": "^1.9.7-15",
     "selenium-chromedriver": "0.0.2",
     "spec-xunit-file": "0.0.1-1",
-    "webdriverio": "^2.3.0",
+    "webdriverio": "^2.4.0",
     "webdriverjs-selenium-bundle": "0.0.2",
-    "zombie": "^2.0.0-alpha31"
+    "zombie": "^2.5.1"
   }
 }

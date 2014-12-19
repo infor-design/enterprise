@@ -144,7 +144,6 @@
       // Add masking with the mask function
       mask: function () {
 
-        console.log(Locale);
         var dateFormat = Locale.calendar().dateFormat,
             sep = dateFormat.seperator;
 

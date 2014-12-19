@@ -17,8 +17,7 @@ app.configure(function() {
 
   var templateOpts = {
     title: 'SoHo Controls XI',
-    layout: 'layout',
-    enableLiveReload: true
+    layout: 'layout'
   };
 
   //Setup All Routes
@@ -31,8 +30,7 @@ app.configure(function() {
   //Controls Index Page and controls sub pages
   var controlOptions = {
       title: 'SoHo Controls XI - Controls Example',
-      layout: 'controls/layout',
-      enableLiveReload: true
+      layout: 'controls/layout'
     };
 
   app.get('/controls/', function(req, res) {
@@ -48,8 +46,7 @@ app.configure(function() {
   app.get('/patterns/*', function(req, res) {
     var patternOptions = {
       title: 'SoHo Controls XI - Pattern Example',
-      layout: 'patterns/layout',
-      enableLiveReload: true
+      layout: 'patterns/layout'
     };
     var end = req.url.replace('/patterns/','');
     res.render('patterns/' + end, patternOptions);
@@ -59,8 +56,7 @@ app.configure(function() {
   app.get('/tests/*', function(req, res) {
     var testOptions = {
       title: 'SoHo Controls XI - Tests',
-      layout: 'tests/layout',
-      enableLiveReload: true
+      layout: 'tests/layout'
     };
     var end = req.url.replace('/tests/','');
     res.render('tests/' + end, testOptions);
@@ -70,8 +66,7 @@ app.configure(function() {
   app.get('/docs*', function(req, res) {
     var docOpts = {
       title: 'SoHo XI',
-      layout: null,
-      enableLiveReload: true
+      layout: null
     };
     res.render('docs/index', docOpts);
   });

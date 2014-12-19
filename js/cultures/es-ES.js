@@ -23,8 +23,8 @@
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'd / M / yyyy', //use four digit year
-                   'medium': 'd / M / yyy',
+                   'short': 'd/M/yyyy', //use four digit year
+                   'medium': 'd/M/yyy',
                    'long': 'd \'de\' MMMM \'de\' y'},
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
       days: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
@@ -34,7 +34,9 @@
         abbreviated: ['Ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Ago.', 'Sept.', 'Oct.', 'Nov.', 'Dic.']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'H:mm'
+      timeFormat: 'H:mm',
+      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/abbreviated
+      dayPeriods: ['a.m.', 'p.m.']
      }],
      //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
      currencySign: '€', //(Replace Sign http://www.currencysymbols.in ?)

@@ -28,4 +28,10 @@ test-form:
 test-colorpicker:
 	@node test-runner.js colorpicker
 
+test-timepicker:
+	@node test-runner.js timepicker
+
+test-datepicker:
+	@node test-runner.js datepicker
+
 .PHONY: test

@@ -31,9 +31,9 @@ describe('Locale [mocha]', function(){
   });
 
   it('should set the html lang attribute', function(){
-    Locale.set('de').should.equal('de');
+    Locale.set('de-DE').should.equal('de-DE');
     var html = window.document.getElementsByTagName('html')[0];
-    html.getAttribute('lang').should.equal('de');
+    html.getAttribute('lang').should.equal('de-DE');
   });
 
   it('should format en dates', function(){
@@ -46,7 +46,7 @@ describe('Locale [mocha]', function(){
   });
 
   it('should format de dates', function(){
-    Locale.set('de');    //year, month, day
+    Locale.set('de-DE');    //year, month, day
     Locale.formatDate(new Date(2000, 10, 8)).should.equal('08.11.2000');
     Locale.formatDate(new Date(2000, 11, 1)).should.equal('01.12.2000');
     Locale.formatDate(new Date(2000, 10, 8), {date: 'short'}).should.equal('08.11.2000');
@@ -59,14 +59,14 @@ describe('Locale [mocha]', function(){
     Locale.set('en');    //year, month, day
     Locale.parseDate('11/8/2000').getTime().should.equal(new Date(2000, 10, 8).getTime());
     Locale.parseDate('10 / 15 / 2014').getTime().should.equal(new Date(2014, 9, 15).getTime());
-    Locale.set('de');    //year, month, day
+    Locale.set('de-DE');    //year, month, day
     Locale.parseDate('08.11.2000').getTime().should.equal(new Date(2000, 10, 8).getTime());
   });
 
   it('be able to return time format', function(){
     Locale.set('en');
     Locale.calendar().timeFormat.should.equal('h:mm a');
-    Locale.set('de');
+    Locale.set('de-DE');
     Locale.calendar().timeFormat.should.equal('HH:mm');
   });
 
@@ -76,7 +76,7 @@ describe('Locale [mocha]', function(){
     Locale.translate('Required').should.equal('Required');
 
     //With Object Selector
-    Locale.set('de');
+    Locale.set('de-DE');
     Locale.translate('Required').should.equal('Erforderlich');
 
     //Error
