@@ -86,8 +86,7 @@
       handleEvents: function () {
         var self = this;
         this.trigger.on('click.timepicker', function () {
-          self.openTimePopup();
-          self.element.focus();
+          self.toggleTimePopup();
         });
 
         this.element.on('focus.timepicker', function () {
@@ -143,8 +142,7 @@
 
       // Return whether or not the calendar div is open.
       isOpen: function () {
-        return (this.popup && this.popup.is(':visible') &&
-          !this.popup.hasClass('is-hidden'));
+        return (this.popup && !this.popup.hasClass('is-hidden'));
       },
 
       openTimePopup: function() {
@@ -260,14 +258,14 @@
         }).on('click.timepicker', '.set-time', function(e) {
           e.preventDefault();
           self.setTimeOnField();
-          self.popup.hide();
+          self.closeTimePopup();
         }).on('keydown.timepicker', 'input.dropdown', function(e) {
           var handled = false;
 
           // Pressing Esc when focused on a closed dropdown menu causes the entire popup to close.
           if (e.which === 27) {
             handled = true;
-            self.popup.hide();
+            self.closeTimePopup();
             self.element.focus();
           }
 
@@ -280,7 +278,7 @@
 
         // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
         self.trigger.one('hide', function() {
-          self.closeTimePopup();
+          self.onPopupHide();
         }).one('open', function() {
           self.popup.find('#timepicker-hours-shdo').focus();
         });
@@ -348,6 +346,10 @@
       },
 
       closeTimePopup: function() {
+        this.trigger.data('tooltip').hide();
+      },
+
+      onPopupHide: function() {
         if (settings.mode === 'standard') {
           $('#timepicker-hours').data('dropdown').destroy();
           $('#timepicker-minutes').data('dropdown').destroy();
@@ -357,9 +359,18 @@
           this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
         }
 
+        this.trigger.off('hide open');
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
         $('#timepicker-popup').remove();
+      },
+
+      toggleTimePopup: function() {
+        if (this.isOpen()) {
+          this.closeTimePopup();
+        } else {
+          this.openTimePopup();
+        }
       },
 
       enable: function() {
@@ -379,7 +390,7 @@
         this.trigger.off('keydown.timepicker');
         this.element.off('focus.timepicker keydown.timepicker');
         if (this.popup) {
-          this.popup.hide(); // closes the timepicker popup
+          this.closeTimePopup();
         }
 
         this.trigger.remove();
