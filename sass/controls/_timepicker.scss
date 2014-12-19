@@ -24,3 +24,36 @@
     }
   }
 }
+
+.timepicker-popup {
+
+  > .tooltip-content {
+    padding: 0;
+  }
+
+  .time-parts {
+    border-bottom: 1px solid $popover-separator-color;
+    padding: 13px;
+    text-align: center;
+
+    > label {
+      width: 72px;
+    }
+  }
+
+  .controls {
+    padding: 7px 13px;
+    text-align: center;
+  }
+
+  .dropdown {
+    display: inline-block;
+    width: 72px;
+  }
+
+  .label {
+    display: inline-block;
+    padding: 0 2px;
+  }
+
+}

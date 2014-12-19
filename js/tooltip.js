@@ -258,7 +258,7 @@
 
       },
       placeBelowOffset: function() {
-        var extraOffset = (this.element.parent().find('.icon').length === 2 ? -7 : 9);
+        var extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 9);
 
         this.tooltip.css({'top' : this.element.offset().top + this.element.outerHeight() + settings.offset.top,
                           'left' : this.element.offset().left + settings.offset.left + (this.element.outerWidth() - this.tooltip.outerWidth()) + extraOffset });
