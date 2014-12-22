@@ -185,7 +185,7 @@
         periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
         if (!this.show24Hours) {
           timeParts.append($('<span class="label">&nbsp;&nbsp;&nbsp;</span>'));
-          periodSelect.append($('<option value="am">am</option><option value="pm">pm</option>')); // TODO: Localize AM/PM With the Locale Plugin
+          periodSelect.append($('<option value="am">AM</option><option value="pm">PM</option>')); // TODO: Localize AM/PM With the Locale Plugin
           timeParts.append($('<label for="timepicker-period" class="audible">Period</label>'));
           timeParts.append(periodSelect);
         }
@@ -199,7 +199,9 @@
           offset: {top: 27, left: 0},
           width: '200',
           tooltipElement: '#timepicker-popup'})
-        .on('open', function() {
+        .on('open', function(e, ui) {
+          ui.find('select').dropdown();
+
           // Set default values based on what's retrieved from the Timepicker's input field.
           hourSelect.val(initValues.hours);
           hourSelect.data('dropdown').input.val(initValues.hours);
@@ -216,13 +218,6 @@
         // Make adjustments to the popup HTML specific to the timepicker
         var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
         tooltip.addClass('timepicker-popup');
-
-        // Activate Dropdowns
-        hourSelect.dropdown();
-        minuteSelect.dropdown();
-        if (!this.show24Hours) {
-          periodSelect.dropdown();
-        }
 
         // Set the blur event up on a timer to make sure it doesn't immediately trigger
         setTimeout(function() {
@@ -280,7 +275,7 @@
           nums = val.split(':'),
           hours = 1,
           minutes = 0,
-          period = 'am';
+          period = 'AM';
 
         nums[0] = parseInt(nums[0].replace(/ /g, ''), 10);
         if (isNaN(nums[0])) {
