@@ -91,10 +91,6 @@
 
         this.element.on('focus.timepicker', function () {
           self.mask();
-        }).on('blur.timepicker', function() {
-          if (self.isOpen()) {
-            self.closeTimePopup();
-          }
         });
 
         this.handleKeys();
@@ -209,24 +205,33 @@
           hourSelect.data('dropdown').input.val(initValues.hours);
           minuteSelect.val(initValues.minutes);
           minuteSelect.data('dropdown').input.val(initValues.minutes);
-          if (!this.show24Hours) {
+          if (!self.show24Hours) {
             periodSelect.val(initValues.period);
             periodSelect.data('dropdown').input.val(initValues.period);
           }
+
+          tooltip.find('#timepicker-hours-shdo').focus();
         });
 
         // Make adjustments to the popup HTML specific to the timepicker
         var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
         tooltip.addClass('timepicker-popup');
 
-        var ddOpts = {
-          forceInputSizing: true
-        };
-        hourSelect.dropdown(ddOpts);
-        minuteSelect.dropdown(ddOpts);
+        // Activate Dropdowns
+        hourSelect.dropdown();
+        minuteSelect.dropdown();
         if (!this.show24Hours) {
-          periodSelect.dropdown(ddOpts);
+          periodSelect.dropdown();
         }
+
+        // Set the blur event up on a timer to make sure it doesn't immediately trigger
+        setTimeout(function() {
+          self.element.on('blur.timepicker', function() {
+            if (self.isOpen()) {
+              self.closeTimePopup();
+            }
+          });
+        }, 400);
       },
 
       setupStandardEvents: function() {
@@ -257,10 +262,8 @@
         });
 
         // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
-        self.trigger.one('hide', function() {
+        self.trigger.on('hide', function() {
           self.onPopupHide();
-        }).one('open', function() {
-          self.popup.find('#timepicker-hours-shdo').focus();
         });
       },
 
@@ -337,7 +340,7 @@
           return;
         }
 
-        if (this.popup) {
+        if (this.popup && !this.popup.hasClass('is-hidden')) {
           self.closeTimePopup();
         }
 
@@ -370,7 +373,7 @@
           }
           this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
         }
-
+        this.element.off('blur.timepicker');
         this.trigger.off('hide open');
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
@@ -400,7 +403,7 @@
       // Teardown
       destroy: function() {
         this.trigger.off('keydown.timepicker');
-        this.element.off('focus.timepicker keydown.timepicker');
+        this.element.off('focus.timepicker blur.timepicker keydown.timepicker');
         if (this.popup) {
           this.closeTimePopup();
         }

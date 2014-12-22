@@ -304,7 +304,7 @@
         this.tooltip.addClass('is-hidden');
         this.tooltip.off('click.tooltip');
 
-        if ($('.popover:visible').length === 0) {
+        if ($('.popover').not('.is-hidden').length === 0) {
           $(document).off('mouseup.tooltip keydown.tooltip');
           $(window).off('resize.tooltip');
         }
@@ -313,8 +313,10 @@
       },
 
       destroy: function() {
+        if (!this.tooltip.hasClass('is-hidden')) {
+          this.hide();
+        }
         this.element.removeData(pluginName);
-        this.hide();
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
       }
     };
