@@ -86,8 +86,7 @@
       handleEvents: function () {
         var self = this;
         this.trigger.on('click.timepicker', function () {
-          self.openTimePopup();
-          self.element.focus();
+          self.toggleTimePopup();
         });
 
         this.element.on('focus.timepicker', function () {
@@ -133,41 +132,12 @@
         this.element.data('mask', undefined);
 
         this.element
-          .attr('data-mask', (this.show24Hours ? '## : ##' : '## : ## am'))
+          .attr('data-mask', (this.show24Hours ? '##:##' : '##:## am'))
           .attr('data-mask-mode', 'time')
           .attr('data-validate', 'time')
           .mask()
           .validate()
           .trigger('updated');
-      },
-
-      // Return whether or not the calendar div is open.
-      isOpen: function () {
-        return (this.popup && this.popup.is(':visible') &&
-          !this.popup.hasClass('is-hidden'));
-      },
-
-      openTimePopup: function() {
-        var self = this;
-
-        if (this.element.is(':disabled')) {
-          return;
-        }
-
-        if (this.popup && !this.popup.hasClass('is-hidden')) {
-          self.closeTimePopup();
-        }
-
-        // Build a different Time Popup based on settings
-        switch(settings.mode) {
-          case 'range':
-            self.buildRangePopup();
-            self.setupRangeEvents();
-            break;
-          default:
-            self.buildStandardPopup();
-            self.setupStandardEvents();
-        }
       },
 
       buildStandardPopup: function() {
@@ -222,33 +192,46 @@
 
         popupContent.append('<div class="controls"><a href="#" class="set-time link">Set Time</a></div>'); // TODO: Localize
 
-        this.trigger.popover({content: popupContent, trigger: 'immediate',
-            placement: 'bottom', offset: {top: 27, left: 0}, width: '200',
-            tooltipElement: '#timepicker-popup'});
+        this.trigger.popover({
+          content: popupContent,
+          trigger: 'immediate',
+          placement: 'bottom',
+          offset: {top: 27, left: 0},
+          width: '200',
+          tooltipElement: '#timepicker-popup'})
+        .on('open', function() {
+          // Set default values based on what's retrieved from the Timepicker's input field.
+          hourSelect.val(initValues.hours);
+          hourSelect.data('dropdown').input.val(initValues.hours);
+          minuteSelect.val(initValues.minutes);
+          minuteSelect.data('dropdown').input.val(initValues.minutes);
+          if (!self.show24Hours) {
+            periodSelect.val(initValues.period);
+            periodSelect.data('dropdown').input.val(initValues.period);
+          }
+
+          tooltip.find('#timepicker-hours-shdo').focus();
+        });
 
         // Make adjustments to the popup HTML specific to the timepicker
         var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
         tooltip.addClass('timepicker-popup');
 
-        var ddOpts = {
-          forceInputSizing: true
-        };
-        hourSelect.dropdown(ddOpts);
-        minuteSelect.dropdown(ddOpts);
+        // Activate Dropdowns
+        hourSelect.dropdown();
+        minuteSelect.dropdown();
         if (!this.show24Hours) {
-          periodSelect.dropdown(ddOpts);
+          periodSelect.dropdown();
         }
 
-        // Set default values based on what's retrieved from the Timepicker's input field.
-        hourSelect.val(initValues.hours);
-        hourSelect.data('dropdown').input.val(initValues.hours);
-        minuteSelect.val(initValues.minutes);
-        minuteSelect.data('dropdown').input.val(initValues.minutes);
-        if (!this.show24Hours) {
-          periodSelect.val(initValues.period);
-          periodSelect.data('dropdown').input.val(initValues.period);
-        }
-
+        // Set the blur event up on a timer to make sure it doesn't immediately trigger
+        setTimeout(function() {
+          self.element.on('blur.timepicker', function() {
+            if (self.isOpen()) {
+              self.closeTimePopup();
+            }
+          });
+        }, 0);
       },
 
       setupStandardEvents: function() {
@@ -260,14 +243,14 @@
         }).on('click.timepicker', '.set-time', function(e) {
           e.preventDefault();
           self.setTimeOnField();
-          self.popup.hide();
+          self.closeTimePopup();
         }).on('keydown.timepicker', 'input.dropdown', function(e) {
           var handled = false;
 
           // Pressing Esc when focused on a closed dropdown menu causes the entire popup to close.
           if (e.which === 27) {
             handled = true;
-            self.popup.hide();
+            self.closeTimePopup();
             self.element.focus();
           }
 
@@ -279,10 +262,8 @@
         });
 
         // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
-        self.trigger.one('hide', function() {
-          self.closeTimePopup();
-        }).one('open', function() {
-          self.popup.find('#timepicker-hours-shdo').focus();
+        self.trigger.on('hide', function() {
+          self.onPopupHide();
         });
       },
 
@@ -347,7 +328,43 @@
           .validate();
       },
 
+      // Return whether or not the calendar div is open.
+      isOpen: function () {
+        return (this.popup && !this.popup.hasClass('is-hidden'));
+      },
+
+      openTimePopup: function() {
+        var self = this;
+
+        if (this.element.is(':disabled')) {
+          return;
+        }
+
+        if (this.popup && !this.popup.hasClass('is-hidden')) {
+          self.closeTimePopup();
+        }
+
+        // Build a different Time Popup based on settings
+        switch(settings.mode) {
+          case 'range':
+            self.buildRangePopup();
+            self.setupRangeEvents();
+            break;
+          default:
+            self.buildStandardPopup();
+            self.setupStandardEvents();
+        }
+      },
+
+      // Triggers the "hide" method on the tooltip plugin.  The Timepicker officially "closes" after the popover's
+      // hide event fully completes because certain events need to be turned off and certain markup needs to be
+      // removed only AFTER the popover is hidden.
       closeTimePopup: function() {
+        this.trigger.data('tooltip').hide();
+      },
+
+      // This gets fired on the popover's "hide" event
+      onPopupHide: function() {
         if (settings.mode === 'standard') {
           $('#timepicker-hours').data('dropdown').destroy();
           $('#timepicker-minutes').data('dropdown').destroy();
@@ -355,6 +372,19 @@
             $('#timepicker-period').data('dropdown').destroy();
           }
           this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
+        }
+        this.element.off('blur.timepicker');
+        this.trigger.off('hide open');
+        this.trigger.data('tooltip').destroy();
+        this.trigger.data('tooltip', undefined);
+        $('#timepicker-popup').remove();
+      },
+
+      toggleTimePopup: function() {
+        if (this.isOpen()) {
+          this.closeTimePopup();
+        } else {
+          this.openTimePopup();
         }
       },
 
@@ -373,9 +403,9 @@
       // Teardown
       destroy: function() {
         this.trigger.off('keydown.timepicker');
-        this.element.off('focus.timepicker keydown.timepicker');
+        this.element.off('focus.timepicker blur.timepicker keydown.timepicker');
         if (this.popup) {
-          this.popup.hide(); // closes the timepicker popup
+          this.closeTimePopup();
         }
 
         this.trigger.remove();

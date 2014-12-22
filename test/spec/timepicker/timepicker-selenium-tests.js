@@ -47,7 +47,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10 : 54 am');
+        value.should.equal('10:54 am');
       })
       .call(done);
   });
@@ -101,7 +101,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('4 : 30 pm');
+        value.should.equal('4:30 pm');
       })
       .call(done);
   });
@@ -154,7 +154,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('4 : 30 pm');
+        value.should.equal('4:30 pm');
       })
       .call(done);
   });
@@ -166,7 +166,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10 : 55 pm');
+        value.should.equal('10:55 pm');
       })
       // use the down arrow to open the popover
       .addValue(TIME_FIELD, ['Down arrow'], globals.noError)
@@ -184,7 +184,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10 : 55 pm');
+        value.should.equal('10:55 pm');
       })
       .call(done);
   });
@@ -198,7 +198,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, result) {
         globals.noError(err);
         should.exist(result);
-        result.should.equal('13 : 61 pm');
+        result.should.equal('13:61 pm');
       })
       // Tab out.  This should activate validation
       .addValue(TIME_FIELD, ['Tab'], globals.noError)
@@ -238,7 +238,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(DISABLED_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10 : 54 am');
+        value.should.equal('10:54 am');
       })
       .call(done);
   });
@@ -249,7 +249,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(DISABLED_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10 : 54 am');
+        value.should.equal('10:54 am');
       })
       // Change the value
       .setValue(DISABLED_FIELD, '', globals.noError)
@@ -296,7 +296,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(DISABLED_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10 : 54 pm');
+        value.should.equal('10:54 pm');
       })
       // check to see if the trigger field now exists
       .isExisting(DISABLED_FIELD_TRIGGER, function(err, result) {

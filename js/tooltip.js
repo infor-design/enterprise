@@ -205,10 +205,10 @@
 
       position: function () {
         var self = this,
-          winH = window.innerHeight,
+          winH = window.innerHeight + $(document).scrollTop(),
           // subtract 2 from the window width to account for the tooltips
           // resizing themselves to fit within the CSS overflow boundary.
-          winW = window.innerWidth - 2;
+          winW = (window.innerWidth - 2) + $(document).scrollLeft();
 
         switch(settings.placement) {
           case 'offset':
@@ -304,7 +304,7 @@
         this.tooltip.addClass('is-hidden');
         this.tooltip.off('click.tooltip');
 
-        if ($('.popover:visible').length === 0) {
+        if ($('.popover').not('.is-hidden').length === 0) {
           $(document).off('mouseup.tooltip keydown.tooltip');
           $(window).off('resize.tooltip');
         }
@@ -313,8 +313,10 @@
       },
 
       destroy: function() {
+        if (!this.tooltip.hasClass('is-hidden')) {
+          this.hide();
+        }
         this.element.removeData(pluginName);
-        this.hide();
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
       }
     };
