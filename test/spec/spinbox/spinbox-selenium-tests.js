@@ -387,7 +387,7 @@ describe('Spinbox [selenium]', function(){
       .call(done);
   });
 
-  it('can handle pasted content from the clipboard', function(done) {
+  it.skip('can handle pasted content from the clipboard', function(done) {
     var input = '#reverse-weird-spinbox';
     var copyInput = '#regular-input';
     runner.client

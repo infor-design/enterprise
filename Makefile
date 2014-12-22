@@ -34,4 +34,7 @@ test-timepicker:
 test-datepicker:
 	@node test-runner.js datepicker
 
+test-spinbox:
+	@node test-runner.js spinbox
+
 .PHONY: test
