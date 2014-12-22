@@ -162,7 +162,7 @@
           hourSelect.append($('<option' + selected + '>' + hourCounter + '</option>'));
           hourCounter++;
         }
-        timeParts.append($('<label for="timepicker-hours" class="audible">Hours</label>'));
+        timeParts.append($('<label for="timepicker-hours" class="audible">Hours</label>')); // TODO: Localize
         timeParts.append(hourSelect);
         timeParts.append($('<span class="label">&nbsp;:&nbsp;</span>'));
 
@@ -179,14 +179,28 @@
           minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
           minuteCounter = minuteCounter + 5;
         }
-        timeParts.append($('<label for="timepicker-minutes" class="audible">Minutes</label>'));
+        timeParts.append($('<label for="timepicker-minutes" class="audible">Minutes</label>')); // TODO: Localize
         timeParts.append(minuteSelect);
 
         periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
         if (!this.show24Hours) {
           timeParts.append($('<span class="label">&nbsp;&nbsp;&nbsp;</span>'));
-          periodSelect.append($('<option value="am">AM</option><option value="pm">PM</option>')); // TODO: Localize AM/PM With the Locale Plugin
-          timeParts.append($('<label for="timepicker-period" class="audible">Period</label>'));
+          var localeDays = Locale.calendar().dayPeriods,
+            localeCount = 0,
+            regexDay = new RegExp(initValues.period, 'i'),
+            realDayValue = 'AM';
+
+          while(localeCount < 2) {
+            realDayValue = localeCount === 0 ? 'AM' : 'PM';
+            selected = '';
+            if (localeDays[localeCount].match(regexDay)) {
+              selected = ' selected';
+            }
+            periodSelect.append($('<option value="' + realDayValue + '">' + localeDays[localeCount] + '</option>'));
+
+            localeCount++;
+          }
+          timeParts.append($('<label for="timepicker-period" class="audible">Period</label>')); // TODO: Localize
           timeParts.append(periodSelect);
         }
 
@@ -313,7 +327,7 @@
       setTimeOnField: function() {
         var hours = $('#timepicker-hours').val() || '',
           minutes = $('#timepicker-minutes').val() || '',
-          period = $('#timepicker-period').val() || '',
+          period = ($('#timepicker-period').val() || '').toUpperCase(),
           timeString = '' + hours + ':' + minutes + ' ' + period;
 
         this.element.val(timeString)
