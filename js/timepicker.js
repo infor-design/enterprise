@@ -231,7 +231,7 @@
               self.closeTimePopup();
             }
           });
-        }, 400);
+        }, 0);
       },
 
       setupStandardEvents: function() {
