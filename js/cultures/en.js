@@ -34,7 +34,9 @@
         abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a'
+      timeFormat: 'h:mm a',
+      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/abbreviated
+      dayPeriods: ['AM', 'PM']
      }],
      //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
      currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
