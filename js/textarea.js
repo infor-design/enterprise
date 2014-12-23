@@ -53,7 +53,15 @@
           if (self.counter) {
             self.counter.addClass('focus');
           }
-        }).on('blur.textarea', function () {
+        }).on('keypress.textarea', function (e) {
+          var length = self.element.val().length,
+          max = self.element.attr('maxlength');
+
+          if (length >= max) {
+            e.preventDefault();
+          }
+        })
+        .on('blur.textarea', function () {
           self.update(self);
           if (self.counter) {
             self.counter.removeClass('focus');
