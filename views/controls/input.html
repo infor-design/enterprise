@@ -1,70 +1,71 @@
-<div class="grid">
-  <div class="col-1-1">
+
+<div class="row">
+  <div class="twelve columns">
     <h1>Input Fields</h1>
     <span class="label">Desktop Controls</span>
     <hr>
-
-    <div class="grid">
-      <div class="col-1-2">
-        <div class="field">
-          <label for="first-name">First Name</label>
-          <input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
-        </div>
-
-        <div class="field">
-          <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
-          <input type="text" id="email-address" name="email-address" data-validate="required" placeholder="Company@address.com">
-        </div>
-
-       <div class="field">
-          <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
-          <input type="text" id="email-address-ok" name="email-address-ok" value="someone@someplace.com">
-          <svg class="icon icon-validated"><use xlink:href="#icon-validated"/></svg>
-        </div>
-
-        <div class="field">
-          <label for="department">Department</label>
-          <input type="text" disabled value="Field not editable" id="department" name="department">
-        </div>
-
-        <div class="field">
-          <label for="department-code">Department Code</label>
-          <input type="text" readonly value="02006" id="department-code" name="department-code">
-        </div>
-
-        <div class="field">
-          <label for="department-code-trackdirty">Department Code</label>
-          <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" name="department-code-trackdirty">
-        </div>
-      </div>
-
-      <div class="col-1-2">
-        <div class="field">
-          <label for="decimal-field">Currency Field</label>
-          <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask="###.00" data-mask-mode="number" data-show-currency="true"/>
-        </div>
-
-        <div class="field">
-          <label for="phone-number">Phone Number</label>
-          <input id="phone-number" name="phone-number" type="text" placeholder="(123) 456-7890" data-mask="(###) ###-####" data-mask-mode="group"/>
-        </div>
-
-        <div class="field">
-          <label for="date-input">Date Input</label>
-          <input id="date-input" name="date-input" type="text" placeholder="M / d / yyyy" data-mask="## / ## / ####" data-mask-mode="date" data-validate="date"/>
-        </div>
-
-        <div class="field">
-          <label for="time-input">Time Input (12 hour)</label>
-          <input id="time-input" name="time-input" type="text" placeholder="hh : mm AM/PM" data-mask="## : ## am" data-mask-mode="time" data-validate="time" />
-        </div>
-
-        <div class="field">
-          <label for="credit-card">Credit Card</label>
-          <input id="credit-card" name="credit-card" type="text" placeholder="0000 - 0000 - 0000 - 0000" data-mask="#### - #### - #### - ####" data-mask-mode="group"/>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <label for="first-name">First Name</label>
+      <input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
+    </div>
+
+    <div class="field">
+      <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
+      <input type="text" id="email-address" name="email-address" data-validate="required" placeholder="Company@address.com">
+    </div>
+
+    <div class="field">
+      <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
+      <input type="text" id="email-address-ok" name="email-address-ok" value="someone@someplace.com">
+      <svg class="icon icon-validated"><use xlink:href="#icon-validated"/></svg>
+    </div>
+
+    <div class="field">
+      <label for="department">Department</label>
+      <input type="text" disabled value="Field not editable" id="department" name="department">
+    </div>
+
+    <div class="field">
+      <label for="department-code">Department Code</label>
+      <input type="text" readonly value="02006" id="department-code" name="department-code">
+    </div>
+
+    <div class="field">
+      <label for="department-code-trackdirty">Department Code</label>
+      <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" name="department-code-trackdirty">
+    </div>
+  </div>
+  <div class="one-half column">
+    <div class="field">
+      <label for="decimal-field">Currency Field</label>
+      <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask="###.00" data-mask-mode="number" data-show-currency="true"/>
+    </div>
+
+    <div class="field">
+      <label for="phone-number">Phone Number</label>
+      <input id="phone-number" name="phone-number" type="text" placeholder="(123) 456-7890" data-mask="(###) ###-####" data-mask-mode="group"/>
+    </div>
+
+    <div class="field">
+      <label for="date-input">Date Input</label>
+      <input id="date-input" name="date-input" type="text" placeholder="M / d / yyyy" data-mask="## / ## / ####" data-mask-mode="date" data-validate="date"/>
+    </div>
+
+    <div class="field">
+      <label for="time-input">Time Input (12 hour)</label>
+      <input id="time-input" name="time-input" type="text" placeholder="hh : mm AM/PM" data-mask="## : ## am" data-mask-mode="time" data-validate="time" />
+    </div>
+
+    <div class="field">
+      <label for="credit-card">Credit Card</label>
+      <input id="credit-card" name="credit-card" type="text" placeholder="0000 - 0000 - 0000 - 0000" data-mask="#### - #### - #### - ####" data-mask-mode="group"/>
+    </div>
+  </div>
+</div>
+
+

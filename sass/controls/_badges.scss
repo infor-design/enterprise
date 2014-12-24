@@ -1,40 +1,39 @@
 // Badges
 //================================================== */
 
-.tag,
-.badge {
+// See also Colors.scss
+.tag {
   background-color: $graphite;
   border-radius: 15px;
   color: #ffffff;
+  display: inline-block;
   @include font-size(13);
   height: 22px;
-  line-height: 25px;
+  line-height: 22px;
   margin-right: 10px;
-  padding: 3px 8px;
+  padding: 0 11px;
   vertical-align: middle;
+}
 
-  &.graphite {
-    background-color: $graphite;
-  }
+.badge {
+  background-color: $graphite;
+  border-radius: 16px;
+  color: #ffffff;
+  display: inline-block;
+  height: 22px;
+  @include font-size(13);
+  line-height: 22px;
+  text-align: center;
+  width: 22px;
 
-  &.amethyst {
-    background-color: $amethyst;
-  }
-
-  &.emerald {
-    background-color: $emerald;
-  }
-
-  &.amber {
-    background-color: $amber;
-  }
-
-  &.red {
-    background-color: $red;
-  }
-
-  &.ruby,
   &.error {
-    background-color: $ruby;
+    background-color: $ruby07;
+  }
+
+  &.large {
+    height: 32px;
+    @include font-size(20);
+    line-height: 32px;
+    width: 32px;
   }
 }

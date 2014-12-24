@@ -1,140 +1,123 @@
-//* Responsive 12 Column Grid loosely
-//  based on http://thisisdallas.github.com/Simple-Grid/
+//  Responsive 12 Column Grid loosely
+//  loosely based bootstrap/
 //================================================== //
-[class*="col-"] {
-  float: left;
-  margin-bottom: 10px;
-}
 
-.grid {
+$gutter-size: 20px;
+
+//$breakpoint-phone: 320px;
+//$breakpoint-phone-to-tablet: 768px;
+//$breakpoint-tablet-to-desktop: 1160px;
+//$breakpoint-desktop-to-extralarge: 1440px;
+
+.container {
   margin: 0 auto;
   max-width: $breakpoint-desktop-to-extralarge;
-  min-width: $breakpoint-phone-to-tablet;
-  overflow: hidden;
-  transition: all .3s ease 0s;
   width: 100%;
 
   .content {
-    background-color: #ffcccc;
-    border-right: 10px solid #f0f0f0;
-    color: #ffffff;
-    height: 100px;
+    background: none repeat scroll 0 0 #dadada;
+    color: #444444;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+  }
+}
 
-    h3 {
-      padding: 35px 10px;
+// For this App Space out the Header
+.header + .svg-icons + .container {
+  margin-top: 45px;
+}
+
+.column,
+.columns {
+  float: left;
+  width: 100%;
+
+  &.pad {
+    padding: $gutter-size;
+  }
+}
+
+// For mobile devices smaller than 320px
+@media (min-width: $breakpoint-phone) {
+  .container {
+    padding: 0 $gutter-size;
+    width: 100%;
+  }
+}
+
+// For devices larger than 550px
+@media (min-width: $breakpoint-phone-to-tablet) {
+  .column,
+  .columns {
+    padding-right: $gutter-size;
+
+    &:last-child {
+      padding-right: 0;
     }
   }
 
-  // Clearfix
-  &:after {
-    clear: both;
-    content: '';
-    display: table;
+  .one.column,
+  .one.columns {
+    width: 8.33333333333%;
   }
-}
 
-// Content Columns
-
-.col-1-1 {
-  width: 100%;
-}
-
-.col-2-3,
-.col-8-12 {
-  width: 66.66%;
-}
-
-.col-1-2,
-.col-6-12 {
-  width: 50%;
-}
-
-.col-1-3,
-.col-4-12 {
-  width: 33.33%;
-}
-
-.col-1-4,
-.col-3-12 {
-  width: 25%;
-}
-
-.col-1-5 {
-  width: 20%;
-}
-
-.col-1-6,
-.col-2-12 {
-  width: 16.667%;
-}
-
-.col-1-7 {
-  width: 14.28%;
-}
-
-.col-1-8 {
-  width: 12.5%;
-}
-
-.col-1-9 {
-  width: 11.1%;
-}
-
-.col-1-10 {
-  width: 10%;
-}
-
-.col-1-11 {
-  width: 9.09%;
-}
-
-.col-1-12 {
-  width: 8.33%;
-}
-
-// Layout Columns
-
-.col-11-12 {
-  width: 91.66%;
-}
-
-.col-10-12 {
-  width: 83.333%;
-}
-
-.col-9-12 {
-  width: 75%;
-}
-
-.col-5-12 {
-  width: 41.66%;
-}
-
-.col-7-12 {
-  width: 58.33%;
-}
-
-@media handheld, only screen and (max-width: $breakpoint-desktop-to-extralarge) {
-  .grid {
-    padding-left: 30px;
-    padding-right: 30px;
+  .two.columns {
+    width: 16.6666666666%;
   }
-}
 
-@media handheld, only screen and (max-width: $breakpoint-phone-to-tablet) {
-  .grid {
+  .three.columns {
+    width: 25%;
+  }
+
+  .four.columns {
+    width: 33.3333333333%;
+  }
+
+  .five.columns {
+    width: 41.6666666666%;
+  }
+
+  .six.columns {
+    width: 50%;
+  }
+
+  .seven.columns {
+    width: 58.3333333333%;
+  }
+
+  .eight.columns {
+    width: 66.6666666666%;
+  }
+
+  .nine.columns {
+    width: 75%;
+  }
+
+  .ten.columns {
+    width: 83.3333333333%;
+  }
+
+  .eleven.columns {
+    width: 91.6666666666%;
+  }
+
+  .twelve.columns,
+  .full.column {
     margin-left: 0;
-    margin-right: 0;
-    min-width: 0;
-    padding-left: 0;
-    padding-right: 0;
     width: 100%;
   }
 
-  [class*="col-"] {
-    float: none;
-    padding-left: 15px;
-    padding-right: 15px;
-    width: auto;
+  .one-third.column {
+    width: 33.3333333333%;
+  }
+
+  .two-thirds.column {
+    width: 66.6666666666%;
+  }
+
+  .one-half.column {
+    width: 50%;
   }
 }

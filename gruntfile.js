@@ -10,8 +10,7 @@ module.exports = function(grunt) {
           'public/stylesheets/dark-theme.css' : 'sass/dark-theme.scss',
           'public/stylesheets/508-theme.css' : 'sass/508-theme.scss',
           'public/stylesheets/demo.css' : 'sass/demo.scss',
-          'public/stylesheets/site.css' : 'sass/site.scss',
-          'public/stylesheets/highlight.css' : 'sass/highlight.scss'
+          'public/stylesheets/site.css' : 'sass/site.scss'
         }
       }
     },
@@ -41,7 +40,7 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js', 'js/button.js', 'js/cardstack.js', 'js/colorpicker.js', 'js/datepicker.js', 'js/editor.js', 'js/datagrid.js', 'js/dropdown.js', 'js/draggable.js', 'js/form.js', 'js/locale.js', 'js/pager.js', 'js/popupmenu.js', 'js/mask.js', 'js/multiselect.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/spinbox.js', 'js/tabs.js', 'js/textarea.js', 'js/timepicker.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
+          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js', 'js/button.js', 'js/cardlist.js', 'js/colorpicker.js', 'js/datepicker.js', 'js/editor.js', 'js/datagrid.js', 'js/dropdown.js', 'js/draggable.js', 'js/form.js', 'js/locale.js', 'js/pager.js', 'js/popupmenu.js', 'js/mask.js', 'js/multiselect.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/spinbox.js', 'js/tabs.js', 'js/textarea.js', 'js/timepicker.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js'],
           'dist/js/initialize.js': ['js/initialize.js']
         }
       }
@@ -68,7 +67,7 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['public/stylesheets/*-theme.css'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['dist/js/initialize.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/demo/highlight.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-1*.min.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-1*min.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'}

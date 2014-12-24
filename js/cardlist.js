@@ -1,6 +1,5 @@
 /**
-* CardStack List Control
-* @name cardstack
+* Card List Control
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -12,10 +11,10 @@
   }
 }(function ($) {
 
-  $.fn.cardstack = function(options) {
+  $.fn.cardlist = function(options) {
 
     // Settings and Options
-    var pluginName = 'cardstack',
+    var pluginName = 'cardlist',
       defaults = {
         dataset: null,
         template: null  //Html Template String

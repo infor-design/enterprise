@@ -27,6 +27,10 @@
     }
   }
 
+  &::-ms-clear {
+    display: none;
+  }
+
   &:disabled + .swatch {
     cursor: default;
   }

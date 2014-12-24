@@ -11,9 +11,10 @@ $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
 // Text Color
+$font-color-extradark: #1a1a1a;
 $font-color-dark: #333333;
 $font-color: #666666;
-$font-color-light: #767676; //Was 999999 in design
+$font-color-light: #999999; //Was 999999 in design
 $label-color: #666666;
 
 // Rules
@@ -21,31 +22,26 @@ $hr-top-color: #b6b6b6;
 $hr-bottom-color: #ffffff;
 
 // Form Buttons
-$primary-btn-bg-color: #0c7ad8; //Was #0896e9 in design
-$primary-btn-hover-bg-color: #0977d5;
-$primary-btn-focus-bg-color: #1d98e6;
-$primary-btn-active-bg-color: #1a7cd4;
+$primary-btn-bg-color: #0c7ad8;
+$primary-btn-hover-bg-color: #005bb8;
+$primary-btn-focus-bg-color: #078cd9;
+$primary-btn-active-bg-color: #005bb8;
+$primary-btn-disabled-bg-color: #84d1ff;
 
 // Secondary/Normal Buttons
-$btn-color: #5a5a5a;
-$btn-bg-color: #d2d2d2;
-$btn-hover-bg-color: #b6b6b6;
-$btn-focus-bg-color: #d2d2d2;
-$btn-active-bg-color: #a8a8a8;
-$btn-active-color: #333333;
-$btn-disabled-opacity: .6;
-
-// Switch
-$switch-checked-color: #6ec90d;
-$switch-unchecked-color: #999999;
-$switch-disabled-color: #d2d2d2;
-$switch-disabled-label-color: #aaaaaa;
+$btn-color: #ffffff;
+$btn-bg-color: #b6b6b6;
+$btn-hover-bg-color: #999999;
+$btn-focus-bg-color: #b6b6b6;
+$btn-active-bg-color: #999999;
+$btn-disabled-color: #999999;
+$btn-disabled-bg-color: #d2d2d2;
 
 // Tertiary Buttons
-$tertiary-btn-color: #666666;
-$tertiary-btn-hover-color: #333333;
-$tertiary-btn-focus-border-color: $primary-color;
-$tertiary-btn-focus-color: $primary-color;
+$tertiary-btn-color: #078cd9;
+$tertiary-btn-hover-color: #005bb8;
+$tertiary-btn-active-color: #005bb8;
+$tertiary-btn-disabled-color: #b6b6b6;
 
 // Input Fields
 $input-border-color: #999999;
@@ -103,14 +99,30 @@ $popupmenu-color: #444444;
 
 // Checkboxes
 $checkbox-color: $primary-color;
-$checkbox-border-color: #999999;
-$checkbox-disabled-color: #d2d2d2;
-$checkbox-disabled-font-color: #aaaaaa;
+$checkbox-arrow-color: #ffffff;
+$checkbox-border-color: #666666;
+$checkbox-disabled-font-color: #c2c2c2;
+$checkbox-disabled-opacity: .65;
+$checkbox-disabled-border-color: #c2c2c2;
+$checkbox-disabled-bg-color: #ececec;
+$checkbox-disabled-select-bg-color: #c2c2c2;
+$checkbox-disabled-arrow-color: #f4f4f4;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
+// Switch
+$switch-checked-color: #6ec90d;
+$switch-unchecked-color: #999999;
+$switch-disabled-color: #d2d2d2;
+$switch-disabled-label-color: #aaaaaa;
+
 // Radio Buttons
-$radio-border-color: #999999;
-$radio-color: $primary-color;
+$radio-border-color: #666666;
+$radio-selected-color: $primary-color;
+$radio-disabled-opacity: .65;
+$radio-disabled-border-color: #c2c2c2;
+$radio-disabled-bg-color: #ececec;
+$radio-disabled-select-bg-color: #c2c2c2;
+$radio-disabled-dot-color: #f4f4f4;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Date Picker
@@ -155,36 +167,19 @@ $spinbox-bg-color: #e5e5e5;
 $tree-border-color: #e0e0e0;
 $tree-selected-color: $primary-color;
 
-//Colors
-$turqoise: #00c2b4;
-$azure: $primary-color;
-$emerald: #2db329;
-$amber: #ffa800;
-$ruby: #ed1c24;
-$error: #ed1c24;
-$red: #d5000e;
-$tourmaline: #a352cb;
-$amethyst: #e63262;
-$graphite: #999999;
-
-///////////////////
-
 //Color Of Labels and Some Hs
 $label-color: #666666;  //Was #6666666
 
 //Text that is disabled
 $disabled-color: #cccccc;
 
-//The Focus Indicator on Fields
-$focus-shadow: 0 0 3px #0095ff;
-
 //The Link Style
 $link-color: #0c7ad8; // Design has #0896e9 but #0072b5 is accessible
 $link-hover-color: #0c7ad8;
 $link-active-color: #004096;
 
-//Breakpoint sizes
-$breakpoint-phone: 360px;
-$breakpoint-phone-to-tablet: 980px;
-$breakpoint-tablet-to-desktop: 1240px;
+//Breakpoint sizes - Grid
+$breakpoint-phone: 320px;
+$breakpoint-phone-to-tablet: 768px;
+$breakpoint-tablet-to-desktop: 1160px;
 $breakpoint-desktop-to-extralarge: 1440px;

@@ -1,37 +1,35 @@
-<div class="grid">
-  <div class="col-1-1">
-
+<div class="row">
+  <div class="twelve columns">
     <h1>Time Picker</h1>
+    <span class="label">Desktop Controls</span>
     <hr>
+  </div>
+</div>
 
-    <div class="grid">
-      <div class="col-1-1">
-
-        <div class="field">
-          <label for="time-field" class="label">Time Field</label>
-          <input id="time-field" class="timepicker" name="time-field" type="text">
-        </div>
-
-        <div class="field">
-          <label for="twentyfour-time-field" class="label">Time Field (24-hour)</label>
-          <input id="twentyfour-time-field" class="timepicker" name="twentyfour-time-field" type="text">
-        </div>
-
-        <div class="field">
-          <label for="time-field-disabled" class="label">Time Field (Disabled)</label>
-          <input id="time-field-disabled" class="timepicker" disabled name="time-field-disabled" type="text">
-        </div>
-
+<div class="row">
+  <div class="twelve columns">
+     <div class="field">
+        <label for="time-field" class="label">Time Field</label>
+        <input id="time-field" class="timepicker" name="time-field" type="text">
       </div>
-    </div>
 
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#twentyfour-time-field').timepicker({
-          forceHourMode: '24'
+      <div class="field">
+        <label for="twentyfour-time-field" class="label">Time Field (24-hour)</label>
+        <input id="twentyfour-time-field" class="timepicker" name="twentyfour-time-field" type="text">
+      </div>
+
+      <div class="field">
+        <label for="time-field-disabled" class="label">Time Field (Disabled)</label>
+        <input id="time-field-disabled" class="timepicker" disabled name="time-field-disabled" type="text">
+      </div>
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $('#twentyfour-time-field').timepicker({
+            forceHourMode: '24'
+          });
         });
-      });
-    </script>
+      </script>
 
   </div>
 </div>

@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Cardlist</h1>
+    <span class="label">List of Items</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+
+    <!--This is only needed because it renders first on the server-->
+    {{={{{ }}}=}}
+    <script id="cardstackTemplate" type="text/html">
+      <ul>
+        {{#demoTasks}}
+          {{#error}}
+            <li class="error">
+          {{/error}}
+          {{^error}}
+            <li>
+          {{/error}}
+            <p class="header">Task #{{task}}</p>
+            <p>{{desc}}</p>
+          </li>
+        {{/demoTasks}}
+      </ul>
+    </script>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Employee Information</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+        </button>
+      </div>
+      <div class="cardlist" style="height: 200px;" data-tmpl="cardstackTemplate" data-dataset="demoTasks">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+

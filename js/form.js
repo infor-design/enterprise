@@ -37,7 +37,7 @@
   $.fn.trackdirty = function() {
       this.each(function () {
         var input = $(this);
-        input.data('original', input.val())
+        input.data('original', (input.is(':checkbox') ? input.prop('checked') : input.val()))
            .on('change.dirty', function () {
             var input = $(this);
 
@@ -48,14 +48,15 @@
             //Add Class and Icon
             input.addClass('dirty');
             if (!input.prev().is('.icon-dirty')) {
-              input.before('<svg class="icon icon-dirty"><use xlink:href="#icon-dropdown"></svg>');
+              var icon = $('<svg class="icon icon-dirty' + (input.is(':checkbox') ? ' checkbox' : '')+ '"><use xlink:href="#icon-dropdown"></svg>');
+              input.before(icon);
             }
 
             //Trigger Event
             input.trigger('dirty');
 
             //Handle Reseting value back
-            if (input.val() === input.data('original')) {
+            if ((input.is(':checkbox') ? input.prop('checked') : input.val()) === input.data('original')) {
               input.removeClass('dirty');
               input.prev('.icon-dirty').remove();
             }

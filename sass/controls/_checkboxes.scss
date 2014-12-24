@@ -31,14 +31,14 @@ span.checkbox > label:before {
 input.checkbox:checked + label:before,
 input.checkbox:checked + input[type="hidden"] + label:before,
 span.checkbox > input:checked + label:before {
-  background-color: transparent;
+  background-color: $checkbox-color;
   border-color: $checkbox-color;
 }
 
 input.checkbox:checked + label:after,
 input.checkbox:checked + input[type="hidden"] + label:after,
 span.checkbox > input:checked + label:after {
-  border-color: $checkbox-color;
+  border-color: $checkbox-arrow-color;
   border-style: solid;
   border-width: 2px 2px 0 0;
   content: '';
@@ -77,26 +77,28 @@ span.checkbox.partial > input:checked + label:after {
 input.checkbox:disabled + label,
 input.checkbox:disabled + input[type="hidden"] + label,
 span.checkbox > input:disabled + label {
-  color: $checkbox-disabled-font-color;
   cursor: default;
+  @include opacity($checkbox-disabled-opacity);
 }
 
 input.checkbox:disabled:not(:checked) + label:before,
 input.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before,
 span.checkbox > input:disabled:not(:checked) + label:before {
-  border-color: $checkbox-disabled-color;
+  background-color: $checkbox-disabled-bg-color;
+  border-color: $checkbox-disabled-border-color;
 }
 
 input.checkbox:disabled:checked + label:before,
 input.checkbox:disabled:checked + input[type="hidden"] + label:before,
 span.checkbox > input:disabled:checked + label:before {
-  border-color: $checkbox-disabled-color;
+  background-color: $checkbox-disabled-select-bg-color;
+  border-color: $checkbox-disabled-select-bg-color;
 }
 
 input.checkbox:disabled:checked + label:after,
 input.checkbox:disabled:checked + input[type="hidden"] + label:after,
 span.checkbox > input:disabled:checked + label:after {
-  border-color: $checkbox-disabled-color;
+  border-color: $checkbox-disabled-arrow-color;
 }
 
 // Focus State
@@ -151,7 +153,7 @@ span.checkbox > input:focus + label:before {
   transform-origin: left top 0;
 }
 
-.checkbox:not(.isPartial):checked + label:after {
+.checkbox:not(.partial):checked + label:after {
   -webkit-animation: .15s ease 0s normal none 1 running check;
   animation: .15s ease 0s normal none 1 running check;
 }

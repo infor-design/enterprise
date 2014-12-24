@@ -20,7 +20,7 @@ $header-height: 82px;
 
   h1 {
     color: $primary-color;
-    font-family: $font-light;
+    font-family: $font-regular;
     @include font-size(36);
     left: 90px;
     margin: 0;
@@ -56,7 +56,7 @@ $header-height: 82px;
     border-bottom: 1px solid #d2d2d2;
     color: #333333;
     display: block;
-    font-family: $font-semibold;
+    font-family: $font-regular;
     @include font-size(16);
     line-height: 65px;
     text-decoration: none;
@@ -67,7 +67,7 @@ $header-height: 82px;
   .title {
     border-bottom: 1px solid #d2d2d2;
     color: $primary-color;
-    font-family: $font-light;
+    font-family: $font-regular;
     @include font-size(36);
     line-height: 82px;
     margin-left: -40px;
@@ -121,7 +121,7 @@ $header-height: 82px;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
     color: #333333;
-    font-family: $font-light;
+    font-family: $font-regular;
     @include font-size(24);
     @include rem(line-height, 3.5rem);
     padding: 35px;

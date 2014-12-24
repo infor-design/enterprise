@@ -56,7 +56,14 @@ svg.icon {
     pointer-events: none;
     position: absolute;
     @include css3(transform, rotate(135deg));
+
+    &.checkbox {
+      margin-left: -9px;
+      margin-top: -9px;
+      z-index: 1;
+    }
   }
+
 }
 
 svg.icon-logo {

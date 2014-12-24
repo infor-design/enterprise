@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Color Pallette</h1>
+    <span class="label">Primary and Accent Colors for Theming and Charts</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="three columns">
+    <div class="pallette-color ruby">
+      <span>Ruby</span>
+      <span>#ed1c24</span>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="pallette-color amber">
+      <span>Amber</span>
+      <span>#ffa800</span>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="pallette-color emerald">
+      <span>Emerald</span>
+      <span>#4fb512</span>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="pallette-color azure">
+      <span>Azure</span>
+      <span>#13a7fe</span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="three columns">
+    <div class="pallette-color turqoise">
+      <span>Turqoise</span>
+      <span>#00c2b4</span>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="pallette-color amethyst">
+      <span>Amethyst</span>
+      <span>#a352cc</span>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="pallette-color tourmaline">
+      <span>Tourmaline</span>
+      <span>#ed4f79</span>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="pallette-color graphite">
+      <span>Graphite</span>
+      <span>#737373</span>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+    function hex(x) {
+        return ('0' + parseInt(x).toString(16)).slice(-2);
+    }
+    return '#' + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+  }
+
+  // Generate the Rest of the Colors
+  $('.pallette-color').each(function() {
+    var color = $(this),
+      colorName = color.attr('class').replace('pallette-color ','');
+
+    for (var i = 9; i >= 1; i--) {
+      var div = $('<div class="pallette-color ' + colorName+'0'+i +'"></div>');
+      color.after(div);
+
+      var colorValue = div.css('background-color');
+      div.append('<span>'+ ('0'+i) +'</span><span>' + rgb2hex(colorValue) + '</span></div>');
+    }
+  });
+</script>

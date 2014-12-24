@@ -1,52 +1,61 @@
-/* Radio Buttons
-================================================== */
-.radio:not(:checked), .radio:checked {
-  position: absolute;
+// Radio Buttons
+//================================================== //
+
+.radio:not(:checked),
+.radio:checked {
   left: -9999px;
+  position: absolute;
 }
 
-.radio:not(:checked) + label, .radio:checked + label {
+.radio:not(:checked) + label,
+.radio:checked + label {
   cursor: pointer;
-  padding-left: 35px;
-  position: relative;
   margin-bottom: 5px;
   margin-top: 4px;
+  padding-left: 35px;
+  position: relative;
 }
 
-.radio:not(:checked) + label:before, .radio:checked + label:before {
+.radio:not(:checked) + label:before,
+.radio:checked + label:before {
+  border: 1px solid $radio-border-color;
+  border-radius: 100%;
   content: '';
-  position: absolute;
+  height: 18px;
   left: 3px;
+  position: absolute;
   top: -1px;
   width: 18px;
-  height: 18px;
-  border: 1px solid $radio-border-color;
-  border-radius: 20px;
+}
+
+.radio:checked + label:before {
+  border: 1px solid $radio-selected-color;
 }
 
 .radio-label {
   display: inline-block;
 }
 
-.radio:not(:checked) + label:after, .radio:checked + label:after {
-  background-color: $radio-color;
+.radio:not(:checked) + label:after,
+.radio:checked + label:after {
+  background-color: $body-bg-color;
   background-repeat: no-repeat;
   border-radius: 10px;
-  content: "";
+  content: '';
   height: 10px;
   left: 8px;
   position: absolute;
   top: 4px;
-  transition: all 0.2s ease 0s;
+  transition: all .2s ease 0s;
   width: 10px;
 }
 
 .radio:checked + label:before {
-  background-color: $body-bg-color;
-  border-color: $radio-color;
+  background-color: $radio-selected-color;
+  border-color: $radio-selected-color;
 }
 
-/* checked mark aspect changes */
+// checked mark aspect changes
 .radio:not(:checked) + label:after {
   @include opacity(0);
   transform: scale(0);
@@ -57,35 +66,35 @@
   transform: scale(1);
 }
 
-/* disabled radio */
-.radio:disabled:not(:checked) + label:before, .radio:disabled:checked + label:before {
-  border-color:  $primary-color;
+// disabled radio
+.radio:disabled:not(:checked) + label:before,
+.radio:disabled:checked + label:before {
+  background-color: $radio-disabled-bg-color;
+  border-color: $radio-disabled-border-color;
+  cursor: default;
+}
+
+.radio:disabled:checked + label:before {
+  background-color: $radio-disabled-select-bg-color;
+  border-color: $radio-disabled-select-bg-color;
   cursor: default;
 }
 
 .radio:disabled:checked + label:after {
-  @include opacity(.5);
+  @include opacity($radio-disabled-opacity);
 }
 
 .radio:disabled:not(:checked) + label:before {
-  border-color: #BBBBBB;
+  border-color: #bbbbbb;
   box-shadow: none;
 }
 
 .radio:disabled + label {
-  color: #aaa;
+  color: #aaaaaa;
   cursor: default;
 }
 
-/* accessibility */
 .radio:checked:focus + label:before, .radio:not(:checked):focus + label:before {
   box-shadow: $radio-focus-shadow;
 }
 
-/* http://msdn.microsoft.com/en-us/library/windows/apps/hh465764.aspx */
-@media screen and (-ms-high-contrast: active) {
-  .radio:not(:checked), .radio:checked {
-    position: relative;
-    left: initial;
-  }
-}

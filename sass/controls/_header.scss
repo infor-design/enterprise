@@ -3,12 +3,16 @@
 
 header.header {
   background-color: $header-color;
-  height: 100px;
-  padding-top: 35px;
+  height: 64px;
+  padding: 20px 0;
+
+  .container {
+    max-width: none;
+  }
 
   .title {
     color: $inverse-color;
-    font-family: $font-semibold;
+    font-family: $font-regular;
     @include font-size(24);
     @include rem(line-height, 2.4rem);
   }
@@ -17,11 +21,6 @@ header.header {
   .audible {
     color: #ffffff;
   }
-}
-
-.header + .svg-icons + .grid,
-.header + .grid {
-  margin-top: 40px;
 }
 
 // Print Style Sheet
@@ -43,11 +42,17 @@ header.header {
 //TODO: Remove was for demo only - will have a switcher
 .header .field.aligned {
   position: absolute;
-  right: 50px;
-  top: 28px;
+  right: 20px;
+  top: 13px;
 
   input {
     background-color: #ffffff;
-    width: 202px;
+    width: 180px;
+  }
+}
+
+@media (max-width: $breakpoint-phone) {
+  .header .field.aligned {
+    display: none;
   }
 }

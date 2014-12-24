@@ -6,11 +6,14 @@
 }
 
 .draggable {
+  cursor: move;
+
   // transition: all .2s ease;
   z-index: 7000;
 
   &.animated {
     transition: all .2s ease;
   }
+
 }
 

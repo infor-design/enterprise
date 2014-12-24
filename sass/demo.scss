@@ -1,100 +1,143 @@
-/* Styling use in the Demo App Only
-================================================== */
-@import "config";
-@import "mixins";
+// Styling use in the Demo App Only
+//================================================== //
 
-.demo .center {
-  text-align: center;
+@import 'config';
+@import 'mixins';
+
+// Syntax High Lighting
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f8f8f2;
+  text-shadow: 0 1px rgba(0, 0, 0, .3);
+  font-size: 1.4rem;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
 }
 
-.demo .inline-code {
-  font-family: Courier;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  padding: 2px 5px;
+// Code blocks
+pre[class*="language-"] {
+  margin: .5em 0;
+  overflow: auto;
+  padding: 20px;
 }
 
-.demo .content {
-  background: none repeat scroll 0 0 #e2b7ba;
-  color: #666666;
-  height: 50px;
-  padding: 0 0 10px 20px;
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #272822;
 }
 
-.demo .content h3 {
-  line-height: 52px;
+// Inline code
+:not(pre) > code[class*="language-"] {
+  border-radius: .3em;
+  padding: .1em;
 }
 
-.demo .content span {
-  margin: 0;
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: slategray;
+}
+
+.token.punctuation {
+  color: #f8f8f2;
+}
+
+.namespace {
+  opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  background-color: transparent;
+  color: #f92672;
   padding: 0;
+  margin: 0;
 }
 
-.demo .loader {
-  height: 160px;
-  left: 113px;
-  margin-bottom: 21px;
+.token.boolean,
+.token.number {
+  color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value {
+  color: #e6db74;
+}
+
+.token.keyword {
+  color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+  color: #fd971f;
+}
+
+.token.important {
+  font-weight: bold;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+pre[class*='language-'] {
   position: relative;
-  top: 65px;
 }
 
-.demo-header .label, .demo-header .dropdown {
-  float: left;
+pre[class*='language-'] > code[data-language] {
+  overflow: scroll;
+  max-height: 28em;
+  display: block;
+}
+
+pre[class*='language-'] > code[data-language]::before {
+  border-radius: 0 0 0 5px;
+  content: attr(data-language);
+  color: black;
+  background-color: #CFCFCF;
   display: inline-block;
-}
-
-.demo-header .label {
-  color: #fff;
-}
-
-/* TODO: Move this to forms */
-.field.aligned {
-  margin-bottom: 0.5em;
-}
-
-.field.aligned .label {
-  display: inline-block;
-  margin: 0.4em 0 0 0;
-  padding-right: 10px;
-  text-align: right;
-  vertical-align: middle;
-}
-
-.field.aligned .dropdown {
-  display: inline-block;
-  height: 26px;
-  margin-top: 2px;
-  padding: 3px 20px 3px 10px !important;
-  vertical-align: middle;
-  width: 12em;
-}
-
-.field.aligned .dropdown + .icon {
-  margin-top: 1px;
-  height: 28px;
-}
-
-/* TODO: Hide Drop Down For Now on Smaller Res */
-@media handheld, only screen and (max-width: 767px) {
-  .demo-header .field.aligned {
-    display: none;
-  }
-}
-
-/* Documentation - Might go in its own sass later */
-.doc-block {
-  border-radius: 4px;
-  background-color: #fff;
-  box-shadow: 0 1px rgba(0,0,0,.2);
-  @include rem(padding, 5);
-}
-
-.doc h1 {
-  margin-top: 50px;
-}
-
-.doc h1:first-child {
-  margin-top: 5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.4rem;
+  padding: 0 0.5em;
+  text-shadow: none;
 }
 

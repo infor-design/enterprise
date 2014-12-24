@@ -60,7 +60,7 @@
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
                         .attr('id', id);
 
-        var icon = $('<svg class="icon"><use xlink:href="#icon-dropdown"/></svg>');
+        var icon = $('<svg class="icon" focusable="false"><use xlink:href="#icon-dropdown"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.element.after(this.input, this.trigger);

@@ -42,7 +42,7 @@
   thead {
     th {
       color: $font-color-dark;
-      font-family: $font-semibold;
+      font-family: $font-regular;
       @include rem(font-size, 1.2rem);
       margin: 20px;
       text-transform: uppercase;
@@ -72,7 +72,7 @@
     &.today {
       border-color: $datepicker-today-color;
       color: $datepicker-today-color;
-      font-family: $font-semibold;
+      font-family: $font-regular;
     }
 
     //Selected
@@ -84,7 +84,7 @@
     &.selected:hover {
       background-color: $datepicker-selected-bg-color;
       color: $datepicker-selected-color;
-      font-family: $font-semibold;
+      font-family: $font-regular;
     }
 
     &:focus {

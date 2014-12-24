@@ -74,9 +74,9 @@
       elem.find('[data-validate-on="submit"]').validate();
 
       //Cardstack
-      elem.find('.cardstack').each(function () {
+      elem.find('.cardlist').each(function () {
         var cs = $(this);
-        $(this).cardstack({template: $('#' + cs.attr('data-tmpl') + '').html(),
+        $(this).cardlist({template: $('#' + cs.attr('data-tmpl') + '').html(),
             dataset: window[cs.attr('data-dataset')]});
       });
 
