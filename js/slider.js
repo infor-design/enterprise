@@ -1,7 +1,6 @@
 /**
-* Touch Enabled/ Responsive and Accessible Slider Control
-* @name Tabs
-* @param {string} propertyName - The Name of the Property
+* Touch Enabled/Responsive and Accessible Slider Control
+* @name Slider
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -38,6 +37,19 @@
     // Check if an object is an array
     function isArray(obj) {
       return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+
+    // Check if is an integer
+    function isInt(n) {
+      return n % 1 === 0;
+    }
+
+    // Round a non-integer to an integer closest to the nearest increment/decrement
+    function roundToIncrement(number, increment) {
+      if (!increment || isNaN(increment) || increment === 0) {
+        increment = 1;
+      }
+      return Math.round(number/increment) * increment;
     }
 
     // Get the distance between two points.
@@ -293,6 +305,63 @@
           });
         });
 
+        self.wrapper.on('touchend.slider touchcancel.slider', function(e) {
+          e.preventDefault();
+          e.target.click();
+        }).on('click.slider', function(e) {
+          e.preventDefault();
+          if (self.isDisabled()) {
+            return;
+          }
+
+          var mX = e.pageX - self.wrapper.offset().left /*- (self.handles[0].width()/2)*/ - $(document).scrollLeft(),
+            mY = e.pageY - self.wrapper.offset().top /*- (self.handles[0].height()/2)*/ - $(document).scrollTop(),
+            clickCoords = [mX,mY],
+            firstHandleCoords = [self.handles[0].offset().left + (self.handles[0].width()/2), self.handles[0].offset().top + (self.handles[0].height()/2)],
+            secondHandleCoords,
+            oldVals = self.value(),
+            dLower = getDistance(clickCoords,firstHandleCoords),
+            dHigher,
+            targetOldVal = oldVals[0],
+            targetHandle = self.handles[0];
+
+          // Convert the coordinates of the mouse click to a value
+          var val = mX / self.wrapper.width() * 100, // TODO: Make an option to have this work Vertically if we need it later
+            rangeVal = self.convertPercentageToValue(val);
+
+          // If the slider is a range, we may use the second handle instead of the first
+          if (self.handles[1]) {
+            secondHandleCoords = [self.handles[1].offset().left + (self.handles[1].width()/2), self.handles[1].offset().top + (self.handles[1].height()/2)];
+            dHigher = getDistance(clickCoords,secondHandleCoords);
+
+            if (dLower > dHigher) {
+              self.value([undefined, rangeVal]);
+              targetHandle = self.handles[1];
+              targetOldVal = oldVals[1];
+            } else {
+              self.value([rangeVal]);
+            }
+          } else {
+            self.value([rangeVal]);
+          }
+
+          self.checkHandleDifference(targetHandle, targetOldVal, rangeVal);
+
+          if (rangeVal < targetOldVal) {
+            self.decreaseValue(e, targetHandle, rangeVal, 0);
+          } else {
+            self.increaseValue(e, targetHandle, rangeVal, 0);
+          }
+
+          // Tooltip repositioner will focus the handle after positioning occurs, but if we are clicking a tick
+          // on a slider with no tooltip, we need to focus it manually.
+          if (!self.settings.tooltip) {
+            targetHandle.focus();
+          }
+
+        });
+
+        /*
         if (this.ticks) {
           $.each(self.ticks, function(i, tick) {
             $(tick.element).on('touchend.slider touchcancel.slider', function(e) {
@@ -345,6 +414,7 @@
             });
           });
         }
+        */
 
         return self;
       },
@@ -404,19 +474,24 @@
         var val = this.value().slice(0),
           incrementBy = increment !== undefined ? increment : this.settings.step !== undefined ? this.settings.step : 1,
           testVal,
-          updatedVal;
+          updatedVal,
+          finalVal;
 
         if (handle.hasClass('higher')) {
           testVal = value !== undefined ? value : val[1];
+          incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : testVal % incrementBy;
           updatedVal = testVal + incrementBy < this.settings.max ? testVal + incrementBy : this.settings.max;
-          this.value([undefined, updatedVal]);
+          finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
+          this.value([undefined, finalVal]);
         } else {
           testVal = value !== undefined ? value : val[0];
           var maxValue = val[1] === undefined ? this.settings.max : val[1];
+          incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : incrementBy - (testVal % incrementBy);
           updatedVal = testVal + incrementBy < maxValue ? testVal + incrementBy : maxValue;
-          this.value([updatedVal]);
+          finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
+          this.value([finalVal]);
         }
-        this.checkHandleDifference(handle, (handle.hasClass('higher') ? val[1] : val[0]), updatedVal);
+        this.checkHandleDifference(handle, testVal, finalVal);
         this.updateRange();
         this.updateTooltip(handle);
       },
@@ -428,19 +503,24 @@
         var val = this.value(),
           decrementBy = decrement !== undefined ? decrement : this.settings.step !== undefined ? this.settings.step : 1,
           testVal,
-          updatedVal;
+          updatedVal,
+          finalVal;
 
         if (handle.hasClass('higher')) {
           testVal = value !== undefined ? value : val[1];
           var minValue = val[0] === undefined ? this.settings.min : val[0];
+          decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : decrementBy - (testVal % decrementBy);
           updatedVal = testVal - decrementBy > minValue ? testVal - decrementBy : minValue;
-          this.value([undefined, updatedVal]);
+          finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
+          this.value([undefined, finalVal]);
         } else {
           testVal = value !== undefined ? value : val[0];
+          decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : testVal % decrementBy;
           updatedVal = testVal - decrementBy > this.settings.min ? testVal - decrementBy : this.settings.min;
-          this.value([updatedVal]);
+          finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
+          this.value([finalVal]);
         }
-        this.checkHandleDifference(handle, (handle.hasClass('higher') ? val[1] : val[0]), updatedVal);
+        this.checkHandleDifference(handle, testVal, finalVal);
         this.updateRange();
         this.updateTooltip(handle);
       },
