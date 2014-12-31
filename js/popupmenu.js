@@ -24,13 +24,13 @@
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function PopupMenu(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Object
-    Plugin.prototype = {
+    PopupMenu.prototype = {
       init: function() {
         this.addMarkup();
         this.handleEvents();
@@ -455,7 +455,11 @@
         this.menu.unwrap().find('.popupmenu').unwrap();
         $.removeData(this.element[0], pluginName);
         this.detach();
-        this.element.off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
+        this.element
+          .removeAttr('aria-owns')
+          .removeAttr('aria-expanded')
+          .removeAttr('aria-haspopup')
+          .off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
         this.menu.trigger('destroy.popupmenu');
       }
     };
@@ -469,7 +473,7 @@
         }
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new PopupMenu(this, settings));
       }
     });
   };
