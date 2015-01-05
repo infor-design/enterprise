@@ -122,8 +122,8 @@
           this.open();
         }
 
-        this.element.on('keypress.popupmenu', function (e) {
-          if (settings.trigger === 'rightClick' && e.shiftKey && e.keyCode === 121) {  //Shift F10
+        this.element.on('keydown.popupmenu', function (e) {
+          if (e.shiftKey && e.which === 121) {  //Shift F10
             self.open(e, true);
           }
         });
@@ -240,8 +240,8 @@
           menuHeight = this.menu.outerHeight();
 
         if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
-          wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
-                        'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
+          wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX),
+                        'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY)});
         } else {
           wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0),
                         'top': target.offset().top - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight()});
