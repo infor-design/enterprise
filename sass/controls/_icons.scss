@@ -56,6 +56,11 @@ svg.icon {
     pointer-events: none;
     position: absolute;
     @include css3(transform, rotate(135deg));
+
+    &.checked {
+      margin-left: -8px;
+      margin-top: -8px;
+    }
   }
 }
 
