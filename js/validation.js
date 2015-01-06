@@ -414,8 +414,10 @@
             if (parseInt(valueHours) < 1) {
               return false;
             }
+            var period0 = new RegExp(Locale.calendar().dayPeriods[0], 'i'),
+              period1 = new RegExp(Locale.calendar().dayPeriods[1], 'i');
 
-            valueM = value.match('am') || value.match('pm') || value.match('AM') || value.match('PM') || [];
+            valueM = value.match(period0) || value.match(period1) || [];
             if (valueM.length === 0) {
               return false;
             }
