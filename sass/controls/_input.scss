@@ -151,6 +151,7 @@ label.required:after,
 // Placeholder - Inline help
 ::-webkit-input-placeholder {
   color: $input-placeholder-color;
+  font-weight: lighter;
   @include font-size(14);
   line-height: 16px;
   opacity: 1;
@@ -158,6 +159,7 @@ label.required:after,
 
 ::-moz-placeholder {
   color: $input-placeholder-color;
+  font-weight: lighter;
   @include font-size(14);
   line-height: 16px;
   opacity: 1;
@@ -165,6 +167,7 @@ label.required:after,
 
 :-ms-input-placeholder {
   color: $input-placeholder-color;
+  font-weight: lighter;
   @include font-size(14);
   line-height: 16px;
   opacity: 1;

@@ -67,6 +67,11 @@ span {
   @include rem(line-height, 1.5rem);
 }
 
+// Add Some Seperation in Kitchen Sink Page
+.columns > h1 {
+  margin-top: 20px;
+}
+
 // Labels
 label,
 .label {

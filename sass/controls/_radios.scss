@@ -34,6 +34,7 @@
 
 .radio-label {
   display: inline-block;
+  line-height: 20px;
 }
 
 .radio:not(:checked) + label:after,
