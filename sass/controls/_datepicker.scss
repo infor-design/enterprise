@@ -119,9 +119,11 @@
     border: 1px solid transparent;
     border-radius: 2px;
     color: transparent;
+    cursor: pointer;
     display: block;
     height: 30px;
     left: 20px;
+    line-height: 1;
     margin-top: 11px;
     position: absolute;
     top: 13px;
@@ -129,7 +131,7 @@
     width: 30px;
 
     &.next {
-      left: initial;
+      left: auto;
       right: 20px;
     }
   }
