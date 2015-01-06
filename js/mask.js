@@ -84,10 +84,7 @@
         if (self.showCurrency) {
           var symbol = Locale.currentLocale.data.currencySign;
           $('<span class="audible currency"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
-          if (this.element.parent('.input-wrapper').length === 0) {
-            this.element.wrap('<div class="input-wrapper"></div>');
-          }
-          self.currencyContainer = $('<span class="currency"></span>').text(symbol).insertBefore(self.element);
+          this.element.parent('.field').attr('data-currency-symbol', '' + symbol).addClass('currency');
         }
 
         // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
@@ -1130,8 +1127,7 @@
 
       destroy: function() {
         if (this.showCurrency) {
-          this.currencyContainer.remove();
-          this.element.unwrap();
+          this.element.parent('.field').removeClass('currency').attr('data-currency-symbol', '');
           this.element.prev('label').find('.currency').remove();
         }
         this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);

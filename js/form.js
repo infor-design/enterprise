@@ -37,29 +37,44 @@
   $.fn.trackdirty = function() {
       this.each(function () {
         var input = $(this);
-        input.data('original', input.val())
-           .on('change.dirty', function () {
-            var input = $(this);
 
-            if (input.attr('data-trackdirty') !== 'true') {
-              return;
-            }
+        function valMethod(elem) {
+          switch(elem.attr('type')) {
+            case 'checkbox':
+            case 'radio':
+              return elem.prop('checked');
+            default:
+              return elem.val();
+          }
+        }
 
-            //Add Class and Icon
-            input.addClass('dirty');
-            if (!input.prev().is('.icon-dirty')) {
-              input.before('<svg class="icon icon-dirty"><use xlink:href="#icon-dropdown"></svg>');
-            }
+        input.data('original', valMethod(input))
+         .on('change.dirty', function () {
+          var input = $(this),
+            cssClass = '';
 
-            //Trigger Event
-            input.trigger('dirty');
+          if (input.attr('data-trackdirty') !== 'true') {
+            return;
+          }
 
-            //Handle Reseting value back
-            if (input.val() === input.data('original')) {
-              input.removeClass('dirty');
-              input.prev('.icon-dirty').remove();
-            }
-          });
+          //Add Class and Icon
+          input.addClass('dirty');
+          if (input.attr('type') === 'checkbox' || input.attr('type') === 'radio') {
+            cssClass += ' checked';
+          }
+          if (!input.prev().is('.icon-dirty')) {
+            input.before('<svg class="icon icon-dirty' + cssClass + '"><use xlink:href="#icon-dropdown"></svg>');
+          }
+
+          //Trigger Event
+          input.trigger('dirty');
+
+          //Handle Reseting value back
+          if (valMethod(input) === input.data('original')) {
+            input.removeClass('dirty');
+            input.prev('.icon-dirty').remove();
+          }
+        });
       });
     return this;
   };
