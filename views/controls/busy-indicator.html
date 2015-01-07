@@ -5,9 +5,22 @@
 
     <div class="grid">
       <div class="col-1-2">
-        <button class="btn busy" type="button">Get Remote Data</button>
+        <button class="btn busy" id="busy-indicator-trigger" type="button">Get Remote Data</button>
       </div>
     </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#busy-indicator-trigger').busyIndicator({
+          timeToComplete: 1000,
+          timeToClose: 3000
+        });
+
+        $('#busy-indicator-trigger').click(function() {
+          $(this).trigger('start.busyIndicator');
+        });
+      });
+    </script>
 
   </div>
 </div>
