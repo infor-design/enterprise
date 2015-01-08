@@ -1,7 +1,7 @@
 // Busy Indicator
 $busy-indicator-size: 60px;
-$busy-indicator-color: #078cd9;
-$busy-indicator-check-color: #ffffff;
+$busy-indicator-color: $primary-btn-bg-color;
+$busy-indicator-check-color: $inverse-color;
 
 .busy-indicator-container {
   display: inline-block;
@@ -120,7 +120,7 @@ $busy-indicator-check-color: #ffffff;
 // Overlay Override for Busy Indicator
 .busy.overlay {
   background-color: $body-bg-color;
-  @include opacity(.65);
+  @include opacity(.85);
   position: absolute;
   @include transition(opacity 500ms);
   visibility: visible;

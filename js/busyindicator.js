@@ -77,10 +77,11 @@
           this.originalPositionProp = this.element.css('position');
           this.element.css('position', 'relative');
           this.overlay = $('<div class="overlay busy is-hidden"></div>').appendTo(this.element);
-          this.container.appendTo(this.element).addClass('blocked-ui');
-        } else {
-          this.container.insertAfter(this.element);
+          this.container.addClass('blocked-ui');
         }
+
+        // Append the markup to the page
+        this.container.appendTo(this.element);
 
         // Remove focus from any controls inside of this element.
         this.element.find(':focus').blur();
