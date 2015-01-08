@@ -1,0 +1,35 @@
+// Toast Message
+//================================================== //
+
+.toast-container {
+  position: fixed;
+  z-index: 8000;
+
+  &.toast-bottom-right {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  &.toast-top-right {
+    right: 10px;
+    top: 10px;
+  }
+}
+
+.toast {
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  margin: 0 0 6px;
+  overflow: hidden;
+  padding: 12px;
+  position: relative;
+  width: auto;
+
+  .toast-title {
+    display: block;
+  }
+
+  .toast-message {
+    display: block;
+  }
+}

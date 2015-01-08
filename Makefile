@@ -49,4 +49,10 @@ test-spinbox:
 test-radio:
 	@node test-runner.js radio
 
+test-message:
+	@node test-runner.js message
+	
+test-toast:
+	@node test-runner.js toast
+		
 .PHONY: test
