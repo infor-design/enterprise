@@ -56,10 +56,11 @@ svg.icon {
     pointer-events: none;
     position: absolute;
     @include css3(transform, rotate(135deg));
+    z-index: 10;
 
     &.checked {
-      margin-left: -8px;
-      margin-top: -8px;
+      margin-left: -9px;
+      margin-top: -9px;
     }
   }
 
@@ -79,5 +80,3 @@ svg.icon-logo {
   border: 1px solid #0896e9;
   outline: 0;
 }
-
-

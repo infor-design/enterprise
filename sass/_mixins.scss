@@ -7,11 +7,100 @@
   font-size: ($size-value / 10) + rem;
 }
 
-// vendor prefixing
+// Prefixes that we use throughout
+$prefixes: -webkit-, -moz-, -ms-, -o-, '';
+
+// Builds a list of vendor-prefixed animation definitions
+@mixin animation($animate...) {
+  $max: length($animate);
+  $animations: '';
+
+  @for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+
+    @if $i < $max {
+      $animations: #{$animations + ", "};
+    }
+  }
+
+  @each $prefix in $prefixes {
+    #{$prefix}animation: $animations;
+  }
+}
+
+// Builds out vendor-prefixed keyframe definitions
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes $animation-name {
+    @content;
+  }
+  @-moz-keyframes $animation-name {
+    @content;
+  }
+  @-ms-keyframes $animation-name {
+    @content;
+  }
+  @-o-keyframes $animation-name {
+    @content;
+  }
+  @keyframes $animation-name {
+    @content;
+  }
+}
+
+// basic vendor prefixing
 @mixin css3($property, $value...) {
-  @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+  @each $prefix in $prefixes {
     #{$prefix}#{$property}: $value;
   }
+}
+
+// vendor prefixes a CSS transition defintion for a CSS3 property that is also vendor-prefixed
+@mixin css3-prop-transition($property, $value) {
+  @each $prefix in $prefixes {
+    #{$prefix}transition: #{$prefix}#{$property} $value;
+  }
+}
+
+// vendor prefixed transitions for regular properties (non-vendor prefixed)
+@mixin transition($transitions-list) {
+  @each $prefix in $prefixes {
+    #{$prefix}transition: $transitions-list;
+  }
+}
+
+// 'transform'-specific vendor prefixing mixins
+// This is because we can't include the word 'transform' inside the normal vendor prefixer,
+// since it would not be prefixed properly.
+@mixin transform($value) {
+  @each $prefix in $prefixes {
+    #{$prefix}transform: $value;
+  }
+}
+
+@mixin transform-origin($origin) {
+  @each $prefix in $prefixes {
+    #{$prefix}transform-origin: $origin;
+  }
+}
+
+// rotation
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+  @include transform(scale($scale));
+}
+
+// translate
+@mixin translate($x, $y) {
+  @include transform(translate($x, $y));
+}
+
+// translate3d
+@mixin translate3d($x, $y, $z) {
+  @include transform(translate3d($x, $y, $z));
 }
 
 // set opacity cross browser

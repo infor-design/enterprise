@@ -129,25 +129,7 @@ span.checkbox > input:focus + label:before {
   line-height: 22px;
 }
 
-// Animation
-@keyframes check {
-  0% {
-    height: 0;
-    width: 0;
-  }
-
-  50% {
-    height: 0;
-    width: 4px;
-  }
-
-  100% {
-    height: 10px;
-    width: 4px;
-  }
-}
-
-@-webkit-keyframes check {
+@include keyframes(check) {
   0% {
     height: 0;
     width: 0;
@@ -165,11 +147,9 @@ span.checkbox > input:focus + label:before {
 }
 
 .checkbox + label:after {
-  -webkit-transform-origin: left top 0;
-  transform-origin: left top 0;
+  @include css3(transform-origin, left top 0);
 }
 
-.checkbox:not(.partial):checked + label:after {
-  -webkit-animation: .15s ease 0s normal none 1 running check;
-  animation: .15s ease 0s normal none 1 running check;
+.checkbox:not(.isPartial):checked + label:after {
+  @include animation('.15s ease 0s normal none 1 running check');
 }
