@@ -87,4 +87,10 @@ $(function($) {
       });
   });
 
+
+// Toast.html View Specifics
+  $('#show-toast-message').on('click', function() {
+      $('body').toast({title: 'Application Offline', message: 'This is a Toast message'});
+  });
+
 });

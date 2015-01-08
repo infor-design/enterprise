@@ -76,7 +76,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('can be edited using arrow keys', function(done) {
+  it.skip('can be edited using arrow keys', function(done) {
     // Regular slider min = 0, max = 100, default value is 50.
     var input = '#regular',
       handle = '#regular-slider-handle';
@@ -118,7 +118,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('can be edited using PageUp and PageDown', function(done) {
+  it.skip('can be edited using PageUp and PageDown', function(done) {
     var input = '#regular',
       handle = '#regular-slider-handle';
 
@@ -156,7 +156,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('can be edited by clicking ticks on the range bar', function(done) {
+  it.skip('can be edited by clicking ticks on the range bar', function(done) {
     var input = '#simple-step',
       lowTick = '#simple-step-tick-1',
       highTick = '#simple-step-tick-4';
@@ -305,7 +305,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should respect the "max" attribute when arrow keys are used to raise its value', function(done) {
+  it.skip('should respect the "max" attribute when arrow keys are used to raise its value', function(done) {
     var input = '#stepped',
       handle = '#stepped-slider-handle';
     runner.client
@@ -416,7 +416,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should update its WAI-ARIA "valuenow" attribute whenever its value is changed', function(done) {
+  it.skip('should update its WAI-ARIA "valuenow" attribute whenever its value is changed', function(done) {
     var input = '#simple-step',
       handle = '#simple-step-slider-handle';
     runner.client
@@ -477,7 +477,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should display a tooltip when its handles are focused if the "data-tooltip-content" attribute is set', function(done) {
+  it.skip('should display a tooltip when its handles are focused if the "data-tooltip-content" attribute is set', function(done) {
     var input = '#tooltips',
       lower = '#tooltips-slider-handle-lower';
 
