@@ -64,8 +64,8 @@
         }
         if (!this.buttons) {
           this.buttons = {
-            'down' : $('<span class="spinbox-control down">-</span>').insertBefore(this.element),
-            'up' : $('<span class="spinbox-control up">+</span>').insertAfter(this.element)
+            'down' : $('<span aria-hidden="true" class="spinbox-control down">-</span>').insertBefore(this.element),
+            'up' : $('<span aria-hidden="true" class="spinbox-control up">+</span>').insertAfter(this.element)
           };
         }
 

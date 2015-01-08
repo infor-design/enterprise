@@ -23,8 +23,8 @@
         <input id="time-field-disabled" class="timepicker" disabled name="time-field-disabled" type="text">
       </div>
 
-      <script type="text/javascript">
-        $(document).ready(function() {
+      <script>
+        $('body').on('initialized',function() {
           $('#twentyfour-time-field').timepicker({
             forceHourMode: '24'
           });

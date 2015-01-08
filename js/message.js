@@ -39,8 +39,8 @@
         //Create the Markup
         this.message = $('<div class="modal"></div>');
         this.messageContent = $('<div class="modal-content"></div>');
-        this.title = $('<h1 class="modal-title" tabindex="0">' + settings.title + '</h3>').appendTo(this.messageContent);
-        this.content = $('<div class="modal-body"><p class="message">'+ settings.message +'</p></div>').appendTo(this.messageContent);
+        this.title = $('<h1 class="modal-title" id="message-title">' + settings.title + '</h1>').appendTo(this.messageContent);
+        this.content = $('<div class="modal-body"><p class="message" id="message-text">'+ settings.message +'</p></div>').appendTo(this.messageContent);
 
         //Append The Content if Passed in
         if (!this.element.is('body')) {
@@ -51,7 +51,7 @@
         this.closeBtn = $('<button type="button" class="btn-primary btn-close">Close</button>').appendTo(this.content);
         this.message.append(this.messageContent).appendTo('body');
         this.message.modal({trigger: 'immediate', buttons: settings.buttons,
-          resizable: settings.resizable, close: settings.close});
+          resizable: settings.resizable, close: settings.close, isAlert: true});
 
         //Adjust Width if Set as a Setting
         if (settings.width !== 'auto') {

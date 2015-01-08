@@ -19,7 +19,8 @@
     var pluginName = 'modal',
       defaults = {
         trigger: 'click', //Supports click, immediate
-        buttons: null
+        buttons: null,  //Pass in the Buttons
+        isAlert: false //Adds alertdialog role
       },
       settings = $.extend({}, defaults, options);
 
@@ -88,23 +89,20 @@
       addButtons: function(buttons){
         var body = this.element.find('.modal-body'),
             self = this,
+            btnWidth = 100/buttons.length,
             buttonset = $('<div class="modal-buttonset"></div>').insertAfter(body);
 
         body.find('button').remove();
-        body.find('.btn-default.btn-close').remove();
+        body.find('.btn-primary .btn-close .btn').remove();
 
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
 
           if (props.isDefault) {
-            btn.addClass('btn-primary');
+            btn.addClass('btn-modal-primary');
           } else {
-            btn.addClass('btn');
-          }
-
-          if (props.isLink) {
-            btn = $('<a href="#" class="link"></a>').text(props.text);
+            btn.addClass('btn-modal');
           }
           if (props.id) {
             btn.attr('id', props.id);
@@ -116,6 +114,7 @@
             }
             self.close();
           });
+          btn.css('width', btnWidth + '%');
           btn.button();
           buttonset.append(btn);
         });
@@ -164,9 +163,18 @@
         }, 300);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
-        this.element.addClass('is-visible').attr('role', 'dialog');
+
+        if (settings.isAlert) {
+          this.element.attr('aria-labeledby', 'message-title');
+          this.element.attr('aria-describedby', 'message-text');
+        } else {
+          this.element.removeAttr('aria-labeledby');
+
+        }
+        this.element.addClass('is-visible').attr('role', (settings.isAlert ? 'alertdialog' : 'dialog'));
         this.element.attr('aria-hidden', 'false');
         this.overlay.attr('aria-hidden', 'false');
+        this.element.attr('aria-modal', 'true'); //This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
 
         //Center
         self.element.css({top:'50%',left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
@@ -187,7 +195,7 @@
           if (e.which === 13 && self.isOnTop()) {
             e.stopPropagation();
             e.preventDefault();
-            self.element.find('.btn-default').trigger('click.modal');
+            self.element.find('.btn-modal-primary').trigger('click.modal');
           }
         });
 
@@ -197,6 +205,10 @@
           e.preventDefault();
           self.getTabbableElements().first.focus();
         });
+
+        setTimeout(function () {
+          self.element.find('.btn-modal-primary').focus();
+        }, 10);
       },
 
       isOnTop: function () {

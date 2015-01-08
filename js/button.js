@@ -33,6 +33,10 @@
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
         this.element.on('touchstart.button mousedown.button', function (e) {
+          if (!self.isTouch && e.which !== 1) {
+            return false;
+          }
+
           if (self.isTouch && e.type === 'mousedown') {
             return false;
           }
