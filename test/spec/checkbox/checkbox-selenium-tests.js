@@ -99,23 +99,14 @@ describe('Checkbox [selenium]', function(){
       .call(done);
   });
 
-  // TODO: Fix this test when we get a fix from the WebdriverIO Dev for testing pseudo-elements
-  // https://github.com/webdriverio/webdriverio/issues/295
-  it.skip('should operate correctly if defined as an ASP checkbox', function(done) {
+  // In the test we are just checking that a specific property gets applied. A bit brittle
+  it('should operate correctly if defined as an ASP checkbox', function(done) {
     runner.client
       // Check the background color on the label's :before pseudo element to see if the box rendered.
-      .getCssProperty('label[for="checkbox-enable-ssl"]', 'background', function(err, result) {
+      .getCssProperty('#asp-check', 'line-height', function(err, result) {
         globals.noError(err);
-        console.log(result);
         should.exist(result);
-        result.value.should.equal('#0086e6');
-      })
-      .click('label[for="checkbox-enable-ssl"]:before', globals.noError)
-      .getCssProperty('label[for="checkbox-enable-ssl"]', 'background', function(err, result) {
-        globals.noError(err);
-        console.log(result);
-        should.exist(result);
-        result.value.should.equal('');
+        result.value.should.equal('22px');
       })
       .call(done);
   });

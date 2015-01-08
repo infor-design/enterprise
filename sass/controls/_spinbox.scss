@@ -80,10 +80,9 @@ input::-webkit-inner-spin-button {
 
     > .spinbox-control {
       border-color: $input-focus-border-color;
-      box-shadow: $input-focus-shadow;
 
       &.is-active {
-        box-shadow: $input-focus-shadow;
+        border-color: $input-focus-border-color;
       }
     }
 

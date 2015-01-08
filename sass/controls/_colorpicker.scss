@@ -38,7 +38,6 @@
   //Open/Focus State is in the input
   &.is-open {
     border-color: $input-focus-border-color;
-    box-shadow: $input-focus-shadow;
 
     + .swatch {
       border-left-color: transparent;
@@ -48,7 +47,6 @@
   &.popupmenu {
     border: 1px solid $input-focus-border-color;
     border-radius: 0 0 3px 3px;
-    box-shadow: $input-focus-shadow;
     max-height: 160px;
     width: auto;
 

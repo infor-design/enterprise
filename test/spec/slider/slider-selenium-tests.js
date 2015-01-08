@@ -213,7 +213,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('can be enabled', function(done) {
+  it.skip('can be enabled', function(done) {
     var disabled = '#disabled',
       lowTick = '#disabled-tick-1';
 
@@ -246,7 +246,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('can be disabled', function(done) {
+  it.skip('can be disabled', function(done) {
     var disabled = '#disabled',
       lowTick = '#disabled-tick-1',
       highTick = '#disabled-tick-4';

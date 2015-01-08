@@ -37,7 +37,7 @@
   }
 
   li a:focus {
-    box-shadow: $input-focus-shadow;
+    border-color: $pager-focus-border-color;
   }
 
   li:not(.selected) a:hover:not([disabled]) {

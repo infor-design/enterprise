@@ -44,13 +44,12 @@ $tertiary-btn-active-color: #005bb8;
 $tertiary-btn-disabled-color: #b6b6b6;
 
 // Input Fields
-$input-border-color: #999999;
+$input-border-color: #666666;
 $input-color: #1a1a1a;
-$input-disabled-bg-color: #e5e5e5;
+$input-disabled-bg-color: #ececec;
 $input-disabled-border-color: #d2d2d2;
 $input-disabled-color: #666666; //Was #737373 in design
-$input-focus-shadow: 0 0 5px rgba(8, 150, 233, .2);
-$input-focus-border-color: $primary-color;
+$input-focus-border-color: #078cd9;
 $input-placeholder-color: #999999;
 $input-readonly-border-color: #d2d2d2;
 
@@ -72,14 +71,12 @@ $dropdown-color: $input-color;
 // Editor
 $editor-border-color: $input-border-color;
 $editor-focus-border-color: $input-focus-border-color;
-$editor-focus-shadow: $input-focus-shadow;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: #ffffff;
 $editor-btn-color: #767676;  //Was #999999  in design
 
 // Multiselect
 $multiselect-focus-border-color: $input-focus-border-color;
-$multiselect-focus-shadow: $input-focus-shadow;
 $multiselect-tag-color: #999999;
 $multiselect-tag-hover-color: #0896e9;
 $multiselect-height: 34px;
@@ -88,7 +85,6 @@ $multiselect-height: 34px;
 $menubutton-border-color: #999999;
 $menubutton-bg-color: transparent;
 $menubutton-height: 34px;
-$menubutton-focus-shadow: $input-focus-shadow;
 $menubutton-focus-border-color: $input-focus-border-color;
 $menubutton-disabled-bg-color: $input-disabled-bg-color;
 $menubutton-disabled-border-color: $input-disabled-border-color;
@@ -134,6 +130,7 @@ $datepicker-hover-bg-color: #ededed;
 
 //Pager
 $pager-selected-color: #0086e6;
+$pager-focus-border-color: $input-focus-border-color;
 
 // Tooltips
 $tooltip-bg-color: #5e5e5e;

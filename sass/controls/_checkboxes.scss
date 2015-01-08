@@ -50,6 +50,22 @@ span.checkbox > input:checked + label:after {
   width: 4px;
 }
 
+// Adjustments for ASP style checkboxes
+input.checkbox:checked + input[type="hidden"] + label:after,
+span.checkbox > input:checked + label:after {
+  left: 11px;
+  margin-top: 3px;
+}
+
+span.checkbox > input:checked + label:after {
+  left: 11px;
+  margin-top: 3px;
+}
+
+span.checkbox > input + label {
+  line-height: 20px;
+}
+
 .ie9 input.checkbox:checked + label:after,
 .ie9 input.checkbox:checked + input[type="hidden"] + label:after,
 .ie9 span.checkbox > input:checked + label:after {

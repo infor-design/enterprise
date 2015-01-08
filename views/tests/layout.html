@@ -2,6 +2,15 @@
 <body id="maincontent">
   {{> includes/header}}
   {{> controls/svg}}
-  {{> content}}
+   <div class="container">
+    {{> content}}
+  </div>
+
+  <script>
+    // Init All SoHo XI Controls Stuff on Document Ready
+    $(function() {
+      $('body').initialize('de-DE');
+    });
+  </script>
 </body>
 </html>

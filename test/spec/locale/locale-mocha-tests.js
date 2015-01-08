@@ -27,11 +27,16 @@ describe('Locale [mocha]', function(){
   });
 
   it('should have a locale method', function(){
-    Locale.set('en').should.equal('en');
+    Locale.set('en').done(function (result) {
+      result.should.equal('en');
+    });
   });
 
   it('should set the html lang attribute', function(){
-    Locale.set('de-DE').should.equal('de-DE');
+    Locale.set('de-DE').done(function (result) {
+      result.should.equal('de-DE');
+    });
+
     var html = window.document.getElementsByTagName('html')[0];
     html.getAttribute('lang').should.equal('de-DE');
   });

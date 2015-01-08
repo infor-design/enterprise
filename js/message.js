@@ -16,9 +16,10 @@
 
     // Settings and Options
     var defaults = {
-          title: 'Message Title',
-          message: 'Message Summary',
-          width: 'auto',
+          title: 'Message Title', //Title text or content shown in the message
+          isError: false, //Show Title as an Error with an Icon
+          message: 'Message Summary', //The message content or text
+          width: 'auto',  //specify a given width or fit to content with auto
           buttons: null //Passed through to modal
         },
         settings = $.extend({}, defaults, options);
@@ -72,6 +73,12 @@
         this.message.data('modal').element.on('afterClose', function() {
           self.destroy();
         });
+
+        if (settings.isError) {
+          this.title.addClass('is-error').prepend('<svg class="icon icon-error"><use xlink:href="#icon-error"></svg>');
+        } else {
+          this.title.removeClass('is-error').find('svg').remove();
+        }
       },
       destroy: function() {
         this.message.remove();

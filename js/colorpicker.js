@@ -126,7 +126,7 @@
 
         // Show Menu
         self.swatch.popupmenu({trigger: 'immediate', menuId: 'colorpicker-menu'})
-        .on('beforeOpen.colorpicker', function () {
+        .on('open.colorpicker', function () {
           self.element.addClass('is-open');
         })
         .on('close.colorpicker', function () {

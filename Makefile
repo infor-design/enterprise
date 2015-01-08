@@ -4,8 +4,14 @@ REPORTER = spec
 test:
 	@node test-runner.js
 
+test-autocomplete:
+	@node test-runner.js autocomplete
+
 test-button:
 	@node test-runner.js button
+
+test-checkbox:
+	@node test-runner.js checkbox
 
 test-dropdown:
 	@node test-runner.js dropdown
@@ -36,5 +42,11 @@ test-datepicker:
 
 test-spinbox:
 	@node test-runner.js spinbox
+
+test-spinbox:
+	@node test-runner.js spinbox
+
+test-radio:
+	@node test-runner.js radio
 
 .PHONY: test

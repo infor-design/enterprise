@@ -1,9 +1,10 @@
-<div class="grid">
-  <div class="col-1-2">
+<div class="row">
+  <div class="twelve columns">
     <h1>Checkbox Tests</h1>
+    <span class="label">CSS-Only</span>
+    <hr>
 
     <div id="cssOnly" class="field">
-      <h2>CSS-Only</h2>
       <input type="checkbox" class="checkbox" id="starts-unchecked">
       <label for="starts-unchecked" class="checkbox-label">Unchecked</label><br>
 
@@ -24,8 +25,11 @@
     </div>
 
     <!-- used in form serialization tests -->
+    <br>
+    <br>
+    <span class="label">Form Serialization</span>
+    <hr>
     <div id="partOfForm" class="field">
-      <h2>Form Serialization</h2>
       <form id="checkbox-serialization-test" action="#" method="POST">
         <input type="checkbox" class="checkbox" id="checkbox-serialized" name="checkbox-serialized" checked>
         <label for="checkbox-serialized" class="checkbox-label">This checkbox will be serialized on form submit</label><br>
@@ -33,23 +37,29 @@
         <input type="checkbox" class="checkbox" id="checkbox-not-serialized">
         <label for="checkbox-not-serialized" class="checkbox-label">This checkbox will NOT be serialized on form submit</label><br>
 
-        <button class="btn-default" type="submit">Submit</button>
+        <button class="btn-primary" type="submit">Submit</button>
       </form>
     </div>
 
     <!-- Used in tooltip tests -->
+    <br>
+    <br>
+    <span class="label">Has a tooltip</span>
+    <hr>
     <div class="field">
-      <h2>Has a tooltip</h2>
       <input type="checkbox" class="checkbox" id="checkbox-has-tooltip">
       <label for="checkbox-has-tooltip" class="checkbox-label">Hover this...</label>
     </div>
 
     <!-- Used in ASP-style Checkbox tests -->
-    <h2>ASP-Style Checkbox Support</h2>
+    <br>
+    <br>
+    <span class="label">ASP-Style Checkbox Support</span>
+    <hr>
     <div class="field">
       <input name="checkbox-enable-ssl" class="checkbox" id="checkbox-enable-ssl" type="checkbox" value="true" data-val="true" checked>
       <input name="checkbox-enable-ssl" type="hidden" value="false">
-      <label class="checkbox-label" for="checkbox-enable-ssl">MVC Checkbox</label>
+      <label class="checkbox-label" id="asp-check" for="checkbox-enable-ssl">MVC Checkbox</label>
     </div>
 
     <div class="field">

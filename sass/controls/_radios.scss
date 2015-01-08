@@ -19,7 +19,7 @@
 .radio:not(:checked) + label:before,
 .radio:checked + label:before {
   border: 1px solid $radio-border-color;
-  border-radius: 100%;
+  border-radius: 50%;
   content: '';
   height: 18px;
   left: 3px;
@@ -41,7 +41,7 @@
 .radio:checked + label:after {
   background-color: $body-bg-color;
   background-repeat: no-repeat;
-  border-radius: 10px;
+  border-radius: 50%;
   content: '';
   height: 10px;
   left: 8px;

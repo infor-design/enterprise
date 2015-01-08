@@ -88,7 +88,7 @@
       addButtons: function(buttons){
         var body = this.element.find('.modal-body'),
             self = this,
-            buttonset = $('<div class="modal-buttonset"></div>').appendTo(body);
+            buttonset = $('<div class="modal-buttonset"></div>').insertAfter(body);
 
         body.find('button').remove();
         body.find('.btn-default.btn-close').remove();
@@ -116,6 +116,7 @@
             }
             self.close();
           });
+          btn.button();
           buttonset.append(btn);
         });
       },

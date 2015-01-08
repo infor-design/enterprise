@@ -31,11 +31,10 @@ select.multiselect {
     background-color: #e5e5e5;
     outline: 1px solid #e5e5e5;
   }
-}
 
-.multiselect.is-focused {
-  border-color: $multiselect-focus-border-color;
-  box-shadow: $multiselect-focus-shadow;
+  &.is-focused {
+    border-color: $multiselect-focus-border-color;
+  }
 }
 
 #multiselect-list {

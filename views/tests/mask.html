@@ -1,97 +1,90 @@
-<div class="grid">
-  <div id="format-container" class="col-1-1">
-
-    <h1>Mask Tests</h1>
+<div id="format-container" class="row">
+    <h1>Form</h1>
+    <span class="label">Mask Tests</span>
     <hr>
-    <div class="grid">
-      <div class="col-1-2">
 
-        <form id="format-form" action="#" method="POST">
+    <div class="twelve columns">
 
-          <h2>Standard Pattern-Matching Mask</h2>
-          <hr>
-          <div class="field">
-            <label for="input-masked-phone">Phone Number</label>
-            <input type="tel" data-mask="(###) ###-####" id="input-masked-phone" />
-          </div>
+      <form id="format-form" action="#" method="POST">
 
-          <div class="field">
-            <label for="input-creditcard">Credit Card</label>
-            <input type="text" inputmode="numeric" data-mask="####-####-####-####" placeholder="####-####-####-####" id="input-creditcard" />
-          </div>
-
-          <div class="field">
-            <label for="input-alpha-only">Only Letters</label>
-            <input type="text" data-mask="xxxxxxxxxx" id="input-alpha-only" />
-          </div>
-
-          <h2>Number Masks</h2>
-          <hr>
-          <div class="field">
-            <label for="input-masked-number">Number</label>
-            <input type="text" inputmode="numeric" data-mask="#,###.00" data-mask-mode="number" id="input-masked-number" placeholder="#,###.00"/>
-          </div>
-
-          <div class="field">
-            <label for="input-masked-longernumber">Longer Number</label>
-            <input type="text" inputmode="numeric" data-mask="##,###,###,###.0000" data-mask-mode="number" id="input-masked-longernumber" placeholder="##,###,###,###.0000"/>
-          </div>
-
-          <div class="field">
-            <label for="input-number-nodecimal">Number with No Decimals</label>
-            <input type="text" inputmode="numeric" data-mask="#,###,###" data-mask-mode="number" id="input-number-nodecimal" placeholder="#,###,###"/>
-          </div>
-
-          <button type="submit" class="btn">(Don't Actually) Submit</button>
-        </form>
-
-        <!-- Used for simulating form submissions without actually submitting. -->
-        <script>
-          $('document').ready(function() {
-            $('#format-form button[type="submit"]').click(function(e) {
-              e.preventDefault();
-            });
-          });
-        </script>
-      </div>
-
-      <div class="col-1-2">
-
-        <h2>Misc. Used for Functional Tests</h2>
+        <br><br><span class="label">Standard Pattern-Matching Mask</span>
         <hr>
         <div class="field">
-          <label for="contains-multiple-types">Contains Multiple Editable Types</label>
-          <input id="contains-multiple-types" type="text" data-mask="~xxxx : #### +=? **** - x#x#x#" placeholder="~xxxx : #### +=? **** - x#x#x#" />
+          <label for="input-masked-phone">Phone Number</label>
+          <input type="tel" data-mask="(###) ###-####" id="input-masked-phone" />
         </div>
 
         <div class="field">
-          <label for="input-previously-filled">Initialized containing "1234567890"</label>
-          <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
+          <label for="input-creditcard">Credit Card</label>
+          <input type="text" inputmode="numeric" data-mask="####-####-####-####" placeholder="####-####-####-####" id="input-creditcard" />
         </div>
 
         <div class="field">
-          <label for="input-previously-filled">Initialized containing "123456789"</label>
-          <input type="text" inputmode="numeric" data-mask="##,###.0000" data-mask-mode="number" id="number-previously-filled" value="123456789" />
+          <label for="input-alpha-only">Only Letters</label>
+          <input type="text" data-mask="xxxxxxxxxx" id="input-alpha-only" />
+        </div>
+
+        <br><br><span class="label">Number Masks</span>
+        <hr>
+        <div class="field">
+          <label for="input-masked-number">Number</label>
+          <input type="text" inputmode="numeric" data-mask="#,###.00" data-mask-mode="number" id="input-masked-number" placeholder="#,###.00"/>
         </div>
 
         <div class="field">
-          <label for="initialize-with-date">Initializes as a Date</label>
-          <input id="initialize-with-date" type="text" data-mask="## / ## / ##" data-mask-mode="date" data-validate="date" value="8/14/12"/>
+          <label for="input-masked-longernumber">Longer Number</label>
+          <input type="text" inputmode="numeric" data-mask="##,###,###,###.0000" data-mask-mode="number" id="input-masked-longernumber" placeholder="##,###,###,###.0000"/>
         </div>
 
         <div class="field">
-          <label for="initialize-with-time">Initializes as a 12-Hour Time</label>
-          <input id="initialize-with-time" type="text" data-mask="## : ## am" data-mask-mode="time" data-validate="time" value="1235pm"/>
+          <label for="input-number-nodecimal">Number with No Decimals</label>
+          <input type="text" inputmode="numeric" data-mask="#,###,###" data-mask-mode="number" id="input-number-nodecimal" placeholder="#,###,###"/>
         </div>
 
-        <!-- Used for tests where we need to use the clipboard -->
-        <div class="field">
-          <label for="copythis">For using the Clipboard</label>
-          <input type="text" id="copythis" />
-        </div>
+        <button type="submit" class="btn">(Don't Actually) Submit</button>
+      </form>
 
+      <!-- Used for simulating form submissions without actually submitting. -->
+      <script>
+        $('document').ready(function() {
+          $('#format-form button[type="submit"]').click(function(e) {
+            e.preventDefault();
+          });
+        });
+      </script>
+
+      <br><br><span class="label">Misc. Used for Functional Tests</span>
+      <hr>
+      <div class="field">
+        <label for="contains-multiple-types">Contains Multiple Editable Types</label>
+        <input id="contains-multiple-types" type="text" data-mask="~xxxx : #### +=? **** - x#x#x#" placeholder="~xxxx : #### +=? **** - x#x#x#" />
+      </div>
+
+      <div class="field">
+        <label for="input-previously-filled">Initialized containing "1234567890"</label>
+        <input type="tel" data-mask="(###) ###-####" id="input-previously-filled" value="1234567890" />
+      </div>
+
+      <div class="field">
+        <label for="input-previously-filled">Initialized containing "123456789"</label>
+        <input type="text" inputmode="numeric" data-mask="##,###.0000" data-mask-mode="number" id="number-previously-filled" value="123456789" />
+      </div>
+
+      <div class="field">
+        <label for="initialize-with-date">Initializes as a Date</label>
+        <input id="initialize-with-date" type="text" data-mask="## / ## / ##" data-mask-mode="date" data-validate="date" value="8/14/12"/>
+      </div>
+
+      <div class="field">
+        <label for="initialize-with-time">Initializes as a 12-Hour Time</label>
+        <input id="initialize-with-time" type="text" data-mask="## : ## am" data-mask-mode="time" data-validate="time" value="1235pm"/>
+      </div>
+
+      <!-- Used for tests where we need to use the clipboard -->
+      <div class="field">
+        <label for="copythis">For using the Clipboard</label>
+        <input type="text" id="copythis" />
       </div>
     </div>
 
-  </div>
 </div>

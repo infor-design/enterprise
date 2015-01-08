@@ -301,7 +301,7 @@
           return;
         }
 
-        this.tooltip.addClass('is-hidden');
+        this.tooltip.addClass('is-hidden').css({'left': '', 'top': ''});
         this.tooltip.off('click.tooltip');
 
         if ($('.popover').not('.is-hidden').length === 0) {
@@ -309,6 +309,8 @@
           $(window).off('resize.tooltip');
         }
 
+        // TODO document breaking change
+        this.element.trigger('close', [this.tooltip]);
         this.element.trigger('hide', [this.tooltip]);
       },
 

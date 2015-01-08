@@ -4,21 +4,17 @@
     <span class="label">Popup Messages</span>
     <hr>
 
-    <button class="btn" type="button" id="show-message-button">Show Message</button>
+    <button class="btn" type="button" id="show-error-message">Show Error Message</button>
     <script>
-      $('#show-message-button').on('click', function () {
-        $('body').message({title: 'Confirmation',
-                          message: 'Do you want to save your changes?',
-                          buttons: [{text: 'Ok',
+      $('#show-error-message').on('click', function () {
+        $('body').message({title: 'Application Error',
+                           isError: true,
+                           message: 'This application has experienced a system error due to the lack of internet access. Please restart the application in order to proceed.',
+                           buttons: [{text: 'Restart Now',
                                       click: function() {
                                         $(this).modal('close');
                                       },
                                       isDefault: true
-                                    },{
-                                      text: 'Cancel',
-                                      click: function() {
-                                        $(this).modal('close');
-                                      }
                                     }]
         });
       });

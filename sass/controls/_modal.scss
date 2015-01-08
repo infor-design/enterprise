@@ -2,7 +2,7 @@
 //================================================== //
 
 .modal {
-  border-radius: 3px;
+  border-radius: 2px;
   box-shadow: 0 0 5px rgba(0, 0, 0, .2);
   -webkit-font-smoothing: antialiased;
   height: auto;
@@ -37,7 +37,7 @@
 }
 
 .modal-engaged .overlay {
-  opacity: .65;
+  opacity: .25;
   visibility: visible;
 }
 
@@ -46,7 +46,7 @@
   color: #666666;
   margin: 0 auto;
   opacity: 0;
-  padding: 20px 30px;
+  padding: 21px 28px 0;
   position: relative;
   @include css3(transition, all .3s);
   @include css3(transform, scale(.7));
@@ -61,7 +61,7 @@
   // Messages/Content
   h1 {
     color: #666666;
-    @include font-size(22);
+    @include font-size(18);
     font-weight: normal;
     margin-bottom: 10px;
     text-align: left;
@@ -70,12 +70,27 @@
       outline: thin dotted #666666;
       outline-offset: 2px;
     }
+
+    &.is-error {
+      color: $ruby;
+
+      svg {
+        margin-left: -2px;
+        margin-right: 5px;
+      }
+
+      &:focus {
+        outline: thin dotted $ruby;
+      }
+    }
   }
 
   .message {
     color: #666666;
     font-size: 1.5rem;
-    padding: 12px 0;
+    line-height: 20px;
+    max-width: 369px;
+    padding: 10px 0 20px;
     text-align: left;
   }
 
@@ -107,13 +122,25 @@
 
 .modal-buttonset button,
 .modal-buttonset a {
+  background-color: transparent;
+  border-radius: 0;
+  border-top: 1px solid #e5e5e5;
+  box-shadow: none;
+  color: #666666;
   display: inline-block;
-  margin: 0 3px;
+  height: 45px;
+  line-height: 50px;
+  width: 100%;
+
+  &.btn-primary {
+    color: $primary-color;
+  }
 }
 
 .modal-buttonset {
-  margin: 15px auto 0;
-  text-align: right;
+  height: 50px;
+  margin: 0 -40px;
+  text-align: center;
 
   a {
     float: left;

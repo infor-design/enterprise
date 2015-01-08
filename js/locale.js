@@ -55,8 +55,9 @@
     //Set the Local
     set: function (locale) {
       var self = this;
+      this.dff = $.Deferred();
 
-      if (locale && !this.cultures[locale]) {
+      if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.currentLocale.name = locale;
 
         //fetch the local and cache it
@@ -66,17 +67,22 @@
           success: function () {
             self.currentLocale.name = locale;
             self.currentLocale.data = self.cultures[locale];
+            self.dff.resolve(self.currentLocale.name);
           },
-          error: function (a) {
-            console.log(a);
-          },
-          async: false
+          error: function () {
+            self.dff.reject();
+          }
         });
       }
+
       this.currentLocale.name = locale;
       self.currentLocale.data = self.cultures[locale];
       this.updateLang();
-      return this.currentLocale.name;
+
+      if (locale && self.currentLocale.data) {
+        self.dff.resolve(self.currentLocale.name);
+      }
+      return this.dff.promise();
     },
 
     //Format a Date Object and return it parsed in the current locale
@@ -122,6 +128,7 @@
 
     // Take a date string written in the current locale and parse it into a Date Object
     parseDate: function(dateString, dateFormat) {
+
       if (!dateString) {
         return undefined;
       }
@@ -197,6 +204,7 @@
         return undefined;
       }
       return new Date(dateObj.year, dateObj.month, dateObj.day);
+
     },
 
     // Overridable culture messages

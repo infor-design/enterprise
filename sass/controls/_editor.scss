@@ -21,7 +21,6 @@
   &:focus,
   &.is-active {
     border: 1px solid $editor-focus-border-color;
-    box-shadow: $editor-focus-shadow;
   }
 
   // Element Style
@@ -126,7 +125,6 @@
 
     &:focus {
       border: 1px solid $editor-focus-border-color;
-      box-shadow: $editor-focus-shadow;
     }
 
     b {
@@ -197,7 +195,6 @@
 
   &.is-focused {
     border: 1px solid $editor-focus-border-color;
-    box-shadow: $editor-focus-shadow;
   }
 
   > * {
