@@ -23,6 +23,7 @@
     // Settings and Options
     var pluginName = 'busyIndicator',
         defaults = {
+          blockUI: false, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
           timeToClose: 0, // fires the 'close' trigger at a certain timing interval.  If 0, goes indefinitely.
         },
@@ -57,28 +58,45 @@
         var self = this;
 
         // If the markup already exists don't do anything
-        if (this.loader) {
+        if (this.container) {
           this.label.text('Loading...'); // TODO: Localize
           this.loader.removeClass('complete').addClass('active');
           this.container.removeClass('is-hidden');
           return;
         }
 
+        // Build all the markup
         this.container = $('<div class="busy-indicator-container is-hidden"></div>');
         this.loader = $('<div class="busy-indicator active"></div>').appendTo(this.container);
-        var bowl = $('<div class="busy-indicator-bowl"></div>').appendTo(this.loader);
-        var container = $('<div class="busy-indicator-ball-container"></div>').appendTo(bowl);
-        this.ball = $('<div class="busy-indicator-ball"></div>').appendTo(container);
+        var bowl = $('<div class="busy-indicator-bowl"></div>').appendTo(this.loader),
+          container = $('<div class="busy-indicator-ball-container"></div>').appendTo(bowl);
+        $('<div class="busy-indicator-ball"></div>').appendTo(container);
+        $('<div class="complete-check"></div>').appendTo(this.loader);
         this.label = $('<span>Loading...</span>').appendTo(this.container);
-        var complete = $('<div class="complete-check"></div>').appendTo(this.loader);
+        if (settings.blockUI) {
+          this.originalPositionProp = this.element.css('position');
+          this.element.css('position', 'relative');
+          this.overlay = $('<div class="overlay busy is-hidden"></div>').appendTo(this.element);
+          this.container.appendTo(this.element).addClass('blocked-ui');
+        } else {
+          this.container.insertAfter(this.element);
+        }
 
-        this.container.insertAfter(this.element);
+        // Remove focus from any controls inside of this element.
+        this.element.find(':focus').blur();
+
+        // Fade in shortly after adding the markup to the page (prevents the indicator from abruptly showing)
         setTimeout(function() {
           self.container.removeClass('is-hidden');
+          if (self.overlay) {
+            self.overlay.removeClass('is-hidden');
+          }
         }, 20);
 
+        // Lets external code know that we've successully kicked off.
         this.element.trigger('started.busyIndicator');
 
+        // Triggers complete if the "timeToComplete" option is set.
         if (settings.timeToComplete > 0) {
           setTimeout(function() {
             self.element.trigger('complete.busyIndicator');
@@ -104,9 +122,19 @@
       close: function() {
         var self = this;
         this.container.addClass('is-hidden');
+        if (this.overlay) {
+          this.overlay.addClass('is-hidden');
+        }
+        // Give the indicator time to fade out before removing all of its components from view
         setTimeout(function() {
-          self.loader.remove();
+          self.container.remove();
+          self.container = undefined;
           self.loader = undefined;
+          if (self.overlay) {
+            self.overlay.remove();
+            self.element.css('position', self.originalPositionProp);
+            self.originalPositionProp = undefined;
+          }
           self.element.trigger('closed.busyIndicator');
         }, 500);
       },

@@ -9,9 +9,19 @@ $busy-indicator-check-color: #ffffff;
   text-align: center;
   @include transition(opacity 500ms);
   vertical-align: middle;
+  z-index: 1010;
 
   &.is-hidden {
     @include opacity(0);
+  }
+
+  &.blocked-ui {
+    bottom: 0;
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 58px); // 115/2, 115 is the height of .busy-indicator-container
   }
 
   span {
@@ -105,6 +115,20 @@ $busy-indicator-check-color: #ffffff;
   @include css3-prop-transition(transform, 500ms);
   @include css3(transform, scale3d(1, 1, 1));
   width: 14px;
+}
+
+// Overlay Override for Busy Indicator
+.busy.overlay {
+  background-color: $body-bg-color;
+  @include opacity(.65);
+  position: absolute;
+  @include transition(opacity 500ms);
+  visibility: visible;
+
+
+  &.is-hidden {
+    @include opacity(0);
+  }
 }
 
 // Fix for IE9 Checkmark positioning.

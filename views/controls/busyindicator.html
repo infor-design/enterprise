@@ -1,11 +1,33 @@
 <div class="grid">
   <div class="col-1-1">
     <h1>Busy Indicator</h1>
+    <span class="label">Click on the buttons to bring up the busy indicator</span>
     <hr>
 
     <div class="grid">
       <div class="col-1-2">
+        <span class="label">Regular</span>
         <button class="btn busy" id="busy-indicator-trigger" type="button">Get Remote Data</button>
+        <div class="info"></div>
+      </div>
+      <div class="col-1-2">
+        <span class="label">UI Blocked</span>
+        <form id="busy-form" action="#" method="POST">
+          <div class="field">
+            <label for="busy-field-name">Name</label>
+            <input id="busy-field-name" name="busy-field-name" />
+          </div>
+          <div class="field">
+            <label for="busy-field-address">Address</label>
+            <input id="busy-field-address" name="busy-field-address" />
+          </div>
+          <div class="field">
+            <label for="busy-field-cats">Number of Cats</label>
+            <input id="busy-field-cats" name="busy-field-cats" />
+          </div>
+          <button type="reset" class="btn-secondary">Clear</button>
+          <button type="submit" class="btn-primary">Submit</button>
+        </form>
       </div>
     </div>
 
@@ -16,9 +38,22 @@
           timeToClose: 3000
         });
 
-        $('#busy-indicator-trigger').click(function() {
+        $('#busy-form').busyIndicator({
+          blockUI: true,
+          timeToComplete: 1000,
+          timeToClose: 3000
+        });
+
+        $('#busy-indicator-trigger').click(function(e) {
+          e.preventDefault();
           $(this).trigger('start.busyIndicator');
         });
+
+        $('#busy-form button[type="submit"]').click(function(e) {
+          e.preventDefault();
+          $('#busy-form').trigger('start.busyIndicator');
+        });
+
       });
     </script>
 
