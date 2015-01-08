@@ -19,6 +19,17 @@
   > .textarea-wordcount {
     margin-bottom: 14px;
   }
+
+  &.currency:before {
+    color: $input-placeholder-color;
+    content: attr(data-currency-symbol);
+    display: inline-block;
+    font-family: $font-regular;
+    @include font-size(14);
+    left: 10px;
+    position: absolute;
+    top: 29px;
+  }
 }
 
 // Input Style
@@ -229,16 +240,4 @@ textarea.error:focus,
 ::-moz-selection {
   background: $primary-color;
   color: $inverse-color;
-}
-
-.input-wrapper {
-  display: inline-block;
-  margin-bottom: 20px;
-
-  > .currency {
-    color: #707070;
-    display: inline-block;
-    padding: 10px;
-    position: absolute;
-  }
 }

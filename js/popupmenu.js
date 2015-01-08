@@ -24,13 +24,13 @@
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function PopupMenu(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Object
-    Plugin.prototype = {
+    PopupMenu.prototype = {
       init: function() {
         this.addMarkup();
         this.handleEvents();
@@ -122,8 +122,8 @@
           this.open();
         }
 
-        this.element.on('keypress.popupmenu', function (e) {
-          if (settings.trigger === 'rightClick' && e.shiftKey && e.keyCode === 121) {  //Shift F10
+        this.element.on('keydown.popupmenu', function (e) {
+          if (e.shiftKey && e.which === 121) {  //Shift F10
             self.open(e, true);
           }
         });
@@ -240,8 +240,8 @@
           menuHeight = this.menu.outerHeight();
 
         if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
-          wrapper.css({'left': (e.type === 'keypress' ? target.offset().left : e.pageX),
-                        'top': (e.type === 'keypress' ? target.offset().top : e.pageY)});
+          wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX),
+                        'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY)});
         } else {
           wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0),
                         'top': target.offset().top - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight()});
@@ -455,7 +455,11 @@
         this.menu.unwrap().find('.popupmenu').unwrap();
         $.removeData(this.element[0], pluginName);
         this.detach();
-        this.element.off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
+        this.element
+          .removeAttr('aria-owns')
+          .removeAttr('aria-expanded')
+          .removeAttr('aria-haspopup')
+          .off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
         this.menu.trigger('destroy.popupmenu');
       }
     };
@@ -469,7 +473,7 @@
         }
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new PopupMenu(this, settings));
       }
     });
   };

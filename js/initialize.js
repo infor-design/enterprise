@@ -117,6 +117,9 @@
         //Time Picker
         elem.find('.timepicker').timepicker();
 
+        //Busy Indicator
+        elem.find('.busy').busyIndicator();
+
         //Class-based detection for IE
         if (!!navigator.userAgent.match(/Trident/)) {
           $('html').addClass('ie');

@@ -1,7 +1,6 @@
 /**
-* Touch Enabled/ Responsive and Accessible Slider Control
-* @name Tabs
-* @param {string} propertyName - The Name of the Property
+* Touch Enabled/Responsive and Accessible Slider Control
+* @name Slider
 */
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
@@ -38,6 +37,20 @@
     // Check if an object is an array
     function isArray(obj) {
       return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+
+    // Check if is an integer
+    function isInt(n) {
+      return n % 1 === 0;
+    }
+
+    // Round a non-integer to an integer closest to the nearest increment/decrement.
+    // If no increment is provided or the increment is 0, only round to the nearest whole number.
+    function roundToIncrement(number, increment) {
+      if (!increment || isNaN(increment) || increment === 0) {
+        increment = 1;
+      }
+      return Math.round(number/increment) * increment;
     }
 
     // Get the distance between two points.
@@ -293,58 +306,67 @@
           });
         });
 
-        if (this.ticks) {
-          $.each(self.ticks, function(i, tick) {
-            $(tick.element).on('touchend.slider touchcancel.slider', function(e) {
-              e.preventDefault();
-              e.target.click();
-            })
-            .on('click.slider', function (e) {
-              e.preventDefault();
-              if (self.isDisabled()) {
-                return;
-              }
-              var oldVal = self.value(),
-                clickedOldVal,
-                clickedHandle;
+        self.wrapper.on('touchend.slider touchcancel.slider', function(e) {
+          e.preventDefault();
+          e.target.click();
+        }).on('click.slider', function(e) {
+          e.preventDefault();
+          if (self.isDisabled()) {
+            return;
+          }
 
-              if (!self.handles[1]) {
-                clearTimeout(self.handles[0].data('animationTimeout'));
-                self.value([tick.value]);
-                clickedHandle = self.handles[0];
-                clickedOldVal = oldVal[0];
-              } else {
-                // For ranged values, we need to get the distance between both handles and the clicked tick.
-                // The handle closest to the tick is the one that gets its value adjusted.
-                var tickCoords = [ $(this).offset().left + ($(this).width()/2), $(this).offset().top + ($(this).height()/2) ],
-                  lowerCoords = [ self.handles[0].offset().left + (self.handles[0].width()/2), self.handles[0].offset().top + (self.handles[0].height()/2) ],
-                  higherCoords = [ self.handles[1].offset().left + (self.handles[1].width()/2), self.handles[1].offset().top + (self.handles[1].height()/2) ],
-                  dFromLower = getDistance(tickCoords, lowerCoords),
-                  dFromHigher = getDistance(tickCoords, higherCoords);
+          var mouseX = e.pageX - self.wrapper.offset().left - $(document).scrollLeft(),
+            mouseY = e.pageY - self.wrapper.offset().top - $(document).scrollTop(),
+            clickCoords = [mouseX,mouseY],
+            fhX = (self.handles[0].offset().left + (self.handles[0].width()/2)) - self.wrapper.offset().left - $(document).scrollLeft(),
+            fhY = (self.handles[0].offset().top + (self.handles[0].height()/2)) - self.wrapper.offset().top - $(document).scrollTop(),
+            firstHandleCoords = [fhX,fhY],
+            shX,
+            shY,
+            secondHandleCoords,
+            oldVals = self.value(),
+            dLower = getDistance(clickCoords,firstHandleCoords),
+            dHigher,
+            targetOldVal = oldVals[0],
+            targetHandle = self.handles[0];
 
-                if (dFromLower <= dFromHigher) {
-                  self.value([tick.value]);
-                  clickedHandle = self.handles[0];
-                  clickedOldVal = oldVal[0];
-                } else {
-                  self.value([undefined, tick.value]);
-                  clickedHandle = self.handles[1];
-                  clickedOldVal = oldVal[1];
-                }
-              }
+          // Convert the coordinates of the mouse click to a value
+          var val = mouseX / self.wrapper.width() * 100, // TODO: Make an option to have this work Vertically if we need it later
+            rangeVal = self.convertPercentageToValue(val);
 
-              self.checkHandleDifference(clickedHandle, clickedOldVal, tick.value);
-              self.updateRange();
-              self.updateTooltip(clickedHandle);
+          // If the slider is a range, we may use the second handle instead of the first
+          if (self.handles[1]) {
+            shX = (self.handles[1].offset().left + (self.handles[1].width()/2)) - self.wrapper.offset().left - $(document).scrollLeft();
+            shY = (self.handles[1].offset().top + (self.handles[1].height()/2)) - self.wrapper.offset().top - $(document).scrollTop();
+            secondHandleCoords = [shX, shY];
+            dHigher = getDistance(clickCoords,secondHandleCoords);
 
-              // Tooltip repositioner will focus the handle after positioning occurs, but if we are clicking a tick
-              // on a slider with no tooltip, we need to focus it manually.
-              if (!self.settings.tooltip) {
-                clickedHandle.focus();
-              }
-            });
-          });
-        }
+            if (dLower > dHigher) {
+              self.value([undefined, rangeVal]);
+              targetHandle = self.handles[1];
+              targetOldVal = oldVals[1];
+            } else {
+              self.value([rangeVal]);
+            }
+          } else {
+            self.value([rangeVal]);
+          }
+
+          self.checkHandleDifference(targetHandle, targetOldVal, rangeVal);
+
+          if (rangeVal < targetOldVal) {
+            self.decreaseValue(e, targetHandle, rangeVal, 0);
+          } else {
+            self.increaseValue(e, targetHandle, rangeVal, 0);
+          }
+
+          // Tooltip repositioner will focus the handle after positioning occurs, but if we are clicking a tick
+          // on a slider with no tooltip, we need to focus it manually.
+          if (!self.settings.tooltip) {
+            targetHandle.focus();
+          }
+
+        });
 
         return self;
       },
@@ -404,19 +426,24 @@
         var val = this.value().slice(0),
           incrementBy = increment !== undefined ? increment : this.settings.step !== undefined ? this.settings.step : 1,
           testVal,
-          updatedVal;
+          updatedVal,
+          finalVal;
 
         if (handle.hasClass('higher')) {
           testVal = value !== undefined ? value : val[1];
+          incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : testVal % incrementBy;
           updatedVal = testVal + incrementBy < this.settings.max ? testVal + incrementBy : this.settings.max;
-          this.value([undefined, updatedVal]);
+          finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
+          this.value([undefined, finalVal]);
         } else {
           testVal = value !== undefined ? value : val[0];
           var maxValue = val[1] === undefined ? this.settings.max : val[1];
+          incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : incrementBy - (testVal % incrementBy);
           updatedVal = testVal + incrementBy < maxValue ? testVal + incrementBy : maxValue;
-          this.value([updatedVal]);
+          finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
+          this.value([finalVal]);
         }
-        this.checkHandleDifference(handle, (handle.hasClass('higher') ? val[1] : val[0]), updatedVal);
+        this.checkHandleDifference(handle, testVal, finalVal);
         this.updateRange();
         this.updateTooltip(handle);
       },
@@ -428,19 +455,24 @@
         var val = this.value(),
           decrementBy = decrement !== undefined ? decrement : this.settings.step !== undefined ? this.settings.step : 1,
           testVal,
-          updatedVal;
+          updatedVal,
+          finalVal;
 
         if (handle.hasClass('higher')) {
           testVal = value !== undefined ? value : val[1];
           var minValue = val[0] === undefined ? this.settings.min : val[0];
+          decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : decrementBy - (testVal % decrementBy);
           updatedVal = testVal - decrementBy > minValue ? testVal - decrementBy : minValue;
-          this.value([undefined, updatedVal]);
+          finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
+          this.value([undefined, finalVal]);
         } else {
           testVal = value !== undefined ? value : val[0];
+          decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : testVal % decrementBy;
           updatedVal = testVal - decrementBy > this.settings.min ? testVal - decrementBy : this.settings.min;
-          this.value([updatedVal]);
+          finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
+          this.value([finalVal]);
         }
-        this.checkHandleDifference(handle, (handle.hasClass('higher') ? val[1] : val[0]), updatedVal);
+        this.checkHandleDifference(handle, testVal, finalVal);
         this.updateRange();
         this.updateTooltip(handle);
       },
@@ -628,14 +660,9 @@
       destroy: function() {
         var self = this;
         $.each(self.handles, function (i, handle) {
-          handle.off('mousedown.slider click.slider drag.slider keydown.slider');
+          handle.off('mousedown.slider click.slider drag.slider keydown.slider dragstart dragend');
         });
-        if (this.ticks) {
-          $.each(self.ticks, function(i, tick) {
-            $(tick.element, tick.label).off('click.slider touchend.slider touchcancel.slider');
-          });
-        }
-        this.wrapper.remove();
+        this.wrapper.off('click.slider touchend.slider touchcancel.slider').remove();
         this.element.attr('type', this.originalElement.type);
         $.removeData(this.element[0], pluginName);
       }
