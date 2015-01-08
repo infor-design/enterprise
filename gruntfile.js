@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js', 'js/busy-indicator.js', 'js/button.js', 'js/cardlist.js', 'js/colorpicker.js', 'js/datepicker.js', 'js/datagrid.js', 'js/dropdown.js', 'js/draggable.js', 'js/editor.js', 'js/form.js', 'js/initialize.js', 'js/locale.js', 'js/pager.js', 'js/popupmenu.js', 'js/mask.js', 'js/multiselect.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/spinbox.js', 'js/tabs.js', 'js/textarea.js', 'js/timepicker.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js']
+          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js', 'js/busyindicator.js', 'js/button.js', 'js/cardlist.js', 'js/colorpicker.js', 'js/datepicker.js', 'js/datagrid.js', 'js/dropdown.js', 'js/draggable.js', 'js/editor.js', 'js/form.js', 'js/initialize.js', 'js/locale.js', 'js/pager.js', 'js/popupmenu.js', 'js/mask.js', 'js/multiselect.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/spinbox.js', 'js/tabs.js', 'js/textarea.js', 'js/timepicker.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js']
         }
       }
     },

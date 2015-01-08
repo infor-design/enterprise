@@ -1,0 +1,141 @@
+// Busy Indicator
+$busy-indicator-size: 60px;
+$busy-indicator-color: #078cd9;
+$busy-indicator-check-color: #ffffff;
+
+.busy-indicator-container {
+  display: inline-block;
+  @include opacity(1);
+  text-align: center;
+  @include transition(opacity 500ms);
+  vertical-align: middle;
+
+  &.is-hidden {
+    @include opacity(0);
+  }
+
+  span {
+    color: $busy-indicator-color;
+    display: block;
+  }
+}
+
+.busy-indicator {
+  display: inline-block;
+  height: $busy-indicator-size;
+  margin: 2em;
+  @include opacity(1);
+  position: relative;
+  vertical-align: middle;
+  width: $busy-indicator-size;
+
+  &.is-hidden {
+    @include opacity(0);
+  }
+
+  &.complete {
+    .busy-indicator-ball {
+      @include css3(transform, scale3d(0, 0, 0));
+    }
+
+    .complete-check {
+      @include opacity(1);
+
+      &:after {
+        @include animation('complete-check 500ms 1');
+        @include opacity(1);
+      }
+    }
+  }
+
+  .complete-check {
+    background-color: $busy-indicator-color;
+    @include css3(border-radius, $busy-indicator-size);
+    height: $busy-indicator-size;
+    @include opacity(0);
+    position: absolute;
+    @include transition(opacity 500ms);
+    width: $busy-indicator-size;
+
+    &:after {
+      border-color: $busy-indicator-check-color;
+      border-style: solid;
+      border-width: 4px 4px 0 0;
+      content: '';
+      height: 26px;
+      left: 14px;
+      margin-top: 32px;
+      @include opacity(0);
+      position: absolute;
+      @include transform(scaleX(-1) rotate(135deg));
+      @include css3(transform-origin, left top 0);
+      width: 10px;
+    }
+
+  }
+}
+
+.busy-indicator-bowl {
+  @include css3(border-radius, $busy-indicator-size);
+  border: 5px solid $busy-indicator-color;
+  height: $busy-indicator-size;
+  position: absolute;
+  width: $busy-indicator-size;
+}
+
+.busy-indicator-ball-container {
+  @include css3(animation-name, rotate-ball);
+  @include css3(animation-duration, 1s);
+  @include css3(animation-iteration-count, infinite);
+  @include css3(animation-timing-function, linear);
+  height: $busy-indicator-size;
+  left: 17px;
+  position: absolute;
+  top: -5px;
+  width: 16px;
+}
+
+.busy-indicator-ball {
+  background: $busy-indicator-color;
+  @include css3(border-radius, 20px);
+  height: 14px;
+  left: 2px;
+  position: absolute;
+  top: -3px;
+  @include css3-prop-transition(transform, 500ms);
+  @include css3(transform, scale3d(1, 1, 1));
+  width: 14px;
+}
+
+// Fix for IE9 Checkmark positioning.
+// It looks terrible without this because of the use of transform-origin.
+.ie9 {
+  .busy-indicator {
+    .complete-check {
+      &:after {
+        left: 23px;
+        margin-top: 12px;
+      }
+    }
+  }
+}
+
+@include keyframes(rotate-ball) {
+  0% { @include transform(rotate(0deg)); }
+  100% { @include transform(rotate(360deg)); }
+}
+
+@include keyframes(complete-check) {
+  0% {
+    height: 0;
+    width: 0;
+  }
+  50% {
+    height: 0;
+    width: 10px;
+  }
+  100% {
+    height: 26px;
+    width: 10px;
+  }
+}
