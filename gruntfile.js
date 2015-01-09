@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     watch: {
       source: {
         files: ['sass/**/*.scss', 'views/**.html', 'views/controls/**.html', 'js/*/*.js', 'js/*.js', 'js/cultures/*.*'],
-        tasks: ['sass', 'concat', 'uglify', 'copy'],
+        tasks: ['revision', 'sass', 'concat', 'uglify', 'copy'],
         options: {
           livereload: true
         }
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: '',
-        banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: <%= gitinfo.local.branch.current.lastCommitNumber %> \n */ \n ',
+        banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: <%= meta.revision %> \n */ \n ',
         footer: '//# sourceURL=<%= pkg.name %>.js'
       },
       basic: {
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: <%= gitinfo.local.branch.current.lastCommitNumber %> \n */ \n ',
+          banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: <%= meta.revision %> \n */ \n ',
           sourceMap: true,
           sourceMapName: 'dist/js/sohoxi.map',
           separator: ';'
@@ -73,12 +73,22 @@ module.exports = function(grunt) {
       }
     },
 
-    // Configuration to be run (and then tested).
-    gitinfo: {}
+    // Git Revision
+    revision: {
+      options: {
+        property: 'meta.revision',
+        ref: 'HEAD',
+        short: false
+      }
+    },
+
+    meta: {
+      revision: undefined
+    }
 
   });
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
-  grunt.registerTask('default', ['gitinfo', 'jshint', 'sass', 'concat', 'uglify', 'copy:main']);
+  grunt.registerTask('default', ['revision', 'jshint', 'sass', 'concat', 'uglify', 'copy:main']);
 };
