@@ -2,6 +2,7 @@
 //================================================== //
 
 .toast-container {
+  max-width: 60%;
   position: fixed;
   z-index: 8000;
 
@@ -10,8 +11,18 @@
     right: 10px;
   }
 
+  &.toast-bottom-left {
+    bottom: 10px;
+    left: 10px;
+  }
+
   &.toast-top-right {
     right: 10px;
+    top: 10px;
+  }
+
+  &.toast-top-left {
+    left: 10px;
     top: 10px;
   }
 }
@@ -21,15 +32,88 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, .2);
   margin: 0 0 6px;
   overflow: hidden;
-  padding: 12px;
+  padding: 10px 32px 10px 12px;
   position: relative;
   width: auto;
 
   .toast-title {
+    color: #1a1a1a;
     display: block;
+    font-weight: bold;
   }
 
   .toast-message {
     display: block;
   }
+}
+
+// Close Button
+.btn-close {
+  cursor: pointer;
+  height: 20px;
+  position: absolute;
+  right: 6px;
+  top: 10px;
+  width: 20px;
+
+  &:after,
+  &:before {
+    background: none repeat scroll 0 0 #b3b3b3;
+    content: '';
+    height: 14px;
+    position: absolute;
+    width: 2px;
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &:hover:after,
+  &:hover:before,
+  &:active:after,
+  &:active:before {
+    background-color: #333333;
+  }
+}
+
+// Animation
+
+.effect-scale {
+  -webkit-animation-duration: .25s;
+  animation-duration: .25s;
+  -webkit-animation-name: animScale;
+  animation-name: animScale;
+}
+
+.effect-scale-hide {
+  -webkit-animation-duration: .25s;
+  animation-duration: .25s;
+  -webkit-animation-name: animScaleOut;
+  animation-name: animScaleOut;
+  opacity: 0;
+}
+
+@-webkit-keyframes animScale {
+  0% { opacity: 0; -webkit-transform: translate3d(0, 40px, 0) scale3d(.1, .6, 1); }
+  100% { opacity: 1; -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+}
+
+@keyframes animScale {
+  0% { opacity: 0; transform: translate3d(0, 40px, 0) scale3d(.1, .6, 1); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+}
+
+@-webkit-keyframes animScaleOut {
+  0% { opacity: 1; -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+  100% { opacity: 0; -webkit-transform: translate3d(0, 40px, 0) scale3d(.1, .6, 1); }
+}
+
+@keyframes animScaleOut {
+  0% { opacity: 1; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
+  100% { opacity: 0; transform: translate3d(0, 40px, 0) scale3d(.1, .6, 1); }
 }

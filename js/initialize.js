@@ -20,9 +20,10 @@
 
     //Set Locale
     Locale.set(locale).done(function () {
+      var returnObj;
 
       //Iterate all objects we are initializing
-      return self.each(function() {
+      returnObj = self.each(function() {
 
         var elem = $(this);
         elem = elem.find(':not(.no-init)');
@@ -140,6 +141,8 @@
         }
       });
 
+      self.trigger('initialized');
+      return returnObj;
     });
   };
 

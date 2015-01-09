@@ -25,7 +25,9 @@
     var pluginName = 'toast',
         defaults = {
           title: '(Title)',
-          message: '(Content)'
+          message: '(Content)',
+          position: 'top right',  //top left, bottom left, bottom right (center??)
+          timeout: 60001
         },
         settings = $.extend({}, defaults, options);
 
@@ -39,25 +41,50 @@
     Plugin.prototype = {
 
       init: function() {
+        this.settings = settings;
         this.show();
       },
 
       // Show a Single Toast Message
       show: function() {
-        var container = $('#toast-container'),
+        var self = this,
+          container = $('#toast-container'),
+          closeBtn = $('<button type="button" class="btn-close"></button>'),
           toast = $('<div class="toast"></div>');
 
         if (container.length === 0) {
-          container = $('<div id="toast-container" class="toast-container toast-top-right" aria-live="polite" role="alert"></div>').appendTo('body');
+          container = $('<div id="toast-container" class="toast-container" aria-live="polite" role="alert"></div>').appendTo('body');
         }
 
-        toast.append('<span class="toast-title">'+ settings.title + '</span>');
-        toast.append('<span class="toast-message">'+ settings.message + '</span>');
+        //TODO: RTL
+        container.removeClass('toast-top-left toast-top-right toast-bottom-right toast-bottom-left')
+          .addClass('toast-' + this.settings.position.replace(' ', '-'));
+
+        toast.append('<span class="toast-title">'+ this.settings.title + '</span>');
+        toast.append('<span class="toast-message">'+ this.settings.message + '</span>');
         container.append(toast);
+        toast.addClass('effect-scale');
+        toast.append(closeBtn);
+
+        closeBtn.on('click', function () {
+          self.remove(toast);
+        });
+
+        setTimeout(function () {
+         self.remove(toast);
+        }, settings.timeout);
+      },
+
+      remove: function (toast) {
+        toast.addClass('effect-scale-hide');
+        setTimeout(function () {
+          toast.remove();
+        }, 500);
       },
 
       // Teardown
       destroy: function() {
+        $('#toast-container').remove();
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -67,6 +94,7 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
+        instance.show();
       } else {
         instance = $.data(this, pluginName, new Plugin(this, settings));
       }

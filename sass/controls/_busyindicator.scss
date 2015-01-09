@@ -154,10 +154,12 @@ $busy-indicator-check-color: $inverse-color;
     height: 0;
     width: 0;
   }
+
   50% {
     height: 0;
     width: 10px;
   }
+
   100% {
     height: 26px;
     width: 10px;

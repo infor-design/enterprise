@@ -89,8 +89,10 @@ $(function($) {
 
 
 // Toast.html View Specifics
+  var cnt = 0;
   $('#show-toast-message').on('click', function() {
-      $('body').toast({title: 'Application Offline', message: 'This is a Toast message'});
+      cnt ++;
+      $('body').toast({title: 'Application Offline' + cnt, message: 'This is a Toast message'});
   });
 
 });
