@@ -1,8 +1,7 @@
 /**
-* Responsive Tab Control
-* @name Tabs
-* @param {string} propertyName - The Name of the Property
+* Tab Control (TODO: bitly link to docs)
 */
+
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
@@ -14,8 +13,7 @@
 }(function ($) {
 
   // Used for changing the stacking order of jQuery events.  This is needed to override certain
-  // Events invoked by other plugins.
-  // http://stackoverflow.com/questions/2360655
+  // Events invoked by other plugins http://stackoverflow.com/questions/2360655
   $.fn.bindFirst = function(name, fn) {
     this.on(name, fn);
     this.each(function() {
@@ -38,15 +36,14 @@
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Actual Plugin Code
     Plugin.prototype = {
       init: function(){
-        var self = this,
-          header = null;
+        var self = this;
 
         self.container = $(this.element);
 
@@ -57,7 +54,7 @@
         self.panels.find('h2:first').attr('tabindex', '0');
 
         //Attach Tablist role and class to the tab headers container
-        header = self.container.find('ul:first')
+        self.header = self.container.find('ul:first')
                     .attr({'class': 'tab-list', 'role': 'tablist',
                             'aria-multiselectable': 'false'});
         self.tablist = self.element.find('.tab-list');
@@ -65,16 +62,13 @@
         // Add the markup for the "More" button if it doesn't exist.
         if (self.tablist.next('.tab-more').length === 0) {
           var button = $('<button>').attr({'class': 'tab-more', 'type': 'button', 'tabindex': '-1'});
-          button.append( $('<span>').text('More') );
-          button.append( $('<svg>').attr({'class': 'icon', 'viewBox': '0 0 32 32'}) );
-          var use = $(document.createElementNS('http://www.w3.org/2000/svg', 'use'));
-          button.find('svg').append(use);
+          button.append( $('<span>').text('More')); //TODO: Localize
+          button.append('<svg class="icon" focusable="false"><use xlink:href="#icon-dropdown"></svg>');
           self.tablist.after(button);
-          use[0].setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-dropdown-arrow');
         }
 
         //for each item in the tabsList...
-        self.anchors = header.find('li > a');
+        self.anchors = self.header.find('li > a');
         self.anchors.each( function () {
           var a = $(this);
 
@@ -112,6 +106,7 @@
                 if (targetLi.length === 0) {
                   targetLi = self.container.find('li:last');
                 }
+                 e.preventDefault();
                 break;
               case 40:
                 e.preventDefault(); // jshint ignore:line
@@ -120,6 +115,7 @@
                 if (targetLi.length === 0) {
                   targetLi = self.container.find('li:first');
                 }
+                e.preventDefault();
                 break;
             }
 
@@ -162,9 +158,9 @@
 
         // Setup the "more" function
         $(window).on('resize.tabs', function() {
-          self._setOverflow();
+          self.setOverflow();
         });
-        self._setOverflow();
+        self.setOverflow();
       },
 
       activate: function(index){
@@ -209,13 +205,26 @@
         ui.panels.find(':first-child').filter('h3').attr('tabindex', '0');
       },
 
-      _setOverflow: function () {
-        //TODO - Implement Overflow/Responsive
+      setOverflow: function () {
         var self = this;
+        //alert(self.tablist[0].scrollHeight);
         if (self.tablist[0].scrollHeight > 40 ) {
           self.element.addClass('has-more-button');
         } else {
           self.element.removeClass('has-more-button');
+        }
+
+        self.setMoreActive();
+      },
+
+      setMoreActive: function () {
+        var self = this,
+          selectedTab = self.header.find('.is-selected');
+
+        if (self.isTabOverflowed(selectedTab)) {
+          self.element.find('.tab-more').addClass('is-selected');
+        } else {
+          self.element.find('.tab-more').removeClass('is-selected');
         }
       },
 
@@ -257,6 +266,7 @@
         self.popupmenu = self.moreButton.data('popupmenu');
         self.popupmenu.element.on('close', function() {
           self.moreButton.removeClass('popup-is-open');
+          self.setMoreActive();
         });
 
         // Add the "is-selected" class to the currently focused item in this popup menu.
@@ -307,6 +317,7 @@
               break;
             case 37: // left
               e.preventDefault();
+              e.stopPropagation();
               $(document).trigger({type: 'keydown.popupmenu', which: 38});
               break;
             case 38: // up
@@ -321,6 +332,7 @@
               break;
             case 39: // right
               e.preventDefault();
+              e.stopPropagation();
               $(document).trigger({type: 'keydown.popupmenu', which: 40});
               break;
             case 40: // down

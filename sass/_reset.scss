@@ -1,7 +1,54 @@
 // Reset
 //================================================== //
 
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, em, img, small, strong, sub, sup, dl, dt, dd, ol, ul, li, fieldset, form, legend, label, input, textarea, select, button, table, caption, thead, tbody, tfoot, tr, th, td {
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+address,
+cite,
+code,
+em,
+img,
+small,
+strong,
+sub,
+sup,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+legend,
+label,
+input,
+textarea,
+select,
+button,
+table,
+caption,
+thead,
+tbody,
+tfoot,
+tr,
+th,
+td {
   border: none;
   margin: 0;
   padding: 0;
@@ -16,19 +63,31 @@ button:focus {
 }
 
 * {
-  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing:
+  border-box; box-sizing: border-box;
 }
 
 html {
   height: 100%;
 }
 
-article, aside, figure, footer, header, hgroup, nav, main, section {
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+nav,
+main,
+section {
   display: block;
 }
 
 // Responsive images and other embedded objects
-img, object, embed {
+img,
+object,
+embed {
   max-width: 100%;
 }
 
@@ -55,8 +114,8 @@ th {
   border: 0;
   font-family: inherit;
   font-weight: inherit;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 table {

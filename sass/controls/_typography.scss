@@ -85,7 +85,7 @@ label,
 // App Specific Typography Classes
 .app-title {
   @include font-size(20);
-  color: $primary-color;
+  color: $primary-color-text;
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2.5rem);
 }

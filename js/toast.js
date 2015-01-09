@@ -27,7 +27,7 @@
           title: '(Title)',
           message: '(Content)',
           position: 'top right',  //top left, bottom left, bottom right (center??)
-          timeout: 60001
+          timeout: 6000
         },
         settings = $.extend({}, defaults, options);
 

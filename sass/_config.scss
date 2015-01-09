@@ -6,7 +6,8 @@ $body-bg-color: #f5f5f5;
 
 // Base Colors
 $header-color: #454545;
-$primary-color: #0c7ad8;  //0896e9 or 0c7ad8 ??
+$primary-color: #0c7ad8;  //Suggest 0371cf
+$primary-color-text: #0371cf;
 $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
@@ -169,6 +170,11 @@ $spinbox-bg-color: #e5e5e5;
 // Tree
 $tree-border-color: #e0e0e0;
 $tree-selected-color: $primary-color;
+
+// Tabs
+$tab-selected-color: #0371cf;  //TODO: $primary-color;
+$tab-border-color: #b6b6b6;
+$tab-hover-color: #ededed;
 
 //Color Of Labels and Some Hs
 $label-color: #666666;  //Was #6666666
