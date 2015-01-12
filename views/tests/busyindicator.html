@@ -45,12 +45,12 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $('#standalone-busy').busyIndicator({
+        $('#standalone-busy').busyindicator({
           timeToComplete: 1000,
           timeToClose: 3000
         });
 
-        $('#busy-form').busyIndicator({
+        $('#busy-form').busyindicator({
           blockUI: true,
           timeToComplete: 1000,
           timeToClose: 3000
@@ -58,12 +58,12 @@
 
         $('#busy-indicator-trigger').click(function(e) {
           e.preventDefault();
-          $('#standalone-busy').trigger('start.busyIndicator');
+          $('#standalone-busy').trigger('start.busyindicator');
         });
 
         $('#busy-form button[type="submit"]').click(function(e) {
           e.preventDefault();
-          $('#busy-form').trigger('start.busyIndicator');
+          $('#busy-form').trigger('start.busyindicator');
         });
 
       });

@@ -18,12 +18,12 @@
 
   'use strict';
 
-  $.fn.busyIndicator = function(options) {
+  $.fn.busyindicator = function(options) {
 
     // Settings and Options
-    var pluginName = 'busyIndicator',
+    var pluginName = 'busyindicator',
         defaults = {
-          blockUI: false, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
+          blockUI: true, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
           timeToClose: 0, // fires the 'close' trigger at a certain timing interval.  If 0, goes indefinitely.
         },
@@ -35,21 +35,49 @@
       this.init();
     }
 
+    // Check to see if the current browser supports CSS3 Animation
+    function browserSupportsAnimation() {
+      var s = document.createElement('p').style,
+        supportsAnimation = 'animation' in s ||
+                              'WebkitAnimation' in s ||
+                              'MozAnimation' in s ||
+                              'msAnimation' in s ||
+                              'OAnimation' in s;
+      return supportsAnimation;
+    }
+
     // Plugin Methods
     BusyIndicator.prototype = {
 
       init: function() {
+        this.setup();
         this.setupEvents();
+      },
+
+      // Sanitize incoming option values
+      setup: function() {
+        var blockUI = this.element.attr('data-block-ui'),
+          completionTime = this.element.attr('data-completion-time'),
+          closeTime = this.element.attr('data-close-time');
+
+        this.blockUI = blockUI !== undefined ? blockUI : settings.blockUI;
+        this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : settings.timeToComplete;
+        this.closeTime = closeTime !== undefined && !isNaN(closeTime) ? parseInt(closeTime, 10) : settings.timeToClose;
       },
 
       setupEvents: function() {
         var self = this;
-        self.element.on('start.busyIndicator', function() {
+        self.element.on('start.busyindicator', function() {
           self.activate();
-        }).on('complete.busyIndicator', function() {
-          self.complete();
-        }).on('close.busyIndicator', function() {
-          self.close();
+        }).on('started.busyindicator', function() {
+          // Completed/Close events are only active once the indicator is "started"
+          self.element.on('complete.busyindicator', function() {
+            self.complete();
+          }).on('close.busyindicator', function() {
+            self.close();
+          });
+        }).on('updated.busyindicator', function() {
+          self.setup();
         });
       },
 
@@ -57,23 +85,36 @@
       activate: function() {
         var self = this;
 
-        // If the markup already exists don't do anything
+        // If the markup already exists don't do anything but clear
         if (this.container) {
+          if (self.closeTimeout) {
+            clearTimeout(self.closeTimeout);
+          }
           this.label.text('Loading...'); // TODO: Localize
           this.loader.removeClass('complete').addClass('active');
           this.container.removeClass('is-hidden');
+          this.element.trigger('started.busyindicator');
           return;
         }
 
         // Build all the markup
         this.container = $('<div class="busy-indicator-container is-hidden"></div>');
         this.loader = $('<div class="busy-indicator active"></div>').appendTo(this.container);
+
         var bowl = $('<div class="busy-indicator-bowl"></div>').appendTo(this.loader),
-          container = $('<div class="busy-indicator-ball-container"></div>').appendTo(bowl);
-        $('<div class="busy-indicator-ball"></div>').appendTo(container);
+          container = $('<div class="busy-indicator-ball-container"></div>'),
+          ball = $('<div class="busy-indicator-ball"></div>');
+
+        if (!browserSupportsAnimation()) {
+          ball.appendTo(bowl);
+        } else {
+          container.appendTo(bowl);
+          ball.appendTo(container);
+        }
+
         $('<div class="complete-check"></div>').appendTo(this.loader);
         this.label = $('<span>Loading...</span>').appendTo(this.container);
-        if (settings.blockUI) {
+        if (this.blockUI) {
           this.originalPositionProp = this.element.css('position');
           this.element.css('position', 'relative');
           this.overlay = $('<div class="overlay busy is-hidden"></div>').appendTo(this.element);
@@ -95,13 +136,19 @@
         }, 20);
 
         // Lets external code know that we've successully kicked off.
-        this.element.trigger('started.busyIndicator');
+        this.element.trigger('started.busyindicator');
+
+        // Start the JS Animation Loop if IE9
+        if (!browserSupportsAnimation()) {
+          self.isAnimating = true;
+          self.animateWithJS();
+        }
 
         // Triggers complete if the "timeToComplete" option is set.
-        if (settings.timeToComplete > 0) {
+        if (this.completionTime > 0) {
           setTimeout(function() {
-            self.element.trigger('complete.busyIndicator');
-          }, settings.timeToComplete);
+            self.element.trigger('complete.busyindicator');
+          }, self.completionTime);
         }
       },
 
@@ -110,12 +157,17 @@
         var self = this;
         this.label.text('Completed'); // TODO: Localize
         this.loader.removeClass('active').addClass('complete');
-        this.element.trigger('completed.busyIndicator');
 
-        if (settings.timeToClose > 0) {
+        if (!browserSupportsAnimation()) {
+          self.isAnimating = false;
+        }
+
+        this.element.trigger('completed.busyindicator');
+
+        if (this.closeTime > 0) {
           setTimeout(function() {
-            self.element.trigger('close.busyIndicator');
-          }, settings.timeToClose);
+            self.element.trigger('close.busyindicator');
+          }, self.closeTime);
         }
       },
 
@@ -127,7 +179,8 @@
           this.overlay.addClass('is-hidden');
         }
         // Give the indicator time to fade out before removing all of its components from view
-        setTimeout(function() {
+        self.closeTimeout = setTimeout(function() {
+          clearTimeout(self.closeTimeout);
           self.container.remove();
           self.container = undefined;
           self.loader = undefined;
@@ -136,13 +189,43 @@
             self.element.css('position', self.originalPositionProp);
             self.originalPositionProp = undefined;
           }
-          self.element.trigger('closed.busyIndicator');
+          self.element.trigger('closed.busyindicator');
+          self.element.off('complete.busyindicator close.busyindicator');
         }, 500);
+      },
+
+      animateWithJS: function() {
+        var self = this,
+          ball = this.container.find('.busy-indicator-ball'),
+          bowl = this.container.find('.busy-indicator-bowl'),
+          bowlPos = bowl.position(),
+          bowlX = Math.floor(parseInt(bowlPos.left) + (bowl.width()/2)),
+          bowlY = Math.floor(parseInt(bowlPos.top) + (bowl.height()/2)),
+          radius = 25,
+          t = 0;
+
+        // Animation Loop
+        function animate() {
+          t += 0.1;
+          var newLeft = Math.floor(bowlX + (radius * Math.cos(t))) - (ball.width()/2),
+            newTop = Math.floor(bowlY + (radius * Math.sin(t))) - (ball.height()/2);
+
+          ball.animate({
+            left: newLeft,
+            top: newTop
+          }, 10, 'linear', function() {
+            if (self.isAnimating) {
+              animate();
+            }
+          });
+        }
+
+        animate();
       },
 
       // Teardown
       destroy: function() {
-        this.off('start.busyIndicator complete.busyIndicator close.busyIndicator');
+        this.off('start.busyindicator complete.busyindicator close.busyindicator updated.busyindicator');
         $.removeData(this.element[0], pluginName);
       }
     };
