@@ -9,36 +9,37 @@
 <div class="row">
   <div class="twelve columns">
 
-    <button class="btn" type="button" data-modal="modal-1">Show Dialog</button>
+    <button class="btn" type="button" data-modal="modal-1">Add Context</button>
     <div class="modal" id="modal-1">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h1 class="modal-title" tabindex="0">Page Settings</h1>
+          <h1 class="modal-title">Add Context</h1>
         </div>
 
         <div class="modal-body">
           <div class="field">
-            <label for="navTitle">Navigation Title</label>
-            <input id="navTitle" name="navTitle" type="text">
+            <label for="context-type">Type</label>
+            <select id="context-type" name="type" type="text"></select>
           </div>
           <div class="field">
-            <label for="navUrl">URL</label>
-            <input id="navUrl" name="navUrl" type="text">
+            <label for="context-name">Name</label>
+            <input id="context-name" name="context-name" type="text">
           </div>
           <div class="field">
-            <label for="pageTitle">Page Title</label>
-            <input id="pageTitle" name="pageTitle" type="text">
-          </div>
-          <div class="field">
-            <label for="pageDesc">Page Description</label>
-            <input id="pageDesc" name="pageDesc" type="text">
+            <label for="context-desc">Page Title</label>
+            <textarea id="context-desc" name="context-desc" ></textarea>
           </div>
 
-          <button type="button" class="btn-primary btn-close">Close</button>
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" style="width:50%">Cancel</button>
+            <button type="button" class="btn-modal-primary" style="width:50%">Submit</button>
+          </div>
         </div>
       </div>
     </div>
+
+    <button class="btn" type="button" id="btn-add-comment">Add Comment</button>
   </div>
 </div>
 

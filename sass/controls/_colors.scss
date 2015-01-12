@@ -2,117 +2,126 @@
 //================================================== //
 
 $ruby: #ed1c24;
-$ruby01: #ffdbdd;
-$ruby02: #ffadb3;
-$ruby03: #ff8282;
-$ruby04: #ff5a5a;
-$ruby05: #ff3b3b;
-$ruby06: #f51717;
-$ruby07: #d5000e;
-$ruby08: #b30813;
-$ruby09: #98010b;
+$ruby01: #fccacd;
+$ruby02: #ffa3a6;
+$ruby03: #ff7075;
+$ruby04: #ff4249;
+$ruby05: #ed1c24;
+$ruby06: #d5000e;
+$ruby07: #b2000c;
+$ruby08: #990610;
+$ruby09: #750008;
+$ruby10: #5c0006;
 
 $amber: #ffa800;
 $amber01: #fff6a8;
 $amber02: #fee77a;
 $amber03: #ffd042;
-$amber04: #ffb805;
-$amber05: #ff9c00;
-$amber06: #ff8400;
-$amber07: #ef6000;
-$amber08: #de4900;
-$amber09: #bc3e00;
+$amber04: #ffa800;
+$amber05: #ff8a00;
+$amber06: #f86f11;
+$amber07: #e8540a;
+$amber08: #cd4400;
+$amber09: #9f3704;
+$amber10: #802c00;
 
 $emerald: #4fb521;
-$emerald01: #e0ffab;
-$emerald02: #bff475;
+$emerald01: #dfffaa;
+$emerald02: #c0f486;
 $emerald03: #96e345;
-$emerald04: #6ec90d;
+$emerald04: #79cc26;
 $emerald05: #4fb521;
-$emerald06: #1c9a18;
-$emerald07: #157a13;
+$emerald06: #3f9818;
+$emerald07: #337a12;
 $emerald08: #1f5905;
 $emerald09: #164203;
+$emerald10: #113301;
 
-$azure: #13a7fe;
-$azure01: #dcf4ff;
-$azure02: #b1e1fc;
-$azure03: #84d1ff;
-$azure04: #4fbeff;
-$azure05: #13a7fe;
+$azure: #13a7ff;
+$azure01: #d6f2fe;
+$azure02: #bde7ff;
+$azure03: #97d8fe;
+$azure04: #5cc3fe;
+$azure05: #13a7ff;
 $azure06: #078cd9;
-$azure07: #005bb8;
-$azure08: #005688;
+$azure07: #0872b0;
+$azure08: #005689;
 $azure09: #004167;
+$azure10: #01304e;
 
 $turqoise: #00c2b4;
-$turqoise01: #d9fbf9;
-$turqoise02: #b6faf5;
-$turqoise03: #93f4ed;
-$turqoise04: #61e6dc;
+$turqoise01: #d2fbf7;
+$turqoise02: #a6f7f1;
+$turqoise03: #64f0e7;
+$turqoise04: #2bdbd0;
 $turqoise05: #00c2b4;
-$turqoise06: #00ab9f;
-$turqoise07: #01a69a;
-$turqoise08: #0a837a;
-$turqoise09: #015e57;
+$turqoise06: #03a59a;
+$turqoise07: #0d8178;
+$turqoise08: #05665f;
+$turqoise09: #004d47;
+$turqoise10: #023d39;
 
-$amethyst: #a352cc;
-$amethyst01: #f7e6ff;
-$amethyst02: #e7c4f8;
-$amethyst03: #d39eee;
-$amethyst04: #c17be5;
-$amethyst05: #a352cc;
-$amethyst06: #8838b1;
-$amethyst07: #73219d;
-$amethyst08: #5f1385;
-$amethyst09: #4c096f;
+$amethyst: #a352cb;
+$amethyst01: #f3dbff;
+$amethyst02: #ebc1ff;
+$amethyst03: #d79df4;
+$amethyst04: #c073e7;
+$amethyst05: #a352cb;
+$amethyst06: #8a39b2;
+$amethyst07: #701f98;
+$amethyst08: #5a187a;
+$amethyst09: #480866;
+$amethyst10: #33054d;
 
-$tourmaline: #ed4f79;
-$tourmaline01: #ffe1e9;
+$tourmaline: #e64e75;
+$tourmaline01: #ffd6e2;
 $tourmaline02: #ffc7d6;
-$tourmaline03: #fca0b9;
-$tourmaline04: #f77397;
-$tourmaline05: #ed4f79;
-$tourmaline06: #d30d42;
-$tourmaline07: #d31c4d;
-$tourmaline08: #b6123e;
-$tourmaline09: #940f32;
+$tourmaline03: #ffc2d2;
+$tourmaline04: #ff94b0;
+$tourmaline05: #e64e75;
+$tourmaline06: #db305d;
+$tourmaline07: #cc1446;
+$tourmaline08: #b3123c;
+$tourmaline09: #900e32;
+$tourmaline10: #660a23;
 
-$graphite: #737373;
-$graphite01: #e5e5e5;
-$graphite02: #d2d2d2;
-$graphite03: #b6b6b6;
+$graphite: #7a7a7a;
+$graphite01: #f5f5f5;
+$graphite02: #d8d8d8;
+$graphite03: #bdbdbd;
 $graphite04: #999999;
-$graphite05: #737373;
-$graphite06: #575757;
-$graphite07: #454545;
-$graphite08: #333333;
-$graphite09: #282828;
+$graphite05: #7a7a7a;
+$graphite06: #616161;
+$graphite07: #4d4d4d;
+$graphite08: #383838;
+$graphite09: #292929;
+$graphite10: #1a1a1a;
 
 // Generate Color Classes for The Sass Variables
-$color-names: ruby ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09
- amber amber01 amber02 amber03 amber04 amber05 amber06 amber07 amber08 amber09
- emerald emerald01 emerald02 emerald03 emerald04 emerald05 emerald06 emerald07 emerald08 emerald09
- azure azure01 azure02 azure03 azure04 azure05 azure06 azure07 azure08 azure09
- turqoise turqoise01 turqoise02 turqoise03 turqoise04 turqoise05 turqoise06 turqoise07 turqoise08 turqoise09
- amethyst amethyst01 amethyst02 amethyst03 amethyst04 amethyst05 amethyst06 amethyst07 amethyst08 amethyst09
- tourmaline tourmaline01 tourmaline02 tourmaline03 tourmaline04 tourmaline05 tourmaline06 tourmaline07 tourmaline08 tourmaline09
- graphite graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09;
+$color-names: ruby ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
+ amber amber01 amber02 amber03 amber04 amber05 amber06 amber07 amber08 amber09 amber10
+ emerald emerald01 emerald02 emerald03 emerald04 emerald05 emerald06 emerald07 emerald08 emerald09 emerald10
+ azure azure01 azure02 azure03 azure04 azure05 azure06 azure07 azure08 azure09 azure10
+ turqoise turqoise01 turqoise02 turqoise03 turqoise04 turqoise05 turqoise06 turqoise07 turqoise08 turqoise09 turqoise10
+ amethyst amethyst01 amethyst02 amethyst03 amethyst04 amethyst05 amethyst06 amethyst07 amethyst08 amethyst09 amethyst10
+ tourmaline tourmaline01 tourmaline02 tourmaline03 tourmaline04 tourmaline05 tourmaline06 tourmaline07 tourmaline08 tourmaline09 tourmaline10
+ graphite graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09 graphite10;
 
-$color-vars: $ruby $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby08 $ruby09
- $amber $amber01 $amber02 $amber03 $amber04 $amber05 $amber06 $amber07 $amber08 $amber09
- $emerald $emerald01 $emerald02 $emerald03 $emerald04 $emerald05 $emerald06 $emerald07 $emerald08 $emerald09
- $azure $azure01 $azure02 $azure03 $azure04 $azure05 $azure06 $azure07 $azure08 $azure09
- $turqoise $turqoise01 $turqoise02 $turqoise03 $turqoise04 $turqoise05 $turqoise06 $turqoise07 $turqoise08 $turqoise09
- $amethyst $amethyst01 $amethyst02 $amethyst03 $amethyst04 $amethyst05 $amethyst06 $amethyst07 $amethyst08 $amethyst09
- $tourmaline $tourmaline01 $tourmaline02 $tourmaline03 $tourmaline04 $tourmaline05 $tourmaline06 $tourmaline07 $tourmaline08 $tourmaline09
- $graphite $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09;
+$color-vars: $ruby $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby08 $ruby09 $ruby10
+ $amber $amber01 $amber02 $amber03 $amber04 $amber05 $amber06 $amber07 $amber08 $amber09 $amber10
+ $emerald $emerald01 $emerald02 $emerald03 $emerald04 $emerald05 $emerald06 $emerald07 $emerald08 $emerald09 $emerald10
+ $azure $azure01 $azure02 $azure03 $azure04 $azure05 $azure06 $azure07 $azure08 $azure09 $azure10
+ $turqoise $turqoise01 $turqoise02 $turqoise03 $turqoise04 $turqoise05 $turqoise06 $turqoise07 $turqoise08 $turqoise09 $turqoise10
+ $amethyst $amethyst01 $amethyst02 $amethyst03 $amethyst04 $amethyst05 $amethyst06 $amethyst07 $amethyst08 $amethyst09 $amethyst10
+ $tourmaline $tourmaline01 $tourmaline02 $tourmaline03 $tourmaline04 $tourmaline05 $tourmaline06 $tourmaline07 $tourmaline08 $tourmaline09 $tourmaline10
+ $graphite $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09 $graphite10;
 
 @each $name in $color-names {
   $i: index($color-names, $name);
+  $color: nth($color-vars, $i);
 
   .#{$name} {
-    background: nth($color-vars, $i);
+    background: $color;
   }
 
   //Classes for Tags
@@ -139,7 +148,16 @@ $color-vars: $ruby $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby
     float: right;
   }
 
-  &:nth-child(10) {
+  &:nth-child(11) {
     margin-bottom: 30px;
   }
+
+  .dark-color {
+    color: #0a0a0a;
+  }
+
+  .light-color {
+    color: #ffffff;
+  }
+
 }

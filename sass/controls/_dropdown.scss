@@ -102,7 +102,7 @@ input.dropdown {
   }
 
   .icon {
-    fill: #999999;
+    fill: $input-border-color;
     margin-left: -30px;
     position: absolute;
     transform: rotate(180deg);

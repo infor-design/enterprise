@@ -108,18 +108,35 @@ label,
 small,
 .micro-text {
   @include font-size(12);
-  color: $font-color-light;
+  color: #616161; //Accessible
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 1.5rem);
 }
 
-.stamp-text {
+.stamp-text,
+.alert-text {
   @include font-size(11);
-  color: $font-color-light;
-  font-weight: bold;
+  color: #616161;
+  font-weight: bold; //Accessible
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
   text-transform: uppercase;
+}
+
+.alert-text {
+  color: #ed1c24;
+  margin-left: 15px;
+
+  &:before {
+    background-color: #ed1c24;
+    border-radius: 50%;
+    content: '';
+    height: 8px;
+    margin-left: -14px;
+    margin-top: 4px;
+    position: absolute;
+    width: 8px;
+  }
 }
 
 // Horizontal Rule

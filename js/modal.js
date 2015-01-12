@@ -20,7 +20,8 @@
       defaults = {
         trigger: 'click', //Supports click, immediate
         buttons: null,  //Pass in the Buttons
-        isAlert: false //Adds alertdialog role
+        isAlert: false, //Adds alertdialog role
+        content: null //Ability to pass in dialog html content
       },
       settings = $.extend({}, defaults, options);
 
@@ -32,7 +33,7 @@
 
     // Actual Plugin Code
     Plugin.prototype = {
-      init: function(){
+      init: function() {
         var self = this;
 
         try {
@@ -66,13 +67,30 @@
           self.close();
         });
 
-        if (settings.buttons) {
-          self.addButtons(settings.buttons);
+        //ensure is appended to body for new dom tree
+        if (settings.content) {
+          settings.trigger = 'immediate';
+          this.appendContent();
+          setTimeout(function () {
+            self.open();
+          }, 1);
+          return;
         }
 
-        //ensure is appended to body for new dom tree
+        self.addButtons(settings.buttons);
         this.element.appendTo('body');
       },
+
+      appendContent: function () {
+        this.element = $('<div class="modal"></div>');
+        var content = $('<div class="modal-content"></div>').appendTo(this.element);
+        content.append('<div class="modal-header"><h1 class="modal-title">'+ settings.title +'</h1></div>');
+        var body = $('<div class="modal-body"></div>').append(settings.content);
+        body.appendTo(content);
+        this.element.appendTo('body');
+        this.addButtons(settings.buttons);
+      },
+
       revertTransition: function (doTop) {
         //Revert the transform so drag and dropping works as expected
         var elem = this.element,
@@ -86,12 +104,23 @@
           elem.css('top', rect.top);
         }
       },
-      addButtons: function(buttons){
+
+      addButtons: function(buttons) {
         var body = this.element.find('.modal-body'),
             self = this,
-            btnWidth = 100/buttons.length,
-            buttonset = $('<div class="modal-buttonset"></div>').insertAfter(body);
+            btnWidth = 100,
+            buttonset;
 
+        if (!buttons) {
+          var inlineBtns = body.find('.modal-buttonset button');
+          // Buttons in markup
+          btnWidth = 100/inlineBtns.length;
+          inlineBtns.css('width', btnWidth-0.5 + '%').button();
+          return;
+        }
+
+        btnWidth = 100/buttons.length;
+        buttonset = $('<div class="modal-buttonset"></div>').insertAfter(body);
         body.find('button').remove();
         body.find('.btn-primary .btn-close .btn').remove();
 
@@ -107,9 +136,9 @@
           if (props.id) {
             btn.attr('id', props.id);
           }
-          btn.on('click.modal', function() {
+          btn.on('click.modal', function(e) {
             if (props.click) {
-              props.click.apply(self.element[0], arguments);
+              props.click.apply(self.element[0], [e, self]);
               return;
             }
             self.close();
@@ -119,6 +148,7 @@
           buttonset.append(btn);
         });
       },
+
       sizeInner: function () {
         var messageArea;
         messageArea = this.element.find('.detailed-message');
@@ -126,6 +156,7 @@
         var h = $(window).height() - messageArea.offset().top - 150;
         messageArea.css({'max-height': h, 'overflow': 'auto', 'width': messageArea.width()});
       },
+
       open: function () {
         var self = this, messageArea,
           elemCanOpen = this.element.triggerHandler('beforeOpen');
@@ -169,15 +200,15 @@
           this.element.attr('aria-describedby', 'message-text');
         } else {
           this.element.removeAttr('aria-labeledby');
-
         }
+
         this.element.addClass('is-visible').attr('role', (settings.isAlert ? 'alertdialog' : 'dialog'));
         this.element.attr('aria-hidden', 'false');
         this.overlay.attr('aria-hidden', 'false');
         this.element.attr('aria-modal', 'true'); //This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
 
         //Center
-        self.element.css({top:'50%',left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
+        self.element.css({top:'50%', left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
 
         // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a chance to be established
         // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
@@ -268,7 +299,9 @@
         }
 
         this.element.off('keypress.modal keydown.modal');
+        this.element.css('visibility', 'visible');
         this.element.removeClass('is-visible');
+
         this.overlay.attr('aria-hidden', 'true');
         this.element.attr('aria-hidden', 'true');
         if ($('.modal[aria-hidden="false"]').length < 1) {
@@ -296,6 +329,10 @@
           self.overlay.remove();
           self.element.trigger('afterClose');
         }, 300); // should match the length of time needed for the overlay to fade out
+
+        if (settings.content) {
+          self.element.remove();
+        }
       },
 
       destroy: function(){
