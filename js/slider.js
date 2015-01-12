@@ -181,18 +181,18 @@
 
         // Handles
         self.handles = [];
-        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'Lower Handle' : 'Handle'));
+        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'lower' : '')); // TODO: Localize
         if (self.settings.range) {
-          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0"></a>').text('Higher Handle'));
+          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0"></a>').text('higher')); // TODO: Localize
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles
-          self.element.attr({
+          handle.attr({
             'role' : 'slider',
             'aria-orientation' : 'horizontal',
             'aria-valuemin' : self.settings.min,
             'aria-valuemax' : self.settings.max,
-            'aria-label' : self.element.prev('label').text()
+            'aria-label' : self.element.prev('label').text() + ' ' + handle.text()
           });
           handle.appendTo(self.wrapper);
         });
@@ -635,7 +635,16 @@
         self._value = [minVal, maxVal];
         self.element.val(maxVal !== undefined ? self._value : self._value[0]);
         $.each(self.handles, function(i, handle) {
-          handle.attr('aria-valuenow', self._value[i]);
+          var prefix = '',
+            suffix = '';
+          if (self.settings.tooltip) {
+            prefix = self.settings.tooltip[0];
+            suffix = self.settings.tooltip[1];
+          }
+          handle.attr({
+            'aria-valuenow': self._value[i],
+            'aria-valuetext': prefix + self._value[i] + suffix
+          });
         });
         self.element.trigger('change');
         return self._value;
