@@ -63,7 +63,7 @@
             cssClass += ' checked';
           }
           if (!input.prev().is('.icon-dirty')) {
-            input.before('<svg class="icon icon-dirty' + cssClass + '"><use xlink:href="#icon-dropdown"></svg>');
+            input.before('<svg class="icon icon-dirty' + cssClass + '" focusable="false"><use xlink:href="#icon-dropdown"></svg>');
           }
 
           //Trigger Event

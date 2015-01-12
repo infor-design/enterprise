@@ -66,7 +66,7 @@
           subNode = a.next();
           //Inject Icons
           if (a.children('svg').length === 0) {
-            a.prepend('<svg class="icon" viewBox="0 0 32 32"><use xlink:href="#icon-document"></use></svg>');
+            a.prepend('<svg class="icon" focusable="false"><use xlink:href="#icon-document"></use></svg>');
           }
 
           if (subNode.is('ul')) {

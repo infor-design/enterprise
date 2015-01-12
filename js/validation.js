@@ -229,7 +229,7 @@
       messages.hide().css('display','inline');
 
       //Append Error
-      var svg = $('<svg class="icon icon-error"><use xlink:href="#icon-error"></use></svg>');
+      var svg = $('<svg class="icon icon-error" focusable="false"><use xlink:href="#icon-error"></use></svg>');
       //TODO //setup tooltip with appendedMsg
       //span = $('<span role="alert" class="error"></span>');
 

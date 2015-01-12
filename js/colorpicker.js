@@ -56,7 +56,7 @@
 
         //Add Button
         this.swatch = $('<span class="swatch"></span>');
-        this.icon = $('<svg class="icon"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.swatch);
+        this.icon = $('<svg class="icon" focusable="false"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.swatch);
         colorpicker.parent().append(this.swatch);
 
         //Add Masking to show the #
