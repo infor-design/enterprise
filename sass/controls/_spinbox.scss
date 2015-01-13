@@ -93,8 +93,9 @@ input::-webkit-inner-spin-button {
     > .spinbox-control {
       background-color: $input-disabled-bg-color;
       border-color: $input-disabled-border-color;
-      color: $input-disabled-color;
+      color: $disabled-color;
       cursor: default;
+      -webkit-text-fill-color: $disabled-color;
     }
   }
 }

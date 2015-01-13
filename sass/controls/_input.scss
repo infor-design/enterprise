@@ -57,7 +57,7 @@ input[readonly],
 textarea[readonly] {
   background-color: $input-disabled-bg-color;
   border: solid 1px $input-disabled-border-color;
-  color: $input-disabled-color;
+  color: $disabled-color;
   -webkit-text-fill-color: $disabled-color;
 }
 

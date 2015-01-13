@@ -194,6 +194,7 @@
             $(document).one('mouseup', function() {
               self.disableLongPress(e, self);
               preventClick = false;
+              self.element.focus();
             });
           }
         });
