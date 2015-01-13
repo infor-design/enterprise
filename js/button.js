@@ -99,7 +99,7 @@
             if (ripple.data('mousedown') === 'off') {
               self.rippleOut(ripple);
             }
-          }, 500);
+          }, 400);
 
           // On mouseup or on mouseleave, set the mousedown flag to 'off' and try to destroy the ripple
           element.on('mouseup mouseleave', function() {

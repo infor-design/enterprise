@@ -6,7 +6,7 @@
     <span class="label">Supported Interaction Scenarios</span>
     <hr>
 
-    <span class="label">Draggable (Can Drag anywhere)</span>
+    <span class="label">Draggable - Clone</span>
     <div class="draggable" style="border: 1px solid #999999;position:absolute; top:235px; width:50px; height:50px; background:#ffffff;">Free</div>
 
     <br>
@@ -30,8 +30,23 @@
     <br>
 
     <span class="label">Draggable - with collision detection</span>
-    <div id="one" class="draggable x-only collision" style="border: 1px solid #999999; position:absolute; top: 440px; width:50px; height:50px; background:#ffffff;">Left</div>
-    <div id="two" class="draggable x-only collision" style="border: 1px solid #999999; position:absolute; left: 280px; top: 440px; width:50px; height:50px; background:#ffffff;">Right</div>
+    <div id="one" class="draggable x-only collision" style="border: 1px solid #999999; position:absolute; top: 447px; width:50px; height:50px; background:#ffffff;">Left</div>
+    <div id="two" class="draggable x-only collision" style="border: 1px solid #999999; position:absolute; left: 285px; top: 447px; width:50px; height:50px; background:#ffffff;">Right</div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <span class="label">Drag Resize - only on x and y</span>
+    <div class="resizable" style="border: 1px solid #999999; position:absolute; top: 557px; width:50px; height:50px; background:#ffffff;">
+      Resize me
+      <div class="resize-handle"></div>
+    </div>
 
   </div>
 </div>
@@ -42,5 +57,6 @@
   $('.draggable.x-only.collision').draggable({axis: 'x', containment: 'parent', obstacle: '.collision'});
   $('.draggable.x-only').draggable({axis: 'x', containment: 'parent'});
   $('.draggable').draggable({containment: 'document', clone: 'true'});
+  $('.resizable').resizable();
 
 </script>

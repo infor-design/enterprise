@@ -1,0 +1,95 @@
+// Chart - Svg and Css
+//==================================================//
+
+// Alternate Text message
+.chart-message {
+  background-color: $ruby01;
+  color: $font-color-dark;
+  padding: 20px;
+  text-align: center;
+}
+
+// SVG Chart Styles
+.chart-container {
+  overflow: hidden;
+  padding: 10px;
+
+  // Line Colors - and Visibility
+  .axis path,
+  .axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+    stroke: #c2c2c2;  //Make a Variable
+  }
+
+  .axis.x .domain {
+    stroke: transparent;
+  }
+
+  // Text Color
+  text {
+    fill: $font-color;
+    font-family: $font-regular;
+    font-weight: lighter;
+    @include font-size(14);
+  }
+
+  .chart-donut-text {
+    @include font-size(18);
+    font-weight: lighter;
+  }
+
+  // Bar Chart Style
+  .bar,
+  .arc {
+    cursor: pointer;
+  }
+
+  .bar {
+    cursor: pointer;
+    stroke: $inverse-color;
+    stroke-width: 1px;
+  }
+
+  // Svg Hidden
+  .is-hidden {
+    @include opacity(0);
+  }
+
+  // Pie Chart
+  .pie path {
+    stroke: $inverse-color;
+    stroke-width: 1px;
+  }
+}
+
+
+// Alternate Content
+
+.alt-message {
+  background-color: #ffe0e2;
+  border-radius: 4px;
+  line-height: 18px;
+  padding: 20px;
+  text-align: center;
+}
+
+// Tooltip Swatch
+
+.chart-swatch > div {
+  display: table-cell;
+  height: 12px;
+  width: 12px;
+}
+
+.chart-swatch > span,
+.chart-swatch > b {
+  display: table-cell;
+  line-height: 12px;
+  padding-left: 7px;
+}
+
+.chart-swatch > br {
+  display: block;
+  margin: 3px 0;
+}

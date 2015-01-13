@@ -49,7 +49,7 @@
       show: function() {
         var self = this,
           container = $('#toast-container'),
-          closeBtn = $('<button type="button" class="btn-close"></button>'),
+          closeBtn = $('<button type="button" class="btn-close"><span class="audible">Close</span></button>'),  //TODO: Localize
           toast = $('<div class="toast"></div>');
 
         if (container.length === 0) {

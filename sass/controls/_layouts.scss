@@ -1,0 +1,16 @@
+// Css Application Layouts
+//================================================== //
+
+// Application Header
+.app-header {
+  background-color: #454545;
+  height: 60px;
+  width: 100%;
+
+  h1 {
+    color: $primary-color;
+    font-weight: normal;
+    @include rem(line-height, 6rem);
+    margin-left: 50px;
+  }
+}

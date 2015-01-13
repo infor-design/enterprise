@@ -234,7 +234,7 @@
         });
 
         // Calendar Footer Events
-        this.footer.off('click.datepicker').on('click.datepicker', 'a', function () {
+        this.footer.off('click.datepicker').on('click.datepicker', 'a', function (e) {
           var btn = $(this);
 
           if (btn.hasClass('cancel')) {
@@ -248,6 +248,7 @@
             self.closeCalendar();
           }
           self.element.focus();
+          e.preventDefault();
         });
 
         // Change Month Events

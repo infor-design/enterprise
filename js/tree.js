@@ -51,7 +51,7 @@
           //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
           a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
           if (i === 0) {
-            self.setSelectedNode(a);
+            self.setSelectedNode(a, false);
           }
 
           //parentCount 'aria-level' to the node's level depth
@@ -87,13 +87,16 @@
         var nodes = this.element.find('ul[role=group]');
         nodes.removeClass('is-open');
       },
-      setSelectedNode: function (node) {
+      setSelectedNode: function (node, focus) {
         if (node.length === 0) {
           return;
         }
         node.attr({'tabindex': '0', 'aria-selected': 'true'}).parent().addClass('is-selected');
         this.element.find('a').not(node).attr({'tabindex': '-1', 'aria-selected': 'false'}).parent().removeClass('is-selected');
-        node.focus();
+
+        if (focus) {
+          node.focus();
+        }
         this.element.trigger('selected', [node]);
       },
       toggleNode: function(node) {
@@ -116,7 +119,7 @@
         //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
         this.element.on('click', 'a', function (e) {
           var target = $(this);
-          self.setSelectedNode(target);
+          self.setSelectedNode(target, true);
           self.toggleNode(target);
           e.stopPropagation();
           return false; //Prevent Click from Going to Top
@@ -139,7 +142,7 @@
             if (next.length === 0) {
               next = target.closest('.folder').next().find('a:first');
             }
-            self.setSelectedNode(next);
+            self.setSelectedNode(next, true);
           }
 
           //up arrow,
@@ -153,7 +156,7 @@
             if (prev.length === 0) {
               prev = target.closest('ul').prev('a');
             }
-            self.setSelectedNode(prev);
+            self.setSelectedNode(prev, true);
           }
 
           //space
@@ -167,7 +170,7 @@
               self.toggleNode(target);
             } else {
               next = target.closest('.folder').find('a:first');
-              self.setSelectedNode(next);
+              self.setSelectedNode(next, true);
             }
             e.stopPropagation();
             return false;
@@ -177,7 +180,7 @@
           if (charCode === 39) {
             if (target.next().hasClass('is-open')) {
               next = target.next().find('a:first');
-              self.setSelectedNode(next);
+              self.setSelectedNode(next, true);
             } else {
               self.toggleNode(target);
             }
@@ -188,13 +191,13 @@
           //Home  (fn-right on mac)
           if (charCode === 36) {
             next = self.element.find('a:first:visible');
-            self.setSelectedNode(next);
+            self.setSelectedNode(next, true);
           }
 
           //End (fn-right on mac)
           if (charCode === 35) {
             next = self.element.find('a:last:visible');
-            self.setSelectedNode(next);
+            self.setSelectedNode(next, true);
           }
 
         });
@@ -217,7 +220,7 @@
                 term = String.fromCharCode(e.which).toLowerCase();
 
               if (first === term) {
-                self.setSelectedNode(node);
+                self.setSelectedNode(node, true);
                 return false;
               }
             });

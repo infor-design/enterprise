@@ -5,18 +5,27 @@
   margin: 20px;
 }
 
+.card,
 .widget {
   background-color: #ffffff;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
-  margin: 30px;
-  min-height: 250px;
+  margin-bottom: 20px;
+  min-height: 200px;
   overflow: auto;
-  resize: both;
+  width: 100%;
 
+  .card-header,
   .widget-header {
-    border-bottom: 1px solid #e8e8e8;
-    height: 48px;
+    border-bottom: 1px solid #d8d8d8;
+    height: 50px;
+    line-height: 50px;
+    padding: 13px 20px;
+
+    > * {
+      display: inline-block;
+      float: left;
+    }
   }
 }
 

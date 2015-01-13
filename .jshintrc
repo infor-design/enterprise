@@ -64,7 +64,7 @@
   "eqnull": true,
 
   // Allow Some Globals used in tests and packages
-  "predef": ["Tmpl", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Locale", "chai", "assert", "expect", "should", "Formatters"],
+  "predef": ["Tmpl", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Locale", "chai", "assert", "expect", "should", "Formatters", "Chart"],
 
   "globals": {
     "globals": true,
