@@ -24,6 +24,7 @@
     var pluginName = 'busyindicator',
         defaults = {
           blockUI: true, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
+          delay: 0, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
           timeToClose: 0, // fires the 'close' trigger at a certain timing interval.  If 0, goes indefinitely.
         },
@@ -57,10 +58,12 @@
       // Sanitize incoming option values
       setup: function() {
         var blockUI = this.element.attr('data-block-ui'),
+          delay = this.element.attr('data-delay'),
           completionTime = this.element.attr('data-completion-time'),
           closeTime = this.element.attr('data-close-time');
 
         this.blockUI = blockUI !== undefined ? blockUI : settings.blockUI;
+        this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(settings.delay) && settings.delay >= 20 ? settings.delay : 20;
         this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : settings.timeToComplete;
         this.closeTime = closeTime !== undefined && !isNaN(closeTime) ? parseInt(closeTime, 10) : settings.timeToClose;
       },
@@ -129,16 +132,13 @@
         // Append the markup to the page
         this.container.appendTo(this.element);
 
-        // Remove focus from any controls inside of this element.
-        //this.element.find(':focus').blur();
-
         // Fade in shortly after adding the markup to the page (prevents the indicator from abruptly showing)
         setTimeout(function() {
           self.container.removeClass('is-hidden');
           if (self.overlay) {
             self.overlay.removeClass('is-hidden');
           }
-        }, 20);
+        }, self.delay);
 
         // Lets external code know that we've successully kicked off.
         this.element.trigger('started.busyindicator');
@@ -200,6 +200,7 @@
         }, 500);
       },
 
+      // Browsers that don't support CSS-based animation can still show the animating Busy Indicator.
       animateWithJS: function() {
         var self = this,
           ball = this.container.find('.busy-indicator-ball'),
