@@ -90,15 +90,20 @@
           if (self.closeTimeout) {
             clearTimeout(self.closeTimeout);
           }
-          this.label.text('Loading...'); // TODO: Localize
+          this.label.remove();
+          this.label = $('<span>Loading</span>').appendTo(this.container); // TODO: Localize
           this.loader.removeClass('complete').addClass('active');
-          this.container.removeClass('is-hidden');
-          this.element.trigger('started.busyindicator');
+          this.container
+            .removeClass('is-hidden')
+            .trigger('started.busyindicator');
           return;
         }
 
         // Build all the markup
-        this.container = $('<div class="busy-indicator-container is-hidden"></div>');
+        this.container = $('<div class="busy-indicator-container is-hidden"></div>').attr({
+          'aria-live': 'polite',
+          'role': 'status'
+        });
         this.loader = $('<div class="busy-indicator active"></div>').appendTo(this.container);
 
         var bowl = $('<div class="busy-indicator-bowl"></div>').appendTo(this.loader),
@@ -113,7 +118,7 @@
         }
 
         $('<div class="complete-check"></div>').appendTo(this.loader);
-        this.label = $('<span>Loading...</span>').appendTo(this.container);
+        this.label = $('<span>Loading</span>').appendTo(this.container);
         if (this.blockUI) {
           this.originalPositionProp = this.element.css('position');
           this.element.css('position', 'relative');
@@ -125,7 +130,7 @@
         this.container.appendTo(this.element);
 
         // Remove focus from any controls inside of this element.
-        this.element.find(':focus').blur();
+        //this.element.find(':focus').blur();
 
         // Fade in shortly after adding the markup to the page (prevents the indicator from abruptly showing)
         setTimeout(function() {
@@ -155,7 +160,8 @@
       // Creates the checkmark and shows a complete state
       complete: function() {
         var self = this;
-        this.label.text('Completed'); // TODO: Localize
+        this.label.remove();
+        this.label = $('<span>Completed</span>').appendTo(this.container); // TODO: Localize
         this.loader.removeClass('active').addClass('complete');
 
         if (!browserSupportsAnimation()) {
