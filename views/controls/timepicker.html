@@ -15,21 +15,13 @@
 
       <div class="field">
         <label for="twentyfour-time-field" class="label">Time Field (24-hour)</label>
-        <input id="twentyfour-time-field" class="timepicker" name="twentyfour-time-field" type="text">
+        <input id="twentyfour-time-field" class="timepicker" name="twentyfour-time-field" data-force-hour-mode="24" type="text">
       </div>
 
       <div class="field">
         <label for="time-field-disabled" class="label">Time Field (Disabled)</label>
         <input id="time-field-disabled" class="timepicker" disabled name="time-field-disabled" type="text">
       </div>
-
-      <script>
-        $('body').on('initialized',function() {
-          $('#twentyfour-time-field').timepicker({
-            forceHourMode: '24'
-          });
-        });
-      </script>
 
   </div>
 </div>

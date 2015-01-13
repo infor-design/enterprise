@@ -49,16 +49,13 @@
       setup: function() {
         // Figure out hour display settings
         this.timeFormat = this.element.attr('data-time-format') !== undefined ? this.element.attr('data-time-format') : Locale.calendar().timeFormat;
-        this.show24Hours = (this.timeFormat.match('HH') || []).length > 0;
-        if (settings.forceHourMode) {
-          var mode = settings.forceHourMode;
-          if (this.element.attr('data-time-format')) {
-            this.origTimeFormat = this.timeFormat;
-          }
-          this.timeFormat = mode === '24' ? 'HH:mm' : 'h:mm a';
-          this.element.attr('data-time-format', this.timeFormat);
-          this.show24Hours = mode === '24';
-        }
+        this.show24Hours = this.element.attr('data-force-hour-mode') === '24' ? true :
+          settings.forceHourMode === '24' ? true :
+          (this.timeFormat.match('HH') || []).length > 0;
+
+        this.origTimeFormat = this.timeFormat;
+        this.timeFormat = this.show24Hours ? 'HH:mm' : 'h:mm a';
+        this.element.attr('data-time-format', this.timeFormat);
 
         return this;
       },
@@ -215,6 +212,9 @@
           tooltipElement: '#timepicker-popup'})
         .on('open', function(e, ui) {
           ui.find('select').dropdown();
+
+          // reposition the popover
+          self.trigger.data('tooltip').position();
 
           // Set default values based on what's retrieved from the Timepicker's input field.
           hourSelect.val(initValues.hours);
