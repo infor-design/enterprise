@@ -135,12 +135,23 @@ $busy-indicator-check-color: $inverse-color;
 // It looks terrible without this because of the use of transform-origin.
 .ie9 {
   .busy-indicator {
+    &.complete {
+      .busy-indicator-ball {
+        display: none;
+      }
+    }
+
     .complete-check {
       &:after {
         left: 23px;
         margin-top: 12px;
       }
     }
+  }
+
+  .busy-indicator-ball {
+    left: auto;
+    top: auto;
   }
 }
 

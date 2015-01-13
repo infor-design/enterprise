@@ -119,7 +119,7 @@
         elem.find('.timepicker').timepicker();
 
         //Busy Indicator
-        elem.find('.busy').busyIndicator();
+        elem.find('.busy').busyindicator();
 
         //Class-based detection for IE
         if (!!navigator.userAgent.match(/Trident/)) {

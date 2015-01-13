@@ -57,6 +57,10 @@
           var length = self.element.val().length,
           max = self.element.attr('maxlength');
 
+          if (!self.isPrintable(e.which)) {
+            return;
+          }
+
           if (length >= max) {
             e.preventDefault();
           }
@@ -67,6 +71,16 @@
             self.counter.removeClass('focus');
           }
         });
+      },
+
+      isPrintable: function(keycode) {
+        var valid =
+          (keycode > 47 && keycode < 58)   || // number keys
+          (keycode > 64 && keycode < 91)   || // letter keys
+          (keycode > 95 && keycode < 112)  || // numpad keys
+          (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+          (keycode > 218 && keycode < 223);   // [\]' (in order)
+        return valid;
       },
 
       update: function (self) {
