@@ -7,6 +7,7 @@
 
 .draggable {
   cursor: move;
+  -ms-touch-action: none;
 
   // transition: all .2s ease;
   z-index: 7000;
