@@ -42,7 +42,16 @@
      currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
      currencyFormat: '¤#,##0.00',
      //Resx
-     messages: {'Required': 'Required', 'UseArrowColor': 'Use arrow keys to select a color', 'UseArrowDate': 'Use arrow keys to select a date'}
+     messages: {
+      'Required': 'Required',
+      'SetTime': 'Set Time',
+      'TimeHours': 'Hours',
+      'TimeMintues': 'Minutes',
+      'TimePeriod': 'Period',
+      'UseArrowColor': 'Use arrow keys to select a color.',
+      'UseArrowDate': 'Use arrow keys to select a date.',
+      'UseArrowTime': 'Use arrow keys to select a time.'
+    }
   });
 
 }));

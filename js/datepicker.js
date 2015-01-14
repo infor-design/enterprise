@@ -55,7 +55,7 @@
 
         //TODO: Confirm this with Accessibility Team
         this.label = $('label[for="'+ this.element.attr('id') + '"]');
-        this.label.append('<span class="audible">' + Locale.translate('UseArrowDate') + '</span>');
+        this.label.append('<span class="audible">. ' + Locale.translate('UseArrowDate') + '</span>');
 
         //TODO: Do We Need This?
         //this.ariaDayOfWeek = $('<span class="dayofweek audible"></span>');

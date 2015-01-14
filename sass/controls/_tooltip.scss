@@ -86,7 +86,7 @@
   border: 0;
   box-shadow: $popover-box-shadow;
   color: $popover-color;
-  pointer-events: initial;
+  pointer-events: auto;
   z-index: 3010;
 
   &.top {
