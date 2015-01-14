@@ -48,8 +48,27 @@
         self.offset = null;
 
         //Touch and Drag Support
-        self.element.attr('draggable', false)
-          .on('touchstart.draggable MSPointerDown.draggable pointerdown.draggable gesturestart.draggable', function(e) {
+        self.element.attr('draggable', false);
+
+        if ('onpointerdown' in window || 'onmspointerdown' in window) {
+          // Setup pointer events
+          // TODO: Setup Pointer Events for IE10/11
+          /*
+          self.element.on('pointerdown MSPointerDown', function(e) {
+
+          })
+          .on('pointermove MSPointerMove', function(e) {
+
+          })
+          .on('pointerup MSPointerUp', function(e) {
+
+          });
+          */
+        }
+        else {
+
+          //Touch-only Drag Support
+          self.element.on('touchstart.draggable gesturestart.draggable', function(e) {
             var pos = $(this).position(),
                 orig = e.originalEvent;
 
@@ -61,7 +80,9 @@
             self.originalPos = pos;
             self.element.trigger('dragstart', pos);
           })
-          .on('touchmove.draggable MSPointerMove.draggable pointermove.draggable gesturechange.draggable', function(e) {
+
+          // Move
+          .on('touchmove.draggable gesturechange.draggable', function(e) {
             e.preventDefault();
             var orig = e.originalEvent;
 
@@ -71,49 +92,53 @@
             }
             self.move(orig.changedTouches[0].pageX - self.offset.x, orig.changedTouches[0].pageY - self.offset.y);
           })
-          //Mouse Drag Support
-          .on('mousedown.draggable', function(e) {
-            e.preventDefault();
-
-            var pos = self.element.position();
-            //Save offset
-            self.offset = {
-              x: e.pageX - pos.left,
-              y: e.pageY - pos.top
-            };
-
-            self.originalPos = pos;
-
-            //Prevent Text Selection
-            $('body').addClass('disable-select');
-
-            //Handle Mouse Press over draggable element
-            $(document).on('mousemove.draggable', function (e) {
-              e.preventDefault();
-              self.move(e.pageX - self.offset.x, e.pageY - self.offset.y);
-            });
-
-            //Handle Mouse release over draggable element close out events and trigger
-            $(document).on('mouseup.draggable', function (e) {
-              e.preventDefault();
-              self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
-            });
-
-            self.element.on('mouseup.draggable', function (e) {
-              e.preventDefault();
-              self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
-            });
-
-            //Trigger dragging
-            self.element.trigger('dragstart', pos);
-          });
 
           //Finish Touch Dragging
-          self.element.on('touchend.draggable MSPointerUp.draggable pointerup.draggable gestureend.draggable touchcancel.draggable' , function (e) {
+          .on('touchend.draggable gestureend.draggable touchcancel.draggable', function (e) {
             e.preventDefault();
             var touch = e.originalEvent.changedTouches[0];
             self.finish(touch.pageX - self.offset.x, touch.pageY - self.offset.y);
           });
+
+        }
+
+        // Always bind mousedown in either scenario, in the event that a mouse is used
+        self.element.on('mousedown.draggable', function(e) {
+          e.preventDefault();
+
+          var pos = self.element.position();
+          //Save offset
+          self.offset = {
+            x: e.pageX - pos.left,
+            y: e.pageY - pos.top
+          };
+
+          self.originalPos = pos;
+
+          //Prevent Text Selection
+          $('body').addClass('disable-select');
+
+          //Handle Mouse Press over draggable element
+          $(document).on('mousemove.draggable', function (e) {
+            e.preventDefault();
+            self.move(e.pageX - self.offset.x, e.pageY - self.offset.y);
+          });
+
+          //Handle Mouse release over draggable element close out events and trigger
+          $(document).on('mouseup.draggable', function (e) {
+            e.preventDefault();
+            self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
+          });
+
+          self.element.on('mouseup.draggable', function (e) {
+            e.preventDefault();
+            self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
+          });
+
+          //Trigger dragging
+          self.element.trigger('dragstart', pos);
+        });
+
       },
 
       //Trigger events and remove clone

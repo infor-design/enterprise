@@ -24,6 +24,7 @@
     // Settings and Options
     var pluginName = 'timepicker',
         defaults = {
+          minuteInterval: 5, // Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
           mode: 'standard', // options: 'standard', 'range',
           forceHourMode: undefined // can be used to force timepicker to use only 12-hour or 24-hour display modes.  Defaults to whatever the current Globalize locale requires if left undefined.
         },
@@ -40,7 +41,6 @@
 
       init: function() {
         this
-          .setup()
           .build()
           .handleEvents();
       },
@@ -57,6 +57,15 @@
         this.timeFormat = this.show24Hours ? 'HH:mm' : 'h:mm a';
         this.element.attr('data-time-format', this.timeFormat);
 
+        // Figure out minute intervals to display
+        var minInt = this.element.attr('data-minute-interval');
+        this.minuteInterval = minInt !== undefined && !isNaN(minInt) ? parseInt(minInt, 10) :
+          !isNaN(settings.minuteInterval) ? parseInt(settings.minuteInterval, 10) : 5;
+
+        var modes = ['standard', 'range'],
+          mode = this.element.attr('data-time-mode');
+        this.mode = mode in modes ? mode : settings.mode in modes ? settings.mode : 'standard';
+
         return this;
       },
 
@@ -70,13 +79,20 @@
                            '</svg>').insertAfter(this.element);
         }
 
-        // Add Aria
-        this.element.attr('aria-haspopup', true);
+        this.addAria();
 
         // Add Mask and Validation plugins for time
         this.mask();
 
         return this;
+      },
+
+      addAria: function () {
+        this.element.attr('aria-haspopup', true);
+
+        //TODO: Confirm this with Accessibility Team
+        this.label = $('label[for="'+ this.element.attr('id') + '"]');
+        this.label.append('<span class="audible">. ' + Locale.translate('UseArrowTime') + '</span>');
       },
 
       //Attach Events used by the Control
@@ -159,7 +175,7 @@
           hourSelect.append($('<option' + selected + '>' + hourCounter + '</option>'));
           hourCounter++;
         }
-        timeParts.append($('<label for="timepicker-hours" class="audible">Hours</label>')); // TODO: Localize
+        timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('TimeHours') + '</label>'));
         timeParts.append(hourSelect);
         timeParts.append($('<span class="label">&nbsp;:&nbsp;</span>'));
 
@@ -174,9 +190,9 @@
             selected = ' selected';
           }
           minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
-          minuteCounter = minuteCounter + 5;
+          minuteCounter = minuteCounter + self.minuteInterval;
         }
-        timeParts.append($('<label for="timepicker-minutes" class="audible">Minutes</label>')); // TODO: Localize
+        timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('TimeMinutes') + '</label>'));
         timeParts.append(minuteSelect);
 
         periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
@@ -185,10 +201,10 @@
           var localeDays = Locale.calendar().dayPeriods,
             localeCount = 0,
             regexDay = new RegExp(initValues.period, 'i'),
-            realDayValue = 'AM';
+            realDayValue = 'AM'; // AM
 
           while(localeCount < 2) {
-            realDayValue = localeCount === 0 ? 'AM' : 'PM';
+            realDayValue = localeCount === 0 ? 'AM' : 'PM';  // ? AM : PM
             selected = '';
             if (localeDays[localeCount].match(regexDay)) {
               selected = ' selected';
@@ -197,11 +213,11 @@
 
             localeCount++;
           }
-          timeParts.append($('<label for="timepicker-period" class="audible">Period</label>')); // TODO: Localize
+          timeParts.append($('<label for="timepicker-period" class="audible">' + Locale.translate('TimePeriod') + '</label>'));
           timeParts.append(periodSelect);
         }
 
-        popupContent.append('<div class="controls"><a href="#" class="set-time link">Set Time</a></div>'); // TODO: Localize
+        popupContent.append('<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">' + Locale.translate('SetTime') + '</button></div>');
 
         this.trigger.popover({
           content: popupContent,
@@ -212,6 +228,7 @@
           tooltipElement: '#timepicker-popup'})
         .on('open', function(e, ui) {
           ui.find('select').dropdown();
+          ui.find('button').button();
 
           // reposition the popover
           self.trigger.data('tooltip').position();
@@ -232,15 +249,6 @@
         // Make adjustments to the popup HTML specific to the timepicker
         var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
         tooltip.addClass('timepicker-popup');
-
-        // Set the blur event up on a timer to make sure it doesn't immediately trigger
-        setTimeout(function() {
-          self.element.on('blur.timepicker', function() {
-            if (self.isOpen()) {
-              self.closeTimePopup();
-            }
-          });
-        }, 0);
       },
 
       setupStandardEvents: function() {
@@ -249,7 +257,7 @@
         self.popup.on('touchend.timepicker touchcancel.timepicker', '.set-time', function(e) {
           e.preventDefault();
           e.target.click();
-        }).on('click.timepicker', '.set-time', function(e) {
+        }).one('click.timepicker', '.set-time', function(e) {
           e.preventDefault();
           self.setTimeOnField();
           self.closeTimePopup();
@@ -263,12 +271,49 @@
             self.element.focus();
           }
 
+          // Pressing Spacebar while the popup is open submits with the new time value.
+          if (e.which === 32) {
+            handled = true;
+            self.popup.find('.set-time').click();
+          }
+
+          // Left & Right Arrows will switch between the available dropdowns
+          if (e.which === 37 || e.which === 39) {
+            handled = true;
+            var inputs = self.popup.find('input[id$="-shdo"]');
+
+            if (e.which === 37) {
+              var prev = inputs.eq(inputs.index(this) - 1);
+              if (!prev || prev.length === 0) {
+                prev = inputs.eq(inputs.length);
+              }
+              prev.focus();
+            }
+
+            if (e.which === 39) {
+              var next = inputs.eq(inputs.index(this) + 1);
+              if (!next || next.length === 0) {
+                next = inputs.eq(0);
+              }
+              next.focus();
+            }
+          }
+
           if (handled) {
             e.preventDefault();
             e.stopPropagation();
             return false;
           }
         });
+
+        // Set the blur event up on a timer to make sure it doesn't immediately trigger
+        setTimeout(function() {
+          self.element.on('blur.timepicker', function() {
+            if (self.isOpen() && self.popup.find(':focus').length === 0) {
+              self.closeTimePopup();
+            }
+          });
+        }, 20);
 
         // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
         self.trigger.on('hide', function() {
@@ -345,6 +390,9 @@
       openTimePopup: function() {
         var self = this;
 
+        // Get all current settings.
+        self.setup();
+
         if (this.element.is(':disabled')) {
           return;
         }
@@ -354,14 +402,12 @@
         }
 
         // Build a different Time Popup based on settings
-        switch(settings.mode) {
-          case 'range':
-            self.buildRangePopup();
-            self.setupRangeEvents();
-            break;
-          default:
-            self.buildStandardPopup();
-            self.setupStandardEvents();
+        if (self.mode === 'range') {
+          self.buildRangePopup();
+          self.setupRangeEvents();
+        } else {
+          self.buildStandardPopup();
+          self.setupStandardEvents();
         }
       },
 
@@ -419,6 +465,7 @@
 
         this.trigger.remove();
         this.element.data('mask').destroy();
+        this.label.find('.audible').remove();
         if (this.origTimeFormat) {
           this.element.attr('data-time-format', this.originalTimeFormat);
         }

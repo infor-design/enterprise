@@ -105,45 +105,46 @@
   &.has-icon .message {
     margin: 25px 33px -6px;
   }
+}
 
-  //Toolbar Buttons
-  .modal-buttonset {
-    border-top: 1px solid #e5e5e5;
-    margin: 20px -28px 0;
+//Toolbar Buttons
+.modal-buttonset {
+  border-top: 1px solid #e5e5e5;
+  margin: 20px -28px 0;
 
-    button {
-      border: 1px solid transparent;
-      border-left: 1px solid #e5e5e5;
-      color: $modal-btn-color;
-      font-weight: bold;
-      @include font-size(12);
-      height: 50px;
-      position: relative;
-      text-align: center;
-      text-transform: uppercase;
-      @include css3(transition, color .3s ease 0s);
-      width: 100%;
+  button {
+    border: 1px solid transparent;
+    border-left: 1px solid #e5e5e5;
+    color: $modal-btn-color;
+    cursor: pointer;
+    font-weight: bold;
+    @include font-size(12);
+    height: 50px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    @include css3(transition, color .3s ease 0s);
+    width: 100%;
 
-      &:hover {
-        color: $modal-btn-hover-color;
-      }
-
-      &:nth-child(1) {
-        border-left: 1px solid transparent;
-      }
-
-      &:focus {
-        // border-color: $primary-color; - TODO: Design Variation
-        text-decoration: underline;
-      }
+    &:hover {
+      color: $modal-btn-hover-color;
     }
 
-    .btn-modal-primary {
-      color: $modal-btn-primary-color;
+    &:nth-child(1) {
+      border-left: 1px solid transparent;
+    }
 
-      &:hover {
-        color: $modal-btn-primary-hover-color;
-      }
+    &:focus {
+      // border-color: $primary-color; - TODO: Design Variation
+      text-decoration: underline;
+    }
+  }
+
+  .btn-modal-primary {
+    color: $modal-btn-primary-color;
+
+    &:hover {
+      color: $modal-btn-primary-hover-color;
     }
   }
 }
@@ -163,4 +164,3 @@
   font-size: 1.5rem;
   margin: 25px auto 5px;
 }
-
