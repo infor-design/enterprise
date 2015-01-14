@@ -3,12 +3,15 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: <%= meta.revision %> \n */ \n ',
+
     sass: {
       dist: {
         files: {
           'public/stylesheets/grey-theme.css' : 'sass/grey-theme.scss',
           'public/stylesheets/dark-theme.css' : 'sass/dark-theme.scss',
           'public/stylesheets/508-theme.css' : 'sass/508-theme.scss',
+          'public/stylesheets/css-only.css' : 'sass/css-only.scss',
           'public/stylesheets/demo.css' : 'sass/demo.scss',
           'public/stylesheets/site.css' : 'sass/site.scss'
         }
@@ -35,7 +38,7 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: '',
-        banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: <%= meta.revision %> \n */ \n ',
+        banner: '<%= banner %>',
         footer: '//# sourceURL=<%= pkg.name %>.js'
       },
       basic: {
@@ -48,7 +51,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd-mm-yyyy MM:hh:ss") %> \n Revision: <%= meta.revision %> \n */ \n ',
+          banner: '<%= banner %>',
           sourceMap: true,
           sourceMapName: 'dist/js/sohoxi.map',
           separator: ';'
@@ -64,6 +67,7 @@ module.exports = function(grunt) {
         files: [
           {expand: true, flatten: true, src: ['dist/js/sohoxi.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['public/stylesheets/*-theme.css'], dest: 'dist/css/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['public/stylesheets/css-only.css'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-1*.min.js'], dest: 'public/js/', filter: 'isFile'},
@@ -71,6 +75,32 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/vendor/d3.min.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'}
         ]
+      }
+    },
+
+    // Minify css
+    cssmin: {
+      dist: {
+        files: {
+          'dist/css/508-theme.min.css': ['dist/css/508-theme.css'],
+          'dist/css/dark-theme.min.css': ['dist/css/dark-theme.css'],
+          'dist/css/grey-theme.min.css': ['dist/css/grey-theme.css'],
+          'dist/css/css-only.min.css': ['dist/css/css-only.css'],
+        }
+      }
+    },
+
+    usebanner: {
+      dist: {
+        options: {
+          position: 'top',
+          banner: '<%= banner %>',
+          linebreak: true
+        },
+
+        files: {
+          src: [ 'dist/css/508-theme.css', 'dist/css/508-theme.min.css', 'dist/css/dark-theme.css', 'dist/css/dark-theme.min.css', 'dist/css/grey-theme.css', 'dist/css/grey-theme.min.css', 'dist/css/css-only.css', 'dist/css/css-only.min.css' ]
+        }
       }
     },
 
@@ -91,5 +121,5 @@ module.exports = function(grunt) {
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
-  grunt.registerTask('default', ['revision', 'jshint', 'sass', 'concat', 'uglify', 'copy:main']);
+  grunt.registerTask('default', ['revision', 'jshint', 'sass', 'concat', 'uglify', 'copy:main', 'cssmin', 'usebanner']);
 };

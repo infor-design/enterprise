@@ -40,30 +40,38 @@
 
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
 
-    //Function to Add a Legend
-    this.addLegend = function(series, svg, margins, dataset, width, height, position) {
-      var legend = svg.append('g').attr('transform', 'translate(' + margins.left + ',' + (position === 'right' ? -(height/2)+20 : (height + margins.bottom)) +')');
-      if (series.length > 1) {
-        series.forEach(function (s, i) {
-          var text = legend.append('text')
-            .attr('x', (position === 'right' ? (width/2)+25 : (120 * (i)) + 25))
-            .attr('y', (position === 'right' ? (25 * i) + 13: 27))
-            .text(s.name);
-
-          if (s.percent) {
-            text.append('tspan')
-            .attr('dx', 5)
-            .style('font-weight', 'bold').text('   '+s.percent);
-          }
-
-          legend.append('rect')
-            .attr('fill', charts.colors(i))
-            .attr('width', 14)
-            .attr('height', 14)
-            .attr('x', (position === 'right' ? (width/2) : 120 * (i)))
-            .attr('y', (position === 'right' ? (25 * i) : 14));
-        });
+    // Function to Add a Legend - TODO Remove unused params
+    this.addLegend = function(series) {
+      //var legend = svg.append('g').attr('transform', 'translate(' + margins.left + ',' + (position === 'right' ? -(height/2)+20 : (height + margins.bottom)) +')');
+      var legend = $('<div class="chart-legend"></div>');
+      if (series.length === 0) {
+        return;
       }
+
+      for (var i = 0; i < series.length; i++) {
+        var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
+          color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
+          text = $('<span>'+ series[i].name  + '</span>');
+
+        if (series[i].percent) {
+          var pct = $('<span class="chart-legend-percent"></span>').text(series[i].percent);
+          text.append(pct);
+        }
+        seriesLine.append(color, text);
+        legend.append(seriesLine);
+      }
+
+      legend.on('click.chart focus.chart', '.chart-legend-item', function () {
+        var idx = $(this).index();
+
+        // trigger the click event
+        var e = document.createEvent('UIEvents');
+        e.initUIEvent('click', true, true, window, 1);
+        series[idx].elem.dispatchEvent(e);
+      });
+
+      $(container).append(legend);
+
     };
 
     //Add Toolbar to the page
@@ -216,7 +224,7 @@
         });
 
       //Add Legends
-      charts.addLegend(series, d3.select(container).select('svg'), margins, dataset, w, h, 'bottom');
+      charts.addLegend(series);
       charts.appendTooltip();
     };
 
@@ -417,7 +425,7 @@
 
       //Add Legends
       margins.left = 0;
-      charts.addLegend(series, svg, margins, dataset, width, height, 'bottom');
+      charts.addLegend(series);
       charts.appendTooltip();
       return $(container);
     };
@@ -425,17 +433,15 @@
     charts.Pie = function(chartData, isDonut) {
       var centerLabel = chartData.dataset[0].centerLabel;
       chartData = chartData.dataset[0].data;
-      var radius, svg, margin, arc, width, height, legendPanel = {
-          width: 300
-      };
+      var radius, svg, margin, arc, width, height;
 
       margin = {top: 20, right: 20, bottom: 20, left: 20};
-      width = 260 - margin.left - margin.right;
+      width = 320 - margin.left - margin.right;
       height = width - margin.top - margin.bottom;
 
       svg = d3.select(container)
               .append('svg')
-                .attr('width', width + margin.left + margin.right  + legendPanel.width)
+                .attr('width', width + margin.left + margin.right)
                 .attr('height', height + margin.top + margin.bottom)
                .append('g')
                 .attr('class', 'pie')
@@ -478,12 +484,12 @@
                     .style('stroke-width', '1px')
                     .attr('transform', '');
 
-                  d3.select(this).select('path')
-                    .classed('is-selected', true)
-                    .style('stroke', color)
-                    .style('stroke-width', 0)
-                    .attr('transform', 'scale(1.045,1.045)');
-                });
+      d3.select(this).select('path')
+          .classed('is-selected', true)
+          .style('stroke', color)
+          .style('stroke-width', 0)
+          .attr('transform', 'scale(1.045,1.045)');
+      });
 
       g.append('path')
         .style('fill', function(d, i) { return charts.colors(i); })
@@ -496,13 +502,15 @@
              };
         });
 
-      //Calculate Percents
-      var total= d3.sum(chartData, function(d){return d.value;});
-      var series = chartData.map(function (d) {
+      //Calculate Percents for Legend
+      var total = d3.sum(chartData, function(d){return d.value;}),
+        series = chartData.map(function (d, i) {
           d.percent = d3.round(100*(d.value/total)) + '%';
-          return {name: d.name, percent:d.percent};
+          d.elem = g[0][i];
+          return {name: d.name, percent:d.percent, elem: d.elem};
         });
-      charts.addLegend(series, svg, margin, chartData, width, height, 'right');
+
+      charts.addLegend(series);
       charts.appendTooltip();
 
       if (isDonut) {

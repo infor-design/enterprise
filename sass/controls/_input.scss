@@ -205,9 +205,9 @@ textarea.error,
 input.error:focus,
 textarea.error:focus,
 .editor.error:focus {
-  box-shadow: 0 0 5px rgba(237, 28, 36, .2);
   color: $input-color !important;
   border-color: $error-color !important;
+  box-shadow: 0 0 5px rgba(237, 28, 36, .2);
 }
 
 .error::-webkit-input-placeholder {
@@ -240,4 +240,25 @@ textarea.error:focus,
 ::-moz-selection {
   background: $primary-color;
   color: $inverse-color;
+}
+
+// Field Sizes
+.input-lg {
+  width: 400px;
+}
+
+.input-med {  //Default
+  width: 300px;
+}
+
+.input-sm {
+  width: 75px;
+}
+
+.input-xs {
+  width: 75px;
+}
+
+.input-full {
+  width: 100%;
 }

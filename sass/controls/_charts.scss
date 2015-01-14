@@ -11,8 +11,13 @@
 
 // SVG Chart Styles
 .chart-container {
-  overflow: hidden;
-  padding: 10px;
+  display: table;
+  margin: 0 auto;
+
+  // Center
+  svg {
+    display: table-cell;
+  }
 
   // Line Colors - and Visibility
   .axis path,
@@ -61,6 +66,37 @@
     stroke: $inverse-color;
     stroke-width: 1px;
   }
+
+  // Legend
+  .chart-legend {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .chart-legend-item {
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: block;
+    padding: 5px 10px 2px 0;
+
+    &:focus {
+      border: 1px solid $primary-color;
+      border-radius: 2px;
+      outline: none;
+    }
+  }
+
+  .chart-legend-color {
+    display: inline-block;
+    height: 12px;
+    margin: 0 8px;
+    width: 12px;
+  }
+
+  .chart-legend-percent {
+    font-weight: bold;
+    padding-left: 5px;
+  }
 }
 
 
@@ -93,3 +129,14 @@
   display: block;
   margin: 3px 0;
 }
+
+// Media Queries
+@include respond-to(phone) {
+  .chart-container .chart-legend {
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
