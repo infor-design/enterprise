@@ -24,6 +24,7 @@
     // Settings and Options
     var pluginName = 'timepicker',
         defaults = {
+          minuteInterval: 5, // Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
           mode: 'standard', // options: 'standard', 'range',
           forceHourMode: undefined // can be used to force timepicker to use only 12-hour or 24-hour display modes.  Defaults to whatever the current Globalize locale requires if left undefined.
         },
@@ -40,7 +41,6 @@
 
       init: function() {
         this
-          .setup()
           .build()
           .handleEvents();
       },
@@ -56,6 +56,11 @@
         this.origTimeFormat = this.timeFormat;
         this.timeFormat = this.show24Hours ? 'HH:mm' : 'h:mm a';
         this.element.attr('data-time-format', this.timeFormat);
+
+        // Figure out minute intervals to display
+        var minInt = this.element.attr('data-minute-interval');
+        this.minuteInterval = minInt !== undefined && !isNaN(minInt) ? parseInt(minInt, 10) :
+          !isNaN(settings.minuteInterval) ? parseInt(settings.minuteInterval, 10) : 5;
 
         return this;
       },
@@ -174,7 +179,7 @@
             selected = ' selected';
           }
           minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
-          minuteCounter = minuteCounter + 5;
+          minuteCounter = minuteCounter + self.minuteInterval;
         }
         timeParts.append($('<label for="timepicker-minutes" class="audible">Minutes</label>')); // TODO: Localize
         timeParts.append(minuteSelect);
@@ -345,6 +350,9 @@
 
       openTimePopup: function() {
         var self = this;
+
+        // Get all current settings.
+        self.setup();
 
         if (this.element.is(':disabled')) {
           return;
