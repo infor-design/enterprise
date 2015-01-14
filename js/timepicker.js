@@ -201,7 +201,7 @@
           timeParts.append(periodSelect);
         }
 
-        popupContent.append('<div class="controls"><a href="#" class="set-time link">Set Time</a></div>'); // TODO: Localize
+        popupContent.append('<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">Set Time</button></div>'); // TODO: Localize
 
         this.trigger.popover({
           content: popupContent,
@@ -212,6 +212,7 @@
           tooltipElement: '#timepicker-popup'})
         .on('open', function(e, ui) {
           ui.find('select').dropdown();
+          ui.find('button').button();
 
           // reposition the popover
           self.trigger.data('tooltip').position();
