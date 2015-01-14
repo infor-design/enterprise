@@ -116,6 +116,7 @@
     border: 1px solid transparent;
     border-left: 1px solid #e5e5e5;
     color: $modal-btn-color;
+    cursor: pointer;
     font-weight: bold;
     @include font-size(12);
     height: 50px;
