@@ -484,12 +484,14 @@
                     .style('stroke-width', '1px')
                     .attr('transform', '');
 
-      d3.select(this).select('path')
-          .classed('is-selected', true)
-          .style('stroke', color)
-          .style('stroke-width', 0)
-          .attr('transform', 'scale(1.045,1.045)');
-      });
+                  var path = d3.select(this).select('path')
+                      .classed('is-selected', true)
+                      .style('stroke', color)
+                      .style('stroke-width', 0)
+                      .attr('transform', 'scale(1.045,1.045)');
+
+                  $(container).trigger('selected', [path[0], d]);
+                });
 
       g.append('path')
         .style('fill', function(d, i) { return charts.colors(i); })
@@ -563,7 +565,7 @@
         if (options.type === 'column') { //TODO incomplete.
           chartInst.Bar(options.dataset, false, true);
         }
-        if (options.type === 'ring') {
+        if (options.type === 'donut') {
           chartInst.Pie(options.dataset, true);
         }
       }
