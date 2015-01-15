@@ -402,10 +402,10 @@
           valueHours = parseInt(value.substring(0, colon));
           valueMins = parseInt(value.substring(colon + 1, colon + 3));
 
-          if (parseInt(valueHours).length < 1 || parseInt(valueHours) < 1 || parseInt(valueHours) > maxHours) {
+          if (valueHours.toString().length < 1 || isNaN(valueHours) || parseInt(valueHours) < 0 || parseInt(valueHours) > maxHours) {
             return false;
           }
-          if (parseInt(valueMins).length < 2 || parseInt(valueMins) < 0 || parseInt(valueMins) > 59) {
+          if (valueMins.toString().length < 1 || isNaN(valueMins) || parseInt(valueMins) < 0 || parseInt(valueMins) > 59) {
             return false;
           }
 

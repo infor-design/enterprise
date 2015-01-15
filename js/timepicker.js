@@ -41,6 +41,7 @@
 
       init: function() {
         this
+          .setup()
           .build()
           .handleEvents();
       },
