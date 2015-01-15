@@ -60,7 +60,7 @@
                         .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
                         .attr('id', id);
 
-        var icon = $('<svg class="icon" focusable="false"><use xlink:href="#icon-dropdown"/></svg>');
+        var icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.element.after(this.input, this.trigger);
@@ -101,7 +101,7 @@
         //Keep a list generated and append as needed
         self.list = $('<div class="dropdown-list" id="dropdown-list">');
         self.listUl =$('<ul tabindex="-1" aria-expanded="true"></ul>').appendTo(self.list);
-        self.list.prepend('<svg class="icon" focusable="false"><use xlink:href="#icon-dropdown"></svg>');
+        self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
 
         self.element.find('option').each(function(i) {
           var option = $(this),

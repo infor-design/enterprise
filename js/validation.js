@@ -224,7 +224,7 @@
       }
 
       //Append Error
-      var svg = $('<svg class="icon icon-error" focusable="false"><use xlink:href="#icon-error"></use></svg>');
+      var svg = $('<svg class="icon icon-error" focusable="false" aria-hidden="true"><use xlink:href="#icon-error"></use></svg>');
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
         field.parent('.field').append(svg);

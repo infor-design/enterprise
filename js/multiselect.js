@@ -50,7 +50,7 @@
         this.orgLabel.hide();
 
         //add icon button
-        this.trigger = $('<svg focusable="false" class="icon" viewBox="0 0 32 32"><use focusable="false" xlink:href="#icon-dropdown"/></svg>').insertAfter(this.input);
+        this.trigger = $('<svg focusable="false" aria-hidden="true" class="icon" viewBox="0 0 32 32"><use focusable="false" aria-hidden="true" xlink:href="#icon-dropdown"/></svg>').insertAfter(this.input);
 
         //Add selected items
         var selOpts = this.element.find('option:selected');
@@ -264,7 +264,7 @@
         }
 
         sel[0].selected = true;
-        tagSpan = $('<span class="tag">' + tag.text() + '<span class="remove"><svg class="icon" focusable="false"><use xlink:href="#icon-delete"></svg></span></span>');
+        tagSpan = $('<span class="tag">' + tag.text() + '<span class="remove"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-delete"></svg></span></span>');
         tagSpan.attr('data-val',val);
         this.input.before(tagSpan);
         this.element.trigger('change');

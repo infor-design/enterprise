@@ -63,7 +63,7 @@
         if (self.tablist.next('.tab-more').length === 0) {
           var button = $('<button>').attr({'class': 'tab-more', 'type': 'button', 'tabindex': '-1'});
           button.append( $('<span>').text('More')); //TODO: Localize
-          button.append('<svg class="icon" focusable="false"><use xlink:href="#icon-dropdown"></svg>');
+          button.append('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
           self.tablist.after(button);
         }
 
