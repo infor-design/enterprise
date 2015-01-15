@@ -15,12 +15,17 @@
     </div>
 
     <div class="field">
-      <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
-      <input type="text" id="email-address" name="email-address" data-validate="required" placeholder="Company@address.com">
+      <label class="required" for="last-name">Last Name</label>
+      <input type="text" id="last-name" aria-required="true" name="last-name">
     </div>
 
     <div class="field">
-      <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
+      <label class="required" for="email-address">Email Address</label>
+      <input type="text" id="email-address" aria-required="true" name="email-address" data-validate="required" placeholder="Company@address.com">
+    </div>
+
+    <div class="field">
+      <label class="required" for="email-address-ok">Second Email Address</label>
       <input type="text" id="email-address-ok" name="email-address-ok" value="someone@someplace.com">
       <svg class="icon icon-validated" focusable="false"><use xlink:href="#icon-validated"/></svg>
     </div>

@@ -45,6 +45,10 @@
   .toast-message {
     display: block;
   }
+
+  &.audible {
+    opacity: 0;
+  }
 }
 
 // Close Button
@@ -66,10 +70,12 @@
   }
 
   &:before {
+    -ms-transform: translate(-50%, -50%) rotate(45deg);
     transform: translate(-50%, -50%) rotate(45deg);
   }
 
   &:after {
+    -ms-transform: translate(-50%, -50%) rotate(-45deg);
     transform: translate(-50%, -50%) rotate(-45deg);
   }
 

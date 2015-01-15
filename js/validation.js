@@ -31,10 +31,6 @@
         this.inputs = $().add(this.element);
       }
 
-      this.srErrors = $('#sr-errors');
-      if (this.srErrors.length === 0) {
-        this.srErrors = $('<div id="sr-errors" role="alert" class="sr-only"><span id="message"></span></div>').appendTo('body');
-      }
       this.timeout = null;
     },
 
@@ -223,20 +219,15 @@
       loc.data('data-errormessage', appendedMsg);
 
       //Add Aria Alert
-      var messages = this.srErrors.find('#message').attr('role', 'alert');
-      this.srErrors.css('clip','auto');
-      messages.html(appendedMsg);
-      messages.hide().css('display','inline');
+      if ($.fn.toast !== undefined) { //TODO: Localize
+        $('body').toast({title: 'Error', audibleOnly: true, message: appendedMsg});
+      }
 
       //Append Error
       var svg = $('<svg class="icon icon-error" focusable="false"><use xlink:href="#icon-error"></use></svg>');
-      //TODO //setup tooltip with appendedMsg
-      //span = $('<span role="alert" class="error"></span>');
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
         field.parent('.field').append(svg);
-
-
       }
 
       //setup tooltip with appendedMsg

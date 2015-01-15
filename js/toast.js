@@ -27,6 +27,7 @@
           title: '(Title)',
           message: '(Content)',
           position: 'top right',  //top left, bottom left, bottom right (center??)
+          audibleOnly: false,
           timeout: 6000
         },
         settings = $.extend({}, defaults, options);
@@ -49,11 +50,11 @@
       show: function() {
         var self = this,
           container = $('#toast-container'),
-          closeBtn = $('<button type="button" class="btn-close"><span class="audible">Close</span></button>'),  //TODO: Localize
+          closeBtn = $('<button type="button" class="btn-close" aria-hidden="true"></button>'),  //TODO: Localize
           toast = $('<div class="toast"></div>');
 
         if (container.length === 0) {
-          container = $('<div id="toast-container" class="toast-container" aria-live="polite" role="alert"></div>').appendTo('body');
+          container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite" role="alert"></div>').appendTo('body');
         }
 
         //TODO: RTL
@@ -63,7 +64,7 @@
         toast.append('<span class="toast-title">'+ this.settings.title + '</span>');
         toast.append('<span class="toast-message">'+ this.settings.message + '</span>');
         container.append(toast);
-        toast.addClass('effect-scale');
+        toast.addClass((this.settings.audibleOnly ? 'audible' : 'effect-scale'));
         toast.append(closeBtn);
 
         closeBtn.on('click', function () {
@@ -72,10 +73,16 @@
 
         setTimeout(function () {
          self.remove(toast);
-        }, settings.timeout);
+        }, (this.settings.audibleOnly ? 100 : settings.timeout));
       },
 
+      // Remove the Message and Animate
       remove: function (toast) {
+        if (this.settings.audibleOnly) {
+          toast.remove();
+          return;
+        }
+
         toast.addClass('effect-scale-hide');
         setTimeout(function () {
           toast.remove();

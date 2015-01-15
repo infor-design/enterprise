@@ -229,6 +229,24 @@ textarea.error:focus,
   opacity: 1;
 }
 
+.error-container {
+  border: 1px solid red;
+  max-width: 0;
+  position: fixed;
+  left: 10px;
+  top: 10px;
+
+  span {
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin: 0 0 6px;
+    overflow: hidden;
+    padding: 10px 32px 10px 12px;
+    position: relative;
+    width: auto;
+  }
+}
+
 // Trigger Fields
 .icon + .icon-error {
   left: -19px !important;

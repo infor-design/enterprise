@@ -398,7 +398,7 @@
         tooltip.classed('is-hidden', false);
       })
       .on('mouseleave', function () {
-        d3.select('#svg-tooltip').classed('is-hidden', true);
+        d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
       })
       .on('click', function (d, i) {
         var bar = d3.select(this);
@@ -474,7 +474,7 @@
                     tooltip.classed('is-hidden', false);
                 })
                 .on('mouseleave', function () {
-                    d3.select('#svg-tooltip').classed('is-hidden', true);
+                    d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
                 })
                 .on('click', function (d, i) {
                   var color = charts.colors(i);
