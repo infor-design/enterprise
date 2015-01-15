@@ -181,9 +181,9 @@
 
         // Handles
         self.handles = [];
-        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></a>').text(self.settings.range ? 'lower' : '')); // TODO: Localize
+        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0">Handle</a>').text(self.settings.range ? 'lower' : '')); // TODO: Localize
         if (self.settings.range) {
-          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0"></a>').text('higher')); // TODO: Localize
+          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0">Handle</a>').text('higher')); // TODO: Localize
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles

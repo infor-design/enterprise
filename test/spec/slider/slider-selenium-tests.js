@@ -400,7 +400,7 @@ describe('Slider [selenium]', function(){
 
   it('should establish WAI-ARIA attributes for min and max value if those HTML5 attributes are present', function(done) {
     // #limited-spinbox has a "min" of -50, and a "max" of 50.
-    var input = '#simple-step';
+    var input = '#simple-step-slider-handle';
     runner.client
       // Check for the WAI-ARIA attributes that should have been set on the spinbox's initialization.
       .getAttribute(input, 'aria-valuemin', function(err, value) {

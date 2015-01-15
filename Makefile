@@ -10,6 +10,9 @@ test-autocomplete:
 test-button:
 	@node test-runner.js button
 
+test-busyindicator:
+	@node test-runner.js busyindicator
+
 test-checkbox:
 	@node test-runner.js checkbox
 
@@ -43,8 +46,8 @@ test-datepicker:
 test-spinbox:
 	@node test-runner.js spinbox
 
-test-spinbox:
-	@node test-runner.js spinbox
+test-slider:
+	@node test-runner.js slider
 
 test-radio:
 	@node test-runner.js radio

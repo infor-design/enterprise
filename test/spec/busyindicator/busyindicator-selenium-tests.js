@@ -13,8 +13,7 @@ function busyIndicatorExists() {
 describe('Busy Indicator [selenium]', function(){
   this.timeout(99999999);
 
-  var STANDALONE_BUSY_TRIGGER = '#busy-indicator-trigger',
-    STANDALONE_BUSY_ELEM = '#standalone-busy';
+  var STANDALONE_BUSY_TRIGGER = '#busy-start-trigger';
 
   //Start Server - Make a Web Driver Connection
   before(function(done){

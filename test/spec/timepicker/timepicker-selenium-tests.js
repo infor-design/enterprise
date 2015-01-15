@@ -101,7 +101,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('4:30 PM');
+        value.should.equal('3:30');
       })
       .call(done);
   });
@@ -122,11 +122,11 @@ describe('Time Picker [selenium]', function(){
       .click(HOURS_DD, globals.noError)
       // click the fourth list item in the list (will have a value of '4')
       .click(DD_LIST + ' li:nth-child(0n + 4)')
-      // check the value of the hours input to make sure it equals '4'
+      // check the value of the hours input to make sure it equals '3'
       .getValue(HOURS_INPUT, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('4');
+        value.should.equal('3');
       })
       // click the first dropdown to open the list
       .click(MINUTES_DD, globals.noError)
@@ -141,20 +141,20 @@ describe('Time Picker [selenium]', function(){
       // click the first dropdown to open the list
       .click(PERIOD_DD, globals.noError)
       // click the sixth list item in the list (will have a value of 'pm')
-      .click(DD_LIST + ' li:nth-child(0n + 2)')
+      //.click(DD_LIST + ' li:nth-child(0n + 2)')
       // check the value of the hours input to make sure it equals 'pm'
-      .getValue(PERIOD_INPUT, function(err, value) {
-        globals.noError(err);
-        should.exist(value);
-        value.should.equal('PM');
-      })
+      //.getValue(PERIOD_INPUT, function(err, value) {
+      //  globals.noError(err);
+      //  should.exist(value);
+      //  value.should.equal('PM');
+      //})
       // click the Set Time link
       .click(SET_TIME_LINK, globals.noError)
       // Check the value of the Timepicker input field.  It should equal '4 : 30 pm'
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('4:30 PM');
+        value.should.equal('3:30');
       })
       .call(done);
   });
@@ -166,7 +166,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10:55 PM');
+        value.should.equal('10:55');
       })
       // use the down arrow to open the popover
       .addValue(TIME_FIELD, ['Down arrow'], globals.noError)
@@ -180,11 +180,11 @@ describe('Time Picker [selenium]', function(){
       })
       // press the Escape key
       .addValue(HOURS_DD, ['Escape'], globals.noError)
-      // the popover menu is now closed.  Check the value to make sure it's remained at 10:55 pm
+      // the popover menu is now closed.  Check the value to make sure it's remained at 10:55
       .getValue(TIME_FIELD, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('10:55 PM');
+        value.should.equal('10:55');
       })
       .call(done);
   });
@@ -198,7 +198,7 @@ describe('Time Picker [selenium]', function(){
       .getValue(TIME_FIELD, function(err, result) {
         globals.noError(err);
         should.exist(result);
-        result.should.equal('13:61 PM');
+        result.should.equal('13:61');
       })
       // Tab out.  This should activate validation
       .addValue(TIME_FIELD, ['Tab'], globals.noError)
