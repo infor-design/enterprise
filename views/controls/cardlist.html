@@ -28,11 +28,24 @@
     </script>
 
     <div class="card">
+      <div class="overlay"></div>
       <div class="card-header">
         <h2 class="card-title">Employee Information</h2>
         <button class="btn-actions">
           <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
         </button>
+        <ul class="popupmenu actions top">
+          <li><a href="#">Create new folder</a></li>
+          <li class="separator"></li>
+          <li><a href="#">Rename...</a></li>
+          <li><a href="#">Move to...</a></li>
+          <li><a href="#">Edit folder settings</a></li>
+          <li class="separator"></li>
+          <li><a href="#">Delete folder</a></li>
+        </ul>
       </div>
       <div class="cardlist" style="height: 200px;" data-tmpl="cardstackTemplate" data-dataset="demoTasks">
       </div>
