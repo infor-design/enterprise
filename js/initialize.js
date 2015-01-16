@@ -43,8 +43,9 @@
         //Editors
         elem.find('.editor').editor();
 
-        //Menu/Split Buttons
+        //Menu/Split/Action Buttons
         elem.find('.btn-menu').popupmenu();
+        elem.find('.btn-actions').popupmenu();
 
         //Context Menu
         elem.find('[data-popupmenu]').each(function () {
