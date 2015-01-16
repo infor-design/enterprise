@@ -36,7 +36,6 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 * DateField
 * Tabs
 
-
 ## Browser Support
 
 ![IE](https://cloud.githubusercontent.com/assets/398893/3528325/20373e76-078e-11e4-8e3a-1cb86cf506f0.png) | ![Chrome](https://cloud.githubusercontent.com/assets/398893/3528328/23bc7bc4-078e-11e4-8752-ba2809bf5cce.png) | ![Firefox](https://cloud.githubusercontent.com/assets/398893/3528329/26283ab0-078e-11e4-84d4-db2cf1009953.png) | ![Opera](https://cloud.githubusercontent.com/assets/398893/3528330/27ec9fa8-078e-11e4-95cb-709fd11dac16.png) | ![Safari](https://cloud.githubusercontent.com/assets/398893/3528331/29df8618-078e-11e4-8e3e-ed8ac738693f.png)
@@ -91,7 +90,7 @@ The [Jira issue tracker](http://jira.infor.com/browse/HFC) is the preferred chan
 
 Use Git for [submitting pull requests](#pull-requests), but please respect the following:
 
-* Please **search for existing issues**. Help us keep duplicate issues to a minimum by checking to see if someone has already reported your problem or requested your idea.
+* Please **search for existing issues** in JIRA before submitting a pull request. Help us keep duplicate issues to a minimum by checking to see if someone has already reported your problem or requested your idea.
 
 * Please **do not** derail or troll issues. Keep the discussion on topic and respect the opinions of others.
 
@@ -163,7 +162,22 @@ Change requests cover both architectural and functional changes to how the contr
 <a name="pull-requests"></a>
 ### Submitting Pull Requests
 
-Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue, please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug. See here for information on how to submit a [pull request](https://confluence.atlassian.com/display/STASH/Using+pull+requests+in+Stash)
+Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue, please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug.
+
+If you'd like to submit a pull request you'll need to do the following:
+
+1. **Fork the SoHo Xi Controls project in Stash.** Navigate to our internal [Stash Git Repository](http://git.infor.com/projects/SOHO/repos/controls) (you may need to contact Tim McConechy to have you added to the Stash Users list).  On the left sidebar at the top, click the button under *Actions* that says *Fork Repository*.  On the screen that follows, make sure *Enable Fork Syncing* is checked, and click *Fork Repository* to create your own remote branch of the SoHo Xi Controls Project.
+2. **Clone the Repository on your machine.**  Get a local clone of your newly created remote repository. In Stash, click the *Repositories* dropdown on the top of the window, and find the link with Your Name along side the word *Controls*.  On the page that follows, click the *Clone* link in the left sidebar.  Using the URL provided to [Clone the Respository with Git](http://git-scm.com/docs/git-clone).
+3. **Make your changes with the local copy of the code.**
+4. **Commit your changes locally.**  Use `git commit -am "[COMMIT MESSAGE]"` and type any related JIRA Ticket numbers into the message to have our build system automatically link your commits to those issues later (For Example "HFC-2105 - Created the project scaffolding needed for adding the SoHo Xi Action Button").  Repeat Steps 3 and 4 as many times as necessary to refine your code.  Please keep in mind our [coding standards](#coding-standards) as you perform these steps.
+5. **Pull/Rebase to the latest version of the controls before you submit.**  If enough time passes between your original clone and the completion of your changes, the main repository may have changed and some files you've edited may be out of sync.  To re-sync your remote branch and clone, use the following commands after committing your changes:
+  * `git pull`
+  * `git rebase`
+You may need to merge some files.  Follow your Git client's directions on properly merging the files, and recommit the changes.
+6. **Push your changes to your remote repository.**  Use `git push` to push your changes out to your branch on the Stash repository.
+7. **Open a pull request.**  Using the Stash website, navigate back to the [Main SoHo Xi Controls repository](http://git.infor.com/projects/SOHO/repos/controls), and click the *Pull Requests* link on the left sidebar.  On the screen that follows, click the *Create a pull request* button. On the next screen, use the drop downs to select the Source/Destination repos (Yours and the Main repo, respectively). Review the files changed underneath, and click "Continue" when ready.  On the screen that follows, you'll be presented with a textbox containing a combination of all your commits for this pull.  Please organize the text accordingly, and list "Tim McConechy" as a reviewer before clicking "Submit".
+
+See additional information here on how to submit a [pull request](https://confluence.atlassian.com/display/STASH/Using+pull+requests+in+Stash)
 
 <a name="testing"></a>
 ### Testing and Quality Assurance
@@ -182,6 +196,7 @@ Soho XI's current documentation can be found at [soho.infor.com](http://soho.inf
 
 The documentation will be generated created inline in the pages (soon but not yet). You can fork the repo and submit pull requests following the [pull-request](#pull-requests) guidelines.
 
+<a name="coding-standards"></a>
 ## Coding Standards and Conventions
 
 [Coding Standards are now in their own Repo](http://git.infor.com/projects/SHARED/repos/coding-standards/browse/README.md)
