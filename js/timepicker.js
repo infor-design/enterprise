@@ -26,6 +26,7 @@
         defaults = {
           minuteInterval: 5, // Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
           mode: 'standard', // options: 'standard', 'range',
+          roundToInterval: false, // If a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
           forceHourMode: undefined // can be used to force timepicker to use only 12-hour or 24-hour display modes.  Defaults to whatever the current Globalize locale requires if left undefined.
         },
         settings = $.extend({}, defaults, options);
@@ -62,6 +63,10 @@
         var minInt = this.element.attr('data-minute-interval');
         this.minuteInterval = minInt !== undefined && !isNaN(minInt) ? parseInt(minInt, 10) :
           !isNaN(settings.minuteInterval) ? parseInt(settings.minuteInterval, 10) : 5;
+
+        var roundToInterval = this.element.attr('data-round-to-interval');
+        this.roundToInterval = roundToInterval !== undefined ? (roundToInterval === 'true') :
+          settings.roundToInterval ? settings.roundToInterval : false;
 
         var modes = ['standard', 'range'],
           mode = this.element.attr('data-time-mode');
@@ -145,6 +150,9 @@
 
         self.element.on('blur.timepicker', function() {
           self.roundMinutes();
+
+          // The action of closing the popup menu is set on a timer because technically there are no fields focused
+          // on frame 0 of the popup menu's existence, which would cause it to close immediately on open.
           setTimeout(function() {
             if (self.isOpen() && self.popup.find(':focus').length === 0) {
               self.closeTimePopup();
@@ -154,11 +162,40 @@
       },
 
       roundMinutes: function() {
-        if (!this.roundToIncrement) {
+        if (!this.roundToInterval) {
           return;
         }
 
+        // separate out the minutes value from the rest of the value.
+        var val = this.element.val(),
+          parts = val ? val.split(':') : [],
+          interval = this.minuteInterval;
 
+        if (!parts[1]) {
+          return;
+        }
+
+        if (!this.show24Hours) {
+          var periodParts = parts[1].split(' ');
+          parts[1] = periodParts[0];
+          if (periodParts[1]) {
+            parts.push(periodParts[1]);
+          }
+        }
+
+        parts[1] = parseInt(parts[1], 10);
+        if (parts[1] % interval === 0) {
+          return;
+        }
+
+        parts[1] = Math.round(parts[1] / interval) * interval;
+
+        parts[1] = parts[1].toString();
+        parts[1] = (parts[1].length < 2 ? '0' : '') + parts[1];
+
+        var newVal = parts[0] + ':' + parts[1] + ' ' + (parts[2] ? parts[2] : '');
+
+        this.element.val(newVal);
       },
 
       // Add masking with the mask function
@@ -443,7 +480,6 @@
           }
           this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
         }
-        this.element.off('blur.timepicker');
         this.trigger.off('hide open');
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
