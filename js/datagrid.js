@@ -67,7 +67,8 @@
 
       //Render the Header
       renderHeader: function() {
-        var self = this;
+        var self = this,
+          headerRow;
 
         for (var i = 0; i < this.settings.dataset.length; i++) {
           headerRow = '<thead><tr>';
@@ -77,8 +78,7 @@
           }
 
           for (var j = 0; j < settings.columns.length; j++) {
-            var formatter = (settings.columns[j].formatter ? settings.columns[j].formatter : self.defaultFormatter),
-              column = settings.columns[j],
+            var column = settings.columns[j],
               isSortable = (column.sortable === undefined ? true : column.sortable);
 
             headerRow += '<th class="' + (isSortable ? 'is-sortable' : '') + '"' + ' data-columnid="'+ column.id +'">';
@@ -98,7 +98,7 @@
 
       //Render the Rows
       renderRows: function() {
-        var rowHtml, headerRow, tableHtml = '',
+        var rowHtml, tableHtml = '',
           self=this;
 
         self.table.find('tbody').remove();
@@ -111,8 +111,7 @@
           }
 
           for (var j = 0; j < settings.columns.length; j++) {
-            var formatter = (settings.columns[j].formatter ? settings.columns[j].formatter : self.defaultFormatter),
-              column = settings.columns[j];
+            var formatter = (settings.columns[j].formatter ? settings.columns[j].formatter : self.defaultFormatter);
 
             rowHtml += '<td>';
             rowHtml += formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';

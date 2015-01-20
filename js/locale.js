@@ -210,9 +210,16 @@
     translate: function(key) {
       if (this.currentLocale.data.messages[key] === undefined) {
         // Need to substitue English Here
-        return this.cultures['en'].messages[key];
+        if (this.cultures.en.messages[key] === undefined) {
+          return undefined;
+        }
+        return this.cultures.en.messages[key].value;
       }
-      return this.currentLocale.data.messages[key];
+
+      if (this.currentLocale.data.messages[key] === undefined) {
+        return undefined;
+      }
+      return this.currentLocale.data.messages[key].value;
     },
 
     // Short cut function to get 'first' calendar

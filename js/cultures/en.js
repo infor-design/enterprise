@@ -43,15 +43,13 @@
      currencyFormat: '¤#,##0.00',
      //Resx
      messages: {
-      'Required': 'Required',
-      'SetTime': 'Set Time',
-      'Today': 'Today',
-      'TimeHours': 'Hours',
-      'TimeMintues': 'Minutes',
-      'TimePeriod': 'Period',
-      'UseArrowColor': 'Use arrow keys to select a color.',
-      'UseArrowDate': 'Use arrow keys to select a date.',
-      'UseArrowTime': 'Use arrow keys to select a time.'
+      'Required': {value: 'Required', comment: 'indicates a form field is manditory'},
+      'SetTime': {value: 'Set Time', comment: 'button text that inserts time when clicked'},
+      'Today': {value: 'Today', comment: 'refering to today on a calendar'},
+      'Hours': {value: 'Hours', comment: 'the hour portion of a time'},
+      'Minutes': {value: 'Minutes', comment: 'the minutes portion of a time'},
+      'Period': {value: 'Period', comment: 'the am/pm portion of a time'},
+      'UseArrow': {value: 'Use arrow keys to select', comment: 'Instructional comments for screen readers'}
     }
   });
 
