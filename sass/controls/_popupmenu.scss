@@ -7,12 +7,63 @@
   left: -999px;
   position: absolute;
   z-index: 4000;
+
+  .arrow,
+  .arrow:after {
+    border-width: 8px;
+  }
+
+  &.top {
+    .arrow {
+      border-top-color: $popover-border-color;
+    }
+
+    .arrow:after {
+      border-top-color: $popover-bg-color;
+    }
+  }
+
+  &.bottom {
+    .arrow {
+      border-bottom-color: $popover-border-color;
+      left: auto;
+      right: 10px;
+      top: -8px;
+    }
+
+    .arrow:after {
+      border-bottom-color: $popover-bg-color;
+      left: -8px;
+      top: 1px;
+    }
+  }
+
+  &.right {
+    .arrow {
+      border-right-color: $popover-border-color;
+    }
+
+    .arrow:after {
+      border-right-color: $popover-bg-color;
+    }
+  }
+
+  &.left {
+    .arrow {
+      border-left-color: $popover-border-color;
+    }
+
+    .arrow:after {
+      border-left-color: $popover-bg-color;
+    }
+  }
 }
 
 .popupmenu {
   background-color: #ffffff;
   border-radius: 3px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   color: $input-color;
   display: none;
   font-family: $font-regular;
@@ -36,21 +87,26 @@
     padding: 0;
     position: static;
     white-space: nowrap;
+
     &:hover {
       background-color: $menu-hover-color;
     }
+
     &:not(.is-selected) > a:focus {
       background-color: $menu-hover-color;
     }
+
     &.disabled > a:focus {
       box-shadow: none;
     }
+
     // Selected
-    &.is-selected a:before, &.checkmark a:before {
+    &.is-selected a:before,
+    &.checkmark a:before {
       border-color: #1a1a1a;
       border-style: solid;
       border-width: 0 3px 3px 0;
-      content: "";
+      content: '';
       height: 10px;
       left: 12px;
       margin-top: 6px;
@@ -59,6 +115,7 @@
       width: 4px;
     }
   }
+
   a {
     border: 1px solid transparent;
     color: $input-color;
@@ -68,23 +125,27 @@
     position: relative;
     text-decoration: none;
     white-space: nowrap;
+
     > span {
       color: inherit;
       font-family: inherit;
       font-weight: inherit;
     }
+
     &[disabled] {
       color: $disabled-color;
       opacity: .6;
     }
   }
+
   //Text Underline on Terms
   i {
     color: $menu-underline-color;
-    font-style: normal;
     font-family: $font-regular;
+    font-style: normal;
     text-decoration: underline;
   }
+
   //Icon Positioning
   .icon {
     fill: $input-color;
@@ -92,6 +153,7 @@
     position: relative;
     top: 9px;
   }
+
   // Disabled
   li.is-disabled a,
   li.disabled a {
@@ -99,22 +161,27 @@
     color: $disabled-color;
     cursor: default;
   }
+
   li.is-disabled:hover,
   li.disabled:hover {
     background-color: transparent;
   }
+
   .submenu {
     .wrapper {
       display: block;
       position: absolute;
       z-index: 4000;
     }
+
     .popupmenu.is-open {
       display: block;
       visibility: visible;
     }
+
     > a {
       padding-right: 48px;
+
       > .icon.arrow {
         border-width: 0;
         left: auto;
@@ -125,9 +192,10 @@
       }
     }
   }
+
   // Seperator
   .separator {
-    border-bottom: 1px solid #d2d2d2;
-    margin: 10px 0px;
+    border-bottom: 1px solid #e5e5e5;
+    margin: 10px 0;
   }
 }

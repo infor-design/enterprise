@@ -66,6 +66,12 @@
           }
         });
 
+        // If action button menu, append arrow markup
+        if (this.element.hasClass('btn-actions') && this.element.parent('.card-header').length > 0) {
+          var arrow = $('<div class="arrow"></div>');
+          this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
+        }
+
         //TODO: Follow up 'button expanded' in JAWS
         this.element.attr('aria-haspopup', true)
           .attr('aria-expanded', 'false')
@@ -237,14 +243,15 @@
         var target = (e ? $(e.target) : this.element),
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuWidth = this.menu.outerWidth(),
-          menuHeight = this.menu.outerHeight();
+          menuHeight = this.menu.outerHeight(),
+          xOffset = this.element.hasClass('btn-actions') && this.element.parent('.card-header').length > 0 ? this.element.parent('.card-header').width() - 10 : 0;
 
         if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
-          wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX),
-                        'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY)});
+          wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
+                        'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
         } else {
-          wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0),
-                        'top': target.offset().top - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight()});
+          wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0) - xOffset,
+                        'top': target.offset().top - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight() });
         }
 
         //Handle Case where menu is off bottom
@@ -281,6 +288,9 @@
 
         $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
+        if (this.element.hasClass('btn-actions') && this.element.parent('.card-header').length > 0) {
+          this.menu.width(this.element.parent('.card-header').outerWidth() - 18);
+        }
         self.position(e);
 
         //Close on Document Click ect..
@@ -444,6 +454,9 @@
 
       destroy: function() {
         this.menu.parent().off('contextmenu.popupmenu');
+        if (this.element.hasClass('btn-actions')) {
+          this.menu.parent().removeClass('bottom').find('.arrow').remove();
+        }
         if (this.originalParent) {
           this.menu.detach().appendTo(this.originalParent);
         }

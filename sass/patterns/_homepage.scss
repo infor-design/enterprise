@@ -7,24 +7,37 @@
 
 .card,
 .widget {
-  background-color: #ffffff;
+  background-color: $cardlist-bg-color;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
   margin-bottom: 20px;
   min-height: 200px;
   overflow: auto;
+  position: relative;
   width: 100%;
 
   .card-header,
   .widget-header {
+    background-color: $cardlist-bg-color;
     border-bottom: 1px solid #d8d8d8;
     height: 50px;
     line-height: 50px;
     padding: 13px 20px;
+    position: relative;
+    z-index: 11;
 
     > * {
       display: inline-block;
       float: left;
+    }
+
+    > .btn-actions {
+      background-color: $actionbutton-bg-color;
+      border: 0;
+      float: none;
+      position: absolute;
+      right: 10px;
+      top: 9px;
     }
   }
 }

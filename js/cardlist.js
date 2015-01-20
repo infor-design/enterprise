@@ -30,7 +30,26 @@
     // Plugin Object
     Plugin.prototype = {
       init: function() {
+        this.setup();
         this.render();
+      },
+
+      setup: function() {
+        var self = this;
+        self.actionButton = this.element.parent().find('.btn-actions');
+
+        if (self.actionButton.length > 0) {
+          // Action Buttons may already be invoked via initialize.js.
+          if (!(self.actionButton.data('popupmenu'))) {
+            self.actionButton.popupmenu();
+          }
+
+          self.actionButton.on('beforeOpen', function() {
+            self.element.parent().addClass('menu-engaged');
+          }).on('close', function() {
+            self.element.parent().removeClass('menu-engaged');
+          });
+        }
       },
 
       render: function() {
@@ -43,6 +62,10 @@
       },
 
       destroy: function() {
+        if (this.actionButton) {
+          this.element.parent().removeClass('menu-engaged');
+          this.actionButton.off('beforeOpen close').data('popupmenu').destroy();
+        }
         this.element.removeData(pluginName);
         this.element.empty();
       }
