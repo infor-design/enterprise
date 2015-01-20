@@ -109,6 +109,8 @@
 
         this.handleKeys();
 
+        this.handleBlur();
+
         return this;
       },
 
@@ -136,6 +138,27 @@
             return false;
           }
         });
+      },
+
+      handleBlur: function() {
+        var self = this;
+
+        self.element.on('blur.timepicker', function() {
+          self.roundMinutes();
+          setTimeout(function() {
+            if (self.isOpen() && self.popup.find(':focus').length === 0) {
+              self.closeTimePopup();
+            }
+          }, 20);
+        });
+      },
+
+      roundMinutes: function() {
+        if (!this.roundToIncrement) {
+          return;
+        }
+
+
       },
 
       // Add masking with the mask function
@@ -306,15 +329,6 @@
             return false;
           }
         });
-
-        // Set the blur event up on a timer to make sure it doesn't immediately trigger
-        setTimeout(function() {
-          self.element.on('blur.timepicker', function() {
-            if (self.isOpen() && self.popup.find(':focus').length === 0) {
-              self.closeTimePopup();
-            }
-          });
-        }, 20);
 
         // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
         self.trigger.on('hide', function() {
