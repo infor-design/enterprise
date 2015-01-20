@@ -23,9 +23,7 @@
     this.cultures =  [];
 
     if (locale) { //Can init new Locale object
-      $(document).ready(function() {
-        self.set(locale);
-      });
+      self.set(locale);
     }
     this.updateLang();
   }
@@ -68,6 +66,7 @@
             self.currentLocale.name = locale;
             self.currentLocale.data = self.cultures[locale];
             self.dff.resolve(self.currentLocale.name);
+            self.addCulture(locale, self.currentLocale.data);
           },
           error: function () {
             self.dff.reject();
@@ -209,6 +208,10 @@
 
     // Overridable culture messages
     translate: function(key) {
+      if (this.currentLocale.data.messages[key] === undefined) {
+        // Need to substitue English Here
+        return this.cultures['en'].messages[key];
+      }
       return this.currentLocale.data.messages[key];
     },
 

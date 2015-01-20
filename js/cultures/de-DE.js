@@ -43,7 +43,17 @@
     currencySign: '€',  //(Replace Sign http://www.currencysymbols.in ?)
     currencyFormat: '#,##0.00 ¤',
     //Resx
-    messages: {'Required': 'Erforderlich'}
+    messages: {
+      'Required': 'Erforderlich',
+      'SetTime': 'Uhrzeit',
+      'Today': 'Heute',
+      'TimeHours': 'Stunden',
+      'TimeMintues': 'Minuten',
+      'TimePeriod': 'Zeit',
+      'UseArrowColor': 'Verwenden Sie Pfeiltasten, um eine Farbe auswählen.',
+      'UseArrowDate': 'Mit den Pfeiltasten , um ein Datum zu wählen.',
+      'UseArrowTime': 'Verwenden Sie Pfeiltasten, um eine Zeit auszuwählen.'
+    }
   });
 
 }));

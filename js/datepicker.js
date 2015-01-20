@@ -143,7 +143,6 @@
 
       // Add masking with the mask function
       mask: function () {
-
         var dateFormat = Locale.calendar().dateFormat,
             sep = dateFormat.seperator;
 
@@ -194,7 +193,8 @@
         this.header = $('<div class="calendar-header"><button class="btn-icon prev"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-left"></use></svg><span>Previous Month</span></button><span class="month">november</span><span class="year"> 2014</span><button class="btn-icon next"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg><span>Next Month</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="selected">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
-        this.footer = $('<div class="calendar-footer"> <a href="#" class="link cancel">Clear</a> <a href="#" class="link today">Today</a> </div>');
+        //TODO: Localize
+        this.footer = $('<div class="calendar-footer"> <a href="#" class="link cancel">Clear</a> <a href="#" class="link today">'+Locale.translate('Today')+'</a> </div>');
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
         this.trigger.popover({content: this.calendar, trigger: 'immediate',

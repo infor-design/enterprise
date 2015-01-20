@@ -1,18 +1,29 @@
-/* Datagrid
-================================================== */
+// Datagrid
+//================================================== //
 
+// Grid Container Div
+.datagrid-container {
+  border: 1px solid #EBEBEB;
+  border-radius: 2px;
+  clear: both;
+  height: auto;
+  overflow: hidden;
+  width: auto;
+}
+
+// Grid Styling
 .datagrid {
+  border-collapse: collapse;
+  border: 0;
   height: 100%;
   overflow: auto;
   width: 100%;
   @include font-size(14);
-  border-collapse: collapse;
-  border: none;
 
-  /*  Table Headers  */
+  // Table Headers
   th {
     background-color: #e8eaeb;
-    border-bottom: 1px solid #dee0e0;
+    border-bottom: 1px solid #d8d8d8;
     border-top: 1px solid #f5f7f7;
     color: $label-color;
     @include font-size(13);
@@ -20,59 +31,54 @@
     padding: 0 10px;
     text-align: left;
     text-transform: uppercase;
+
+    .datagrid-header-text {
+      line-height: normal;
+      position: relative;
+      top: 3px;
+    }
   }
 
   .is-sortable:hover {
-    cursor: pointer;
     background-color: #d3d3d3;
+    cursor: pointer;
   }
 
-  /* Table Rows */
+  // Table Rows
   td {
-    line-height: 50px;
     background-color: #ffffff;
     border-bottom: 1px solid #dee0e0;
     color: $label-color;
+    line-height: 50px;
+    max-width: 100px;
+    overflow: hidden;
     padding: 0 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  /* States */
-  .disabled {
-    color: #999;
+  // States
+  .is-disabled {
+    color: #767676;
   }
-}
-
-.datagrid-container {
-  border: 1px solid #EBEBEB;
-  clear: both;
-  height: auto;
-  overflow: hidden;
-  width: auto;
-  border-radius: 2px;
 }
 
 .sort-indicator {
   display: inline-block;
-  height: 14px;
-  width: 18px;
-  margin: 0 10px;
+  left: 4px;
+  position: relative;
+  top: -6px;
+  vertical-align: top;
+
+  svg {
+    fill: #666666;
+    height: 20px;
+    width: 20px;
+  }
+
+  span {
+    height: 7px;
+    display: block;
+  }
 }
 
-.sort-asc {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAAFFQTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXKkVQgAAABp0Uk5TskrKS5XdIrMEuaWkBQkZGgECCMmUIbre5gDABBzBAAAAMklEQVQI1wXBCQJAIAAEwE0lRUjn7v8fagZkce0lwStJ50HkoLWED0O+71MRdrvJp5ofP88Cqc/WdrgAAAAASUVORK5CAII=");
-  background-position: center center;
-  background-repeat: no-repeat;
-  display: block;
-  height: 5px;
-  opacity: .6;
-}
-
-.sort-desc {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABGdBTUEAALGPC/xhBQAAAE5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxKKmWQAAABl0Uk5TJoPSUa0G7CmbVrTgHNAH4x8Bp5bouYcDAGhFvSYAAAAySURBVAjXBcEHAoAgAAOxojhBERxc//9RE21HhmsY9TppKd51Rj+z2yT6at8dQf0C8AM01wKaIyt6kQAAAABJRU5ErkJggg==");
-  background-position: center center;
-  background-repeat: no-repeat;
-  display: block;
-  height: 5px;
-  margin-top: 2px;
-  opacity: .6;
-}

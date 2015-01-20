@@ -1,5 +1,5 @@
 /**
-* XYZ Control (TODO: bitly link to docs)
+* XYZ Control (TODO: bitly link to soho xi docs)
 */
 
 (function(factory) {
@@ -38,16 +38,16 @@
     Plugin.prototype = {
 
       init: function() {
-        var self = this;
-        console.log(self);
+        this.settings = settings;
+        //Do other init
       },
 
-      // Do Something in some method
+      // Example Method
       someMethod: function() {
 
       },
 
-      // Teardown
+      // Teardown - Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
       }

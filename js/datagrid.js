@@ -43,6 +43,7 @@
     Plugin.prototype = {
 
       init: function(){
+       this.settings = settings;
        this.render();
        this.handleEvents();
       },
@@ -52,33 +53,26 @@
         var self = this;
 
         self.table = $('<table></table>').addClass('datagrid');
+        self.table.empty();
         self.renderHeader();
         self.renderRows();
         self.element.addClass('datagrid-container').append(self.table);
 
-        if (settings.showDrillDown) {
+        if (this.settings.showDrillDown) {
           self.element.on('click', '.drilldown', function(e) {
             self.element.trigger('drilldown', e);
           });
         }
       },
 
-      //Render Just the Header
+      //Render the Header
       renderHeader: function() {
+        var self = this;
 
-      },
-
-      //Render the Rows
-      renderRows: function() {
-        var rowHtml, headerRow, tableHtml = '',
-          self=this;
-
-        for (var i = 0; i < settings.dataset.length; i++) {
-          rowHtml = '<tr>';
+        for (var i = 0; i < this.settings.dataset.length; i++) {
           headerRow = '<thead><tr>';
 
           if (settings.showDrillDown) {
-            rowHtml += '<td>' + '<a href="#" class="drilldown"><span></span></a>' + '</td>';
             headerRow += '<th></th>';
           }
 
@@ -87,21 +81,47 @@
               column = settings.columns[j],
               isSortable = (column.sortable === undefined ? true : column.sortable);
 
-            rowHtml += '<td>';
-            rowHtml += formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
             headerRow += '<th class="' + (isSortable ? 'is-sortable' : '') + '"' + ' data-columnid="'+ column.id +'">';
-            headerRow += settings.columns[j].name;
+            headerRow += '<span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
             if (isSortable) {
-              headerRow += '<div class="sort-indicator"><span class="sort-asc"></span><span class="sort-desc"></span></div>';
+              headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-down"></svg></span></div>';
             }
+
             headerRow += '</th>';
           }
-          rowHtml += '</tr>';
           headerRow += '</tr></thead>';
+        }
+
+        self.table.append(headerRow);
+      },
+
+      //Render the Rows
+      renderRows: function() {
+        var rowHtml, headerRow, tableHtml = '',
+          self=this;
+
+        self.table.find('tbody').remove();
+
+        for (var i = 0; i < settings.dataset.length; i++) {
+          rowHtml = '<tbody><tr>';
+
+          if (settings.showDrillDown) {
+            rowHtml += '<td>' + '<a href="#" class="drilldown"><span></span></a>' + '</td>';
+          }
+
+          for (var j = 0; j < settings.columns.length; j++) {
+            var formatter = (settings.columns[j].formatter ? settings.columns[j].formatter : self.defaultFormatter),
+              column = settings.columns[j];
+
+            rowHtml += '<td>';
+            rowHtml += formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
+
+          }
+          rowHtml += '</tr></tbody>';
           tableHtml += rowHtml;
         }
-        self.table.empty().append(headerRow, tableHtml);
+        self.table.append(tableHtml);
       },
 
       // Attach All relevant events
@@ -116,7 +136,7 @@
 
       //Api Event to set the sort Column
       setSortColumn: function(columnId) {
-        var sort = this.sortFunction(columnId, true, function(a){return (typeof a === 'string' ? a.toUpperCase() : a);});
+        var sort = this.sortFunction(columnId, false, function(a){return (typeof a === 'string' ? a.toUpperCase() : a);});
         settings.dataset.sort(sort);
         this.renderRows();
       },
@@ -149,5 +169,6 @@
         instance = $.data(this, pluginName, new Plugin(this, settings));
       }
     });
+
   };
 }));

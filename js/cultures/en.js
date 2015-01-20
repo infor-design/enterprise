@@ -45,6 +45,7 @@
      messages: {
       'Required': 'Required',
       'SetTime': 'Set Time',
+      'Today': 'Today',
       'TimeHours': 'Hours',
       'TimeMintues': 'Minutes',
       'TimePeriod': 'Period',
