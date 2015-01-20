@@ -63,6 +63,19 @@
     pointer-events: none;
   }
 
+  &:focus,
+  &:hover {
+    > .icon {
+      fill: $font-color-extradark;
+    }
+
+    &[aria-expanded="true"] {
+      > .icon {
+        fill: $menubutton-focus-border-color;
+      }
+    }
+  }
+
   &[aria-expanded="true"] {
     > .icon {
       fill: $menubutton-focus-border-color;
