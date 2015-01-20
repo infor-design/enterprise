@@ -35,10 +35,9 @@ input.dropdown {
     fill: $input-border-color;
     height: 32px;
     margin-left: -32px;
-    margin-top: 2px;
+    top: 11px;
     pointer-events: none;
-    position: absolute;
-    transition: opacity .2s ease 0s;
+    position: relative;
     width: 32px;
   }
 

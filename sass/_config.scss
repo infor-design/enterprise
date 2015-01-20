@@ -193,6 +193,12 @@ $link-color: #0c7ad8; // Design has #0896e9 but #0072b5 is accessible
 $link-hover-color: #0c7ad8;
 $link-active-color: #004096;
 
+
+// Rating (Stars)
+$rating-bg-color: #ffd042;
+$rating-border-color: #a4a4a4;
+$rating-hover-color: $primary-color;
+
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
 $breakpoint-phone-to-tablet: 768px;
