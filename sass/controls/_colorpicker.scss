@@ -54,6 +54,11 @@
       padding: 0 6px 2px 0;
     }
 
+    li a:focus {
+      background-color: transparent !important;
+      border-color: $input-focus-border-color;
+    }
+
     .swatch {
       background-color: #333333;
       display: block;

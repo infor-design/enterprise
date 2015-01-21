@@ -9,8 +9,22 @@
 
   h1 {
     color: $primary-color;
+    display: inline-block;
     font-weight: normal;
     @include rem(line-height, 6rem);
     margin-left: 50px;
+  }
+
+  .btn-actions {
+    border: 0 none;
+    display: inline-block;
+    float: right;
+    position: relative;
+    right: 50px;
+    top: 13px;
+
+    svg {
+      fill: $primary-color;
+    }
   }
 }

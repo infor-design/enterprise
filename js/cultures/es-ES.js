@@ -49,7 +49,7 @@
       'Hours': {value: 'horas', comment: 'the hour portion of a time'},
       'Minutes': {value: 'acta', comment: 'the minutes portion of a time'},
       'Period': {value: 'período', comment: 'the am/pm portion of a time'},
-      'UseArrow': {value: 'Utilice las teclas de flecha para seleccionar', comment: 'Instructional comments for screen readers'}
+      'UseArrow': {value: '. Utilice las teclas de flecha para seleccionar.', comment: 'Instructional comments for screen readers'}
     }
   });
 

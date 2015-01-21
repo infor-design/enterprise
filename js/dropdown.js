@@ -116,6 +116,10 @@
           if (option.attr('class')) {
             listOption.addClass(option.attr('class'));
           }
+          //Disabled Support
+          if (option.attr('disabled')) {
+            listOption.addClass('is-disabled');
+          }
           //Special Data Attribute
           if (option.attr('data-attr')) {
             listOption.attr('data-attr', option.attr('data-attr'));
@@ -301,7 +305,7 @@
         }
 
         if (self.isOpen()) {
-          options = this.listUl.find('li:visible');
+          options = this.listUl.find('li:visible').not(':disabled').not('.is-disabled');
           selectedIndex = -1;
           $(options).each(function(index) {
             if ($(this).is('.selected')) {
@@ -386,20 +390,18 @@
           }
         }
 
-        if (!self.isOpen() && self.isPrintable(e.keyCode)) {
+        if (!self.isOpen() && !self.isControl(e.keyCode)) {
           self.toggleList();
           self.searchInput.val('');
         }
         return true;
       },
 
-      isPrintable: function(keycode) {
+      isControl: function(keycode) {
         var valid =
-          (keycode > 47 && keycode < 58)   || // number keys
-          (keycode > 64 && keycode < 91)   || // letter keys
-          (keycode > 95 && keycode < 112)  || // numpad keys
-          (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
-          (keycode > 218 && keycode < 223);   // [\]' (in order)
+          (keycode > 7 && keycode < 48)   || // control chars
+          (keycode > 90 && keycode < 94)   || // windows keys
+          (keycode > 111 && keycode < 146);  // function keys
 
           return valid;
       },
@@ -473,6 +475,9 @@
               cur = $(self.element[0].options[idx]);
 
           //Select the clicked item
+          if (cur.is(':disabled')) {
+            return;
+          }
           self.selectOption(cur);
           self.activate();
           self.closeList();
@@ -626,6 +631,10 @@
 
         if (option.is('li')) {
           option = this.element.find('option').eq(option.attr('id').replace('list-option',''));
+        }
+
+        if (option.hasClass('.is-disabled') || option.is(':disabled')) {
+          return;
         }
 
         var code = option.val(),

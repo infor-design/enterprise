@@ -81,7 +81,7 @@
 
         //TODO: Test
         $('label[for="'+ this.element.attr('id') + '"]')
-          .append('<span class="audible">' + Locale.translate('UseArrowColor') + '</span>');
+          .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
       },
 
       // Attach Control Events
@@ -89,6 +89,10 @@
         var self = this;
         this.swatch.on('click.colorpicker', function () {
           self.toggleList();
+        });
+
+        this.swatch.on('focus.colorpicker', function () {
+          self.addAria(); //refresh aria local text
         });
 
         this.element.on('keypress.colorpicker', function () {

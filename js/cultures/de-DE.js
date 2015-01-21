@@ -50,7 +50,7 @@
       'Hours': {value: 'Stunden', comment: 'the hour portion of a time'},
       'Minutes': {value: 'Minuten', comment: 'the minutes portion of a time'},
       'Period': {value: 'Zeit', comment: 'the am/pm portion of a time'},
-      'UseArrow': {value: 'Mit den Pfeiltasten wählen Sie', comment: 'Instructional comments for screen readers'}
+      'UseArrow': {value: '. Mit den Pfeiltasten wählen Sie.', comment: 'Instructional comments for screen readers, starts with dot for a pause'}
     }
   });
 

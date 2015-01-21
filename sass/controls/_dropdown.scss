@@ -13,14 +13,16 @@ input.dropdown {
   color: $dropdown-color;
   cursor: pointer;
   display: inline-block;
-  padding: 9px 24px 9px 10px;
+  padding: 9px 24px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
+  vertical-align: middle;
 
   &[disabled] {
     background-color: $dropdown-disabled-bg-color;
     border-color: $dropdown-disabled-border-color;
     color: $dropdown-disabled-color;
     cursor: default;
+    -webkit-text-fill-color: $dropdown-disabled-color;
 
     &.dropdown + .icon {
       cursor: default;
@@ -35,9 +37,9 @@ input.dropdown {
     fill: $input-border-color;
     height: 32px;
     margin-left: -32px;
-    top: 11px;
     pointer-events: none;
     position: relative;
+    top: 3px;
     width: 32px;
   }
 
@@ -78,6 +80,15 @@ input.dropdown {
     background-color: $menu-hover-color;
     cursor: pointer;
     outline: none;
+  }
+
+  li.is-disabled {
+    color: #b6b6b6;
+
+    &:hover {
+      background-color: transparent;
+      cursor: default;
+    }
   }
 
   li.selected:before {

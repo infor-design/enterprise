@@ -93,7 +93,7 @@
 
         //TODO: Confirm this with Accessibility Team
         this.label = $('label[for="'+ this.element.attr('id') + '"]');
-        this.label.append('<span class="audible">. ' + Locale.translate('UseArrowTime') + '</span>');
+        this.label.append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
       },
 
       //Attach Events used by the Control

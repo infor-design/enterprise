@@ -67,7 +67,7 @@
         });
 
         // If action button menu, append arrow markup
-        if (this.element.hasClass('btn-actions') && this.element.parent('.card-header').length > 0) {
+        if (this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('-header') > 0) {
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }

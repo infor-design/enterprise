@@ -49,7 +49,7 @@
       'Hours': {value: 'Hours', comment: 'the hour portion of a time'},
       'Minutes': {value: 'Minutes', comment: 'the minutes portion of a time'},
       'Period': {value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {value: 'Use arrow keys to select', comment: 'Instructional comments for screen readers'}
+      'UseArrow': {value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'}
     }
   });
 
