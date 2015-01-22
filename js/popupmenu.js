@@ -311,10 +311,19 @@
           self.element.trigger('open', [self.menu]);
         }, 400);
 
-        //Hide on iFrame Clicks
-        $('iframe').ready(function () {
-          $('iframe').contents().find('body').on('click.popupmenu', function () {
-            self.close();
+        //Hide on iFrame Clicks - only works if on same domain
+        $('iframe').each(function () {
+          var frame = $(this);
+          frame.ready(function () {
+
+            try {
+              frame.contents().find('body').on('click.popupmenu', function () {
+                self.close();
+              });
+            } catch (e)  {
+              //Ignore security errors on out of iframe
+            }
+
           });
         });
 
@@ -429,7 +438,15 @@
         $(document).off('click.popupmenu keydown.popupmenu');
         $(window).off('scroll.popupmenu resize.popupmenu');
         this.menu.off('click.popmenu');
-        $('iframe').contents().find('body').off('click.popupmenu');
+
+        $('iframe').each(function () {
+          var frame = $(this);
+          try {
+            frame.contents().find('body').off('click.popupmenu');
+          } catch (e) {
+            //Ignore security errors on out of iframe
+          }
+        });
       },
 
       close: function () {
