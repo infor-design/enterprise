@@ -358,6 +358,8 @@
 
             if (selectedIndex > 0) {
               this.selectOption($(options[selectedIndex - 1]));
+              next.parent().find('li').removeClass('hover');
+              next.addClass('hover');
             }
 
             e.stopPropagation();
@@ -368,6 +370,8 @@
             if (selectedIndex < options.length - 1) {
               var next = $(options[selectedIndex + 1]);
               this.selectOption(next);
+              next.parent().find('li').removeClass('hover');
+              next.addClass('hover');
             }
 
             e.stopPropagation();

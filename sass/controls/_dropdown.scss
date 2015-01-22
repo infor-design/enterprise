@@ -76,7 +76,8 @@ input.dropdown {
     text-indent: 31px;
   }
 
-  li:hover {
+  li:hover,
+  li.hover {
     background-color: $menu-hover-color;
     cursor: pointer;
     outline: none;
