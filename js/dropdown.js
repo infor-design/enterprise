@@ -295,7 +295,7 @@
       handleKeyDown: function(input, e) {
         var selectedIndex = this.element[0].selectedIndex,
             options = this.element[0].options,
-            self = this;
+            self = this, next;
 
         self.ignoreKeys(input, e);
 
@@ -357,7 +357,8 @@
           case 38: {  //up
 
             if (selectedIndex > 0) {
-              this.selectOption($(options[selectedIndex - 1]));
+              next = $(options[selectedIndex - 1]);
+              this.selectOption(next);
               next.parent().find('li').removeClass('hover');
               next.addClass('hover');
             }
@@ -368,7 +369,7 @@
           }
           case 40: {  //down
             if (selectedIndex < options.length - 1) {
-              var next = $(options[selectedIndex + 1]);
+              next = $(options[selectedIndex + 1]);
               this.selectOption(next);
               next.parent().find('li').removeClass('hover');
               next.addClass('hover');
