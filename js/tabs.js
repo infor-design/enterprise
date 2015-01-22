@@ -35,13 +35,13 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Tabs(element) {
       this.element = $(element);
       this.init();
     }
 
     // Actual Plugin Code
-    Plugin.prototype = {
+    Tabs.prototype = {
       init: function(){
         var self = this;
 
@@ -75,69 +75,7 @@
           a.attr({'role': 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', 'tabindex': '-1'})
            .parent().attr('role', 'presentation').addClass('tab');
 
-          //Attach click events to tab and anchor
-          a.parent().on('click.tabs', function () {
-            self.activate($(this).index());
-            if (self.popupmenu) {
-              self.popupmenu.close();
-            }
-            $(this).find('a').focus();
-          });
-
-          a.on('click.tabs', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).parent().trigger('click');
-          }).on('keydown.tabs', function (e) {
-
-            var currentLi = $(this).parent(),
-              targetLi,
-              key = e.which;
-
-            if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || key < 32) {
-              return;
-            }
-
-            switch(key) {
-              case 38:
-                e.preventDefault(); // jshint ignore:line
-              case 37:
-                targetLi = currentLi.prev();
-                if (targetLi.length === 0) {
-                  targetLi = self.container.find('li:last');
-                }
-                 e.preventDefault();
-                break;
-              case 40:
-                e.preventDefault(); // jshint ignore:line
-              case 39:
-                targetLi = currentLi.next();
-                if (targetLi.length === 0) {
-                  targetLi = self.container.find('li:first');
-                }
-                e.preventDefault();
-                break;
-            }
-
-            // Use the matching option in the popup menu if the target is hidden by overflow.
-            if (self.isTabOverflowed(targetLi)) {
-              e.preventDefault();
-              var oldIndex = self.tablist.find(targetLi).index();
-              // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
-              setTimeout(function() {
-                self.buildPopupMenu(oldIndex);
-              }, 0);
-              return;
-            }
-
-            targetLi.find('a').click().focus();
-          }).on('focus.tabs', function(e) {
-            e.preventDefault();
-            var targetLi = a.parent();
-            if (self.isTabOverflowed(targetLi)) {
-              self.buildPopupMenu(targetLi.index());
-            }
-          });
+          self.buildAnchorEvents(a);
         });
 
         // store a reference to the more button and set up events for it
@@ -161,6 +99,91 @@
           self.setOverflow();
         });
         self.setOverflow();
+      },
+
+      buildAnchorEvents: function(anchor) {
+        var self = this,
+          a = anchor;
+
+        //Attach click events to tab and anchor
+        a.parent().on('click.tabs', function () {
+          self.activate($(this).index());
+          if (self.popupmenu) {
+            self.popupmenu.close();
+          }
+          $(this).find('a').focus();
+        });
+
+        a.on('click.tabs', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).parent().trigger('click');
+        }).on('keydown.tabs', function (e) {
+
+          if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || e.which < 32) {
+            return;
+          }
+
+          var currentLi = $(this).parent(),
+            targetLi,
+            tabs = self.container.find('li');
+
+          function previousTab() {
+            var i = currentLi.index() - 1;
+            while (i > -1 && !targetLi) {
+              if (tabs.eq(i).is(':not(.hidden)')) {
+                return tabs.eq(i);
+              }
+              i = i - 1;
+            }
+            return self.container.find('li:last');
+          }
+
+          function nextTab() {
+            var i = currentLi.index() + 1;
+            while(i < tabs.length && !targetLi) {
+              if (tabs.eq(i).is(':not(.hidden')) {
+                return tabs.eq(i);
+              }
+              i++;
+            }
+            return self.container.find('li:first');
+          }
+
+          switch(e.which) {
+            case 38:
+              e.preventDefault(); // jshint ignore:line
+            case 37:
+              targetLi = previousTab();
+               e.preventDefault();
+              break;
+            case 40:
+              e.preventDefault(); // jshint ignore:line
+            case 39:
+              targetLi = nextTab();
+              e.preventDefault();
+              break;
+          }
+
+          // Use the matching option in the popup menu if the target is hidden by overflow.
+          if (self.isTabOverflowed(targetLi)) {
+            e.preventDefault();
+            var oldIndex = self.tablist.find(targetLi).index();
+            // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
+            setTimeout(function() {
+              self.buildPopupMenu(oldIndex);
+            }, 0);
+            return;
+          }
+
+          targetLi.find('a').click().focus();
+        }).on('focus.tabs', function(e) {
+          e.preventDefault();
+          var targetLi = a.parent();
+          if (self.isTabOverflowed(targetLi)) {
+            self.buildPopupMenu(targetLi.index());
+          }
+        });
       },
 
       activate: function(index){
@@ -203,6 +226,94 @@
         });
 
         ui.panels.find(':first-child').filter('h3').attr('tabindex', '0');
+      },
+
+      // Adds a new tab into the list and properly binds events
+      add: function(tabId, tabName, tabContent, atIndex) {
+        if (!tabId) {
+          return this;
+        }
+
+        // Sanitize
+        tabId = '' + tabId;
+        tabName = '' + tabName;
+
+        // Build
+        var tabHeaderMarkup = $('<li role="presentation" class="tab"></li>'),
+          anchorMarkup = $('<a href="#'+ tabId +'" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">'+ tabName +'</a>'),
+          tabContentMarkup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+        tabHeaderMarkup.html(anchorMarkup);
+        tabContentMarkup.html(tabContent);
+
+        // Insert markup at the very end, or at the specified index.
+        if (atIndex === undefined || isNaN(atIndex)) {
+          this.tablist.append(tabHeaderMarkup);
+          this.container.append(tabContentMarkup);
+        } else {
+          var tabs = this.tablist.find('li'),
+            insertBefore = tabs.eq(atIndex).length > 0,
+            targetIndex = insertBefore ? atIndex : tabs.length - 1;
+
+          if (!insertBefore) {
+            tabHeaderMarkup.insertAfter(tabs.eq(targetIndex));
+            tabContentMarkup.insertAfter(this.container.children().eq(targetIndex + 2));
+          } else {
+            tabHeaderMarkup.insertBefore(tabs.eq(targetIndex));
+            tabContentMarkup.insertBefore(this.container.children().eq(targetIndex + 2));
+          }
+        }
+
+        // Add each new part to their respective collections.
+        this.panels = this.panels.add(tabContentMarkup);
+        this.anchors = this.anchors.add(anchorMarkup);
+
+        // Setup events on the new anchor
+        this.buildAnchorEvents(anchorMarkup);
+
+        return this;
+      },
+
+      // Removes a tab from the list and cleans up properly
+      remove: function(tabId) {
+        if (!tabId) {
+          return this;
+        }
+
+        var targetAnchor = this.anchors.filter('[href="#' + tabId + '"]'),
+          targetLi = targetAnchor.parent(),
+          targetPanel = this.panels.filter('#' + tabId);
+
+        // Remove these from the collections
+        this.panels = this.panels.not(targetPanel);
+        this.anchors = this.anchors.not(targetAnchor);
+
+        // Kill associated events
+        targetLi.off('click.tabs');
+        targetAnchor.off('click.tabs focus.tabs keydown.tabs');
+
+        // Remove Markup
+        targetLi.remove();
+        targetPanel.remove();
+
+        return this;
+      },
+
+      // Hides a tab
+      hide: function(tabId) {
+        if (!tabId) {
+          return;
+        }
+        this.anchors.filter('[href="#' + tabId + '"]').parent().addClass('hidden');
+        return this;
+      },
+
+      // Shows a tab
+      show: function(tabId) {
+        if (!tabId) {
+          return;
+        }
+        this.anchors.filter('[href="#' + tabId + '"]').parent().removeClass('hidden');
+        return this;
       },
 
       setOverflow: function () {
@@ -249,7 +360,7 @@
 
         // Create menu items for all of the "invisible" tabs
         $.each(self.element.find('li'), function(i, item) {
-          if (self.isTabOverflowed(item)) {
+          if (self.isTabOverflowed(item) && $(item).is(':not(.hidden)')) {
             var popupLi = $(item).clone().removeClass('tab is-selected').attr('data-original-tab-index', i).appendTo(menuHtml);
             popupLi.find('a').on('focus', function() {
               self.activate(i);
@@ -367,12 +478,32 @@
       },
 
       destroy: function(){
+        this.panels.removeAttr('style');
+
+        this.header
+          .removeAttr('role')
+          .removeAttr('aria-multiselectable');
+
+        this.tablist.find('li')
+          .off('click.tabs')
+          .removeAttr('role')
+          .removeClass('tab is-selected');
+
+        this.anchors
+          .off('click.tabs focus.tabs keydown.tabs')
+          .removeAttr('role')
+          .removeAttr('aria-expanded')
+          .removeAttr('aria-selected')
+          .removeAttr('tabindex');
+
         $(window).off('resize.tabs');
+
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
-          this.moreButton.remove();
         }
-        $.removeData(this.obj, pluginName);
+        this.moreButton.remove();
+
+        $.removeData(this.element[0], pluginName);
       }
     };
 
@@ -382,7 +513,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Tabs(this, settings));
       }
     });
   };
