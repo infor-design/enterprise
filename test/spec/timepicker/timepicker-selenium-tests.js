@@ -13,6 +13,7 @@ describe('Time Picker [selenium]', function(){
     TIME_FIELD_TRIGGER = '#time-field + svg',
     DISABLED_FIELD = '#time-field-disabled',
     DISABLED_FIELD_TRIGGER = '#time-field-disabled + svg',
+    ROUNDING_FIELD = '#rounding-time-field',
     HOURS_INPUT = '#timepicker-hours',
     HOURS_DD = '#timepicker-hours-shdo',
     MINUTES_INPUT = '#timepicker-minutes',
@@ -209,6 +210,43 @@ describe('Time Picker [selenium]', function(){
         globals.noError(err);
         should.exist(result);
         result.should.contain('error');
+      })
+      .call(done);
+  });
+
+  it('should round minutes to the nearest minute interval if the "roundToIncrement" setting has been toggled on', function(done) {
+    runner.client
+      // Set and check the original value of the input
+      .setValue(ROUNDING_FIELD, '', globals.noError)
+      .getValue(ROUNDING_FIELD, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('');
+      })
+      // Key in a time that doesn't match up to any of the predefined intervals on the 10s
+      .setValue(ROUNDING_FIELD, '1013pm', globals.noError)
+      .addValue(ROUNDING_FIELD, ['Tab'], globals.noError)
+      // Check the value.  It should've rounded down to 10:10 pm
+      .getValue(ROUNDING_FIELD, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('10:10 pm');
+      })
+      // Reset the value to nothing and check the input
+      .setValue(ROUNDING_FIELD, '', globals.noError)
+      .getValue(ROUNDING_FIELD, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('');
+      })
+      // Key in a time that doesn't match up to any of the predefined intervals on the 10s
+      .setValue(ROUNDING_FIELD, '1016pm', globals.noError)
+      .addValue(ROUNDING_FIELD, ['Tab'], globals.noError)
+      // Check the value.  It should've rounded up to 10:20 pm
+      .getValue(ROUNDING_FIELD, function(err, value) {
+        globals.noError(err);
+        should.exist(value);
+        value.should.equal('10:20 pm');
       })
       .call(done);
   });
