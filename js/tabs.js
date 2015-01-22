@@ -289,7 +289,7 @@
 
         // Kill associated events
         targetLi.off('click.tabs');
-        targetAnchor.off('click.tabs focus.tabs');
+        targetAnchor.off('click.tabs focus.tabs keydown.tabs');
 
         // Remove Markup
         targetLi.remove();
@@ -478,12 +478,32 @@
       },
 
       destroy: function(){
+        this.panels.removeAttr('style');
+
+        this.header
+          .removeAttr('role')
+          .removeAttr('aria-multiselectable');
+
+        this.tablist.find('li')
+          .off('click.tabs')
+          .removeAttr('role')
+          .removeClass('tab is-selected');
+
+        this.anchors
+          .off('click.tabs focus.tabs keydown.tabs')
+          .removeAttr('role')
+          .removeAttr('aria-expanded')
+          .removeAttr('aria-selected')
+          .removeAttr('tabindex');
+
         $(window).off('resize.tabs');
+
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
-          this.moreButton.remove();
         }
-        $.removeData(this.obj, pluginName);
+        this.moreButton.remove();
+
+        $.removeData(this.element[0], pluginName);
       }
     };
 
