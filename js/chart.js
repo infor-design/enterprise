@@ -94,16 +94,13 @@
         h = 300,
         barWidth = 24,
         spaceWidth = 10,
-        legendPanel = {
-          height: 40
-        },
         y,
         stack,
         x = d3.scale.ordinal().rangeRoundBands([0, w - margins.left - margins.right]);
 
       var svg = d3.select(container).append('svg')
         .attr('width', w)
-        .attr('height', h + legendPanel.height)
+        .attr('height', h)
         .append('g')
         .attr('transform', 'translate(' + (margins.left) + ',' + (h - margins.top) + ')');
 
@@ -229,24 +226,19 @@
     };
 
     charts.VerticalBar = function(dataset, isNormalized) {
-      //http://jsfiddle.net/datashaman/rBfy5/2/
-      var legendPanel, maxTextWidth, width, height, series, rects, svg, stack,
+      //Original http://jsfiddle.net/datashaman/rBfy5/2/
+      var maxTextWidth, width, height, series, rects, svg, stack,
           xMax, xScale, yScale, yAxis, yMap, xAxis, groups;
 
       var margins = {
-        top: 12,
+        top: 30,
         left: 48,
         right: 24,
-        bottom: 34
-      };
-
-      legendPanel = {
-        width: 240,
-        height: 160
+        bottom: 50 // 30px plus size of the bottom axis (20)
       };
 
       width = 376 + margins.left + margins.right ;
-      height = 178 - margins.top - margins.bottom;
+      height = 250 - margins.top - margins.bottom;  //influences the bar width
 
       //Get the Legend Series'
       series = dataset.map(function (d) {
@@ -287,7 +279,7 @@
       svg = d3.select(container)
         .append('svg')
         .attr('width', width + margins.left + margins.right)
-        .attr('height', height + margins.top + margins.bottom + legendPanel.height)
+        .attr('height', height + margins.top + margins.bottom)
         .append('g')
         .attr('class', 'group')
         .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
@@ -390,7 +382,7 @@
               xPos = parseFloat(shape.attr('x')) + parseFloat(shape.attr('width')),
               yPos = parseFloat(d3.select(this).attr('y')) + yPosS - 2;
 
-        tooltip.style('left', xPos + 90 + 'px') //80 is the tooltip width so its over the mouse
+        tooltip.style('left', xPos + margins.left + 90 + 'px') //80 is the tooltip width so its over the mouse
             .style('top', yPos + 'px')
             .select('.tooltip-content')
             .html('<p><b>' + d.y + ' </b>' + d.x + '</p>');
@@ -431,8 +423,8 @@
     };
 
     charts.Pie = function(chartData, isDonut) {
-      var centerLabel = chartData.dataset[0].centerLabel;
-      chartData = chartData.dataset[0].data;
+      var centerLabel = chartData[0].centerLabel;
+      chartData = chartData[0].data;
       var radius, svg, margin, arc, width, height;
 
       margin = {top: 20, right: 20, bottom: 20, left: 20};
