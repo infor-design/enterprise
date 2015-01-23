@@ -218,6 +218,7 @@
 
         // Build the slider controls
         self.wrapper = $('<div class="slider-wrapper"></div>').attr('id', self.element.attr('id') + '-slider').insertAfter(self.element);
+        self.hitarea = $('<div class="slider-hit-area"></div>').appendTo(self.wrapper);
         self.range = $('<div class="slider-range"></div>').appendTo(self.wrapper);
 
         // Handles

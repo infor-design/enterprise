@@ -7,6 +7,15 @@
   position: relative;
   width: 92%;
 
+  .slider-hit-area {
+    bottom: -10px;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -10px;
+  }
+
   > .tick {
     background-color: $slider-bg-color;
     border-radius: 12px;
@@ -140,6 +149,7 @@
 
 .slider-range {
   background-color: $primary-color;
+  cursor: pointer;
   display: block;
   height: inherit;
   position: absolute;
