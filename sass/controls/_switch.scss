@@ -8,7 +8,6 @@
 
   // Text Label
   label {
-    text-align: right;
     text-indent: 60px;
   }
 
@@ -18,7 +17,6 @@
 
     ~ label {
       cursor: pointer;
-      float: left;
       line-height: 17px;
       position: relative;
       @include no-select();
@@ -89,4 +87,3 @@
   }
 
 }
-
