@@ -42,7 +42,7 @@
     }
 
     ~ label:after {
-      background-color: $switch-unchecked-color;
+      background-color: $body-bg-color;
       border: solid 2px $switch-unchecked-color;
       border-radius: 50%;
       height: 12px;
@@ -59,7 +59,6 @@
 
   //Checked Styling - Toggle Handle
   input:checked ~ label:after {
-    background-color: $switch-checked-color;
     border-color: $switch-checked-color;
     left: 29px;
   }
@@ -68,6 +67,11 @@
   input:focus ~ label:after {
     // Doesnt look as good background-color: #ffffff;
     box-shadow: 0 0 0 2px #f5f5f5, 0 0 0 3px #0c7ad8;
+  }
+
+  // Active State
+  input:active ~ label:after {
+    box-shadow: 0 0 0 2px #f5f5f5;
   }
 
   //Disabled
