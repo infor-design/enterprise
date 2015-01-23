@@ -10,10 +10,12 @@
   > .tick {
     background-color: $slider-bg-color;
     border-radius: 12px;
+    cursor: pointer;
     display: inline-block;
     height: 12px;
     line-height: 12px;
     margin-top: -4px;
+    outline: 0;
     position: absolute;
     text-align: center;
     text-decoration: none;
@@ -27,14 +29,10 @@
     }
 
     > .label {
-      margin: 14px 0 0;
       position: absolute;
       text-overflow: ellipsis;
+      top: 24px;
       white-space: nowrap;
-
-      &:hover {
-        cursor: pointer;
-      }
     }
 
   }
@@ -45,6 +43,10 @@
     > .tick {
       background-color: #d2d2d2 !important;
       cursor: default;
+
+      > .label {
+        color: #d2d2d2;
+      }
     }
 
     > .slider-range {
@@ -61,10 +63,11 @@
 
 .slider-handle {
   background-color: $slider-active-bg-color;
-  border: 3px solid $slider-active-bg-color;
+  border: 6px solid $slider-active-bg-color;
   border-radius: 24px;
   box-shadow: 0 0 0 20px transparent; //Increase touch point
   color: transparent;
+  cursor: pointer;
   display: inline-block;
   height: 24px;
   line-height: 24px;
@@ -77,11 +80,56 @@
     @include css3(transition, left 200ms, right 200ms);
   }
 
+  // Focus Border
+  &::after {
+    border: 1px solid;
+    border-color: inherit;
+    border-radius: 32px;
+    content: '';
+    height: 60px;
+    left: -25px;
+    position: absolute;
+    @include scale(0);
+    top: -25px;
+    @include css3-prop-transition(transform, 200ms);
+    width: 60px;
+    z-index: 19;
+  }
+
+  // Transparent BGs
+  &::before {
+    border: 28px solid;
+    border-color: inherit;
+    border-radius: 28px;
+    content: '';
+    left: -22px;
+    opacity: .1;
+    position: absolute;
+    top: -22px;
+    @include css3-prop-transition(transform, 200ms);
+    @include scale(0);
+    z-index: 19;
+  }
+
   &:focus,
-  &:active,
-  &.is-active {
+  &:active {
     background-color: $inverse-color !important; // Needs !important to override inline CSS for background color on active state.
     border-color: $slider-active-bg-color;
+    outline: 0;
+  }
+
+  &:focus {
+    &::before,
+    &::after {
+      @include scale(1);
+    }
+  }
+
+  &:active,
+  &.is-active {
+    &::after {
+      border: 0;
+    }
   }
 
   &.is-dragging {
