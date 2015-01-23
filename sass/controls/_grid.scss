@@ -3,6 +3,7 @@
 //================================================== //
 
 $gutter-size: 20px;
+$gutter-neg-size: -20px;
 
 //$breakpoint-phone: 320px;
 //$breakpoint-phone-to-tablet: 768px;
@@ -10,8 +11,9 @@ $gutter-size: 20px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 
 .container {
-  margin: 0 auto;
+  margin-left: $gutter-neg-size;
   max-width: $breakpoint-desktop-to-extralarge;
+  padding: 0 0 0 $gutter-size;
   width: 100%;
 
   .content {
@@ -43,15 +45,20 @@ $gutter-size: 20px;
 @media (min-width: $breakpoint-phone) {
   .container {
     padding: 0 $gutter-size;
-    width: 100%;
+    margin: 0;
   }
 }
 
 // For devices larger than 550px
 @media (min-width: $breakpoint-phone-to-tablet) {
+  .container {
+    padding: 0 0 0 $gutter-size;
+    margin: 0 0 0 $gutter-neg-size;
+  }
+
   .column,
   .columns {
-    padding-right: $gutter-size;
+    padding-left: $gutter-size;
 
     &:last-child {
       padding-right: 0;

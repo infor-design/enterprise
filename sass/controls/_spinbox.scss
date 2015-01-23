@@ -1,11 +1,12 @@
-/* Spinboxes
-================================================== */
+// Spinboxes
+//================================================== //
 
 // Overrides some basic styles from the "input".
 .spinbox {
   border-radius: 0;
   -webkit-font-smoothing: subpixel-antialiased;
   font-weight: 400;
+  padding: 9px;
   text-align: center;
   width: 84px;
 }
