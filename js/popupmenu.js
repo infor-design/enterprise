@@ -244,7 +244,7 @@
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight(),
-          xOffset = this.element.hasClass('btn-actions') && this.element.parent('.card-header').length > 0 ? this.element.parent('.card-header').width() - 10 : 0;
+          xOffset = this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('-header') > -1 ? (menuWidth) - 34 : 0;
 
         if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
@@ -288,9 +288,7 @@
 
         $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
-        if (this.element.hasClass('btn-actions') && this.element.parent('.card-header').length > 0) {
-          this.menu.width(this.element.parent('.card-header').outerWidth() - 18);
-        }
+
         self.position(e);
 
         //Close on Document Click ect..
