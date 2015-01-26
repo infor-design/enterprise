@@ -118,21 +118,62 @@
           this.settings.tooltip.push('');
         }
 
-        if (this.settings.ticks) {
-          // Check the type of the data-ticks.  If it's not a complete array and doesn't have at least one option, ignore it
-          var ticks = self.settings.ticks;
-          this.ticks = [];
+        // Build ticks.  All sliders have a tick for minimum and maximum by default.  Some will be provided as extra.
+        this.ticks = [];
+        var minTick = {
+          'value' : this.settings.min,
+          'description' : self.getModifiedTextValue(this.settings.min)
+        }, maxTick = {
+          'value' : this.settings.max,
+          'description' : self.getModifiedTextValue(this.settings.max)
+        };
+
+        if (!this.settings.ticks) {
+          this.ticks.push(minTick, maxTick);
+        } else {
+          // Check the type of the data-ticks.  If it's not a complete array
+          // and doesn't have at least one option, ignore it.
+          var ticks = self.settings.ticks || [];
+
           if (isArray(ticks) && ticks.length > 0) {
-            for (var i = 0; i < ticks.length; i++) {
-              var tick = {};
-              if (ticks[i].value !== undefined) {
-                tick.value = ticks[i].value;
-                tick.description = ticks[i].description !== undefined ? ticks[i].description : '';
-                tick.color = ticks[i].color;
-                self.ticks.push(tick);
-              }
+            // Filter through the incoming ticks to figure out if any have been defined
+            // That match the values of min and max.
+            var equalsMin = ticks.filter(function(obj) {
+              return obj.value === self.settings.min;
+            }),
+            equalsMax = ticks.filter(function(obj) {
+              return obj.value === self.settings.max;
+            });
+
+            // Overwrite description and color for min/max if they've been found.
+            if (equalsMin.length > 0) {
+              minTick.description = equalsMin[0].description;
+              minTick.color = equalsMin[0].color;
+              ticks = $.grep(ticks, function(val) {
+                return val !== equalsMin[0];
+              });
+            }
+            if (equalsMax.length > 0) {
+              maxTick.description = equalsMax[0].description;
+              maxTick.color = equalsMax[0].color;
+              ticks = $.grep(ticks, function(val) {
+                return val !== equalsMax[0];
+              });
             }
           }
+
+          // Push the values of all ticks out to the ticks array
+          self.ticks.push(minTick);
+          for (var i = 0; i < ticks.length; i++) {
+            var tick = {};
+            if (ticks[i].value !== undefined) {
+              tick.value = ticks[i].value;
+              tick.description = ticks[i].description !== undefined ? ticks[i].description : '';
+              tick.color = ticks[i].color;
+              self.ticks.push(tick);
+            }
+          }
+          self.ticks.push(maxTick);
         }
 
         // configure the slider to deal with an array of values, and normalize the values to make sure they are numbers.
@@ -177,13 +218,14 @@
 
         // Build the slider controls
         self.wrapper = $('<div class="slider-wrapper"></div>').attr('id', self.element.attr('id') + '-slider').insertAfter(self.element);
+        self.hitarea = $('<div class="slider-hit-area"></div>').appendTo(self.wrapper);
         self.range = $('<div class="slider-range"></div>').appendTo(self.wrapper);
 
         // Handles
         self.handles = [];
-        self.handles.push($('<a href="#" class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0">Handle</a>').text(self.settings.range ? 'lower' : '')); // TODO: Localize
+        self.handles.push($('<div class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></div>').text(self.settings.range ? 'lower' : 'handle')); // TODO: Localize
         if (self.settings.range) {
-          self.handles.push($('<a href="#" class="slider-handle higher" tabindex="0">Handle</a>').text('higher')); // TODO: Localize
+          self.handles.push($('<div class="slider-handle higher" tabindex="0"></div>').text('higher')); // TODO: Localize
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles
@@ -198,15 +240,13 @@
         });
 
         // Ticks
-        if (self.ticks) {
-          for (var i = 0; i < self.ticks.length; i++) {
-            var leftTickPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - 6px)';
-            self.ticks[i].element = $('<a href="#" class="tick" data-value="'+ self.ticks[i].value +'" tabindex="-1">&nbsp;<br></a>');
-            self.ticks[i].label = $('<span class="label">' + self.ticks[i].description + '</span>');
-            self.ticks[i].element.css('left', leftTickPos).append(self.ticks[i].label);
-            self.wrapper.append(self.ticks[i].element);
-            self.ticks[i].label.css('left', '-' + (self.ticks[i].label.outerWidth()/2 - 8) + 'px');
-          }
+        for (var i = 0; i < self.ticks.length; i++) {
+          var leftTickPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - 6px)';
+          self.ticks[i].element = $('<div class="tick" data-value="'+ self.ticks[i].value +'"></div>');
+          self.ticks[i].label = $('<span class="label">' + self.ticks[i].description + '</span>');
+          self.ticks[i].element.css('left', leftTickPos).append(self.ticks[i].label);
+          self.wrapper.append(self.ticks[i].element);
+          self.ticks[i].label.css('left', '-' + (self.ticks[i].label.outerWidth()/2 - self.ticks[i].element.width()/2) + 'px');
         }
 
         self.value(self.settings.value);
@@ -217,7 +257,7 @@
           if (self.settings.tooltip) {
             handle.tooltip({
               content: function() {
-                return '' + self.settings.tooltip[0] + Math.floor(self.value()[i]) + self.settings.tooltip[1];
+                return '' + self.getModifiedTextValue(Math.floor(self.value()[i]));
               },
               placement: 'top',
               trigger: 'focus',
@@ -291,7 +331,11 @@
             updateHandleFromDraggable(e, $(e.currentTarget), args);
           })
           .on('keydown.slider', function(e) {
+            self.activateHandle(handle);
             self.handleKeys(e, self);
+          })
+          .on('keyup.slider blur.slider', function() {
+            self.deactivateHandle(handle);
           })
           // Add/Remove Classes for canceling animation of handles on the draggable's events.
           .on('dragstart', function() {
@@ -369,6 +413,14 @@
         });
 
         return self;
+      },
+
+      activateHandle: function(handle) {
+        handle.addClass('is-active');
+      },
+
+      deactivateHandle: function(handle) {
+        handle.removeClass('is-active');
       },
 
       convertValueToPercentage: function(value) {
@@ -481,36 +533,60 @@
       updateRange: function() {
         var self = this,
           newVal = this.value(),
-          percentages = [];
+          percentages = [],
+          color = this.getColorClosestToValue();
 
-        if (this.ticks) {
-          var color = this.getColorClosestToValue();
+        for (var i = 0; i < this.ticks.length; i++) {
+          var condition = !this.settings.range ? this.ticks[i].value <= newVal[0] :
+            newVal[0] < this.ticks[i].value && this.ticks[i].value <= newVal[1];
 
-          for (var i = 0; i < this.ticks.length; i++) {
-            var condition = !this.settings.range ? this.ticks[i].value <= newVal[0] : newVal[0] < this.ticks[i].value && this.ticks[i].value <= newVal[1];
-            if (condition) {
-              this.ticks[i].element.addClass('complete');
-              if (color) {
-                this.ticks[i].element.css('background-color', color);
-              }
-            } else {
-              this.ticks[i].element.removeClass('complete');
-              if (color) {
-                this.ticks[i].element.css('background-color', '');
-              }
+          if (condition) {
+            this.ticks[i].element.addClass('complete');
+            if (color) {
+              this.ticks[i].element.css('background-color', color);
+            }
+          } else {
+            this.ticks[i].element.removeClass('complete');
+            if (color) {
+              this.ticks[i].element.css('background-color', '');
             }
           }
-
-          if (color) {
-            this.range.css('background-color', color);
-            $.each(this.handles, function(i, handle) {
-              handle.css({
-                'background-color' : color,
-                'border-color' : color
-              });
-            });
-          }
         }
+
+        if (color) {
+          this.range.css('background-color', color);
+          $.each(this.handles, function(i, handle) {
+            handle.css({
+              'background-color' : color,
+              'border-color' : color
+            });
+          });
+        }
+
+        // Change the text color of ticks if either handle value matches their value
+        var lowerTicks = this.ticks.filter(function(obj) {
+          return obj.value === newVal[0];
+        }) || [],
+          higherTicks = [];
+        if (this.handles[1]) {
+          higherTicks = this.ticks.filter(function(obj) {
+            return obj.value === newVal[1];
+          }) || [];
+        }
+
+        // Remove any text colors that already existed.
+        $.each(self.ticks, function(i) {
+          self.ticks[i].label.css('color', '');
+        });
+
+        // Set the text colors to the background color of the tick
+        if (lowerTicks.length > 0) {
+          lowerTicks[0].label.css('color', lowerTicks[0].element.css('background-color'));
+        }
+        if (higherTicks.length > 0) {
+          higherTicks[0].label.css('color', higherTicks[0].element.css('background-color'));
+        }
+
 
         // Convert the stored values from ranged to percentage
         percentages[0] = this.convertValueToPercentage(newVal[0]);
@@ -590,10 +666,6 @@
       },
 
       getColorClosestToValue: function() {
-        if (!this.ticks) {
-          return undefined;
-        }
-
         var val = this.value()[0],
           highestTickColor;
         for (var i = 0; i < this.ticks.length; i++) {
@@ -635,19 +707,22 @@
         self._value = [minVal, maxVal];
         self.element.val(maxVal !== undefined ? self._value : self._value[0]);
         $.each(self.handles, function(i, handle) {
-          var prefix = '',
-            suffix = '';
-          if (self.settings.tooltip) {
-            prefix = self.settings.tooltip[0];
-            suffix = self.settings.tooltip[1];
-          }
           handle.attr({
             'aria-valuenow': self._value[i],
-            'aria-valuetext': prefix + self._value[i] + suffix
+            'aria-valuetext': self.getModifiedTextValue(self._value[i])
           });
         });
         self.element.trigger('change');
         return self._value;
+      },
+
+      // Returns a value with prefixed/suffixed text content.
+      // Used by the tooltip and default ticks to get potential identifiers like $ and %.
+      getModifiedTextValue: function(content) {
+        if (!this.settings.tooltip) {
+          return content;
+        }
+        return this.settings.tooltip[0] + content + this.settings.tooltip[1];
       },
 
       enable: function() {
@@ -669,7 +744,7 @@
       destroy: function() {
         var self = this;
         $.each(self.handles, function (i, handle) {
-          handle.off('mousedown.slider click.slider drag.slider keydown.slider dragstart dragend');
+          handle.off('mousedown.slider click.slider blur.slider drag.slider keydown.slider keyup.slider dragstart dragend');
         });
         this.wrapper.off('click.slider touchend.slider touchcancel.slider').remove();
         this.element.attr('type', this.originalElement.type);
