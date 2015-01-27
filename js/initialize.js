@@ -122,6 +122,9 @@
         //Busy Indicator
         elem.find('.busy').busyindicator();
 
+        //Search Field
+        elem.find('.searchfield').searchfield();
+
         //Class-based detection for IE
         if (!!navigator.userAgent.match(/Trident/)) {
           $('html').addClass('ie');

@@ -24,6 +24,7 @@
     // Plugin Constructor
     function Plugin(element) {
       //TODO: Idea is that data-autocomplete can be a url, 'source' or an array
+      this.settings = settings;
       this.element = $(element);
       this.init();
     }
@@ -76,8 +77,10 @@
           .on('close.autocomplete', function () {
             self.list.parent('.popupmenu-wrapper').remove();
             self.element.removeClass('is-open');
-          });
+          })
+          .trigger('populated', items);
 
+        // Overrides the 'click' listener attached by the Popupmenu plugin
         self.list.off('click.autocomplete').on('click.autocomplete', 'a', function (e) {
           var a = $(e.currentTarget),
             ret = a.text();
@@ -92,8 +95,6 @@
             }
           }
 
-          self.element.trigger('selected', ret);
-
           e.preventDefault();
           return false;
         });
@@ -107,6 +108,7 @@
 
         this.noSelect = true;
         this.element.focus();
+        this.element.trigger('autocomplete-list-open', items);
       },
 
       handleEvents: function () {
@@ -175,6 +177,8 @@
       var instance = $.data(this, pluginName);
       if (!instance) {
         instance = $.data(this, pluginName, new Plugin(this, settings));
+      } else {
+        instance.settings = $.extend({}, instance.settings, options);
       }
     });
   };

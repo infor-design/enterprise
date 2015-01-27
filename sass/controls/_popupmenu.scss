@@ -118,7 +118,7 @@
 
   a {
     border: 1px solid transparent;
-    color: $input-color;
+    color: $font-color-light;
     display: block;
     @include font-size(14);
     padding: 0 30px 0 20px;
@@ -140,10 +140,9 @@
 
   //Text Underline on Terms
   i {
-    color: $menu-underline-color;
+    color: $font-color-extradark;
     font-family: $font-regular;
     font-style: normal;
-    text-decoration: underline;
   }
 
   //Icon Positioning
