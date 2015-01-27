@@ -11,7 +11,7 @@ $gutter-neg-size: -20px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 
 .container {
-  margin-left: $gutter-neg-size;
+  margin: 0 auto;
   max-width: $breakpoint-desktop-to-extralarge;
   padding: 0 0 0 $gutter-size;
   width: 100%;
@@ -44,25 +44,21 @@ $gutter-neg-size: -20px;
 // For mobile devices smaller than 320px
 @media (min-width: $breakpoint-phone) {
   .container {
-    padding: 0 $gutter-size;
     margin: 0;
+    padding: 0 $gutter-size;
   }
 }
 
 // For devices larger than 550px
 @media (min-width: $breakpoint-phone-to-tablet) {
   .container {
-    padding: 0 0 0 $gutter-size;
     margin: 0 0 0 $gutter-neg-size;
+    padding: 0 0 0 $gutter-size;
   }
 
   .column,
   .columns {
     padding-left: $gutter-size;
-
-    &:last-child {
-      padding-right: 0;
-    }
   }
 
   .one.column,
@@ -128,3 +124,16 @@ $gutter-neg-size: -20px;
     width: 50%;
   }
 }
+
+// For devices larger than 550px
+@media (min-width: $breakpoint-desktop-to-extralarge) {
+  .container {
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .row {
+    margin-left: -20px;
+  }
+}
+

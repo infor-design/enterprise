@@ -71,6 +71,18 @@
   .chart-legend {
     display: table-cell;
     vertical-align: middle;
+
+    &.is-below {
+      display: block;
+      margin-bottom: 20px;
+      text-align: center;
+      vertical-align: middle;
+
+      .chart-legend-item {
+        display: inline-block;
+        width: 100px;
+      }
+    }
   }
 
   .chart-legend-item {

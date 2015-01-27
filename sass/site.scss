@@ -8,148 +8,90 @@
 @import 'controls/typography';
 
 // Variables for this file
-$header-height: 82px;
+$header-height: 118px;
 
 // Top Header
 .site-header {
-  background-color: #fafafa;
+  background-color: #a352cc;
   display: block;
   height: $header-height;
-  position: fixed;
+  overflow: hidden;
   width: 100%;
 
+  .column {
+    padding-top: 40px;
+
+    > * {
+      display: inline-block;
+    }
+  }
+
   h1 {
-    color: $primary-color;
-    font-family: $font-regular;
-    @include font-size(36);
-    left: 90px;
-    margin: 0;
-    max-width: 300px;
-    position: relative;
-    top: -4px;
-  }
-}
-
-// Side Nav for larger screens
-.site-side-nav {
-  background-color: #ffffff;
-  //border-right: 1px solid rgba(0, 0, 0, .14);
-  bottom: 0;
-  color: #333333;
-  display: block;
-  font-family: $font-regular;
-  left: 0;
-  max-height: 900px;
-  min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-left: 40px;
-  position: fixed;
-  top: 0;
-  transform: translateZ(0);
-  transform-style: preserve-3d;
-  transition: transform .2s cubic-bezier(.4, 0, .2, 1) .1s;
-  width: 240px;
-  z-index: 4;
-
-  a {
-    border-bottom: 1px solid #d2d2d2;
-    color: #333333;
-    display: block;
-    font-family: $font-regular;
-    @include font-size(16);
-    line-height: 65px;
-    text-decoration: none;
-    text-transform: uppercase;
-    width: 100%;
-  }
-
-  .title {
-    border-bottom: 1px solid #d2d2d2;
-    color: $primary-color;
-    font-family: $font-regular;
-    @include font-size(36);
-    line-height: 82px;
-    margin-left: -40px;
-    margin-top: 0;
-    text-indent: 40px;
-  }
-
-  .footer-text {
-    color: #999999;
-    @include font-size(18);
-    position: relative;
-    top: 564px;
-  }
-}
-
-// Gradient Image
-.site-hero-image {
-  background-color: #055bb8;
-  background-image: linear-gradient(41deg, #00ab9f, #005bb8);
-  background-size: cover;
-  height: 600px;
-  position: absolute;
-  top: $header-height;
-  width: 100%;
-}
-
-.site-hero {
-  height: 600px;
-
-  //Title
-  h1 {
-    color: $inverse-color;
-    font-family: $font-regular;
-    @include font-size(60);
-    @include vertical-align();
-    top: 40%;
-  }
-
-  // Sub title
-  .subtitle {
     color: $inverse-color;
     font-family: $font-regular;
     @include font-size(30);
-    @include vertical-align();
-    top: 45%;
+    margin-left: 20px;
+    max-width: 300px;
   }
 
-  // Callout
-  .callout {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
-    color: #333333;
-    font-family: $font-regular;
-    @include font-size(24);
-    @include rem(line-height, 3.5rem);
-    padding: 35px;
-    @include vertical-align();
-    top: 95%;
-    width: 65%;
+  .btn-actions {
+    border-color: transparent;
+
+    svg {
+      fill: $inverse-color;
+    }
+
+    &:focus,
+    &:active {
+      border-color: $inverse-color;
+    }
+  }
+
+  .site-header-right {
+    float: right;
+  }
+
+  .site-search {
+    height: 34px;
+    margin-right: 10px;
+    vertical-align: top;
+    width: 34px;
+
+    svg {
+      fill: $inverse-color;
+      left: 5px;
+      top: 6px;
+    }
+
+    &:hover svg {
+      fill: $inverse-color;
+    }
+
+    &:focus,
+    &:active {
+      border-color: $inverse-color;
+    }
   }
 }
 
 // Hamburger Icon
 .hamburger-menu {
-  background-color: #333333;
+  background-color: $inverse-color;
   color: transparent;
   cursor: pointer;
   height: 2px;
-  left: 30px;
   position: relative;
-  top: 29px;
+  top: 3px;
   width: 30px;
 
   &:after,
   &:before {
-    background-color: #333333;
+    background-color: $inverse-color;
     content: '';
     height: 2px;
     left: 0;
     position: absolute;
-    top: 7px;
+    top: 8px;
     width: 100%;
   }
 
@@ -158,50 +100,18 @@ $header-height: 82px;
   }
 }
 
-// Main body Area
-.site-main {
-  background-color: none repeat scroll 0 0 #f0f0f0;
-  float: left;
-  height: 100%;
-  padding-bottom: 100px;
-  padding-left: 240px;
-  transition: padding-left .2s cubic-bezier(.4, 0, .2, 1) 0s;
-  width: 100%;
+// Text in the Page
+.site-content {
+  h1 {
+    margin-bottom: 20px;
+    margin-top: 50px;
+    font-size: 30px;
+  }
 
-  //Centers the middle content and changes size
-  .site-outer {
-    margin: auto;
-    width: 1160px;
+  p {
+    font-size: 18px;
+    line-height: 30px;
   }
 }
 
-// Break Point for Side Nav
-@media screen and (max-width: $breakpoint-desktop-to-extralarge) {
-  .site-side-nav {
-    transform: translateX(-241px);
-    visibility: hidden;
-  }
 
-  .site-main {
-    padding-left: 0;
-  }
-}
-
-// Break Point for Inner Size
-@media screen and (max-width: $breakpoint-tablet-to-desktop) {
-  .site-main .site-outer {
-    width: $breakpoint-phone-to-tablet;
-  }
-}
-
-@media screen and (max-width: $breakpoint-phone-to-tablet) {
-  .site-main .site-outer {
-    width: $breakpoint-phone;
-  }
-}
-
-@media screen and (max-width: $breakpoint-phone) {
-  .site-main .site-outer {
-    width: 100%;
-  }
-}

@@ -11,70 +11,79 @@
 
   <!-- Style Sheets -->
   <link rel="stylesheet" href="/stylesheets/site.css" type="text/css">
+  <link rel="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
 
-   <!-- jQuery and Plugin Code
+  <!-- jQuery and Plugin Code-->
   <script src="/js/jquery-1.11.1.min.js"></script>
   <script src="/js/sohoxi.js"></script>
-  <script src="/js/initialize.js"></script>
-  <script src="/js/demo.js"></script>-->
+  <script src="/js/demo.js"></script>
 
 </head>
 <body>
+  {{> controls/svg}}
 
   <header class="site-header" role="banner">
-    <nav class="site-header-nav">
-      <button class="hamburger-menu">Show navigation</button>
-      <h1>{{title}}</h1>
-    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="full column">
 
-    <section class="site-header-search">
-      <label for="site-search">I am searching for...</label>
-      <input id="site-search">
-    </section>
+          <button class="hamburger-menu" type="button">Show navigation</button>
+          <h1>{{title}} | Style</h1>
 
-    <section class="site-header-alerts">
-      <button></button>
-      <span class="badge"></span>
-      <button></button>
-    </section>
+          <div class="site-header-right ">
+            <button class="btn-icon site-search hidden-sm">
+              <svg class="icon" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-search"></use>
+              </svg>
+              <span>Search</span>
+            </button>
+
+            <button class="btn-actions">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="false">
+              <use xlink:href="#action-button"></use>
+            </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Theme</a></li>
+              <li class="separator"></li>
+              <li><a href="#">Something Else...</a></li>
+              <li><a href="#">Something Else...</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </header>
 
-  <nav class="site-side-nav" role="navigation">
-    <h1 class="title">Soho Xi</h1>
-    <ul>
-      <li><a href="#">Our Vision</a></li>
-      <li><a href="#">Design Gallery</a></li>
-      <li><a href="#">Style Guide</a></li>
-    </ul>
-    <span class="footer-text">Infor Company 2014</span>
-  </nav>
+  <section id="maincontent" class="site-content container">
+    <div class="row">
+      <div class="full column">
+        <h1>UX & Research</h1>
+        <p>Consider the shower faucet. Once upon a time, shower faucets were simple contraptions. There was a old-water knob and there was a hot-water knob. You would turn each knob to adjust the temperature;you didn’t have to figure out how to use it. It was obvious. Then, in the Sixties or Seventies, some engineer came along and decided that maybe you could combine the cold and hot water faucets into one faucet.
 
-  <div class="site-hero-image">
-  </div>
-  <section class="site-main" role="main">
-    <div class="site-outer">
-      <div class="site-hero">
-        <h1 class="title">Soho Xi: The Vision</h1>
-        <span class="subtitle">Soho Xi Vision Landing Subtitle</span>
-        <p class="callout">
-          Creative technology often demands that user experience designers “think outside the box” to come up with new exciting ways of engaging the user. Incredible innovation happens this way new standards are set, new experiences are defined. Our applications help turn information into decisions, and decisions into actions — faster.
-        </p>
+        Suddenly figuring out how to work the temperature and water pressure became infinitely more complicated. There arrived on the market a plethora of new faucets, each operating differently. How many of you have been to a hotel or a friend’s house</p>
       </div>
-
     </div>
   </section>
 
 
-{{#enableLiveReload}}
-<!-- Script Highlighting -->
-<script src="/js/highlight.js" type="text/javascript"></script>
-<!-- Live Reload - "grunt watch" -->
-<script type="text/javascript">
-  if (window.location.hostname !== '107.170.15.202') {
-    document.write('\x3Cscript type="text/javascript" src="//' + window.location.hostname + ':35729/livereload.js">\x3C/script>');
-  }
-</script>
-{{/enableLiveReload}}
+  {{#enableLiveReload}}
+  <!-- Live Reload - "grunt watch" -->
+  <script type="text/javascript">
+    if (window.location.hostname !== '107.170.15.202') {
+      document.write('\x3Cscript type="text/javascript" src="//' + window.location.hostname + ':35729/livereload.js">\x3C/script>');
+    }
+  </script>
+  {{/enableLiveReload}}
+
+  <script>
+    // Init All SoHo XI Controls Stuff on Document Ready
+    $(function() {
+      $('body').initialize('en');
+    });
+  </script>
 
 </body>
 </html>

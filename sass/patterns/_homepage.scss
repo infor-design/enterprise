@@ -2,7 +2,8 @@
 //==================================================//
 
 .homepage {
-  margin: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .card,
@@ -11,7 +12,7 @@
   border: 1px solid #d8d8d8;
   border-radius: 2px;
   margin-bottom: 20px;
-  min-height: 200px;
+  min-height: 330px;
   overflow: auto;
   position: relative;
   width: 100%;
@@ -40,5 +41,19 @@
       top: 9px;
     }
   }
+}
+
+// Double and Triple Height Widths
+.double-height {
+  min-height: 680px;
+}
+
+.double-width {
+  position: absolute;
+  width: 64.666%;
+}
+
+.triple-height {
+  min-height: 1030px;
 }
 

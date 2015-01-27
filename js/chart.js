@@ -41,7 +41,7 @@
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
 
     // Function to Add a Legend - TODO Remove unused params
-    this.addLegend = function(series) {
+    this.addLegend = function(series, position) {
       //var legend = svg.append('g').attr('transform', 'translate(' + margins.left + ',' + (position === 'right' ? -(height/2)+20 : (height + margins.bottom)) +')');
       var legend = $('<div class="chart-legend"></div>');
       if (series.length === 0) {
@@ -70,6 +70,9 @@
         series[idx].elem.dispatchEvent(e);
       });
 
+      if (position === 'below') {
+        legend.addClass('is-below');
+      }
       $(container).append(legend);
 
     };
@@ -234,7 +237,7 @@
         top: 30,
         left: 48,
         right: 24,
-        bottom: 50 // 30px plus size of the bottom axis (20)
+        bottom: 30 // 30px plus size of the bottom axis (20)
       };
 
       width = 376 + margins.left + margins.right ;
@@ -276,10 +279,15 @@
 
       margins.left += maxTextWidth*4.5;
 
+      var h = height + margins.top + margins.bottom,
+        w = width + margins.left + margins.right;
+
       svg = d3.select(container)
         .append('svg')
-        .attr('width', width + margins.left + margins.right)
-        .attr('height', height + margins.top + margins.bottom)
+        .attr('preserveAspectRatio', 'xMinYMax meet')
+        .attr('viewBox', '0 0 '+ w + ' ' + h)
+        .attr('width', w)
+        .attr('height', h)
         .append('g')
         .attr('class', 'group')
         .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
@@ -377,12 +385,12 @@
       .attr('width', 0) //Animated in later
       .on('mouseenter', function (d) {
           var yPosS = svg[0][0].getBoundingClientRect().top,
-              shape = d3.select(this),
+               shape = d3.select(this),
               tooltip = d3.select('#svg-tooltip'),
               xPos = parseFloat(shape.attr('x')) + parseFloat(shape.attr('width')),
-              yPos = parseFloat(d3.select(this).attr('y')) + yPosS - 2;
+              yPos = parseFloat(shape.attr('y')) + yPosS + 9;
 
-        tooltip.style('left', xPos + margins.left + 90 + 'px') //80 is the tooltip width so its over the mouse
+        tooltip.style('left', xPos + $(container).offset().left + 60 + 'px') //80 is the tooltip width so its over the mouse
             .style('top', yPos + 'px')
             .select('.tooltip-content')
             .html('<p><b>' + d.y + ' </b>' + d.x + '</p>');
@@ -416,8 +424,7 @@
         });
 
       //Add Legends
-      margins.left = 0;
-      charts.addLegend(series);
+      charts.addLegend(series, 'below');
       charts.appendTooltip();
       return $(container);
     };

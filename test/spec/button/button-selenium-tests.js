@@ -80,7 +80,7 @@ describe('Button [selenium]', function(){
     runner.client
       .getCssProperty('#one-hundred', 'width', function(err, width) {
         globals.noError(err);
-        width.value.should.equal('984px');
+        width.value.should.equal('974px');
       })
       .call(done);
   });

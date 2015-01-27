@@ -46,7 +46,7 @@
 }
 
 .hidden-sm {
-  @include respond-to(phone) { display: none; }
+  @include respond-to(phone) { display: none !important; }
 }
 
 [class*="visible-md-"] {
