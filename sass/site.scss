@@ -16,6 +16,7 @@ $header-height: 118px;
   display: block;
   height: $header-height;
   overflow: hidden;
+  transition: background-color 2s ease 0s;
   width: 100%;
 
   .column {
@@ -102,10 +103,10 @@ $header-height: 118px;
 
 // Text in the Page
 .site-content {
-  h1 {
+  h2 {
+    font-size: 30px;
     margin-bottom: 20px;
     margin-top: 50px;
-    font-size: 30px;
   }
 
   p {
