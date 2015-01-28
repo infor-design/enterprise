@@ -414,7 +414,7 @@
       // Focus the Element
       activate: function () {
         this.input.focus();
-        if (this.input[0].setSelectionRange) {
+        if (this.input[0].setSelectionRange&& !this.input[0].readOnly) {
           this.input[0].setSelectionRange(0, 0);  //scroll to left
         }
       },
