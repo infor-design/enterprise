@@ -388,9 +388,9 @@
         var shape = d3.select(this),
               content = '',
               yPosS = svg[0][0].getBoundingClientRect().top,
-              xPos = d3.event.pageX + 25;
-              //parseFloat(shape.attr('x')) + parseFloat(shape.attr('width')) + $(container).offset().left + 60,
-              yPos = parseFloat(shape.attr('y')) + yPosS - 20;
+              xPos = d3.event.pageX + 25,
+              yPos = parseFloat(shape.attr('y')) + yPosS - 20,
+              total = 0, totals = [];
 
           if (dataset.length === 1) {
             content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
@@ -398,7 +398,7 @@
            content = '<div class="chart-swatch">';
 
            for (var j = 0; j < dataset.length; j++) {
-            var total = 0, totals = [];
+            total = 0;
 
             for (var k = 0; k < dataset.length; k++) {
               total += dataset[k][i].x;
