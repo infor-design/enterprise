@@ -1,0 +1,14 @@
+// Toolbars
+//================================================== */
+
+// See also Colors.scss
+.toolbar {
+  border: 1px solid red;
+  width: 100%;
+
+  .btn {
+    background-color: transparent;
+    border-color: transparent;
+    color: #616161;
+  }
+}

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Toolbars Message</h1>
+    <span class="label">User Feedback</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="toolbar">
+    <button class="btn" type="button" id="show-toast-top-left">Show Toast Top left</button>
+    <button class="btn" type="button" id="show-toast-top-right">Show Toast Top Right</button>
+    <button class="btn" type="button" id="show-toast-bottom-left">Show Toast Bottom Left</button>
+    <button class="btn" type="button" id="show-toast-bottom-right">Show Toast Bottom Right</button>
+    <button class="btn" type="button" id="show-toast-big-text">Show Toast Long Text</button>
+    <button class="btn" type="button" id="toast-destroy">Toast Destroy</button>
+  </div>
+</div>
+
+<script>
+  var cnt = 1;
+
+  $('#show-toast-top-left').on('click', function() {
+      cnt ++;
+      $('body').toast({title: 'Application Offline' + cnt, position: 'top left', message: 'This is a Toast message.'});
+  });
+
+  $('#show-toast-top-right').on('click', function() {
+    cnt ++;
+    $('body').toast({title: 'Application Offline' + cnt, position: 'top right', message: 'This is a Toast message.'});
+  });
+
+  $('#show-toast-bottom-left').on('click', function() {
+    cnt ++;
+    $('body').toast({title: 'Application Offline' + cnt, position: 'bottom left', message: 'This is a Toast message.'});
+  });
+
+  $('#show-toast-bottom-right').on('click', function() {
+    cnt ++;
+    $('body').toast({title: 'Application Offline' + cnt, position: 'bottom right', message: 'This is a Toast message.'});
+  });
+
+  $('#show-toast-big-text').on('click', function() {
+    cnt ++;
+    $('body').toast({title: 'Longer Application Offline' + cnt, position: 'bottom right', message: 'This is a Toast message that is much longer. It is so long it might wrap but that does not cause any issues.'});
+  });
+
+  $('#toast-destroy').on('click', function() {
+    $('body').data('toast').destroy();
+  });
+</script>
