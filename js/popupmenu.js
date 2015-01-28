@@ -351,7 +351,7 @@
 
           menuToClose = $(this).find('ul');
 
-          var isLeft = parseInt(menuToClose.parent('.wrapper').css('left')) < 0;
+          var isLeft = parseInt(menuToClose.parent('.wrapper').css('left')) < 0,
             canClose = (tracker - startY) < 3.5;
 
           if (isLeft) {
