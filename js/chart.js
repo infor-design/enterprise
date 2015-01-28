@@ -57,6 +57,7 @@
           var pct = $('<span class="chart-legend-percent"></span>').text(series[i].percent);
           text.append(pct);
         }
+
         seriesLine.append(color, text);
         legend.append(seriesLine);
       }
@@ -383,19 +384,41 @@
         return yScale.rangeBand();
       })
       .attr('width', 0) //Animated in later
-      .on('mouseenter', function (d) {
-          var yPosS = svg[0][0].getBoundingClientRect().top,
-               shape = d3.select(this),
-              tooltip = d3.select('#svg-tooltip'),
-              xPos = parseFloat(shape.attr('x')) + parseFloat(shape.attr('width')),
-              yPos = parseFloat(shape.attr('y')) + yPosS + 9;
+      .on('mouseenter', function (d, i) {
+        var shape = d3.select(this),
+              content = '',
+              yPosS = svg[0][0].getBoundingClientRect().top,
+              xPos = d3.event.pageX + 25;
+              //parseFloat(shape.attr('x')) + parseFloat(shape.attr('width')) + $(container).offset().left + 60,
+              yPos = parseFloat(shape.attr('y')) + yPosS - 20;
 
-        tooltip.style('left', xPos + $(container).offset().left + 60 + 'px') //80 is the tooltip width so its over the mouse
-            .style('top', yPos + 'px')
-            .select('.tooltip-content')
-            .html('<p><b>' + d.y + ' </b>' + d.x + '</p>');
+          if (dataset.length === 1) {
+            content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
+          } else {
+           content = '<div class="chart-swatch">';
 
-        tooltip.classed('is-hidden', false);
+           for (var j = 0; j < dataset.length; j++) {
+            var total = 0, totals = [];
+
+            for (var k = 0; k < dataset.length; k++) {
+              total += dataset[k][i].x;
+              totals[k] = dataset[k][i].x;
+            }
+
+            content += '<div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></br>';
+           }
+           content += '</div>';
+          }
+
+          //TODO: Localize
+          content = '<span class="chart-tooltip-total"><b>' + total + '</b> Total</span>' +content;
+
+          charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'})
+              .find('.tooltip-content')
+                .html(content);
+
+        //charts.tooltip.addClass('top').removeClass('right').removeClass('is-hidden');
+        charts.tooltip.removeClass('is-hidden', false);
       })
       .on('mouseleave', function () {
         d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
@@ -558,10 +581,10 @@
         if (options.type === 'bar-normalized') {
           chartInst.VerticalBar(options.dataset, true);
         }
-        if (options.type === 'bar-grouped') { //TODO incomplete.
+        if (options.type === 'bar-grouped') {
           chartInst.VerticalBar(options.dataset, false, true);
         }
-        if (options.type === 'column') { //TODO incomplete.
+        if (options.type === 'column') {
           chartInst.Bar(options.dataset, false, true);
         }
         if (options.type === 'donut') {

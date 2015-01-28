@@ -68,6 +68,13 @@
           this.activeButton.attr('tabindex', '0').focus();
           return false;
         }
+
+        if (next === -1) {
+          this.activeButton = this.buttons.filter(':visible:not(:disabled)').last().attr('tabindex', '0');
+          this.buttons.attr('tabindex', '-1');
+          this.activeButton.attr('tabindex', '0').focus();
+          return false;
+        }
       },
 
       // Handle Arrow Keys
@@ -75,8 +82,7 @@
         var self = this;
 
         this.element.on('keydown.toolbar', 'button', function (e) {
-
-          if (e.keyCode === 38) {
+          if (e.keyCode === 37) {
             return self.navigate(-1);
           }
 
