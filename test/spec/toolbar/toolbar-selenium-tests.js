@@ -39,4 +39,14 @@ describe('Toolbar [selenium]', function(){
       .call(done);
   });
 
+  it.skip('should have aria roles', function(done) {
+    runner.client
+      .getAttribute('#standard', 'type', function(err, value) {
+        globals.noError(err);
+        value.should.equal('button');
+      })
+      .call(done);
+  });
+
+
 });
