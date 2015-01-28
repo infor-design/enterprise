@@ -52,13 +52,20 @@
 
       // Go To a button
       navigate: function (direction) {
-        this.buttons = this.buttons.filter(':visible:not(:disabled)').first();
+        this.buttons = this.buttons.filter(':visible:not(:disabled)');
         var current = this.buttons.index(this.activeButton),
           next = current + direction;
 
         if (next >= 0 && next < this.buttons.length) {
           this.buttons.attr('tabindex', '-1');
-          $(this.buttons[next]).attr('tabindex', '0').focus();
+          this.activeButton = this.buttons.eq(next).attr('tabindex', '0').focus();
+          return false;
+        }
+
+        if (next >= this.buttons.length) {
+          this.activeButton = this.buttons.filter(':visible:not(:disabled)').first().attr('tabindex', '0');
+          this.buttons.attr('tabindex', '-1');
+          this.activeButton.attr('tabindex', '0').focus();
           return false;
         }
       },
