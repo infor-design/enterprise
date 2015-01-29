@@ -123,7 +123,7 @@
         elem.find('.busy').busyindicator();
 
         //Search Field
-        elem.find('.searchfield').searchfield();
+        elem.find('[data-searchfield]:not([data-init])').searchfield();
 
         //Class-based detection for IE
         if (!!navigator.userAgent.match(/Trident/)) {

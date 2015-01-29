@@ -26,7 +26,7 @@
         defaults = {
           allResultsCallback: undefined,
           source: ['Delaware', 'Maryland', 'New Jersey', 'New York', 'Pennsylvania', 'Texas'],
-          listItemTemplate: undefined
+          template: undefined // Template that can be passed
         },
         settings = $.extend({}, defaults, options);
 
@@ -42,13 +42,8 @@
 
       init: function() {
         this
-          .setup()
           .build()
           .setupEvents();
-      },
-
-      setup: function() {
-        return this;
       },
 
       build: function() {
@@ -98,16 +93,14 @@
 
             if (!isMoreLink && !isNoneLink) {
               // Only write text into the field on a regular result pick.
-              self.element.val(ret).attr('aria-activedescendant', a.parent().attr('id'));
-            } else {
-              self.element.val('');
+              self.element.attr('aria-activedescendant', a.parent().attr('id'));
+            }
 
-              if (isMoreLink) {
-                // Trigger callback if one is defined
-                var callback = self.settings.allResultsCallback;
-                if (callback && typeof callback === 'function') {
-                  callback();
-                }
+            if (isMoreLink) {
+              // Trigger callback if one is defined
+              var callback = self.settings.allResultsCallback;
+              if (callback && typeof callback === 'function') {
+                callback(ret);
               }
             }
 
@@ -126,6 +119,16 @@
             e.preventDefault();
             return false;
           });
+
+          // Override the focus event created by the Autocomplete control to make the more link
+          // and no-results link blank out the text inside the input.
+          list.find('.more-results, .no-results').off('focus').on('focus.searchfield', function () {
+            var anchor = $(this);
+            list.find('li').removeClass('is-selected');
+            anchor.parent('li').addClass('is-selected');
+            self.element.val('');
+          });
+
         });
 
         return this;

@@ -20,6 +20,14 @@
   a {
     color: inherit;
     padding: 0 10px;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    > .icon {
+      position: static;
+    }
   }
 
   a:before,

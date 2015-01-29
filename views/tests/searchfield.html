@@ -1,17 +1,17 @@
 <div class="row">
   <div class="twelve columns">
-    <h1>Autocomplete</h1>
+    <h1>Searchfield</h1>
     <span class="label">for search and textbox</span>
     <hr>
 
     <div class="field">
-      <label for="auto-default">#auto-default (autocomplete with stock settings)</label>
-      <input data-autocomplete id="auto-default" placeholder="Type to Search" type="text" />
+      <label for="searchfield-default">#searchfield-default (searchfield with stock settings)</label>
+      <input data-searchfield id="searchfield-default" placeholder="Type to Search" type="text" />
     </div>
 
     <div class="field">
-      <label for="auto-template">#auto-template (uses an alternate source and external template)</label>
-      <input data-autocomplete="source" data-init="false" data-tmpl="#autocomplete-with-pic" id="auto-template" placeholder="Type to Search" type="text">
+      <label for="searchfield-template">#searchfield-template (uses an alternate source and external template)</label>
+      <input data-searchfield="source" data-tmpl="#searchfield-with-pic" id="searchfield-template" placeholder="Type to Search" type="text">
     </div>
 
   </div>
@@ -19,7 +19,7 @@
 
 <!--This is only needed because it renders first on the server-->
 {{={{{ }}}=}}
-<script id="autocomplete-with-pic" type="text/html">
+<script id="searchfield-with-pic" type="text/html">
   <li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}" {{/hasValue}}role="listitem">
     <a href="#" tabindex="-1">
       <svg class="icon">
@@ -34,7 +34,7 @@
 
 <script>
   $(function () {
-    $('#auto-template').autocomplete({
+    $('#searchfield-template').searchfield({
       source: '/api/states?term='
     }).on('selected', function (e, anchor) {
       console.log('Changed to: ' + $(anchor).parent().attr('data-value'));

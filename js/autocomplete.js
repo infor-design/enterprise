@@ -18,7 +18,7 @@
     var pluginName = 'autocomplete',
       defaults = {
         source: ['Alabama', 'Alaska', 'California', 'Delaware'], //Defines the data to use, must be specified.
-        listItemTemplate: undefined // If defined, use this to draw the contents of each search result instead of the default draw routine.
+        template: undefined // If defined, use this to draw the contents of each search result instead of the default draw routine.
       },
       settings = $.extend({}, defaults, options);
 
@@ -48,6 +48,10 @@
         this.handleEvents();
       },
 
+      setup: function() {
+
+      },
+
       addMarkup: function () {
         this.element.addClass('autocomplete').attr('role', 'combobox')
           .attr('aria-owns', 'autocomplete-list')
@@ -69,13 +73,18 @@
         this.list.css({'height': 'auto', 'width': this.element.outerWidth()}).addClass('autocomplete');
         this.list.empty();
 
-        // Pre-compile template
+        // Pre-compile template.
         // Try to get an element first, and use its contents.
         // If the string provided isn't a selector, attempt to use it as a string, or fall back to the default template.
-        this.tmpl = $(this.settings.listItemTemplate).length ?
-          $(this.settings.listItemTemplate).text() : /*
-          typeof this.settings.listItemTemplate === 'string' ?
-          this.settings.listItemTemplate : */
+        var templateAttr = $(this.element.attr('data-tmpl'));
+        this.tmpl = $(templateAttr).length ?
+          $(templateAttr).text() :
+          typeof templateAttr === 'string' ?
+          templateAttr :
+          $(this.settings.template).length ?
+          $(this.settings.template).text() :
+          typeof this.settings.template === 'string' ?
+          this.settings.template :
           resultTemplate;
 
         // Error out if the Template system can't be found
@@ -127,7 +136,7 @@
           var a = $(e.currentTarget),
             ret = a.text().trim();
 
-          self.element.val(ret).attr('aria-activedescendant', a.parent().attr('id'));
+          self.element.attr('aria-activedescendant', a.parent().attr('id'));
 
           if (a.parent().attr('data-value')) {
             for (var i = 0; i < items.length; i++) {
@@ -149,7 +158,7 @@
           var anchor = $(this);
           all.parent('li').removeClass('is-selected');
           anchor.parent('li').addClass('is-selected');
-          self.element.val(anchor.text());
+          self.element.val(anchor.text().trim());
         });
 
         this.noSelect = true;
@@ -230,6 +239,14 @@
         }).on('requestend.autocomplete', function(e, buffer, data) {
           self.openList(buffer, data);
         });
+      },
+
+      enable: function() {
+        this.element.prop('disabled', false);
+      },
+
+      disable: function() {
+        this.element.prop('disabled', true);
       },
 
       destroy: function() {
