@@ -19,10 +19,6 @@ describe('Dropdown [zombie]', function() {
     browser.visit('/tests/dropdown', done);
   });
 
-  it('should be in the right page', function() {
-    browser.text('title').should.contain('SoHo Controls XI - Tests');
-  });
-
   it('should have first selected', function() {
     var item = browser.document.getElementById('states');
     item.selectedIndex.should.equal(0);
