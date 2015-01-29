@@ -29,9 +29,9 @@ $header-height: 118px;
   }
 
   .seperator {
-    padding: 0 10px;
     @include font-size(37);
     color: #ffffff;
+    padding: 0 10px;
   }
 
   .btn-actions {
@@ -42,8 +42,13 @@ $header-height: 118px;
     }
 
     &:focus,
+    &:hover,
     &:active {
-      border-color: $inverse-color;
+      border-color: $inverse-color !important;
+
+      svg {
+        fill: $inverse-color !important;
+      }
     }
   }
 
@@ -76,13 +81,15 @@ $header-height: 118px;
 
 // Hamburger Icon
 .hamburger-menu {
-  background-color: $inverse-color;
+  background-color: #ffffff;
   color: transparent;
   cursor: pointer;
+  display: inline-block;
   height: 2px;
   position: relative;
-  top: 3px;
   width: 30px;
+  top: 4px;
+  vertical-align: top;
 
   &:after,
   &:before {
