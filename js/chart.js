@@ -49,6 +49,10 @@
       }
 
       for (var i = 0; i < series.length; i++) {
+        if (!series[i].name) {
+          continue;
+        }
+
         var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
           color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
           text = $('<span>'+ series[i].name  + '</span>');
@@ -68,7 +72,9 @@
         // trigger the click event
         var e = document.createEvent('UIEvents');
         e.initUIEvent('click', true, true, window, 1);
-        series[idx].elem.dispatchEvent(e);
+        if (series[idx].elem) {
+          series[idx].elem.dispatchEvent(e);
+        }
       });
 
       if (position === 'below') {
@@ -361,8 +367,9 @@
         .data(dataset)
         .enter()
         .append('g')
+        .attr('class', 'series-group')
         .style('fill', function (d, i) {
-            return charts.colors(i);
+          return charts.colors(i);
         });
 
       rects = groups.selectAll('rect')
@@ -387,12 +394,9 @@
       .on('mouseenter', function (d, i) {
         var shape = d3.select(this),
               content = '',
-              yPosS = svg[0][0].getBoundingClientRect().top,
-              xPos = d3.event.pageX + 25,
-              yPos = parseFloat(shape.attr('y')) + yPosS - 20,
               total = 0, totals = [];
 
-          if (dataset.length === 1) {
+         if (dataset.length === 1) {
             content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
           } else {
            content = '<div class="chart-swatch">';
@@ -411,11 +415,18 @@
           }
 
           //TODO: Localize
-          content = '<span class="chart-tooltip-total"><b>' + total + '</b> Total</span>' +content;
+          if (total > 0) {
+            content = '<span class="chart-tooltip-total"><b>' + total + '</b> Total</span>' +content;
+          }
 
-          charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'})
-              .find('.tooltip-content')
-                .html(content);
+          // Set the position
+          charts.tooltip.find('.tooltip-content').html(content);
+
+          var yPosS = svg[0][0].getBoundingClientRect().top,
+              xPos = d3.event.pageX + 25,
+              yPos = yPosS + parseFloat(shape.attr('y')) + 5 - (parseInt(charts.tooltip.outerHeight()) /2) + (parseFloat(shape.attr('height'))/2);
+
+          charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'});
 
         //charts.tooltip.addClass('top').removeClass('right').removeClass('is-hidden');
         charts.tooltip.removeClass('is-hidden', false);
@@ -445,6 +456,15 @@
         .attr('width', function (d) {
           return xScale(d.x);
         });
+
+
+      //TODO: Link Click Event to the legend
+      /*
+      svg.selectAll('.series-group')
+      .each(function(d,i) {
+        series[i].elem = d3.select(this).select('rect')[0][];
+      });
+      */
 
       //Add Legends
       charts.addLegend(series, 'below');

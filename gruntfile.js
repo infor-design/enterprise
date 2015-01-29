@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         options: {
           banner: '<%= banner %>',
           sourceMap: true,
-          sourceMapName: 'dist/js/sohoxi.map',
+          sourceMapName: 'dist/js/sohoxi.min.map',
           separator: ';'
         },
         files: {
@@ -73,6 +73,7 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/vendor/jquery-1*.min.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-1*min.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.min.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/d3.min.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'}
         ]
       }
