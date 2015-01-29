@@ -42,6 +42,9 @@ $(function($) {
   $('#page-changer').on('selected', function (e, link) {
     var href = link.attr('href').substr(1);
 
+    link.parent().parent().find('.checkmark').removeClass('checkmark');
+    link.parent().addClass('checkmark');
+
     // Change Theme
     if (href.indexOf('-theme') > 1) {
       $('body').fadeOut('fast', function() {
@@ -53,11 +56,16 @@ $(function($) {
     }
 
     // TODO: Change Lang
+    if (href.indexOf('lang-') === 0) {
+      Locale.set(href.substr(5));
+      return;
+    }
 
     // Change Color
     var color = link.attr('data-rgbcolor');
     $('.is-personalizable').css('background-color', color);
-    //personalization-bg-color
+
+
   });
 
   // Message.html View Specifics
