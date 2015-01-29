@@ -61,8 +61,8 @@
 
 .popupmenu {
   background-color: #ffffff;
-  border-radius: 3px;
   border: 1px solid #e5e5e5;
+  border-radius: 3px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   color: $input-color;
   display: none;
@@ -88,7 +88,8 @@
     position: static;
     white-space: nowrap;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: $menu-hover-color;
     }
 
@@ -118,7 +119,7 @@
 
   a {
     border: 1px solid transparent;
-    color: $font-color-light;
+    color: $font-color;
     display: block;
     @include font-size(14);
     padding: 0 30px 0 20px;

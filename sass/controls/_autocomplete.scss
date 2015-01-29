@@ -9,7 +9,16 @@
   box-shadow: 0 1px 0 1px rgba(8, 150, 233, .2), -1px 1px 0 rgba(8, 150, 233, .2), 1px 1px 1px rgba(8, 150, 233, .2);
   //5px 5px 5px -5px rgba(8, 150, 233, 0.2);
 
+  li {
+    color: $font-color-light;
+
+    &.is-selected {
+      background-color: $menu-hover-color;
+    }
+  }
+
   a {
+    color: inherit;
     padding: 0 10px;
   }
 

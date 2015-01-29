@@ -24,8 +24,9 @@
     // Settings and Options
     var pluginName = 'searchfield',
         defaults = {
-          source: ['Delaware', 'Maryland', 'New Brunswick', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'New York City', 'New Zealand', 'News', 'Pennsylvania', 'Texas'],
-          allResultsCallback: undefined
+          allResultsCallback: undefined,
+          source: ['Delaware', 'Maryland', 'New Jersey', 'New York', 'Pennsylvania', 'Texas'],
+          listItemTemplate: undefined
         },
         settings = $.extend({}, defaults, options);
 
@@ -51,17 +52,18 @@
       },
 
       build: function() {
-        // TODO: Get Icon from Design Team
-        //$('<svg class="icon"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
+        if (!this.element.parent().hasClass('searchfield-wrapper')) {
+          this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
+        }
 
-        // Build Autocomplete Settings
-        var acSettings = {};
-        if (this.settings.source) {
-          acSettings.source = this.settings.source;
+        // Add Icon
+        if (this.wrapper.find('.icon').length === 0) {
+          $('<svg class="icon"><use xlink:href="#icon-search-field"/></svg>').insertAfter(this.element);
         }
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
-        this.element.autocomplete(acSettings);
+        // Autocomplete settings are fed the same settings as Searchfield
+        this.element.autocomplete(this.settings);
         this.autocomplete = this.element.data('autocomplete');
 
         return this;
@@ -78,6 +80,8 @@
         this.element.on('populated.searchfield', function(e, items) {
           if (items.length > 0 ) {
             self.addMoreLink();
+          } else {
+            self.addNoneLink();
           }
         });
 
@@ -86,20 +90,24 @@
         this.element.on('autocomplete-list-open.searchfield', function(e, items) {
           var list = $('#autocomplete-list');
 
-          list.off('click.autocomplete').on('click.autocomplete', 'a', function (e) {
+          list.off('click').on('click.autocomplete', 'a', function (e) {
             var a = $(e.currentTarget),
-              ret = a.text();
+              ret = a.text().trim(),
+              isMoreLink = a.hasClass('more-results'),
+              isNoneLink = a.hasClass('no-results');
 
-            if (!a.hasClass('more-results')) {
+            if (!isMoreLink && !isNoneLink) {
               // Only write text into the field on a regular result pick.
-              self.element.val(a.text()).attr('aria-activedescendant', a.parent().attr('id'));
+              self.element.val(ret).attr('aria-activedescendant', a.parent().attr('id'));
             } else {
               self.element.val('');
 
-              // Trigger callback if one is defined
-              var callback = self.settings.allResultsCallback;
-              if (callback && typeof callback === 'function') {
-                callback();
+              if (isMoreLink) {
+                // Trigger callback if one is defined
+                var callback = self.settings.allResultsCallback;
+                if (callback && typeof callback === 'function') {
+                  callback();
+                }
               }
             }
 
@@ -110,6 +118,10 @@
                 }
               }
             }
+
+            self.element.trigger('selected', [a]);
+
+            self.element.data('popupmenu').close();
 
             e.preventDefault();
             return false;
@@ -128,16 +140,28 @@
         this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('All Results For <i>' + val + '</i>').appendTo(more); // TODO: Localize
       },
 
+      addNoneLink: function() {
+        var list = $('#autocomplete-list'),
+          none = $('<li role="presentation"></li>').appendTo(list);
+
+        this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('No Results').appendTo(none);
+      },
+
       // Triggered by the "updated.searchfield" event
       update: function() {
         this.autocomplete.destroy();
-        this.element.build();
+        this.build();
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.element.off('updated.searchfield beforeOpen.searchfield');
+        this.element.off('updated.searchfield populated.searchfield');
         this.autocomplete.destroy();
+
+        this.element.next('.icon').remove();
+        if (this.element.parent().hasClass('searchfield-wrapper')) {
+          this.element.unwrap();
+        }
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -147,6 +171,7 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.update();
       } else {
         instance = $.data(this, pluginName, new SearchField(this, settings));
       }

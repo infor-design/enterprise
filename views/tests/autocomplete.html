@@ -12,16 +12,28 @@
   </div>
 </div>
 
+<!--This is only needed because it renders first on the server-->
+{{={{{ }}}=}}
+<script id="autocomplete-with-pic" type="text/html">
+  <li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}" {{/hasValue}}role="listitem">
+    <a href="#" tabindex="-1">
+      <svg class="icon" viewBox="0 0 32 32">
+        <use xlink:href="#icon-logo" />
+      </svg>
+      <span>
+        {{& label}}
+      </span>
+    </a>
+  </li>
+</script>
+
 <script>
   $(function () {
-    $('#input-autocomplete').autocomplete({source: function (term, response) {
-      //make an ajax call
-      $.getJSON('/api/states?term='+term, function(data) {
-        //Structure the data with val, label syntax is done on the server
-        response(data);
-      });
-    }}).on('change', function () {
-      console.log('Changed to :' + $(this).val());
+    $('#input-autocomplete').autocomplete({
+      source: '/api/states?term=',
+      listItemTemplate: '#autocomplete-with-pic'
+    }).on('selected', function (e, anchor) {
+      console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
     });
   });
 </script>

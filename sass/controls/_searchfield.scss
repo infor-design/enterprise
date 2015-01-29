@@ -1,2 +1,14 @@
-// Search Field
-// ----------------------------------------
+/* Search Field
+================================================== */
+
+.searchfield-wrapper {
+  display: inline-block;
+  position: relative;
+
+  > .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+}

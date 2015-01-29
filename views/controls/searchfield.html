@@ -15,13 +15,14 @@
     </div>
 
     <script type="text/javascript">
-    $('body').on('initialized', function() {
-      $('#searchfield').searchfield({
-        allResultsCallback: function() {
-          alert('Show All Results Callback has been triggered');
-        }
-      })
-    });
+      $('body').on('initialized', function() {
+        $('#searchfield').searchfield({
+          allResultsCallback: function() {
+            alert('Show All Results Callback has been triggered');
+          },
+          source: '/api/states?term='
+        })
+      });
     </script>
 
   </div>
