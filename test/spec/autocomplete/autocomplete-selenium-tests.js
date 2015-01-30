@@ -144,8 +144,9 @@ describe('Autocomplete [selenium]', function(){
     runner.client
       // Run the enable() method
       .execute('$("#auto-default").enable();', globals.noError)
+      .pause(20)
       // Attempt to key in a value
-      .addValue(AUTO_DEFAULT, 'Del', globals.noError)
+      .setValue(AUTO_DEFAULT, 'Del', globals.noError)
       // Check the value of the field.  It should equal the 'Del' value we entered.
       .getValue(AUTO_DEFAULT, function(err, result) {
         globals.noError(err);
