@@ -1,6 +1,16 @@
 /**
-* Card List Control
+* List View Control
 */
+
+//TODO:
+// API - Selection,
+// edit template
+// navigatable
+// seletable (single or multiple)
+// template (as id or string)
+// alt template
+// Methods: add, remove, clear, destroy, refresh (rebind), select (get or set)
+// Events: rendered, remove, add, select
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
@@ -11,13 +21,14 @@
   }
 }(function ($) {
 
-  $.fn.cardlist = function(options) {
+  $.fn.listview = function(options) {
 
     // Settings and Options
-    var pluginName = 'cardlist',
+    var pluginName = 'listview',
       defaults = {
-        dataset: null,
-        template: null  //Html Template String
+        dataset: null,  //Object or Arrray or url
+        template: null,  //Html Template String
+        rowHeight: 'medium' //Short, Medium or Tall or a number
       },
       settings = $.extend({}, defaults, options);
 
@@ -31,12 +42,15 @@
     Plugin.prototype = {
       init: function() {
         this.setup();
-        this.render();
+        this.refresh();
       },
 
       setup: function() {
-        var self = this;
-        self.actionButton = this.element.parent().find('.btn-actions');
+        var self = this,
+          card = this.element.closest('.card');
+
+        //TODO - Maybe Remove this, confirm with design
+        self.actionButton = card.find('.btn-actions');
 
         if (self.actionButton.length > 0) {
           // Action Buttons may already be invoked via initialize.js.
@@ -45,20 +59,42 @@
           }
 
           self.actionButton.on('beforeOpen', function() {
-            self.element.parent().addClass('menu-engaged');
+            card.addClass('menu-engaged');
           }).on('close', function() {
-            self.element.parent().removeClass('menu-engaged');
+            card.removeClass('menu-engaged');
           });
         }
       },
 
-      render: function() {
-        if (Tmpl && settings.dataset && settings.template) {
+      render: function(dataset) {
+        // Set Row Height
+        if (typeof settings.rowHeight === 'string') {
+          this.element.addClass(settings.rowHeight);
+        } else {
+           this.element.css('line-height', settings.rowHeight);
+        }
+
+        // Render Template
+        if (Tmpl && dataset && settings.template) {
           var compiledTmpl = Tmpl.compile(settings.template),
-            renderedTmpl = compiledTmpl.render({demoTasks: settings.dataset});
+            renderedTmpl = compiledTmpl.render({dataset: dataset});
 
           this.element.html(renderedTmpl);
         }
+      },
+
+      // Get the Data Source. Can be an array, Object or Url
+      refresh: function () {
+        var ds = settings.dataset,
+          self = this;
+
+        if (ds.indexOf('http') === 0) {
+          $.getJSON(ds, function(data) {
+            self.render(data);
+          });
+          return;
+        }
+        this.render(ds);
       },
 
       destroy: function() {

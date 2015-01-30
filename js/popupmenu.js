@@ -19,7 +19,7 @@
       defaults = {
         menuId: null,  //Menu's Id
         trigger: 'click',  //click, rightClick, immediate
-        autoFocus: false
+        autoFocus: true
       },
       settings = $.extend({}, defaults, options);
 
@@ -366,7 +366,9 @@
         });
 
         if (settings.autoFocus) {
-          self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+          setTimeout(function () {
+            self.menu.parent().find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+          }, 1);
         }
       },
 

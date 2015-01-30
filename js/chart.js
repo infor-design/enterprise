@@ -29,13 +29,10 @@
       $(container).append('<p class="chart-message">This content is not available because it uses SVG features not supported in your current browser version. Please try Chrome, Firefox, Safari or IE9+</p>');
       return null;
     }
-
-    //Shared Options
     this.options = {
-      colorRange: ['#0896e9', '#0070be', '#9ed927', '#23b519', '#ffd500',
-            '#ff6400', '#e63262','#ffaa00', '#61c5ff', '#9ed927', '#ffd500', '#ff574d', '#ff80a2',
-            '#c680ff','#b3b3b3', '#6dd9d1', '#005ce6', '#00733a', '#ff6400', '#b3000c',
-            '#bf2951', '#7533a6', '#595959', '#00898c']
+      colorRange: ['#13a7ff', '#0872b0', '#79cc26', '#3f9818', '#ffd042',
+          '#f86f11', '#97d8ff', '#96e345', '#d79df4', '#f57294', '#bdbdbd',
+          '#164203', '#03a59a', '#660a23', '#5a187a', '#454545', '#004d47', '#ff4249'], //Shared Options
     };
 
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);

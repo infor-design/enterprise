@@ -11,9 +11,9 @@
   background-color: $cardlist-bg-color;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
+  height: 330px;
   margin-bottom: 20px;
   min-height: 330px;
-  overflow: auto;
   position: relative;
   width: 100%;
 
@@ -34,18 +34,31 @@
 
     > .btn-actions {
       background-color: $actionbutton-bg-color;
-      border: 0;
       float: none;
       position: absolute;
       right: 10px;
       top: 9px;
     }
   }
+
+  .widget-content,
+  .card-content {
+    height: 280px;
+    min-height: 280px;
+    overflow: auto;
+  }
 }
 
 // Double and Triple Height Widths
 .double-height {
+  height: 680px;
   min-height: 680px;
+
+  .widget-content,
+  .card-content {
+    height: 630px;
+    min-height: 630px;
+  }
 }
 
 .double-width {
@@ -54,6 +67,13 @@
 }
 
 .triple-height {
+  height: 1030px;
   min-height: 1030px;
+
+  .widget-content,
+  .card-content {
+    height: 980px;
+    min-height: 980px;
+  }
 }
 

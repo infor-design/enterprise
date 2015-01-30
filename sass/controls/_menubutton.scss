@@ -57,6 +57,7 @@
 }
 
 .btn-actions {
+  border: 1px solid transparent;
   color: $font-color-extradark;
 
   > * {
@@ -73,6 +74,14 @@
       > .icon {
         fill: $menubutton-focus-border-color;
       }
+    }
+  }
+
+  &:focus {
+    border-color: $primary-color !important;
+
+    > .icon {
+      fill: $font-color-extradark;
     }
   }
 

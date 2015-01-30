@@ -1,7 +1,7 @@
-// Cardlist
+// Simple List
 //================================================== //
 
-.cardlist {
+.listview {
   background-color: #ffffff;
   font-family: $font-regular;
   overflow: auto;
@@ -20,7 +20,7 @@
 
   li:hover {
     background-color: $menu-hover-color;
-    transition: background-color .3s ease 0s;
+    transition: background-color .15s ease 0s;
   }
 
   p {

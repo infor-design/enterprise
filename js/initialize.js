@@ -83,10 +83,15 @@
         elem.find('[data-validate-on="submit"]').validate();
 
         //Cardstack
-        elem.find('.cardlist').each(function () {
-          var cs = $(this);
-          $(this).cardlist({template: $('#' + cs.attr('data-tmpl') + '').html(),
-              dataset: window[cs.attr('data-dataset')]});
+        elem.find('.listview').each(function () {
+          var cs = $(this),
+            attr = cs.attr('data-dataset');
+
+          if (window[attr]) {
+            attr = window[attr];
+          }
+          $(this).listview({template: $('#' + cs.attr('data-tmpl') + '').html(),
+              dataset: attr});
         });
 
         //Auto Complete

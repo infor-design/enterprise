@@ -76,7 +76,7 @@
     }
 
     &.is-error {
-      color: $ruby;
+      color: $ruby05;
 
       svg {
         margin-left: -2px;
@@ -84,7 +84,7 @@
       }
 
       &:focus {
-        outline: thin dotted $ruby;
+        outline: thin dotted $ruby05;
       }
     }
   }

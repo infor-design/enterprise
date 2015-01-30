@@ -16,7 +16,7 @@ app.configure(function() {
   app.use(express.static('public'));
 
   var templateOpts = {
-    title: 'SoHo Controls XI',
+    title: 'SoHo XI',
     layout: 'layout',
     enableLiveReload: true
   };
@@ -109,6 +109,26 @@ app.configure(function() {
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(states));
+  });
+
+  // Sample People
+  app.get('/api/people', function(req, res) {
+    var people = [{ id: 1, rowHeight: 50, lastName:  'Asper', firstName:  'David',  title:  'Engineer', img: 'images/profile-default-35x35.png', status: 'Approved' , anniversary: '06/02/2012', score: 3, payRate: 90000, budgeted: 1200, budgetedHourly: 0.25, reccomended: '0-0%', percent: '0%'},
+        { id: 2, lastName:  'Baxter', firstName:  'Michael',  title:  'System Architect', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 2, payRate: 50000, budgeted: 1300, budgetedHourly: 0.25, reccomended: '10-20%', percent: '4.16%'},
+        { id: 3, rowHeight: 100, lastName:  'Baxter', firstName:  'Steven',  title:  'Some Very Very Very Long Title That is too long but still should show.', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 0, payRate: 60000, budgeted: 1100, budgetedHourly: 0.65, reccomended: '30-40%', percent: '10%'},
+        { id: 4, lastName:  'Baxter', firstName:  'Samual',  title:  'System Architect', img: 'images/profile-default-35x35.png', status: 'Approved', anniversary: '06/02/2012', score: 5, payRate: 80000, budgeted: 1200, budgetedHourly: 0.15, reccomended: '60-70%', percent: '20%'},
+        { id: 5, lastName:  'Bronte', firstName:  'Emily',  title:  'Engineer', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 6, lastName:  'Davendar', firstName:  'Konda',  title:  'Engineer', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 7, lastName:  'Jeremy', firstName:  'Little',  title:  'Engineer', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 8, lastName:  'Julie', firstName:  'Ayers',  title:  'Architect', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 9, lastName:  'Hector', firstName:  'Ortega',  title:  'Senior Architect', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 10, lastName:  'Norm', firstName:  'McConnel',  title:  'Engineer', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 11, lastName:  'John', firstName:  'Smith',  title:  'Developer', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 12, lastName:  'Donna', firstName:  'Horrocks',  title:  'Ass. Developer', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'},
+        { id: 13, lastName:  'Danielle', firstName:  'Land',  title:  'Developer', img: 'images/profile-default-35x35.png', status: 'Updated', anniversary: '06/02/2012', score: 6, payRate: 50000, budgeted: 1400, budgetedHourly: 0.15, reccomended: '70-100%', percent: '30%'}];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(people));
   });
 
 });
