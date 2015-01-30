@@ -60,7 +60,8 @@
       },
 
       openList: function (term, items) {
-        var self = this;
+        var self = this,
+          matchingOptions = [];
 
         term = term.toLowerCase();
 
@@ -101,6 +102,8 @@
             dataset = isString ? baseData : $.extend(baseData, items[i]);
 
           if (option.toLowerCase().indexOf(term) > -1) {
+            matchingOptions.push(option);
+
             // Build the dataset that will be submitted to the template
             var regex = new RegExp('(' + term + ')', 'gi');
 
@@ -128,7 +131,7 @@
             self.element.removeClass('is-open');
           });
 
-        this.element.trigger('populated', [items]);
+        this.element.trigger('populated', [matchingOptions]);
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
 

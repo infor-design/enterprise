@@ -156,6 +156,14 @@
         this.build();
       },
 
+      enable: function() {
+        this.element.prop('disabled', false);
+      },
+
+      disable: function() {
+        this.element.prop('disabled', true);
+      },
+
       // Teardown - Remove added markup and events
       destroy: function() {
         this.element.off('updated.searchfield populated.searchfield');

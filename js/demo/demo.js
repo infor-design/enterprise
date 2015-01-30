@@ -121,4 +121,37 @@ $(function($) {
 
   });
 
+
+  // Autocomplete.html View Specifics
+  // Setup an alternate source for the templated Autocomplete.
+  $('#auto-template').autocomplete({
+    source: '/api/states?term='
+  }).on('selected', function (e, anchor) {
+    console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
+  });
+
+
+  // Searchfield.html View Specifics
+  function searchfieldCallback(noResultsContent) {
+    $('body').toast({
+      title: noResultsContent,
+      message: 'Show All Results Callback has been triggered'
+    });
+  }
+
+  // Toast Message Callback for the Default Searchfield
+  $('#searchfield').searchfield({
+    allResultsCallback: searchfieldCallback,
+    source: '/api/states?term='
+  });
+  $('#searchfield-default').searchfield({
+    allResultsCallback: searchfieldCallback
+  });
+  // Setup an external source for the templated searchfield
+  $('#searchfield-template').searchfield({
+    source: '/api/states?term='
+  }).on('selected', function (e, anchor) {
+    console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
+  });
+
 });

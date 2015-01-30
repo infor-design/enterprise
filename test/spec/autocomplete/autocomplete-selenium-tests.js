@@ -84,9 +84,75 @@ describe('Autocomplete [selenium]', function(){
         should.exist(result);
         result.should.equal(true);
       })
+      // Choose a menu item to close the menu
+      .click(LIST + ' li:first-child > a', globals.noError)
       .call(done);
   });
 
-  // TODO: Tests for Enabled/Disabled/Destroy/Invoke
+  it('can be destroyed', function(done) {
+    runner.client
+      // Run the destroy method
+      .execute('$("#auto-default").data("autocomplete").destroy();', globals.noError)
+      // Key in some text into the field and wait.
+      // The popup menu should not exist after the wait period.
+      .setValue(AUTO_DEFAULT, '', globals.noError)
+      .addValue(AUTO_DEFAULT, 'Hey There', globals.noError)
+      .pause(500)
+      .isExisting(LIST, function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(false);
+      })
+      .call(done);
+  });
+
+  it('can be invoked', function(done) {
+    runner.client
+      // Re-invoke the autocomplete plugin on #auto-default
+      .execute('$("#auto-default").autocomplete();', globals.noError)
+      // Key some text into the field and wait.
+      // The popup menu should show up after the wait period.
+      .setValue(AUTO_DEFAULT, '', globals.noError)
+      .addValue(AUTO_DEFAULT, 'Hey There', globals.noError)
+      .pause(500)
+      .isExisting(LIST, function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(true);
+      })
+      .call(done);
+  });
+
+  it('can be disabled', function(done) {
+    runner.client
+      // Set a default value on the #auto-default autocomplete field
+      .setValue(AUTO_DEFAULT, '', globals.noError)
+      // Run the disable() method
+      .execute('$("#auto-default").disable();', globals.noError)
+      // Attempt to key in a value on the field.
+      .addValue(AUTO_DEFAULT, 'Del', globals.noError)
+      // Check the value of the field.  It should not have changed.
+      .getValue(AUTO_DEFAULT, function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal('');
+      })
+      .call(done);
+  });
+
+  it('can be enabled', function(done) {
+    runner.client
+      // Run the enable() method
+      .execute('$("#auto-default").enable();', globals.noError)
+      // Attempt to key in a value
+      .addValue(AUTO_DEFAULT, 'Del', globals.noError)
+      // Check the value of the field.  It should equal the 'Del' value we entered.
+      .getValue(AUTO_DEFAULT, function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal('Del');
+      })
+      .call(done);
+  });
 
 });

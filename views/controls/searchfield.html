@@ -14,22 +14,5 @@
       <input data-searchfield data-init id="searchfield" name="searchfield" class="searchfield" />
     </div>
 
-    <script type="text/javascript">
-      $('body').on('initialized', function() {
-        var cnt = 0;
-
-        $('#searchfield').searchfield({
-          allResultsCallback: function(noResultsContent) {
-            cnt ++;
-            $('body').toast({
-              title: noResultsContent,
-              message: 'Show All Results Callback has been triggered'
-            });
-          },
-          source: '/api/states?term='
-        })
-      });
-    </script>
-
   </div>
 </div>

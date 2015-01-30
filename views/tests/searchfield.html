@@ -6,7 +6,7 @@
 
     <div class="field">
       <label for="searchfield-default">#searchfield-default (searchfield with stock settings)</label>
-      <input data-searchfield id="searchfield-default" placeholder="Type to Search" type="text" />
+      <input data-searchfield data-init id="searchfield-default" placeholder="Type to Search" type="text" />
     </div>
 
     <div class="field">
@@ -30,14 +30,4 @@
       </span>
     </a>
   </li>
-</script>
-
-<script>
-  $(function () {
-    $('#searchfield-template').searchfield({
-      source: '/api/states?term='
-    }).on('selected', function (e, anchor) {
-      console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
-    });
-  });
 </script>
