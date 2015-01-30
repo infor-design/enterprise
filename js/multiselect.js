@@ -58,6 +58,7 @@
           self.addTag($(item));
         });
       },
+
       //Call the source function or get the select options
       callSource: function (term) {
         var items = [],
