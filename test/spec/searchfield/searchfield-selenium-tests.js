@@ -128,8 +128,9 @@ describe('Searchfield [selenium]', function(){
       .setValue(SEARCH_DEFAULT, '', globals.noError)
       // Run the disable() method
       .execute('$("#searchfield-default").disable();', globals.noError)
+      .pause(20)
       // Attempt to key in a value on the field.
-      .addValue(SEARCH_DEFAULT, 'Del', globals.noError)
+      .setValue(SEARCH_DEFAULT, 'Del', globals.noError)
       // Check the value of the field.  It should not have changed.
       .getValue(SEARCH_DEFAULT, function(err, result) {
         globals.noError(err);
