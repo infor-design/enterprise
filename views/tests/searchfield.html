@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Searchfield</h1>
+    <span class="label">for search and textbox</span>
+    <hr>
+
+    <div class="field">
+      <label for="searchfield-default">#searchfield-default (searchfield with stock settings)</label>
+      <input data-searchfield data-init id="searchfield-default" placeholder="Type to Search" type="text" />
+    </div>
+
+    <div class="field">
+      <label for="searchfield-template">#searchfield-template (uses an alternate source and external template)</label>
+      <input data-searchfield="source" data-tmpl="#searchfield-with-pic" id="searchfield-template" placeholder="Type to Search" type="text">
+    </div>
+
+  </div>
+</div>
+
+<!--This is only needed because it renders first on the server-->
+{{={{{ }}}=}}
+<script id="searchfield-with-pic" type="text/html">
+  <li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}" {{/hasValue}}role="listitem">
+    <a href="#" tabindex="-1">
+      <svg class="icon">
+        <use xlink:href="#icon-logo" />
+      </svg>
+      <span>
+        {{& label}}
+      </span>
+    </a>
+  </li>
+</script>

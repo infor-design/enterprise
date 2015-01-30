@@ -127,6 +127,9 @@
         //Busy Indicator
         elem.find('.busy').busyindicator();
 
+        //Search Field
+        elem.find('[data-searchfield]:not([data-init])').searchfield();
+
         //Toolbar
         elem.find('.toolbar').toolbar();
 
