@@ -1,0 +1,15 @@
+/* Search Field
+================================================== */
+
+.searchfield-wrapper {
+  display: inline-block;
+  margin-bottom: 20px;
+  position: relative;
+
+  > .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+}
