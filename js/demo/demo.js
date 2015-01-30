@@ -38,6 +38,36 @@ $(function($) {
     $('#stylesheet').attr('href', '/stylesheets/'+ theme +'.css');
   }
 
+  // New, Theme, Personalization, Language Changer. TODO: Should this be a plugin?
+  $('#page-changer').on('selected', function (e, link) {
+    var href = link.attr('href').substr(1);
+
+    link.parent().parent().find('.checkmark').removeClass('checkmark');
+    link.parent().addClass('checkmark');
+
+    // Change Theme
+    if (href.indexOf('-theme') > 1) {
+      $('body').fadeOut('fast', function() {
+        $('#stylesheet').attr('href', '/stylesheets/'+ href +'.css');
+        $(this).fadeIn('fast');
+      });
+
+      return;
+    }
+
+    // TODO: Change Lang
+    if (href.indexOf('lang-') === 0) {
+      Locale.set(href.substr(5));
+      return;
+    }
+
+    // Change Color
+    var color = link.attr('data-rgbcolor');
+    $('.is-personalizable').css('background-color', color);
+
+
+  });
+
   // Message.html View Specifics
   $('#show-application-error').on('click', function() {
       $('body').message({

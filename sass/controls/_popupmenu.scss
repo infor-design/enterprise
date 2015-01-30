@@ -64,7 +64,7 @@
   border: 1px solid #e5e5e5;
   border-radius: 3px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
-  color: $input-color;
+  color: $popupmenu-color;
   display: none;
   font-family: $font-regular;
   list-style: none;
@@ -119,7 +119,7 @@
 
   a {
     border: 1px solid transparent;
-    color: $font-color;
+    color: $popupmenu-color;
     display: block;
     @include font-size(14);
     padding: 0 30px 0 20px;
@@ -148,7 +148,7 @@
 
   //Icon Positioning
   .icon {
-    fill: $input-color;
+    fill: $popupmenu-color;
     left: -8px;
     position: relative;
     top: 9px;

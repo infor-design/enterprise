@@ -1,26 +1,109 @@
 // Site/App Header
 //================================================== //
 
-// TO DO - Remove this and use standard header
-header.header {
-  background-color: $header-color;
-  height: 64px;
-  padding: 20px 0;
+// Variables for this file
+$header-height: 118px;
 
-  .container {
-    max-width: none;
+// Top Header
+.site-header {
+  background-color: #a352cc;
+  display: block;
+  height: $header-height;
+  overflow: hidden;
+  transition: background-color 1s ease 0s;
+  width: 100%;
+
+  .column {
+    padding-top: 40px;
+
+    > * {
+      display: inline-block;
+    }
   }
 
-  .title {
+  h1 {
     color: $inverse-color;
     font-family: $font-regular;
-    @include font-size(24);
-    @include rem(line-height, 2.4rem);
+    @include font-size(30);
+    margin-left: 20px;
   }
 
-  // Change invisible Label color to trick 508 checkers
-  .audible {
+  .seperator {
+    @include font-size(37);
     color: #ffffff;
+    padding: 0 10px;
+  }
+
+  .btn-actions {
+    border-color: transparent;
+
+    svg {
+      fill: $inverse-color;
+    }
+
+    &:focus,
+    &:hover,
+    &:active {
+      border-color: $inverse-color !important;
+
+      svg {
+        fill: $inverse-color !important;
+      }
+    }
+  }
+
+  .site-header-right {
+    float: right;
+  }
+
+  .site-search {
+    height: 34px;
+    margin-right: 10px;
+    vertical-align: top;
+    width: 34px;
+
+    svg {
+      fill: $inverse-color;
+      left: 5px;
+      top: 6px;
+    }
+
+    &:hover svg {
+      fill: $inverse-color;
+    }
+
+    &:focus,
+    &:active {
+      border-color: $inverse-color;
+    }
+  }
+}
+
+// Hamburger Icon
+.hamburger-menu {
+  background-color: #ffffff;
+  color: transparent;
+  cursor: pointer;
+  display: inline-block;
+  height: 2px;
+  position: relative;
+  width: 30px;
+  top: 4px;
+  vertical-align: top;
+
+  &:after,
+  &:before {
+    background-color: $inverse-color;
+    content: '';
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 8px;
+    width: 100%;
+  }
+
+  &:before {
+    top: 15px;
   }
 }
 
@@ -37,23 +120,5 @@ header.header {
 
   header.header .title {
     color: #333333 !important;
-  }
-}
-
-//TODO: Remove was for demo only - will have a switcher
-.header .field.aligned {
-  position: absolute;
-  right: 30px;
-  top: 13px;
-
-  input {
-    background-color: #ffffff;
-    width: 190px;
-  }
-}
-
-@media (max-width: $breakpoint-phone) {
-  .header .field.aligned {
-    display: none;
   }
 }

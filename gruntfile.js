@@ -74,6 +74,7 @@ module.exports = function(grunt) {
             'js/textarea.js',
             'js/timepicker.js',
             'js/tmpl.js',
+            'js/toolbar.js',
             'js/tooltip.js',
             'js/tree.js',
             'js/validation.js'
@@ -105,8 +106,9 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-1*.min.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-1*min.map'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/jquery-1*.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.min.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/d3.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'}
         ]
       }

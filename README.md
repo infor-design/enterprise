@@ -201,6 +201,30 @@ The documentation will be generated created inline in the pages (soon but not ye
 
 [Coding Standards are now in their own Repo](http://git.infor.com/projects/SHARED/repos/coding-standards/browse/README.md)
 
+<a name="developer-guide"></a>
+## Developer Guide
+
+#### Coding a new Control
+ - See if it can be done with only css.
+ - Add _*.scss file to sass/controls folder similar to current examples
+ - Add new entry for new file in _controls.scss
+ - Add any variables in _config.scss
+ - Add a view like current examples to views/controls
+ - Add link to view to index.html page
+ - if js is needed copy the template.js in the js/controls folder.
+ - modify the gruntfie.js to add the new script
+ - add initializer code to initialize.js (should be able to boot strap the page)
+ - code control
+ - right unit tests by adding a js file to tests/spec like existing tests, make it run the tests/controlname page and test out various things as spec'd
+ - make sure all tests pass
+ - run grunt to test jshint for the new control
+ - verify html is valid: https://addons.mozilla.org/en-US/firefox/addon/html-validator/
+ - verify no automated accessibility errors http://squizlabs.github.io/HTML_CodeSniffer/
+ - test your page with voice over https://www.apple.com/voiceover/info/guide/
+ - test your page with Jaws (download http://www.freedomscientific.com/Downloads/ProductDemos) http://www.washington.edu/itconnect/learn/accessible/atc/quickstarts/jaws-2/
+ - commit and pull request
+ - close jira and quote the Jira number on the commit message
+
 <a name="qa-documentation"></a>
 ## QA Documentation
 
@@ -266,6 +290,7 @@ or eventually the SoHo XI site pages
 | Hansen 8  | An ASP Application interested in accessibility  | Ovidiu Petruescu |
 | Healthcare Clinical  |   | Charlie Price |
 | HMS  |   | David Parisi |
+| Home Pages  | Typescript, Angular  | Fredrik Eriksson |
 | Infinium SHCM  |   | Joe Bockskopf |
 | Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato |
 | Landmark  | Jetty Server Servlet | Phillip Patton |
@@ -292,5 +317,6 @@ or eventually the SoHo XI site pages
 | System I |   | Richard Sankey |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  |
 | Xtreme Support | ASP| Raj S. Joshi |
+
 
 

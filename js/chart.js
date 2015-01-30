@@ -49,6 +49,10 @@
       }
 
       for (var i = 0; i < series.length; i++) {
+        if (!series[i].name) {
+          continue;
+        }
+
         var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
           color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
           text = $('<span>'+ series[i].name  + '</span>');
@@ -57,6 +61,7 @@
           var pct = $('<span class="chart-legend-percent"></span>').text(series[i].percent);
           text.append(pct);
         }
+
         seriesLine.append(color, text);
         legend.append(seriesLine);
       }
@@ -67,7 +72,9 @@
         // trigger the click event
         var e = document.createEvent('UIEvents');
         e.initUIEvent('click', true, true, window, 1);
-        series[idx].elem.dispatchEvent(e);
+        if (series[idx].elem) {
+          series[idx].elem.dispatchEvent(e);
+        }
       });
 
       if (position === 'below') {
@@ -360,8 +367,9 @@
         .data(dataset)
         .enter()
         .append('g')
+        .attr('class', 'series-group')
         .style('fill', function (d, i) {
-            return charts.colors(i);
+          return charts.colors(i);
         });
 
       rects = groups.selectAll('rect')
@@ -383,19 +391,45 @@
         return yScale.rangeBand();
       })
       .attr('width', 0) //Animated in later
-      .on('mouseenter', function (d) {
+      .on('mouseenter', function (d, i) {
+        var shape = d3.select(this),
+              content = '',
+              total = 0, totals = [];
+
+         if (dataset.length === 1) {
+            content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
+          } else {
+           content = '<div class="chart-swatch">';
+
+           for (var j = 0; j < dataset.length; j++) {
+            total = 0;
+
+            for (var k = 0; k < dataset.length; k++) {
+              total += dataset[k][i].x;
+              totals[k] = dataset[k][i].x;
+            }
+
+            content += '<div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></br>';
+           }
+           content += '</div>';
+          }
+
+          //TODO: Localize
+          if (total > 0) {
+            content = '<span class="chart-tooltip-total"><b>' + total + '</b> Total</span>' +content;
+          }
+
+          // Set the position
+          charts.tooltip.find('.tooltip-content').html(content);
+
           var yPosS = svg[0][0].getBoundingClientRect().top,
-               shape = d3.select(this),
-              tooltip = d3.select('#svg-tooltip'),
-              xPos = parseFloat(shape.attr('x')) + parseFloat(shape.attr('width')),
-              yPos = parseFloat(shape.attr('y')) + yPosS + 9;
+              xPos = d3.event.pageX + 25,
+              yPos = yPosS + parseFloat(shape.attr('y')) + 5 - (parseInt(charts.tooltip.outerHeight()) /2) + (parseFloat(shape.attr('height'))/2);
 
-        tooltip.style('left', xPos + $(container).offset().left + 60 + 'px') //80 is the tooltip width so its over the mouse
-            .style('top', yPos + 'px')
-            .select('.tooltip-content')
-            .html('<p><b>' + d.y + ' </b>' + d.x + '</p>');
+          charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'});
 
-        tooltip.classed('is-hidden', false);
+        //charts.tooltip.addClass('top').removeClass('right').removeClass('is-hidden');
+        charts.tooltip.removeClass('is-hidden', false);
       })
       .on('mouseleave', function () {
         d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
@@ -422,6 +456,15 @@
         .attr('width', function (d) {
           return xScale(d.x);
         });
+
+
+      //TODO: Link Click Event to the legend
+      /*
+      svg.selectAll('.series-group')
+      .each(function(d,i) {
+        series[i].elem = d3.select(this).select('rect')[0][];
+      });
+      */
 
       //Add Legends
       charts.addLegend(series, 'below');
@@ -558,10 +601,10 @@
         if (options.type === 'bar-normalized') {
           chartInst.VerticalBar(options.dataset, true);
         }
-        if (options.type === 'bar-grouped') { //TODO incomplete.
+        if (options.type === 'bar-grouped') {
           chartInst.VerticalBar(options.dataset, false, true);
         }
-        if (options.type === 'column') { //TODO incomplete.
+        if (options.type === 'column') {
           chartInst.Bar(options.dataset, false, true);
         }
         if (options.type === 'donut') {

@@ -125,6 +125,9 @@
         //Search Field
         elem.find('[data-searchfield]:not([data-init])').searchfield();
 
+        //Toolbar
+        elem.find('.toolbar').toolbar();
+
         //Class-based detection for IE
         if (!!navigator.userAgent.match(/Trident/)) {
           $('html').addClass('ie');

@@ -57,5 +57,8 @@ test-message:
 	
 test-toast:
 	@node test-runner.js toast
-		
+
+test-toolbar:
+	@node test-runner.js toolbar
+			
 .PHONY: test

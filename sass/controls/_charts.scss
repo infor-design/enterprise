@@ -126,20 +126,28 @@
 
 .chart-swatch > div {
   display: table-cell;
-  height: 12px;
-  width: 12px;
+  height: 14px;
+  width: 14px;
 }
 
 .chart-swatch > span,
 .chart-swatch > b {
+  color: #ffffff;
   display: table-cell;
   line-height: 12px;
-  padding-left: 7px;
+  padding-left: 10px;
 }
 
 .chart-swatch > br {
   display: block;
-  margin: 3px 0;
+  margin: 5px 0;
+}
+
+.chart-tooltip-total {
+  color: #ffffff;
+  display: block;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 // Media Queries

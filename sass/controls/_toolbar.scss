@@ -1,0 +1,37 @@
+// Toolbars
+//================================================== */
+
+// See also Colors.scss
+.toolbar {
+  float: right;
+  width: 100%;
+
+  .btn {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    color: #616161;
+
+    &:focus {
+      border: 1px solid $primary-color;
+      color: $primary-color;
+    }
+
+    &:hover {
+      background-color: transparent;
+      color: #4d4d4d;
+    }
+
+    &:disabled {
+      color: #bdbdbd;
+    }
+
+    &:active {
+      color: #005689;
+    }
+
+    .ripple {
+      background-color: #5cc3fe;
+    }
+  }
+}

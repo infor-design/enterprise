@@ -1,22 +1,58 @@
-<header class="header" role="banner">
-  <div class="container">
-    <div class="row">
-      <div class="eleven columns">
-        <a href="#maincontent" class="skip-link">skip to main content</a>
-        <span class="title">Soho XI Guide</span>
-      </div>
+  <header class="site-header is-personalizable" role="banner">
+    <div class="container">
+      <div class="row">
+        <div class="full column">
 
-      <div class="one column">
-        <div class="field aligned">
-          <label for="theme" class="label audible">Theme</label>
-          <select id="theme" name="theme" class="dropdown">
-            <option value="grey-theme" selected>Default - Light UI</option>
-            <option value="dark-theme">Dark UI</option>
-            <option value="508-theme">Higher Contrast (508)</option>
-          </select>
+          <button class="hamburger-menu" type="button">Show navigation</button>
+          <h1>{{title}}
+          {{#subtitle}}
+          <span class="seperator">|</span>
+          {{/subtitle}}
+          {{subtitle}}</h1>
+
+          <div class="site-header-right ">
+            <button class="btn-icon site-search hidden-sm">
+              <span class="audible">Search</span>
+              <svg class="icon" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-search"></use>
+              </svg>
+            </button>
+
+            <button class="btn-actions" id="page-changer">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="false">
+                <use xlink:href="#action-button"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu checkmark">
+              <li>
+                <a href="#">Theme</a>
+                <ul class="popupmenu">
+                  <li class="checkmark"><a href="#grey-theme">Light</a></li>
+                  <li><a href="#dark-theme">Dark</a></li>
+                  <li><a href="#508-theme">Light High Contrast</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Personalization</a>
+                <ul class="popupmenu">
+                  <li class="checkmark"><a data-rgbcolor="#a352cc" href="#amethyst">Amethyst</a></li>
+                  <li><a data-rgbcolor="#13a7ff" href="#azure">Azure</a></li>
+                  <li><a data-rgbcolor="#ed1c24" href="#tourmaline">Ruby</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Language</a>
+                <ul class="popupmenu">
+                  <li class="checkmark"><a href="#lang-en">English</a></li>
+                  <li><a href="#lang-de-DE">German</a></li>
+                  <li><a href="#lang-es-ES">Spanish</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
         </div>
-
       </div>
     </div>
-  </div>
-</header>
+  </header>

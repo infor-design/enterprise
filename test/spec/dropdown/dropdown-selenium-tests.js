@@ -22,16 +22,6 @@ describe('Dropdown [selenium]', function(){
       .call(done);
   });
 
-  // smoke test, to figure out if we're even on the right page
-  it('is on the correct page', function(done) {
-    runner.client
-      .getTitle(function(err, title) {
-        globals.noError(err);
-        title.should.equal('SoHo Controls XI - Tests');
-      })
-      .call(done);
-  });
-
   it('should have its first item selected', function(done) {
     runner.client
       .getAttribute('#states', 'selectedIndex', function(err, index) {

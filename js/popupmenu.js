@@ -154,10 +154,9 @@
           }
 
           self.element.trigger('selected', [anchor]);
-
           self.close();
 
-          //Not a very usefull call back use closed events
+          //Not a very usefull callback use closed events
           if (callback && href) {
             callback(href.substr(1), self.element , self.menu.offset(), $(this));
           }
@@ -167,9 +166,12 @@
           }
 
           if (href && href.charAt(0) !== '#') {
-            return true;
+             return true;
           }
+
           e.preventDefault();
+          e.stopPropagation();
+
         });
 
         $(document).on('keydown.popupmenu', function (e) {
@@ -349,7 +351,14 @@
 
           menuToClose = $(this).find('ul');
 
-          if ((tracker - startY) < 3.5) { //We are moving slopie to the menu
+          var isLeft = parseInt(menuToClose.parent('.wrapper').css('left')) < 0,
+            canClose = (tracker - startY) < 3.5;
+
+          if (isLeft) {
+            canClose = (tracker - startY) >= 0;
+          }
+
+          if (canClose) { //We are moving slopie to the menu
             menuToClose.removeClass('is-open').removeAttr('style');
             menuToClose.parent('.wrapper').removeAttr('style');
           }
