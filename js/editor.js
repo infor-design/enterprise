@@ -144,6 +144,7 @@
         }
         this.toolbar = this.createToolbar();
         this.toolbarActions = this.toolbar;
+        this.toolbar.toolbar();
 
         return this;
       },
