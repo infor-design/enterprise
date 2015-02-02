@@ -12,7 +12,7 @@
 }
 
 // Tab Headers aka Notches
-.tab-list {
+.tab-list { //Ref: http://bradsknutson.com/blog/css-sliding-underline/
   border-bottom: 1px solid $tab-border-color;
   display: inline-block;
   height: 40px;
@@ -22,29 +22,49 @@
   width: 100%;
 
   li {
-    border-bottom: 3px solid transparent;
+    border-bottom: 3px solid rgba($tab-hover-color, 0); /*transparent;*/
     border-radius: 2px 2px 0 0;
     cursor: pointer;
     display: inline-block;
     height: 40px;
     padding: 0 25px;
-    transition: border-color .35s ease 0s;
+    position: relative;
+    transition: all .35s ease; /*transition: border-color .35s ease 0s;*/
+
+    &:after{
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      height: 3px;
+      width: 0;
+      background: rgba($tab-hover-color, 0); /*background: transparent;*/
+      transition: all .35s ease;
+    }
 
     &:hover {
       background-color: $tab-hover-color;
-      border-color: #333333;
+      /*border-color: #333333;*/
+    }
+
+    &:hover:after {
+      background: $tab-border-color;
+      left: 0;
+      width: 100%;
     }
 
     a {
-      color: #666666;
+      color: #666666; /*?? $font-color ?? */
       @include font-size(14);
       font-weight: normal;
       line-height: 39px;
       text-decoration: none;
 
+      /* Recommend taking this out because tabs are not actually links
       &:focus {
         text-decoration: underline;
-      }
+      }*/
     }
 
     &.is-selected {
@@ -55,7 +75,11 @@
       }
 
       &:hover {
-        background-color: transparent;
+        background: rgba($tab-hover-color, 0); /*background-color: transparent;*/
+      }
+
+      &:hover:after {
+        background: rgba($tab-hover-color, 0);
       }
     }
   }
