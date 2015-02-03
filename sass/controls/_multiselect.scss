@@ -129,9 +129,25 @@ select.multiselect {
 
 }
 
-#multiselect-list {
+.multiselect-list {
   max-height: 300px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  > li {
+    padding-left: 24px;
+    position: relative;
+
+    &:before {
+      @include checkbox-unchecked-before-style;
+
+      margin-left: 0;
+    }
+
+    &:after {
+
+    }
+  }
 }
 
 // Layout

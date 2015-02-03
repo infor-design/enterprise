@@ -117,7 +117,7 @@
           }
 
           if (label.toString().toLowerCase().indexOf(term.toString().toLowerCase()) > -1) {
-            var listOption = $('<li id="multiselect--option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + label + '</a></li>');
+            var listOption = $('<li id="multiselect-option'+ i +'" role="option" role="listitem" ><a href="#" tabindex="-1">' + label + '</a></li>');
             listOption.find('a').attr('href', '#'+ (value || id || label));
             listOption.addClass((isDisabled ? 'is-disabled' : ''));
             self.list.append(listOption);
@@ -135,8 +135,11 @@
         this.container
           .off('close.multiselect')
           .off('selected.multiselect')
-          .popupmenu({menuId: 'multiselect-list', trigger: 'immediate', autoFocus: false})
-          .on('close.multiselect', function () {
+          .popupmenu({
+            menuId: 'multiselect-list',
+            trigger: 'immediate',
+            autoFocus: false
+          }).on('close.multiselect', function () {
             self.list.remove();
           }).on('selected.multiselect', function (e, args) {
             self.addTag(args);
@@ -144,7 +147,7 @@
           });
 
         // remove extraneous list markup after the popupmenu has closed.
-        this.list.on('destroy.popupmenu', function() {
+        this.list.addClass('multiselect-list').on('destroy.popupmenu', function() {
           self.list.remove();
         });
 
