@@ -81,7 +81,7 @@
             var column = settings.columns[j],
               isSortable = (column.sortable === undefined ? true : column.sortable);
 
-            headerRow += '<th class="' + (isSortable ? 'is-sortable' : '') + '"' + ' data-columnid="'+ column.id +'">';
+            headerRow += '<th scope="col" class="' + (isSortable ? 'is-sortable' : '') + '"' + ' data-columnid="'+ column.id +'">';
             headerRow += '<span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
             if (isSortable) {

@@ -3,7 +3,7 @@
 
 // Grid Container Div
 .datagrid-container {
-  border: 1px solid #EBEBEB;
+  border: 1px solid #ebebeb;
   border-radius: 2px;
   clear: both;
   height: auto;
@@ -13,8 +13,8 @@
 
 // Grid Styling
 .datagrid {
-  border-collapse: collapse;
   border: 0;
+  border-collapse: collapse;
   height: 100%;
   overflow: auto;
   width: 100%;
@@ -77,8 +77,8 @@
   }
 
   span {
-    height: 7px;
     display: block;
+    height: 7px;
   }
 }
 

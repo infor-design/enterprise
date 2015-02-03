@@ -9,20 +9,19 @@
 <div class="row">
   <div class="one-third column">
 
-    <!--This is only needed because it renders first on the server-->
+    <!--This is only needed because it renders first on the server on the first one-->
     {{={{{ }}}=}}
     <script id="employee-tmpl" type="text/html">
       <ul>
         {{#dataset}}
            <li>
-            <p class="header">{{firstName}} {{lastName}}, {{title}}</p>
+            <p>{{firstName}} {{lastName}}, {{title}}</p>
           </li>
         {{/dataset}}
       </ul>
     </script>
 
     <div class="card" >
-      <div class="overlay"></div>
       <div class="card-header">
         <h2 class="card-title">Employee Information</h2>
         <button class="btn-actions">
@@ -56,15 +55,15 @@
           {{^error}}
             <li>
           {{/error}}
-            <p class="header">Task #{{task}}</p>
-            <p>{{desc}}</p>
+            <p class="listview-heading">Task #{{task}}</p>
+            <p class="listview-subheading">{{desc}}</p>
+            <p class="listview-micro">Due: {{date}}</p>
           </li>
         {{/dataset}}
       </ul>
     </script>
 
     <div class="card" >
-      <div class="overlay"></div>
       <div class="card-header">
         <h2 class="card-title">Tasks</h2>
         <button class="btn-actions">
@@ -81,10 +80,64 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+        <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="two-thirds column">
+
+    <script id="drilldown-tmpl" type="text/html">
+      <table class="listview-table">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Title</th>
+          <th scope="col">status</th>
+        </tr>
+        {{#dataset}}
+          <tr>
+            <td><a class="link">{{firstName}} {{lastName}}</a></td>
+            <td>{{title}}</td>
+            <td>{{status}}</td>
+          </tr>
+        {{/dataset}}
+      </table>
+    </script>
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Employee Information</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+          <li><a href="#">Action Three</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="emp-listview" data-tmpl="drilldown-tmpl" data-dataset="http://localhost:4000/api/people"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#emp-listview').on('click', 'a', function () {
+    console.log('Drill Down on: '+ $(this).text());
+  });
+
+  $('#task-listview, #emp-listview').on('selectionchange',function (e, args) {
+    console.log(args);
+  });
+</script>
+
 
 

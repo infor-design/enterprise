@@ -3,12 +3,9 @@
 */
 
 //TODO:
-// API - Selection,
-// edit template
+// TODOs: edit and/or alt template
 // navigatable
-// seletable (single or multiple)
 // template (as id or string)
-// alt template
 // Methods: add, remove, clear, destroy, refresh (rebind), select (get or set)
 // Events: rendered, remove, add, select
 (function (factory) {
@@ -28,7 +25,8 @@
       defaults = {
         dataset: null,  //Object or Arrray or url
         template: null,  //Html Template String
-        rowHeight: 'medium' //Short, Medium or Tall or a number
+        description: null,  //Audible Label (or use parent title)
+        selectable: 'single' //false, 'single' or 'multiple' //TODO: Own Plugin?
       },
       settings = $.extend({}, defaults, options);
 
@@ -36,6 +34,7 @@
     function Plugin(element) {
       this.element = $(element);
       this.init();
+      this.handleEvents();
     }
 
     // Plugin Object
@@ -43,6 +42,7 @@
       init: function() {
         this.setup();
         this.refresh();
+        this.selectedItems = [];
       },
 
       setup: function() {
@@ -57,30 +57,40 @@
           if (!(self.actionButton.data('popupmenu'))) {
             self.actionButton.popupmenu();
           }
-
-          self.actionButton.on('beforeOpen', function() {
-            card.addClass('menu-engaged');
-          }).on('close', function() {
-            card.removeClass('menu-engaged');
-          });
         }
+
+        //Setup Keyboard Support and Aria
+        this.id = (this.element.attr('id') ? this.element.attr('id') : 'listview-'+ ($ ('.listview').index() + 1));
+        this.element.attr({'tabindex': 0,
+          'role' : 'listbox',
+          'aria-label' : (settings.description ? settings.description : this.element.closest('.card').find('.card-title').text()),
+          'aria-activedescendant': 'item'+ this.id + '-0'});
+
+        this.element.parent('.card-content').css('overflow', 'hidden');
       },
 
       render: function(dataset) {
-        // Set Row Height
-        if (typeof settings.rowHeight === 'string') {
-          this.element.addClass(settings.rowHeight);
-        } else {
-           this.element.css('line-height', settings.rowHeight);
-        }
+        var self = this;
 
-        // Render Template
+        // Render "mustache" Template
         if (Tmpl && dataset && settings.template) {
           var compiledTmpl = Tmpl.compile(settings.template),
             renderedTmpl = compiledTmpl.render({dataset: dataset});
 
           this.element.html(renderedTmpl);
         }
+
+        // Add an Id
+        if (this.element.find('li, tr').first().attr('id')) {
+          return;
+        }
+
+        this.element.find('li, tr').each(function (i) {
+          var row = $(this).attr('role', 'option');
+          if (!row.attr('id')) {
+            row.attr('id', self.id + '-' + i);
+          }
+        });
       },
 
       // Get the Data Source. Can be an array, Object or Url
@@ -97,9 +107,50 @@
         this.render(ds);
       },
 
+      // Handle Keyboard / Navigation Ect
+      handleEvents: function () {
+        var self = this;
+
+
+        // Key Board
+        this.element.on('focus.listview', function () {
+         console.log('this');
+        });
+
+        // Selection View Click/Touch
+        if (settings.selectable) {
+          this.element.addClass('is-selectable');
+
+          this.element.on('click.listview', 'li, tr', function () {
+            self.select($(this));
+          });
+        }
+      },
+
+      select: function (li) {
+        var self = this;
+
+        self.selectedItems = [];
+        if (settings.selectable === 'multiple') {
+          li.parent().find('.is-selected').each(function (i) {
+            self.selectedItems[i] = $(this);
+          });
+        } else {
+          li.parent().find('.is-selected').removeClass('is-selected');
+          self.selectedItems[0] = $(this);
+        }
+
+        if (li.hasClass('is-selected')) {
+          li.removeClass('is-selected').attr('aria-selected', false);
+        } else {
+          li.addClass('is-selected').attr('aria-selected', true);
+        }
+
+        this.element.trigger('selectionchange', [this.selectedItems]);
+      },
+
       destroy: function() {
         if (this.actionButton) {
-          this.element.parent().removeClass('menu-engaged');
           this.actionButton.off('beforeOpen close').data('popupmenu').destroy();
         }
         this.element.removeData(pluginName);
