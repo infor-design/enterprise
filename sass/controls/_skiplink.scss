@@ -1,0 +1,27 @@
+// Skip Link
+//================================================== //
+
+.skip-link {
+  background: none repeat scroll 0 0 transparent;
+  border-bottom-right-radius: 3px;
+  color: #0977d5;
+  font-family: $font-regular;
+  @include font-size(14);
+  left: 0;
+  padding: 6px;
+  position: absolute;
+  text-decoration: none;
+  top: -40px;
+  transition: top 1s ease-out 0s, background 1s linear 0s;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  background: #ffffff;
+  left: 0;
+  outline: 0 none;
+  position: absolute;
+  top: 0;
+  transition: top .3s ease-in 0s, background .3s linear 0s;
+}
+

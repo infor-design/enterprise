@@ -11,7 +11,6 @@
   background-color: $cardlist-bg-color;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
-  height: 330px;
   margin-bottom: 20px;
   min-height: 330px;
   position: relative;
@@ -27,7 +26,9 @@
     position: relative;
     z-index: 11;
 
-    > * {
+    > h2,
+    > h1,
+    > button {
       display: inline-block;
       float: left;
     }

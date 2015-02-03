@@ -87,9 +87,9 @@ $header-height: 118px;
   display: inline-block;
   height: 2px;
   position: relative;
-  width: 30px;
   top: 4px;
   vertical-align: top;
+  width: 30px;
 
   &:after,
   &:before {
@@ -103,7 +103,38 @@ $header-height: 118px;
   }
 
   &:before {
-    top: 15px;
+    top: 17px;
+  }
+}
+
+// Application Header
+.app-header {
+  background-color: #454545;
+  height: 60px;
+  width: 100%;
+
+  h1 {
+    color: $inverse-color;
+    display: inline-block;
+    font-weight: normal;
+    @include rem(line-height, 6rem);
+    margin-left: 50px;
+  }
+
+  .btn-actions {
+    display: inline-block;
+    float: right;
+    position: relative;
+    right: 50px;
+    top: 13px;
+
+    svg {
+      fill: $inverse-color;
+    }
+
+    &:focus {
+      border-color: $inverse-color !important;
+    }
   }
 }
 

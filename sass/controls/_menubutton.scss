@@ -58,7 +58,10 @@
 
 .btn-actions {
   border: 1px solid transparent;
-  color: $font-color-extradark;
+
+  > .icon {
+    fill: $font-color-extradark;
+  }
 
   > * {
     pointer-events: none;

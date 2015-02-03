@@ -61,9 +61,12 @@
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
         this.menu.find('.popupmenu').each(function(i, elem) {
-          if (!($(elem).parent().hasClass('wrapper'))) {
-            $(elem).wrap('<div class="wrapper"></div>');
+          var popup = $(elem);
+
+          if (!(popup.parent().hasClass('wrapper'))) {
+            popup.wrap('<div class="wrapper"></div>');
           }
+
         });
 
         // If action button menu, append arrow markup
@@ -90,6 +93,7 @@
         });
         this.menu.find('a').attr('tabindex', '-1').attr('role', 'menuitem');
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
+
       },
 
       handleEvents: function() {
