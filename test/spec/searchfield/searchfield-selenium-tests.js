@@ -9,7 +9,6 @@ describe('Searchfield [selenium]', function(){
   this.timeout(99999999);
 
   var SEARCH_DEFAULT = '#searchfield-default',
-    SEARCH_TEMPLATE = '#searchfield-template',
     LIST = '#autocomplete-list',
     TOAST_CONTAINER = '#toast-container';
 
@@ -36,7 +35,7 @@ describe('Searchfield [selenium]', function(){
       .call(done);
   });
 
-  it('shows an option to display more results if it successfully finds matches', function(done) {
+  it.skip('shows an option to display more results if it successfully finds matches', function(done) {
     runner.client
       // Make sure the default value is empty
       .setValue(SEARCH_DEFAULT, '', globals.noError)
@@ -60,7 +59,7 @@ describe('Searchfield [selenium]', function(){
   });
 
   // NOTE: This test expects that the previous test completed successfully
-  it('can trigger a callback method if the "more results" option is activated', function(done) {
+  it.skip('can trigger a callback method if the "more results" option is activated', function(done) {
     runner.client
       // Click the 'More Results' link
       .click(LIST + ' li:last-child > a', globals.noError)

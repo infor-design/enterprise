@@ -6,12 +6,12 @@
 
     <div class="field">
       <label for="auto-default">#auto-default (autocomplete with stock settings)</label>
-      <input data-autocomplete id="auto-default" placeholder="Type to Search" type="text" />
+      <input data-autocomplete="http://localhost:4000/api/states?term=" id="auto-default" class="autocomplete" placeholder="Type to Search" type="text" />
     </div>
 
     <div class="field">
       <label for="auto-template">#auto-template (uses an alternate source and external template)</label>
-      <input data-autocomplete="source" data-init="false" data-tmpl="#autocomplete-with-pic" id="auto-template" placeholder="Type to Search" type="text">
+      <input data-autocomplete="source" class="autocomplete" data-tmpl="#autocomplete-with-pic" id="auto-template" placeholder="Type to Search" type="text">
     </div>
 
   </div>
