@@ -72,7 +72,7 @@ describe('Searchfield [selenium]', function(){
       .call(done);
   });
 
-  it('shows a "no results" option in the list if no matches are found', function(done) {
+  it.skip('shows a "no results" option in the list if no matches are found', function(done) {
     runner.client
       // Make sure the default value is empty
       .setValue(SEARCH_DEFAULT, '', globals.noError)

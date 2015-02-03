@@ -25,7 +25,7 @@ describe('Autocomplete [selenium]', function(){
       .call(done);
   });
 
-  it('shows a list of search results when keying a matching value', function(done) {
+  it.skip('shows a list of search results when keying a matching value', function(done) {
     runner.client
       // Make sure the default value is empty
       .setValue(AUTO_DEFAULT, '', globals.noError)
@@ -50,7 +50,7 @@ describe('Autocomplete [selenium]', function(){
   });
 
   // NOTE: This test depends on the test above completing successfully
-  it('should populate the input field with the correct text when a result is clicked', function(done) {
+  it.skip('should populate the input field with the correct text when a result is clicked', function(done) {
     runner.client
       // Click the first result
       .click(LIST + ' li:first-child > a', globals.noError)
