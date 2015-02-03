@@ -37,7 +37,9 @@
 
     // Default Autocomplete Result Item Template
     var resultTemplate = '<li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
-      '<a href="#" tabindex="-1">{{{label}}}</a>' + '\n\n' +
+      '<a href="#" tabindex="-1">' + '\n\n' +
+        '<span>{{{label}}}</span>' + '\n\n' +
+      '</a>' + '\n\n' +
     '</li>';
 
     // Plugin Object
