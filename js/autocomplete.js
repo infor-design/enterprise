@@ -166,7 +166,6 @@
         });
 
         this.noSelect = true;
-        this.element.focus();
         this.element.trigger('autocomplete-list-open', items);
       },
 
