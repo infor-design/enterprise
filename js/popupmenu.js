@@ -70,7 +70,7 @@
         });
 
         // If action button menu, append arrow markup
-        if (this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('-header') > 0) {
+        if (this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('header') >= 0) {
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }
@@ -250,7 +250,7 @@
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight(),
-          xOffset = this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('-header') > -1 ? (menuWidth) - 34 : 0;
+          xOffset = this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('header') > -1 ? (menuWidth) - 34 : 0;
 
         if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,

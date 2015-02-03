@@ -103,7 +103,7 @@
             },
             dataset = isString ? baseData : $.extend(baseData, items[i]);
 
-          if (option.toLowerCase().indexOf(term) > -1) {
+          if (option.toLowerCase().indexOf(term) === 0) {
             matchingOptions.push(option);
 
             // Build the dataset that will be submitted to the template

@@ -92,13 +92,19 @@
     <script id="drilldown-tmpl" type="text/html">
       <table class="listview-table">
         <tr>
+          <th scope="col">Drilldown</th>
           <th scope="col">Name</th>
           <th scope="col">Title</th>
           <th scope="col">status</th>
         </tr>
         {{#dataset}}
           <tr>
-            <td><a class="link">{{firstName}} {{lastName}}</a></td>
+            <td>
+              <button data-id="{{id}}" class="btn-icon small"><svg class="icon" focusable="false" aria-hidden="true">
+                   <use xlink:href="#icon-drilldown"></use></svg><span>Drilldown</span>
+              </button>
+            </td>
+            <td>{{firstName}} {{lastName}}</td>
             <td>{{title}}</td>
             <td>{{status}}</td>
           </tr>
@@ -130,8 +136,8 @@
 </div>
 
 <script>
-  $('#emp-listview').on('click', 'a', function () {
-    console.log('Drill Down on: '+ $(this).text());
+  $('#emp-listview').on('click', 'button', function () {
+    console.log('Drill Down on: '+ $(this).attr('data-id'));
   });
 
   $('#task-listview, #emp-listview').on('selectionchange',function (e, args) {

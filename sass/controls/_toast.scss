@@ -123,3 +123,14 @@
   0% { opacity: 1; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
   100% { opacity: 0; transform: translate3d(0, 40px, 0) scale3d(.1, .6, 1); }
 }
+
+
+.toast-progress {
+  background-color: $primary-color;
+  bottom: 0;
+  height: 3px;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}

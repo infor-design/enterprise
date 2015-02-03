@@ -95,7 +95,16 @@
         });
 
         //Auto Complete
-        elem.find('[data-autocomplete]:not([data-init])').autocomplete();
+        elem.find('[data-autocomplete]:not([data-init])').each(function () {
+          var ac  = $(this),
+            source = $(this).attr('data-source');
+
+          if (source) {
+            ac.autocomplete({source: source});
+          } else {
+            ac.autocomplete();
+          }
+        });
 
         //Multiselect
         elem.find('select[multiple]:not([data-init])').multiselect();

@@ -790,7 +790,7 @@
             currentElement = self.getCurrentElement();
 
         //Attach Label
-        this.element.prev('.label').css('cursor', 'default').on('click.editor', function () {
+        this.element.prevAll('.label').css('cursor', 'default').on('click.editor', function () {
           currentElement.focus();
         });
         currentElement.attr('aria-label', currentElement.prev('.label').text());
