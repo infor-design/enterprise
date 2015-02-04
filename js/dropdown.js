@@ -12,7 +12,7 @@
   }
 }(function ($) {
 
-  $.fn.dropdown = function(options, args) {
+  $.fn.dropdown = function(options) {
 
     // Dropdown Settings and Options
     var pluginName = 'dropdown',
@@ -41,15 +41,15 @@
     }
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Dropdown(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
     // Actual DropDown Code
-    Plugin.prototype = {
+    Dropdown.prototype = {
       init: function() {
-
         var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
@@ -73,8 +73,12 @@
         }
 
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
-          .text('. Press the Down Arrow to browse available options.')
+          .text('. Press the Down Arrow to browse available options.') // TODO: Localize
           .insertAfter(this.label);
+
+        if (this.element.prop('multiple') && !this.settings.multiple) {
+          this.settings.multiple = true;
+        }
 
         this.updateList();
         this.setValue();
@@ -144,9 +148,10 @@
 
       // Set the value based on selected options
       setValue: function () {
-        var text = this.element.find('option:selected').text();
+        var opts = this.element.find('option:selected'),
+          text = this.getOptionText(opts);
 
-        if (settings.empty && this.element.find('option[selected]').length === 0) {
+        if (this.settings.empty && opts.length === 0) {
           //initially empty
           return;
         }
@@ -185,8 +190,8 @@
 
         //TODO: Empty Selection
         if (this.element.attr('placeholder')) {
-        this.input.attr('placeholder', this.element.attr('placeholder'));
-        this.element.removeAttr('placeholder');
+          this.input.attr('placeholder', this.element.attr('placeholder'));
+          this.element.removeAttr('placeholder');
         }
       },
 
@@ -257,7 +262,7 @@
           self.ignoreKeys(searchInput, e);
 
           //Open List and Filter results
-          if (self.searchInput.val() === self.element.find('option:selected').text()) {
+          if (self.searchInput.val() === self.getOptionText()) {
             self.searchInput.val('');
           }
 
@@ -430,6 +435,24 @@
         }
       },
 
+      // Retrieves a string containing all text for currently selected options delimited by commas
+      getOptionText: function(opts) {
+        var text = '';
+
+        if (!opts) {
+          opts = this.element.find('option:selected');
+        }
+
+        opts.each(function() {
+          if (text.length > 0) {
+            text += ', ';
+          }
+          text += $(this).text();
+        });
+
+        return text;
+      },
+
       // Prep for opening list,make ajax call ect...
       open: function() {
         var self = this;
@@ -449,8 +472,12 @@
 
       // Actually Show The List
       openList: function () {
-        var current = this.list.find('.selected'),
+        var current = this.previousActiveDescendant ? this.list.find('#' + this.previousActiveDescendant) : this.list.find('.selected'),
             self =  this;
+
+        if (current.length > 0) {
+          current = current.eq(0);
+        }
 
         this.input.attr('aria-expanded', 'true');
         this.input.attr('aria-activedescendant', current.attr('id'));
@@ -483,7 +510,7 @@
         this.list.appendTo('body').show();
         this.position();
         this.highlightOption(current, true);
-        this.searchInput.val(this.element.find('option:selected').text()).focus();
+        this.searchInput.val(current.text()).focus();
         this.handleSearchEvents();
 
         self.list.on('touchend.list touchcancel.list', function(e) {
@@ -686,23 +713,15 @@
           return;
         }
 
-        var code = option.val(),
-          oldVal = this.input.val(),
-          text = option.text(),
-          trimmed;
-
-        if (!isMobile() && option.index() === this.element[0].selectedIndex) {
+        if (!isMobile() && !this.settings.multiple && option.index() === this.element[0].selectedIndex) {
           return;
         }
 
-        this.input.val(text); //set value and active descendent
-        this.searchInput.val(text);
-
-        if (this.element.attr('maxlength')) {
-          trimmed = text.substr(0, this.element.attr('maxlength'));
-          this.input.val(trimmed);
-          this.searchInput.val(trimmed);
-        }
+        var code = option.val(),
+          val = this.element.val(),
+          oldText = this.input.val(),
+          text = '',
+          trimmed = '';
 
         this.element.find('option').each(function () {
           if (this.value === code) {
@@ -711,16 +730,60 @@
           }
         });
 
-        if (oldVal !== option.text() && !noTrigger) {
-          this.element.val(code).trigger('change');
+        if (this.settings.multiple) {
+          // Working with a select multiple allows for the "de-selection" of items in the list
+          if (!val) {
+            val = [];
+          }
+          if ($.inArray(code, val) !== -1) {
+            val = $.grep(val, function(optionValue) {
+              return optionValue !== code;
+            });
+            this.previousActiveDescendant = undefined;
+          } else {
+            val = typeof val === 'string' ? [val] : val;
+            val.push(code);
+            this.previousActiveDescendant = 'list-option' + option.index();
+          }
+
+          var newOptions = this.element.find('option').filter(function() {
+            return $.inArray($(this)[0].value, val) !== -1;
+          });
+          text = this.getOptionText(newOptions);
+        } else {
+          // Working with a single select
+          val = code;
+          this.previousActiveDescendant = 'list-option' + option.index();
+          text = option.text();
         }
 
+        // If we're working with a single select and the value hasn't changed, just return without
+        // firing a change event
+        if (text === oldText) {
+          return;
+        }
+
+        // Change the values of both inputs and swap out the active descendant
+        this.input.val(text);
+        this.searchInput.val(text);
+
+        if (this.element.attr('maxlength')) {
+          trimmed = text.substr(0, this.element.attr('maxlength'));
+          this.input.val(trimmed);
+          this.searchInput.val(trimmed);
+        }
+
+        // Fire the change event with the new value if the noTrigger flag isn't set
+        if (!noTrigger) {
+          this.element.val(val).trigger('change');
+        }
       },
 
       // Execute the source ajax option
       callSource: function(callback) {
         var self = this;
-        if (settings.source) {
+
+        if (this.settings.source) {
           var response = function (data) {
             //to do - no results back do not open.
             var list = '',
@@ -743,7 +806,7 @@
           //TODO: show indicator when we have it
           self.input.addClass('is-busy');
 
-          settings.source(self.input.val(), response);
+          this.settings.source(self.input.val(), response);
           return true;
         }
         return false;
@@ -779,13 +842,23 @@
       },
 
       disable: function() {
-        this.element.attr('disabled', 'disabled');
-        this.input.attr('disabled', 'disabled');
+        this.element.prop('disabled', true);
+        this.input.prop('disabled', true);
       },
 
       enable: function() {
-        this.element.removeAttr('disabled');
-        this.input.removeAttr('disabled');
+        this.element.prop('disabled', false);
+        this.input.prop('disabled', false);
+      },
+
+      // Triggered whenever the plugin's settings are changed
+      update: function() {
+        // Update the 'multiple' property
+        if (this.settings.multiple && this.settings.multiple === true) {
+          this.element.prop('multiple', true);
+        } else {
+          this.element.prop('multiple', false);
+        }
       }
 
     };
@@ -794,12 +867,10 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        if (typeof instance[options] === 'function') {
-          instance[options](args);
-        }
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.update();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Dropdown(this, settings));
       }
     });
   };
