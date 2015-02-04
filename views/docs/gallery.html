@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>{{title}}</title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="/stylesheets/site.css" type="text/css">
+  <link rel="stylesheet" id="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+
+  <!-- jQuery and Plugin Code-->
+  <script src="/js/jquery-1.11.1.min.js"></script>
+  <script src="/js/sohoxi.js"></script>
+  <script src="/js/demo.js"></script>
+
+</head>
+<body>
+  {{> controls/svg}}
+
+  {{> includes/header}}
+
+  <section id="maincontent" class="site-content container">
+    <div class="row">
+      <div class="full column">
+        <h2>Gallery</h2>
+        <p>Consider the shower faucet. Once upon a time, shower faucets were simple contraptions. There was a old-water knob and there was a hot-water knob. You would turn each knob to adjust the temperature;you didn’t have to figure out how to use it. It was obvious. Then, in the Sixties or Seventies, some engineer came along and decided that maybe you could combine the cold and hot water faucets into one faucet.
+
+        Suddenly figuring out how to work the temperature and water pressure became infinitely more complicated. There arrived on the market a plethora of new faucets, each operating differently. How many of you have been to a hotel or a friend’s house</p>
+      </div>
+    </div>
+  </section>
+
+
+  {{#enableLiveReload}}
+  <!-- Live Reload - "grunt watch" -->
+  <script type="text/javascript">
+    if (window.location.hostname !== '107.170.15.202') {
+      document.write('\x3Cscript type="text/javascript" src="//' + window.location.hostname + ':35729/livereload.js">\x3C/script>');
+    }
+  </script>
+  {{/enableLiveReload}}
+
+  <script>
+    // Init All SoHo XI Controls Stuff on Document Ready
+    $(function() {
+      $('body').initialize('en');
+    });
+  </script>
+
+</body>
+</html>
