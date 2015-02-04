@@ -11,15 +11,107 @@
 // Text in the Page
 .site-content {
   h2 {
-    font-size: 30px;
+    font-size: 40px;
     margin-bottom: 20px;
     margin-top: 50px;
+  }
+
+  h3 {
+  	font-size: 24px;
   }
 
   p {
     font-size: 18px;
     line-height: 30px;
   }
+
+  a {
+  	text-decoration: none;
+  }
+
+  &.home {
+  	max-width: 820px;
+  	text-align: center;
+
+  	h2 {
+  		color: $highlight-color;
+  	}
+
+  	> p {
+  		// width: 47%;
+		margin: 0 auto;
+		font-size: 22px;
+  	}
+  }
+
+
+  .call-out {
+  	margin: 100px 0;
+  	.column {
+  		.content {
+  			background: transparent;
+  			display: block;
+  		}
+
+  		p {
+			width: 92%;
+			margin: 0 auto;
+			font-size: 16px;
+		}
+
+		&.gallery {
+
+			p {
+				width: 80%;
+			}
+
+		}
+
+  		&:hover {
+
+  			h3, p {
+  				color: #fff;
+  			}
+  			.content {
+  				background: $callout-hover-bd;
+  			}
+
+  			.icon-circle {
+  				background: $callout-icon-hover-bd;
+  			}
+  		}
+  	}
+  }
+
+  .icon-circle {
+  	width: 155px;
+	height: 155px;
+	background: $callout-icon-bd;
+	border-radius: 50%;
+	margin: 10px auto 24px;
+
+	
+
+	svg {
+		width: 60%;
+		height: 100%;
+
+		&.icon-vision {
+			fill: $callout-icon-vision;
+		}
+
+		&.icon-gallery {
+			fill: $callout-icon-gallery;
+		}
+
+		&.icon-guide {
+			fill: $callout-icon-guide;
+		}
+
+	}
+  }
+
+
 }
 
 
