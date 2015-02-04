@@ -38,15 +38,27 @@
   	}
 
   	> p {
-  		// width: 47%;
 		margin: 0 auto;
 		font-size: 22px;
   	}
   }
 
+  &.gallery {
+
+	max-width: 1140px;
+
+  	.column .content{
+  		border: solid $switch-disabled-color 1px;
+  		padding-top: 0;
+  	}
+
+  }
+
 
   .call-out {
+
   	margin: 100px 0;
+
   	.column {
   		.content {
   			background: transparent;
@@ -84,13 +96,12 @@
   }
 
   .icon-circle {
+  	
   	width: 155px;
 	height: 155px;
 	background: $callout-icon-bd;
 	border-radius: 50%;
 	margin: 10px auto 24px;
-
-	
 
 	svg {
 		width: 60%;
