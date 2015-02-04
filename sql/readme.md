@@ -21,6 +21,14 @@ Navigate to /src. You will find 2 modules:
 * controllers/sample-data-controller.js. This contains sql interfaces to the soho schema.
 * routers/rest-router.js. This exposes RESTful Express routes.
 
+## Examples
+
+* Get Countries - http://localhost:4000/api/countries
+* Get Datagrid Page (w/o column + sort) - http://localhost:4000/api/datagrid?pg=1&recs=20&col=none
+* Get Datagrid Page (w column + sort) - http://localhost:4000/api/datagrid?pg=1&recs=20&col=integer_amount&sort=1
+* Insert Datagrid Row - [](http://localhost:4000/media/datagrid-insert.png)
+* Delete Datagrid Row - [](http://localhost:4000/media/datagrid-delete.png)
+
 ## Extending the API
 
 If you need to extend the API, keep the following in mind:
