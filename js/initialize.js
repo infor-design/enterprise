@@ -95,7 +95,7 @@
         });
 
         //Auto Complete
-        elem.find('[data-autocomplete]:not([data-init])').autocomplete();
+        elem.find('.autocomplete:not([data-init])').autocomplete();
 
         //Multiselect
         elem.find('select[multiple]:not([data-init])').multiselect();
@@ -128,7 +128,7 @@
         elem.find('.busy').busyindicator();
 
         //Search Field
-        elem.find('[data-searchfield]:not([data-init])').searchfield();
+        elem.find('.searchfield:not([data-init])').searchfield();
 
         //Toolbar
         elem.find('.toolbar').toolbar();

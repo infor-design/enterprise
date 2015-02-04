@@ -2,10 +2,10 @@
 //================================================== //
 
 // Variables for this file
-$header-height: 118px;
+$header-height: 70px;
 
 // Top Header
-.site-header {
+.header {
   background-color: #454545;
   display: block;
   height: $header-height;
@@ -14,7 +14,7 @@ $header-height: 118px;
   width: 100%;
 
   .column {
-    padding-top: 40px;
+    margin-top: 25px;
 
     > * {
       display: inline-block;
@@ -24,14 +24,17 @@ $header-height: 118px;
   h1 {
     color: $inverse-color;
     font-family: $font-regular;
-    @include font-size(30);
-    margin-left: 20px;
+    @include font-size(20);
+    line-height: inherit;
+    margin-left: 13px;
   }
 
   .seperator {
-    @include font-size(37);
-    color: #ffffff;
-    padding: 0 10px;
+    color: $inverse-color;
+    @include font-size(20);
+    padding: 0 4px 0 5px;
+    position: relative;
+    top: -2px;
   }
 
   .btn-actions {
@@ -52,13 +55,15 @@ $header-height: 118px;
     }
   }
 
-  .site-header-right {
+  .header-right {
     float: right;
+    position: relative;
+    top: -7px;
   }
 
-  .site-search {
+  .header-search {
     height: 34px;
-    margin-right: 10px;
+    margin-right: 5px;
     vertical-align: top;
     width: 34px;
 
@@ -87,9 +92,9 @@ $header-height: 118px;
   display: inline-block;
   height: 2px;
   position: relative;
-  top: 4px;
+  top: 2px;
   vertical-align: top;
-  width: 30px;
+  width: 25px;
 
   &:after,
   &:before {
@@ -98,43 +103,12 @@ $header-height: 118px;
     height: 2px;
     left: 0;
     position: absolute;
-    top: 8px;
+    top: 6px;
     width: 100%;
   }
 
   &:before {
-    top: 17px;
-  }
-}
-
-// Application Header
-.app-header {
-  background-color: #454545;
-  height: 60px;
-  width: 100%;
-
-  h1 {
-    color: $inverse-color;
-    display: inline-block;
-    font-weight: normal;
-    @include rem(line-height, 6rem);
-    margin-left: 50px;
-  }
-
-  .btn-actions {
-    display: inline-block;
-    float: right;
-    position: relative;
-    right: 50px;
-    top: 13px;
-
-    svg {
-      fill: $inverse-color;
-    }
-
-    &:focus {
-      border-color: $inverse-color !important;
-    }
+    top: 11px;
   }
 }
 

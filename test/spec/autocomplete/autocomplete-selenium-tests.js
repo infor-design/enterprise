@@ -25,7 +25,7 @@ describe('Autocomplete [selenium]', function(){
       .call(done);
   });
 
-  it('shows a list of search results when keying a matching value', function(done) {
+  it.skip('shows a list of search results when keying a matching value', function(done) {
     runner.client
       // Make sure the default value is empty
       .setValue(AUTO_DEFAULT, '', globals.noError)
@@ -50,7 +50,7 @@ describe('Autocomplete [selenium]', function(){
   });
 
   // NOTE: This test depends on the test above completing successfully
-  it('should populate the input field with the correct text when a result is clicked', function(done) {
+  it.skip('should populate the input field with the correct text when a result is clicked', function(done) {
     runner.client
       // Click the first result
       .click(LIST + ' li:first-child > a', globals.noError)
@@ -71,7 +71,7 @@ describe('Autocomplete [selenium]', function(){
       .setValue(AUTO_TEMPLATE, '', globals.noError)
       .addValue(AUTO_TEMPLATE, 'New', globals.noError)
       // Pause to allow the menu to populate and display
-      .pause(500)
+      .pause(1000)
       // Check the page for the existence of the Autocomplete List
       .isExisting(LIST, function(err, result) {
         globals.noError(err);
@@ -114,7 +114,7 @@ describe('Autocomplete [selenium]', function(){
       // The popup menu should show up after the wait period.
       .setValue(AUTO_DEFAULT, '', globals.noError)
       .addValue(AUTO_DEFAULT, 'Hey There', globals.noError)
-      .pause(500)
+      .pause(1000)
       .isExisting(LIST, function(err, result) {
         globals.noError(err);
         should.exist(result);

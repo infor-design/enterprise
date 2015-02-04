@@ -25,7 +25,7 @@
     var pluginName = 'searchfield',
         defaults = {
           allResultsCallback: undefined,
-          source: ['Delaware', 'Maryland', 'New Jersey', 'New York', 'Pennsylvania', 'Texas'],
+          source: [],
           template: undefined // Template that can be passed
         },
         settings = $.extend({}, defaults, options);

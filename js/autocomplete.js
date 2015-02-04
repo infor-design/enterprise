@@ -17,14 +17,13 @@
     // Settings and Options
     var pluginName = 'autocomplete',
       defaults = {
-        source: ['Alabama', 'Alaska', 'California', 'Delaware'], //Defines the data to use, must be specified.
+        source: [], //Defines the data to use, must be specified.
         template: undefined // If defined, use this to draw the contents of each search result instead of the default draw routine.
       },
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Autocomplete(element) {
-      // TODO: Idea is that data-autocomplete can be a url, 'source' or an array
       this.settings = settings;
       this.element = $(element);
       this.init();
@@ -46,12 +45,13 @@
     Autocomplete.prototype = {
 
       init: function() {
+        // data-autocomplete can be a url, 'source' or an array
+        if (this.element.attr('data-autocomplete') !== 'source') {
+          this.settings.source = this.element.attr('data-autocomplete');
+        }
+
         this.addMarkup();
         this.handleEvents();
-      },
-
-      setup: function() {
-
       },
 
       addMarkup: function () {
@@ -103,7 +103,7 @@
             },
             dataset = isString ? baseData : $.extend(baseData, items[i]);
 
-          if (option.toLowerCase().indexOf(term) > -1) {
+          if (option.toLowerCase().indexOf(term) === 0) {
             matchingOptions.push(option);
 
             // Build the dataset that will be submitted to the template
@@ -152,7 +152,6 @@
           }
 
           self.element.trigger('selected', [a]);
-
           self.element.data('popupmenu').close();
 
           e.preventDefault();
@@ -167,7 +166,6 @@
         });
 
         this.noSelect = true;
-        this.element.focus();
         this.element.trigger('autocomplete-list-open', items);
       },
 

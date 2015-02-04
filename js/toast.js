@@ -28,6 +28,7 @@
           message: '(Content)',
           position: 'top right',  //top left, bottom left, bottom right (center??)
           audibleOnly: false,
+          progressBar: true,
           timeout: 6000
         },
         settings = $.extend({}, defaults, options);
@@ -51,7 +52,8 @@
         var self = this,
           container = $('#toast-container'),
           closeBtn = $('<button type="button" class="btn-close" aria-hidden="true"></button>'),  //TODO: Localize
-          toast = $('<div class="toast"></div>');
+          toast = $('<div class="toast"></div>'),
+          progress = $('<div class="toast-progress"></div>');
 
         if (container.length === 0) {
           container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite" role="alert"></div>').appendTo('body');
@@ -63,21 +65,36 @@
 
         toast.append('<span class="toast-title">'+ this.settings.title + '</span>');
         toast.append('<span class="toast-message">'+ this.settings.message + '</span>');
+
+        if (this.settings.progressBar) {
+          toast.append(progress);
+          var maxHideTime = parseFloat(self.settings.timeout),
+              hideEta = new Date().getTime() + maxHideTime,
+              interval = setInterval(function () {
+            var percentage = ((hideEta - (new Date().getTime())) / maxHideTime) * 100;
+            progress.width(percentage + '%');
+          }, 10);
+        }
+
         container.append(toast);
         toast.addClass((this.settings.audibleOnly ? 'audible' : 'effect-scale'));
         toast.append(closeBtn);
 
         closeBtn.on('click', function () {
           self.remove(toast);
+          clearInterval(interval);
         });
 
         setTimeout(function () {
          self.remove(toast);
+         clearInterval(interval);
         }, (this.settings.audibleOnly ? 100 : settings.timeout));
       },
 
       // Remove the Message and Animate
       remove: function (toast) {
+
+
         if (this.settings.audibleOnly) {
           toast.remove();
           return;
