@@ -59,8 +59,8 @@
 
   //Checked Styling - Toggle Handle
   input:checked ~ label:after {
-    border-color: $switch-checked-color;
     background: $switch-checked-color;
+    border-color: $switch-checked-color;
     left: 29px;
   }
 
