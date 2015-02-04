@@ -805,14 +805,31 @@
             var list = '',
               val = self.element.val();
 
+            function buildOption(option) {
+              var isString = typeof option === 'string';
+
+              if (option !== null && option !== undefined) {
+                list += '<option' + (option.id === undefined ? '' : ' id="' + option.id.replace('"', '\'') + '"') +
+                        (option.value !== undefined ? ' value="' + option.value.replace('"', '\'') + '"' : isString ? ' value="' + option.replace('"', '\'') + '"' : '') +
+                        (option.value === val ? ' selected ' : '') +
+                        '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : isString ? option : '') + '</option>';
+              }
+            }
+
             //populate
             self.element.empty();
             for (var i=0; i < data.length; i++) {
-              if (data[i] !== null && data[i] !== undefined) {
-                list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"') +
-                        (data[i].value !== undefined ? ' value="' + data[i].value.replace('"', '\'') + '"' : typeof data[i] === 'string' ? ' value="' + data[i].replace('"', '\'') + '"' : '') +
-                        (data[i].value === val ? ' selected ' : '') +
-                        '>'+ (data[i].label !== undefined ? data[i].label : typeof data[i] === 'string' ? data[i] : '') + '</option>';
+              var opts;
+
+              if (data[i].group) {
+                opts = data[i].options;
+                list += '<optgroup label="' + data[i].group + '">';
+                for (var ii = 0; ii < opts.length; ii++) {
+                  buildOption(opts[ii]);
+                }
+                list += '</optgroup>';
+              } else {
+                buildOption(data[i]);
               }
             }
             self.element.append(list);
