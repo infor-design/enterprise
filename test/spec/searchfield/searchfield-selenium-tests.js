@@ -42,7 +42,7 @@ describe('Searchfield [selenium]', function(){
       // Key in a value that will return search results
       .addValue(SEARCH_DEFAULT, 'a', globals.noError)
       // Pause to allow the menu to populate and display
-      .pause(500)
+      .pause(1000)
       // Check the page for the existence of the Autocomplete List
       .isExisting(LIST, function(err, result) {
         globals.noError(err);
@@ -63,6 +63,7 @@ describe('Searchfield [selenium]', function(){
     runner.client
       // Click the 'More Results' link
       .click(LIST + ' li:last-child > a', globals.noError)
+      .pause(1000)
       // There should be a toast message visible on the top right of the page.  Check for its existence
       .isExisting(TOAST_CONTAINER, function(err, result) {
         globals.noError(err);
@@ -72,14 +73,14 @@ describe('Searchfield [selenium]', function(){
       .call(done);
   });
 
-  it.skip('shows a "no results" option in the list if no matches are found', function(done) {
+  it('shows a "no results" option in the list if no matches are found', function(done) {
     runner.client
       // Make sure the default value is empty
       .setValue(SEARCH_DEFAULT, '', globals.noError)
       // Key in a value that will return search results
       .addValue(SEARCH_DEFAULT, 'massachusetts', globals.noError)
       // Pause to allow the menu to populate and display
-      .pause(500)
+      .pause(1000)
       // Check the page for the existence of the Autocomplete List
       .isExisting(LIST, function(err, result) {
         globals.noError(err);
