@@ -47,6 +47,11 @@
       this.init();
     }
 
+    // Check if an object is an array
+    function isArray(obj) {
+      return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+
     // Actual DropDown Code
     Dropdown.prototype = {
       init: function() {
@@ -76,8 +81,12 @@
           .text('. Press the Down Arrow to browse available options.') // TODO: Localize
           .insertAfter(this.label);
 
+        // Setup the incoming options that can be set as properties/attributes
         if (this.element.prop('multiple') && !this.settings.multiple) {
           this.settings.multiple = true;
+        }
+        if (this.element.attr('data-source') && this.element.attr('data-source') !== 'source') {
+          this.settings.source = this.element.attr('data-source');
         }
 
         this.updateList();
@@ -461,10 +470,15 @@
           return;
         }
 
-        if (!self.callSource(function () {
-          self.updateList();
-          self.openList();
-        })) {
+        if (self.element.find('option').length === 0) {
+          if (!self.callSource(function () {
+            self.updateList();
+            self.openList();
+          })) {
+            self.updateList();
+            this.openList();
+          }
+        } else {
           self.updateList();
           this.openList();
         }
@@ -784,7 +798,9 @@
         var self = this;
 
         if (this.settings.source) {
-          var response = function (data) {
+          var searchTerm = self.input.val(),
+            sourceType = typeof this.settings.source,
+            response = function (data) {
             //to do - no results back do not open.
             var list = '',
               val = self.element.val();
@@ -792,21 +808,45 @@
             //populate
             self.element.empty();
             for (var i=0; i < data.length; i++) {
-              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"') +
-                      (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"') +
-                      (data[i].value === val ? ' selected ' : '') +
-                      '>'+ data[i].label + '</option>';
+              if (data[i] !== null && data[i] !== undefined) {
+                list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"') +
+                        (data[i].value !== undefined ? ' value="' + data[i].value.replace('"', '\'') + '"' : typeof data[i] === 'string' ? ' value="' + data[i].replace('"', '\'') + '"' : '') +
+                        (data[i].value === val ? ' selected ' : '') +
+                        '>'+ (data[i].label !== undefined ? data[i].label : typeof data[i] === 'string' ? data[i] : '') + '</option>';
+              }
             }
             self.element.append(list);
             self.input.removeClass('is-busy');
+            self.element.trigger('requestend', [searchTerm, data]);
             callback();
             return;
           };
 
           //TODO: show indicator when we have it
           self.input.addClass('is-busy');
+          self.element
+              .trigger('requeststart');
 
-          this.settings.source(self.input.val(), response);
+            if (sourceType === 'function') {
+              // Call the 'source' setting as a function with the done callback.
+              this.settings.source(response);
+            } else if (sourceType === 'object') {
+              // Use the 'source' setting as pre-existing data.
+              // Sanitize accordingly.
+              var sourceData = isArray(this.settings.source) ? this.settings.source : [this.settings.source];
+              response(sourceData);
+            } else {
+              // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
+              var sourceURL = this.settings.source.toString(),
+                request = $.getJSON(sourceURL);
+
+              request.done(function(data) {
+                response(data);
+              }).fail(function() {
+                console.warn('Request to ' + sourceURL + ' could not be processed...');
+                response([]);
+              });
+            }
           return true;
         }
         return false;

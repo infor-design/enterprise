@@ -130,5 +130,27 @@
         <option value="AK" selected>Alaska</option>
       </select>
     </div>
+
+    <div class="field">
+      <label for="towns-array" class="label">Towns Multi Select (Uses an Array as Source)</label>
+      <select data-init="false" id="towns-array" name="towns-array" class="dropdown" multiple></select>
+    </div>
+
+    <div class="field">
+      <label for="states-ajax" class="label">States Multi Select (Uses AJAX as Source)</label>
+      <select data-init="false" id="states-ajax" name="states-ajax" class="dropdown" multiple></select>
+    </div>
+
+    <script type="text/javascript">
+      $('body').on('initialized', function() {
+        $('#towns-array').dropdown({
+          source: ['Bass River Township', 'Beverly', 'Bordentown City', 'Bordentown Township', 'Browns Mills', 'Burlington City', 'Burlington Township', 'Cherry Hill', 'Chesterfield', 'Cinnaminson', 'Columbus', 'Delanco', 'Delran', 'Eastampton', 'Edgewater Park', 'Evesham', 'Fieldsboro', 'Florence', 'Fort Dix', 'Haddon Heights', 'Haddonfield', 'Hainesport', 'Lumberton', 'Mansfield', 'Maple Shade', 'Marlton', 'Medford Lakes', 'Medford Township', 'Moorestown', 'Mount Holly', 'Mount Laurel', 'New Hanover', 'North Hanover', 'Palmyra', 'Pemberton', 'Pennsauken', 'Roebling', 'Riverside', 'Riverton', 'Shamong', 'Southampton', 'Springfield', 'Tabernacle', 'Washington Township', 'Westampton', 'Willingboro', 'Woodland', 'Wrightstown']
+        });
+
+        $('#states-ajax').dropdown({
+          source: '/api/states?term='
+        });
+      });
+    </script>
   </div>
 </div>
