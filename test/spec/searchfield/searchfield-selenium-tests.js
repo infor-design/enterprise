@@ -35,7 +35,7 @@ describe('Searchfield [selenium]', function(){
       .call(done);
   });
 
-  it.skip('shows an option to display more results if it successfully finds matches', function(done) {
+  it('shows an option to display more results if it successfully finds matches', function(done) {
     runner.client
       // Make sure the default value is empty
       .setValue(SEARCH_DEFAULT, '', globals.noError)
@@ -59,7 +59,7 @@ describe('Searchfield [selenium]', function(){
   });
 
   // NOTE: This test expects that the previous test completed successfully
-  it.skip('can trigger a callback method if the "more results" option is activated', function(done) {
+  it('can trigger a callback method if the "more results" option is activated', function(done) {
     runner.client
       // Click the 'More Results' link
       .click(LIST + ' li:last-child > a', globals.noError)
@@ -78,7 +78,7 @@ describe('Searchfield [selenium]', function(){
       // Make sure the default value is empty
       .setValue(SEARCH_DEFAULT, '', globals.noError)
       // Key in a value that will return search results
-      .addValue(SEARCH_DEFAULT, 'massachusetts', globals.noError)
+      .addValue(SEARCH_DEFAULT, 'xyz12345', globals.noError)
       // Pause to allow the menu to populate and display
       .pause(1000)
       // Check the page for the existence of the Autocomplete List
