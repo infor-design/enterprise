@@ -69,15 +69,26 @@ app.configure(function() {
   });
 
   //Doc Page
-  app.get('/docs*', function(req, res) {
-    var docOpts = {
-      title: 'SoHo XI',
-      tests: 'Docs',
-      layout: null,
-      enableLiveReload: true
-    };
+  var docOpts = {
+    title: 'SoHo XI',
+    tests: 'Docs',
+    layout: null,
+    enableLiveReload: true
+  };
+
+  app.get('/docs/', function(req, res) {
     res.render('docs/index', docOpts);
   });
+
+  app.get('/docs', function(req, res) {
+    res.render('docs/index', docOpts);
+  });
+
+  app.get('/docs*', function(req, res) {
+    var end = req.url.replace('/docs/','');
+    res.render('docs/' + end, docOpts);
+  });
+
 
   //Sample Json call that returns States
   //Example Call: http://localhost:4000/api/states?term=al
