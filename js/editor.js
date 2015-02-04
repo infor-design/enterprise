@@ -46,8 +46,11 @@
           elem = this.element;
 
         //Make it an editor
-        elem.attr('contentEditable', true);
-
+        elem.attr({'contentEditable': true, 'aria-multiline': true, 'role': 'textbox'});
+        var label = elem.parent().find('.label:first');
+        if (label) {
+         elem.attr('aria-label', label.text());
+        }
         //Bind functionality for Pre elements. We dont use this yet but could if we want to edit code blocks.
         elem.attr('data-editor', true); //TODO : Need?
         this.bindParagraphCreation(i).bindTab(i);
