@@ -121,6 +121,10 @@
         self.listUl = $('<ul tabindex="-1" role="listbox"></ul>').appendTo(self.list);
         self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
 
+        if (self.settings.multiple) {
+          self.list.addClass('multiple');
+        }
+
         self.element.find('option').each(function(i) {
           var option = $(this),
               listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.html() + '</li>');
@@ -284,6 +288,7 @@
           clearTimeout(timer);
           timer = setTimeout(function () {
             term = searchInput.val().toLowerCase();
+            self.list.addClass('search-mode');
             self.listUl.find('li').hide();
 
             $.each(self.element[0].options, function (index) {
@@ -301,7 +306,7 @@
 
                 //Highlight Term
                 var exp = new RegExp('(' + term + ')', 'gi'),
-                text = listOpt.text().replace(exp, '<b>$1</b>');
+                text = listOpt.text().replace(exp, '<i>$1</i>');
                 listOpt.show().html(text);
               }
             });

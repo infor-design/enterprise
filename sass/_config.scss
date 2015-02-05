@@ -54,6 +54,9 @@ $input-focus-border-color: #078cd9;
 $input-placeholder-color: #999999;
 $input-readonly-border-color: #d2d2d2;
 
+// Autocomplete
+$autocomplete-light-text: #777777;
+
 // Context Menu
 $menu-hover-color: #ededed;
 $menu-border-color: $primary-color;
@@ -66,8 +69,9 @@ $dropdown-disabled-bg-color: #e5e5e5;
 $dropdown-disabled-border-color: #d2d2d2;
 $dropdown-disabled-color: #737373;
 $dropdown-focus-border-color: $input-focus-border-color;
-$dropdown-filter-color: #0099ff;
+$dropdown-filter-color: $font-color-extradark;
 $dropdown-color: $input-color;
+$dropdown-search-color: $autocomplete-light-text;
 
 // Editor
 $editor-border-color: $input-border-color;
@@ -96,9 +100,6 @@ $popupmenu-color: #1a1a1a;
 
 // Action Button
 $actionbutton-bg-color: $inverse-color;
-
-// Autocomplete
-$autocomplete-light-text: #777777;
 
 // Cardlist
 $cardlist-bg-color: $inverse-color;
