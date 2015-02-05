@@ -38,24 +38,115 @@
   	}
 
   	> p {
-		margin: 0 auto;
-		font-size: 22px;
+  		margin: 0 auto;
+  		font-size: 22px;
   	}
+
+    .call-out {
+
+      margin: 100px 0;
+
+      .column {
+        .content {
+          background: transparent;
+          display: block;
+        }
+
+        p {
+        width: 92%;
+        margin: 0 auto;
+        font-size: 16px;
+      }
+
+      &.gallery {
+
+        p {
+          width: 80%;
+        }
+
+      }
+
+        &:hover {
+
+          h3, p {
+            color: #fff;
+          }
+          .content {
+            background: $callout-hover-bd;
+          }
+
+          .icon-circle {
+            background: $callout-icon-hover-bd;
+          }
+        }
+      }
+    }
   }
 
   &.gallery {
 
-	max-width: 1140px;
+	  max-width: 1140px;
 
   	.column .content{
   		border: solid $switch-disabled-color 1px;
   		padding-top: 0;
+      text-align: left;
+
   	}
+
+    .call-out {
+
+      margin: 60px 0;
+
+      .column {
+        .content {
+          background: transparent;
+          display: block;
+
+          .details {
+
+            padding: 30px 20px 10px;
+
+            h3 {
+              font-size: 20px;
+              color: $font-color-extradark;
+              margin-bottom: 10px;
+            }
+
+            p {
+              width: 92%;
+              font-size: 14px;
+              color: $font-color-light;
+              line-height: 24px;
+            }
+
+            .tags {
+              margin: 25px 0;
+
+              .tag {
+                color: $hr-top-color;
+                background: transparent;
+                font-size: 12px;
+                font-weight: 100;
+                padding: 0;
+              }
+            }
+
+            .post-date {
+              text-transform: uppercase;
+              color: $hr-top-color;
+              font-size: 12px;
+              font-weight: 400;
+            }
+          }
+        }
+      }
+    }
 
   }
 
 
-  .call-out {
+  /* .call-out {
 
   	margin: 100px 0;
 
@@ -93,33 +184,32 @@
   			}
   		}
   	}
-  }
+  } */
 
   .icon-circle {
-  	
   	width: 155px;
-	height: 155px;
-	background: $callout-icon-bd;
-	border-radius: 50%;
-	margin: 10px auto 24px;
+  	height: 155px;
+  	background: $callout-icon-bd;
+  	border-radius: 50%;
+  	margin: 10px auto 24px;
 
-	svg {
-		width: 60%;
-		height: 100%;
+  	svg {
+  		width: 60%;
+  		height: 100%;
 
-		&.icon-vision {
-			fill: $callout-icon-vision;
-		}
+  		&.icon-vision {
+  			fill: $callout-icon-vision;
+  		}
 
-		&.icon-gallery {
-			fill: $callout-icon-gallery;
-		}
+  		&.icon-gallery {
+  			fill: $callout-icon-gallery;
+  		}
 
-		&.icon-guide {
-			fill: $callout-icon-guide;
-		}
+  		&.icon-guide {
+  			fill: $callout-icon-guide;
+  		}
 
-	}
+  	}
   }
 
 
