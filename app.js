@@ -14,6 +14,8 @@ app.configure(function() {
 
   // instruct express to server up static assets
   app.use(express.static('public'));
+  // leverage body parsing middleware (to be deprecated in subsequent versions)
+  app.use(express.bodyParser());
 
   var templateOpts = {
     title: 'SoHo XI',
@@ -141,6 +143,9 @@ app.configure(function() {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(people));
   });
+
+  // RESTful routes
+  var restRouter = require('./src/routers/rest-router')(app);
 
 });
 
