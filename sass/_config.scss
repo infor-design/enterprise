@@ -16,7 +16,7 @@ $font-color-extradark: #1a1a1a;
 $font-color-dark: #333333;
 $font-color: #666666;
 $font-color-light: #999999; //Was 999999 in design
-$label-color: #666666;
+c: #666666;
 
 // Rules
 $hr-top-color: #b6b6b6;
@@ -211,6 +211,7 @@ $breakpoint-desktop-to-extralarge: 1440px;
 //Docs
 $highlight-color: #00c2b4;
 $highlight-color-rgba: rgba(0,194,180, 0.97);
+$highlight-color-gallery: #d5000e;
 $callout-icon-bd: $popover-separator-color;
 $callout-icon-hover-bd: #fff;
 $callout-bd: $callout-icon-hover-bd;
