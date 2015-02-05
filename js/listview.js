@@ -33,6 +33,7 @@
     // Plugin Constructor
     function Plugin(element) {
       this.element = $(element);
+      this.settings = settings;
       this.init();
       this.handleEvents();
     }
@@ -49,7 +50,10 @@
         var self = this,
           card = this.element.closest('.card');
 
-        //TODO - Maybe Remove this, confirm with design
+        if (this.element.attr('data-selectable')) {
+          this.settings.selectable = this.element.attr('data-selectable');
+        }
+
         self.actionButton = card.find('.btn-actions');
 
         if (self.actionButton.length > 0) {
@@ -63,7 +67,7 @@
         this.id = (this.element.attr('id') ? this.element.attr('id') : 'listview-'+ ($ ('.listview').index() + 1));
         this.element.attr({'tabindex': 0,
           'role' : 'listbox',
-          'aria-label' : (settings.description ? settings.description : this.element.closest('.card').find('.card-title').text()),
+          'aria-label' : (this.settings.description ? this.settings.description : this.element.closest('.card').find('.card-title').text()),
           'aria-activedescendant': 'item'+ this.id + '-0'});
 
         this.element.parent('.card-content').css('overflow', 'hidden');
@@ -73,29 +77,42 @@
         var self = this;
 
         // Render "mustache" Template
-        if (Tmpl && dataset && settings.template) {
-          var compiledTmpl = Tmpl.compile(settings.template),
+        if (Tmpl && dataset && this.settings.template) {
+          var compiledTmpl = Tmpl.compile(this.settings.template),
             renderedTmpl = compiledTmpl.render({dataset: dataset});
 
           this.element.html(renderedTmpl);
         }
 
-        // Add an Id
-        if (this.element.find('li, tr').first().attr('id')) {
+        // Add an Id or Checkboxes
+        var addId = this.element.find('li, tr').first().attr('id'),
+          addCheckboxes = (this.settings.selectable === 'multiple');
+
+        if (!addId && !addCheckboxes) {
           return;
         }
 
         this.element.find('li, tr').each(function (i) {
-          var row = $(this).attr('role', 'option');
-          if (!row.attr('id')) {
+          var row = $(this),
+            chk;
+
+          if (addId && !row.attr('id')) {
             row.attr('id', self.id + '-' + i);
           }
+
+          // Add Selection Checkboxes
+          if (addCheckboxes) {
+            var id = self.id + '-chk-' + i;
+            chk = '<div class="listview-checkbox"><input id="' + id + '" class="checkbox" type="checkbox"><label class="checkbox-label" for="' + id + '">&nbsp;</label></div>';
+            row.prepend(chk);
+          }
         });
+
       },
 
       // Get the Data Source. Can be an array, Object or Url
       refresh: function () {
-        var ds = settings.dataset,
+        var ds = this.settings.dataset,
           self = this;
 
         if (ds.indexOf('http') === 0) {
@@ -118,11 +135,17 @@
         });
 
         // Selection View Click/Touch
-        if (settings.selectable) {
+        if (this.settings.selectable) {
           this.element.addClass('is-selectable');
 
           this.element.on('click.listview', 'li, tr', function () {
-            self.select($(this));
+           self.select($(this));
+          });
+        }
+
+        if (this.settings.selectable === 'multiple') {
+          this.element.on('change.selectable-listview', '.listview-checkbox input', function () {
+           $(this).parent().trigger('click');
           });
         }
       },
@@ -131,7 +154,7 @@
         var self = this;
 
         self.selectedItems = [];
-        if (settings.selectable === 'multiple') {
+        if (this.settings.selectable === 'multiple') {
           li.parent().find('.is-selected').each(function (i) {
             self.selectedItems[i] = $(this);
           });
@@ -150,11 +173,8 @@
       },
 
       destroy: function() {
-        if (this.actionButton) {
-          this.actionButton.off('beforeOpen close').data('popupmenu').destroy();
-        }
         this.element.removeData(pluginName);
-        this.element.empty();
+        this.element.off('click.listview focus.listview').empty();
       }
     };
 

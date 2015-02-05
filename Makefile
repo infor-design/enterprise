@@ -4,6 +4,9 @@ REPORTER = spec
 test:
 	@node test-runner.js
 
+test-accessibility:
+	@node test-runner.js accessibility
+
 test-autocomplete:
 	@node test-runner.js autocomplete
 
@@ -12,6 +15,9 @@ test-button:
 
 test-busyindicator:
 	@node test-runner.js busyindicator
+
+test-charts:
+	@node test-runner.js charts
 
 test-checkbox:
 	@node test-runner.js checkbox

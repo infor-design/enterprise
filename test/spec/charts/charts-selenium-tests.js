@@ -22,7 +22,7 @@ describe('Charts [selenium]', function(){
       .call(done);
   });
 
-  it('Can Reload Chart Data', function(done) {
+  it.skip('Can Reload Chart Data', function(done) {
 
   });
 

@@ -9,6 +9,13 @@ $gutter-neg-size: -20px;
 //$breakpoint-phone-to-tablet: 768px;
 //$breakpoint-tablet-to-desktop: 1160px;
 //$breakpoint-desktop-to-extralarge: 1440px;
+.row {
+  clear: both;
+}
+
+.homepage .row {
+  clear: none;
+}
 
 .container {
   margin: 0 auto;
