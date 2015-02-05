@@ -42,7 +42,7 @@
     }
 
     tr:hover {
-      background-color: $menu-hover-color !important;
+      background-color: $menu-hover-color;
       transition: background-color .15s ease 0s;
     }
 
@@ -82,10 +82,24 @@
     background-color: $azure01; //bde7ff
     border-left: 3px solid $azure06;
     padding: 15px 17px;
+
+    &:hover {
+      background-color: $azure01;
+    }
   }
 
-  tr.is-selected td:first-child{
+  tr.is-selected td:first-child {
     border-left: 6px solid $azure06;
     padding: 13px 12px;
+  }
+
+  // Selection Checkboxes
+  .listview-checkbox {
+    margin-left: -5px;
+    position: absolute;
+
+    + p {
+      margin-left: 35px;
+    }
   }
 }
