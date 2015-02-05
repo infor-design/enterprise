@@ -146,7 +146,7 @@ app.configure(function() {
 
   // RESTful routes
   var restRouter = require('./src/routers/rest-router')(app);
-
+  module.exports = restRouter;
 });
 
 module.exports = app;
