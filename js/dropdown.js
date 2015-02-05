@@ -125,6 +125,12 @@
           var option = $(this),
               listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.html() + '</li>');
 
+          // Add Group Header if this is an <optgroup>
+          if ($(this).is(':first-child') && $(this).parent().is('optgroup')) {
+            var groupHeader = $('<li role="presentation" class="group-label"></li>').text($(this).parent().attr('label'));
+            self.listUl.append(groupHeader);
+          }
+
           self.listUl.append(listOption);
           listOption.attr({'aria-selected':'false'});
           if (option.is(':selected')) {
@@ -321,7 +327,9 @@
       handleKeyDown: function(input, e) {
         var selectedIndex = this.element[0].selectedIndex,
             options = this.element[0].options,
-            self = this, next;
+            self = this,
+            excludes = 'li:visible:not(.separator):not(.group-label):not(.is-disabled)',
+            next;
 
         //Down and Up arrow to open
         if (!self.isOpen() && (e.keyCode === 38 || e.keyCode === 40)) {
@@ -329,7 +337,7 @@
         }
 
         if (self.isOpen()) {
-          options = this.listUl.find('li:visible').not(':disabled').not('.is-disabled');
+          options = this.listUl.find(excludes);
           selectedIndex = -1;
           $(options).each(function(index) {
             if ($(this).is('.is-focused')) {
@@ -531,7 +539,7 @@
           e.preventDefault();
           e.target.click();
         }).on('click.list', 'li', function () {
-          var idx = $(this).index(),
+          var idx = $(this).parent().find('li:not(.group-label)').index($(this)),
               cur = $(self.element[0].options[idx]);
 
           //Select the clicked item
@@ -548,7 +556,7 @@
           e.target.click();
         }).on('click.dropdown', function(e) {
           var target = $(e.target);
-          if (target.is('.dropdown-option') || target.is('.dropdown')) {
+          if (target.is('.dropdown-option') || target.is('.dropdown') || target.is('.group-label')) {
             return;
           }
           self.closeList();

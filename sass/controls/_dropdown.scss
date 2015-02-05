@@ -112,6 +112,22 @@ input.dropdown {
     text-decoration: underline;
   }
 
+  .group-label {
+    font-weight: bold;
+    text-indent: 10px;
+    @include css3(user-select, none);
+
+    &:not(:first-child) {
+      border-top: 1px solid $popover-separator-color;
+      margin-top: 10px;
+    }
+
+    &:hover {
+      background-color: transparent;
+      cursor: default;
+    }
+  }
+
   .icon {
     fill: $input-border-color;
     margin-left: -30px;
