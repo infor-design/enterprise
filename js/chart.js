@@ -581,33 +581,38 @@
       var instance = $.data(this, 'chart'),
         chartInst;
 
-
-      if (!instance) {
-        chartInst = new Chart(this, options);
-        instance = $.data(this, 'chart', chartInst);
-
-        if ($.isEmptyObject(chartInst)) {
-         return;
-        }
-        if (options.type === 'pie') {
-          chartInst.Pie(options.dataset);
-        }
-        if (options.type === 'bar') {
-          chartInst.VerticalBar(options.dataset);
-        }
-        if (options.type === 'bar-normalized') {
-          chartInst.VerticalBar(options.dataset, true);
-        }
-        if (options.type === 'bar-grouped') {
-          chartInst.VerticalBar(options.dataset, false, true);
-        }
-        if (options.type === 'column') {
-          chartInst.Bar(options.dataset, false, true);
-        }
-        if (options.type === 'donut') {
-          chartInst.Pie(options.dataset, true);
-        }
+      if (instance) {
+        $(this).empty();
       }
+
+      chartInst = new Chart(this, options);
+      instance = $.data(this, 'chart', chartInst);
+
+      if ($.isEmptyObject(chartInst)) {
+       return;
+      }
+      if (options.type === 'pie') {
+        chartInst.Pie(options.dataset);
+      }
+      if (options.type === 'bar') {
+        chartInst.VerticalBar(options.dataset);
+      }
+      if (options.type === 'bar-normalized') {
+        chartInst.VerticalBar(options.dataset, true);
+      }
+      if (options.type === 'bar-grouped') {
+        chartInst.VerticalBar(options.dataset, false, true);
+      }
+      if (options.type === 'column') {
+        chartInst.Bar(options.dataset, false, true);
+      }
+      if (options.type === 'donut') {
+        chartInst.Pie(options.dataset, true);
+      }
+      if (options.type === 'sparkline') {
+        chartInst.Sparkline(options.dataset);
+      }
+
     });
   };
 
