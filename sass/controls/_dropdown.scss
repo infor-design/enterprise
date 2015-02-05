@@ -102,6 +102,13 @@ input.dropdown {
       }
     }
 
+    &:focus,
+    &.is-focused {
+      background-color: $menu-hover-color;
+      cursor: pointer;
+      outline: none;
+    }
+
     &.selected {
       // Single Select Black Checkmark
       &:not(.group-label):after {
@@ -169,7 +176,7 @@ input.dropdown {
 
   .group-label {
     font-weight: bold;
-    text-indent: 17px;
+    text-indent: 10px;
     @include css3(user-select, none);
 
     &:not(:first-child) {
@@ -206,6 +213,7 @@ input.dropdown {
     border: 0;
     border-bottom: 1px solid #d2d2d2;
     box-shadow: none;
+    outline: none;
   }
 }
 

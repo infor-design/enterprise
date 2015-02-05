@@ -701,18 +701,23 @@
           return option;
         }
 
+        var opts = this.element.find('option');
         if (option.is('li')) {
-          option = this.element.find('option').eq(option.attr('id').replace('list-option',''));
+          option = opts.eq(option.attr('id').replace('list-option',''));
         }
 
         if (option.hasClass('.is-disabled') || option.is(':disabled')) {
           return;
         }
 
+        if (option.length === 0) {
+          option = opts.eq(0);
+        }
+
         if (this.isOpen()) {
           // remove the selected class from the current selection
           this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
-          var listOption = this.list.find('#list-option'+option.index());
+          var listOption = this.list.find('.dropdown-option').eq(opts.index(option));
           listOption.addClass('is-focused').attr({'tabindex':'0'});
 
           // Set activedescendent for new option
