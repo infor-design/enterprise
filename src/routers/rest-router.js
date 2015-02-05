@@ -1,6 +1,6 @@
 var sampleDataCtrl = require('./../controllers/sample-data-controller'),
-    _ = require('underscore'),
-    _str = require('underscore.string');
+  _ = require('underscore'),
+  _str = require('underscore.string');
 
 module.exports = function(app) {
 

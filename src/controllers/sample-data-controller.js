@@ -150,7 +150,7 @@ module.exports = {
                     'from		dropdown dd, datagrid dg ' +
                     'where		dd.id = dg.dropdown_id ' +
                     'order by	dd.name ' + sortDirection === 0 ? 'ASC ' : 'DESC ' +
-                    'offset ' + rowoffset + ' limit ' + recsPerPg.toString();
+                    'offset ' + rowoffset + ' limit ' + recsPerPg.toString(); // jshint ignore:line
       }
       else {
         queryData = 'select 	 t.id, ' +
@@ -170,7 +170,7 @@ module.exports = {
                                       'dropdown_id ' +
                             'from 	datagrid ' +
                             (sortColName === 'none' ? '' : ('order by ' + sortColName + (sortDirection === 0 ? ' ASC' : ' DESC'))) + ') t ' +
-                    'offset ' + rowoffset + ' limit ' + recsPerPg.toString();
+                    'offset ' + rowoffset + ' limit ' + recsPerPg.toString(); // jshint ignore:line
       }
 
 			client.query(queryData, function(err2, data2) {
@@ -276,7 +276,7 @@ module.exports = {
                         "'" + gridRow.create_date + "'," +
                         "'" + gridRow.some_bool + "'," +
                         "'" + dropDownId.toString() + "'" +
-                      ") returning id";
+                      ") returning id"; // jshint ignore:line
       client.query(query2, function(err2, data2) {
         if (err2) {
           return cb(err2, undefined);

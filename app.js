@@ -3,8 +3,10 @@ var express = require('express'),
   app = express(),
   path = require('path'),
   mmm = require('mmm'),
-  colors = require('colors'); // jshint ignore:line
-
+  colors = require('colors');
+  //restRouter = require('./src/routers/rest-router')(app),
+  uploadRouter = require('./src/routers/upload-router')(app); // jshint ignore:line
+//
 app.configure(function() {
 
   app.set('view engine', 'html');
@@ -145,7 +147,9 @@ app.configure(function() {
   });
 
   // RESTful routes
-  var restRouter = require('./src/routers/rest-router')(app);
+  require('./src/routers/rest-router')(app);
+  // Upload routes
+  require('./src/routers/upload-router')(app);
 
 });
 

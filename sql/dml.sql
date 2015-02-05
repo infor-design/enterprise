@@ -610,36 +610,3 @@ VALUES ('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed
 ('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a',4.8615,679,'2015-01-11T15:24:05-08:00',true,56),
 ('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu',35.7685,25,'2014-05-13T06:17:23-07:00',false,45),
 ('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices iaculis odio. Nam interdum enim non nisi. Aenean eget metus. In nec orci. Donec nibh. Quisque',61.5974,470,'2014-09-03T18:39:38-07:00',false,40);
-
-select 	t.id,
-		t.comment,
-		t.fractional_amount,
-		t.integer_amount,
-		t.create_date,
-		t.dropdown_id,
-		(getCountryNameVal(t.dropdown_id)).name as cntry_name,
-		(getCountryNameVal(t.dropdown_id)).val as cntry_value
-from 	(select 	id,
-					comment,
-					fractional_amount,
-					integer_amount,
-					create_date,
-					some_bool,
-					dropdown_id
-		from 	datagrid
-		order by  t.integer_amount DESC
-					offset 25 limit 25) t;
-
-select		dg.id,
-		dg.comment,
-		dg.fractional_amount,
-		dg.integer_amount,
-		dg.create_date,
-		dg.some_bool,
-		dg.dropdown_id,
-		dd.name as cntry_name,
-		dd.value as cntry_value
-from		dropdown dd, datagrid dg
-where		dd.id = dg.dropdown_id
-order by	dd.name asc
-		offset 0 limit 25;

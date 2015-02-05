@@ -7,6 +7,8 @@
   "private": true,
   "dependencies": {
     "express": "~3.4.8",
+    "formidable": "^1.0.16",
+    "multer": "^0.1.7",
     "pg": "^4.2.0",
     "pg-native": "^1.8.0",
     "underscore": "^1.7.0",
