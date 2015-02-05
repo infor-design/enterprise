@@ -46,8 +46,11 @@
           elem = this.element;
 
         //Make it an editor
-        elem.attr('contentEditable', true);
-
+        elem.attr({'contentEditable': true, 'aria-multiline': true, 'role': 'textbox'});
+        var label = elem.parent().find('.label:first');
+        if (label) {
+         elem.attr('aria-label', label.text());
+        }
         //Bind functionality for Pre elements. We dont use this yet but could if we want to edit code blocks.
         elem.attr('data-editor', true); //TODO : Need?
         this.bindParagraphCreation(i).bindTab(i);
@@ -144,6 +147,7 @@
         }
         this.toolbar = this.createToolbar();
         this.toolbarActions = this.toolbar;
+        this.toolbar.toolbar();
 
         return this;
       },
@@ -789,7 +793,7 @@
             currentElement = self.getCurrentElement();
 
         //Attach Label
-        this.element.prev('.label').css('cursor', 'default').on('click.editor', function () {
+        this.element.prevAll('.label').css('cursor', 'default').on('click.editor', function () {
           currentElement.focus();
         });
         currentElement.attr('aria-label', currentElement.prev('.label').text());

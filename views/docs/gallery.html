@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>{{title}}</title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="/stylesheets/site.css" type="text/css">
+  <link rel="stylesheet" id="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+
+  <!-- jQuery and Plugin Code-->
+  <script src="/js/jquery-1.11.1.min.js"></script>
+  <script src="/js/sohoxi.js"></script>
+  <script src="/js/demo.js"></script>
+
+</head>
+<body>
+  {{> controls/svg}}
+
+  {{> includes/header}}
+
+  <section id="maincontent" class="site-content container">
+    <h1>Replace Content of PSD Regarding Galler Page Here from after Header down</h1>
+  </section>
+
+
+  {{#enableLiveReload}}
+  <!-- Live Reload - "grunt watch" -->
+  <script type="text/javascript">
+    if (window.location.hostname !== '107.170.15.202') {
+      document.write('\x3Cscript type="text/javascript" src="//' + window.location.hostname + ':35729/livereload.js">\x3C/script>');
+    }
+  </script>
+  {{/enableLiveReload}}
+
+  <script>
+    // Init All SoHo XI Controls Stuff on Document Ready
+    $(function() {
+      $('body').initialize('en');
+    });
+  </script>
+
+</body>
+</html>

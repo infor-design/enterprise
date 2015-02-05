@@ -97,6 +97,9 @@ $popupmenu-color: #1a1a1a;
 // Action Button
 $actionbutton-bg-color: $inverse-color;
 
+// Autocomplete
+$autocomplete-light-text: #777777;
+
 // Cardlist
 $cardlist-bg-color: $inverse-color;
 
@@ -113,9 +116,9 @@ $checkbox-disabled-arrow-color: #f4f4f4;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Switch
-$switch-checked-color: #6ec90d;
-$switch-unchecked-color: #999999;
-$switch-disabled-color: #d2d2d2;
+$switch-checked-color: #4fb521;
+$switch-unchecked-color: #bdbdbd;
+$switch-disabled-color: #d8d8d8;
 $switch-disabled-label-color: #aaaaaa;
 
 // Radio Buttons

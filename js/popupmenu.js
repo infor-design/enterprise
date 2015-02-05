@@ -19,7 +19,7 @@
       defaults = {
         menuId: null,  //Menu's Id
         trigger: 'click',  //click, rightClick, immediate
-        autoFocus: false
+        autoFocus: true
       },
       settings = $.extend({}, defaults, options);
 
@@ -61,13 +61,16 @@
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
         this.menu.find('.popupmenu').each(function(i, elem) {
-          if (!($(elem).parent().hasClass('wrapper'))) {
-            $(elem).wrap('<div class="wrapper"></div>');
+          var popup = $(elem);
+
+          if (!(popup.parent().hasClass('wrapper'))) {
+            popup.wrap('<div class="wrapper"></div>');
           }
+
         });
 
         // If action button menu, append arrow markup
-        if (this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('-header') > 0) {
+        if (this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('header') >= 0) {
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }
@@ -90,6 +93,7 @@
         });
         this.menu.find('a').attr('tabindex', '-1').attr('role', 'menuitem');
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
+
       },
 
       handleEvents: function() {
@@ -246,7 +250,7 @@
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight(),
-          xOffset = this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('-header') > -1 ? (menuWidth) - 34 : 0;
+          xOffset = this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('header') > -1 ? (menuWidth) - 34 : 0;
 
         if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
@@ -366,7 +370,9 @@
         });
 
         if (settings.autoFocus) {
-          self.menu.find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+          setTimeout(function () {
+            self.menu.parent().find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+          }, 1);
         }
       },
 

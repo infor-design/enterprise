@@ -61,6 +61,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 
 ## Running The App
 * `cd` into project folder and run `node server` to talk a walk in Grammercy Park
+* Run `grunt` to compile initial assests
 * Make a new terminal window and cd into project folder and run `grunt watch`
 * Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload

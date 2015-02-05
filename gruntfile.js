@@ -43,7 +43,42 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': ['js/autocomplete.js', 'js/busyindicator.js', 'js/button.js', 'js/cardlist.js', 'js/colorpicker.js', 'js/chart.js', 'js/datepicker.js', 'js/datagrid.js', 'js/dropdown.js', 'js/draggable.js', 'js/editor.js', 'js/form.js', 'js/initialize.js', 'js/locale.js', 'js/pager.js', 'js/popupmenu.js', 'js/mask.js', 'js/multiselect.js', 'js/message.js', 'js/modal.js', 'js/rating.js', 'js/resizable.js', 'js/spinbox.js', 'js/toolbar.js', 'js/toast.js', 'js/tabs.js', 'js/textarea.js', 'js/timepicker.js', 'js/tmpl.js', 'js/tooltip.js','js/tree.js', 'js/slider.js', 'js/validation.js']
+          'dist/js/<%= pkg.name %>.js': [
+            'js/autocomplete.js',
+            'js/busyindicator.js',
+            'js/button.js',
+            'js/colorpicker.js',
+            'js/chart.js',
+            'js/datepicker.js',
+            'js/datagrid.js',
+            'js/dropdown.js',
+            'js/draggable.js',
+            'js/editor.js',
+            'js/form.js',
+            'js/initialize.js',
+            'js/listview.js',
+            'js/locale.js',
+            'js/pager.js',
+            'js/popupmenu.js',
+            'js/mask.js',
+            'js/multiselect.js',
+            'js/message.js',
+            'js/modal.js',
+            'js/rating.js',
+            'js/resizable.js',
+            'js/searchfield.js',
+            'js/slider.js',
+            'js/spinbox.js',
+            'js/toast.js',
+            'js/tabs.js',
+            'js/textarea.js',
+            'js/timepicker.js',
+            'js/tmpl.js',
+            'js/toolbar.js',
+            'js/tooltip.js',
+            'js/tree.js',
+            'js/validation.js'
+          ]
         }
       }
     },
@@ -71,8 +106,9 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-1*.min.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-1*min.map'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/jquery-1*.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.min.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/d3.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'}
         ]
       }
@@ -99,7 +135,16 @@ module.exports = function(grunt) {
         },
 
         files: {
-          src: [ 'dist/css/508-theme.css', 'dist/css/508-theme.min.css', 'dist/css/dark-theme.css', 'dist/css/dark-theme.min.css', 'dist/css/grey-theme.css', 'dist/css/grey-theme.min.css', 'dist/css/css-only.css', 'dist/css/css-only.min.css' ]
+          src: [
+            'dist/css/508-theme.css',
+            'dist/css/508-theme.min.css',
+            'dist/css/dark-theme.css',
+            'dist/css/dark-theme.min.css',
+            'dist/css/grey-theme.css',
+            'dist/css/grey-theme.min.css',
+            'dist/css/css-only.css',
+            'dist/css/css-only.min.css'
+          ]
         }
       }
     },

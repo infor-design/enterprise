@@ -60,5 +60,8 @@ test-toast:
 
 test-toolbar:
 	@node test-runner.js toolbar
-			
+
+test-searchfield:
+	@node test-runner.js searchfield
+				
 .PHONY: test

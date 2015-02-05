@@ -57,7 +57,11 @@
 }
 
 .btn-actions {
-  color: $font-color-extradark;
+  border: 1px solid transparent;
+
+  > .icon {
+    fill: $font-color-extradark;
+  }
 
   > * {
     pointer-events: none;
@@ -73,6 +77,14 @@
       > .icon {
         fill: $menubutton-focus-border-color;
       }
+    }
+  }
+
+  &:focus {
+    border-color: $primary-color !important;
+
+    > .icon {
+      fill: $font-color-extradark;
     }
   }
 

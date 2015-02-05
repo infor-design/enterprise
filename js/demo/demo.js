@@ -5,18 +5,18 @@
 
 // Public Variable with some sample data
 var demoTasks = [];
-demoTasks.push({task:'063001', error: true, desc: 'Special fields test - New item has been created.'});
-demoTasks.push({task:'063002', desc: 'Part #4212132 has low inventory level'});
-demoTasks.push({task:'063003', desc: 'Check #112412 parts ordering.'});
-demoTasks.push({task:'063004', desc: 'Special fields test - New item has been created.'});
-demoTasks.push({task:'063005', desc: 'Call XYZ Inc at 5 PM'});
-demoTasks.push({task:'063006', error: true, desc: 'Part #4212132 has low inventory level'});
-demoTasks.push({task:'063007', desc: 'Special fields test - New item has been created.'});
-demoTasks.push({task:'063008', desc: 'Part #5212132 has low inventory level'});
-demoTasks.push({task:'063009', desc: 'Check #212412 parts ordering.'});
-demoTasks.push({task:'063010', desc: 'Special fields test - New item has been created.'});
-demoTasks.push({task:'063011', desc: 'Call TMZ Inc at 5 PM'});
-demoTasks.push({task:'063012', desc: 'Part #6212132 has low inventory level'});
+demoTasks.push({task:'063001', error: true, date: '10/11/2015' ,desc: 'Special fields test - New item has been created.'});
+demoTasks.push({task:'063002', date: '10/11/2015' , desc: 'Part #4212132 has low inventory level'});
+demoTasks.push({task:'063003', date: '10/07/2015' , desc: 'Check #112412 parts ordering.'});
+demoTasks.push({task:'063004', date: '10/07/2015' , desc: 'Special fields test - New item has been created.'});
+demoTasks.push({task:'063005', date: '10/11/2015' , desc: 'Call XYZ Inc at 5 PM'});
+demoTasks.push({task:'063006', error: true, date: '10/11/2015' , desc: 'Part #4212132 has low inventory level'});
+demoTasks.push({task:'063007', date: '07/11/2015' , desc: 'Special fields test - New item has been created.'});
+demoTasks.push({task:'063008', date: '10/11/2015' , desc: 'Part #5212132 has low inventory level'});
+demoTasks.push({task:'063009', date: '10/07/2015' , desc: 'Check #212412 parts ordering.'});
+demoTasks.push({task:'063010', date: '10/11/2015' , desc: 'Special fields test - New item has been created.'});
+demoTasks.push({task:'063011', date: '10/11/2015' , desc: 'Call TMZ Inc at 5 PM'});
+demoTasks.push({task:'063012', date: '07/08/2015' , desc: 'Part #6212132 has low inventory level'});
 
 // Execute Page Code for Demo Page
 $(function($) {
@@ -42,10 +42,13 @@ $(function($) {
   $('#page-changer').on('selected', function (e, link) {
     var href = link.attr('href').substr(1);
 
+    link.parent().parent().find('.checkmark').removeClass('checkmark');
+    link.parent().addClass('checkmark');
+
     // Change Theme
-    if (href.indexOf('-theme') > 1) {
+    if (link.attr('data-theme')) {
       $('body').fadeOut('fast', function() {
-        $('#stylesheet').attr('href', '/stylesheets/'+ href +'.css');
+        $('#stylesheet').attr('href', '/stylesheets/'+ link.attr('data-theme') +'.css');
         $(this).fadeIn('fast');
       });
 
@@ -53,11 +56,16 @@ $(function($) {
     }
 
     // TODO: Change Lang
+    if (link.attr('data-lang')) {
+      Locale.set(link.attr('data-lang'));
+      return;
+    }
 
     // Change Color
     var color = link.attr('data-rgbcolor');
     $('.is-personalizable').css('background-color', color);
-    //personalization-bg-color
+
+
   });
 
   // Message.html View Specifics
@@ -141,6 +149,39 @@ $(function($) {
     cnt ++;
     $('body').toast({title: 'Application Offline' + cnt, message: 'This is a Toast message'});
 
+  });
+
+
+  // Autocomplete.html View Specifics
+  // Setup an alternate source for the templated Autocomplete.
+  $('#auto-template').autocomplete({
+    source: '/api/states?term='
+  }).on('selected', function (e, anchor) {
+    console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
+  });
+
+  // Searchfield.html View Specifics
+  function searchfieldCallback(noResultsContent) {
+    $('body').toast({
+      title: noResultsContent,
+      message: 'Show All Results Callback has been triggered'
+    });
+  }
+
+  // Toast Message Callback for the Default Searchfield
+  $('#searchfield').searchfield({
+    allResultsCallback: searchfieldCallback,
+    source: '/api/states?term='
+  });
+  $('#searchfield-default').searchfield({
+    allResultsCallback: searchfieldCallback
+  });
+
+  // Setup an external source for the templated searchfield
+  $('#searchfield-template').searchfield({
+    source: '/api/states?term='
+  }).on('selected', function (e, anchor) {
+    console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
   });
 
 });
