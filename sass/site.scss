@@ -31,7 +31,7 @@
 
   
 
-  header {
+  .site-header {
 
     position: relative;
 
@@ -208,47 +208,6 @@
 
   }
 
-
-  /* .call-out {
-
-  	margin: 100px 0;
-
-  	.column {
-  		.content {
-  			background: transparent;
-  			display: block;
-  		}
-
-  		p {
-			width: 92%;
-			margin: 0 auto;
-			font-size: 16px;
-		}
-
-		&.gallery {
-
-			p {
-				width: 80%;
-			}
-
-		}
-
-  		&:hover {
-
-  			h3, p {
-  				color: #fff;
-  			}
-  			.content {
-  				background: $callout-hover-bd;
-  			}
-
-  			.icon-circle {
-  				background: $callout-icon-hover-bd;
-  			}
-  		}
-  	}
-  } */
-
   .icon-circle {
   	width: 155px;
   	height: 155px;
@@ -275,7 +234,18 @@
   	}
   }
 
-
 }
 
+
+.site-footer {
+ clear: both;
+}
+
+.divider-horiz {
+  width: 90%;
+  margin: 20px auto;
+  height: 2px;
+  background: $divider-color;
+  // clear: both;
+}
 

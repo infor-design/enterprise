@@ -1,0 +1,32 @@
+<footer class="site-footer">
+ <div class="divider-horiz"></div>
+  <nav>
+    <ul>
+      <li><a href="#">Xi Rules &amp; Guide</a></li>
+      <li><a href="#">Control Library</a></li>
+      <li><a href="#">Ming.le</a></li>
+      <li><a href="#">Icon Library</a></li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+  </nav>
+  <div class="legal">
+    <div class="copyright">&copy; Infor 2015. All rights are reserved.</div>
+    <div class="built">Built and run in New York City by Hook &amp; Loop</div>
+  </div>
+</footer>
+
+{{#enableLiveReload}}
+  <!-- Live Reload - "grunt watch" -->
+  <script type="text/javascript">
+    if (window.location.hostname !== '107.170.15.202') {
+      document.write('\x3Cscript type="text/javascript" src="//' + window.location.hostname + ':35729/livereload.js">\x3C/script>');
+    }
+  </script>
+  {{/enableLiveReload}}
+
+  <script>
+    // Init All SoHo XI Controls Stuff on Document Ready
+    $(function() {
+      $('body').initialize('en');
+    });
+  </script>
