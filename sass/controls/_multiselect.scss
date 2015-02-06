@@ -1,78 +1,66 @@
 // Multi Select (DropDown)
 //================================================== //
 
-// Hide on Initial Load
-select.multiselect {
-  display: none;
-}
-
-.multiselect {
-  background-color: transparent;
+.multiselect-tags {
   border: 1px solid $input-border-color;
   border-radius: 2px;
-  font-size: 0;
-  min-height: $multiselect-height;
-  outline: medium none;
+  cursor: pointer;
+  height: $multiselect-height;
   overflow: hidden;
-  padding: 0 0 0 5px;
-  text-align: left;
+  position: absolute;
   width: 300px;
 
   &.disabled {
     background-color: #e5e5e5;
-    border: solid 1px #e5e5e5;
+    border: solid 1px $disabled-color;
     color: $disabled-color;
+    cursor: default;
     -webkit-text-fill-color: $disabled-color;
 
-    .icon {
+    &:focus,
+    &.is-focused {
+      border: 1px solid $disabled-color;
+      box-shadow: none;
+    }
+
+    + input.dropdown + .icon {
+      cursor: default;
       display: none;
     }
 
     .tag {
       background-color: #f1f1f1;
       box-shadow: none;
-      color: #666666;
+      color: $input-disabled-color;
       cursor: default;
-      padding: 10px;
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
 
       > span {
         cursor: default;
       }
+
+      .icon {
+        visibility: hidden;
+      }
     }
   }
 
+  &:focus,
   &.is-focused {
     border-color: $multiselect-focus-border-color;
+    box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+    outline: none;
   }
 
-  //Trigger Icon
-  > .icon {
-    cursor: pointer;
-    float: right;
-    height: $multiselect-height;
-    vertical-align: top;
-    width: $multiselect-height;
-  }
+  + input.dropdown {
+    visibility: hidden;
 
-  > .icon:hover {
-    background-color: #e5e5e5;
-    outline: 1px solid #e5e5e5;
-  }
-
-  // Input inside multiselect
-  input[type="text"] {
-    background-color: transparent;
-    border: medium none;
-    box-shadow: none;
-    display: inline;
-    height: 30px;
-    margin: 0 1px;
-    max-width: inherit;
-    min-width: 80px;
-    outline: medium none;
-    padding: 0 4px;
-    vertical-align: top;
-    @include rem(width, 8rem);
+    + .icon {
+      cursor: pointer;
+    }
   }
 
   .tag {
@@ -85,13 +73,14 @@ select.multiselect {
     @include no-select;
     height: 22px;
     line-height: 24px;
-    margin: 6px 6px 0 0;
+    margin: 5px 6px 0 0;
     max-width: 100px;
     overflow: hidden;
     padding: 0 30px 0 10px;
     position: relative;
     text-overflow: ellipsis;
     transition: all .15s linear 0s;
+    white-space: nowrap;
 
     &:hover {
       background-color: $multiselect-tag-hover-color;
@@ -99,6 +88,10 @@ select.multiselect {
       .icon {
         fill: $inverse-color;
       }
+    }
+
+    &:first-of-type {
+      margin-left: 6px;
     }
 
     &:last-of-type {
@@ -129,28 +122,6 @@ select.multiselect {
 
 }
 
-.multiselect-list {
-  max-height: 300px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  > li {
-    padding-left: 24px;
-    position: relative;
-
-    &:before {
-      @include checkbox-unchecked-before-style;
-
-      margin-left: 0;
-    }
-
-    &:after {
-
-    }
-  }
-}
-
-// Layout
-.field .multiselect {
-  margin-bottom: 20px;
+.field > .multiselect-tags {
+  margin: 3px 0 20px;
 }

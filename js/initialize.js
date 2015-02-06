@@ -98,7 +98,7 @@
         elem.find('.autocomplete:not([data-init])').autocomplete();
 
         //Multiselect
-        elem.find('.multiselect:not([data-init])').multiselect();
+        elem.find('select[multiple]:not(.dropdown), .multiselect:not([data-init])').multiselect();
 
         //Button with Effects
         elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive').button();
