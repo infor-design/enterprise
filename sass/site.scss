@@ -77,6 +77,8 @@
     // max-width: 820px;
   	max-width: $breakpoint-phone-to-tablet;
   	text-align: center;
+    margin-bottom: 80px;
+    overflow: hidden;
 
   	h2 {
   		color: $highlight-color;
