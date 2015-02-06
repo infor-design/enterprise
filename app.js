@@ -4,6 +4,7 @@ var express = require('express'),
   path = require('path'),
   mmm = require('mmm'),
   colors = require('colors'); // jshint ignore:line
+  uploadRouter = require('./src/routers/upload-router')(app); // jshint ignore:line
 
 app.configure(function() {
 
@@ -14,6 +15,8 @@ app.configure(function() {
 
   // instruct express to server up static assets
   app.use(express.static('public'));
+  // leverage body parsing middleware (to be deprecated in subsequent versions)
+  app.use(express.bodyParser());
 
   var templateOpts = {
     title: 'SoHo XI',
@@ -141,6 +144,31 @@ app.configure(function() {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(people));
   });
+
+  // Sample Tasks
+  app.get('/api/tasks', function(req, res) {
+    var tasks = [{ id: 1, escalated: 2, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order.', comments: 21, time: '7:04 AM'},
+      { id: 2, escalated: 1, taskName: 'Quotes due to expire', desc: 'Update pending quotes and send out again to customers.', comments: 3, time: '12/13/14 7:04 AM'},
+      { id: 3, escalated: 0, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '12/14/14'},
+      { id: 4, escalated: 0, taskName: 'Follow up action with Acme Trucking', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '12/14/14'},
+      { id: 5, escalated: 0, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '12/14/14'},
+      { id: 6, escalated: 0, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '12/15/14'},
+      { id: 7, escalated: 0, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '12/15/14'},
+      { id: 8, escalated: 0, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, time: '12/16/14'},
+      { id: 9, escalated: 0, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, time: '12/16/14'},
+      { id: 10, escalated: 0, taskName: 'Follow up action with Residental Shipping Logistics ', desc: 'Contact sales representative.', comments: 2, time: '12/16/14'},
+      { id: 11, escalated: 0, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '12/18/14'},
+      { id: 12, escalated: 0, taskName: 'Follow up action with Acme Universal Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '12/18/14'},
+    ];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(tasks));
+  });
+
+  // RESTful routes
+  require('./src/routers/rest-router')(app);
+  // Upload routes
+  require('./src/routers/upload-router')(app);
 
 });
 

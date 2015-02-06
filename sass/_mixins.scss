@@ -189,3 +189,11 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
+
+
+// Truncate to Ellipsis....
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

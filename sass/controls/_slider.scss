@@ -93,28 +93,28 @@
   &::after {
     border: 1px solid;
     border-color: inherit;
-    border-radius: 32px;
+    border-radius: 50%;
     content: '';
-    height: 60px;
-    left: -25px;
+    height: 40px;
+    left: -15px;
     position: absolute;
     @include scale(0);
-    top: -25px;
+    top: -15px;
     @include css3-prop-transition(transform, 200ms);
-    width: 60px;
+    width: 40px;
     z-index: 19;
   }
 
   // Transparent BGs
   &::before {
-    border: 28px solid;
+    border: 21px solid;
     border-color: inherit;
-    border-radius: 28px;
+    border-radius: 50%;
     content: '';
-    left: -22px;
+    left: -14px;
     opacity: .1;
     position: absolute;
-    top: -22px;
+    top: -15px;
     @include css3-prop-transition(transform, 200ms);
     @include scale(0);
     z-index: 19;
