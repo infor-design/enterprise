@@ -207,3 +207,17 @@ $breakpoint-phone: 320px;
 $breakpoint-phone-to-tablet: 768px;
 $breakpoint-tablet-to-desktop: 1160px;
 $breakpoint-desktop-to-extralarge: 1440px;
+
+//Docs
+$highlight-color: #00c2b4;
+$highlight-color-rgba: rgba(0,194,180, 0.97);
+$highlight-color-gallery: #d5000e;
+$callout-icon-bd: $popover-separator-color;
+$callout-icon-hover-bd: #fff;
+$callout-bd: $callout-icon-hover-bd;
+$callout-hover-bd: $highlight-color;
+$callout-icon-vision: #ad3db6;
+$callout-icon-gallery: #d5000e;
+$callout-icon-guide: #ff8400;
+
+$divider-color: #d8d8d8;
