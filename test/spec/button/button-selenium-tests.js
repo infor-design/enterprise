@@ -73,16 +73,4 @@ describe('Button [selenium]', function(){
       .call(done);
   });
 
-  // WebdriverIO doesn't return the defined CSS property, but it returns the 'calculated' CSS property.
-  // Since we set the window size before testing, we can use the computed value in the test.
-  // When the screen is 1024px wide, the button's computed width comes out to 474px wide.
-  it('can have 100% width', function(done) {
-    runner.client
-      .getCssProperty('#one-hundred', 'width', function(err, width) {
-        globals.noError(err);
-        width.value.should.equal('984px');
-      })
-      .call(done);
-  });
-
 });
