@@ -68,6 +68,36 @@
         this.element.find('option:selected').each(function() {
           self.addTag($(this));
         });
+
+        this.updateAria();
+      },
+
+      // TODO: Localize
+      buildAriaLabel: function() {
+        var tags = this.tagContainer.find('.tag'),
+          optionWord = 'options',
+          tagString = '';
+
+        tags.each(function(i) {
+          if (tagString.length > 0) {
+            tagString += ', ';
+          }
+          if (tagString.length > 1 && !tags[i + 1]) {
+            tagString += 'and ';
+          }
+          tagString += $(this).text();
+        });
+
+        if (tags.length === 1) {
+          optionWord = 'option';
+        }
+
+        return this.dropdown.label.text() + '. Multiselect with ' + this.tagContainer.find('.tag').length +
+          ' ' + optionWord + ' tagged. ' + tagString + (tags.length > 0 ? '.' : '');
+      },
+
+      updateAria: function() {
+        this.tagContainer.attr({'aria-label': this.buildAriaLabel()});
       },
 
       handleEvents: function() {
@@ -110,6 +140,7 @@
         } else {
           this.removeTag(tag);
         }
+        this.updateAria();
       },
 
       addTag: function(tag) {

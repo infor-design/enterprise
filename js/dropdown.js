@@ -590,8 +590,8 @@
           e.preventDefault();
           e.target.click();
         }).on('click.list', 'li', function () {
-          var idx = $(this).parent().find('li:not(.group-label)').index($(this)),
-              cur = $(self.element[0].options[idx]);
+          var val = $(this).attr('data-val'),
+            cur = self.element.find('option[value="'+ val +'"]');
 
           //Select the clicked item
           if (cur.is(':disabled')) {
