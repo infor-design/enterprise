@@ -25,7 +25,7 @@
   {{> includes/header}}
 
   <section id="maincontent" class="site-content container gallery">
-    <header>
+    <header class="gallery-header">
       <h2>Showcase of Xi works</h2>
       <nav class="gallery-nav">
           <div class="field">
@@ -51,7 +51,7 @@
     <div class="row call-out">
       <div class="one-third column">
         <div class="content">
-          <img src="http://lorempixel.com/365/200/technics/1" alt="work piece image" />
+          <img src="http://lorempixel.com/372/200/technics/1" alt="work piece image" />
           <div class="details">
             <h3>Clear WorK: Parts Ordering</h3>
             <p>
@@ -72,7 +72,7 @@
 
       <div class="one-third column">
         <div class="content">
-          <img src="http://lorempixel.com/365/200/technics/2" alt="work piece image" />
+          <img src="http://lorempixel.com/372/200/technics/2" alt="work piece image" />
           <div class="details">
             <h3>Ming.le Mobile</h3>
             <p>
@@ -93,7 +93,7 @@
 
       <div class="one-third column">
         <div class="content">
-          <img src="http://lorempixel.com/365/200/technics/3" alt="work piece image" />
+          <img src="http://lorempixel.com/372/200/technics/3" alt="work piece image" />
           <div class="details">
             <h3>Ferrari Formual 1 Dashboard</h3>
             <p>
@@ -116,7 +116,7 @@
     <div class="row call-out">
       <div class="one-third column">
         <div class="content">
-          <img src="http://lorempixel.com/365/200/technics/4" alt="work piece image" />
+          <img src="http://lorempixel.com/372/200/technics/4" alt="work piece image" />
           <div class="details">
             <h3>Clear WorK: Parts Ordering</h3>
             <p>
@@ -137,7 +137,7 @@
 
       <div class="one-third column">
         <div class="content">
-          <img src="http://lorempixel.com/365/200/technics/5" alt="work piece image" />
+          <img src="http://lorempixel.com/372/200/technics/5" alt="work piece image" />
           <div class="details">
             <h3>Ming.le Mobile</h3>
             <p>
@@ -158,7 +158,7 @@
 
       <div class="one-third column">
         <div class="content">
-          <img src="http://lorempixel.com/365/200/technics/6" alt="work piece image" />
+          <img src="http://lorempixel.com/372/200/technics/6" alt="work piece image" />
           <div class="details">
             <h3>Ferrari Formual 1 Dashboard</h3>
             <p>
@@ -180,21 +180,8 @@
   </section>
 
 
-  {{#enableLiveReload}}
-  <!-- Live Reload - "grunt watch" -->
-  <script type="text/javascript">
-    if (window.location.hostname !== '107.170.15.202') {
-      document.write('\x3Cscript type="text/javascript" src="//' + window.location.hostname + ':35729/livereload.js">\x3C/script>');
-    }
-  </script>
-  {{/enableLiveReload}}
-
-  <script>
-    // Init All SoHo XI Controls Stuff on Document Ready
-    $(function() {
-      $('body').initialize('en');
-    });
-  </script>
+  {{> includes/docs-footer}}
+  
 
 </body>
 </html>
