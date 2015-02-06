@@ -108,6 +108,7 @@
           }
         });
 
+        this.element.trigger('rendered', [dataset]);
       },
 
       // Get the Data Source. Can be an array, Object or Url
@@ -115,7 +116,7 @@
         var ds = this.settings.dataset,
           self = this;
 
-        if (ds.indexOf('http') === 0) {
+        if (ds.indexOf('http') === 0 || ds.indexOf('/') === 0) {
           $.getJSON(ds, function(data) {
             self.render(data);
           });

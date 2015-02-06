@@ -1,5 +1,6 @@
 var path = require('path'),
-    multer = require('multer');
+    multer = require('multer'); // jshint ignore:line
+
 module.exports = function(app) {
 
   app.use(multer({
@@ -12,33 +13,15 @@ module.exports = function(app) {
       rename: function(fieldname, filename) {
         return filename + Date.now();
       },
-      onFileUploadStart: function(file) {
-
-      },
-      onFileUploadData: function(file, data) {
-
-      },
-      onFileUploadComplete: function(file) {
-
-      },
       onError: function(error, next) {
         // do something here?
         next(error);
-      },
-      onFileSizeLimit: function(file) {
-        // do something here?
-      },
-      onFieldsLimit: function() {
-        // do something here?
-      },
-      onPartsLimit: function() {
-        // do something here?
       }
     }
   }));
 
   app.post('/api/upload', function(req, res) {
-    console.log('upload');
+    console.log(req, res);
   });
 
 };

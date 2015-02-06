@@ -24,10 +24,10 @@ Navigate to /src. You will find 2 modules:
 ## Examples
 
 * Get Countries - http://localhost:4000/api/countries
-* Get Datagrid Page (w/o column + sort) - http://localhost:4000/api/datagrid?pg=1&recs=20&col=none
-* Get Datagrid Page (w column + sort) - http://localhost:4000/api/datagrid?pg=1&recs=20&col=integer_amount&sort=1
-* Insert Datagrid Row - [](datagrid-insert.png)
-* Delete Datagrid Row - [](datagrid-delete.png)
+* Get Item Page (w/o column + sort) - http://localhost:4000/api/items?pg=1&recs=20&col=none
+* Get Item Page (w column + sort) - http://localhost:4000/api/items?pg=1&recs=20&col=integer_amount&sort=1
+* Insert item Row - [](datagrid-insert.png)
+* Delete item Row - [](datagrid-delete.png)
 
 ## Extending the API
 
