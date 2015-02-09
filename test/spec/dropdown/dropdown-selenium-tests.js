@@ -129,7 +129,7 @@ describe('Dropdown [selenium]', function(){
       .call(done);
   });
 
-  it.skip('should be able to add and invoke a new dropdown', function(done) {
+  it('should be able to add and invoke a new dropdown', function(done) {
     var id = 'destroyThis';
 
     runner.client

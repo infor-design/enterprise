@@ -78,6 +78,7 @@
   //Disabled
   input:disabled ~ label {
     color: $switch-disabled-label-color;
+    cursor: default;
   }
 
   input:disabled ~ label:before {
