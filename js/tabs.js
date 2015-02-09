@@ -370,6 +370,7 @@
 
         // Invoke the popup menu on the button.
         self.moreButton.popupmenu({
+          autoFocus: false,
           menuId: 'tab-container-popupmenu',
           trigger: 'immediate'
         });
