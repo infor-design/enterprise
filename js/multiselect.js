@@ -47,6 +47,7 @@
       build: function() {
         var self = this,
           ddOpts = {
+            closeOnSelect: false,
             empty: true,
             multiple: true
           };
