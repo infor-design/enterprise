@@ -105,9 +105,17 @@
       margin: 100px 0 100px -20px;
 
       .column {
+
+
         .content {
-          background: transparent;
+          background: $body-bg-color;
           display: block;
+          -webkit-transition: 500ms;
+
+
+          &:hover{
+
+          }
         }
 
         p {
