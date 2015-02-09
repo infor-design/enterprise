@@ -11,18 +11,18 @@
 // Text in the Page
 
 .divider-horiz {
-  width: 100%;
-  margin: 20px auto;
-  height: 1px;
   background: $divider-color;
+  height: 1px;
+  margin: 20px auto;
+  width: 100%;
 }
 
 .site-content {
   h2 {
-    font-size: 40px;
-    margin-top: 70px;
-    line-height: 50px;
     color: $primary-color;
+    font-size: 40px;
+    line-height: 50px;
+    margin-top: 70px;
   }
 
   h3 {
@@ -75,22 +75,15 @@
   }
 
   &.home {
-    // max-width: 820px;
-  	// max-width: $breakpoint-phone-to-tablet;
   	text-align: center;
-    // margin: 0 auto;
     margin-bottom: 80px;
     overflow: hidden;
 
-    .pull-in {
+    .l-pull-in {
       width: 100%;
       margin: 0 auto;
       max-width: 815px;
     }
-
-  	// h2 {
-  	// 	color: $highlight-color;
-  	// }
 
   	> p {
   		margin: 0 auto;
@@ -155,16 +148,10 @@
 
   &.gallery {
 
-	  // max-width: $breakpoint-tablet-to-desktop;
     margin: 0 auto 80px;
     overflow: hidden;
 
-    // h2 {
-    //   color: $highlight-color-gallery;
-    //   color: $highlight-color-gallery;
-    // }
-
-  	.column .content{
+    .column .content{
   		border: solid $switch-disabled-color 1px;
   		padding-top: 0;
       text-align: left;
