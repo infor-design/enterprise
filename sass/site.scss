@@ -20,8 +20,8 @@
 .site-content {
   h2 {
     font-size: 40px;
-    margin-bottom: 20px;
-    margin-top: 50px;
+    margin-top: 30px;
+    line-height: 50px;
   }
 
   h3 {
@@ -75,10 +75,17 @@
 
   &.home {
     // max-width: 820px;
-  	max-width: $breakpoint-phone-to-tablet;
+  	// max-width: $breakpoint-phone-to-tablet;
   	text-align: center;
+    // margin: 0 auto;
     margin-bottom: 80px;
     overflow: hidden;
+
+    .pull-in {
+      width: 100%;
+      margin: 0 auto;
+      max-width: 815px;
+    }
 
   	h2 {
   		color: $highlight-color;
@@ -136,9 +143,8 @@
 
   &.gallery {
 
-    // max-width: 1140px;
-	  max-width: $breakpoint-tablet-to-desktop;
-    margin-bottom: 80px;
+	  // max-width: $breakpoint-tablet-to-desktop;
+    margin: 0 auto 80px;
     overflow: hidden;
 
     h2 {
@@ -163,6 +169,10 @@
           background: transparent;
           display: block;
           position: relative;
+
+          .work-img {
+            width: 100%;
+          }
 
           .details {
 
