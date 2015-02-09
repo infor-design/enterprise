@@ -17,6 +17,7 @@
     // Dropdown Settings and Options
     var pluginName = 'dropdown',
         defaults = {
+          closeOnSelect: true,
           editable: 'false',
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
           moveSelectedToTop: false,
@@ -95,6 +96,9 @@
         }
         if (this.element.attr('data-move-selected') && !this.settings.moveSelectedToTop) {
           this.settings.moveSelectedToTop = this.element.attr('data-move-selected') === 'true';
+        }
+        if (this.element.attr('data-close-on-select') && !this.settings.closeOnSelect) {
+          this.settings.closeOnSelect = this.element.attr('data-close-on-select') === 'true';
         }
 
         this.updateList();
@@ -347,7 +351,6 @@
                 if (!selected) {
                   self.highlightOption(opt);
                   selected = true;
-                  //self.searchInput.val(term);
                 }
 
                 //Highlight Term
@@ -405,9 +408,9 @@
           case 9: {  //tab - save the current selection
             if (self.isOpen()) {
               this.selectOption($(options[selectedIndex]));
-              this.activate();
               if (self.isOpen()) {  // Close the option list
                 self.closeList(false);
+                this.activate();
               }
             }
             // allow tab to propagate
@@ -431,8 +434,10 @@
             if (self.isOpen()) {
               e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
-              self.closeList(false);  // Close the option list
-              self.activate();
+              if (self.settings.closeOnSelect) {
+                self.closeList(false);  // Close the option list
+                self.activate();
+              }
             }
 
             e.stopPropagation();
@@ -443,8 +448,8 @@
             if (selectedIndex > 0) {
               next = $(options[selectedIndex - 1]);
               this.highlightOption(next);
-              next.parent().find('li').removeClass('hover');
-              next.addClass('hover');
+              next.parent().find('li').removeClass('is-focused');
+              next.addClass('is-focused');
             }
 
             e.stopPropagation();
@@ -455,8 +460,8 @@
             if (selectedIndex < options.length - 1) {
               next = $(options[selectedIndex + 1]);
               this.highlightOption(next);
-              next.parent().find('li').removeClass('hover');
-              next.addClass('hover');
+              next.parent().find('li').removeClass('is-focused');
+              next.addClass('is-focused');
             }
 
             e.stopPropagation();
@@ -598,8 +603,12 @@
             return;
           }
           self.selectOption(cur);
-          self.activate();
-          self.closeList();
+          if (self.settings.closeOnSelect) {
+            self.closeList();
+            self.activate();
+          } else {
+            self.searchInput.focus();
+          }
         });
 
         setTimeout(function() {
@@ -782,8 +791,13 @@
           return option;
         }
 
+        var li;
         if (option.is('li')) {
+          li = option;
           option = this.element.find('option[value="' + option.attr('data-val') + '"]');
+        }
+        if (!li) {
+          li = this.listUl.find('li[data-val="'+ option.val() +'"]');
         }
 
         if (option.hasClass('.is-disabled') || option.is(':disabled')) {
@@ -810,6 +824,7 @@
             val = $.grep(val, function(optionValue) {
               return optionValue !== code;
             });
+            li.removeClass('selected').attr({'aria-selected': 'false'});
             this.previousActiveDescendant = undefined;
             isAdded = false;
           } else {
@@ -819,6 +834,7 @@
 
             val = typeof val === 'string' ? [val] : val;
             val.push(code);
+            li.addClass('selected').attr({'aria-selected': 'true'});
             this.previousActiveDescendant = option.val();
           }
 
@@ -829,6 +845,7 @@
         } else {
           // Working with a single select
           val = code;
+          li.addClass('selected').attr({'aria-selected': 'true'});
           this.previousActiveDescendant = option.val();
           text = option.text();
         }
