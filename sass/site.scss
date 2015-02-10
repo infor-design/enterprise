@@ -75,15 +75,15 @@
   }
 
   &.home {
-  	text-align: center;
     margin-bottom: 80px;
     overflow: hidden;
+    text-align: center;
 
     .l-pull-in {
-      width: 100%;
       margin: 0 auto;
       max-width: 815px;
       overflow: hidden;
+      width: 100%;
     }
 
     > p {
@@ -96,53 +96,32 @@
     }
 
     .call-out {
-
       margin: 100px 0 100px -20px;
     }
 
     .call-out-column {
 
+      .content {
+        background: $body-bg-color;
+        display: block;
+        -webkit-transition: 500ms;
+        -moz-transition: 500ms;
+        -ms-transition: 500ms;
+        transition: 500ms;
+      }
 
+      p {
+        font-size: 16px;
+        margin: 0 auto;
+        width: 92%;
+      }
 
-
-
-        .content {
-          background: $body-bg-color;
-          display: block;
-          -webkit-transition: 500ms;
-          -moz-transition: 500ms;
-          -ms-transition: 500ms;
-          transition: 500ms;
-
-                  }
-
+      &.gallery {
         p {
-          font-size: 16px;
-          margin: 0 auto;
-          width: 92%;
+          width: 80%;
         }
+      }
 
-        &.gallery {
-
-          p {
-            width: 80%;
-          }
-
-        }
-
-        // &:hover {
-
-        //   h3, p {
-        //     color: #ffffff;
-        //   }
-        //   .content {
-        //     background: $callout-hover-bd;
-        //   }
-
-        //   .icon-circle {
-        //     background: $callout-icon-hover-bd;
-        //   }
-        // }
     }
 
     .call-out-column:hover {
@@ -151,6 +130,7 @@
       p {
         color: #ffffff;
       }
+
       .content {
         background: $callout-hover-bd;
       }
@@ -166,36 +146,37 @@
     margin: 0 auto 80px;
     overflow: hidden;
 
-    .column .content{
-  		border: solid $switch-disabled-color 1px;
-  		padding-top: 0;
+    .content {
+      border: solid $switch-disabled-color 1px;
+      padding-top: 0;
       text-align: left;
   	}
 
     .call-out {
-
-      margin-top: 60px;
       margin-bottom: 60px;
+      margin-top: 60px;
       // clear: both;
+    }
 
-      .column {
-        .content {
+  }
+
+  .gallery-column {
+        .gallery-content {
           background: transparent;
           display: block;
           position: relative;
 
           &:focus {
             border: $primary-color 1px solid;
-            outline:none;
-            outline-color:transparent;
+            outline: none;
+            outline-color: transparent;
           }
 
-          .work-img {
+          .gallery-img {
             width: 100%;
           }
 
-          .details {
-
+          .gallery-details {
             padding: 30px 20px 10px;
 
             h3 {
@@ -205,33 +186,39 @@
             }
 
             p {
-              width: 92%;
+              color: $font-color;
               font-size: 14px;
-              color: $font-color;
               line-height: 24px;
-            }
-
-            .tags {
-              margin: 25px 0;
-
-              .tag {
-                color: $font-color;
-                background: transparent;
-                font-size: 12px;
-                font-weight: 100;
-                padding: 0;
-              }
-            }
-
-            .post-date {
-              text-transform: uppercase;
-              color: $font-color;
-              font-size: 12px;
-              font-weight: 400;
+              width: 92%;
             }
           }
 
-          .look {
+          .gallery-tags {
+            margin: 25px 0;
+          }
+
+          .gallery-tag {
+            color: $font-color;
+            background: transparent;
+            font-size: 12px;
+            font-weight: 100;
+            padding: 0;
+            display: inline-block;
+            margin-left: 20px;
+          }
+
+          .gallery-tag:first-child {
+            margin-left: 0;
+          }
+
+          .gallery-post-date {
+            color: $font-color;
+            font-size: 12px;
+            font-weight: 400;
+            text-transform: uppercase;
+          }
+
+          .gallery-look {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -244,26 +231,23 @@
             transition: 400ms;
 
             span {
-              color: #fff;
+              color: #ffffff;
               font-size: 30px;
               font-weight: 400;
-              position: absolute;
-              top: 50%;
               height: 1em;
-              margin-top: -0.5em;
-              width: 100%;
+              margin-top: -.5em;
+              position: absolute;
               text-align: center;
+              top: 50%;
+              width: 100%;
             }
           }
+        }
 
-          &:hover .look {
-            opacity: 1;
-          }
+        .content:hover .gallery-look {
+          opacity: 1;
         }
       }
-    }
-
-  }
 
   .icon-circle {
     background: $callout-icon-bd;
@@ -347,5 +331,11 @@
     position: absolute;
     right: auto;
     top: auto;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) { 
+  .site-content .gallery-header .gallery-nav .field:first-child {
+    margin-right: 0;
   }
 }
