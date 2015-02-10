@@ -24,164 +24,167 @@
 
   {{> includes/header}}
 
-  <section id="maincontent" class="site-content container gallery">
+  <section id="maincontent" class="site-content container gallery" role="main">
     <header class="gallery-header">
       <h2>Showcase of Xi works</h2>
-      <nav class="gallery-nav">
-          <div class="field">
-            <select id="states" name="states" class="dropdown">
-              <option value="recent">Most Recent</option>
+      <nav class="gallery-nav" role="navigation">
+        <form role="form" title="sort-form">
+          <div class="gallery-field field">
+            <label class="audible" for="general-sort">General Sort</label>
+            <select id="general-sort" name="general-sort" title="general-sort" class="dropdown">
+              <option value="recent" selected>Most Recent</option>
               <option value="popular">Popular</option>
               <option value="alpha-asc">Alpabetical - A to Z</option>
               <option value="alph-desc">Alpabetical - Z to A</option>
             </select>
           </div>
-          <div class="field">
-            <select id="states" name="states" class="dropdown">
-              <option value="all">All Tags</option>
+          <div class="gallery-field field">
+            <label class="audible" for="tag-sort">Tag Sort</label>
+            <select id="tag-sort" name="tag-sort" title="general-sort" class="dropdown">
+              <option value="all" selected>All Tags</option>
               <option value="responsive">Responsive</option>
               <option value="mobile">Mobile</option>
               <option value="interface">Interface</option>
             </select>
           </div>
+          <button class="audible" type="submit">Submit</button>
+        </form>
       </nav>
     </header>
     
 
-    <div class="row call-out">
-      <div class="one-third column">
-        <div class="content">
-          <img src="http://lorempixel.com/372/200/technics/1" alt="work piece image" />
-          <div class="details">
+    <div class="row call-out" role="navigation">
+      <div class="one-third gallery-column column">
+        <div class="gallery-content content" tabindex=1 >
+          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/1" alt="work piece image" />
+          <div class="gallery-details">
             <h3>Clear WorK: Parts Ordering</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
-            <div class="tags">
+            <div class="gallery-tags">
               <ul>
-                <li class="tag">#responsive</li>
-                <li class="tag">#mobile</li>
-                <li class="tag">#interface</li>
+                <li class="gallery-tag">#responsive</li>
+                <li class="gallery-tag">#mobile</li>
+                <li class="gallery-tag">#interface</li>
               </ul>
             </div>
-            <time class="post-date" datetime="2015-01-07">Jan 07, 2015</time>
+            <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="look"><span>Take a Look</span></a>
+          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
 
-      <div class="one-third column">
-        <div class="content">
-          <img src="http://lorempixel.com/372/200/technics/2" alt="work piece image" />
-          <div class="details">
+      <div class="one-third gallery-column column">
+        <div class="gallery-content content" tabindex=2 >
+          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/2" alt="work piece image" />
+          <div class="gallery-details">
             <h3>Ming.le Mobile</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
-            <div class="tags">
+            <div class="gallery-tags">
               <ul>
-                <li class="tag">#responsive</li>
-                <li class="tag">#mobile</li>
-                <li class="tag">#interface</li>
+                <li class="gallery-tag">#responsive</li>
+                <li class="gallery-tag">#mobile</li>
+                <li class="gallery-tag">#interface</li>
               </ul>
             </div>
-            <time class="post-date" datetime="2015-01-07">Jan 07, 2015</time>
+            <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="look"><span>Take a Look</span></a>
+          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
 
-      <div class="one-third column">
-        <div class="content">
-          <img src="http://lorempixel.com/372/200/technics/3" alt="work piece image" />
-          <div class="details">
+      <div class="one-third gallery-column column">
+        <div class="gallery-content content" tabindex=3 >
+          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/3" alt="work piece image" />
+          <div class="gallery-details">
             <h3>Ferrari Formual 1 Dashboard</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
-            <div class="tags">
+            <div class="gallery-tags">
               <ul>
-                <li class="tag">#responsive</li>
-                <li class="tag">#mobile</li>
-                <li class="tag">#interface</li>
+                <li class="gallery-tag">#responsive</li>
+                <li class="gallery-tag">#mobile</li>
+                <li class="gallery-tag">#interface</li>
               </ul>
             </div>
-            <time class="post-date" datetime="2015-01-07">Jan 07, 2015</time>
+            <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="look"><span>Take a Look</span></a>
+          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
     </div>
 
-    <div class="row call-out">
-      <div class="one-third column">
-        <div class="content">
-          <img src="http://lorempixel.com/372/200/technics/4" alt="work piece image" />
-          <div class="details">
+    <div class="row call-out" role="navigation">
+      <div class="one-third gallery-column column">
+        <div class="gallery-content content" tabindex=4 >
+          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/4" alt="work piece image" />
+          <div class="gallery-details">
             <h3>Clear WorK: Parts Ordering</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
-            <div class="tags">
+            <div class="gallery-tags">
               <ul>
-                <li class="tag">#responsive</li>
-                <li class="tag">#mobile</li>
-                <li class="tag">#interface</li>
+                <li class="gallery-tag">#responsive</li>
+                <li class="gallery-tag">#mobile</li>
+                <li class="gallery-tag">#interface</li>
               </ul>
             </div>
-            <time class="post-date" datetime="2015-01-07">Jan 07, 2015</time>
+            <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="look"><span>Take a Look</span></a>
+          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
 
-      <div class="one-third column">
-        <div class="content">
-          <img src="http://lorempixel.com/372/200/technics/5" alt="work piece image" />
-          <div class="details">
+      <div class="one-third gallery-column column">
+        <div class="gallery-content content" tabindex=5 >
+          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/5" alt="work piece image" />
+          <div class="gallery-details">
             <h3>Ming.le Mobile</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
-            <div class="tags">
+            <div class="gallery-tags">
               <ul>
-                <li class="tag">#responsive</li>
-                <li class="tag">#mobile</li>
-                <li class="tag">#interface</li>
+                <li class="gallery-tag">#responsive</li>
+                <li class="gallery-tag">#mobile</li>
+                <li class="gallery-tag">#interface</li>
               </ul>
             </div>
-            <time class="post-date" datetime="2015-01-07">Jan 07, 2015</time>
+            <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="look"><span>Take a Look</span></a>
+          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
 
-      <div class="one-third column">
-        <div class="content">
-          <img src="http://lorempixel.com/372/200/technics/6" alt="work piece image" />
-          <div class="details">
+      <div class="one-third gallery-column column">
+        <div class="gallery-content content" tabindex=6 >
+          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/6" alt="work piece image" />
+          <div class="gallery-details">
             <h3>Ferrari Formual 1 Dashboard</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
-            <div class="tags">
+            <div class="gallery-tags">
               <ul>
-                <li class="tag">#responsive</li>
-                <li class="tag">#mobile</li>
-                <li class="tag">#interface</li>
+                <li class="gallery-tag">#responsive</li>
+                <li class="gallery-tag">#mobile</li>
+                <li class="gallery-tag">#interface</li>
               </ul>
             </div>
-            <time class="post-date" datetime="2015-01-07">Jan 07, 2015</time>
+            <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="look"><span>Take a Look</span></a>
+          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
     </div>
   </section>
 
-
   {{> includes/docs-footer}}
-  
 
 </body>
 </html>
