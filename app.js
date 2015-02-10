@@ -166,9 +166,9 @@ app.configure(function() {
   });
 
   // RESTful routes
-  // require('./src/routers/rest-router')(app);
+  require('./src/routers/rest-router')(app);
   // Upload routes
-  // require('./src/routers/upload-router')(app);
+  require('./src/routers/upload-router')(app);
 
 });
 

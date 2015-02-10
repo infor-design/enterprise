@@ -13,6 +13,8 @@ Go to [Postgresql.org](http://www.postgresql.org/download/), pull down the binar
 * Open the file explorer, pointing it to /sql/ddl.sql. Execute by clicking the pgScript toolbar icon. This script creates objects and permissions. If you see "does not exist errors," its OK.
 * Open the file explorer, pointing it to /sql/dml.sql. Execute by clicking the pgScript toolbar icon. This script creates rows of data.
 * Using the treeview, navigate to the public schema and open one of the tables to confirm data exists.
+* Paste the following line into the command line:
+* export PATH=/Library/PostgreSQL/9.3/bin:$PATH
 
 ## Node.js Modules
 
