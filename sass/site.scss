@@ -47,10 +47,10 @@
   }
 
   .content {
+    box-shadow: 0 0 5px rgba(8, 150, 233, 0); 
+
     &:focus {
-      border: $primary-color 1px solid;
-      outline: none;
-      outline-color: transparent;
+      @include focus-state;
     }
   }
 
@@ -201,13 +201,12 @@
 
   .gallery-content.content {
     background: $body-bg-color;
+    box-shadow: 0 0 5px rgba(8, 150, 233, 0); 
     display: block;
     position: relative;
 
     &:focus {
-      border: $primary-color 1px solid;
-      outline: none;
-      outline-color: transparent;
+      @include focus-state;
     }
   }
 
