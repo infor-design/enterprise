@@ -1,6 +1,68 @@
 // Checkboxes
 //================================================== //
 
+@mixin checkbox-animation {
+  @include animation('.15s ease 0s normal none 1 running check');
+}
+
+@mixin checkbox-transform-rules {
+  @include css3(transform-origin, left top 0);
+}
+
+@mixin checkbox-unchecked-before-style {
+  border: 1px solid $checkbox-border-color;
+  border-radius: 2px;
+  content: '';
+  height: 18px;
+  margin-left: -31px;
+  position: absolute;
+  width: 18px;
+}
+
+@mixin checkbox-unchecked-disabled-before-style {
+  background-color: $checkbox-disabled-bg-color;
+  border-color: $checkbox-disabled-border-color;
+}
+
+@mixin checkbox-checked-before-style {
+  background-color: $checkbox-color;
+  border-color: $checkbox-color;
+}
+
+@mixin checkbox-checked-disabled-before-style {
+  background-color: $checkbox-disabled-select-bg-color;
+  border-color: $checkbox-disabled-select-bg-color;
+}
+
+@mixin checkbox-checked-after-style {
+  border-color: $checkbox-arrow-color;
+  border-style: solid;
+  border-width: 2px 2px 0 0;
+  content: '';
+  height: 10px;
+  left: 8px;
+  margin-top: 11px;
+  position: absolute;
+  @include css3(transform, scaleX(-1) rotate(135deg));
+  width: 4px;
+}
+
+@mixin checkbox-checked-disabled-after-style {
+  border-color: $checkbox-disabled-arrow-color;
+}
+
+@mixin checkbox-focus-state {
+  box-shadow: $checkbox-focus-shadow;
+}
+
+@mixin checkbox-partial-after-style {
+  border-width: 0 0 3px;
+  margin-left: 0;
+  margin-top: -1px;
+  @include css3(transform, none);
+  width: 12px;
+}
+
 input.checkbox,
 span.checkbox > input {
   left: -9999px;
@@ -19,35 +81,19 @@ span.checkbox > label {
 input.checkbox + label:before,
 input.checkbox + input[type="hidden"] + label:before,
 span.checkbox > label:before {
-  border: 1px solid $checkbox-border-color;
-  border-radius: 2px;
-  content: '';
-  height: 18px;
-  margin-left: -31px;
-  position: absolute;
-  width: 18px;
+  @include checkbox-unchecked-before-style;
 }
 
 input.checkbox:checked + label:before,
 input.checkbox:checked + input[type="hidden"] + label:before,
 span.checkbox > input:checked + label:before {
-  background-color: $checkbox-color;
-  border-color: $checkbox-color;
+  @include checkbox-checked-before-style;
 }
 
 input.checkbox:checked + label:after,
 input.checkbox:checked + input[type="hidden"] + label:after,
 span.checkbox > input:checked + label:after {
-  border-color: $checkbox-arrow-color;
-  border-style: solid;
-  border-width: 2px 2px 0 0;
-  content: '';
-  height: 10px;
-  left: 8px;
-  margin-top: 11px;
-  position: absolute;
-  @include css3(transform, scaleX(-1) rotate(135deg));
-  width: 4px;
+  @include checkbox-checked-after-style;
 }
 
 // Adjustments for ASP style checkboxes
@@ -76,11 +122,7 @@ span.checkbox > input + label {
 input.checkbox.partial:checked + label:after,
 input.checkbox.partial:checked + input[type="hidden"] + label:after,
 span.checkbox.partial > input:checked + label:after {
-  border-width: 0 0 3px;
-  margin-left: 0;
-  margin-top: -1px;
-  @include css3(transform, none);
-  width: 12px;
+  @include checkbox-partial-after-style;
 }
 
 .ie9 input.checkbox.partial:checked + label:after,
@@ -100,28 +142,26 @@ span.checkbox > input:disabled + label {
 input.checkbox:disabled:not(:checked) + label:before,
 input.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before,
 span.checkbox > input:disabled:not(:checked) + label:before {
-  background-color: $checkbox-disabled-bg-color;
-  border-color: $checkbox-disabled-border-color;
+  @include checkbox-unchecked-disabled-before-style;
 }
 
 input.checkbox:disabled:checked + label:before,
 input.checkbox:disabled:checked + input[type="hidden"] + label:before,
 span.checkbox > input:disabled:checked + label:before {
-  background-color: $checkbox-disabled-select-bg-color;
-  border-color: $checkbox-disabled-select-bg-color;
+  @include checkbox-checked-disabled-before-style;
 }
 
 input.checkbox:disabled:checked + label:after,
 input.checkbox:disabled:checked + input[type="hidden"] + label:after,
 span.checkbox > input:disabled:checked + label:after {
-  border-color: $checkbox-disabled-arrow-color;
+  @include checkbox-checked-disabled-after-style;
 }
 
 // Focus State
 input.checkbox:focus + label:before,
 input.checkbox:focus + input[type="hidden"] + label:before,
 span.checkbox > input:focus + label:before {
-  box-shadow: $checkbox-focus-shadow;
+  @include checkbox-focus-state;
 }
 
 // Labels
@@ -147,9 +187,9 @@ span.checkbox > input:focus + label:before {
 }
 
 .checkbox + label:after {
-  @include css3(transform-origin, left top 0);
+  @include checkbox-transform-rules;
 }
 
 .checkbox:not(.isPartial):checked + label:after {
-  @include animation('.15s ease 0s normal none 1 running check');
+  @include checkbox-animation;
 }

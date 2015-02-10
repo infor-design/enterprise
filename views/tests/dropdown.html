@@ -150,10 +150,25 @@
         <button id="disable-button" class="btn" type="button">Disable</button>
     </form>
 
+    <div class="field">
+      <label for="ajax-test">Ajax Test</label>
+      <select id="ajax-test" name="ajax-test" class="dropdown"></select>
+    </div>
+
   </div>
 </div>
 
 <script>
+  $('#ajax-test').dropdown({
+    source: function (term, response) {
+      //make an ajax call
+      $.getJSON('/api/states?term='+term, function(data) {
+        //Structure the data with val, label syntax is done on the server
+        response(data);
+      });
+    }
+  });
+
   $('#disable-button').on('click', function () {
     var field = $('#dupes');
     if (field.is(':disabled')) {

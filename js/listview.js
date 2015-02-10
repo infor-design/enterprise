@@ -81,6 +81,8 @@
           var compiledTmpl = Tmpl.compile(this.settings.template),
             renderedTmpl = compiledTmpl.render({dataset: dataset});
 
+          console.log(this.settings.template);
+          console.log(this.element, renderedTmpl);
           this.element.html(renderedTmpl);
         }
 

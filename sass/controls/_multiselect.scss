@@ -1,139 +1,128 @@
 // Multi Select (DropDown)
 //================================================== //
 
-// Hide on Initial Load
-select.multiselect {
-  display: none;
-}
-
-.multiselect {
-  background-color: transparent;
+.multiselect-tags {
   border: 1px solid $input-border-color;
   border-radius: 2px;
-  font-size: 0;
-  min-height: $multiselect-height;
-  outline: medium none;
+  cursor: pointer;
+  height: $multiselect-height;
   overflow: hidden;
-  padding: 0 0 0 5px;
-  text-align: left;
+  padding-right: 32px;
+  position: absolute;
   width: 300px;
 
-  //Trigger Icon
-  > .icon {
-    cursor: pointer;
-    float: right;
-    height: $multiselect-height;
-    vertical-align: top;
-    width: $multiselect-height;
-  }
-
-  > .icon:hover {
+  &.disabled {
     background-color: #e5e5e5;
-    outline: 1px solid #e5e5e5;
+    border: solid 1px $disabled-color;
+    color: $disabled-color;
+    cursor: default;
+    -webkit-text-fill-color: $disabled-color;
+
+    &:focus,
+    &.is-focused {
+      border: 1px solid $disabled-color;
+      box-shadow: none;
+    }
+
+    + input.dropdown + .icon {
+      cursor: default;
+      display: none;
+    }
+
+    .tag {
+      background-color: #f1f1f1;
+      box-shadow: none;
+      color: $input-disabled-color;
+      cursor: default;
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+
+      > span {
+        cursor: default;
+      }
+
+      .icon {
+        visibility: hidden;
+      }
+    }
   }
 
+  &:focus,
   &.is-focused {
     border-color: $multiselect-focus-border-color;
+    box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+    outline: none;
   }
-}
 
-#multiselect-list {
-  max-height: 300px;
-  overflow: auto;
-}
+  + input.dropdown {
+    visibility: hidden;
 
-// Input inside multiselect
-.multiselect input[type="text"] {
-  background-color: transparent;
-  border: medium none;
-  box-shadow: none;
-  display: inline;
-  height: 30px;
-  margin: 0 1px;
-  max-width: inherit;
-  min-width: 80px;
-  outline: medium none;
-  padding: 0 4px;
-  vertical-align: top;
-  @include rem(width, 8rem);
-}
-
-// Tags
-.multiselect .tag {
-  background-color: $multiselect-tag-color;
-  border-radius: 14px;
-  color: $inverse-color;
-  cursor: default;
-  display: inline-block;
-  @include font-size(12);
-  @include no-select;
-  height: 22px;
-  line-height: 24px;
-  margin: 6px 6px 0 0;
-  overflow: hidden;
-  padding: 0 30px 0 10px;
-  position: relative;
-  transition: all 0.15s linear 0s;
-
-  &:last-of-type {
-    margin-right: 0;
+    + .icon {
+      cursor: pointer;
+    }
   }
+
+  .tag {
+    background-color: $multiselect-tag-color;
+    border-radius: 14px;
+    color: $inverse-color;
+    cursor: default;
+    display: inline-block;
+    @include font-size(12);
+    @include no-select;
+    height: 22px;
+    line-height: 24px;
+    margin: 5px 6px 0 0;
+    max-width: 100px;
+    overflow: hidden;
+    padding: 0 30px 0 10px;
+    position: relative;
+    text-overflow: ellipsis;
+    transition: all .15s linear 0s;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $multiselect-tag-hover-color;
+
+      .icon {
+        fill: $inverse-color;
+      }
+    }
+
+    &:first-of-type {
+      margin-left: 6px;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    > span {
+      border: 0;
+      bottom: 0;
+      color: $inverse-color;
+      cursor: pointer;
+      opacity: 1;
+      padding: 0;
+      position: absolute;
+      right: 2px;
+      top: -4px;
+      width: 25px;
+      z-index: 2;
+    }
+
+    .icon {
+      fill: $inverse-color;
+      height: 22px;
+      left: -5px;
+      top: 3px;
+    }
+  }
+
 }
 
-.multiselect .tag:hover {
-  background-color: $multiselect-tag-hover-color;
-}
-
-.multiselect .tag:hover .icon {
-  fill: $inverse-color;
-}
-
-.multiselect .tag > span {
-  border: none;
-  bottom: 0;
-  color: $inverse-color;
-  cursor: pointer;
-  opacity: 1;
-  padding: 0;
-  position: absolute;
-  right: 2px;
-  top: -4px;
-  width: 25px;
-  z-index: 2;
-}
-
-.multiselect .tag .icon {
-  fill: $inverse-color;
-  height: 22px;
-  left: -5px;
-  top: 3px;
-}
-
-// Layout
-.field .multiselect {
-  margin-bottom: 20px;
-}
-
-// States
-.multiselect.disabled {
-  color: $disabled-color;
-  -webkit-text-fill-color: $disabled-color;
-  background-color: #e5e5e5;
-  border: solid 1px #e5e5e5;
-}
-
-.multiselect.disabled .icon {
-  display: none;
-}
-
-.multiselect.disabled .tag {
-  background-color: #f1f1f1;
-  box-shadow: none;
-  color: #666;
-  cursor: default;
-  padding: 10px 10px 10px 10px;
-}
-
-.multiselect.disabled .tag > span {
-  cursor: default;
+.field > .multiselect-tags {
+  margin: 3px 0 20px;
 }

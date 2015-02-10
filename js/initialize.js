@@ -32,7 +32,7 @@
         elem.find('.tab-container').tabs();
 
         //Select / DropDowns
-        elem.find('select, .dropdown').not('[multiple]').dropdown();
+        elem.find('select, .dropdown').not('.multiselect').dropdown();
 
         //Modals
         elem.find('.modal').modal();
@@ -98,7 +98,7 @@
         elem.find('.autocomplete:not([data-init])').autocomplete();
 
         //Multiselect
-        elem.find('select[multiple]:not([data-init])').multiselect();
+        elem.find('select[multiple]:not(.dropdown), .multiselect:not([data-init])').multiselect();
 
         //Button with Effects
         elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive').button();

@@ -12,12 +12,16 @@
   }
 }(function ($) {
 
-  $.fn.dropdown = function(options, args) {
+  $.fn.dropdown = function(options) {
 
     // Dropdown Settings and Options
     var pluginName = 'dropdown',
         defaults = {
+          closeOnSelect: true,
           editable: 'false',
+          maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
+          moveSelectedToTop: false,
+          multiple: false, //Turns the dropdown into a multiple selection box
           source: null,  //A function that can do an ajax call.
           empty: false //Initialize Empty Value
         },
@@ -40,15 +44,20 @@
     }
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Dropdown(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
-    // Actual DropDown Code
-    Plugin.prototype = {
-      init: function() {
+    // Check if an object is an array
+    function isArray(obj) {
+      return Object.prototype.toString.call(obj) === '[object Array]';
+    }
 
+    // Actual DropDown Code
+    Dropdown.prototype = {
+      init: function() {
         var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
@@ -56,9 +65,9 @@
 
         this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
         this.input = $('<input type="text" readonly class="dropdown" tabindex="0"/>').attr({'role': 'combobox'})
-                        .attr({'aria-autocomplete': 'none', 'aria-owns': 'dropdown-list'})
-                        .attr({'aria-readonly': 'true', 'aria-activedescendant': 'dropdown-opt16'})
-                        .attr('id', id);
+                        .attr({'aria-autocomplete': 'list', 'aria-owns': 'dropdown-list'})
+                        .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
+                        .attr({'aria-describedby' : id + '-instructions', 'id': id});
 
         var icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
 
@@ -69,6 +78,27 @@
           this.element.after(this.label, this.input, this.trigger, icon);
         } else {
           this.element.after(this.input, this.trigger, icon);
+        }
+
+        this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
+          .text('. Press the Down Arrow to browse available options.') // TODO: Localize
+          .insertAfter(this.label);
+
+        // Setup the incoming options that can be set as properties/attributes
+        if (this.element.prop('multiple') && !this.settings.multiple) {
+          this.settings.multiple = true;
+        }
+        if (this.element.attr('data-source') && this.element.attr('data-source') !== 'source') {
+          this.settings.source = this.element.attr('data-source');
+        }
+        if (this.element.attr('data-maxselected') && !isNaN(this.element.attr('data-maxselected'))) {
+          this.settings.maxSelected = parseInt(this.element.attr('data-maxselected'), 10);
+        }
+        if (this.element.attr('data-move-selected') && !this.settings.moveSelectedToTop) {
+          this.settings.moveSelectedToTop = this.element.attr('data-move-selected') === 'true';
+        }
+        if (this.element.attr('data-close-on-select') && !this.settings.closeOnSelect) {
+          this.settings.closeOnSelect = this.element.attr('data-close-on-select') === 'true';
         }
 
         this.updateList();
@@ -97,20 +127,16 @@
 
       // Update List Values
       updateList: function() {
-        var self = this;
+        var self = this,
+          upTopOpts = 0;
         //Keep a list generated and append as needed
         self.list = $('<div class="dropdown-list" id="dropdown-list">');
-        self.listUl =$('<ul tabindex="-1" aria-expanded="true"></ul>').appendTo(self.list);
+        self.listUl = $('<ul tabindex="-1" role="listbox"></ul>').appendTo(self.list);
         self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
 
-        self.element.find('option').each(function(i) {
-          var option = $(this),
-              listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option" role="listitem" tabindex="-1">'+ option.html() + '</li>');
-
-          self.listUl.append(listOption);
-          if (option.is(':selected')) {
-            listOption.addClass('selected');
-          }
+        function setOptions(option, listOption) {
+          //Add a data-val attribute that matches the original option value
+          listOption.attr('data-val', option.val());
 
           //Image Support
           if (option.attr('class')) {
@@ -128,6 +154,53 @@
           if (option.attr('title') && $.fn.tooltip) {
             listOption.attr('title', option.attr('title')).tooltip();
           }
+        }
+
+        if (self.settings.multiple) {
+          self.list.addClass('multiple');
+        }
+
+        // Move all selected options to the top of the list if the setting is true.
+        // Also adds a group heading if other option groups are found in the <select> element.
+        if (self.settings.moveSelectedToTop) {
+          var selectedOpts = self.element.find('option:selected');
+          if (selectedOpts.length > 0 && self.element.find('optgroup').length) {
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('Selected Items')); // TODO: Localize
+          }
+          selectedOpts.each(function(i) {
+            var option = $(this),
+              listOption = $('<li id="list-option'+ i +'" role="listitem" class="dropdown-option selected" tabindex="-1">'+ option.html()+ '</li>')
+                .attr({'aria-selected': 'true'});
+            setOptions(option, listOption);
+            self.listUl.append(listOption);
+            upTopOpts++;
+          });
+        }
+
+        self.element.find('option').each(function(i) {
+          var count = i + upTopOpts,
+            option = $(this),
+            listOption;
+
+          // Add Group Header if this is an <optgroup>
+          if (option.is(':first-child') && option.parent().is('optgroup')) {
+            var groupHeader = $('<li role="presentation" class="group-label"></li>').text(option.parent().attr('label'));
+            self.listUl.append(groupHeader);
+          }
+
+          if (self.settings.moveSelectedToTop && option.is(':selected')) {
+            return;
+          }
+
+          listOption = $('<li id="list-option'+ count +'" role="listitem" class="dropdown-option" tabindex="-1">'+ option.html() + '</li>');
+
+          self.listUl.append(listOption);
+          listOption.attr({'aria-selected':'false'});
+          if (option.is(':selected')) {
+            listOption.addClass('selected').attr({'aria-selected':'true', 'tabindex': '0'});
+          }
+
+          setOptions(option, listOption);
         });
 
         //Add Input Element and
@@ -138,9 +211,10 @@
 
       // Set the value based on selected options
       setValue: function () {
-        var text = this.element.find('option:selected').text();
+        var opts = this.element.find('option:selected'),
+          text = this.getOptionText(opts);
 
-        if (settings.empty && this.element.find('option[selected]').length === 0) {
+        if (this.settings.empty && opts.length === 0) {
           //initially empty
           return;
         }
@@ -179,8 +253,8 @@
 
         //TODO: Empty Selection
         if (this.element.attr('placeholder')) {
-        this.input.attr('placeholder', this.element.attr('placeholder'));
-        this.element.removeAttr('placeholder');
+          this.input.attr('placeholder', this.element.attr('placeholder'));
+          this.element.removeAttr('placeholder');
         }
       },
 
@@ -205,6 +279,12 @@
           self.closeList();
           self.updateList();
           self.setValue();
+        }).on('open.dropdown', function() {
+          self.toggleList();
+        }).on('simulateKeyDown.dropdown', function(e, origE) {
+          self.handleKeyDown(self.input, origE);
+        }).on('simulateKeyPress.dropdown', function(e, origE) {
+          self.ignoreKeys(self.input, origE);
         });
 
         //for form resets.
@@ -251,34 +331,40 @@
           self.ignoreKeys(searchInput, e);
 
           //Open List and Filter results
-          if (self.searchInput.val() === self.element.find('option:selected').text()) {
+          if (self.searchInput.val() === self.getOptionText()) {
             self.searchInput.val('');
           }
 
           clearTimeout(timer);
           timer = setTimeout(function () {
-           term = searchInput.val().toLowerCase();
+            term = searchInput.val().toLowerCase();
+            self.list.addClass('search-mode');
             self.listUl.find('li').hide();
 
-            $.each(self.element[0].options, function (index) {
+            $.each(self.element[0].options, function () {
               //Filter List
               var opt = $(this),
-                listOpt = self.listUl.find('#list-option'+ index);
+                listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]');
 
               //Find List Item - Starts With
-              if (opt.text().toLowerCase().indexOf(term) > -1) {
+              if (opt.text().toLowerCase().indexOf(term) === 0) {
                 if (!selected) {
-                  self.selectOption(opt);
+                  self.highlightOption(opt);
                   selected = true;
-                  self.searchInput.val(term);
                 }
 
                 //Highlight Term
                 var exp = new RegExp('(' + term + ')', 'gi'),
-                text = listOpt.text().replace(exp, '<b>$1</b>');
+                text = listOpt.text().replace(exp, '<i>$1</i>');
                 listOpt.show().html(text);
               }
             });
+
+            // Set ARIA-activedescendant to the first search term
+            var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
+            self.highlightOption(topItem);
+            self.input.attr('aria-activedescendant', topItem.attr('id'));
+            self.searchInput.attr('aria-activedescendant', topItem.attr('id'));
 
             term = '';
 
@@ -295,9 +381,9 @@
       handleKeyDown: function(input, e) {
         var selectedIndex = this.element[0].selectedIndex,
             options = this.element[0].options,
-            self = this, next;
-
-        self.ignoreKeys(input, e);
+            self = this,
+            excludes = 'li:visible:not(.separator):not(.group-label):not(.is-disabled)',
+            next;
 
         //Down and Up arrow to open
         if (!self.isOpen() && (e.keyCode === 38 || e.keyCode === 40)) {
@@ -305,28 +391,28 @@
         }
 
         if (self.isOpen()) {
-          options = this.listUl.find('li:visible').not(':disabled').not('.is-disabled');
+          options = this.listUl.find(excludes);
           selectedIndex = -1;
           $(options).each(function(index) {
-            if ($(this).is('.selected')) {
+            if ($(this).is('.is-focused')) {
               selectedIndex = index;
             }
           });
         }
 
-        switch (e.keyCode) {
+        switch (e.which) {
           case 46: { //del
             e.stopPropagation();
             return false;
           }
           case 9: {  //tab - save the current selection
-
-            this.selectOption($(options[selectedIndex]));
-            this.activate();
-            if (self.isOpen()) {  // Close the option list
-              self.closeList(false);
+            if (self.isOpen()) {
+              this.selectOption($(options[selectedIndex]));
+              if (self.isOpen()) {  // Close the option list
+                self.closeList(false);
+                this.activate();
+              }
             }
-
             // allow tab to propagate
             return true;
           }
@@ -342,13 +428,16 @@
             // that rely on dropdown may need to trigger routines when the Esc key is pressed.
             break;
           }
+          case 32: //spacebar
           case 13: {  //enter
 
             if (self.isOpen()) {
               e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
-              self.closeList(false);  // Close the option list
-              self.activate();
+              if (self.settings.closeOnSelect) {
+                self.closeList(false);  // Close the option list
+                self.activate();
+              }
             }
 
             e.stopPropagation();
@@ -358,9 +447,9 @@
 
             if (selectedIndex > 0) {
               next = $(options[selectedIndex - 1]);
-              this.selectOption(next);
-              next.parent().find('li').removeClass('hover');
-              next.addClass('hover');
+              this.highlightOption(next);
+              next.parent().find('li').removeClass('is-focused');
+              next.addClass('is-focused');
             }
 
             e.stopPropagation();
@@ -370,9 +459,9 @@
           case 40: {  //down
             if (selectedIndex < options.length - 1) {
               next = $(options[selectedIndex + 1]);
-              this.selectOption(next);
-              next.parent().find('li').removeClass('hover');
-              next.addClass('hover');
+              this.highlightOption(next);
+              next.parent().find('li').removeClass('is-focused');
+              next.addClass('is-focused');
             }
 
             e.stopPropagation();
@@ -381,14 +470,14 @@
           }
           case 35: { //end
             var last = $(options[options.length - 1]);
-            this.selectOption(last);
+            this.highlightOption(last);
 
             e.stopPropagation();
             return false;
           }
           case 36: {  //home
             var first = $(options[0]);
-            this.selectOption(first);
+            this.highlightOption(first);
 
             e.stopPropagation();
             return false;
@@ -419,6 +508,24 @@
         }
       },
 
+      // Retrieves a string containing all text for currently selected options delimited by commas
+      getOptionText: function(opts) {
+        var text = '';
+
+        if (!opts) {
+          opts = this.element.find('option:selected');
+        }
+
+        opts.each(function() {
+          if (text.length > 0) {
+            text += ', ';
+          }
+          text += $(this).text();
+        });
+
+        return text;
+      },
+
       // Prep for opening list,make ajax call ect...
       open: function() {
         var self = this;
@@ -427,10 +534,15 @@
           return;
         }
 
-        if (!self.callSource(function () {
-          self.updateList();
-          self.openList();
-        })) {
+        if (self.element.find('option').length === 0) {
+          if (!self.callSource(function () {
+            self.updateList();
+            self.openList();
+          })) {
+            self.updateList();
+            this.openList();
+          }
+        } else {
           self.updateList();
           this.openList();
         }
@@ -438,8 +550,15 @@
 
       // Actually Show The List
       openList: function () {
-        var current = this.list.find('.selected'),
+        var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant +'"]') : this.list.find('.selected'),
             self =  this;
+
+        if (current.length > 0) {
+          current = current.eq(0);
+        }
+
+        this.input.attr('aria-expanded', 'true');
+        this.input.attr('aria-activedescendant', current.attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones
 
@@ -466,46 +585,52 @@
           return;
         }
 
-        this.list.appendTo('body').show().attr('aria-expanded', 'true');
+        this.list.appendTo('body').show();
         this.position();
-        this.scrollToOption(current);
-        this.searchInput.val(this.element.find('option:selected').text()).focus();
+        this.highlightOption(current, true);
+        this.searchInput.val(current.text()).focus();
         this.handleSearchEvents();
 
         self.list.on('touchend.list touchcancel.list', function(e) {
           e.preventDefault();
           e.target.click();
         }).on('click.list', 'li', function () {
-          var idx = $(this).index(),
-              cur = $(self.element[0].options[idx]);
+          var val = $(this).attr('data-val'),
+            cur = self.element.find('option[value="'+ val +'"]');
 
           //Select the clicked item
           if (cur.is(':disabled')) {
             return;
           }
           self.selectOption(cur);
-          self.activate();
-          self.closeList();
-        });
-
-        $(document).on('touchend.dropdown touchcancel.dropdown', function(e) {
-          e.preventDefault();
-          e.target.click();
-        }).on('click.dropdown', function(e) {
-          var target = $(e.target);
-          if (target.is('.dropdown-option') || target.is('.dropdown')) {
-            return;
-          }
-          self.closeList();
-        }).on('scroll.dropdown', function() {
-          if (!isAndroid()) {
+          if (self.settings.closeOnSelect) {
             self.closeList();
+            self.activate();
+          } else {
+            self.searchInput.focus();
           }
         });
 
-        $(window).on('resize.dropdown', function() {
-          self.closeList();
-        });
+        setTimeout(function() {
+          $(document).on('touchend.dropdown touchcancel.dropdown', function(e) {
+            e.preventDefault();
+            e.target.click();
+          }).on('click.dropdown', function(e) {
+            var target = $(e.target);
+            if (target.is('.dropdown-option') || target.is('.dropdown') || target.is('.group-label')) {
+              return;
+            }
+            self.closeList();
+          }).on('scroll.dropdown', function() {
+            if (!isAndroid()) {
+              self.closeList();
+            }
+          });
+
+          $(window).on('resize.dropdown', function() {
+            self.closeList();
+          });
+        }, 10);
       },
 
       // Set size and positioning of the list
@@ -577,12 +702,14 @@
 
       //Close list and detch events
       closeList: function() {
-        this.list.hide().attr('aria-expanded', 'false').remove();
+        this.list.hide().remove();
         this.list.off('click.list touchend.list touchcancel.list').off('mousewheel.list');
         this.listUl.find('li').show();
-        this.input.removeClass('is-open');
+        this.input.removeClass('is-open').attr('aria-expanded', 'false').removeAttr('aria-activedescendant');
         $(document).off('click.dropdown scroll.dropdown touchend.dropdown touchcancel.dropdown');
         $(window).off('resize.dropdown');
+
+        this.element.trigger('close');
       },
 
       //Set option into view
@@ -628,48 +755,99 @@
         }
       },
 
+      highlightOption: function(listOption) {
+        if (!listOption) {
+          return listOption;
+        }
+
+        if (listOption.length === 0) {
+          listOption = this.list.find('.dropdown-option').eq(0);
+        }
+
+        // Get corresponding option from the list
+        var option = this.element.find('option[value="' + listOption.attr('data-val') + '"]');
+
+        if (option.hasClass('.is-disabled') || option.is(':disabled')) {
+          return;
+        }
+
+        if (this.isOpen()) {
+          this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
+          listOption.addClass('is-focused').attr({'tabindex': '0'});
+
+          // Set activedescendent for new option
+          this.input.attr('aria-activedescendant', listOption.attr('id'));
+          this.searchInput.attr('aria-activedescendant', listOption.attr('id'));
+
+          this.scrollToOption(listOption);
+        }
+
+        return;
+      },
+
       //Select an option and optionally trigger events
       selectOption: function(option, noTrigger) {
         if (!option) {
           return option;
         }
 
+        var li;
         if (option.is('li')) {
-          option = this.element.find('option').eq(option.attr('id').replace('list-option',''));
+          li = option;
+          option = this.element.find('option[value="' + option.attr('data-val') + '"]');
+        }
+        if (!li) {
+          li = this.listUl.find('li[data-val="'+ option.val() +'"]');
         }
 
         if (option.hasClass('.is-disabled') || option.is(':disabled')) {
           return;
         }
 
-        var code = option.val(),
-          oldVal = this.input.val(),
-          text = option.text(),
-          trimmed;
-
-        if (!isMobile() && option.index() === this.element[0].selectedIndex) {
+        if (!isMobile() && !this.settings.multiple && option.index() === this.element[0].selectedIndex) {
           return;
         }
 
-        if (this.isOpen()) {
-          // remove the selected class from the current selection
-          this.list.find('.selected').removeClass('selected');
-          var listOption = this.list.find('#list-option'+option.index());
-          listOption.addClass('selected');
+        var code = option.val(),
+          val = this.element.val(),
+          oldText = this.input.val(),
+          text = '',
+          trimmed = '',
+          isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
 
-          // Set activedescendent for new option
-          this.input.attr('aria-activedescendant', listOption.attr('id'));
-          this.searchInput.attr('aria-activedescendant', listOption.attr('id'));
-          this.scrollToOption(listOption);
-        }
+        if (this.settings.multiple) {
+          // Working with a select multiple allows for the "de-selection" of items in the list
+          if (!val) {
+            val = [];
+          }
+          if ($.inArray(code, val) !== -1) {
+            val = $.grep(val, function(optionValue) {
+              return optionValue !== code;
+            });
+            li.removeClass('selected').attr({'aria-selected': 'false'});
+            this.previousActiveDescendant = undefined;
+            isAdded = false;
+          } else {
+            if (!isNaN(this.settings.maxSelected) && this.element.find('option:selected').length >= this.settings.maxSelected) {
+              return;
+            }
 
-        this.input.val(text); //set value and active descendent
-        this.searchInput.val(text);
+            val = typeof val === 'string' ? [val] : val;
+            val.push(code);
+            li.addClass('selected').attr({'aria-selected': 'true'});
+            this.previousActiveDescendant = option.val();
+          }
 
-        if (this.element.attr('maxlength')) {
-          trimmed = text.substr(0, this.element.attr('maxlength'));
-          this.input.val(trimmed);
-          this.searchInput.val(trimmed);
+          var newOptions = this.element.find('option').filter(function() {
+            return $.inArray($(this)[0].value, val) !== -1;
+          });
+          text = this.getOptionText(newOptions);
+        } else {
+          // Working with a single select
+          val = code;
+          li.addClass('selected').attr({'aria-selected': 'true'});
+          this.previousActiveDescendant = option.val();
+          text = option.text();
         }
 
         this.element.find('option').each(function () {
@@ -679,39 +857,99 @@
           }
         });
 
-        if (oldVal !== option.text() && !noTrigger) {
-          this.element.val(code).trigger('change');
+        // If we're working with a single select and the value hasn't changed, just return without
+        // firing a change event
+        if (text === oldText) {
+          return;
         }
 
+        // Change the values of both inputs and swap out the active descendant
+        this.input.val(text);
+        this.searchInput.val(text);
+
+        if (this.element.attr('maxlength')) {
+          trimmed = text.substr(0, this.element.attr('maxlength'));
+          this.input.val(trimmed);
+          this.searchInput.val(trimmed);
+        }
+
+        // Fire the change event with the new value if the noTrigger flag isn't set
+        if (!noTrigger) {
+          this.element.val(val).trigger('change').trigger('selected', [option, isAdded]);
+        }
       },
 
       // Execute the source ajax option
       callSource: function(callback) {
         var self = this;
-        if (settings.source) {
-          var response = function (data) {
+
+        if (this.settings.source) {
+          var searchTerm = self.input.val(),
+            sourceType = typeof this.settings.source,
+            response = function (data) {
             //to do - no results back do not open.
             var list = '',
               val = self.element.val();
 
+            function buildOption(option) {
+              var isString = typeof option === 'string';
+
+              if (option !== null && option !== undefined) {
+                list += '<option' + (option.id === undefined ? '' : ' id="' + option.id.replace('"', '\'') + '"') +
+                        (option.value !== undefined ? ' value="' + option.value.replace('"', '\'') + '"' : isString ? ' value="' + option.replace('"', '\'') + '"' : '') +
+                        (option.value === val ? ' selected ' : '') +
+                        '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : isString ? option : '') + '</option>';
+              }
+            }
+
             //populate
             self.element.empty();
             for (var i=0; i < data.length; i++) {
-              list += '<option' + (data[i].id === undefined ? '' : ' id="' + data[i].id.replace('"', '\'') + '"') +
-                      (data[i].value === undefined ? '' : ' value="' + data[i].value.replace('"', '\'') + '"') +
-                      (data[i].value === val ? ' selected ' : '') +
-                      '>'+ data[i].label + '</option>';
+              var opts;
+
+              if (data[i].group) {
+                opts = data[i].options;
+                list += '<optgroup label="' + data[i].group + '">';
+                for (var ii = 0; ii < opts.length; ii++) {
+                  buildOption(opts[ii]);
+                }
+                list += '</optgroup>';
+              } else {
+                buildOption(data[i]);
+              }
             }
             self.element.append(list);
             self.input.removeClass('is-busy');
+            self.element.trigger('requestend', [searchTerm, data]);
             callback();
             return;
           };
 
           //TODO: show indicator when we have it
           self.input.addClass('is-busy');
+          self.element
+              .trigger('requeststart');
 
-          settings.source(self.input.val(), response);
+            if (sourceType === 'function') {
+              // Call the 'source' setting as a function with the done callback.
+              this.settings.source(response);
+            } else if (sourceType === 'object') {
+              // Use the 'source' setting as pre-existing data.
+              // Sanitize accordingly.
+              var sourceData = isArray(this.settings.source) ? this.settings.source : [this.settings.source];
+              response(sourceData);
+            } else {
+              // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
+              var sourceURL = this.settings.source.toString(),
+                request = $.getJSON(sourceURL);
+
+              request.done(function(data) {
+                response(data);
+              }).fail(function() {
+                console.warn('Request to ' + sourceURL + ' could not be processed...');
+                response([]);
+              });
+            }
           return true;
         }
         return false;
@@ -740,19 +978,30 @@
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.closeList();
+        this.instructions.remove();
         this.input.prev('label').remove();
         this.input.off().remove();
         this.element.show().prev('label').show();
       },
 
       disable: function() {
-        this.element.attr('disabled', 'disabled');
-        this.input.attr('disabled', 'disabled');
+        this.element.prop('disabled', true);
+        this.input.prop('disabled', true);
       },
 
       enable: function() {
-        this.element.removeAttr('disabled');
-        this.input.removeAttr('disabled');
+        this.element.prop('disabled', false);
+        this.input.prop('disabled', false);
+      },
+
+      // Triggered whenever the plugin's settings are changed
+      update: function() {
+        // Update the 'multiple' property
+        if (this.settings.multiple && this.settings.multiple === true) {
+          this.element.prop('multiple', true);
+        } else {
+          this.element.prop('multiple', false);
+        }
       }
 
     };
@@ -761,12 +1010,10 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        if (typeof instance[options] === 'function') {
-          instance[options](args);
-        }
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.update();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Dropdown(this, settings));
       }
     });
   };

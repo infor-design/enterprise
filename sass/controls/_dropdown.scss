@@ -76,40 +76,118 @@ input.dropdown {
     text-indent: 31px;
   }
 
-  li:hover,
-  li.hover {
-    background-color: $menu-hover-color;
-    cursor: pointer;
-    outline: none;
+  li {
+    position: relative;
+
+    i {
+      color: $dropdown-filter-color;
+      font-style: normal;
+      text-decoration: none;
+    }
+
+    &:hover,
+    &.hover {
+      background-color: $menu-hover-color;
+      cursor: pointer;
+      outline: none;
+    }
+
+    &.is-disabled {
+      color: #b6b6b6;
+
+      &:hover,
+      &.hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+
+    &:focus,
+    &.is-focused {
+      background-color: $menu-hover-color;
+      cursor: pointer;
+      outline: none;
+    }
+
+    &.selected {
+      // Single Select Black Checkmark
+      &:not(.group-label):after {
+        border-color: #1a1a1a;
+        border-style: solid;
+        border-width: 0 3px 3px 0;
+        content: '';
+        height: 10px;
+        left: 12px;
+        margin-top: 6px;
+        position: absolute;
+        @include css3(transform, rotate(45deg));
+        width: 4px;
+      }
+    }
+
   }
 
-  li.is-disabled {
-    color: #b6b6b6;
+  // Added to the dropdown list when doing a search
+  &.search-mode {
+    li {
+      color: $dropdown-search-color;
+
+      &.is-disabled {
+        color: #b6b6b6;
+      }
+    }
+  }
+
+  &.multiple {
+
+    ul {
+      text-indent: 42px;
+    }
+
+    li:not(.group-label):before {
+      top: 5px;
+      @include checkbox-unchecked-before-style;
+    }
+
+    li.is-disabled:not(.group-label):before {
+      @include checkbox-unchecked-disabled-before-style;
+    }
+
+    li.selected:not(.group-label):before {
+      @include checkbox-checked-before-style;
+    }
+
+    li.selected:not(.group-label):after {
+      @include checkbox-checked-after-style;
+      left: 18px;
+      margin-top: 8px;
+    }
+
+    li.is-disabled.selected:not(.group-label):before {
+      @include checkbox-checked-disabled-before-style;
+    }
+
+    li.is-disabled.selected:not(.group-label):after {
+      @include checkbox-checked-disabled-after-style;
+      left: 25px;
+      margin-top: 8px;
+    }
+  }
+
+  .group-label {
+    font-weight: bold;
+    text-indent: 10px;
+    @include css3(user-select, none);
+
+    &:not(:first-child) {
+      border-top: 1px solid $popover-separator-color;
+      margin-top: 10px;
+    }
 
     &:hover {
       background-color: transparent;
       cursor: default;
     }
-  }
-
-  li.selected:before {
-    border-color: #1a1a1a;
-    border-style: solid;
-    border-width: 0 3px 3px 0;
-    content: '';
-    height: 10px;
-    left: 12px;
-    margin-top: 6px;
-    position: absolute;
-    transform: rotate(45deg);
-    width: 4px;
-  }
-
-  li b {
-    color: $dropdown-filter-color;
-    font-style: normal;
-    letter-spacing: 1px;
-    text-decoration: underline;
   }
 
   .icon {
@@ -135,6 +213,7 @@ input.dropdown {
     border: 0;
     border-bottom: 1px solid #d2d2d2;
     box-shadow: none;
+    outline: none;
   }
 }
 
