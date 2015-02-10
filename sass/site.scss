@@ -46,6 +46,14 @@
     clear: both;
   }
 
+  .content {
+    &:focus {
+      border: $primary-color 1px solid;
+      outline: none;
+      outline-color: transparent;
+    }
+  }
+
 
 
   // Index Styles
@@ -349,6 +357,14 @@
     position: absolute;
     right: auto;
     top: auto;
+  }
+
+  .site-content.home .call-out {
+    margin: 60px 0 100px -20px;
+  }
+
+  .site-content.home .call-out-column p {
+    padding: 0 0 0 10px;
   }
 }
 
