@@ -26,7 +26,7 @@
   }
 
   h3 {
-  	font-size: 24px;
+    font-size: 24px;
   }
 
   p {
@@ -35,7 +35,7 @@
   }
 
   a {
-  	text-decoration: none;
+    text-decoration: none;
   }
 
   .row {
@@ -62,9 +62,9 @@
         display: inline-block;
         
         input.dropdown {
-          width: 170px;
           color: $label-color;
           font-weight: 400;
+          width: 170px;
         }
 
         &:first-child {
@@ -86,10 +86,10 @@
       overflow: hidden;
     }
 
-  	> p {
-  		margin: 0 auto;
-  		font-size: 22px;
-  	}
+    > p {
+      font-size: 22px;
+      margin: 0 auto;
+    }
 
     .row {
       margin-left: -20px;
@@ -98,8 +98,12 @@
     .call-out {
 
       margin: 100px 0 100px -20px;
+    }
 
-      .column {
+    .call-out-column {
+
+
+
 
 
         .content {
@@ -110,39 +114,49 @@
           -ms-transition: 500ms;
           transition: 500ms;
 
-
-          &:hover{
-
-          }
-        }
+                  }
 
         p {
-        width: 92%;
-        margin: 0 auto;
-        font-size: 16px;
-      }
-
-      &.gallery {
-
-        p {
-          width: 80%;
+          font-size: 16px;
+          margin: 0 auto;
+          width: 92%;
         }
 
+        &.gallery {
+
+          p {
+            width: 80%;
+          }
+
+        }
+
+        // &:hover {
+
+        //   h3, p {
+        //     color: #ffffff;
+        //   }
+        //   .content {
+        //     background: $callout-hover-bd;
+        //   }
+
+        //   .icon-circle {
+        //     background: $callout-icon-hover-bd;
+        //   }
+        // }
+    }
+
+    .call-out-column:hover {
+
+      h3, 
+      p {
+        color: #ffffff;
+      }
+      .content {
+        background: $callout-hover-bd;
       }
 
-        &:hover {
-
-          h3, p {
-            color: #fff;
-          }
-          .content {
-            background: $callout-hover-bd;
-          }
-
-          .icon-circle {
-            background: $callout-icon-hover-bd;
-          }
-        }
+      .icon-circle {
+        background: $callout-icon-hover-bd;
       }
     }
   }
@@ -257,8 +271,6 @@
     height: 155px;
     margin: 10px auto 24px;
     width: 155px;
-
-    
   }
 
   .icon-img {
@@ -276,7 +288,6 @@
     &.icon-guide {
       fill: $callout-icon-guide;
     }
-
   }
 }
 
@@ -323,9 +334,6 @@
     margin: 0 0 55px;
   }
 }
-
-
-
 
 @media screen and (max-width: $breakpoint-phone-to-tablet) { 
   .gallery-header {
