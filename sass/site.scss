@@ -479,10 +479,10 @@
 //==================================================//
 
 @media screen and (max-width: $breakpoint-phone-to-tablet) { 
-  .gallery-header {
-    overflow: hidden;
-    padding-bottom: 60px;
-  }
+  // .gallery-header {
+  //   overflow: hidden;
+  //   padding-bottom: 60px;
+  // }
 
   .site-content .gallery-header .gallery-nav {
     bottom: 0;
@@ -493,7 +493,7 @@
   }
 
   .site-content.home .call-out {
-    margin: 60px 0 100px -20px;
+    margin: 0 0 0 -20px;
   }
 
   .site-content.home .call-out-column p {
