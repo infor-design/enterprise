@@ -185,3 +185,10 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+@mixin focus-state {
+  border: solid 1px $input-focus-border-color;
+  box-shadow: 0 0 5px rgba(8, 150, 233, .2); 
+  outline: none;
+  outline-color: transparent;
+}
