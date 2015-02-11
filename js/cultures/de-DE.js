@@ -50,7 +50,8 @@
      'Hours': {id: 'Hours', value: 'Stunden', comment: 'the hour portion of a time'},
      'Minutes': {id: 'Minutes', value: 'Minuten', comment: 'the minutes portion of a time'},
      'Period': {id: 'Period', value: 'Zeit', comment: 'the am/pm portion of a time'},
-     'UseArrow': {id: 'UseArrow', value: '. Mit den Pfeiltasten wählen Sie.', comment: 'Instructional comments for screen readers, starts with dot for a pause'}
+     'UseArrow': {id: 'UseArrow', value: '. Mit den Pfeiltasten wählen Sie.', comment: 'Instructional comments for screen readers, starts with dot for a pause'},
+     'Loading': {id: 'Loading', value: 'Wird Geladen', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 

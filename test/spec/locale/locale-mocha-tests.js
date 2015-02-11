@@ -83,6 +83,7 @@ describe('Locale [mocha]', function(){
     //With Object Selector
     Locale.set('de-DE');
     Locale.translate('Required').should.equal('Erforderlich');
+    Locale.translate('Loading').should.equal('Wird Geladen');
 
     //Error
     should.not.exist(Locale.translate('XYZ'));

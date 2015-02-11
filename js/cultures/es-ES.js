@@ -49,7 +49,8 @@
        'Hours': {id: 'Hours', value: 'horas', comment: 'the hour portion of a time'},
        'Minutes': {id: 'Minutes', value: 'acta', comment: 'the minutes portion of a time'},
        'Period': {id: 'Period', value: 'período', comment: 'the am/pm portion of a time'},
-       'UseArrow': {id: 'UseArrow', value: '. Utilice las teclas de flecha para seleccionar.', comment: 'Instructional comments for screen readers'}
+       'UseArrow': {id: 'UseArrow', value: '. Utilice las teclas de flecha para seleccionar.', comment: 'Instructional comments for screen readers'},
+       'Loading': {id: 'Loading', value: 'Cargando', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 

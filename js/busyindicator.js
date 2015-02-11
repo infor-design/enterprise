@@ -24,6 +24,7 @@
     var pluginName = 'busyindicator',
         defaults = {
           blockUI: true, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
+          text: null, //Custom Text To Show or Will Show Localized Loading....
           delay: 0, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
           timeToClose: 0, // fires the 'close' trigger at a certain timing interval.  If 0, goes indefinitely.
@@ -63,6 +64,7 @@
           closeTime = this.element.attr('data-close-time');
 
         this.blockUI = blockUI !== undefined ? blockUI : settings.blockUI;
+        this.loadingText = settings.text ? settings.text : Locale.translate('Loading');
         this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(settings.delay) && settings.delay >= 20 ? settings.delay : 20;
         this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : settings.timeToComplete;
         this.closeTime = closeTime !== undefined && !isNaN(closeTime) ? parseInt(closeTime, 10) : settings.timeToClose;
@@ -94,7 +96,7 @@
             clearTimeout(self.closeTimeout);
           }
           this.label.remove();
-          this.label = $('<span>Loading</span>').appendTo(this.container); // TODO: Localize
+          this.label = $('<span>' + this.loadingText + '</span>').appendTo(this.container);
           this.loader.removeClass('complete').addClass('active');
           this.container
             .removeClass('is-hidden')
@@ -121,7 +123,7 @@
         }
 
         $('<div class="complete-check"></div>').appendTo(this.loader);
-        this.label = $('<span>Loading</span>').appendTo(this.container);
+        this.label = $('<span>'+ this.loadingText +'</span>').appendTo(this.container);
         if (this.blockUI) {
           this.originalPositionProp = this.element.css('position');
           this.element.css('position', 'relative');
