@@ -41,15 +41,15 @@
      //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
      currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
      currencyFormat: '¤#,##0.00',
-     //Resx
+     //Resx - Approved By Translation Team
      messages: {
-      'Required': {value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'}
+      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'}
     }
   });
 

@@ -64,7 +64,7 @@ app.configure(function() {
   app.get('/tests/*', function(req, res) {
     var testOptions = {
       title: 'SoHo XI',
-      tests: 'Patterns',
+      subtitle: 'Tests',
       layout: 'tests/layout'
     };
     var end = req.url.replace('/tests/','');
@@ -74,7 +74,7 @@ app.configure(function() {
   //Doc Page
   var docOpts = {
     title: 'SoHo XI',
-    tests: 'Docs',
+    subtitle: 'Docs',
     layout: null,
     enableLiveReload: true
   };
@@ -92,6 +92,26 @@ app.configure(function() {
     res.render('docs/' + end, docOpts);
   });
 
+  //Layouts Page
+  var layoutOpts = {
+    title: 'SoHo XI',
+    subtitle: 'Layouts',
+    layout: 'layouts/layout',
+    enableLiveReload: true
+  };
+
+  app.get('/layouts/', function(req, res) {
+    res.render('layouts/index', layoutOpts);
+  });
+
+  app.get('/layouts', function(req, res) {
+    res.render('layouts/index', layoutOpts);
+  });
+
+  app.get('/layouts*', function(req, res) {
+    var end = req.url.replace('/layouts/','');
+    res.render('layouts/' + end, layoutOpts);
+  });
 
   //Sample Json call that returns States
   //Example Call: http://localhost:4000/api/states?term=al

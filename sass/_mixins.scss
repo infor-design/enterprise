@@ -157,27 +157,14 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
 @mixin respond-to($media) {
   @if $media == phone {
     @media (max-width: $breakpoint-phone-to-tablet - 1) { @content; }
+  } @else if $media == tabletdown {
+    @media (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
   } @else if $media == tablet {
     @media (min-width: $breakpoint-phone-to-tablet) and (max-width: $breakpoint-tablet-to-desktop - 1) { @content; }
   } @else if $media == desktop {
     @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: $breakpoint-desktop-to-extralarge - 1) { @content; }
   } @else if $media == extralarge {
     @media (min-width: $breakpoint-desktop-to-extralarge) { @content; }
-  }
-}
-
-// Apply Font Face
-@mixin font-face($family, $src, $weight: normal, $style: normal) {
-  @font-face {
-    font-family: $family;
-    src: url('#{$src}.eot'); // IE9 compat
-    src: url('#{$src}.eot?#iefix') format('embedded-opentype'), // IE8 and below
-    url('#{$src}.woff') format('woff'), // standards
-    url('#{$src}.woff2') format('woff2'), // standards
-    url('#{$src}.ttf') format('truetype'), // Safari, Android, iOS
-    url('#{$src}.svg##{$family}') format('svg'); // legacy iOS
-    font-style: $style;
-    font-weight: $weight;
   }
 }
 
@@ -188,6 +175,7 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+  vertical-align: top;
 }
 
 

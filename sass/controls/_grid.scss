@@ -19,7 +19,7 @@ $gutter-neg-size: -20px;
 
 .container {
   margin: 0 auto;
-  max-width: $breakpoint-desktop-to-extralarge;
+  max-width: $breakpoint-tablet-to-desktop;
   padding: 0 0 0 $gutter-size;
   width: 100%;
 
@@ -48,7 +48,7 @@ $gutter-neg-size: -20px;
   }
 }
 
-// For mobile devices smaller than 320px
+// For mobile devices
 @media (min-width: $breakpoint-phone) {
   .container {
     margin: 0;
@@ -56,7 +56,7 @@ $gutter-neg-size: -20px;
   }
 }
 
-// For devices larger than 550px
+// For tabledevices larger than 550px
 @media (min-width: $breakpoint-phone-to-tablet) {
   .container {
     margin: 0 0 0 $gutter-neg-size;
@@ -133,7 +133,7 @@ $gutter-neg-size: -20px;
 }
 
 // For devices larger than 550px
-@media (min-width: $breakpoint-desktop-to-extralarge) {
+@media (min-width: $breakpoint-tablet-to-desktop) {
   .container {
     margin: 0 auto;
     padding: 0;
@@ -143,4 +143,3 @@ $gutter-neg-size: -20px;
     margin-left: -20px;
   }
 }
-

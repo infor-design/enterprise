@@ -8,7 +8,7 @@ var runner;
 describe('Toolbar [selenium]', function(){
   this.timeout(99999999);
 
-  before(function(done){
+  before(function(done) {
     runner = globals.setup(undefined, '/tests/toolbar');
     runner.client
       .execute('window.hnl = {};')

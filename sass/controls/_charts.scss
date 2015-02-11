@@ -11,12 +11,11 @@
 
 // SVG Chart Styles
 .chart-container {
-  display: table;
-  margin: 0 auto;
 
   // Center
   svg {
-    display: table-cell;
+    display: block;
+    margin: 0 auto;
   }
 
   // Line Colors - and Visibility
@@ -67,63 +66,34 @@
     stroke-width: 1px;
   }
 
-  // Legend
-  .chart-legend {
-    display: table-cell;
-    vertical-align: middle;
+}
 
-    &.is-below {
-      display: block;
-      margin-bottom: 20px;
-      text-align: center;
-      vertical-align: middle;
+.chart-legend-item {
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px 2px 0;
 
-      .chart-legend-item {
-        display: inline-block;
-        width: 100px;
-      }
-    }
-  }
-
-  .chart-legend-item {
-    border: 1px solid transparent;
-    cursor: pointer;
-    display: block;
-    padding: 5px 10px 2px 0;
-
-    &:focus {
-      border: 1px solid $primary-color;
-      border-radius: 2px;
-      outline: none;
-    }
-  }
-
-  .chart-legend-color {
-    display: inline-block;
-    height: 12px;
-    margin: 0 8px;
-    width: 12px;
-  }
-
-  .chart-legend-percent {
-    font-weight: bold;
-    padding-left: 5px;
+  &:focus {
+    border: 1px solid $primary-color;
+    border-radius: 2px;
+    outline: none;
   }
 }
 
+.chart-legend-color {
+  display: inline-block;
+  height: 12px;
+  margin: 0 8px;
+  width: 12px;
+}
 
-// Alternate Content
-
-.alt-message {
-  background-color: #ffe0e2;
-  border-radius: 4px;
-  line-height: 18px;
-  padding: 20px;
-  text-align: center;
+.chart-legend-percent {
+  font-weight: bold;
+  padding-left: 5px;
 }
 
 // Tooltip Swatch
-
 .chart-swatch > div {
   display: table-cell;
   height: 14px;
@@ -150,6 +120,23 @@
   text-align: center;
 }
 
+// Chart Specific Centering and Styling
+.chart-pie {
+  display: inline-block;
+  height: 100%;
+  padding: 20px;
+  width: 38%;
+
+  + .chart-legend {
+    display: inline-block;
+    @include vertical-align();
+
+    .chart-legend-item {
+      display: block;
+    }
+  }
+}
+
 // Media Queries
 @include respond-to(phone) {
   .chart-container .chart-legend {
@@ -160,3 +147,8 @@
   }
 }
 
+@include respond-to(phone) {
+  .chart-pie {
+    width: 97%;
+  }
+}

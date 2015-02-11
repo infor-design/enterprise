@@ -43,13 +43,13 @@
      currencyFormat: '#,##0.00 ¤',
      //Resx
      messages: {
-      'Required': {value: 'necesario', comment: 'indicates a form field is manditory'},
-      'SetTime': {value: 'Establecer hora', comment: 'button text that inserts time when clicked'},
-      'Today': {value: 'hoy', comment: 'refering to today on a calendar'},
-      'Hours': {value: 'horas', comment: 'the hour portion of a time'},
-      'Minutes': {value: 'acta', comment: 'the minutes portion of a time'},
-      'Period': {value: 'período', comment: 'the am/pm portion of a time'},
-      'UseArrow': {value: '. Utilice las teclas de flecha para seleccionar.', comment: 'Instructional comments for screen readers'}
+       'Required': {id: 'Required', value: 'necesario', comment: 'indicates a form field is manditory'},
+       'SetTime': {id: 'SetTime', value: 'Establecer hora', comment: 'button text that inserts time when clicked'},
+       'Today': {id: 'Today', value: 'hoy', comment: 'refering to today on a calendar'},
+       'Hours': {id: 'Hours', value: 'horas', comment: 'the hour portion of a time'},
+       'Minutes': {id: 'Minutes', value: 'acta', comment: 'the minutes portion of a time'},
+       'Period': {id: 'Period', value: 'período', comment: 'the am/pm portion of a time'},
+       'UseArrow': {id: 'UseArrow', value: '. Utilice las teclas de flecha para seleccionar.', comment: 'Instructional comments for screen readers'}
     }
   });
 

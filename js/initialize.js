@@ -102,6 +102,7 @@
 
         //Button with Effects
         elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive').button();
+        elem.find('.skip-link').button();
 
         //Pager
         elem.find('.pager').pager();

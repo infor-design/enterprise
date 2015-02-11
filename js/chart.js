@@ -74,10 +74,10 @@
         }
       });
 
+      $(container).after(legend);
       if (position === 'below') {
         legend.addClass('is-below');
       }
-      $(container).append(legend);
 
     };
 
@@ -104,6 +104,8 @@
         y,
         stack,
         x = d3.scale.ordinal().rangeRoundBands([0, w - margins.left - margins.right]);
+
+      $(container).addClass('chart-bar');
 
       var svg = d3.select(container).append('svg')
         .attr('width', w)
@@ -244,6 +246,10 @@
         bottom: 30 // 30px plus size of the bottom axis (20)
       };
 
+      $(container).addClass('chart-vertical-bar');
+      $(container).closest('.widget-content').addClass('l-center');
+      $(container).closest('.card-content').addClass('l-center');
+
       width = 376 + margins.left + margins.right ;
       height = 250 - margins.top - margins.bottom;  //influences the bar width
 
@@ -288,10 +294,10 @@
 
       svg = d3.select(container)
         .append('svg')
-        .attr('preserveAspectRatio', 'xMinYMax meet')
-        .attr('viewBox', '0 0 '+ w + ' ' + h)
-        .attr('width', w)
+        .attr('width', w) //100%
         .attr('height', h)
+        .attr('viewBox', '0 0 '+ w + ' ' + h)
+        .attr('preserveAspectRatio','xMinYMin meet')
         .append('g')
         .attr('class', 'group')
         .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
@@ -419,14 +425,14 @@
           // Set the position
           charts.tooltip.find('.tooltip-content').html(content);
 
-          var yPosS = svg[0][0].getBoundingClientRect().top,
+          var yPosS = svg[0][0].getBoundingClientRect().top + $(window).scrollTop(),
               xPos = d3.event.pageX + 25,
               yPos = yPosS + parseFloat(shape.attr('y')) + 5 - (parseInt(charts.tooltip.outerHeight()) /2) + (parseFloat(shape.attr('height'))/2);
 
           charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'});
 
-        //charts.tooltip.addClass('top').removeClass('right').removeClass('is-hidden');
         charts.tooltip.removeClass('is-hidden', false);
+
       })
       .on('mouseleave', function () {
         d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
@@ -475,18 +481,20 @@
       var radius, svg, margin, arc, width, height;
 
       margin = {top: 20, right: 20, bottom: 20, left: 20};
-      width = 320 - margin.left - margin.right;
-      height = width - margin.top - margin.bottom;
+      width = parseInt($(container).parent().width());
+      height = parseInt($(container).parent().height());
+      $(container).addClass('chart-pie');
 
       svg = d3.select(container)
               .append('svg')
-                .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
-               .append('g')
-                .attr('class', 'pie')
-                .attr('transform', 'translate(' + ((width/2)+margin.left) + ',' + ((height/2)+margin.top) + ')');
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox','0 0 '+Math.min(width,height) +' '+Math.min(width,height) )
+            .attr('preserveAspectRatio','xMinYMin')
+            .append('g')
+            .attr('transform', 'translate(' + (Math.min(width,height) + 10)/ 2 + ',' + (Math.min(width,height) + 10) / 2 + ')');
 
-      radius = Math.min(width, height) / 2;
+      radius = ((Math.min(width, height) / 2) - 12);
 
       arc = d3.svg.arc().outerRadius(radius);
 
@@ -517,7 +525,7 @@
                 })
                 .on('click', function (d, i) {
                   var color = charts.colors(i);
-                  d3.select('.is-selected')
+                  d3.select('.chart-container .is-selected')
                     .classed('is-selected', false)
                     .style('stroke', '#fff')
                     .style('stroke-width', '1px')
@@ -527,7 +535,7 @@
                       .classed('is-selected', true)
                       .style('stroke', color)
                       .style('stroke-width', 0)
-                      .attr('transform', 'scale(1.045,1.045)');
+                      .attr('transform', 'scale(1.05,1.05)');
 
                   $(container).trigger('selected', [path[0], d]);
                 });

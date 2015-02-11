@@ -8,3 +8,109 @@
 .l-pull-left {
   float: left;
 }
+
+// Box For Layout Demos
+.l-demo {
+  border: 1px solid #bdbdbd;
+  height: inherit;
+  min-height: 320px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+// Give Space from header
+.header + section {
+  margin-top: 30px;
+}
+
+
+// Two Column Layout
+
+.twocolumn-layout {
+  height: calc(100% - 110px);
+  margin: 20px auto 0;
+  max-width: $breakpoint-tablet-to-desktop;
+
+  > * {
+    display: inline-block;
+    float: left;
+    height: 100%;
+
+    &:nth-child(1) {
+      height: 100%;
+      margin: 0 20px;
+      width: 25%;
+    }
+
+    &:nth-child(2) {
+      height: auto;
+      width: calc(75% - 60px);
+    }
+  }
+
+}
+
+// Respond Off Canvas on left and right column
+@include respond-to(phone) {
+  .twocolumn-layout {
+    margin: 20px;
+
+    > *:nth-child(1) {
+      display: none;
+    }
+
+    > *:nth-child(2) {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+// Three Column Layout
+
+.threecolumn-layout {
+  height: calc(100% - 110px); //header - top and bottom margin
+  margin: 20px auto 0;
+  max-width: $breakpoint-tablet-to-desktop;
+
+  > * {
+    display: inline-block;
+    float: left;
+    height: 100%;
+
+    &:nth-child(1) {
+      width: 25%;
+    }
+
+    &:nth-child(2) {
+      height: auto;
+      margin: 0 20px;
+      width: calc(50% - 40px);
+    }
+
+    &:nth-child(3) {
+      width: 25%;
+    }
+  }
+
+}
+
+// Respond Off Canvas on left and right column
+@include respond-to(tabletdown) {
+  .threecolumn-layout {
+    margin: 20px;
+
+    > *:nth-child(1) {
+      display: none;
+    }
+
+    > *:nth-child(2) {
+      margin: 0;
+      width: 100%;
+    }
+
+    > *:nth-child(3) {
+      display: none;
+    }
+  }
+}

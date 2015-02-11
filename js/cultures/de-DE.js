@@ -44,13 +44,13 @@
     currencyFormat: '#,##0.00 ¤',
     //Resx
     messages: {
-      'Required': {value: 'Erforderlich', comment: 'indicates a form field is manditory'},
-      'SetTime': {value: 'Uhrzeit', comment: 'button text that inserts time when clicked'},
-      'Today': {value: 'Heute', comment: 'refering to today on a calendar'},
-      'Hours': {value: 'Stunden', comment: 'the hour portion of a time'},
-      'Minutes': {value: 'Minuten', comment: 'the minutes portion of a time'},
-      'Period': {value: 'Zeit', comment: 'the am/pm portion of a time'},
-      'UseArrow': {value: '. Mit den Pfeiltasten wählen Sie.', comment: 'Instructional comments for screen readers, starts with dot for a pause'}
+     'Required': {id: 'Required', value: 'Erforderlich', comment: 'indicates a form field is manditory'},
+     'SetTime': {id: 'SetTime', value: 'Uhrzeit', comment: 'button text that inserts time when clicked'},
+     'Today': {id: 'Today', value: 'Heute', comment: 'refering to today on a calendar'},
+     'Hours': {id: 'Hours', value: 'Stunden', comment: 'the hour portion of a time'},
+     'Minutes': {id: 'Minutes', value: 'Minuten', comment: 'the minutes portion of a time'},
+     'Period': {id: 'Period', value: 'Zeit', comment: 'the am/pm portion of a time'},
+     'UseArrow': {id: 'UseArrow', value: '. Mit den Pfeiltasten wählen Sie.', comment: 'Instructional comments for screen readers, starts with dot for a pause'}
     }
   });
 

@@ -2,22 +2,28 @@
 //================================================== //
 
 .skip-link {
-  background: none repeat scroll 0 0 transparent;
-  border-bottom-right-radius: 3px;
-  color: #0977d5;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  border-bottom-right-radius: 2px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  color: $primary-color;
   font-family: $font-regular;
   @include font-size(14);
   left: 0;
-  padding: 6px;
+  padding: 10px;
   position: absolute;
   text-decoration: none;
   top: -40px;
   transition: top 1s ease-out 0s, background 1s linear 0s;
   z-index: 100;
+
+  &:hover {
+    color: #383838;
+  }
 }
 
 .skip-link:focus {
-  background: #ffffff;
+  border-color: $primary-color;
   left: 0;
   outline: 0 none;
   position: absolute;
