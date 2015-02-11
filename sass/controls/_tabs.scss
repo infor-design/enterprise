@@ -1,85 +1,150 @@
 // Tabs (Vertical and Horizontal)
 //==================================================/
 .tab-container {
+  margin-bottom: 20px;
+  position: relative;
+
   &.has-more-button > .tab-list {
     width: calc(100% - 102px);
   }
 
   &.has-more-button > .tab-more {
-    display: inline-block;
-    float: right;
+    visibility: visible;
+  }
+
+  &.has-counts {
+
+    .tab-list {
+      height: 65px;
+    }
+
+    .tab-more {
+      padding: 16px 14px 16px;
+    }
+
   }
 }
 
+@mixin tab-after-off {
+  background-color: rgba($tab-hover-color, 0); //background: transparent;
+  bottom: 0;
+  content: '';
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  @include css3(transition, all .35s ease);
+  width: 0;
+}
+
+@mixin tab-after-hover {
+  background-color: $tab-border-color;
+  left: 12px;
+  width: calc(100% - 24px);
+}
+
+@mixin tab-after-selected {
+
+}
+
+@mixin tab-after-selected-hover {
+  background-color: $primary-color;
+  left: 12px;
+  width: calc(100% - 24px);
+}
+
 // Tab Headers aka Notches
-.tab-list { //Ref: http://bradsknutson.com/blog/css-sliding-underline/
+// Ref: http://bradsknutson.com/blog/css-sliding-underline/
+.tab-list {
   border-bottom: 1px solid $tab-border-color;
-  display: inline-block;
-  height: 40px;
+  height: 43px;
   list-style: none outside none;
   overflow: hidden;
   padding: 0;
   width: 100%;
 
   li {
-    border-bottom: 3px solid rgba($tab-hover-color, 0); /*transparent;*/
     border-radius: 2px 2px 0 0;
     cursor: pointer;
     display: inline-block;
-    height: 40px;
-    padding: 0 25px;
+    padding: 14px;
     position: relative;
-    transition: all .35s ease; /*transition: border-color .35s ease 0s;*/
+    @include css3(transition, background-color .35s ease);
 
-    &:after{
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: -3px;
-      left: 50%;
-      height: 3px;
-      width: 0;
-      background: rgba($tab-hover-color, 0); /*background: transparent;*/
-      transition: all .35s ease;
+    &:after {
+      @include tab-after-off;
     }
 
     &:hover {
       background-color: $tab-hover-color;
-      /*border-color: #333333;*/
     }
 
     &:hover:after {
-      background: $tab-border-color;
-      left: 0;
-      width: 100%;
+      @include tab-after-hover;
     }
 
-    a {
-      color: #666666; /*?? $font-color ?? */
-      @include font-size(14);
-      font-weight: normal;
-      line-height: 39px;
-      text-decoration: none;
+    &.separator {
+      cursor: default;
+      margin: 0 12px;
+      padding: 11px 0;
+      @include css3(transition, none);
 
-      /* Recommend taking this out because tabs are not actually links
-      &:focus {
-        text-decoration: underline;
-      }*/
-    }
+      &:before {
+        border-left: 1px solid $tab-border-color;
+        content: '';
+        display: block;
+        height: 100%;
+        position: absolute;
+        top: calc(50% - 6px);
+        width: 1px;
+      }
 
-    &.is-selected {
-      border-color: $primary-color;
-
-      a {
-        color: $tab-selected-color;
+      &:after {
+        display: none;
+        @include css3(transition, none);
       }
 
       &:hover {
-        background: rgba($tab-hover-color, 0); /*background-color: transparent;*/
+        background-color: transparent;
       }
 
       &:hover:after {
-        background: rgba($tab-hover-color, 0);
+        background-color: transparent;
+      }
+    }
+
+    a {
+      color: $font-color;
+      @include font-size(14);
+      font-weight: normal;
+      text-decoration: none;
+    }
+
+    .count {
+      display: block;
+      font-size: 180%;
+    }
+
+    &.is-selected {
+
+      a {
+        color: $tab-selected-color;
+
+        > .count {
+          color: $tab-selected-color;
+        }
+      }
+
+      &:after {
+        @include tab-after-selected-hover;
+      }
+
+      &:hover {
+        background: rgba($tab-hover-color, 0); //background-color: transparent;
+      }
+
+      &:hover:after {
+        background: $primary-color;
       }
     }
   }
@@ -95,19 +160,37 @@
   background-color: transparent;
   border-bottom: 1px solid $tab-border-color;
   border-radius: 2px 2px 0 0;
-  display: none;
-  line-height: 39px;
+  display: inline-block;
   max-width: 102px;
-  padding: 0 13px 0 25px;
+  padding: 5px 14px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  @include css3(transition, background-color .35s ease);
+  visibility: hidden;
+
+  &:after {
+    @include tab-after-off;
+  }
+
+  &:hover {
+    background-color: $tab-hover-color;
+
+    &:after {
+      @include tab-after-hover;
+    }
+  }
 
   > span {
     font-weight: normal;
+    padding: 0 5px;
   }
 
   &.popup-is-open,
   &.is-selected {
     span {
       color: $tab-selected-color;
+      text-decoration: none;
     }
 
     svg {
@@ -115,19 +198,12 @@
     }
 
     &:after {
-      background-color: $tab-selected-color;
-      content: '';
-      display: block;
-      height: 2px;
-      left: 0;
-      margin: -2px -13px 0 -20px;
-      position: relative;
-      width: inherit;
+      @include tab-after-selected-hover;
     }
   }
 
   &.popup-is-open span {
-    text-decoration: underline;
+    text-decoration: none;
   }
 
   // Position Elements in menu
@@ -143,7 +219,7 @@
     color: $inverse-color;
 
     &:before {  //Removes default check icon
-      border-color: transparent;
+      display: none;
     }
   }
 }
