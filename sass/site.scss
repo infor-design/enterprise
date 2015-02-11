@@ -44,6 +44,8 @@
 
   .row {
     clear: both;
+    overflow: hidden;
+    padding: 80px 0;
   }
 
   .content {
@@ -61,7 +63,7 @@
 
 
   &.home {
-    margin-bottom: 80px;
+    // margin-bottom: 80px;
     overflow: hidden;
     text-align: center;
 
@@ -82,7 +84,7 @@
     }
 
     .call-out {
-      margin: 100px 0 100px -20px;
+      margin: 20px 0 20px -20px;
     }
 
     .call-out-column {
@@ -169,14 +171,20 @@
   	}
 
     .call-out {
-      margin-bottom: 60px;
-      margin-top: 60px;
+      // margin-bottom: 60px;
+      // margin-top: 60px;
       // clear: both;
+      margin: 0;
+      padding: 0;
     }
   }
 
   .gallery-header {
     position: relative;
+
+    h2 {
+      margin-bottom: 40px;
+    }
   }
 
   .gallery-nav {
@@ -291,12 +299,21 @@
 
   &.vision {
 
+    h3 {
+      margin: 50px 0 30px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+
   }
 
   .vision-hero {
-    text-align: center;
-    padding: 90px 0;
     border-bottom: 2px solid $font-color-light;
+    padding: 90px 0;
+    text-align: center;
 
     .headline,
     .sub-headline {
@@ -307,8 +324,8 @@
 
     .headline {
       font-size: 50px;
-      margin-bottom: 40px;
       line-height: 60px;
+      margin-bottom: 40px;
     }
 
     .sub-headline {
@@ -317,6 +334,67 @@
       font-weight: 400;
       line-height: 34px;
       max-width: 820px;
+    }
+  }
+
+  .sidebar {
+    color: $font-color;
+    
+    h4 {
+      color: $popupmenu-color;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+  }
+
+  .sidebar-content {
+    float: right;
+    max-width: 300px;
+    width: 100%;
+
+    > * {
+      margin: 30px 0;
+    }
+
+    > *:first-child {
+      margin-top: 10px;
+    }
+
+  }
+
+  .sidebar-author {
+    .title {
+      font-size: 14px;
+    }
+  }
+
+  .sidebar-sub-data {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    
+    .value {
+      font-weight: bold;
+    }
+  }
+
+  .sidebar-cta {
+    button {
+      display: block;
+      margin-left: 0;
+      max-width: 200px;
+      width: 100%;
+    }
+  }
+
+  .sidebar-tags {
+    color: $font-color-light;
+
+    .sidebar-tag {
+      font-size: 14px;
+      font-weight: 100;
+      line-height: 24px;
     }
   }
 }
@@ -398,6 +476,15 @@
 
   .site-content.home .call-out-column p {
     padding: 0 0 0 10px;
+  }
+
+  .site-content .sidebar-content {
+    max-width: none;
+  }
+
+  .site-footer nav li {
+    display: block;
+    margin: 0 0 10px;
   }
 }
 
