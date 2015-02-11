@@ -286,8 +286,42 @@
     }
   }
 
-  
+  // Vision Styles
+  //==================================================//
+
+  &.vision {
+
+  }
+
+  .vision-hero {
+    text-align: center;
+    padding: 90px 0;
+    border-bottom: 2px solid $font-color-light;
+
+    .headline,
+    .sub-headline {
+      margin: 0 auto;
+      max-width: 900px;
+      width: 97%;
+    }
+
+    .headline {
+      font-size: 50px;
+      margin-bottom: 40px;
+      line-height: 60px;
+    }
+
+    .sub-headline {
+      color: $font-color-light;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 34px;
+      max-width: 820px;
+    }
+  }
 }
+
+
 
 
 
