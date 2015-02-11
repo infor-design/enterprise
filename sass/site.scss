@@ -175,10 +175,6 @@
   	}
 
     .call-out {
-      // margin-bottom: 60px;
-      // margin-top: 60px;
-      // clear: both;
-      margin: 0;
       padding: 0;
     }
   }
@@ -220,8 +216,8 @@
     background: $body-bg-color;
     box-shadow: 0 0 5px rgba(8, 150, 233, 0); 
     display: block;
-    position: relative;
     min-height: 444px;
+    position: relative;
 
     &:focus {
       @include focus-state;
@@ -501,10 +497,6 @@
 
 
 @media screen and (max-width: $breakpoint-phone) { 
-  // .site-content h2 {
-  //   font-size: 34px;
-  // }
-
   .site-content .gallery-header .gallery-nav .field:first-child {
     margin-right: 0;
   }
