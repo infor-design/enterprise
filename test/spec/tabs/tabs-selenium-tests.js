@@ -9,29 +9,33 @@ describe('Tabs [selenium]', function(){
   this.timeout(99999999);
 
   // Global variables for input field names
-  var TABS = '#tabs',
+  var TABS = '#tabs-regular',
     TAB_4 = '#tab4',
     NEW_TAB = '#newTab';
 
   function getTabList() {
-    return $('#tabs').data('tabs');
+    return $('#tabs-regular').data('tabs');
   }
 
   function addTab() {
-    var content = '<h2>New Tab Content</h2><p>Here is some new tab content</p>';
-    $('#tabs').data('tabs').add('newTab', 'New Tab', content);
+    var content = '<h2>New Tab Content</h2><p>Here is some new tab content</p>',
+      opts = {
+        name: 'New Tab',
+        content: content
+      };
+    $('#tabs-regular').data('tabs').add('newTab', opts);
   }
 
   function removeTab() {
-    $('#tabs').data('tabs').remove('newTab');
+    $('#tabs-regular').data('tabs').remove('newTab');
   }
 
   function hideTab() {
-    $('#tabs').data('tabs').hide('tab4');
+    $('#tabs-regular').data('tabs').hide('tab4');
   }
 
   function showTab() {
-    $('#tabs').data('tabs').show('tab4');
+    $('#tabs-regular').data('tabs').show('tab4');
   }
 
   //Start Server - Make a Web Driver Connection
@@ -51,7 +55,7 @@ describe('Tabs [selenium]', function(){
   it('can be destroyed', function(done) {
     runner.client
       // Run the destroy method
-      .execute('$("'+ TABS +'").data("tabs").destroy();', globals.noError)
+      .execute('$("#tabs-regular").data("tabs").destroy();', globals.noError)
       // Check the visibility of one of the hidden tab panels to see if they can be seen
       .isVisible(TAB_4, function(err, result) {
         globals.noError(err);

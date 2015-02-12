@@ -47,7 +47,11 @@
       init: function(){
         this
           .setup()
-          .build();
+          .build()
+          .setupEvents();
+
+        this.activate(0);
+        this.setOverflow();
       },
 
       setup: function() {
@@ -87,92 +91,83 @@
 
         //for each item in the tabsList...
         self.anchors = self.header.find('li:not(.separator) > a');
-        self.anchors.each( function () {
+        self.anchors.each(function () {
           var a = $(this);
-
           a.attr({'role': 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', 'tabindex': '-1'})
            .parent().attr('role', 'presentation').addClass('tab');
+
+          if (a.parent().hasClass('dismissible')) {
+            $('<svg class="icon"><use xlink:href="#icon-delete"></svg>').insertAfter(a);
+          }
 
           if (self.settings.tabCounts && $(this).find('.count').length === 0) {
             $(this).prepend('<span class="count">0 </span>');
           }
-
-          self.buildAnchorEvents(a);
         });
 
         // store a reference to the more button and set up events for it
         self.moreButton = self.element.find('.tab-more');
-        self.moreButton.on('click.tabs', function(e) {
-          if (!(self.container.hasClass('has-more-button'))) {
-            e.stopPropagation();
-          }
-          if (self.moreButton.hasClass('popup-is-open')) {
-            self.popupmenu.close();
-            self.moreButton.removeClass('popup-is-open');
-          } else {
-            self.buildPopupMenu();
-          }
-        });
-
-        self.activate(0);
-
-        // Setup the "more" function
-        $(window).on('resize.tabs', function() {
-          self.setOverflow();
-        });
-        self.setOverflow();
 
         return this;
       },
 
-      buildAnchorEvents: function(anchor) {
+      setupEvents: function() {
         var self = this,
-          a = anchor;
+          nonVisibleExcludes = ':not(.separator):not(.hidden)',
+          allExcludes = ':not(.hidden):not(.separator):not(:disabled)';
 
-        //Attach click events to tab and anchor
-        a.parent().on('click.tabs', function () {
-          self.activate(self.container.find('li:not(.separator):not(.hidden)').index($(this)));
+        // Bind all "a" and "li" events to the tablist so that we can add/remove without issue
+        self.tablist.on('click.tabs', 'li', function() {
+          self.activate(self.tablist.find('li' + nonVisibleExcludes).index($(this)));
           if (self.popupmenu) {
             self.popupmenu.close();
           }
           $(this).find('a').focus();
-        });
-
-        a.on('click.tabs', function (e) {
+        // Clicking the 'a' triggers the click on the 'li'
+        }).on('click.tabs', 'a', function(e) {
           e.preventDefault();
           e.stopPropagation();
           $(this).parent().trigger('click');
-        }).on('keydown.tabs', function (e) {
+        }).on('click.tabs', '.icon', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          self.remove($(this).prev().attr('href'));
+        }).on('focus.tabs', 'a', function(e) {
+          e.preventDefault();
+          var targetLi = $(this).parent();
+          if (self.isTabOverflowed(targetLi)) {
+            self.buildPopupMenu(self.container.find('li' + allExcludes).index(targetLi));
+          }
+        }).on('keydown.tabs', 'a', function(e) {
 
           if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey || e.which < 32) {
             return;
           }
 
           var currentLi = $(this).parent(),
-            excludes = ':not(.hidden):not(.separator):not(:disabled)',
             targetLi,
-            tabs = self.container.find('li' + excludes);
+            tabs = self.container.find('li' + allExcludes);
 
           function previousTab() {
             var i = tabs.index(currentLi) - 1;
             while (i > -1 && !targetLi) {
-              if (tabs.eq(i).is(excludes)) {
+              if (tabs.eq(i).is(allExcludes)) {
                 return tabs.eq(i);
               }
               i = i - 1;
             }
-            return self.container.find('li' + excludes).last();
+            return self.container.find('li' + allExcludes).last();
           }
 
           function nextTab() {
             var i = tabs.index(currentLi) + 1;
             while(i < tabs.length && !targetLi) {
-              if (tabs.eq(i).is(excludes)) {
+              if (tabs.eq(i).is(allExcludes)) {
                 return tabs.eq(i);
               }
               i++;
             }
-            return self.container.find('li' + excludes).first();
+            return self.container.find('li' + allExcludes).first();
           }
 
           switch(e.which) {
@@ -202,13 +197,27 @@
           }
 
           targetLi.find('a').click();
-        }).on('focus.tabs', function(e) {
-          e.preventDefault();
-          var targetLi = a.parent();
-          if (self.isTabOverflowed(targetLi)) {
-            self.buildPopupMenu(self.container.find('li:not(.hidden):not(.separator):not(:disabled)').index(targetLi));
+        });
+
+        // Setup the "more" function
+        self.moreButton.on('click.tabs', function(e) {
+          if (!(self.container.hasClass('has-more-button'))) {
+            e.stopPropagation();
+          }
+          if (self.moreButton.hasClass('popup-is-open')) {
+            self.popupmenu.close();
+            self.moreButton.removeClass('popup-is-open');
+          } else {
+            self.buildPopupMenu();
           }
         });
+
+        // Check to see if we need to add/remove the more button on resize
+        $(window).on('resize.tabs', function() {
+          self.setOverflow();
+        });
+
+        return this;
       },
 
       activate: function(index){
@@ -260,21 +269,62 @@
       },
 
       // Adds a new tab into the list and properly binds events
-      add: function(tabId, tabName, tabContent, atIndex) {
+      add: function(tabId, options, atIndex) {
         if (!tabId) {
           return this;
         }
 
+        if (!options) {
+          options = {};
+        }
+
         // Sanitize
-        tabId = '' + tabId;
-        tabName = '' + tabName;
+        tabId = '' + tabId.replace(/#/g, '');
+        options.name = options.name ? options.name.toString() : '';
+        options.isDismissible = options.isDismissible ? options.isDismissible === true : false;
+        options.isDropdown = options.isDropdown ? options.isDropdown === true : false;
+
+        function getObjectFromSelector(sourceString) {
+          var contentType = typeof sourceString;
+          switch(contentType) {
+            case 'string':
+              var hasId = sourceString.match(/#/g);
+              // Text Content or a Selector.
+              if (hasId !== null) {
+                var obj = $(sourceString);
+                sourceString = obj.length ? $(sourceString).clone() : sourceString;
+              }
+              // do nothing if it's just a string of text.
+              break;
+            case 'object':
+              // jQuery object or HTML Element
+              sourceString = $(sourceString).clone();
+              break;
+          }
+        }
+        if (options.content) {
+          getObjectFromSelector(options.content);
+        }
+        if (options.dropdown) {
+          getObjectFromSelector(options.dropdown);
+        }
 
         // Build
         var tabHeaderMarkup = $('<li role="presentation" class="tab"></li>'),
-          anchorMarkup = $('<a href="#'+ tabId +'" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">'+ tabName +'</a>'),
+          anchorMarkup = $('<a href="#'+ tabId +'" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">'+ options.name +'</a>'),
           tabContentMarkup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+
         tabHeaderMarkup.html(anchorMarkup);
-        tabContentMarkup.html(tabContent);
+        tabContentMarkup.html(options.content);
+
+        if (options.isDismissible) {
+          tabHeaderMarkup.addClass('dismissible');
+          tabHeaderMarkup.append('<svg class="icon"><use xlink:href="#icon-delete"></svg>');
+        }
+
+        if (this.settings.tabCounts) {
+          anchorMarkup.prepend('<span class="count">0 </span>');
+        }
 
         // Insert markup at the very end, or at the specified index.
         if (atIndex === undefined || isNaN(atIndex)) {
@@ -298,8 +348,8 @@
         this.panels = this.panels.add(tabContentMarkup);
         this.anchors = this.anchors.add(anchorMarkup);
 
-        // Setup events on the new anchor
-        this.buildAnchorEvents(anchorMarkup);
+        // Adjust tablist height
+        this.setOverflow();
 
         return this;
       },
@@ -309,6 +359,7 @@
         if (!tabId) {
           return this;
         }
+        tabId = tabId.replace(/#/g, '');
 
         var targetAnchor = this.anchors.filter('[href="#' + tabId + '"]'),
           targetLi = targetAnchor.parent(),
@@ -325,6 +376,9 @@
         // Remove Markup
         targetLi.remove();
         targetPanel.remove();
+
+        // Adjust tablist height
+        this.setOverflow();
 
         return this;
       },
@@ -361,19 +415,18 @@
           selectedTab = self.header.find('.is-selected');
 
         if (self.isTabOverflowed(selectedTab)) {
-          self.element.find('.tab-more').addClass('is-selected');
+          self.moreButton.addClass('is-selected');
         } else {
-          self.element.find('.tab-more').removeClass('is-selected');
+          self.moreButton.removeClass('is-selected');
         }
       },
 
       buildPopupMenu: function(startingIndex) {
         var self = this;
         if (self.popupmenu) {
-          $.each(self.popupmenu.element.find('li > a'), function(i, item) {
-            $(item).off('focus');
-          });
+          $('#tab-container-popupmenu').off('focus.popupmenu');
           self.popupmenu.close();
+          $('#tab-container-popupmenu').remove();
           $(document).off('keydown.popupmenu');
         }
 
@@ -400,10 +453,7 @@
               popupLi = $(item).clone().removeClass('tab is-selected');
               popupLi
                 .appendTo(menuHtml)
-                .attr('data-original-tab-index', tabs.index($(item)))
-                .find('a').on('focus', function() {
-                  self.activate(tabs.index($(item)));
-                });
+                .attr('data-original-tab-index', tabs.index($(item)));
             }
           }
         });
@@ -416,7 +466,9 @@
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
-        self.popupmenu.element.on('close', function() {
+
+        self.popupmenu.element.on('close.popupmenu', function() {
+          $(this).off('close.popupmenu');
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
         });
@@ -425,6 +477,9 @@
         self.popupmenu.menu.on('focus.popupmenu', 'a', function() {
           $(this).parents('ul').find('li').removeClass('is-selected');
           $(this).parent().addClass('is-selected');
+          self.activate(parseInt($(this).parent().attr('data-original-tab-index')));
+        }).on('destroy.popupmenu', function() {
+          $('#tab-container-popupmenu').remove();
         });
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
@@ -460,6 +515,28 @@
             });
           }
 
+          function prevMenuItem() {
+            // If the first item in the popup menu is already focused, close the menu and focus
+            // on the last visible item in the tabs list.
+            var first = self.popupmenu.menu.find('li.is-selected:first-child');
+            if (first.length > 0) {
+              e.preventDefault();
+              $(document).off(e);
+              targetIndex = first.attr('data-original-tab-index') - 1;
+              $(self.anchors[targetIndex]).click();
+            }
+          }
+
+          function nextMenuItem() {
+            // If the last item in the popup menu is already focused, close the menu and focus
+            // on the first visible item in the tabs list.
+            if (self.popupmenu.menu.find('li.is-selected:last-child').length > 0) {
+              e.preventDefault();
+              $(document).off(e);
+              $(self.anchors[targetIndex]).click();
+            }
+          }
+
           switch(key) {
             case 13: // enter
               e.preventDefault();
@@ -468,35 +545,22 @@
               $(self.panels[targetIndex]).find('h2:first-child').focus();
               break;
             case 37: // left
-              e.preventDefault();
               e.stopPropagation();
+              e.preventDefault();
               $(document).trigger({type: 'keydown.popupmenu', which: 38});
               break;
             case 38: // up
-              // If the first item in the popup menu is already focused, close the menu and focus
-              // on the last visible item in the tabs list.
-              var first = self.popupmenu.menu.find('li.is-selected:first-child');
-              if (first.length > 0) {
-                e.preventDefault();
-                targetIndex = first.attr('data-original-tab-index') - 1;
-                $(self.anchors[targetIndex]).click();
-              }
+              prevMenuItem();
               break;
             case 39: // right
-              e.preventDefault();
               e.stopPropagation();
+              e.preventDefault();
               $(document).trigger({type: 'keydown.popupmenu', which: 40});
               break;
             case 40: // down
-              // If the last item in the popup menu is already focused, close the menu and focus
-              // on the first visible item in the tabs list.
-              if (self.popupmenu.menu.find('li.is-selected:last-child').length > 0) {
-                e.preventDefault();
-                $(self.anchors[targetIndex]).click();
-              }
+              nextMenuItem();
               break;
           }
-
         });
       },
 
@@ -515,7 +579,7 @@
         while(!(this.isTabOverflowed(targetFocus))) {
           targetFocus = targetFocus.next('li');
         }
-        targetFocus.prev().find('a').click().focus();
+        targetFocus.prev().find('a').focus();
       },
 
       destroy: function(){
@@ -552,8 +616,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
-        instance.update();
+        instance.settings = $.extend(instance.settings, options);
       } else {
         instance = $.data(this, pluginName, new Tabs(this, settings));
       }

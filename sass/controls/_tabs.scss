@@ -19,7 +19,7 @@
     }
 
     .tab-more {
-      padding: 16px 14px 16px;
+      padding: 16px 14px;
     }
 
   }
@@ -38,7 +38,7 @@
 }
 
 @mixin tab-after-hover {
-  background-color: $tab-border-color;
+  background-color: $tab-hover-color;
   left: 12px;
   width: calc(100% - 24px);
 }
@@ -67,20 +67,39 @@
     border-radius: 2px 2px 0 0;
     cursor: pointer;
     display: inline-block;
-    padding: 14px;
+    padding: 6px 6px 8px;
     position: relative;
     @include css3(transition, background-color .35s ease);
+
+    > * {
+      vertical-align: middle;
+    }
 
     &:after {
       @include tab-after-off;
     }
 
     &:hover {
-      background-color: $tab-hover-color;
+      color: $tab-hover-color;
+
+      a {
+        color: $tab-hover-color;
+      }
+
+      .icon {
+        fill: $tab-hover-color;
+      }
     }
 
     &:hover:after {
       @include tab-after-hover;
+    }
+
+    &.dismissible {
+      .icon {
+        width: 24px;
+        height: 24px;
+      }
     }
 
     &.separator {
@@ -114,10 +133,18 @@
     }
 
     a {
+      border: 1px solid transparent;
+      border-radius: 2px;
       color: $font-color;
+      display: inline-block;
       @include font-size(14);
       font-weight: normal;
+      padding: 6px 10px;
       text-decoration: none;
+
+      &:focus {
+        border-color: $tab-selected-color;
+      }
     }
 
     .count {
@@ -133,6 +160,10 @@
         > .count {
           color: $tab-selected-color;
         }
+      }
+
+      .icon {
+        fill: $tab-selected-color;
       }
 
       &:after {
@@ -174,7 +205,7 @@
   }
 
   &:hover {
-    background-color: $tab-hover-color;
+    color: $tab-hover-color;
 
     &:after {
       @include tab-after-hover;
