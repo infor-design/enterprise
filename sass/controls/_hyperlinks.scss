@@ -1,56 +1,65 @@
-// Hyperlinks
+// Hyperhyperlinks
 //================================================== //
 
-.link {
-  color: $link-color;
+.hyperlink {
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: $hyperlink-color;
   cursor: pointer;
   font-family: $font-regular;
   @include font-size(14);
   line-height: 25px;
-  margin-left: 5px;
-  padding: 0 1px 0 0;
+  margin-left: -5px;
+  padding: 7px;
+  position: relative;
   text-decoration: none;
+  @include transition(all .3ms);
   white-space: nowrap;
 
   &:visited {
-    color: $link-color; //#7533a6
+    color: $hyperlink-color; //#7533a6
   }
 
   // Mouse Over States is Same as the focus
   &:hover {
-    color: $link-hover-color;
-    text-decoration: underline;
-  }
-
-  &:hover,
-  &:focus {
+    color: $hyperlink-hover-color;
     text-decoration: underline;
   }
 
   &:focus {
-    outline: thin dotted $link-hover-color;
-    outline-offset: 2px;
+    border-color: $hyperlink-focus-border-color;
+    color: $hyperlink-focus-border-color;
   }
 
-  // TODO: Visited Style
+  &:active {
+    border-color: transparent;
+    color: $hyperlink-active-color;
+  }
+
+  &:visited {
+    color: $hyperlink-visited-color;
+    text-decoration: underline !important;
+  }
 
   //Disabled
   &[disabled] {
-    color: #666666;
-    filter: alpha(opacity = 50);
-    opacity: .5;
+    color: #b6b6b6;
 
     &:hover {
-      color: #666666;
+      color: #b6b6b6;
       cursor: default;
       text-decoration: none;
     }
 
     &:active {
-      color: $link-active-color;
-      outline: thin dotted $link-active-color;
-      text-decoration: underline;
+      color: #b6b6b6;
     }
+  }
+
+  .ripple-wrapper {
+    border-radius: 8px;
+    margin-left: 20%;
+    width: 60%;
   }
 }
 

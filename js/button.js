@@ -41,6 +41,10 @@
             return false;
           }
 
+          if (self.element.attr('disabled')) {
+            return false;
+          }
+
           var element = $(this);
 
           // If the ripple wrapper does not exists, create it

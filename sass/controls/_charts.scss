@@ -73,6 +73,7 @@
   cursor: pointer;
   display: inline-block;
   padding: 5px 10px 2px 0;
+  text-align: left;
 
   &:focus {
     border: 1px solid $primary-color;
@@ -123,8 +124,8 @@
 // Chart Specific Centering and Styling
 .chart-pie {
   display: inline-block;
-  height: 100%;
-  padding: 20px;
+  height: 99%;
+  padding: 15px;
   width: 38%;
 
   + .chart-legend {
@@ -138,6 +139,13 @@
 }
 
 // Media Queries
+@include respond-to(tablet) {
+  .chart-pie {
+    margin-left: -50px;
+    width: 56%;
+  }
+}
+
 @include respond-to(phone) {
   .chart-container .chart-legend {
     display: block;
@@ -145,10 +153,12 @@
     text-align: center;
     vertical-align: middle;
   }
-}
 
-@include respond-to(phone) {
   .chart-pie {
-    width: 97%;
+    margin-left: -20px;
+    margin-bottom: -65px;
+    width: 100%;
   }
 }
+
+

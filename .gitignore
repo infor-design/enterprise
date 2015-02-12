@@ -8,3 +8,4 @@ dist/js/
 phantomjsdriver.log
 xunit.xml
 .idea/
+.idea
