@@ -7,9 +7,9 @@
 @import 'controls/grid';
 @import 'controls/typography';
 @import 'controls/header';
+@import 'controls/hyperlinks';
 
 // Text in the Page
-
 .divider-horiz {
   background: $divider-color;
   height: 1px;
@@ -53,18 +53,16 @@
   }
 
   .content {
-    box-shadow: 0 0 5px rgba(8, 150, 233, 0); 
+    border: 1px solid transparent;
+    box-shadow: 0 0 5px rgba(8, 150, 233, 0);
 
     &:focus {
       @include focus-state;
     }
   }
 
-
-
   // Index Styles
   //==================================================//
-
 
   &.home {
     // margin-bottom: 80px;
@@ -96,9 +94,9 @@
       .content {
         background: $body-bg-color;
         display: block;
-        -webkit-transition: 500ms;
         -moz-transition: 500ms;
         -ms-transition: 500ms;
+        -webkit-transition: 500ms;
         transition: 500ms;
       }
 
@@ -118,7 +116,7 @@
 
     .call-out-column:hover {
 
-      h3, 
+      h3,
       p {
         color: #ffffff;
       }
@@ -158,11 +156,8 @@
     }
   }
 
-
-
   // Gallery Styles
   //==================================================//
-
 
   &.gallery {
     margin: 0 auto 80px;
@@ -200,7 +195,7 @@
 
   .gallery-field {
     display: inline-block;
-    
+
     input.dropdown {
       color: $label-color;
       font-weight: 400;
@@ -214,7 +209,7 @@
 
   .gallery-content.content {
     background: $body-bg-color;
-    box-shadow: 0 0 5px rgba(8, 150, 233, 0); 
+    box-shadow: 0 0 5px rgba(8, 150, 233, 0);
     display: block;
     min-height: 444px;
     position: relative;
@@ -280,12 +275,11 @@
     opacity: 0;
     position: absolute;
     top: 0;
-    -webkit-transition: 400ms;
     -moz-transition: 400ms;
     -ms-transition: 400ms;
+    -webkit-transition: 400ms;
     transition: 400ms;
     width: 100%;
-
 
     .copy {
       color: #ffffff;
@@ -316,8 +310,6 @@
     p {
       margin-bottom: 20px;
     }
-
-
   }
 
   .vision-hero {
@@ -353,13 +345,12 @@
 
   .sidebar {
     color: $font-color;
-    
+
     h4 {
       color: $popupmenu-color;
       font-size: 20px;
       margin-bottom: 5px;
     }
-
   }
 
   .sidebar-content {
@@ -378,7 +369,6 @@
     > *:first-child {
       margin-top: 10px;
     }
-
   }
 
   .sidebar-author {
@@ -391,7 +381,7 @@
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
-    
+
     .value {
       font-weight: bold;
     }
@@ -417,24 +407,13 @@
   }
 }
 
-
-
-
-
 // Footer Styles
 //==================================================//
-
 
 .site-footer {
   clear: both;
   margin-bottom: 50px;
   text-align: center;
-
-  a {
-    color: $font-color-light;
-    font-size: 14px;
-    font-weight: 100;
-  } 
 
   nav {
     margin: 0 auto;
@@ -469,16 +448,10 @@
   }
 }
 
-
-
 // Responsive Breakpoint Styles
 //==================================================//
 
-@media screen and (max-width: $breakpoint-phone-to-tablet) { 
-  // .gallery-header {
-  //   overflow: hidden;
-  //   padding-bottom: 60px;
-  // }
+@media screen and (max-width: $breakpoint-phone-to-tablet) {
 
   .site-content .gallery-header .gallery-nav {
     bottom: 0;
@@ -500,11 +473,13 @@
     display: block;
     margin: 0 0 10px;
   }
+
+  .vision-img img {
+    padding: 0 100px;
+  }
 }
 
-
-
-@media screen and (max-width: $breakpoint-phone) { 
+@media screen and (max-width: $breakpoint-phone) {
   .site-content .gallery-header .gallery-nav .field:first-child {
     margin-right: 0;
   }

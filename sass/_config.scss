@@ -192,10 +192,12 @@ $label-color: #666666;  //Was #6666666
 //Text that is disabled
 $disabled-color: #cccccc;
 
-//The Link Style
-$link-color: #0c7ad8; // Design has #0896e9 but #0072b5 is accessible
-$link-hover-color: #0c7ad8;
-$link-active-color: #004096;
+//The hyperlink Style
+$hyperlink-color: #1a1a1a;
+$hyperlink-hover-color: #1a1a1a;
+$hyperlink-active-color: #004096;
+$hyperlink-visited-color: #005689;
+$hyperlink-focus-border-color: $primary-color;
 
 
 // Rating (Stars)
@@ -205,6 +207,7 @@ $rating-hover-color: $primary-color;
 
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
+$breakpoint-phablet: 401px;
 $breakpoint-phone-to-tablet: 767px;
 $breakpoint-tablet-to-desktop: 1280px;
 $breakpoint-desktop-to-extralarge: 1600px;

@@ -483,7 +483,10 @@
       margin = {top: 20, right: 20, bottom: 20, left: 20};
       width = parseInt($(container).parent().width());
       height = parseInt($(container).parent().height());
+
       $(container).addClass('chart-pie');
+      $(container).closest('.widget-content').addClass('l-center');
+      $(container).closest('.card-content').addClass('l-center');
 
       svg = d3.select(container)
               .append('svg')
