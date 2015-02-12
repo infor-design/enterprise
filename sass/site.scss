@@ -309,6 +309,10 @@
       margin: 50px 0 30px;
     }
 
+    h3:first-child {
+      margin-top: 0;
+    }
+
     p {
       margin-bottom: 20px;
     }
@@ -317,7 +321,7 @@
   }
 
   .vision-hero {
-    border-bottom: 2px solid $font-color-light;
+    border-bottom: 1px solid $divider-color;
     padding: 90px 0;
     text-align: center;
 
@@ -340,6 +344,10 @@
       font-weight: 400;
       line-height: 34px;
       max-width: 820px;
+    }
+
+    .vision-img {
+      margin: 50px 0 -50px;
     }
   }
 
@@ -467,10 +475,10 @@
 //==================================================//
 
 @media screen and (max-width: $breakpoint-phone-to-tablet) { 
-  .gallery-header {
-    overflow: hidden;
-    padding-bottom: 60px;
-  }
+  // .gallery-header {
+  //   overflow: hidden;
+  //   padding-bottom: 60px;
+  // }
 
   .site-content .gallery-header .gallery-nav {
     bottom: 0;
@@ -481,7 +489,7 @@
   }
 
   .site-content.home .call-out {
-    margin: 60px 0 100px -20px;
+    margin: 0 0 0 -20px;
   }
 
   .site-content.home .call-out-column p {
