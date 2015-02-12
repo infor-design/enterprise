@@ -124,13 +124,14 @@
 // Chart Specific Centering and Styling
 .chart-pie {
   display: inline-block;
-  height: 99%;
+  height: 80%;
   padding: 15px;
   width: 38%;
 
   + .chart-legend {
     display: inline-block;
     @include vertical-align();
+    padding-left: 10px;
 
     .chart-legend-item {
       display: block;
@@ -138,11 +139,24 @@
   }
 }
 
+.one-third .chart-pie {
+  margin-top: 35px;
+  padding: 0px;
+  width: 53%;
+}
+
 // Media Queries
 @include respond-to(tablet) {
   .chart-pie {
     margin-left: -50px;
     width: 56%;
+  }
+
+  .one-third .chart-pie {
+    margin: 0 auto 0 -20px;
+    margin-bottom: -65px;
+    padding: 0;
+    width: 83%;
   }
 }
 
@@ -155,9 +169,13 @@
   }
 
   .chart-pie {
-    margin-left: -20px;
     margin-bottom: -65px;
+    margin-left: -20px;
     width: 100%;
+  }
+
+  .one-third .chart-pie {
+    margin-top: 0;
   }
 }
 
