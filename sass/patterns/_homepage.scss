@@ -52,29 +52,29 @@
 
 // Double and Triple Height Widths
 .double-height {
-  height: 720px;
-  min-height: 720px;
+  height: 740px;
+  min-height: 740px;
 
   .widget-content,
   .card-content {
-    height: 670px;
-    min-height: 670px;
+    height: 680px;
+    min-height: 680px;
   }
 }
 
 .double-width {
   position: absolute;
-  width: 64.666%;
+  width: calc(66.66% - 40px);
 }
 
 .triple-height {
-  height: 1030px;
-  min-height: 1030px;
+  height: 1120px;
+  min-height: 1120px;
 
   .widget-content,
   .card-content {
-    height: 980px;
-    min-height: 980px;
+    height: 1070px;
+    min-height: 1070px;
   }
 }
 
