@@ -2,16 +2,18 @@
 //================================================== //
 
 .breadcrumb {
+
+  ul {
+    li {
+      display: inline-block;
+    }
+  }
   
   .hyperlink {
     color: $font-color;
     font-size: 16px;
     font-weight: 100;
     text-decoration: none;
-
-    @include respond-to(tabletdown) {
-      display: none;
-    }
 
     &:visited {
       color: $font-color;
@@ -35,13 +37,6 @@
     &.current {
       font-weight: 500;
     }
-
-    &.current,
-    &.home {
-      @include respond-to(tabletdown) {
-        display: inline-block;
-      }
-    }
   }
 
   .breadcrumb-arrow {
@@ -49,19 +44,34 @@
     position: relative;
     top: -2px;
     vertical-align: middle;
-
-    @include respond-to(tabletdown) {
-      display: none;
-    }
-
-    &.home {
+  }
+  
+  &.test {
+    .hyperlink {
       @include respond-to(tabletdown) {
-        display: inline-block;
+        display: none;
+      }
+
+      &.current,
+      &.home {
+        @include respond-to(tabletdown) {
+          display: inline-block;
+        }
       }
     }
 
-  }
 
+    .breadcrumb-arrow {
+      @include respond-to(tabletdown) {
+        display: none;
+      }
+
+      &.home {
+        @include respond-to(tabletdown) {
+          display: inline-block;
+        }
+      }
+    }
+  }
   
 }
-
