@@ -83,6 +83,8 @@
 
         self.moreButton = self.tablist.next('.tab-more');
 
+        self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+
         // Add the markup for the "More" button if it doesn't exist.
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
@@ -134,9 +136,13 @@
           self.remove($(this).prev().attr('href'));
         }).on('focus.tabs', 'a', function() {
           var targetLi = $(this).parent();
+          self.moreButton.removeClass('is-selected');
           targetLi.addClass('is-focused');
           if (self.isTabOverflowed(targetLi)) {
             self.buildPopupMenu(self.container.find('li' + allExcludes).index(targetLi));
+            self.focusBar(self.addMoreButton);
+          } else {
+            self.focusBar(targetLi);
           }
         }).on('keydown.tabs', 'a', function(e) {
 
@@ -201,6 +207,9 @@
 
         self.tablist.find('a').on('blur.tabs', function() {
           $(this).parent().removeClass('is-focused');
+          setTimeout(function() {
+            self.checkFocusedElements();
+          }, 10);
         });
 
         // Setup the "more" function
@@ -214,13 +223,12 @@
           } else {
             self.buildPopupMenu();
           }
-        }).on('blur.tabs', function() {
-          $(this).removeClass('is-focused');
         });
 
         // Check to see if we need to add/remove the more button on resize
         $(window).on('resize.tabs', function() {
           self.setOverflow();
+          self.focusBar();
         });
 
         return this;
@@ -424,6 +432,7 @@
           self.moreButton.addClass('is-selected');
         } else {
           self.moreButton.removeClass('is-selected');
+          self.checkFocusedElements();
         }
       },
 
@@ -457,6 +466,7 @@
             }
             if ($(item).is(':not(.separator)')) {
               popupLi = $(item).clone().removeClass('tab is-selected');
+              popupLi.find('.icon').remove(); // NOTE: Remove this to show the close icon in overflow menu
               popupLi
                 .appendTo(menuHtml)
                 .attr('data-original-tab-index', tabs.index($(item)));
@@ -474,11 +484,13 @@
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
+        self.focusBar(self.moreButton);
 
         self.popupmenu.element.on('close.popupmenu', function() {
           $(this).off('close.popupmenu');
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
+          self.focusBar();
         });
 
         // Add the "is-selected" class to the currently focused item in this popup menu.
@@ -593,6 +605,47 @@
         targetFocus.prev().find('a').focus();
       },
 
+      focusBar: function(li) {
+        var self = this,
+          target = li !== undefined ? li :
+            self.moreButton.hasClass('is-selected') ? self.moreButton :
+            self.tablist.find('.is-selected').length > 0 ? self.tablist.find('.is-selected') : undefined; //li.is(self.moreButton) ? li : li.find('a');
+
+        if (target === undefined) {
+          return;
+        }
+        clearTimeout(self.animationTimeout);
+        this.animatedBar.addClass('visible');
+        this.animationTimeout = setTimeout(function() {
+          self.animatedBar.css({
+            'left' : Math.floor(target.offset().left - 4) + 'px',
+            'width' : Math.floor(target.width() - 18) + 'px'
+          });
+        }, 0);
+      },
+
+      defocusBar: function() {
+        var self = this,
+          newLeft = (self.animatedBar.position().left + (self.animatedBar.outerWidth()/2)) + 'px';
+        clearTimeout(self.animationTimeout);
+        this.animatedBar.css({
+          'left' : newLeft,
+          'width' : '0'
+        });
+        this.animationTimeout = setTimeout(function() {
+          self.animatedBar.removeClass('visible').removeAttr('style');
+        }, 350);
+      },
+
+      checkFocusedElements: function() {
+        var self = this,
+          focusableItems = self.tablist;
+
+        if (focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
+          self.defocusBar();
+        }
+      },
+
       destroy: function(){
         this.panels.removeAttr('style');
 
@@ -618,6 +671,7 @@
           this.moreButton.data('popupmenu').destroy();
         }
         this.moreButton.remove();
+        this.animatedBar.remove();
 
         $.removeData(this.element[0], pluginName);
       }

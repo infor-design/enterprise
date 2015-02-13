@@ -14,6 +14,10 @@
 
   &.has-counts {
 
+    .animated-bar {
+      top: 63px;
+    }
+
     .tab-list {
       height: 65px;
     }
@@ -27,7 +31,10 @@
         position: static;
       }
     }
+  }
 
+  .animated-bar {
+    top: 41px;
   }
 }
 
@@ -93,9 +100,11 @@
       vertical-align: middle;
     }
 
+    /*
     &:before {
       @include tab-after-off;
     }
+    */
 
     &:after {
       @include tab-outline;
@@ -113,9 +122,11 @@
       }
     }
 
+    /*
     &:hover:before {
       @include tab-after-hover;
     }
+    */
 
     &.is-focused {
       &:after {
@@ -197,9 +208,11 @@
         }
       }
 
+      /*
       &:before {
         @include tab-after-selected-hover;
       }
+      */
 
       &:hover {
         background: rgba($tab-hover-color, 0); //background-color: transparent;
@@ -209,6 +222,23 @@
         background: $primary-color;
       }
     }
+  }
+}
+
+// Animated Bar
+.animated-bar {
+  background-color: rgba($tab-selected-color, 0); //background: transparent;
+  bottom: 0;
+  display: inline-block;
+  height: 2px;
+  left: 0;
+  position: absolute;
+  @include transition(left .35s ease, width .35s ease);
+  width: 20px;
+
+  &.visible {
+    background-color: rgba($tab-selected-color, 1);
+    @include transition(background-color .35s ease, left .35s ease, width .35s ease);
   }
 }
 
@@ -234,16 +264,20 @@
     @include tab-outline;
   }
 
+  /*
   &:before {
     @include tab-after-off;
   }
+  */
 
   &:hover {
     color: $tab-hover-color;
 
+    /*
     &:before {
       @include tab-after-hover;
     }
+    */
   }
 
   > span {
@@ -267,9 +301,11 @@
       fill: $tab-selected-color;
     }
 
+    /*
     &:before {
       @include tab-after-selected-hover;
     }
+    */
   }
 
   &.popup-is-open span {
