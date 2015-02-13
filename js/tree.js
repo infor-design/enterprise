@@ -71,7 +71,7 @@
 
           if (subNode.is('ul')) {
             subNode.attr('role', 'group').parent().addClass('folder');
-            a.find('use').attr('xlink:href','#icon-folder');
+            a.find('use').attr('xlink:href','#icon-folder-collapse');
           }
 
           if (li.is('[class^="icon"]')) {
