@@ -1,43 +1,5 @@
 // Tabs (Vertical and Horizontal)
 //==================================================/
-.tab-container {
-  margin-bottom: 20px;
-  position: relative;
-
-  &.has-more-button > .tab-list {
-    padding-right: 102px;
-  }
-
-  &.has-more-button > .tab-more {
-    visibility: visible;
-  }
-
-  &.has-counts {
-
-    .animated-bar {
-      top: 63px;
-    }
-
-    .tab-list {
-      height: 65px;
-    }
-
-    .tab-more {
-      padding: 16px 14px;
-    }
-
-    li.dismissible {
-      .icon {
-        position: static;
-      }
-    }
-  }
-
-  .animated-bar {
-    top: 41px;
-  }
-}
-
 @mixin tab-outline {
   border: 1px solid transparent;
   border-radius: 2px;
@@ -73,7 +35,7 @@
 }
 
 @mixin tab-after-selected-hover {
-  background-color: $primary-color;
+  background-color: $tab-selected-color;
   left: 12px;
   width: calc(100% - 24px);
 }
@@ -100,11 +62,9 @@
       vertical-align: middle;
     }
 
-    /*
     &:before {
       @include tab-after-off;
     }
-    */
 
     &:after {
       @include tab-outline;
@@ -122,11 +82,9 @@
       }
     }
 
-    /*
-    &:hover:before {
+    &:not(.separator):hover:before {
       @include tab-after-hover;
     }
-    */
 
     &.is-focused {
       &:after {
@@ -148,7 +106,7 @@
       cursor: default;
       margin: 0 12px;
       padding: 11px 0;
-      @include css3(transition, none);
+      @include css3(user-select, none);
 
       &:before {
         border-left: 1px solid $tab-border-color;
@@ -157,6 +115,7 @@
         height: 100%;
         position: absolute;
         top: calc(50% - 6px);
+        @include css3(transition, none);
         width: 1px;
       }
 
@@ -171,8 +130,8 @@
 
       &:hover:before {
         background-color: transparent;
-    }
       }
+    }
 
     a {
       color: $font-color;
@@ -189,7 +148,6 @@
     }
 
     &.is-selected {
-
       a {
         color: $tab-selected-color;
 
@@ -202,20 +160,8 @@
         fill: $tab-selected-color;
       }
 
-      &:focus {
-        &:after {
-          @include tab-outline-focus;
-        }
-      }
-
-      /*
-      &:before {
-        @include tab-after-selected-hover;
-      }
-      */
-
       &:hover {
-        background: rgba($tab-hover-color, 0); //background-color: transparent;
+        background: rgba($tab-hover-color, 0);
       }
 
       &:hover:before {
@@ -264,20 +210,8 @@
     @include tab-outline;
   }
 
-  /*
-  &:before {
-    @include tab-after-off;
-  }
-  */
-
   &:hover {
     color: $tab-hover-color;
-
-    /*
-    &:before {
-      @include tab-after-hover;
-    }
-    */
   }
 
   > span {
@@ -300,12 +234,6 @@
     svg {
       fill: $tab-selected-color;
     }
-
-    /*
-    &:before {
-      @include tab-after-selected-hover;
-    }
-    */
   }
 
   &.popup-is-open span {
@@ -315,6 +243,71 @@
   // Position Elements in menu
   > * {
     vertical-align: middle;
+  }
+}
+
+// Tab Container
+// Can change the way the contents are styled based on classes
+.tab-container {
+  margin-bottom: 20px;
+  position: relative;
+
+  &.has-more-button > .tab-list {
+    padding-right: 102px;
+  }
+
+  &.has-more-button > .tab-more {
+    visibility: visible;
+  }
+
+  &.has-counts {
+
+    .animated-bar {
+      top: 62px;
+    }
+
+    .tab-list {
+      height: 65px;
+    }
+
+    .tab-more {
+      padding: 16px 14px;
+    }
+
+    li.dismissible {
+      .icon {
+        position: static;
+      }
+    }
+  }
+
+  .animated-bar {
+    top: 40px;
+  }
+}
+
+// IE-specific padding for tab-list
+.ie {
+  .tab-list {
+    li {
+      padding: 6px;
+    }
+  }
+
+  .tab-more {
+    padding: 5px 14px 4px;
+  }
+
+  .tab-container.has-counts {
+    .tab-list {
+      li {
+        padding: 6px 6px 7px;
+      }
+    }
+
+    .tab-more {
+      padding: 16px 14px 15px;
+    }
   }
 }
 

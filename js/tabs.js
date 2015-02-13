@@ -416,7 +416,7 @@
       },
 
       setOverflow: function () {
-        if (this.tablist[0].scrollHeight > this.tablist.outerHeight()) {
+        if (this.tablist[0].scrollHeight > this.tablist.outerHeight() + 1) {
           this.element.addClass('has-more-button');
         } else {
           this.element.removeClass('has-more-button');
@@ -618,8 +618,8 @@
         this.animatedBar.addClass('visible');
         this.animationTimeout = setTimeout(function() {
           self.animatedBar.css({
-            'left' : Math.floor(target.offset().left - 4) + 'px',
-            'width' : Math.floor(target.width() - 18) + 'px'
+            'left' : (target.offset().left - 7) + 'px',
+            'width' : (target.width() - 11) + 'px'
           });
         }, 0);
       },
