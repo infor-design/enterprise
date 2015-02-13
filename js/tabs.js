@@ -81,12 +81,15 @@
                             'aria-multiselectable': 'false'});
         self.tablist = self.element.find('.tab-list');
 
+        self.moreButton = self.tablist.next('.tab-more');
+
         // Add the markup for the "More" button if it doesn't exist.
-        if (self.tablist.next('.tab-more').length === 0) {
-          var button = $('<button>').attr({'class': 'tab-more', 'type': 'button', 'tabindex': '-1'});
+        if (self.moreButton.length === 0) {
+          var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span>').text('More')); //TODO: Localize
-          button.append('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
+          button.append('<svg class="icon" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
           self.tablist.after(button);
+          self.moreButton = button;
         }
 
         //for each item in the tabsList...
@@ -104,9 +107,6 @@
             $(this).prepend('<span class="count">0 </span>');
           }
         });
-
-        // store a reference to the more button and set up events for it
-        self.moreButton = self.element.find('.tab-more');
 
         return this;
       },
@@ -132,9 +132,9 @@
           e.preventDefault();
           e.stopPropagation();
           self.remove($(this).prev().attr('href'));
-        }).on('focus.tabs', 'a', function(e) {
-          e.preventDefault();
+        }).on('focus.tabs', 'a', function() {
           var targetLi = $(this).parent();
+          targetLi.addClass('is-focused');
           if (self.isTabOverflowed(targetLi)) {
             self.buildPopupMenu(self.container.find('li' + allExcludes).index(targetLi));
           }
@@ -199,6 +199,10 @@
           targetLi.find('a').click();
         });
 
+        self.tablist.find('a').on('blur.tabs', function() {
+          $(this).parent().removeClass('is-focused');
+        });
+
         // Setup the "more" function
         self.moreButton.on('click.tabs', function(e) {
           if (!(self.container.hasClass('has-more-button'))) {
@@ -210,6 +214,8 @@
           } else {
             self.buildPopupMenu();
           }
+        }).on('blur.tabs', function() {
+          $(this).removeClass('is-focused');
         });
 
         // Check to see if we need to add/remove the more button on resize
@@ -458,6 +464,8 @@
           }
         });
 
+        self.tablist.find('li:not(.separator)').removeClass('is-focused');
+
         // Invoke the popup menu on the button.
         self.moreButton.popupmenu({
           autoFocus: false,
@@ -506,7 +514,7 @@
             e.preventDefault();
             self.popupmenu.close();
             e.stopImmediatePropagation();
-            var tabIndexes = $('[tabindex]');
+            var tabIndexes = this.tablist.find('[tabindex]');
             tabIndexes.each(function(i) {
               if ($(this)[0] === self.tablist.find('li > a')[0]) {
                 $(tabIndexes[i-1]).focus();
@@ -567,6 +575,9 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
+        if (!li || li.length === 0) {
+          return true;
+        }
         if (this.tablist.scrollTop() > 0) {
           this.tablist.scrollTop(0);
         }

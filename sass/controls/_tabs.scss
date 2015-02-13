@@ -5,7 +5,7 @@
   position: relative;
 
   &.has-more-button > .tab-list {
-    width: calc(100% - 102px);
+    padding-right: 102px;
   }
 
   &.has-more-button > .tab-more {
@@ -22,7 +22,29 @@
       padding: 16px 14px;
     }
 
+    li.dismissible {
+      .icon {
+        position: static;
+      }
+    }
+
   }
+}
+
+@mixin tab-outline {
+  border: 1px solid transparent;
+  border-radius: 2px;
+  bottom: 7px;
+  content: '';
+  left: 7px;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  z-index: -1;
+}
+
+@mixin tab-outline-focus {
+  border-color: $tab-selected-color;
 }
 
 @mixin tab-after-off {
@@ -41,10 +63,6 @@
   background-color: $tab-hover-color;
   left: 12px;
   width: calc(100% - 24px);
-}
-
-@mixin tab-after-selected {
-
 }
 
 @mixin tab-after-selected-hover {
@@ -75,8 +93,12 @@
       vertical-align: middle;
     }
 
-    &:after {
+    &:before {
       @include tab-after-off;
+    }
+
+    &:after {
+      @include tab-outline;
     }
 
     &:hover {
@@ -91,14 +113,23 @@
       }
     }
 
-    &:hover:after {
+    &:hover:before {
       @include tab-after-hover;
+    }
+
+    &.is-focused {
+      &:after {
+        @include tab-outline-focus;
+      }
     }
 
     &.dismissible {
       .icon {
-        width: 24px;
         height: 24px;
+        margin-right: 4px;
+        position: relative;
+        top: -3px;
+        width: 24px;
       }
     }
 
@@ -127,24 +158,18 @@
         background-color: transparent;
       }
 
-      &:hover:after {
+      &:hover:before {
         background-color: transparent;
-      }
     }
+      }
 
     a {
-      border: 1px solid transparent;
-      border-radius: 2px;
       color: $font-color;
       display: inline-block;
       @include font-size(14);
       font-weight: normal;
-      padding: 6px 10px;
+      padding: 8px 11px 6px;
       text-decoration: none;
-
-      &:focus {
-        border-color: $tab-selected-color;
-      }
     }
 
     .count {
@@ -166,7 +191,13 @@
         fill: $tab-selected-color;
       }
 
-      &:after {
+      &:focus {
+        &:after {
+          @include tab-outline-focus;
+        }
+      }
+
+      &:before {
         @include tab-after-selected-hover;
       }
 
@@ -174,7 +205,7 @@
         background: rgba($tab-hover-color, 0); //background-color: transparent;
       }
 
-      &:hover:after {
+      &:hover:before {
         background: $primary-color;
       }
     }
@@ -189,8 +220,7 @@
 // More Button
 .tab-more {
   background-color: transparent;
-  border-bottom: 1px solid $tab-border-color;
-  border-radius: 2px 2px 0 0;
+  cursor: pointer;
   display: inline-block;
   max-width: 102px;
   padding: 5px 14px;
@@ -201,13 +231,17 @@
   visibility: hidden;
 
   &:after {
+    @include tab-outline;
+  }
+
+  &:before {
     @include tab-after-off;
   }
 
   &:hover {
     color: $tab-hover-color;
 
-    &:after {
+    &:before {
       @include tab-after-hover;
     }
   }
@@ -219,6 +253,11 @@
 
   &.popup-is-open,
   &.is-selected {
+
+    &:after {
+      @include tab-outline-focus;
+    }
+
     span {
       color: $tab-selected-color;
       text-decoration: none;
@@ -228,7 +267,7 @@
       fill: $tab-selected-color;
     }
 
-    &:after {
+    &:before {
       @include tab-after-selected-hover;
     }
   }
