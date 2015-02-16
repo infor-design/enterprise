@@ -72,6 +72,11 @@
           if (subNode.is('ul')) {
             subNode.attr('role', 'group').parent().addClass('folder');
             a.find('use').attr('xlink:href','#icon-folder-collapse');
+
+            // var linkCnt = subNode.find('li').length
+            //     linkHt = subNode.find('li').outerHeight();
+            // console.log('linkCnt: ', linkCnt);
+            // console.log('linkHt: ', linkHt);
           }
 
           if (li.is('[class^="icon"]')) {
@@ -93,6 +98,14 @@
         }
         node.attr({'tabindex': '0', 'aria-selected': 'true'}).parent().addClass('is-selected');
         this.element.find('a').not(node).attr({'tabindex': '-1', 'aria-selected': 'false'}).parent().removeClass('is-selected');
+        
+        console.log('node: ', node);
+
+        // var nodeUse = node.find('svg').find('use');
+        // var nodeUse = node.find('.icon').insert('<svg class="icon" focusable="false" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-folder-expand"></use></svg>');
+        var nodeUse = node.find('.icon');
+
+        console.log('nodeUse: ', nodeUse);
 
         if (focus) {
           node.focus();
@@ -100,11 +113,29 @@
         this.element.trigger('selected', [node]);
       },
       toggleNode: function(node) {
+        console.log('toggleNode');
         var next = node.next();
         if (next.is('ul[role="group"]')) {
           next.slideToggle(function() {
             next.toggleClass('is-open');
           });
+
+        var linkCnt = next.find('li').length
+            linkHt = next.find('li').outerHeight(),
+            groupH = linkCnt * linkHt,
+            group = node.nextElementSibling;
+
+        var width = window.getComputedStyle(
+          document.querySelector('.folder'), ':before'
+        )/*.getPropertyValue('width');*/
+        .style.setAttribute ("height", "500px");
+        console.log('width: ', width);
+
+          // next.closest('.folder:before').css('height', groupH);
+
+          //TRY THE FOLLOWING TO MANIPULATE THE PSEUDO ELEMENT
+          //http://stackoverflow.com/questions/4481485/changing-css-pseudo-element-styles-via-javascript
+          //http://stackoverflow.com/questions/26095149/why-is-document-queryselector-not-working-on-pseudo-element
         }
       },
       setupEvents: function  () {

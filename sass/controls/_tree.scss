@@ -25,7 +25,8 @@
 }
 
 .tree li.is-selected {
-  background-color: #E0E0E0;
+  // background-color: #E0E0E0;
+  
 }
 
 .tree li.folder {
@@ -36,10 +37,10 @@
 .tree li.folder:before {
   content: '';
   background: $switch-disabled-color;
-  height: 70%;
-  left: 15px;
+  // height: 72%;
+  left: 16px;
   position: absolute;
-  top: 17%;
+  top: 23px;
   width: 1px;
 }
 
@@ -52,7 +53,7 @@
   //   url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABGdBTUEAALGPC/xhBQAAAANQTFRFqqqqEX77+QAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CAII=") no-repeat 0 0 / 1px 100%,
   //   url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABGdBTUEAALGPC/xhBQAAAANQTFRFqqqqEX77+QAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CAII=") no-repeat 1px 14px / 9px 1px,
   //   url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAgAQMAAADpK4BZAAAABGdBTUEAALGPC/xhBQAAAANQTFRF4ODg8Oz87gAAAAxJREFUCNdjYKAMAAAAQAABZhdjsAAAAABJRU5ErkJggg==") repeat-x center top;
-  background-color: transparent;
+  // background-color: transparent;
 }
 
 .tree li.is-selected > a {
@@ -105,11 +106,6 @@
 // Icons
 .tree li svg {
   fill: transparent;
-
-  // height: 26px;
-  // margin-bottom: -8px;
-  // margin-left: 0;
-  // margin-right: 10px;
   margin: 0 10px -8px 0;
   stroke: $switch-disabled-color;
   width: 20px;
@@ -120,10 +116,4 @@
   fill: #333;
 }
 
-
-.icon-page {
-  a:before {
-    // content: url(../../images/svg/folder.svg);
-  }
-}
 
