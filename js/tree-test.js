@@ -157,17 +157,15 @@
 
         if (node.find('.icon').hasClass('expanded')) {
           console.log('expanded!');
-          $(this).replaceWith( '<svg class="icon" focusable="false" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-folder-expand"></use></svg>' );
+          // $(this).replaceWith( '<svg class="icon" focusable="false" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-folder-expand"></use></svg>' );
         } else {
           console.log('collapesed!');
-          $(this).replaceWith( '<svg class="icon" focusable="false" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-folder-collapse"></use></svg>' );
+          // $(this).replaceWith( '<svg class="icon" focusable="false" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-folder-collapse"></use></svg>' );
         }
 
-        var width = window.getComputedStyle(
-          document.querySelector('.folder'), ':before'
-        )/*.getPropertyValue('width');*/
-        .style.setAttribute ("height", "500px");
-        console.log('width: ', width);
+        // var width = window.getComputedStyle(document.querySelector('.folder'), ':before')//.getPropertyValue('width');
+        // .style.setAttribute ("height", "500px");
+        // console.log('width: ', width);
 
 
           // next.closest('.folder:before').css('height', groupH);
