@@ -1,0 +1,77 @@
+// Buttons
+//================================================== //
+
+.breadcrumb {
+
+  ul {
+    li {
+      display: inline-block;
+    }
+  }
+  
+  .hyperlink {
+    color: $font-color;
+    font-size: 16px;
+    font-weight: 100;
+    text-decoration: none;
+
+    &:visited {
+      color: $font-color;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      border: 1px solid $primary-btn-bg-color;
+      border-radius: 2px;
+      color: $primary-btn-bg-color;
+    }
+
+    &:active {
+      color: $primary-btn-active-bg-color;
+      text-decoration: underline;
+    }
+
+    &.current {
+      font-weight: 500;
+    }
+  }
+
+  .breadcrumb-arrow {
+    color: $slider-disabled-color;
+    position: relative;
+    top: -2px;
+    vertical-align: middle;
+  }
+  
+  &.test {
+    .hyperlink {
+      @include respond-to(tabletdown) {
+        display: none;
+      }
+
+      &.current,
+      &.home {
+        @include respond-to(tabletdown) {
+          display: inline-block;
+        }
+      }
+    }
+
+
+    .breadcrumb-arrow {
+      @include respond-to(tabletdown) {
+        display: none;
+      }
+
+      &.home {
+        @include respond-to(tabletdown) {
+          display: inline-block;
+        }
+      }
+    }
+  }
+  
+}
