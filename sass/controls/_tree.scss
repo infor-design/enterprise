@@ -25,22 +25,40 @@
 }
 
 .tree li.is-selected {
-  background-color: #E0E0E0;
+  // background-color: #E0E0E0;
 }
 
 .tree li.folder {
   position: relative;
 }
 
+@function folderHeight($value) {
+  @return $value - 30px;
+}
 
-.tree ul:before {
+// .tree ul:before {
+.tree ul.is-open:before {
 // .tree li.folder:before {
+
+  // content: '';
+  // background: $switch-disabled-color;
+  // height: 70%;
+  // height: 100%;
+  // left: 15px;
+  // position: absolute;
+  // top: 17%;
+  // width: 1px;
+
+
   content: '';
-  background: $switch-disabled-color;
-  height: 70%;
-  left: 15px;
+  background: #d8d8d8;
+  $heightp: 100px;
+
+  height: folderHeight($heightP);
+
+  left: 11px;
   position: absolute;
-  top: 17%;
+  top: 27px;
   width: 1px;
 }
 
@@ -105,27 +123,14 @@
 
 // Icons
 .tree li svg {
-  // fill: transparent;
   fill: $switch-disabled-color;
-
-  // height: 26px;
-  // margin-bottom: -8px;
-  // margin-left: 0;
-  // margin-right: 10px;
   margin: 0 10px -8px 0;
   stroke: $switch-disabled-color;
   width: 20px;
+  top: 3px;
 
 }
 
 .tree li.is-selected > a > svg {
   fill: #333;
 }
-
-
-.icon-page {
-  a:before {
-    // content: url(../../images/svg/folder.svg);
-  }
-}
-

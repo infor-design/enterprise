@@ -100,14 +100,25 @@
         this.element.trigger('selected', [node]);
       },
       toggleNode: function(node) {
-        console.log('toggleNode1');
         var next = node.next();
         if (next.is('ul[role="group"]')) {
             next.slideToggle(function() {
               next.toggleClass('is-open');
             });
-        console.log('toggleNode2');
         }
+
+        var linkCnt = next.find('> li').length
+        linkHt = next.find('> li > a').outerHeight(),
+        groupH = linkCnt * linkHt,
+        group = node.nextElementSibling;
+
+        console.log('next: ', next);
+        console.log("next.find('> li'): ", next.find('> li'));
+        console.log('linkCnt: ', linkCnt);
+        console.log('linkHt: ', linkHt);
+        console.log('groupH: ', groupH);
+        next.closest('.folder:before').css('height', groupH);
+
       },
       toggleIcon: function(node) {
         console.log('toggleIcon1');
