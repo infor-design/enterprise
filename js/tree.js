@@ -100,12 +100,17 @@
         this.element.trigger('selected', [node]);
       },
       toggleNode: function(node) {
+        console.log('toggleNode1');
         var next = node.next();
         if (next.is('ul[role="group"]')) {
-          next.slideToggle(function() {
-            next.toggleClass('is-open');
-          });
+            next.slideToggle(function() {
+              next.toggleClass('is-open');
+            });
+        console.log('toggleNode2');
         }
+      },
+      toggleIcon: function(node) {
+        console.log('toggleIcon1');
       },
       setupEvents: function  () {
         var self = this;
@@ -121,6 +126,7 @@
           var target = $(this);
           self.setSelectedNode(target, true);
           self.toggleNode(target);
+          self.toggleIcon(target);
           e.stopPropagation();
           return false; //Prevent Click from Going to Top
         });
