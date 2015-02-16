@@ -28,28 +28,39 @@
   position: relative;
 }
 
-.tree .link-wrapper{
-  position: relative;
+// .tree .link-wrapper{
+//   position: relative;
 
-  .side-line {
-    position: absolute;
-    top: 27px;
-    left: 10px;
-    height: calc(100% - 45px);
-    width: 1px;
-    background: dimgray;
-  }
-}
+//   .side-line {
+//     position: absolute;
+//     top: 27px;
+//     left: 10px;
+//     height: calc(100% - 45px);
+//     width: 1px;
+//     background: dimgray;
+//   }
+// }
+
+// .tree ul {
+//   left: 31px;
+//   .link-wrapper {
+//     // left: 30px;
+//     .side-line {
+//       left: 30px;
+//     }
+//   }
+// }
+
 
 // .tree ul:before {
 .tree ul.is-open:before {
-  content: '';
-  background: #d8d8d8;
-  height: 100%;
-  left: 11px;
-  position: absolute;
-  top: 27px;
-  width: 1px;
+  // content: '';
+  // background: #d8d8d8;
+  // height: 100%;
+  // left: 11px;
+  // position: absolute;
+  // top: 27px;
+  // width: 1px;
 }
 
 .tree > li.folder.is-selected {
@@ -111,6 +122,37 @@
   background-position: 0 0px, 0 15px;
   background-size: 1px 15px, 10px 1px;
 }
+
+.tree .link-wrapper{
+  position: relative;
+
+  .side-line {
+    position: absolute;
+    top: 27px;
+    left: 10px;
+    height: calc(100% - 45px);
+    width: 1px;
+    background: $switch-disabled-color;
+  }
+}
+
+.tree .level-1.is-open {
+  left: 11px;
+}
+
+.tree ul {
+  left: 31px;
+  .link-wrapper {
+    // left: 30px;
+    .side-line {
+      left: 30px;
+    }
+  }
+}
+
+// .tree > li > ul.is-open {
+//   left: 11px;
+// }
 
 // Icons
 .tree li svg {
