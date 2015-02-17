@@ -78,7 +78,7 @@
     left: 30px;
     overflow: hidden;
     position: relative;
-    padding-bottom: 5px;
+    padding-bottom: 8px;
 
     // Open Tree Nodes
     &.is-open {
@@ -108,7 +108,7 @@
       &:before {
         background-color: $tree-line-color;
         content: '';
-        height: calc(100% - 12px);
+        height: calc(100% - 15px);
         position: absolute;
         width: 1px;
       }
@@ -118,7 +118,7 @@
       ul:before {
         background-color: $tree-line-color;
         content: '';
-        height: calc(100% - 12px);
+        height: calc(100% - 15px);
         position: absolute;
         width: 1px;
       }
