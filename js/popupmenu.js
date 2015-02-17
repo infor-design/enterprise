@@ -42,6 +42,12 @@
         if (this.element.attr('data-popupmenu') && (this.settings.menu === null || this.settings.menu === undefined)) {
           this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
         }
+        // Backwards compatibility for "menuId" menu options coming from other controls
+        // that utilize the Popupmenu.
+        if (this.settings.menuId) {
+          this.settings.menu = this.settings.menuId;
+          this.settings.menuId = undefined;
+        }
       },
 
       //Add markip including Aria
