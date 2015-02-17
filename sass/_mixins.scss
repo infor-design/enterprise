@@ -62,7 +62,7 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
 }
 
 // vendor prefixed transitions for regular properties (non-vendor prefixed)
-@mixin transition($transitions-list) {
+@mixin transition($transitions-list...) {
   @each $prefix in $prefixes {
     #{$prefix}transition: $transitions-list;
   }
