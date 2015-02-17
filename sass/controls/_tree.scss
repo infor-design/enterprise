@@ -15,20 +15,6 @@
     color: $breadcrumb-color;
     font-size: 16px;
 
-    a:focus {
-      outline: none;
-      border: 1px solid $primary-color;
-      border-radius: 2px;
-      color: $primary-color;
-    }
-  }
-
-  .tree-btn {
-    color: $breadcrumb-color;
-    font-size: 16px;
-    font-weight: 100;
-    text-decoration: none;
-
     &:visited {
       color: $breadcrumb-color;
     }
@@ -48,9 +34,8 @@
       text-decoration: underline;
     }
 
-    &.current {
-      font-weight: 500;
-    }
+  }
+
   }
 
   li.folder {
