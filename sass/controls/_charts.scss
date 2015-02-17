@@ -124,7 +124,7 @@
 // Chart Specific Centering and Styling
 .chart-pie {
   display: inline-block;
-  height: 80%;
+  height: 98%;
   padding: 15px;
   width: 38%;
 
@@ -141,14 +141,42 @@
 
 .one-third .chart-pie {
   margin-top: 35px;
-  padding: 0px;
+  padding: 0;
   width: 53%;
+}
+
+.sparkline {
+  height: 70px;
+  margin: 50px auto;
+  position: relative;
+  width: 200px;
+
+  path {
+    fill: none;
+    stroke-width: 3px;
+  }
+
+  svg {
+    position: absolute;
+  }
+
+  .bar-rect {
+    fill: transparent;
+    stroke-width: 0;
+  }
+
+  .point {
+    stroke-width: 4.5;
+  }
+
 }
 
 // Media Queries
 @include respond-to(tablet) {
   .chart-pie {
+    height: 97%;
     margin-left: -50px;
+    margin-top: 5px;
     width: 56%;
   }
 

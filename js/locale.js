@@ -105,7 +105,8 @@
       if (!pattern) { //missing translations
         return undefined;
       }
-      var day = value.getDate(), month = value.getMonth(), year = value.getFullYear();
+      var day = value.getDate(), month = value.getMonth(), year = value.getFullYear(),
+        mins = value.getMinutes(), hours = value.getHours(), seconds = value.getSeconds();
 
       //Day of Month
       ret = pattern.replace('dd', this.pad(day, 2));
@@ -121,6 +122,14 @@
       ret = ret.replace('yyyy', year);
       ret = ret.replace('yy', year.toString().substr(2));
       ret = ret.replace('y', year);
+
+      //Time
+      ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
+      ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
+      ret = ret.replace('HH', hours);
+      ret = ret.replace('mm', mins);
+      ret = ret.replace('ss', seconds);
+      ret = ret.replace('a', (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
 
       return ret.trim();
     },

@@ -8,22 +8,22 @@
     </div>
 
     <script>
+      $(function() {
+      // Handler for .ready() called.
 
-      var output = $('#output');
-      var append = function (value) {
-        output.append('<span>' + value + '</span><br>');
-      };
+          var output = $('#output');
+          var append = function (value) {
+            output.append('<span>' + value + '</span><br>');
+          };
 
-      Locale.set('de');
-      debugger;
-      append(Locale.parseDate('11/8/2000'));
-      append(Locale.formatDate(new Date()));
-      append(Locale.formatDate(new Date(), {date: 'medium'}));
-      append(Locale.formatDate(new Date(), {date: 'long'}));
+      setTimeout(function () {
+        debugger;
+        append(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'}));
+        append(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {pattern: 'M.dd.yyyy HH:mm'}));
+      }, 1000);
 
-      Locale.set('de');
-      append(Locale.translate('Required'));
 
+      });
     </script>
 
   </div>

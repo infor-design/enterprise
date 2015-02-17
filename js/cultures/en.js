@@ -25,7 +25,8 @@
       dateFormat: {'seperator': '/', //Infered
                    'short': 'M/d/yyyy', //use four digit year
                    'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy'},
+                   'long': 'MMMM d, yyyy',
+                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
       days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated

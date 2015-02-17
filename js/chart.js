@@ -36,6 +36,7 @@
     };
 
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
+    this.greyColors = d3.scale.ordinal().range(['#7a7a7a', '#999999', '#bdbdbd', '#d8d8d8']);
 
     // Function to Add a Legend - TODO Remove unused params
     this.addLegend = function(series, position) {
@@ -87,6 +88,25 @@
       if (this.tooltip.length === 0) {
         this.tooltip = $('<div id="svg-tooltip" class="tooltip right is-hidden"><div class="arrow"></div><div class="tooltip-content"><p><b>32</b> Element</p></div></div>').appendTo('body');
       }
+    };
+
+    //Show Tooltip
+    this.showTooltip = function(x, y, content, arrow) {
+      this.tooltip.css({'left': x + 'px', 'top': y + 'px'})
+        .find('.tooltip-content').html(content);
+
+      this.tooltip.removeClass('bottom top left right').addClass(arrow);
+      this.tooltip.removeClass('is-hidden');
+    };
+
+    this.getTooltipSize = function(content) {
+      this.tooltip.find('.tooltip-content').html(content);
+      return {height: this.tooltip.outerHeight(), width: this.tooltip.outerWidth()};
+    };
+
+    //Hide Tooltip
+    this.hideTooltip = function() {
+      d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
     };
 
     this.Bar = function(dataset) {
@@ -234,7 +254,7 @@
       charts.appendTooltip();
     };
 
-    charts.VerticalBar = function(dataset, isNormalized) {
+    this.VerticalBar = function(dataset, isNormalized) {
       //Original http://jsfiddle.net/datashaman/rBfy5/2/
       var maxTextWidth, width, height, series, rects, svg, stack,
           xMax, xScale, yScale, yAxis, yMap, xAxis, groups;
@@ -435,7 +455,7 @@
 
       })
       .on('mouseleave', function () {
-        d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
+        charts.hideTooltip();
       })
       .on('click', function (d, i) {
         var bar = d3.select(this);
@@ -475,7 +495,7 @@
       return $(container);
     };
 
-    charts.Pie = function(chartData, isDonut) {
+    this.Pie = function(chartData, isDonut) {
       var centerLabel = chartData[0].centerLabel;
       chartData = chartData[0].data;
       var radius, svg, margin, arc, width, height;
@@ -514,17 +534,13 @@
               .enter().append('g')
                 .attr('class', 'arc')
                 .on('mousemove', function (d) {
-                    var tooltip = d3.select('#svg-tooltip');
-
-                    tooltip.style('left', d3.event.pageX + 20 + 'px')
-                      .style('top', d3.event.pageY-margin.top-20 + 'px')
-                      .select('.tooltip-content')
-                      .html('<p>' + d.data.name + '<b> ' + d.data.percent + '</b></p>');
-
-                    tooltip.classed('is-hidden', false);
+                  var x = d3.event.pageX + 20,
+                    y = d3.event.pageY-margin.top-20,
+                    content = '<p>' + d.data.name + '<b> ' + d.data.percent + '</b></p>';
+                  charts.showTooltip(x, y, content, 'right');
                 })
                 .on('mouseleave', function () {
-                    d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
+                  charts.hideTooltip();
                 })
                 .on('click', function (d, i) {
                   var color = charts.colors(i);
@@ -575,14 +591,77 @@
       return $(container);
     };
 
-    /* Donut Chart - Same as Pie but inner radius */
-    charts.Ring = function(chartData) {
+    // Donut Chart - Same as Pie but inner radius
+    this.Ring = function(chartData) {
       return charts.Pie(chartData, true);
     };
 
-    /* Column Chart - Sames as bar but reverse axis */
-    charts.Column = function(chartData) {
+    // Column Chart - Sames as bar but reverse axis
+    this.Column = function(chartData) {
       return charts.Bar(chartData, true);
+    };
+
+    this.Sparkline = function(chartData) {
+       // calculate max and min values in the NLWest data
+      var max=0, min=0, len=0, i;
+
+      for (i = 0; i < chartData.length; i++) {
+        min = d3.min([d3.min(chartData[i].data), min]);
+        max = d3.max([d3.max(chartData[i].data), max]);
+        len = d3.max([chartData[i].data.length, len]);
+      }
+
+      var h = 60,
+        w = 250,
+        p = 10,
+        x = d3.scale.linear().domain([0, len]).range([p, w - p]),
+        y = d3.scale.linear().domain([min, max]).range([h - p, p]),
+        line = d3.svg.line()
+                     .x(function(d, i) { return x(i); })
+                     .y(function(d) { return y(d); });
+
+      charts.appendTooltip();
+      var svg = d3.select(container)
+        .append('svg')
+        .attr('height', h)
+        .attr('width', w);
+
+      for (i = 0; i < chartData.length; i++) {
+        var set = chartData[i],
+          g = svg.append('g');
+          g.append('path')
+           .attr('d', line(set.data))
+           .attr('stroke', charts.greyColors(i))
+           .attr('class', 'team');
+         // g.append('title')
+         //  .text(set.name);
+      }
+
+      //Add Peak Dot
+      svg.selectAll('.point')
+        .data(chartData[0].data)
+      .enter()
+        .append('circle')
+        .attr('class', 'point')
+        .attr('cx', function(d, i) { return x(i); })
+        .attr('cy', function(d) { return y(d); })
+        .style('fill', '#786186')
+        .style('stroke', '#f86f11')
+        .attr('r', function(d) {
+          // Could do: First and Last (i === (data.length - 1) || i === 0)
+          // But instead we show max
+          return (max === d) ? 4 : 0;
+        }).on('mouseenter', function(d) {
+          var rect = d3.select(this)[0][0].getBoundingClientRect(),
+            content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> Peak: ': '') + '<b>' + d  + '</b></p>',  //TODO Localize Max
+            size = charts.getTooltipSize(content),
+            x = rect.x - (size.width /2) + 6,
+            y = rect.y - size.height - 18;
+
+          charts.showTooltip(x, y, content, 'top');
+        }).on('mouseleave', function() {
+          charts.hideTooltip();
+        });
     };
   };
 

@@ -24,7 +24,6 @@
     line-height: 50px;
     padding: 13px 20px;
     position: relative;
-    z-index: 11;
 
     > h2,
     > h1,
@@ -81,6 +80,7 @@
 // Centering
 .widget-content.l-center,
 .card-content.l-center {
+  overflow: hidden;
   text-align: center;
 }
 
