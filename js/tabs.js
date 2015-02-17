@@ -171,6 +171,22 @@
           } else {
             self.buildPopupMenu();
           }
+        }).on('keydown.tabs', function(e) {
+
+          switch(e.which) {
+            case 37: // left
+            case 38: // up
+              e.preventDefault();
+              self.findLastVisibleTab();
+              break;
+            case 13: // enter
+              e.preventDefault(); //jshint ignore:line
+            case 39: // right
+            case 40: // down
+              self.buildPopupMenu();
+              break;
+          }
+
         });
 
         // Check to see if we need to add/remove the more button on resize
@@ -183,10 +199,12 @@
       },
 
       handleClick: function(li) {
-        var nonVisibleExcludes = ':not(.separator):not(:hidden)';
+        var nonVisibleExcludes = ':not(.separator):not(:hidden)',
+          a = li.children('a');
+
 
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
-        li.addClass('is-selected').children('a').focus();
+        li.addClass('is-selected');
 
         // Don't activate a dropdown tab, but open its popupmenu.
         if (li.is('.has-popupmenu')) {
@@ -198,6 +216,7 @@
         if (this.popupmenu) {
           this.popupmenu.close();
         }
+        a.focus();
         this.focusBar(li);
       },
 
@@ -341,6 +360,9 @@
           'aria-expanded': 'false',
           'tabindex': '-1'
         }).parent().removeClass('is-selected');
+        this.moreButton.attr({
+          'tabindex': '-1'
+        });
 
         //show current tab
         if (!this.isTabOverflowed(a.parent())) {
@@ -349,6 +371,10 @@
             'aria-expanded': 'true',
             'tabindex': '0'
           }).parent().addClass('is-selected');
+        } else {
+          this.moreButton.attr({
+            'tabindex': '0'
+          });
         }
       },
 
