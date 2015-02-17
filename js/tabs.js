@@ -56,6 +56,9 @@
       },
 
       setup: function() {
+        // Used by the window.resize event to correctly identify the tabs
+        this.tabsIndex = $('.tab-container').index(this.element);
+
         if (!this.settings.tabCounts && this.element.attr('data-tab-counts')) {
           this.settings.tabCounts = this.element.attr('data-tab-counts') === 'true';
         }
@@ -190,7 +193,7 @@
         });
 
         // Check to see if we need to add/remove the more button on resize
-        $(window).on('resize.tabs', function() {
+        $(window).on('resize.tabs' + this.tabsIndex, function() {
           self.setOverflow();
           self.focusBar();
         });
@@ -760,13 +763,16 @@
           .removeAttr('aria-selected')
           .removeAttr('tabindex');
 
-        $(window).off('resize.tabs');
+        $(window).off('resize.tabs' + this.tabsIndex);
+        this.tabsIndex = undefined;
 
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
         }
-        this.moreButton.remove();
+        this.moreButton.off().remove();
+        this.moreButton = undefined;
         this.animatedBar.remove();
+        this.animatedBar = undefined;
 
         $.removeData(this.element[0], pluginName);
       }

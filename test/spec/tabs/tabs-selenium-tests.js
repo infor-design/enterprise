@@ -13,10 +13,6 @@ describe('Tabs [selenium]', function(){
     TAB_4 = '#tab4',
     NEW_TAB = '#newTab';
 
-  function getTabList() {
-    return $('#tabs-regular').data('tabs');
-  }
-
   function addTab() {
     var content = '<h2>New Tab Content</h2><p>Here is some new tab content</p>',
       opts = {
@@ -61,12 +57,6 @@ describe('Tabs [selenium]', function(){
         globals.noError(err);
         should.exist(result);
         result.should.equal(true);
-      })
-      // Check to see if the more button still exists (should have been removed via the destroy() method)
-      .isExisting(TABS + ' .tab-more', function(err, result) {
-        globals.noError(err);
-        should.exist(result);
-        result.should.equal(false);
       })
       .call(done);
   });
