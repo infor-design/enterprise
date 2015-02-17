@@ -29,21 +29,6 @@
   position: relative;
 }
 
-
-
-
-.tree > li.folder.is-selected {
-  // background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAgAQMAAADpK4BZAAAABGdBTUEAALGPC/xhBQAAAANQTFRF4ODg8Oz87gAAAAxJREFUCNdjYKAMAAAAQAABZhdjsAAAAABJRU5ErkJggg==") repeat-x scroll center top rgba(0, 0, 0, 0);
-}
-
-.tree ul > li.folder.is-selected {
-  // background:
-  //   url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABGdBTUEAALGPC/xhBQAAAANQTFRFqqqqEX77+QAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CAII=") no-repeat 0 0 / 1px 100%,
-  //   url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABGdBTUEAALGPC/xhBQAAAANQTFRFqqqqEX77+QAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CAII=") no-repeat 1px 14px / 9px 1px,
-  //   url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAgAQMAAADpK4BZAAAABGdBTUEAALGPC/xhBQAAAANQTFRF4ODg8Oz87gAAAAxJREFUCNdjYKAMAAAAQAABZhdjsAAAAABJRU5ErkJggg==") repeat-x center top;
-  // background-color: transparent;
-}
-
 .tree li.is-selected > a {
   color: #333;
 }
@@ -110,18 +95,16 @@
 }
 
 .tree ul {
+
   left: 31px;
+
   .link-wrapper {
-    // left: 30px;
     .side-line {
       left: 30px;
     }
   }
-}
 
-// .tree > li > ul.is-open {
-//   left: 11px;
-// }
+}
 
 // Icons
 .tree li svg {
@@ -129,8 +112,8 @@
   fill: $switch-disabled-color;
   margin: 0 10px -8px 0;
   stroke: $switch-disabled-color;
-  width: 20px;
   top: 3px;
+  width: 20px;
 
 }
 
