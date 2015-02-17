@@ -226,13 +226,13 @@
           li = a.parent();
 
         this.tablist.children('li' + allExcludes).add(this.moreButton).removeClass('is-selected');
-        li.addClass('is-focused');
 
         if (this.isTabOverflowed(li)) {
           this.buildPopupMenu(a.attr('href'));
           this.moreButton.addClass('is-focused is-selected');
           this.focusBar(this.moreButton);
         } else {
+          li.addClass('is-focused');
           if (li.not('.has-popupmenu').length > 0) {
             this.activate(li.find('a').attr('href'));
           }

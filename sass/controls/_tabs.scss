@@ -225,11 +225,6 @@
 
   &.popup-is-open,
   &.is-selected {
-
-    &:after {
-      @include tab-outline-focus;
-    }
-
     span {
       color: $tab-selected-color;
       text-decoration: none;
@@ -240,8 +235,20 @@
     }
   }
 
-  &.popup-is-open span {
-    text-decoration: none;
+  &.is-selected:focus {
+    &:after {
+      @include tab-outline-focus;
+    }
+  }
+
+  &.popup-is-open {
+    &:after {
+      @include tab-outline-focus;
+    }
+
+    span {
+      text-decoration: none;
+    }
   }
 
   // Position Elements in menu
