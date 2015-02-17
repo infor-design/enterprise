@@ -3,20 +3,20 @@
 
 .breadcrumb {
 
-  ul {
+  ol {
     li {
       display: inline-block;
     }
   }
-  
+
   .hyperlink {
-    color: $font-color;
+    color: $breadcrumb-color;
     font-size: 16px;
     font-weight: 100;
     text-decoration: none;
 
     &:visited {
-      color: $font-color;
+      color: $breadcrumb-color;
     }
 
     &:hover {
@@ -24,13 +24,13 @@
     }
 
     &:focus {
-      border: 1px solid $primary-btn-bg-color;
+      border: 1px solid $primary-color;
       border-radius: 2px;
-      color: $primary-btn-bg-color;
+      color: $primary-color;
     }
 
     &:active {
-      color: $primary-btn-active-bg-color;
+      color: $breadcrumb-active-bg-color;
       text-decoration: underline;
     }
 
@@ -40,38 +40,24 @@
   }
 
   .breadcrumb-arrow {
-    color: $slider-disabled-color;
+    color: $breadcrumb-disabled-color;
     position: relative;
     top: -2px;
     vertical-align: middle;
   }
-  
-  &.test {
-    .hyperlink {
-      @include respond-to(tabletdown) {
-        display: none;
-      }
 
-      &.current,
-      &.home {
-        @include respond-to(tabletdown) {
-          display: inline-block;
-        }
-      }
-    }
+}
 
+//TODO Confirm Responsive and Style on a Header
 
-    .breadcrumb-arrow {
-      @include respond-to(tabletdown) {
-        display: none;
-      }
+.header .breadcrumb {
 
-      &.home {
-        @include respond-to(tabletdown) {
-          display: inline-block;
-        }
-      }
-    }
+  .hyperlink {
+    color: #ffffff !important;
+    margin-left: 10px;
   }
-  
+
+  svg {
+    fill: #ffffff;
+  }
 }

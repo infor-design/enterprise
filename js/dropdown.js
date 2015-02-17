@@ -169,7 +169,7 @@
           }
           selectedOpts.each(function(i) {
             var option = $(this),
-              listOption = $('<li id="list-option'+ i +'" role="listitem" class="dropdown-option selected" tabindex="-1">'+ option.html()+ '</li>')
+              listOption = $('<li id="list-option'+ i +'" role="listitem" class="dropdown-option is-selected" tabindex="-1">'+ option.html()+ '</li>')
                 .attr({'aria-selected': 'true'});
             setOptions(option, listOption);
             self.listUl.append(listOption);
@@ -197,7 +197,7 @@
           self.listUl.append(listOption);
           listOption.attr({'aria-selected':'false'});
           if (option.is(':selected')) {
-            listOption.addClass('selected').attr({'aria-selected':'true', 'tabindex': '0'});
+            listOption.addClass('is-selected').attr({'aria-selected':'true', 'tabindex': '0'});
           }
 
           setOptions(option, listOption);
@@ -448,8 +448,8 @@
             if (selectedIndex > 0) {
               next = $(options[selectedIndex - 1]);
               this.highlightOption(next);
-              next.parent().find('li').removeClass('is-focused');
-              next.addClass('is-focused');
+              next.parent().find('.is-selected').removeClass('is-selected');
+              next.addClass('is-selected');
             }
 
             e.stopPropagation();
@@ -460,8 +460,8 @@
             if (selectedIndex < options.length - 1) {
               next = $(options[selectedIndex + 1]);
               this.highlightOption(next);
-              next.parent().find('li').removeClass('is-focused');
-              next.addClass('is-focused');
+              next.parent().find('.is-selected').removeClass('is-selected');
+              next.addClass('is-selected');
             }
 
             e.stopPropagation();
@@ -550,7 +550,7 @@
 
       // Actually Show The List
       openList: function () {
-        var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant +'"]') : this.list.find('.selected'),
+        var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant +'"]') : this.list.find('.is-selected'),
             self =  this;
 
         if (current.length > 0) {
@@ -824,7 +824,7 @@
             val = $.grep(val, function(optionValue) {
               return optionValue !== code;
             });
-            li.removeClass('selected').attr({'aria-selected': 'false'});
+            li.removeClass('is-selected').attr({'aria-selected': 'false'});
             this.previousActiveDescendant = undefined;
             isAdded = false;
           } else {
@@ -834,7 +834,7 @@
 
             val = typeof val === 'string' ? [val] : val;
             val.push(code);
-            li.addClass('selected').attr({'aria-selected': 'true'});
+            li.addClass('is-selected').attr({'aria-selected': 'true'});
             this.previousActiveDescendant = option.val();
           }
 
@@ -845,7 +845,7 @@
         } else {
           // Working with a single select
           val = code;
-          li.addClass('selected').attr({'aria-selected': 'true'});
+          li.addClass('is-selected').attr({'aria-selected': 'true'});
           this.previousActiveDescendant = option.val();
           text = option.text();
         }
@@ -897,7 +897,7 @@
               if (option !== null && option !== undefined) {
                 list += '<option' + (option.id === undefined ? '' : ' id="' + option.id.replace('"', '\'') + '"') +
                         (option.value !== undefined ? ' value="' + option.value.replace('"', '\'') + '"' : isString ? ' value="' + option.replace('"', '\'') + '"' : '') +
-                        (option.value === val ? ' selected ' : '') +
+                        (option.value === val ? ' is-selected ' : '') +
                         '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : isString ? option : '') + '</option>';
               }
             }

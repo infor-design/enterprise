@@ -245,6 +245,7 @@ https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm
 
 Usefull Links:
 http://accessibility.psu.edu/protocol
+http://www.paciellogroup.com/blog/2010/04/html5-and-the-myth-of-wai-aria-redundance/
 
 ### Things to Test
 

@@ -43,8 +43,10 @@
       padding: 13px 15px;
     }
 
-    tr:hover {
+    tr:hover,
+    tr:focus {
       background-color: $menu-hover-color;
+      outline: none;
       transition: background-color .15s ease 0s;
     }
 
@@ -61,11 +63,14 @@
     border-bottom: 1px solid #e5e5e5;
     color: #1a1a1a;
     padding: 15px 20px;
-  }
 
-  li:hover {
-    background-color: $menu-hover-color;
-    transition: background-color .15s ease 0s;
+    &:hover,
+    &:focus {
+      background-color: $menu-hover-color;
+      outline: none;
+      @include transition(background-color .15s ease 0s);
+    }
+
   }
 
   p {
@@ -82,8 +87,7 @@
   li.is-selected,
   tr.is-selected {
     background-color: $azure01; //bde7ff
-    border-left: 3px solid $azure06;
-    padding: 15px 20px 15px 17px;
+    padding: 15px 20px;
 
     &:hover {
       background-color: $azure01;
@@ -91,8 +95,7 @@
   }
 
   tr.is-selected td:first-child {
-    border-left: 6px solid $azure06;
-    padding: 13px 12px;
+    padding: 13px 15px;
   }
 
   // Selection Checkboxes
@@ -103,5 +106,53 @@
     + p {
       margin-left: 35px;
     }
+  }
+
+  &.is-muliselect li:before {
+    @include checkbox-unchecked-before-style;
+    margin-left: -39px;
+    margin-right: 20px;
+  }
+
+  &.is-muliselect li {
+    text-indent: 42px;
+
+    &.is-selected:before {
+      @include checkbox-checked-before-style;
+    }
+
+    &.is-selected:after {
+      @include checkbox-checked-after-style;
+      @include css3(transform-origin, -11px top 0);
+      @include checkbox-animation;
+      left: 30px;
+      margin-top: -19px;
+    }
+  }
+}
+
+.listview-toolbar {
+  background-color: #0c7ad8;
+  border-radius: 2px 2px 0 0;
+  display: none;
+  height: 0;
+  margin: -50px 0 0;
+  position: absolute;
+  @include transition(height .75s ease 0s);
+  text-align: right;
+  width: 100%;
+  z-index: 20;
+
+  &.is-visible {
+    height: 52px;
+  }
+
+  button {
+    color: $inverse-color;
+    @include font-size(12);
+    font-weight: bold;
+    margin-right: 20px;
+    padding-top: 20px;
+    text-transform: uppercase;
   }
 }
