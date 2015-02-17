@@ -36,8 +36,6 @@
 
   }
 
-  }
-
   li.folder {
     position: relative;
   }
@@ -59,6 +57,7 @@
     left: 30px;
     overflow: hidden;
     position: relative;
+    padding-bottom: 5px;
 
     // Open Tree Nodes
     &.is-open {
@@ -88,7 +87,7 @@
       &:before {
         background-color: #d8d8d8;
         content: '';
-        height: calc(100% - 7px);
+        height: calc(100% - 12px);
         position: absolute;
         width: 1px;
       }
@@ -98,7 +97,7 @@
       ul:before {
         background-color: #d8d8d8;
         content: '';
-        height: calc(100% - 7px);
+        height: calc(100% - 12px);
         position: absolute;
         width: 1px;
       }
