@@ -2,8 +2,6 @@
 //================================================== //
 
 .tree {
-  border-right: 1px solid $tree-border-color;
-  width: 210px;
 
   // Tree Items
   a {
@@ -11,115 +9,77 @@
     border-radius: 2px;
     color: #666666;
     font-family: $font-regular;
+    font-weight: 100;
     @include font-size(16);
     line-height: 32px;
     padding: 5px;
     text-decoration: none;
-    font-weight: 100;
-  }
 
-  //TODO: Maybe blue border
-  a:focus {
-
-  }
-}
-
-
-.tree li.folder {
-  position: relative;
-}
-
-.tree li.is-selected > a {
-  color: #333;
-}
-
-.tree li.is-droptarget a {
-  color: white;
-}
-
-.tree a:focus {
-  outline: none;
-}
-
-.tree ul {
-  overflow: hidden;
-  position: relative;
-  left: 11px;
-  display: none;
-}
-
-.tree ul.is-open {
-  display: block;
-}
-
-.tree ul.is-open li {
-  position: relative;
-}
-
-
-.tree ul.is-open a {
-  margin: 0 0 0 14px;
-}
-
-.tree ul.is-open a:before {
-  content: '';
-  background: $switch-disabled-color;
-  height: 1px;
-  left: -16px;
-  position: absolute;
-  top: 10px;
-  width: 20px;
-}
-
-
-.tree ul li:last-child {
-  background-position: 0 0px, 0 15px;
-  background-size: 1px 15px, 10px 1px;
-}
-
-.tree .link-wrapper{
-  position: relative;
-
-  .side-line {
-    position: absolute;
-    top: 27px;
-    left: 10px;
-    height: calc(100% - 45px);
-    width: 1px;
-    background: $switch-disabled-color;
-  }
-}
-
-.tree .level-1.is-open {
-  left: 11px;
-}
-
-.tree ul {
-
-  left: 31px;
-
-  .link-wrapper {
-    .side-line {
-      left: 30px;
+    a:focus {
+      outline: none;
     }
   }
 
+  li.folder {
+    position: relative;
+  }
+
+  // Selected State
+  li.is-selected {
+    a {
+      color: #333333;
+    }
+
+    svg {
+      stroke: #1a1a1a;
+    }
+  }
+
+  // Sub Nodes
+  ul {
+    display: none;
+    left: 31px;
+    overflow: hidden;
+    position: relative;
+
+    // Open Tree Nodes
+    &.is-open {
+      display: block;
+
+      li {
+        position: relative;
+      }
+
+      a {
+        margin: 0 0 0 14px;
+
+        &:before {
+          background-color: #d8d8d8;
+          content: '';
+          height: 1px;
+          left: -16px;
+          position: absolute;
+          top: 20px;
+          width: 29px;
+        }
+      }
+
+      // The Lines
+      ul:before {
+        background-color: #d8d8d8;
+        content: '';
+        height: calc(100% - 20px);
+        position: absolute;
+        width: 1px;
+      }
+    }
+  }
+
+  // Icons
+  svg {
+    margin: 0 10px -8px 0;
+    stroke: #1a1a1a;
+    top: 3px;
+    width: 20px;
+  }
 }
-
-// Icons
-.tree li svg {
-
-  fill: $switch-disabled-color;
-  margin: 0 10px -8px 0;
-  stroke: $switch-disabled-color;
-  top: 3px;
-  width: 20px;
-
-}
-
-.tree li.is-selected > a > svg {
-  fill: #333;
-}
-
-
-
