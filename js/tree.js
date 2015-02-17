@@ -102,15 +102,12 @@
       },
       toggleNode: function(node) {
         var next = node.next();
+
         if (next.is('ul[role="group"]')) {
-          next.addClass('is-open').slideToggle();
+          next.slideToggle(function () {
+            next.addClass('is-open');
+          });
         }
-
-        var linkCnt = next.find('> li').length,
-        linkHt = next.find('> li > a').outerHeight(),
-        groupH = linkCnt * linkHt;
-
-        next.closest('.folder:before').css('height', groupH);
       },
 
       setupEvents: function  () {

@@ -8,7 +8,6 @@
     border: 1px solid transparent;
     border-radius: 2px;
     color: #666666;
-    font-family: $font-regular;
     font-weight: 100;
     @include font-size(16);
     line-height: 32px;
@@ -68,7 +67,7 @@
       ul:before {
         background-color: #d8d8d8;
         content: '';
-        height: calc(100% - 20px);
+        height: calc(100% - 16px);
         position: absolute;
         width: 1px;
       }
