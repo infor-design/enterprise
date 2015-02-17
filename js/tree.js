@@ -105,9 +105,18 @@
 
         if (next.is('ul[role="group"]')) {
           next.slideToggle(function () {
-            next.addClass('is-open');
+            next.toggleClass('is-open')
           });
         }
+
+        if(next.hasClass('is-open')){
+          node.find('use').attr('xlink:href', '#icon-folder-expand' );
+        } else {
+          node.find('use').attr('xlink:href', '#icon-folder-collapse' );
+        }
+
+        // .find('.folder use')
+        // .attr('xlink:href', next.hasClass('is-open') ? '#icon-folder-expand' : '#icon-folder-collapse');
       },
 
       setupEvents: function  () {
