@@ -68,6 +68,10 @@
             break;
         }
 
+        if (this.menu.length === 0) {
+          throw new Error('Could not generate PopupMenu Control for element ' + this.element.id + ' using menu option ' + this.settings.menu + '.  ');
+        }
+
         // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
         // to prevent containment issues.
         if (this.menu.parent().not('body').length > 0) {
