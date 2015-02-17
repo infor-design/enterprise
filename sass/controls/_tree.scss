@@ -117,6 +117,10 @@
 
 }
 
+.tree li svg.expanded {
+  display: none;
+}
+
 .tree li.is-selected > a > svg {
   fill: #333;
 }
