@@ -8,30 +8,37 @@
   a {
     border: 1px solid transparent;
     border-radius: 2px;
-    font-weight: 100;
+    font-weight: 400;
     @include font-size(16);
     padding: 5px;
     text-decoration: none;
-    color: $breadcrumb-color;
-    font-size: 16px;
+    color: $tree-link-color;
 
     &:visited {
-      color: $breadcrumb-color;
+      color: $tree-link-color;
     }
 
     &:hover {
-      text-decoration: underline;
+      color: $tree-link-color;
     }
 
     &:focus {
-      border: 1px solid $primary-color;
+      border: 1px solid $tree-selected-color;
       border-radius: 2px;
-      color: $primary-color;
+      color: $tree-selected-color;
     }
 
     &:active {
-      color: $breadcrumb-active-bg-color;
-      text-decoration: underline;
+      border: 1px solid transparent;
+      color: $tree-selected-color;
+    }
+
+    &.disabled {
+      color: $tree-disabled-color;
+
+      svg {
+        stroke: $tree-disabled-color;
+      }
     }
 
   }
@@ -48,6 +55,20 @@
 
     svg {
       stroke: #1a1a1a;
+    }
+
+    > a {
+      color: $tree-selected-color;
+
+      svg {
+        stroke: $tree-selected-color;
+      }
+    }
+
+    &.folder {
+      a {
+        border: 1px solid transparent;
+      }
     }
   }
 
@@ -85,7 +106,7 @@
 
       // The Lines
       &:before {
-        background-color: #d8d8d8;
+        background-color: $tree-line-color;
         content: '';
         height: calc(100% - 12px);
         position: absolute;
@@ -95,7 +116,7 @@
 
 
       ul:before {
-        background-color: #d8d8d8;
+        background-color: $tree-line-color;
         content: '';
         height: calc(100% - 12px);
         position: absolute;
@@ -113,7 +134,7 @@
   // Icons
   svg {
     margin: 0 10px -8px 0;
-    stroke: #1a1a1a;
+    stroke: $tree-icon-color;
     top: 3px;
     width: 20px;
   }
