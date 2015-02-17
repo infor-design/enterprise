@@ -62,9 +62,10 @@ describe('Locale [mocha]', function(){
 
   it('should format time', function(){
     Locale.set('en');    //year, month, day, hours, mins , secs
-    Locale.formatDate(new Date(2000, 10, 8, 13, 40)).should.equal('08.11.2000 1:40 PM');
+    Locale.formatDate(new Date(2000, 10, 8, 13, 40), {date: 'datetime'}).should.equal('11/8/2000 1:40 PM');
     Locale.set('de-DE');
-    Locale.formatDate(new Date(2000, 11, 1, 13, 40)).should.equal('01.12.2000 13:40');
+    Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'}).should.equal('01.12.2000 13:40');
+    Locale.formatDate(new Date(2000, 11, 1, 13, 40), {pattern: 'M.dd.yyyy HH:mm'}).should.equal('12.01.2000 13:40');
   });
 
   it('should be able to parse dates', function(){

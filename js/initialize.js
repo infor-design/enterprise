@@ -12,12 +12,12 @@
 }(function ($) {
 
   $.fn.initialize = function(locale) {
+    console.log('x');
     var self = this;
 
     if (!locale) {
-      locale = 'en';
+      locale = 'de-DE';
     }
-
     //Set Locale
     Locale.set(locale).done(function () {
       var returnObj;
