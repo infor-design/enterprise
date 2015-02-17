@@ -3,6 +3,8 @@
 
 .tree {
 
+
+
   // Tree Items
   a {
     border: 1px solid transparent;
@@ -10,7 +12,7 @@
     color: #666666;
     font-weight: 100;
     @include font-size(16);
-    line-height: 32px;
+    // line-height: 32px;
     padding: 5px;
     text-decoration: none;
 
@@ -46,6 +48,7 @@
       display: block;
 
       li {
+        margin: 6px 0 0;
         position: relative;
       }
 
@@ -56,7 +59,7 @@
           background-color: #d8d8d8;
           content: '';
           height: 1px;
-          left: -16px;
+          left: -6px;
           position: absolute;
           top: 20px;
           width: 29px;
@@ -64,14 +67,34 @@
       }
 
       // The Lines
+      &:before {
+        background-color: #d8d8d8;
+        content: '';
+        height: calc(100% - 7px);
+        // height: calc(100% - 16px);
+        // height: 100%;
+        position: absolute;
+        width: 1px;
+      }
+
+
+
       ul:before {
         background-color: #d8d8d8;
         content: '';
-        height: calc(100% - 16px);
+        height: calc(100% - 7px);
+        // height: calc(100% - 16px);
+        // height: 100%;
         position: absolute;
         width: 1px;
       }
     }
+  }
+
+  .root {
+    left: 16px;
+    overflow: hidden;
+    position: relative;
   }
 
   // Icons
