@@ -64,14 +64,15 @@
 
           //adds role=group' to all subnodes
           subNode = a.next();
+
           //Inject Icons
           if (a.children('svg').length === 0) {
-            a.prepend('<svg class="icon collapsed" focusable="false" aria-hidden="true"><use xlink:href="#icon-document"></use></svg><svg class="icon expanded" focusable="false" aria-hidden="true"><use xlink:href="#icon-folder-expand"></use></svg>');
+            a.prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true"><use xlink:href="#icon-document"></use></svg>');
           }
 
           if (subNode.is('ul')) {
             subNode.attr('role', 'group').parent().addClass('folder');
-            a.find('use').eq(0).attr('xlink:href','#icon-folder-collapse');
+            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-folder-collapse' : '#icon-folder-expand');
           }
 
           if (li.is('[class^="icon"]')) {
@@ -101,38 +102,22 @@
       },
       toggleNode: function(node) {
         var next = node.next();
+
         if (next.is('ul[role="group"]')) {
-          next.slideToggle(function() {
-            next.toggleClass('is-open');
+          next.slideToggle(function () {
+            next.addClass('is-open');
           });
         }
-
-        var linkCnt = next.find('> li').length
-        linkHt = next.find('> li > a').outerHeight(),
-        groupH = linkCnt * linkHt,
-        group = node.nextElementSibling;
-        next.closest('.folder:before').css('height', groupH);
-
-        console.log('node: ', node);
-        console.log('node.find("use"): ', node.find('use'));
-
-        node.find('svg').toggle();
-        /*node.find('svg').each(function(){
-          $(this).toggleClass('hidden');
-          $(this).addClass('non-hidden');
-        })*/
       },
-      toggleIcon: function(node) {
-        console.log('toggleIcon1');
-      },
+
       setupEvents: function  () {
         var self = this;
         self.element.on('updated', function () {
           self.setupTree();
         });
       },
+
       handleKeys: function () {
-        console.log('handleKeys');
 
         //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
         var self = this;
@@ -141,7 +126,6 @@
           var target = $(this);
           self.setSelectedNode(target, true);
           self.toggleNode(target);
-          self.toggleIcon(target);
           e.stopPropagation();
           return false; //Prevent Click from Going to Top
         });
