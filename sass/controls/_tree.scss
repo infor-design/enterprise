@@ -8,11 +8,11 @@
   a {
     border: 1px solid transparent;
     border-radius: 2px;
-    font-weight: 400;
+    color: $tree-link-color;
     @include font-size(16);
+    font-weight: 400;
     padding: 5px;
     text-decoration: none;
-    color: $tree-link-color;
 
     &:visited {
       color: $tree-link-color;
@@ -53,9 +53,9 @@
       color: #333333;
     }
 
-    svg {
-      stroke: #1a1a1a;
-    }
+    // svg {
+    //   stroke: #1a1a1a;
+    // }
 
     > a {
       color: $tree-selected-color;
@@ -80,18 +80,8 @@
     position: relative;
     padding-bottom: 8px;
 
-    // Open Tree Nodes
-    &.is-open {
-      display: block;
-
-      li {
-        margin: 6px 0 0;
-        position: relative;
-      }
-
-      a {
+    a {
         margin: 0 0 0 14px;
-        // transition: 500ms;
 
         &:before {
           background-color: #d8d8d8;
@@ -121,6 +111,15 @@
         height: calc(100% - 15px);
         position: absolute;
         width: 1px;
+      }
+
+    // Open Tree Nodes
+    &.is-open {
+      display: block;
+
+      li {
+        margin: 6px 0 0;
+        position: relative;
       }
     }
   }
