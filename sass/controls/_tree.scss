@@ -117,9 +117,27 @@
 
 }
 
-.tree li svg.expanded {
+.tree li svg {
   display: none;
 }
+
+.tree li .is-open svg.expanded {
+  display: inline-block;
+}
+
+// .tree li svg {
+
+// }
+
+// .tree li svg.expanded,
+// .is-open svg.collapsed {
+//   display: inline-block;
+// }
+
+// .tree li svg.expanded,
+// .is-open svg.collapsed {
+//   display: none;
+// }
 
 .tree li.is-selected > a > svg {
   fill: #333;
