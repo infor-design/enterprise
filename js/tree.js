@@ -109,9 +109,9 @@
           });
         }
 
-        if(next.hasClass('is-open')){
+        if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){
           node.find('use').attr('xlink:href', '#icon-folder-expand' );
-        } else {
+        } else if(node.closest('li').hasClass('folder')) {
           node.find('use').attr('xlink:href', '#icon-folder-collapse' );
         }
 
