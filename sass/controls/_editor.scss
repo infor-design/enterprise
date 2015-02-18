@@ -10,17 +10,28 @@
   float: left;
   font-family: $font-regular;
   @include font-size(16);
-  height: 400px;
-  min-height: 90px;
+  height: 320px;
+  min-height: 128px;
   outline: none;
   overflow: auto;
-  padding: 10px;
+  padding: 55px 10px 10px;
+  position: relative;
   width: 100%;
 
   //States
   &:focus,
   &.is-active {
     border: 1px solid $editor-focus-border-color;
+  }
+
+  &.is-disabled {
+    background-color: #ececec;
+    border: 1px solid #d2d2d2;
+    padding: 10px;
+
+    > * {
+      color: #999999;
+    }
   }
 
   // Element Style
@@ -60,7 +71,7 @@
 
   b,
   strong {
-    font-weight: bolder;
+    font-weight: 800;
   }
 
   blockquote {
@@ -83,18 +94,16 @@
 // Toolbar
 .editor-toolbar {
   background-color: $editor-toolbar-bg-color;
-  border: 1px solid $editor-border-color;
-  border-bottom: 0;
+  border-bottom: 1px solid #d8d8d8;
   border-radius: 2px 2px 0 0;
-  display: block;
-  float: left;
-  font-family: $font-regular;
-  height: auto;
-  margin-top: 3px;
-  min-height: 40px;
-  padding: 0 10px;
-  @include font-size(14);
-  width: 100%;
+  height: 40px;
+  left: 1px;
+  overflow: hidden;
+  padding: 0 20px;
+  position: absolute;
+  top: 28px;
+  width: calc(100% - 2px);
+  z-index: 50;
 
   button {
     background-color: $editor-toolbar-bg-color;
@@ -104,32 +113,38 @@
     display: block;
     fill: $editor-btn-color;
     float: left;
-    height: 30px;
+    height: 28px;
     line-height: 0;
-    margin: 5px 2px;
-    min-width: 30px;
+    margin: 5px 4px;
+    min-width: 28px;
     outline: none;
-    padding: 8px 5px;
+    padding: 5px 2px;
     @include font-size(16);
     text-decoration: none;
     -webkit-transition: background-color .2s ease-in;
     transition: background-color .2s ease-in;
 
-    &:hover,
+    &:hover {
+      color: #1a1a1a;
+    }
+
     &:active,
     &.is-active {
-      background-color: #e5e5e5;
-      border-color: #d2d2d2;
-      color: #5c5c5c;
+      color: $primary-color;
     }
 
     &:focus {
       border: 1px solid $editor-focus-border-color;
+      color: $editor-focus-border-color;
+
+      svg {
+        fill: $editor-focus-border-color;
+      }
     }
 
     b {
       font-weight: bold;
-      line-height: 14px;
+      line-height: 18px;
     }
   }
 
@@ -142,8 +157,8 @@
     height: 25px;
     pointer-events: none;
     position: relative;
-    top: -7px;
-    width: 25px;
+    top: -4px;
+    width: 24px;
   }
 
   .seperator {
@@ -157,6 +172,10 @@
 
 }
 
+.is-disabled .editor-toolbar {
+  display: none;
+}
+
 // Dialog Styling
 #editor-modal-image {
   width: 50%;
@@ -166,7 +185,7 @@
   border: 1px solid $editor-border-color;
   border-radius: 0 0 2px 2px;
   @include font-size(14);
-  height: 400px;
+  height: 320px;
   margin: 0 0 10px;
   min-height: 88px;
   -webkit-overflow-scrolling: touch;
@@ -177,14 +196,15 @@
   textarea {
     background-color: transparent;
     border: 0;
-    color: $input-color;
+    color: $font-color;
     font-family: $font-regular;
     @include font-size(16);
+    font-weight: 100;
     height: 100%;
     line-height: 2.4rem;
     outline: none;
     overflow: hidden;
-    padding: 10px;
+    padding: 54px 10px 10px;
     width: 100%;
 
     &:focus,
@@ -209,29 +229,42 @@
   }
 
   > .line-numbers {
-    background-color: #e5e5e5;
+    background-color: transparent;
+    border-right: 1px solid #d8d8d8;
     color: #ffffff;
     display: inline-block;
     min-height: 100%;
-    padding: 10px;
+    padding: 50px 10px 10px;
 
     > li {
-      @include font-size(14);
+      @include font-size(12);
       line-height: 2.4rem;
       text-align: center;
     }
   }
 }
 
+//Placeholder
+.editor-placeholder {
+  color: $input-placeholder-color;
+}
+
+.editor-placeholder:after {
+  content: attr(data-placeholder) !important;
+  font-weight: 100;
+  @include font-size(14);
+  left: 10px;
+  position: absolute;
+  margin-top: -14px;
+  white-space: pre;
+}
+
 // Older versions of Internet Explorer incorrectly size the line number fonts,
 // So we need to adjust it slightly.
-.ie8,
-.ie9 {
-  .editor-source {
-    > .line-numbers {
-      > li {
-        font-size: 1.45rem;
-      }
-    }
+.ie8 .editor-source,
+.ie9 .editor-source {
+  .line-numbers li {
+    @include font-size(14.5);
   }
 }
+

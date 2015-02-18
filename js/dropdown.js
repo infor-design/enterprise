@@ -598,6 +598,14 @@
           var val = $(this).attr('data-val'),
             cur = self.element.find('option[value="'+ val +'"]');
 
+          //Try matching the option's text if 'cur' comes back empty.
+          //Supports options that don't have a 'value' attribute.
+          if (cur.length === 0) {
+            cur = self.element.find('option').filter(function() {
+              return $(this).text() === val;
+            });
+          }
+
           //Select the clicked item
           if (cur.is(':disabled')) {
             return;
