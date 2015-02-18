@@ -67,7 +67,7 @@
 
           //Inject Icons
           if (a.children('svg').length === 0) {
-            a.wrapInner("<span class='link-copy'></span>").prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true"><use xlink:href="#icon-document"></use></svg>');
+            a.prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true"><use xlink:href="#icon-document"></use></svg>');
           }
 
           if (subNode.is('ul')) {
