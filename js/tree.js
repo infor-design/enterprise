@@ -105,9 +105,19 @@
 
         if (next.is('ul[role="group"]')) {
           next.slideToggle(function () {
-            next.addClass('is-open');
+            next.toggleClass('is-open')
           });
+
+          node.closest('.folder').toggleClass('is-open');
+          
         }
+
+        if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){
+          node.find('use').attr('xlink:href', '#icon-folder-expand' );
+        } else if(node.closest('li').hasClass('folder')) {
+          node.find('use').attr('xlink:href', '#icon-folder-collapse' );
+        }
+
       },
 
       setupEvents: function  () {

@@ -4,59 +4,146 @@
 .tree {
 
   // Tree Items
+
   a {
     border: 1px solid transparent;
     border-radius: 2px;
-    color: #666666;
-    font-weight: 100;
+    color: $tree-link-color;
     @include font-size(16);
-    line-height: 32px;
-    padding: 5px;
+    font-weight: 400;
+    padding: 8px 8px 6px 5px;
     text-decoration: none;
 
-    a:focus {
-      outline: none;
+    &:visited {
+      color: $tree-link-color;
     }
+
+    &:hover {
+      color: $tree-folder-link-color;
+      text-decoration: underline;
+
+      svg {
+        stroke: $tree-folder-link-color;
+      }
+    }
+
+    &:focus {
+      border: 1px solid $tree-selected-color;
+      border-radius: 2px;
+      color: $tree-selected-color;
+    }
+
+    &:active {
+      border: 1px solid transparent;
+      color: $tree-selected-color;
+    }
+
+    &.disabled {
+      color: $tree-disabled-color;
+
+      svg {
+        stroke: $tree-disabled-color;
+      }
+
+      &:visited {
+        color: $tree-disabled-color;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+
+      }
+
+      &:hover {
+        color: $tree-disabled-color;
+        text-decoration: none;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+      }
+
+      &:focus {
+        border: 1px solid transparent;
+        border-radius: 2px;
+        color: $tree-disabled-color;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+      }
+
+      &:active {
+        border: 1px solid transparent;
+        color: $tree-disabled-color;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+
+      }
+    }
+
+  }
+
+  li {
+    margin-bottom: 15px;
   }
 
   li.folder {
     position: relative;
+      // margin-bottom: 0;
+
+
+    &.is-open {
+      margin-bottom: 0;
+    }
+
+    > a {
+      color: $tree-folder-link-color;
+    }
   }
 
   // Selected State
   li.is-selected {
+
     a {
       color: #333333;
     }
 
-    svg {
-      stroke: #1a1a1a;
+    > a {
+      color: $tree-selected-color;
+      text-decoration: none;
+
+
+      svg {
+        stroke: $tree-selected-color;
+      }
+    }
+
+    &.folder {
+      a {
+        border: 1px solid transparent;
+      }
     }
   }
 
   // Sub Nodes
   ul {
     display: none;
-    left: 31px;
+    left: 30px;
     overflow: hidden;
     position: relative;
+    // padding-bottom: 8px;
 
-    // Open Tree Nodes
-    &.is-open {
-      display: block;
-
-      li {
-        position: relative;
-      }
-
-      a {
+    a {
         margin: 0 0 0 14px;
 
         &:before {
           background-color: #d8d8d8;
           content: '';
           height: 1px;
-          left: -16px;
+          left: -6px;
           position: absolute;
           top: 20px;
           width: 29px;
@@ -64,20 +151,46 @@
       }
 
       // The Lines
-      ul:before {
-        background-color: #d8d8d8;
+      &:before {
+        background-color: $tree-line-color;
         content: '';
-        height: calc(100% - 16px);
+        height: calc(100% - 22px);
         position: absolute;
         width: 1px;
       }
+
+
+
+      ul:before {
+        background-color: $tree-line-color;
+        content: '';
+        height: calc(100% - 22px);
+        position: absolute;
+        width: 1px;
+      }
+
+      li {
+        margin-top: 6px;
+        position: relative;
+      }
+
+    // Open Tree Nodes
+    &.is-open {
+      display: block;
     }
+
+  }
+
+  .root {
+    left: 16px;
+    overflow: hidden;
+    position: relative;
   }
 
   // Icons
   svg {
-    margin: 0 10px -8px 0;
-    stroke: #1a1a1a;
+    margin: 0 7px -9px 0;
+    stroke: $tree-icon-color;
     top: 3px;
     width: 20px;
   }
