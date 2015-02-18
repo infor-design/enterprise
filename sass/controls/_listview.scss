@@ -26,6 +26,18 @@
     line-height: 2rem;
   }
 
+  .listview-thumbnail {
+    border-radius: 50%;
+    display: inline-block;
+    float: left;
+    height: 50px;
+    margin-right: 20px;
+    margin-top: -3px;
+    padding: 0;
+    vertical-align: middle;
+    width: 50px;
+  }
+
   .listview-cell {
     display: table-cell;
     width: auto;
@@ -110,12 +122,12 @@
 
   &.is-muliselect li:before {
     @include checkbox-unchecked-before-style;
-    margin-left: -39px;
-    margin-right: 20px;
+    margin-left: -35px;
   }
 
   &.is-muliselect li {
-    text-indent: 42px;
+    position: relative;
+    text-indent: 30px;
 
     &.is-selected:before {
       @include checkbox-checked-before-style;
@@ -125,8 +137,9 @@
       @include checkbox-checked-after-style;
       @include css3(transform-origin, -11px top 0);
       @include checkbox-animation;
-      left: 30px;
-      margin-top: -19px;
+      left: 22px;
+      margin-top: 0;
+      top: 18px;
     }
   }
 }
@@ -137,6 +150,7 @@
   display: none;
   height: 0;
   margin: -50px 0 0;
+  overflow: hidden;
   position: absolute;
   @include transition(height .75s ease 0s);
   text-align: right;
@@ -155,4 +169,14 @@
     padding-top: 20px;
     text-transform: uppercase;
   }
+
+  .listview-selection-count {
+    color: $inverse-color;
+    @include font-size(16);
+    float: left;
+    line-height: 54px;
+    margin-left: 20px;
+  }
 }
+
+

@@ -250,16 +250,28 @@
         li.find('input:checkbox:first').prop('checked', !isChecked);
         this.element.trigger('selectionchange', [this.selectedItems]);
 
-        var card = this.element.closest('.card').find('.listview-toolbar');
+        var toolbar = this.element.closest('.card').find('.listview-toolbar');
         if (self.selectedItems.length > 0) {
-          card.show();
+          toolbar.show();
           setTimeout(function () {
-            card.addClass('is-visible');
+            toolbar.addClass('is-visible');
           }, 0);
+
+          var count = toolbar.find('.listview-selection-count'),
+            countSpan;
+          if (count.length === 0) {
+            countSpan = $('<span class="listview-selection-count"></span>');
+            toolbar.prepend(countSpan);
+          } else {
+            countSpan = toolbar.find('.listview-selection-count');
+          }
+
+          //TODO - Localize
+          countSpan.text(self.selectedItems.length + ' selected');
         } else {
-          card.removeClass('is-visible');
+          toolbar.removeClass('is-visible');
           setTimeout(function () {
-            card.hide();
+            toolbar.hide();
           }, 750);
         }
       },

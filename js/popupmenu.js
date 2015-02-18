@@ -75,7 +75,7 @@
         }
 
         if (this.menu.length === 0) {
-          throw new Error('Could not generate PopupMenu Control for element ' + this.element.id + ' using menu option ' + this.settings.menu + '.  ');
+          return false;
         }
 
         // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag

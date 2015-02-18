@@ -12,7 +12,6 @@
 }(function ($) {
 
   $.fn.initialize = function(locale) {
-    console.log('x');
     var self = this;
 
     if (!locale) {
