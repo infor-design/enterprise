@@ -16,10 +16,6 @@
   @include transition(all .3ms);
   white-space: nowrap;
 
-  &:visited {
-    color: $hyperlink-color; //#7533a6
-  }
-
   // Mouse Over States is Same as the focus
   &:hover {
     color: $hyperlink-hover-color;
@@ -37,8 +33,7 @@
   }
 
   &:visited {
-    color: $hyperlink-visited-color;
-    text-decoration: underline !important;
+    //color: #8a39b2; // TODO: Why does this var work? $amethyst06;
   }
 
   //Disabled
@@ -46,6 +41,7 @@
     color: #b6b6b6;
 
     &:hover {
+      border-bottom-color: transparent;
       color: #b6b6b6;
       cursor: default;
       text-decoration: none;

@@ -9,14 +9,15 @@
     var pluginName = 'editor',
       defaults = {
         buttons: {
-          editor: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'video', 'seperator', 'source'],
+          editor: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'seperator', 'source'],
           source: ['bold','italic','underline', 'seperator', 'anchor', 'seperator', 'quote', 'seperator', 'visual']
         },
         delay: 200,
         diffLeft: 0,
         diffTop: -10,
         firstHeader: 'h3',
-        secondHeader: 'h4'
+        secondHeader: 'h4',
+        placeholder: 'Enter comments here...' //TODO: Localize
       },
       settings = $.extend({}, defaults, options);
 
@@ -39,6 +40,7 @@
         this.initElements()
           .bindSelect()
           .bindPaste()
+          .setPlaceholders()
           .bindWindowActions();
       },
       initElements: function () {
@@ -47,13 +49,14 @@
 
         //Make it an editor
         elem.attr({'contentEditable': true, 'aria-multiline': true, 'role': 'textbox'});
-        var label = elem.parent().find('.label:first');
-        if (label) {
-         elem.attr('aria-label', label.text());
-        }
+
         //Bind functionality for Pre elements. We dont use this yet but could if we want to edit code blocks.
         elem.attr('data-editor', true); //TODO : Need?
         this.bindParagraphCreation(i).bindTab(i);
+
+        if (!elem.attr('data-placeholder')) {
+          elem.attr('data-placeholder', settings.placeholder);
+        }
 
         this.initToolbar()
           .bindButtons()
@@ -69,6 +72,30 @@
       // Returns true if the source view is currently active.
       sourceViewActive: function() {
         return this.element.hasClass('source-view-active');
+      },
+
+      //Bind Events for the place holder
+      setPlaceholders: function () {
+        var self = this;
+
+        self.element.on('blur.editor', function () {
+          self.togglePlaceHolder();
+        }).on('keypress', function () {
+          self.togglePlaceHolder();
+        });
+
+        self.togglePlaceHolder();
+        return this;
+      },
+
+      togglePlaceHolder: function () {
+        var self = this.element;
+
+        if (self.text().trim() === '') {
+          self.addClass('editor-placeholder');
+        } else {
+          self.removeClass('editor-placeholder');
+        }
       },
 
       // Returns the currently visible element - either the main editor window, or the source-view textarea
@@ -348,7 +375,6 @@
             'seperator': '<div class="seperator"></div>',
             'anchor': '<button type="button" class="btn-editor" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
             'image': '<button type="button" class="btn-editor" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
-            'video': '<button type="button" class="btn-editor" title="insert video" data-action="video" data-modal="editor-modal-video" data-element="video">' + buttonLabels.video + '</button>',
             'header1': '<button type="button" class="btn-editor" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
             'header2': '<button type="button" class="btn-editor" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
             'quote': '<button type="button" class="btn-editor" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
@@ -377,7 +403,6 @@
             'subscript': '<span class="audible">Subscript</span><b aria-hidden="true">x<sub>1</sub></b>',
             'anchor': '<span class="audible">Anchor</span><svg focusable="false" aria-hidden="true" class="icon icon-link"><use xlink:href="#icon-link"></use></svg>',
             'image': '<span class="audible">Image</span><svg focusable="false" aria-hidden="true"class="icon icon-image"><use xlink:href="#icon-image"></use></svg>',
-            'video': '<span class="audible">Video</span><svg focusable="false" aria-hidden="true" class="icon icon-video"><use xlink:href="#icon-video"></use></svg>',
             'header1': '<span class="audible">Heading 3</span><b aria-hidden="true">H3</b>',
             'header2': '<span class="audible">Heading 4</span><b aria-hidden="true">H4</b>',
             'quote': '<span class="audible">Block Quote</span><svg focusable="false" aria-hidden="true" class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
@@ -445,8 +470,7 @@
 
         self.modals = {
           url: self.createURLModal(),
-          image: self.createImageModal(),
-          video: self.createVideoModal()
+          image: self.createImageModal()
         };
 
         $('#editor-modal-url, #editor-modal-image').modal()
@@ -532,25 +556,6 @@
           '</div>').appendTo('body');
       },
 
-      createVideoModal: function() {
-        var videoModal = $('#editor-modal-video');
-        if (videoModal.length > 0) {
-          return videoModal;
-        }
-        return $('<div class="modal editor-modal-video" id="editor-modal-video"></div>')
-          .html('<div class="modal-content">' +
-            '<div class="modal-header">' +
-              '<h1 class="modal-title" tabindex="0">Insert Video</h1>' +
-            '</div>' +
-            '<div class="modal-body">' +
-              '<p>Todo</p>' +
-              '<div class="modal-buttonset">' +
-                '<a href="#" class="link link-cancel">Cancel</a>' +
-              '</div>' +
-            '</div>' +
-          '</div>').appendTo('body');
-      },
-
       bindAnchorPreview: function () {
         this.element.find('a').tooltip({content: function() {
           return $(this).attr('href');
@@ -606,21 +611,22 @@
             selectionElement;
 
         if (this.selection === undefined) {
-
           if (this.sourceViewActive()) {
             newSelection = this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ).toString().trim();
             this.hideToolbarActions();
             return;
           }
-
-          newSelection = window.getSelection();
-          selectionElement = this.getSelectionElement();
-          if (!selectionElement) {
-              this.hideToolbarActions();
-          } else {
-            this.checkSelectionElement(newSelection, selectionElement);
-          }
         }
+
+        newSelection = window.getSelection();
+        selectionElement = this.getSelectionElement();
+        if (!selectionElement) {
+            this.hideToolbarActions();
+        } else {
+          this.checkSelectionElement(newSelection, selectionElement);
+        }
+
+
         return this;
       },
 
@@ -664,7 +670,6 @@
 
         this.selection = newSelection;
         this.selectionRange = this.selection.getRangeAt(0);
-
         if (currentElement === selectionElement) {
           this.setToolbarButtonStates();
           return;
@@ -793,10 +798,11 @@
             currentElement = self.getCurrentElement();
 
         //Attach Label
-        this.element.prevAll('.label').css('cursor', 'default').on('click.editor', function () {
+        var label = this.element.prevAll('.label');
+        label.css('cursor', 'default').on('click.editor', function () {
           currentElement.focus();
         });
-        currentElement.attr('aria-label', currentElement.prev('.label').text());
+        currentElement.attr('aria-label', label.text());
         return this;
       },
 
@@ -868,9 +874,6 @@
             this.modals.url.data('modal').open();
           } else if (action === 'image') {
             this.modals.image.data('modal').open();
-          } else if (action === 'video') {
-            // TODO: Re-enable this when we are ready to build the video portion of this plugin.
-            //this.modals.video.data('modal').open();
           } else if (action === 'source' || action === 'visual') {
             this.toggleSource();
           } else {
@@ -999,6 +1002,16 @@
         this.modals = {};
 
         this.element.trigger('destroy.toolbar.editor');
+      },
+
+      disable: function () {
+        this.element.addClass('is-disabled');
+        this.element.parent('.field').addClass('is-disabled');
+      },
+
+      enable: function () {
+        this.element.removeClass('is-disabled');
+        this.element.parent('.field').addClass('is-disabled');
       },
 
       destroy: function () {

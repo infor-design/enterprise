@@ -197,7 +197,7 @@ label.required:after,
 
 .field .icon-error,
 .field .icon-validated {
-  display: inline-block;
+  display: inline-block !important;
   margin-left: -30px;
   top: 4px;
 }
@@ -211,9 +211,9 @@ textarea.error,
 input.error:focus,
 textarea.error:focus,
 .editor.error:focus {
-  color: $input-color !important;
   border-color: $error-color !important;
   box-shadow: 0 0 5px rgba(237, 28, 36, .2);
+  color: $input-color !important;
 }
 
 .error::-webkit-input-placeholder {
@@ -232,15 +232,15 @@ textarea.error:focus,
 }
 
 .error-container {
-  border: 1px solid red;
+  border: 1px solid #d5000e;
+  left: 10px;
   max-width: 0;
   position: fixed;
-  left: 10px;
   top: 10px;
 
   span {
     background-color: #ffffff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
     margin: 0 0 6px;
     overflow: hidden;
     padding: 10px 32px 10px 12px;
