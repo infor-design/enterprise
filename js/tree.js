@@ -55,7 +55,7 @@
           }
 
           //parentCount 'aria-level' to the node's level depth
-          parentCount = a.parentsUntil(this.element, 'ul').length;
+          parentCount = a.parentsUntil(this.element, 'ul').length - 1;
           a.attr('aria-level', parentCount + 1);
 
           //Set the current tree item node position relative to its aria-setsize
@@ -114,7 +114,7 @@
           node.closest('.folder').toggleClass('is-open');
 
           (node.attr('aria-expanded') === "true")? node.attr('aria-expanded', 'false') : node.attr('aria-expanded', 'true');
-          
+
         }
 
         if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){
