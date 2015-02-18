@@ -107,6 +107,9 @@
           next.slideToggle(function () {
             next.toggleClass('is-open')
           });
+
+          node.closest('.folder').toggleClass('is-open');
+          
         }
 
         if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){
@@ -115,8 +118,6 @@
           node.find('use').attr('xlink:href', '#icon-folder-collapse' );
         }
 
-        // .find('.folder use')
-        // .attr('xlink:href', next.hasClass('is-open') ? '#icon-folder-expand' : '#icon-folder-collapse');
       },
 
       setupEvents: function  () {
