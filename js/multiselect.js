@@ -65,10 +65,12 @@
         // Insert Tag Container after the icon
         this.tagContainer = $('<div class="multiselect-tags" tabindex="0"></div>').insertBefore(this.dropdown.input);
 
+        /*
         // Add Tags to the container based on existing selected options
         this.element.find('option:selected').each(function() {
           self.addTag($(this));
         });
+        */
 
         this.updateAria();
       },
@@ -131,7 +133,7 @@
           self.tagContainer.focus();
         }).on('selected.multiselect', function(e, option, isAdded) {
           // Triggered by the dropdown's 'selected' event
-          self.handleTagFromDropdown(option, isAdded);
+          //self.handleTagFromDropdown(option, isAdded);
         });
       },
 

@@ -448,8 +448,8 @@
             if (selectedIndex > 0) {
               next = $(options[selectedIndex - 1]);
               this.highlightOption(next);
-              next.parent().find('.is-selected').removeClass('is-selected');
-              next.addClass('is-selected');
+              next.parent().find('.is-focused').removeClass('is-focused');
+              next.addClass('is-focused');
             }
 
             e.stopPropagation();
@@ -460,8 +460,8 @@
             if (selectedIndex < options.length - 1) {
               next = $(options[selectedIndex + 1]);
               this.highlightOption(next);
-              next.parent().find('.is-selected').removeClass('is-selected');
-              next.addClass('is-selected');
+              next.parent().find('.is-focused').removeClass('is-focused');
+              next.addClass('is-focused');
             }
 
             e.stopPropagation();
