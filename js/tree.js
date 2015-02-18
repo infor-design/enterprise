@@ -62,6 +62,9 @@
           var posinset = a.parent().index();
           a.attr('aria-posinset', posinset + 1);
 
+          //Set the current tree item node expansion state
+          a.attr('aria-expanded', a.next().hasClass('is-open') ? 'true' : 'false');
+
           //adds role=group' to all subnodes
           subNode = a.next();
 
@@ -109,6 +112,8 @@
           });
 
           node.closest('.folder').toggleClass('is-open');
+
+          (node.attr('aria-expanded') === "true")? node.attr('aria-expanded', 'false') : node.attr('aria-expanded', 'true');
           
         }
 
