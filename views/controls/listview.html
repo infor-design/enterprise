@@ -214,6 +214,46 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="one-third column">
+   <script id="team-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          <li>
+            {{#escalated}}
+              <small class="alert-text">Escalated ({{escalated}}X)</small>
+            {{/escalated}}
+            <img class="listview-thumbnail" alt="Photo of {{firstName}}" src="{{img}}"></img>
+            <p class="listview-heading">{{firstName}} {{lastName}}</p>
+            <p class="listview-subheading">{{title}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">My Team</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-tmpl="team-tmpl" data-dataset="/api/people"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
   $('#emp-listview').on('click', 'button', function () {
     console.log('Drill Down on: '+ $(this).attr('data-id'));

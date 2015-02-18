@@ -17,7 +17,7 @@
     // Settings and Options
     var pluginName = 'popupmenu',
       defaults = {
-        menuId: null,  //Menu's Id
+        menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
         trigger: 'click',  //click, rightClick, immediate
         autoFocus: true
       },
@@ -25,6 +25,7 @@
 
     // Plugin Constructor
     function PopupMenu(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -32,20 +33,49 @@
     // Plugin Object
     PopupMenu.prototype = {
       init: function() {
+        this.setup();
         this.addMarkup();
         this.handleEvents();
       },
 
+      setup: function() {
+        if (this.element.attr('data-popupmenu') && (this.settings.menu === null || this.settings.menu === undefined)) {
+          this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
+        }
+        // Backwards compatibility for "menuId" menu options coming from other controls
+        // that utilize the Popupmenu.
+        if (this.settings.menuId) {
+          this.settings.menu = this.settings.menuId;
+          this.settings.menuId = undefined;
+        }
+      },
+
       //Add markip including Aria
       addMarkup: function () {
-        var id = settings.menuId;
+        var id;
 
-        this.menu = $('#' + settings.menuId);
-        //Use Next Element if no Id
-        if (!settings.menuId) {
-          this.menu = this.element.next('.popupmenu');
-          this.menu.attr('id', 'popupmenu-'+ (parseInt($('.popupmenu-wrapper').length, 10)+1).toString());
-          id = this.menu.attr('id');
+        switch(typeof this.settings.menu) {
+          case 'string': // ID Selector
+            id = this.settings.menu;
+            this.menu = $('#' + this.settings.menu);
+            break;
+          case 'object': // jQuery Object
+            if (this.settings.menu === null) {
+              this.menu = this.element.next('.popupmenu');
+            } else {
+              this.menu = $(this.settings.menu);
+            }
+
+            id = this.menu.attr('id');
+            if (!id || id === '') {
+              this.menu.attr('id', 'popupmenu-'+ (parseInt($('.popupmenu-wrapper').length, 10)+1).toString());
+              id = this.menu.attr('id');
+            }
+            break;
+        }
+
+        if (this.menu.length === 0) {
+          return false;
         }
 
         // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
@@ -99,7 +129,7 @@
       handleEvents: function() {
         var self = this;
 
-        if (settings.trigger === 'click' || settings.trigger === 'toggle') {
+        if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
           this.element.on('click.popupmenu', function (e) {
             $(this).focus();
             if (self.menu.hasClass('is-open')){
@@ -110,7 +140,7 @@
           });
         }
         //settings.trigger
-        if (settings.trigger === 'rightClick') {
+        if (this.settings.trigger === 'rightClick') {
           this.menu.parent().on('contextmenu.popupmenu', function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -128,7 +158,7 @@
           });
         }
 
-        if (settings.trigger === 'immediate') {
+        if (this.settings.trigger === 'immediate') {
           this.open();
         }
 
@@ -252,7 +282,7 @@
           menuHeight = this.menu.outerHeight(),
           xOffset = this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('header') > -1 ? (menuWidth) - 34 : 0;
 
-        if (settings.trigger === 'rightClick' || (e !== null && e !== undefined && settings.trigger === 'immediate')) {
+        if (this.settings.trigger === 'rightClick' || (e !== null && e !== undefined && this.settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
                         'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
         } else {
@@ -369,7 +399,7 @@
           clearTimeout(timeout);
         });
 
-        if (settings.autoFocus) {
+        if (self.settings.autoFocus) {
           setTimeout(function () {
             self.menu.parent().find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
           }, 1);
@@ -477,7 +507,7 @@
         this.element.focus().attr('aria-expanded', 'false');
         this.detach();
 
-        if (settings.trigger === 'immediate') {
+        if (this.settings.trigger === 'immediate') {
           this.destroy();
         }
       },
@@ -514,7 +544,7 @@
         if (typeof instance[options] === 'function') {
           instance[options]();
         }
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
       } else {
         instance = $.data(this, pluginName, new PopupMenu(this, settings));
       }
