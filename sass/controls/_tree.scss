@@ -19,8 +19,18 @@
     }
 
     &:hover {
-      color: $tree-link-color;
+      border-bottom: 1px solid $tree-folder-link-color;
+      color: $tree-folder-link-color;
+      padding-bottom: 1px;
+  //     text-decoration: none;
+
+      svg {
+        stroke: $tree-folder-link-color;
+      }
+
     }
+
+    
 
     &:focus {
       border: 1px solid $tree-selected-color;
@@ -39,12 +49,53 @@
       svg {
         stroke: $tree-disabled-color;
       }
+
+      &:visited {
+        color: $tree-disabled-color;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+
+      }
+
+      &:hover {
+        color: $tree-disabled-color;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+      }
+
+      &:focus {
+        border: 1px solid transparent;
+        border-radius: 2px;
+        color: $tree-disabled-color;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+      }
+
+      &:active {
+        border: 1px solid transparent;
+        color: $tree-disabled-color;
+
+        svg {
+          stroke: $tree-disabled-color;
+        }
+
+      }
     }
 
   }
 
   li.folder {
     position: relative;
+
+    > a {
+      color: $tree-folder-link-color;
+    }
   }
 
   // Selected State
@@ -52,10 +103,6 @@
     a {
       color: #333333;
     }
-
-    // svg {
-    //   stroke: #1a1a1a;
-    // }
 
     > a {
       color: $tree-selected-color;
@@ -113,15 +160,16 @@
         width: 1px;
       }
 
-    // Open Tree Nodes
-    &.is-open {
-      display: block;
-
       li {
         margin: 6px 0 0;
         position: relative;
       }
+
+    // Open Tree Nodes
+    &.is-open {
+      display: block;
     }
+
   }
 
   .root {
