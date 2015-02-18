@@ -62,6 +62,11 @@
           var posinset = a.parent().index();
           a.attr('aria-posinset', posinset + 1);
 
+          //Set the current tree item aria-setsize
+          var listCount = a.closest('li').siblings().andSelf().length;
+          a.attr('aria-setsize', listCount);
+
+
           //Set the current tree item node expansion state
           a.attr('aria-expanded', a.next().hasClass('is-open') ? 'true' : 'false');
 
