@@ -17,10 +17,10 @@
     // Dropdown Settings and Options
     var pluginName = 'dropdown',
         defaults = {
-          closeOnSelect: true,
+          closeOnSelect: true, // When an option is selected, the list will close if set to "true".  List stays open if "false".
           editable: 'false',
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
-          moveSelectedToTop: false,
+          moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
           source: null,  //A function that can do an ajax call.
           empty: false //Initialize Empty Value
@@ -164,8 +164,9 @@
         // Also adds a group heading if other option groups are found in the <select> element.
         if (self.settings.moveSelectedToTop) {
           var selectedOpts = self.element.find('option:selected');
-          if (selectedOpts.length > 0 && self.element.find('optgroup').length) {
-            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('Selected Items')); // TODO: Localize
+          // Show a "selected" header if any options have been selected.
+          if (selectedOpts.length > 0) {
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('Selected ' + this.label.text())); // TODO: Localize
           }
           selectedOpts.each(function(i) {
             var option = $(this),
@@ -175,6 +176,10 @@
             self.listUl.append(listOption);
             upTopOpts++;
           });
+          // Only show the "all" header if there are no other optgroups present
+          if (selectedOpts.length > 0 && !self.element.find('optgroup').length) {
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('All ' + this.label.text()));
+          }
         }
 
         self.element.find('option').each(function(i) {
