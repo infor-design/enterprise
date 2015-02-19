@@ -803,6 +803,14 @@
         if (option.is('li')) {
           li = option;
           option = this.element.find('option[value="' + option.attr('data-val') + '"]');
+
+          //Try matching the option's text if 'cur' comes back empty.
+          //Supports options that don't have a 'value' attribute.
+          if (option.length === 0) {
+            option = this.element.find('option').filter(function() {
+              return $(this).text() === li.attr('data-val');
+            });
+          }
         }
         if (!li) {
           li = this.listUl.find('li[data-val="'+ option.val() +'"]');
