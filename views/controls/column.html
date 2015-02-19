@@ -1,6 +1,6 @@
 <div class="row">
   <div class="twelve columns">
-    <h1>Stacked Bar - Vertical</h1>
+    <h1>Column Bar Chart</h1>
     <span class="label">Charts</span>
     <hr>
   </div>
@@ -10,10 +10,10 @@
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 class="widget-title">Column Bar Chart</h2>
+          <h2 class="widget-title">Column Bar Chart Title</h2>
         </div>
         <div class="widget-content">
-          <div id="bar-stacked-example" class="chart-container">
+          <div id="column-bar-example" class="chart-container">
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
         }]
       }];
 
-    $('#bar-stacked-example').chart({type: 'column', dataset: dataset})
+    $('#column-bar-example').chart({type: 'column', dataset: dataset})
       .on('selected', function(e, args) {
         console.log(e, args);
       });

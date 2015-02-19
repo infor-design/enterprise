@@ -113,13 +113,11 @@
 
         if (next.is('ul[role="group"]')) {
           next.slideToggle(function () {
-            next.toggleClass('is-open')
+            next.toggleClass('is-open');
           });
 
           node.closest('.folder').toggleClass('is-open');
-
-          (node.attr('aria-expanded') === "true")? node.attr('aria-expanded', 'false') : node.attr('aria-expanded', 'true');
-
+          node.attr('aria-expanded', (node.attr('aria-expanded') === 'true' ? true : false));
         }
 
         if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){
