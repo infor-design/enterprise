@@ -1,7 +1,6 @@
 <div class="row">
   <div class="twelve columns">
     <h1>Multiselect</h1>
-    <span class="label">Tags</span>
     <hr>
 
     <div class="field">
@@ -30,32 +29,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $(function () {
-    $('#states-multi-ajax').multiselect({source: function (term, response) {
-      //make an ajax call
-      $.getJSON('/api/states?term='+term, function(data) {
-        //Structure the data with val, label syntax is done on the server
-        response(data);
-      });
-    }}).on('change', function () {
-      console.log('Changed to :' + $(this).val());
-    });
-
-    //make an id for Test
-    $('span[data-val="option1"]').attr('id','option1-sel');
-
-    //Toggle disabled
-    $('#disable-button').on('click', function () {
-      var multi = $('#states-multi-ajax'), btn = $(this);
-      if (multi.is(':disabled')) {
-        multi.enable();
-        btn.text('Disable');
-      } else {
-        multi.disable();
-        btn.text('Enable');
-      }
-    });
-  });
-</script>
