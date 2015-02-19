@@ -121,7 +121,13 @@
             $(item).append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
           }
         });
-        this.menu.find('a').attr('tabindex', '-1').attr('role', 'menuitem');
+
+        var anchor = this.menu.find('a');
+        anchor.attr('tabindex', '-1').attr('role', 'menuitem');
+        if (anchor.parent().hasClass('is-checked')) {
+          anchor.attr('tabindex', '-1').attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
+        }
+
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
 
       },

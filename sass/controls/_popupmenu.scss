@@ -73,7 +73,7 @@
   overflow-y: auto;
   padding: 10px 0;
 
-  &.checkmark a {
+  &.is-padded a {
     padding: 0 30px;
   }
 
@@ -103,7 +103,7 @@
 
     // Selected
     &.is-selected a:before,
-    &.checkmark a:before {
+    &.is-checked a:before {
       border-color: #1a1a1a;
       border-style: solid;
       border-width: 0 3px 3px 0;

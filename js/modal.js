@@ -91,31 +91,21 @@
         this.addButtons(settings.buttons);
       },
 
-      revertTransition: function (doTop) {
-        //Revert the transform so drag and dropping works as expected
-        var elem = this.element,
-          //parentRect = elem.parent()[0].getBoundingClientRect(),
-          rect = elem[0].getBoundingClientRect();
-
-        elem.css({'transition': 'all 0 ease 0', 'transform': 'none',
-          'left': rect.left});
-
-        if (doTop) {
-          elem.css('top', rect.top);
-        }
-      },
-
       addButtons: function(buttons) {
         var body = this.element.find('.modal-body'),
             self = this,
             btnWidth = 100,
             buttonset;
 
+
         if (!buttons) {
           var inlineBtns = body.find('.modal-buttonset button');
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
           inlineBtns.css('width', btnWidth-0.5 + '%').button();
+          inlineBtns.on('click.modal', function () {
+            self.close();
+          });
           return;
         }
 
@@ -195,11 +185,19 @@
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
 
+        // Ensure aria-labelled by points to the id
         if (settings.isAlert) {
           this.element.attr('aria-labeledby', 'message-title');
           this.element.attr('aria-describedby', 'message-text');
         } else {
-          this.element.removeAttr('aria-labeledby');
+          var h1 = this.element.find('h1:first'),
+            id = h1.attr('id');
+
+          if (!id) {
+            id = this.element.attr('id') + '-title';
+            h1.attr('id', id);
+          }
+          this.element.attr('aria-labeledby', id);
         }
 
         //Center

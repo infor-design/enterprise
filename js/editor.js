@@ -518,7 +518,7 @@
         return $('<div class="modal editor-modal-url" id="editor-modal-url"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
-              '<h1 class="modal-title" tabindex="0">Insert Url</h1>' +
+              '<h1 class="modal-title">Insert Url</h1>' +
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
@@ -526,8 +526,8 @@
                 '<input id="url" name="url" type="text" value="http://www.example.com">' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<a href="#" class="link link-cancel">Cancel</a>' +
-                '<button type="button" class="button-primary button-close">Insert</button>' +
+                '<button type="button" class="btn-modal">Cancel</button>' +
+                '<button type="button" class="btn-modal-primary">Insert</button>' +
               '</div>' +
             '</div>' +
           '</div>').appendTo('body');
@@ -541,7 +541,7 @@
         return $('<div class="modal editor-modal-image" id="editor-modal-image"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
-              '<h1 class="modal-title" tabindex="0">Insert Image</h1>' +
+              '<h1 class="modal-title">Insert Image</h1>' +
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
@@ -549,8 +549,8 @@
                 '<input id="image" name="image" type="text" value="http://images2.fanpop.com/image/photos/12900000/Cute-kittens-12929201-1600-1200.jpg">' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<a href="#" class="link link-cancel">Cancel</a>' +
-                '<button type="button" class="button-primary button-close">Insert</button>' +
+                '<button type="button" class="btn-modal">Cancel</button>' +
+                '<button type="button" class="btn-modal-primary">Insert</button>' +
               '</div>' +
             '</div>' +
           '</div>').appendTo('body');
