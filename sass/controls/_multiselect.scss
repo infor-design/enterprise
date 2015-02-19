@@ -20,7 +20,7 @@
     color: $font-color-extradark;
   }
 
-  &.disabled {
+  &.is-disabled {
     background-color: #e5e5e5;
     border: solid 1px $disabled-color;
     color: $disabled-color;

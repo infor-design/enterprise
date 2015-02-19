@@ -17,10 +17,10 @@
     // Dropdown Settings and Options
     var pluginName = 'dropdown',
         defaults = {
-          closeOnSelect: true,
+          closeOnSelect: true, // When an option is selected, the list will close if set to "true".  List stays open if "false".
           editable: 'false',
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
-          moveSelectedToTop: false,
+          moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
           source: null,  //A function that can do an ajax call.
           empty: false //Initialize Empty Value
@@ -69,15 +69,18 @@
                         .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
                         .attr({'aria-describedby' : id + '-instructions', 'id': id});
 
-        var icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
+        this.icon = this.element.parent().find('.icon');
+        if (this.icon.length === 0) {
+          this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
+        }
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.element.after(this.input, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
-          this.element.after(this.label, this.input, this.trigger, icon);
+          this.element.after(this.label, this.input, this.trigger, this.icon);
         } else {
-          this.element.after(this.input, this.trigger, icon);
+          this.element.after(this.input, this.trigger, this.icon);
         }
 
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
@@ -164,8 +167,9 @@
         // Also adds a group heading if other option groups are found in the <select> element.
         if (self.settings.moveSelectedToTop) {
           var selectedOpts = self.element.find('option:selected');
-          if (selectedOpts.length > 0 && self.element.find('optgroup').length) {
-            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('Selected Items')); // TODO: Localize
+          // Show a "selected" header if any options have been selected.
+          if (selectedOpts.length > 0) {
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('Selected ' + this.label.text())); // TODO: Localize
           }
           selectedOpts.each(function(i) {
             var option = $(this),
@@ -175,6 +179,10 @@
             self.listUl.append(listOption);
             upTopOpts++;
           });
+          // Only show the "all" header if there are no other optgroups present
+          if (selectedOpts.length > 0 && !self.element.find('optgroup').length) {
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('All ' + this.label.text()));
+          }
         }
 
         self.element.find('option').each(function(i) {
@@ -997,7 +1005,9 @@
         this.instructions.remove();
         this.input.prev('label').remove();
         this.input.off().remove();
-        this.element.show().prev('label').show();
+        this.icon.remove();
+        this.element.removeAttr('style');
+        this.orgLabel.removeAttr('style');
       },
 
       disable: function() {

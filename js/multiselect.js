@@ -49,6 +49,7 @@
           ddOpts = {
             closeOnSelect: false,
             empty: true,
+            moveSelectedToTop: true,
             multiple: true
           };
 
@@ -69,6 +70,10 @@
         this.element.find('option:selected').each(function() {
           self.addOptionText($(this));
         });
+
+        if (this.element.is(':disabled')) {
+          this.textbox.addClass('is-disabled');
+        }
 
         this.updateAria();
       },
@@ -102,18 +107,10 @@
           e.preventDefault();
           $(e.target).click();
         }).on('click.multiselect', function(e) {
-          if ($(this).hasClass('disabled')) {
-            return;
+          if ($(this).hasClass('is-disabled')) {
+            return false;
           }
-
-          var target = $(e.target);
-          if (target.is('.multiselect-textbox')) {
-            self.element.trigger('open', [e]);
-          }
-          if (target.is('.remove') || target.is('use') || target.is('svg')) {
-            var option = self.element.find('option[value="' + target.parents('.tag').attr('data-val') + '"]');
-            self.dropdown.selectOption(option);
-          }
+          self.element.trigger('open', [e]);
         }).on('keydown.multiselect', function(e) {
           self.element.trigger('simulateKeyDown', [e]);
         }).on('keypress.multiselect', function(e) {
@@ -153,19 +150,19 @@
 
       enable: function() {
         this.dropdown.enable();
-        this.textbox.removeClass('disabled');
+        this.textbox.removeClass('is-disabled');
       },
 
       disable: function() {
         this.dropdown.disable();
-        this.textbox.addClass('disabled');
+        this.textbox.addClass('is-disabled');
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
         this.textbox.off().remove();
         this.dropdown.destroy();
-        this.element.off('close.multiselect selected.multiselect');
+        this.element.off();
         $.removeData(this.element[0], pluginName);
       }
     };
