@@ -62,12 +62,12 @@
         this.dropdown = this.element.data('dropdown');
         this.dropdown.input.attr('tabindex', '-1');
 
-        // Insert Tag Container after the icon
-        this.tagContainer = $('<div class="multiselect-tags" tabindex="0"></div>').insertBefore(this.dropdown.input);
+        // Insert Textbox after the icon
+        this.textbox = $('<div class="multiselect-textbox" tabindex="0"></div>').insertBefore(this.dropdown.input);
 
-        // Add Tags to the container based on existing selected options
+        // Add text to the container based on existing selected options
         this.element.find('option:selected').each(function() {
-          self.addTag($(this));
+          self.addOptionText($(this));
         });
 
         this.updateAria();
@@ -75,17 +75,11 @@
 
       // TODO: Localize
       buildAriaLabel: function() {
-        var tags = this.tagContainer.find('.tag'),
+        var tags = this.textbox.find('span'),
           optionWord = 'options',
           tagString = '';
 
-        tags.each(function(i) {
-          if (tagString.length > 0) {
-            tagString += ', ';
-          }
-          if (tagString.length > 1 && !tags[i + 1]) {
-            tagString += 'and ';
-          }
+        tags.each(function() {
           tagString += $(this).text();
         });
 
@@ -93,18 +87,18 @@
           optionWord = 'option';
         }
 
-        return this.dropdown.label.text() + '. Multiselect with ' + this.tagContainer.find('.tag').length +
+        return this.dropdown.label.text() + '. Multiselect with ' + this.textbox.find('.tag').length +
           ' ' + optionWord + ' tagged. ' + tagString + (tags.length > 0 ? '.' : '');
       },
 
       updateAria: function() {
-        this.tagContainer.attr({'aria-label': this.buildAriaLabel()});
+        this.textbox.attr({'aria-label': this.buildAriaLabel()});
       },
 
       handleEvents: function() {
         var self = this;
 
-        this.tagContainer.on('touchend.multiselect touchcancel.multiselect', function(e) {
+        this.textbox.on('touchend.multiselect touchcancel.multiselect', function(e) {
           e.preventDefault();
           $(e.target).click();
         }).on('click.multiselect', function(e) {
@@ -113,7 +107,7 @@
           }
 
           var target = $(e.target);
-          if (target.is('.multiselect-tags')) {
+          if (target.is('.multiselect-textbox')) {
             self.element.trigger('open', [e]);
           }
           if (target.is('.remove') || target.is('use') || target.is('svg')) {
@@ -128,45 +122,48 @@
 
         this.element.on('close.multiselect', function() {
           // Triggered by the dropdown's 'close' event.
-          self.tagContainer.focus();
+          self.textbox.focus();
         }).on('selected.multiselect', function(e, option, isAdded) {
           // Triggered by the dropdown's 'selected' event
-          self.handleTagFromDropdown(option, isAdded);
+          self.handleOptionFromDropdown(option, isAdded);
         });
       },
 
-      handleTagFromDropdown: function(tag, isAdded) {
+      handleOptionFromDropdown: function(option, isAdded) {
         if (isAdded) {
-          this.addTag(tag);
+          this.addOptionText(option);
         } else {
-          this.removeTag(tag);
+          this.removeOptionText(option);
         }
         this.updateAria();
       },
 
-      addTag: function(tag) {
-        var tagSpan = $('<span class="tag">' + tag.text() + '<span class="remove"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-delete"></svg></span></span>');
-        tagSpan.attr('data-val', tag.val());
-        this.tagContainer.append(tagSpan);
+      addOptionText: function(option) {
+        var text = (this.textbox.find('.option-text').length > 0 ? ', ' : '') + option.text(),
+          optionSpan = $('<span class="option-text">' + text + '</span>');
+
+        this.textbox.append(optionSpan);
       },
 
-      removeTag: function(tag) {
-        this.tagContainer.find('.tag[data-val="' + tag.val() + '"]').remove();
+      removeOptionText: function(option) {
+        this.textbox.find('.option-text').filter(function() {
+          return $(this).text().replace(/, /g, '') === option.text();
+        }).remove();
       },
 
       enable: function() {
         this.dropdown.enable();
-        this.tagContainer.removeClass('disabled');
+        this.textbox.removeClass('disabled');
       },
 
       disable: function() {
         this.dropdown.disable();
-        this.tagContainer.addClass('disabled');
+        this.textbox.addClass('disabled');
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.tagContainer.off().remove();
+        this.textbox.off().remove();
         this.dropdown.destroy();
         this.element.off('close.multiselect selected.multiselect');
         $.removeData(this.element[0], pluginName);

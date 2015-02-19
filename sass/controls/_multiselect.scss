@@ -1,15 +1,24 @@
 // Multi Select (DropDown)
 //================================================== //
 
-.multiselect-tags {
+.multiselect-textbox {
   border: 1px solid $input-border-color;
   border-radius: 2px;
+  color: $font-color-extradark;
   cursor: pointer;
+  font-weight: 700;
   height: $multiselect-height;
+  line-height: $multiselect-height;
   overflow: hidden;
-  padding-right: 32px;
+  padding: 0 32px 0 10px;
   position: absolute;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   width: 300px;
+
+  span {
+    color: $font-color-extradark;
+  }
 
   &.disabled {
     background-color: #e5e5e5;
@@ -28,25 +37,6 @@
       cursor: default;
       display: none;
     }
-
-    .tag {
-      background-color: #f1f1f1;
-      box-shadow: none;
-      color: $input-disabled-color;
-      cursor: default;
-
-      &:hover {
-        background-color: #f1f1f1;
-      }
-
-      > span {
-        cursor: default;
-      }
-
-      .icon {
-        visibility: hidden;
-      }
-    }
   }
 
   &:focus,
@@ -64,65 +54,8 @@
     }
   }
 
-  .tag {
-    background-color: $multiselect-tag-color;
-    border-radius: 14px;
-    color: $inverse-color;
-    cursor: default;
-    display: inline-block;
-    @include font-size(12);
-    @include no-select;
-    height: 22px;
-    line-height: 24px;
-    margin: 5px 6px 0 0;
-    max-width: 100px;
-    overflow: hidden;
-    padding: 0 30px 0 10px;
-    position: relative;
-    text-overflow: ellipsis;
-    transition: all .15s linear 0s;
-    white-space: nowrap;
-
-    &:hover {
-      background-color: $multiselect-tag-hover-color;
-
-      .icon {
-        fill: $inverse-color;
-      }
-    }
-
-    &:first-of-type {
-      margin-left: 6px;
-    }
-
-    &:last-of-type {
-      margin-right: 0;
-    }
-
-    > span {
-      border: 0;
-      bottom: 0;
-      color: $inverse-color;
-      cursor: pointer;
-      opacity: 1;
-      padding: 0;
-      position: absolute;
-      right: 2px;
-      top: -4px;
-      width: 25px;
-      z-index: 2;
-    }
-
-    .icon {
-      fill: $inverse-color;
-      height: 22px;
-      left: -5px;
-      top: 3px;
-    }
-  }
-
 }
 
-.field > .multiselect-tags {
+.field > .multiselect-textbox {
   margin: 3px 0 20px;
 }
