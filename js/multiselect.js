@@ -103,17 +103,9 @@
           $(e.target).click();
         }).on('click.multiselect', function(e) {
           if ($(this).hasClass('disabled')) {
-            return;
+            return false;
           }
-
-          var target = $(e.target);
-          if (target.is('.multiselect-textbox')) {
-            self.element.trigger('open', [e]);
-          }
-          if (target.is('.remove') || target.is('use') || target.is('svg')) {
-            var option = self.element.find('option[value="' + target.parents('.tag').attr('data-val') + '"]');
-            self.dropdown.selectOption(option);
-          }
+          self.element.trigger('open', [e]);
         }).on('keydown.multiselect', function(e) {
           self.element.trigger('simulateKeyDown', [e]);
         }).on('keypress.multiselect', function(e) {
