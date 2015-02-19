@@ -66,6 +66,15 @@
     stroke-width: 1px;
   }
 
+  &.chart-vertical-bar {
+    margin: 0 auto;
+    max-width: 540px;
+
+    svg {
+      width: 100%;
+    }
+  }
+
 }
 
 .chart-legend-item {
@@ -175,9 +184,15 @@
 @include respond-to(tablet) {
   .chart-pie {
     height: 97%;
-    margin-left: -50px;
-    margin-top: 5px;
-    width: 56%;
+    // margin-left: -50px;
+    // margin-top: 5px;
+    // width: 56%;
+    width: 50%;
+    top: 50%;
+    position: relative;
+    // margin-top: -95px;
+    margin-top: -115px;
+    margin-left: 0;
   }
 
   .one-third .chart-pie {
@@ -185,6 +200,7 @@
     margin-bottom: -65px;
     padding: 0;
     width: 83%;
+    margin-left: 0;
   }
 }
 
@@ -198,12 +214,14 @@
 
   .chart-pie {
     margin-bottom: -65px;
-    margin-left: -20px;
+    // margin-left: -20px;
+    margin-left: 0;
     width: 100%;
   }
 
   .one-third .chart-pie {
     margin-top: 0;
+    width: 50%;
   }
 }
 
