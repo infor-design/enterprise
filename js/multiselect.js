@@ -162,7 +162,7 @@
       destroy: function() {
         this.textbox.off().remove();
         this.dropdown.destroy();
-        this.element.off('close.multiselect selected.multiselect');
+        this.element.off();
         $.removeData(this.element[0], pluginName);
       }
     };

@@ -69,15 +69,18 @@
                         .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
                         .attr({'aria-describedby' : id + '-instructions', 'id': id});
 
-        var icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
+        this.icon = this.element.parent().find('.icon');
+        if (this.icon.length === 0) {
+          this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
+        }
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.element.after(this.input, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
-          this.element.after(this.label, this.input, this.trigger, icon);
+          this.element.after(this.label, this.input, this.trigger, this.icon);
         } else {
-          this.element.after(this.input, this.trigger, icon);
+          this.element.after(this.input, this.trigger, this.icon);
         }
 
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
@@ -1002,7 +1005,9 @@
         this.instructions.remove();
         this.input.prev('label').remove();
         this.input.off().remove();
-        this.element.show().prev('label').show();
+        this.icon.remove();
+        this.element.removeAttr('style');
+        this.orgLabel.removeAttr('style');
       },
 
       disable: function() {

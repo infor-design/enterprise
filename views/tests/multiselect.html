@@ -5,27 +5,29 @@
     <hr>
 
     <div class="field">
-      <label for="states-multi" class="label">Normal Test</label>
-      <select multiple id="states-multi" name="states" class="multiselect">
-        <option value="option1" selected>Option One</option>
-        <option value="option2">Option Two</option>
-        <option value="option3">Option Three</option>
-        <option value="option4">Option Four</option>
+      <label for="states-multi" class="label">States (Max 10)</label>
+      <select multiple id="states-multi" data-source="/api/states?term=" name="states-multi" data-maxselected="10" class="multiselect"></select>
+    </div>
+
+    <div class="field">
+      <label for="towns-multi-optgroup" class="label">Towns (Max 5)</label>
+      <select multiple data-maxselected="5" data-source="/api/towns" data-init="false" id="towns-multi-optgroup" name="towns-multi-optgroup" class="multiselect">
       </select>
     </div>
 
     <div class="field">
-      <label for="input-test" class="label">Test Input</label>
-      <input id="input-test" type="text">
-    </div>
-
-    <div class="field">
-      <label for="states-multi-ajax" class="label">Ajax Test</label>
-      <select multiple id="states-multi-ajax" name="states" data-init="false" class="multiselect">
+      <label for="fruits-multi" class="label">Fruits (disabled)</label><br />
+      <select multiple disabled id="fruits-multi" name="fruits-multi" data-maxselected="2" class="multiselect">
+        <option>Apple</option>
+        <option>Banana</option>
+        <option>Grapefruit</option>
+        <option>Kiwi</option>
+        <option>Lemon</option>
+        <option>Lime</option>
+        <option selected>Orange</option>
+        <option>Strawberry</option>
       </select>
     </div>
-
-    <button id="disable-button" class="btn" type="button">Disable</button>
   </div>
 </div>
 
