@@ -124,6 +124,10 @@
           // Triggered by the dropdown's 'selected' event
           self.handleOptionFromDropdown(option, isAdded);
         });
+
+        this.dropdown.label.on('click.multiselect', function() {
+          self.textbox.focus();
+        });
       },
 
       handleOptionFromDropdown: function(option, isAdded) {
