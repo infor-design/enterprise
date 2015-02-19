@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Stacked Bar - Vertical</h1>
+    <span class="label">Charts</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Bar Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-stacked-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+    var dataset = [{
+      data: [{
+          name: '2014',
+          value: 100
+      }, {
+          name: '2015',
+          value: 200
+      }],
+      name: 'Component 1'
+    }, {
+      data: [{
+          name: '2014',
+          value: 100
+      }, {
+          name: '2015',
+          value: 400
+      }],
+      name: 'Component 2'
+    }];
+
+  $('#bar-stacked-example').chart({type: 'bar-normalized', dataset: dataset});
+</script>

@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Stacked Bar - Vertical</h1>
+    <span class="label">Charts</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Simple Bar Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-stacked-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+ var dataset = [{
+      data: [{
+          name: 'Category A',
+          value: 373
+      }, {
+          name: 'Category B',
+          value: 372
+      }, {
+          name: 'Category C',
+          value: 236.35
+      }],
+      name: ''  //Can be optionally passed in makes less sense with one: Group 1
+    }];
+
+  $('#bar-stacked-example').chart({type: 'bar', dataset: dataset});
+</script>

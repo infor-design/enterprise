@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Stacked Bar - Vertical</h1>
+    <span class="label">Charts</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Column Bar Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-stacked-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+    var dataset = [{
+        data: [{
+            name: 'JAN',
+            value: 12
+        }, {
+            name: 'FEB',
+            value: 11
+        }, {
+            name: 'MAR',
+            value: 14
+        }, {
+            name: 'APR',
+            value: 10
+        }, {
+            name: 'MAY',
+            value: 14
+        }, {
+            name: 'JUN',
+            value: 8
+        }, {
+            name: 'JUL',
+            value: 7
+        }, {
+            name: 'AUG',
+            value: 10
+        }, {
+            name: 'SEP',
+            value: 9
+        }, {
+            name: 'OCT',
+            value: 8
+        }, {
+            name: 'NOV',
+            value: 10
+        }, {
+            name: 'DEC',
+            value: 6
+        }]
+      }];
+
+    $('#bar-stacked-example').chart({type: 'column', dataset: dataset})
+      .on('selected', function(e, args) {
+        console.log(e, args);
+      });
+
+</script>
