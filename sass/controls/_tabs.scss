@@ -24,7 +24,7 @@
   height: 2px;
   left: 50%;
   position: absolute;
-  @include css3(transition, all .35s ease);
+  @include css3(transition, background-color .35s ease);
   width: 0;
 }
 
@@ -97,8 +97,13 @@
         height: 24px;
         margin-right: 4px;
         position: relative;
-        top: -3px;
         width: 24px;
+      }
+    }
+
+    &.has-popupmenu {
+      .icon {
+        margin: -2px;
       }
     }
 

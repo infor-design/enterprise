@@ -50,9 +50,9 @@
           .build()
           .setupEvents();
 
-        this.activate(this.tablist.children('li:first-child').children('a').attr('href'));
+        this.activate(this.tablist.children('li:first-child').children('a').attr('href'), true);
         this.setOverflow();
-        this.focusBar();
+        //this.focusBar();
       },
 
       setup: function() {
@@ -112,13 +112,24 @@
           // Find and configure dropdown tabs
           var dd = a.next();
           if (dd.length > 0 && dd.is('ul')) {
-            a.parent().addClass('has-popupmenu').popupmenu({
+            var li = a.parent();
+
+           li.addClass('has-popupmenu').popupmenu({
               menu: dd,
               trigger: 'click'
             }, function (href) {
               self.activate(href);
               self.panels.filter(href).find('h3:first-child').focus();
               self.updateAria(a);
+            });
+
+            li.data('popupmenu').menu.on('keydown.popupmenu', 'a', function(e) {
+              switch(e.which) {
+                case 27: // escape
+                  li.addClass('is-selected');
+                  a.focus();
+                  break;
+              }
             });
 
             a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
@@ -145,7 +156,7 @@
           e.stopPropagation();
           $(this).parent().trigger('click');
         }).on('click.tabs', '.icon', function(e) {
-          if ($(this).hasClass('dismissible')) {
+          if ($(this).parent().hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
             self.remove($(this).prev().attr('href'));
@@ -175,7 +186,6 @@
             self.buildPopupMenu();
           }
         }).on('keydown.tabs', function(e) {
-
           switch(e.which) {
             case 37: // left
             case 38: // up
@@ -183,13 +193,14 @@
               self.findLastVisibleTab();
               break;
             case 13: // enter
+            case 32: // spacebar
               e.preventDefault(); //jshint ignore:line
             case 39: // right
             case 40: // down
-              self.buildPopupMenu();
+              e.preventDefault();
+              self.buildPopupMenu(self.tablist.find('.is-selected').children('a').attr('href'));
               break;
           }
-
         });
 
         // Check to see if we need to add/remove the more button on resize
@@ -236,20 +247,24 @@
           this.focusBar(this.moreButton);
         } else {
           li.addClass('is-focused');
+          /*
           if (li.not('.has-popupmenu').length > 0) {
             this.activate(li.find('a').attr('href'));
           }
+          */
           li.addClass('is-selected');
           this.focusBar(li);
         }
       },
 
       handleKeyDown: function(e) {
-        if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) {
+        if (e.shiftKey || e.ctrlKey || e.metaKey || (e.altKey && e.which !== 8)) {
           return;
         }
 
-        if ((e.which < 32 && e.which !== 13) || e.which > 46) {
+        var passableKeys = [8, 13];
+
+        if ((e.which < 32 && $.inArray(e.which, passableKeys) === -1) || e.which > 46) {
           return;
         }
 
@@ -282,11 +297,20 @@
         }
 
         switch(e.which) {
+          case 8:
+            if (e.altKey && currentLi.is('.dismissible')) {
+              e.preventDefault();
+              self.remove(currentLi.children('a').attr('href'));
+            }
+            return;
           case 13:
+          case 32:
             e.preventDefault();
             if (currentLi.hasClass('has-popupmenu')) {
               currentLi.data('popupmenu').open();
+              return;
             }
+            self.activate(currentLi.children('a').attr('href'));
             return;
           case 38:
             e.preventDefault(); // jshint ignore:line
@@ -316,7 +340,7 @@
         targetLi.children('a').focus();
       },
 
-      activate: function(href) {
+      activate: function(href, noAutoFocus) {
         var self = this,
           a = self.anchors.filter('[href="' + href + '"]'),
           ui = {
@@ -350,7 +374,10 @@
           }
         });
 
-        ui.panels.find(':first-child').filter('h3').attr('tabindex', '0');
+        var headings = ui.panels.find(':first-child').filter('h3').attr('tabindex', '0');
+        if (!noAutoFocus) {
+          headings.first().focus();
+        }
       },
 
       updateAria: function(a) {
@@ -476,7 +503,9 @@
 
         var targetAnchor = this.anchors.filter('[href="#' + tabId + '"]'),
           targetLi = targetAnchor.parent(),
-          targetPanel = this.panels.filter('#' + tabId);
+          targetPanel = this.panels.filter('#' + tabId),
+          targetLiIndex = this.tablist.children('li').index(targetLi),
+          prevLi = targetLi.prev();
 
         // Remove these from the collections
         this.panels = this.panels.not(targetPanel);
@@ -493,6 +522,21 @@
         // Adjust tablist height
         this.setOverflow();
 
+        // If any tabs are left in the list, set the previous tab as the currently active one.
+        var count = targetLiIndex - 1;
+        while (count > -1) {
+          count = -1;
+          if (prevLi.is('.separator') || prevLi.is(':hidden') || prevLi.is(':disabled')) {
+            prevLi = prevLi.prev();
+            count = count - 1;
+          }
+        }
+        if (prevLi.length === 0) {
+          return this;
+        }
+
+        this.activate(prevLi.children('a').attr('href'));
+        this.focusBar(prevLi);
         return this;
       },
 
@@ -590,6 +634,8 @@
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
           self.focusBar();
+        }).on('selected.tabs', function(e, anchor) {
+          self.activate(anchor.attr('href'));
         });
 
         var menu = self.popupmenu.menu;
@@ -598,10 +644,21 @@
         menu.on('focus.popupmenu', 'a', function() {
           $(this).parents('ul').find('li').removeClass('is-selected');
           $(this).parent().addClass('is-selected');
-          self.activate($(this).attr('href'));
           self.moreButton.addClass('is-selected');
           self.focusBar();
+        }).on('keydown.popupmenu', 'a', function(e) {
+          var target = $(e.currentTarget);
+          switch(e.which) {
+            case 13:
+            case 32:
+              e.preventDefault();
+              target.parents('ul').find('li').removeClass('is-selected');
+              target.addClass('is-selected');
+              self.activate(target.attr('href'));
+              break;
+          }
         }).on('destroy.popupmenu', function() {
+          menu.off();
           $('#tab-container-popupmenu').remove();
         });
 
@@ -649,6 +706,7 @@
 
           switch(key) {
             case 13: // enter
+            case 32: // spacebar
               e.preventDefault();
               targetHref = menu.find('li.is-selected').attr('data-tab-href');
               self.popupmenu.close();
@@ -712,7 +770,7 @@
         this.animatedBar.addClass('visible');
         this.animationTimeout = setTimeout(function() {
           self.animatedBar.css({
-            'left' : (target.offset().left - 7) + 'px',
+            'left' : (target.position().left + 12) + 'px',
             'width' : (target.width() - 11) + 'px'
           });
         }, 0);
@@ -753,8 +811,11 @@
           .removeAttr('role')
           .removeClass('tab is-selected');
 
-        tabs.filter('.has-popupmenu')
-          .data('popupmenu').destroy();
+        var dds = tabs.filter('.has-popupmenu').data('popupmenu');
+        dds.each(function() {
+          $(this).menu.off();
+          $(this).destroy();
+        });
 
         this.anchors
           .off()

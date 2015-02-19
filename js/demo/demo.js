@@ -184,4 +184,14 @@ $(function($) {
     console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
   });
 
+  // Run these on 'body.initialized' event
+  $('body').on('initialized', function() {
+
+    // Randomize the numbers on the Tabs Counts example
+    $('#tabs-counts').find('li > a > .count').each(function() {
+      $(this).text((Math.floor(Math.random() * (20 - 0)) + 0) + ' ');
+    });
+
+  });
+
 });

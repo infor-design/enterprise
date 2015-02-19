@@ -89,7 +89,10 @@ describe('Number Format [selenium]', function(){
   });
 
   // http://jira.infor.com/browse/HFC-1822 - Comment on 08/Sep/14 12:57 PM
-  it('should be able to select all characters and clear them by typing a decimal point', function(done) {
+  // Skipped because this test doesn't run properly with Chrome due to an issue with WebdriverIO.
+  // Copy/Paste keyboard controls are not implemented in all browser drivers.
+  // https://github.com/webdriverio/webdriverio/issues/290
+  it.skip('should be able to select all characters and clear them by typing a decimal point', function(done) {
     var input = '#input-masked-number';
     // type a bunch of characters
     // select all of them (make sure the caret highlights all of them)
@@ -153,7 +156,10 @@ describe('Number Format [selenium]', function(){
       .call(done);
   });
 
-  it('can handle pasted items from the clipboard and format them correctly', function(done) {
+  // Skipped because this test doesn't run properly with Chrome due to an issue with WebdriverIO.
+  // Copy/Paste keyboard controls are not implemented in all browser drivers.
+  // https://github.com/webdriverio/webdriverio/issues/290
+  it.skip('can handle pasted items from the clipboard and format them correctly', function(done) {
     var input = '#input-masked-number';
     var copyInput = '#copythis';
     runner.client
