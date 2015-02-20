@@ -29,14 +29,14 @@
                    'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
       days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
+      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
         wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'h:mm a',
-      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/abbreviated
+      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
       dayPeriods: ['AM', 'PM']
      }],
      //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)

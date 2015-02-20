@@ -18,6 +18,7 @@ Locale = window.Locale; // jshint ignore:line
 //Load the Locales because Ajax doesnt work
 require('../../../js/cultures/en.js');
 require('../../../js/cultures/de-DE.js');
+require('../../../js/cultures/nb-NO.js');
 
 //Tests
 describe('Locale [mocha]', function(){
@@ -82,6 +83,14 @@ describe('Locale [mocha]', function(){
     Locale.calendar().timeFormat.should.equal('h:mm a');
     Locale.set('de-DE');
     Locale.calendar().timeFormat.should.equal('HH:mm');
+  });
+
+  it('be treat no as nb-NO', function() {
+    Locale.set('no');
+    Locale.translate('Loading').should.equal('Laster');
+    Locale.set('no-NO');
+    Locale.translate('Loading').should.equal('Laster');
+    Locale.calendar().timeFormat.should.equal('HH.mm');
   });
 
   it('be able to translate', function(){

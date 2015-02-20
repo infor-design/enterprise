@@ -122,7 +122,8 @@
 
   &.is-muliselect li:before {
     @include checkbox-unchecked-before-style;
-    margin-left: -35px;
+    left: 14px;
+    margin-left: 0;
   }
 
   &.is-muliselect li {
@@ -137,7 +138,7 @@
       @include checkbox-checked-after-style;
       @include css3(transform-origin, -11px top 0);
       @include checkbox-animation;
-      left: 22px;
+      left: 21px;
       margin-top: 0;
       top: 18px;
     }

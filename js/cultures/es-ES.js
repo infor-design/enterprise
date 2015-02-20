@@ -32,7 +32,7 @@
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
       months: {
         wide: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        abbreviated: ['Ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Ago.', 'Sept.', 'Oct.', 'Nov.', 'Dic.']
+        abbreviated: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'H:mm',

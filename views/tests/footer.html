@@ -1,0 +1,21 @@
+{{#enableLiveReload}}
+
+<!-- Script Highlighting -->
+<script src="/js/syntax.js" type="text/javascript"></script>
+
+<!-- Live Reload - "grunt watch" -->
+<script type="text/javascript">
+  if (window.location.hostname !== '107.170.15.202') {
+    var script = '\x3Cscript type="text/javascript" src="//' +
+                  window.location.hostname + ':35729/livereload.js">\x3C/script>';
+    document.write(script); // jshint ignore:line
+  }
+</script>
+{{/enableLiveReload}}
+
+<script>
+  // Init All SoHo XI Controls Stuff on Document Ready test
+  $(function() {
+    $('body').initialize('no');
+  });
+</script>

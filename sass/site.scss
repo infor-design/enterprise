@@ -160,8 +160,9 @@
   //==================================================//
 
   &.gallery {
-    margin: 0 auto 80px;
+    margin: 0 auto;
     overflow: hidden;
+    padding: 0 20px;
 
     .content {
       border: solid $switch-disabled-color 1px;

@@ -14,6 +14,8 @@
 }(function () {
 
   function Locale(locale) {
+    locale = this.closestLocale(locale);
+
     if (!(this instanceof Locale)) {
       return new Locale(locale);
     }
@@ -35,6 +37,11 @@
       $('html').attr('lang', this.currentLocale.name);
     },
 
+    //Gets Near Cultures for some
+    closestLocale: function (locale) {
+      return (locale.substr(0,2) === 'no' ?  'nb-NO' : locale);
+    },
+
     //Get the Path of the Script
     scriptPath: function(partialPath) {
      var scripts = document.getElementsByTagName('script');
@@ -54,6 +61,7 @@
     set: function (locale) {
       var self = this;
       this.dff = $.Deferred();
+      locale = this.closestLocale(locale);
 
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.currentLocale.name = locale;
