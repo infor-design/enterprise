@@ -51,16 +51,17 @@
           continue;
         }
 
-        var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
+        var seriesLine = $('<span class="chart-legend-item hidden-lg" tabindex="0"></span>'),
           color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
-          text = $('<span>'+ series[i].name  + '</span>');
+          // textBlock = $('<span>'+ series[i].name  + '</span>');
+          textBlock = $('<span/>').append('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
         if (series[i].percent) {
           var pct = $('<span class="chart-legend-percent"></span>').text(series[i].percent);
-          text.append(pct);
+          textBlock.append(pct);
         }
 
-        seriesLine.append(color, text);
+        seriesLine.append(color, textBlock);
         legend.append(seriesLine);
       }
 
