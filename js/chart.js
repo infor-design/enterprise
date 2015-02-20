@@ -32,7 +32,7 @@
     this.options = {
       colorRange: ['#13a7ff', '#0872b0', '#79cc26', '#3f9818', '#ffd042',
           '#f86f11', '#97d8ff', '#96e345', '#d79df4', '#f57294', '#bdbdbd',
-          '#164203', '#03a59a', '#660a23', '#5a187a', '#454545', '#004d47', '#ff4249'], //Shared Options
+          '#164203', '#03a59a', '#660a23', '#5a187a', '#454545', '#004d47', '#ff4249'] //Shared Options
     };
 
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
@@ -117,6 +117,8 @@
         bottom: 5
       };
 
+      console.log('bar chart args: ', arguments);
+
       var w = 480,
         h = 300,
         barWidth = 24,
@@ -124,6 +126,7 @@
         y,
         stack,
         x = d3.scale.ordinal().rangeRoundBands([0, w - margins.left - margins.right]);
+
 
       $(container).addClass('chart-bar');
 
@@ -210,10 +213,15 @@
       stack.selectAll('rect')
         .on('mouseenter', function (d, i) {
 
+          console.log('mouseenter');
+
           var shape = d3.select(this),
               content = '',
               xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
+
+          console.log('xPos: ', xPos);
+          console.log('yPos: ', yPos);
 
           if (dataset.length === 1) {
             content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
@@ -265,6 +273,9 @@
         right: 24,
         bottom: 30 // 30px plus size of the bottom axis (20)
       };
+
+      console.log('vertical bar chart args: ', arguments);
+
 
       $(container).addClass('chart-vertical-bar');
       $(container).closest('.widget-content').addClass('l-center');
@@ -448,6 +459,9 @@
           var yPosS = svg[0][0].getBoundingClientRect().top + $(window).scrollTop(),
               xPos = d3.event.pageX + 25,
               yPos = yPosS + parseFloat(shape.attr('y')) + 5 - (parseInt(charts.tooltip.outerHeight()) /2) + (parseFloat(shape.attr('height'))/2);
+
+          console.log('xPos: ', xPos);
+          console.log('yPos: ', yPos);
 
           charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'});
 
@@ -701,6 +715,13 @@
       }
       if (options.type === 'sparkline') {
         chartInst.Sparkline(options.dataset);
+      }
+
+      d3.select(window).on('resize', resize); 
+
+      function resize() {
+        console.log('resize!');
+
       }
 
     });
