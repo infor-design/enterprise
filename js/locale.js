@@ -127,7 +127,7 @@
       ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('HH', hours);
-      ret = ret.replace('mm', mins);
+      ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', seconds);
       ret = ret.replace('a', (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
 
