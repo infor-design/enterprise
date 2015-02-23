@@ -504,6 +504,36 @@
       });
       */
 
+      d3.select(window).on('resize', resize); 
+
+      function resize() {
+
+        var width = $(window).width(); 
+        var height = $(window).height(); 
+
+        console.log('resize -- w: ', width, ' h: ', height);
+        console.log('xMax: ', xMax);
+
+        if (width <= 580) {
+          console.log('small scale here');
+
+          // Redefine the X Scale
+          var xScale = d3.scale.linear()
+            .domain([0, xMax / 2])
+            .nice()
+            .range([0, width]);
+
+          // Redefine the X Axis
+          xAxis = d3.svg.axis()
+            .scale(xScale);
+
+          // Redraw the X Axis
+          d3.select(".x")
+            .call(xAxis);
+        }
+
+      }
+
       //Add Legends
       charts.addLegend(series, 'below');
       charts.appendTooltip();
@@ -524,7 +554,7 @@
       $(container).closest('.card-content').addClass('l-center');
 
       svg = d3.select(container)
-              .append('svg')
+            .append('svg')
             .attr('width', '100%')
             .attr('height', '100%')
             .attr('viewBox','0 0 '+Math.min(width,height) +' '+Math.min(width,height) ) 
@@ -718,16 +748,16 @@
         chartInst.Sparkline(options.dataset);
       }
 
-      d3.select(window).on('resize', resize); 
+      // d3.select(window).on('resize', resize); 
 
-      function resize() {
+      // function resize() {
 
-        var width = $(window).width(); 
-        var height = $(window).height(); 
+      //   var width = $(window).width(); 
+      //   var height = $(window).height(); 
 
-        console.log('resize -- w: ', width, ' h: ', height);
+      //   console.log('resize -- w: ', width, ' h: ', height);
 
-      }
+      // }
 
     });
   };
