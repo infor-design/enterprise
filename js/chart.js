@@ -721,7 +721,11 @@
       d3.select(window).on('resize', resize); 
 
       function resize() {
-        console.log('resize!');
+
+        var width = $(window).width(); 
+        var height = $(window).height(); 
+
+        console.log('resize -- w: ', width, ' h: ', height);
 
       }
 
