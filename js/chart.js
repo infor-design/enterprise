@@ -277,7 +277,6 @@
 
       console.log('vertical bar chart args: ', arguments);
 
-
       $(container).addClass('chart-vertical-bar');
       $(container).closest('.widget-content').addClass('l-center');
       $(container).closest('.card-content').addClass('l-center');
@@ -333,6 +332,7 @@
         .append('g')
         .attr('class', 'group')
         .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
+
 
       xMax = d3.max(dataset, function (group) {
         return d3.max(group, function (d) {
@@ -521,37 +521,28 @@
           var xScale = d3.scale.linear()
             .domain([0, xMax])
             .nice()
-            .range([0, width]);
+            .range([0, width/2]);
 
           // Redefine the X Axis
           xAxis = d3.svg.axis()
             .scale(xScale)
-            .ticks(4);
+            .ticks(4)
+            .tickSize(-height)
+            .tickPadding(0);
 
           // Redraw the X Axis
           d3.select(".x")
             .call(xAxis);
 
-          // Redraw Rectangles
-          rects = groups.selectAll('rect')
-            .data(function (d) {
-              return d;
-          })
-          .enter()
-          .append('rect')
-          .attr('class', function(d, i) {
-            return 'series-'+i+' bar';
-          })
-          .attr('x', function (d) {
-            return xScale(d.x0);
-          })
-          .attr('y', function (d) {
-            return yScale(d.y);
-          })
-          .attr('height', function () {
-            return yScale.rangeBand();
-          })
-          .attr('width', 0);
+          svg.selectAll('.bar')
+            .transition()
+            .duration(500)
+            .attr('width', function (d) {
+              return xScale(d.x);
+            })
+            .attr('x', function (d) {
+              return xScale(d.x0);
+            });
 
         } else{
 
@@ -564,32 +555,27 @@
           // Redefine the X Axis
           xAxis = d3.svg.axis()
             .scale(xScale)
-            .ticks(9);
+            .ticks(9)
+            .tickSize(-height);
 
           // Redraw the X Axis
           d3.select(".x")
             .call(xAxis);
 
-          // Redraw Rectangles
-          rects = groups.selectAll('rect')
-            .data(function (d) {
-              return d;
-          })
-          .enter()
-          .append('rect')
-          .attr('class', function(d, i) {
-            return 'series-'+i+' bar';
-          })
-          .attr('x', function (d) {
-            return xScale(d.x0);
-          })
-          .attr('y', function (d) {
-            return yScale(d.y);
-          })
-          .attr('height', function () {
-            return yScale.rangeBand();
-          })
-          .attr('width', 0);
+          // Redraw the X Axis
+          d3.select(".x")
+            .call(xAxis);
+
+          svg.selectAll('.bar')
+            .transition()
+            .duration(500)
+            .attr('width', function (d) {
+              return xScale(d.x);
+            })
+            .attr('x', function (d) {
+              return xScale(d.x0);
+            });
+         
         }
 
       }
