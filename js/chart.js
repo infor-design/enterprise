@@ -527,10 +527,10 @@
               .append('svg')
             .attr('width', '100%')
             .attr('height', '100%')
-            .attr('viewBox','0 0 '+Math.min(width,height) +' '+Math.min(width,height) )
+            .attr('viewBox','0 0 '+Math.min(width,height) +' '+Math.min(width,height) ) 
             .attr('preserveAspectRatio','xMinYMin')
             .append('g')
-            .attr('transform', 'translate(' + (Math.min(width,height) + 10)/ 2 + ',' + (Math.min(width,height) + 10) / 2 + ')');
+            .attr('transform', 'translate(' + (Math.min(width,height) + 5)/ 2 + ',' + (Math.min(width,height) + 5) / 2 + ')');
 
       radius = ((Math.min(width, height) / 2) - 12);
 
