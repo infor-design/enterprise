@@ -45,6 +45,7 @@
     Tabs.prototype = {
 
       init: function(){
+        var self = this;
         this
           .setup()
           .build()
@@ -52,7 +53,14 @@
 
         this.activate(this.tablist.children('li:first-child').children('a').attr('href'), true);
         this.setOverflow();
-        //this.focusBar();
+
+        // Focus the bar on the first element, but don't animate it on page load.
+        this.animatedBar.addClass('no-transition');
+        this.focusBar(undefined, function() {
+          setTimeout(function() {
+            self.animatedBar.removeClass('no-transition');
+          }, 0);
+        });
       },
 
       setup: function() {
@@ -358,7 +366,7 @@
         self.panels.hide();
         self.updateAria(a);
 
-        ui.panels.stop().fadeIn(function() {
+        ui.panels.stop().fadeIn(250, function() {
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
           self.element.trigger('activate', null, ui);
@@ -757,7 +765,7 @@
         targetFocus.prev().find('a').focus();
       },
 
-      focusBar: function(li) {
+      focusBar: function(li, callback) {
         var self = this,
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
@@ -773,6 +781,9 @@
             'left' : (target.position().left + 12) + 'px',
             'width' : (target.width() - 11) + 'px'
           });
+          if (callback && typeof callback === 'function') {
+            callback();
+          }
         }, 0);
       },
 
