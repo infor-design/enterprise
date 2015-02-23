@@ -595,8 +595,8 @@
       width = parseInt($(container).parent().width());
       height = parseInt($(container).parent().height());
 
-      $(container).addClass('chart-pie');
-      $(container).closest('.widget-content').addClass('l-center');
+      $(container).addClass('chart-pie-visualization');
+      $(container).closest('.widget-content').addClass('l-center chart-pie');
       $(container).closest('.card-content').addClass('l-center');
 
       svg = d3.select(container)

@@ -77,7 +77,7 @@
 
 }
 
-.chart-legend-item {
+/* .chart-legend-item {
   border: 1px solid transparent;
   cursor: pointer;
   display: inline-block;
@@ -118,10 +118,6 @@
   @include ellipsis; 
 }
 
-// .chart-vertical-bar .chart-legend-item-text {
-//   min-width: 150px;
-// }
-
 .chart-legend-percent {
   font-weight: bold;
   padding-left: 5px;
@@ -129,7 +125,7 @@
   display: inline-block;
   position: absolute;
   right: 0;
-}
+} */
 
 // Tooltip Swatch
 .chart-swatch > div {
@@ -158,8 +154,9 @@
   text-align: center;
 }
 
+
 // Chart Specific Centering and Styling
-.chart-pie {
+/* .chart-pie {
   display: inline-block;
   // height: 98%;
   padding: 15px;
@@ -185,11 +182,49 @@
   }
 }
 
+
 .one-third .chart-pie {
   // margin-top: 35px;
   padding: 0;
   width: 53%;
+} */
+
+.chart-legend {
+  text-align: left;
 }
+
+
+
+.chart-legend-color {
+  height: 12px;
+  width: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.chart-pie {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  .chart-pie-visualization {
+    width: 56.4%;
+    float: left;
+  }
+
+  .chart-legend {
+    width: 28.4%;
+    float: right;
+
+    .chart-legend-item {
+      display: block;
+    }
+
+  }
+
+}
+
 
 .sparkline {
   height: 70px;
@@ -217,51 +252,5 @@
 
 }
 
-// Media Queries
-@include respond-to(tablet) {
-  /* .chart-pie {
-    height: 97%;
-    // margin-left: -50px;
-    // margin-top: 5px;
-    // width: 56%;
-    width: 50%;
-    // top: 50%;
-    top: 0;
-    position: relative;
-    // margin-top: -95px;
-    margin-top: -115px;
-    margin-left: 0;
-  } */
-
- /*  .one-third .chart-pie {
-    margin: 0 auto 0 -20px;
-    margin-bottom: -65px;
-    padding: 0;
-    width: 83%;
-    margin-left: 0;
-  } */
-
-}
-
-@include respond-to(phone) {
-  /* .chart-container .chart-legend {
-    display: block;
-    margin-bottom: 20px;
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  .chart-pie {
-    margin-bottom: -65px;
-    // margin-left: -20px;
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .one-third .chart-pie {
-    margin-top: 0;
-    width: 50%;
-  } */
-}
 
 
