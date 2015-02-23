@@ -84,6 +84,7 @@
   padding: 5px 10px 2px 0;
   position: relative;
   text-align: left;
+  min-width: 150px;
 
   &:focus {
     border: 1px solid $primary-color;
@@ -114,12 +115,12 @@
 .chart-legend-item-text {
   width: 78%;
   display: inline-block;
-  // white-space: nowrap;
-  // overflow: hidden;
-  // text-overflow: ellipsis; 
-
   @include ellipsis; 
 }
+
+// .chart-vertical-bar .chart-legend-item-text {
+//   min-width: 150px;
+// }
 
 .chart-legend-percent {
   font-weight: bold;

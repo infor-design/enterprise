@@ -508,28 +508,88 @@
 
       function resize() {
 
-        var width = $(window).width(); 
-        var height = $(window).height(); 
+        var win_width = $(window).width(); 
+        var win_height = $(window).height(); 
 
-        console.log('resize -- w: ', width, ' h: ', height);
+        console.log('resize -- w: ', win_width, ' h: ', win_height);
         console.log('xMax: ', xMax);
 
-        if (width <= 580) {
+        if (win_width <= 580) {
           console.log('small scale here');
 
           // Redefine the X Scale
           var xScale = d3.scale.linear()
-            .domain([0, xMax / 2])
+            .domain([0, xMax])
             .nice()
             .range([0, width]);
 
           // Redefine the X Axis
           xAxis = d3.svg.axis()
-            .scale(xScale);
+            .scale(xScale)
+            .ticks(4);
 
           // Redraw the X Axis
           d3.select(".x")
             .call(xAxis);
+
+          // Redraw Rectangles
+          rects = groups.selectAll('rect')
+            .data(function (d) {
+              return d;
+          })
+          .enter()
+          .append('rect')
+          .attr('class', function(d, i) {
+            return 'series-'+i+' bar';
+          })
+          .attr('x', function (d) {
+            return xScale(d.x0);
+          })
+          .attr('y', function (d) {
+            return yScale(d.y);
+          })
+          .attr('height', function () {
+            return yScale.rangeBand();
+          })
+          .attr('width', 0);
+
+        } else{
+
+          // Redefine the X Scale
+          var xScale = d3.scale.linear()
+            .domain([0, xMax])
+            .nice()
+            .range([0, width]);
+
+          // Redefine the X Axis
+          xAxis = d3.svg.axis()
+            .scale(xScale)
+            .ticks(9);
+
+          // Redraw the X Axis
+          d3.select(".x")
+            .call(xAxis);
+
+          // Redraw Rectangles
+          rects = groups.selectAll('rect')
+            .data(function (d) {
+              return d;
+          })
+          .enter()
+          .append('rect')
+          .attr('class', function(d, i) {
+            return 'series-'+i+' bar';
+          })
+          .attr('x', function (d) {
+            return xScale(d.x0);
+          })
+          .attr('y', function (d) {
+            return yScale(d.y);
+          })
+          .attr('height', function () {
+            return yScale.rangeBand();
+          })
+          .attr('width', 0);
         }
 
       }
