@@ -4,6 +4,7 @@
 @import 'config';
 @import 'reset';
 @import 'mixins';
+@import 'controls/colors';
 @import 'controls/grid';
 @import 'controls/typography';
 @import 'controls/header';
@@ -160,17 +161,12 @@
   //==================================================//
 
   &.gallery {
-    margin: 0 auto;
+    margin: 0 auto 40px;
     overflow: hidden;
     padding: 0 20px;
 
-    .content {
-      border: solid $switch-disabled-color 1px;
-      padding-top: 0;
-      text-align: left;
-  	}
-
-    .call-out {
+    .row {
+      margin-left: -20px;
       padding: 0;
     }
   }
@@ -180,6 +176,7 @@
 
     h2 {
       margin-bottom: 40px;
+      line-height: 42px;
     }
   }
 
@@ -200,7 +197,7 @@
     input.dropdown {
       color: $label-color;
       font-weight: 400;
-      width: 170px;
+      width: 150px;
     }
 
     &:first-child {
@@ -208,24 +205,32 @@
     }
   }
 
-  .gallery-content.content {
+  .gallery-content {
     background: $body-bg-color;
+    border: solid $switch-disabled-color 1px;
     box-shadow: 0 0 5px rgba(8, 150, 233, 0);
+    color: #444444;
     display: block;
+    margin-bottom: 20px;
     min-height: 444px;
+    overflow: hidden;
+    padding-bottom: 10px;
+    padding-top: 0;
     position: relative;
+    text-align: left;
 
     &:focus {
       @include focus-state;
     }
-  }
 
-  .gallery-content:hover .gallery-look {
-    opacity: 1;
-  }
+    a {
+      border: 1px solid transparent;
+      display: block;
 
-  .gallery-img {
-    width: 100%;
+      &:focus {
+        @include focus-state;
+      }
+    }
   }
 
   .gallery-details {
@@ -270,27 +275,39 @@
     text-transform: uppercase;
   }
 
-  .gallery-look {
-    background: $highlight-color-rgba;
-    height: 100%;
-    opacity: 0;
+  // Overlay Styles
+
+  .gallery-overlay {
+    overflow: hidden;
+    position: relative;
+
+    &:hover .gallery-overlay-contents {
+      opacity: 1;
+    }
+  }
+
+  .gallery-overlay-contents {
+    background-color: rgba(7, 140, 217, .9);
+    color: #ffffff;
+    height: inherit;
+    left: 0;
+    @include opacity(0);
+    padding: 50%;
     position: absolute;
+    @include transition(opacity 1s ease);
     top: 0;
-    -moz-transition: 400ms;
-    -ms-transition: 400ms;
-    -webkit-transition: 400ms;
-    transition: 400ms;
-    width: 100%;
+    width: inherit;
 
     .copy {
-      color: #ffffff;
+      color: $inverse-color;
       font-size: 30px;
       font-weight: 400;
       height: 1em;
-      margin-top: -.5em;
+      left: 0;
+      margin-top: 0;
       position: absolute;
       text-align: center;
-      top: 50%;
+      top: 25%;
       width: 100%;
     }
   }
@@ -437,7 +454,7 @@
 
   .legal {
     clear: both;
-    color: $font-color-light;
+    color: #707070;
     font-size: 14px;
     font-weight: 100;
     line-height: 25px;
@@ -477,6 +494,10 @@
 
   .vision-img img {
     padding: 0 100px;
+  }
+
+  .site-content.gallery .row {
+    margin-left: 0 !important;
   }
 }
 

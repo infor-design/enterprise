@@ -26,9 +26,13 @@
                    'short': 'M/d/yyyy', //use four digit year
                    'medium': 'MMM d, yyyy',
                    'long': 'MMMM d, yyyy',
+                   'full': 'EEEE, MMMM d, y',
                    'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
-      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
-      days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
+      days: {
+         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+      },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
         wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],

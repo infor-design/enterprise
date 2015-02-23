@@ -16,9 +16,10 @@ require('../../../js/Locale.js');
 Locale = window.Locale; // jshint ignore:line
 
 //Load the Locales because Ajax doesnt work
-require('../../../js/cultures/en.js');
+require('../../../js/cultures/en-US.js');
 require('../../../js/cultures/de-DE.js');
 require('../../../js/cultures/nb-NO.js');
+require('../../../js/cultures/es-ES.js');
 
 //Tests
 describe('Locale [mocha]', function(){
@@ -70,7 +71,29 @@ describe('Locale [mocha]', function(){
     Locale.formatDate(new Date(2000, 11, 1, 13, 05), {pattern: 'M.dd.yyyy HH:mm'}).should.equal('12.01.2000 13:05');
   });
 
-  it('should be able to parse dates', function(){
+  it('should format long', function() {
+    Locale.set('en');    //year, month, day, hours, mins , secs
+    Locale.formatDate(new Date(2015, 0, 8, 13, 40), {date: 'long'}).should.equal('January 8, 2015');
+    Locale.set('de-DE');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1. Januar 2015');
+  });
+
+  it('should format long with day of week', function() {
+    Locale.set('en');    //year, month, day, hours, mins , secs
+    Locale.formatDate(new Date(2015, 0, 8, 13, 40), {date: 'full'}).should.equal('Thursday, January 8, 2015');
+    Locale.formatDate(new Date(2015, 2, 7, 13, 40), {date: 'full'}).should.equal('Thursday, January 8, 2015');
+    Locale.set('de-DE');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'full'}).should.equal('Donnerstag, 1. Januar 2015');
+  });
+
+  it('should format long days', function() {
+    Locale.set('en');    //year, month, day, hours, mins , secs
+    Locale.formatDate(new Date(2015, 0, 8, 13, 40), {date: 'long'}).should.equal('January 8, 2015');
+    Locale.set('de-DE');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1. Januar 2015');
+  });
+
+  it('should be able to parse dates', function() {
     Locale.set('en');    //year, month, day
     Locale.parseDate('11/8/2000').getTime().should.equal(new Date(2000, 10, 8).getTime());
     Locale.parseDate('10 / 15 / 2014').getTime().should.equal(new Date(2014, 9, 15).getTime());

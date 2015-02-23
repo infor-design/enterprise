@@ -105,15 +105,15 @@
             self.insertDate(self.currentDate);
           }
 
-          //Arrow Left or - : select prev day
-          if (key === 37 && self.isOpen() || key === 61 && !self.isOpen()) {
+          //Arrow Left
+          if (key === 37 && self.isOpen()) {
             handled = true;
             self.currentDate.setDate(self.currentDate.getDate() - 1);
             self.insertDate(self.currentDate);
           }
 
-          //Arrow Right or - : select prev day
-          if (key === 39 && self.isOpen() || key === 173 && !self.isOpen()) {
+          //Arrow Right
+          if (key === 39 && self.isOpen()) {
             handled = true;
             self.currentDate.setDate(self.currentDate.getDate() + 1);
             self.insertDate(self.currentDate);
@@ -126,10 +126,16 @@
             self.insertDate(self.currentDate);
           }
 
-          // Space closes Date Picker, selecting the Date
-          if (key === 32 && self.isOpen()) {
+          // Space or Enter closes Date Picker, selecting the Date
+          if (key === 32 && self.isOpen() || key === 13 && self.isOpen()) {
             self.closeCalendar();
             self.element.focus();
+            handled = true;
+          }
+
+          // Tab closes Date Picker like escape and goes to next field
+          if (key === 9 && self.isOpen()) {
+            self.closeCalendar();
           }
 
           if (handled) {
@@ -190,15 +196,15 @@
 
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table"></table>');
-        this.header = $('<div class="calendar-header"><button class="btn-icon prev"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-left"></use></svg><span>Previous Month</span></button><span class="month">november</span><span class="year"> 2014</span><button class="btn-icon next"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg><span>Next Month</span></button></div>');
+        this.header = $('<div class="calendar-header"><button class="btn-icon prev" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-left"></use></svg><span>Previous Month</span></button><span class="month">november</span><span class="year"> 2014</span><button class="btn-icon next" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg><span>Next Month</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
-        this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="selected">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
+        this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="is-selected" aria-selected="true">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
         //TODO: Localize
-        this.footer = $('<div class="calendar-footer"> <a href="#" class="link cancel">Clear</a> <a href="#" class="link today">'+Locale.translate('Today')+'</a> </div>');
+        this.footer = $('<div class="calendar-footer"> <a href="#" class="hyperlink cancel" tabindex="-1">Clear</a> <a href="#" tabindex="-1" class="hyperlink is-today">'+Locale.translate('Today')+'</a> </div>');
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
         this.trigger.popover({content: this.calendar, trigger: 'immediate',
-            placement: 'offset', offset: {top: 27, left: 141}, width: '200',
+            placement: 'offset', offset: {top: 20, left: 147}, width: '200',
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
@@ -223,10 +229,10 @@
 
         // Calendar Day Events
         this.days.off('click.datepicker').on('click.datepicker', 'td', function () {
-          self.days.find('.selected').removeClass('selected');
+          self.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected');
 
           var month = self.header.find('.month').attr('data-month'),
-            day = $(this).addClass('selected').text();
+            day = $(this).addClass('is-selected').attr('aria-selected', 'true').text();
 
           self.currentDate = new Date(new Date().getFullYear(), month, day);
           self.insertDate(self.currentDate);
@@ -243,7 +249,7 @@
             self.closeCalendar();
           }
 
-          if (btn.hasClass('today')) {
+          if (btn.hasClass('is-today')) {
             self.insertDate(new Date());
             self.closeCalendar();
           }
@@ -259,6 +265,8 @@
             self.showMonth(self.currentMonth - 1, self.currentYear);
           }
         });
+
+        self.days.find('.is-selected').attr('tabindex', 0).focus();
       },
 
       // Open the calendar in a popup
@@ -285,7 +293,7 @@
           this.header.find('.year').text(' ' + year);
         }
 
-        var days = Locale.calendar().days,
+        var days = Locale.calendar().days.abbreviated,
           monthName = Locale.calendar().months.wide[month];
 
         this.currentMonth = month;
@@ -307,8 +315,8 @@
           dayCnt = 1, nextMonthDayCnt = 1;
 
         this.days.find('td').each(function (i) {
-          var th = $(this).removeClass('alt selected today');
-          th.attr('tabindex', 0);
+          var th = $(this).removeClass('alt is-selected is-today');
+          th.removeAttr('aria-selected');
 
           if (i < leadDays) {
             th.addClass('alt').text(lastMonthDays - leadDays + 1 + i);
@@ -318,13 +326,14 @@
             th.text(dayCnt);
 
             if (dayCnt === self.currentDay) {
-              th.addClass('selected');
+              th.addClass('is-selected').attr('aria-selected', 'true');
             }
 
             if (dayCnt === self.todayDay && self.currentMonth === self.todayMonth) {
-              th.addClass('today');
+              th.addClass('is-today');
             }
 
+            th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {date: 'full'}));
             dayCnt++;
             return;
           }
@@ -356,8 +365,8 @@
                         return $(this).text().toLowerCase() === date.getDate().toString();
                       });
 
-        this.days.find('.selected').removeClass('selected');
-        dateTd.addClass('selected');  //.focus();
+        this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected');
+        dateTd.addClass('is-selected').attr('aria-selected', true);
       }
     };
 

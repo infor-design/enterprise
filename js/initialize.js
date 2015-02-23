@@ -15,8 +15,9 @@
     var self = this;
 
     if (!locale) {
-      locale = 'de-DE';
+      locale = 'en-US';
     }
+
     //Set Locale
     Locale.set(locale).done(function () {
       var returnObj;

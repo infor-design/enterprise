@@ -25,10 +25,14 @@
       dateFormat: {'seperator': '/', //Infered
                    'short': 'dd.MM.yy', //use four digit year
                    'medium': 'd. MMM y',
-                   'long': 'd. MMM y',
+                   'long': 'd. MMMM y',
+                   'full': 'EEEE d. MMMM y',
                    'datetime': 'dd.MM.yy HH.mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
-      days: ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø'],
+      days: {
+        wide: ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
+        abbreviated: ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø']
+      },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
       months: {
         wide: ['februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'],

@@ -120,12 +120,6 @@
       ret = pattern.replace('dd', this.pad(day, 2));
       ret = ret.replace('d', day);
 
-      //months
-      ret = ret.replace('MMMM', cal.months.wide[month]);  //full
-      ret = ret.replace('MMM', cal.months.abbreviated[month]);  //abreviation
-      ret = ret.replace('MM', this.pad(month+1, 2));  //number padded
-      ret = ret.replace('M', month+1);                //number unpadded
-
       //years
       ret = ret.replace('yyyy', year);
       ret = ret.replace('yy', year.toString().substr(2));
@@ -137,7 +131,18 @@
       ret = ret.replace('HH', hours);
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', seconds);
-      ret = ret.replace('a', (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+      ret = ret.replace(' a', ' '+ (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+
+      //months
+      ret = ret.replace('MMMM', cal.months.wide[month]);  //full
+      ret = ret.replace('MMM', cal.months.abbreviated[month]);  //abreviation
+      if (pattern.indexOf('MMM') === -1) {
+        ret = ret.replace('MM', this.pad(month+1, 2));  //number padded
+        ret = ret.replace('M', month+1);                //number unpadded
+      }
+
+      //Day of Week
+      ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
 
       return ret.trim();
     },
@@ -251,5 +256,5 @@
     }
   };
 
-  window.Locale = new Locale('en');
+  window.Locale = new Locale('en-US');
 }));
