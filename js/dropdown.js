@@ -262,8 +262,7 @@
 
       //Bind mouse and key events
       handleEvents: function() {
-        var self = this,
-          pointerEventName = 'onmspointerdown' in window ? 'onmspointerdown' : 'onpointerdown';
+        var self = this;
 
         this.input.on('keydown.dropdown', function(e) {
           self.handleKeyDown($(this), e);
@@ -583,7 +582,7 @@
         this.searchInput.val(current.text()).focus();
         this.handleSearchEvents();
 
-        self.list.on('touchmove.list', function(e) {
+        self.list.on('touchmove.list', function() {
           self.touchmove = true;
         }).on('touchend.list touchcancel.list', function(e) {
           e.preventDefault();
@@ -620,7 +619,9 @@
         });
 
         $(window).on('resize.dropdown', function() {
-          self.closeList();
+          if (!self.touchmove) {
+            self.closeList();
+          }
         });
 
         $(document).on('scroll.dropdown', function(e) {
