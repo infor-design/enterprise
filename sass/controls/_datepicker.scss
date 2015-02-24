@@ -12,6 +12,7 @@
     margin-top: 1px;
     position: absolute;
     width: 20px;
+    z-index: 1;
 
     &:hover {
       fill: #1a1a1a;
@@ -68,9 +69,18 @@
     transition: .2s background-color ease;
     width: 35px;
 
+    span {
+      line-height: normal;
+      width: auto;
+    }
+
     //Other month color
     &.alt {
       color: $datepicker-alt-month-color;
+
+      span {
+        color: $datepicker-alt-month-color;
+      }
     }
 
     //Today
@@ -78,6 +88,10 @@
       border-color: $datepicker-today-color;
       color: $datepicker-today-color;
       font-family: $font-regular;
+
+      span {
+        color: $datepicker-today-color;
+      }
     }
 
     //Selected
@@ -90,6 +104,10 @@
       background-color: $datepicker-selected-bg-color;
       color: $datepicker-selected-color;
       font-family: $font-regular;
+
+      span {
+        color: $datepicker-selected-color;
+      }
     }
 
     &:focus {
@@ -162,6 +180,7 @@
     float: left;
     line-height: inherit;
     margin-left: 20px;
+    text-transform: uppercase;
   }
 
   .is-today {

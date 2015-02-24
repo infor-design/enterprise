@@ -22,63 +22,116 @@
 
   // Table Headers
   th {
-    background-color: #e8eaeb;
-    border-bottom: 1px solid #d8d8d8;
-    border-top: 1px solid #f5f7f7;
-    color: $label-color;
-    @include font-size(13);
-    height: 32px;
-    padding: 0 10px;
+    background-color: #616161;
+    border-left: 1px solid #d8d8d8;
+    height: 40px;
+    padding: 0 20px;
     text-align: left;
-    text-transform: uppercase;
+    @include transition(background-color 250ms ease);
 
     .datagrid-header-text {
+      color: #ffffff;
+      @include font-size(12);
+      font-weight: bold;
       line-height: normal;
       position: relative;
-      top: 3px;
+      top: 0;
     }
   }
 
   .is-sortable:hover {
-    background-color: #d3d3d3;
+    background-color: #454545;
     cursor: pointer;
+
+    .icon {
+      opacity: 1;
+    }
   }
 
   // Table Rows
+  tr {
+
+    // Hover States
+    &:hover td {
+      background-color: #e4e4e4;
+
+      .is-readonly {
+        background-color: #e4e4e4;
+      }
+    }
+  }
+
   td {
     background-color: #ffffff;
-    border-bottom: 1px solid #dee0e0;
-    color: $label-color;
-    line-height: 50px;
+    border-bottom: 1px solid #d8d8d8;
+    border-left: 1px solid #d8d8d8;
+    color: $font-color-extradark;
+    height: 48px;
     max-width: 100px;
     overflow: hidden;
-    padding: 0 10px;
+    padding: 0 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    &:last-child {
+      border-right: 1px solid #d8d8d8;
+    }
+
+    span {
+      line-height: 48px;
+    }
   }
 
   // States
-  .is-disabled {
-    color: #767676;
+  .is-readonly {
+    background-color: #f2f2f2;
+    color: #666666;
+    display: block;
+    height: inherit;
+    margin: 0 -20px;
+    padding: 0 20px;
+    width: inherit;
   }
 }
 
+// Sorting
 .sort-indicator {
   display: inline-block;
-  left: 4px;
+  left: 3px;
   position: relative;
-  top: -6px;
-  vertical-align: top;
+  top: -10px;
+  vertical-align: middle;
 
-  svg {
-    fill: #666666;
-    height: 20px;
-    width: 20px;
+  .icon {
+    fill: #999999;
+    height: 28px;
+    opacity: 0;
+    @include transition(all 250ms ease);
+    width: 28px;
   }
 
   span {
     display: block;
-    height: 7px;
+    height: 8px;
   }
 }
 
+.is-sorted-asc {
+  .sort-indicator .icon {
+    opacity: 1;
+  }
+
+  .sort-asc .icon {
+    fill: $inverse-color;
+  }
+}
+
+.is-sorted-desc {
+  .sort-indicator .icon {
+    opacity: 1;
+  }
+
+  .sort-desc .icon {
+    fill: $inverse-color;
+  }
+}

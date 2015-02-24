@@ -29,7 +29,10 @@
                    'full': 'EEEE, d \'de\' MMMM \'de\' y',
                    'datetime': 'd/M/yyyy H:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
-      days: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
+      days: {
+        wide: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
+      },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
       months: {
         wide: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],

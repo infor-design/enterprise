@@ -70,22 +70,21 @@
           } else {
             self.openCalendar();
           }
-          self.element.focus();
         });
 
         self.mask();
-        this.handleKeys();
+        this.handleKeys(this.element);
       },
 
       // Handle Keyboard Stuff
-      handleKeys: function () {
+      handleKeys: function (elem) {
         var self = this;
 
-        this.element.on('keydown.datepicker', function (e) {
+        elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
           var handled = false,
             key = e.which;
 
-          //Arrow Down or Alt first opens the dialog
+         //Arrow Down or Alt first opens the dialog
           if (key === 40 && !self.isOpen()) {
             handled = true;
             self.openCalendar();
@@ -194,8 +193,8 @@
 
         this.element.addClass('is-active');
 
-        // Calendar Html in Popups
-        this.table = $('<table class="calendar-table"></table>');
+        // Calendar Html in Popups  TODO: Localize
+        this.table = $('<table class="calendar-table" aria-label="Calendar" role="application"></table>');
         this.header = $('<div class="calendar-header"><button class="btn-icon prev" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-left"></use></svg><span>Previous Month</span></button><span class="month">november</span><span class="year"> 2014</span><button class="btn-icon next" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg><span>Next Month</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="is-selected" aria-selected="true">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
@@ -208,7 +207,11 @@
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
+            }).on('open.datepicker', function () {
+              self.days.find('.is-selected').attr('tabindex', 0).focus();
             });
+
+        this.handleKeys($('#calendar-popup'));
 
         // Show Month
         var currentVal = this.element.val();
@@ -266,7 +269,6 @@
           }
         });
 
-        self.days.find('.is-selected').attr('tabindex', 0).focus();
       },
 
       // Open the calendar in a popup
@@ -319,11 +321,11 @@
           th.removeAttr('aria-selected');
 
           if (i < leadDays) {
-            th.addClass('alt').text(lastMonthDays - leadDays + 1 + i);
+            th.addClass('alt').html('<span class="aria-hidden">' + (lastMonthDays - leadDays + 1 + i) + '</span>');
           }
 
           if (i >= leadDays && dayCnt <= thisMonthDays) {
-            th.text(dayCnt);
+            th.html('<span class="aria-hidden">' + dayCnt + '</span>');
 
             if (dayCnt === self.currentDay) {
               th.addClass('is-selected').attr('aria-selected', 'true');
@@ -334,6 +336,8 @@
             }
 
             th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {date: 'full'}));
+            //th.append('<span class="audible">' + Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {date: 'full'}) + '</span>');
+            th.attr('role', 'link');
             dayCnt++;
             return;
           }
@@ -365,8 +369,8 @@
                         return $(this).text().toLowerCase() === date.getDate().toString();
                       });
 
-        this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected');
-        dateTd.addClass('is-selected').attr('aria-selected', true);
+        this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
+        dateTd.addClass('is-selected').attr({'aria-selected': true, 'tabindex': 0}).focus();
       }
     };
 

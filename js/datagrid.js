@@ -16,8 +16,8 @@
     Text: function(row, cell, value) {
       return ((value === null || value === undefined || value === '') ? '--' : value);
     },
-    Disabled: function(row, cell, value) {
-      return '<span class="is-disabled">' + ((value === null || value === undefined) ? '--' : value) + '</span>';
+    Readonly: function(row, cell, value) {
+      return '<span class="is-readonly">' + ((value === null || value === undefined) ? '--' : value) + '</span>';
     }
   };
 
@@ -44,8 +44,13 @@
 
       init: function(){
        this.settings = settings;
+       this.initSettings();
        this.render();
        this.handleEvents();
+      },
+
+      initSettings: function () {
+        this.sortColumn = {columnId: null, sortAsc: true};
       },
 
       //Render the Header and Rows
@@ -93,7 +98,8 @@
           headerRow += '</tr></thead>';
         }
 
-        self.table.append(headerRow);
+        self.headerRow = $(headerRow);
+        self.table.append(self.headerRow);
       },
 
       //Render the Rows
@@ -111,12 +117,13 @@
           }
 
           for (var j = 0; j < settings.columns.length; j++) {
-            var formatter = (settings.columns[j].formatter ? settings.columns[j].formatter : self.defaultFormatter);
+            var col = settings.columns[j],
+                formatter = (col.formatter ? col.formatter : self.defaultFormatter);
 
-            rowHtml += '<td>';
+            rowHtml += '<td' + (col.readonly ? 'class="is-readonly"' : '') + '>';
             rowHtml += formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
-
           }
+
           rowHtml += '</tr></tbody>';
           tableHtml += rowHtml;
         }
@@ -135,14 +142,24 @@
 
       //Api Event to set the sort Column
       setSortColumn: function(columnId) {
-        var sort = this.sortFunction(columnId, false, function(a){return (typeof a === 'string' ? a.toUpperCase() : a);});
+        var sort;
+
+        //Set Internal Variables
+        this.sortColumn.sortAsc = (this.sortColumn.columnId === columnId ? !this.sortColumn.sortAsc : true);
+        this.sortColumn.columnId = columnId;
+
+        //Do Sort on Data Set
+        sort = this.sortFunction(this.sortColumn.columnId, this.sortColumn.sortAsc, function(a){ return (typeof a === 'string' ? a.toUpperCase() : a);});
         settings.dataset.sort(sort);
+
+        //Set Visual Indicator
+        this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc');
+        this.headerRow.find('[data-columnid="' +columnId + '"]').addClass((this.sortColumn.sortAsc ? 'is-sorted-asc' : 'is-sorted-desc'));
         this.renderRows();
       },
 
       //Overridable function to conduct sorting
       sortFunction: function(field, reverse, primer) {
-        //Can Override Sort Function.
         var key = primer ?
           function(x) {return primer(x[field]);} :
           function(x) {return x[field];};
