@@ -28,19 +28,13 @@
         settings = $.extend({}, defaults, options);
 
     // Test the current browser for a mobile UA string.
-    function isMobile() {
+    function isSmallFormFactor() {
       // Adapted from http://www.detectmobilebrowsers.com
       var ua = navigator.userAgent || navigator.vendor || window.opera;
 
       // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
       // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
-      return (/iPhone|iPod|iPad/).test(ua);
-    }
-
-    // Need to specifically test for Android to keep the Menu open and allow for touch scrolling
-    function isAndroid() {
-      var ua = navigator.userAgent || navigator.vendor || window.opera;
-      return (/Android/).test(ua);
+      return (/iPhone|iPod/).test(ua);
     }
 
     // Plugin Constructor
@@ -268,7 +262,8 @@
 
       //Bind mouse and key events
       handleEvents: function() {
-        var self = this;
+        var self = this,
+          pointerEventName = 'onmspointerdown' in window ? 'onmspointerdown' : 'onpointerdown';
 
         this.input.on('keydown.dropdown', function(e) {
           self.handleKeyDown($(this), e);
@@ -279,6 +274,18 @@
             return;
           }
           self.toggleList();
+        }).on('touchstart.dropdown', function() {
+          // Set the self.touchmove flag when a touch is detected.  This flag prevents scrolling/resizing from closing
+          // the dropdown list while the screen is being interacted with via touch.
+          self.touchmove = true;
+        }).on('touchend.dropdown touchcancel.dropdown', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (isSmallFormFactor()) {
+            self.openNativePicker();
+            return false;
+          }
+          self.input.trigger('mouseup');
         });
 
         self.element.on('activate', function () {
@@ -570,38 +577,23 @@
 
         $('#dropdown-list').remove(); //remove old ones
 
-        // On mobile devices, don't use the HTML5 dropdown and trigger
-        // the native one instead.
-        if (isMobile()) {
-          self.element.css({
-            'position':'absolute',
-            'left': '-999px'
-          }).show().focus().click();
-
-          self.element.off('change.dropdown').one('change.dropdown', function() {
-            var idx = self.element.find('option:selected').index(),
-              cur = $(self.element[0].options[idx]);
-
-            //Select the clicked item
-            self.selectOption(cur);
-
-            self.element.hide().css({'position': '', 'left': ''});
-            setTimeout(function() {
-              self.input.focus();
-            });
-          });
-          return;
-        }
-
         this.list.appendTo('body').show();
         this.position();
         this.highlightOption(current, true);
         this.searchInput.val(current.text()).focus();
         this.handleSearchEvents();
 
-        self.list.on('touchend.list touchcancel.list', function(e) {
+        self.list.on('touchmove.list', function(e) {
+          self.touchmove = true;
+        }).on('touchend.list touchcancel.list', function(e) {
           e.preventDefault();
-          e.target.click();
+          e.stopPropagation();
+          if (!self.touchmove) {
+            $(e.target).click();
+          }
+          setTimeout(function() {
+            self.touchmove = false;
+          }, 10);
         }).on('click.list', 'li', function () {
           var val = $(this).attr('data-val'),
             cur = self.element.find('option[value="'+ val +'"]');
@@ -627,32 +619,57 @@
           }
         });
 
-        setTimeout(function() {
-          $(document).on('touchend.dropdown touchcancel.dropdown', function(e) {
-            e.preventDefault();
-            e.target.click();
-          }).on('click.dropdown', function(e) {
-            var target = $(e.target);
-            if (target.is('.dropdown-option') || target.is('.dropdown') || target.is('.group-label')) {
-              return;
-            }
-            self.closeList();
-          }).on('scroll.dropdown', function() {
-            if (!isAndroid()) {
-              self.closeList();
-            }
-          });
+        $(window).on('resize.dropdown', function() {
+          self.closeList();
+        });
 
-          $(window).on('resize.dropdown', function() {
-            self.closeList();
+        $(document).on('scroll.dropdown', function(e) {
+          var target = $(e.target);
+          if (target.is('.dropdown-option') || target.is('.dropdown') || target.is('.group-label') || self.touchmove === true) {
+            return;
+          }
+          self.closeList();
+        }).on('touchend.dropdown touchcancel.dropdown', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(e.target).click();
+        }).on('click.dropdown', function(e) {
+          var target = $(e.target);
+          if (target.is('.dropdown-option') || target.is('.dropdown') || target.is('.group-label') || self.touchmove === true) {
+            return;
+          }
+          self.closeList();
+        });
+      },
+
+      // On mobile devices, don't use the HTML5 dropdown and trigger
+      // the native one instead.  Set up events for listening for changes
+      openNativePicker: function() {
+        var self = this;
+
+        this.element.css({
+          'position':'absolute',
+          'visibility': ''
+        }).show().focus().trigger('click');
+
+        this.element.off('change.dropdown').one('change.dropdown', function() {
+          var idx = self.element.find('option:selected').index(),
+            cur = $(self.element[0].options[idx]);
+
+          //Select the clicked item
+          self.selectOption(cur);
+
+          self.element.hide().css({'position': '', 'left': ''});
+          setTimeout(function() {
+            self.input.focus();
           });
-        }, 10);
+        });
       },
 
       // Set size and positioning of the list
       position: function() {
         var isFixed = false, isAbs = false,
-          top = (this.input.offset().top);// + $(window).scrollTop());
+          top = (this.input.offset().top);
 
         this.list.css({'top': top, 'left': this.input.offset().left - $(window).scrollLeft()});
 
@@ -718,11 +735,15 @@
 
       //Close list and detch events
       closeList: function() {
+        if (this.touchmove) {
+          this.touchmove = false;
+        }
+
         this.list.hide().remove();
-        this.list.off('click.list touchend.list touchcancel.list').off('mousewheel.list');
+        this.list.off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list');
         this.listUl.find('li').show();
         this.input.removeClass('is-open').attr('aria-expanded', 'false').removeAttr('aria-activedescendant');
-        $(document).off('click.dropdown scroll.dropdown touchend.dropdown touchcancel.dropdown');
+        $(document).off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
         $(window).off('resize.dropdown');
 
         this.element.trigger('close');
@@ -763,12 +784,10 @@
       // Hide or Show list
       toggleList: function() {
         if (this.isOpen()) {
-          if (!isAndroid()) {
-            this.closeList();
-          }
-        } else {
-          this.open();
+          this.closeList();
+          return;
         }
+        this.open();
       },
 
       highlightOption: function(listOption) {
@@ -828,7 +847,7 @@
           return;
         }
 
-        if (!isMobile() && !this.settings.multiple && option.index() === this.element[0].selectedIndex) {
+        if (!this.settings.multiple && option.index() === this.element[0].selectedIndex) {
           return;
         }
 
