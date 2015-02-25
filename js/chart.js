@@ -51,7 +51,7 @@
           continue;
         }
 
-        var seriesLine = $('<span class="chart-legend-item hidden-lg" tabindex="0"></span>'),
+        var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
           color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
           // textBlock = $('<span>'+ series[i].name  + '</span>');
           textBlock = $('<span/>').append('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
@@ -506,16 +506,46 @@
 
       d3.select(window).on('resize', resize); 
 
+
       function resize() {
 
         var win_width = $(window).width(); 
-        var win_height = $(window).height(); 
 
-        console.log('resize -- w: ', win_width, ' h: ', win_height);
-        console.log('xMax: ', xMax);
+        // console.log('container: ', container);
+        // console.log('column: ', $(container).closest('.column'));
 
-        if (win_width <= 580) {
-          console.log('small scale here');
+        // console.log('group: ', $(container).find('.group').css({
+        //   'transform': 'translate(50%, 20%)'
+        // }));
+
+        var classList = $(container).closest('.column').attr('class').split(/\s+/);
+        var breakPoint = 1300;
+
+        $.each( classList, function(index, item){
+            if (item === 'one-third') {
+              // console.log('in one-third');
+              breakPoint = 640;
+            } else if (item === 'two-thirds') {
+              // console.log('in two-thirds');
+              breakPoint = 960;
+
+            }
+        });
+
+
+        if (win_width <= breakPoint) {
+
+          // $(container).find('.group').css({
+          //   'position': 'absolute',
+          //   'left': 50%,
+          //   'top': 50%,
+          //   'transform': 'translate(-50%, -50%)'
+          // });
+
+          var currTicks = d3.svg.axis()
+              .scale(xScale)
+              .ticks(),
+              newTicks = Math.floor(currTicks / 2);
 
           // Redefine the X Scale
           var xScale = d3.scale.linear()
@@ -526,7 +556,7 @@
           // Redefine the X Axis
           xAxis = d3.svg.axis()
             .scale(xScale)
-            .ticks(4)
+            .ticks(newTicks)
             .tickSize(-height)
             .tickPadding(0);
 
@@ -534,6 +564,8 @@
           d3.select(".x")
             .call(xAxis);
 
+
+          // Redraw the bars  
           svg.selectAll('.bar')
             .transition()
             .duration(500)
@@ -546,6 +578,13 @@
 
         } else{
 
+          // $(container).find('.group').css({
+          //   'position': 'absolute',
+          //   'left': 50%,
+          //   'top': 50%,
+          //   'transform': 'translate(-50%, -50%)'
+          // });
+
           // Redefine the X Scale
           var xScale = d3.scale.linear()
             .domain([0, xMax])
@@ -555,17 +594,14 @@
           // Redefine the X Axis
           xAxis = d3.svg.axis()
             .scale(xScale)
-            .ticks(9)
+            .ticks(currTicks)
             .tickSize(-height);
 
           // Redraw the X Axis
           d3.select(".x")
             .call(xAxis);
 
-          // Redraw the X Axis
-          d3.select(".x")
-            .call(xAxis);
-
+          // Redraw the bars  
           svg.selectAll('.bar')
             .transition()
             .duration(500)
@@ -596,7 +632,7 @@
       height = parseInt($(container).parent().height());
 
       $(container).addClass('chart-pie-visualization');
-      $(container).closest('.widget-content').addClass('l-center chart-pie');
+      $(container).closest('.widget-content').addClass('l-center chart-pie vertical-legend');
       $(container).closest('.card-content').addClass('l-center');
 
       svg = d3.select(container)
