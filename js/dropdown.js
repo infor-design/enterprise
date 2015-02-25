@@ -626,7 +626,9 @@
 
         $(document).on('scroll.dropdown', function(e) {
           var target = $(e.target);
-          if (target.is('.dropdown-option') || target.is('.dropdown') || target.is('.group-label') || self.touchmove === true) {
+          if (target.is('.multiselect-textbox') || target.is('.option-text') ||
+              target.is('.dropdown-option') || target.is('.dropdown') ||
+              target.is('.group-label') || self.touchmove === true) {
             return;
           }
           self.closeList();
@@ -636,7 +638,9 @@
           $(e.target).click();
         }).on('click.dropdown', function(e) {
           var target = $(e.target);
-          if (target.is('.dropdown-option') || target.is('.dropdown') || target.is('.group-label') || self.touchmove === true) {
+          if (target.is('.multiselect-textbox') || target.is('.option-text') ||
+              target.is('.dropdown-option') || target.is('.dropdown') ||
+              target.is('.group-label') || self.touchmove === true) {
             return;
           }
           self.closeList();
