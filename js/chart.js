@@ -505,42 +505,25 @@
       */
 
       d3.select(window).on('resize', resize); 
+      d3.select(window).on('load', resize); 
 
 
       function resize() {
 
         var win_width = $(window).width(); 
 
-        // console.log('container: ', container);
-        // console.log('column: ', $(container).closest('.column'));
-
-        // console.log('group: ', $(container).find('.group').css({
-        //   'transform': 'translate(50%, 20%)'
-        // }));
-
         var classList = $(container).closest('.column').attr('class').split(/\s+/);
         var breakPoint = 1300;
 
         $.each( classList, function(index, item){
             if (item === 'one-third') {
-              // console.log('in one-third');
-              breakPoint = 640;
+              breakPoint = 2040;
             } else if (item === 'two-thirds') {
-              // console.log('in two-thirds');
               breakPoint = 960;
-
             }
         });
 
-
         if (win_width <= breakPoint) {
-
-          // $(container).find('.group').css({
-          //   'position': 'absolute',
-          //   'left': 50%,
-          //   'top': 50%,
-          //   'transform': 'translate(-50%, -50%)'
-          // });
 
           var currTicks = d3.svg.axis()
               .scale(xScale)
@@ -577,13 +560,6 @@
             });
 
         } else{
-
-          // $(container).find('.group').css({
-          //   'position': 'absolute',
-          //   'left': 50%,
-          //   'top': 50%,
-          //   'transform': 'translate(-50%, -50%)'
-          // });
 
           // Redefine the X Scale
           var xScale = d3.scale.linear()
