@@ -33,11 +33,12 @@ input.dropdown {
 
   // Icon States
   + .icon {
+    background-color: $body-bg-color;
     cursor: pointer;
     display: inline-block;
     fill: $input-border-color;
-    height: 32px;
-    margin-left: -32px;
+    height: 31px;
+    margin-left: -33px;
     pointer-events: none;
     position: relative;
     top: 3px;
@@ -47,6 +48,10 @@ input.dropdown {
   &:focus {
     border-color: $input-focus-border-color;
   }
+}
+
+.modal-body .dropdown + .icon {
+  background-color: #ffffff;
 }
 
 // The List
@@ -214,7 +219,7 @@ input.dropdown {
 
   .icon {
     fill: $input-border-color;
-    margin-left: -30px;
+    margin-left: -32px;
     position: absolute;
     transform: rotate(180deg);
   }
