@@ -78,9 +78,21 @@ input.is-active {
 // Text Area
 textarea {
   @include rem(line-height, 2rem);
-  min-height: 80px;
+  min-height: 280px;
+  overflow: auto;
   padding: 10px;
   width: 362px;
+
+/* IE Styling
+  scrollbar-base-color: $body-bg-color;
+  scrollbar-face-color: #b6b6b6;
+  scrollbar-arrow-color: $body-bg-color;
+  scrollbar-track-color: $body-bg-color;
+  scrollbar-shadow-color: $body-bg-color;
+  scrollbar-highlight-color: $body-bg-color;
+  scrollbar-3dlight-color: $body-bg-color;
+  scrollbar-darkshadow-color: $body-bg-color;
+*/
 
   &.resizable {
     resize: vertical;
