@@ -510,58 +510,24 @@
 
       function resize() {
 
-        var win_width = $(window).width(),
-            svg_W = $('.chart-container svg').width(),
-            widget_W = $('.widget-content').width(),
+        var svg_W = $('.chart-container svg').width(),
             chart_W = $('.chart-container').width();
 
         if (chart_W <= svg_W) {
+
           var chartSvgDiff = svg_W - chart_W,
-              // squeezePercent = ((chartSvgDiff * 100) / svg_W) * 0.01 ; 
-              squeezePercent = ( ( svg_W - chartSvgDiff ) * 100 ) / svg_W ; 
-          
-          console.log('chartSvgDiff: ',chartSvgDiff);
-          console.log('squeezePercent: ',squeezePercent * 0.01);
-
-        }
-
-        console.log('win_width: ',win_width);
-        console.log('widget_W: ',widget_W);
-        console.log('chart_W: ',chart_W);
-        console.log('svg_W: ',svg_W);
-
-        
-
-        /*var classList = $(container).closest('.column').attr('class').split(/\s+/);
-        var breakPoint = 1300;
-
-        $.each( classList, function(index, item){
-            if (item === 'one-third') {
-              breakPoint = 2040;
-            } else if (item === 'two-thirds') {
-              breakPoint = 960;
-            }
-        });*/
-
-        // if (win_width <= breakPoint) {
-        if (chart_W <= svg_W) {
-
-          var scaleW = 0.01 * squeezePercent;
-          console.log('squeezePercent: ',squeezePercent);
-          console.log('width: ',width);
-          console.log('scaleW: ',scaleW);
+              squeezePercent = ( ( svg_W - chartSvgDiff ) * 100 ) / svg_W,
+              scaleW = 0.01 * squeezePercent; 
 
           var currTicks = d3.svg.axis()
               .scale(xScale)
               .ticks(),
-              // newTicks = Math.floor(currTicks / 2);
               newTicks = Math.floor(currTicks / 2);
 
           // Redefine the X Scale
           var xScale = d3.scale.linear()
             .domain([0, xMax])
             .nice()
-            // .range([0, width/2]);
             .range([0, (width * scaleW) - 40]);
 
           // Redefine the X Axis
@@ -574,7 +540,6 @@
           // Redraw the X Axis
           d3.select(".x")
             .call(xAxis);
-
 
           // Redraw the bars  
           svg.selectAll('.bar')
