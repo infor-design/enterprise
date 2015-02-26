@@ -51,7 +51,9 @@
           continue;
         }
 
-        var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
+        var /*seriesNameClass = series[i].name.replace(' ', '').toLowerCase(),*/
+        seriesIdx = i,
+        seriesLine = $('<span class="chart-legend-item" tabindex="0" data-idx="'+seriesIdx+'"></span>'),
           color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
           // textBlock = $('<span>'+ series[i].name  + '</span>');
           textBlock = $('<span/>').append('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
