@@ -78,12 +78,16 @@
         }
       });
 
+      
+
       $(container).after(legend);
       if (position === 'below') {
         legend.addClass('is-below');
       }
 
     };
+
+    
 
     //Add Toolbar to the page
     this.appendTooltip = function() {
@@ -509,7 +513,6 @@
       d3.select(window).on('resize', resize); 
       d3.select(window).on('load', resize); 
 
-
       function resize() {
 
         var svg_W = $('.chart-container svg').width(),
@@ -584,7 +587,6 @@
             });
          
         }
-
       }
 
       //Add Legends
@@ -801,16 +803,27 @@
         chartInst.Sparkline(options.dataset);
       }
 
-      // d3.select(window).on('resize', resize); 
 
-      // function resize() {
+      $('.chart-legend-item').on('click', function() {
+          var triggerIdx = $(this).index(),
+              targetGroup = $(this).closest('.chart-legend').siblings('.chart-container').find('svg .series-group').eq(triggerIdx);
 
-      //   var width = $(window).width(); 
-      //   var height = $(window).height(); 
+          targetGroup.css({
+            'opacity': 1
+          })
+          .siblings('.series-group').css({
+            'opacity': 0.5
+          });
 
-      //   console.log('resize -- w: ', width, ' h: ', height);
+      });
 
-      // }
+      // $('.widget-content').on('click', function(){
+      //     $(this).find('.chart-container svg .series-group').css({
+      //       'opacity': 1
+      //     });
+      // });
+
+      
 
     });
   };
