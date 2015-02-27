@@ -1,7 +1,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
-      define(['jquery'], factory);
+      define('nb-NO', ['jquery'], factory);
   } else {
       // No AMD. Register plugin with global jQuery object.
       factory(jQuery);
@@ -42,21 +42,28 @@
       timeFormat: 'HH.mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
       dayPeriods: ['AM', 'PM']
-     }],
-     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-     currencySign: 'kr', //(Replace Sign http://www.currencysymbols.in ?)
-     currencyFormat: '¤ #,##0.00',
-     //Resx
-     messages: {
-      'Required': {id: 'Required', value: 'Påkrevd', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Still inn Tid', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'i dag', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Timer', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutter', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Periode', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Bruk piltastene til å velge.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Laster', comment: 'Text below spinning indicator to indicate loading'}
-    }
+      }],
+      //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
+      currencySign: 'kr', //(Replace Sign http://www.currencysymbols.in ?)
+      currencyFormat: '¤ #,##0.00',
+      //numbers/symbols-numberSystem-latn
+      numbers: {
+        percentSign: '%',
+        minusSign: '-',
+        decimal: ',',
+        group: '.'
+      },
+      //Resx
+      messages: {
+        'Required': {id: 'Required', value: 'Påkrevd', comment: 'indicates a form field is manditory'},
+        'SetTime': {id: 'SetTime', value: 'Still inn Tid', comment: 'button text that inserts time when clicked'},
+        'Today': {id: 'Today', value: 'i dag', comment: 'refering to today on a calendar'},
+        'Hours': {id: 'Hours', value: 'Timer', comment: 'the hour portion of a time'},
+        'Minutes': {id: 'Minutes', value: 'Minutter', comment: 'the minutes portion of a time'},
+        'Period': {id: 'Period', value: 'Periode', comment: 'the am/pm portion of a time'},
+        'UseArrow': {id: 'UseArrow', value: '. Bruk piltastene til å velge.', comment: 'Instructional comments for screen readers'},
+        'Loading': {id: 'Loading', value: 'Laster', comment: 'Text below spinning indicator to indicate loading'}
+      }
   });
 
 }));

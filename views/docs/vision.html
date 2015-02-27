@@ -16,15 +16,15 @@
   <!-- jQuery and Plugin Code-->
   <script src="/js/jquery-1.11.1.min.js"></script>
   <script src="/js/sohoxi.js"></script>
-  <script src="/js/demo.js"></script>
 
 </head>
 <body>
-  {{> controls/svg}}
 
-  {{> includes/header}}
+  {{> controls/svg}}
+  {{> includes/header-sticky}}
+
   <div class="site-content vision">
-    <div class="vision-hero">
+    <div class="site-hero">
       <h2 class="headline">
         The future of SoHo Xi and what it means for Infor applications.
       </h2>
@@ -32,6 +32,7 @@
         Creative technology often demands that user experience designers “think outside the box”—to come up with new exciting ways of engaging the user.
       </h3>
     </div>
+
     <div class="container">
       <div class="row">
         <section id="maincontent" class="two-thirds column" role="main">
@@ -80,16 +81,12 @@
               </ul>
             </div>
           </div>
-
         </section>
       </div>
     </div>
 
   </div>
 
-
   {{> includes/docs-footer}}
-
-
 </body>
 </html>

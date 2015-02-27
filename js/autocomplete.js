@@ -1,4 +1,3 @@
-
 /**
 * Autocomplete for inputs and searches
 */

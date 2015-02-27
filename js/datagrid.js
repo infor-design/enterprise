@@ -16,9 +16,65 @@
     Text: function(row, cell, value) {
       return ((value === null || value === undefined || value === '') ? '--' : value);
     },
+
     Readonly: function(row, cell, value) {
       return '<span class="is-readonly">' + ((value === null || value === undefined) ? '--' : value) + '</span>';
-    }
+    },
+
+    Date: function(row, cell, value, col) {
+      var formatted = ((value === null || value === undefined) ? '' : value);
+
+      if (typeof Locale !== undefined && true) {
+         formatted = Locale.formatDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
+      }
+      return formatted;
+    },
+
+    Decimal:  function(row, cell, value, col) {
+      var formatted = ((value === null || value === undefined) ? '' : value);
+
+      if (typeof Locale !== undefined && true) {
+         formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
+      }
+      return formatted;
+    },
+
+    Hyperlink: function(row, cell, value) {
+      //TODO - Click Events, Confirm Styling
+      return '<a href="#" class="hyperlink">' + value + '</a>';
+    },
+
+    Template: function(row, cell, value, col, item) {
+      var tmpl = col.template,
+        renderedTmpl = '';
+
+      if (Tmpl && item && tmpl) {
+        var compiledTmpl = Tmpl.compile('{{#dataset}}'+tmpl+'{{/dataset}}');
+        renderedTmpl = compiledTmpl.render({dataset: item});
+      }
+      return renderedTmpl;
+    },
+
+    // TODOs
+    // DrillDown
+    // Checkbox
+    // Button
+    // Action Button
+    // Toggle Button ??
+    // Detail Template
+    // Re Order ??
+    // Multi Line TextArea
+    // Select
+    // Lookup
+    // Text
+    // Int
+    // Decimal
+    // Status Indicator
+    // Tree
+    // Percent
+    // Progress Indicator (n of 100%)
+    // Process Indicators
+    // Currency
   };
 
   //TODO: resize cols - http://dobtco.github.io/jquery-resizable-columns/
@@ -29,7 +85,8 @@
         defaults = {
           dataset: [],
           columns: [],
-          showDrillDown: false
+          showDrillDown: false,
+          rowHeight: 'medium' //(short, medium or tall)
         },
         settings = $.extend({}, defaults, options);
 
@@ -110,7 +167,7 @@
         self.table.find('tbody').remove();
 
         for (var i = 0; i < settings.dataset.length; i++) {
-          rowHtml = '<tbody><tr>';
+          rowHtml = '<tbody><tr '+ (settings.rowHeight !== 'medium' ? 'class="' + settings.rowHeight + '-rowheight"' : '') +'>';
 
           if (settings.showDrillDown) {
             rowHtml += '<td>' + '<a href="#" class="drilldown"><span></span></a>' + '</td>';
@@ -118,10 +175,16 @@
 
           for (var j = 0; j < settings.columns.length; j++) {
             var col = settings.columns[j],
-                formatter = (col.formatter ? col.formatter : self.defaultFormatter);
+                formatter = (col.formatter ? col.formatter : self.defaultFormatter),
+                formatted = '';
 
-            rowHtml += '<td' + (col.readonly ? 'class="is-readonly"' : '') + '>';
-            rowHtml += formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
+            formatted = formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
+            if (formatted.indexOf('<span class="is-readonly">') === 0) {
+              col.readonly = true;
+            }
+
+            rowHtml += '<td' + (col.readonly ? ' class="is-readonly"' : '') + '>';
+            rowHtml += formatted;
           }
 
           rowHtml += '</tr></tbody>';
@@ -149,7 +212,7 @@
         this.sortColumn.columnId = columnId;
 
         //Do Sort on Data Set
-        sort = this.sortFunction(this.sortColumn.columnId, this.sortColumn.sortAsc, function(a){ return (typeof a === 'string' ? a.toUpperCase() : a);});
+        sort = this.sortFunction(this.sortColumn.columnId, this.sortColumn.sortAsc);
         settings.dataset.sort(sort);
 
         //Set Visual Indicator
@@ -160,11 +223,20 @@
 
       //Overridable function to conduct sorting
       sortFunction: function(field, reverse, primer) {
+
+        if (!primer) {
+          primer = function(a) {
+            a = (a === undefined || a === null ? '' : a);
+            return (typeof a === 'string' ? a.toUpperCase() : a);
+          };
+        }
+
         var key = primer ?
           function(x) {return primer(x[field]);} :
           function(x) {return x[field];};
 
-        reverse = [-1, 1][+!!reverse];
+        reverse = !reverse ? 1 : -1;
+
         return function (a, b) {
            return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
         };

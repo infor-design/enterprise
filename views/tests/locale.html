@@ -7,6 +7,7 @@
       <span>Test Conversions</span><br><br>
     </div>
 
+    <script src="/js/cultures/en-US.js"></script>
     <script>
       $(function() {
       // Handler for .ready() called.
@@ -18,6 +19,8 @@
 
       setTimeout(function () {
         debugger;
+        append(Locale.formatNumber(12345.123, {style: 'currency'}));
+
         append(Locale.formatDate(new Date(2015, 2, 7, 13, 40), {date: 'full'}));
       }, 1000);
 

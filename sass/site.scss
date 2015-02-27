@@ -68,6 +68,7 @@
   &.site-home {
     background-color: #ffffff;
     overflow: hidden;
+    padding: 0 30px;
     text-align: center;
 
     .l-pull-in {
@@ -80,14 +81,6 @@
     > p {
       font-size: 22px;
       margin: 0 auto;
-    }
-
-    .row {
-      margin-left: -20px;
-    }
-
-    .call-out {
-      margin: 20px 0 20px -20px;
     }
 
     .call-out-column {
@@ -293,7 +286,7 @@
     @include opacity(0);
     padding: 50%;
     position: absolute;
-    @include transition(opacity 1s ease);
+    @include transition(opacity .2s ease);
     top: 0;
     width: inherit;
 
@@ -315,6 +308,10 @@
   //==================================================//
 
   &.vision {
+
+    .site-hero h3 {
+      margin: 0 auto;
+    }
 
     h3 {
       margin: 50px 0 30px;
@@ -491,10 +488,6 @@
     top: auto;
   }
 
-  .site-content.site-home .call-out {
-    margin: 0 0 0 -20px;
-  }
-
   .site-content.site-home .call-out-column p {
     padding: 0 0 0 10px;
   }
@@ -514,7 +507,7 @@
 }
 
 @media screen and (max-width: $breakpoint-phone) {
-  .site-content .gallery-header .gallery-nav .field:first-child {
+  .site-content .gallery-nav .field:first-child {
     margin-right: 0;
   }
 }

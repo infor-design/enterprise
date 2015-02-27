@@ -2,7 +2,6 @@
 * Code used in Samples and Demo Pages
 */
 
-
 // Public Variable with some sample data
 var demoTasks = [];
 demoTasks.push({task:'063001', error: true, date: '10/11/2015' ,desc: 'Special fields test - New item has been created.'});
@@ -20,53 +19,6 @@ demoTasks.push({task:'063012', date: '07/08/2015' , desc: 'Part #6212132 has low
 
 // Execute Page Code for Demo Page
 $(function($) {
-
-  var theme = $('#theme').val();
-
-  //Change Theme when we select in the Drop Down
-  $('#theme').on('change', function() {
-    theme = $(this).val();
-    //swap style sheets..
-    $('body').fadeOut('fast', function() {
-      $('#stylesheet').attr('href', '/stylesheets/'+ theme +'.css');
-      $(this).fadeIn('fast');
-    });
-  });
-
-  // Set Initial Theme
-  if (theme !==undefined && theme !== 'grey-theme') {
-    $('#stylesheet').attr('href', '/stylesheets/'+ theme +'.css');
-  }
-
-  // New, Theme, Personalization, Language Changer. TODO: Should this be a plugin?
-  $('#page-changer').on('selected', function (e, link) {
-    var href = link.attr('href').substr(1);
-
-    link.parent().parent().find('.checkmark').removeClass('checkmark');
-    link.parent().addClass('checkmark');
-
-    // Change Theme
-    if (link.attr('data-theme')) {
-      $('body').fadeOut('fast', function() {
-        $('#stylesheet').attr('href', '/stylesheets/'+ link.attr('data-theme') +'.css');
-        $(this).fadeIn('fast');
-      });
-
-      return;
-    }
-
-    // TODO: Change Lang
-    if (link.attr('data-lang')) {
-      Locale.set(link.attr('data-lang'));
-      return;
-    }
-
-    // Change Color
-    var color = link.attr('data-rgbcolor');
-    $('.is-personalizable').css('background-color', color);
-
-
-  });
 
   // Message.html View Specifics
   $('#show-application-error').on('click', function() {

@@ -1,10 +1,10 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
-      // AMD. Register as an anonymous module depending on jQuery.
-      define(['jquery'], factory);
+    // AMD. Register as an anonymous module depending on jQuery.
+    define('de-DE', ['jquery'], factory);
   } else {
-      // No AMD. Register plugin with global jQuery object.
-      factory(jQuery);
+    // No AMD. Register plugin with global jQuery object.
+    factory(jQuery);
   }
 }(function () {
 
@@ -47,6 +47,13 @@
     //numbers/currencyFormats-numberSystem-latn/standard
     currencySign: '€',  //(Replace Sign http://www.currencysymbols.in ?)
     currencyFormat: '#,##0.00 ¤',
+    //numbers/symbols-numberSystem-latn
+    numbers: {
+      percentSign: '%',
+      minusSign: '-',
+      decimal: ',',
+      group: '.'
+    },
     //Resx
     messages: {
      'Required': {id: 'Required', value: 'Erforderlich', comment: 'indicates a form field is manditory'},

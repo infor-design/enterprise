@@ -14,7 +14,6 @@
 }(function () {
 
   function Locale(locale) {
-    locale = this.closestLocale(locale);
 
     if (!(this instanceof Locale)) {
       return new Locale(locale);
@@ -37,11 +36,6 @@
       $('html').attr('lang', this.currentLocale.name);
     },
 
-    //Gets Near Cultures for some
-    closestLocale: function (locale) {
-      return (locale.substr(0,2) === 'no' ?  'nb-NO' : locale);
-    },
-
     //Get the Path of the Script
     scriptPath: function(partialPath) {
      var scripts = document.getElementsByTagName('script');
@@ -61,7 +55,6 @@
     set: function (locale) {
       var self = this;
       this.dff = $.Deferred();
-      locale = this.closestLocale(locale);
 
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.currentLocale.name = locale;
@@ -73,8 +66,8 @@
           success: function () {
             self.currentLocale.name = locale;
             self.currentLocale.data = self.cultures[locale];
-            self.dff.resolve(self.currentLocale.name);
             self.addCulture(locale, self.currentLocale.data);
+            self.dff.resolve(self.currentLocale.name);
           },
           error: function () {
             self.dff.reject();
@@ -228,14 +221,54 @@
 
     },
 
+    //format a decimal with thousands and padding in the current locale
+    // options.style can be decimal, currency, percent and integer
+    // http://mzl.la/1MUOEWm
+    // percentSign, minusSign, decimal, group
+    // minimumFractionDigits (0), maximumFractionDigits (3)
+    formatNumber: function(number, options) {
+      //Lookup , decimals, decimalSep, thousandsSep
+      var formattedNum, curFormat,
+        decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
+        group = options && options.group ? options.group : this.numbers().group,
+        minimumFractionDigits = options && options.minimumFractionDigits ? options.minimumFractionDigits : 0,
+        maximumFractionDigits = options && options.maximumFractionDigits ? options.maximumFractionDigits : 3;
+
+      if (options && options.style === 'integer') {
+        maximumFractionDigits = 0;
+        minimumFractionDigits = 0;
+      }
+
+      //Doc Note: Uses Rounding
+      if (options && options.style === 'currency') {
+        var sign = this.currentLocale.data.currencySign;
+
+        maximumFractionDigits = 2;
+        minimumFractionDigits = 2;
+        curFormat = this.currentLocale.data.currencyFormat;
+        curFormat = curFormat.replace('¤', sign);
+      }
+
+      var parts = number.toFixed(maximumFractionDigits).split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
+      formattedNum = parts.join(decimal);
+
+      //TODO: Confirm Logic After All Locales are added.
+      if (options && options.style === 'currency') {
+        formattedNum = curFormat.replace('#,##0.00', formattedNum);
+      }
+
+      return formattedNum;
+    },
+
     // Overridable culture messages
     translate: function(key) {
       if (this.currentLocale.data.messages[key] === undefined) {
         // Need to substitue English Here
-        if (this.cultures.en.messages[key] === undefined) {
+        if (this.cultures['en-US'].messages[key] === undefined) {
           return undefined;
         }
-        return this.cultures.en.messages[key].value;
+        return this.cultures['en-US'].messages[key].value;
       }
 
       if (this.currentLocale.data.messages[key] === undefined) {
@@ -247,6 +280,11 @@
     // Short cut function to get 'first' calendar
     calendar: function() {
       return this.currentLocale.data.calendars[0];
+    },
+
+    // Short cut function to get numbers
+    numbers: function() {
+      return this.currentLocale.data.numbers;
     },
 
     pad: function(n, width, z) {
