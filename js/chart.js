@@ -51,11 +51,8 @@
           continue;
         }
 
-        var /*seriesNameClass = series[i].name.replace(' ', '').toLowerCase(),*/
-        seriesIdx = i,
-        seriesLine = $('<span class="chart-legend-item" tabindex="0" data-idx="'+seriesIdx+'"></span>'),
+        var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
           color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
-          // textBlock = $('<span>'+ series[i].name  + '</span>');
           textBlock = $('<span/>').append('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
         if (series[i].percent) {
@@ -227,8 +224,8 @@
               xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
 
-          console.log('xPos: ', xPos);
-          console.log('yPos: ', yPos);
+          // console.log('xPos: ', xPos);
+          // console.log('yPos: ', yPos);
 
           if (dataset.length === 1) {
             content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
@@ -253,7 +250,6 @@
           var bar = d3.select(this);
           //Hide bold on label
           svg.selectAll('.label').style('font-weight', 'normal');
-
           d3.selectAll('.bar-group rect').style('opacity', 1);
           d3.selectAll('.is-selected').classed('is-selected', false);
           if (!this.classList.contains('is-selected')) {
@@ -482,16 +478,45 @@
         var bar = d3.select(this);
 
         d3.selectAll('.axis.y .tick').style('font-weight', 'normal');
-        d3.selectAll('.bar').style('opacity', 1);
+
+        // var currH = d3.select(this).attr("height"),
+        //     newH = currH * 1.1,
+        //     currY = d3.select(this).attr("y"),
+        //     newY = currY  - (currH * 0.05);
+        // d3.select(this).attr("height", newH);
+        // d3.select(this).attr("y", newY);
+
+        var origH = d3.select(this).attr("height"),
+            origY = d3.select(this).attr("y");
+
         if (this.classList.contains('is-selected')) {
           d3.selectAll('.is-selected').classed('is-selected', false);
+
+          var currH = d3.select(this).attr("height"),
+              newH = currH * 1.1,
+              currY = d3.select(this).attr("y"),
+              newY = currY  - (currH * 0.05);
+          
+          d3.select(this).attr("height", origH);
+          d3.select(this).attr("y", origY);
+
         } else {
           d3.selectAll('.is-selected').classed('is-selected', false);
           bar.classed('is-selected', true);
           d3.selectAll('.axis.y .tick:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
           d3.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.5);
+
+          var currH = d3.select(this).attr("height"),
+            newH = currH * 1.1,
+            currY = d3.select(this).attr("y"),
+            newY = currY  - (currH * 0.05);
+
+          d3.select(this).attr("height", newH);
+          d3.select(this).attr("y", newY);
         }
+
         $(container).trigger('selected', [bar, d]);
+
       });
 
       //Animate the Bars In
