@@ -41,7 +41,7 @@
     // Function to Add a Legend - TODO Remove unused params
     this.addLegend = function(series, position) {
       //var legend = svg.append('g').attr('transform', 'translate(' + margins.left + ',' + (position === 'right' ? -(height/2)+20 : (height + margins.bottom)) +')');
-      var legend = $('<div class="chart-legend"></div>');
+      var legend = $('<div class="chart-legend hidden-sm"></div>');
       if (series.length === 0) {
         return;
       }
