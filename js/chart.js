@@ -713,6 +713,31 @@
         .attr('class', 'chart-donut-text')
         .text(centerLabel);
       }
+
+      d3.select(window).on('resize', resizePie); 
+      d3.select(window).on('load', resizePie); 
+
+      function resizePie() {
+
+        console.log('resizePie');
+
+        var svg_W = $('.chart-container svg').width(),
+            chart_W = $('.chart-container').width(),
+            widget_W = $('.widget').width();
+
+        console.log('widget_W: ', widget_W);
+
+        if (chart_W <= 575) {
+
+          $('.widget-container').addClass('vis-only');
+
+        } else{
+
+          $('.chart-container').removeClass('vis-only');
+         
+        }
+      }
+      
       return $(container);
     };
 

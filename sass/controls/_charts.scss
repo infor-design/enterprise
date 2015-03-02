@@ -273,7 +273,23 @@
   @include respond-to(phone) {
     float: none;
     margin: 0 auto;
-    width: 60%;
+    width: 100%;
+  }
+
+  svg {
+    @include respond-to(phone) {
+      width: 300px;
+    }
+  }
+
+  &.vis-only {
+    float: none;
+    margin: 0 auto;
+    width: 100%;
+
+    svg {
+      width: 300px;
+    }
   }
 }
 
