@@ -221,11 +221,19 @@
 
           var shape = d3.select(this),
               content = '',
-              xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
+              // xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
+              
+              contW = $('.chart-container').width(),
+              svgW = $('.chart-container > svg').width(),
+              svgStart = (contW - svgW) / 2,
+              xPos = svgStart + parseFloat(shape.attr('x')) + barWidth/2 + 38,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
 
-          // console.log('xPos: ', xPos);
-          // console.log('yPos: ', yPos);
+              console.log('container width: ', $('.chart-container').width() );
+              console.log('svg width: ', $('.chart-container > svg').width() );
+              console.log('svg start: ', $('.chart-container').width() -  $('.chart-container > svg').width());
+              console.log('shape.attr("x"): ', shape.attr('x'), ' margins.left: ', margins.left, ' charts.tooltip.outerWidth()/2: ', charts.tooltip.outerWidth()/2, ' barWidth/2: ', barWidth/2);
+              console.log('x: ', xPos, ' y: ', yPos);
 
           if (dataset.length === 1) {
             content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
@@ -236,6 +244,7 @@
            }
            content += '</div>';
           }
+
           charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'})
               .find('.tooltip-content')
                 .html(content);
@@ -662,6 +671,7 @@
                   var x = d3.event.pageX + 20,
                     y = d3.event.pageY-margin.top-20,
                     content = '<p>' + d.data.name + '<b> ' + d.data.percent + '</b></p>';
+                    console.log('x: ', x, ' y: ', y);
                   charts.showTooltip(x, y, content, 'right');
                 })
                 .on('mouseleave', function () {
@@ -783,7 +793,7 @@
             size = charts.getTooltipSize(content),
             x = rect.x - (size.width /2) + 6,
             y = rect.y - size.height - 18;
-
+            console.log('x: ', x, ' y: ', y);
           charts.showTooltip(x, y, content, 'top');
         }).on('mouseleave', function() {
           charts.hideTooltip();
