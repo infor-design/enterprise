@@ -214,7 +214,7 @@
   margin: 0 auto;
 
   .chart-legend {
-    width: 36%;
+    width: 40%;
     float: right;
     padding-right: 4px;
     position: relative;
@@ -272,7 +272,7 @@
   top: 50%;
   transform: translateY(-50%);
   width: 56%;
-  
+
 
   @include respond-to(phone) {
     float: none;
@@ -288,12 +288,14 @@
 
   svg {
     @include respond-to(phone) {
-      // width: 300px;
+      width: 60%;
+    }
+    @include respond-to(tablet) {
       width: 60%;
     }
   }
 
-  &.vis-only {
+  /* &.vis-only {
     float: none;
     margin: 0 auto;
     width: 100%;
@@ -302,7 +304,7 @@
       // width: 300px;
       width: 60%;
     }
-  }
+  } */
 
 }
 
