@@ -15,8 +15,8 @@
 
 {{={{{ }}}=}}
 <script>
-
-    Locale.set('en-US').done(function () {
+    $('body').on('initialized', function () {
+     //Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -35,6 +35,7 @@
       var rowTemplate = '<p class="datagrid-row-heading">{{productId}}</p>' +
                         '<p class="datagrid-row-subheading">{{productName}}</p>';
 
+      columns.push({ id: '', name: 'Drill In', field: '', width: 125, formatter: Formatters.Drilldown, cssClass: 'l-center-text', click: function (e, args) {console.log('clicked', args);}});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 125, formatter: Formatters.Template, template: rowTemplate});
       columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly });
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
@@ -49,8 +50,8 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         idProperty:'officeId',
-        dataset: data,
-        rowHeight: 'tall'
+        dataset: data//,
+        //rowHeight: 'tall'
       }).data('datagrid');
     });
 

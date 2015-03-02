@@ -174,7 +174,6 @@
 
         this.element.on('keypress.autocomplete', function (e) {
           var field = $(this);
-
           clearTimeout(timer);
 
           if (e.altKey && e.keyCode === 40) {  //open list
@@ -190,8 +189,8 @@
             }
             buffer = buffer.toLowerCase();
 
-            //This checks all printable characters
-            if (e.which === 0 || e.charCode === 0 || e.ctrlKey || e.metaKey || e.altKey) {
+            //This checks all printable characters - except backspace
+            if (e.which === 0 || (e.charCode === 0 && e.which !== 8) || e.ctrlKey || e.metaKey || e.altKey) {
               return;
             }
 
