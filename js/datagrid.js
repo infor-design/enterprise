@@ -207,7 +207,7 @@
             cell = elem.index(),
             row = $(this).closest('tr').index(),
             col = self.settings.columns[cell];
-          debugger;
+
           if (col.click) {
             col.click(e, [row, cell, col]);
           }

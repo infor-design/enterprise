@@ -55,6 +55,7 @@ module.exports = function(grunt) {
             'js/draggable.js',
             'js/editor.js',
             'js/form.js',
+            'js/fileupload.js',
             'js/header.js',
             'js/initialize.js',
             'js/listview.js',

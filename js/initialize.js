@@ -136,6 +136,8 @@
 
         elem.filter('.header').header();
 
+        elem.find('.fileupload').fileupload();
+
         //Class-based detection for IE
         if (!!navigator.userAgent.match(/Trident/)) {
           $('html').addClass('ie');

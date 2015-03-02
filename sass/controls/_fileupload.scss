@@ -1,0 +1,30 @@
+// File Upload
+//================================================== //
+
+label.fileupload {
+  display: inline-block;
+  position: absolute;
+  top: 14px;
+
+  // Label
+  span {
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    height: 34px;
+    position: relative;
+  }
+
+  // Make this flow offscreen
+  input[type="file"] {
+    left: -1000px;
+    position: fixed;
+  }
+
+}
+
+.field-fileupload input {
+  @include respond-to(phone) {
+    width: 180px;
+  }
+}
