@@ -268,7 +268,11 @@
 
 .chart-pie-visualization {
   float: left;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
   width: 56%;
+  
 
   @include respond-to(phone) {
     float: none;
@@ -276,9 +280,16 @@
     width: 100%;
   }
 
+  @include respond-to(tabletdown) {
+    float: none;
+    margin: 0 auto;
+    width: 100%;
+  }
+
   svg {
     @include respond-to(phone) {
-      width: 300px;
+      // width: 300px;
+      width: 60%;
     }
   }
 
@@ -288,7 +299,17 @@
     width: 100%;
 
     svg {
-      width: 300px;
+      // width: 300px;
+      width: 60%;
+    }
+  }
+
+}
+
+.one-third .chart-pie-visualization {
+  svg {
+    @include respond-to(tabletdown) {
+      width: 60%;
     }
   }
 }

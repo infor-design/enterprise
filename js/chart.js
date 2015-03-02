@@ -41,7 +41,7 @@
     // Function to Add a Legend - TODO Remove unused params
     this.addLegend = function(series, position) {
       //var legend = svg.append('g').attr('transform', 'translate(' + margins.left + ',' + (position === 'right' ? -(height/2)+20 : (height + margins.bottom)) +')');
-      var legend = $('<div class="chart-legend hidden-sm"></div>');
+      var legend = $('<div class="chart-legend hidden-md hidden-sm"></div>');
       if (series.length === 0) {
         return;
       }
@@ -535,10 +535,10 @@
       });
       */
 
-      d3.select(window).on('resize', resize); 
-      d3.select(window).on('load', resize); 
+      d3.select(window).on('resize', resizeVertBar); 
+      d3.select(window).on('load', resizeVertBar); 
 
-      function resize() {
+      function resizeVertBar() {
 
         var svg_W = $('.chart-container svg').width(),
             chart_W = $('.chart-container').width();
@@ -714,30 +714,6 @@
         .text(centerLabel);
       }
 
-      d3.select(window).on('resize', resizePie); 
-      d3.select(window).on('load', resizePie); 
-
-      function resizePie() {
-
-        console.log('resizePie');
-
-        var svg_W = $('.chart-container svg').width(),
-            chart_W = $('.chart-container').width(),
-            widget_W = $('.widget').width();
-
-        console.log('widget_W: ', widget_W);
-
-        if (chart_W <= 575) {
-
-          $('.widget-container').addClass('vis-only');
-
-        } else{
-
-          $('.chart-container').removeClass('vis-only');
-         
-        }
-      }
-      
       return $(container);
     };
 
