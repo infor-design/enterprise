@@ -62,6 +62,10 @@
 
     .hyperlink {
       color: $primary-color;
+      display: block;
+      margin-left: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
 
@@ -167,3 +171,26 @@
   margin: 0 auto;
 }
 
+//
+.datagrid-checkbox {
+  text-indent: 14px;
+
+  &:before {
+    @include checkbox-unchecked-before-style;
+    margin-left: -12px;
+    margin-top: -8px;
+  }
+
+  &.is-checked:before {
+    @include checkbox-checked-before-style;
+  }
+
+  &.is-checked:after {
+    @include checkbox-checked-after-style;
+    @include css3(transform-origin, -11px top 0);
+    @include checkbox-animation;
+    left: unset;
+    margin-left: -5px;
+    margin-top: -5px;
+  }
+}

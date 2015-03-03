@@ -61,17 +61,32 @@
            '<svg aria-hidden="true" focusable="false" class="icon">'+
            '<use xlink:href="#icon-drilldown"/></svg><span>'+Locale.translate('Drilldown')+'</span>'+
            '</button>';
+    },
+
+    Checkbox: function (row, cell, value, col) {
+      //treat 1, true or '1' as checked
+      var isChecked = (value==undefined ? false : value == true); // jshint ignore:line
+      return '<span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
+       (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span>';
+    },
+
+    Actions: function (row, cell, value, col) {
+      //Render an Action Formatter
+      return '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="popupmenu-1">' +
+            '<span class="audible">'+ col.title +'</span>' +
+            '<svg class="icon" aria-hidden="false" focusable="false">' +
+            '<use xlink:href="#action-button"></svg></button>';
     }
 
     // TODOs
-    // Checkbox
-    // Button
     // Action Button
     // Detail Template
     // Multi Line TextArea
     // Select
+    // Multi Select
+    // Color Picker
+    // File Upload
     // Lookup
-    // Text
     // Int
     // Decimal
     // Status Indicator
@@ -80,6 +95,7 @@
     // Progress Indicator (n of 100%)
     // Process Indicators
     // Currency
+    // Button ??
     // Toggle Button ??
     // Re Order ??
   };
@@ -137,13 +153,18 @@
 
           for (var j = 0; j < settings.columns.length; j++) {
             var column = settings.columns[j],
-              isSortable = (column.sortable === undefined ? true : column.sortable);
+              isSortable = (column.sortable === undefined ? true : column.sortable),
+              isResizable = (column.resizable === undefined ? true : column.resizable);
 
-            headerRow += '<th scope="col" class="' + (isSortable ? 'is-sortable' : '') + '"' + ' data-columnid="'+ column.id +'">';
+            headerRow += '<th scope="col" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' + ' data-columnid="'+ column.id +'">';
             headerRow += '<span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
             if (isSortable) {
-              headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-down"></svg></span></div>';
+              headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-down"></svg></div>';
+            }
+
+            if (isResizable) {
+              headerRow += '<div class="resize-handle"></div>';
             }
 
             headerRow += '</th>';
@@ -153,6 +174,9 @@
 
         self.headerRow = $(headerRow);
         self.table.append(self.headerRow);
+
+        console.log(self.headerRow.find('.is-resizable'));
+        self.headerRow.find('.is-resizable').resizable();
       },
 
       //Render the Rows
@@ -174,6 +198,11 @@
             formatted = formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
             if (formatted.indexOf('<span class="is-readonly">') === 0) {
               col.readonly = true;
+            }
+
+            if (formatted.indexOf('datagrid-checkbox') > -1 ||
+              formatted.indexOf('btn-actions') > -1) {
+              col.cssClass += ' l-center-text';
             }
 
             // Add Column Css Classes
@@ -209,9 +238,10 @@
             col = self.settings.columns[cell];
 
           if (col.click) {
-            col.click(e, [row, cell, col]);
+            col.click(e, [row, cell, col, e.currentTarget]);
           }
         });
+
       },
 
       //Api Event to set the sort Column

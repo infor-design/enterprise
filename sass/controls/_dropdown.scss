@@ -25,7 +25,8 @@ input.dropdown {
     cursor: default;
     -webkit-text-fill-color: $dropdown-disabled-color;
 
-    &.dropdown + .icon {
+    + .icon {
+      background-color: $dropdown-disabled-bg-color;
       cursor: default;
       fill: #999999;
     }

@@ -12,7 +12,7 @@
   }
 }(function ($) {
 
-  $.fn.popupmenu = function(options, callback) {
+  $.fn.popupmenu = function(options) {
 
     // Settings and Options
     var pluginName = 'popupmenu',
@@ -173,6 +173,7 @@
             self.open(e, true);
           }
         });
+
       },
 
       handleKeys: function () {
@@ -196,11 +197,6 @@
           self.element.trigger('selected', [anchor]);
           self.close();
 
-          //Not a very usefull callback use closed events
-          if (callback && href) {
-            callback(href.substr(1), self.element , self.menu.offset(), $(this));
-          }
-
           if (self.element.is('.autocomplete')) {
             return;
           }
@@ -214,10 +210,15 @@
 
         });
 
+        var excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
+        //Select on Focus
+        this.menu.on('mouseenter.popupmenu', 'a', function () {
+          $(this).focus();
+        });
+
         $(document).on('keydown.popupmenu', function (e) {
           var key = e.which,
-            focus,
-            excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
+            focus;
 
           //Close on escape
           if (key === 27) {

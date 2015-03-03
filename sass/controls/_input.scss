@@ -78,7 +78,7 @@ input.is-active {
 // Text Area
 textarea {
   @include rem(line-height, 2rem);
-  min-height: 280px;
+  min-height: 90px;
   overflow: auto;
   padding: 10px;
   width: 362px;

@@ -23,10 +23,7 @@
   border: 1px solid #13a7ff;
   cursor: e-resize;
   height: inherit;
-  margin-left: -9px;
   @include no-select;
   position: absolute;
-  right: -1px;
-  top: -1px;
   width: 10px;
 }
