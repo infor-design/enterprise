@@ -219,23 +219,14 @@
 
           console.log('mouseenter');
 
-          // var shape = d3.select(this),
           var shape = $(this),
               content = '',
-              // xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
               contW = shape.closest('.chart-container').width(),
               svgW = shape.closest('.chart-container > svg').width(),
               svgStart = (contW - svgW) / 2,
               contStart = shape.closest('.chart-container').closest('.widget').position().left,
               xPos = svgStart + parseFloat(shape.attr('x')) + barWidth + contStart,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
-
-              console.log('container width: ', $('.chart-container').width() );
-              console.log('container start: ', contStart );
-              console.log('svg width: ', $('.chart-container > svg').width() );
-              console.log('svg start: ', $('.chart-container').width() -  $('.chart-container > svg').width());
-              console.log('parseFloat(shape.attr("x")): ', parseFloat(shape.attr('x')), ' margins.left: ', margins.left, ' charts.tooltip.outerWidth()/2: ', charts.tooltip.outerWidth()/2, ' barWidth/2: ', barWidth/2);
-              console.log('x: ', xPos, ' y: ', yPos);
 
           if (dataset.length === 1) {
             content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
