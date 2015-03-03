@@ -28,6 +28,16 @@
   width: 0;
 }
 
+// Disable transitions
+.no-transition {
+  @include css3(transition, none !important);
+}
+
+// Disable animations
+.no-animation {
+  @include css3(animation, none !important);
+}
+
 // visibility classes for different form factors
 [class*="visible-sm-"] {
   display: none;

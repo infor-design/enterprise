@@ -16,9 +16,72 @@
     Text: function(row, cell, value) {
       return ((value === null || value === undefined || value === '') ? '--' : value);
     },
-    Disabled: function(row, cell, value) {
-      return '<span class="is-disabled">' + ((value === null || value === undefined) ? '--' : value) + '</span>';
+
+    Readonly: function(row, cell, value) {
+      return '<span class="is-readonly">' + ((value === null || value === undefined) ? '--' : value) + '</span>';
+    },
+
+    Date: function(row, cell, value, col) {
+      var formatted = ((value === null || value === undefined) ? '' : value);
+
+      if (typeof Locale !== undefined && true) {
+         formatted = Locale.formatDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
+      }
+      return formatted;
+    },
+
+    Decimal:  function(row, cell, value, col) {
+      var formatted = ((value === null || value === undefined) ? '' : value);
+
+      if (typeof Locale !== undefined && true) {
+         formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
+      }
+      return formatted;
+    },
+
+    Hyperlink: function(row, cell, value) {
+      //TODO - Click Events, Confirm Styling
+      return '<a href="#" class="hyperlink">' + value + '</a>';
+    },
+
+    Template: function(row, cell, value, col, item) {
+      var tmpl = col.template,
+        renderedTmpl = '';
+
+      if (Tmpl && item && tmpl) {
+        var compiledTmpl = Tmpl.compile('{{#dataset}}'+tmpl+'{{/dataset}}');
+        renderedTmpl = compiledTmpl.render({dataset: item});
+      }
+
+      return renderedTmpl;
+    },
+
+    Drilldown: function () {
+      return '<button class="btn-icon small datagrid-drilldown">' +
+           '<svg aria-hidden="true" focusable="false" class="icon">'+
+           '<use xlink:href="#icon-drilldown"/></svg><span>'+Locale.translate('Drilldown')+'</span>'+
+           '</button>';
     }
+
+    // TODOs
+    // Checkbox
+    // Button
+    // Action Button
+    // Detail Template
+    // Multi Line TextArea
+    // Select
+    // Lookup
+    // Text
+    // Int
+    // Decimal
+    // Status Indicator
+    // Tree
+    // Percent
+    // Progress Indicator (n of 100%)
+    // Process Indicators
+    // Currency
+    // Toggle Button ??
+    // Re Order ??
   };
 
   //TODO: resize cols - http://dobtco.github.io/jquery-resizable-columns/
@@ -29,7 +92,7 @@
         defaults = {
           dataset: [],
           columns: [],
-          showDrillDown: false
+          rowHeight: 'medium' //(short, medium or tall)
         },
         settings = $.extend({}, defaults, options);
 
@@ -44,8 +107,13 @@
 
       init: function(){
        this.settings = settings;
+       this.initSettings();
        this.render();
        this.handleEvents();
+      },
+
+      initSettings: function () {
+        this.sortColumn = {columnId: null, sortAsc: true};
       },
 
       //Render the Header and Rows
@@ -57,12 +125,6 @@
         self.renderHeader();
         self.renderRows();
         self.element.addClass('datagrid-container').append(self.table);
-
-        if (this.settings.showDrillDown) {
-          self.element.on('click', '.drilldown', function(e) {
-            self.element.trigger('drilldown', e);
-          });
-        }
       },
 
       //Render the Header
@@ -72,10 +134,6 @@
 
         for (var i = 0; i < this.settings.dataset.length; i++) {
           headerRow = '<thead><tr>';
-
-          if (settings.showDrillDown) {
-            headerRow += '<th></th>';
-          }
 
           for (var j = 0; j < settings.columns.length; j++) {
             var column = settings.columns[j],
@@ -93,33 +151,44 @@
           headerRow += '</tr></thead>';
         }
 
-        self.table.append(headerRow);
+        self.headerRow = $(headerRow);
+        self.table.append(self.headerRow);
       },
 
       //Render the Rows
       renderRows: function() {
-        var rowHtml, tableHtml = '',
+        var rowHtml, tableHtml = '<tbody>',
           self=this;
 
         self.table.find('tbody').remove();
 
         for (var i = 0; i < settings.dataset.length; i++) {
-          rowHtml = '<tbody><tr>';
-
-          if (settings.showDrillDown) {
-            rowHtml += '<td>' + '<a href="#" class="drilldown"><span></span></a>' + '</td>';
-          }
+          rowHtml = '<tr '+ (settings.rowHeight !== 'medium' ? 'class="' + settings.rowHeight + '-rowheight"' : '') +'>';
 
           for (var j = 0; j < settings.columns.length; j++) {
-            var formatter = (settings.columns[j].formatter ? settings.columns[j].formatter : self.defaultFormatter);
+            var col = settings.columns[j],
+                cssClass = '',
+                formatter = (col.formatter ? col.formatter : self.defaultFormatter),
+                formatted = '';
 
-            rowHtml += '<td>';
-            rowHtml += formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
+            formatted = formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
+            if (formatted.indexOf('<span class="is-readonly">') === 0) {
+              col.readonly = true;
+            }
 
+            // Add Column Css Classes
+            cssClass += (col.readonly ? 'is-readonly ' : '');
+            cssClass += (col.cssClass ? col.cssClass : '');
+
+            rowHtml += '<td' + (cssClass ? ' class="' + cssClass + '"' : '') + '>';
+            rowHtml += formatted;
           }
-          rowHtml += '</tr></tbody>';
+
+          rowHtml += '</tr>';
           tableHtml += rowHtml;
         }
+
+        tableHtml += '</tbody>';
         self.table.append(tableHtml);
       },
 
@@ -131,23 +200,54 @@
         this.element.on('click.datagrid', 'th.is-sortable', function () {
           self.setSortColumn($(this).attr('data-columnid'));
         });
+
+        //Handle Clicking Buttons and links in formatters
+        this.table.on('click.datagrid', 'a, button', function (e) {
+          var elem = $(this).closest('td'),
+            cell = elem.index(),
+            row = $(this).closest('tr').index(),
+            col = self.settings.columns[cell];
+
+          if (col.click) {
+            col.click(e, [row, cell, col]);
+          }
+        });
       },
 
       //Api Event to set the sort Column
       setSortColumn: function(columnId) {
-        var sort = this.sortFunction(columnId, false, function(a){return (typeof a === 'string' ? a.toUpperCase() : a);});
+        var sort;
+
+        //Set Internal Variables
+        this.sortColumn.sortAsc = (this.sortColumn.columnId === columnId ? !this.sortColumn.sortAsc : true);
+        this.sortColumn.columnId = columnId;
+
+        //Do Sort on Data Set
+        sort = this.sortFunction(this.sortColumn.columnId, this.sortColumn.sortAsc);
         settings.dataset.sort(sort);
+
+        //Set Visual Indicator
+        this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc');
+        this.headerRow.find('[data-columnid="' +columnId + '"]').addClass((this.sortColumn.sortAsc ? 'is-sorted-asc' : 'is-sorted-desc'));
         this.renderRows();
       },
 
       //Overridable function to conduct sorting
       sortFunction: function(field, reverse, primer) {
-        //Can Override Sort Function.
+
+        if (!primer) {
+          primer = function(a) {
+            a = (a === undefined || a === null ? '' : a);
+            return (typeof a === 'string' ? a.toUpperCase() : a);
+          };
+        }
+
         var key = primer ?
           function(x) {return primer(x[field]);} :
           function(x) {return x[field];};
 
-        reverse = [-1, 1][+!!reverse];
+        reverse = !reverse ? 1 : -1;
+
         return function (a, b) {
            return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
         };

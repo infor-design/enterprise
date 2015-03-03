@@ -163,6 +163,7 @@ $modal-btn-color: #666666;
 $modal-btn-hover-color: #333333;
 $modal-btn-primary-color: $primary-color;
 $modal-btn-primary-hover-color: #005bb8;
+$modal-btn-disabled-color: #b6b6b6;
 
 //BreadCrumb
 $breadcrumb-disabled-color: #d2d2d2;
@@ -222,13 +223,13 @@ $breakpoint-tablet-to-desktop: 1280px;
 $breakpoint-desktop-to-extralarge: 1600px;
 
 //Docs
-$highlight-color: #00c2b4;
+$highlight-color: #078cd9;
 $highlight-color-rgba: rgba(0, 194, 180, .97);
 $highlight-color-gallery: #d5000e;
 $callout-icon-bd: $popover-separator-color;
 $callout-icon-hover-bd: #ffffff;
 $callout-bd: $callout-icon-hover-bd;
-$callout-hover-bd: $highlight-color;
+$callout-hover-bd: #078cd9;
 $callout-icon-vision: #ad3db6;
 $callout-icon-gallery: #d5000e;
 $callout-icon-guide: #ff8400;

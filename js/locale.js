@@ -14,6 +14,7 @@
 }(function () {
 
   function Locale(locale) {
+
     if (!(this instanceof Locale)) {
       return new Locale(locale);
     }
@@ -65,8 +66,8 @@
           success: function () {
             self.currentLocale.name = locale;
             self.currentLocale.data = self.cultures[locale];
-            self.dff.resolve(self.currentLocale.name);
             self.addCulture(locale, self.currentLocale.data);
+            self.dff.resolve(self.currentLocale.name);
           },
           error: function () {
             self.dff.reject();
@@ -112,12 +113,6 @@
       ret = pattern.replace('dd', this.pad(day, 2));
       ret = ret.replace('d', day);
 
-      //months
-      ret = ret.replace('MMMM', cal.months.wide[month]);  //full
-      ret = ret.replace('MMM', cal.months.abbreviated[month]);  //abreviation
-      ret = ret.replace('MM', this.pad(month+1, 2));  //number padded
-      ret = ret.replace('M', month+1);                //number unpadded
-
       //years
       ret = ret.replace('yyyy', year);
       ret = ret.replace('yy', year.toString().substr(2));
@@ -127,9 +122,20 @@
       ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('HH', hours);
-      ret = ret.replace('mm', mins);
+      ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', seconds);
-      ret = ret.replace('a', (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+      ret = ret.replace(' a', ' '+ (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+
+      //months
+      ret = ret.replace('MMMM', cal.months.wide[month]);  //full
+      ret = ret.replace('MMM', cal.months.abbreviated[month]);  //abreviation
+      if (pattern.indexOf('MMM') === -1) {
+        ret = ret.replace('MM', this.pad(month+1, 2));  //number padded
+        ret = ret.replace('M', month+1);                //number unpadded
+      }
+
+      //Day of Week
+      ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
 
       return ret.trim();
     },
@@ -215,14 +221,54 @@
 
     },
 
+    //format a decimal with thousands and padding in the current locale
+    // options.style can be decimal, currency, percent and integer
+    // http://mzl.la/1MUOEWm
+    // percentSign, minusSign, decimal, group
+    // minimumFractionDigits (0), maximumFractionDigits (3)
+    formatNumber: function(number, options) {
+      //Lookup , decimals, decimalSep, thousandsSep
+      var formattedNum, curFormat,
+        decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
+        group = options && options.group ? options.group : this.numbers().group,
+        minimumFractionDigits = options && options.minimumFractionDigits ? options.minimumFractionDigits : 0,
+        maximumFractionDigits = options && options.maximumFractionDigits ? options.maximumFractionDigits : 3;
+
+      if (options && options.style === 'integer') {
+        maximumFractionDigits = 0;
+        minimumFractionDigits = 0;
+      }
+
+      //Doc Note: Uses Rounding
+      if (options && options.style === 'currency') {
+        var sign = this.currentLocale.data.currencySign;
+
+        maximumFractionDigits = 2;
+        minimumFractionDigits = 2;
+        curFormat = this.currentLocale.data.currencyFormat;
+        curFormat = curFormat.replace('¤', sign);
+      }
+
+      var parts = number.toFixed(maximumFractionDigits).split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
+      formattedNum = parts.join(decimal);
+
+      //TODO: Confirm Logic After All Locales are added.
+      if (options && options.style === 'currency') {
+        formattedNum = curFormat.replace('#,##0.00', formattedNum);
+      }
+
+      return formattedNum;
+    },
+
     // Overridable culture messages
     translate: function(key) {
       if (this.currentLocale.data.messages[key] === undefined) {
         // Need to substitue English Here
-        if (this.cultures.en.messages[key] === undefined) {
+        if (this.cultures['en-US'].messages[key] === undefined) {
           return undefined;
         }
-        return this.cultures.en.messages[key].value;
+        return this.cultures['en-US'].messages[key].value;
       }
 
       if (this.currentLocale.data.messages[key] === undefined) {
@@ -236,6 +282,11 @@
       return this.currentLocale.data.calendars[0];
     },
 
+    // Short cut function to get numbers
+    numbers: function() {
+      return this.currentLocale.data.numbers;
+    },
+
     pad: function(n, width, z) {
       z = z || '0';
       n = n + '';
@@ -243,5 +294,5 @@
     }
   };
 
-  window.Locale = new Locale('en');
+  window.Locale = new Locale('en-US');
 }));

@@ -15,8 +15,9 @@
     var self = this;
 
     if (!locale) {
-      locale = 'de-DE';
+      locale = 'en-US';
     }
+
     //Set Locale
     Locale.set(locale).done(function () {
       var returnObj;
@@ -132,6 +133,10 @@
 
         //Toolbar
         elem.find('.toolbar').toolbar();
+
+        elem.filter('.header').header();
+
+        elem.find('.fileupload').fileupload();
 
         //Class-based detection for IE
         if (!!navigator.userAgent.match(/Trident/)) {

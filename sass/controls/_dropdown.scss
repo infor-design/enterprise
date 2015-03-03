@@ -15,6 +15,7 @@ input.dropdown {
   display: inline-block;
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
+  text-overflow: ellipsis;
   vertical-align: middle;
 
   &[disabled] {
@@ -32,11 +33,12 @@ input.dropdown {
 
   // Icon States
   + .icon {
+    background-color: $body-bg-color;
     cursor: pointer;
     display: inline-block;
     fill: $input-border-color;
-    height: 32px;
-    margin-left: -32px;
+    height: 31px;
+    margin-left: -33px;
     pointer-events: none;
     position: relative;
     top: 3px;
@@ -46,6 +48,10 @@ input.dropdown {
   &:focus {
     border-color: $input-focus-border-color;
   }
+}
+
+.modal-body .dropdown + .icon {
+  background-color: #ffffff;
 }
 
 // The List
@@ -73,7 +79,7 @@ input.dropdown {
     min-height: inherit;
     overflow: auto;
     position: relative;
-    text-indent: 31px;
+    text-indent: 10px;
   }
 
   li {
@@ -107,13 +113,6 @@ input.dropdown {
       cursor: pointer;
       outline: none;
     }
-
-    /*
-    &.is-selected {
-      background-color: $primary-color;
-      color: $inverse-color;
-    }
-    */
 
     &.is-focused {
       background-color: $primary-color;
@@ -220,7 +219,7 @@ input.dropdown {
 
   .icon {
     fill: $input-border-color;
-    margin-left: -30px;
+    margin-left: -32px;
     position: absolute;
     transform: rotate(180deg);
   }
@@ -232,6 +231,7 @@ input.dropdown {
   border-radius: 0;
   color: $dropdown-color;
   padding: 9px 32px 8px 10px;
+  text-overflow: ellipsis;
   width: 100%;
 
   &::-ms-clear {

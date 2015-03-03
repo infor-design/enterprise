@@ -1,10 +1,10 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
-      // AMD. Register as an anonymous module depending on jQuery.
-      define(['jquery'], factory);
+    // AMD. Register as an anonymous module depending on jQuery.
+    define('de-DE', ['jquery'], factory);
   } else {
-      // No AMD. Register plugin with global jQuery object.
-      factory(jQuery);
+    // No AMD. Register plugin with global jQuery object.
+    factory(jQuery);
   }
 }(function () {
 
@@ -26,9 +26,13 @@
                    'short': 'dd.MM.yyyy', //use four digit year
                    'medium': 'dd.MM.yyyy',
                    'long': 'd. MMMM yyyy',
+                   'full': 'EEEE, d. MMMM y',
                    'datetime': 'dd.MM.yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
-      days: ['So', 'Mo', 'Tu', 'Di', 'Mi', 'Fr','Sa'],
+      days: {
+        wide: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        abbreviated: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr','Sa']
+      },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
             //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
       months: {
@@ -43,6 +47,13 @@
     //numbers/currencyFormats-numberSystem-latn/standard
     currencySign: '€',  //(Replace Sign http://www.currencysymbols.in ?)
     currencyFormat: '#,##0.00 ¤',
+    //numbers/symbols-numberSystem-latn
+    numbers: {
+      percentSign: '%',
+      minusSign: '-',
+      decimal: ',',
+      group: '.'
+    },
     //Resx
     messages: {
      'Required': {id: 'Required', value: 'Erforderlich', comment: 'indicates a form field is manditory'},

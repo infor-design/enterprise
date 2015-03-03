@@ -21,13 +21,13 @@
   Validator.prototype = {
 
     init: function() {
-      var fields = 'input, textarea, select, div[data-validate], div[data-validation]';
+      this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
 
       //If we initialize with a form find all inputs
-      this.inputs = this.element.find(fields);
+      this.inputs = this.element.find(this.fields);
 
       //Or Just use the current input
-      if (this.element.is(fields)) {
+      if (this.element.is(this.fields)) {
         this.inputs = $().add(this.element);
       }
 
@@ -113,7 +113,8 @@
       var self = this,
         deferreds = [];
 
-      self.inputs.each(function () {
+      self.inputs = this.element.find(self.fields);
+      self.inputs.filter(':visible').each(function () {
         var dfds = self.validate($(this), false);
         for (var i = 0; i < dfds.length; i++) {
           deferreds.push(dfds[i]);

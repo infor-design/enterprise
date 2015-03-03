@@ -138,6 +138,17 @@
       // border-color: $primary-color; - TODO: Design Variation
       text-decoration: underline;
     }
+
+    &[disabled],
+    &[disabled]:hover {
+      color: $modal-btn-disabled-color;
+      cursor: default;
+      text-decoration: none;
+    }
+
+    &[disabled]:focus {
+      text-decoration: underline;
+    }
   }
 
   .btn-modal-primary {

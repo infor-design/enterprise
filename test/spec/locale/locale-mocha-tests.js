@@ -16,8 +16,13 @@ require('../../../js/Locale.js');
 Locale = window.Locale; // jshint ignore:line
 
 //Load the Locales because Ajax doesnt work
-require('../../../js/cultures/en.js');
+require('../../../js/cultures/en-US.js');
 require('../../../js/cultures/de-DE.js');
+require('../../../js/cultures/nb-NO.js');
+require('../../../js/cultures/no-NO.js');
+require('../../../js/cultures/es-ES.js');
+require('../../../js/cultures/bg-BG.js');
+require('../../../js/cultures/ar-EG.js');
 
 //Tests
 describe('Locale [mocha]', function(){
@@ -27,8 +32,8 @@ describe('Locale [mocha]', function(){
   });
 
   it('should have a locale method', function(){
-    Locale.set('en').done(function (result) {
-      result.should.equal('en');
+    Locale.set('en-US').done(function (result) {
+      result.should.equal('en-US');
     });
   });
 
@@ -42,7 +47,7 @@ describe('Locale [mocha]', function(){
   });
 
   it('should format en dates', function(){
-    Locale.set('en');    //year, month, day
+    Locale.set('en-US');    //year, month, day
     Locale.formatDate(new Date(2000, 10, 8)).should.equal('11/8/2000');
     Locale.formatDate(new Date(2000, 10, 8), {date: 'short'}).should.equal('11/8/2000');
     Locale.formatDate(new Date(2000, 10, 8), {date: 'medium'}).should.equal('Nov 8, 2000');
@@ -61,15 +66,42 @@ describe('Locale [mocha]', function(){
   });
 
   it('should format time', function(){
-    Locale.set('en');    //year, month, day, hours, mins , secs
+    Locale.set('en-US');    //year, month, day, hours, mins , secs
     Locale.formatDate(new Date(2000, 10, 8, 13, 40), {date: 'datetime'}).should.equal('11/8/2000 1:40 PM');
+    Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'datetime'}).should.equal('11/8/2000 1:00 PM');
     Locale.set('de-DE');
     Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'}).should.equal('01.12.2000 13:40');
-    Locale.formatDate(new Date(2000, 11, 1, 13, 40), {pattern: 'M.dd.yyyy HH:mm'}).should.equal('12.01.2000 13:40');
+    Locale.formatDate(new Date(2000, 11, 1, 13, 05), {pattern: 'M.dd.yyyy HH:mm'}).should.equal('12.01.2000 13:05');
   });
 
-  it('should be able to parse dates', function(){
-    Locale.set('en');    //year, month, day
+  it('should format long', function() {
+    Locale.set('en-US');    //year, month, day, hours, mins , secs
+    Locale.formatDate(new Date(2015, 0, 8, 13, 40), {date: 'long'}).should.equal('January 8, 2015');
+    Locale.set('de-DE');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1. Januar 2015');
+  });
+
+  it('should format long with day of week', function() {
+    Locale.set('en-US');    //year, month, day, hours, mins , secs
+    Locale.formatDate(new Date(2015, 0, 8, 13, 40), {date: 'full'}).should.equal('Thursday, January 8, 2015');
+    Locale.formatDate(new Date(2015, 2, 7, 13, 40), {date: 'full'}).should.equal('Saturday, March 7, 2015');
+    Locale.set('de-DE');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'full'}).should.equal('Donnerstag, 1. Januar 2015');
+  });
+
+  it('should format long days', function() {
+    Locale.set('en-US');    //year, month, day, hours, mins , secs
+    Locale.formatDate(new Date(2015, 0, 8, 13, 40), {date: 'long'}).should.equal('January 8, 2015');
+    Locale.set('de-DE');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1. Januar 2015');
+    Locale.set('ar-EG');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1 يناير، 2015');
+    Locale.set('bg-BG');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1 януари 2015 г.');
+  });
+
+  it('should be able to parse dates', function() {
+    Locale.set('en-US');    //year, month, day
     Locale.parseDate('11/8/2000').getTime().should.equal(new Date(2000, 10, 8).getTime());
     Locale.parseDate('10 / 15 / 2014').getTime().should.equal(new Date(2014, 9, 15).getTime());
     Locale.set('de-DE');    //year, month, day
@@ -77,15 +109,24 @@ describe('Locale [mocha]', function(){
   });
 
   it('be able to return time format', function(){
-    Locale.set('en');
+    Locale.set('en-US');
     Locale.calendar().timeFormat.should.equal('h:mm a');
     Locale.set('de-DE');
     Locale.calendar().timeFormat.should.equal('HH:mm');
   });
 
+  it('be work with either no-NO or nb-NO', function() {
+    Locale.set('no-NO');
+    Locale.translate('Loading').should.equal('Laster');
+    Locale.set('nb-NO');
+    Locale.translate('Loading').should.equal('Laster');
+    Locale.calendar().timeFormat.should.equal('HH.mm');
+    Locale.set('en-US');
+  });
+
   it('be able to translate', function(){
     //Normal
-    Locale.set('en');
+    Locale.set('en-US');
     Locale.translate('Required').should.equal('Required');
 
     //With Object Selector
@@ -96,5 +137,38 @@ describe('Locale [mocha]', function(){
     //Error
     should.not.exist(Locale.translate('XYZ'));
   });
+
+  it('should format decimals', function() {
+    Locale.set('en-US');
+    Locale.formatNumber(12345.1234).should.equal('12,345.123');
+    Locale.formatNumber(12345.123, {style: 'decimal', maximumFractionDigits:2}).should.equal('12,345.12');
+    Locale.formatNumber(12345.123456, {style: 'decimal', maximumFractionDigits:3}).should.equal('12,345.123');
+
+    Locale.set('de-DE');
+    Locale.formatNumber(12345.1).should.equal('12.345,100');
+
+    Locale.set('ar-EG');
+    Locale.formatNumber(12345.1).should.equal('12٬345٫100');
+    Locale.set('bg-BG');
+    Locale.formatNumber(12345.1).should.equal('12 345,100');
+
+  });
+
+  it('should format integers', function() {
+    Locale.set('en-US');
+    Locale.formatNumber(12345.123, {style: 'integer'}).should.equal('12,345');
+
+    Locale.set('de-DE');
+    Locale.formatNumber(12345.123, {style: 'integer'}).should.equal('12.345');
+  });
+
+  it('should format currency', function() {
+    Locale.set('en-US');
+    Locale.formatNumber(12345.129, {style: 'currency'}).should.equal('$12,345.13');
+
+    Locale.set('de-DE');
+    Locale.formatNumber(12345.123, {style: 'currency'}).should.equal('12.345,12 €');
+  });
+
 
 });

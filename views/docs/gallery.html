@@ -16,22 +16,20 @@
   <!-- jQuery and Plugin Code-->
   <script src="/js/jquery-1.11.1.min.js"></script>
   <script src="/js/sohoxi.js"></script>
-  <script src="/js/demo.js"></script>
 
 </head>
 <body>
   {{> controls/svg}}
-
-  {{> includes/header}}
+  {{> includes/header-sticky}}
 
   <section id="maincontent" class="site-content container gallery" role="main">
     <header class="gallery-header">
       <h2>Showcase of Xi works</h2>
-      <nav class="gallery-nav" role="navigation">
-        <form role="form" title="sort-form">
+      <nav class="gallery-nav">
+        <form role="form">
           <div class="gallery-field field">
             <label class="audible" for="general-sort">General Sort</label>
-            <select id="general-sort" name="general-sort" title="general-sort" class="dropdown">
+            <select id="general-sort" name="general-sort" class="dropdown">
               <option value="recent" selected>Most Recent</option>
               <option value="popular">Popular</option>
               <option value="alpha-asc">Alpabetical - A to Z</option>
@@ -40,7 +38,7 @@
           </div>
           <div class="gallery-field field">
             <label class="audible" for="tag-sort">Tag Sort</label>
-            <select id="tag-sort" name="tag-sort" title="general-sort" class="dropdown">
+            <select id="tag-sort" name="tag-sort" class="dropdown">
               <option value="all" selected>All Tags</option>
               <option value="responsive">Responsive</option>
               <option value="mobile">Mobile</option>
@@ -52,12 +50,20 @@
       </nav>
     </header>
 
-    <div class="row call-out" role="navigation">
-      <div class="one-third gallery-column column">
-        <div class="gallery-content content" tabindex=0 >
-          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/1" alt="work piece image" />
+    <div class="row">
+      <div class="one-third column">
+
+        <div class="gallery-content">
+          <a href="/docs/clearwork">
+            <div class="gallery-overlay">
+                <img src="http://placehold.it/372x200" alt="Parts Order Screenshot" class="img-responsive"/>
+                <div class="gallery-overlay-contents">
+                  <span class="copy">Take a Look</span>
+                </div>
+            </div>
+          </a>
           <div class="gallery-details">
-            <h3>Clear WorK: Parts Ordering</h3>
+            <h3>Clear Work: Parts Ordering</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
@@ -70,13 +76,20 @@
             </div>
             <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="/docs/clearwork" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
 
-      <div class="one-third gallery-column column">
-        <div class="gallery-content content" tabindex=0 >
-          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/2" alt="work piece image" />
+      <div class="one-third column">
+
+        <div class="gallery-content">
+          <a href="/docs/clearwork">
+            <div class="gallery-overlay">
+                <img src="http://placehold.it/372x200" alt="Parts Order Screenshot" class="img-responsive"/>
+                <div class="gallery-overlay-contents">
+                  <span class="copy">Take a Look</span>
+                </div>
+            </div>
+          </a>
           <div class="gallery-details">
             <h3>Ming.le Mobile</h3>
             <p>
@@ -91,13 +104,21 @@
             </div>
             <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
+
       </div>
 
-      <div class="one-third gallery-column column">
-        <div class="gallery-content content" tabindex=0 >
-          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/3" alt="work piece image" />
+      <div class="one-third column">
+
+        <div class="gallery-content">
+          <a href="/docs/clearwork">
+            <div class="gallery-overlay">
+                <img src="http://placehold.it/372x200" alt="Parts Order Screenshot" class="img-responsive"/>
+                <div class="gallery-overlay-contents">
+                  <span class="copy">Take a Look</span>
+                </div>
+            </div>
+          </a>
           <div class="gallery-details">
             <h3>Ferrari Formual 1 Dashboard</h3>
             <p>
@@ -112,17 +133,24 @@
             </div>
             <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
+
       </div>
     </div>
 
-    <div class="row call-out" role="navigation">
-      <div class="one-third gallery-column column">
-        <div class="gallery-content content" tabindex=0 >
-          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/4" alt="work piece image" />
+    <div class="row">
+      <div class="one-third column">
+        <div class="gallery-content">
+          <a href="/docs/clearwork">
+            <div class="gallery-overlay">
+                <img src="http://placehold.it/372x200" alt="Parts Order Screenshot" class="img-responsive"/>
+                <div class="gallery-overlay-contents">
+                  <span class="copy">Take a Look</span>
+                </div>
+            </div>
+          </a>
           <div class="gallery-details">
-            <h3>Clear WorK: Parts Ordering</h3>
+            <h3>Clear Work: Parts Ordering</h3>
             <p>
               Creating new interface and user experience guidelines and bringing a greater e-commerce approach to the parts ordering process.
             </p>
@@ -133,15 +161,22 @@
                 <li class="gallery-tag">#interface</li>
               </ul>
             </div>
-            <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
+            <time class="gallery-post-date" datetime="2015-01-07">Jan 08, 2015</time>
           </div>
-          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
       </div>
 
-      <div class="one-third gallery-column column">
-        <div class="gallery-content content" tabindex=0 >
-          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/5" alt="work piece image" />
+      <div class="one-third column">
+
+        <div class="gallery-content">
+          <a href="/docs/clearwork">
+            <div class="gallery-overlay">
+                <img src="http://placehold.it/372x200" alt="Parts Order Screenshot" class="img-responsive"/>
+                <div class="gallery-overlay-contents">
+                  <span class="copy">Take a Look</span>
+                </div>
+            </div>
+          </a>
           <div class="gallery-details">
             <h3>Ming.le Mobile</h3>
             <p>
@@ -156,13 +191,21 @@
             </div>
             <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
+
       </div>
 
-      <div class="one-third gallery-column column">
-        <div class="gallery-content content" tabindex=0 >
-          <img class="gallery-img" src="http://lorempixel.com/372/200/technics/6" alt="work piece image" />
+      <div class="one-third column">
+
+       <div class="gallery-content">
+          <a href="/docs/clearwork">
+            <div class="gallery-overlay">
+                <img src="http://placehold.it/372x200" alt="Parts Order Screenshot" class="img-responsive"/>
+                <div class="gallery-overlay-contents">
+                  <span class="copy">Take a Look</span>
+                </div>
+            </div>
+          </a>
           <div class="gallery-details">
             <h3>Ferrari Formual 1 Dashboard</h3>
             <p>
@@ -177,8 +220,8 @@
             </div>
             <time class="gallery-post-date" datetime="2015-01-07">Jan 07, 2015</time>
           </div>
-          <a href="#" class="gallery-look"><span class="copy">Take a Look</span></a>
         </div>
+
       </div>
     </div>
   </section>

@@ -7,13 +7,19 @@
   + .icon {
     cursor: pointer;
     fill: #999999;
-    height: 18px;
-    margin-left: -30px;
-    margin-top: 8px;
+    height: 33px;
+    margin-left: -25px;
+    margin-top: 1px;
     position: absolute;
+    width: 20px;
+    z-index: 1;
 
     &:hover {
-      fill: #666666;
+      fill: #1a1a1a;
+    }
+
+    &:active {
+      fill: $primary-color;
     }
   }
 
@@ -63,16 +69,29 @@
     transition: .2s background-color ease;
     width: 35px;
 
+    span {
+      line-height: normal;
+      width: auto;
+    }
+
     //Other month color
     &.alt {
       color: $datepicker-alt-month-color;
+
+      span {
+        color: $datepicker-alt-month-color;
+      }
     }
 
     //Today
-    &.today {
+    &.is-today {
       border-color: $datepicker-today-color;
       color: $datepicker-today-color;
       font-family: $font-regular;
+
+      span {
+        color: $datepicker-today-color;
+      }
     }
 
     //Selected
@@ -80,11 +99,15 @@
       background-color: $datepicker-hover-bg-color;
     }
 
-    &.selected,
-    &.selected:hover {
+    &.is-selected,
+    &.is-selected:hover {
       background-color: $datepicker-selected-bg-color;
       color: $datepicker-selected-color;
       font-family: $font-regular;
+
+      span {
+        color: $datepicker-selected-color;
+      }
     }
 
     &:focus {
@@ -134,6 +157,7 @@
       left: auto;
       right: 20px;
     }
+
   }
 
   .month,
@@ -156,9 +180,10 @@
     float: left;
     line-height: inherit;
     margin-left: 20px;
+    text-transform: uppercase;
   }
 
-  .today {
+  .is-today {
     float: right;
     line-height: inherit;
     margin-right: 20px;

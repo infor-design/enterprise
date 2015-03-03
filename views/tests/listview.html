@@ -1,0 +1,266 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Simple List</h1>
+    <span class="label">Data Sets</span>
+    <hr>
+  </div>
+</div>
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+<div class="row">
+  <div class="one-third column">
+
+    <script id="employee-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+           <li>
+            <p>{{firstName}} {{lastName}}, {{title}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Employee Information</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-tmpl="employee-tmpl" data-dataset="/api/people"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="one-third column">
+
+    <script id="task-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          {{#error}}
+            <li class="error">
+          {{/error}}
+          {{^error}}
+            <li>
+          {{/error}}
+            <p class="listview-heading">Task #{{task}}</p>
+            <p class="listview-subheading">{{desc}}</p>
+            <p class="listview-micro">Due: {{date}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+
+    <script id="drilldown-tmpl" type="text/html">
+      <table class="listview-table">
+        <tr>
+          <th scope="col">Drilldown</th>
+          <th scope="col">Name</th>
+          <th scope="col">Title</th>
+          <th scope="col">status</th>
+        </tr>
+        {{#dataset}}
+          <tr>
+            <td>
+              <button data-id="{{id}}" class="btn-icon small"><svg class="icon" focusable="false" aria-hidden="true">
+                   <use xlink:href="#icon-drilldown"></use></svg><span>Drilldown</span>
+              </button>
+            </td>
+            <td>{{firstName}} {{lastName}}</td>
+            <td>{{title}}</td>
+            <td>{{status}}</td>
+          </tr>
+        {{/dataset}}
+      </table>
+    </script>
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Employee Information</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+          <li><a href="#">Action Three</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="emp-listview" data-tmpl="drilldown-tmpl" data-dataset="/api/people"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+   <script id="multiselect-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+           <li>
+            <p>{{desc}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+   </script>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">My Tasks</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="listview-toolbar">
+          <button class="btn-toolbar" title="Assign Selected Items" type="button">Assign</button>
+          <button class="btn-toolbar" title="Remove Selected Items"type="button">Remove</button>
+        </div>
+        <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+   <script id="alerts-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          <li>
+            {{#escalated}}
+              <small class="alert-text">Escalated ({{escalated}}X)</small>
+            {{/escalated}}
+            <span class="listview-micro l-pull-right">{{time}}</span>
+            <p class="listview-heading">{{taskName}}</p>
+            <p class="listview-subheading">{{desc}}</p>
+            <p class="listview-micro">{{comments}} Comments</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">My Alerts</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-tmpl="alerts-tmpl" data-dataset="/api/tasks"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+   <script id="team-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          <li>
+            {{#escalated}}
+              <small class="alert-text">Escalated ({{escalated}}X)</small>
+            {{/escalated}}
+            <img class="listview-thumbnail" alt="Photo of {{firstName}}" src="{{img}}"></img>
+            <p class="listview-heading">{{firstName}} {{lastName}}</p>
+            <p class="listview-subheading">{{title}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">My Team</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-tmpl="team-tmpl" data-dataset="/api/people"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('#emp-listview').on('click', 'button', function () {
+    console.log('Drill Down on: '+ $(this).attr('data-id'));
+  });
+
+  $('#task-listview, #emp-listview, #multiselect-listview').on('selectionchange',function (e, args) {
+    console.log(args);
+  });
+</script>
+
+
+

@@ -103,7 +103,7 @@
   position: absolute;
   top: 28px;
   width: calc(100% - 2px);
-  z-index: 50;
+  z-index: 20;
 
   button {
     background-color: $editor-toolbar-bg-color;
@@ -194,7 +194,7 @@
   width: 100%;
 
   textarea {
-    background-color: transparent;
+    background-color: $inverse-color;
     border: 0;
     color: $font-color;
     font-family: $font-regular;
@@ -229,17 +229,19 @@
   }
 
   > .line-numbers {
-    background-color: transparent;
-    border-right: 1px solid #d8d8d8;
-    color: #ffffff;
+    background-color: $inverse-color;
     display: inline-block;
     min-height: 100%;
-    padding: 50px 10px 10px;
+    padding: 55px 10px 10px;
 
     > li {
       @include font-size(12);
-      line-height: 2.4rem;
+      line-height: 2.41rem;
       text-align: center;
+    }
+
+    span {
+      color: #999999;
     }
   }
 }

@@ -4,4 +4,4 @@
 ***/
 
 // Modifies the browser or headless-webkit environment to drive tests through
-process.env.TEST_BROWSER = 'chrome'; //phantomjs, chrome or firefox
+process.env.TEST_BROWSER = 'phantomjs'; //phantomjs, chrome or firefox

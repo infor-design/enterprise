@@ -57,7 +57,9 @@
         //Add Button
         this.swatch = $('<span class="swatch"></span>');
         this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.swatch);
-        colorpicker.parent().append(this.swatch);
+        this.container = $('<div class="colorpicker-container"></div>');
+        colorpicker.wrap(this.container);
+        colorpicker.after(this.swatch);
 
         //Add Masking to show the #
         colorpicker.attr('data-mask', '*******').mask();
@@ -70,6 +72,10 @@
         if (initialValue.length === 7) {
           this.setColor(initialValue);
           this.element.val(initialValue);
+        }
+
+         if (this.element.is(':disabled')) {
+          this.disable();
         }
 
         this.addAria();
@@ -91,8 +97,11 @@
           self.toggleList();
         });
 
-        this.swatch.on('focus.colorpicker', function () {
-          self.addAria(); //refresh aria local text
+        this.element.on('focus.colorpicker', function () {
+          $(this).parent().addClass('is-focused');
+        })
+        .on('blur.colorpicker', function () {
+          $(this).parent().removeClass('is-focused');
         });
 
         this.element.on('keypress.colorpicker', function () {
@@ -171,10 +180,12 @@
 
       enable: function() {
         this.element.prop('disabled', false);
+        this.element.parent().removeClass('is-disabled');
       },
 
       disable: function() {
         this.element.prop('disabled', true);
+        this.element.parent().addClass('is-disabled');
       },
 
       isDisabled: function() {

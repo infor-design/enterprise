@@ -79,9 +79,12 @@ svg.icon-tree {
   stroke: #999999;
 }
 
-.btn-icon:hover  svg,
-.btn-icon:active svg {
+.btn-icon:hover  svg {
   fill: #333333;
+}
+
+.btn-icon:active svg {
+  fill: $primary-color;
 }
 
 .btn-icon:focus {

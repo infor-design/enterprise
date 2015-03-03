@@ -9,6 +9,10 @@
   float: left;
 }
 
+.l-center-text {
+  text-align: center;
+}
+
 // Box For Layout Demos
 .l-demo {
   border: 1px solid #bdbdbd;
@@ -24,7 +28,6 @@
 }
 
 // Two Column Layout
-
 .twocolumn-layout {
   height: calc(100% - 110px);
   margin: 20px auto 0;
@@ -47,6 +50,16 @@
     }
   }
 
+}
+
+// Responsive Images
+.img-responsive {
+  border: 0 none;
+  display: block;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+  width: 100%;
 }
 
 // Respond Off Canvas on left and right column
