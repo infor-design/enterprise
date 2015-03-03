@@ -32,7 +32,7 @@
     this.options = {
       colorRange: ['#13a7ff', '#0872b0', '#79cc26', '#3f9818', '#ffd042',
           '#f86f11', '#97d8ff', '#96e345', '#d79df4', '#f57294', '#bdbdbd',
-          '#164203', '#03a59a', '#660a23', '#5a187a', '#454545', '#004d47', '#ff4249'], //Shared Options
+          '#164203', '#03a59a', '#660a23', '#5a187a', '#454545', '#004d47', '#ff4249'] //Shared Options
     };
 
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
@@ -41,7 +41,7 @@
     // Function to Add a Legend - TODO Remove unused params
     this.addLegend = function(series, position) {
       //var legend = svg.append('g').attr('transform', 'translate(' + margins.left + ',' + (position === 'right' ? -(height/2)+20 : (height + margins.bottom)) +')');
-      var legend = $('<div class="chart-legend"></div>');
+      var legend = $('<div class="chart-legend hidden-md hidden-sm"></div>');
       if (series.length === 0) {
         return;
       }
@@ -53,14 +53,14 @@
 
         var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
           color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
-          text = $('<span>'+ series[i].name  + '</span>');
+          textBlock = $('<span/>').append('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
         if (series[i].percent) {
           var pct = $('<span class="chart-legend-percent"></span>').text(series[i].percent);
-          text.append(pct);
+          textBlock.append(pct);
         }
 
-        seriesLine.append(color, text);
+        seriesLine.append(color, textBlock);
         legend.append(seriesLine);
       }
 
@@ -75,12 +75,16 @@
         }
       });
 
+      
+
       $(container).after(legend);
       if (position === 'below') {
         legend.addClass('is-below');
       }
 
     };
+
+    
 
     //Add Toolbar to the page
     this.appendTooltip = function() {
@@ -117,6 +121,8 @@
         bottom: 5
       };
 
+      console.log('bar chart args: ', arguments);
+
       var w = 480,
         h = 300,
         barWidth = 24,
@@ -124,6 +130,7 @@
         y,
         stack,
         x = d3.scale.ordinal().rangeRoundBands([0, w - margins.left - margins.right]);
+
 
       $(container).addClass('chart-bar');
 
@@ -210,9 +217,15 @@
       stack.selectAll('rect')
         .on('mouseenter', function (d, i) {
 
-          var shape = d3.select(this),
+          console.log('mouseenter');
+
+          var shape = $(this),
               content = '',
-              xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
+              contW = shape.closest('.chart-container').width(),
+              svgW = shape.closest('.chart-container > svg').width(),
+              svgStart = (contW - svgW) / 2,
+              contStart = shape.closest('.chart-container').closest('.widget').position().left,
+              xPos = svgStart + parseFloat(shape.attr('x')) + barWidth + contStart,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
 
           if (dataset.length === 1) {
@@ -224,6 +237,7 @@
            }
            content += '</div>';
           }
+
           charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'})
               .find('.tooltip-content')
                 .html(content);
@@ -238,7 +252,6 @@
           var bar = d3.select(this);
           //Hide bold on label
           svg.selectAll('.label').style('font-weight', 'normal');
-
           d3.selectAll('.bar-group rect').style('opacity', 1);
           d3.selectAll('.is-selected').classed('is-selected', false);
           if (!this.classList.contains('is-selected')) {
@@ -265,6 +278,8 @@
         right: 24,
         bottom: 30 // 30px plus size of the bottom axis (20)
       };
+
+      console.log('vertical bar chart args: ', arguments);
 
       $(container).addClass('chart-vertical-bar');
       $(container).closest('.widget-content').addClass('l-center');
@@ -321,6 +336,7 @@
         .append('g')
         .attr('class', 'group')
         .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
+
 
       xMax = d3.max(dataset, function (group) {
         return d3.max(group, function (d) {
@@ -449,6 +465,9 @@
               xPos = d3.event.pageX + 25,
               yPos = yPosS + parseFloat(shape.attr('y')) + 5 - (parseInt(charts.tooltip.outerHeight()) /2) + (parseFloat(shape.attr('height'))/2);
 
+          console.log('xPos: ', xPos);
+          console.log('yPos: ', yPos);
+
           charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'});
 
         charts.tooltip.removeClass('is-hidden', false);
@@ -461,16 +480,45 @@
         var bar = d3.select(this);
 
         d3.selectAll('.axis.y .tick').style('font-weight', 'normal');
-        d3.selectAll('.bar').style('opacity', 1);
+
+        // var currH = d3.select(this).attr("height"),
+        //     newH = currH * 1.1,
+        //     currY = d3.select(this).attr("y"),
+        //     newY = currY  - (currH * 0.05);
+        // d3.select(this).attr("height", newH);
+        // d3.select(this).attr("y", newY);
+
+        var origH = d3.select(this).attr("height"),
+            origY = d3.select(this).attr("y");
+
         if (this.classList.contains('is-selected')) {
           d3.selectAll('.is-selected').classed('is-selected', false);
+
+          var currH = d3.select(this).attr("height"),
+              newH = currH * 1.1,
+              currY = d3.select(this).attr("y"),
+              newY = currY  - (currH * 0.05);
+          
+          d3.select(this).attr("height", origH);
+          d3.select(this).attr("y", origY);
+
         } else {
           d3.selectAll('.is-selected').classed('is-selected', false);
           bar.classed('is-selected', true);
           d3.selectAll('.axis.y .tick:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
           d3.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.5);
+
+          var currH = d3.select(this).attr("height"),
+            newH = currH * 1.1,
+            currY = d3.select(this).attr("y"),
+            newY = currY  - (currH * 0.05);
+
+          d3.select(this).attr("height", newH);
+          d3.select(this).attr("y", newY);
         }
+
         $(container).trigger('selected', [bar, d]);
+
       });
 
       //Animate the Bars In
@@ -489,6 +537,85 @@
       });
       */
 
+      d3.select(window).on('resize', resizeVertBar); 
+      d3.select(window).on('load', resizeVertBar); 
+
+      function resizeVertBar() {
+
+        var svg_W = $('.chart-container svg').width(),
+            chart_W = $('.chart-container').width();
+
+        if (chart_W <= svg_W) {
+
+          var chartSvgDiff = svg_W - chart_W,
+              squeezePercent = ( ( svg_W - chartSvgDiff ) * 100 ) / svg_W,
+              scaleW = 0.01 * squeezePercent; 
+
+          var currTicks = d3.svg.axis()
+              .scale(xScale)
+              .ticks(),
+              newTicks = Math.floor(currTicks / 2);
+
+          // Redefine the X Scale
+          var xScale = d3.scale.linear()
+            .domain([0, xMax])
+            .nice()
+            .range([0, (width * scaleW) - 40]);
+
+          // Redefine the X Axis
+          xAxis = d3.svg.axis()
+            .scale(xScale)
+            .ticks(newTicks)
+            .tickSize(-height)
+            .tickPadding(0);
+
+          // Redraw the X Axis
+          d3.select(".x")
+            .call(xAxis);
+
+          // Redraw the bars  
+          svg.selectAll('.bar')
+            .transition()
+            .duration(500)
+            .attr('width', function (d) {
+              return xScale(d.x);
+            })
+            .attr('x', function (d) {
+              return xScale(d.x0);
+            });
+
+        } else{
+
+          // Redefine the X Scale
+          var xScale = d3.scale.linear()
+            .domain([0, xMax])
+            .nice()
+            .range([0, width]);
+
+          // Redefine the X Axis
+          xAxis = d3.svg.axis()
+            .scale(xScale)
+            .ticks(currTicks)
+            .tickSize(-height);
+
+          // Redraw the X Axis
+          d3.select(".x")
+            .call(xAxis);
+
+          // Redraw the bars  
+          svg.selectAll('.bar')
+            .transition()
+            .duration(500)
+            .attr('width', function (d) {
+              return xScale(d.x);
+            })
+            .attr('x', function (d) {
+              return xScale(d.x0);
+            });
+         
+        }
+      }
+
       //Add Legends
       charts.addLegend(series, 'below');
       charts.appendTooltip();
@@ -504,18 +631,18 @@
       width = parseInt($(container).parent().width());
       height = parseInt($(container).parent().height());
 
-      $(container).addClass('chart-pie');
-      $(container).closest('.widget-content').addClass('l-center');
+      $(container).addClass('chart-pie-visualization');
+      $(container).closest('.widget-content').addClass('l-center chart-pie vertical-legend');
       $(container).closest('.card-content').addClass('l-center');
 
       svg = d3.select(container)
-              .append('svg')
+            .append('svg')
             .attr('width', '100%')
             .attr('height', '100%')
-            .attr('viewBox','0 0 '+Math.min(width,height) +' '+Math.min(width,height) )
+            .attr('viewBox','0 0 '+Math.min(width,height) +' '+Math.min(width,height) ) 
             .attr('preserveAspectRatio','xMinYMin')
             .append('g')
-            .attr('transform', 'translate(' + (Math.min(width,height) + 10)/ 2 + ',' + (Math.min(width,height) + 10) / 2 + ')');
+            .attr('transform', 'translate(' + (Math.min(width,height) + 5)/ 2 + ',' + (Math.min(width,height) + 5) / 2 + ')');
 
       radius = ((Math.min(width, height) / 2) - 12);
 
@@ -537,6 +664,7 @@
                   var x = d3.event.pageX + 20,
                     y = d3.event.pageY-margin.top-20,
                     content = '<p>' + d.data.name + '<b> ' + d.data.percent + '</b></p>';
+                    console.log('x: ', x, ' y: ', y);
                   charts.showTooltip(x, y, content, 'right');
                 })
                 .on('mouseleave', function () {
@@ -588,6 +716,7 @@
         .attr('class', 'chart-donut-text')
         .text(centerLabel);
       }
+
       return $(container);
     };
 
@@ -657,7 +786,7 @@
             size = charts.getTooltipSize(content),
             x = rect.x - (size.width /2) + 6,
             y = rect.y - size.height - 18;
-
+            console.log('x: ', x, ' y: ', y);
           charts.showTooltip(x, y, content, 'top');
         }).on('mouseleave', function() {
           charts.hideTooltip();
@@ -702,6 +831,28 @@
       if (options.type === 'sparkline') {
         chartInst.Sparkline(options.dataset);
       }
+
+
+      $('.chart-legend-item').on('click', function() {
+          var triggerIdx = $(this).index(),
+              targetGroup = $(this).closest('.chart-legend').siblings('.chart-container').find('svg .series-group').eq(triggerIdx);
+
+          targetGroup.css({
+            'opacity': 1
+          })
+          .siblings('.series-group').css({
+            'opacity': 0.5
+          });
+
+      });
+
+      // $('.widget-content').on('click', function(){
+      //     $(this).find('.chart-container svg .series-group').css({
+      //       'opacity': 1
+      //     });
+      // });
+
+      
 
     });
   };
