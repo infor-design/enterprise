@@ -11,7 +11,8 @@ button {
 .btn-secondary,
 .btn-primary,
 .btn-destructive,
-.btn-tertiary {
+.btn-tertiary,
+.btn-icon {
   background-color: $primary-btn-bg-color;
   border: 1px solid transparent;
   border-radius: 2px;
@@ -25,7 +26,7 @@ button {
   margin-top: 5px;
   min-width: 100px;
   overflow: hidden;
-  @include font-size(12);
+  @include font-size($button-font-size);
   padding: 0 30px;
   position: relative;
   text-transform: uppercase;
@@ -130,9 +131,102 @@ button {
   }
 }
 
-// Ripple Effect
+// Icon Buttons
+// Also see ./_icons.scss
+.btn-icon {
+  background-color: transparent;
+  box-shadow: none;
+  color: transparent;
+  cursor: pointer;
+  margin-top: 0;
+  min-width: 0;
+  padding: 0;
 
+  > * {
+    vertical-align: middle;
+  }
+
+  > .icon {
+    fill: #999999;
+  }
+
+  > span {
+    color: transparent;
+    @include font-size(12);
+    font-weight: 700;
+    position: absolute;
+    width: 0;
+  }
+
+  &:hover {
+    svg {
+      fill: $font-color-dark;
+    }
+  }
+
+  &:focus {
+    border: 1px solid #0896e9;
+    outline: 0;
+
+    svg {
+      fill: $primary-color;
+    }
+
+    &:hover {
+      svg {
+        fill: $primary-color;
+      }
+    }
+  }
+
+  &:active {
+    svg {
+      fill: $primary-color;
+    }
+  }
+}
+
+@include respond-to(tablet) {
+  // Show text with icon buttons by using this class.
+  // Text will still become invisible on small breakpoint (but still visible to screen readers).
+  // See respond-to(tabletdown) below.
+  .btn-icon.has-text {
+    border-radius: 18px;
+    color: $font-color;
+    padding: 0 10px 0 2px;
+
+    > span {
+      color: $font-color;
+      position: static;
+      width: auto;
+    }
+
+    &:hover {
+      color: $font-color-dark;
+
+      > span {
+        color: $font-color-dark;
+      }
+    }
+
+    &:focus,
+    &:hover:focus {
+      color: $primary-color;
+
+      > span {
+        color: $primary-color;
+      }
+    }
+
+    .ripple-wrapper {
+      border-radius: 18px;
+    }
+  }
+}
+
+// Ripple Effect
 .ripple-wrapper {
+  border-radius: 2px;
   height: 100%;
   left: 0;
   overflow: hidden;
@@ -143,10 +237,9 @@ button {
   z-index: 1;
 }
 
-
 .ripple {
   background-color: #5cc3fe;
-  border-radius: 100;
+  border-radius: 100px;
   height: 20px;
   margin-left: -10px;
   margin-top: -10px;
@@ -163,12 +256,14 @@ button {
 
   &.ripple-on {
     opacity: .15;
+    -ms-transition: opacity .15s ease-in 0s, -ms-transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
     -webkit-transition: opacity .15s ease-in 0s, -webkit-transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
     transition: opacity .15s ease-in 0s, transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
   }
 
   &.ripple-out {
     opacity: 0;
+    -ms-transition: opacity .2s linear 0s !important;
     -webkit-transition: opacity .2s linear 0s !important;
     transition: opacity .2s linear 0s !important;
   }

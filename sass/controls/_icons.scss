@@ -1,6 +1,7 @@
 // Icons and Icon Buttons
 //================================================== //
 
+/*
 // Buttons
 .btn-icon {
   background-color: transparent;
@@ -29,6 +30,7 @@
     width: 20px;
   }
 }
+*/
 
 // Svg Styles
 svg.icon {
@@ -77,17 +79,4 @@ svg.icon-logo {
 
 svg.icon-tree {
   stroke: #999999;
-}
-
-.btn-icon:hover  svg {
-  fill: #333333;
-}
-
-.btn-icon:active svg {
-  fill: $primary-color;
-}
-
-.btn-icon:focus {
-  border: 1px solid #0896e9;
-  outline: 0;
 }

@@ -67,6 +67,11 @@
     pointer-events: none;
   }
 
+  &:before {
+    background-color: rgba($primary-color, .3);
+    border-radius: 12px;
+  }
+
   &:focus,
   &:hover {
     > .icon {
