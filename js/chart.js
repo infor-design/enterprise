@@ -219,13 +219,14 @@
 
           console.log('mouseenter');
 
-          var shape = d3.select(this),
+          // var shape = d3.select(this),
+          var shape = $(this),
               content = '',
               // xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
-              contW = $('.chart-container').width(),
-              svgW = $('.chart-container > svg').width(),
+              contW = shape.closest('.chart-container').width(),
+              svgW = shape.closest('.chart-container > svg').width(),
               svgStart = (contW - svgW) / 2,
-              contStart = $('.chart-container').closest('.widget').position().left,
+              contStart = shape.closest('.chart-container').closest('.widget').position().left,
               xPos = svgStart + parseFloat(shape.attr('x')) + barWidth + contStart,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
 
