@@ -222,17 +222,18 @@
           var shape = d3.select(this),
               content = '',
               // xPos = parseFloat(shape.attr('x')) + margins.left - (charts.tooltip.outerWidth()/2) + barWidth/2,
-              
               contW = $('.chart-container').width(),
               svgW = $('.chart-container > svg').width(),
               svgStart = (contW - svgW) / 2,
-              xPos = svgStart + parseFloat(shape.attr('x')) + barWidth/2 + 38,
+              contStart = $('.chart-container').closest('.widget').position().left,
+              xPos = svgStart + parseFloat(shape.attr('x')) + barWidth + contStart,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
 
               console.log('container width: ', $('.chart-container').width() );
+              console.log('container start: ', contStart );
               console.log('svg width: ', $('.chart-container > svg').width() );
               console.log('svg start: ', $('.chart-container').width() -  $('.chart-container > svg').width());
-              console.log('shape.attr("x"): ', shape.attr('x'), ' margins.left: ', margins.left, ' charts.tooltip.outerWidth()/2: ', charts.tooltip.outerWidth()/2, ' barWidth/2: ', barWidth/2);
+              console.log('parseFloat(shape.attr("x")): ', parseFloat(shape.attr('x')), ' margins.left: ', margins.left, ' charts.tooltip.outerWidth()/2: ', charts.tooltip.outerWidth()/2, ' barWidth/2: ', barWidth/2);
               console.log('x: ', xPos, ' y: ', yPos);
 
           if (dataset.length === 1) {
