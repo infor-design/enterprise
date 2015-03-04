@@ -101,7 +101,7 @@
         elem.find('select[multiple]:not(.dropdown), .multiselect:not([data-init])').multiselect();
 
         //Button with Effects
-        elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-icon, .btn-actions').button();
+        elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split').button();
         elem.find('.skip-link, .hyperlink').button();
 
         //Pager

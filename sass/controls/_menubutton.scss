@@ -11,34 +11,20 @@
 .btn-split,
 .btn-menu,
 .btn-actions {
-  background-color: $menubutton-bg-color;
-  border: 1px solid $menubutton-border-color;
-  border-radius: 2px;
-  @include font-size(18);
   height: $menubutton-height;
+  min-width: 0;
+  padding: 0;
 
   span {
     @include rem(padding, 1rem);
+    @include font-size(12);
+    font-weight: 700;
     line-height: $menubutton-height;
+    text-transform: uppercase;
     vertical-align: top;
   }
 
-  &:focus {
-    border-color: $menubutton-focus-border-color;
-  }
-
-  &[disabled] {
-    background-color: $menubutton-disabled-bg-color;
-    border-color: $menubutton-disabled-border-color;
-    cursor: default;
-
-    span {
-      color: $menubutton-disabled-color;
-    }
-  }
-
   .icon {
-    fill: $menubutton-border-color;
     pointer-events: none;
   }
 }
@@ -49,6 +35,8 @@
   + .btn-menu {
     border-radius: 0 2px 2px 0;
     margin-left: -21px;
+    min-width: 0;
+    padding: 0;
   }
 
   &:focus + .btn-menu {
@@ -57,10 +45,13 @@
 }
 
 .btn-actions {
-  border: 1px solid transparent;
+  background-color: $body-bg-color;
+  border-radius: 18px;
+  box-shadow: 0 0 0 2px transparent;
+  position: relative;
 
   > .icon {
-    fill: $font-color-extradark;
+    fill: $tertiary-btn-color;
   }
 
   > * {
@@ -68,34 +59,33 @@
   }
 
   &:before {
-    background-color: rgba($primary-color, .3);
     border-radius: 12px;
   }
 
-  &:focus,
   &:hover {
     > .icon {
-      fill: $font-color-extradark;
-    }
-
-    &[aria-expanded="true"] {
-      > .icon {
-        fill: $menubutton-focus-border-color;
-      }
+      fill: $tertiary-btn-hover-color;
     }
   }
 
   &:focus {
-    border-color: $primary-color !important;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
 
     > .icon {
-      fill: $font-color-extradark;
+      fill: $tertiary-btn-hover-color;
     }
   }
 
   &[aria-expanded="true"] {
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+
     > .icon {
-      fill: $menubutton-focus-border-color;
+      fill: $tertiary-btn-hover-color;
     }
+  }
+
+
+  .ripple-wrapper {
+    border-radius: 18px;
   }
 }

@@ -1,6 +1,10 @@
 // Buttons
 //================================================== //
 
+// Also see:
+// sass/controls/_icons.scss
+// sass/controls/_menubutton.scss
+
 button {
   background-color: transparent;
   font-family: $font-regular;
@@ -12,11 +16,12 @@ button {
 .btn-primary,
 .btn-destructive,
 .btn-tertiary,
-.btn-icon {
+.btn-icon,
+.btn-split,
+.btn-menu {
   background-color: $primary-btn-bg-color;
   border: 1px solid transparent;
   border-radius: 2px;
-  box-shadow: inset 0 -1px rgba(0, 0, 0, .2);
   color: $btn-color;
   font-family: $font-regular;
   font-weight: bold;
@@ -44,9 +49,13 @@ button {
   }
 
   &:focus {
-    background-color: $primary-btn-bg-color;
     border: 1px solid $primary-btn-bg-color;
     box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+
+    &:active {
+      background-color: $primary-btn-bg-color;
+      box-shadow: none;
+    }
   }
 
   &[disabled],
@@ -54,6 +63,7 @@ button {
   &[disabled]:active {
     background-color: $primary-btn-disabled-bg-color;
     box-shadow: none;
+    color: $primary-btn-disabled-text-color;
     cursor: default;
   }
 
@@ -78,9 +88,13 @@ button {
   }
 
   &:focus {
-    background-color: $btn-focus-bg-color;
-    border: 1px solid $btn-hover-bg-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-hover-bg-color;
+    border: 1px solid $btn-focus-bg-color;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
+
+    &:active {
+      background-color: $btn-focus-bg-color;
+      box-shadow: none;
+    }
   }
 
   &[disabled],
@@ -98,13 +112,25 @@ button {
 
 // Destructive Actions / Third Level Button
 .btn-destructive,
-.btn-tertiary {
-  background-color: transparent;
+.btn-tertiary,
+.btn-menu,
+.btn-split,
+.btn-icon {
+  background-color: $body-bg-color;
+  border-radius: 18px;
   box-shadow: none;
   color: $tertiary-btn-color;
 
   &:hover {
     color: $tertiary-btn-hover-color;
+
+    span {
+      color: $tertiary-btn-hover-color;
+    }
+
+    .icon {
+      fill: $tertiary-btn-hover-color;
+    }
   }
 
   &:active {
@@ -112,14 +138,34 @@ button {
   }
 
   &:focus {
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $tertiary-btn-hover-color;
     color: $tertiary-btn-color;
-    text-decoration: underline;
+
+    &:active {
+      box-shadow: none;
+    }
   }
 
   &[disabled],
   &[disabled]:hover {
     color: $tertiary-btn-disabled-color;
     cursor: default;
+
+    span {
+      color: $tertiary-btn-disabled-color;
+    }
+
+    .icon {
+      fill: $tertiary-btn-disabled-color;
+    }
+  }
+
+  span {
+    color: $tertiary-btn-color;
+  }
+
+  .icon {
+    fill: $tertiary-btn-color;
   }
 
   .ripple {
@@ -127,17 +173,13 @@ button {
   }
 
   .ripple-wrapper {
-    border-radius: 8px;
+    border-radius: 18px;
   }
 }
 
 // Icon Buttons
 // Also see ./_icons.scss
 .btn-icon {
-  background-color: transparent;
-  box-shadow: none;
-  color: transparent;
-  cursor: pointer;
   margin-top: 0;
   min-width: 0;
   padding: 0;
@@ -147,11 +189,10 @@ button {
   }
 
   > .icon {
-    fill: #999999;
+    fill: $tertiary-btn-color;
   }
 
   > span {
-    color: transparent;
     @include font-size(12);
     font-weight: 700;
     position: absolute;
@@ -159,29 +200,28 @@ button {
   }
 
   &:hover {
-    svg {
-      fill: $font-color-dark;
+    .icon {
+      fill: $tertiary-btn-hover-color;
     }
   }
 
   &:focus {
-    border: 1px solid #0896e9;
     outline: 0;
 
-    svg {
-      fill: $primary-color;
+    .icon {
+      fill: $tertiary-btn-color;
     }
 
     &:hover {
-      svg {
-        fill: $primary-color;
+      .icon {
+        fill: $tertiary-btn-hover-color;
       }
     }
   }
 
   &:active {
-    svg {
-      fill: $primary-color;
+    .icon {
+      fill: $tertiary-btn-hover-color;
     }
   }
 }
@@ -191,35 +231,11 @@ button {
   // Text will still become invisible on small breakpoint (but still visible to screen readers).
   // See respond-to(tabletdown) below.
   .btn-icon.has-text {
-    border-radius: 18px;
-    color: $font-color;
     padding: 0 10px 0 2px;
 
     > span {
-      color: $font-color;
       position: static;
       width: auto;
-    }
-
-    &:hover {
-      color: $font-color-dark;
-
-      > span {
-        color: $font-color-dark;
-      }
-    }
-
-    &:focus,
-    &:hover:focus {
-      color: $primary-color;
-
-      > span {
-        color: $primary-color;
-      }
-    }
-
-    .ripple-wrapper {
-      border-radius: 18px;
     }
   }
 }

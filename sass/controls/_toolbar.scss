@@ -22,8 +22,8 @@
     color: $font-color;
     display: inline-block;
     @include font-size(14);
-    padding: ($toolbar-height/2 - 12) 0;
-    margin-right: 1em;
+    margin: 0 1em 0 0;
+    padding: ($toolbar-height/2 - 8) 0;
 
     > * {
       vertical-align: middle;
@@ -32,6 +32,7 @@
     + .buttonset {
       display: inline-block;
       float: right;
+      margin-top: 3px;
 
       &:after {
         clear: both;
@@ -41,6 +42,7 @@
 
   .buttonset {
     height: $toolbar-height;
+    margin: 0 5px 0 0;
     padding: 0;
 
     > * {
@@ -48,48 +50,23 @@
     }
   }
 
-  .btn {
+  .btn,
+  .btn-secondary,
+  .btn-tertiary {
     padding: 0 16px;
   }
 
   .btn,
-  .btn-icon {
-    background-color: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    color: #616161;
+  .btn-secondary,
+  .btn-tertiary,
+  .btn-icon,
+  .btn-menu {
     min-width: 0;
-
-    &:focus {
-      border: 1px solid $primary-color;
-      color: $primary-color;
-    }
-
-    &:hover {
-      background-color: transparent;
-      color: #4d4d4d;
-    }
-
-    &:disabled {
-      color: #bdbdbd;
-    }
-
-    &:active {
-      color: #005689;
-
-      &:disabled {
-        color: #bdbdbd;
-      }
-    }
 
     > .icon {
       height: ($button-font-size * 1.5) + px;
       position: relative;
       top: -1px;
-    }
-
-    .ripple {
-      background-color: #5cc3fe;
     }
   }
 
@@ -101,11 +78,7 @@
     top: 0;
 
     .btn-actions {
-      margin-top: 5px;
-
-      &.popup-is-open {
-        border: 1px solid $primary-color;
-      }
+      margin: 5px 5px 0 0;
     }
   }
 

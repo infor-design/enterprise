@@ -3,10 +3,11 @@
 
 // Variables for this file
 $header-height: 70px;
+$header-bg-color: #454545;
 
 // Top Header
 .header {
-  background-color: #454545;
+  background-color: $header-bg-color;
   display: block;
   height: $header-height;
   overflow: hidden;
@@ -38,20 +39,28 @@ $header-height: 70px;
   }
 
   .btn-actions {
-    border-color: transparent;
+    background-color: $header-bg-color;
 
-    svg {
+    .icon {
       fill: $inverse-color;
     }
 
     &:focus,
     &:hover,
-    &:active {
-      border-color: $inverse-color !important;
-
-      svg {
+    &:active,
+    &[aria-expanded="true"] {
+      .icon {
         fill: $inverse-color !important;
       }
+    }
+
+    &:focus,
+    &[aria-expanded="true"] {
+      box-shadow: 0 0 0 2px $header-bg-color, 0 0 0 3px $inverse-color;
+    }
+
+    .ripple {
+      background-color: #ffffff;
     }
   }
 
@@ -62,25 +71,30 @@ $header-height: 70px;
   }
 
   .header-search {
+    background-color: $header-bg-color;
     height: 34px;
     margin-right: 5px;
     vertical-align: top;
     width: 34px;
 
-    svg {
+    .icon {
       fill: $inverse-color;
       left: 5px;
       top: 6px;
     }
 
-    &:hover svg {
+    &:hover .icon {
       fill: $inverse-color;
     }
 
-    &:focus,
-    &:active {
-      border-color: $inverse-color;
+    &:focus {
+      box-shadow: 0 0 0 2px $header-bg-color, 0 0 0 3px $inverse-color;
     }
+
+    .ripple {
+      background-color: #ffffff;
+    }
+
   }
 
   // Sticky Header
