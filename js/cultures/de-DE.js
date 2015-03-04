@@ -16,6 +16,8 @@
   Locale.addCulture('de-DE', {
     //layout/language
     language: 'de',
+    englishName: 'German (Germany)',
+    nativeName: 'Deutsch (Deutschland)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian

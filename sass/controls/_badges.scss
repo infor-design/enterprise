@@ -13,6 +13,10 @@
   margin-right: 10px;
   padding: 0 11px;
   vertical-align: middle;
+
+  &.error {
+    background-color: $ruby06;
+  }
 }
 
 .badge {
@@ -27,7 +31,7 @@
   width: 22px;
 
   &.error {
-    background-color: $ruby07;
+    background-color: $ruby06;
   }
 
   &.large {

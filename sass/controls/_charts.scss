@@ -69,63 +69,8 @@
   &.chart-vertical-bar {
     margin: 0 auto;
     max-width: 540px;
-
-    svg {
-      // width: 100%;
-    }
-  }
-
-}
-
-/* .chart-legend-item {
-  border: 1px solid transparent;
-  cursor: pointer;
-  display: inline-block;
-  padding: 5px 10px 2px 0;
-  position: relative;
-  text-align: left;
-  min-width: 150px;
-
-  &:focus {
-    border: 1px solid $primary-color;
-    border-radius: 2px;
-    outline: none;
-  }
-
-  > span {
-    display: inline-block;
-    // padding-left: 12%;
-    padding-left: 25px;
-    width: 90%;
   }
 }
-
-.chart-legend-color {
-  // display: inline-block;
-  height: 12px;
-  margin: 0 8px;
-  width: 12px;
-  // width: 7%;
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  margin-top: -9px;
-}
-
-.chart-legend-item-text {
-  width: 78%;
-  display: inline-block;
-  @include ellipsis; 
-}
-
-.chart-legend-percent {
-  font-weight: bold;
-  padding-left: 5px;
-  width: 33%;
-  display: inline-block;
-  position: absolute;
-  right: 0;
-} */
 
 // Tooltip Swatch
 .chart-swatch > div {
@@ -154,119 +99,80 @@
   text-align: center;
 }
 
+.chart-legend {
+  margin-top: 10px;
+  text-align: center;
+}
 
-// Chart Specific Centering and Styling
-/* .chart-pie {
-  display: inline-block;
-  // height: 98%;
-  padding: 15px;
-  // width: 38%;
-  position: relative;
-  // top: 50%;
-  // transform: translateY(-50%);
-
-  + .chart-legend {
-    display: inline-block;
-    @include vertical-align();
-    padding-left: 10px;
-    width: 45%;
-    max-width: 190px;
-
-    .chart-legend-item {
-      display: block;
-    }
-
-    @include respond-to(tablet) {
-      display: none;
-    }
+.is-below {
+  .chart-legend-color {
+    top: 0;
   }
 }
 
-
-.one-third .chart-pie {
-  // margin-top: 35px;
-  padding: 0;
-  width: 53%;
-} */
-
-.chart-legend {
-  text-align: left;
-}
-
 .chart-legend-color {
-  height: 12px;
-  width: 12px;
   display: inline-block;
-  vertical-align: super;
-  margin-right: 10px;
+  height: 12px;
+  margin-left: 20px;
+  margin-right: 7px;
   position: relative;
-  top: -2px;
+  top: -8px;
+  width: 12px;
 }
 
 .chart-legend-item-text {
   width: auto;
-  @include ellipsis; 
+  @include ellipsis;
 }
 
+
+// Legend on the side... TODO - Use Lines.
 .vertical-legend {
-  width: 100%;
-  max-width: 500px;
   margin: 0 auto;
+  max-width: 500px;
+  width: 100%;
 
   .chart-legend {
-    width: 40%;
     float: right;
     padding-right: 4px;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+    width: 40%;
 
     .chart-legend-item {
       display: block;
-      position: relative;
       padding-top: 5px;
+      position: relative;
+      text-align: left;
+    }
 
-      span {
-        display: inline-block;
-      }
-
-      .chart-legend-percent {
-        // position: absolute;
-        // right: 0;
-        // top: 5px;
-        font-weight: bold;
-        vertical-align: top;
-      }
-
+    .chart-legend-percent {
+      font-weight: bold;
+      margin-left: 7px;
+      vertical-align: top;
     }
 
     .chart-legend-item-text {
-      // width: 78%;
       display: inline-block;
-      @include ellipsis; 
+      @include ellipsis;
       padding-right: 5px;
     }
 
-  }
+    &.is-below {
+      margin: 20px 0;
+      text-align: center;
 
+      .chart-legend-item {
+        margin-right: 20px;
+      }
+    }
+
+  }
 }
 
-.chart-legend.is-below {
-  text-align: center;
-  margin: 20px 0;
-
-  .chart-legend-item {
-    margin-right: 20px;
-  }
-
-  .chart-legend-color {
-    vertical-align: middle;
-  }
-
-}
-
-
-.chart-pie-visualization {
+// Pie Charts Specifics
+.chart-pie {
   float: left;
   position: relative;
   top: 50%;
@@ -290,25 +196,14 @@
     @include respond-to(phone) {
       width: 60%;
     }
+
     @include respond-to(tablet) {
       width: 60%;
     }
   }
-
-  /* &.vis-only {
-    float: none;
-    margin: 0 auto;
-    width: 100%;
-
-    svg {
-      // width: 300px;
-      width: 60%;
-    }
-  } */
-
 }
 
-.one-third .chart-pie-visualization {
+.one-third .chart-pie {
   svg {
     @include respond-to(tabletdown) {
       width: 60%;
@@ -316,21 +211,7 @@
   }
 }
 
-#bar-stacked-example .group {
-  // right: -50%;
-  // transform: translateX(-50%);
-  // position: relative;
-
-  
-  // margin: 0 auto;
-  // width: 100%;
-  // overflow: hidden;
-}
-
-
-
-
-
+// Spark Line Charts
 .sparkline {
   height: 70px;
   margin: 50px auto;
@@ -354,8 +235,4 @@
   .point {
     stroke-width: 4.5;
   }
-
 }
-
-
-

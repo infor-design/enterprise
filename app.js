@@ -113,6 +113,27 @@ app.configure(function() {
     res.render('layouts/' + end, layoutOpts);
   });
 
+  //Examples Apps Pages
+  var exampleOpts = {
+    title: 'SoHo XI',
+    subtitle: 'Examples',
+    layout: 'examples/layout',
+    enableLiveReload: true
+  };
+
+  app.get('/examples/', function(req, res) {
+    res.render('examples/index', exampleOpts);
+  });
+
+  app.get('/examples', function(req, res) {
+    res.render('examples/index', exampleOpts);
+  });
+
+  app.get('/examples*', function(req, res) {
+    var end = req.url.replace('/examples/','');
+    res.render('examples/' + end, exampleOpts);
+  });
+
   //Sample Json call that returns States
   //Example Call: http://localhost:4000/api/states?term=al
   app.get('/api/states', function(req, res) {

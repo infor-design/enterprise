@@ -33,8 +33,8 @@
       initPageChanger: function () {
         this.element.on('selected', function (e, link) {
 
-          link.parent().parent().find('.checkmark').removeClass('checkmark');
-          link.parent().addClass('checkmark');
+          link.parent().parent().find('.is-checked').removeClass('is-checked');
+          link.parent().addClass('is-checked');
 
           // Change Theme
           if (link.attr('data-theme')) {

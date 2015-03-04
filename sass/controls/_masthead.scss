@@ -1,16 +1,55 @@
-/* Mast Head
-================================================== */
+// Mast Head
+//================================================== //
+
 .masthead {
+  background-color: #454545;
   height: 34px;
-  background-color: #666;
+
+  + .header.is-sticky {
+    top: 34px;
+
+    + .container,
+    + .site-content,
+    + .hero,
+    + .svg-icons + .container {
+      margin-top: 114px;
+    }
+  }
 }
 
 .masthead-appname {
-  color: #f1f1f1;
+  color: #cccccc;
   display: inline-block;
   font-family: $font-regular;
+  font-weight: bold;
   @include font-size(12);
   line-height: 34px;
-  margin: 0 0 3px 10px;
+  margin: 0 0 3px;
+  padding-right: 10px;
   vertical-align: top;
+}
+
+.masthead-square {
+  background-color: #b5b5b5;
+  display: inline-block;
+  height: 11px;
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 0;
+  position: relative;
+  top: 10px;
+  width: 11px;
+}
+
+.icon-mingle {
+  fill: #b5b5b5;
+}
+
+.icon-mingle-user {
+  fill: #b5b5b5 !important;
+  height: 21px !important;
+  position: relative;
+  top: -6px;
+  width: 22px !important;
 }
