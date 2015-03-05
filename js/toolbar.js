@@ -393,6 +393,7 @@
 
             switch(key) {
               case 13: // enter
+              case 32: // space
                 e.preventDefault();
                 selectListOption();
                 self.popupmenu.close();

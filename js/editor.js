@@ -139,7 +139,7 @@
         var self = this,
           currentElement = self.getCurrentElement();
 
-        currentElement.on('keydown', function (e) {
+        currentElement.on('keydown.editor', function (e) {
           if (e.which === 9) {
             // Override tab only for pre nodes
             var tag = self.getSelectionStart().tagName.toLowerCase();
@@ -416,14 +416,14 @@
             'quote': '<span class="audible">Block Quote</span><svg focusable="false" aria-hidden="true" class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
             'orderedlist': '<span class="audible">Ordered List</span><svg focusable="false" aria-hidden="true" class="icon icon-orderedlist"><use xlink:href="#icon-orderedlist"></use></svg>',
             'unorderedlist': '<span class="audible">Un-Ordered List</span><svg focusable="false" aria-hidden="true" class="icon icon-unorderedlist"><use xlink:href="#icon-unorderedlist"></use></svg>',
-            'pre': '<span class="audible">Pre</span><b>0101</b>',
-            'indent': '<span class="audible">Indent</span><b>&rarr;</b>',
-            'outdent': '<span class="audible">Outdent</span><b>&larr;</b>',
+            'pre': '<span class="audible">Pre</span><b aria-hidden="true">0101</b>',
+            'indent': '<span class="audible">Indent</span><b aria-hidden="true">&rarr;</b>',
+            'outdent': '<span class="audible">Outdent</span><b aria-hidden="true">&larr;</b>',
             'justifyLeft': '<span class="audible">Justify Left</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-left"><use xlink:href="#icon-justify-left"></use></svg>',
             'justifyCenter': '<span class="audible">Justify Center</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-center"><use xlink:href="#icon-justify-center"></use></svg>',
             'justifyRight': '<span class="audible">Justify Right</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-right"><use xlink:href="#icon-justify-right"></use></svg>',
-            'source': '<span class="audible">View Source</span><b>&nbsp;HTML&nbsp;</b>',
-            'visual': '<span class="audible">View Visual</span><b>&nbsp;VISUAL&nbsp;</b>'
+            'source': '<span class="audible">View Source</span><b aria-hidden="true">&nbsp;HTML&nbsp;</b>',
+            'visual': '<span class="audible">View Visual</span><b aria-hidden="true">&nbsp;VISUAL&nbsp;</b>'
           };
 
         if (typeof buttonLabelType === 'object') {
