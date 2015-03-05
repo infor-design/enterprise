@@ -24,7 +24,7 @@
     // Settings and Options
     var pluginName = 'resizable',
         defaults = {
-          title: '(Title)'
+          axis: 'x'
         },
         settings = $.extend({}, defaults, options);
 
@@ -47,8 +47,7 @@
         var self = this;
         self.handle = null;
 
-        this.element.find('.resize-handle').draggable({axis: 'x'}).on('drag.resziable', function (e, args) {
-          console.log(args);
+        this.element.find('.resize-handle').draggable({axis: settings.axis}).on('drag.resziable', function (e, args) {
           self.element.width(args.left);
         });
       },

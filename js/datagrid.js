@@ -39,6 +39,15 @@
       return formatted;
     },
 
+    Integer:  function(row, cell, value, col) {
+      var formatted = ((value === null || value === undefined) ? '' : value);
+
+      if (typeof Locale !== undefined && true) {
+        formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'integer'}));
+      }
+      return formatted;
+    },
+
     Hyperlink: function(row, cell, value) {
       //TODO - Click Events, Confirm Styling
       return '<a href="#" class="hyperlink">' + value + '</a>';
@@ -79,7 +88,6 @@
     }
 
     // TODOs
-    // Action Button
     // Detail Template
     // Multi Line TextArea
     // Select
@@ -98,6 +106,8 @@
     // Button ??
     // Toggle Button ??
     // Re Order ??
+    // Sparkline
+    // Status
   };
 
   //TODO: resize cols - http://dobtco.github.io/jquery-resizable-columns/
@@ -157,7 +167,7 @@
               isResizable = (column.resizable === undefined ? true : column.resizable);
 
             headerRow += '<th scope="col" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' + ' data-columnid="'+ column.id +'">';
-            headerRow += '<span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
+            headerRow += '<div class="datagrid-column-wrapper"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
             if (isSortable) {
               headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-down"></svg></div>';
@@ -167,7 +177,7 @@
               headerRow += '<div class="resize-handle"></div>';
             }
 
-            headerRow += '</th>';
+            headerRow += '</div></th>';
           }
           headerRow += '</tr></thead>';
         }

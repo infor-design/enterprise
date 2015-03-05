@@ -79,7 +79,14 @@
 }
 
 // Hero Section
+.hero {
+  text-align: center;
 
+  .searchfield {
+    background-color: $inverse-color;
+
+  }
+}
 
 // Three Column Layout
 

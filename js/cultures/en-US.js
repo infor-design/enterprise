@@ -16,6 +16,8 @@
   Locale.addCulture('en-US', {
     //layout/language
     language: 'en',
+    englishName: 'English (United States)',
+    nativeName: 'English (United States)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian

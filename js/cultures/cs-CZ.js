@@ -13,9 +13,9 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('cs-CZ', {
     //layout/language
-    language: 'en',
+    language: 'cs',
     englishName: 'Czech (Czech Republic)',
     nativeName: 'čeština (Česká republika)',
     //layout/orientation/@characters

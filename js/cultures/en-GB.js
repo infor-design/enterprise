@@ -13,9 +13,11 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('en-GB', {
     //layout/language
     language: 'en',
+    englishName: 'English (United Kingdom)',
+    nativeName: 'English (United Kingdom)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -23,11 +25,11 @@
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'short': 'dd/MM/yyyy', //use four digit year
+                   'medium': 'd MMM yyyy',
+                   'long': 'd MMMM yyyy',
+                   'full': 'EEEE, d MMMM yyyy',
+                   'datetime': 'dd/MM/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -39,12 +41,12 @@
         abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'HH:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['am', 'pm']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
+    currencySign: '£', //(Replace Sign http://www.currencysymbols.in ?)
     currencyFormat: '¤#,##0.00',
     //numbers/symbols-numberSystem-latn
     numbers: {

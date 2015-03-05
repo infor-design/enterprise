@@ -2,15 +2,22 @@
 {{> includes/header-sticky}}
 
 <section class="hero" role="main">
+
+    <div class="field">
+      <label for="searchfield" class="audible">Search</label>
+      <input placeholder="Search for Itemsor Customer" data-autocomplete="http://localhost:4000/api/states?term=" data-init="false" id="searchfield" name="searchfield" class="searchfield" />
+    </div>
+
 </section>
 
-<section class="homepage container" role="main">
+<br>
+
+<section class="container" role="main">
 
   <div class="row">
-    <div class="three columns"><div class="content"><h3>Three</h3></div></div>
-    <div class="three columns"><div class="content"><h3>Three</h3></div></div>
-    <div class="three columns"><div class="content"><h3>Three</h3></div></div>
-    <div class="three columns"><div class="content"><h3>Three</h3></div></div>
+    <div class="three columns"><div class="content"><h3>Left</h3></div></div>
+    <div class="six columns"><div class="content"><h3>Center</h3></div></div>
+    <div class="three columns"><div class="content"><h3>Right</h3></div></div>
   </div>
 
 </section>

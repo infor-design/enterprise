@@ -16,6 +16,8 @@
   Locale.addCulture('en-US', {
     //layout/language
     language: 'en',
+    englishName: 'Spanish (United States)',
+    nativeName: 'Español (Estados Unidos)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -25,18 +27,18 @@
       dateFormat: {'seperator': '/', //Infered
                    'short': 'M/d/yyyy', //use four digit year
                    'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
+                   'long': 'd de MMMM de yyyy',
+                   'full': 'EEEE, d de MMMM de yyyy',
                    'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        wide: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        abbreviated: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'h:mm a',
@@ -55,14 +57,14 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'necesario', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'Establecer hora', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'hoy', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'horas', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'acta', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'período', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. Utilice las teclas de flecha para seleccionar.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'Cargando', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

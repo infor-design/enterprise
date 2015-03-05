@@ -260,12 +260,12 @@
 
           //Hide bold on label
           svg.selectAll('.label').style('font-weight', 'normal');
-          d3.selectAll('.bar-group rect').style('opacity', 1);
-          d3.selectAll('.is-selected').classed('is-selected', false);
+          svg.selectAll('.bar-group rect').style('opacity', 1);
+          svg.selectAll('.is-selected').classed('is-selected', false);
           if (!this.classList.contains('is-selected')) {
             bar.classed('is-selected', true);
             svg.selectAll('.label:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
-            d3.selectAll('.bar:not(.is-selected)').style('opacity', 0.5);
+            svg.selectAll('.bar:not(.is-selected)').style('opacity', 0.5);
           }
           $(container).trigger('selected', [bar, d]);
         });

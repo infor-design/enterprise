@@ -25,7 +25,7 @@
     background-color: #616161;
     border-left: 1px solid #d8d8d8;
     height: 40px;
-    padding: 0 20px;
+
     text-align: left;
     @include transition(background-color 250ms ease);
 
@@ -33,9 +33,22 @@
       color: #ffffff;
       @include font-size(12);
       font-weight: bold;
-      line-height: normal;
+      line-height: 39px;
       position: relative;
       top: 0;
+    }
+  }
+
+  //Column Resize
+  .datagrid-column-wrapper {
+    height: 40px;
+    padding: 0 20px;
+    position: relative;
+
+    .resize-handle {
+      margin-left: -4px;
+      margin-top: -40px;
+      right: 0;
     }
   }
 
@@ -109,10 +122,7 @@
 // Sorting
 .sort-indicator {
   display: inline-block;
-  float: right;
-  margin-left: 6px;
-  margin-top: -10px;
-  position: absolute;
+  margin-left: 3px;
   vertical-align: top;
 
   .icon {

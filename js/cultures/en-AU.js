@@ -13,9 +13,11 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('en-AU', {
     //layout/language
     language: 'en',
+    englishName: 'English (Australia)',
+    nativeName: 'English (Australia)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -23,11 +25,11 @@
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'short': 'd/MM/yyyy', //use four digit year
+                   'medium': 'd MMM yyyyy',
+                   'long': 'd MMMM yyyy',
+                   'full': 'EEEE, d MMMM y',
+                   'datetime': 'd/MM/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],

@@ -249,6 +249,10 @@
         curFormat = curFormat.replace('¤', sign);
       }
 
+      if (typeof number === 'string') {
+        number = parseFloat(number);
+      }
+
       var parts = number.toFixed(maximumFractionDigits).split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
       formattedNum = parts.join(decimal);

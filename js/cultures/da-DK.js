@@ -13,9 +13,9 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('da-DK', {
     //layout/language
-    language: 'en',
+    language: 'da',
     englishName: 'Danish (Denmark)',
     nativeName: 'dansk (Danmark)',
     //layout/orientation/@characters

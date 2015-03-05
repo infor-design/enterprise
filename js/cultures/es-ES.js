@@ -16,6 +16,8 @@
   Locale.addCulture('es-ES', {
     //layout/language
     language: 'es',
+    englishName: 'Spanish (Spain)',
+    nativeName: 'Español (España)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -31,7 +33,7 @@
         //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
         days: {
           wide: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-          abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
+          abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA']
         },
         //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
         months: {
