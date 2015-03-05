@@ -96,10 +96,10 @@
   background-color: $editor-toolbar-bg-color;
   border-bottom: 1px solid #d8d8d8;
   border-radius: 2px 2px 0 0;
-  height: 40px;
   left: 1px;
+  margin-bottom: 0;
   overflow: hidden;
-  padding: 0 20px;
+  padding: 0 10px;
   position: absolute;
   top: 28px;
   width: calc(100% - 2px);
@@ -107,44 +107,15 @@
 
   button {
     background-color: $editor-toolbar-bg-color;
-    border: 1px solid transparent;
-    color: $editor-btn-color;
-    cursor: pointer;
-    display: block;
-    fill: $editor-btn-color;
-    float: left;
-    height: 28px;
-    line-height: 0;
-    margin: 5px 4px;
-    min-width: 28px;
-    outline: none;
-    padding: 5px 2px;
-    @include font-size(16);
-    text-decoration: none;
-    -webkit-transition: background-color .2s ease-in;
-    transition: background-color .2s ease-in;
+    @include font-size(14);
 
-    &:hover {
-      color: #1a1a1a;
+    > .icon {
+      height: (($button-font-size * 2) + 2) + px;
+      top: 3px;
     }
 
-    &:active,
-    &.is-active {
-      color: $primary-color;
-    }
-
-    &:focus {
-      border: 1px solid $editor-focus-border-color;
-      color: $editor-focus-border-color;
-
-      svg {
-        fill: $editor-focus-border-color;
-      }
-    }
-
-    b {
-      font-weight: bold;
-      line-height: 18px;
+    &.btn-actions > .icon {
+      top: 1px;
     }
   }
 
@@ -154,21 +125,13 @@
 
   .icon {
     fill: $editor-btn-color;
-    height: 25px;
     pointer-events: none;
-    position: relative;
-    top: -4px;
-    width: 24px;
   }
 
-  .seperator,
   .separator {
     background-color: #b6b6b6;
-    display: block;
-    float: left;
     height: 20px;
-    margin: 9px 15px;
-    width: 1px;
+    margin: 5px 15px 0;
   }
 
 }

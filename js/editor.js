@@ -9,8 +9,8 @@
     var pluginName = 'editor',
       defaults = {
         buttons: {
-          editor: ['header1', 'header2', 'seperator', 'bold', 'italic', 'underline', 'seperator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'seperator', 'quote', 'orderedlist', 'unorderedlist', 'seperator', 'anchor', 'seperator', 'image', 'seperator', 'source'],
-          source: ['bold','italic','underline', 'seperator', 'anchor', 'seperator', 'quote', 'seperator', 'visual']
+          editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source'],
+          source: ['bold','italic','underline', 'separator', 'anchor', 'separator', 'quote', 'separator', 'visual']
         },
         delay: 200,
         diffLeft: 0,
@@ -29,11 +29,13 @@
 
     // Actual Plugin Code
     Editor.prototype = {
+
       init: function() {
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
         return this.setup();
       },
+
       setup: function () {
         this.isActive = true;
         this.modals = {};
@@ -43,6 +45,7 @@
           .setPlaceholders()
           .bindWindowActions();
       },
+
       initElements: function () {
         var i,
           elem = this.element;
@@ -180,7 +183,7 @@
       },
 
       createToolbar: function () {
-        var toolbar = $('<div></div>').attr('class', 'editor-toolbar').attr('id', 'editor-toolbar-' + this.id);
+        var toolbar = $('<div class="editor-toolbar"></div>').attr('id', 'editor-toolbar-' + this.id);
         this.toolbarButtons(toolbar);
         toolbar.insertBefore(this.sourceViewActive() ? this.element.prev() : this.element);
         toolbar.find('button').tooltip();
@@ -189,13 +192,18 @@
 
       toolbarButtons: function (toolbar) {
         var btns = this.sourceViewActive() ? settings.buttons.source : settings.buttons.editor,
+            buttonset = toolbar.find('.buttonset'),
             i, btn;
+
+        if (!buttonset.length) {
+          buttonset = $('<div class="buttonset"></div>').appendTo(toolbar);
+        }
 
         for (i = 0; i < btns.length; i += 1) {
           btn = this.buttonTemplate(btns[i]);
 
           if (btn) {
-            toolbar.append(btn);
+            buttonset.append(btn);
           }
         }
       },
@@ -366,28 +374,28 @@
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
           buttonTemplates = { //TODO: Localize Text
-            'bold': '<button type="button" class="btn-editor" title="Toggle Bold Text" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-            'italic': '<button type="button" class="btn-editor" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-            'underline': '<button type="button" class="btn-editor underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-            'strikethrough': '<button type="button" class="btn-editor" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
-            'superscript': '<button type="button" class="btn-editor" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-            'subscript': '<button type="button" class="btn-editor" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
-            'seperator': '<div class="seperator"></div>',
-            'anchor': '<button type="button" class="btn-editor" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
-            'image': '<button type="button" class="btn-editor" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
-            'header1': '<button type="button" class="btn-editor" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-            'header2': '<button type="button" class="btn-editor" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-            'quote': '<button type="button" class="btn-editor" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-            'orderedlist': '<button type="button" class="btn-editor" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-            'unorderedlist': '<button type="button" class="btn-editor" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-            'pre': '<button type="button" class="btn-editor" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
-            'indent': '<button type="button" class="btn-editor" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-            'outdent': '<button type="button" class="btn-editor" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-            'justifyLeft': '<button type="button" class="btn-editor" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-            'justifyCenter': '<button type="button" class="btn-editor" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-            'justifyRight': '<button type="button" class="btn-editor" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
-            'source': '<button type="button" class="btn-editor" title="view source" data-action="source" >' + buttonLabels.source + '</button>',
-            'visual': '<button type="button" class="btn-editor" title="view visual" data-action="visual" >' + buttonLabels.visual + '</button>'
+            'bold': '<button type="button" class="btn-tertiary" title="Toggle Bold Text" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+            'italic': '<button type="button" class="btn-tertiary" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+            'underline': '<button type="button" class="btn-tertiary underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+            'strikethrough': '<button type="button" class="btn-tertiary" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+            'superscript': '<button type="button" class="btn-tertiary" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+            'subscript': '<button type="button" class="btn-tertiary" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+            'separator': '<div class="separator"></div>',
+            'anchor': '<button type="button" class="btn-tertiary" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
+            'image': '<button type="button" class="btn-tertiary" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
+            'header1': '<button type="button" class="btn-tertiary" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+            'header2': '<button type="button" class="btn-tertiary" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+            'quote': '<button type="button" class="btn-tertiary" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+            'orderedlist': '<button type="button" class="btn-tertiary" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+            'unorderedlist': '<button type="button" class="btn-tertiary" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+            'pre': '<button type="button" class="btn-tertiary" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
+            'indent': '<button type="button" class="btn-tertiary" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
+            'outdent': '<button type="button" class="btn-tertiary" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+            'justifyLeft': '<button type="button" class="btn-tertiary" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+            'justifyCenter': '<button type="button" class="btn-tertiary" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+            'justifyRight': '<button type="button" class="btn-tertiary" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
+            'source': '<button type="button" class="btn-tertiary" title="view source" data-action="source" >' + buttonLabels.source + '</button>',
+            'visual': '<button type="button" class="btn-tertiary" title="view visual" data-action="visual" >' + buttonLabels.visual + '</button>'
           };
 
         return buttonTemplates[btnType] || false;
@@ -408,14 +416,14 @@
             'quote': '<span class="audible">Block Quote</span><svg focusable="false" aria-hidden="true" class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
             'orderedlist': '<span class="audible">Ordered List</span><svg focusable="false" aria-hidden="true" class="icon icon-orderedlist"><use xlink:href="#icon-orderedlist"></use></svg>',
             'unorderedlist': '<span class="audible">Un-Ordered List</span><svg focusable="false" aria-hidden="true" class="icon icon-unorderedlist"><use xlink:href="#icon-unorderedlist"></use></svg>',
-            'pre': '<b>0101</b>',
-            'indent': '<b>&rarr;</b>',
-            'outdent': '<b>&larr;</b>',
+            'pre': '<span class="audible">Pre</span><b>0101</b>',
+            'indent': '<span class="audible">Indent</span><b>&rarr;</b>',
+            'outdent': '<span class="audible">Outdent</span><b>&larr;</b>',
             'justifyLeft': '<span class="audible">Justify Left</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-left"><use xlink:href="#icon-justify-left"></use></svg>',
             'justifyCenter': '<span class="audible">Justify Center</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-center"><use xlink:href="#icon-justify-center"></use></svg>',
             'justifyRight': '<span class="audible">Justify Right</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-right"><use xlink:href="#icon-justify-right"></use></svg>',
-            'source': '<b>&nbsp;HTML&nbsp;</b>',
-            'visual': '<b>&nbsp;VISUAL&nbsp;</b>'
+            'source': '<span class="audible">View Source</span><b>&nbsp;HTML&nbsp;</b>',
+            'visual': '<span class="audible">View Visual</span><b>&nbsp;VISUAL&nbsp;</b>'
           };
 
         if (typeof buttonLabelType === 'object') {

@@ -155,7 +155,6 @@
             e.stopPropagation();
           }
           self.buildPopupMenu();
-          //self.setActiveButton($(this));
         }).on('keydown.toolbar', function(e) {
           switch(e.which) {
             case 37: // left
@@ -248,12 +247,11 @@
 
         function selectListOption() {
           var listOpts = menuHtml.find('li:not(.separator):not(.overflow-break)'),
-            selected = menuHtml.find('.is-selected');
+            selected = menuHtml.find('.is-selected'),
+            button = menuOpts.eq(listOpts.index(selected));
 
-          self.setActiveButton(menuOpts.eq(listOpts.index(selected)));
-          if (!self.activeButton.hasClass('btn-actions')) {
-            self.activeButton.trigger('click');
-          }
+          self.setActiveButton(button);
+          button.trigger('click');
         }
 
         if (self.popupmenu) {
@@ -292,6 +290,23 @@
           }
           if (button.is(':disabled')) {
             popupLi.addClass('is-disabled');
+          }
+
+          var icon = popupLi.find('.icon');
+          if (icon.length) {
+            menuHtml.addClass('has-icons');
+            icon.detach().prependTo(popupLi);
+          }
+
+          var linkspan = popupLi.find('b');
+          if (linkspan.length) {
+            menuHtml.addClass('has-icons');
+            linkspan.detach().prependTo(popupLi);
+          }
+
+          var text = popupLi.find('.audible');
+          if (text) {
+            text.removeClass('audible');
           }
 
           if (!menuOpts) {
