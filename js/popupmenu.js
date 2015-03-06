@@ -100,7 +100,8 @@
         });
 
         // If action button menu, append arrow markup
-        if (this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('header') >= 0) {
+        var containerClass = this.element.parent().attr('class');
+        if (this.element.hasClass('btn-actions') && containerClass.indexOf('header') >= 0 || containerClass.indexOf('toolbar') >= 0) {
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }
@@ -543,8 +544,8 @@
           .removeAttr('aria-owns')
           .removeAttr('aria-expanded')
           .removeAttr('aria-haspopup')
-          .off('click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
-        this.menu.trigger('destroy.popupmenu');
+          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
+        this.menu.trigger('destroy');
       }
     };
 

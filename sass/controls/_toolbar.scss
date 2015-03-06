@@ -2,36 +2,123 @@
 //================================================== */
 
 // See also Colors.scss
-.toolbar {
-  float: right;
-  width: 100%;
+.toolbar,
+.editor-toolbar {
+  height: $toolbar-height;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
 
-  .btn {
-    background-color: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    color: #616161;
-
-    &:focus {
-      border: 1px solid $primary-color;
-      color: $primary-color;
+  &.has-more-button {
+    .buttonset {
+      padding-right: 64px;
     }
 
-    &:hover {
-      background-color: transparent;
-      color: #4d4d4d;
+    .more {
+      display: inline-block;
+    }
+  }
+
+  .title {
+    color: $font-color;
+    display: inline-block;
+    @include font-size(14);
+    margin: 0 1em 0 0;
+    padding: ($toolbar-height/2 - 8) 0;
+
+    > * {
+      vertical-align: middle;
     }
 
-    &:disabled {
-      color: #bdbdbd;
+    + .buttonset {
+      display: inline-block;
+      float: right;
+      margin-top: 3px;
+
+      &:after {
+        clear: both;
+      }
+    }
+  }
+
+  .buttonset {
+    height: $toolbar-height;
+    margin: 0 5px 0 0;
+    padding: 0;
+
+    > * {
+      vertical-align: middle;
+    }
+  }
+
+  .btn,
+  .btn-secondary,
+  .btn-tertiary {
+    padding: 0;
+  }
+
+  button {
+    min-width: 32px;
+
+    > .icon {
+      height: ($button-font-size * 1.5) + px;
+      position: relative;
+      top: -1px;
+    }
+  }
+
+  // Container for More Button
+  .more {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .btn-actions {
+      margin: 5px 5px 0 0;
+    }
+  }
+
+  .separator {
+    background-color: #b6b6b6;
+    display: inline-block;
+    height: 20px;
+    margin: 9px 15px;
+    width: 1px;
+  }
+}
+
+.popupmenu.toolbar-options {
+  li {
+    > a {
+      padding: 0 30px;
     }
 
-    &:active {
-      color: #005689;
+    > .icon,
+    > b {
+      margin-left: 10px;
+      width: 28px;
     }
 
-    .ripple {
-      background-color: #5cc3fe;
+    &.is-selected {
+      background-color: $menu-hover-color;
+      color: $font-color-dark;
+
+      > .icon {
+        fill: $font-color-dark;
+      }
+
+      > a:before {
+        display: none;
+      }
+    }
+  }
+
+  &.has-icons {
+    li {
+      > a {
+        padding: 0 30px 0 45px;
+      }
     }
   }
 }

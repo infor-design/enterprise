@@ -146,11 +146,14 @@
   }
 
   //Icon Positioning
-  .icon {
-    fill: $popupmenu-color;
-    left: -8px;
-    position: relative;
-    top: 9px;
+  .icon,
+  b {
+    fill: $font-color-light;
+    position: absolute;
+  }
+
+  b {
+    text-overflow: ellipsis;
   }
 
   // Disabled

@@ -45,7 +45,7 @@
 
         //Menu/Split/Action Buttons
         elem.find('.btn-menu').popupmenu();
-        elem.find('.btn-actions').popupmenu();
+        elem.find('.btn-actions:not([data-init])').popupmenu();
 
         //Context Menu
         elem.find('[data-popupmenu]').each(function () {
@@ -101,7 +101,7 @@
         elem.find('select[multiple]:not(.dropdown), .multiselect:not([data-init])').multiselect();
 
         //Button with Effects
-        elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive').button();
+        elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split').button();
         elem.find('.skip-link, .hyperlink').button();
 
         //Pager
