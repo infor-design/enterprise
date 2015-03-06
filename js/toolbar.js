@@ -45,6 +45,20 @@
       setup: function () {
         this.element.attr('role', 'toolbar');
 
+        // Set up an aria-label as per AOL guidelines
+        // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
+        if (!this.element.attr('aria-label')) {
+          var id = this.element.attr('id') || '',
+            title = this.element.find('.title'),
+            prevLabel = this.element.prev('label'),
+            prevSpan = this.element.prev('.label'),
+            labelText = title.length ? title.text() :
+            prevLabel.length ? prevLabel.text() :
+            prevSpan.length ? prevSpan.text() : id + ' Toolbar'; // TODO: Localize
+
+          this.element.attr('aria-label', labelText);
+        }
+
         this.buttonset = this.element.find('.buttonset');
         if (!this.buttonset.length) {
           this.buttonset = $('<div class="buttonset"></div>').appendTo(this.buttonset);

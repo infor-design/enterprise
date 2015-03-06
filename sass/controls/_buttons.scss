@@ -162,6 +162,8 @@ button {
 
   span {
     color: $tertiary-btn-color;
+    @include font-size(12);
+    font-weight: 700;
   }
 
   .icon {
@@ -175,6 +177,11 @@ button {
   .ripple-wrapper {
     border-radius: 18px;
   }
+}
+
+.btn-destructive,
+.btn-tertiary {
+  padding: 0 10px;
 }
 
 // Icon Buttons
@@ -193,8 +200,6 @@ button {
   }
 
   > span {
-    @include font-size(12);
-    font-weight: 700;
     position: absolute;
     width: 0;
   }
