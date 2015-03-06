@@ -317,7 +317,7 @@
             clone: false
           };
 
-          handle.draggable(draggableOptions)
+          handle.drag(draggableOptions)
           .on('mousedown.slider', function () {
             if (self.isDisabled()) {
               return;

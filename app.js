@@ -4,7 +4,7 @@ var express = require('express'),
   path = require('path'),
   mmm = require('mmm'),
   colors = require('colors'); // jshint ignore:line
-  uploadRouter = require('./src/routers/upload-router')(app); // jshint ignore:line
+  //uploadRouter = require('./src/routers/upload-router')(app); // jshint ignore:line
 
 app.configure(function() {
 
@@ -134,6 +134,27 @@ app.configure(function() {
     res.render('examples/' + end, exampleOpts);
   });
 
+// Angular Support
+  var angularOpts = {
+    title: 'SoHo XI',
+    subtitle: 'Angular',
+    layout: 'angular/layout',
+    enableLiveReload: true
+  };
+
+  app.get('/angular/', function(req, res) {
+    res.render('angular/index', angularOpts);
+  });
+
+  app.get('/angular', function(req, res) {
+    res.render('angular/index', angularOpts);
+  });
+
+  app.get('/angular*', function(req, res) {
+    var end = req.url.replace('/angular/','');
+    res.render('angular/' + end, angularOpts);
+  });
+
   //Sample Json call that returns States
   //Example Call: http://localhost:4000/api/states?term=al
   app.get('/api/states', function(req, res) {
@@ -252,9 +273,9 @@ app.configure(function() {
   });
 
   // RESTful routes
-  require('./src/routers/rest-router')(app);
+  //require('./src/routers/rest-router')(app);
   // Upload routes
-  require('./src/routers/upload-router')(app);
+  //require('./src/routers/upload-router')(app);
 });
 
 module.exports = app;

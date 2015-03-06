@@ -27,8 +27,8 @@
         dateFormat: {'seperator': '/', //Infered
                      'short': 'd/M/yyyy', //use four digit year
                      'medium': 'd/M/yyy',
-                     'long': 'd \'de\' MMMM \'de\' y',
-                     'full': 'EEEE, d \'de\' MMMM \'de\' y',
+                     'long': 'd de MMMM de y',
+                     'full': 'EEEE, d de MMMM de y',
                      'datetime': 'd/M/yyyy H:mm'}, //Infered short + short gregorian/dateTimeFormats
         //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
         days: {

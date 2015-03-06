@@ -14,7 +14,7 @@
   /* Formatters */
   window.Formatters = {
     Text: function(row, cell, value) {
-      return ((value === null || value === undefined || value === '') ? '--' : value);
+      return ((value === null || value === undefined || value === '') ? '--' : value.toString());
     },
 
     Readonly: function(row, cell, value) {
@@ -185,8 +185,7 @@
         self.headerRow = $(headerRow);
         self.table.append(self.headerRow);
 
-        console.log(self.headerRow.find('.is-resizable'));
-        self.headerRow.find('.is-resizable').resizable();
+        self.headerRow.find('.is-resizable').resize();
       },
 
       //Render the Rows

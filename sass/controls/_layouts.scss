@@ -27,6 +27,17 @@
   margin-top: 30px;
 }
 
+//Scroll Under the Header
+.scrollable-container {
+  height: calc(100% - 70px);
+  overflow: auto;
+}
+
+body.no-scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
 // Two Column Layout
 .twocolumn-layout {
   height: calc(100% - 110px);

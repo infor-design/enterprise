@@ -19,10 +19,10 @@
 
   'use strict';
 
-  $.fn.resizable = function(options) {
+  $.fn.resize = function(options) {
 
     // Settings and Options
-    var pluginName = 'resizable',
+    var pluginName = 'resize',
         defaults = {
           axis: 'x'
         },
@@ -47,7 +47,7 @@
         var self = this;
         self.handle = null;
 
-        this.element.find('.resize-handle').draggable({axis: settings.axis}).on('drag.resziable', function (e, args) {
+        this.element.find('.resize-handle').drag({axis: settings.axis}).on('drag.resziable', function (e, args) {
           self.element.width(args.left);
         });
       },

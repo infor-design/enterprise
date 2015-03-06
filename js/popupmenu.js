@@ -334,6 +334,10 @@
 
         self.position(e);
 
+        if (this.element.closest('.header')) {
+          this.menu.parent().css('z-index', '9001');
+        }
+
         //Close on Document Click ect..
         setTimeout(function () {
           $(document).on('click.popupmenu', function (e) {

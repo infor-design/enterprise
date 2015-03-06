@@ -11,16 +11,8 @@ $gutter-neg-size: -20px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 .row {
   clear: both;
-}
-
-.homepage .row {
-  clear: none;
-}
-
-.container {
   margin: 0 auto;
   max-width: $breakpoint-tablet-to-desktop;
-  padding: 0 0 0 $gutter-size;
   width: 100%;
 
   .content {
@@ -33,113 +25,107 @@ $gutter-neg-size: -20px;
   }
 }
 
+.homepage .row {
+  clear: none;
+}
+
 // For this App Space out the Header
-.header + .svg-icons + .container {
+.header + .svg-icons + div {
   margin-top: 10px;
 }
 
 .column,
 .columns {
   float: left;
+  padding: 0 20px;
   width: 100%;
-
-  &.pad {
-    padding: $gutter-size;
-  }
-}
-
-// For mobile devices
-@media (min-width: $breakpoint-phone) {
-  .container {
-    margin: 0;
-    padding: 0 $gutter-size;
-  }
 }
 
 // For tabledevices larger than 550px
 @media (min-width: $breakpoint-phone-to-tablet) {
-  .container {
-    margin: 0 0 0 $gutter-neg-size;
-    padding: 0 0 0 $gutter-size;
+  .row {
+    padding-right: 20px;
   }
 
   .column,
   .columns {
-    padding-left: $gutter-size;
+    padding: 0;
   }
 
   .one.column,
   .one.columns {
-    width: 8.33333333333%;
+    margin-left: $gutter-size;
+    width: calc(8.33333333333% - 20px);
   }
 
   .two.columns {
-    width: 16.6666666666%;
+    margin-left: $gutter-size;
+    width: calc(16.6666666666% - 20px);
   }
 
   .three.columns {
-    width: 25%;
+    margin-left: $gutter-size;
+    width: calc(25% - 20px);
   }
 
   .four.columns {
-    width: 33.3333333333%;
+    margin-left: $gutter-size;
+    width: calc(33.3333333333% - 20px);
   }
 
   .five.columns {
-    width: 41.6666666666%;
+    margin-left: $gutter-size;
+    width: calc(41.6666666666% - 20px);
   }
 
   .six.columns {
-    width: 50%;
+    margin-left: $gutter-size;
+    width: calc(50% - 20px);
   }
 
   .seven.columns {
-    width: 58.3333333333%;
+    margin-left: $gutter-size;
+    width: calc(58.3333333333% - 20px);
   }
 
   .eight.columns {
-    width: 66.6666666666%;
+    margin-left: $gutter-size;
+    width: calc(66.6666666666% - 20px);
   }
 
   .nine.columns {
-    width: 75%;
+    margin-left: $gutter-size;
+    width: calc(75% - 20px);
   }
 
   .ten.columns {
-    width: 83.3333333333%;
+    margin-left: $gutter-size;
+    width: calc(83.3333333333% - 20px);
   }
 
   .eleven.columns {
-    width: 91.6666666666%;
+    margin-left: $gutter-size;
+    width: calc(91.6666666666% - 20px);
   }
 
   .twelve.columns,
   .full.column {
-    margin-left: 0;
-    width: 100%;
+    margin-left: $gutter-size;
+    width: calc(100% - 20px);
   }
 
   .one-third.column {
-    width: 33.3333333333%;
+    margin-left: $gutter-size;
+    width: calc(33.3333333% - 20px);
   }
 
   .two-thirds.column {
-    width: 66.6666666666%;
+    margin-left: $gutter-size;
+    width: calc(66.6666666666% - 20px);
   }
 
   .one-half.column {
-    width: 50%;
-  }
-}
-
-// For devices larger than 550px
-@media (min-width: $breakpoint-tablet-to-desktop) {
-  .container {
-    margin: 0 auto;
-    padding: 0;
-  }
-
-  .row {
-    margin-left: -20px;
+    margin-left: $gutter-size;
+    width: calc(50% - 20px);
   }
 }

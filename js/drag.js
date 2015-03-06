@@ -1,5 +1,5 @@
 /**
-* Draggable Drag and Drop Functions
+* Drag and Drop Functions with Touch Support
 */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -17,10 +17,10 @@
 
   //TODO: Resize: http://stackoverflow.com/questions/8258232/resize-an-html-element-using-touches
   // Similar: https://github.com/desandro/draggabilly
-  $.fn.draggable = function(options) {
+  $.fn.drag = function(options) {
 
     // Settings and Options
-    var pluginName = 'draggable',
+    var pluginName = 'drag',
       defaults = {
         axis: null, //Constrains dragging to either axis. Possible values: 'x', 'y'
         clone: false, //Clone the object - Useful so you dont have to abs position

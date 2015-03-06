@@ -51,12 +51,11 @@
   </div>
 </div>
 
-
 <script>
 
-  $('.draggable.x-only.collision').draggable({axis: 'x', containment: 'parent', obstacle: '.collision'});
-  $('.draggable.x-only').draggable({axis: 'x', containment: 'parent'});
-  $('.draggable').draggable({containment: 'document', clone: 'true'});
-  $('.resizable').resizable();
+  $('.draggable.x-only.collision').drag({axis: 'x', containment: 'parent', obstacle: '.collision'});
+  $('.draggable.x-only').drag({axis: 'x', containment: 'parent'});
+  $('.draggable').drag({containment: 'document', clone: 'true'});
+  $('.resizable').resize();
 
 </script>

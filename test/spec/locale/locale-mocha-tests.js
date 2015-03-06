@@ -79,6 +79,8 @@ describe('Locale [mocha]', function(){
     Locale.formatDate(new Date(2015, 0, 8, 13, 40), {date: 'long'}).should.equal('January 8, 2015');
     Locale.set('de-DE');
     Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1. Januar 2015');
+    Locale.set('es-ES');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1 de Enero de 2015');
   });
 
   it('should format long with day of week', function() {

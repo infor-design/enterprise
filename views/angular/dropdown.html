@@ -1,0 +1,82 @@
+
+  <div class="row">
+      <div class="twelve columns">
+
+        <dropdown id="ddl1" count-from="x"></dropdown>
+        <div class="field" id="ddl2" data-dropdown count-from="x"></div>
+
+    </div>
+  </div>
+
+  <div my-dom-directive>Click Me!</div>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.js"></script>
+
+  <script>
+    //http://www.sitepoint.com/practical-guide-angularjs-directives/
+    var app = angular.module('sohoxi-angular', []);
+
+    app.controller('dropdownDemo', function($scope) {
+
+      $scope.states = [{
+        name: 'Pennsylvania',
+        id: 'PA'
+      }, {
+        name: 'New York',
+        hex: 'NY'
+      }, {
+        name: 'New Jersey',
+        hex: 'NJ'
+      }];
+
+      $scope.state = '';
+    });
+
+    // Or is this better ? http://css.dzone.com/articles/angularjs-ng-select-and-ng-0
+
+    app.directive('myDomDirective', function () {
+        return {
+            link: function ($scope, element, attrs) {
+                element.bind('click', function () {
+                    element.html('You clicked me!');
+                });
+                element.bind('mouseenter', function () {
+                    element.css('background-color', 'yellow');
+                });
+                element.bind('mouseleave', function () {
+                    element.css('background-color', 'white');
+                });
+            }
+        };
+    });
+
+    // SoHo XI Angular Directives
+    (function () {
+
+        var dropdown = function () {
+            return {
+              replace: true,
+              template: '<div class="field"><label for="{{countFrom}}" class="label">{{countFrom}}</label><select id="{{countFrom}}"></select></div>',
+              scope: {
+                countFrom: '='
+              },
+              link: function(scope, elem, attrs) {
+                scope.countFrom = attrs.countFrom;
+              }
+            };
+        };
+
+        var other = function () {
+            return {
+            replace: true,
+              template: '<div class="field"></div>',
+            };
+        };
+
+        angular.module('sohoxi-angular')
+            .directive('dropdown', dropdown)
+            .directive('other', other);
+
+    }());
+
+  </script>
+
