@@ -45,6 +45,20 @@
       setup: function () {
         this.element.attr('role', 'toolbar');
 
+        // Set up an aria-label as per AOL guidelines
+        // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
+        if (!this.element.attr('aria-label')) {
+          var id = this.element.attr('id') || '',
+            title = this.element.find('.title'),
+            prevLabel = this.element.prev('label'),
+            prevSpan = this.element.prev('.label'),
+            labelText = title.length ? title.text() :
+            prevLabel.length ? prevLabel.text() :
+            prevSpan.length ? prevSpan.text() : id + ' Toolbar'; // TODO: Localize
+
+          this.element.attr('aria-label', labelText);
+        }
+
         this.buttonset = this.element.find('.buttonset');
         if (!this.buttonset.length) {
           this.buttonset = $('<div class="buttonset"></div>').appendTo(this.buttonset);
@@ -304,10 +318,19 @@
             linkspan.detach().prependTo(popupLi);
           }
 
-          var text = popupLi.find('.audible');
-          if (text) {
-            text.removeClass('audible');
-          }
+          // Order of operations for populating the List Item text:
+          // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
+          var text = popupLi.find('.audible'),
+            title = button.attr('title'),
+            tooltip = button.data('tooltip'),
+            tooltipText = tooltip ? tooltip.content : undefined;
+
+          var popupLiText = text.length ? text.removeClass('audible').text() :
+            title !== '' && title !== undefined ? button.attr('title') :
+            tooltipText ? tooltipText : button.text();
+
+          popupLi.find('.audible').remove();
+          popupLi.find('a').text(popupLiText);
 
           if (!menuOpts) {
             menuOpts = button;

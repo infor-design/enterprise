@@ -20,13 +20,13 @@
     var pluginName = 'button';
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Button(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    Button.prototype = {
       init: function() {
         var self = this;
 
@@ -136,7 +136,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (!instance) {
-        instance = $.data(this, pluginName, new Plugin(this));
+        instance = $.data(this, pluginName, new Button(this));
       }
     });
   };

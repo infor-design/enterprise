@@ -51,12 +51,6 @@
     }
   }
 
-  .btn,
-  .btn-secondary,
-  .btn-tertiary {
-    padding: 0;
-  }
-
   button {
     min-width: 32px;
 
@@ -64,6 +58,11 @@
       height: ($button-font-size * 1.5) + px;
       position: relative;
       top: -1px;
+    }
+
+    &.btn-actions > .icon {
+      height: (($button-font-size * 2) + 2) + px;
+      top: 0;
     }
   }
 

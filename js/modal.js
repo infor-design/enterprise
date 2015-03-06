@@ -58,6 +58,7 @@
         }
 
         self.isCancelled = false;
+        /*
         this.element.find('.btn-close').on('click.modal', function() {
           self.close();
         });
@@ -66,6 +67,7 @@
           self.isCancelled = true;
           self.close();
         });
+        */
 
         //ensure is appended to body for new dom tree
         if (settings.content) {
@@ -103,7 +105,10 @@
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
           inlineBtns.css('width', btnWidth-0.5 + '%').button();
-          inlineBtns.on('click.modal', function () {
+          inlineBtns.on('click.modal', function (e) {
+            if ($(e.target).is('.btn-cancel')) {
+              self.isCancelled = true;
+            }
             self.close();
           });
           return;
@@ -308,7 +313,7 @@
         }
 
         //Fire Events
-        self.element.trigger('close');
+        self.element.trigger('close', self.isCancelled);
 
         if (this.oldActive && $(this.oldActive).is('button:visible')) {
           this.oldActive.focus();
