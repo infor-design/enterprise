@@ -101,7 +101,7 @@
 
         // If action button menu, append arrow markup
         var containerClass = this.element.parent().attr('class');
-        if (this.element.hasClass('btn-actions') && containerClass.indexOf('header') >= 0 || containerClass.indexOf('toolbar') >= 0) {
+        if (this.element.hasClass('btn-actions') && containerClass.indexOf('header') >= 0 || containerClass.indexOf('more') >= 0) {
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }
