@@ -3,6 +3,7 @@
 
 .modal {
   border-radius: 2px;
+  display: none;
   -webkit-font-smoothing: antialiased;
   height: auto;
   left: 50%;
@@ -13,12 +14,11 @@
   overflow-y: auto;
   position: fixed;
   top: 50%;
-  visibility: hidden;
   width: auto;
   z-index: 1001;
 
   &.is-visible {
-    visibility: visible;
+    display: block;
   }
 
   textarea {

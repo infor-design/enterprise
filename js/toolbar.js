@@ -304,10 +304,19 @@
             linkspan.detach().prependTo(popupLi);
           }
 
-          var text = popupLi.find('.audible');
-          if (text) {
-            text.removeClass('audible');
-          }
+          // Order of operations for populating the List Item text:
+          // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
+          var text = popupLi.find('.audible'),
+            title = button.attr('title'),
+            tooltip = button.data('tooltip'),
+            tooltipText = tooltip ? tooltip.content : undefined;
+
+          var popupLiText = text.length ? text.removeClass('audible').text() :
+            title !== '' && title !== undefined ? button.attr('title') :
+            tooltipText ? tooltipText : button.text();
+
+          popupLi.find('.audible').remove();
+          popupLi.find('a').text(popupLiText);
 
           if (!menuOpts) {
             menuOpts = button;

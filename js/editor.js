@@ -375,27 +375,27 @@
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
           buttonTemplates = { //TODO: Localize Text
             'bold': '<button type="button" class="btn-tertiary" title="Toggle Bold Text" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-            'italic': '<button type="button" class="btn-tertiary" title="italic" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-            'underline': '<button type="button" class="btn-tertiary underline" title="underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-            'strikethrough': '<button type="button" class="btn-tertiary" title="strike through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
-            'superscript': '<button type="button" class="btn-tertiary" title="superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-            'subscript': '<button type="button" class="btn-tertiary" title="subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+            'italic': '<button type="button" class="btn-tertiary" title="Toggle Italic Text" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+            'underline': '<button type="button" class="btn-tertiary underline" title="Toggle Underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+            'strikethrough': '<button type="button" class="btn-tertiary" title="Strike Through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+            'superscript': '<button type="button" class="btn-tertiary" title="Superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+            'subscript': '<button type="button" class="btn-tertiary" title="Subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
             'separator': '<div class="separator"></div>',
-            'anchor': '<button type="button" class="btn-tertiary" title="insert anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
-            'image': '<button type="button" class="btn-tertiary" title="insert image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
+            'anchor': '<button type="button" class="btn-tertiary" title="Insert Anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
+            'image': '<button type="button" class="btn-tertiary" title="Insert Image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
             'header1': '<button type="button" class="btn-tertiary" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
             'header2': '<button type="button" class="btn-tertiary" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-            'quote': '<button type="button" class="btn-tertiary" title="blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-            'orderedlist': '<button type="button" class="btn-tertiary" title="ordered list" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-            'unorderedlist': '<button type="button" class="btn-tertiary" title="unordered list" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-            'pre': '<button type="button" class="btn-tertiary" data-action="append-pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
-            'indent': '<button type="button" class="btn-tertiary" data-action="indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-            'outdent': '<button type="button" class="btn-tertiary" data-action="outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-            'justifyLeft': '<button type="button" class="btn-tertiary" title="justify left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-            'justifyCenter': '<button type="button" class="btn-tertiary" title="justify center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-            'justifyRight': '<button type="button" class="btn-tertiary" title="justify right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
-            'source': '<button type="button" class="btn-tertiary" title="view source" data-action="source" >' + buttonLabels.source + '</button>',
-            'visual': '<button type="button" class="btn-tertiary" title="view visual" data-action="visual" >' + buttonLabels.visual + '</button>'
+            'quote': '<button type="button" class="btn-tertiary" title="Blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+            'orderedlist': '<button type="button" class="btn-tertiary" title="Ordered List" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+            'unorderedlist': '<button type="button" class="btn-tertiary" title="Unordered List" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+            'pre': '<button type="button" class="btn-tertiary" data-action="Append Pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
+            'indent': '<button type="button" class="btn-tertiary" data-action="Indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
+            'outdent': '<button type="button" class="btn-tertiary" data-action="Outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
+            'justifyLeft': '<button type="button" class="btn-tertiary" title="Justify Left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+            'justifyCenter': '<button type="button" class="btn-tertiary" title="Justify Center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+            'justifyRight': '<button type="button" class="btn-tertiary" title="Justify Right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
+            'source': '<button type="button" class="btn-tertiary" title="View Source" data-action="source" >' + buttonLabels.source + '</button>',
+            'visual': '<button type="button" class="btn-tertiary" title="View Visual" data-action="visual" >' + buttonLabels.visual + '</button>'
           };
 
         return buttonTemplates[btnType] || false;
@@ -404,26 +404,26 @@
         var customButtonLabels,
           attrname,
           buttonLabels = {    //TODO: Localize
-            'bold': '<span class="audible">Bold</span><b aria-hidden="true">B</b>',
-            'italic': '<span class="audible">Italic</span><b aria-hidden="true"><i>I</i></b>',
-            'underline': '<span class="audible">Underline</span><b aria-hidden="true"><u>U</u></b>',
-            'superscript': '<span class="audible">Superscript</span><b aria-hidden="true">x<sup>1</sup></b>',
-            'subscript': '<span class="audible">Subscript</span><b aria-hidden="true">x<sub>1</sub></b>',
-            'anchor': '<span class="audible">Anchor</span><svg focusable="false" aria-hidden="true" class="icon icon-link"><use xlink:href="#icon-link"></use></svg>',
-            'image': '<span class="audible">Image</span><svg focusable="false" aria-hidden="true"class="icon icon-image"><use xlink:href="#icon-image"></use></svg>',
-            'header1': '<span class="audible">Heading 3</span><b aria-hidden="true">H3</b>',
-            'header2': '<span class="audible">Heading 4</span><b aria-hidden="true">H4</b>',
-            'quote': '<span class="audible">Block Quote</span><svg focusable="false" aria-hidden="true" class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
-            'orderedlist': '<span class="audible">Ordered List</span><svg focusable="false" aria-hidden="true" class="icon icon-orderedlist"><use xlink:href="#icon-orderedlist"></use></svg>',
-            'unorderedlist': '<span class="audible">Un-Ordered List</span><svg focusable="false" aria-hidden="true" class="icon icon-unorderedlist"><use xlink:href="#icon-unorderedlist"></use></svg>',
-            'pre': '<span class="audible">Pre</span><b aria-hidden="true">0101</b>',
-            'indent': '<span class="audible">Indent</span><b aria-hidden="true">&rarr;</b>',
-            'outdent': '<span class="audible">Outdent</span><b aria-hidden="true">&larr;</b>',
-            'justifyLeft': '<span class="audible">Justify Left</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-left"><use xlink:href="#icon-justify-left"></use></svg>',
-            'justifyCenter': '<span class="audible">Justify Center</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-center"><use xlink:href="#icon-justify-center"></use></svg>',
-            'justifyRight': '<span class="audible">Justify Right</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-right"><use xlink:href="#icon-justify-right"></use></svg>',
-            'source': '<span class="audible">View Source</span><b aria-hidden="true">&nbsp;HTML&nbsp;</b>',
-            'visual': '<span class="audible">View Visual</span><b aria-hidden="true">&nbsp;VISUAL&nbsp;</b>'
+            'bold': '<span aria-hidden="true"><b>B</b></span>',
+            'italic': '<span aria-hidden="true"><b><i>I</i></b></span>',
+            'underline': '<span aria-hidden="true"><b><u>U</u></b></span>',
+            'superscript': '<span aria-hidden="true"><b>x<sup>1</sup></b></span>',
+            'subscript': '<span aria-hidden="true"><b>x<sub>1</sub></b></span>',
+            'anchor': '<svg focusable="false" aria-hidden="true" class="icon icon-link"><use xlink:href="#icon-link"></use></svg>',
+            'image': '<svg focusable="false" aria-hidden="true"class="icon icon-image"><use xlink:href="#icon-image"></use></svg>',
+            'header1': '<span aria-hidden="true"><b>H3</b></span>',
+            'header2': '<span aria-hidden="true"><b>H4</b></span>',
+            'quote': '<svg focusable="false" aria-hidden="true" class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
+            'orderedlist': '<svg focusable="false" aria-hidden="true" class="icon icon-orderedlist"><use xlink:href="#icon-orderedlist"></use></svg>',
+            'unorderedlist': '<svg focusable="false" aria-hidden="true" class="icon icon-unorderedlist"><use xlink:href="#icon-unorderedlist"></use></svg>',
+            'pre': '<span aria-hidden="true"><b>0101</b></span>',
+            'indent': '<span aria-hidden="true"><b>&rarr;</b></span>',
+            'outdent': '<span aria-hidden="true"><b>&larr;</b></span>',
+            'justifyLeft': '<svg focusable="false" aria-hidden="true" class="icon icon-justify-left"><use xlink:href="#icon-justify-left"></use></svg>',
+            'justifyCenter': '<svg focusable="false" aria-hidden="true" class="icon icon-justify-center"><use xlink:href="#icon-justify-center"></use></svg>',
+            'justifyRight': '<svg focusable="false" aria-hidden="true" class="icon icon-justify-right"><use xlink:href="#icon-justify-right"></use></svg>',
+            'source': '<span aria-hidden="true"><b>&nbsp;HTML&nbsp;</b></span>',
+            'visual': '<span aria-hidden="true"><b>&nbsp;VISUAL&nbsp;</b></span>'
           };
 
         if (typeof buttonLabelType === 'object') {
@@ -534,7 +534,7 @@
                 '<input id="url" name="url" type="text" value="http://www.example.com">' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<button type="button" class="btn-modal">Cancel</button>' +
+                '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
                 '<button type="button" class="btn-modal-primary">Insert</button>' +
               '</div>' +
             '</div>' +
@@ -557,7 +557,7 @@
                 '<input id="image" name="image" type="text" value="http://images2.fanpop.com/image/photos/12900000/Cute-kittens-12929201-1600-1200.jpg">' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<button type="button" class="btn-modal">Cancel</button>' +
+                '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
                 '<button type="button" class="btn-modal-primary">Insert</button>' +
               '</div>' +
             '</div>' +
