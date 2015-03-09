@@ -62,6 +62,7 @@ module.exports = function(grunt) {
             'js/locale.js',
             'js/pager.js',
             'js/popupmenu.js',
+            'js/progress.js',
             'js/mask.js',
             'js/multiselect.js',
             'js/message.js',

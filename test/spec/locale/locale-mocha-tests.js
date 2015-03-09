@@ -23,6 +23,7 @@ require('../../../js/cultures/no-NO.js');
 require('../../../js/cultures/es-ES.js');
 require('../../../js/cultures/bg-BG.js');
 require('../../../js/cultures/ar-EG.js');
+require('../../../js/cultures/fi-FI.js');
 
 //Tests
 describe('Locale [mocha]', function(){
@@ -55,7 +56,7 @@ describe('Locale [mocha]', function(){
     Locale.formatDate(new Date(2000, 10, 8), {pattern: 'M/d/yyyy'}).should.equal('11/8/2000');
   });
 
-  it('should format de dates', function(){
+  it('should format other dates', function(){
     Locale.set('de-DE');    //year, month, day
     Locale.formatDate(new Date(2000, 10, 8)).should.equal('08.11.2000');
     Locale.formatDate(new Date(2000, 11, 1)).should.equal('01.12.2000');
@@ -63,6 +64,10 @@ describe('Locale [mocha]', function(){
     Locale.formatDate(new Date(2000, 10, 8), {date: 'medium'}).should.equal('08.11.2000');
     Locale.formatDate(new Date(2000, 10, 8), {date: 'long'}).should.equal('8. November 2000');
     Locale.formatDate(new Date(2000, 10, 8), {pattern: 'M.dd.yyyy'}).should.equal('11.08.2000');
+
+    Locale.set('fi-FI');    //year, month, day
+    Locale.formatDate(new Date(2000, 11, 1)).should.equal('1.12.2000');
+
   });
 
   it('should format time', function(){

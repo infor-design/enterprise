@@ -66,9 +66,15 @@
     },
 
     Drilldown: function () {
+      //TODO: Localize
+      var text = Locale.translate('Drilldown');
+      if (text === undefined) {
+        text = '';
+      }
+
       return '<button class="btn-icon small datagrid-drilldown">' +
            '<svg aria-hidden="true" focusable="false" class="icon">'+
-           '<use xlink:href="#icon-drilldown"/></svg><span>'+Locale.translate('Drilldown')+'</span>'+
+           '<use xlink:href="#icon-drilldown"/></svg><span>'+ text +'</span>'+
            '</button>';
     },
 
@@ -85,11 +91,16 @@
             '<span class="audible">'+ col.title +'</span>' +
             '<svg class="icon" aria-hidden="false" focusable="false">' +
             '<use xlink:href="#action-button"></svg></button>';
+    },
+
+    // Multi Line TextArea
+    TextArea: function (row, cell, value) {
+      var formatted = ((value === null || value === undefined) ? '' : value);
+      return '<span class="datagrid-textarea">'+ formatted + '</span>';
     }
 
     // TODOs
     // Detail Template
-    // Multi Line TextArea
     // Select
     // Multi Select
     // Color Picker
@@ -211,7 +222,7 @@
 
             if (formatted.indexOf('datagrid-checkbox') > -1 ||
               formatted.indexOf('btn-actions') > -1) {
-              col.cssClass += ' l-center-text';
+              cssClass += ' l-center-text';
             }
 
             // Add Column Css Classes

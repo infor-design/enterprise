@@ -13,9 +13,11 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('et-EE', {
     //layout/language
-    language: 'en',
+    language: 'et',
+    englishName: 'Estonian (Estonia)',
+    nativeName: 'eesti (Eesti)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -23,46 +25,45 @@
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'short': 'dd.MM.yyyy', //use four digit year
+                   'medium': 'dd.MM.yyyy',
+                   'long': 'd. MMMM yyyy',
+                   'full': 'EEEE, d. MMMM y',
+                   'datetime': 'dd.MM.yyyy H:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+         wide: ['pühapäev', 'esmaspäev', 'teisipäev', 'kolmapäev', 'neljapäev', 'reede', 'laupäev'],
+         abbreviated: ['P', 'E', 'T', 'K', 'N', 'R', 'L']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      },
+        wide: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
+        abbreviated: ['jaan', 'veebr', 'märts', 'apr', 'mai', 'juuni', 'juuli', 'au', 'sept','okt', 'nov', 'dets']},
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'H:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['e.k.', 'p.k.']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '¤#,##0.00',
+    currencySign: 'kr', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '#,##0.00 ¤',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
       minusSign: '-',
-      decimal: '.',
-      group: ','
+      decimal: ',',
+      group: ' '
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'nõutav', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'Määra aeg', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'täna', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'tööaeg', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'protokoll', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'periood', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. Kasuta nooleklahve , et valida.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'laadimine', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

@@ -1,0 +1,26 @@
+// Progress Indicator
+//================================================== //
+
+.progress {
+  background: #f1f1f1;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
+  height: 8px;
+  margin: 20px 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  .progress-bar {
+    background: #0c7ad8;
+    border-radius: 4px;
+    height: 6px;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .progress-label {
+    display: inline-block;
+  }
+}

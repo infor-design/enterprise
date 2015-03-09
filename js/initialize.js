@@ -75,6 +75,9 @@
         //Rating
         elem.find('.rating').rating();
 
+        //Progress
+        elem.find('.progress-bar').progress();
+
         //Format
         elem.find('input[data-mask]').mask();
 

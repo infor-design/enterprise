@@ -312,6 +312,7 @@ or eventually the SoHo XI site pages
 | Rhythm | Node Js app with Marionette | Thim Orskov |
 | Sales Portal |   | Matt Defina  |
 | SmartStream | ASP | Wim Denayer |
+| Smart Mobile CityWatch app | ?? | Nicholas Gabb |
 | Softbrands FourthShift ERP | ASP | Steve Duepner |
 | S3 Worklist | Webpart (Black) | Jeremy Spring |
 | Sunsystems Transfer Desk | Alexander Taylor | MVC3 |

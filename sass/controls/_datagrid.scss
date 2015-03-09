@@ -25,6 +25,7 @@
     background-color: #616161;
     border-left: 1px solid #d8d8d8;
     height: 40px;
+    overflow: hidden;
 
     text-align: left;
     @include transition(background-color 250ms ease);
@@ -178,10 +179,29 @@
 }
 
 .datagrid-drilldown {
+  background-color: transparent;
+  border-radius: 0;
   margin: 0 auto;
+
+  svg {
+    width: 26px;
+  }
 }
 
-//
+td .btn-actions {
+  background-color: transparent;
+}
+
+.datagrid-textarea {
+  display: block;
+  height: inherit;
+  line-height: 22px !important;
+  overflow: auto;
+  padding-top: 5px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
 .datagrid-checkbox {
   text-indent: 14px;
 
