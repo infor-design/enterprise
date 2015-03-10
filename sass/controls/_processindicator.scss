@@ -1,0 +1,294 @@
+// Process Indicators
+//================================================== //
+
+$indicator-darkest: $azure08;
+$indicator-darker: $azure07;
+$indicator-lighter: $azure06;
+$indicator-lightest: $azure05;
+$indicator-warning: #cf4738;
+$indicator-blank: #dbdbdb;
+
+$indicator-size: 1.3em;
+$indicator-current-size: ($indicator-size * 1.6);
+
+// Container
+.process-indicator {
+  margin-bottom: 20px;
+
+  // Main blocks:  .display, .header, .subheader, .details
+  .display {
+    margin-bottom: 20px;
+    word-spacing: -($indicator-size * .22);
+
+    > * {
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .separator {
+      border: 1px solid transparent;
+      display: inline-block;
+      height: 0;
+      width: $indicator-size;
+
+      &.darkest {
+        border-color: $indicator-darkest;
+      }
+
+      &.darker {
+        border-color: $indicator-darker;
+      }
+
+      &.lighter {
+        border-color: $indicator-lighter;
+      }
+
+      &.lightest {
+        border-color: $indicator-lightest;
+      }
+
+      // smaller size for sitting in-between 'minor' indicators
+      &.minor {
+        width: ($indicator-size / 2);
+      }
+
+    }
+  }
+
+  .heading {
+    @include font-size(12);
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  .sub-heading {
+    color: $font-color;
+    @include font-size(12);
+    font-weight: lighter;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .details {
+    color: $font-color;
+    @include font-size(10);
+    font-weight: lighter;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    > span {
+      @include font-size(10);
+    }
+
+    > .icon {
+      height: 15px;
+      margin-right: 10px;
+      width: 15px;
+    }
+  }
+
+  // Makes the size of the process indicator smaller
+  &.compact {
+    .display {
+      @include css3(transform, scale(.7, .7));
+      @include css3(transform-origin, left center);
+    }
+
+    .heading,
+    .sub-heading,
+    .details {
+      display: inline-block;
+    }
+  }
+
+}
+
+// Indicator icons
+.indicator {
+  border: 2px solid $indicator-blank;
+  border-radius: ($indicator-size / 2);
+  display: inline-block;
+  height: $indicator-size;
+  position: relative;
+  width: $indicator-size;
+
+  // Color defs
+  &.darkest {
+    background-color: $indicator-darkest;
+    border: 0;
+  }
+
+  &.darker {
+    background-color: $indicator-darker;
+    border: 0;
+  }
+
+  &.lighter {
+    background-color: $indicator-lighter;
+    border: 0;
+  }
+
+  &.lightest {
+    background-color: $indicator-lightest;
+    border: 0;
+  }
+
+  // State Defs:
+  // Processing
+  &.processing {
+    background-color: transparent;
+    border: 0;
+    border-radius: ($indicator-size / 2);
+    // NOTE: Used for Chrome/Safari because border-radius is not respected by overflow in Webkit
+    -webkit-mask-image: -webkit-radial-gradient(circle, #ffffff, #000000);
+    overflow: hidden;
+
+    &:before,
+    &:after {
+      border-radius: ($indicator-size / 2) + 2;
+      content: '';
+      position: absolute;
+    }
+
+    // simulates border inside
+    &:before {
+      border: 2px solid $indicator-blank;
+      height: calc(100% - 4px);
+      left: 0;
+      top: 0;
+      width: calc(100% - 4px);
+    }
+
+    // break in the circle
+    &:after {
+      @include css3(animation-name, rotate-processing-indicator);
+      @include css3(animation-duration, 1s);
+      @include css3(animation-iteration-count, infinite);
+      @include css3(animation-timing-function, linear);
+      @include css3(transform-origin, calc(50% - 1px) calc(50% - 1px) 0);
+      border: 2px solid $indicator-lightest;
+      height: calc(100% - 2px);
+      left: 0;
+      top: 0;
+      width: calc(100% - 2px);
+    }
+
+  }
+
+  // Current is larger than the rest
+  &.current {
+    border-radius: ($indicator-current-size / 2);
+    height: $indicator-current-size;
+    width: $indicator-current-size;
+
+    // circle
+    &:before {
+      border-radius: ($indicator-current-size / 2);
+    }
+  }
+
+  // Rejected
+  &.rejected {
+    border: 0;
+
+    &:before,
+    &:after {
+      background-color: #ffffff;
+      border-radius: .2em;
+      content: '';
+      display: inline-block;
+      height: .15em;
+      left: .14em;
+      position: absolute;
+      top: .54em;
+      width: ($indicator-size * .82);
+    }
+
+    &:before {
+      @include css3(transform, rotate(135deg));
+    }
+
+    &:after {
+      @include css3(transform, rotate(45deg));
+    }
+
+    &.current {
+      background-color: $indicator-warning;
+
+      &:before,
+      &:after {
+        left: .51em;
+        top: .93em;
+      }
+    }
+
+  }
+
+  &.more-info {
+    border: 0;
+
+    &:before {
+      color: #ffffff;
+      content: '!';
+      display: inline-block;
+      font-size: 1.4em;
+      font-weight: bold;
+      height: 100%;
+      position: relative;
+      text-align: center;
+      top: .25em;
+      width: 100%;
+    }
+
+    &.current {
+      background-color: $indicator-warning;
+    }
+  }
+
+  &.time-out {
+    border: 0;
+
+    // Clock circle
+    &:before {
+      border: .15em solid #ffffff;
+      content: '';
+      height: 50%;
+      left: .370em;
+      position: absolute;
+      top: .370em;
+      width: 50%;
+    }
+
+    // Clock hands
+    &:after {
+      border-bottom: .15em solid #ffffff;
+      border-left: .15em solid #ffffff;
+      content: '';
+      height: 20%;
+      left: .97em;
+      position: absolute;
+      top: .6em;
+      width: 10%;
+    }
+
+    &.current {
+      background-color: $indicator-warning;
+    }
+  }
+
+  // Really small indicator for long processes
+  &.minor {
+    border-radius: ($indicator-size / 4);
+    height: ($indicator-size / 2);
+    width: ($indicator-size / 2);
+  }
+
+}
+
+// Keyframes for the  "processing" animation
+@include keyframes(rotate-processing-indicator) {
+  0% { @include transform(rotate(0deg)); }
+  100% { @include transform(rotate(360deg)); }
+}
