@@ -58,16 +58,6 @@
         }
 
         self.isCancelled = false;
-        /*
-        this.element.find('.btn-close').on('click.modal', function() {
-          self.close();
-        });
-
-        this.element.find('.btn-cancel, .link-cancel').on('click.modal', function() {
-          self.isCancelled = true;
-          self.close();
-        });
-        */
 
         //ensure is appended to body for new dom tree
         if (settings.content) {
@@ -206,7 +196,7 @@
         }
 
         //Center
-        self.element.css({top:'50%', left:'50%', margin:'-'+(self.element.find('.modal-content').outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
+        self.element.css({top:'50%', left:'50%', margin:'-'+(self.element.outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
 
         this.element.addClass('is-visible').attr('role', (settings.isAlert ? 'alertdialog' : 'dialog'));
         this.element.attr('aria-hidden', 'false');

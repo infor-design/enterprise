@@ -82,12 +82,23 @@ $graphite01: #f5f5f5;
 $graphite02: #d8d8d8;
 $graphite03: #bdbdbd;
 $graphite04: #999999;
-$graphite05: #7a7a7a;
+$graphite05: #656871;
 $graphite06: #616161;
 $graphite07: #454545;
 $graphite08: #383838;
 $graphite09: #292929;
 $graphite10: #1a1a1a;
+
+$slate01: #dee1e8;
+$slate02: #c8cbd4;
+$slate03: #abaeb7;
+$slate04: #888b94;
+$slate05: #656871;
+$slate06: #50535a;
+$slate07: #414247;
+$slate08: #313236;
+$slate09: #212224;
+$slate10: #1c1819;
 
 // Generate Color Classes for The Sass Variables
 $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
@@ -97,7 +108,8 @@ $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 rub
  turquoise01 turquoise02 turquoise03 turquoise04 turquoise05 turquoise06 turquoise07 turquoise08 turquoise09 turquoise10
  amethyst01 amethyst02 amethyst03 amethyst04 amethyst05 amethyst06 amethyst07 amethyst08 amethyst09 amethyst10
  tourmaline01 tourmaline02 tourmaline03 tourmaline04 tourmaline05 tourmaline06 tourmaline07 tourmaline08 tourmaline09 tourmaline10
- graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09 graphite10;
+ graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09 graphite10
+ slate01 slate02 slate03 slate04 slate05 slate06 slate07 slate08 slate09 slate10;
 
 $color-vars: $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby08 $ruby09 $ruby10
  $amber01 $amber02 $amber03 $amber04 $amber05 $amber06 $amber07 $amber08 $amber09 $amber10
@@ -106,7 +118,8 @@ $color-vars: $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby08 $ru
  $turquoise01 $turquoise02 $turquoise03 $turquoise04 $turquoise05 $turquoise06 $turquoise07 $turquoise08 $turquoise09 $turquoise10
  $amethyst01 $amethyst02 $amethyst03 $amethyst04 $amethyst05 $amethyst06 $amethyst07 $amethyst08 $amethyst09 $amethyst10
  $tourmaline01 $tourmaline02 $tourmaline03 $tourmaline04 $tourmaline05 $tourmaline06 $tourmaline07 $tourmaline08 $tourmaline09 $tourmaline10
- $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09 $graphite10;
+ $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09 $graphite10
+ $slate01 $slate02 $slate03 $slate04 $slate05 $slate06 $slate07 $slate08 $slate09 $slate10;
 
 @each $name in $color-names {
   $i: index($color-names, $name);

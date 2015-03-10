@@ -13,9 +13,9 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('fr-FR', {
     //layout/language
-    language: 'en',
+    language: 'fr',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -55,14 +55,14 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'requis', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'fixé temps', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'aujourd\'hui', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'heures', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'minute', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'période', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. Utilisez les touches fléchées pour sélectionner.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'chargement', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));
