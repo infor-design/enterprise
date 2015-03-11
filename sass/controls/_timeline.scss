@@ -1,0 +1,132 @@
+// Timeline
+//================================================== //
+//
+// See also:  /sass/controls/_processindicator.scss
+
+$process-timeline-heading: $primary-color;
+
+.timeline {
+  min-height: 44px;
+  position: relative;
+
+  // vertical line
+  &:before {
+    border-left: 1px dashed #c5c5c5;
+    bottom: 60px;
+    content: '';
+    left: 1.125em;
+    position: absolute;
+    top: 0;
+    width: 3px;
+  }
+
+}
+
+.timeline-block {
+  margin-bottom: 20px;
+  position: relative;
+
+  // micro-clearfix
+  &:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .date {
+    margin-left: 6em;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    > span {
+      @include font-size(10);
+      line-height: 1.5rem;
+    }
+
+    > .icon {
+      height: 15px;
+      margin-right: 8px;
+      width: 15px;
+    }
+
+    &.estimated {
+      > .icon {
+        fill: $indicator-warning;
+      }
+
+      > span {
+        color: $indicator-warning;
+      }
+    }
+  }
+
+  .indicator-container {
+    float: left;
+    position: relative;
+    text-align: center;
+    width: 2.5em;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    // line behind the indicatro
+    &:after {
+      background-color: transparent;
+      border-bottom: 1px dashed #c5c5c5;
+      content: '';
+      display: inline-block;
+      height: 0;
+      position: absolute;
+      top: .7em;
+      width: 100%;
+    }
+  }
+
+  .content {
+    margin-left: 6em;
+
+    .heading {
+      color: $process-timeline-heading;
+    }
+  }
+
+}
+
+@media (min-width: $breakpoint-phone-to-tablet) {
+  .timeline {
+    &:before {
+      bottom: 44px;
+      left: 12.65em;
+    }
+  }
+
+  .timeline-block {
+    .date,
+    .indicator-container,
+    .content {
+      float: left;
+    }
+
+    .date {
+      margin-left: 0;
+      position: absolute;
+      text-align: right;
+      width: 11em;
+    }
+
+    .indicator-container {
+      margin-left: 11.5em;
+    }
+
+    .content {
+      margin-left: 3em;
+    }
+  }
+}
