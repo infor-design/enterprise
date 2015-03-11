@@ -77,7 +77,7 @@
     .hyperlink {
       color: $primary-color;
       display: block;
-      margin-left: 0;
+      margin-left: -8px;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -202,6 +202,7 @@ td .btn-actions {
   word-wrap: break-word;
 }
 
+//Grid Checkboxes
 .datagrid-checkbox {
   text-indent: 14px;
 
@@ -222,5 +223,61 @@ td .btn-actions {
     left: unset;
     margin-left: -5px;
     margin-top: -5px;
+  }
+}
+
+//Grid Expand Button
+.datagrid-expand-btn {
+  background-color: transparent;
+  margin-left: -12px;
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+
+  span {
+    color: transparent;
+  }
+
+  + span {
+    color: #1a1a1a;
+  }
+
+  &:hover {
+    span {
+      color: transparent;
+    }
+  }
+}
+
+//Grid Expandable Area
+.datagrid-expandable-row {
+  td {
+    border-bottom: 0;
+    height: auto;
+  }
+
+  .datagrid-row-detail {
+    border-bottom: 1px solid #d8d8d8;
+    height: 0;
+    margin: -1px -20px 0;
+    padding: 0 20px;
+    transition: height 300ms cubic-bezier(.17, .04, .03, .94) 0s;
+  }
+
+  .datagrid-row-detail-padding {
+    padding: 30px;
+  }
+
+  .datagrid-row-micro-text {
+    color: #666666;
+    @include font-size(12);
+  }
+
+  .datagrid-cell-layout {
+    display: table-cell;
+    padding: 0 0 0 30px;
+    vertical-align: top;
   }
 }

@@ -97,23 +97,31 @@
     TextArea: function (row, cell, value) {
       var formatted = ((value === null || value === undefined) ? '' : value);
       return '<span class="datagrid-textarea">'+ formatted + '</span>';
+    },
+
+    // Detail Template
+    Expander: function (row, cell, value) {
+      var button = '<button class="btn-icon datagrid-expand-btn">'+
+        '<svg class="icon" aria-hidden="true" focusable="false">'+
+        '<use xlink:href="#icon-caret-down"></use>'+
+        '</svg><span>Expand/Collapse</span>'+
+        '</button>' + '<span> ' + value + '</span>';
+
+      return button;
     }
 
     // TODOs
-    // Detail Template
+    // Status Indicator
     // Select
     // Multi Select
     // Color Picker
     // File Upload
     // Lookup
-    // Int
-    // Decimal
-    // Status Indicator
-    // Tree
+    // Currency
     // Percent
     // Progress Indicator (n of 100%)
     // Process Indicators
-    // Currency
+    // Tree
     // Button ??
     // Toggle Button ??
     // Re Order ??
@@ -215,7 +223,7 @@
                 formatter = (col.formatter ? col.formatter : self.defaultFormatter),
                 formatted = '';
 
-            formatted = formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]) + '</td>';
+            formatted = formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]).toString();
             if (formatted.indexOf('<span class="is-readonly">') === 0) {
               col.readonly = true;
             }
@@ -230,10 +238,27 @@
             cssClass += (col.cssClass ? col.cssClass : '');
 
             rowHtml += '<td' + (cssClass ? ' class="' + cssClass + '"' : '') + '>';
-            rowHtml += formatted;
+            rowHtml += formatted + '</td>';
           }
 
           rowHtml += '</tr>';
+
+
+          if (settings.rowTemplate) {
+            var tmpl = settings.rowTemplate,
+              item = settings.dataset[i],
+              renderedTmpl = '';
+
+            if (Tmpl && item) {
+              var compiledTmpl = Tmpl.compile('{{#dataset}}'+tmpl+'{{/dataset}}');
+              renderedTmpl = compiledTmpl.render({dataset: item});
+            }
+
+            console.log(renderedTmpl);
+            rowHtml += '<tr class="datagrid-expandable-row"><td colspan="100%">' +
+              '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">'+ renderedTmpl + '</div></div>' +
+              '</td></tr>';
+          }
           tableHtml += rowHtml;
         }
 
@@ -253,6 +278,7 @@
         //Handle Clicking Buttons and links in formatters
         this.table.on('click.datagrid', 'a, button', function (e) {
           var elem = $(this).closest('td'),
+            btn = $(this),
             cell = elem.index(),
             row = $(this).closest('tr').index(),
             col = self.settings.columns[cell];
@@ -260,8 +286,32 @@
           if (col.click) {
             col.click(e, [row, cell, col, e.currentTarget]);
           }
+
+          if (btn.is('.datagrid-expand-btn')) {
+            self.expandRow(row+1);
+          }
         });
 
+      },
+
+      //TODO: Views
+      saveView: function () {
+        // Save - Expanded Rows
+        // Columns
+        // Search
+      },
+
+      expandRow: function(row) {
+        var expandRow = this.table.find('tr').eq(row+1),
+          detail = expandRow.find('.datagrid-row-detail');
+
+        if (expandRow.hasClass('is-expanded')) {
+          expandRow.removeClass('is-expanded');
+          detail.height(0);
+        } else {
+          expandRow.addClass('is-expanded');
+          detail.height(190       );
+        }
       },
 
       //Api Event to set the sort Column

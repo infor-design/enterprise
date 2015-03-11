@@ -49,3 +49,27 @@ svg.icon-logo {
 svg.icon-tree {
   stroke: #999999;
 }
+
+
+.img-placeholder {
+  background-color: #ececec;
+  border: 1px solid #e1e1e1;
+  border-radius: 2px;
+  display: table-cell;
+  height: 100px;
+  max-height: 100px;
+  max-width: 100px;
+  min-height: 100px;
+  min-width: 100px;
+  width: 100px;
+
+  svg {
+    display: inline-block;
+    fill: #ffffff;
+    height: 45px;
+    margin-left: 26px;
+    margin-top: 25px;
+    position: relative;
+    width: 45px;
+  }
+}

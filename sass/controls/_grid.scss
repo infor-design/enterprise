@@ -25,6 +25,12 @@ $gutter-neg-size: -20px;
   }
 }
 
+.row::after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
 .homepage .row {
   clear: none;
 }

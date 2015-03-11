@@ -19,70 +19,86 @@
 
 </head>
 <body>
-  {{> controls/svg}}
-  {{> docs/svg}}
+
   {{> includes/header-sticky}}
 
-  <section class="site-hero">
-    <img src="http://placehold.it/344x466/" class="site-hero-img" alt="IPad App"/>
-  </section>
+    <section class="site-hero-carousel">
+      <div class="row">
+        <div class="one-half column">
+          <h2>Lorem ipsum dolor sit amet, consectetur adipiscing eli</h2>
+          <a href="#">View All Controls</a>
+        </div>
 
-  <section id="maincontent" class="site-content site-home" role="main">
-    <div class="l-pull-in">
-      <h2>Make it intuitive. Make it awesome.</h2>
+        <div class="one-half column">
+          <img src="/images/site/fruit-placeholder.png" alt="Image of Fruit"/>
+        </div>
+      </div>
+    </section>
 
-      <p>
-        Infor applications should be intuitive, fluid, and natural to use: It shouldn&rsquo;t take a lot of work to make it work. Using Infor applications should be simple, and not require help or lengthy tutorials. Users should never get lost, perform unrecoverable errors, or feel confused.
-      </p>
 
-      <div class="row call-out" role="navigation">
-        <div class="one-third column call-out-column ">
-          <a class="content" href="/docs/vision">
-            <div class="icon-circle">
-              <svg aria-hidden="true" class="icon icon-img icon-vision">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-vision"></use>
-              </svg>
-            </div>
-            <h3>Vision</h3>
-            <p>
-              Learn more about Hook &amp; Loops Xi goals and principles.
-            </p>
+    <section id="maincontent" class="site-intro" role="main">
+      <div class="row">
+        <h2>Introducing SoHo Xi: Infor’s visual language</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. </p>
+        <img src="/images/site/app-placeholder.png" alt="Responsive Application Screen Shots"/>
+      </div>
+    </section>
+
+    <section class="site-howto-nav">
+
+      <div class="row">
+        <div class="full column">
+          <h2>How to navigate this site</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="one-third column">
+          <a href="/docs/vision" class="site-navbox">
+            <h3>Design & Methodology</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur dolor adipiscing elit.</p>
           </a>
         </div>
 
-        <div class="one-third column call-out-column ">
-          <a class="content" href="/docs/gallery">
-            <div class="icon-circle">
-              <svg aria-hidden="true" class="icon icon-img icon-gallery">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-gallery"></use>
-              </svg>
-            </div>
-            <h3>Gallery</h3>
-            <p>
-              Browse a showcase of Xi products and designs.
-            </p>
+        <div class="one-third column">
+          <a href="/docs/gallery" class="site-navbox visual-gallery">
+            <h3>Visual Gallery</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur dolor adipiscing elit.</p>
           </a>
         </div>
 
-        <div class="one-third column call-out-column ">
-          <a class="content" href="/docs/guide">
-            <div class="icon-circle">
-              <svg aria-hidden="true" class="icon icon-img icon-guide">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-guide"></use>
-              </svg>
-            </div>
-            <h3>Guide</h3>
-            <p>
-              Download away!<br />
-              Grab your assets &amp; start coding!
-            </p>
+        <div class="one-third column">
+          <a href="/docs/guide" class="site-navbox controls">
+            <h3>Controls & Codebase</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur dolor adipiscing elit.</p>
           </a>
         </div>
       </div>
-    </div>
-  </section>
 
-  {{> includes/docs-footer}}
+    </section>
 
+
+    <section class="site-comments">
+      <div class="row">
+        <div class="full column">
+          <h2>Have a question or comment?</h2>
+          <form action="mailto:tim.mcconechy@infor.com" method="post" enctype="text/plain" >
+            <div class="field">
+              <label for="email" class="audible">Email Address</label>
+              <input id="email" type="text" placeholder="Your Email Address" name="email">
+            </div>
+            <div class="field">
+              <label for="comments" class="audible">Questions or Comments</label>
+              <textarea placeholder="Your Questions or Comments Address" name="comments" id="comments"></textarea>
+            </div>
+            <button class="btn-primary" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  {{> controls/svg}}
+  {{> docs/footer}}
 </body>
 </html>

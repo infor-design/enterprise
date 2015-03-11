@@ -73,8 +73,8 @@ app.configure(function() {
 
   //Doc Page
   var docOpts = {
-    title: 'SoHo XI',
-    subtitle: 'Docs',
+    title: 'Infor SoHo XI',
+    subtitle: '',
     layout: null,
     enableLiveReload: true
   };
