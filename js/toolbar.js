@@ -56,24 +56,33 @@
             prevLabel.length ? prevLabel.text() :
             prevSpan.length ? prevSpan.text() : id + ' Toolbar'; // TODO: Localize
 
-          this.element.attr('aria-label', labelText);
+          this.element.attr('aria-label', labelText.replace(/\s+/g,' ').trim());
         }
 
         this.buttonset = this.element.find('.buttonset');
+
         if (!this.buttonset.length) {
           this.buttonset = $('<div class="buttonset"></div>').appendTo(this.buttonset);
         }
 
         this.moreButton = this.element.find('.btn-actions');
+
         if (!this.moreButton.length) {
           var container = $('<div class="more"></div>').appendTo(this.element);
           this.moreButton = $('<button class="btn-actions" data-init="true" tabindex="-1"></button>').appendTo(container);
           $('<svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg>').appendTo(this.moreButton);
           $('<span class="audible">Actions</span>').appendTo(this.moreButton); // TODO: Localize
         }
+
+        // Use an pre-defined menu on the action button as a "base" that always gets displayed in the popup menu.
+        if (this.moreButton.next('ul').length) {
+          this.baseMenu = this.moreButton.next('ul');
+        }
+
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
         }
+
         if (!this.moreButton.data('button')) {
           this.moreButton.button();
         }
@@ -210,6 +219,11 @@
 
       // NOTE: Tabs has similar code... not very DRY...
       setOverflow: function() {
+        if (this.baseMenu) {
+          this.element.addClass('has-more-button');
+          return;
+        }
+
         if (this.buttonset[0].scrollHeight > this.element.outerHeight() + 1) {
           this.element.addClass('has-more-button');
         } else {
@@ -257,7 +271,7 @@
         var self = this,
           menuHtml = $('#toolbar-overflow-menu'),
           buttons = this.buttons.filter(':not(:hidden)'),
-          menuOpts;
+          menuOpts = $();
 
         function selectListOption() {
           var listOpts = menuHtml.find('li:not(.separator):not(.overflow-break)'),
@@ -338,6 +352,11 @@
             menuOpts = menuOpts.add(button);
           }
         });
+
+        // If a base menu exists, append the contents to the end of the new menu
+        if (this.baseMenu) {
+          menuHtml.append(this.baseMenu.children('li').clone());
+        }
 
         self.moreButton
           .popupmenu({
@@ -449,6 +468,10 @@
 
       // Teardown - Remove added markup and events
       destroy: function() {
+        if (this.baseMenu) {
+          this.baseMenu.remove();
+          this.baseMenu = undefined;
+        }
         $.removeData(this.element[0], pluginName);
       }
     };

@@ -14,16 +14,13 @@ $header-bg-color: #454545;
   transition: background-color 1s ease 0s;
   width: 100%;
 
-  .column {
-    margin-top: 25px;
-
-    > * {
-      display: inline-block;
-    }
+  > * {
+    vertical-align: middle;
   }
 
   h1 {
     color: $inverse-color;
+    display: inline;
     font-family: $font-regular;
     @include font-size(20);
     line-height: inherit;
@@ -38,8 +35,9 @@ $header-bg-color: #454545;
     top: -2px;
   }
 
-  .btn-actions {
-    background-color: transparent;
+  .btn-actions,
+  .btn-icon {
+    background-color: $header-bg-color;
     border: 1px solid transparent;
 
     .icon {
@@ -61,8 +59,18 @@ $header-bg-color: #454545;
       box-shadow: none;
     }
 
+    &.hamburger-menu {
+      .icon {
+        height: 26px;
+      }
+    }
+
     .ripple {
       background-color: #ffffff;
+    }
+
+    span {
+      visibility: hidden;
     }
   }
 
@@ -73,6 +81,7 @@ $header-bg-color: #454545;
   }
 
   .header-search {
+    /*
     background-color: transparent;
     border: 1px solid transparent;
     height: 34px;
@@ -86,6 +95,8 @@ $header-bg-color: #454545;
       top: 6px;
     }
 
+
+
     &:hover .icon {
       fill: $inverse-color;
     }
@@ -98,7 +109,20 @@ $header-bg-color: #454545;
     .ripple {
       background-color: #ffffff;
     }
+    */
 
+  }
+
+  .toolbar {
+    margin: 13px 0;
+
+    .title {
+      padding: 0;
+    }
+
+    .buttonset {
+      //height: $header-height;
+    }
   }
 
   // Sticky Header
@@ -124,6 +148,7 @@ $header-bg-color: #454545;
 }
 
 // Hamburger Icon
+/*
 .hamburger-menu {
   background-color: #ffffff;
   color: transparent;
@@ -150,6 +175,7 @@ $header-bg-color: #454545;
     top: 12px;
   }
 }
+*/
 
 // Print Style Sheet
 @media print {
