@@ -57,24 +57,24 @@
         this.element.hide();
         this.orgLabel = $('label[for="' + this.element.attr('id') + '"]');
 
+        this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.element);
+
         this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
         this.input = $('<input type="text" readonly class="dropdown" tabindex="0"/>').attr({'role': 'combobox'})
                         .attr({'aria-autocomplete': 'list', 'aria-owns': 'dropdown-list'})
                         .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
                         .attr({'aria-describedby' : id + '-instructions', 'id': id});
 
-        this.icon = this.element.parent().find('.icon');
-        if (this.icon.length === 0) {
-          this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
-        }
+        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
-          this.element.after(this.input, this.trigger);
+          this.wrapper.append(this.input, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
-          this.element.after(this.label, this.input, this.trigger, this.icon);
+          this.element.after(this.label);
+          this.wrapper.append(this.input, this.trigger, this.icon);
         } else {
-          this.element.after(this.input, this.trigger, this.icon);
+          this.wrapper.append(this.input, this.trigger, this.icon);
         }
 
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
@@ -1030,6 +1030,7 @@
         this.input.prev('label').remove();
         this.input.off().remove();
         this.icon.remove();
+        this.wrapper.remove();
         this.element.removeAttr('style');
         this.orgLabel.removeAttr('style');
       },

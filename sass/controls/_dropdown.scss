@@ -7,12 +7,18 @@ select.dropdown {
   position: absolute;
 }
 
+.dropdown-wrapper {
+  display: inline-block;
+  margin-bottom: 20px;
+  position: relative;
+}
+
 input.dropdown {
   background-color: transparent;
   border-color: $input-border-color;
   color: $dropdown-color;
   cursor: pointer;
-  display: inline-block;
+  display: block;
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   text-overflow: ellipsis;
@@ -35,14 +41,16 @@ input.dropdown {
   // Icon States
   + .icon {
     background-color: $body-bg-color;
+    border-radius: 1px;
     cursor: pointer;
     display: inline-block;
     fill: $input-border-color;
     height: 31px;
     margin-left: -33px;
     pointer-events: none;
-    position: relative;
-    top: 3px;
+    position: absolute;
+    right: 1px;
+    top: 1px;
     width: 32px;
   }
 

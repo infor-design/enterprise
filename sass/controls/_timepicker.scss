@@ -41,9 +41,17 @@
     }
   }
 
+  .dropdown-wrapper {
+    margin-bottom: 0;
+  }
+
   .dropdown {
     display: inline-block;
     width: 72px;
+
+    + .icon {
+      background-color: $popupmenu-bg-color;
+    }
   }
 
   .label {
