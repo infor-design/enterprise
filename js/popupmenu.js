@@ -48,6 +48,10 @@
           this.settings.menu = this.settings.menuId;
           this.settings.menuId = undefined;
         }
+
+        // keep track of how many popupmenus there are with an ID.
+        // Used for managing events that are bound to $(document)
+        this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
       },
 
       //Add markip including Aria
@@ -68,7 +72,7 @@
 
             id = this.menu.attr('id');
             if (!id || id === '') {
-              this.menu.attr('id', 'popupmenu-'+ (parseInt($('.popupmenu-wrapper').length, 10)+1).toString());
+              this.menu.attr('id', 'popupmenu-' + this.id);
               id = this.menu.attr('id');
             }
             break;
@@ -217,7 +221,7 @@
           $(this).focus();
         });
 
-        $(document).on('keydown.popupmenu', function (e) {
+        $(document).on('keydown.popupmenu.' + this.id, function (e) {
           var key = e.which,
             focus;
 
@@ -341,7 +345,7 @@
 
         //Close on Document Click ect..
         setTimeout(function () {
-          $(document).on('click.popupmenu', function (e) {
+          $(document).on('click.popupmenu.' + this.id, function (e) {
             if (e.button === 2) {
               return;
             }
@@ -351,7 +355,7 @@
             }
           });
 
-          $(window).on(' scroll.popupmenu resize.popupmenu', function () {
+          $(window).on('scroll.popupmenu resize.popupmenu', function () {
             self.close();
           });
           self.element.trigger('open', [self.menu]);
@@ -380,7 +384,7 @@
         var tracker = 0, startY, menuToClose, timeout;
 
         self.menu.find('.popupmenu').removeClass('is-open');
-        self.menu.on('mouseenter', '.submenu', function (e) {
+        self.menu.on('mouseenter.popupmenu', '.submenu', function (e) {
           var menuitem = $(this);
           startY = e.pageX;
 
@@ -389,11 +393,11 @@
             self.showSubmenu(menuitem);
           }, 300);
 
-          $(document).on('mousemove.popupmenu', function (e) {
+          $(document).on('mousemove.popupmenu.' + this.id, function (e) {
             tracker = e.pageX;
           });
-        }).on('mouseleave', '.submenu', function () {
-          $(document).off('mousemove.popupmenu');
+        }).on('mouseleave.popupmenu', '.submenu', function () {
+          $(document).off('mousemove.popupmenu.' + this.id);
 
           menuToClose = $(this).find('ul');
 
@@ -514,6 +518,10 @@
           $(this).off('close.popupmenu');
           e.stopPropagation();
         }); //do not propapagate events to parent
+
+        // Close all events
+        $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
+        this.menu.off('click.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
         this.element.trigger('close');
         this.element.focus().attr('aria-expanded', 'false');

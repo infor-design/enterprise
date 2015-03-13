@@ -32,7 +32,7 @@
 }
 
 .calendar {
-  background-color: $inverse-color;
+  background-color: $popupmenu-bg-color;
   display: inline-block;
   min-height: 300px;
   min-width: 300px;
@@ -139,22 +139,26 @@
   text-align: center;
 
   button {
+    background-color: $popupmenu-bg-color;
     border: 1px solid transparent;
     border-radius: 2px;
     color: transparent;
     cursor: pointer;
     display: block;
-    height: 30px;
     left: 20px;
     line-height: 1;
     margin-top: 11px;
     position: absolute;
-    top: 13px;
+    top: 11px;
     transition: border-color .3s ease;
-    width: 30px;
+
+    &.prev {
+      margin: 11px 5px 0 0;
+    }
 
     &.next {
       left: auto;
+      margin: 11px 0 0 5px;
       right: 20px;
     }
 

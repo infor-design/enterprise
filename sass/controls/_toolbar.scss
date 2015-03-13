@@ -11,7 +11,7 @@
 
   &.has-more-button {
     .buttonset {
-      padding-right: 64px;
+      padding-right: 44px;
     }
 
     .more {
@@ -23,32 +23,43 @@
     color: $font-color;
     display: inline-block;
     @include font-size(14);
-    margin: 0 1em 0 0;
-    padding: ($toolbar-height/2 - 8) 0;
+    left: 0;
+    margin: 5px 1em 5px 0;
+    padding: 10px 0;
+    position: absolute;
+    top: 0;
 
     > * {
       vertical-align: middle;
     }
 
     + .buttonset {
-      display: inline-block;
-      float: right;
-      margin-top: 3px;
-
-      &:after {
-        clear: both;
-      }
+      text-align: right;
     }
   }
 
   .buttonset {
-    height: $toolbar-height;
+    height: $toolbar-height - 10;
     margin: 0 5px 0 0;
     padding: 0;
 
     > * {
       vertical-align: middle;
     }
+
+    > .btn-group {
+      display: inline-block;
+
+      > * {
+        margin-right: 0;
+      }
+    }
+
+    button {
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+
   }
 
   button {
@@ -63,6 +74,11 @@
     &.btn-actions > .icon {
       height: (($button-font-size * 2) + 2) + px;
       top: 0;
+    }
+
+    &.btn-menu > .icon:last-of-type {
+      height: (($button-font-size * 2) + 8) + px;
+      top: -1px;
     }
   }
 

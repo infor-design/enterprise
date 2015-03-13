@@ -19,7 +19,7 @@ button {
 .btn-icon,
 .btn-split,
 .btn-menu {
-  background-color: $primary-btn-bg-color;
+  background-color: transparent;
   border: 1px solid transparent;
   border-radius: 2px;
   color: $btn-color;
@@ -231,7 +231,7 @@ button {
   }
 }
 
-@include respond-to(tablet) {
+@media (min-width: $breakpoint-phone-to-tablet) {
   // Show text with icon buttons by using this class.
   // Text will still become invisible on small breakpoint (but still visible to screen readers).
   // See respond-to(tabletdown) below.
