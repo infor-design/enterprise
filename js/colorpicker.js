@@ -140,11 +140,11 @@
         // Show Menu
         self.swatch.popupmenu({trigger: 'immediate', menuId: 'colorpicker-menu'})
         .on('open.colorpicker', function () {
-          self.element.addClass('is-open');
+          self.element.parent().addClass('is-open');
         })
         .on('close.colorpicker', function () {
           $('#colorpicker-menu').parent('.popupmenu-wrapper').remove();
-          self.element.removeClass('is-open');
+          self.element.parent().removeClass('is-open');
           self.element.focus();
         })
         .on('selected.colorpicker', function (e, item) {

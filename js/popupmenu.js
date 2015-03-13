@@ -335,7 +335,7 @@
 
         self.position(e);
 
-        if (this.element.closest('.header')) {
+        if (this.element.closest('.header').length > 0) {
           this.menu.parent().css('z-index', '9001');
         }
 

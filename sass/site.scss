@@ -22,8 +22,8 @@ label,
 p,
 small,
 span {
-  font-family: Helvetica Neue, Helvetica, Arial !important;
-  font-weight: 200;
+  //font-family: Helvetica Neue, Helvetica, Arial !important;
+  font-weight: 100;
   @include font-size(20);
 }
 
@@ -40,6 +40,21 @@ span {
   background-color: #fc6242;
   height: 500px;
   width: 100%;
+
+  .row {
+     max-width: 968px;
+  }
+
+  .site-hero-carousel-content,
+   .site-hero-carousel-img {
+    float: left;
+    margin-left: 20px;
+    width: calc(50% - 20px);
+
+    img {
+      padding-top: 6%;
+    }
+  }
 
   h2 {
     color: $inverse-color;
@@ -65,9 +80,6 @@ span {
     }
   }
 
-  img {
-    padding-top: 6%;
-  }
 }
 
 .site-intro,
@@ -199,11 +211,7 @@ span {
 
     li {
       display: inline-block;
-      margin: 40px 10px;
-    }
-
-    li:first-child {
-      margin-left: 0;
+      margin: 37px 10px 0 !important;
     }
   }
 
@@ -219,7 +227,7 @@ span {
     @include font-size(15);
     font-weight: 100;
     line-height: 15px;
-    margin: 30px 20px;
+    margin: 32px 20px 0;
     text-align: left;
   }
 }
@@ -227,26 +235,32 @@ span {
 // Media Queries
 //==================================================//
 
-@include respond-to(tabletdown) {
+@include respond-to(phablet) {
   .site-hero-carousel {
     img {
-      padding-top: 8%;
+      padding-top: 125%;
     }
+  }
+
+  .site-intro > div,
+  .site-howto-nav > div,
+  .site-comments > div {
+    max-width: 80%;
   }
 }
 
 @include respond-to(tablet) {
   .site-hero-carousel {
     img {
-      padding-top: 13%;
+      height: 150%;
+      padding-top: 25%;
     }
+  }
+
+  .site-intro > div,
+  .site-howto-nav > div,
+  .site-comments > div {
+    max-width: $breakpoint-phone-to-tablet;
   }
 }
 
-@include respond-to(phone) {
-  .site-hero-carousel {
-    img {
-      display: none;
-    }
-  }
-}

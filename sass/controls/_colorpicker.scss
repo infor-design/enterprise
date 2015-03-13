@@ -16,6 +16,10 @@
     background-color: $input-disabled-bg-color;
     border-color: $input-disabled-border-color;
   }
+
+  &.is-open {
+    border-color: $input-focus-border-color;
+  }
 }
 
 .field > .colorpicker-container {
@@ -67,12 +71,8 @@
   }
 
   //Open/Focus State is in the input
-  &.is-open {
-    border-color: $input-focus-border-color;
-
-    + .swatch {
-      border-left-color: transparent;
-    }
+  &.is-open + .swatch {
+    border-left-color: transparent;
   }
 
   &.popupmenu {
@@ -82,7 +82,7 @@
     width: auto;
 
     li a {
-      padding: 0 6px 2px 0;
+      padding: 0 5px 2px 1px;
     }
 
     li a:focus {
@@ -95,6 +95,11 @@
       display: block;
       height: 33px;
       width: 56px;
+    }
+
+    &.is-open {
+      border: 1px solid $input-focus-border-color !important;
+      padding: 7px 0 0 3px;
     }
   }
 }

@@ -236,3 +236,41 @@
     stroke-width: 4.5;
   }
 }
+
+// Progess Bar Charts
+.chart-progressbar {
+  background-color: #d2d2d2;
+  height: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+
+  span {
+    color: $inverse-color;
+    @include font-size(12);
+    font-weight: 400;
+    padding: 0 5px;
+  }
+
+  .completed {
+    height: 20px;
+    margin-top: -20px;
+    position: relative;
+    transition: width .5s ease 0s;
+    width: 50%;
+  }
+
+  .target {
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 2px, 0, rgba(255, 255, 255, .5) 7px);
+    height: 20px;
+    position: relative;
+    transition: width .5s ease 0s;
+    width: 60%;
+
+    span {
+      color: $inverse-color;
+      left: 100%;
+      margin-left: -32px;
+      position: relative;
+    }
+  }
+}

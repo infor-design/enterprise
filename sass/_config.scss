@@ -212,7 +212,7 @@ $label-color: #666666;  //Was #6666666
 $disabled-color: #cccccc;
 
 //The hyperlink Style
-$hyperlink-color: #1a1a1a;
+$hyperlink-color: $primary-color;
 $hyperlink-hover-color: #1a1a1a;
 $hyperlink-active-color: #004096;
 $hyperlink-visited-color: #005689;
@@ -227,6 +227,7 @@ $rating-hover-color: $primary-color;
 $breakpoint-phone: 320px;
 $breakpoint-phablet: 401px;
 $breakpoint-phone-to-tablet: 767px;
+$breakpoint-wide-tablet: 968px;
 $breakpoint-tablet-to-desktop: 1280px;
 $breakpoint-desktop-to-extralarge: 1600px;
 
