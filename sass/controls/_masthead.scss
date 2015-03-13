@@ -23,6 +23,7 @@
     + .svg-icons + .scrollable-container {
       height: calc(100% - 104px);
       margin-top: 104px !important;
+      -webkit-overflow-scrolling: touch;
     }
 
   }

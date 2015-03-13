@@ -107,7 +107,7 @@
 
   button {
     background-color: $editor-toolbar-bg-color;
-    @include font-size(14);
+
 
     > .icon {
       height: (($button-font-size * 2) + 2) + px;
@@ -116,6 +116,10 @@
 
     &.btn-actions > .icon {
       top: 1px;
+    }
+
+    span {
+      @include font-size(16);
     }
   }
 
