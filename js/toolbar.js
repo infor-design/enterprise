@@ -43,8 +43,7 @@
       },
 
       setup: function () {
-        var self = this;
-        this.element.attr('role', 'toolbar');
+       this.element.attr('role', 'toolbar');
 
         // Set up an aria-label as per AOL guidelines
         // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
