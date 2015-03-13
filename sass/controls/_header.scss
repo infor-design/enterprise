@@ -2,7 +2,7 @@
 //================================================== //
 
 // Variables for this file
-$header-height: 70px;
+$header-height: 80px;
 $header-bg-color: #454545;
 
 // Top Header
@@ -14,16 +14,13 @@ $header-bg-color: #454545;
   transition: background-color 1s ease 0s;
   width: 100%;
 
-  .column {
-    margin-top: 25px;
-
-    > * {
-      display: inline-block;
-    }
+  > * {
+    vertical-align: middle;
   }
 
   h1 {
     color: $inverse-color;
+    display: inline;
     font-family: $font-regular;
     @include font-size(20);
     line-height: inherit;
@@ -38,7 +35,8 @@ $header-bg-color: #454545;
     top: -2px;
   }
 
-  .btn-actions {
+  .btn-actions,
+  .btn-icon {
     background-color: transparent;
     border: 1px solid transparent;
 
@@ -61,8 +59,18 @@ $header-bg-color: #454545;
       box-shadow: none;
     }
 
+    &.hamburger-menu {
+      .icon {
+        height: 26px;
+      }
+    }
+
     .ripple {
       background-color: #ffffff;
+    }
+
+    span {
+      visibility: hidden;
     }
   }
 
@@ -72,33 +80,16 @@ $header-bg-color: #454545;
     top: -7px;
   }
 
-  .header-search {
-    background-color: transparent;
-    border: 1px solid transparent;
-    height: 34px;
-    margin-right: 5px;
-    vertical-align: top;
-    width: 34px;
+  .toolbar {
+    margin: ($header-height / 4) 0;
 
-    .icon {
-      fill: $inverse-color;
-      left: 5px;
-      top: 6px;
+    .title {
+      padding: 0;
     }
 
-    &:hover .icon {
-      fill: $inverse-color;
+    .buttonset {
+      height: ($header-height / 2) + 2;
     }
-
-    &:focus {
-      border: 1px solid $inverse-color;
-      box-shadow: none;
-    }
-
-    .ripple {
-      background-color: #ffffff;
-    }
-
   }
 
   // Sticky Header
@@ -120,34 +111,6 @@ $header-bg-color: #454545;
       padding-top: 20px;
     }
 
-  }
-}
-
-// Hamburger Icon
-.hamburger-menu {
-  background-color: #ffffff;
-  color: transparent;
-  cursor: pointer;
-  display: inline-block;
-  height: 2px;
-  position: relative;
-  top: 2px;
-  vertical-align: top;
-  width: 25px;
-
-  &:after,
-  &:before {
-    background-color: $inverse-color;
-    content: '';
-    height: 2px;
-    left: 0;
-    position: absolute;
-    top: 6px;
-    width: 100%;
-  }
-
-  &:before {
-    top: 12px;
   }
 }
 

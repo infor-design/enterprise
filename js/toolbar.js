@@ -43,6 +43,7 @@
       },
 
       setup: function () {
+        var self = this;
         this.element.attr('role', 'toolbar');
 
         // Set up an aria-label as per AOL guidelines
@@ -56,24 +57,28 @@
             prevLabel.length ? prevLabel.text() :
             prevSpan.length ? prevSpan.text() : id + ' Toolbar'; // TODO: Localize
 
-          this.element.attr('aria-label', labelText);
+          this.element.attr('aria-label', labelText.replace(/\s+/g,' ').trim());
         }
 
         this.buttonset = this.element.find('.buttonset');
+
         if (!this.buttonset.length) {
           this.buttonset = $('<div class="buttonset"></div>').appendTo(this.buttonset);
         }
 
         this.moreButton = this.element.find('.btn-actions');
+
         if (!this.moreButton.length) {
           var container = $('<div class="more"></div>').appendTo(this.element);
           this.moreButton = $('<button class="btn-actions" data-init="true" tabindex="-1"></button>').appendTo(container);
           $('<svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg>').appendTo(this.moreButton);
           $('<span class="audible">Actions</span>').appendTo(this.moreButton); // TODO: Localize
         }
+
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
         }
+
         if (!this.moreButton.data('button')) {
           this.moreButton.button();
         }
@@ -130,6 +135,12 @@
         this.buttons.attr('tabindex', '-1').removeClass('is-selected');
         this.moreButton.attr('tabindex', '-1').removeClass('is-selected');
 
+        if (activeButton.is('a')) {
+          this.activeButton = activeButton.parents('.popupmenu').last().prev('button').attr('tabindex', '0');
+          this.activeButton.focus();
+          return;
+        }
+
         // if the button that needs to be selected is overflowed, don't make it tabbable, but make
         // the more button tabbable instead.
         if (activeButton[0] !== this.moreButton[0] && this.isButtonOverflowed(activeButton)) {
@@ -138,7 +149,6 @@
         } else {
           this.activeButton = activeButton.addClass('is-selected').attr('tabindex', '0');
         }
-
         this.activeButton.focus();
       },
 
@@ -257,15 +267,24 @@
         var self = this,
           menuHtml = $('#toolbar-overflow-menu'),
           buttons = this.buttons.filter(':not(:hidden)'),
-          menuOpts;
+          menuOpts = $();
 
-        function selectListOption() {
+        function selectListOption(e) {
           var listOpts = menuHtml.find('li:not(.separator):not(.overflow-break)'),
             selected = menuHtml.find('.is-selected'),
             button = menuOpts.eq(listOpts.index(selected));
 
+          if (selected.parents('.submenu').length > 0) {
+            button = selected.children('a');
+          }
+
           self.setActiveButton(button);
-          button.trigger('click');
+
+          // Only click the button if this isn't being filtered from a 'select' event
+          // (select event is triggered in PopupMenu by a click)
+          if (!e || e.type !== 'selected') {
+            button.trigger('click');
+          }
         }
 
         if (self.popupmenu) {
@@ -289,10 +308,10 @@
           if (!pastOverflowBreak && button.prevAll('.overflow-break').length) {
             pastOverflowBreak = true;
           }
-
           if (!pastOverflowBreak && !self.isButtonOverflowed(button)) {
             return;
           }
+
           if (menuHtml.find('li').length > 0 && button.prev().is('.separator')) {
             button.prev().clone().appendTo(menuHtml);
           }
@@ -306,7 +325,10 @@
             popupLi.addClass('is-disabled');
           }
 
-          var icon = popupLi.find('.icon');
+          // Pass along any icons except for the dropdown (which is added as part of the submenu design)
+          var icon = popupLi.find('.icon').filter(function(){
+            return $(this).find('use').attr('xlink:href') !== '#icon-dropdown';
+          });
           if (icon.length) {
             menuHtml.addClass('has-icons');
             icon.detach().prependTo(popupLi);
@@ -316,6 +338,11 @@
           if (linkspan.length) {
             menuHtml.addClass('has-icons');
             linkspan.detach().prependTo(popupLi);
+          }
+
+          if (button.is('.btn-menu')) {
+            var submenu = button.data('popupmenu').menu.clone().wrap($('<div class="wrapper"></div>'));
+            popupLi.addClass('submenu').append(submenu);
           }
 
           // Order of operations for populating the List Item text:
@@ -330,7 +357,7 @@
             tooltipText ? tooltipText : button.text();
 
           popupLi.find('.audible').remove();
-          popupLi.find('a').text(popupLiText);
+          popupLi.children('a').text(popupLiText);
 
           if (!menuOpts) {
             menuOpts = button;
@@ -361,9 +388,9 @@
           $(document).off(this.popupmenuKeyboardEvent);
           this.popupmenuKeyboardEvent = undefined;
           self.moreButton.removeClass('popup-is-open');
-        }).on('selected.popupmenu', function() {
+        }).on('selected.popupmenu', function(e) {
           // internal popupmenu event that fires when an option is clicked
-          selectListOption();
+          selectListOption(e);
         });
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
@@ -377,7 +404,7 @@
             index = menuOpts.index(focused);
           }
         }
-        menuHtml.find('a').eq(index).focus();
+        menuHtml.children('li').eq(index).children('a').focus();
 
         // Overrides a similar method in the popupmenu code that controls escaping of this menu when
         // pressing certain keys.  We override this here so that the controls act in a manner as if all tabs
@@ -418,8 +445,10 @@
               case 13: // enter
               case 32: // space
                 e.preventDefault();
-                selectListOption();
-                self.popupmenu.close();
+                if ($(e.target).is(':not(.submenu)')) {
+                  selectListOption();
+                  self.popupmenu.close();
+                }
                 break;
               case 27: // escape
                 e.preventDefault();
@@ -427,17 +456,21 @@
                 self.setActiveButton(target);
                 break;
               case 37: // left
-                e.stopPropagation();
-                e.preventDefault();
-                $(document).trigger({type: 'keydown.popupmenu', which: 38});
+                if ($(e.target).parents('.wrapper').length === 0) { // is currently selected item inside a submenu that can be closed?
+                  e.stopPropagation();
+                  e.preventDefault();
+                  $(document).trigger({type: 'keydown.popupmenu', which: 38});
+                }
                 break;
               case 38: // up
                 prevMenuItem();
                 break;
               case 39: // right
-                e.stopPropagation();
-                e.preventDefault();
-                $(document).trigger({type: 'keydown.popupmenu', which: 40});
+                if ($(e.target).is(':not(.submenu)')) { // is currently selected menu item a parent?
+                  e.stopPropagation();
+                  e.preventDefault();
+                  $(document).trigger({type: 'keydown.popupmenu', which: 40});
+                }
                 break;
               case 40: // down
                 nextMenuItem();
