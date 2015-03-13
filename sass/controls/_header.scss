@@ -2,7 +2,7 @@
 //================================================== //
 
 // Variables for this file
-$header-height: 70px;
+$header-height: 80px;
 $header-bg-color: #454545;
 
 // Top Header
@@ -37,7 +37,7 @@ $header-bg-color: #454545;
 
   .btn-actions,
   .btn-icon {
-    background-color: $header-bg-color;
+    background-color: transparent;
     border: 1px solid transparent;
 
     .icon {
@@ -80,48 +80,15 @@ $header-bg-color: #454545;
     top: -7px;
   }
 
-  .header-search {
-    /*
-    background-color: transparent;
-    border: 1px solid transparent;
-    height: 34px;
-    margin-right: 5px;
-    vertical-align: top;
-    width: 34px;
-
-    .icon {
-      fill: $inverse-color;
-      left: 5px;
-      top: 6px;
-    }
-
-
-
-    &:hover .icon {
-      fill: $inverse-color;
-    }
-
-    &:focus {
-      border: 1px solid $inverse-color;
-      box-shadow: none;
-    }
-
-    .ripple {
-      background-color: #ffffff;
-    }
-    */
-
-  }
-
   .toolbar {
-    margin: 13px 0;
+    margin: ($header-height / 4) 0;
 
     .title {
       padding: 0;
     }
 
     .buttonset {
-      //height: $header-height;
+      height: ($header-height / 2) + 2;
     }
   }
 
@@ -146,36 +113,6 @@ $header-bg-color: #454545;
 
   }
 }
-
-// Hamburger Icon
-/*
-.hamburger-menu {
-  background-color: #ffffff;
-  color: transparent;
-  cursor: pointer;
-  display: inline-block;
-  height: 2px;
-  position: relative;
-  top: 2px;
-  vertical-align: top;
-  width: 25px;
-
-  &:after,
-  &:before {
-    background-color: $inverse-color;
-    content: '';
-    height: 2px;
-    left: 0;
-    position: absolute;
-    top: 6px;
-    width: 100%;
-  }
-
-  &:before {
-    top: 12px;
-  }
-}
-*/
 
 // Print Style Sheet
 @media print {

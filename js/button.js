@@ -32,6 +32,15 @@
 
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+        if (this.element.hasClass('btn-menu')) {
+          var ddIcon = this.element.children('.icon').filter(function() {
+            return $(this).find('use').attr('xlink:href','#icon-dropdown');
+          });
+          if (!ddIcon.length) {
+            this.element.append($('<svg class="icon" focusable="false" aria-hidden="true" viewBox="0 0 32 32"><use xlink:href="#icon-dropdown"></use></svg>'));
+          }
+        }
+
         this.element.on('touchstart.button mousedown.button', function (e) {
           if (!self.isTouch && e.which !== 1) {
             return false;

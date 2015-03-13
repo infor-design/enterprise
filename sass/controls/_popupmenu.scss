@@ -101,8 +101,8 @@
     }
 
     // Selected
-    &.is-selected a:before,
-    &.is-checked a:before {
+    &.is-checked > a:before,
+    &.is-checked.is-selected > a:before {
       border-color: $azure07;
       border-style: solid;
       border-width: 0 3px 3px 0;
