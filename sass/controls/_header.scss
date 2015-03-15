@@ -74,6 +74,12 @@ $header-bg-color: #454545;
     }
   }
 
+  .header-search {
+    > .icon {
+      height: ($button-font-size * 2) + px;
+    }
+  }
+
   .header-right {
     float: right;
     position: relative;
