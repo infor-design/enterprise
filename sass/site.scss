@@ -37,7 +37,7 @@ span {
 }
 
 .site-hero-carousel {
-  background-color: #fc6242;
+  background-color: #f86f11;
   height: 500px;
   width: 100%;
 
@@ -94,7 +94,7 @@ span {
   }
 
   h2 {
-    color: #595959;
+    color: #666666;
     @include font-size(40);
     font-weight: 300;
     line-height: 40px;
@@ -102,7 +102,7 @@ span {
   }
 
   p {
-    color: #595959;
+    color: #666666;
     @include font-size(20);
     font-weight: 300;
     line-height: 25px;
@@ -120,7 +120,7 @@ span {
   background-color: $inverse-color;
 
   .site-navbox {
-    background-color: #00c3b5;
+    background-color: #00c2b4;
     background-image: url('/images/site/lego-turq@2x.png');
     background-position: center 10%;
     background-repeat: no-repeat;
@@ -139,7 +139,7 @@ span {
     }
 
     &.visual-gallery {
-      background-color: #c77cff;
+      background-color: #c073e7;
       background-image: url('/images/site/lego-amethyst@2x.png');
 
       &:focus {
@@ -148,7 +148,7 @@ span {
     }
 
     &.controls {
-      background-color: #ff6545;
+      background-color: #f86f11;
       background-image: url('/images/site/lego-ruby@2x.png');
 
       &:focus {
@@ -193,12 +193,13 @@ span {
 .site-footer {
   background-color: #e3e3e3;
   border-top: 1px solid #ffffff;
+  clear: both;
   text-align: center;
 
   nav {
-    margin: 0 auto;
+    margin: 0 40px;
     max-width: 968px;
-    width: 100%;
+    width: calc(100% - 80px);
 
     .icon-logo {
       float: left;
@@ -223,7 +224,7 @@ span {
   }
 
   .legal {
-    color: #595959;
+    color: #666666;
     float: left;
     @include font-size(15);
     font-weight: 100;
@@ -233,12 +234,10 @@ span {
   }
 }
 
-// Media Queries
+// Media Queries - For Main Page
 //==================================================//
 
 @include respond-to(phone) {
-
-
   .site-intro > div,
   .site-howto-nav > div,
   .site-comments > div {
@@ -259,13 +258,10 @@ span {
     width: 120%;
   }
 
-  .site-footer {
-    padding: 0 30px;
-  }
-
   .site-footer nav ul {
     display: none;
   }
+
 }
 
 @include respond-to(tablet) {
@@ -288,7 +284,11 @@ span {
   .site-howto-nav .site-navbox h3 {
     @include font-size(22);
     height: 135px;
-    padding: 50% 10px 0;
+    padding: 55% 10px 0;
+  }
+
+  .site-howto-nav .site-navbox p {
+    padding-top: 10%;
   }
 
   .site-comments input,
@@ -300,6 +300,177 @@ span {
   .site-howto-nav > div,
   .site-comments > div {
     max-width: $breakpoint-phone-to-tablet;
+  }
+}
+
+// Vision Page
+//==================================================//
+.container {
+  margin: 0 auto;
+  max-width: 968px;
+}
+
+.site-vision-carousel {
+  background-color: #00c2b4;
+  height: 433px;
+  margin-top: 70px !important;
+
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+
+  h2 {
+    color: $inverse-color;
+    display: table-cell;
+    @include font-size(50);
+    font-weight: 200;
+    height: 433px;
+    line-height: 50px;
+    padding-left: 20%;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  .site-vision-carousel-content {
+    float: left;
+    width: 50%;
+  }
+
+  .site-vision-carousel-img {
+    float: right;
+    width: 50%;
+
+    img {
+      border: 1px dashed #ffffff;
+      height: 300px;
+      margin: 61px auto 0;
+    }
+  }
+}
+
+.breadcrumb {
+  margin: 20px;
+}
+
+.vision-section-title {
+  margin: 0 auto;
+  max-width: 968px;
+
+  h2 {
+    color: #666666;
+    @include font-size(40);
+    line-height: 45px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    text-align: center;
+  }
+}
+
+.vision-article {
+  display: table;
+  margin: 20px auto;
+  max-width: 968px;
+
+  &.alt-color {
+    .vision-article-title {
+      background-color: $azure04;
+    }
+
+    .vision-article-content {
+      background-color: $azure03;
+    }
+  }
+
+  .vision-article-title {
+    background-color: $turquoise06;
+    display: table-cell;
+    vertical-align: top;
+    width: 35%;
+
+    h3 {
+      color: $inverse-color;
+      @include font-size(46);
+      line-height: normal;
+      padding: 50px;
+      text-align: left;
+    }
+  }
+
+  .vision-article-content {
+    background-color: $turquoise05;
+    display: table-cell;
+    width: 65%;
+
+    .vision-article-section {
+      float: left;
+      height: 220px;
+      padding: 45px 30px 0;
+      text-align: left;
+      width: 50%;
+    }
+
+    h4 {
+      color: $inverse-color;
+      @include font-size(24);
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    p {
+      color: $inverse-color;
+      @include font-size(18);
+      line-height: normal;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+.vision {
+  background-color: $inverse-color;
+}
+
+.vision-latest-container {
+  background-color: #f5f5f5;
+  width: 100%;
+
+  h2 {
+    color: #666666;
+    margin: 80px auto 0;
+    max-width: 968px;
+    padding: 80px 0 60px;
+    @include font-size(40);
+  }
+
+  .vision-latest-articles {
+    margin: 0 auto;
+    max-width: 968px;
+  }
+
+  .vision-recent-article {
+    background-color: $turquoise05;
+
+    &.alt-color {
+      background-color: $amber06;
+    }
+  }
+}
+
+// Media Queries For Vision Page
+//==================================================//
+
+@include respond-to(tablet) {
+  .site-vision-carousel {
+    height: 355px;
+
+    h2 {
+      height: 355px;
+    }
+
+    img {
+      margin: 30px auto 0 !important;
+    }
   }
 }
 

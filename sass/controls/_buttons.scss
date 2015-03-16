@@ -40,6 +40,8 @@ button {
 
 // standard, primary, destructive
 .btn-primary {
+  background-color: $primary-btn-bg-color;
+
   &:hover {
     background-color: $primary-btn-hover-bg-color;
   }

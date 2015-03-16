@@ -308,6 +308,7 @@ or eventually the SoHo XI site pages
 | MUA (M3H5 Client) |   | Michael Quibin , Jack Rubillar |
 | Optiva |   | Andy Koenigsberg |
 | PMServerAdmin |   | Mike Campbell |
+| (Infor) PLM Discrete |   | Srinivasulu Vadakattu |
 | PCM | Knockout App | Tim Dunham |
 | Rhythm | Node Js app with Marionette | Thim Orskov |
 | Sales Portal |   | Matt Defina  |
