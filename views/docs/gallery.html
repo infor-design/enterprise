@@ -18,9 +18,36 @@
   <script src="/js/sohoxi.js"></script>
 
 </head>
-<body>
+<body class="gallery">
+
   {{> controls/svg}}
   {{> includes/header-sticky}}
+
+  <section class="site-masthead">
+    <div class="container">
+      <div class="content">
+        <h2>Visual Gallery</h2>
+      </div>
+
+      <div class="hero-img">
+        <img src="http://placehold.it/640x430/bb50ff/ffffff" alt="Image of Fruit"/>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <nav role="navigation" class="breadcrumb">
+      <ol aria-label="breadcrumb">
+        <li>
+          <a class="hyperlink" href="/docs">Home</a>
+          <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+            <use xlink:href="#icon-caret-right"></use>
+          </svg>
+        </li>
+        <li><a class="hyperlink current" href="/docs/vision">Visual Gallery</a></li>
+      </ol>
+    </nav>
+  </div>
 
   <section id="maincontent" class="site-content container gallery" role="main">
     <header class="gallery-header">
