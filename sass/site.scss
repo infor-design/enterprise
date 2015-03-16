@@ -53,6 +53,7 @@ span {
     width: calc(50% - 20px);
 
     img {
+      border: 1px dashed #ffffff;
       margin-top: 20%;
     }
   }
@@ -118,6 +119,11 @@ span {
 
 .site-howto-nav {
   background-color: $inverse-color;
+  padding-bottom: 70px;
+
+  > div {
+    max-width: 100%;
+  }
 
   .site-navbox {
     background-color: #00c2b4;
@@ -127,12 +133,9 @@ span {
     background-size: 102px 82px;
     cursor: pointer;
     display: block;
-    height: 0;
-    margin-bottom: 90px;
-    min-height: 300px;
-    padding-bottom: 100%;
+    height: 320px;
     text-decoration: none;
-    width: 100%;
+    width: 320px;
 
     &:focus {
       box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px #00c3b5;
@@ -197,9 +200,8 @@ span {
   text-align: center;
 
   nav {
-    margin: 0 40px;
+    margin: 0 auto;
     max-width: 968px;
-    width: calc(100% - 80px);
 
     .icon-logo {
       float: left;
@@ -258,10 +260,13 @@ span {
     width: 120%;
   }
 
-  .site-footer nav ul {
-    display: none;
-  }
+  .site-footer nav {
+    margin: 0 40px;
 
+    ul {
+      display: none;
+    }
+  }
 }
 
 @include respond-to(tablet) {
@@ -300,6 +305,11 @@ span {
   .site-howto-nav > div,
   .site-comments > div {
     max-width: $breakpoint-phone-to-tablet;
+  }
+
+  .site-footer nav {
+    margin: 0 40px;
+    max-width: 100%;
   }
 }
 
@@ -405,7 +415,7 @@ span {
 
     .vision-article-section {
       float: left;
-      height: 220px;
+      height: 250px;
       padding: 45px 30px 0;
       text-align: left;
       width: 50%;
@@ -457,6 +467,82 @@ span {
   }
 }
 
+.vision-vocabulary {
+  margin: 0 auto 90px;
+  max-width: 90%;
+  text-align: center;
+
+  h2 {
+    color: #666666;
+    margin: 80px auto 0;
+    max-width: 968px;
+    padding: 80px 0 40px;
+    @include font-size(40);
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 40px;
+    @include font-size(18);
+    padding: 0 40px;
+    text-align: center;
+  }
+
+  .vision-vocabulary-icon {
+    background-color: $turquoise05;
+
+    display: inline-block;
+    height: 320px;
+
+    margin: 10px 0 0 10px;
+    text-decoration: none;
+    width: 320px;
+
+    &:focus {
+      box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $turquoise05;
+    }
+
+    &:nth-child(even) {
+      background-color: $azure06;
+
+      &:focus {
+        box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $azure06;
+      }
+
+      .vision-icon {
+        background-color: $azure07;
+      }
+    }
+
+    h3 {
+      color: $inverse-color;
+      @include font-size(27);
+      margin-top: 60%;
+      text-align: center;
+    }
+
+    // Section Icons
+    .vision-icon {
+      background-color: $turquoise06;
+      height: 90px;
+      left: 50%;
+      margin-left: -45px;
+      margin-top: -45px;
+      position: relative;
+      top: 50%;
+      width: 90px;
+
+      .icon {
+        height: 50px;
+        margin-top: -25px;
+        position: relative;
+        top: 50%;
+        width: 50px;
+      }
+    }
+  }
+}
+
 // Media Queries For Vision Page
 //==================================================//
 
@@ -471,6 +557,10 @@ span {
     img {
       margin: 30px auto 0 !important;
     }
+  }
+
+  .vision-article {
+    max-width: 90%;
   }
 }
 

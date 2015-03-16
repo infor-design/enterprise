@@ -30,7 +30,7 @@ span {
   font-family: $font-regular;
   -webkit-font-smoothing: antialiased;
   font-weight: lighter;
-  @include rem(line-height, 1.5rem);
+  line-height: normal;
 }
 
 h1,
@@ -39,33 +39,28 @@ h3,
 h4 {
   color: $font-color-dark;
   @include rem(margin-bottom, 1rem);
-  @include rem(line-height, 3rem);
 }
 
 h1 {
   @include font-size(24);
-  @include rem(line-height, 3rem);
 }
 
 h2 {
   @include font-size(20);
-  @include rem(line-height, 2.5rem);
 }
 
 h3 {
   @include font-size(18);
-  @include rem(line-height, 2rem);
+
 }
 
 h4 {
   @include font-size(16);
-  @include rem(line-height, 1.5rem);
 }
 
 p,
 span {
   @include font-size(14);
-  @include rem(line-height, 2.2rem);
 }
 
 // Add Some Seperation in Kitchen Sink Page
