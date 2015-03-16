@@ -24,6 +24,9 @@ $header-bg-color: #454545;
     font-family: $font-regular;
     @include font-size(20);
     line-height: inherit;
+  }
+
+  .hamburger-menu + h {
     margin-left: 13px;
   }
 
@@ -90,6 +93,7 @@ $header-bg-color: #454545;
     margin: ($header-height / 4) 0;
 
     .title {
+      line-height: 30px;
       padding: 0;
     }
 

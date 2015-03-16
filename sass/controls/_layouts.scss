@@ -15,10 +15,9 @@
 
 // Box For Layout Demos
 .l-demo {
-  border: 1px solid #bdbdbd;
   height: inherit;
   margin-bottom: 20px;
-  min-height: 320px;
+  min-height: 640px;
   width: 100%;
 }
 
@@ -41,26 +40,28 @@ body.no-scroll {
 // Two Column Layout
 .twocolumn-layout {
   height: calc(100% - 110px);
-  margin: 20px auto 0;
-  max-width: $breakpoint-tablet-to-desktop;
+  margin: 80px auto 20px;
+  max-width: 1280px;
 
-  > * {
+  .main,
+  .gutter {
+    background-color: $inverse-color;
     display: inline-block;
     float: left;
     height: 100%;
-
-    &:nth-child(1) {
-      height: 100%;
-      margin: 0 20px;
-      width: 25%;
-    }
-
-    &:nth-child(2) {
-      height: auto;
-      width: calc(75% - 60px);
-    }
+    height: auto;
+    width: calc(75% - 60px);
   }
 
+  .gutter {
+    background-color: $body-bg-color;
+    height: auto;
+    width: calc(25% - 60px);
+  }
+
+  header {
+    margin: 25px;
+  }
 }
 
 // Responsive Images
@@ -74,16 +75,12 @@ body.no-scroll {
 }
 
 // Respond Off Canvas on left and right column
-@include respond-to(phone) {
+@include respond-to(phablet) {
   .twocolumn-layout {
-    margin: 20px;
 
-    > *:nth-child(1) {
-      display: none;
-    }
-
-    > *:nth-child(2) {
-      margin: 0;
+    .gutter,
+    .main {
+      display: block;
       width: 100%;
     }
   }
