@@ -340,7 +340,10 @@
           }
 
           if (button.is('.btn-menu')) {
-            var submenu = button.data('popupmenu').menu.clone().wrap($('<div class="wrapper"></div>'));
+            var submenu = button.data('popupmenu').menu.clone(),
+              id = submenu.attr('id');
+
+            submenu.removeAttr('id').attr('data-original-menu', id).wrap($('<div class="wrapper"></div>'));
             popupLi.addClass('submenu').append(submenu);
           }
 
