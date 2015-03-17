@@ -129,47 +129,37 @@ describe('Dropdown [selenium]', function(){
       .call(done);
   });
 
-  it('should be able to add and invoke a new dropdown', function(done) {
-    var id = 'destroyThis';
-
+  it('can be destroyed', function(done) {
     runner.client
-      // build the new markup containing the dropdown
-      .execute('$("<div>").attr("id","destroy-container").addClass("field").prependTo("#dropdowns-container");')
-      .execute('$("<label>").attr("for","' + id + '").addClass("label").text("Destroy This").appendTo("#destroy-container");')
-      .execute('$("<select>").attr("id","' + id + '").appendTo("#destroy-container");')
-      .execute('$("<option>").val("destroy1").text("Destroy 1").appendTo("#destroyThis");')
-      .execute('$("<option>").val("destroy2").text("Destroy 2").appendTo("#destroyThis");')
-      .execute('$("<option>").val("destroy3").text("Destroy 3").appendTo("#destroyThis");')
-      .execute('window.hnl.dd = $("#' + id + '");')
-      .execute('window.hnl.dd.dropdown();')
-
-      // should be able to click on the new dropdown,
-      // as well as both of its options.
-      .click('#' + id + '-shdo', globals.noError)
-      .click('#list-option0', globals.noError)
-      .click('#' + id + '-shdo', globals.noError)
-      .click('#list-option1', globals.noError)
-      .call(done);
-  });
-
-  it.skip('should be able to destroy itself and reset back to its original <select> tag', function(done) {
-    var id = 'destroyThis';
-
-    runner.client
-      // run the destroy method on the dropdown
-      .execute('window.hnl.dd.data("dropdown").destroy();')
-      .getCssProperty('#' + id, 'display', function(err, display) {
+      // Reset clicks by clicking on the Body tag
+      .click('body', globals.noError)
+      // Run the Destroy method
+      .execute('$("#states").data("dropdown").destroy();')
+      // Check if the pseudo-markup for the Dropdown Control exists.  It shouldn't.
+      .isExisting('#states-shdo', function(err, result) {
         globals.noError(err);
-        display.value.should.equal('inline-block');
-      })
-      // should error out
-      .click('#destroyThis-shdo', function(err) {
-        should.exist(err);
+        should.exist(result);
+        result.should.equal(false);
       })
       .call(done);
   });
 
-  it.skip('should work correctly with a <form> reset', function(done) {
+  it('can be invoked', function(done) {
+    runner.client
+      // Reset clicks by clicking on the Body tag
+      .click('body', globals.noError)
+      // Re-invoke the Dropdown Control on #states
+      .execute('$("#states").dropdown();')
+      // Check if the pseudo-markup for the Dropdown Control exists.  It shouldn't.
+      .isExisting('#states-shdo', function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(true);
+      })
+      .call(done);
+  });
+
+  it('should work correctly with a <form> reset', function(done) {
     runner.client
       // check that the "selected" item in the #form-dropdown dropdown is indeed selected.
       .isSelected('#option2', function(err, result) {

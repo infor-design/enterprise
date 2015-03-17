@@ -358,17 +358,26 @@
             $.each(self.element[0].options, function () {
               //Filter List
               var opt = $(this),
-                listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]');
+                listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
+                parts = opt.text().toLowerCase().split(' ')
+                containsTerm = false;
+
+              $.each(parts, function() {
+                if (this.indexOf(term) === 0) {
+                  containsTerm = true;
+                  return false;
+                }
+              });
 
               //Find List Item - Starts With
-              if (opt.text().toLowerCase().indexOf(term) === 0) {
+              if (containsTerm) {
                 if (!selected) {
                   self.highlightOption(opt);
                   selected = true;
                 }
 
                 //Highlight Term
-                var exp = new RegExp('(' + term + ')', 'gi'),
+                var exp = new RegExp('(' + term + ')', 'i'),
                 text = listOpt.text().replace(exp, '<i>$1</i>');
                 listOpt.show().html(text);
               }

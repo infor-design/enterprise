@@ -100,13 +100,22 @@
             baseData = {
               label: option
             },
-            dataset = isString ? baseData : $.extend(baseData, items[i]);
+            dataset = isString ? baseData : $.extend(baseData, items[i]),
+            parts = option.toLowerCase().split(' ');
+            containsTerm = false;
 
-          if (option.toLowerCase().indexOf(term) === 0) {
+          $.each(parts, function() {
+            if (this.indexOf(term) === 0) {
+              containsTerm = true;
+              return false;
+            }
+          });
+
+          if (containsTerm) {
             matchingOptions.push(option);
 
             // Build the dataset that will be submitted to the template
-            var regex = new RegExp('(' + term + ')', 'gi');
+            var regex = new RegExp('(' + term + ')', 'i');
 
             dataset.listItemId = 'ac-list-option' + i;
             dataset.label = option.replace(regex, '<i>$1</i>');
