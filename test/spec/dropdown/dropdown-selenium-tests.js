@@ -129,6 +129,40 @@ describe('Dropdown [selenium]', function(){
       .call(done);
   });
 
+  it('can be disabled', function(done) {
+    runner.client
+      // Reset clicks by clicking on the Body tag
+      .click('body', globals.noError)
+      // Execute the disable method
+      .execute('$("#states").disable();')
+      // Click on the psuedo-element
+      .click('#states-shdo', globals.noError)
+      // Check for the existence of Dropdown Menu Markup.  It should not exist.
+      .isExisting('#dropdown-list', function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(false);
+      })
+      .call(done);
+  });
+
+  it('can be enabled', function(done) {
+    runner.client
+      // Reset clicks by clicking on the Body tag
+      .click('body', globals.noError)
+      // Execute the disable method
+      .execute('$("#states").enable();')
+      // Click on the psuedo-element
+      .click('#states-shdo', globals.noError)
+      // Check for the existence of Dropdown Menu Markup.  It should not exist.
+      .isExisting('#dropdown-list', function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(true);
+      })
+      .call(done);
+  });
+
   it('can be destroyed', function(done) {
     runner.client
       // Reset clicks by clicking on the Body tag

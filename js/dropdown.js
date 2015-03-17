@@ -1047,6 +1047,7 @@
       disable: function() {
         this.element.prop('disabled', true);
         this.input.prop('disabled', true);
+        this.closeList();
       },
 
       enable: function() {
