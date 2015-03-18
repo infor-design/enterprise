@@ -359,7 +359,7 @@
               //Filter List
               var opt = $(this),
                 listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
-                parts = opt.text().toLowerCase().split(' ')
+                parts = opt.text().toLowerCase().split(' '),
                 containsTerm = false;
 
               $.each(parts, function() {
