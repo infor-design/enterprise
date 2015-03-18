@@ -70,10 +70,48 @@
         </form>
 
       </div>
-      <div class="one-half column">
-
-      </div>
+      <div class="one-half column"></div>
     </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <hr>
+
+    <span class="label">Nested Busy Indicators</span>
+    <span class="label">The "card" Busy Indicator is nested inside the "Form" busy indicator.  They should both still operate independently of one another.</span>
+    <form id="nested-busy-form" class="busy" action="#" method="POST" data-completion-time="2000" data-close-time="3000">
+      <div class="field">
+        <label for="nested-busy-field-name">Name</label>
+        <input id="nested-busy-field-name" name="nested-busy-field-name" />
+      </div>
+      <div class="field">
+        <label for="nested-busy-field-address">Address</label>
+        <input id="nested-busy-field-address" name="nested-busy-field-address" />
+      </div>
+      <div class="field">
+        <label for="nested-busy-field-cats">Number of Cats</label>
+        <input id="nested-busy-field-cats" name="nested-busy-field-cats" />
+      </div>
+      <div class="field">
+        <button type="reset" class="btn-secondary">Clear</button>
+        <button type="submit" class="btn-primary">Submit</button>
+      </div>
+
+      <div class="row">
+        <div class="one-half column">
+          <button class="btn" id="nested-busy-start-trigger" type="button">Fire "start" Event</button><br />
+          <button class="btn" id="nested-busy-complete-trigger" type="button">Fire "complete" Event</button><br />
+          <button class="btn" id="nested-busy-close-trigger" type="button">Fire "close" Event</button>
+        </div>
+        <div class="one-half column">
+          <div id="nested-busy-standalone" class="busy card"></div>
+        </div>
+      </div>
+
+    </form>
 
     <script type="text/javascript">
       $(document).ready(function() {
@@ -107,6 +145,26 @@
           var val = parseInt($(this).val(), 10);
           $('#busy-time-length').text('(Waits ' + val + 'ms)');
           $('#busy-delayed-form').attr('data-delay', val).trigger('updated.busyindicator');
+        });
+
+        $('#nested-busy-form button[type="submit"]').click(function(e) {
+          e.preventDefault();
+          $('#nested-busy-form').trigger('start.busyindicator');
+        });
+
+        $('#nested-busy-start-trigger').click(function(e) {
+          e.preventDefault();
+          $('#nested-busy-standalone').trigger('start.busyindicator');
+        });
+
+        $('#nested-busy-complete-trigger').click(function(e) {
+          e.preventDefault();
+          $('#nested-busy-standalone').trigger('complete.busyindicator');
+        });
+
+        $('#nested-busy-close-trigger').click(function(e) {
+          e.preventDefault();
+          $('#nested-busy-standalone').trigger('close.busyindicator');
         });
 
       });
