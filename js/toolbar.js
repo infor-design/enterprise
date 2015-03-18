@@ -59,25 +59,26 @@
           this.element.attr('aria-label', labelText.replace(/\s+/g,' ').trim());
         }
 
-        this.buttonset = this.element.find('.buttonset');
+        // keep track of how many popupmenus there are with an ID.
+        // Used for managing events that are bound to $(document)
+        this.id = (parseInt($('.toolbar, .editor-toolbar').length, 10)+1);
 
+        this.buttonset = this.element.find('.buttonset');
         if (!this.buttonset.length) {
           this.buttonset = $('<div class="buttonset"></div>').appendTo(this.buttonset);
         }
+        this.buttonset.find('.overflow-break').css('display', '');
 
         this.moreButton = this.element.find('.btn-actions');
-
         if (!this.moreButton.length) {
           var container = $('<div class="more"></div>').appendTo(this.element);
           this.moreButton = $('<button class="btn-actions" data-init="true" tabindex="-1"></button>').appendTo(container);
           $('<svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg>').appendTo(this.moreButton);
           $('<span class="audible">Actions</span>').appendTo(this.moreButton); // TODO: Localize
         }
-
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
         }
-
         if (!this.moreButton.data('button')) {
           this.moreButton.button();
         }
@@ -101,33 +102,26 @@
         var buttons = this.buttons.filter(':visible:not(:disabled)'),
           current = buttons.index(this.activeButton),
           next = current + direction,
-          last;
+          target;
 
         if (next >= 0 && next < buttons.length) {
-          if (this.isButtonOverflowed(buttons.eq(next))) {
-            this.setActiveButton(this.moreButton);
-            this.buildPopupMenu(buttons.eq(next));
-          } else {
-            this.setActiveButton(buttons.eq(next));
-          }
-          return false;
+          target = buttons.eq(next);
         }
 
         if (next >= buttons.length) {
-          this.setActiveButton(buttons.first());
-          return false;
+          target = buttons.first();
         }
 
         if (next === -1) {
-          last = buttons.last();
-          if (this.isButtonOverflowed(last)) {
-            this.setActiveButton(this.moreButton);
-            this.buildPopupMenu(last);
-          } else {
-            this.setActiveButton(last);
-          }
-          return false;
+          target = buttons.last();
         }
+
+        if (this.isButtonOverflowed(target)) {
+          target = this.moreButton;
+        }
+
+        this.setActiveButton(target);
+        return false;
       },
 
       setActiveButton: function(activeButton) {
@@ -181,24 +175,17 @@
         }).on('keydown.toolbar', function(e) {
           switch(e.which) {
             case 37: // left
-            case 38: // up
               e.preventDefault();
               self.setActiveButton(self.getLastVisibleButton());
               break;
-            case 13: // enter
-            case 32: // spacebar
-              if ($(this).hasClass('popup-is-open')) {
-                return false;
-              } //jshint ignore:line
             case 39: // right
-            case 40: // down
               e.preventDefault();
-              self.buildPopupMenu();
+              self.setActiveButton(self.getFirstVisibleButton());
               break;
           }
         });
 
-        $(window).on('resize.toolbar', function() {
+        $(window).on('resize.toolbar.' + this.id, function() {
           self.setOverflow();
         });
       },
@@ -277,8 +264,6 @@
             button = selected.children('a');
           }
 
-          self.setActiveButton(button);
-
           // Only click the button if this isn't being filtered from a 'select' event
           // (select event is triggered in PopupMenu by a click)
           if (!e || e.type !== 'selected') {
@@ -340,7 +325,10 @@
           }
 
           if (button.is('.btn-menu')) {
-            var submenu = button.data('popupmenu').menu.clone().wrap($('<div class="wrapper"></div>'));
+            var submenu = button.data('popupmenu').menu.clone(),
+              id = submenu.attr('id');
+
+            submenu.removeAttr('id').attr('data-original-menu', id).wrap($('<div class="wrapper"></div>'));
             popupLi.addClass('submenu').append(submenu);
           }
 
@@ -409,78 +397,47 @@
         // pressing certain keys.  We override this here so that the controls act in a manner as if all tabs
         // are still visible (for accessiblity reasons), meaning you can use left and right to navigate the
         // popup menu options as if they were tabs.
-        setTimeout(function() {
-          $(document).bindFirst('keydown.popupmenu', function(e) {
-            this.popupmenuKeyboardEvent = e;
-            var key = e.which;
+        $(document).on('keydown.toolbar.' + this.id, function(e) {
+          this.popupmenuKeyboardEvent = e;
+          var key = e.which;
 
-            function prevMenuItem() {
-              // If the first item in the popup menu is already focused, close the menu and focus
-              // on the last visible item in the tabs list.
-              var firstInList = menuHtml.find('li:not(.separator):not(.overflow-break):not(.is-disabled):visible').first(),
-                selected = menuHtml.find('.is-selected');
-              if (firstInList[0] === selected[0]) {
-                e.preventDefault();
-                $(document).off(e);
-                self.popupmenu.close();
-                self.setActiveButton(self.getLastVisibleButton());
+          switch(key) {
+            case 13: // enter
+            case 32: // space
+              e.preventDefault();
+              if ($(e.target).parent().is(':not(.submenu)')) {
+                selectListOption();
               }
-            }
+              break;
+          }
+        });
+      },
 
-            function nextMenuItem() {
-              // If the last item in the popup menu is already focused, close the menu and focus
-              // on the first visible item in the tabs list.
-              var lastInList = menuHtml.find('li:not(.separator):not(.overflow-break):not(.is-disabled):visible').last(),
-                selected = menuHtml.find('.is-selected');
-              if (lastInList[0] === selected[0]) {
-                e.preventDefault();
-                $(document).off(e);
-                self.popupmenu.close();
-                self.setActiveButton(self.getFirstVisibleButton());
-              }
-            }
+      enable: function() {
+        this.element.prop('disabled', false);
+        this.buttons.prop('disabled', false);
+        this.moreButton.prop('disabled', false);
+      },
 
-            switch(key) {
-              case 13: // enter
-              case 32: // space
-                e.preventDefault();
-                if ($(e.target).is(':not(.submenu)')) {
-                  selectListOption();
-                  self.popupmenu.close();
-                }
-                break;
-              case 27: // escape
-                e.preventDefault();
-                var target = self.getLastVisibleButton();
-                self.setActiveButton(target);
-                break;
-              case 37: // left
-                if ($(e.target).parents('.wrapper').length === 0) { // is currently selected item inside a submenu that can be closed?
-                  e.stopPropagation();
-                  e.preventDefault();
-                  $(document).trigger({type: 'keydown.popupmenu', which: 38});
-                }
-                break;
-              case 38: // up
-                prevMenuItem();
-                break;
-              case 39: // right
-                if ($(e.target).is(':not(.submenu)')) { // is currently selected menu item a parent?
-                  e.stopPropagation();
-                  e.preventDefault();
-                  $(document).trigger({type: 'keydown.popupmenu', which: 40});
-                }
-                break;
-              case 40: // down
-                nextMenuItem();
-                break;
-            }
-          });
-         }, 0);
+      disable: function() {
+        this.element.prop('disabled', true);
+        this.buttons.prop('disabled', true);
+        this.moreButton.prop('disabled', true);
+        this.popupmenu.close();
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
+        if (this.popupmenu) {
+          this.popupmenu.destroy();
+        }
+        this.moreButton.unwrap();
+        this.moreButton.off().remove();
+        this.buttonset.find('button').removeAttr('tabindex');
+        this.buttonset.off();
+        this.buttonset.find('.overflow-break').css('display', 'none');
+        $(document).off(this.popupmenuKeyboardEvent);
+        $(window).off('resize.toolbar.' + this.id);
         $.removeData(this.element[0], pluginName);
       }
     };

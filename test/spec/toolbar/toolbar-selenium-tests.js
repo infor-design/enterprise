@@ -99,4 +99,65 @@ describe('Toolbar [selenium]', function(){
       .call(done);
   });
 
+  it('can be disabled', function(done) {
+    runner.client
+      // Reset clicks by clicking on body
+      .click('body', globals.noError)
+      .click('body', globals.noError)
+      // Call the Disable Method
+      .execute('$("#second").disable();', globals.noError)
+      // Try clicking the 'more' button to open the spillover menu.
+      .click('#second .btn-actions', globals.noError)
+      // Check for the Toolbar Popup menu markup.  It shouldn't exist.
+      .isExisting('#toolbar-overflow-menu', function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(false);
+      })
+      .call(done);
+  });
+
+  it('can be enabled', function(done) {
+    runner.client
+      // Reset clicks by clicking on body
+      .click('body', globals.noError)
+      // Call the Enable Method
+      .execute('$("#second").enable();', globals.noError)
+      // Try clicking the 'more' button to open the spillover menu.
+      .click('#second .btn-actions', globals.noError)
+      // Check for the Toolbar Popup menu markup.  It shouldn't exist.
+      .isExisting('#toolbar-overflow-menu', function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(true);
+      })
+      .call(done);
+  });
+
+  it('can be destroyed', function(done) {
+    runner.client
+      // call the Destroy method
+      .execute('$("#first").data("toolbar").destroy();', globals.noError)
+      // See if the More button is no longer there.  Its Action Button control and
+      // its markup should disappear when destroyed.
+      .isExisting('#first .btn-actions', function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(false);
+      })
+      .call(done);
+  });
+
+  it('can be invoked', function(done) {
+    runner.client
+      .execute('$("#first").toolbar();', globals.noError)
+      // See if the More button exists.  It should have been added back.
+      .isExisting('#first .btn-actions', function(err, result) {
+        globals.noError(err);
+        should.exist(result);
+        result.should.equal(true);
+      })
+      .call(done);
+  });
+
 });
