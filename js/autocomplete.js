@@ -104,12 +104,11 @@
             parts = option.toLowerCase().split(' '),
             containsTerm = false;
 
-          $.each(parts, function() {
-            if (this.indexOf(term) === 0) {
+          for (var a = 0; a < parts.length; a++) {
+            if (parts[a].indexOf(term) === 0) {
               containsTerm = true;
-              return false;
             }
-          });
+          }
 
           if (containsTerm) {
             matchingOptions.push(option);
