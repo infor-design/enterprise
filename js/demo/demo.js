@@ -99,7 +99,15 @@ $(function($) {
   $('#show-toast-message').on('click', function() {
 
     cnt ++;
-    $('body').toast({title: 'Application Offline' + cnt, message: 'This is a Toast message'});
+    //$('body').toast({title: 'Submitted' + cnt, message: 'Thank you for submitting Requisition # <span>1000356</span>'});
+    $('body').toast({
+        title: 'Submitted!',
+        message: 'Thank you for submitting Requisition # <span>1000356</span>',
+        position: 'top right',  //top left, bottom left, bottom right (center??)
+        audibleOnly: false,
+        progressBar: true,
+        timeout: 120000
+    });
 
   });
 

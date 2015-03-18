@@ -36,55 +36,39 @@ span {
   padding-top: 0 !important;
 }
 
-.site-hero-carousel {
-  background-color: #f86f11;
-  height: 500px;
-  width: 100%;
+.site-home {
+  .site-hero {
+    background-color: #f86f11;
 
-  .row {
-    max-width: 968px;
-  }
+    h2 {
+      color: $inverse-color;
+      display: block;
+      @include font-size(50);
+      line-height: 5rem;
+      margin: 90px auto 0 0 !important;
+      max-width: 450px !important;
+      padding: 0 0 60px !important;
+    }
 
-  .site-hero-carousel-content,
-   .site-hero-carousel-img {
-    float: left;
-    margin-left: 20px;
-    margin-top: 20px;
-    width: calc(50% - 20px);
+    a {
+      border-bottom: 1px solid $inverse-color;
+      color: $inverse-color;
+      font-weight: 300;
+      @include font-size(20);
+      font-weight: 300;
+      padding-bottom: 1px;
+      position: relative;
+      text-decoration: none;
+      top: -25px;
 
-    img {
-      border: 1px dashed #ffffff;
-      margin-top: 20%;
+      &:after {
+        content: ' ›';
+      }
     }
   }
-
-  h2 {
-    color: $inverse-color;
-    display: block;
-    @include font-size(50);
-    line-height: 5rem;
-    padding-top: 24%;
-  }
-
-  a {
-    border-bottom: 1px solid $inverse-color;
-    color: $inverse-color;
-    font-weight: 300;
-    @include font-size(20);
-    font-weight: 300;
-    padding-bottom: 1px;
-    position: relative;
-    text-decoration: none;
-    top: 30px;
-
-    &:after {
-      content: ' ›';
-    }
-  }
-
 }
 
-.site-intro,
+.site-text-section,
 .site-howto-nav,
 .site-comments {
   background-color: $body-bg-color;
@@ -107,7 +91,7 @@ span {
     @include font-size(20);
     font-weight: 300;
     line-height: 25px;
-    margin: 35px 0 55px;
+    margin: 25px 0 30px;
     padding: 0 10%;
     text-align: center;
   }
@@ -240,7 +224,7 @@ span {
 //==================================================//
 
 @include respond-to(phone) {
-  .site-intro > div,
+  .site-text-section > div,
   .site-howto-nav > div,
   .site-comments > div {
     max-width: 80%;
@@ -249,7 +233,7 @@ span {
 
 @include respond-to(phablet) {
 
-  .site-intro > div,
+  .site-text-section > div,
   .site-howto-nav > div,
   .site-comments > div {
     max-width: 80%;
@@ -261,30 +245,16 @@ span {
   }
 
   .site-footer nav {
-    margin: 0 40px;
+    margin: 0 30px;
 
     ul {
       display: none;
     }
   }
+
 }
 
 @include respond-to(tablet) {
-
-  .site-hero-carousel .site-hero-carousel-img {
-    img {
-      margin-top: 25%;
-    }
-  }
-
-  .site-hero-carousel .site-hero-carousel-content {
-    padding-left: 35px;
-
-    h2 {
-      position: relative;
-      width: 130%;
-    }
-  }
 
   .site-howto-nav .site-navbox h3 {
     @include font-size(22);
@@ -301,7 +271,7 @@ span {
     width: 70%;
   }
 
-  .site-intro > div,
+  .site-text-section > div,
   .site-howto-nav > div,
   .site-comments > div {
     max-width: $breakpoint-phone-to-tablet;
@@ -361,7 +331,19 @@ span {
 }
 
 .breadcrumb {
-  margin: 20px;
+  margin: 20px 0;
+}
+
+.vision {
+  background-color: $inverse-color;
+
+  .site-hero {
+    background-color: #00c2b4;
+  }
+
+  h2 {
+    color: $inverse-color;
+  }
 }
 
 .vision-section-title {
@@ -437,9 +419,6 @@ span {
   }
 }
 
-.vision {
-  background-color: $inverse-color;
-}
 
 .vision-latest-container {
   background-color: #f5f5f5;
@@ -467,7 +446,7 @@ span {
   }
 }
 
-.vision-vocabulary {
+.site-categories {
   margin: 0 auto 90px;
   max-width: 90%;
   text-align: center;
@@ -488,7 +467,7 @@ span {
     text-align: center;
   }
 
-  .vision-vocabulary-icon {
+  .site-category-icon {
     background-color: $turquoise05;
 
     display: inline-block;
@@ -509,7 +488,7 @@ span {
         box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $azure06;
       }
 
-      .vision-icon {
+      .site-icon {
         background-color: $azure07;
       }
     }
@@ -517,20 +496,25 @@ span {
     h3 {
       color: $inverse-color;
       @include font-size(27);
-      margin-top: 60%;
+      margin-top: 40%;
+      padding: 0 5px;
       text-align: center;
     }
 
     // Section Icons
-    .vision-icon {
+    .site-icon {
       background-color: $turquoise06;
       height: 90px;
       left: 50%;
       margin-left: -45px;
-      margin-top: -45px;
+      margin-top: -62px;
       position: relative;
       top: 50%;
       width: 90px;
+
+      + h3 {
+        margin-top: 60%;
+      }
 
       .icon {
         height: 50px;
@@ -543,7 +527,7 @@ span {
   }
 }
 
-.site-masthead {
+.site-hero {
   height: 410px;
   margin-top: 70px !important;
 
@@ -564,6 +548,11 @@ span {
         padding: 80px 0 60px;
         @include font-size(50);
       }
+
+      span {
+        color: $inverse-color;
+        @include font-size(24);
+      }
     }
 
     > .hero-img {
@@ -583,7 +572,7 @@ span {
 .gallery {
   background-color: $inverse-color;
 
-  .site-masthead {
+  .site-hero {
     background-color: #bb50ff;
 
     h2 {
@@ -593,7 +582,7 @@ span {
 
 }
 
-// Media Queries For Vision Page
+// Media Queries For Vision Page and Shared
 //==================================================//
 
 @include respond-to(tabletdown) {
@@ -613,8 +602,14 @@ span {
     max-width: 90%;
   }
 
-  .site-masthead {
-      height: 300px;
+  .site-home {
+    .site-hero h2 {
+      margin: 54px auto -15px 0px !important;
+    }
+  }
+
+  .site-hero {
+    height: 300px;
 
     > .container {
 
@@ -625,6 +620,7 @@ span {
       }
 
       .content {
+        margin-left: 30px;
         position: absolute;
 
         h2 {
@@ -647,11 +643,19 @@ span {
     }
 
   }
+
+  .breadcrumb {
+    margin: 20px;
+  }
+
+  .site-footer nav {
+    margin: 0 30px;
+  }
 }
 
 @include respond-to(phone) {
 
-  .site-masthead {
+  .site-hero {
     height: 250px;
 
     > .container {
@@ -665,15 +669,236 @@ span {
       > .hero-img {
 
         img {
+          display: none;
           margin: 30px auto 0;
           max-height: 200px;
         }
-
       }
-
     }
-
   }
 
+  .site-home {
+    .site-hero h2 {
+      margin: 34px auto -15px 30px !important;
+    }
+    .site-hero a {
+      margin-left: 30px !important;
+    }
+  }
+
+}
+
+// Guide/Controls Pages
+//==================================================//
+.guide {
+  background-color: $inverse-color;
+
+  .site-text-section {
+    background-color: $inverse-color;
+    padding: 20px 0;
+  }
+
+  .site-hero {
+    background-color: $ruby04;
+
+    h2 {
+      color: $inverse-color;
+    }
+  }
+
+  .site-alt-bgrnd {
+    background-color: $body-bg-color;
+    padding-bottom: 40px;
+  }
+
+  .site-category-icon {
+    background-color: $ruby04;
+    vertical-align: top;
+
+    &:focus {
+      box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $ruby04;
+    }
+
+    .site-icon {
+      background-color: $ruby06;
+    }
+  }
+
+  .site-category-icon:nth-child(even) {
+    background-color: $ruby05;
+
+    &:focus {
+      box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $ruby05;
+    }
+
+    .site-icon {
+      background-color: $ruby06;
+    }
+  }
+}
+
+
+// Guide/Controls Category Pages
+//==================================================//
+.guide-category {
+  .site-hero h2 {
+    @include font-size(40);
+    margin: 27px auto 0 20px !important;
+  }
+
+  .site-categories {
+    h2 {
+      padding: 0 0 40px;
+      text-align: left;
+    }
+  }
+
+  .site-category-icon {
+    height: 220px;
+    width: 220px;
+  }
+}
+
+.guide-doc-section {
+  display: table-cell;
+  padding-top: 25px;
+  width: 70%;
+
+  h2 {
+    @include font-size(40);
+  }
+
+  small {
+    color: #999999;
+    display: block;
+    padding-bottom: 30px;
+    @include font-size(14);
+    text-transform: uppercase;
+  }
+
+  p {
+    color: #666666;
+    @include font-size(16);
+    line-height: 24px;
+    padding-bottom: 20px;
+  }
+
+  ol,
+  ul {
+    color: #666666;
+    @include font-size(16);
+    font-weight: lighter;
+    line-height: 24px;
+    list-style: inside none disc;
+    margin: 0 0 20px 30px;
+
+    li {
+      margin-bottom: 15px;
+    }
+  }
+
+}
+
+.guide-doc-sidebar {
+  display: table-cell;
+  width: 30%;
+
+  h3 {
+    @include font-size(20);
+  }
+
+  .tags {
+    margin: 15px 0 50px;
+
+    .tag {
+      margin: 6px 4px 0 0;
+    }
+  }
+
+  .gallery-item {
+    border-bottom: 1px solid #d6d6d6;
+    display: block;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+
+    img {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+      width: 35%;
+    }
+
+    span {
+      display: inline-block;
+      margin-top: 14px;
+      text-overflow: ellipsis;
+      width: 60%;
+    }
+  }
+}
+
+.site-nextprev {
+  margin-bottom: 35px;
+  padding-top: 25px;
+  position: relative;
+  top: 40px;
+
+  .site-next,
+  .site-prev {
+    background-color: $graphite05;
+    color: $inverse-color;
+    display: inline-block;
+    @include font-size(20);
+    font-weight: lighter;
+    height: 130px;
+    margin-bottom: 40px;
+    margin-left: 10px;
+    max-height: 130px;
+    padding: 55px 0;
+    text-align: center;
+    text-decoration: none;
+    width: 130px;
+  }
+
+  .site-next {
+    background-color: $ruby05;
+  }
+}
+
+// Media Queries for Guide/Controls Category Pages
+//==================================================//
+@include respond-to(tablet) {
+
+}
+
+@include respond-to(tabletdown) {
+  .site-hero > .container > .content h2 {
+    padding: 75px 0 60px;
+  }
+
+  .guide-doc-section {
+    display: block;
+    margin: 0 20px;
+    padding-top: 25px;
+    width: 90%;
+  }
+
+  .guide-doc-sidebar {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+
+  .gallery-examples {
+    margin: 0 auto;
+    width: 80%;
+  }
+}
+
+@include respond-to(phablet) {
+  .site-hero > .container > .content h2 {
+    padding: 55px 0 60px;
+  }
 }
 

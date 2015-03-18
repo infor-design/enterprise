@@ -40,10 +40,13 @@
     color: #1a1a1a;
     display: block;
     font-weight: bold;
+    margin-bottom: 8px;
   }
 
   .toast-message {
     display: block;
+    margin-bottom: 5px;
+    padding-right: 5px;
   }
 
   &.audible {

@@ -172,7 +172,15 @@ If you'd like to submit a pull request you'll need to do the following:
 2. **Clone the Repository on your machine.**  Get a local clone of your newly created remote repository. In Stash, click the *Repositories* dropdown on the top of the window, and find the link with Your Name along side the word *Controls*.  On the page that follows, click the *Clone* link in the left sidebar.  Using the URL provided to [Clone the Respository with Git](http://git-scm.com/docs/git-clone).
 3. **Make your changes with the local copy of the code.**
 4. **Commit your changes locally.**  Use `git commit -am "[COMMIT MESSAGE]"` and type any related JIRA Ticket numbers into the message to have our build system automatically link your commits to those issues later (For Example "HFC-2105 - Created the project scaffolding needed for adding the SoHo Xi Action Button").  Repeat Steps 3 and 4 as many times as necessary to refine your code.  Please keep in mind our [coding standards](#coding-standards) as you perform these steps.
-5. **Pull/Rebase to the latest version of the controls before you submit.**  If enough time passes between your original clone and the completion of your changes, the main repository may have changed and some files you've edited may be out of sync.  To re-sync your remote branch and clone, use the following commands after committing your changes:
+
+In your commit message from 4 we use a simple standard like: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
+
+More Examples:
+Changed modal to implement the new design - HFC-XXXX
+Changed header markup to implement arrow keys treating it as a toolbar - HFC-XXXX
+Added api to the list view to add, 'remove, add' functions - HFC-XXXX
+Fixed issue in the xyz control as per HFC-XXXX
+6. **Pull/Rebase to the latest version of the controls before you submit.**  If enough time passes between your original clone and the completion of your changes, the main repository may have changed and some files you've edited may be out of sync.  To re-sync your remote branch and clone, use the following commands after committing your changes:
   * `git pull`
   * `git rebase`
 You may need to merge some files.  Follow your Git client's directions on properly merging the files, and recommit the changes.

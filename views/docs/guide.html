@@ -18,20 +18,100 @@
   <script src="/js/sohoxi.js"></script>
 
 </head>
-<body>
-  {{> controls/svg}}
-  {{> includes/header-sticky}}
+<body class="guide">
 
-  <section id="maincontent" class="site-content container gallery" role="main">
-    <header class="gallery-header">
-      <h2>Guide Page</h2>
-    </header>
+   {{> includes/header-hamburger}}
 
+  <section class="site-hero">
+    <div class="container">
+      <div class="content">
+        <h2>Controls & Code Base</h2>
+      </div>
+
+      <div class="hero-img">
+        <img src="http://placehold.it/640x430/ff4249/ffffff" alt="Image of Fruit"/>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <nav role="navigation" class="breadcrumb">
+      <ol aria-label="breadcrumb">
+        <li>
+          <a class="hyperlink" href="/docs">Home</a>
+          <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+            <use xlink:href="#icon-caret-right"></use>
+          </svg>
+        </li>
+
+        <li><a class="hyperlink current" href="/docs/guide">Controls & Code Base</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <section role="main" class="site-text-section" id="maincontent">
+    <div class="row">
+      <h2>The Soho Xi controls library</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. </p>
+      <p>
+      Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. Nunc sodales posuere urna eu lacinia. Ut vehicula blandit velit at laoreet. In vitae aliquam mauris, at placerat enim. Nam quis velit a ante iaculis</p>
+    </div>
   </section>
 
 
-  {{> includes/docs-footer}}
+  <section class="site-alt-bgrnd">
+    <div class="site-categories">
+      <h2>Controls By Category</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. </p>
 
+      <div class="row">
+          <a href="/docs/guide-category" class="site-category-icon layout">
+            <div class="site-icon">
+              <svg class="icon" focusable="false" aria-hidden="true">
+               <use xlink:href="#icon-vision-layout"></use>
+              </svg>
+            </div>
+            <h3>Navigation</h3>
+          </a>
+          <a href="/docs/guide-category" class="site-category-icon">
+            <div class="site-icon">
+              <svg class="icon" focusable="false" aria-hidden="true">
+               <use xlink:href="#icon-vision-layout"></use>
+              </svg>
+            </div>
+            <h3>Organizing Content</h3>
+          </a>
+          <a href="/docs/guide-category" class="site-category-icon">
+            <div class="site-icon">
+              <svg class="icon" focusable="false" aria-hidden="true">
+               <use xlink:href="#icon-vision-layout"></use>
+              </svg>
+            </div>
+            <h3>User Input</h3>
+          </a>
+          <a href="/docs/guide-category" class="site-category-icon">
+            <div class="site-icon">
+              <svg class="icon" focusable="false" aria-hidden="true">
+               <use xlink:href="#icon-vision-layout"></use>
+              </svg>
+            </div>
+            <h3>Notifications</h3>
+          </a>
+          <a href="/docs/guide-category" class="site-category-icon">
+            <div class="site-icon">
+              <svg class="icon" focusable="false" aria-hidden="true">
+               <use xlink:href="#icon-vision-layout"></use>
+              </svg>
+            </div>
+            <h3>Charting</h3>
+          </a>
+      </div>
+    </div>
+  </section>
+
+  {{> controls/svg}}
+  {{> docs/svg}}
+  {{> docs/footer}}
 
 </body>
 </html>
