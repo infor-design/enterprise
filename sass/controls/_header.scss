@@ -38,8 +38,11 @@ $header-bg-color: #454545;
     top: -2px;
   }
 
+  .btn-tertiary,
+  .btn-destructive,
   .btn-actions,
-  .btn-icon {
+  .btn-icon,
+  .btn-menu {
     background-color: transparent;
     border: 1px solid transparent;
 
@@ -72,6 +75,13 @@ $header-bg-color: #454545;
       background-color: #ffffff;
     }
 
+    span {
+      color: #ffffff;
+    }
+  }
+
+  .btn-actions,
+  .btn-icon {
     span {
       visibility: hidden;
     }

@@ -32,9 +32,21 @@
 
       initPageChanger: function () {
         this.element.on('selected', function (e, link) {
+          var ul = link.parent().parent(),
+            origMenu = ul.attr('data-original-menu');
 
-          link.parent().parent().find('.is-checked').removeClass('is-checked');
+          ul.find('.is-checked').removeClass('is-checked');
           link.parent().addClass('is-checked');
+
+          if (origMenu) {
+            origMenu = $('#' + origMenu);
+            var opt = origMenu.children('li').filter(function() {
+              return $(this).children('a').text() === link.text();
+            });
+
+            origMenu.children('li').removeClass('is-checked');
+            opt.addClass('is-checked');
+          }
 
           // Change Theme
           if (link.attr('data-theme')) {
