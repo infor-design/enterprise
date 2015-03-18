@@ -24,9 +24,27 @@
 
       //Iterate all objects we are initializing
       returnObj = self.each(function() {
-
         var elem = $(this);
         elem = elem.find(':not(.no-init)');
+
+        //Class-based detection for IE
+        if (!!navigator.userAgent.match(/Trident/)) {
+          $('html').addClass('ie');
+        }
+        if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
+          navigator.userAgent.indexOf('MSIE 8.0') > -1 ||
+          document.documentMode === 8) {
+          $('html').addClass('ie8');
+        }
+        if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
+          $('html').addClass('ie9');
+        }
+        if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
+          $('html').addClass('ie10');
+        }
+        if (!!navigator.userAgent.match(/Trident\/7\./)) {
+          $('html').addClass('ie11');
+        }
 
         //Tabs
         elem.find('.tab-container').tabs();
@@ -141,24 +159,6 @@
 
         elem.find('.fileupload').fileupload();
 
-        //Class-based detection for IE
-        if (!!navigator.userAgent.match(/Trident/)) {
-          $('html').addClass('ie');
-        }
-        if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
-          navigator.userAgent.indexOf('MSIE 8.0') > -1 ||
-          document.documentMode === 8) {
-          $('html').addClass('ie8');
-        }
-        if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
-          $('html').addClass('ie9');
-        }
-        if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
-          $('html').addClass('ie10');
-        }
-        if (!!navigator.userAgent.match(/Trident\/7\./)) {
-          $('html').addClass('ie11');
-        }
       });
 
       self.trigger('initialized');

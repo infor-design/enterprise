@@ -279,11 +279,11 @@
   &.has-counts {
 
     .animated-bar {
-      top: 62px;
+      top: 65px;
     }
 
     .tab-list {
-      height: 65px;
+      height: 68px;
     }
 
     .tab-more {
@@ -303,6 +303,7 @@
 }
 
 // IE-specific padding for tab-list
+//
 .ie {
   .tab-list {
     > li {
@@ -315,9 +316,15 @@
   }
 
   .tab-container.has-counts {
+    .animated-bar {
+      top: 71px;
+    }
+
     .tab-list {
+      height: 74px !important;
+
       > li {
-        padding: 6px 6px 7px;
+        padding: 7px 6px 8px;
       }
     }
 

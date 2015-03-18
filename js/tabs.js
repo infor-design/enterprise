@@ -254,13 +254,7 @@
           this.moreButton.addClass('is-focused is-selected');
           this.focusBar(this.moreButton);
         } else {
-          li.addClass('is-focused');
-          /*
-          if (li.not('.has-popupmenu').length > 0) {
-            this.activate(li.find('a').attr('href'));
-          }
-          */
-          li.addClass('is-selected');
+          li.addClass('is-focused').addClass('is-selected');
           this.focusBar(li);
         }
       },
