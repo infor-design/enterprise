@@ -101,7 +101,7 @@
               label: option
             },
             dataset = isString ? baseData : $.extend(baseData, items[i]),
-            parts = option.toLowerCase().split(' ');
+            parts = option.toLowerCase().split(' '),
             containsTerm = false;
 
           $.each(parts, function() {
