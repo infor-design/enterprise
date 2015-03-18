@@ -72,13 +72,16 @@
 
       setupEvents: function() {
         var self = this;
-        self.element.on('start.busyindicator', function() {
+        self.element.on('start.busyindicator', function(e) {
+          e.stopPropagation();
           self.activate();
         }).on('started.busyindicator', function() {
           // Completed/Close events are only active once the indicator is "started"
-          self.element.on('complete.busyindicator', function() {
+          self.element.on('complete.busyindicator', function(e) {
+            e.stopPropagation();
             self.complete();
-          }).on('close.busyindicator', function() {
+          }).on('close.busyindicator', function(e) {
+            e.stopPropagation();
             self.close();
           });
         }).on('updated.busyindicator', function() {
