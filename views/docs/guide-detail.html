@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>{{title}}</title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="/stylesheets/site.css" type="text/css">
+  <link rel="stylesheet" id="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+
+  <!-- jQuery and Plugin Code-->
+  <script src="/js/jquery-1.11.1.min.js"></script>
+  <script src="/js/sohoxi.js"></script>
+
+</head>
+<body class="guide guide-detail">
+
+  {{> includes/header-hamburger}}
+
+  <section class="site-hero">
+    <div class="container">
+      <div class="content">
+        <h2><span>Controls & Code Base</span><br> Flyout Application Menu</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-breadcrumb" >
+    <div class="row">
+      <div class="full column">
+        <nav class="breadcrumb" role="navigation">
+          <ol aria-label="breadcrumb">
+            <li>
+              <a class="hyperlink" href="/docs">Home</a>
+              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </li>
+            <li>
+              <a class="hyperlink current" href="/docs/guide">Controls & Code Base</a>
+              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </li>
+            <li>
+              <a class="hyperlink current" href="/docs/guide-category">Navigation</a>
+              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </li>
+            <li>
+              <a class="hyperlink current" href="/docs/guide-category">Flyout Application Menu</a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section role="main" class="guide-example" id="maincontent">
+    <div class="row">
+      <div class="full column">
+        <small>Updated January 20th, 2015 by <a href="#" class="hyperlink">Author</a></small>
+        <h2>Flyout Application Menu</h2>
+        <div class="example">
+          <div class="field">
+            <label for="states" class="label">States</label>
+            <select id="states" name="states" class="dropdown">
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO" disabled>Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="DC">District Of Columbia</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
+              <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-copy alt-bgrnd">
+    <div class="row">
+      <div class="two-thirds column">
+        <h2>Description</h2>
+        <p>Description/use case for this component.</p>
+
+        <h2>Usage Guidelines</h2>
+        <p>Usage & best practices (expands on info in subcategory landing page).</p>
+        <ul>
+          <li>Users should be able to customize the menu.</li>
+          <li>Try to restrict the hierarchy to 3-4 levels.</li>
+        </ul>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. </p>
+
+        <h2>Dynamically generated specs</h2>
+        <p>dynamically generated specs 3 Dynamically generated visual specs (padding, etc.)</p>
+
+        <table class="listview-table">
+          <tr>
+            <td>Thing</td>
+            <td>3px</td>
+           </tr>
+          <tr>
+            <td>Thing</td>
+            <td>50px</td>
+           </tr>
+        </table>
+
+        <h2>Code Details</h2>
+        <p>Technical details of this component</p>
+        <p>Actual .html from HTML control</p>
+        <pre><code class="language-markup">&lt;p class="prism">&lt;/p></code></pre>
+
+        <p>Actual .css from HTML control</p>
+        <pre><code class="language-css">p { color: red;}</code></pre>
+
+        <p>Actual .js from HTML control</p>
+        <pre><code class="language-javascript">var test = 'hello';</code></pre>
+
+        <h3>Behavior Guidelines</h3>
+        <p>Details around behavior and interaction.</p>
+
+        <h3>Implementation Guidelines</h3>
+        <p>How to technically implement the HTML control.</p>
+
+        <h3>Implementation Guidelines</h3>
+        <p>How to technically implement the HTML control.</p>
+
+        <h3>States & Variations</h3>
+        <p>Supported states (hover, focus, etc.).</p>
+
+        <h2>Accessibility Guidelines</h2>
+        <p>TSection 508 & related information.</p>
+
+        <h2>Asset List</h2>
+        <p>List of any assets associated with this control, such as svg files for icons.Photoshop files 3 Original photoshop files or related assets.</p>
+
+        <h2>Responsive Guidelines</h2>
+        <p> How the control should respond responsively across different devices & display resolutions.</p>
+
+
+      </div>
+      <div class="one-third column">
+        <section class="guide-doc-sidebar">
+          <div class="site-nextprev">
+            <h3>Next and Previous Control</h3>
+            <a href="#" class="site-next">Sign-in Form</a>
+            <a href="#" class="site-prev">Mega Menus</a>
+          </div>
+
+          <h3>Tags</h3>
+          <div class="tags">
+            <span class="tag">Soho XI</span>
+            <span class="tag">Responsive</span>
+            <span class="tag">Applications</span>
+            <span class="tag">Mobile-first</span>
+          </div>
+
+          <h3>Related Controls</h3>
+          <div class="guide-related-controls">
+            <a href="#" class="hyperlink">Text Input</a>
+            <a href="#" class="hyperlink">Auto Complete</a>
+            <a href="#" class="hyperlink">Multiselect</a>
+          </div>
+
+          <h3>Gallery Examples</h3>
+          <div class="gallery-examples">
+            <a href="#" class="gallery-item">
+              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
+              <span>Infor M3 Role based home pages</span>
+            </a>
+
+            <a href="#" class="gallery-item">
+              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
+              <span>Infor LN Requisitions</span>
+            </a>
+
+            <a href="#" class="gallery-item">
+              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
+              <span>Infor LN Workbench</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+
+  {{> controls/svg}}
+  {{> docs/svg}}
+  {{> docs/footer}}
+
+</body>
+</html>
