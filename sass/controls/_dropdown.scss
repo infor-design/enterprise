@@ -40,7 +40,7 @@ input.dropdown {
 
   // Icon States
   + .icon {
-    background-color: $body-bg-color;
+    background-color: inherit;
     border-radius: 1px;
     cursor: pointer;
     display: inline-block;

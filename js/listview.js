@@ -6,8 +6,8 @@
 // TODOs: edit and/or alt template
 // navigatable
 // template (as id or string)
-// Methods: add, remove, clear, destroy, refresh (rebind), select (get or set)
-// Events: rendered, remove, add, select
+// Methods: add, remove (X), clear (X), destroy, refresh (rebind) (X), select (get or set) (X)
+// Events: rendered, add, select
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
       // AMD. Register as an anonymous module depending on jQuery.
@@ -124,6 +124,7 @@
 
         });
 
+       this.element.initialize();
        this.element.trigger('rendered', [dataset]);
       },
 
@@ -217,6 +218,20 @@
         this.select(item);
       },
 
+      // Remove Either the list element or index
+      remove: function (li) {
+        if (typeof li === 'number') {
+           li = $(this.element.children()[0]).children().eq(li);
+        }
+        li.remove();
+      },
+
+      // Remove All
+      clear: function () {
+        var root = $(this.element.children()[0]);
+        root.empty();
+      },
+
       // Handle Selecting the List Element
       select: function (li) {
         var self = this,
@@ -247,7 +262,6 @@
         li.attr('tabindex', 0);
 
         li.attr('aria-selected', !isChecked);
-        li.find('input:checkbox:first').prop('checked', !isChecked);
         this.element.trigger('selectionchange', [this.selectedItems]);
 
         var toolbar = this.element.closest('.card').find('.listview-toolbar');

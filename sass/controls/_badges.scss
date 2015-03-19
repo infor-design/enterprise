@@ -27,11 +27,51 @@
   height: 22px;
   @include font-size(13);
   line-height: 22px;
+  position: relative;
   text-align: center;
   width: 22px;
 
   &.error {
     background-color: $ruby06;
+  }
+
+  &.alert {
+    background-color: $amber06;
+  }
+
+  &.good {
+    background-color: $emerald06;
+  }
+
+  &.pending {
+
+    // Clock circle
+    &:before {
+      border: .15em solid #ffffff;
+      border-radius: 55%;
+      content: '';
+      height: 58%;
+      left: .31em;
+      position: absolute;
+      top: .28em;
+      width: 58%;
+    }
+
+    // Clock hands
+    &:after {
+      border-bottom: .15em solid #ffffff;
+      border-left: .1em solid #ffffff;
+      content: '';
+      height: 24%;
+      left: .8em;
+      position: absolute;
+      top: .55em;
+      width: 20%;
+    }
+
+    &.current {
+      background-color: $amber06;
+    }
   }
 
   &.large {
@@ -41,3 +81,5 @@
     width: 32px;
   }
 }
+
+

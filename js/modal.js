@@ -94,7 +94,7 @@
           var inlineBtns = body.find('.modal-buttonset button');
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
-          inlineBtns.css('width', btnWidth-0.5 + '%').button();
+          inlineBtns.css('width', btnWidth + '%').button();
           inlineBtns.on('click.modal', function (e) {
             if ($(e.target).is('.btn-cancel')) {
               self.isCancelled = true;

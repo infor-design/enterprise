@@ -12,7 +12,6 @@ module.exports = function(grunt) {
           'public/stylesheets/dark-theme.css' : 'sass/dark-theme.scss',
           'public/stylesheets/508-theme.css' : 'sass/508-theme.scss',
           'public/stylesheets/css-only.css' : 'sass/css-only.scss',
-          'public/stylesheets/demo.css' : 'sass/demo.scss',
           'public/stylesheets/site.css' : 'sass/site.scss'
         }
       }

@@ -67,7 +67,7 @@
     color: #666666;
     @include font-size(18);
     font-weight: normal;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     text-align: left;
 
     &:focus {
@@ -110,13 +110,15 @@
 //Toolbar Buttons
 .modal-buttonset {
   border-top: 1px solid #e5e5e5;
-  margin: 20px -28px 0;
+  height: 50px;
+  margin: 25px -28px 0;
 
   button {
     border: 1px solid transparent;
     border-left: 1px solid #e5e5e5;
     color: $modal-btn-color;
     cursor: pointer;
+    float: left;
     font-weight: bold;
     @include font-size(12);
     height: 50px;

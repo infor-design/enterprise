@@ -14,6 +14,8 @@
 // Home Page
 //==================================================//
 
+$site-maxwidth: 968px;
+
 h1,
 h2,
 h3,
@@ -75,7 +77,7 @@ span {
   text-align: center;
 
   > div {
-    max-width: 968px;
+    max-width: $site-maxwidth;
   }
 
   h2 {
@@ -184,8 +186,6 @@ span {
   text-align: center;
 
   nav {
-    margin: 0 auto;
-    max-width: 968px;
 
     .icon-logo {
       float: left;
@@ -210,7 +210,7 @@ span {
   }
 
   .legal {
-    color: #666666;
+    color: #656565;
     float: left;
     @include font-size(15);
     font-weight: 100;
@@ -287,7 +287,7 @@ span {
 //==================================================//
 .container {
   margin: 0 auto;
-  max-width: 968px;
+  max-width: $site-maxwidth;
 }
 
 .site-vision-carousel {
@@ -348,7 +348,7 @@ span {
 
 .vision-section-title {
   margin: 0 auto;
-  max-width: 968px;
+  max-width: $site-maxwidth;
 
   h2 {
     color: #666666;
@@ -363,7 +363,7 @@ span {
 .vision-article {
   display: table;
   margin: 20px auto;
-  max-width: 968px;
+  max-width: $site-maxwidth;
 
   &.alt-color {
     .vision-article-title {
@@ -427,14 +427,14 @@ span {
   h2 {
     color: #666666;
     margin: 80px auto 0;
-    max-width: 968px;
+    max-width: $site-maxwidth;
     padding: 80px 0 60px;
     @include font-size(40);
   }
 
   .vision-latest-articles {
     margin: 0 auto;
-    max-width: 968px;
+    max-width: $site-maxwidth;
   }
 
   .vision-recent-article {
@@ -454,7 +454,7 @@ span {
   h2 {
     color: #666666;
     margin: 80px auto 0;
-    max-width: 968px;
+    max-width: $site-maxwidth;
     padding: 80px 0 40px;
     @include font-size(40);
     text-align: center;
@@ -544,8 +544,8 @@ span {
 
       h2 {
         margin: 90px auto 0 20px;
-        max-width: 968px;
-        padding: 80px 0 60px;
+        max-width: $site-maxwidth;
+        padding: 50px 0 60px;
         @include font-size(50);
       }
 
@@ -693,6 +693,10 @@ span {
 .guide {
   background-color: $inverse-color;
 
+  .container {
+    max-width: unset;
+  }
+
   .site-text-section {
     background-color: $inverse-color;
     padding: 20px 0;
@@ -701,14 +705,17 @@ span {
   .site-hero {
     background-color: $ruby04;
 
+    .container {
+      max-width: 1280px;
+    }
+
     h2 {
       color: $inverse-color;
     }
   }
 
-  .site-alt-bgrnd {
+  .alt-bgrnd {
     background-color: $body-bg-color;
-    padding-bottom: 40px;
   }
 
   .site-category-icon {
@@ -741,12 +748,15 @@ span {
 // Guide/Controls Category Pages
 //==================================================//
 .guide-category {
+
   .site-hero h2 {
     @include font-size(40);
     margin: 27px auto 0 20px !important;
   }
 
   .site-categories {
+    max-width: 70%;
+
     h2 {
       padding: 0 0 40px;
       text-align: left;
@@ -759,19 +769,25 @@ span {
   }
 }
 
-.guide-doc-section {
+.guide-doc-section,
+.guide-example {
   display: table-cell;
-  padding-top: 25px;
+  padding-top: 30px;
   width: 70%;
 
   h2 {
     @include font-size(40);
+    padding-bottom: 5px;
+  }
+
+  .example {
+    margin-bottom: 100px;
   }
 
   small {
-    color: #999999;
+    color: #767676;
     display: block;
-    padding-bottom: 30px;
+    padding-bottom: 5px;
     @include font-size(14);
     text-transform: uppercase;
   }
@@ -797,6 +813,26 @@ span {
     }
   }
 
+}
+
+.guide-example {
+  display: block;
+  width: 100%;
+
+  h2::after {
+    background-color: $ruby04;
+    color: $inverse-color;
+    content: 'Example';
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    height: 24px;
+    line-height: 27px;
+    margin-top: 20px;
+    padding: 4px 13px;
+    text-transform: uppercase;
+    width: 54px;
+  }
 }
 
 .guide-doc-sidebar {
@@ -840,9 +876,18 @@ span {
 
 .site-nextprev {
   margin-bottom: 35px;
-  padding-top: 25px;
+  padding-top: 10px;
   position: relative;
   top: 40px;
+
+  h3 {
+    &::after {
+      clear: both;
+      content: '';
+      display: table;
+    }
+
+  }
 
   .site-next,
   .site-prev {
@@ -866,11 +911,59 @@ span {
   }
 }
 
-// Media Queries for Guide/Controls Category Pages
-//==================================================//
-@include respond-to(tablet) {
+.guide-copy {
+  .row {
+    padding: 50px 0 75px;
+  }
+
+  p,
+  ul {
+    @include font-size(16);
+    line-height: 28px;
+  }
+
+  ul {
+    list-style: inside;
+    margin: 10px 20px;
+  }
+
+  h2 {
+    @include font-size(30);
+    margin: 40px 0 20px;
+  }
+
+  h3 {
+    @include font-size(25);
+    margin: 20px 0;
+  }
+
+  .tab-container {
+    margin-top: 20px;
+
+    ul {
+      margin: 0;
+
+      a {
+        @include font-size(18);
+      }
+    }
+  }
+
+  .guide-related-controls {
+    margin-bottom: 50px;
+
+    .hyperlink {
+      border-bottom: 1px solid #d6d6d6;
+      @include font-size(16);
+      display: block;
+      @include font-size(16);
+    }
+  }
 
 }
+
+// Media Queries for Guide/Controls Category Pages
+//==================================================//
 
 @include respond-to(tabletdown) {
   .site-hero > .container > .content h2 {
@@ -900,5 +993,153 @@ span {
   .site-hero > .container > .content h2 {
     padding: 55px 0 60px;
   }
+}
+
+// Syntax High Lighting
+//==================================================//
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f8f8f2;
+  text-shadow: 0 1px rgba(0, 0, 0, .3);
+  font-size: 1.4rem;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+.token.tag {
+  font-size: 1.4rem;
+}
+
+// Code blocks
+pre[class*="language-"] {
+  margin: .5em 0;
+  overflow: auto;
+  padding: 20px;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #ebebeb;
+}
+
+// Inline code
+:not(pre) > code[class*="language-"] {
+  border-radius: .3em;
+  padding: .1em;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: slategray;
+}
+
+.token.punctuation {
+  color: $azure07;
+}
+
+.namespace {
+  opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  background-color: transparent;
+  color: $azure07;
+  margin: 0;
+  padding: 0;
+}
+
+.token.property {
+  color: $ruby06;
+}
+
+.token.boolean,
+.token.number {
+  color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: $azure07;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  color: $ruby06;
+}
+
+.token.atrule,
+.token.attr-value {
+  color: $ruby06;
+}
+
+.token.keyword {
+  color: $ruby06;
+}
+
+.token.regex,
+.token.important {
+  color: $azure07;
+}
+
+.token.important {
+  font-weight: bold;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+pre[class*='language-'] {
+  position: relative;
+}
+
+pre[class*='language-'] > code[data-language] {
+  overflow: scroll;
+  max-height: 28em;
+  display: block;
+}
+
+pre[class*='language-'] > code[data-language]::before {
+  background-color: $inverse-color;
+  border-radius: 1px;
+  content: attr(data-language);
+  color: black;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.4rem;
+  padding: 0 0.5em;
+  text-shadow: none;
+  text-transform: uppercase;
 }
 

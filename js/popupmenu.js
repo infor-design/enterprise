@@ -292,14 +292,14 @@
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight(),
-          xOffset = this.element.hasClass('btn-actions') && this.element.parent().attr('class').indexOf('header') > -1 ? (menuWidth) - 34 : 0;
+          xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 34 : 0;
 
         if (this.settings.trigger === 'rightClick' || (e !== null && e !== undefined && this.settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
                         'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
         } else {
           wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0) - xOffset,
-                        'top': target.offset().top - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight() });
+                        'top': target.offset().top + 10 - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight() });
         }
 
         //Handle Case where menu is off bottom

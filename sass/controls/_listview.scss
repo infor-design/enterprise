@@ -26,6 +26,32 @@
     line-height: 18px;
   }
 
+  .badge {
+    float: left;
+    margin-right: 15px;
+    margin-top: -1px;
+  }
+
+  .dropdown-wrapper {
+    float: left;
+  }
+
+  .l-pull-right {
+    position: relative;
+    top: -28px;
+  }
+
+  .field {
+    float: left;
+  }
+
+  .checkbox-label {
+    color: #1a1a1a;
+    left: 10px;
+    position: relative;
+    top: 3px;
+  }
+
   .listview-thumbnail {
     border-radius: 50%;
     display: inline-block;
@@ -41,34 +67,6 @@
   .listview-cell {
     display: table-cell;
     width: auto;
-  }
-
-  .listview-table {
-    border-collapse: collapse;
-    width: 100%;
-
-    tr,
-    td {
-      @include font-size(14);
-      color: #1a1a1a;
-      font-weight: lighter;
-      padding: 13px 15px;
-      @include transition(background-color .15s ease 0s);
-    }
-
-    tr:hover,
-    tr:focus {
-      background-color: $menu-hover-color;
-      outline: none;
-    }
-
-    th {
-      display: none;
-    }
-
-    tr {
-      border-bottom: 1px solid #e5e5e5;
-    }
   }
 
   li {
@@ -94,6 +92,7 @@
   button {
     background-color: transparent;
     border-radius: 0;
+    margin: 0 15px;
 
     svg {
       height: 25px;
@@ -192,4 +191,35 @@
   }
 }
 
+.listview-table {
+  border-collapse: collapse;
+  width: 100%;
+
+  tr,
+  td {
+    @include font-size(14);
+    color: #1a1a1a;
+    font-weight: lighter;
+    padding: 13px 15px;
+    @include transition(background-color .15s ease 0s);
+  }
+
+  tr:hover,
+  tr:focus {
+    background-color: $menu-hover-color;
+    outline: none;
+  }
+
+  th {
+    display: none;
+  }
+
+  &.show-header {
+    display: block;
+  }
+
+  tr {
+    border-bottom: 1px solid #e5e5e5;
+  }
+}
 
