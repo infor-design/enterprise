@@ -263,6 +263,7 @@
               trigger: 'focus',
               keepOpen: self.settings.persistTooltip
             });
+            handle.removeAttr('aria-describedby');
           }
         });
 
@@ -707,9 +708,17 @@
         self._value = [minVal, maxVal];
         self.element.val(maxVal !== undefined ? self._value : self._value[0]);
         $.each(self.handles, function(i, handle) {
+          var valueText = self._value[i];
+
+          $.each(self.ticks, function(a, tick) {
+            if (tick.value === valueText) {
+              valueText = tick.description;
+            }
+          });
+
           handle.attr({
             'aria-valuenow': self._value[i],
-            'aria-valuetext': self.getModifiedTextValue(self._value[i])
+            'aria-valuetext': self.getModifiedTextValue(valueText)
           });
         });
         self.element.trigger('change');
