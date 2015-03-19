@@ -1,0 +1,52 @@
+// About
+//================================================== //
+
+.modal.about {
+
+  .close-container {
+    position: absolute;
+    right: 5px;
+    text-align: right;
+    top: 5px;
+  }
+
+  .modal-content {
+    max-width: 640px;
+    //@include css3(transform, translate(0, 100%));
+  }
+
+  /*
+  &.is-visible {
+    .modal-content {
+      @include css3(transform, translate(0, 0));
+    }
+  }
+  */
+
+  .modal-header {
+    margin: 3em 0;
+    text-align: center;
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .modal-body {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .additional-content {
+    @include font-size(14);
+    font-weight: lighter;
+    line-height: normal;
+    margin: 20px 0;
+  }
+
+  .about-logo {
+    margin-bottom: 1em;
+    width: 72px;
+  }
+
+}
