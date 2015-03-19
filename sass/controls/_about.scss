@@ -2,6 +2,11 @@
 //================================================== //
 
 .modal.about {
+  @include css3(transform, translate(0, 100%));
+
+  &.is-visible {
+    @include css3(transform, translate(0, 0));
+  }
 
   .close-container {
     position: absolute;
@@ -12,16 +17,7 @@
 
   .modal-content {
     max-width: 640px;
-    //@include css3(transform, translate(0, 100%));
   }
-
-  /*
-  &.is-visible {
-    .modal-content {
-      @include css3(transform, translate(0, 0));
-    }
-  }
-  */
 
   .modal-header {
     margin: 3em 0;

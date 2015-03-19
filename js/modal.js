@@ -70,7 +70,7 @@
         }
 
         self.addButtons(settings.buttons);
-        this.element.appendTo('body');
+        this.element.css({'display':'none'}).appendTo('body');
       },
 
       appendContent: function () {
@@ -197,11 +197,13 @@
 
         //Center
         self.element.css({top:'50%', left:'50%', margin:'-'+(self.element.outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
-
-        this.element.addClass('is-visible').attr('role', (settings.isAlert ? 'alertdialog' : 'dialog'));
-        this.element.attr('aria-hidden', 'false');
-        this.overlay.attr('aria-hidden', 'false');
-        this.element.attr('aria-modal', 'true'); //This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
+        this.element.css({'display': ''});
+        setTimeout(function() {
+          self.element.addClass('is-visible').attr('role', (settings.isAlert ? 'alertdialog' : 'dialog'));
+          self.element.attr('aria-hidden', 'false');
+          self.overlay.attr('aria-hidden', 'false');
+          self.element.attr('aria-modal', 'true'); //This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
+        }, 1);
 
         // Add the 'modal-engaged' class after all the HTML markup and CSS classes have a chance to be established
         // (Fixes an issue in non-V8 browsers (FF, IE) where animation doesn't work correctly).
@@ -320,7 +322,7 @@
 
         setTimeout( function() {
           self.overlay.remove();
-          self.element.trigger('afterClose');
+          self.element.css({'display':'none'}).trigger('afterClose');
         }, 300); // should match the length of time needed for the overlay to fade out
 
         if (settings.content) {
