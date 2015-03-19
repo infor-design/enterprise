@@ -153,9 +153,9 @@ label.required:after,
   content: '*';
   display: inline-block;
   font-family: $font-regular;
-  @include font-size(17);
+  @include font-size(18);
   left: 3px;
-  line-height: 0;
+  line-height: 10px;
   position: relative;
   top: 2px;
 }
