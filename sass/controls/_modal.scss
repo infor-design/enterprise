@@ -53,7 +53,7 @@
   padding: 21px 28px 0;
   position: relative;
   @include css3(transition, all .3s);
-  @include css3(transform, scale(.7));
+  @include css3(transform, translateY(20%));
 
 //
 //3D sign Effect
@@ -137,7 +137,6 @@
     }
 
     &:focus {
-      // border-color: $primary-color; - TODO: Design Variation
       text-decoration: underline;
     }
 

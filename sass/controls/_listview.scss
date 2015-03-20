@@ -210,12 +210,17 @@
     outline: none;
   }
 
-  th {
-    display: none;
+  &.show-header th {
+    color: $graphite10;
+    display: table-cell;
+    @include font-size(16);
+    font-weight: bold;
+    padding: 10px 15px;
+    text-align: left;
   }
 
-  &.show-header {
-    display: block;
+  th {
+    display: none;
   }
 
   tr {

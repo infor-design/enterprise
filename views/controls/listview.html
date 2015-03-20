@@ -280,7 +280,7 @@
                 <input id="default-{{id}}" class="checkbox" type="checkbox">
                 <label class="checkbox-label" for="default-{{id}}">Default</label>
               </div>
-              <button data-rowid="{{id}}" class="btn-icon" title="Delete">
+              <button class="btn-icon" title="Delete">
                 <svg class="icon" aria-hidden="true" focusable="false">
                   <use xlink:href="#icon-delete">
                 </svg>
@@ -324,9 +324,12 @@
     console.log(args);
   });
 
-  var shareList = $('#share-rbhp').on('click', 'button', function (e, ui) {
+
+  //TODO: Thought should we put this inside?
+  var shareList = $('#share-rbhp').on('click', 'button', function (e) {
     var api = shareList.data('listview');
     api.remove($(this).closest('li'));
+    //api.clear();
    });
 
 </script>

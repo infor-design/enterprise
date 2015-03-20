@@ -68,11 +68,19 @@ span {
       }
     }
   }
+
+  .gallery-thumb {
+    height: 310px;
+  }
+
+  .gallery-thumbs {
+    padding: 50px 0 70px;
+  }
 }
 
 .site-text-section,
 .site-howto-nav,
-.site-comments {
+.site-recent {
   background-color: $body-bg-color;
   text-align: center;
 
@@ -159,22 +167,8 @@ span {
       @include font-size(18);
     }
   }
-
 }
 
-.site-comments {
-  background-color: $body-bg-color;
-  margin-bottom: 90px;
-
-  h2 {
-    margin-bottom: 60px;
-  }
-
-  input,
-  textarea {
-    width: 50%;
-  }
-}
 
 // Footer
 //==================================================//
@@ -225,8 +219,7 @@ span {
 
 @include respond-to(phone) {
   .site-text-section > div,
-  .site-howto-nav > div,
-  .site-comments > div {
+  .site-howto-nav > div {
     max-width: 80%;
   }
 }
@@ -234,14 +227,8 @@ span {
 @include respond-to(phablet) {
 
   .site-text-section > div,
-  .site-howto-nav > div,
-  .site-comments > div {
+  .site-howto-nav > div {
     max-width: 80%;
-  }
-
-  .site-comments input,
-  .site-comments textarea {
-    width: 120%;
   }
 
   .site-footer nav {
@@ -266,14 +253,8 @@ span {
     padding-top: 10%;
   }
 
-  .site-comments input,
-  .site-comments textarea {
-    width: 70%;
-  }
-
   .site-text-section > div,
-  .site-howto-nav > div,
-  .site-comments > div {
+  .site-howto-nav > div {
     max-width: $breakpoint-phone-to-tablet;
   }
 
@@ -573,13 +554,87 @@ span {
   background-color: $inverse-color;
 
   .site-hero {
-    background-color: #bb50ff;
+    background-color: $amethyst05;
 
     h2 {
       color: #ffffff;
+      padding: 90px 0 0 !important;
     }
   }
 
+  h2 {
+    @include font-size(40);
+    margin: 40px 0 60px;
+  }
+}
+
+
+.gallery-thumbs {
+  padding: 50px 0;
+}
+
+.gallery-thumb {
+  backface-visibility: hidden;
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  height: 480px;
+  margin: 15px;
+  overflow: hidden;
+  text-decoration: none;
+  transform: translateZ(0);
+  transition-duration: .3s;
+  transition-property: box-shadow;
+  width: 330px;
+
+  &:hover {
+    box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+  }
+
+  a {
+    text-align: left;
+    text-decoration: none;
+  }
+
+  h3 {
+    @include font-size(24);
+    color: $graphite07;
+    margin: 30px 20px 0;
+
+    + span {
+      @include font-size(16);
+      color: $graphite07;
+      display: block;
+      margin-left: 20px;
+      margin-top: 5px;
+      padding-bottom: 20px;
+    }
+  }
+
+  p {
+    @include font-size(16);
+    line-height: 20px;
+    margin-left: 20px;
+  }
+
+  .tags {
+    border-top: 1px solid #e1e1e1;
+    margin-top: 20px;
+    padding-top: 14px;
+    text-align: center;
+  }
+
+  .gallery-overlay {
+    background-color: $amethyst05;
+    display: block;
+    height: 480px;
+    opacity: .8;
+    overflow: hidden;
+    position: absolute;
+    visibility: visible;
+    width: 330px;
+    z-index: 6;
+  }
 }
 
 // Media Queries For Vision Page and Shared
@@ -690,6 +745,11 @@ span {
 
 // Guide/Controls Pages
 //==================================================//
+
+section.alt-bgrnd {
+  background-color: $body-bg-color;
+}
+
 .guide {
   background-color: $inverse-color;
 
@@ -712,10 +772,6 @@ span {
     h2 {
       color: $inverse-color;
     }
-  }
-
-  .alt-bgrnd {
-    background-color: $body-bg-color;
   }
 
   .site-category-icon {
@@ -812,7 +868,6 @@ span {
       margin-bottom: 15px;
     }
   }
-
 }
 
 .guide-example {
@@ -835,20 +890,20 @@ span {
   }
 }
 
+.tags {
+  margin: 15px 0 50px;
+
+  .tag {
+    margin: 6px 4px 0 0;
+  }
+}
+
 .guide-doc-sidebar {
   display: table-cell;
   width: 30%;
 
   h3 {
     @include font-size(20);
-  }
-
-  .tags {
-    margin: 15px 0 50px;
-
-    .tag {
-      margin: 6px 4px 0 0;
-    }
   }
 
   .gallery-item {
@@ -960,6 +1015,9 @@ span {
     }
   }
 
+  .listview-table {
+    margin: 20px 0;
+  }
 }
 
 // Media Queries for Guide/Controls Category Pages
@@ -1000,29 +1058,32 @@ span {
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: #f8f8f2;
-  text-shadow: 0 1px rgba(0, 0, 0, .3);
-  font-size: 1.4rem;
-  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  color: #4d4d4c;
   direction: ltr;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
+  @include font-size(16);
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  -webkit-hyphens: none;
+  hyphens: none;
+  font-family: Helvetica,Arial;
+  font-weight: lighter;
   line-height: 1.5;
 
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
+  text-align: left;
 
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
 }
 
+.token,
 .token.tag {
-  font-size: 1.4rem;
+  font-family: Helvetica,Arial;
+  @include font-size(16);
+  font-weight: lighter;
 }
 
 // Code blocks
@@ -1047,7 +1108,7 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: slategray;
+  color: $graphite07;
 }
 
 .token.punctuation {
@@ -1075,7 +1136,7 @@ pre[class*="language-"] {
 
 .token.boolean,
 .token.number {
-  color: #ae81ff;
+  color: $azure07;
 }
 
 .token.selector,
@@ -1120,26 +1181,36 @@ pre[class*="language-"] {
 
 pre[class*='language-'] {
   position: relative;
-}
 
-pre[class*='language-'] > code[data-language] {
-  overflow: scroll;
-  max-height: 28em;
-  display: block;
-}
+  > code[data-language] {
+    display: block;
+    max-height: 28em;
+    overflow: scroll;
+  }
 
-pre[class*='language-'] > code[data-language]::before {
-  background-color: $inverse-color;
-  border-radius: 1px;
-  content: attr(data-language);
-  color: black;
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 1.4rem;
-  padding: 0 0.5em;
-  text-shadow: none;
-  text-transform: uppercase;
-}
+  > code[data-language]::before {
+    background-color: $amethyst06;
+    border-radius: 1px;
+    color: $inverse-color;
+    content: attr(data-language);
+    display: inline-block;
+    @include font-size(11);
+    font-family: Helvetica,Arial;
+    font-size: 1.1rem;
+    line-height: 14px;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    text-transform: uppercase;
+    top: 0;
+  }
 
+  .language-markup:before {
+    background-color: $azure06 !important
+  }
+
+  .language-css:before {
+    background-color: $amber08 !important
+  }
+
+}

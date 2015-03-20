@@ -301,8 +301,9 @@ or eventually the SoHo XI site pages
 | Hansen 8  | An ASP Application interested in accessibility  | Ovidiu Petruescu |
 | Healthcare Clinical  |   | Charlie Price |
 | HMS  |   | David Parisi |
-| Home Pages  | Typescript, Angular  | Fredrik Eriksson |
+| Home Pages  | Typescript, Angular  - 4.0 | Fredrik Eriksson |
 | Infinium SHCM  |   | Joe Bockskopf |
+| Ion Desk  | ?????  | Massimo Capoccia|
 | Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato |
 | Landmark  | Jetty Server Servlet | Phillip Patton |
 | Lawson S3  |   | Andy Buboltz |
@@ -313,8 +314,9 @@ or eventually the SoHo XI site pages
 | Mongoose - Demo Services | Mongoose | Lee Flaherty |
 | MSCM (Mobile Supply Chain Management ) |   | Ferdinand Brian Verdejol, Larry Amisola |
 | M3 Sales and Marketing Suite Team - Metadata Publisher |   | Ralph Brian Mercadal, Lito Lopez |
+| M3 Counter Sales |  Typescript, Angular - 4.0 | Jörgen Nilsson |
 | MUA (M3H5 Client) |   | Michael Quibin , Jack Rubillar |
-| Optiva |   | Andy Koenigsberg |
+| Optiva |   | Bert Cushman |
 | PMServerAdmin |   | Mike Campbell |
 | (Infor) PLM Discrete |   | Srinivasulu Vadakattu |
 | PCM | Knockout App | Tim Dunham |
