@@ -39,6 +39,11 @@ svg.icon {
       margin-top: -9px;
     }
   }
+
+  &.icon-close {
+    position: relative;
+    top: -1.5px;
+  }
 }
 
 svg.icon-logo {

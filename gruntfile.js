@@ -43,6 +43,7 @@ module.exports = function(grunt) {
       basic: {
         files: {
           'dist/js/<%= pkg.name %>.js': [
+            'js/about.js',
             'js/autocomplete.js',
             'js/busyindicator.js',
             'js/button.js',

@@ -57,6 +57,7 @@
     },
     //Resx - Approved By Translation Team
     messages: {
+      'AboutText': {id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners.'},
       'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
       'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
       'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},

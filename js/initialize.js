@@ -159,6 +159,7 @@
 
         elem.find('.fileupload').fileupload();
 
+        elem.find('.about').about();
       });
 
       self.trigger('initialized');
