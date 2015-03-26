@@ -18,7 +18,7 @@
         value.disable();
       }
     });
-    this.attr('disabled', 'disabled');
+    this.prop('disabled', true);
     return this;
   };
 
@@ -29,7 +29,7 @@
         value.enable();
       }
     });
-    this.removeAttr('disabled');
+    this.prop('disabled', false);
     return this;
   };
 

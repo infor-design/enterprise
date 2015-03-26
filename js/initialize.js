@@ -160,6 +160,8 @@
         elem.find('.fileupload').fileupload();
 
         elem.find('.about').about();
+
+        elem.find('.accordion').accordion();
       });
 
       self.trigger('initialized');

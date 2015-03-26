@@ -1,0 +1,52 @@
+// Application Nav Control
+//================================================== //
+
+.application-nav {
+
+  .panel.logout {
+
+    .icon.avatar {
+      border-radius: 24px;
+      float: left;
+      height: 48px;
+      width: 48px;
+    }
+
+    .content {
+      padding-left: 1em;
+
+      > * {
+        display: block;
+        line-height: 1.5em;
+      }
+
+      > .name {
+        @include font-size(16);
+        line-height: 1.8em;
+      }
+    }
+
+    span {
+      display: inline-block;
+    }
+
+  }
+
+  .accordion {
+
+    .dark {
+      .name {
+        color: #ffffff;
+      }
+    }
+
+    .light {
+      .name {
+        color: #1a1a1a;
+      }
+    }
+
+  }
+
+
+}
