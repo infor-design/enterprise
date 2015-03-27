@@ -34,13 +34,13 @@
 
   .accordion {
 
-    .dark {
+    &.dark {
       .name {
         color: #ffffff;
       }
     }
 
-    .light {
+    &.light {
       .name {
         color: #1a1a1a;
       }

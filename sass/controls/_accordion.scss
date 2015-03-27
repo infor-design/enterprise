@@ -43,13 +43,35 @@
 
   }
 
-  li {
+  .accordion-header {
     position: relative;
     @include font-size(14);
 
-    &.is-selected {
+    &.is-selected,
+    &.child-selected {
+      &:before {
+        color: $primary-color;
+      }
+
+      > a {
+        color: $primary-color;
+
+        span {
+          color: $primary-color;
+        }
+
+        .icon {
+          fill: $primary-color;
+        }
+      }
+    }
+
+    &.is-focused.is-selected {
       background-color: $primary-color;
-      color: #ffffff;
+
+      &:before {
+        color: #ffffff;
+      }
 
       > a {
         color: #ffffff;
@@ -57,24 +79,28 @@
         span {
           color: #ffffff;
         }
-      }
-    }
 
-    &.separator {
-      margin: 1em 1em 0 3em;
-      padding-bottom: 1em;
-
-      &:before {
-        border-bottom: 1px solid transparent;
-        content: '';
-        display: block;
-        position: absolute;
-        width: 100%;
+        .icon {
+          fill: #ffffff;
+        }
       }
     }
   }
 
-  > li {
+  .separator {
+    margin: 1em 1em 0 3em;
+    overflow: hidden;
+    padding-bottom: 1em;
+
+    &:before {
+      border-bottom: 1px solid transparent;
+      content: '';
+      display: block;
+      width: 100%;
+    }
+  }
+
+  > .accordion-header {
     border-bottom: 1px solid transparent;
 
     &:last-child {
@@ -82,20 +108,20 @@
     }
   }
 
-  ul {
+  .accordion-pane {
     overflow: hidden;
     @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
 
-    ul {
+    .accordion-pane {
       padding-left: 2em;
     }
 
-    li,
+    .accordion-header,
     span {
       @include font-size(12);
     }
 
-    li[aria-expanded] {
+    .accordion-header[aria-expanded] {
       &:before {
         content: '+';
         @include font-size(14);
@@ -114,11 +140,18 @@
     }
   }
 
+  .accordion-content {
+    font-weight: lighter;
+    line-height: 1.2em;
+    margin: 1em 1em 1em 3.68em;
+  }
+
   &.light {
     background-color: #ffffff;
 
-    > li {
+    > .accordion-header {
       border-bottom-color: #d8d8d8;
+      color: #666666;
 
       &:before {
         color: #666666;
@@ -129,22 +162,14 @@
       fill: #666666;
     }
 
-    li {
-      &.is-selected {
-        .icon {
-          fill: #ffffff;
-        }
-      }
-
-      &.separator {
-        &:before {
-          border-color: #d8d8d8;
-        }
-      }
+    .accordion-pane {
+      background-color: #f2f2f2;
     }
 
-    ul {
-      background-color: #f2f2f2;
+    .separator {
+      &:before {
+        border-color: #d8d8d8;
+      }
     }
   }
 
@@ -152,7 +177,7 @@
     background-color: #383838;
     color: #acadae;
 
-    > li {
+    > .accordion-header {
       border-bottom-color: #1a1a1a;
 
       &:before {
@@ -168,22 +193,14 @@
       fill: #acadae;
     }
 
-    li {
-      &.is-selected {
-        .icon {
-          fill: #ffffff;
-        }
-      }
-
-      &.separator {
-        &:before {
-          border-color: #3b3b3b;
-        }
-      }
+    .accordion-pane {
+      background-color: #292929;
     }
 
-    ul {
-      background-color: #292929;
+    .separator {
+      &:before {
+        border-color: #3b3b3b;
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 /**
 * Height Animation Controls (TODO: bitly link to soho xi docs)
 * Idea borrowed from: http://n12v.com/css-transition-to-from-auto/
+* Contains a handful of animation helper methods that attempt to DRY up CSS-powered sliding animations.
 */
 
 (function(factory) {
@@ -97,7 +98,8 @@
       }
 
       // Clear any previous attempt at this animation when the animation starts new
-      $(this).one('animateOpenStart.animation', function() {
+      $(this).one('animateOpenStart.animation', function(e) {
+        e.stopPropagation();
         $(this).off(eventName);
       });
 
@@ -143,7 +145,8 @@
       }
 
       // Clear any previous attempt at this animation when the animation starts new
-      $(this).one('animateClosedStart', function() {
+      $(this).one('animateClosedStart', function(e) {
+        e.stopPropagation();
         $(this).off(eventName + '.animation');
       });
 
