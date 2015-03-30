@@ -1,0 +1,208 @@
+// Accordion
+//================================================== //
+
+.accordion {
+
+  a {
+    display: block;
+    padding: 1em;
+    text-decoration: none;
+
+    &:focus {
+      outline: 0;
+    }
+
+    > * {
+      display: inline-block;
+      pointer-events: none;
+      vertical-align: middle;
+    }
+
+    > .icon {
+      height: 1.3em;
+
+      + .title {
+        margin-left: 0;
+      }
+    }
+
+    > .title,
+      .panel {
+      margin-left: 3.25em;
+    }
+
+    > .panel {
+      display: block;
+
+      &:after {
+        clear: both;
+        content: '';
+        display: table;
+      }
+    }
+
+  }
+
+  .accordion-header {
+    position: relative;
+    @include font-size(14);
+
+    &.is-selected,
+    &.child-selected {
+      &:before {
+        color: $primary-color;
+      }
+
+      > a {
+        color: $primary-color;
+
+        span {
+          color: $primary-color;
+        }
+
+        .icon {
+          fill: $primary-color;
+        }
+      }
+    }
+
+    &.is-focused.is-selected {
+      background-color: $primary-color;
+
+      &:before {
+        color: #ffffff;
+      }
+
+      > a {
+        color: #ffffff;
+
+        span {
+          color: #ffffff;
+        }
+
+        .icon {
+          fill: #ffffff;
+        }
+      }
+    }
+  }
+
+  .separator {
+    margin: 1em 1em 0 3em;
+    overflow: hidden;
+    padding-bottom: 1em;
+
+    &:before {
+      border-bottom: 1px solid transparent;
+      content: '';
+      display: block;
+      width: 100%;
+    }
+  }
+
+  > .accordion-header {
+    border-bottom: 1px solid transparent;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .accordion-pane {
+    overflow: hidden;
+    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
+
+    .accordion-pane {
+      padding-left: 2em;
+    }
+
+    .accordion-header,
+    span {
+      @include font-size(12);
+    }
+
+    .accordion-header[aria-expanded] {
+      &:before {
+        content: '+';
+        @include font-size(14);
+        left: 1.88em;
+        pointer-events: none;
+        position: absolute;
+        top: .65em;
+      }
+
+      &.is-expanded {
+        &:before {
+          content: '–';
+          left: 1.94em;
+        }
+      }
+    }
+  }
+
+  .accordion-content {
+    font-weight: lighter;
+    line-height: 1.2em;
+    margin: 1em 1em 1em 3.68em;
+  }
+
+  &.light {
+    background-color: #ffffff;
+
+    > .accordion-header {
+      border-bottom-color: #d8d8d8;
+      color: #666666;
+
+      &:before {
+        color: #666666;
+      }
+    }
+
+    .icon {
+      fill: #666666;
+    }
+
+    .accordion-pane {
+      background-color: #f2f2f2;
+    }
+
+    .separator {
+      &:before {
+        border-color: #d8d8d8;
+      }
+    }
+  }
+
+  &.dark {
+    background-color: #383838;
+    color: #acadae;
+
+    > .accordion-header {
+      border-bottom-color: #1a1a1a;
+
+      &:before {
+        color: #acadae;
+      }
+    }
+
+    span {
+      color: #acadae;
+    }
+
+    .icon {
+      fill: #acadae;
+    }
+
+    .accordion-pane {
+      background-color: #292929;
+    }
+
+    .separator {
+      &:before {
+        border-color: #3b3b3b;
+      }
+    }
+  }
+
+}
+

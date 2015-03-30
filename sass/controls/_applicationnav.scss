@@ -1,0 +1,63 @@
+// Application Nav Control
+//================================================== //
+
+.application-nav {
+  @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
+  display: none;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 2em;
+  bottom: 0;
+  z-index: 9000;
+
+  > .accordion {
+    height: 100%;
+  }
+
+  .panel.logout {
+
+    .icon.avatar {
+      border-radius: 24px;
+      float: left;
+      height: 48px;
+      width: 48px;
+    }
+
+    .content {
+      padding-left: 1em;
+
+      > * {
+        display: block;
+        line-height: 1.5em;
+      }
+
+      > .name {
+        @include font-size(16);
+        line-height: 1.8em;
+      }
+    }
+
+    span {
+      display: inline-block;
+    }
+
+  }
+
+  .accordion {
+
+    &.dark {
+      .name {
+        color: #ffffff;
+      }
+    }
+
+    &.light {
+      .name {
+        color: #1a1a1a;
+      }
+    }
+
+  }
+}
