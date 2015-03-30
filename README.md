@@ -305,6 +305,7 @@ or eventually the SoHo XI site pages
 | Infinium SHCM  |   | Joe Bockskopf |
 | Ion Desk  | ?????  | Massimo Capoccia|
 | Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato |
+| Infor Hospitality in France  | POS  | Bruno Martinot |
 | Landmark  | Jetty Server Servlet | Phillip Patton |
 | Lawson S3  |   | Andy Buboltz |
 | LBI |   | Steve Stahl, Rommel Dollison |

@@ -18,13 +18,13 @@
   <script src="/js/sohoxi.js"></script>
 
 </head>
-<body class="guide guide-detail">
+<body>
 
   {{> includes/header-hamburger}}
 
-  <section class="site-hero">
-    <div class="container">
-      <div class="content">
+ <section class="site-hero component">
+    <div class="row">
+      <div class="full column">
         <h2><span>Controls & Code Base</span><br> Flyout Application Menu</h2>
       </div>
     </div>
@@ -129,7 +129,7 @@
     </div>
   </section>
 
-  <section class="guide-copy alt-bgrnd">
+  <section class="site-copy alt-bgrnd">
     <div class="row">
       <div class="two-thirds column">
         <h2>Description</h2>
@@ -145,7 +145,6 @@
 
         <h2>Dynamically generated specs</h2>
         <p>dynamically generated specs 3 Dynamically generated visual specs (padding, etc.)</p>
-
 
         <table class="listview-table show-header">
           <thead>
@@ -201,10 +200,9 @@
         <h2>Upgrading from Soho 3.x</h2>
         <p> Steps to upgrade from the previous version</p>
 
-
       </div>
       <div class="one-third column">
-        <section class="guide-doc-sidebar">
+        <section class="site-sidebar">
           <div class="site-nextprev">
             <h3>Next and Previous Control</h3>
             <a href="#" class="site-next">Sign-in Form</a>
@@ -247,7 +245,6 @@
       </div>
     </div>
   </section>
-
 
   {{> controls/svg}}
   {{> docs/svg}}

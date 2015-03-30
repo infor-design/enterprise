@@ -18,36 +18,37 @@
   <script src="/js/sohoxi.js"></script>
 
 </head>
-<body class="guide">
+<body>
 
    {{> includes/header-hamburger}}
 
-  <section class="site-hero">
-    <div class="container">
-      <div class="content">
+  <section class="site-hero component">
+    <div class="row">
+      <div class="full column">
         <h2>Controls & Code Base</h2>
-      </div>
-
-      <div class="hero-img">
-        <img src="http://placehold.it/640x430/ff4249/ffffff" alt="Image of Fruit"/>
       </div>
     </div>
   </section>
 
-  <div class="container">
-    <nav role="navigation" class="breadcrumb">
-      <ol aria-label="breadcrumb">
-        <li>
-          <a class="hyperlink" href="/docs">Home</a>
-          <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
-            <use xlink:href="#icon-caret-right"></use>
-          </svg>
-        </li>
-
-        <li><a class="hyperlink current" href="/docs/guide">Controls & Code Base</a></li>
-      </ol>
-    </nav>
-  </div>
+  <section class="site-breadcrumb" >
+    <div class="row">
+      <div class="full column">
+        <nav class="breadcrumb" role="navigation">
+          <ol aria-label="breadcrumb">
+            <li>
+              <a class="hyperlink" href="/docs">Home</a>
+              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </li>
+            <li>
+              <a class="hyperlink current" href="/docs/guide">Controls & Code Base</a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </section>
 
   <section role="main" class="site-text-section" id="maincontent">
     <div class="row">
@@ -60,12 +61,12 @@
 
 
   <section class="alt-bgrnd">
-    <div class="site-categories">
+    <div class="site-categories ">
       <h2>Controls By Category</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. </p>
 
       <div class="row">
-          <a href="/docs/guide-category" class="site-category-icon layout">
+          <a href="/docs/component-category" class="site-category-icon layout component">
             <div class="site-icon">
               <svg class="icon" focusable="false" aria-hidden="true">
                <use xlink:href="#icon-vision-layout"></use>
@@ -73,7 +74,7 @@
             </div>
             <h3>Navigation</h3>
           </a>
-          <a href="/docs/guide-category" class="site-category-icon">
+          <a href="/docs/component-category" class="site-category-icon component">
             <div class="site-icon">
               <svg class="icon" focusable="false" aria-hidden="true">
                <use xlink:href="#icon-vision-layout"></use>
@@ -81,7 +82,7 @@
             </div>
             <h3>Organizing Content</h3>
           </a>
-          <a href="/docs/guide-category" class="site-category-icon">
+          <a href="/docs/component-category" class="site-category-icon component">
             <div class="site-icon">
               <svg class="icon" focusable="false" aria-hidden="true">
                <use xlink:href="#icon-vision-layout"></use>
@@ -89,7 +90,7 @@
             </div>
             <h3>User Input</h3>
           </a>
-          <a href="/docs/guide-category" class="site-category-icon">
+          <a href="/docs/component-category" class="site-category-icon component">
             <div class="site-icon">
               <svg class="icon" focusable="false" aria-hidden="true">
                <use xlink:href="#icon-vision-layout"></use>
@@ -97,7 +98,7 @@
             </div>
             <h3>Notifications</h3>
           </a>
-          <a href="/docs/guide-category" class="site-category-icon">
+          <a href="/docs/component-category" class="site-category-icon component">
             <div class="site-icon">
               <svg class="icon" focusable="false" aria-hidden="true">
                <use xlink:href="#icon-vision-layout"></use>
