@@ -2,18 +2,35 @@
 //================================================== //
 
 .application-nav {
-  @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
-  display: none;
-  left: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  background-color: #383838;
+  @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, 0));
+  bottom: 0;
+  color: #acadae;
+  left: -300px;
+  overflow: hidden;
   position: fixed;
   top: 2em;
-  bottom: 0;
+  @include transition(left 300ms cubic-bezier(.17, .04, .03, .94),
+    -moz-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
+    -ms-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
+    -o-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
+    -webkit-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
+    box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+  width: 300px;
   z-index: 9000;
 
+  &.is-open {
+    left: 0;
+    @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
+  }
+
+  .branding {
+    padding: 1em;
+  }
+
   > .accordion {
-    height: 100%;
+    height: calc(100% - 5em);
+    overflow-y: auto;
   }
 
   .panel.logout {
@@ -46,18 +63,8 @@
   }
 
   .accordion {
-
-    &.dark {
-      .name {
-        color: #ffffff;
-      }
+    .name {
+      color: #ffffff;
     }
-
-    &.light {
-      .name {
-        color: #1a1a1a;
-      }
-    }
-
   }
 }

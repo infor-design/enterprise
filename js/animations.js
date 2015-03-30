@@ -95,7 +95,7 @@
       // Clear any previous attempt at this animation when the animation starts new
       $(this).one('animateOpenStart.animation', function(e) {
         e.stopPropagation();
-        $(this).off(eventName);
+        $(this).off(eventName + '.animation');
       });
       $(this).trigger('animateOpenStart');
 
@@ -143,6 +143,7 @@
         if (!eventName) {
           clearTimeout(timeout);
         }
+        self.style.transition = '';
         $(self).trigger('animateClosedComplete');
       }
 

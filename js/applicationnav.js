@@ -52,7 +52,6 @@
 
         this.originalParent = this.menu.parent();
         this.menu.detach().insertAfter($('body').find('header').first());
-        this.menu.removeClass('is-open');
         this.closeMenu();
 
         return this;
@@ -91,36 +90,29 @@
 
       openMenu: function() {
         var self = this;
+        this.menu
+          .addClass('is-open')
+          .find('.is-selected > a')
+          .attr('tabindex', '0')
+          .focus();
 
-        this.menu.addClass('is-open');
-        this.menu.css('display','block');
-        this.menu.one('animateOpenComplete', function() {
-            // Events that will close the nav menu
-            $(document).on('touchend.appNav touchcancel.appNav', function(e) {
-              e.preventDefault();
-              $(e.target).click();
-            }).on('click.appNav', function(e) {
-              if ($(e.target).parents('.application-nav').length < 1) {
-                self.closeMenu();
-              }
-            });
+        // Events that will close the nav menu
+        // On a timer to prevent conflicts with the Trigger button's click events
+        setTimeout(function() {
+          $(document).on('touchend.appNav touchcancel.appNav', function(e) {
+            e.preventDefault();
+            $(e.target).click();
+          }).on('click.appNav', function(e) {
+            if ($(e.target).parents('.application-nav').length < 1) {
+              self.closeMenu();
+            }
           });
-        this.menu.animateOpen({
-            direction: 'horizontal',
-            distance: 300
-          });
+        }, 0);
       },
 
       closeMenu: function() {
-        this.menu.removeClass('is-open');
-        this.menu.one('animateClosedComplete', function(e) {
-            e.stopPropagation();
-            $(this).css('display','none');
-            $(document).off('touchend.appNav touchcancel.appNav click.appNav');
-        });
-        this.menu.animateClosed({
-            direction: 'horizontal'
-          });
+        this.menu.removeClass('is-open').find('.is-selected > a').attr('tabindex', '-1');
+        $(document).off('touchend.appNav touchcancel.appNav click.appNav');
       },
 
       // Teardown - Remove added markup and events
