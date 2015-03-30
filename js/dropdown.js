@@ -265,6 +265,7 @@
         var self = this;
 
         this.input.on('keydown.dropdown', function(e) {
+          self.ignoreKeys($(this), e);
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
           self.ignoreKeys($(this), e);
@@ -319,8 +320,8 @@
           return false;
         }
 
-        // Prevent Backspace from returning to the previous page.
-        if (charCode === 8 && input.hasClass('.dropdown')) {
+        // TODO: Prevent Backspace from returning to the previous page.
+        if (charCode === 8 && input.hasClass('dropdown')) {
           e.stopPropagation();
           e.preventDefault();
           return false;
@@ -329,76 +330,90 @@
         if (input.is(':disabled') || input.hasClass('is-readonly')) {
           return;
         }
+
+        return true;
       },
 
       //handle events while search is focus'd
       handleSearchEvents: function () {
-        var self = this,
-          timer, term = '';
+        var self = this;
 
         this.searchInput.on('keydown.dropdown', function(e) {
-          self.handleKeyDown($(this), e);
-        }).on('keypress.dropdown', function(e) {
-          var searchInput = $(this),
-            selected = false;
+          var searchInput = $(this);
 
-          self.ignoreKeys(searchInput, e);
+          if (!self.ignoreKeys(searchInput, e)) {
+            return;
+          }
+
+          if (!self.handleKeyDown(searchInput, e)) {
+            return;
+          }
 
           //Open List and Filter results
           if (self.searchInput.val() === self.getOptionText()) {
             self.searchInput.val('');
           }
 
-          clearTimeout(timer);
-          timer = setTimeout(function () {
-            term = searchInput.val().toLowerCase();
-            self.list.addClass('search-mode');
-            self.listUl.find('li').hide();
-
-            $.each(self.element[0].options, function () {
-              //Filter List
-              var opt = $(this),
-                listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
-                parts = opt.text().toLowerCase().split(' '),
-                containsTerm = false;
-
-              $.each(parts, function() {
-                if (this.indexOf(term) === 0) {
-                  containsTerm = true;
-                  return false;
-                }
-              });
-
-              //Find List Item - Starts With
-              if (containsTerm) {
-                if (!selected) {
-                  self.highlightOption(opt);
-                  selected = true;
-                }
-
-                //Highlight Term
-                var exp = new RegExp('(' + term + ')', 'i'),
-                text = listOpt.text().replace(exp, '<i>$1</i>');
-                listOpt.show().html(text);
-              }
-            });
-
-            // Set ARIA-activedescendant to the first search term
-            var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
-            self.highlightOption(topItem);
-            self.input.attr('aria-activedescendant', topItem.attr('id'));
-            self.searchInput.attr('aria-activedescendant', topItem.attr('id'));
-
-            term = '';
-
-            //Adjust height / top position
-            if (self.list.hasClass('is-ontop')) {
-              self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
-            }
-          }, 100);
+          self.filterList(searchInput.val().toLowerCase());
 
         });
 
+      },
+
+      filterList: function(term) {
+        var timer, self = this,
+          selected = false;
+
+        if (!term) {
+          term = '';
+        }
+
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          self.list.addClass('search-mode');
+          self.listUl.find('li').hide();
+
+          $.each(self.element[0].options, function () {
+            //Filter List
+            var opt = $(this),
+              listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
+              parts = opt.text().toLowerCase().split(' '),
+              containsTerm = false;
+
+            $.each(parts, function() {
+              if (this.indexOf(term) === 0) {
+                containsTerm = true;
+                return false;
+              }
+            });
+
+            //Find List Item - Starts With
+            if (containsTerm) {
+              if (!selected) {
+                self.highlightOption(opt);
+                selected = true;
+              }
+
+              //Highlight Term
+              var exp = new RegExp('(' + term + ')', 'i'),
+              text = listOpt.text().replace(exp, '<i>$1</i>');
+              listOpt.show().html(text);
+            }
+          });
+
+          // Set ARIA-activedescendant to the first search term
+          var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
+          self.highlightOption(topItem);
+          self.input.attr('aria-activedescendant', topItem.attr('id'));
+          self.searchInput.attr('aria-activedescendant', topItem.attr('id'));
+
+          term = '';
+
+          //Adjust height / top position
+          if (self.list.hasClass('is-ontop')) {
+            self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+          }
+        }, 100);
       },
 
       handleKeyDown: function(input, e) {
@@ -473,6 +488,7 @@
               this.highlightOption(next);
               next.parent().find('.is-focused').removeClass('is-focused');
               next.addClass('is-focused');
+              self.selectOption(next);
             }
 
             e.stopPropagation();
@@ -485,6 +501,7 @@
               this.highlightOption(next);
               next.parent().find('.is-focused').removeClass('is-focused');
               next.addClass('is-focused');
+              self.selectOption(next);
             }
 
             e.stopPropagation();

@@ -30,7 +30,7 @@ ul {
   color: $font-color;
   font-family: $font-regular;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  //-moz-osx-font-smoothing: grayscale;
   font-weight: lighter;
   line-height: normal;
 }

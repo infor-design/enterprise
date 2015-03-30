@@ -218,7 +218,7 @@
         var excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
         //Select on Focus
         this.menu.on('mouseenter.popupmenu', 'a', function () {
-          $(this).trigger('focus');
+          $(this).focus();
         });
 
         $(document).on('keydown.popupmenu.' + this.id, function (e) {
