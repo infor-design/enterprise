@@ -162,6 +162,8 @@
         elem.find('.about').about();
 
         elem.find('.accordion').accordion();
+
+        elem.find('.application-nav-trigger').appNav();
       });
 
       self.trigger('initialized');

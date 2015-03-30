@@ -51,11 +51,11 @@
   $.fn.transitionEndName = function() {
     var prop = $.fn.transitionSupport(),
       eventNames = {
-        'transition':       'transitionend',
-        'MozTransition':    'transitionend',
-        'OTransition':      'oTransitionEnd',
-        'WebkitTransition': 'webkitTransitionEnd',
-        'msTransition':     'MSTransitionEnd'
+        'WebkitTransition' :'webkitTransitionEnd',
+        'MozTransition'    :'transitionend',
+        'MSTransition'     :'msTransitionEnd',
+        'OTransition'      :'oTransitionEnd',
+        'transition'       :'transitionend'
       };
 
     return eventNames[prop] || null;
@@ -66,25 +66,20 @@
 
     // Settings and Options
     var defaults = {
+        direction: 'vertical', // Can also be 'horizontal'
+        distance: 'auto', // Distance in pixels that the animation covers.  'auto', or pixel value size
         timing: 300, // in Miliseconds
-        transition: 'cubic-bezier(.17, .04, .03, .94)'
+        transition: 'cubic-bezier(.17, .04, .03, .94)' // CSS Transition Timing Function
       },
       settings = $.extend({}, defaults, options);
 
     // Initialize the plugin (Once)
     return this.each(function() {
-      $(this).trigger('animateOpenStart');
-      var prevHeight = this.style.height;
-      this.style.height = 'auto';
-      var endHeight = getComputedStyle(this).height;
-      this.style.height = prevHeight;
-      // next line forces a repaint
-      this.offsetHeight // jshint ignore:line
-      this.style.transition = 'height ' + settings.timing + 'ms ' + settings.transition;
-      this.style.height = endHeight;
-
       var self = this,
         eventName = $.fn.transitionEndName(),
+        dim = settings.direction === 'horizontal' ? 'width' : 'height',
+        cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
+        distance = !isNaN(settings.distance) ? parseInt(settings.distance, 10) + 'px' : 'auto',
         timeout;
 
       function transitionEndCallback() {
@@ -93,7 +88,7 @@
         }
 
         self.style.transition = '';
-        self.style.height = 'auto';
+        self.style[dim] = distance;
         $(self).trigger('animateOpenComplete');
       }
 
@@ -102,7 +97,9 @@
         e.stopPropagation();
         $(this).off(eventName);
       });
+      $(this).trigger('animateOpenStart');
 
+      // Trigger the callback either by Timeout or by TransitionEnd
       if (eventName) {
         $(this).one(eventName + '.animation', transitionEndCallback);
       } else {
@@ -110,6 +107,15 @@
         timeout = setTimeout(transitionEndCallback, settings.timing);
       }
 
+      // Animate
+      var prevVal = this.style[dim];
+      this.style[dim] = distance;
+      var endVal = getComputedStyle(this)[dim];
+      this.style[dim] = prevVal;
+      // next line forces a repaint
+      this['offset' + cDim]; // jshint ignore:line
+      this.style.transition = dim + ' ' + settings.timing + 'ms ' + settings.transition;
+      this.style[dim] = endVal;
     });
   };
 
@@ -119,6 +125,7 @@
 
     // Settings and Options
     var defaults = {
+        direction: 'vertical', // can also be 'horizontal'
         timing: 300, // in Miliseconds
         transition: 'cubic-bezier(.17, .04, .03, .94)'
       },
@@ -126,15 +133,10 @@
 
     // Initialize the plugin (Once)
     return this.each(function() {
-      $(this).trigger('animateClosedStart');
-      this.style.height = getComputedStyle(this).height;
-      this.style.transition = 'height ' + settings.timing + 'ms ' + settings.transition;
-      // next line forces a repaint
-      this.offsetWidth; // jshint ignore:line
-      this.style.height = '0px';
-
       var self = this,
         eventName = $.fn.transitionEndName(),
+        dim = settings.direction === 'horizontal' ? 'width' : 'height',
+        cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
         timeout;
 
       function transitionEndCallback() {
@@ -149,12 +151,21 @@
         e.stopPropagation();
         $(this).off(eventName + '.animation');
       });
+      $(this).trigger('animateClosedStart');
 
+      // Trigger the callback either by Timeout or by TransitionEnd
       if (eventName) {
         $(this).one(eventName + '.animation', transitionEndCallback);
       } else {
         timeout = setTimeout(transitionEndCallback, settings.timing);
       }
+
+      // Animate
+      this.style[dim] = getComputedStyle(this)[dim];
+      // next line forces a repaint
+      this['offset' + cDim]; // jshint ignore:line
+      this.style.transition = dim + ' ' + settings.timing + 'ms ' + settings.transition;
+      this.style[dim] = '0px';
     });
   };
 

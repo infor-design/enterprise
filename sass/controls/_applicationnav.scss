@@ -2,6 +2,19 @@
 //================================================== //
 
 .application-nav {
+  @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
+  display: none;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 2em;
+  bottom: 0;
+  z-index: 9000;
+
+  > .accordion {
+    height: 100%;
+  }
 
   .panel.logout {
 
@@ -47,6 +60,4 @@
     }
 
   }
-
-
 }
