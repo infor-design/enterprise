@@ -127,6 +127,7 @@
     white-space: nowrap;
 
     > span {
+      -moz-osx-font-smoothing: initial;
       color: inherit;
       font-family: inherit;
       font-weight: inherit;

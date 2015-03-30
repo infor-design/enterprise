@@ -167,6 +167,7 @@
 
         var all = self.list.find('a').on('focus', function () {
           var anchor = $(this);
+
           all.parent('li').removeClass('is-selected');
           anchor.parent('li').addClass('is-selected');
           self.element.val(anchor.text().trim());
