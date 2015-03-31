@@ -118,6 +118,20 @@
             self.insertDate(self.currentDate);
           }
 
+          //Page Up Selects Same Day Next Month
+          if (key === 33 && self.isOpen()) {
+            handled = true;
+            self.currentDate.setMonth(self.currentDate.getMonth() + 1);
+            self.insertDate(self.currentDate);
+          }
+
+          //Page Down Selects Same Day Prev Month
+          if (key === 34 && self.isOpen()) {
+            handled = true;
+            self.currentDate.setMonth(self.currentDate.getMonth() - 1);
+            self.insertDate(self.currentDate);
+          }
+
           // 't' selects today
           if (key === 84) {
             handled = true;
@@ -214,9 +228,9 @@
         this.handleKeys($('#calendar-popup'));
 
         // Show Month
-        var currentVal = this.element.val();
+        var currentVal = Locale.parseDate(this.element.val());
 
-        this.currentDate = (currentVal ? Locale.parseDate(this.element.val()) : new Date());
+        this.currentDate = (currentVal ? currentVal : new Date());
         this.currentMonth = this.currentDate.getMonth();
         this.currentYear = this.currentDate.getFullYear();
         this.currentDay = this.currentDate.getDate();
@@ -240,6 +254,7 @@
           self.currentDate = new Date(new Date().getFullYear(), month, day);
           self.insertDate(self.currentDate);
           self.closeCalendar();
+          self.element.focus();
         });
 
         // Calendar Footer Events
@@ -353,7 +368,7 @@
       // Put the date in the field and select on the calendar
       insertDate: function (date) {
         var input = this.element;
-        input.val(Locale.formatDate(date)).trigger('updated');
+        input.val(Locale.formatDate(date)).trigger('updated').trigger('change');
 
         // Make sure Calendar is showing that month
         if (this.currentMonth !== date.getMonth()) {
