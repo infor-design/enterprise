@@ -336,7 +336,7 @@
 
       //handle events while search is focus'd
       handleSearchEvents: function () {
-        var self = this;
+        var self = this, timer;
 
         this.searchInput.on('keydown.dropdown', function(e) {
           var searchInput = $(this);
@@ -354,66 +354,66 @@
             self.searchInput.val('');
           }
 
-          self.filterList(searchInput.val().toLowerCase());
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            self.filterList(searchInput.val().toLowerCase());
+          }, 100);
 
         });
 
       },
 
       filterList: function(term) {
-        var timer, self = this,
+        var self = this,
           selected = false;
 
         if (!term) {
           term = '';
         }
 
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          self.list.addClass('search-mode');
-          self.listUl.find('li').hide();
+        self.list.addClass('search-mode');
+        self.listUl.find('li').hide();
 
-          $.each(self.element[0].options, function () {
-            //Filter List
-            var opt = $(this),
-              listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
-              parts = opt.text().toLowerCase().split(' '),
-              containsTerm = false;
+        $.each(self.element[0].options, function () {
+          //Filter List
+          var opt = $(this),
+            listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
+            parts = opt.text().toLowerCase().split(' '),
+            containsTerm = false;
 
-            $.each(parts, function() {
-              if (this.indexOf(term) === 0) {
-                containsTerm = true;
-                return false;
-              }
-            });
-
-            //Find List Item - Starts With
-            if (containsTerm) {
-              if (!selected) {
-                self.highlightOption(opt);
-                selected = true;
-              }
-
-              //Highlight Term
-              var exp = new RegExp('(' + term + ')', 'i'),
-              text = listOpt.text().replace(exp, '<i>$1</i>');
-              listOpt.show().html(text);
+          $.each(parts, function() {
+            if (this.indexOf(term) === 0) {
+              containsTerm = true;
+              return false;
             }
           });
 
-          // Set ARIA-activedescendant to the first search term
-          var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
-          self.highlightOption(topItem);
-          self.input.attr('aria-activedescendant', topItem.attr('id'));
-          self.searchInput.attr('aria-activedescendant', topItem.attr('id'));
+          //Find List Item - Starts With
+          if (containsTerm) {
+            if (!selected) {
+              self.highlightOption(opt);
+              selected = true;
+            }
 
-          term = '';
-
-          //Adjust height / top position
-          if (self.list.hasClass('is-ontop')) {
-            self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+            //Highlight Term
+            var exp = new RegExp('(' + term + ')', 'i'),
+            text = listOpt.text().replace(exp, '<i>$1</i>');
+            listOpt.show().html(text);
           }
-        }, 100);
+        });
+
+        // Set ARIA-activedescendant to the first search term
+        var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
+        self.highlightOption(topItem);
+        self.input.attr('aria-activedescendant', topItem.attr('id'));
+        self.searchInput.attr('aria-activedescendant', topItem.attr('id'));
+
+        term = '';
+
+        //Adjust height / top position
+        if (self.list.hasClass('is-ontop')) {
+          self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+        }
       },
 
       handleKeyDown: function(input, e) {
