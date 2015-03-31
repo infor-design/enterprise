@@ -134,7 +134,7 @@
         }
 
         this.element.addClass('is-open')
-          .popupmenu({menuId: 'autocomplete-list', trigger: 'immediate', autoFocus: false})
+          .popupmenu({menuId: 'autocomplete-list', mouseFocus: false, trigger: 'immediate', autoFocus: false})
           .on('close.autocomplete', function () {
             self.list.parent('.popupmenu-wrapper').remove();
             self.element.removeClass('is-open');
@@ -181,7 +181,12 @@
         //similar code as dropdown but close enough to be dry
         var buffer = '', timer, self = this;
 
-        this.element.on('keypress.autocomplete', function (e) {
+        this.element.on('keydown.autocomplete', function(e) {
+          if (e.keyCode === 8) {
+            self.element.trigger('keypress');
+          }
+        })
+        .on('keypress.autocomplete', function (e) {
           var field = $(this);
           clearTimeout(timer);
 
@@ -194,6 +199,7 @@
 
             buffer = field.val();
             if (buffer === '') {
+              self.element.data('popupmenu').close();
               return;
             }
             buffer = buffer.toLowerCase();

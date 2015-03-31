@@ -19,7 +19,8 @@
       defaults = {
         menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
         trigger: 'click',  //click, rightClick, immediate
-        autoFocus: true
+        autoFocus: true,
+        mouseFocus: true
       },
       settings = $.extend({}, defaults, options);
 
@@ -217,9 +218,11 @@
 
         var excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
         //Select on Focus
-        this.menu.on('mouseenter.popupmenu', 'a', function () {
-          $(this).focus();
-        });
+        if (this.settings.mouseFocus) {
+          this.menu.on('mouseenter.popupmenu', 'a', function () {
+            $(this).focus();
+          });
+        }
 
         $(document).on('keydown.popupmenu.' + this.id, function (e) {
           var key = e.which,
