@@ -193,8 +193,12 @@
         parts[1] = parts[1].toString();
         parts[1] = (parts[1].length < 2 ? '0' : '') + parts[1];
 
-        var newVal = parts[0] + ':' + parts[1] + ' ' + (parts[2] ? parts[2] : '');
+        if (parts[1] === '60') {
+          parts[1] = '00';
+          parts[0] = (parseInt(parts[0]) + 1).toString();
+        }
 
+        var newVal = parts[0] + ':' + parts[1] + ' ' + (parts[2] ? parts[2] : '');
         this.element.val(newVal);
       },
 
