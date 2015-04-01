@@ -10,7 +10,7 @@
   @include font-size(13);
   height: 22px;
   line-height: 22px;
-  margin-right: 10px;
+  margin: 0 10px 5px 0;
   padding: 0 11px;
   vertical-align: middle;
 
@@ -27,6 +27,7 @@
   height: 22px;
   @include font-size(13);
   line-height: 22px;
+  margin: 0 10px 5px 0;
   position: relative;
   text-align: center;
   width: 22px;
@@ -51,9 +52,9 @@
       border-radius: 55%;
       content: '';
       height: 58%;
-      left: .31em;
+      left: .3em;
       position: absolute;
-      top: .28em;
+      top: .25em;
       width: 58%;
     }
 
@@ -63,10 +64,10 @@
       border-left: .1em solid #ffffff;
       content: '';
       height: 24%;
-      left: .8em;
+      left: .75em;
       position: absolute;
-      top: .55em;
-      width: 20%;
+      top: .5em;
+      width: 19.5%;
     }
 
     &.current {
@@ -77,7 +78,7 @@
   &.large {
     height: 32px;
     @include font-size(20);
-    line-height: 32px;
+    line-height: 35px;
     width: 32px;
   }
 }

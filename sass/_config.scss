@@ -1,13 +1,14 @@
 // Variables
 //================================================== //
+@import 'controls/colors';
 
 // Form Background Color
 $body-bg-color: #f5f5f5;
 
 // Base Colors
 $header-color: #5c5c5c;
-$primary-color: #0c7ad8;  //Suggest 0371cf for text
-$primary-color-text: #0371cf;
+$primary-color: $azure05;
+$primary-color-text: $azure07;
 $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 

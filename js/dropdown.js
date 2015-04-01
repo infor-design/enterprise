@@ -18,11 +18,10 @@
     var pluginName = 'dropdown',
         defaults = {
           closeOnSelect: true, // When an option is selected, the list will close if set to "true".  List stays open if "false".
-          editable: 'false',
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
           moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
-          source: null,  //A function that can do an ajax call.
+          source: undefined,  //A function that can do an ajax call.
           empty: false //Initialize Empty Value
         },
         settings = $.extend({}, defaults, options);
@@ -1004,26 +1003,26 @@
           self.element
               .trigger('requeststart');
 
-            if (sourceType === 'function') {
-              // Call the 'source' setting as a function with the done callback.
-              this.settings.source(response);
-            } else if (sourceType === 'object') {
-              // Use the 'source' setting as pre-existing data.
-              // Sanitize accordingly.
-              var sourceData = isArray(this.settings.source) ? this.settings.source : [this.settings.source];
-              response(sourceData);
-            } else {
-              // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
-              var sourceURL = this.settings.source.toString(),
-                request = $.getJSON(sourceURL);
+          if (sourceType === 'function') {
+            // Call the 'source' setting as a function with the done callback.
+            this.settings.source(response);
+          } else if (sourceType === 'object') {
+            // Use the 'source' setting as pre-existing data.
+            // Sanitize accordingly.
+            var sourceData = isArray(this.settings.source) ? this.settings.source : [this.settings.source];
+            response(sourceData);
+          } else {
+            // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
+            var sourceURL = this.settings.source.toString(),
+              request = $.getJSON(sourceURL);
 
-              request.done(function(data) {
-                response(data);
-              }).fail(function() {
-                console.warn('Request to ' + sourceURL + ' could not be processed...');
-                response([]);
-              });
-            }
+            request.done(function(data) {
+              response(data);
+            }).fail(function() {
+              console.warn('Request to ' + sourceURL + ' could not be processed...');
+              response([]);
+            });
+          }
           return true;
         }
         return false;
@@ -1087,8 +1086,10 @@
     // Keep the Chaining and Init the Controls or Settings
     return this.each(function() {
       var instance = $.data(this, pluginName);
+
       if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
+        console.log(settings);
+        instance.settings = $.extend({}, settings, instance.settings);
         instance.update();
       } else {
         instance = $.data(this, pluginName, new Dropdown(this, settings));
