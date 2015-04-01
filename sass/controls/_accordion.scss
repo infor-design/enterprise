@@ -41,6 +41,14 @@
       }
     }
 
+    .badge,
+    .tag {
+      float: right;
+      margin-right: 0;
+      position: relative;
+      top: -.2em;
+    }
+
   }
 
   .accordion-header {
@@ -138,6 +146,14 @@
         }
       }
     }
+
+    .badge,
+    .tag {
+      @include font-size(10);
+      height: 16px;
+      line-height: 16px;
+      padding: 0 7px;
+    }
   }
 
   .accordion-content {
@@ -148,6 +164,12 @@
 
   &.light {
     background-color: #ffffff;
+
+    .badge,
+    .tag {
+      background-color: $amber09 !important;
+      color: #ffffff !important;
+    }
 
     > .accordion-header {
       border-bottom-color: #d8d8d8;
@@ -176,6 +198,12 @@
   &.dark {
     background-color: #383838;
     color: #acadae;
+
+    .badge,
+    .tag {
+      background-color: $amber04 !important;
+      color: #0a0a0a !important;
+    }
 
     > .accordion-header {
       border-bottom-color: #1a1a1a;

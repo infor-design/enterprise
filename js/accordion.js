@@ -66,15 +66,19 @@
       build: function() {
         var self = this;
         this.element.attr({
-          'role': 'tablist',
           'aria-multiselectable': 'true'
-        }).find('ul').attr({
-          'role': 'tablist',
-          'aria-multiselectable': 'true'
+        }).find('.accordion-pane').attr({
+          'aria-multiselectable': 'false'
         });
 
-        this.element.find('.accordion-header').attr({
-          'role': 'tab'
+        if (this.settings.allowOnePane) {
+          this.element.attr({
+            'aria-multiselectable': 'false'
+          });
+        }
+
+        this.headers.attr({
+          'role' : 'presentation'
         });
 
         this.element.find('a + .accordion-pane').parent().each(function() {
@@ -111,7 +115,8 @@
       },
 
       handleKeydown: function(e) {
-        var key = e.which,
+        var self = this,
+          key = e.which,
           anchors = this.anchors.filter(':not(:disabled):not(:hidden)'),
           selected = this.element.find('.is-selected').children('a'),
           next, prev;
@@ -122,12 +127,67 @@
 
         // NOTE: Enter is handled by the anchor's default implementation
 
+        if (key === 9) { // Tab
+
+          if (!e.shiftKey) {
+            // Go Forward
+            var panel = selected.next('.accordion-pane'),
+              firstItem;
+
+            if (panel.length && panel.parent().hasClass('is-expanded')) {
+              e.preventDefault();
+              firstItem = panel.find(':focusable').first();
+              if (firstItem[0].tagName === 'A') {
+                this.setActiveAnchor(firstItem);
+              } else {
+                firstItem.focus();
+              }
+              return false;
+            }
+
+            // Navigate to the next header
+            next = anchors.eq(anchors.index(selected) + 1);
+            if (next.length) {
+              e.preventDefault();
+              this.setActiveAnchor(next);
+              return false;
+            }
+
+          } else {
+            // Go Backward
+            var index = anchors.index(selected) - 1;
+            prev = anchors.eq(index);
+            if (prev.length && index > -1) {
+              e.preventDefault();
+              this.setActiveAnchor(prev);
+              return false;
+            }
+
+            var parent = selected.parentsUntil(this.element, '.accordion-header').eq(1);
+            if (parent.length) {
+              e.preventDefault();
+              this.setActiveAnchor(parent.children('a'));
+              return false;
+            }
+
+          }
+
+          // If e.preventDefault() doesn't fire, focus may be on an element outside of the accordion.
+          // If this happens, trigger a 'blur' event on the main accordion so we can communicate to other
+          // plugins that focus is no longer here.
+          setTimeout(function() {
+            if (!$.contains(self.element[0], document.activeElement)) {
+              self.element.trigger('blur');
+            }
+          }, 0);
+        }
+
         if (key === 32) { // Spacebar
           this.handleSelected(selected);
           return false;
         }
 
-        if (key === 38) { // Up
+        if (key === 37 || key === 38) { // Left/Up
           e.preventDefault();
           prev = anchors.eq(anchors.index(selected) - 1);
           if (!prev.length) {
@@ -137,7 +197,7 @@
           return false;
         }
 
-        if (key === 40) { // Down
+        if (key === 39 || key === 40) { // Right/Down
           e.preventDefault();
           next = anchors.eq(anchors.index(selected) + 1);
           if (!next.length) {
@@ -167,15 +227,13 @@
         this.headers.removeClass('child-selected');
 
         this.anchors.attr({
-          'tabindex': '-1',
           'aria-selected': 'false'
         }).parent().removeClass('is-selected');
+
         anchor.attr({
-          'tabindex': '0',
           'aria-selected': 'true'
-        })
-        .parent()
-          .addClass('is-selected')
+        }).parent().addClass('is-selected')
+
         .parentsUntil(this.element, '.accordion-header')
           .addClass('child-selected');
 
@@ -210,7 +268,8 @@
         header.attr('aria-expanded', 'false').removeClass('is-expanded');
         header.children('.accordion-pane').one('animateClosedComplete', function(e) {
           e.stopPropagation();
-          $(this).css('display','none');
+          $(this).add($(this).find('.accordion-pane')).css('display', 'none');
+
         }).animateClosed();
       },
 
@@ -223,7 +282,7 @@
           .removeAttr('aria-expanded')
           .removeAttr('role');
         this.anchors
-          .removeAttr('tabindex')
+          //.removeAttr('tabindex')
           .removeAttr('aria-selected')
           .off('touchend.accordion touchcancel.accordion click.accordion keydown.accordion focus.accordion blur.accordion');
         this.element.removeAttr('role').removeAttr('aria-multiselectable');

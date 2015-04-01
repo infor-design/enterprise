@@ -7,12 +7,14 @@
       <div class="toolbar">
 
         <div class="title">
-          <button class="btn-icon hamburger-menu" type="button">
+          <button class="btn-icon hamburger-menu application-nav-trigger" type="button">
             <span>Show navigation</span>
             <svg class="icon">
               <use xlink:href="#icon-hamburger"></use>
             </svg>
           </button>
+          {{> includes/applicationnav}}
+
           <h1>{{title}}
           {{#subtitle}}
           <span class="seperator">|</span>

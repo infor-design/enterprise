@@ -9,7 +9,7 @@
   left: -300px;
   overflow: hidden;
   position: fixed;
-  top: 2em;
+  top: 8em;
   @include transition(left 300ms cubic-bezier(.17, .04, .03, .94),
     -moz-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
     -ms-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
@@ -18,6 +18,10 @@
     box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
   width: 300px;
   z-index: 9000;
+
+  &.short {
+    top: 3em;
+  }
 
   &.is-open {
     left: 0;
