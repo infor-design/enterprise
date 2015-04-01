@@ -272,6 +272,10 @@ app.configure(function() {
     res.end(JSON.stringify(tasks));
   });
 
+  app.get('/api/nav-items', function(req, res) {
+    res.render('tests/accordion-api-options.html');
+  });
+
   // RESTful routes
   //"dependencies": {
   //"formidable": "^1.0.16",

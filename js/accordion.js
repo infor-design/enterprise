@@ -45,6 +45,11 @@
           .handleEvents();
       },
 
+      updated: function() {
+        this.anchors.off();
+        return this.init();
+      },
+
       setup: function() {
         var allowOnePane = this.element.attr('data-allow-one-pane');
         this.settings.allowOnePane = allowOnePane !== undefined ? allowOnePane === 'true' : this.settings.allowOnePane;
@@ -54,7 +59,7 @@
           return $(this).children('.accordion-pane').length > 0;
         });
 
-        var active = this.anchors.filter('.is-selected');
+        var active = this.anchors.parent().filter('.is-selected').children('a');
         if (!active.length) {
           active = this.anchors.filter(':not(:disabled):not(:hidden)').first();
         }
@@ -109,6 +114,10 @@
           $(this).parent().addClass('is-focused');
         }).on('blur.accordion', function() {
           $(this).parent().removeClass('is-focused');
+        });
+
+        this.element.one('updated.accordion', function() {
+          self.updated();
         });
 
         return this;
@@ -217,10 +226,7 @@
         }
 
         this.element.trigger('selected', [target]);
-
-        if (target.next('.accordion-pane').length) {
-          this.toggleHeader(target.parent());
-        }
+        this.toggleHeader(target.parent());
       },
 
       setActiveAnchor: function(anchor) {
@@ -249,28 +255,105 @@
       },
 
       openHeader: function(header) {
-        var self = this;
+        var self = this,
+          a = header.children('a'),
+          source = header.attr('data-source'),
+          childPane = header.children('.accordion-pane');
 
-        if (this.settings.allowOnePane) {
-          this.headers.not(header).filter(function() {
-            return header.parentsUntil(this.element).filter($(this)).length === 0;
-          }).each(function() {
-            if ($(this).hasClass('is-expanded')) {
-              self.closeHeader($(this));
-            }
-          });
+        function open() {
+          if (self.settings.allowOnePane) {
+            self.headers.not(header).filter(function() {
+              return header.parentsUntil(this.element).filter($(this)).length === 0;
+            }).each(function() {
+              if ($(this).hasClass('is-expanded')) {
+                self.closeHeader($(this));
+              }
+            });
+          }
+          header.attr('aria-expanded', 'true').addClass('is-expanded');
+          header.children('.accordion-pane').css('display','block').animateOpen();
         }
-        header.attr('aria-expanded', 'true').addClass('is-expanded');
-        header.children('.accordion-pane').css('display','block').animateOpen();
+
+        if (source && source !== null && source !== undefined && !childPane.contents().length) {
+          this.loadExternalSource(a, source, open);
+        } else {
+          if (!childPane.length) {
+            return;
+          }
+          open();
+        }
       },
 
       closeHeader: function(header) {
+        if (!header.children('.accordion-pane').length) {
+          return;
+        }
+
         header.attr('aria-expanded', 'false').removeClass('is-expanded');
         header.children('.accordion-pane').one('animateClosedComplete', function(e) {
           e.stopPropagation();
           $(this).add($(this).find('.accordion-pane')).css('display', 'none');
-
         }).animateClosed();
+      },
+
+      loadExternalSource: function(target, source, callback) {
+        var self = this,
+          paneEl = target.next('.accordion-pane'),
+          sourceType = typeof source;
+
+        function done(markup) {
+          target
+            .removeClass('busy')
+            .trigger('requestend');
+
+          paneEl.append(markup);
+          self.element.trigger('updated');
+          if (callback && typeof callback === 'function') {
+            callback();
+          }
+        }
+
+        if (!paneEl.length) {
+          var parentEl = this.element[0].tagName.toLowerCase();
+          paneEl = $('<' + parentEl + ' class="accordion-pane"></' + parentEl + '>').appendTo(target.parent());
+        }
+
+        target
+          .addClass('busy')
+          .trigger('requeststart');
+
+        if (sourceType === 'function') {
+          // Call the 'source' setting as a function with the done callback.
+          settings.source(done);
+        } else {
+          // Convert source to string, and check for existing DOM elements that match the selectors.
+          var str = source.toString(),
+            request,
+            jqRegex = /\$\(\'/,
+            idRegex = /#[A-Za-z0-9]+/;
+
+          if (jqRegex.test(str)) {
+            str = str.replace("$('", '').replace("')", ''); //jshint ignore:line
+            done($(str).html());
+            return;
+          }
+
+          if (idRegex.test(str)) {
+            done($(str).html());
+            return;
+          }
+
+          // String is a URL.  Attempt an AJAX GET.
+          request = $.get(str);
+
+          request.done(function(data) {
+            done(data);
+          }).fail(function() {
+            console.warn('Request to ' + str + ' could not be processed...');
+            done('');
+          });
+        }
+
       },
 
       // Teardown - Remove added markup and events
@@ -285,7 +368,10 @@
           //.removeAttr('tabindex')
           .removeAttr('aria-selected')
           .off('touchend.accordion touchcancel.accordion click.accordion keydown.accordion focus.accordion blur.accordion');
-        this.element.removeAttr('role').removeAttr('aria-multiselectable');
+        this.element
+          .off('updated')
+          .removeAttr('role')
+          .removeAttr('aria-multiselectable');
         $.removeData(this.element[0], pluginName);
       }
     };
