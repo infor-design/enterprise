@@ -193,6 +193,33 @@
         border-color: #d8d8d8;
       }
     }
+
+    &.is-disabled {
+      background-color: $input-disabled-bg-color;
+
+      > .accordion-header {
+        border-bottom-color: $input-disabled-border-color;
+      }
+
+      a {
+        cursor: default;
+      }
+
+      .accordion-header,
+      .accordion-header.is-selected,
+      .accordion-header.is-selected.is-focused {
+        background-color: transparent;
+        color: $input-disabled-color;
+
+        span {
+          color: $input-disabled-color;
+        }
+
+        .icon {
+          fill: $input-disabled-color;
+        }
+      }
+    }
   }
 
   &.dark {
@@ -228,6 +255,33 @@
     .separator {
       &:before {
         border-color: #3b3b3b;
+      }
+    }
+
+    &.is-disabled {
+      background-color: $input-disabled-bg-color;
+
+      > .accordion-header {
+        border-bottom-color: $input-disabled-border-color;
+      }
+
+      a {
+        cursor: default;
+      }
+
+      .accordion-header,
+      .accordion-header.is-selected,
+      .accordion-header.is-selected.is-focused {
+        background-color: transparent;
+        color: $input-disabled-color;
+
+        span {
+          color: $input-disabled-color;
+        }
+
+        .icon {
+          fill: $input-disabled-color;
+        }
       }
     }
   }

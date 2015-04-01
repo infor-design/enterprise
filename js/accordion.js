@@ -106,14 +106,13 @@
           e.preventDefault();
           $(e.target).click();
         }).on('click.accordion', function(e) {
-          self.setActiveAnchor($(e.target));
-          self.handleSelected(e);
+          self.handleClick(e);
         }).on('keydown.accordion', function(e) {
           self.handleKeydown(e);
-        }).on('focus.accordion', function() {
-          $(this).parent().addClass('is-focused');
-        }).on('blur.accordion', function() {
-          $(this).parent().removeClass('is-focused');
+        }).on('focus.accordion', function(e) {
+          self.handleFocus(e, $(this));
+        }).on('blur.accordion', function(e) {
+          self.handleBlur(e, $(this));
         });
 
         this.element.one('updated.accordion', function() {
@@ -123,7 +122,38 @@
         return this;
       },
 
+      handleClick: function(e) {
+        if (this.element.prop('disabled') === true) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        this.setActiveAnchor($(e.target));
+        this.handleSelected(e);
+      },
+
+      handleFocus: function(e, anchor) {
+        if (this.element.prop('disabled') === true) {
+          e.preventDefault();
+          return false;
+        }
+        anchor.parent().addClass('is-focused');
+      },
+
+      handleBlur: function(e, anchor) {
+        if (this.element.prop('disabled') === true) {
+          e.preventDefault();
+          return false;
+        }
+        anchor.parent().removeClass('is-focused');
+      },
+
       handleKeydown: function(e) {
+        if (this.element.prop('disabled') === true) {
+          return false;
+        }
+
         var self = this,
           key = e.which,
           anchors = this.anchors.filter(':not(:disabled):not(:hidden)'),
@@ -135,7 +165,6 @@
         }
 
         // NOTE: Enter is handled by the anchor's default implementation
-
         if (key === 9) { // Tab
 
           if (!e.shiftKey) {
@@ -218,6 +247,10 @@
 
       // NOTE: "e" is either an event or a jQuery object
       handleSelected: function(e) {
+        if (this.element.prop('disabled') === true) {
+          return false;
+        }
+
         var isEvent = e !== undefined && e.type !== undefined,
           target = isEvent ? $(e.target) : e;
 
@@ -354,6 +387,16 @@
           });
         }
 
+      },
+
+      disable: function() {
+        this.element
+          .addClass('is-disabled');
+      },
+
+      enable: function() {
+        this.element
+          .removeClass('is-disabled');
       },
 
       // Teardown - Remove added markup and events
