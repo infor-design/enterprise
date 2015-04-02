@@ -158,7 +158,7 @@
             }
           }
 
-          self.element.trigger('selected', [a]);
+          self.element.trigger('selected', [a, ret]);
           self.element.data('popupmenu').close();
 
           e.preventDefault();
