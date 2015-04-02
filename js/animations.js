@@ -1,6 +1,6 @@
 /**
 * Height Animation Controls (TODO: bitly link to soho xi docs)
-* Idea borrowed from: http://n12v.com/css-transition-to-from-auto/
+* Adapted from: http://n12v.com/css-transition-to-from-auto/
 * Contains a handful of animation helper methods that attempt to DRY up CSS-powered sliding animations.
 */
 
@@ -21,47 +21,7 @@
 
   'use strict';
 
-  // Transition Support Check
-  // Returns the vendor-prefixed name of the 'transition' property available by the browser.
-  // If the browser doesn't support transitions, it returns null.
-  $.fn.transitionSupport = function() {
-    var el = $('<div></div>')[0],
-      prop = 'transition',
-      prefixes = ['Moz', 'Webkit', 'O', 'ms'],
-      prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
-
-    if (prop in el.style) {
-      $(el).remove();
-      return prop;
-    }
-
-    for (var i = 0; i < prefixes.length; i++) {
-      var vendorProp = prefixes[i] + prop_;
-      if (vendorProp in el.style) {
-        $(el).remove();
-        return vendorProp;
-      }
-    }
-
-    $(el).remove();
-    return null;
-  };
-
-  // Returns the name of the TransitionEnd event.
-  $.fn.transitionEndName = function() {
-    var prop = $.fn.transitionSupport(),
-      eventNames = {
-        'WebkitTransition' :'webkitTransitionEnd',
-        'MozTransition'    :'transitionend',
-        'MSTransition'     :'msTransitionEnd',
-        'OTransition'      :'oTransitionEnd',
-        'transition'       :'transitionend'
-      };
-
-    return eventNames[prop] || null;
-  };
-
-  // Use CSS to animate from "0" to "auto" widths
+  // Use CSS Transitions to animate from "0" to "auto" widths
   $.fn.animateOpen = function(options) {
 
     // Settings and Options
@@ -76,7 +36,7 @@
     // Initialize the plugin (Once)
     return this.each(function() {
       var self = this,
-        eventName = $.fn.transitionEndName(),
+        eventName = $.fn.transitionEndName,
         dim = settings.direction === 'horizontal' ? 'width' : 'height',
         cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
         distance = !isNaN(settings.distance) ? parseInt(settings.distance, 10) + 'px' : 'auto',
@@ -95,7 +55,7 @@
       // Clear any previous attempt at this animation when the animation starts new
       $(this).one('animateOpenStart.animation', function(e) {
         e.stopPropagation();
-        $(this).off(eventName);
+        $(this).off(eventName + '.animation');
       });
       $(this).trigger('animateOpenStart');
 
@@ -119,8 +79,7 @@
     });
   };
 
-
-  // Use CSS to animate from "auto" to "0" widths
+  // Use CSS Transitions to animate from "auto" to "0" widths
   $.fn.animateClosed = function(options) {
 
     // Settings and Options
@@ -134,7 +93,7 @@
     // Initialize the plugin (Once)
     return this.each(function() {
       var self = this,
-        eventName = $.fn.transitionEndName(),
+        eventName = $.fn.transitionEndName,
         dim = settings.direction === 'horizontal' ? 'width' : 'height',
         cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
         timeout;
@@ -143,6 +102,7 @@
         if (!eventName) {
           clearTimeout(timeout);
         }
+        self.style.transition = '';
         $(self).trigger('animateClosedComplete');
       }
 

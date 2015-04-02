@@ -8,8 +8,9 @@
   color: #ffffff;
   display: inline-block;
   @include font-size(13);
+  font-weight: 400;
   height: 22px;
-  line-height: 22px;
+  line-height: 24px;
   margin: 0 10px 5px 0;
   padding: 0 11px;
   vertical-align: middle;
@@ -24,9 +25,10 @@
   border-radius: 16px;
   color: #ffffff;
   display: inline-block;
-  height: 22px;
   @include font-size(13);
-  line-height: 22px;
+  font-weight: 400;
+  height: 22px;
+  line-height: 24px;
   margin: 0 10px 5px 0;
   position: relative;
   text-align: center;
@@ -78,7 +80,7 @@
   &.large {
     height: 32px;
     @include font-size(20);
-    line-height: 35px;
+    line-height: 36px;
     width: 32px;
   }
 }

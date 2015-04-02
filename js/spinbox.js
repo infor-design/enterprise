@@ -240,8 +240,9 @@
         // If the key is a number, pre-calculate the value of the number to see if it would be
         // greater than the maximum, or less than the minimum.  If it's fine, let it through.
         // Doing this check here prevents visual jitter.
-        if (key > 47 && key < 58) {
-          var num = Number(this.checkForNumeric(this.element.val()) + String.fromCharCode(key)),
+        if ((key > 47 && key < 58) || (key > 95 && key < 106)) {
+          var num = Number(this.checkForNumeric(this.element.val()) +
+              String.fromCharCode(key > 95 && key < 106 ? key - 48 : key)), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
             min = self.element.attr('min'),
             max = self.element.attr('max');
 
