@@ -1,0 +1,103 @@
+/**
+* Utils.js - (TODO: Bit.ly Link to Docs)
+* Compilation of common tools that can be used across all SoHo Xi Controls.
+*/
+
+(function(factory) {
+  'use strict';
+
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module depending on jQuery.
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    //Support for Atom/CommonJS - Not Tested TODO
+    module.exports = factory;
+  } else {
+    // Register with Browser globals
+    factory(window.jQuery || window.Zepto);
+  }
+}(function($) {
+
+  'use strict';
+
+  // Transition Support Check
+  // Returns the vendor-prefixed name of the 'transition' property available by the browser.
+  // If the browser doesn't support transitions, it returns null.
+  $.fn.transitionSupport = (function() {
+    var el = $('<div></div>')[0],
+      prop = 'transition',
+      prefixes = ['Moz', 'Webkit', 'O', 'ms'],
+      prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
+
+    if (prop in el.style) {
+      $(el).remove();
+      return prop;
+    }
+
+    for (var i = 0; i < prefixes.length; i++) {
+      var vendorProp = prefixes[i] + prop_;
+      if (vendorProp in el.style) {
+        $(el).remove();
+        return vendorProp;
+      }
+    }
+
+    $(el).remove();
+    return null;
+  })();
+
+  // Returns the name of the TransitionEnd event.
+  $.fn.transitionEndName = (function() {
+    var prop = $.fn.transitionSupport,
+      eventNames = {
+        'WebkitTransition' :'webkitTransitionEnd',
+        'MozTransition'    :'transitionend',
+        'MSTransition'     :'msTransitionEnd',
+        'OTransition'      :'oTransitionEnd',
+        'transition'       :'transitionend'
+      };
+
+    return eventNames[prop] || null;
+  })();
+
+  // From jQueryUI Core: https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93
+  // Adapted from:  http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus
+  // Adds the ':focusable' selector to Sizzle to allow for the selection of elements that can currently be focused.
+  function focusable(element) {
+    var map, mapName, img,
+      nodeName = element.nodeName.toLowerCase(),
+      isTabIndexNotNaN = !isNaN($.attr(element, 'tabindex'));
+
+    if ('area' === nodeName) {
+      map = element.parentNode;
+      mapName = map.name;
+      if (!element.href || !mapName || map.nodeName.toLowerCase() !== 'map') {
+        return false;
+      }
+      img = $('img[usemap=#' + mapName + ']')[0];
+      return !!img && visible(img);
+    }
+
+    return (/input|select|textarea|button|object/.test(nodeName) ?
+      !element.disabled :
+      'a' === nodeName ?
+        element.href || isTabIndexNotNaN :
+        isTabIndexNotNaN) &&
+      // the element and all of its ancestors must be visible
+      visible( element );
+  }
+
+  function visible(element) {
+    return $.expr.filters.visible( element ) &&
+      !$(element).parents().addBack().filter(function() {
+        return $.css(this, 'visibility') === 'hidden';
+      }).length;
+  }
+
+  $.extend($.expr[':'], {
+    focusable: function(element) {
+      return focusable(element, !isNaN($.attr(element, 'tabindex')));
+    }
+  });
+
+}));

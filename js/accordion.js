@@ -45,6 +45,11 @@
           .handleEvents();
       },
 
+      updated: function() {
+        this.anchors.off();
+        return this.init();
+      },
+
       setup: function() {
         var allowOnePane = this.element.attr('data-allow-one-pane');
         this.settings.allowOnePane = allowOnePane !== undefined ? allowOnePane === 'true' : this.settings.allowOnePane;
@@ -54,7 +59,7 @@
           return $(this).children('.accordion-pane').length > 0;
         });
 
-        var active = this.anchors.filter('.is-selected');
+        var active = this.anchors.parent().filter('.is-selected').children('a');
         if (!active.length) {
           active = this.anchors.filter(':not(:disabled):not(:hidden)').first();
         }
@@ -66,15 +71,19 @@
       build: function() {
         var self = this;
         this.element.attr({
-          'role': 'tablist',
           'aria-multiselectable': 'true'
-        }).find('ul').attr({
-          'role': 'tablist',
-          'aria-multiselectable': 'true'
+        }).find('.accordion-pane').attr({
+          'aria-multiselectable': 'false'
         });
 
-        this.element.find('.accordion-header').attr({
-          'role': 'tab'
+        if (this.settings.allowOnePane) {
+          this.element.attr({
+            'aria-multiselectable': 'false'
+          });
+        }
+
+        this.headers.attr({
+          'role' : 'presentation'
         });
 
         this.element.find('a + .accordion-pane').parent().each(function() {
@@ -97,21 +106,56 @@
           e.preventDefault();
           $(e.target).click();
         }).on('click.accordion', function(e) {
-          self.setActiveAnchor($(e.target));
-          self.handleSelected(e);
+          self.handleClick(e);
         }).on('keydown.accordion', function(e) {
           self.handleKeydown(e);
-        }).on('focus.accordion', function() {
-          $(this).parent().addClass('is-focused');
-        }).on('blur.accordion', function() {
-          $(this).parent().removeClass('is-focused');
+        }).on('focus.accordion', function(e) {
+          self.handleFocus(e, $(this));
+        }).on('blur.accordion', function(e) {
+          self.handleBlur(e, $(this));
+        });
+
+        this.element.one('updated.accordion', function() {
+          self.updated();
         });
 
         return this;
       },
 
+      handleClick: function(e) {
+        if (this.element.prop('disabled') === true) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        this.setActiveAnchor($(e.target));
+        this.handleSelected(e);
+      },
+
+      handleFocus: function(e, anchor) {
+        if (this.element.prop('disabled') === true) {
+          e.preventDefault();
+          return false;
+        }
+        anchor.parent().addClass('is-focused');
+      },
+
+      handleBlur: function(e, anchor) {
+        if (this.element.prop('disabled') === true) {
+          e.preventDefault();
+          return false;
+        }
+        anchor.parent().removeClass('is-focused');
+      },
+
       handleKeydown: function(e) {
-        var key = e.which,
+        if (this.element.prop('disabled') === true) {
+          return false;
+        }
+
+        var self = this,
+          key = e.which,
           anchors = this.anchors.filter(':not(:disabled):not(:hidden)'),
           selected = this.element.find('.is-selected').children('a'),
           next, prev;
@@ -121,13 +165,67 @@
         }
 
         // NOTE: Enter is handled by the anchor's default implementation
+        if (key === 9) { // Tab
+
+          if (!e.shiftKey) {
+            // Go Forward
+            var panel = selected.next('.accordion-pane'),
+              firstItem;
+
+            if (panel.length && panel.parent().hasClass('is-expanded')) {
+              e.preventDefault();
+              firstItem = panel.find(':focusable').first();
+              if (firstItem[0].tagName === 'A') {
+                this.setActiveAnchor(firstItem);
+              } else {
+                firstItem.focus();
+              }
+              return false;
+            }
+
+            // Navigate to the next header
+            next = anchors.eq(anchors.index(selected) + 1);
+            if (next.length) {
+              e.preventDefault();
+              this.setActiveAnchor(next);
+              return false;
+            }
+
+          } else {
+            // Go Backward
+            var index = anchors.index(selected) - 1;
+            prev = anchors.eq(index);
+            if (prev.length && index > -1) {
+              e.preventDefault();
+              this.setActiveAnchor(prev);
+              return false;
+            }
+
+            var parent = selected.parentsUntil(this.element, '.accordion-header').eq(1);
+            if (parent.length) {
+              e.preventDefault();
+              this.setActiveAnchor(parent.children('a'));
+              return false;
+            }
+
+          }
+
+          // If e.preventDefault() doesn't fire, focus may be on an element outside of the accordion.
+          // If this happens, trigger a 'blur' event on the main accordion so we can communicate to other
+          // plugins that focus is no longer here.
+          setTimeout(function() {
+            if (!$.contains(self.element[0], document.activeElement)) {
+              self.element.trigger('blur');
+            }
+          }, 0);
+        }
 
         if (key === 32) { // Spacebar
           this.handleSelected(selected);
           return false;
         }
 
-        if (key === 38) { // Up
+        if (key === 37 || key === 38) { // Left/Up
           e.preventDefault();
           prev = anchors.eq(anchors.index(selected) - 1);
           if (!prev.length) {
@@ -137,7 +235,7 @@
           return false;
         }
 
-        if (key === 40) { // Down
+        if (key === 39 || key === 40) { // Right/Down
           e.preventDefault();
           next = anchors.eq(anchors.index(selected) + 1);
           if (!next.length) {
@@ -149,6 +247,10 @@
 
       // NOTE: "e" is either an event or a jQuery object
       handleSelected: function(e) {
+        if (this.element.prop('disabled') === true) {
+          return false;
+        }
+
         var isEvent = e !== undefined && e.type !== undefined,
           target = isEvent ? $(e.target) : e;
 
@@ -157,25 +259,20 @@
         }
 
         this.element.trigger('selected', [target]);
-
-        if (target.next('.accordion-pane').length) {
-          this.toggleHeader(target.parent());
-        }
+        this.toggleHeader(target.parent());
       },
 
       setActiveAnchor: function(anchor) {
         this.headers.removeClass('child-selected');
 
         this.anchors.attr({
-          'tabindex': '-1',
           'aria-selected': 'false'
         }).parent().removeClass('is-selected');
+
         anchor.attr({
-          'tabindex': '0',
           'aria-selected': 'true'
-        })
-        .parent()
-          .addClass('is-selected')
+        }).parent().addClass('is-selected')
+
         .parentsUntil(this.element, '.accordion-header')
           .addClass('child-selected');
 
@@ -191,27 +288,115 @@
       },
 
       openHeader: function(header) {
-        var self = this;
+        var self = this,
+          a = header.children('a'),
+          source = header.attr('data-source'),
+          childPane = header.children('.accordion-pane');
 
-        if (this.settings.allowOnePane) {
-          this.headers.not(header).filter(function() {
-            return header.parentsUntil(this.element).filter($(this)).length === 0;
-          }).each(function() {
-            if ($(this).hasClass('is-expanded')) {
-              self.closeHeader($(this));
-            }
-          });
+        function open() {
+          if (self.settings.allowOnePane) {
+            self.headers.not(header).filter(function() {
+              return header.parentsUntil(this.element).filter($(this)).length === 0;
+            }).each(function() {
+              if ($(this).hasClass('is-expanded')) {
+                self.closeHeader($(this));
+              }
+            });
+          }
+          header.attr('aria-expanded', 'true').addClass('is-expanded');
+          header.children('.accordion-pane').css('display','block').animateOpen();
         }
-        header.attr('aria-expanded', 'true').addClass('is-expanded');
-        header.children('.accordion-pane').css('display','block').animateOpen();
+
+        if (source && source !== null && source !== undefined && !childPane.contents().length) {
+          this.loadExternalSource(a, source, open);
+        } else {
+          if (!childPane.length) {
+            return;
+          }
+          open();
+        }
       },
 
       closeHeader: function(header) {
+        if (!header.children('.accordion-pane').length) {
+          return;
+        }
+
         header.attr('aria-expanded', 'false').removeClass('is-expanded');
         header.children('.accordion-pane').one('animateClosedComplete', function(e) {
           e.stopPropagation();
-          $(this).css('display','none');
+          $(this).add($(this).find('.accordion-pane')).css('display', 'none');
         }).animateClosed();
+      },
+
+      loadExternalSource: function(target, source, callback) {
+        var self = this,
+          paneEl = target.next('.accordion-pane'),
+          sourceType = typeof source;
+
+        function done(markup) {
+          target
+            .removeClass('busy')
+            .trigger('requestend');
+
+          paneEl.append(markup);
+          self.element.trigger('updated');
+          if (callback && typeof callback === 'function') {
+            callback();
+          }
+        }
+
+        if (!paneEl.length) {
+          var parentEl = this.element[0].tagName.toLowerCase();
+          paneEl = $('<' + parentEl + ' class="accordion-pane"></' + parentEl + '>').appendTo(target.parent());
+        }
+
+        target
+          .addClass('busy')
+          .trigger('requeststart');
+
+        if (sourceType === 'function') {
+          // Call the 'source' setting as a function with the done callback.
+          settings.source(done);
+        } else {
+          // Convert source to string, and check for existing DOM elements that match the selectors.
+          var str = source.toString(),
+            request,
+            jqRegex = /\$\(\'/,
+            idRegex = /#[A-Za-z0-9]+/;
+
+          if (jqRegex.test(str)) {
+            str = str.replace("$('", '').replace("')", ''); //jshint ignore:line
+            done($(str).html());
+            return;
+          }
+
+          if (idRegex.test(str)) {
+            done($(str).html());
+            return;
+          }
+
+          // String is a URL.  Attempt an AJAX GET.
+          request = $.get(str);
+
+          request.done(function(data) {
+            done(data);
+          }).fail(function() {
+            console.warn('Request to ' + str + ' could not be processed...');
+            done('');
+          });
+        }
+
+      },
+
+      disable: function() {
+        this.element
+          .addClass('is-disabled');
+      },
+
+      enable: function() {
+        this.element
+          .removeClass('is-disabled');
       },
 
       // Teardown - Remove added markup and events
@@ -223,10 +408,13 @@
           .removeAttr('aria-expanded')
           .removeAttr('role');
         this.anchors
-          .removeAttr('tabindex')
+          //.removeAttr('tabindex')
           .removeAttr('aria-selected')
           .off('touchend.accordion touchcancel.accordion click.accordion keydown.accordion focus.accordion blur.accordion');
-        this.element.removeAttr('role').removeAttr('aria-multiselectable');
+        this.element
+          .off('updated')
+          .removeAttr('role')
+          .removeAttr('aria-multiselectable');
         $.removeData(this.element[0], pluginName);
       }
     };

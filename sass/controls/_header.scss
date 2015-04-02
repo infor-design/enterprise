@@ -120,9 +120,10 @@ $header-bg-color: #454545;
 
     + .container,
     + .site-content,
-    + .hero,
+    + .site-hero,
+    + .application-nav + .site-hero,
     + .svg-icons + .container {
-      margin-top: 90px;
+      margin-top: 80px;
     }
 
     + .scrollable-container,

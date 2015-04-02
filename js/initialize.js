@@ -163,9 +163,9 @@
 
         elem.find('.about').about();
 
-        elem.find('.accordion').accordion();
-
         elem.find('.application-nav-trigger').appNav();
+
+        elem.find('.accordion').accordion();
       });
 
       self.trigger('initialized');
