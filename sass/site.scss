@@ -15,6 +15,10 @@
 //==================================================//
 
 $site-maxwidth: 968px;
+$home-color: $amber10;
+$vision-color: $turquoise05;
+$gallery-color: #ac6cbc;
+$code-color: $amber10;
 
 body {
   background-color: $inverse-color !important;
@@ -43,16 +47,25 @@ span {
 }
 
 .site-hero {
-  background-color: #f86f11;
+  background-color: $home-color;
+  height: 540px;
   overflow: hidden;
+  padding-top: 85px;
+
+  .row {
+    position: relative;
+    top: calc(50% - 18px);
+    transform: translateY(-50%);
+    vertical-align: top;
+  }
 
   h2 {
     color: $inverse-color;
     display: block;
     @include font-size(50);
     line-height: 5rem;
-    margin: 100px auto 0 0;
-    padding: 0 0 50px;
+    margin: 0 20px;
+    max-width: 60%;
 
     span {
       color: $inverse-color;
@@ -64,36 +77,29 @@ span {
   a {
     border-bottom: 1px solid $inverse-color;
     color: $inverse-color;
-    font-weight: 300;
+    display: inline-block;
     @include font-size(20);
     font-weight: 300;
+    line-height: 25px;
     position: relative;
     text-decoration: none;
-    top: -34px;
+    width: auto;
 
     &:after {
       content: ' ›';
     }
   }
-
-  img {
-    border: 1px dashed $inverse-color;
-    margin-top: 60px;
-  }
 }
 
 .site-home.gallery-thumbs {
-  padding: 10px 0 30px;
-
-  .gallery-thumb {
-    height: 310px;
-  }
+  padding: 10px 0 40px;
 }
 
 .site-text-section,
 .site-howto-nav,
 .site-recent {
   background-color: $body-bg-color;
+  padding-top: 50px;
   text-align: center;
 
   > div {
@@ -105,7 +111,7 @@ span {
     @include font-size(40);
     font-weight: 300;
     line-height: 40px;
-    margin-top: 60px;
+    margin-top: 30px;
   }
 
   p {
@@ -132,7 +138,7 @@ span {
   }
 
   .site-navbox {
-    background-color: #00c2b4;
+    background-color: $vision-color;
     background-image: url('/assets/site/lego-turq@2x.png');
     background-position: center 15%;
     background-repeat: no-repeat;
@@ -148,7 +154,8 @@ span {
     }
 
     &.visual-gallery {
-      background-color: #c073e7;
+
+      background-color: $gallery-color;
       background-image: url('/assets/site/lego-amethyst@2x.png');
 
       &:focus {
@@ -157,7 +164,7 @@ span {
     }
 
     &.controls {
-      background-color: #f86f11;
+      background-color: $code-color;
       background-image: url('/assets/site/lego-ruby@2x.png');
 
       &:focus {
@@ -168,7 +175,7 @@ span {
     h3 {
       color: $inverse-color;
       font-weight: 200;
-      padding-top: 45%;
+      padding-top: 46%;
       @include font-size(26);
     }
 
@@ -251,6 +258,10 @@ span {
     }
   }
 
+  .gallery-thumb {
+    margin: 20px 0 0 !important;
+  }
+
 }
 
 @include respond-to(tablet) {
@@ -274,6 +285,7 @@ span {
     margin: 0 40px;
     max-width: 100%;
   }
+
 }
 
 // Vision Page
@@ -329,11 +341,7 @@ span {
 
 
 .vision.site-hero {
-  background-color: #00c2b4;
-
-  h2 {
-    color: $inverse-color;
-  }
+  background-color: $vision-color;
 }
 
 .vision-section-title {
@@ -357,11 +365,11 @@ span {
 
   &.alt-color {
     .vision-article-title {
-      background-color: $azure04;
+      background-color: $azure06;
     }
 
     .vision-article-content {
-      background-color: $azure03;
+      background-color: $azure05;
     }
   }
 
@@ -409,36 +417,10 @@ span {
   }
 }
 
-
-.vision-latest-container {
-  background-color: #f5f5f5;
-  width: 100%;
-
-  h2 {
-    color: #666666;
-    margin: 80px auto 0;
-    max-width: $site-maxwidth;
-    padding: 80px 0 60px;
-    @include font-size(40);
-  }
-
-  .vision-latest-articles {
-    margin: 0 auto;
-    max-width: $site-maxwidth;
-  }
-
-  .vision-recent-article {
-    background-color: $turquoise05;
-
-    &.alt-color {
-      background-color: $amber06;
-    }
-  }
-}
-
 .site-categories {
-  margin: 0 auto 90px;
-  max-width: 90%;
+  background-color: $body-bg-color;
+  margin: 0 auto;
+  padding-bottom: 70px;
   text-align: center;
 
   h2 {
@@ -472,14 +454,14 @@ span {
     }
 
     &:nth-child(even) {
-      background-color: $azure06;
+      background-color: $azure05;
 
       &:focus {
-        box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $azure06;
+        box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $azure05;
       }
 
       .site-icon {
-        background-color: $azure07;
+        background-color: $azure06;
       }
     }
 
@@ -517,15 +499,21 @@ span {
   }
 }
 
-.gallery {
-  background-color: $inverse-color;
+// Code For Gallery Page
+//==================================================//
 
+.gallery {
+  &.site-hero {
+    background-color: $gallery-color;
+  }
+}
+
+.gallery-headline {
   h2 {
     @include font-size(40);
     margin: 30px 40px 40px;
   }
 }
-
 
 .gallery-thumbs {
   padding: 50px 0;
@@ -537,21 +525,14 @@ span {
   border: 1px solid #e1e1e1;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   height: 480px;
-  margin: 15px;
+  margin: 20px 0 0 20px !important;
   overflow: hidden;
   text-decoration: none;
   transform: translateZ(0);
-  transition-duration: .3s;
-  transition-property: box-shadow;
   width: 330px;
 
-  &:hover {
-    box-shadow: 0 0 1.5px $azure06;
-  }
-
-  a {
-    text-align: left;
-    text-decoration: none;
+  &:focus {
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $azure05;
   }
 
   h3 {
@@ -571,14 +552,14 @@ span {
 
   p {
     @include font-size(16);
-    line-height: 20px;
-    margin-left: 20px;
+    line-height: 22px;
+    margin: 0 20px;
   }
 
   .tags {
     border-top: 1px solid #e1e1e1;
     margin-top: 20px;
-    padding-top: 14px;
+    padding-top: 7px;
     text-align: center;
   }
 
@@ -612,7 +593,13 @@ span {
   }
 
   .vision-article {
-    max-width: 90%;
+    display: block;
+
+    .vision-article-title,
+    .vision-article-content {
+      display: inline-block;
+      width: 100%;
+    }
   }
 
   .breadcrumb {
@@ -799,6 +786,7 @@ section.light-bgrnd {
 
     span {
       display: inline-block;
+      @include font-size(16);
       margin-top: 14px;
       text-overflow: ellipsis;
       width: 60%;
@@ -845,11 +833,15 @@ section.light-bgrnd {
 
 .site-copy {
   .row {
-    padding: 50px 0 75px;
+    padding: 40px 0 70px;
   }
 
   img {
-    margin: 50px 0;
+    margin: 25px 0 0;
+  }
+
+  .author + img {
+    margin: 50px 0 0;
   }
 
   p {
@@ -863,8 +855,10 @@ section.light-bgrnd {
   figcaption {
     @include font-size(14);
     color: #666666;
-    margin-top: -30px;
-    padding: 0;
+    font-size: 1.4rem;
+    font-weight: 300;
+    padding: 10px;
+    width: 84%;
   }
 
   figure {
@@ -895,7 +889,6 @@ section.light-bgrnd {
   h3 {
     @include font-size(22);
     margin: 20px 0;
-    text-transform: uppercase;
   }
 
   .tab-container {
@@ -913,10 +906,13 @@ section.light-bgrnd {
   .guide-related-controls {
     margin-bottom: 50px;
 
-    .hyperlink {
+    .guide-related-control {
       border-bottom: 1px solid #d6d6d6;
-      @include font-size(16);
       display: block;
+      padding: 10px 0;
+    }
+
+    .hyperlink {
       @include font-size(16);
     }
   }
@@ -942,12 +938,22 @@ section.light-bgrnd {
     display: block;
     text-align: center;
     width: 100%;
+
+    .tags,
+    .guide-related-controls,
+    h3 {
+      text-align: left;
+    }
   }
 
+  .guide-related-controls,
   .gallery-examples {
     margin: 0 auto;
-    width: 80%;
+    text-align: left;
+    width: 100%;
   }
+
+
 }
 
 // Syntax High Lighting

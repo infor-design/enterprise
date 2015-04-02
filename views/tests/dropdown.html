@@ -160,9 +160,11 @@
 
 <script>
   $('#ajax-test').dropdown({
-    source: function (term, response) {
-      //make an ajax call
-      $.getJSON('/api/states?term='+term, function(data) {
+    source: function (response) {
+      //TODO: Add Term Back
+      //function (term, response
+      //$.getJSON('/api/states?term='+term, function(data) {
+      $.getJSON('/api/states', function(data) {
         //Structure the data with val, label syntax is done on the server
         response(data);
       });

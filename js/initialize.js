@@ -50,7 +50,9 @@
         elem.find('.tab-container').tabs();
 
         //Select / DropDowns
-        elem.find('select, .dropdown').not('.multiselect').dropdown();
+        elem.find('select.dropdown').not('.multiselect').dropdown().on('selected', function(e, args) {
+          console.log(args[0], args[1]);
+        });
 
         //Modals
         elem.find('.modal').modal();

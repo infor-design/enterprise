@@ -87,6 +87,18 @@ app.configure(function() {
     res.render('docs/index', docOpts);
   });
 
+  app.get('/vison', function(req, res) {
+    res.render('docs/vison', docOpts);
+  });
+
+  app.get('/gallery', function(req, res) {
+    res.render('docs/gallery', docOpts);
+  });
+
+  app.get('/components', function(req, res) {
+    res.render('docs/components', docOpts);
+  });
+
   app.get('/docs*', function(req, res) {
     var end = req.url.replace('/docs/','');
     res.render('docs/' + end, docOpts);
@@ -134,7 +146,7 @@ app.configure(function() {
     res.render('examples/' + end, exampleOpts);
   });
 
-// Angular Support
+  // Angular Support
   var angularOpts = {
     title: 'SoHo XI',
     subtitle: 'Angular',
@@ -182,6 +194,11 @@ app.configure(function() {
         states.push(allStates[i]);
       }
     }
+
+    if (req.query.term === undefined) {
+      states = allStates;
+    }
+
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(states));
