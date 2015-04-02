@@ -176,10 +176,15 @@ If you'd like to submit a pull request you'll need to do the following:
 In your commit message from 4 we use a simple standard like: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
 
 More Examples:
+
 Changed modal to implement the new design - HFC-XXXX
+
 Changed header markup to implement arrow keys treating it as a toolbar - HFC-XXXX
+
 Added api to the list view to add, 'remove, add' functions - HFC-XXXX
+
 Fixed issue in the xyz control as per HFC-XXXX
+
 6. **Pull/Rebase to the latest version of the controls before you submit.**  If enough time passes between your original clone and the completion of your changes, the main repository may have changed and some files you've edited may be out of sync.  To re-sync your remote branch and clone, use the following commands after committing your changes:
   * `git pull`
   * `git rebase`

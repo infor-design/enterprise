@@ -56,7 +56,7 @@
 
         //Add Button
         this.swatch = $('<span class="swatch"></span>');
-        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.swatch);
+        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"/></svg>').appendTo(this.swatch);
         this.container = $('<div class="colorpicker-container"></div>');
         colorpicker.wrap(this.container);
         colorpicker.after(this.swatch);

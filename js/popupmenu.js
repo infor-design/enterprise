@@ -124,7 +124,7 @@
             $(item).html('<span>' + text + '<span>');
           }
           if ($(item).find('svg.arrow').length === 0) {
-            $(item).append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
+            $(item).append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
           }
         });
 

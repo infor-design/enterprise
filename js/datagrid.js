@@ -154,6 +154,7 @@
        this.settings = settings;
        this.initSettings();
        this.render();
+       this.createHandle();
        this.handleEvents();
       },
 
@@ -175,36 +176,62 @@
       //Render the Header
       renderHeader: function() {
         var self = this,
-          headerRow;
-
-        for (var i = 0; i < this.settings.dataset.length; i++) {
           headerRow = '<thead><tr>';
 
-          for (var j = 0; j < settings.columns.length; j++) {
-            var column = settings.columns[j],
-              isSortable = (column.sortable === undefined ? true : column.sortable),
-              isResizable = (column.resizable === undefined ? true : column.resizable);
+        for (var j = 0; j < settings.columns.length; j++) {
+          var column = settings.columns[j],
+            isSortable = (column.sortable === undefined ? true : column.sortable),
+            isResizable = (column.resizable === undefined ? true : column.resizable);
 
-            headerRow += '<th scope="col" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' + ' data-columnid="'+ column.id +'">';
-            headerRow += '<div class="datagrid-column-wrapper"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
+          headerRow += '<th scope="col" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
+           ' data-column-id="'+ column.id + '" data-field="'+ column.field +'"'+ (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
+          headerRow += '<div class="datagrid-column-wrapper"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
-            if (isSortable) {
-              headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-caret-down"></svg></div>';
-            }
-
-            if (isResizable) {
-              headerRow += '<div class="resize-handle"></div>';
-            }
-
-            headerRow += '</div></th>';
+          if (isSortable) {
+            headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-down"></svg></div>';
           }
-          headerRow += '</tr></thead>';
+
+          headerRow += '</div></th>';
         }
+        headerRow += '</tr></thead>';
 
         self.headerRow = $(headerRow);
         self.table.append(self.headerRow);
 
-        self.headerRow.find('.is-resizable').resize();
+      },
+
+      //Explicitly Set the Width of a column.
+      setColumnWidth: function(id, width) {
+        var self = this,
+          total = 0;
+
+        self.headerRow.find('th').each(function () {
+          var col = $(this);
+
+          if (col.attr('data-column-id') === id) {
+            col.css('width', width);
+            total += width;  //as percentage??
+          } else {
+            total += col.outerWidth();
+          }
+
+        });
+
+        /*for (var i = 0; i < settings.columns.length; i++) {
+          if (settings.columns[i].id === id) {
+            settings.columns[i].width = width;
+            self.headerRow.find('th[data-column-id="'+ id +'"]').css('width', width);
+          }
+        }*/
+        self.table.css('width', total);
+      },
+
+      //Return Value from the Object handling dotted notation
+      fieldValue: function (obj, field) {
+        if (field.indexOf('.') > -1) {
+          return field.split('.').reduce(function(o, x) { return (o ? o[x] : ''); }, obj);
+        }
+        return obj[field];
       },
 
       //Render the Rows
@@ -223,7 +250,7 @@
                 formatter = (col.formatter ? col.formatter : self.defaultFormatter),
                 formatted = '';
 
-            formatted = formatter(i, j, settings.dataset[i][settings.columns[j].field], settings.columns[j], settings.dataset[i]).toString();
+            formatted = formatter(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i]).toString();
             if (formatted.indexOf('<span class="is-readonly">') === 0) {
               col.readonly = true;
             }
@@ -254,7 +281,6 @@
               renderedTmpl = compiledTmpl.render({dataset: item});
             }
 
-            console.log(renderedTmpl);
             rowHtml += '<tr class="datagrid-expandable-row"><td colspan="100%">' +
               '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">'+ renderedTmpl + '</div></div>' +
               '</td></tr>';
@@ -272,7 +298,7 @@
 
         //Sorting - If Shift is Down then Multiples
         this.element.on('click.datagrid', 'th.is-sortable', function () {
-          self.setSortColumn($(this).attr('data-columnid'));
+          self.setSortColumn($(this).attr('data-field'));
         });
 
         //Handle Clicking Buttons and links in formatters
@@ -292,6 +318,27 @@
           }
         });
 
+        // Move the drag handle to the end or start of the column
+        this.headerRow.on('mousemove.datagrid touchstart.datagrid touchmove.datagrid', 'th', function (e) {
+          if (self.dragging) {
+            return;
+          }
+
+          self.currentHeader = $(e.target).closest('th');
+
+          if (!self.currentHeader.hasClass('is-resizable')) {
+            return;
+          }
+
+          var leftEdge = parseInt(self.currentHeader.position().left),
+            rightEdge = leftEdge + self.currentHeader.outerWidth(),
+            leftPos = 0;
+
+          //TODO: Test Touch support - may need handles on each column
+          leftPos = ((e.pageX - leftEdge > rightEdge - e.pageX) ? (rightEdge - 5.5): (leftEdge - 5.5));
+          self.resizeHandle.css('left', leftPos + 'px');
+        });
+
       },
 
       //TODO: Views
@@ -303,33 +350,52 @@
 
       expandRow: function(row) {
         var expandRow = this.table.find('tr').eq(row+1),
+          expandButton = this.table.find('tr').eq(row).find('.datagrid-expand-btn'),
           detail = expandRow.find('.datagrid-row-detail');
 
         if (expandRow.hasClass('is-expanded')) {
           expandRow.removeClass('is-expanded');
+          expandButton.removeClass('is-expanded');
           detail.height(0);
         } else {
           expandRow.addClass('is-expanded');
-          detail.height(190       );
+          expandButton.addClass('is-expanded');
+          detail.height(190);
         }
       },
 
       //Api Event to set the sort Column
-      setSortColumn: function(columnId) {
+      setSortColumn: function(field) {
         var sort;
-
         //Set Internal Variables
-        this.sortColumn.sortAsc = (this.sortColumn.columnId === columnId ? !this.sortColumn.sortAsc : true);
-        this.sortColumn.columnId = columnId;
+        this.sortColumn.sortAsc = (this.sortColumn.sortField === field ? !this.sortColumn.sortAsc : true);
+        this.sortColumn.sortField = field;
 
         //Do Sort on Data Set
-        sort = this.sortFunction(this.sortColumn.columnId, this.sortColumn.sortAsc);
+        sort = this.sortFunction(this.sortColumn.sortField, this.sortColumn.sortAsc);
         settings.dataset.sort(sort);
 
         //Set Visual Indicator
         this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc');
-        this.headerRow.find('[data-columnid="' +columnId + '"]').addClass((this.sortColumn.sortAsc ? 'is-sorted-asc' : 'is-sorted-desc'));
+        this.headerRow.find('[data-field="' +field + '"]').addClass((this.sortColumn.sortAsc ? 'is-sorted-asc' : 'is-sorted-desc'));
         this.renderRows();
+      },
+
+      //Generate Resize Handles
+      createHandle: function() {
+        var self = this;
+
+        this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
+        this.table.before(this.resizeHandle);
+
+        this.resizeHandle.drag({axis: 'x', containment: 'parent'}).on('drag.datagrid', function (e, ui) {
+          var id = self.currentHeader.attr('data-column-id');
+          self.dragging = true;
+          self.setColumnWidth(id, ui.left - self.element.position().left);
+          //ui.left - self.element.position().left - self.currentHeader.position().left + 5);
+        }).on('dragend.datagrid', function () {
+          self.dragging = false;
+        });
       },
 
       //Overridable function to conduct sorting
