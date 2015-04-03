@@ -30,7 +30,7 @@
     </div>
   </section>
 
-  <section class="site-breadcrumb" >
+  <div class="site-breadcrumb" >
     <div class="row">
       <div class="full column">
         <nav class="breadcrumb" role="navigation">
@@ -48,9 +48,9 @@
         </nav>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section role="main" class="site-text-section" id="maincontent">
+  <section role="main" class="site-text-section light-bgrnd component" id="maincontent">
     <div class="row">
       <h2>The Soho Xi controls library</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. </p>
@@ -59,56 +59,70 @@
     </div>
   </section>
 
-
-  <section class="alt-bgrnd">
-    <div class="site-categories ">
-      <h2>Controls By Category</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. </p>
-
-      <div class="row">
-          <a href="/docs/component-category" class="site-category-icon layout component">
-            <div class="site-icon">
-              <svg class="icon" focusable="false" aria-hidden="true">
-               <use xlink:href="#icon-vision-layout"></use>
-              </svg>
-            </div>
-            <h3>Navigation</h3>
-          </a>
-          <a href="/docs/component-category" class="site-category-icon component">
-            <div class="site-icon">
-              <svg class="icon" focusable="false" aria-hidden="true">
-               <use xlink:href="#icon-vision-layout"></use>
-              </svg>
-            </div>
-            <h3>Organizing Content</h3>
-          </a>
-          <a href="/docs/component-category" class="site-category-icon component">
-            <div class="site-icon">
-              <svg class="icon" focusable="false" aria-hidden="true">
-               <use xlink:href="#icon-vision-layout"></use>
-              </svg>
-            </div>
-            <h3>User Input</h3>
-          </a>
-          <a href="/docs/component-category" class="site-category-icon component">
-            <div class="site-icon">
-              <svg class="icon" focusable="false" aria-hidden="true">
-               <use xlink:href="#icon-vision-layout"></use>
-              </svg>
-            </div>
-            <h3>Notifications</h3>
-          </a>
-          <a href="/docs/component-category" class="site-category-icon component">
-            <div class="site-icon">
-              <svg class="icon" focusable="false" aria-hidden="true">
-               <use xlink:href="#icon-vision-layout"></use>
-              </svg>
-            </div>
-            <h3>Charting</h3>
-          </a>
+  <section class="site-categories component alt-bgrnd">
+    <div class="row">
+      <div class="full column">
+        <h2>Controls By Category</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. </p>
       </div>
     </div>
+
+    <div class="site-category-box component">
+      <div class="row">
+        <div class="full column">
+          <div class="site-category-header">
+             <h3>Navigation</h3>
+          </div>
+          <div class="site-category-content">
+
+            <div class="site-category-section">
+              <h4>Navigating an Application</h4>
+              <a href="#" class="hyperlink">Flyout Menu</a><br>
+              <a href="#" class="hyperlink">Mega Menus</a>
+            </div>
+
+            <div class="site-category-section">
+              <h4>Navigating a workflow</h4>
+              <a href="#" class="hyperlink">Hyperlinks</a><br>
+              <a href="#" class="hyperlink">Breadcrumbs</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <div class="site-category-box component alt-bgrnd">
+        <div class="row">
+          <div class="full column">
+            <div class="site-category-header">
+               <h3>Organizing Content</h3>
+            </div>
+            <div class="site-category-content">
+              <div class="site-category-section">
+                <h4>Data Sets</h4>
+                <a href="#" class="hyperlink">Data Grid</a><br>
+                <a href="#" class="hyperlink">Cardstack List</a>
+              </div>
+
+              <div class="site-category-section">
+                <h4>Form Content</h4>
+                <a href="#" class="hyperlink">Data Grid</a><br>
+                <a href="#" class="hyperlink">Cardstack List</a>
+              </div>
+
+              <div class="site-category-section">
+                <h4>Hierarchical Relationships</h4>
+                <a href="#" class="hyperlink">Data Grid</a><br>
+                <a href="#" class="hyperlink">Cardstack List</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
   </section>
+
 
   {{> controls/svg}}
   {{> docs/svg}}

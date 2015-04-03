@@ -18,116 +18,132 @@
   <script src="/js/sohoxi.js"></script>
 
 </head>
-<body class="guide guide-category">
+<body>
 
   {{> includes/header-hamburger}}
 
-  <section class="site-hero">
-    <div class="container">
-      <div class="content">
+
+  <section class="site-hero component">
+    <div class="row">
+      <div class="full column">
         <h2><span>Controls & Code Base</span><br> Navigation</h2>
       </div>
     </div>
   </section>
 
-  <div class="container">
-    <nav role="navigation" class="breadcrumb">
-      <ol aria-label="breadcrumb">
-        <li>
-          <a class="hyperlink" href="/docs">Home</a>
-          <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
-            <use xlink:href="#icon-caret-right"></use>
-          </svg>
-        </li>
-        <li>
-          <a class="hyperlink current" href="/docs/guide">Controls & Code Base</a>
-          <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
-            <use xlink:href="#icon-caret-right"></use>
-          </svg>
-        </li>
-        <li>
-          <a class="hyperlink current" href="/docs/guide-category">Navigation</a>
-       </li>
-      </ol>
-    </nav>
+
+  <div class="site-breadcrumb">
+    <div class="row">
+      <div class="full column">
+        <nav class="breadcrumb" role="navigation">
+          <ol aria-label="breadcrumb">
+            <li>
+              <a class="hyperlink" href="/docs">Home</a>
+              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </li>
+            <li>
+              <a class="hyperlink current" href="/docs/components">Controls & Code Base</a>
+              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </li>
+            <li>
+              <a class="hyperlink current" href="/docs/component-category">Navigation</a>
+           </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
   </div>
 
-  <div class="container">
+  <section class="site-copy alt-bgrnd component" role="main" id="maincontent">
+    <div class="row">
+      <div class="two-thirds column">
+        <h1>Navigating an Application</h1>
+        <small class="timestamp">Updated January 20th, 2015 by <a href="#" class="hyperlink">Author</a></small>
 
-    <section role="main" class="guide-doc-section" id="maincontent">
-      <div class="row">
-        <small>Updated January 20th, 2015</small>
-        <h2>Navigating an Application</h2>
         <p>Application menus allow users to navigate through all available pages within an application. If an application supports multiple open pages, users can then use module tabs to navigate between all open pages.</p>
 
         <p>The type of application menu you use depends on the size and complexity of your application.</p>
-        <ol>
+        <ul>
           <li>The fly-out application menu works best for more complex applications, and has more flexibility to accomodate multiple levels of navigation. However, it only provides visibility into the currently selected option.</li>
           <li>The mega menu works best for simpler applications, or for role-specific navigation. It works best with only 2 levels of navigation, and provides visibility into all the options within a specific category. You can also include action buttons for the most commonly performed actions directly on the mega menu.</li>
-        </ol>
+        </ul>
         <p>Regardless of which approach you choose, the application menu should be a fall back method of navigating. Ideally, applications will be organized by role and task, with role-based home pages serving as the primary entry point and main method of navigation. Users should only need to access an application menu when they are performing infrequent tasks that are not part of their regular role.</p>
         <p>In addition to menu navigation, in certain applications users can open multiple home pages, workbenches, or forms at one time. For these applications, use module tabs to provide navigation among all open pages.
         </p>
+
+        <section class="site-categories">
+          <h2>Related Soho Controls</h2>
+
+          <div class="row blockgrid">
+            <a href="#" class="site-category-icon">
+              <h3>Fly out Navigation Menu</h3>
+            </a>
+            <a href="#" class="site-category-icon">
+              <h3>Mega Menus</h3>
+            </a>
+            <a href="#" class="site-category-icon">
+              <h3>Module Tabs</h3>
+            </a>
+            <a href="#" class="site-category-icon">
+               <h3>Sign in Form</h3>
+            </a>
+            <a href="#" class="site-category-icon">
+              <h3>Bar Chart</h3>
+            </a>
+          </div>
+        </section>
+
       </div>
-    </section>
+      <div class="one-third column">
+        <section class="site-sidebar">
+          <div class="site-nextprev">
+            <h3>Next and Previous Control</h3>
+            <a href="#" class="site-next">Sign-in Form</a>
+            <a href="#" class="site-prev">Mega Menus</a>
+          </div>
 
+          <h3>Tags</h3>
+          <div class="tags">
+            <span class="tag">Soho XI</span>
+            <span class="tag">Responsive</span>
+            <span class="tag">Applications</span>
+            <span class="tag">Mobile-first</span>
+          </div>
 
-    <section role="complementary" class="guide-doc-sidebar">
-      <div class="site-nextprev">
-        <h3>Next and Previous Control</h3>
-        <a href="#" class="site-next">Sign-in Form</a>
-        <a href="#" class="site-prev">Mega Menus</a>
+          <h3>Related Controls</h3>
+          <div class="related-controls">
+           <div><a href="#" class="hyperlink">Text Input</a></div>
+            <div><a href="#" class="hyperlink">Auto Complete</a></div>
+           <div> <a href="#" class="hyperlink">Multiselect</a></div>
+          </div>
+
+          <h3>Gallery Examples</h3>
+          <div class="gallery-examples">
+            <a href="#" class="gallery-item">
+              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
+              <span>Infor M3 Role based home pages</span>
+            </a>
+
+            <a href="#" class="gallery-item">
+              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
+              <span>Infor LN Requisitions</span>
+            </a>
+
+            <a href="#" class="gallery-item">
+              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
+              <span>Infor LN Workbench</span>
+            </a>
+          </div>
+        </section>
       </div>
-
-      <h3>Tags</h3>
-      <div class="tags">
-        <span class="tag">Soho XI</span>
-        <span class="tag">Responsive</span>
-        <span class="tag">Applications</span>
-        <span class="tag">Mobile-first</span>
-      </div>
-
-      <h3>Gallery Examples</h3>
-      <div class="gallery-examples">
-        <a href="#" class="gallery-item">
-          <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
-          <span>Infor M3 Role based home pages</span>
-        </a>
-
-        <a href="#" class="gallery-item">
-          <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
-          <span>Infor LN Requisitions</span>
-        </a>
-
-        <a href="#" class="gallery-item">
-          <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
-          <span>Infor LN Workbench</span>
-        </a>
-      </div>
-    </section>
-  </div>
-
-  <section class="site-categories">
-    <h2>Related Soho Controls</h2>
-
-    <div class="row">
-        <a href="#" class="site-category-icon">
-          <h3>Fly out Navigation Menu</h3>
-        </a>
-        <a href="#" class="site-category-icon">
-          <h3>Mega Menus</h3>
-        </a>
-        <a href="#" class="site-category-icon">
-          <h3>Module Tabs</h3>
-        </a>
-        <a href="#" class="site-category-icon">
-           <h3>Sign in Form</h3>
-        </a>
-        <a href="#" class="site-category-icon">
-          <h3>Bar Chart</h3>
-        </a>
     </div>
   </section>
+
+
 
   {{> controls/svg}}
   {{> docs/svg}}

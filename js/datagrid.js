@@ -99,7 +99,7 @@
       return '<span class="datagrid-textarea">'+ formatted + '</span>';
     },
 
-    // Detail Template
+    // Expand / Collapse Button
     Expander: function (row, cell, value) {
       var button = '<button class="btn-icon datagrid-expand-btn">'+
         '<svg class="icon" aria-hidden="true" focusable="false">'+
@@ -111,7 +111,10 @@
     }
 
     // TODOs
-    // Status Indicator
+    // Badge
+    // Status Error, Ok, Alert
+    // Tags
+    // Status Indicator - Validation, New, Editing,
     // Select
     // Multi Select
     // Color Picker
@@ -120,13 +123,12 @@
     // Currency
     // Percent
     // Progress Indicator (n of 100%)
-    // Process Indicators
+    // Process Indicator
     // Tree
     // Button ??
     // Toggle Button ??
     // Re Order ??
     // Sparkline
-    // Status
   };
 
   //TODO: resize cols - http://dobtco.github.io/jquery-resizable-columns/
@@ -154,7 +156,7 @@
        this.settings = settings;
        this.initSettings();
        this.render();
-       this.createHandle();
+       this.createResizeHandle();
        this.handleEvents();
       },
 
@@ -335,7 +337,7 @@
             leftPos = 0;
 
           //TODO: Test Touch support - may need handles on each column
-          leftPos = ((e.pageX - leftEdge > rightEdge - e.pageX) ? (rightEdge - 5.5): (leftEdge - 5.5));
+          leftPos = ((e.pageX - leftEdge > rightEdge - e.pageX) ? (rightEdge - 6): (leftEdge - 6));
           self.resizeHandle.css('left', leftPos + 'px');
         });
 
@@ -382,7 +384,7 @@
       },
 
       //Generate Resize Handles
-      createHandle: function() {
+      createResizeHandle: function() {
         var self = this;
 
         this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
@@ -390,9 +392,13 @@
 
         this.resizeHandle.drag({axis: 'x', containment: 'parent'}).on('drag.datagrid', function (e, ui) {
           var id = self.currentHeader.attr('data-column-id');
+
+          if (!self.currentHeader) {
+            return;
+          }
+
           self.dragging = true;
-          self.setColumnWidth(id, ui.left - self.element.position().left);
-          //ui.left - self.element.position().left - self.currentHeader.position().left + 5);
+          self.setColumnWidth(id, ui.left - self.currentHeader.offset().left + 6);
         }).on('dragend.datagrid', function () {
           self.dragging = false;
         });

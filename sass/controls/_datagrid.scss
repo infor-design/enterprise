@@ -13,8 +13,11 @@ $datagrid-header-height: 40px;
   width: auto;
 
   .resize-handle {
+    border: 0;
     cursor: col-resize;
     height: $datagrid-header-height;
+    left: -999px;
+    width: 11px;
     z-index: 1;
   }
 }
@@ -35,8 +38,8 @@ $datagrid-header-height: 40px;
     background-color: #616161;
     border-left: 1px solid #d8d8d8;
     height: $datagrid-header-height;
+    min-width: 25px;
     overflow: hidden;
-
     text-align: left;
     @include transition(background-color 250ms ease);
 
@@ -129,6 +132,7 @@ $datagrid-header-height: 40px;
   display: inline-block;
   margin: -3px 0 0 -2px;
   vertical-align: top;
+  width: 25px;
 
   .icon {
     fill: #999999;

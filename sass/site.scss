@@ -358,22 +358,22 @@ span {
   }
 }
 
-.vision-article {
+.site-category-box {
   display: table;
   margin: 20px auto;
   max-width: $site-maxwidth;
 
   &.alt-color {
-    .vision-article-title {
+    .site-category-header {
       background-color: $azure06;
     }
 
-    .vision-article-content {
+    .site-category-content {
       background-color: $azure05;
     }
   }
 
-  .vision-article-title {
+  .site-category-header {
     background-color: $turquoise06;
     display: table-cell;
     vertical-align: top;
@@ -388,17 +388,18 @@ span {
     }
   }
 
-  .vision-article-content {
+  .site-category-content {
     background-color: $turquoise05;
     display: table-cell;
+    padding: 40px 0;
     width: 65%;
 
-    .vision-article-section {
+    .site-category-section {
       float: left;
-      height: 250px;
-      padding: 45px 30px 0;
+      min-height: 75px;
+      padding: 20px 50px;
       text-align: left;
-      width: 50%;
+      width: 100%;
     }
 
     h4 {
@@ -420,7 +421,6 @@ span {
 .site-categories {
   background-color: $body-bg-color;
   margin: 0 auto;
-  padding-bottom: 70px;
   text-align: center;
 
   h2 {
@@ -437,6 +437,10 @@ span {
     @include font-size(18);
     padding: 0 40px;
     text-align: center;
+  }
+
+  &.vision {
+    padding-bottom: 70px;
   }
 
   .site-category-icon {
@@ -468,8 +472,9 @@ span {
     h3 {
       color: $inverse-color;
       @include font-size(27);
-      margin-top: 40%;
-      padding: 0 5px;
+      @include vertical-align();
+      padding: 15px;
+      margin: 0;
       text-align: center;
     }
 
@@ -479,13 +484,13 @@ span {
       height: 90px;
       left: 50%;
       margin-left: -45px;
-      margin-top: -62px;
+      margin-top: -70px;
       position: relative;
       top: 50%;
       width: 90px;
 
       + h3 {
-        margin-top: 60%;
+        margin-top: 30px;
       }
 
       .icon {
@@ -592,14 +597,24 @@ span {
     }
   }
 
-  .vision-article {
+  .site-category-box {
     display: block;
 
-    .vision-article-title,
-    .vision-article-content {
+    .site-category-header,
+    .site-category-content {
       display: inline-block;
       width: 100%;
     }
+
+    h3 {
+      padding: 50px 0 !important;
+      text-align: center !important;
+    }
+  }
+
+  .site-category-section {
+    height: auto;
+
   }
 
   .breadcrumb {
@@ -612,7 +627,10 @@ span {
 }
 
 @include respond-to(phone) {
-
+  .site-category-section {
+    display: block;
+    width: 100% !important;
+  }
 }
 
 // Guide/Controls Pages
@@ -630,7 +648,54 @@ section.light-bgrnd {
   background-color: $inverse-color;
 
   &.site-hero {
-    background-color: $amber07;
+    background-color: $code-color;
+  }
+
+  .site-nextprev .site-next {
+    background-color: $code-color;
+  }
+
+  .site-category-header {
+    background-color: $ruby07;
+  }
+
+  .site-category-content {
+    background-color: $ruby06;
+  }
+
+  &.site-categories {
+    padding-bottom: 70px;
+  }
+
+  &.site-category-box {
+    background-color: $body-bg-color;
+
+    .hyperlink {
+      color: $inverse-color;
+      display: inline-block;
+      line-height: 24px;
+      margin-bottom: -3px;
+      margin-left: 0;
+      padding: 1px 9px;
+
+      &:focus {
+        border-color: $inverse-color;
+      }
+
+      .ripple {
+        background-color: $inverse-color;
+      }
+    }
+
+    &.alt-bgrnd {
+      .site-category-header {
+        background-color: $code-color;
+      }
+
+      .site-category-content {
+        background-color: $amber09;
+      }
+    }
   }
 
   &.container {
@@ -639,7 +704,27 @@ section.light-bgrnd {
 
   &.site-text-section {
     background-color: $inverse-color;
-    padding: 20px 0;
+    padding: 20px 0 60px;
+  }
+
+  .site-categories {
+    text-align: left;
+
+    h2 {
+      padding: 25px 0 0;
+      text-align: left;
+    }
+
+    .site-category-icon {
+      background-color: $code-color;
+      float: left;
+      height: 225px;
+      width: 225px;
+
+      &:nth-child(2n) {
+        background-color: $amber07;
+      }
+    }
   }
 
   &.site-category-icon {
@@ -652,6 +737,12 @@ section.light-bgrnd {
 
     .site-icon {
       background-color: $amber06;
+    }
+  }
+
+  &.site-categories {
+    h2 {
+      padding: 50px 0 40px;
     }
   }
 
@@ -688,7 +779,6 @@ section.light-bgrnd {
   }
 }
 
-.guide-doc-section,
 .guide-example {
   display: table-cell;
   padding-top: 30px;
@@ -700,15 +790,7 @@ section.light-bgrnd {
   }
 
   .example {
-    margin-bottom: 100px;
-  }
-
-  small {
-    color: #767676;
-    display: block;
-    padding-bottom: 5px;
-    @include font-size(14);
-    text-transform: uppercase;
+    margin-bottom: 75px;
   }
 
   p {
@@ -730,6 +812,18 @@ section.light-bgrnd {
     li {
       margin-bottom: 15px;
     }
+  }
+}
+
+.timestamp {
+  color: #767676;
+  display: block;
+  padding-bottom: 5px;
+  @include font-size(14);
+  text-transform: uppercase;
+
+  + p {
+    padding-top: 15px;
   }
 }
 
@@ -763,6 +857,7 @@ section.light-bgrnd {
 
 .site-sidebar {
   display: table-cell;
+  padding-left: 25px;
   width: 30%;
 
   h3 {
@@ -795,7 +890,8 @@ section.light-bgrnd {
 }
 
 .site-nextprev {
-  margin-bottom: 35px;
+  display: inline-block;
+  padding-bottom: 20px;
   padding-top: 10px;
   position: relative;
   top: 40px;
@@ -813,21 +909,22 @@ section.light-bgrnd {
   .site-prev {
     background-color: $graphite05;
     color: $inverse-color;
-    display: inline-block;
+    display: block;
     @include font-size(20);
+    float: left;
     font-weight: lighter;
     height: 130px;
     margin-bottom: 40px;
     margin-left: 10px;
     max-height: 130px;
-    padding: 55px 0;
+    padding: 50px 0;
     text-align: center;
     text-decoration: none;
     width: 130px;
   }
 
   .site-next {
-    background-color: $amber05;
+    background-color: $code-color;
   }
 }
 
@@ -857,7 +954,7 @@ section.light-bgrnd {
     color: #666666;
     font-size: 1.4rem;
     font-weight: 300;
-    padding: 10px;
+    padding: 12px 0;
     width: 84%;
   }
 
@@ -889,6 +986,7 @@ section.light-bgrnd {
   h3 {
     @include font-size(22);
     margin: 20px 0;
+    clear: both;
   }
 
   .tab-container {
@@ -903,7 +1001,7 @@ section.light-bgrnd {
     }
   }
 
-  .guide-related-controls {
+  .related-controls {
     margin-bottom: 50px;
 
     .guide-related-control {
@@ -914,6 +1012,11 @@ section.light-bgrnd {
 
     .hyperlink {
       @include font-size(16);
+    }
+
+    > div {
+      border-bottom: 1px solid #d6d6d6;
+      padding: 10px 0;
     }
   }
 
@@ -927,32 +1030,33 @@ section.light-bgrnd {
 
 @include respond-to(tabletdown) {
 
-  .guide-doc-section {
-    display: block;
-    margin: 0 20px;
-    padding-top: 25px;
-    width: 90%;
-  }
-
   .site-sidebar {
     display: block;
-    text-align: center;
+    padding-left: 0;
+    text-align: left;
     width: 100%;
 
     .tags,
-    .guide-related-controls,
+    .related-controls,
     h3 {
+      text-align: left;
+    }
+
+    .site-nextprev {
       text-align: left;
     }
   }
 
-  .guide-related-controls,
+  .related-controls,
   .gallery-examples {
     margin: 0 auto;
     text-align: left;
     width: 100%;
   }
 
+  .site-categories {
+    padding-bottom: 0;
+  }
 
 }
 

@@ -13,39 +13,41 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('he-IL', {
     //layout/language
-    language: 'en',
+    language: 'he',
+    englishName: 'Hebrew (Israel)',
+    nativeName: 'עברית (ישראל)',
     //layout/orientation/@characters
-    direction: 'left-to-right',
+    direction: 'right-to-left',
     //ca-gregorian
     calendars: [{
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'short': 'dd/MM/yyyy', //use four digit year
+                   'medium': 'd בMMM yyyy',
+                   'long': 'd בMMMM yyyy',
+                   'full': 'EEEE, d בMMMM yyyy',
+                   'datetime': 'dd/MM/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+         wide: ['יום ראשון','יום שני','יום שלישי','יום רביעי','יום חמישי','יום שישי','יום שבת'],
+         abbreviated: ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'],
+        abbreviated: ['ינו׳', 'פבר׳', 'מרץ', 'אפר׳', 'מאי', 'יוני', 'יולי', 'אוג׳', 'ספט׳', 'אוק׳', 'נוב׳', 'דצמ׳']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'HH:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['לפנה״צ', 'אחה״צ']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '¤#,##0.00',
+    currencySign: '₪', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '#,##0.00 ¤',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
@@ -55,14 +57,14 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'חובה', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'שעה יעודה', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'היום', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'שעות', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'דקות', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'תקופה', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. השתמש במקשי חצים כדי לבחור.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'מחכה', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));
