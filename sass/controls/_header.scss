@@ -66,6 +66,9 @@ $header-bg-color: #454545;
     }
 
     &.hamburger-menu {
+      position: relative;
+      top: -2px;
+
       .icon {
         height: 26px;
       }
