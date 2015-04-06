@@ -122,7 +122,7 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['public/stylesheets/css-only.css'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-2*.min.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/jquery-2*.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-2*.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.min.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.map'], dest: 'public/js/', filter: 'isFile'},

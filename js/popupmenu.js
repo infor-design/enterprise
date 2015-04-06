@@ -113,8 +113,11 @@
 
         //TODO: Follow up 'button expanded' in JAWS
         this.element.attr('aria-haspopup', true)
-          .attr('aria-expanded', 'false')
-          .attr('aria-owns', id);
+          .attr('aria-expanded', 'false');
+
+        if (!this.element.is('button')) {
+          this.element.attr('aria-owns', id);
+        }
 
         this.menu.find('li').attr('role', 'presentation');
         this.menu.find('.popupmenu').parent().parent().addClass('submenu');
