@@ -1,0 +1,15 @@
+// Search Results Pattern
+//================================================== */
+
+.container.search-results {
+  margin-top: 6em;
+
+  input.search {
+    border: 0;
+    color: $primary-color;
+    @include font-size(72);
+    width: 100%;
+
+  }
+
+}

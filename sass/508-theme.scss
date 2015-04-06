@@ -1,14 +1,14 @@
 // Soho XI - 508 Theme
 //================================================== */
+
+// Standard CSS reset stuff here
+@import 'reset';
+@import 'mixins';
 @import 'config';
 
 //Theme Overrides
 $primary-color: #0977d5;
 $primary-button-bg-color: $primary-color;
-
-// Standard CSS reset stuff here
-@import 'reset';
-@import 'mixins';
 
 // Core Controls
 @import 'controls';

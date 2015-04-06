@@ -16,6 +16,7 @@ $indicator-current-size: ($indicator-size * 1.6);
 // Container
 .process-indicator {
   margin-bottom: 20px;
+  @include font-size(14);
 
   // Main blocks:  .display, .header, .subheader, .details
   .display {
@@ -64,10 +65,6 @@ $indicator-current-size: ($indicator-size * 1.6);
 
     > * {
       vertical-align: middle;
-    }
-
-    > span {
-      @include font-size(10);
     }
 
     > .icon {

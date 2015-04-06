@@ -1,6 +1,9 @@
 // Soho XI - Dark UI Theme
 //================================================== */
 
+// Standard CSS reset stuff here
+@import 'reset';
+@import 'mixins';
 @import 'config';
 
 //Theme Config Overrides
@@ -67,10 +70,6 @@ $slider-disabled-color: #444444;
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
 }
-
-// Standard CSS reset stuff here
-@import 'reset';
-@import 'mixins';
 
 // Core Controls
 @import 'controls';
