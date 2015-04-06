@@ -1,8 +1,27 @@
 // Search Results Pattern
 //================================================== */
 
+$sr-masthead-text-color: $font-color;
+
 .container.search-results {
   margin-top: 6em;
+
+  .masthead {
+    background-color: $body-bg-color;
+    color: $sr-masthead-text-color;
+
+    .masthead-square {
+      background-color: $sr-masthead-text-color;
+    }
+
+    .masthead-appname {
+      color: $sr-masthead-text-color;
+    }
+
+    .icon {
+      fill: $sr-masthead-text-color;
+    }
+  }
 
   input.search {
     border: 0;

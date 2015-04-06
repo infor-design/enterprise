@@ -123,6 +123,7 @@
 .chart-legend-item-text {
   width: auto;
   @include ellipsis;
+  @include font-size(14);
 }
 
 
