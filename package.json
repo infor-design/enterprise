@@ -6,7 +6,8 @@
   "author": "Hook and Loop",
   "private": true,
   "dependencies": {
-    "express": "~3.4.8"
+    "express": "~3.4.8",
+    "glob": "^5.0.3"
   },
   "devDependencies": {
     "chai": "^1.9.1",
