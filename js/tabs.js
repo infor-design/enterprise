@@ -817,10 +817,12 @@
           .removeClass('tab is-selected');
 
         var dds = tabs.filter('.has-popupmenu').data('popupmenu');
-        dds.each(function() {
-          $(this).menu.off();
-          $(this).destroy();
-        });
+        if (dds) {
+          dds.each(function() {
+            $(this).menu.off();
+            $(this).destroy();
+          });
+        }
 
         this.anchors
           .off()

@@ -1088,7 +1088,6 @@
       var instance = $.data(this, pluginName);
 
       if (instance) {
-        console.log(settings);
         instance.settings = $.extend({}, settings, instance.settings);
         instance.update();
       } else {

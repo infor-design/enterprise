@@ -24,6 +24,7 @@ require('../../../js/cultures/es-ES.js');
 require('../../../js/cultures/bg-BG.js');
 require('../../../js/cultures/ar-EG.js');
 require('../../../js/cultures/fi-FI.js');
+require('../../../js/cultures/lt-LT.js');
 
 //Tests
 describe('Locale [mocha]', function(){
@@ -86,6 +87,8 @@ describe('Locale [mocha]', function(){
     Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1. Januar 2015');
     Locale.set('es-ES');
     Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('1 de Enero de 2015');
+    Locale.set('lt-LT');
+    Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'}).should.equal('2015 m. sausis 1 d.');
   });
 
   it('should format long with day of week', function() {

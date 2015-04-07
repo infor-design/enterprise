@@ -13,21 +13,23 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('hr-HR', {
     //layout/language
-    language: 'en',
+    language: 'hr',
+    englishName: 'Croatian (Croatia)',
+    nativeName: 'hrvatski (Hrvatska)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
     calendars: [{
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+      dateFormat: {'seperator': '.', //Infered
+                   'short': 'd.M.yyyy.', //use four digit year
+                   'medium': 'd. MMM yyyy.',
+                   'long': 'd. MMMM yyyyy.',
+                   'full': 'EEEE, d. MMMM yyyyy.',
+                   'datetime': 'd.M.yyyy. HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -35,34 +37,34 @@
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['siječnja', 'veljače', 'ožujka', 'travnja', 'svibnja', 'lipnja', 'srpnja', 'kolovoza', 'rujna', 'listopada', 'studenoga', 'prosinca'],
+        abbreviated: ['sij', 'velj', 'ožu', 'tra', 'svi', 'lip', 'srp', 'kol', 'ruj', 'lis', 'stu', 'pro']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'HH:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
       dayPeriods: ['AM', 'PM']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '¤#,##0.00',
+    currencySign: 'kn', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '#,##0.00 ¤',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
       minusSign: '-',
-      decimal: '.',
-      group: ','
+      decimal: ',',
+      group: '.'
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'potreban', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'Set vrijeme', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'danas', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'Radno vrijeme', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'minuta', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'razdoblje', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. Koristite tipke sa strelicama za odabir.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'utovar', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));
