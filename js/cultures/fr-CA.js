@@ -24,7 +24,7 @@
     calendars: [{
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'seperator': '/', //Infered
+      dateFormat: {'seperator': '-', //Infered
                    'short': 'yyyy-MM-dd', //use four digit year
                    'medium': 'yyyy-MM-dd',
                    'long': 'd MMMM yyyyy',

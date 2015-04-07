@@ -274,6 +274,7 @@
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass('error');
       field.removeData('data-errormessage');
+
       field.next('.icon-error').off('click.validate').remove();
       if (field.hasClass('dropdown')) {
         field.next().next().removeClass('error') // #shdo
@@ -285,6 +286,10 @@
       field.off('focus.validate focus.tooltip');
       if (field.data('tooltip')) {
         field.data('tooltip').destroy();
+      }
+      if (field.attr('aria-describedby') === 'validation-tooltip') {
+        field.removeAttr('aria-describedby');
+        $('#validation-tooltip').remove();
       }
 
       if (loc.attr('data-placeholder')) {

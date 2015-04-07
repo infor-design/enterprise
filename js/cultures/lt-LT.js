@@ -13,56 +13,58 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('lt-LT', {
     //layout/language
-    language: 'en',
+    language: 'lt',
+    englishName: 'Lithuanian (Lithuania)',
+    nativeName: 'lietuvių (Lietuva)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
     calendars: [{
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+      dateFormat: {'seperator': '-', //Infered
+                   'short': 'yyyy-MM-dd', //use four digit year
+                   'medium': 'yyyy MMM d',
+                   'long': 'yyyy m. MMMM d d.',
+                   'full': 'yyyy m. MMMM d d., EEEE',
+                   'datetime': 'yyyy-MM-dd HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+         wide: ['sekmadienis', 'pirmadienis', 'antradienis', 'trečiadienis', 'ketvirtadienis', 'penktadienis', 'šeštadienis'],
+         abbreviated: ['sk', 'pr', 'an', 'tr', 'kt', 'pn', 'št']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['sausis', 'vasaris', 'kovas', 'balandis', 'gegužė', 'birželis', 'rugpjūtis', 'rugsėjis', 'spalis', 'lapkritis', 'gruodis'],
+        abbreviated: ['saus.','vas.','kov.','bal.','geg.','birž.','liep.','rugp.','rugs.', 'spal.', 'lapkr.', 'gruod.']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'HH:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['pr.p.', 'pop.']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '¤#,##0.00',
+    currencySign: 'Lt', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '#,##0.00 ¤',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
       minusSign: '-',
-      decimal: '.',
-      group: ','
+      decimal: ',',
+      group: ' '
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'Reikalinga', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'Nustatyti laikas', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'šiandien', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'Darbo laikas', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'protokolas', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'laikotarpis', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. Naudokite rodyklių klavišus, kad pasirinktumėte.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'pakrovimas', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

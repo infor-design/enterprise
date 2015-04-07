@@ -13,9 +13,11 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('hu-HU', {
     //layout/language
-    language: 'en',
+    language: 'hu',
+    englishName: 'Hungarian (Hungary)',
+    nativeName: 'magyar (Magyarország)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -23,35 +25,35 @@
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'short': 'yyyy. MM. dd.', //use four digit year
+                   'medium': 'yyyy. MMM d.',
+                   'long': 'yyyy. MMMM d.',
+                   'full': 'yyyy. MMMM d., EEEE',
+                   'datetime': 'yyyy. MM. dd. H:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+         wide: ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'],
+         abbreviated: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['január', 'február', 'március', 'április', 'május', 'június', 'július', 'augusztus', 'szeptember', 'október', 'november', 'december'],
+        abbreviated: ['jan.','febr.','márc.','ápr.','máj.','jún.','júl.','aug.','szept.','okt.','nov.','dec.']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'H:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['de.', 'du.']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '¤#,##0.00',
+    currencySign: 'Ft', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '#,##0.00 ¤',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
       minusSign: '-',
-      decimal: '.',
-      group: ','
+      decimal: ',',
+      group: ' '
     },
     //Resx - Approved By Translation Team
     messages: {

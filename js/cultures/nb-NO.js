@@ -16,6 +16,8 @@
   Locale.addCulture('nb-NO', {
     //layout/language
     language: 'nb',
+    englishName: 'Norwegian, Bokmål (Norway)',
+    nativeName: 'norsk, bokmål (Norge)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian

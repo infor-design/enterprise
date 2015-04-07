@@ -69,5 +69,8 @@ test-toolbar:
 
 test-searchfield:
 	@node test-runner.js searchfield
-				
+
+test-tabs:
+	@node test-runner.js tabs
+					
 .PHONY: test

@@ -13,39 +13,41 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('hi-IN', {
     //layout/language
-    language: 'en',
+    language: 'hi',
+    englishName: 'Hindi (India)',
+    nativeName: 'हिंदी (भारत)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
     calendars: [{
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+      dateFormat: {'seperator': '-', //Infered
+                   'short': 'd-M-yyyy', //use four digit year
+                   'medium': 'dd-MM-yyyy',
+                   'long': 'd MMMM yyyy',
+                   'full': 'EEEE, d MMMM yyyy',
+                   'datetime': 'd-M-yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        wide: ['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'],
+        abbreviated: ['र','सो','मं','बु','गु','शु','श']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्टूबर','नवंबर','दिसंबर'],
+        abbreviated: ['ज','फ़','मा','अ','म','जू','जु','अ','सि','अ','न','दि']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'h:mm a',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['पूर्व', 'अपर']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '¤#,##0.00',
+    currencySign: '₹', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '"¤#,##,##0.00',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
@@ -55,14 +57,14 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'अपेक्षित', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'निर्धारित समय', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'आज श', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'घंट घंटे', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'कार्यवृत्त', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'पीरियड', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. चयन करने के लिए तीर कुंजी का प्रयोग करें.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'लोडिंग', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

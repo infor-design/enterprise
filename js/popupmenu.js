@@ -94,6 +94,9 @@
           .attr('role', 'menu').attr('aria-hidden', 'true')
           .wrap('<div class="popupmenu-wrapper"></div>');
 
+        //Enforce Correct Modality
+        this.menu.parent('.popupmenu-wrapper').attr('role', 'application');
+
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
         this.menu.find('.popupmenu').each(function(i, elem) {
           var popup = $(elem);
@@ -106,7 +109,7 @@
 
         // If action button menu, append arrow markup
         var containerClass = this.element.parent().attr('class');
-        if (this.element.hasClass('btn-actions') && containerClass.indexOf('header') >= 0 || containerClass.indexOf('more') >= 0) {
+        if (this.element.hasClass('btn-actions') || containerClass.indexOf('more') >= 0 || containerClass.indexOf('btn-group') >= 0) {
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }
@@ -121,21 +124,33 @@
 
         this.menu.find('li').attr('role', 'presentation');
         this.menu.find('.popupmenu').parent().parent().addClass('submenu');
-        this.menu.find('.submenu').children('a').each(function(i, item) {
-          if ($(item).find('span').length === 0) {
+        this.menu.find('.submenu').children('a').each(function(i, value) {
+          var item = $(value);
+
+          if (item.find('span').length === 0) {
             var text = $(item).text();
-            $(item).html('<span>' + text + '<span>');
+            item.html('<span>' + text + '<span>');
           }
-          if ($(item).find('svg.arrow').length === 0) {
-            $(item).append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
+          if (item.find('svg.arrow').length === 0) {
+            item.append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
           }
+          item.attr('aria-haspopup', 'true');
+
         });
 
         var anchor = this.menu.find('a');
         anchor.attr('tabindex', '-1').attr('role', 'menuitem');
-        if (anchor.parent().hasClass('is-checked')) {
-          anchor.attr('tabindex', '-1').attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
-        }
+
+        //Add Checked indication
+        anchor.each(function () {
+          var a = $(this);
+          if (a.parent().hasClass('is-checked')) {
+            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
+          }
+          if (a.parent().hasClass('is-not-checked')) {
+            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'false'});
+          }
+        });
 
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
 
@@ -333,6 +348,11 @@
         //Handle Case where menu is off the bottom
         if ((wrapper.offset().left + menuWidth) > $(window).width()) {
           wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
+        }
+
+        if (this.element.hasClass('btn-menu')) {
+          //move the arrow - might need better logic here.
+          wrapper.find('.arrow').css('left', '25%');
         }
       },
 
