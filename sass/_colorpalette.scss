@@ -1,0 +1,109 @@
+// Color Variables
+//================================================== //
+
+$azure01: #cbebf6;
+$azure02: #addcf2;
+$azure03: #87ceee;
+$azure04: #5cbbeb;
+$azure05: #41a5e7;
+$azure06: #278ed1;
+$azure07: #1e7bb1;
+$azure08: #186290;
+$azure09: #0e4e76;
+$azure10: #063c5f;
+
+$amber01: #ffe9ab;
+$amber02: #ffde80;
+$amber03: #ffd356;
+$amber04: #ffc82c;
+$amber05: #ffbb22;
+$amber06: #ffa617;
+$amber07: #ff971a;
+$amber08: #f78411;
+$amber09: #ef720c;
+$amber10: #e25100;
+
+$amethyst01: #eadcff;
+$amethyst02: #d8c8ed;
+$amethyst03: #c7b4db;
+$amethyst04: #b5a1c9;
+$amethyst05: #a38db7;
+$amethyst06: #9279a6;
+$amethyst07: #806594;
+$amethyst08: #6e5282;
+$amethyst09: #5d3e70;
+$amethyst10: #4b2a5e;
+
+$turquoise01: #aef4dd;
+$turquoise02: #9ce3cc;
+$turquoise03: #89d3bb;
+$turquoise04: #77c2aa;
+$turquoise05: #64b199;
+$turquoise06: #52a189;
+$turquoise07: #3f9078;
+$turquoise08: #2d7f67;
+$turquoise09: #1a6f56;
+$turquoise10: #085e45;
+
+$ruby01: #ff9999;
+$ruby02: #f88888;
+$ruby03: #f07777;
+$ruby04: #e96666;
+$ruby05: #e25555;
+$ruby06: #da4444;
+$ruby07: #d33333;
+$ruby08: #c42d2d;
+$ruby09: #aa2424;
+$ruby10: #911616;
+
+$emerald01: #c1ff99;
+$emerald02: #b1f088;
+$emerald03: #a1e177;
+$emerald04: #91d366;
+$emerald05: #81c455;
+$emerald06: #70b544;
+$emerald07: #60a633;
+$emerald08: #509822;
+$emerald09: #408911;
+$emerald10: #307a00;
+
+$graphite01: #ededed;
+$graphite02: #d8d8d8;
+$graphite03: #bdbdbd;
+$graphite04: #999999;
+$graphite05: #737373;
+$graphite06: #5c5c5c;
+$graphite07: #454545;
+$graphite08: #383838;
+$graphite09: #292929;
+$graphite10: #1a1a1a;
+
+$slate01: #dee1e8;
+$slate02: #c8cbd4;
+$slate03: #abaeb7;
+$slate04: #888b94;
+$slate05: #656871;
+$slate06: #50535a;
+$slate07: #414247;
+$slate08: #313236;
+$slate09: #212224;
+$slate10: #1c1819;
+
+// Generate Color Classes for The Sass Variables
+$color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
+ amber01 amber02 amber03 amber04 amber05 amber06 amber07 amber08 amber09 amber10
+ emerald01 emerald02 emerald03 emerald04 emerald05 emerald06 emerald07 emerald08 emerald09 emerald10
+ azure01 azure02 azure03 azure04 azure05 azure06 azure07 azure08 azure09 azure10
+ turquoise01 turquoise02 turquoise03 turquoise04 turquoise05 turquoise06 turquoise07 turquoise08 turquoise09 turquoise10
+ amethyst01 amethyst02 amethyst03 amethyst04 amethyst05 amethyst06 amethyst07 amethyst08 amethyst09 amethyst10
+ graphite01 graphite02 graphite03 graphite04 graphite05 graphite06 graphite07 graphite08 graphite09 graphite10
+ slate01 slate02 slate03 slate04 slate05 slate06 slate07 slate08 slate09 slate10;
+
+$color-vars: $ruby01 $ruby02 $ruby03 $ruby04 $ruby05 $ruby06 $ruby07 $ruby08 $ruby09 $ruby10
+ $amber01 $amber02 $amber03 $amber04 $amber05 $amber06 $amber07 $amber08 $amber09 $amber10
+ $emerald01 $emerald02 $emerald03 $emerald04 $emerald05 $emerald06 $emerald07 $emerald08 $emerald09 $emerald10
+ $azure01 $azure02 $azure03 $azure04 $azure05 $azure06 $azure07 $azure08 $azure09 $azure10
+ $turquoise01 $turquoise02 $turquoise03 $turquoise04 $turquoise05 $turquoise06 $turquoise07 $turquoise08 $turquoise09 $turquoise10
+ $amethyst01 $amethyst02 $amethyst03 $amethyst04 $amethyst05 $amethyst06 $amethyst07 $amethyst08 $amethyst09 $amethyst10
+ $graphite01 $graphite02 $graphite03 $graphite04 $graphite05 $graphite06 $graphite07 $graphite08 $graphite09 $graphite10
+ $slate01 $slate02 $slate03 $slate04 $slate05 $slate06 $slate07 $slate08 $slate09 $slate10;
