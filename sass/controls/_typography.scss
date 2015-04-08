@@ -137,6 +137,21 @@ small,
   }
 }
 
+.stamp-text {
+  // Used for showing groupings within a line of text.
+  // Uses the '#text-arrow' SVG symbol.
+  > .text-arrow {
+    fill: $font-color;
+    height: .9rem;
+    margin: 0 .6rem;
+    @include transform(rotate(-90deg));
+
+    &.left {
+      @include transform(rotate(90deg));
+    }
+  }
+}
+
 // Horizontal Rule
 hr {
   border-bottom: 1px solid $hr-bottom-color;

@@ -2,16 +2,29 @@
 //================================================== */
 
 $sr-masthead-text-color: $font-color;
+$sr-result-bottom-border-color: $hr-top-color;
 
 .container.search-results {
-  margin-top: 6em;
+  margin-top: 3em;
 
   .masthead {
     background-color: $body-bg-color;
     color: $sr-masthead-text-color;
+    margin-bottom: 3em;
+    position: relative;
+    width: auto;
+
+    &.toolbar .title {
+      padding: 2px 0;
+
+      > * {
+        vertical-align: top;
+      }
+    }
 
     .masthead-square {
       background-color: $sr-masthead-text-color;
+      min-width: 0;
     }
 
     .masthead-appname {
@@ -27,8 +40,67 @@ $sr-masthead-text-color: $font-color;
     border: 0;
     color: $primary-color;
     @include font-size(72);
+    font-weight: 100;
     width: 100%;
-
   }
 
+  .search-result {
+    border-bottom: 1px solid $sr-result-bottom-border-color;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+
+    > * {
+      display: inline-block;
+    }
+
+    .type {
+      color: $font-color-light;
+      @include font-size(16);
+      line-height: 1.5em;
+    }
+
+    .description {
+      color: $primary-color;
+      @include font-size(18);
+      line-height: 1.5em;
+    }
+
+    .detail {
+      @include font-size(16);
+      line-height: 1.5em;
+      margin-right: .3em;
+
+      + span {
+        color: $font-color-extradark;
+        @include font-size(16);
+        line-height: 1.5em;
+      }
+    }
+
+    .date {
+      @include font-size(14);
+      line-height: 1.5em;
+    }
+
+    .related-business-object {
+      color: $emerald06;
+      @include font-size(12);
+      margin-top: 1rem;
+
+      > * {
+        vertical-align: middle;
+      }
+    }
+
+    .icon-bo {
+      left: -0.4em;
+      height: 1.6em;
+    }
+
+    .stamp-text {
+      margin-bottom: 0;
+      line-height: 1.2rem;
+    }
+
+  }
 }
