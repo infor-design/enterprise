@@ -89,6 +89,9 @@ $datagrid-header-height: 40px;
       text-overflow: ellipsis;
     }
 
+    .btn-icon span {
+      color: transparent;
+    }
 
     //Row Height Feature
     &.tall-rowheight td {

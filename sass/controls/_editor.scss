@@ -89,6 +89,10 @@
     top: 65px;
   }
 
+  img {
+    margin: 0 auto;
+    max-width: 80%;
+  }
 }
 
 // Toolbar
@@ -145,9 +149,6 @@
 }
 
 // Dialog Styling
-#editor-modal-image {
-  width: 50%;
-}
 
 .editor-source {
   border: 1px solid $editor-border-color;

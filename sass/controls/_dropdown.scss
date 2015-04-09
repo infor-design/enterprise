@@ -151,21 +151,15 @@ input.dropdown {
 
     li.is-focused:not(.group-label):before {
       @include checkbox-checked-before-style;
-      border-color: #ffffff;
     }
 
     li.is-selected {
-      background-color: $primary-color;
-      color: $inverse-color;
-
-      i {
-        color: $inverse-color;
-      }
+      background-color: $inverse-color;
+      color: #333333;
     }
 
     li.is-selected:not(.group-label):before {
       @include checkbox-checked-before-style;
-      border-color: #ffffff;
     }
 
     li.is-selected:not(.group-label):after {

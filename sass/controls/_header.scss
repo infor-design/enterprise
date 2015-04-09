@@ -85,7 +85,7 @@ $header-bg-color: #454545;
 
   .btn-actions,
   .btn-icon {
-    span {
+    span:not(.audible) {
       visibility: hidden;
     }
   }

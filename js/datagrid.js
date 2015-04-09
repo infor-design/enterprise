@@ -49,7 +49,6 @@
     },
 
     Hyperlink: function(row, cell, value) {
-      //TODO - Click Events, Confirm Styling
       return '<a href="#" class="hyperlink">' + value + '</a>';
     },
 
@@ -66,7 +65,6 @@
     },
 
     Drilldown: function () {
-      //TODO: Localize
       var text = Locale.translate('Drilldown');
       if (text === undefined) {
         text = '';
@@ -131,7 +129,6 @@
     // Sparkline
   };
 
-  //TODO: resize cols - http://dobtco.github.io/jquery-resizable-columns/
   $.fn.datagrid = function(options) {
 
     // Settings and Options

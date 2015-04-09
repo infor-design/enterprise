@@ -220,8 +220,8 @@
       loc.data('data-errormessage', appendedMsg);
 
       //Add Aria Alert
-      if ($.fn.toast !== undefined) { //TODO: Localize
-        $('body').toast({title: 'Error', audibleOnly: true, message: appendedMsg});
+      if ($.fn.toast !== undefined) {
+        $('body').toast({title: Locale.translate('Error'), audibleOnly: true, message: appendedMsg});
       }
 
       //Append Error
@@ -365,6 +365,7 @@
       },
       date: {
         check: function(value) {
+          this.message = Locale.translate('InvalidDate');
           value = value.replace(/ /g, '');
           var dateFormat = Locale.calendar().dateFormat.short,
             parsedDate = Locale.parseDate(value);
@@ -379,7 +380,7 @@
 
           return true;
         },
-        message: 'Invalid Date' // TODO - Localize
+        message: 'Invalid Date'
       },
       time: {
         check: function(value, field) {

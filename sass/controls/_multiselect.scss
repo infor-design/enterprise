@@ -18,6 +18,7 @@
 
   span {
     color: $font-color-extradark;
+    @include font-size(14);
   }
 
   &.is-disabled {

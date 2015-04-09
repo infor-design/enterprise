@@ -77,7 +77,7 @@
         }
 
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
-          .text('. Press the Down Arrow to browse available options.') // TODO: Localize
+          .text(Locale.translate('ChangeSelection'))
           .insertAfter(this.label);
 
         // Setup the incoming options that can be set as properties/attributes
@@ -162,7 +162,7 @@
           var selectedOpts = self.element.find('option:selected');
           // Show a "selected" header if any options have been selected.
           if (selectedOpts.length > 0) {
-            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('Selected ' + this.label.text())); // TODO: Localize
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text(Locale.translate('Selected') + ' ' + this.label.text()));
           }
           selectedOpts.each(function(i) {
             var option = $(this),

@@ -88,7 +88,7 @@
         this.modal = $('<div class="modal about" id="about-modal"></div>');
         $('<div class="modal-content"></div>').appendTo(this.modal);
         var header = $('<div class="modal-header"></div>').appendTo(this.modal.find('.modal-content'));
-        $('<div class="close-container"><button name="close" class="btn-icon has-text"><svg class="icon icon-close"><use xlink:href="#icon-close"></use></svg><span>Close</span></button></div>').appendTo(header); // TODO: Localize
+        $('<div class="close-container"><button name="close" class="btn-icon has-text"><svg class="icon icon-close"><use xlink:href="#icon-close"></use></svg><span>'+Locale.translate('Close')+'</span></button></div>').appendTo(header);
         $('<svg class="about-logo" viewBox="0 0 44 44"><use xlink:href="#icon-logo-trademark"></use></svg>').appendTo(header);
         this.title = $('<h1 class="title"></h1>').text(this.settings.appName).appendTo(this.modal.find('.modal-header'));
 

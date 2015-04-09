@@ -880,6 +880,10 @@ section.light-bgrnd {
       width: 35%;
     }
 
+    &:visited {
+      color: #666666;
+    }
+
     span {
       display: inline-block;
       @include font-size(16);

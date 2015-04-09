@@ -1,5 +1,5 @@
 /**
-* Datepicker Control (link to docs)
+* Datepicker Control (TODO link to docs)
 */
 (function(factory) {
   'use strict';
@@ -51,14 +51,8 @@
       },
 
       addAria: function () {
-        this.element.attr('aria-haspopup', true);
-
-        //TODO: Confirm this with Accessibility Team
         this.label = $('label[for="'+ this.element.attr('id') + '"]');
-        this.label.append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
-
-        //TODO: Do We Need This?
-        //this.ariaDayOfWeek = $('<span class="dayofweek audible"></span>');
+        this.label.append('<span class="audible">' + Locale.translate('PressDown') + '</span>');
       },
 
       //Attach Events used by the Control
@@ -82,7 +76,9 @@
 
         elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
           var handled = false,
-            key = e.which;
+            key = e.keyCode || e.charCode || 0;
+
+          console.log(key, e.metaKey, e.altKey);
 
          //Arrow Down or Alt first opens the dialog
           if (key === 40 && !self.isOpen()) {
@@ -119,16 +115,45 @@
           }
 
           //Page Up Selects Same Day Next Month
-          if (key === 33 && self.isOpen()) {
+          if (key === 33 && !e.altKey && self.isOpen()) {
             handled = true;
             self.currentDate.setMonth(self.currentDate.getMonth() + 1);
             self.insertDate(self.currentDate);
           }
 
           //Page Down Selects Same Day Prev Month
-          if (key === 34 && self.isOpen()) {
+          if (key === 34 && !e.altKey && self.isOpen()) {
             handled = true;
             self.currentDate.setMonth(self.currentDate.getMonth() - 1);
+            self.insertDate(self.currentDate);
+          }
+
+          //Alt+Page Up Selects Same Day Next Year
+          if (key === 33 && e.altKey && self.isOpen()) {
+            handled = true;
+            self.currentDate.setFullYear(self.currentDate.getFullYear() + 1);
+            self.insertDate(self.currentDate);
+          }
+
+          //Alt+Page Down Selects Same Day Prev Year
+          if (key === 34 && e.altKey && self.isOpen()) {
+            handled = true;
+            self.currentDate.setFullYear(self.currentDate.getFullYear() - 1);
+            self.insertDate(self.currentDate);
+          }
+
+          //Home Moves to End of the month
+          if (key === 35 && self.isOpen()) {
+            handled = true;
+            var lastDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth()+1, 0);
+            self.currentDate = lastDay;
+            self.insertDate(self.currentDate);
+          }
+
+          //End Moves to Start of the month
+          if (key === 36 && self.isOpen()) {
+            var firstDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth(), 1);
+            self.currentDate = firstDay;
             self.insertDate(self.currentDate);
           }
 
@@ -149,6 +174,7 @@
           // Tab closes Date Picker like escape and goes to next field
           if (key === 9 && self.isOpen()) {
             self.closeCalendar();
+            self.element.focus();
           }
 
           if (handled) {
@@ -181,7 +207,6 @@
           .attr('data-mask-mode', 'date')
           .mask().validate();
 
-        //TODO: Test - should add placeholder if there is one
         if (this.element.attr('placeholder') !== undefined) {
           this.element.attr('placeholder', settings.dateFormat);
         }
@@ -207,13 +232,12 @@
 
         this.element.addClass('is-active');
 
-        // Calendar Html in Popups  TODO: Localize
-        this.table = $('<table class="calendar-table" aria-label="Calendar" role="application"></table>');
-        this.header = $('<div class="calendar-header"><button class="btn-icon prev" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-left"></use></svg><span>Previous Month</span></button><span class="month">november</span><span class="year"> 2014</span><button class="btn-icon next" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg><span>Next Month</span></button></div>');
+        // Calendar Html in Popups
+        this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
+        this.header = $('<div class="calendar-header"><button class="btn-icon prev" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-left"></use></svg><span>'+ Locale.translate('PreviousMonth') +'</span></button><span class="month">november</span><span class="year"> 2015</span><button class="btn-icon next" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg><span>'+ Locale.translate('NextMonth') +'</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="is-selected" aria-selected="true">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
-        //TODO: Localize
-        this.footer = $('<div class="calendar-footer"> <a href="#" class="hyperlink cancel" tabindex="-1">Clear</a> <a href="#" tabindex="-1" class="hyperlink is-today">'+Locale.translate('Today')+'</a> </div>');
+        this.footer = $('<div class="calendar-footer"> <a href="#" class="hyperlink cancel" tabindex="-1">'+ Locale.translate('Clear') +'</a> <a href="#" tabindex="-1" class="hyperlink is-today">'+Locale.translate('Today')+'</a> </div>');
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
         this.trigger.popover({content: this.calendar, trigger: 'immediate',
@@ -277,7 +301,7 @@
 
         // Change Month Events
         this.header.off('click.datepicker').on('click.datepicker', 'button', function () {
-          if ($(this).attr('class') === 'next') {
+          if ($(this).hasClass('next')) {
             self.showMonth(self.currentMonth + 1, self.currentYear);
           } else {
             self.showMonth(self.currentMonth - 1, self.currentYear);
@@ -323,6 +347,7 @@
 
         //Localize Month Name
         this.header.find('.month').attr('data-month', month).text(monthName);
+        this.header.find('.year').text(' ' + year);
 
         //Adjust days of the week
         //lead days
@@ -336,11 +361,11 @@
           th.removeAttr('aria-selected');
 
           if (i < leadDays) {
-            th.addClass('alt').html('<span class="aria-hidden">' + (lastMonthDays - leadDays + 1 + i) + '</span>');
+            th.addClass('alt').html('<span aria-hidden="true">' + (lastMonthDays - leadDays + 1 + i) + '</span>');
           }
 
           if (i >= leadDays && dayCnt <= thisMonthDays) {
-            th.html('<span class="aria-hidden">' + dayCnt + '</span>');
+            th.html('<span aria-hidden="true">' + dayCnt + '</span>');
 
             if (dayCnt === self.currentDay) {
               th.addClass('is-selected').attr('aria-selected', 'true');
@@ -371,7 +396,7 @@
         input.val(Locale.formatDate(date)).trigger('updated').trigger('change');
 
         // Make sure Calendar is showing that month
-        if (this.currentMonth !== date.getMonth()) {
+        if (this.currentMonth !== date.getMonth() || this.currentYear !== date.getFullYear()) {
           this.showMonth(date.getMonth(), date.getFullYear());
         }
 

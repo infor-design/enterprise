@@ -99,6 +99,7 @@
 
     &.is-open {
       border: 1px solid $input-focus-border-color !important;
+      margin-top: -10px;
       padding: 7px 0 0 3px;
     }
   }

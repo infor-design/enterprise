@@ -13,38 +13,39 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('th-TH', {
     //layout/language
-    language: 'en',
+    language: 'th',
+    englishName: 'Thai (Thailand)',
+    nativeName: 'ไทย (ไทย)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
     calendars: [{
-      name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'seperator': '/', //Infered
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'short': 'd/M/yyyy', //use four digit year
+                   'medium': 'd MMM yyyy',
+                   'long': 'd MMMM yyyy',
+                   'full': 'EEEEที่ d MMMM G yyyy',
+                   'datetime': 'd/M/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        wide: ['วันอาทิตย์', 'วันจันทร์', 'วันอังคาร', 'วันพุธ', 'วันพฤหัสบดี', 'วันศุกร์', 'วันเสาร์'],
+        abbreviated: ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+        abbreviated: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'HH:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['ก่อนเที่ยง', 'หลังเที่ยง']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
+    currencySign: 'kr', //(Replace Sign http://www.currencysymbols.in ?)
     currencyFormat: '¤#,##0.00',
     //numbers/symbols-numberSystem-latn
     numbers: {
@@ -55,14 +56,14 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: 'ที่จำเป็น', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: 'ตั้งเวลา', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: 'วันนี้', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: 'ชั่วโมง', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: 'นาที', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: 'ระยะเวลา', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. ใช้ปุ่มลูกศรเพื่อเลือก.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: 'โหลด', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

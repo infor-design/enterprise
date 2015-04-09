@@ -27,7 +27,7 @@
     // Theme, Personalization, Language Changer, Scrolling
     Plugin.prototype = {
       init: function() {
-        this.initPageChanger();
+         this.initPageChanger();
       },
 
       initPageChanger: function () {

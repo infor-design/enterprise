@@ -7,7 +7,6 @@
   Work on update functions or routine
   Make responsive
   Make Area/Dot Chart
-  IE8 Fallbacks
   Test With Screen readers
 */
 (function (factory) {
@@ -25,8 +24,7 @@
 
     //IE8 and Below Message
     if (typeof d3 === 'undefined') {
-      //TODO - Localize and Check Text
-      $(container).append('<p class="chart-message">This content is not available because it uses SVG features not supported in your current browser version. Please try Chrome, Firefox, Safari or IE9+</p>');
+       $(container).append('<p class="chart-message">'+Locale.translate('Unsupported')+'</p>');
       return null;
     }
     this.options = {
@@ -38,7 +36,7 @@
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
     this.greyColors = d3.scale.ordinal().range(['#7a7a7a', '#999999', '#bdbdbd', '#d8d8d8']);
 
-    // Function to Add a Legend - TODO Remove unused params
+    // Function to Add a Legend
     this.addLegend = function(series, chartType) {
       var legend = $('<div class="chart-legend"></div>');
       if (series.length === 0) {
@@ -459,9 +457,8 @@
            content += '</div>';
           }
 
-          //TODO: Localize
           if (total > 0) {
-            content = '<span class="chart-tooltip-total"><b>' + total + '</b> Total</span>' +content;
+            content = '<span class="chart-tooltip-total"><b>' + total + '</b> '+Locale.translate('Total')+'</span>' +content;
           }
 
           // Set the position
@@ -745,7 +742,7 @@
           return (max === d) ? 4 : 0;
         }).on('mouseenter', function(d) {
           var rect = d3.select(this)[0][0].getBoundingClientRect(),
-            content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> Peak: ': '') + '<b>' + d  + '</b></p>',  //TODO Localize Max
+            content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> '+ Locale.translate('Peak') +': ': '') + '<b>' + d  + '</b></p>',
             size = charts.getTooltipSize(content),
             x = rect.x - (size.width /2) + 6,
             y = rect.y - size.height - 18;
