@@ -51,7 +51,7 @@
       show: function() {
         var self = this,
           container = $('#toast-container'),
-          closeBtn = $('<button type="button" class="btn-close" aria-hidden="true"></button>'),  //TODO: Localize
+          closeBtn = $('<button type="button" class="btn-close" aria-hidden="true">'+ Locale.translate('Close') +'</button>'),
           toast = $('<div class="toast"></div>'),
           progress = $('<div class="toast-progress"></div>');
 

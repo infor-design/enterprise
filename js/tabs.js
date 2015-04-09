@@ -100,7 +100,7 @@
         // Add the markup for the "More" button if it doesn't exist.
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
-          button.append( $('<span>').text('More')); //TODO: Localize
+          button.append( $('<span>').text(Locale.translate('More')));
           button.append('<svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
           self.tablist.after(button);
           self.moreButton = button;

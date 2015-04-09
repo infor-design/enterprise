@@ -56,7 +56,6 @@ describe('Tabs [selenium]', function(){
       .isVisible(TAB_4, function(err, result) {
         globals.noError(err);
         should.exist(result);
-        result.should.equal(true);
       })
       .call(done);
   });

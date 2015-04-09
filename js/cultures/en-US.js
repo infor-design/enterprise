@@ -57,6 +57,7 @@
     },
     //Resx - Approved By Translation Team
     messages: {
+      'Actions': {id: 'Actions', value: 'Actions', comment: 'Tooltip text for the action button with additional in context actions'},
       'AllResults': {id: 'AllResults', value: 'All Results For', comment: 'Search Results Text'},
       'Amber': {id: 'Amber', value: 'Amber', comment: 'Color in our color pallette'},
       'Amethyst': {id: 'Amethyst', value: 'Amethyst', comment: 'Color in our color pallette'},
@@ -82,6 +83,7 @@
       'JustifyRight': {id: 'JustifyRight', value: 'Justify Right', comment: 'justify text to right in the editor'},
       'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'},
       'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
+      'More': {id: 'More', value: 'More...', comment: 'Text Indicating More Buttons or form content'},
       'MultiselectWith': {id: 'MultiselectWith', value: '. Multiselect with ', comment: 'the minutes portion of a time'},
       'NextMonth': {id: 'NextMonth', value: 'Next Month', comment: 'the label for the button that moves calendar to next/prev'},
       'NoResults': {id: 'NoResults', value: 'No Results', comment: 'Search Results Text'},
@@ -104,6 +106,7 @@
       'ToggleH4': {id: 'ToggleH4', value: 'Toggle Heading 4', comment: 'turn on and off heading 4 text'},
       'ToggleItalic': {id: 'ToggleItalic', value: 'Toggle Italic Text', comment: 'turn on and off Italic in text editor (like word)'},
       'ToggleUnderline': {id: 'ToggleUnderline', value: 'Toggle Underline Text', comment: 'turn on and off Underline in text editor (like word)'},
+      'Toolbar': {id: 'Toolbar', value: 'Toolbar', comment: 'describing the toolbar component'},
       'Total': {id: 'Total', value: 'Total', comment: 'mathematic total of a calculation'},
       'Turquoise': {id: 'Turquoise', value: 'Turquoise', comment: 'Color in our color pallette'},
       'UnorderedList': {id: 'UnorderedList', value: 'Unordered List', comment: 'Insert an Unordered list in the editor'},
