@@ -26,13 +26,14 @@
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Modal(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
     // Actual Plugin Code
-    Plugin.prototype = {
+    Modal.prototype = {
       init: function() {
         var self = this;
 
@@ -87,7 +88,8 @@
         var body = this.element.find('.modal-body'),
             self = this,
             btnWidth = 100,
-            buttonset;
+            buttonset,
+            isPanel = false;
 
 
         if (!buttons) {
@@ -104,8 +106,25 @@
           return;
         }
 
+        if (this.element.is('.contextual-action-panel')) {
+          isPanel = true;
+          // construct the toolbar markup if a toolbar isn't found
+          buttonset = this.element.find('.buttonset');
+          if (!buttonset.length) {
+            var toolbar = this.element.find('.toolbar');
+            if (!toolbar.length) {
+              $('<div class="toolbar"></div>').appendTo(this.element.find('.modal-header'));
+            }
+            buttonset = $('<div class="buttonset"></div>').appendTo(this.element.find('.toolbar'));
+          }
+        } else {
+          buttonset = this.element.find('.modal-buttonset');
+          if (!buttonset.length) {
+            buttonset = $('<div class="modal-buttonset"></div>').insertAfter(body);
+          }
+        }
+
         btnWidth = 100/buttons.length;
-        buttonset = $('<div class="modal-buttonset"></div>').insertAfter(body);
         body.find('button').remove();
         body.find('.btn-primary .btn-close .btn').remove();
 
@@ -113,11 +132,21 @@
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
 
-          if (props.isDefault) {
-            btn.addClass('btn-modal-primary');
+          if (props.cssClass) {
+            btn.attr('class', props.cssClass);
           } else {
-            btn.addClass('btn-modal');
+            if (props.isDefault) {
+              btn.addClass('btn-modal-primary');
+            } else {
+              btn.addClass('btn-modal');
+            }
           }
+
+          if (props.icon && props.icon.charAt(0) === '#') {
+            btn.html('<span>' + btn.text() + '</span>');
+            $('<svg class="icon" viewBox="0 0 32 32"><use xlink:href="' + props.icon + '"></use></svg>').prependTo(btn);
+          }
+
           if (props.id) {
             btn.attr('id', props.id);
           }
@@ -128,7 +157,10 @@
             }
             self.close();
           });
-          btn.css('width', btnWidth + '%');
+
+          if (!isPanel) {
+            btn.css('width', btnWidth + '%');
+          }
           btn.button();
           buttonset.append(btn);
         });
@@ -350,7 +382,7 @@
         if (typeof instance[options] === 'function') {
           instance[options]();
         }
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
 
         if (settings.trigger === 'immediate') {
           instance.open();
@@ -358,7 +390,7 @@
         return;
       }
 
-      instance = $.data(this, pluginName, new Plugin(this, settings));
+      instance = $.data(this, pluginName, new Modal(this, settings));
     });
   };
 

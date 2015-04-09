@@ -1,0 +1,47 @@
+// Contextual Action Panel
+//================================================== //
+
+.modal.contextual-action-panel {
+  @include css3(transform, translate(0, 100%));
+  @include css3(transition-timing-function, cubic-bezier(.17, .04, .03, .94));
+
+  &.is-visible {
+    @include css3(transform, translate(0, 0));
+    @include css3(transition-timing-function, cubic-bezier(.94, .03, .04, .17));
+  }
+
+  .modal-content {
+    padding: 0;
+  }
+
+  .modal-header {
+    background-color: $contextual-panel-bg;
+    padding: 1em 2em;
+  }
+
+  .toolbar {
+    margin-bottom: 0;
+
+    .title {
+      @include font-size(18);
+    }
+  }
+
+  .modal-body {
+    padding: 2em;
+  }
+
+  .btn-close {
+    height: auto;
+    left: auto;
+    position: relative;
+    top: auto;
+    width: auto;
+
+    &:before,
+    &:after {
+      content: none;
+    }
+  }
+
+}
