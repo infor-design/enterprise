@@ -119,27 +119,38 @@
 
       deconstruct: function() {
         this.panel.detach().insertAfter(this.element);
+        this.panel.find('.toolbar').data('toolbar').destroy();
+        this.header.remove();
 
         var children = this.panel.find('.modal-body').children();
         children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
 
-        this.header.remove();
         this.panel.removeAttr('id').removeClass('modal');
+        this.panel.data('modal').destroy();
       },
 
       close: function() {
         this.panel.data('modal').close();
       },
 
+      disable: function() {
+        this.element.prop('disabled', true);
+        if (this.panel.hasClass('is-visible')) {
+          this.close();
+        }
+      },
+
+      enable: function() {
+        this.element.prop('disabled', false);
+      },
+
       // Teardown - Remove added markup and events
       destroy: function() {
-        if (this.close.length) {
-          this.close.off('touchend.contextualactionpanel touchcancel.contextualactionpanel click.contextualactionpanel');
+        if (this.closeButton.length) {
+          this.closeButton.off('touchend.contextualactionpanel touchcancel.contextualactionpanel click.contextualactionpanel');
         }
 
         this.deconstruct();
-        this.element.find('.toolbar').data('toolbar').destroy();
-        this.element.data('modal').destroy();
         $.removeData(this.element[0], pluginName);
       }
     };

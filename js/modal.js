@@ -43,6 +43,9 @@
           this.oldActive = parent.document.activeElement; //iframe
         }
 
+        // Used for tracking events tied to the Window object
+        this.id = (parseInt($('.modal').length, 10)+1);
+
         this.trigger = $('button[data-modal="' + this.element.attr('id') + '"]');  //Find the button with same dialog ID
         this.overlay = $('<div class="overlay"></div>');
 
@@ -91,6 +94,7 @@
             buttonset,
             isPanel = false;
 
+        this.modalButtons = buttons;
 
         if (!buttons) {
           var inlineBtns = body.find('.modal-buttonset button');
@@ -188,7 +192,7 @@
 
         messageArea = self.element.find('.detailed-message');
         if (messageArea.length === 1) {
-          $(window).on('resize.modal', function () {
+          $(window).on('resize.modal-' + this.id, function () {
             self.sizeInner();
           });
           self.sizeInner();
@@ -364,6 +368,21 @@
 
       destroy: function(){
         this.close();
+
+        if (this.modalButtons) {
+          this.modalButtons.each(function() {
+            $(this).off('click.modal');
+          });
+        }
+
+        if (this.element.find('.detailed-message').length === 1) {
+          $(window).off('resize.modal-' + this.id);
+        }
+
+        if (settings.trigger === 'click') {
+          this.trigger.off('click.modal');
+        }
+
         $.removeData($(this.element),'modal');
         this.element.trigger('destroy.modal');
       }
