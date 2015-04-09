@@ -79,8 +79,8 @@
     Checkbox: function (row, cell, value, col) {
       //treat 1, true or '1' as checked
       var isChecked = (value==undefined ? false : value == true); // jshint ignore:line
-      return '<span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
-       (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span>';
+      return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
+       (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span></div>';
     },
 
     Actions: function (row, cell, value, col) {
@@ -136,7 +136,8 @@
         defaults = {
           dataset: [],
           columns: [],
-          rowHeight: 'medium' //(short, medium or tall)
+          rowHeight: 'medium', //(short, medium or tall)
+          menuId: null  //Id to the right click context menu
         },
         settings = $.extend({}, defaults, options);
 
@@ -291,6 +292,17 @@
         self.table.append(tableHtml);
       },
 
+      //Trigger event on parent and compose the args
+      triggerRowEvent: function (eventName, e) {
+        var self = this,
+            row = $(e.currentTarget).index(),
+            cell = $(e.target).closest('td').index(),
+            item = self.settings.dataset[row];
+
+        e.stopPropagation();
+        self.element.trigger(eventName, [{row: row, cell: cell, item: item, originalEvent: e}]);
+      },
+
       // Attach All relevant events
       handleEvents: function() {
         var self = this;
@@ -308,12 +320,38 @@
             row = $(this).closest('tr').index(),
             col = self.settings.columns[cell];
 
+
           if (col.click) {
             col.click(e, [row, cell, col, e.currentTarget]);
           }
 
+          if (col.menuId) {
+            btn.popupmenu({menuId: col.menuId, trigger: 'immediate'});
+          }
+
           if (btn.is('.datagrid-expand-btn')) {
             self.expandRow(row+1);
+          }
+
+        });
+
+        var body = this.table.find('tbody');
+        body.on('click.datagrid', 'tr', function (e) {
+          self.triggerRowEvent('click', e);
+        });
+
+        body.on('dblclick.datagrid', 'tr', function (e) {
+          self.triggerRowEvent('dblclick', e);
+        });
+
+        //Handle Context Menu Option
+        body.on('contextmenu.datagrid', 'tr', function (e) {
+          self.triggerRowEvent('contextmenu', e);
+
+          if (self.settings.menuId) {
+            e.preventDefault();
+            $(e.currentTarget).popupmenu({menuId: self.settings.menuId, eventObj: e, trigger: 'immediate'});
+            return false;
           }
         });
 
@@ -331,10 +369,20 @@
 
           var leftEdge = parseInt(self.currentHeader.position().left),
             rightEdge = leftEdge + self.currentHeader.outerWidth(),
+            alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX),
             leftPos = 0;
 
           //TODO: Test Touch support - may need handles on each column
-          leftPos = ((e.pageX - leftEdge > rightEdge - e.pageX) ? (rightEdge - 6): (leftEdge - 6));
+          leftPos = (alignToLeft ? (rightEdge - 6): (leftEdge - 6));
+
+          if (self.currentHeader.index() === 0 && !alignToLeft) {
+            leftPos = '-999';
+          }
+
+          if (!alignToLeft) {
+             self.currentHeader = self.currentHeader.prev();
+          }
+
           self.resizeHandle.css('left', leftPos + 'px');
         });
 

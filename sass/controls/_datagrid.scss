@@ -181,7 +181,7 @@ $datagrid-header-height: 40px;
 .datagrid-row-subheading {
   @include font-size(14);
   color: #666666;
-  padding-top: 8px;
+  padding-top: 2px;
 }
 
 .datagrid-row-micro {
@@ -236,6 +236,10 @@ td .btn-actions {
     margin-left: -5px;
     margin-top: -5px;
   }
+}
+
+.datagrid-checkbox-wrapper {
+  position: relative;
 }
 
 //Grid Expand Button

@@ -20,7 +20,8 @@
         menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
         trigger: 'click',  //click, rightClick, immediate
         autoFocus: true,
-        mouseFocus: true
+        mouseFocus: true,
+        eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
       },
       settings = $.extend({}, defaults, options);
 
@@ -109,7 +110,7 @@
 
         // If action button menu, append arrow markup
         var containerClass = this.element.parent().attr('class');
-        if (this.element.hasClass('btn-actions') || containerClass.indexOf('more') >= 0 || containerClass.indexOf('btn-group') >= 0) {
+        if (containerClass !==undefined && (this.element.hasClass('btn-actions') || containerClass.indexOf('more') >= 0 || containerClass.indexOf('btn-group') >= 0)) {
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }
@@ -189,7 +190,7 @@
         }
 
         if (this.settings.trigger === 'immediate') {
-          this.open();
+          this.open(this.settings.eventObj);
         }
 
         this.element.on('keydown.popupmenu', function (e) {
