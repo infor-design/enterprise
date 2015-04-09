@@ -109,6 +109,10 @@
       var day = value.getDate(), month = value.getMonth(), year = value.getFullYear(),
         mins = value.getMinutes(), hours = value.getHours(), seconds = value.getSeconds();
 
+      //Special
+      pattern = pattern.replace('ngày','nnnn');
+      pattern = pattern.replace('tháng','t1áng');
+
       //Day of Month
       ret = pattern.replace('dd', this.pad(day, 2));
       ret = ret.replace('d', day);
@@ -136,6 +140,8 @@
 
       //Day of Week
       ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
+      ret = ret.replace('nnnn','ngày');
+      ret = ret.replace('t1áng','tháng');
 
       return ret.trim();
     },
@@ -267,8 +273,12 @@
 
     // Overridable culture messages
     translate: function(key) {
+      if (this.currentLocale.data === undefined) {
+        return key;
+      }
+
       if (this.currentLocale.data.messages[key] === undefined) {
-        // Need to substitue English Here
+        // Substitue English Expression if missing
         if (this.cultures['en-US'].messages[key] === undefined) {
           return undefined;
         }

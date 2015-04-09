@@ -54,7 +54,7 @@
             prevSpan = this.element.prev('.label'),
             labelText = title.length ? title.text() :
             prevLabel.length ? prevLabel.text() :
-            prevSpan.length ? prevSpan.text() : id + ' Toolbar'; // TODO: Localize
+            prevSpan.length ? prevSpan.text() : id + ' ' + Locale.translate('Toolbar');
 
           this.element.attr('aria-label', labelText.replace(/\s+/g,' ').trim());
         }
@@ -74,7 +74,7 @@
           var container = $('<div class="more"></div>').appendTo(this.element);
           this.moreButton = $('<button class="btn-actions" data-init="true" tabindex="-1"></button>').appendTo(container);
           $('<svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg>').appendTo(this.moreButton);
-          $('<span class="audible">Actions</span>').appendTo(this.moreButton); // TODO: Localize
+          $('<span class="audible">'+Locale.translate('Actions')+'</span>').appendTo(this.moreButton);
         }
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();

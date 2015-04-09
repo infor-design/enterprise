@@ -139,6 +139,11 @@
     }
   }
 
+  span {
+    color: inherit;
+    @include font-size(14);
+  }
+
   //Text Underline on Terms
   i {
     color: $font-color-extradark;

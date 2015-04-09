@@ -13,9 +13,11 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('zh-tw', {
     //layout/language
-    language: 'en',
+    language: 'zh',
+    englishName: 'Chinese (Traditional, Taiwan)',
+    nativeName: '中文(台灣)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
@@ -27,25 +29,25 @@
                    'medium': 'MMM d, yyyy',
                    'long': 'MMMM d, yyyy',
                    'full': 'EEEE, MMMM d, y',
-                   'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'datetime': 'M/d/yyyy hh:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
-         wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-         abbreviated: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+        wide: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+        abbreviated: ['週日','週一','週二','週三','週四','週五','週六']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        wide: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+        abbreviated: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
+      timeFormat: 'hh:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['上午', '下午']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '¤#,##0.00',
+    currencySign: 'NT$', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '¤ #,##0.00',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
@@ -55,14 +57,14 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'}
+      'Required': {id: 'Required', value: '需要', comment: 'indicates a form field is manditory'},
+      'SetTime': {id: 'SetTime', value: '設置時間', comment: 'button text that inserts time when clicked'},
+      'Today': {id: 'Today', value: '今天', comment: 'refering to today on a calendar'},
+      'Hours': {id: 'Hours', value: '小時', comment: 'the hour portion of a time'},
+      'Minutes': {id: 'Minutes', value: '分鐘', comment: 'the minutes portion of a time'},
+      'Period': {id: 'Period', value: '期', comment: 'the am/pm portion of a time'},
+      'UseArrow': {id: 'UseArrow', value: '. 使用箭頭鍵選擇.', comment: 'Instructional comments for screen readers'},
+      'Loading': {id: 'Loading', value: '載入中', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

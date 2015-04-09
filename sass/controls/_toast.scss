@@ -30,6 +30,7 @@
 .toast {
   background-color: #ffffff;
   box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  @include font-size(14);
   margin: 0 0 6px;
   overflow: hidden;
   padding: 10px 32px 10px 12px;
@@ -40,7 +41,7 @@
     color: #1a1a1a;
     display: block;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin: 4.5px 0 8px 0;
   }
 
   .toast-message {

@@ -13,6 +13,12 @@
   </div>
 </div>
 
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a></li>
+  <li><a href="#">Action Three</a></li>
+</ul>
+
 {{={{{ }}}=}}
 <script>
     $('body').on('initialized', function () {
@@ -47,7 +53,7 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 10, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
       columns.push({ id: 'ordered', name: 'Ordered', field: 'ordered', width: 200, formatter: Formatters.Checkbox});
-      columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Formatters.Actions});
+      columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Formatters.Actions, menuId: 'grid-actions-menu'});
       columns.push({ id: 'nested', name: 'Nested Prop', field: 'setting.optionOne', width: 200, formatter: Formatters.Text});
       columns.push({ id: 'comment', name: 'Comment', field: 'comment', width: 200, formatter: Formatters.TextArea});
 
@@ -56,7 +62,14 @@
         columns: columns,
         idProperty:'officeId',
         dataset: data,
-        rowHeight: 'tall'
+        rowHeight: 'tall',
+        menuId: 'grid-actions-menu'
+      }).on('click', function (e, args) {
+        console.log('Row Was Clicked', args);
+      }).on('dblclick', function (e, args) {
+        console.log('Row Was DblClicked', args);
+      }).on('contextmenu', function (e, args) {
+        console.log('Row Was Context Menu-d', args);
       }).data('datagrid');
     });
 

@@ -155,7 +155,7 @@
         //Toolbar
         elem.find('.toolbar').toolbar();
 
-        elem.filter('.header').header();
+        elem.find('.header').header();
 
         elem.find('.fileupload').fileupload();
 

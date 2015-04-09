@@ -166,7 +166,7 @@
       complete: function() {
         var self = this;
         this.label.remove();
-        this.label = $('<span>Completed</span>').appendTo(this.container); // TODO: Localize
+        this.label = $('<span>'+Locale.translate('Completed')+'</span>').appendTo(this.container);
         this.loader.removeClass('active').addClass('complete');
 
         if (!browserSupportsAnimation()) {

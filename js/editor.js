@@ -17,7 +17,7 @@
         diffTop: -10,
         firstHeader: 'h3',
         secondHeader: 'h4',
-        placeholder: 'Enter comments here...' //TODO: Localize
+        placeholder: null
       },
       settings = $.extend({}, defaults, options);
 
@@ -54,11 +54,11 @@
         elem.attr({'contentEditable': true, 'aria-multiline': true, 'role': 'textbox'});
 
         //Bind functionality for Pre elements. We dont use this yet but could if we want to edit code blocks.
-        elem.attr('data-editor', true); //TODO : Need?
+        elem.attr('data-editor', true);
         this.bindParagraphCreation(i).bindTab(i);
 
         if (!elem.attr('data-placeholder')) {
-          elem.attr('data-placeholder', settings.placeholder);
+          elem.attr('data-placeholder', (settings.placeholder === null ? Locale.translate('EnterComments') : settings.placeholder));
         }
 
         this.initToolbar()
@@ -226,7 +226,6 @@
         // fill the text area with any content that may already exist within the editor DIV
         this.textarea.text(this.element.html().toString());
 
-        // TODO: setup the events here
         this.element.on('input.editor keyup.editor', function() {
           self.textarea.val(self.element.html().toString());
         });
@@ -373,37 +372,33 @@
 
       buttonTemplate: function (btnType) {
         var buttonLabels = this.getButtonLabels(settings.buttonLabels),
-          buttonTemplates = { //TODO: Localize Text
-            'bold': '<button type="button" class="btn-tertiary" title="Toggle Bold Text" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-            'italic': '<button type="button" class="btn-tertiary" title="Toggle Italic Text" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-            'underline': '<button type="button" class="btn-tertiary underline" title="Toggle Underline" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-            'strikethrough': '<button type="button" class="btn-tertiary" title="Strike Through" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
-            'superscript': '<button type="button" class="btn-tertiary" title="Superscript" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-            'subscript': '<button type="button" class="btn-tertiary" title="Subscript" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
+          buttonTemplates = {
+            'bold': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('ToggleBold') + '" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
+            'italic': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('ToggleItalic') + '" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
+            'underline': '<button type="button" class="btn-tertiary underline" title="'+ Locale.translate('ToggleUnderline') + '" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
+            'strikethrough': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('StrikeThrough') + '" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+            'superscript': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('Superscript') + '" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
+            'subscript': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('Subscript') + '" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
             'separator': '<div class="separator"></div>',
-            'anchor': '<button type="button" class="btn-tertiary" title="Insert Anchor" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
-            'image': '<button type="button" class="btn-tertiary" title="Insert Image" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
-            'header1': '<button type="button" class="btn-tertiary" title="' + settings.firstHeader + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-            'header2': '<button type="button" class="btn-tertiary" title="' + settings.secondHeader + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-            'quote': '<button type="button" class="btn-tertiary" title="Blockquote" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-            'orderedlist': '<button type="button" class="btn-tertiary" title="Ordered List" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-            'unorderedlist': '<button type="button" class="btn-tertiary" title="Unordered List" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-            'pre': '<button type="button" class="btn-tertiary" data-action="Append Pre" title="pre" data-element="pre">' + buttonLabels.pre + '</button>',
-            'indent': '<button type="button" class="btn-tertiary" data-action="Indent" title="indent" data-element="ul">' + buttonLabels.indent + '</button>',
-            'outdent': '<button type="button" class="btn-tertiary" data-action="Outdent" title="outdent" data-element="ul">' + buttonLabels.outdent + '</button>',
-            'justifyLeft': '<button type="button" class="btn-tertiary" title="Justify Left" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-            'justifyCenter': '<button type="button" class="btn-tertiary" title="Justify Center" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-            'justifyRight': '<button type="button" class="btn-tertiary" title="Justify Right" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
-            'source': '<button type="button" class="btn-tertiary" title="View Source" data-action="source" >' + buttonLabels.source + '</button>',
-            'visual': '<button type="button" class="btn-tertiary" title="View Visual" data-action="visual" >' + buttonLabels.visual + '</button>'
+            'anchor': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('InsertAnchor') + '" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
+            'image': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('InsertImage') + '" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
+            'header1': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('ToggleH3') + '" + data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+            'header2': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('ToggleH4') + '" + data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+            'quote': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('Blockquote') + '" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
+            'orderedlist': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('OrderedList') + '" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
+            'unorderedlist': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('UnorderedList') + '" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
+            'justifyLeft': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('JustifyLeft') + '" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+            'justifyCenter': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('JustifyCenter') + '" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+            'justifyRight': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('JustifyRight') + '" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
+            'source': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('ViewSource') + '" data-action="source" >' + buttonLabels.source + '</button>',
+            'visual': '<button type="button" class="btn-tertiary" title="'+ Locale.translate('ViewVisual') + '" data-action="visual" >' + buttonLabels.visual + '</button>'
           };
-
-        return buttonTemplates[btnType] || false;
+       return buttonTemplates[btnType] || false;
       },
       getButtonLabels: function (buttonLabelType) {
         var customButtonLabels,
           attrname,
-          buttonLabels = {    //TODO: Localize
+          buttonLabels = {
             'bold': '<span aria-hidden="true"><b>B</b></span>',
             'italic': '<span aria-hidden="true"><b><i>I</i></b></span>',
             'underline': '<span aria-hidden="true"><b><u>U</u></b></span>',

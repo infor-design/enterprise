@@ -83,13 +83,6 @@ $header-bg-color: #454545;
     }
   }
 
-  .btn-actions,
-  .btn-icon {
-    span {
-      visibility: hidden;
-    }
-  }
-
   .header-search {
     > .icon {
       height: ($button-font-size * 2) + px;

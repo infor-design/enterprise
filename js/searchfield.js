@@ -140,14 +140,14 @@
 
         $('<li class="separator" role="presentation"></li>').appendTo(list);
         var more = $('<li role="presentation"></li>').appendTo(list);
-        this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>All Results For <i>' + val + '</i></span>').appendTo(more); // TODO: Localize
+        this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' <i>' + val + '</i></span>').appendTo(more);
       },
 
       addNoneLink: function() {
         var list = $('#autocomplete-list'),
           none = $('<li role="presentation"></li>').appendTo(list);
 
-        this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('<span>No Results</span>').appendTo(none);
+        this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('NoResults') + '</span>').appendTo(none);
       },
 
       // Triggered by the "updated.searchfield" event

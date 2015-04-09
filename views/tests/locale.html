@@ -18,7 +18,8 @@
           };
 
       setTimeout(function () {
-        debugger;
+        Locale.set('vi-VN');
+
         append(Locale.formatNumber(12345.123, {style: 'currency'}));
 
         append(Locale.formatDate(new Date(2015, 2, 7, 13, 40), {date: 'full'}));

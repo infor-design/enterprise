@@ -23,15 +23,14 @@
 
     // Settings and Options
     var pluginName = 'colorpicker',
-        defaults = {  //TODO: Localize
-          colors: [{label: 'Azure', value: '0896e9'},
-                   {label: 'Amber', value: 'ffa800'},
-                   {label: 'Turquoise', value: '00c2b4'},
-                   {label: 'Amethyst', value: 'a352cc'},
-                   {label: 'Emerald', value: '2db329'},
-                   {label: 'Ruby', value: 'ed1c24'},
-                   {label: 'Tourmaline', value: 'e63262'},
-                   {label: 'Graphite', value: '737373'}]
+        defaults = {
+          colors: [{label: 'Azure', value: '41A5E7'},
+                   {label: 'Amber', value: 'FF971A'},
+                   {label: 'Amethyst', value: '806594'},
+                   {label: 'Turquoise', value: '3F9078'},
+                   {label: 'Ruby', value: 'D33333'},
+                   {label: 'Emerald', value: '60A633'},
+                   {label: 'Graphite', value: '454545'}]
         },
         settings = $.extend({}, defaults, options);
 
@@ -84,8 +83,6 @@
       // Add/Update Aria
       addAria: function () {
         this.element.attr('aria-haspopup', true);
-
-        //TODO: Test
         $('label[for="'+ this.element.attr('id') + '"]')
           .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
       },
@@ -167,9 +164,9 @@
           var li = $('<li></li>'),
               a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
 
-          a.attr('title', settings.colors[i].label + ' #' + settings.colors[i].value );
+          a.attr('title', Locale.translate(settings.colors[i].label) + ' #' + settings.colors[i].value );
           a.find('.swatch').css('background-color', '#' + settings.colors[i].value);
-          a.data('label', settings.colors[i].label);
+          a.data('label', Locale.translate(settings.colors[i].label));
           a.data('value', settings.colors[i].value);
           a.tooltip({placement: 'right'});
           menu.append(li);

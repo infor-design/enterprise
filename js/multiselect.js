@@ -78,7 +78,7 @@
         this.updateAria();
       },
 
-      // TODO: Localize
+      // TODO: Localize and revisit this for accessibility...
       buildAriaLabel: function() {
         var tags = this.textbox.find('span'),
           optionWord = 'options',
@@ -92,7 +92,7 @@
           optionWord = 'option';
         }
 
-        return this.dropdown.label.text() + '. Multiselect with ' + this.textbox.find('.tag').length +
+        return this.dropdown.label.text() + Locale.translate('MultiselectWith') + this.textbox.find('.tag').length +
           ' ' + optionWord + ' tagged. ' + tagString + (tags.length > 0 ? '.' : '');
       },
 

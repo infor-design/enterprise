@@ -10,7 +10,7 @@
   @include font-size(13);
   font-weight: 400;
   height: 22px;
-  line-height: 24px;
+  line-height: 22px;
   margin: 0 10px 5px 0;
   padding: 0 11px;
   vertical-align: middle;
@@ -71,6 +71,11 @@
       width: 19.5%;
     }
 
+    [class*='ie'] &:before {
+      left: 3px;
+      top: 3px;
+    }
+
     &.current {
       background-color: $amber06;
     }
@@ -79,8 +84,13 @@
   &.large {
     height: 32px;
     @include font-size(20);
-    line-height: 36px;
+    line-height: 32px;
+    padding-top: 1px;
     width: 32px;
+
+    [class*='ie'] & {
+      padding: 0 1px;
+    }
   }
 }
 
