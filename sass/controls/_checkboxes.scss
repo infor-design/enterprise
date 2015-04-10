@@ -75,6 +75,7 @@ span.checkbox > label {
   cursor: pointer;
   display: inline-block;
   padding-left: 35px;
+  position: relative;
   @include no-select();
 }
 

@@ -80,6 +80,17 @@ label,
   margin-bottom: 4px;
 }
 
+label.side,
+.label.side {
+  color: $font-color;
+  display: inline-block;
+  //float: left;
+  @include font-size(14);
+  height: 100%;
+  line-height: 1.5;
+  min-width: 120px;
+}
+
 // App Specific Typography Classes
 .app-title {
   @include font-size(20);

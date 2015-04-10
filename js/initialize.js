@@ -164,6 +164,8 @@
         elem.find('.application-nav-trigger').appNav();
 
         elem.find('.accordion').accordion();
+
+        elem.find('.contextual-action-panel-trigger:not(.no-init)').contextualactionpanel();
       });
 
       self.trigger('initialized');

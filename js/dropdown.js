@@ -76,6 +76,10 @@
           this.wrapper.append(this.input, this.trigger, this.icon);
         }
 
+        if (this.orgLabel.hasClass('side')) {
+          this.label.addClass('side');
+        }
+
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
           .text(Locale.translate('ChangeSelection'))
           .insertAfter(this.label);
