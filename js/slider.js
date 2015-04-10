@@ -228,11 +228,11 @@
         var labelText = self.element.prev('label').text(),
           handleLower = $('<div class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></div>')
           .attr('aria-label', (self.settings.range ? Locale.translate('SliderMinimumHandle') : Locale.translate('SliderHandle')) + ' ' + labelText);
-        self.handles.push(handleLower); // TODO: Localize
+        self.handles.push(handleLower);
         if (self.settings.range) {
           var handleHigher = $('<div class="slider-handle higher" tabindex="0"></div>')
             .attr('aria-label', Locale.translate('SliderMaximumHandle') + ' ' + labelText);
-          self.handles.push(handleHigher); // TODO: Localize
+          self.handles.push(handleHigher);
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles

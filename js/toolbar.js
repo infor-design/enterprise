@@ -48,11 +48,13 @@
         // Set up an aria-label as per AOL guidelines
         // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
         if (!this.element.attr('aria-label')) {
-          var id = this.element.attr('id') || '',
+          var isHeader = $.contains($('header.header')[0], this.element[0]),
+            id = this.element.attr('id') || '',
             title = this.element.find('.title'),
             prevLabel = this.element.prev('label'),
             prevSpan = this.element.prev('.label'),
-            labelText = title.length ? title.text() :
+            labelText = isHeader ? $('header.header').find('h1').text() :
+            title.length ? title.filter('div').text() :
             prevLabel.length ? prevLabel.text() :
             prevSpan.length ? prevSpan.text() : id + ' ' + Locale.translate('Toolbar');
 
