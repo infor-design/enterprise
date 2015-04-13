@@ -374,11 +374,11 @@ describe('Slider [selenium]', function(){
     runner.client
       // Press the END Key
       .addValue(handle, ['End'], globals.noError)
-      // Check to see if the value is 0
+      // Check to see if the value is 100
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('0');
+        value.should.equal('100');
       })
       .call(done);
   });
@@ -389,11 +389,11 @@ describe('Slider [selenium]', function(){
     runner.client
       // Press the HOME Key
       .addValue(handle, ['Home'], globals.noError)
-      // Check to see if the value is 50
+      // Check to see if the value is 0
       .getValue(input, function(err, value) {
         globals.noError(err);
         should.exist(value);
-        value.should.equal('100');
+        value.should.equal('0');
       })
       .call(done);
   });

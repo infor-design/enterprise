@@ -225,9 +225,14 @@
 
         // Handles
         self.handles = [];
-        self.handles.push($('<div class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></div>').text(self.settings.range ? 'lower' : 'handle')); // TODO: Localize
+        var labelText = self.element.prev('label').text(),
+          handleLower = $('<div class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></div>')
+          .attr('aria-label', (self.settings.range ? Locale.translate('SliderMinimumHandle') : Locale.translate('SliderHandle')) + ' ' + labelText);
+        self.handles.push(handleLower);
         if (self.settings.range) {
-          self.handles.push($('<div class="slider-handle higher" tabindex="0"></div>').text('higher')); // TODO: Localize
+          var handleHigher = $('<div class="slider-handle higher" tabindex="0"></div>')
+            .attr('aria-label', Locale.translate('SliderMaximumHandle') + ' ' + labelText);
+          self.handles.push(handleHigher);
         }
         $.each(self.handles, function(i, handle) {
           // Add WAI-ARIA to the handles
@@ -235,8 +240,7 @@
             'role' : 'slider',
             'aria-orientation' : 'horizontal',
             'aria-valuemin' : self.settings.min,
-            'aria-valuemax' : self.settings.max,
-            'aria-label' : self.element.prev('label').text() + ' ' + handle.text()
+            'aria-valuemax' : self.settings.max
           });
           handle.appendTo(self.wrapper);
         });
@@ -459,11 +463,11 @@
           case 34: // Page Down decreases the value by 10%
             self.decreaseValue(e, handle, undefined, this.getIncrement());
             break;
-          case 35: // End key sets the handle to its lowest possible value (either minimum value or as low as the "lower" handle)
-            self.decreaseValue(e, handle, this.settings.min);
-            break;
-          case 36: // Home key sets the spinbox to its maximum value
+          case 35: // End key sets the handle to its maximum possible value
             self.increaseValue(e, handle, this.settings.max);
+            break;
+          case 36: // Home key sets the handle to its lowest (either minimum value or as low as the "lower" handle)
+            self.decreaseValue(e, handle, this.settings.min);
             break;
           case 38: case 39: // Right and Up increase the spinbox value
             self.increaseValue(e, handle);
@@ -625,6 +629,11 @@
               self.range.removeClass('is-animated');
             }, 201));
           }
+
+          // update the 'aria-valuemin' attribute on the Max handle, and the 'aria-valuemax' attribute on the Min handle
+          // for better screen reading compatability
+          this.handles[0].attr('aria-valuemax', newVal[1]);
+          this.handles[1].attr('aria-valuemin', newVal[0]);
         }
       },
 
@@ -710,17 +719,18 @@
         self._value = [minVal, maxVal];
         self.element.val(maxVal !== undefined ? self._value : self._value[0]);
         $.each(self.handles, function(i, handle) {
-          var valueText = self._value[i];
+          var value = self._value[i],
+            valueText = self.getModifiedTextValue(value);
 
           $.each(self.ticks, function(a, tick) {
-            if (tick.value === valueText) {
+            if (tick.value === value) {
               valueText = tick.description;
             }
           });
 
           handle.attr({
             'aria-valuenow': self._value[i],
-            'aria-valuetext': self.getModifiedTextValue(valueText)
+            'aria-valuetext': valueText
           });
         });
         self.element.trigger('change');
