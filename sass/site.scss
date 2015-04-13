@@ -530,6 +530,7 @@ span {
   background-color: #ffffff;
   border: 1px solid #e1e1e1;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  color: #666666;
   height: 480px;
   margin: 20px 0 0 20px !important;
   overflow: hidden;
@@ -539,6 +540,10 @@ span {
 
   &:focus {
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $azure05;
+  }
+
+  &:visited {
+    color: #666666;
   }
 
   h3 {

@@ -300,7 +300,10 @@
             item = self.settings.dataset[row];
 
         e.stopPropagation();
+        e.preventDefault();
+
         self.element.trigger(eventName, [{row: row, cell: cell, item: item, originalEvent: e}]);
+        return false;
       },
 
       // Attach All relevant events
@@ -313,16 +316,18 @@
         });
 
         //Handle Clicking Buttons and links in formatters
-        this.table.on('click.datagrid', 'a, button', function (e) {
+        this.table.on('mouseup.datagrid', 'td', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
           var elem = $(this).closest('td'),
             btn = $(this),
             cell = elem.index(),
             row = $(this).closest('tr').index(),
-            col = self.settings.columns[cell];
-
+            col = self.settings.columns[cell],
+            item = self.settings.dataset[row];
 
           if (col.click) {
-            col.click(e, [row, cell, col, e.currentTarget]);
+            col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
           }
 
           if (col.menuId) {
@@ -333,10 +338,11 @@
             self.expandRow(row+1);
           }
 
+          return false;
         });
 
         var body = this.table.find('tbody');
-        body.on('click.datagrid', 'tr', function (e) {
+        body.on('click.datagrid', 'td', function (e) {
           self.triggerRowEvent('click', e);
         });
 

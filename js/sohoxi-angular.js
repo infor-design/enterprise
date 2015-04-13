@@ -26,7 +26,7 @@
 
     var other = function () {
         return {
-        replace: true,
+          replace: true,
           template: '<div class="field"></div>',
         };
     };

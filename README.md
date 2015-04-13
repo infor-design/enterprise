@@ -1,7 +1,9 @@
 
 # Welcome to Soho XI
 
-Soho XI is the next generation of Hook and Loop's Html controls for Infor Applications. This version is built from the ground up to be responsive, touch friendly, more flexible and completely accessible. Only the most accessible and responsive controls from the previous set are retained in this new set.
+SoHo XI provides comprehensive tools for product development teams to create use experiences that are: Intuitive, Engaging, Purposeful, Relevant Functional and Beautiful.
+
+The SoHo XI Control library is a framework independent UI (js and css) library that is pattern focused, template drive, touch enabled, responsive, accessible and configurable.
 
 For guidelines on when and where to use the controls see the [Soho Style Guide](http://soho.infor.com).
 
