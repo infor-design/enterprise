@@ -166,6 +166,8 @@
         elem.find('.accordion').accordion();
 
         elem.find('.contextual-action-panel-trigger:not(.no-init)').contextualactionpanel();
+
+        $('body').flyingfocus();
       });
 
       self.trigger('initialized');
