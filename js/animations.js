@@ -129,4 +129,48 @@
     });
   };
 
+  // Extends the jQuery $.css() method to vendor-prefix newer CSS properties that are still in Draft specification
+  $.fn.cssVendorProp = function(prop, value) {
+
+    // Settings
+    var defaults = {
+        propertyName: '', // Name of the CSS property that can be changed
+        propertyValue: '' // Value to set the property to
+      },
+      incomingOptions = {},
+      settings;
+
+    if (!prop) {
+      console.warn('$.fn.cssVendorProp was not invoked on element ' + this + ' because no property name was given.');
+      return;
+    }
+
+    if (typeof prop === 'object') {
+      incomingOptions = prop;
+    }
+
+    if (typeof prop === 'string') {
+      incomingOptions.propertyName = prop;
+      if (value !== undefined) {
+        incomingOptions.propertyValue = value;
+      }
+    }
+
+    settings = $.extend({}, defaults, incomingOptions);
+
+    // Initialize the plugin (Once)
+    return this.each(function() {
+      var prefixes = ['-moz-', '-ms-', '-o-', '-webkit-', ''];
+
+      // Sanitize
+      settings.propertyName = settings.propertyName.toString();
+      settings.propertyValue = settings.propertyValue.toString();
+
+      for (var i = 0; i < prefixes.length; i++) {
+        $(this).css(prefixes[i] + settings.propertyName, settings.propertyValue);
+      }
+    });
+
+  };
+
 }));

@@ -1,0 +1,28 @@
+// Flying Focus
+//================================================== //
+
+#flying-focus {
+  background: transparent;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px $primary-color, 0 0 2px $primary-color inset;
+  margin: 0;
+  pointer-events: none;
+  position: absolute;
+  @include css3(transition-property, left, top, width, height, border-radius, box-shadow);
+  @include css3(transition-timing-function, cubic-bezier(0, 1, 0, 1));
+  visibility: hidden;
+
+  &.is-visible {
+    visibility: visible;
+    z-index: 9999;
+  }
+
+}
+
+.flying-focus-target {
+  outline: none !important; // Doesn't work in Firefox
+
+  &::-moz-focus-inner {
+    border: 0 !important;
+  }
+}
