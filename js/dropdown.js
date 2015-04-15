@@ -297,7 +297,7 @@
           self.closeList();
           self.updateList();
           self.setValue();
-        }).on('open.dropdown', function() {
+        }).on('openList.dropdown', function() {
           self.toggleList();
         }).on('simulateKeyDown.dropdown', function(e, origE) {
           self.handleKeyDown(self.input, origE);
@@ -610,6 +610,8 @@
         this.highlightOption(current, true);
         this.searchInput.val(current.text()).focus();
         this.handleSearchEvents();
+
+        this.element.trigger('open');
 
         self.list.on('touchmove.list', function() {
           self.touchmove = true;

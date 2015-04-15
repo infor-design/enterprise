@@ -88,6 +88,19 @@
 
       this.inputs.filter('select').filter(attribs).on('change.validate', function () {
         self.validate($(this), true);
+      }).on('open.validate', function() {
+        var field = $(this),
+          tooltip = field.data('tooltip');
+        if (tooltip) {
+          tooltip.hide();
+        }
+      }).on('close.validate', function() {
+        var field = $(this),
+          tooltip = field.data('tooltip');
+
+        if (tooltip && document.activeElement === this) {
+          tooltip.show();
+        }
       });
 
       //Attach to Form Submit and Validate
@@ -107,6 +120,7 @@
 
         this.element.on('submit.validate',submitHandler);
       }
+
     },
 
     validateForm: function (callback) {
@@ -276,7 +290,8 @@
       field.removeData('data-errormessage');
 
       field.next('.icon-error').off('click.validate').remove();
-      if (field.hasClass('dropdown')) {
+      if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
+        field.off('open.validate close.validate');
         field.next().next().removeClass('error') // #shdo
           .next().next().off('click.validate').remove(); // SVG Error Icon
       }

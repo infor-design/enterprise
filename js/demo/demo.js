@@ -140,10 +140,18 @@ $(function($) {
   // Run these on 'body.initialized' event
   $('body').on('initialized', function() {
 
+    //----------------------------------------------------------
+    //  Examples: Tabs
+    //----------------------------------------------------------
+
     // Randomize the numbers on the Tabs Counts example
     $('#tabs-counts').find('li > a > .count').each(function() {
       $(this).text((Math.floor(Math.random() * (20 - 0)) + 0) + ' ');
     });
+
+    //----------------------------------------------------------
+    //  Examples: Contextual Action Panel
+    //----------------------------------------------------------
 
     // Build the Datagrid that goes into the Settings-based Contextual Action Panel
     var data = [],
@@ -188,6 +196,31 @@ $(function($) {
         }
       ]
     });
+
+    //----------------------------------------------------------
+    //  Tests: Validation
+    //----------------------------------------------------------
+
+    // duplicates the "required" value checker
+    function requiredCheck(value) {
+      if (typeof value === 'string' && $.trim(value).length === 0) {
+        return false;
+      }
+      return (value ? true : false);
+    }
+
+    // This test adds an additional validation rule.
+    $.fn.validation.rules['also-required'] = {
+      check: requiredCheck,
+      message: 'This is a custom validation rule that duplicates the functionality of the "required" rule built into the validator, but has this really long message instead.  This is testing the size of error message tooltips, as well as testing that custom rules work properly.', //TODO - Localize
+      async: false
+    };
+
+    $.fn.validation.rules['dd-required'] = {
+      check: requiredCheck,
+      message: 'This dropdown is required.  Please select an option from the Dropdown.',
+      async: false
+    };
 
   });
 
