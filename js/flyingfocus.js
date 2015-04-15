@@ -94,6 +94,24 @@
           return;
         }
 
+        // Don't focus on the actual checkbox since it's offscreen, but focus on the fake elements
+        var excludes = ['.checkbox', '.radio', '.switch'],
+          pseudo = null;
+        for (var i = 0; i < excludes.length; i++) {
+          if (target.is(excludes[i])) {
+            target = target.next();
+            switch(excludes[i]) {
+              case '.radio':
+              case '.checkbox':
+                pseudo = ':before';
+                break;
+              case '.switch':
+                pseudo = ':after';
+                break;
+            }
+          }
+        }
+
         var isFirstFocus = false;
 
         if (!this.focusIndicator) {
@@ -102,12 +120,13 @@
           this.focusIndicator.cssVendorProp('transition-duration', this.settings.duration + 'ms');
         }
 
-        var offset = this.getOffset(target);
+        var props = this.getProps(target, pseudo);
         this.focusIndicator.css({
-          'left': offset.left + 'px',
-          'top': offset.top + 'px',
-          'width': target[0].offsetWidth + 'px',
-          'height': target[0].offsetHeight + 'px'
+          'left': props.left,
+          'top': props.top,
+          'width': props.width,
+          'height': props.height,
+          'border-radius': props.borderRadius
         });
 
         if (isFirstFocus || !this.isJustPressed()) {
@@ -138,19 +157,77 @@
         return Date.now() - keydownTime < 42;
       },
 
-      getOffset: function(target) {
-        var rect = target[0].getBoundingClientRect(),
+      getProps: function(target, pseudoSelector) {
+        var self = this,
+          rect = target[0].getBoundingClientRect(),
           clientLeft = this.root[0].clientLeft || $('body')[0].clientLeft,
           clientTop  = this.root[0].clientTop  || $('body')[0].clientTop,
           scrollLeft = $(window)[0].pageXOffset || this.root[0].scrollLeft || $('body')[0].scrollLeft,
           scrollTop  = $(window)[0].pageYOffset || this.root[0].scrollTop  || $('body')[0].scrollTop,
           left = rect.left + scrollLeft - clientLeft,
-          top =  rect.top  + scrollTop  - clientTop;
+          top =  rect.top  + scrollTop  - clientTop,
+          borderRadius = target.css('border-radius'),
+          width = target[0].offsetWidth,
+          height = target[0].offsetHeight,
+          cssLeft = 0,
+          cssTop = 0;
+
+        function getPixelValueForProp(prop) {
+          return parseInt(self.getPseudoProp(prop, target[0], pseudoSelector), 10);
+        }
+
+        if (pseudoSelector) {
+          var targetProps = target.css([
+            'margin-left',
+            'margin-top',
+            'padding-left',
+            'padding-top',
+          ]),
+          pseudoLeft = getPixelValueForProp('left') || 0,
+            pseudoTop = getPixelValueForProp('top') || 0,
+            targetMarginLeft = parseInt(targetProps['margin-left'], 10) || 0,
+            pseudoMarginLeft = getPixelValueForProp('margin-left') || 0,
+            targetPaddingLeft = parseInt(targetProps['padding-left'], 10) || 0,
+            pseudoPaddingLeft = getPixelValueForProp('padding-left') || 0,
+            targetMarginTop = parseInt(targetProps['margin-top'], 10) || 0,
+            pseudoMarginTop = getPixelValueForProp('margin-top') || 0,
+            targetPaddingTop = parseInt(targetProps['padding-top'], 10) || 0,
+            pseudoPaddingTop = getPixelValueForProp('padding-top') || 0;
+
+          cssLeft = pseudoLeft + (targetMarginLeft + pseudoMarginLeft) + (targetPaddingLeft + pseudoPaddingLeft);
+          cssTop = pseudoTop + (targetMarginTop + pseudoMarginTop) + (targetPaddingTop + pseudoPaddingTop);
+          width = getPixelValueForProp('width') +
+            getPixelValueForProp('border-left-width') +
+            getPixelValueForProp('border-right-width');
+          height = getPixelValueForProp('height') +
+            getPixelValueForProp('border-top-width') +
+            getPixelValueForProp('border-bottom-width');
+          borderRadius = this.getPseudoProp('border-radius', target[0], pseudoSelector);
+
+          top = rect.top + cssTop + scrollTop - clientTop;
+          left = rect.left + cssLeft + scrollLeft - clientLeft;
+        }
 
         return {
-          top: top || 0,
-          left: left || 0
+          top: (top || 0) + 'px',
+          left: (left || 0) + 'px',
+          width: width + 'px',
+          height: height + 'px',
+          borderRadius: borderRadius
         };
+      },
+
+      // Gets a CSS Property of a ::before or ::after pseudo-element because we can't target them
+      // with jQuery
+      getPseudoProp: function(prop, elem, pseudoSelector) {
+        if (!prop || !elem) {
+          return undefined;
+        }
+        if (!pseudoSelector) {
+          pseudoSelector = ':before';
+        }
+
+        return window.getComputedStyle(elem, pseudoSelector).getPropertyValue(prop);
       },
 
       // Teardown - Remove added markup and events
