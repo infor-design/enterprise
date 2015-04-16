@@ -37,10 +37,20 @@
     // Plugin Object
     Tooltip.prototype = {
       init: function() {
+        this.setup();
         this.appendTooltip();
         this.handleEvents();
         this.addAria();
         this.isPopover = (settings.content !== null && typeof settings.content === 'object') || settings.popover;
+      },
+
+      setup: function() {
+        // this.activeElement is the element that the tooltip displays and positions against
+        this.activeElement = this.element;
+
+        if (this.element.is('.dropdown, .multiselect')) {
+          this.activeElement = $('#' + this.element.attr('id') + '-shdo');
+        }
       },
 
       addAria: function() {
@@ -269,26 +279,26 @@
       placeBelowOffset: function() {
         var extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 9);
 
-        this.tooltip.css({'top' : this.element.offset().top + this.element.outerHeight() + settings.offset.top,
-                          'left' : this.element.offset().left + settings.offset.left + (this.element.outerWidth() - this.tooltip.outerWidth()) + extraOffset });
+        this.tooltip.css({'top' : this.activeElement.offset().top + this.activeElement.outerHeight() + settings.offset.top,
+                          'left' : this.activeElement.offset().left + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset });
       },
       placeBelow: function () {
-        this.tooltip.css({'top': this.element.offset().top + this.element.outerHeight() + settings.offset.top,
-                          'left': this.element.offset().left + settings.offset.left + (this.element.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+        this.tooltip.css({'top': this.activeElement.offset().top + this.activeElement.outerHeight() + settings.offset.top,
+                          'left': this.activeElement.offset().left + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
       },
       placeAbove: function () {
-        this.tooltip.css({'top': this.element.offset().top - settings.offset.top - this.tooltip.outerHeight(),
-                          'left': this.element.offset().left + settings.offset.left + (this.element.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+        this.tooltip.css({'top': this.activeElement.offset().top - settings.offset.top - this.tooltip.outerHeight(),
+                          'left': this.activeElement.offset().left + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
       },
       placeToRight: function () {
         this.tooltip.removeAttr('style');
-        this.tooltip.css({'top': this.element.offset().top - (this.tooltip.outerHeight() / 2) + (this.element.outerHeight() / 2),
-                          'left': this.element.offset().left + settings.offset.left + this.element.outerWidth() + settings.offset.top});
+        this.tooltip.css({'top': this.activeElement.offset().top - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2),
+                          'left': this.activeElement.offset().left + settings.offset.left + this.activeElement.outerWidth() + settings.offset.top});
       },
       placeToLeft: function () {
         this.tooltip.removeAttr('style');
-        this.tooltip.css({'top': this.element.offset().top - (this.tooltip.outerHeight() / 2) + (this.element.outerHeight() / 2),
-                          'left': this.element.offset().left + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) });
+        this.tooltip.css({'top': this.activeElement.offset().top - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2),
+                          'left': this.activeElement.offset().left + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) });
       },
 
       hide: function() {

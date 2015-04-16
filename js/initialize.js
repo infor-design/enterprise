@@ -166,7 +166,7 @@
 
         elem.find('.contextual-action-panel-trigger:not(.no-init)').contextualactionpanel();
 
-        $('body').flyingfocus();
+        //$('body').flyingfocus();
       });
 
       self.trigger('initialized');
