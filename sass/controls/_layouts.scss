@@ -13,12 +13,20 @@
   text-align: center;
 }
 
-// Box For Layout Demos
-.l-demo {
-  height: inherit;
-  margin-bottom: 20px;
-  min-height: 640px;
-  width: 100%;
+// Single Column Layout
+.header.is-sticky + .single-column {
+  margin-top: 100px;
+}
+
+.single-column {
+  height: calc(100% - 120px);
+  margin: 20px 20px 30px;
+  width: calc(100% - 40px);
+
+  .content {
+    background-color: $inverse-color;
+    border: 1px solid #d8d8d8;
+  }
 }
 
 // Give Space from header
@@ -28,7 +36,7 @@
 
 //Scroll Under the Header
 .scrollable-container {
-  height: calc(100% - 70px);
+  height: calc(100% - 80px);
   overflow: auto;
 }
 
@@ -38,29 +46,69 @@ body.no-scroll {
 }
 
 // Two Column Layout
-.twocolumn-layout {
-  height: calc(100% - 110px);
-  margin: 80px auto 20px;
-  max-width: 1280px;
+.two-column {
+  height: calc(100% - 80px);
+  margin: 0 auto 20px;
+  overflow: scroll;
 
   .main,
-  .gutter {
+  .sidebar {
     background-color: $inverse-color;
     display: inline-block;
     float: left;
     height: 100%;
     height: auto;
-    width: calc(75% - 60px);
   }
 
-  .gutter {
+  .main {
+    border-right: 1px solid $graphite02;
+    width: 75%;
+  }
+
+  .sidebar {
     background-color: $body-bg-color;
     height: auto;
-    width: calc(25% - 60px);
+    width: 25%;
+
+    & + .main {
+      border-left: 1px solid $graphite02;
+      border-right: 0;
+    }
   }
 
   header {
     margin: 25px;
+  }
+}
+
+.editorial {
+
+  .main {
+    background-color: $inverse-color;
+    height: calc(100% - 80px);
+    overflow: scroll;
+    width: 100%;
+  }
+
+  // Sticky Way Points Sidebar Nav
+  .sidebar-nav {
+    background-color: $body-bg-color;
+    display: inline-block;
+    float: left;
+    height: auto;
+    margin-top: 50px;
+    width: 300px;
+  }
+}
+
+// Respond Off Canvas on left and right column
+@include respond-to(phone) {
+  .two-column {
+    .main,
+    .sidebar {
+      display: block;
+      width: 100%;
+    }
   }
 }
 
@@ -74,30 +122,7 @@ body.no-scroll {
   width: 100%;
 }
 
-// Respond Off Canvas on left and right column
-@include respond-to(phablet) {
-  .twocolumn-layout {
-
-    .gutter,
-    .main {
-      display: block;
-      width: 100%;
-    }
-  }
-}
-
-// Hero Section
-.hero {
-  text-align: center;
-
-  .searchfield {
-    background-color: $inverse-color;
-
-  }
-}
-
 // Three Column Layout
-
 .threecolumn-layout {
   height: calc(100% - 110px); //header - top and bottom margin
   margin: 20px auto 0;

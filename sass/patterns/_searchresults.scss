@@ -15,6 +15,7 @@ $sr-result-bottom-border-color: $hr-top-color;
     width: auto;
 
     &.toolbar .title {
+      margin: 5px 1em 4px -8px;
       padding: 2px 0;
 
       > * {
@@ -29,6 +30,7 @@ $sr-result-bottom-border-color: $hr-top-color;
 
     .masthead-appname {
       color: $sr-masthead-text-color;
+      line-height: 34px;
     }
 
     .icon {
@@ -55,7 +57,7 @@ $sr-result-bottom-border-color: $hr-top-color;
 
     .type {
       color: $font-color-light;
-      @include font-size(16);
+      @include font-size(14);
       line-height: 1.5em;
     }
 
@@ -66,7 +68,7 @@ $sr-result-bottom-border-color: $hr-top-color;
     }
 
     .detail {
-      @include font-size(16);
+      @include font-size(14);
       line-height: 1.5em;
       margin-right: .3em;
 
@@ -89,6 +91,7 @@ $sr-result-bottom-border-color: $hr-top-color;
 
       > * {
         vertical-align: middle;
+        margin-right: -6px;
       }
     }
 
@@ -102,5 +105,11 @@ $sr-result-bottom-border-color: $hr-top-color;
       line-height: 1.2rem;
     }
 
+  }
+}
+
+#search-all {
+  .title {
+    @include font-size(16);
   }
 }

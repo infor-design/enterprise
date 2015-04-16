@@ -8,8 +8,8 @@ $body-bg-color: #f5f5f5;
 
 // Base Colors
 $header-color: #5c5c5c;
-$primary-color: $azure05;
-$primary-color-text: $azure07;
+$primary-color: $azure06;
+$primary-color-text: $azure08;
 $inverse-color: #ffffff;
 $secondary-color: #69d2ce;
 
@@ -219,9 +219,9 @@ $disabled-color: #cccccc;
 
 //The hyperlink Style
 $hyperlink-color: $primary-color;
-$hyperlink-hover-color: #1a1a1a;
-$hyperlink-active-color: #004096;
-$hyperlink-visited-color: #005689;
+$hyperlink-hover-color: $primary-color;
+$hyperlink-active-color: $primary-color;
+$hyperlink-visited-color: $amethyst06;
 $hyperlink-focus-border-color: $primary-color;
 
 // Rating (Stars)

@@ -6,13 +6,23 @@
   ol {
     li {
       display: inline-block;
+
+      &:after {
+        content: '/';
+        padding: 0 8px 0 3px;
+      }
+
+      &:last-child:after {
+        content: none;
+      }
     }
   }
 
   .hyperlink {
     color: $breadcrumb-color;
-    font-size: 16px;
+    @include font-size(12);
     font-weight: 100;
+    line-height: 10px;
     text-decoration: none;
 
     &:visited {
@@ -47,8 +57,6 @@
   }
 
 }
-
-//TODO Confirm Responsive and Style on a Header
 
 .header .breadcrumb {
 

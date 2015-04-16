@@ -15,11 +15,12 @@
 // Home Page
 //==================================================//
 
-$site-maxwidth: 968px;
+$site-maxwidth: 960px;
 $home-color: $amber10;
 $vision-color: $turquoise05;
 $gallery-color: #ac6cbc;
-$code-color: $amber10;
+$code-color: $amber07;
+$code-color-alt: $amber08;
 
 body {
   background-color: $inverse-color !important;
@@ -63,10 +64,10 @@ span {
   h2 {
     color: $inverse-color;
     display: block;
-    @include font-size(50);
-    line-height: 5rem;
-    margin: 0 20px;
-    max-width: 60%;
+    @include font-size(60);
+    line-height: 6rem;
+    margin: 0 10px;
+    padding-top: 15px;
 
     span {
       color: $inverse-color;
@@ -89,6 +90,35 @@ span {
     &:after {
       content: ' ›';
     }
+  }
+
+  .breadcrumb {
+    margin: 10px 0 0 10px;
+
+    li:after {
+      color: $inverse-color;
+    }
+
+    a {
+      border-bottom: 1px solid transparent;
+      color: $inverse-color !important;
+
+      &:after {
+        content: none;
+      }
+
+      &:focus {
+        border: 1px solid #ffffff;
+      }
+    }
+  }
+
+  .tag {
+    background-color: $code-color-alt;
+  }
+
+  .tags {
+    margin: 10px 10px 0 5px;
   }
 }
 
@@ -291,9 +321,8 @@ span {
 
 // Vision Page
 //==================================================//
-.container {
-  margin: 0 auto;
-  max-width: $site-maxwidth;
+.row {
+  max-width: $site-maxwidth !important;
 }
 
 .site-vision-carousel {
@@ -340,9 +369,14 @@ span {
   margin: 20px 0;
 }
 
-
 .vision.site-hero {
   background-color: $vision-color;
+  height: 270px;
+
+  h2 {
+    position: relative;
+    top: -40px;
+  }
 }
 
 .vision-section-title {
@@ -623,8 +657,10 @@ span {
 
   }
 
-  .breadcrumb {
-    margin: 20px;
+  .site-hero {
+    .timestamp {
+      @include font-size(12);
+    }
   }
 
   .site-footer nav {
@@ -655,10 +691,8 @@ section.light-bgrnd {
 
   &.site-hero {
     background-color: $code-color;
-  }
-
-  .site-nextprev .site-next {
-    background-color: $code-color;
+    height: 275px;
+    padding-top: 25px;
   }
 
   .site-category-header {
@@ -795,10 +829,6 @@ section.light-bgrnd {
     padding-bottom: 5px;
   }
 
-  .example {
-    margin-bottom: 75px;
-  }
-
   p {
     color: #666666;
     @include font-size(16);
@@ -822,14 +852,41 @@ section.light-bgrnd {
 }
 
 .timestamp {
-  color: #767676;
+  color: #ffffff;
   display: block;
-  padding-bottom: 5px;
-  @include font-size(14);
-  text-transform: uppercase;
+  @include font-size(12);
+  margin-right: 30px;
+  margin-top: -30px;
+  padding: 5px;
+  position: absolute;
+  right: 1px;
+  top: 1px;
 
   + p {
     padding-top: 15px;
+  }
+}
+
+.asset-item {
+  background-color: #ffffff;
+  color: #666666;
+  height: 125px;
+  text-decoration: none;
+  width: 125px;
+
+  &:hover {
+    background-color: $azure07;
+  }
+
+  img {
+    height: 100px;
+    margin: 3px 0 0 !important;
+  }
+
+  span {
+    font-size: 16px;
+    position: relative;
+    top: -27px;
   }
 }
 
@@ -837,20 +894,24 @@ section.light-bgrnd {
   display: block;
   width: 100%;
 
-  h2::after {
-    background-color: $amber07;
-    color: $inverse-color;
-    content: 'Example';
+  .example-tag {
+    background-color: $code-color;
+    color: #ffffff;
     display: block;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
-    height: 24px;
-    line-height: 27px;
-    margin-top: 20px;
-    padding: 4px 13px;
+    height: 31px;
+    line-height: 18px;
+    margin-bottom: 10px;
+    padding: 7px 12px;
     text-transform: uppercase;
-    width: 54px;
+    width: 80px;
   }
+
+  .example {
+    padding: 45px 0 50px 0;
+  }
+
 }
 
 .tags {
@@ -868,73 +929,6 @@ section.light-bgrnd {
 
   h3 {
     @include font-size(20);
-  }
-
-  .gallery-item {
-    border-bottom: 1px solid #d6d6d6;
-    display: block;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    text-decoration: none;
-
-    img {
-      display: inline-block;
-      margin: 0;
-      margin-right: 10px;
-      vertical-align: middle;
-      width: 35%;
-    }
-
-    &:visited {
-      color: #666666;
-    }
-
-    span {
-      display: inline-block;
-      @include font-size(16);
-      margin-top: 14px;
-      text-overflow: ellipsis;
-      width: 60%;
-    }
-  }
-}
-
-.site-nextprev {
-  display: inline-block;
-  padding-bottom: 20px;
-  padding-top: 10px;
-  position: relative;
-  top: 40px;
-
-  h3 {
-    &::after {
-      clear: both;
-      content: '';
-      display: table;
-    }
-
-  }
-
-  .site-next,
-  .site-prev {
-    background-color: $graphite05;
-    color: $inverse-color;
-    display: block;
-    @include font-size(20);
-    float: left;
-    font-weight: lighter;
-    height: 130px;
-    margin-bottom: 40px;
-    margin-left: 10px;
-    max-height: 130px;
-    padding: 50px 0;
-    text-align: center;
-    text-decoration: none;
-    width: 130px;
-  }
-
-  .site-next {
-    background-color: $code-color;
   }
 }
 
@@ -954,7 +948,7 @@ section.light-bgrnd {
   p {
     @include font-size(16);
     line-height: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     padding-right: 20px;
   }
 
@@ -973,11 +967,32 @@ section.light-bgrnd {
     padding: 0;
   }
 
-  ul {
+  ul,
+  ol {
+    font-weight: lighter;
     @include font-size(16);
     line-height: 30px;
     list-style: inside none disc;
-    margin: -20px 20px 20px;
+    margin: -10px 20px 20px;
+  }
+
+  ol {
+    list-style: inside none number;
+  }
+
+  li > ul,
+  li > ol {
+     padding-top: 20px;
+  }
+
+  h3 + ul,
+  h3 + ol {
+    padding-top: 20px;
+  }
+
+  h2 + ul,
+  h2 + ol {
+    padding-top: 20px;
   }
 
   h1 {
@@ -1012,7 +1027,6 @@ section.light-bgrnd {
   }
 
   .related-controls {
-    margin-bottom: 50px;
 
     .guide-related-control {
       border-bottom: 1px solid #d6d6d6;
@@ -1047,21 +1061,9 @@ section.light-bgrnd {
     width: 100%;
 
     .tags,
-    .related-controls,
     h3 {
       text-align: left;
     }
-
-    .site-nextprev {
-      text-align: left;
-    }
-  }
-
-  .related-controls,
-  .gallery-examples {
-    margin: 0 auto;
-    text-align: left;
-    width: 100%;
   }
 
   .site-categories {

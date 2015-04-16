@@ -30,13 +30,19 @@
   }
 }
 
+.twelve {
+  .masthead {
+    position: static;
+  }
+}
+
 .masthead-appname {
   color: #cccccc;
   display: inline-block;
   font-family: $font-regular;
   font-weight: bold;
   @include font-size(12);
-  line-height: 34px;
+  line-height: 38px;
   margin: 0 0 3px;
   padding-right: 10px;
   vertical-align: top;

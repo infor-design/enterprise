@@ -28,10 +28,7 @@
       return null;
     }
     this.options = {
-      colorRange: ['#13a7ff', '#0872b0', '#79cc26', '#3f9818', '#ffd042',
-          '#f86f11', '#97d8ff', '#96e345', '#d79df4', '#f57294', '#bdbdbd',
-          '#164203', '#03a59a', '#660a23', '#5a187a', '#454545', '#004d47', '#ff4249'] //Shared Options
-    };
+      colorRange: ['#7CC0B5', '#1D5F8A', '#806594', '#ABAEB7', '#56932E', '#F4C951']};
 
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
     this.greyColors = d3.scale.ordinal().range(['#7a7a7a', '#999999', '#bdbdbd', '#d8d8d8']);
@@ -585,99 +582,180 @@
     };
 
     this.Pie = function(chartData, isDonut) {
-      var centerLabel = chartData[0].centerLabel;
-      chartData = chartData[0].data;
-      var radius, svg, margin, arc, width, height;
 
-      margin = {top: 20, right: 20, bottom: 20, left: 20};
-      width = parseInt($(container).parent().width());
-      height = parseInt($(container).parent().height());
+      var svg = d3.select(container).append('svg'),
+        art = svg.select('.arcs'),
+        labels = svg.select('.labels');
 
-      $(container).addClass('chart-pie');
-      $(container).closest('.widget-content').addClass('l-center vertical-legend');
-      $(container).closest('.card-content').addClass('l-center');
+      // Create the pie layout function.
+      // This function will add convenience
+      // data to our existing data, like
+      // the start angle and end angle
+      // for each data element.
+      jhw_pie = d3.layout.pie()
+      jhw_pie.value(function (d, i) {
+          // Tells the layout function what
+          // property of our data object to
+          // use as the value.
+          return d.instances;
+      });
 
-      svg = d3.select(container)
-            .append('svg')
-            .attr('width', '100%')
-            .attr('height', '100%')
-            .attr('viewBox','0 0 '+Math.min(width,height) +' '+Math.min(width,height) )
-            .attr('preserveAspectRatio','xMinYMin')
-            .append('g')
-            .attr('transform', 'translate(' + (Math.min(width,height) + 5)/ 2 + ',' + (Math.min(width,height) + 5) / 2 + ')');
-
-      radius = ((Math.min(width, height) / 2) - 12);
-
-      arc = d3.svg.arc().outerRadius(radius);
-
-      if (isDonut) {
-        arc.innerRadius(radius - 20);
+      // Store our chart dimensions
+      cDim = {
+          height: 500,
+          width: 500,
+          innerRadius: 50,
+          outerRadius: 150,
+          labelRadius: 175
       }
 
-      var pie = d3.layout.pie()
-          .sort(null)
-          .value(function(d) { return d.value; });
+      // Set the size of our SVG element
+      svg.attr({
+          height: cDim.height,
+          width: cDim.width
+      });
 
-      var g = svg.selectAll('.arc')
-                .data(pie(chartData))
-              .enter().append('g')
-                .attr('class', 'arc')
-                .on('mousemove', function (d) {
-                  var x = d3.event.pageX + 20,
-                    y = d3.event.pageY-margin.top-20,
-                    content = '<p>' + d.data.name + '<b> ' + d.data.percent + '</b></p>';
+      // This translate property moves the origin of the group's coordinate
+      // space to the center of the SVG element, saving us translating every
+      // coordinate individually.
+      canvas.attr("transform", "translate(" + (cDim.width / 2) + "," + (cDim.width / 2) + ")");
 
-                   charts.showTooltip(x, y, content, 'right');
-                })
-                .on('mouseleave', function () {
-                  charts.hideTooltip();
-                })
-                .on('click', function (d, i) {
-                  var color = charts.colors(i);
-                  d3.select('.chart-container .is-selected')
-                    .classed('is-selected', false)
-                    .style('stroke', '#fff')
-                    .style('stroke-width', '1px')
-                    .attr('transform', '');
+      pied_data = jhw_pie(data);
 
-                  var path = d3.select(this).select('path')
-                      .classed('is-selected', true)
-                      .style('stroke', color)
-                      .style('stroke-width', 0)
-                      .attr('transform', 'scale(1.05,1.05)');
+      // The pied_arc function we make here will calculate the path
+      // information for each wedge based on the data set. This is
+      // used in the "d" attribute.
+      pied_arc = d3.svg.arc()
+          .innerRadius(50)
+          .outerRadius(150);
 
-                  $(container).trigger('selected', [path[0], d]);
-                });
+      // This is an ordinal scale that returns 10 predefined colors.
+      // It is part of d3 core.
+      pied_colors = d3.scale.category10();
 
-      g.append('path')
-        .style('fill', function(d, i) { return charts.colors(i); })
-        .transition().duration(750)
-        .attrTween('d', function(d) {
-             var i = d3.interpolate(d.startAngle, d.endAngle);
-             return function(t) {
-                 d.endAngle = i(t);
-               return arc(d);
-             };
-        });
+      // Let's start drawing the arcs.
+      enteringArcs = art.selectAll(".wedge").data(pied_data).enter();
 
-      //Calculate Percents for Legend
-      var total = d3.sum(chartData, function(d){return d.value;}),
-        series = chartData.map(function (d, i) {
-          d.percent = d3.round(100*(d.value/total)) + '%';
-          d.elem = g[0][i];
-          return {name: d.name, percent:d.percent, elem: d.elem};
-        });
+      enteringArcs.append("path")
+          .attr("class", "wedge")
+          .attr("d", pied_arc)
+          .style("fill", function (d, i) {
+          return pied_colors(i);
+      });
 
-      charts.addLegend(series, 'pie');
-      charts.appendTooltip();
+      // Now we'll draw our label lines, etc.
+      enteringLabels = labels.selectAll(".label").data(pied_data).enter();
+      labelGroups = enteringLabels.append("g").attr("class", "label");
+      labelGroups.append("circle").attr({
+          x: 0,
+          y: 0,
+          r: 2,
+          fill: "#000",
+          transform: function (d, i) {
+              centroid = pied_arc.centroid(d);
+              return "translate(" + pied_arc.centroid(d) + ")";
+          },
+              'class': "label-circle"
+      });
 
-      if (isDonut) {
-        svg.append('text')
-        .attr('dy', '.35em')
-        .style('text-anchor', 'middle')
-        .attr('class', 'chart-donut-text')
-        .text(centerLabel);
+      // "When am I ever going to use this?" I said in
+      // 10th grade trig.
+      textLines = labelGroups.append("line").attr({
+          x1: function (d, i) {
+              return pied_arc.centroid(d)[0];
+          },
+          y1: function (d, i) {
+              return pied_arc.centroid(d)[1];
+          },
+          x2: function (d, i) {
+              centroid = pied_arc.centroid(d);
+              midAngle = Math.atan2(centroid[1], centroid[0]);
+              x = Math.cos(midAngle) * cDim.labelRadius;
+              return x;
+          },
+          y2: function (d, i) {
+              centroid = pied_arc.centroid(d);
+              midAngle = Math.atan2(centroid[1], centroid[0]);
+              y = Math.sin(midAngle) * cDim.labelRadius;
+              return y;
+          },
+              'class': "label-line"
+      });
+
+      textLabels = labelGroups.append("text").attr({
+          x: function (d, i) {
+              centroid = pied_arc.centroid(d);
+              midAngle = Math.atan2(centroid[1], centroid[0]);
+              x = Math.cos(midAngle) * cDim.labelRadius;
+              sign = (x > 0) ? 1 : -1
+              labelX = x + (5 * sign)
+              return labelX;
+          },
+          y: function (d, i) {
+              centroid = pied_arc.centroid(d);
+              midAngle = Math.atan2(centroid[1], centroid[0]);
+              y = Math.sin(midAngle) * cDim.labelRadius;
+              return y;
+          },
+              'text-anchor': function (d, i) {
+              centroid = pied_arc.centroid(d);
+              midAngle = Math.atan2(centroid[1], centroid[0]);
+              x = Math.cos(midAngle) * cDim.labelRadius;
+              return (x > 0) ? "start" : "end";
+          },
+              'class': 'label-text'
+      }).text(function (d) {
+          return d.data.label
+      });
+
+      alpha = 0.5;
+      spacing = 20;
+
+      function relax() {
+          again = false;
+          textLabels.each(function (d, i) {
+              a = this;
+              da = d3.select(a);
+              y1 = da.attr("y");
+              textLabels.each(function (d, j) {
+                  b = this;
+                  // a & b are the same element and don't collide.
+                  if (a == b) return;
+                  db = d3.select(b);
+                  // a & b are on opposite sides of the chart and
+                  // don't collide
+                  if (da.attr("text-anchor") != db.attr("text-anchor")) return;
+                  // Now let's calculate the distance between
+                  // these elements.
+                  y2 = db.attr("y");
+                  deltaY = y1 - y2;
+
+                  // Our spacing is greater than our specified spacing,
+                  // so they don't collide.
+                  if (Math.abs(deltaY) > spacing) return;
+
+                  // If the labels collide, we'll push each
+                  // of the two labels up and down a little bit.
+                  again = true;
+                  sign = deltaY > 0 ? 1 : -1;
+                  adjust = sign * alpha;
+                  da.attr("y",+y1 + adjust);
+                  db.attr("y",+y2 - adjust);
+              });
+          });
+          // Adjust our line leaders here
+          // so that they follow the labels.
+          if(again) {
+              labelElements = textLabels[0];
+              textLines.attr("y2",function(d,i) {
+                  labelForLine = d3.select(labelElements[i]);
+                  return labelForLine.attr("y");
+              });
+              relax();
+          }
       }
+
+      relax();
 
       return $(container);
     };

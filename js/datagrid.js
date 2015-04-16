@@ -109,23 +109,24 @@
     }
 
     // TODOs
-    // Badge
-    // Status Error, Ok, Alert
-    // Tags
-    // Status Indicator - Validation, New, Editing,
-    // Select
+    // Badge (Visual Indictors), Tags
+    // Tags (low priority)
+    // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
+    // Select (Drop Down)
     // Multi Select
-    // Color Picker
-    // File Upload
+    // Color Picker (Low)
+    // File Upload (Simple)
     // Lookup
     // Currency
     // Percent
     // Progress Indicator (n of 100%)
     // Process Indicator
     // Tree
-    // Button ??
-    // Toggle Button ??
-    // Re Order ??
+    // Text Button (1 or 2)
+    // Menu Button
+    // Icon Button (Approved and SoHo Xi Standard)
+    // Toggle Button (No)
+    // Re Order - Drag Indicator
     // Sparkline
   };
 
@@ -320,7 +321,7 @@
           e.stopPropagation();
           e.preventDefault();
           var elem = $(this).closest('td'),
-            btn = $(this),
+            btn = $(this).find('button'),
             cell = elem.index(),
             row = $(this).closest('tr').index(),
             col = self.settings.columns[cell],

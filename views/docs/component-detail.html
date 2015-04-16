@@ -20,54 +20,52 @@
 </head>
 <body>
 
-  {{> includes/header-hamburger}}
+ {{> includes/header-hamburger}}
 
  <section class="site-hero component">
     <div class="row">
       <div class="full column">
-        <h2><span>Controls & Code Base</span><br> Flyout Application Menu</h2>
+        <h2>Dropdown List</h2>
+
+        <div class="site-breadcrumb">
+          <nav class="breadcrumb" role="navigation">
+            <ol aria-label="breadcrumb">
+              <li>
+                <a class="hyperlink" href="/docs">Home</a>
+              </li>
+              <li>
+                <a class="hyperlink current" href="/docs/guide">Controls & Code Base</a>
+              </li>
+              <li>
+                <a class="hyperlink current" href="/docs/guide-category">Navigation</a>
+              </li>
+              <li>
+                <a class="hyperlink current" href="/docs/guide-category">Dropdown List</a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="tags">
+          <span class="tag">Soho XI</span>
+          <span class="tag">Responsive</span>
+          <span class="tag">Applications</span>
+          <span class="tag">Mobile-first</span>
+        </div>
+
+        <small class="timestamp">Updated January 20th, 2015</small>
+
       </div>
     </div>
   </section>
 
-  <div class="site-breadcrumb">
-    <div class="row">
-      <div class="full column">
-        <nav class="breadcrumb" role="navigation">
-          <ol aria-label="breadcrumb">
-            <li>
-              <a class="hyperlink" href="/docs">Home</a>
-              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
-                <use xlink:href="#icon-caret-right"></use>
-              </svg>
-            </li>
-            <li>
-              <a class="hyperlink current" href="/docs/guide">Controls & Code Base</a>
-              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
-                <use xlink:href="#icon-caret-right"></use>
-              </svg>
-            </li>
-            <li>
-              <a class="hyperlink current" href="/docs/guide-category">Navigation</a>
-              <svg class="icon breadcrumb-arrow" focusable="false" aria-hidden="true">
-                <use xlink:href="#icon-caret-right"></use>
-              </svg>
-            </li>
-            <li>
-              <a class="hyperlink current" href="/docs/guide-category">Flyout Application Menu</a>
-            </li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-  </div>
-
   <section role="main" class="guide-example" id="maincontent">
     <div class="row">
       <div class="full column">
-        <small class="timestamp">Updated January 20th, 2015 by <a href="#" class="hyperlink">Author</a></small>
-        <h2>Flyout Application Menu</h2>
-        <div class="example">
+
+      <div class="example">
+        <span class="example-tag">Example</span>
+        <div class="example-content">
           <div class="field">
             <label for="states" class="label">States</label>
             <select id="states" name="states" class="dropdown">
@@ -126,12 +124,14 @@
           </div>
         </div>
       </div>
+
+      </div>
     </div>
   </section>
 
   <section class="site-copy alt-bgrnd">
     <div class="row">
-      <div class="two-thirds column">
+      <div class="full column">
         <h2>Description</h2>
         <p>Description/use case for this component.</p>
 
@@ -200,48 +200,13 @@
         <h2>Upgrading from Soho 3.x</h2>
         <p> Steps to upgrade from the previous version</p>
 
-      </div>
-      <div class="one-third column">
-        <section class="site-sidebar">
-          <div class="site-nextprev">
-            <h3>Next and Previous Topic</h3>
-            <a href="#" class="site-prev">Basics</a>
-            <a href="#" class="site-next">Oragnizing Content</a>
-          </div>
+        <h2>Related Controls</h2>
+        <div class="related-controls">
+          <div><a href="#" class="hyperlink">Text Input</a></div>
+          <div><a href="#" class="hyperlink">Auto Complete</a></div>
+          <div><a href="#" class="hyperlink">Multiselect</a></div>
+        </div>
 
-          <h3>Tags</h3>
-          <div class="tags">
-            <span class="tag">Soho XI</span>
-            <span class="tag">Responsive</span>
-            <span class="tag">Applications</span>
-            <span class="tag">Mobile-first</span>
-          </div>
-
-          <h3>Related Controls</h3>
-          <div class="related-controls">
-            <div><a href="#" class="hyperlink">Text Input</a></div>
-            <div><a href="#" class="hyperlink">Auto Complete</a></div>
-            <div><a href="#" class="hyperlink">Multiselect</a></div>
-          </div>
-
-          <h3>Gallery Examples</h3>
-          <div class="gallery-examples">
-            <a href="#" class="gallery-item">
-              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
-              <span>Infor M3 Role based home pages</span>
-            </a>
-
-            <a href="#" class="gallery-item">
-              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
-              <span>Infor LN Requisitions</span>
-            </a>
-
-            <a href="#" class="gallery-item">
-              <img src="http://placehold.it/100x78/ebebeb/ebebeb" alt="Screen Shot"/>
-              <span>Infor LN Workbench</span>
-            </a>
-          </div>
-        </section>
       </div>
     </div>
   </section>

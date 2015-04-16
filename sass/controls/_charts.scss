@@ -49,6 +49,10 @@
     cursor: pointer;
   }
 
+  .arc {
+    stroke: #ffffff;
+  }
+
   .bar {
     cursor: pointer;
     stroke: $inverse-color;
@@ -249,6 +253,7 @@
     color: $inverse-color;
     @include font-size(12);
     font-weight: 400;
+    line-height: 22px;
     padding: 0 5px;
   }
 

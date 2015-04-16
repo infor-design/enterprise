@@ -19,7 +19,7 @@
     }
 
     //Class-based detection for IE
-    if (!navigator.userAgent.match(/Trident/)) {
+    if (navigator.userAgent.match(/Trident/)) {
       $('html').addClass('ie');
     }
     if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
@@ -33,7 +33,7 @@
     if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
       $('html').addClass('ie10');
     } else {
-      if (!navigator.userAgent.match(/Trident\/7\./)) {
+      if (navigator.userAgent.match(/Trident\/7\./)) {
         $('html').addClass('ie11');
       }
     }
@@ -123,7 +123,6 @@
 
         //Button with Effects
         elem.find('.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split').button();
-        elem.find('.skip-link, .hyperlink').button();
 
         //Pager
         elem.find('.pager').pager();
