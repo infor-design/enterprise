@@ -110,7 +110,7 @@
           if ($(this).hasClass('is-disabled')) {
             return false;
           }
-          self.element.trigger('open', [e]);
+          self.element.trigger('openList', [e]);
         }).on('keydown.multiselect', function(e) {
           self.element.trigger('simulateKeyDown', [e]);
         }).on('keypress.multiselect', function(e) {

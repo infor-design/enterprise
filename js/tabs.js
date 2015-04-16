@@ -56,6 +56,7 @@
 
         // Focus the bar on the first element, but don't animate it on page load.
         this.animatedBar.addClass('no-transition');
+        this.positionFocusState(self.anchors.get(0));
         this.focusBar(undefined, function() {
           setTimeout(function() {
             self.animatedBar.removeClass('no-transition');
@@ -95,13 +96,15 @@
 
         self.moreButton = self.tablist.next('.tab-more');
 
+        self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
+
         self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
 
         // Add the markup for the "More" button if it doesn't exist.
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span>').text(Locale.translate('More')));
-          button.append('<svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
+          button.append('<svg class="icon icon-more" aria-hidden="true"><use xlink:href="#text-arrow"></svg>');
           self.tablist.after(button);
           self.moreButton = button;
         }
@@ -214,6 +217,7 @@
         // Check to see if we need to add/remove the more button on resize
         $(window).on('resize.tabs' + this.tabsIndex, function() {
           self.setOverflow();
+          self.positionFocusState();
           self.focusBar();
         });
 
@@ -239,6 +243,7 @@
           this.popupmenu.close();
         }
         a.focus();
+        this.positionFocusState(a, true);
         this.focusBar(li);
       },
 
@@ -252,9 +257,11 @@
         if (this.isTabOverflowed(li)) {
           this.buildPopupMenu(a.attr('href'));
           this.moreButton.addClass('is-focused is-selected');
+          this.positionFocusState(this.moreButton, true);
           this.focusBar(this.moreButton);
         } else {
           li.addClass('is-focused').addClass('is-selected');
+          this.positionFocusState(a, true);
           this.focusBar(li);
         }
       },
@@ -537,7 +544,9 @@
           return this;
         }
 
-        this.activate(prevLi.children('a').attr('href'));
+        var a = prevLi.children('a');
+        this.positionFocusState(a, true);
+        this.activate(a.attr('href'));
         this.focusBar(prevLi);
         return this;
       },
@@ -629,12 +638,14 @@
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
+        self.positionFocusState(self.moreButton, true);
         self.focusBar(self.moreButton);
 
         self.popupmenu.element.on('close.popupmenu', function() {
           $(this).off('close.popupmenu');
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
+          self.positionFocusState(undefined, true);
           self.focusBar();
         }).on('selected.tabs', function(e, anchor) {
           self.activate(anchor.attr('href'));
@@ -647,6 +658,7 @@
           $(this).parents('ul').find('li').removeClass('is-selected');
           $(this).parent().addClass('is-selected');
           self.moreButton.addClass('is-selected');
+          self.positionFocusState(undefined, true);
           self.focusBar();
         }).on('keydown.popupmenu', 'a', function(e) {
           var target = $(e.currentTarget);
@@ -763,7 +775,20 @@
         var self = this,
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
-            self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected') : undefined;
+            self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected') : undefined,
+          paddingLeft = parseInt(target.css('padding-left'), 10) || 0,
+          width = target.innerWidth();
+
+        if (target.is('.tab')) {
+          paddingLeft = paddingLeft + parseInt(target.children('a').css('padding-left'), 10) || 0;
+          width = target.children('a').width();
+        }
+        if (target.is('.dismissible.tab') || target.is('.has-popupmenu.tab')) {
+          width = width + 27;
+        }
+        if (target.is('.tab-more')) {
+          width = width - 14;
+        }
 
         if (target === undefined) {
           return;
@@ -772,8 +797,8 @@
         this.animatedBar.addClass('visible');
         this.animationTimeout = setTimeout(function() {
           self.animatedBar.css({
-            'left' : (target.position().left + 12) + 'px',
-            'width' : (target.width() - 11) + 'px'
+            'left' : (paddingLeft + target.position().left) + 'px',
+            'width' : width + 'px'
           });
           if (callback && typeof callback === 'function') {
             callback();
@@ -794,9 +819,52 @@
         }, 350);
       },
 
+      positionFocusState: function(target, unhide) {
+        var self = this;
+        target = target !== undefined ? $(target) :
+            self.moreButton.hasClass('is-selected') ? self.moreButton :
+            self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected').children('a') : undefined;
+
+        var pos = target.offset(),
+          offset = this.tablist.offset(),
+          width = parseInt(target.outerWidth()),
+          height = parseInt(target.outerHeight());
+
+        // Modifications on a specific basis
+        if (target.is('.tab:first-child > a')) {
+          pos.left = pos.left - 10;
+          width = width + 9;
+        }
+        if (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a')) {
+          width = width + 32;
+        }
+        if (target.is('.tab-more')) {
+          height = height - 14;
+          width = width + 11;
+          pos.top = pos.top + 6;
+        }
+
+        this.focusState.css({
+          left: pos.left - offset.left,
+          top: pos.top - offset.top,
+          right: (pos.left - offset.left) + width,
+          bottom: (pos.top - offset.top) + height,
+          width: width,
+          height: height
+        });
+
+        if (unhide === true) {
+          this.focusState.addClass('is-visible');
+        }
+      },
+
       checkFocusedElements: function() {
         var self = this,
           focusableItems = self.tablist;
+
+        if (focusableItems.find('.is-focused').length === 0 && !self.moreButton.hasClass('is-focused') && !self.moreButton.hasClass('popup-is-open')) {
+          self.focusState.removeClass('is-visible');
+        }
 
         if (focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
           self.defocusBar();
@@ -839,6 +907,8 @@
         }
         this.moreButton.off().remove();
         this.moreButton = undefined;
+        this.focusState.remove();
+        this.focusState = undefined;
         this.animatedBar.remove();
         this.animatedBar = undefined;
 

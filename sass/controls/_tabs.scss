@@ -30,14 +30,14 @@
 
 @mixin tab-after-hover {
   background-color: $tab-hover-color;
-  left: 12px;
-  width: calc(100% - 24px);
+  left: 17px;
+  width: calc(100% - 34px);
 }
 
 @mixin tab-after-selected-hover {
   background-color: $tab-selected-color;
-  left: 12px;
-  width: calc(100% - 24px);
+  left: 17px;
+  width: calc(100% - 34px);
 }
 
 // Tab Headers aka Notches
@@ -62,12 +62,16 @@
       vertical-align: middle;
     }
 
-    &:before {
-      @include tab-after-off;
+    &:first-child {
+      padding-left: 0;
+
+      a {
+        padding-left: 0;
+      }
     }
 
-    &:after {
-      @include tab-outline;
+    &:before {
+      @include tab-after-off;
     }
 
     &:hover {
@@ -82,8 +86,15 @@
       }
     }
 
-    &:not(.separator):hover:before {
-      @include tab-after-hover;
+    &:not(.separator):hover {
+      &::before {
+        @include tab-after-hover;
+      }
+
+      &:first-child::before {
+        left: 0;
+        width: calc(100% - 17px);
+      }
     }
 
     &.is-focused {
@@ -193,6 +204,17 @@
   }
 }
 
+// Tab Focus State
+// Isn't actually attached to each tab, but is a separate element that moves around
+// This helps break overflow issues and simplifies the CSS
+.tab-focus-indicator {
+  @include tab-outline;
+
+  &.is-visible {
+    @include tab-outline-focus;
+  }
+}
+
 // Tab Body
 .tab-panel {
   margin-top: 20px;
@@ -203,17 +225,14 @@
   background-color: transparent;
   cursor: pointer;
   display: inline-block;
+  @include font-size(14);
   max-width: 102px;
-  padding: 5px 14px;
+  padding: 5px 0 5px 14px;
   position: absolute;
   right: 0;
   top: 0;
   @include css3(transition, background-color .25s ease);
   visibility: hidden;
-
-  &:after {
-    @include tab-outline;
-  }
 
   &:focus {
     outline: none;
@@ -223,9 +242,9 @@
     color: $tab-hover-color;
   }
 
-  > span {
-    font-weight: normal;
-    padding: 0 5px;
+  .icon {
+    width: 12px;
+    margin: 0 0 0 8px;
   }
 
   &.popup-is-open,
@@ -240,17 +259,7 @@
     }
   }
 
-  &.is-selected:focus {
-    &:after {
-      @include tab-outline-focus;
-    }
-  }
-
   &.popup-is-open {
-    &:after {
-      @include tab-outline-focus;
-    }
-
     span {
       text-decoration: none;
     }
@@ -287,7 +296,7 @@
     }
 
     .tab-more {
-      padding: 16px 14px;
+      padding: 16px 0 16px 14px;
     }
 
     > li.dismissible {

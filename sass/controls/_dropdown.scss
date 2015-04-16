@@ -11,6 +11,10 @@ select.dropdown {
   display: inline-block;
   margin-bottom: 20px;
   position: relative;
+
+  + .icon-error { // display errors
+    margin-left: -50px;
+  }
 }
 
 input.dropdown {
