@@ -167,6 +167,7 @@
 
         elem.find('.contextual-action-panel-trigger:not(.no-init)').contextualactionpanel();
 
+        // TODO: Decide whether or not we are removing this completely
         //$('body').flyingfocus();
       });
 
