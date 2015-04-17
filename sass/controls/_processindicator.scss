@@ -8,7 +8,7 @@ $indicator-darker: $azure07;
 $indicator-lighter: $azure06;
 $indicator-lightest: $azure05;
 $indicator-warning: $ruby06;
-$indicator-blank: #dbdbdb;
+$indicator-blank: $graphite02;
 
 $indicator-size: 1.3em;
 $indicator-current-size: ($indicator-size * 1.6);
@@ -129,10 +129,13 @@ $indicator-current-size: ($indicator-size * 1.6);
     // NOTE: Used for Chrome/Safari because border-radius is not respected by overflow in Webkit
     -webkit-mask-image: -webkit-radial-gradient(circle, #ffffff, #000000);
     overflow: hidden;
-    @include css3(animation-name, rotate-processing-indicator);
-    @include css3(animation-duration, 1s);
-    @include css3(animation-iteration-count, infinite);
-    @include css3(animation-timing-function, linear);
+
+    &.animated {
+      @include css3(animation-name, rotate-processing-indicator);
+      @include css3(animation-duration, 1s);
+      @include css3(animation-iteration-count, infinite);
+      @include css3(animation-timing-function, linear);
+    }
 
     &:before,
     &:after {

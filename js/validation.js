@@ -88,19 +88,18 @@
 
       this.inputs.filter('select').filter(attribs).on('change.validate', function () {
         self.validate($(this), true);
-      }).on('open.validate', function() {
+      }).on('dropdownopen.validate', function() {
         var field = $(this),
           tooltip = field.data('tooltip');
-        if (tooltip) {
-          tooltip.hide();
-        }
-      }).on('close.validate', function() {
+          if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
+            tooltip.hide();
+          }
+      }).on('dropdownclose.validate', function() {
         var field = $(this),
           tooltip = field.data('tooltip');
-
-        if (tooltip && document.activeElement === this) {
-          tooltip.show();
-        }
+          if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
+            tooltip.show();
+          }
       });
 
       //Attach to Form Submit and Validate
@@ -291,7 +290,6 @@
 
       field.next('.icon-error').off('click.validate').remove();
       if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
-        field.off('open.validate close.validate');
         field.next().next().removeClass('error') // #shdo
           .next().next().off('click.validate').remove(); // SVG Error Icon
       }

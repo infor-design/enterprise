@@ -117,7 +117,7 @@
           self.element.trigger('simulateKeyPress', [e]);
         });
 
-        this.element.on('close.multiselect', function() {
+        this.element.on('dropdownclose.multiselect', function() {
           // Triggered by the dropdown's 'close' event.
           self.textbox.focus();
         }).on('selected.multiselect', function(e, option, isAdded) {
