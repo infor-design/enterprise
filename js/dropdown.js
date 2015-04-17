@@ -611,7 +611,7 @@
         this.searchInput.val(current.text()).focus();
         this.handleSearchEvents();
 
-        this.element.trigger('dropdownopen');
+        this.element.trigger('dropdownopen'); // TODO: Change event name?
 
         self.list.on('touchmove.list', function() {
           self.touchmove = true;
@@ -688,7 +688,7 @@
           'visibility': ''
         }).show().focus().trigger('click');
 
-        this.element.trigger('dropdownopen');
+        this.element.trigger('dropdownopen'); // TODO: Change event name?
 
         this.element.off('change.dropdown').one('change.dropdown', function() {
           var idx = self.element.find('option:selected').index(),
@@ -784,7 +784,7 @@
         $(document).off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
         $(window).off('resize.dropdown');
 
-        this.element.trigger('dropdownclose');
+        this.element.trigger('dropdownclose'); // TODO: Change event name?
       },
 
       //Set option into view
