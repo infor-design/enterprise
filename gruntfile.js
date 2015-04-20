@@ -55,7 +55,7 @@ module.exports = function(grunt) {
             'js/animations.js',
             'js/about.js',
             'js/accordion.js',
-            'js/applicationnav.js',
+            'js/applicationmenu.js',
             'js/autocomplete.js',
             'js/busyindicator.js',
             'js/button.js',
