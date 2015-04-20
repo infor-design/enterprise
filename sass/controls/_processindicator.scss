@@ -124,43 +124,8 @@ $indicator-current-size: ($indicator-size * 1.6);
   // State Defs:
   // Processing
   &.processing {
-    border: 0;
+    border: 2px solid $indicator-lightest;
     border-radius: ($indicator-size / 2);
-    // NOTE: Used for Chrome/Safari because border-radius is not respected by overflow in Webkit
-    -webkit-mask-image: -webkit-radial-gradient(circle, #ffffff, #000000);
-    overflow: hidden;
-
-    &.animated {
-      @include css3(animation-name, rotate-processing-indicator);
-      @include css3(animation-duration, 1s);
-      @include css3(animation-iteration-count, infinite);
-      @include css3(animation-timing-function, linear);
-    }
-
-    &:before,
-    &:after {
-      border-radius: ($indicator-size / 2) + 2;
-      content: '';
-      left: 0;
-      position: absolute;
-      top: 0;
-    }
-
-    // simulates border inside
-    &:before {
-      border: 2px solid $indicator-blank;
-      height: calc(100% - 4px);
-      width: calc(100% - 4px);
-    }
-
-    // blue circle (portion that appears to spin)
-    &:after {
-      border: 2px solid $indicator-lightest;
-      height: calc(100% - .13em);
-      width: calc(100% - .13em);
-      @include css3(transform-origin, calc(50% - .03em) calc(50% - .03em) 0);
-    }
-
   }
 
   // Current is larger than the rest
