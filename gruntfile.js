@@ -84,6 +84,7 @@ module.exports = function(grunt) {
             'js/rating.js',
             'js/resize.js',
             'js/searchfield.js',
+            'js/sidebar.js',
             'js/slider.js',
             'js/spinbox.js',
             'js/toast.js',

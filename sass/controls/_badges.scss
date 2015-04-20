@@ -18,6 +18,11 @@
   &.error {
     background-color: $ruby06;
   }
+
+  &.graphite03,
+  &.graphite02 {
+    color: $font-color-dark;
+  }
 }
 
 .badge {

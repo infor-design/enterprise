@@ -166,6 +166,8 @@
 
         elem.find('.contextual-action-panel-trigger:not(.no-init)').contextualactionpanel();
 
+        elem.find('.sidebar-nav').sidebar();
+
         // TODO: Decide whether or not we are removing this completely
         //$('body').flyingfocus();
       });

@@ -1,5 +1,5 @@
 /**
-* XYZ Control (TODO: bitly link to soho xi docs)
+* Side Bar Menu Control (TODO: bitly link to soho xi docs)
 */
 
 (function(factory) {
@@ -19,32 +19,35 @@
 
   'use strict';
 
-  $.fn.pluginname = function(options) {
+  $.fn.sidebar = function() {
 
     // Settings and Options
-    var pluginName = 'pluginName',
-        defaults = {
-          propertyName: 'defaultValue'
-        },
-        settings = $.extend({}, defaults, options);
+    var pluginName = 'sidebar';
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Sidebar(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    Sidebar.prototype = {
 
       init: function() {
-        this.settings = settings;
-        //Do other init
+        this.buildIndex();
+        this.handleEvents();
       },
 
-      // Example Method
-      someMethod: function() {
+      // Make an Internal Array with all H elements
+      buildIndex: function() {
 
+      },
+
+      // Make an Internal Array with
+      handleEvents: function() {
+        $(window).add('.editorial').on('scroll.sidebar', function (e) {
+          console.log($(this).scrollTop());
+        });
       },
 
       // Teardown - Remove added markup and events
@@ -56,10 +59,8 @@
     // Initialize the plugin (Once)
     return this.each(function() {
       var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, defaults, options);
-      } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+      if (!instance) {
+        instance = $.data(this, pluginName, new Sidebar(this));
       }
     });
   };

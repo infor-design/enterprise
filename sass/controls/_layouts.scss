@@ -82,23 +82,43 @@ body.no-scroll {
 }
 
 .editorial {
+  height: calc(100% - 80px);
+  margin: 0 auto 20px;
+  overflow: scroll;
+  position: relative;
 
   .main {
     background-color: $inverse-color;
-    height: calc(100% - 80px);
-    overflow: scroll;
+    height: auto;
     width: 100%;
   }
 
   // Sticky Way Points Sidebar Nav
   .sidebar-nav {
     background-color: $body-bg-color;
-    display: inline-block;
-    float: left;
+    border: 1px solid $graphite02;
     height: auto;
-    margin-top: 50px;
+    min-height: 100px;
+    padding: 30px;
+    position: absolute;
+    right: 20px;
+    top: 40px;
     width: 300px;
+
+    h3 {
+      margin-bottom: 20px !important;
+    }
   }
+
+  .hero {
+    background-color: $body-bg-color;
+    border: 1px solid $graphite02;
+    height: 500px;
+  }
+}
+
+.hero + .main + .sidebar-nav {
+  margin-top: 520px;
 }
 
 // Respond Off Canvas on left and right column
