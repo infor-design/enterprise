@@ -168,6 +168,8 @@
 
         elem.find('.sidebar-nav').sidebar();
 
+        elem.find('.expandable-area').expandablearea();
+
         // TODO: Decide whether or not we are removing this completely
         //$('body').flyingfocus();
       });

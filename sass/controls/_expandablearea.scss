@@ -1,0 +1,66 @@
+// Expandable Area (accordion like, single-paned content area)
+//================================================== //
+$expandable-area-border-color: $font-color-light;
+
+.expandable-area {
+
+  &:first-child {
+    .expandable-header {
+      border-top: 1px solid $expandable-area-border-color;
+    }
+  }
+
+  &.is-expanded + .expandable-area {
+    .expandable-header {
+      border-top: 1px solid $expandable-area-border-color;
+    }
+  }
+
+}
+
+.expandable-header {
+  border-bottom: 1px solid $expandable-area-border-color;
+  border-top: 0;
+  @include font-size(16);
+  position: relative;
+
+  > * {
+    vertical-align: middle;
+  }
+
+  > a {
+    cursor: pointer;
+    display: block;
+    padding: 1rem 0 1rem 3rem;
+    //      @include css3(user-select, none);
+
+    &::before {
+      content: '+';
+      left: -1.5rem;
+      position: relative;
+      text-align: center;
+    }
+  }
+
+  &[aria-expanded="true"] {
+    > a::before {
+      content: '–';
+    }
+
+    + .expandable-pane {
+      display: block;
+    }
+  }
+
+}
+
+.expandable-pane {
+  @include font-size(14);
+  font-weight: 100;
+  overflow: hidden;
+  @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
+
+  > .content {
+    padding: 1.5rem 1.5rem 1.5rem 4.3rem;
+  }
+}

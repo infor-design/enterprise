@@ -67,6 +67,7 @@ module.exports = function(grunt) {
             'js/dropdown.js',
             'js/drag.js',
             'js/editor.js',
+            'js/expandablearea.js',
             'js/flyingfocus.js',
             'js/form.js',
             'js/fileupload.js',

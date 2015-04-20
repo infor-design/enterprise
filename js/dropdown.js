@@ -696,7 +696,6 @@
 
           //Select the clicked item
           self.selectOption(cur);
-
           self.element.hide().css({'position': '', 'left': ''});
           setTimeout(function() {
             self.input.focus();
