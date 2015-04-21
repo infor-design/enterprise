@@ -84,6 +84,7 @@
       'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'},
       'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
       'More': {id: 'More', value: 'More...', comment: 'Text Indicating More Buttons or form content'},
+      'MoreActions': {id: 'MoreActions', value: 'More Actions', comment: 'Text on the More Actions button indictating hidden functions'},
       'MultiselectWith': {id: 'MultiselectWith', value: '. Multiselect with ', comment: 'the minutes portion of a time'},
       'NextMonth': {id: 'NextMonth', value: 'Next Month', comment: 'the label for the button that moves calendar to next/prev'},
       'NoResults': {id: 'NoResults', value: 'No Results', comment: 'Search Results Text'},
