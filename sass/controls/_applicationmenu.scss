@@ -1,15 +1,16 @@
-// Application Nav Control
+// Application Menu Control
 //================================================== //
 
-.application-nav {
+.application-menu {
   background-color: #383838;
   @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, 0));
   bottom: 0;
   color: #acadae;
+  height: 100%;
   left: -300px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   position: fixed;
-  top: 8em;
   @include transition(left 300ms cubic-bezier(.17, .04, .03, .94),
     -moz-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
     -ms-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
@@ -19,22 +20,9 @@
   width: 300px;
   z-index: 9000;
 
-  &.short {
-    top: 3em;
-  }
-
   &.is-open {
     left: 0;
     @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
-  }
-
-  .branding {
-    padding: 1em;
-  }
-
-  > .accordion {
-    height: calc(100% - 5em);
-    overflow-y: auto;
   }
 
   .panel.logout {
@@ -67,8 +55,26 @@
   }
 
   .accordion {
+    margin-bottom: calc(-2rem - 38px);
+    min-height: 100%;
+
+    &::after {
+      content: '';
+      display: block;
+    }
+
     .name {
       color: #ffffff;
     }
   }
+
+  .accordion::after,
+  .branding {
+    height: calc(2rem + 38px);
+  }
+
+  .branding {
+    padding: 2rem 2rem 2rem 2.5rem;
+  }
+
 }

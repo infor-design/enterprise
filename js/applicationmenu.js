@@ -19,22 +19,22 @@
 
   'use strict';
 
-  $.fn.appNav = function(options) {
+  $.fn.applicationmenu = function(options) {
 
     // Settings and Options
-    var pluginName = 'appNav',
+    var pluginName = 'applicationmenu',
         defaults = {},
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function ApplicationNav(element) {
+    function ApplicationMenu(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    ApplicationNav.prototype = {
+    ApplicationMenu.prototype = {
 
       init: function() {
         this
@@ -44,14 +44,16 @@
 
       setup: function() {
         this.hasTrigger = false;
-        if (this.element.hasClass('application-nav')) {
+        if (this.element.hasClass('application-menu')) {
           this.menu = this.element;
         }
-        if (!this.menu && this.element.next('.application-nav')) {
+        if (!this.menu && this.element.next('.application-menu')) {
           this.hasTrigger = true;
-          this.menu = this.element.next('.application-nav');
+          this.menu = this.element.next('.application-menu');
         }
+        this.scrollTarget = this.menu.parents('.header');
         if (this.menu.parents('.masthead').length > 0) {
+          this.scrollTarget = this.menu.parents('.masthead');
           this.menu.addClass('short');
         }
 
@@ -60,6 +62,7 @@
         this.originalParent = this.menu.parent();
         this.menu.detach().insertAfter($('body').find('header').first());
         this.closeMenu();
+        this.adjustHeight();
 
         return this;
       },
@@ -70,27 +73,31 @@
         // Setup click events on this.element if it's not the menu itself
         // (this means that it's a trigger button)
         if (this.hasTrigger) {
-          this.element.on('touchend.appNav touchcancel.appNav', function(e) {
+          this.element.on('touchend.applicationmenu touchcancel.applicationmenu', function(e) {
             e.preventDefault();
             $(e.target).click();
-          }).on('click.appNav', function() {
+          }).on('click.applicationmenu', function() {
             self.toggleMenu();
           });
         }
 
         // Setup notification change events
-        this.menu.on('notify.appNav', function(e, anchor, value) {
+        this.menu.on('notify.applicationmenu', function(e, anchor, value) {
           self.notify(anchor, value);
         });
 
-        this.accordion.on('blur.appNav', function() {
+        this.accordion.on('blur.applicationmenu', function() {
           self.closeMenu();
         });
 
-        $(document).on('openNavMenu', function() {
+        $(document).on('open-applicationmenu', function() {
           self.openMenu();
-        }).on('closeNavMenu', function() {
+        }).on('close-applicationmenu', function() {
           self.closeMenu();
+        });
+
+        $(window).on('scroll.applicationmenu', function() {
+          self.adjustHeight();
         });
 
         return this;
@@ -138,6 +145,11 @@
         return tag;
       },
 
+      adjustHeight: function() {
+        var offset = this.scrollTarget.height() - $(window).scrollTop();
+        this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
+      },
+
       toggleMenu: function() {
         if (this.menu.hasClass('is-open')) {
           this.closeMenu();
@@ -151,7 +163,7 @@
           transitionEnd = $.fn.transitonEndName;
 
         this.menu
-          .off(transitionEnd + '.appNav')
+          .off(transitionEnd + '.applicationmenu')
           .css('display', '');
         // next line forces a repaint
         this.menu[0].offsetHeight; //jshint ignore:line
@@ -162,14 +174,14 @@
         // Events that will close the nav menu
         // On a timer to prevent conflicts with the Trigger button's click events
         setTimeout(function() {
-          $(document).on('touchend.appNav touchcancel.appNav', function(e) {
+          $(document).on('touchend.applicationmenu touchcancel.applicationmenu', function(e) {
             e.preventDefault();
             $(e.target).click();
-          }).on('click.appNav', function(e) {
-            if ($(e.target).parents('.application-nav').length < 1) {
+          }).on('click.applicationmenu', function(e) {
+            if ($(e.target).parents('.application-menu').length < 1) {
               self.closeMenu();
             }
-          }).on('keydown.appNav', function(e) {
+          }).on('keydown.applicationmenu', function(e) {
             self.handleKeyDown(e);
           });
         }, 0);
@@ -179,22 +191,23 @@
         var self = this,
           transitionEnd = $.fn.transitionEndName;
 
-        this.menu.one(transitionEnd + '.appNav', function() {
+        this.menu.one(transitionEnd + '.applicationmenu', function() {
           self.menu.css('display', 'none');
         });
         this.menu.removeClass('is-open').find('[tabindex]');
-        $(document).off('touchend.appNav touchcancel.appNav click.appNav keydown.appNav');
+        $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu keydown.applicationmenu');
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.accordion.off('blur.appNav');
+        this.accordion.off('blur.applicationmenu');
         this.menu
           .detach()
           .appendTo(this.originalParent)
-          .removeClass('short');
+          .removeClass('short')
+          .removeAttr('style');
         this.menu.off('animateOpenComplete animateClosedComplete');
-        $(document).off('touchend.appNav touchcancel.appNav click.appNav');
+        $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -205,7 +218,7 @@
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
       } else {
-        instance = $.data(this, pluginName, new ApplicationNav(this, settings));
+        instance = $.data(this, pluginName, new ApplicationMenu(this, settings));
       }
     });
   };

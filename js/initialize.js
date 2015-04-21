@@ -160,7 +160,7 @@
 
         elem.find('.about').about();
 
-        elem.find('.application-nav-trigger').appNav();
+        elem.find('.application-menu-trigger').applicationmenu();
 
         elem.find('.accordion').accordion();
 
