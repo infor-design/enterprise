@@ -207,6 +207,7 @@
           .removeClass('short')
           .removeAttr('style');
         this.menu.off('animateOpenComplete animateClosedComplete');
+        $(window).off('scroll.applicationmenu');
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
         $.removeData(this.element[0], pluginName);
       }
