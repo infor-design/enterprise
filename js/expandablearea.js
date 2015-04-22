@@ -67,6 +67,11 @@
           'id': this.id + '-content'
         });
 
+        this.expandedIcon = this.header.children('a').find('.icon.plus-minus');
+        if (!this.expandedIcon.length) {
+          this.expandedIcon = $('<span class="icon plus-minus"></span>').prependTo(this.header.children('a'));
+        }
+
         if (!expanded) {
           this.content.addClass('no-transition');
           this.element.one('close-expandablearea', function() {
@@ -147,6 +152,7 @@
         var self = this;
         this.element.addClass('is-expanded');
         this.header.attr('aria-expanded', 'true');
+        this.expandedIcon.addClass('active');
         this.content.css('display','block').one('animateOpenComplete', function() {
           self.element.trigger('open-expandablearea');
         }).animateOpen();
@@ -160,6 +166,7 @@
         var self = this;
         this.element.removeClass('is-expanded');
         this.header.attr('aria-expanded', 'false');
+        this.expandedIcon.removeClass('active');
         this.content.one('animateClosedComplete', function() {
           $(this).css('display', 'none');
           self.element.trigger('close-expandablearea');
