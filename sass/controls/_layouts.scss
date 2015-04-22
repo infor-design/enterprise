@@ -148,10 +148,14 @@ body.no-scroll {
       color: $graphite05;
       display: block;
       @include font-size(14);
+      overflow: hidden;
       padding: 8px 0;
       @include css3(transition, border-color .25s ease);
       text-decoration: none;
       text-indent: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 240px;
 
       &.is-indented {
         @include font-size(12);

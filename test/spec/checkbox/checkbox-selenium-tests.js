@@ -106,7 +106,7 @@ describe('Checkbox [selenium]', function(){
       .getCssProperty('#asp-check', 'line-height', function(err, result) {
         globals.noError(err);
         should.exist(result);
-        result.value.should.equal('22px');
+        result.value.should.equal('21px');
       })
       .call(done);
   });

@@ -27,7 +27,7 @@ button {
   font-weight: bold;
   height: 34px;
   line-height: 34px;
-  margin-left: 5px;
+  margin-right: 5px;
   margin-top: 5px;
   min-width: 100px;
   overflow: hidden;
@@ -63,6 +63,11 @@ button {
   .ripple {
     background-color: #ffffff;
   }
+}
+
+a.btn-primary {
+  display: inline-block;
+  text-decoration: none;
 }
 
 // Normal / Secondary Button
