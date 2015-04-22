@@ -40,8 +40,10 @@ span {
 }
 
 // Header Adjustments
-.header h1 {
-  line-height: 20px;
+.header {
+  h1 {
+    line-height: 20px;
+  }
 }
 
 .header.is-sticky + .scrollable-container {

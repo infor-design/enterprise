@@ -23,17 +23,13 @@
   }
 
   &:focus {
-    border-color: $hyperlink-focus-border-color;
-    color: $hyperlink-focus-border-color;
+    border-color: $hyperlink-color;
+    color: $hyperlink-color;
   }
 
   &:active {
     border-color: transparent;
     color: $hyperlink-active-color;
-  }
-
-  &:visited {
-    //color: #8a39b2; // TODO: Why does this var work? $amethyst06;
   }
 
   //Disabled
@@ -59,5 +55,23 @@
   }
 }
 
+.link-list {
+  margin-bottom: 40px;
+
+  div {
+    border-bottom: 1px solid $graphite02;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+
+    &:last-child {
+      border: 0;
+    }
+
+  }
+
+  &.no-border div {
+    border-bottom: 0;
+  }
+}
 
 

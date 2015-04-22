@@ -81,34 +81,108 @@ body.no-scroll {
   }
 }
 
+@include respond-to(phone) {
+  .two-column {
+    .main,
+    .sidebar {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+// Editorial Pattern
 .editorial {
-  height: calc(100% - 80px);
-  margin: 0 auto 20px;
-  overflow: scroll;
-  position: relative;
+  background-color: $inverse-color;
 
   .main {
     background-color: $inverse-color;
     height: auto;
+    margin: 0 auto;
+    max-width: 1080px;//$breakpoint-wide-tablet;
     width: 100%;
+
+    .content {
+      display: inline-block;
+      float: left;
+      margin-top: 40px;
+      max-width: calc(100% - 370px);
+      min-width: 300px;
+      padding: 0 30px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
   }
 
   // Sticky Way Points Sidebar Nav
   .sidebar-nav {
-    background-color: $body-bg-color;
-    border: 1px solid $graphite02;
+    display: inline-block;
+    float: right;
     height: auto;
+    margin-right: 30px;
     min-height: 100px;
-    padding: 30px;
-    position: absolute;
-    right: 20px;
-    top: 40px;
     width: 300px;
 
+    .content {
+      background-color: $body-bg-color;
+      border: 1px solid $graphite02;
+      height: auto;
+      padding: 0 30px 30px;
+      width: 300px;
+    }
+
     h3 {
+      clear: both;
       margin-bottom: 20px !important;
+      padding-top: 30px;
+
+      &:not(:first-child) {
+        border-top: 1px solid $graphite02;
+      }
+    }
+
+    .tracker-item {
+      border-left: 3px solid transparent;
+      color: $graphite05;
+      display: block;
+      @include font-size(14);
+      padding: 8px 0;
+      @include css3(transition, border-color .25s ease);
+      text-decoration: none;
+      text-indent: 10px;
+
+      &.is-indented {
+        @include font-size(12);
+        margin-left: 15px;
+      }
+
+      &.is-active,
+      &:hover {
+        border-left: 3px solid $azure06;
+      }
     }
   }
+
+  .tag-list .tag {
+    clear: both;
+    display: block;
+    float: left;
+    width: auto;
+
+    &:last-child {
+      margin-bottom: 30px;
+    }
+  }
+
+  .is-sticky {
+    .content {
+      position: fixed;
+      top: 80px;
+    }
+  }
+
 
   .hero {
     background-color: $body-bg-color;
@@ -117,17 +191,14 @@ body.no-scroll {
   }
 }
 
-.hero + .main + .sidebar-nav {
-  margin-top: 520px;
-}
+@include respond-to(phablet) {
+  .editorial {
+    .main .content {
+      min-width: 100%;
+    }
 
-// Respond Off Canvas on left and right column
-@include respond-to(phone) {
-  .two-column {
-    .main,
-    .sidebar {
-      display: block;
-      width: 100%;
+    .sidebar-nav {
+      display: none;
     }
   }
 }

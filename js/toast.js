@@ -9,7 +9,7 @@
     // AMD. Register as an anonymous module depending on jQuery.
     define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
-    //Support for Atom/CommonJS - Not Tested TODO
+    //Support for Atom/CommonJS
     module.exports = factory;
   } else {
     // Register with Browser globals
@@ -51,7 +51,7 @@
       show: function() {
         var self = this,
           container = $('#toast-container'),
-          closeBtn = $('<button type="button" class="btn-close" aria-hidden="true">'+ Locale.translate('Close') +'</button>'),
+          closeBtn = $('<button type="button" class="btn-close" title="'+ Locale.translate('Close') +'" aria-hidden="true"></button>'),
           toast = $('<div class="toast"></div>'),
           progress = $('<div class="toast-progress"></div>');
 
@@ -93,8 +93,6 @@
 
       // Remove the Message and Animate
       remove: function (toast) {
-
-
         if (this.settings.audibleOnly) {
           toast.remove();
           return;

@@ -26,15 +26,13 @@ $hr-bottom-color: #ffffff;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
-$primary-btn-hover-bg-color: #0b6dc1;
+$primary-btn-hover-bg-color: $azure08;
 $primary-btn-focus-bg-color: $primary-color;
-$primary-btn-active-bg-color: #0b6dc1;
-$primary-btn-disabled-bg-color: #7eb5e4;
-$primary-btn-disabled-text-color: #d9e9f7;
+$primary-btn-active-bg-color: $azure08;
 
 // Secondary/Normal Buttons
-$btn-color: #ffffff;
-$btn-bg-color: #acaeb7;
+$btn-color: $inverse-color;
+$btn-bg-color: $slate03;
 $btn-hover-bg-color: #9a9ca4;
 $btn-focus-bg-color: #acaeb7;
 $btn-focus-border-color: $primary-color;
@@ -142,7 +140,7 @@ $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Date Picker
 $datepicker-alt-month-color: #999999; //Was 999999 in design but 767676 passes
-$datepicker-selected-bg-color: #007bc4;
+$datepicker-selected-bg-color: $azure06;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: #1a1a1a;
 $datepicker-hover-bg-color: #ededed;
@@ -177,9 +175,8 @@ $modal-btn-primary-hover-color: #005bb8;
 $modal-btn-disabled-color: #b6b6b6;
 
 //BreadCrumb
-$breadcrumb-disabled-color: #d2d2d2;
+$breadcrumb-disabled-color: $graphite02;
 $breadcrumb-color: #666666;
-$breadcrumb-active-bg-color: #005689;
 
 //States
 $error-color: #ed1c24;
@@ -219,10 +216,8 @@ $disabled-color: #cccccc;
 
 //The hyperlink Style
 $hyperlink-color: $primary-color;
-$hyperlink-hover-color: $primary-color;
-$hyperlink-active-color: $primary-color;
-$hyperlink-visited-color: $amethyst06;
-$hyperlink-focus-border-color: $primary-color;
+$hyperlink-hover-color: $primary-color-text;
+$hyperlink-active-color: $primary-color-text;
 
 // Rating (Stars)
 $rating-bg-color: #ffd042;

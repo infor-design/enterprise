@@ -7,12 +7,13 @@
   border-radius: 15px;
   color: #ffffff;
   display: inline-block;
-  @include font-size(13);
+  @include font-size(14);
   font-weight: 400;
-  height: 22px;
-  line-height: 22px;
-  margin: 0 10px 5px 0;
-  padding: 0 11px;
+  height: 30px;
+  line-height: 33px;
+  margin: 0 0 8px;
+  padding: 0 12px;
+  text-decoration: none;
   vertical-align: middle;
 
   &.error {

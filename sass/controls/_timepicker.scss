@@ -14,7 +14,7 @@
     @include css3(user-select, none);
 
     &:hover {
-      fill: #666666;
+      fill: $primary-color;
     }
   }
 

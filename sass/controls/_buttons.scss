@@ -60,15 +60,6 @@ button {
     }
   }
 
-  &[disabled],
-  &[disabled]:hover,
-  &[disabled]:active {
-    background-color: $primary-btn-disabled-bg-color;
-    box-shadow: none;
-    color: $primary-btn-disabled-text-color;
-    cursor: default;
-  }
-
   .ripple {
     background-color: #ffffff;
   }

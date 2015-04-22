@@ -13,10 +13,10 @@
   border: 1px solid $checkbox-border-color;
   border-radius: 2px;
   content: '';
-  height: 18px;
-  margin-left: -31px;
+  height: 16px;
+  margin-left: -30px;
   position: absolute;
-  width: 18px;
+  width: 16px;
 }
 
 @mixin checkbox-unchecked-disabled-before-style {
@@ -41,7 +41,7 @@
   content: '';
   height: 10px;
   left: 8px;
-  margin-top: 11px;
+  margin-top: 10px;
   position: absolute;
   @include css3(transform, scaleX(-1) rotate(135deg));
   width: 4px;
@@ -58,7 +58,7 @@
 @mixin checkbox-partial-after-style {
   border-width: 0 0 3px;
   margin-left: 0;
-  margin-top: -1px;
+  margin-top: -2px;
   @include css3(transform, none);
   width: 12px;
 }
@@ -167,7 +167,7 @@ span.checkbox > input:focus + label:before {
 
 // Labels
 .checkbox-label {
-  line-height: 22px;
+  line-height: 21px;
 }
 
 @include keyframes(check) {

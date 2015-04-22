@@ -41,9 +41,7 @@
     SearchField.prototype = {
 
       init: function() {
-        this
-          .build()
-          .setupEvents();
+        this.build().setupEvents();
       },
 
       build: function() {
@@ -61,6 +59,8 @@
         this.element.autocomplete(this.settings);
         this.autocomplete = this.element.data('autocomplete');
 
+        //Prevent browser typahead
+        this.element.attr('autocomplete','off');
         return this;
       },
 

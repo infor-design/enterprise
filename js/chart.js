@@ -28,10 +28,11 @@
       return null;
     }
     this.options = {
-      colorRange: ['#7CC0B5', '#1D5F8A', '#806594', '#ABAEB7', '#56932E', '#F4C951']};
+      colorRange: ['#7CC0B5', '#1D5F8A', '#806594', '#ABAEB7', '#56932E', '#F4C951',
+                    '#0E5B52', '#8DC9E6', '#4B2A5E', '#656871', '#0E5B52', '#DE8181']};
 
     this.colors = d3.scale.ordinal().range(charts.options.colorRange);
-    this.greyColors = d3.scale.ordinal().range(['#7a7a7a', '#999999', '#bdbdbd', '#d8d8d8']);
+    this.greyColors = d3.scale.ordinal().range(['#737373', '#999999', '#bdbdbd', '#d8d8d8']);
 
     // Function to Add a Legend
     this.addLegend = function(series, chartType) {
@@ -87,10 +88,6 @@
       });
 
       $(container).after(legend);
-
-      if (chartType !== 'pie') {
-        legend.addClass('is-below');
-      }
     };
 
     //Add Toolbar to the page
@@ -573,7 +570,7 @@
         }
       }
 
-      $(window).on('resize load', resizeVertBar);
+      $(window).on('resize.charts load.charts', resizeVertBar);
 
       //Add Legends
       charts.addLegend(series, 'bar');
@@ -581,181 +578,238 @@
       return $(container);
     };
 
-    this.Pie = function(chartData, isDonut) {
+    this.Pie = function(initialData, isDonut) {
 
       var svg = d3.select(container).append('svg'),
-        art = svg.select('.arcs'),
-        labels = svg.select('.labels');
+        arcs = svg.append('g').attr('class','arcs'),
+        labels = svg.append('g').attr('class','labels'),
+        centerLabel = initialData[0].centerLabel;
+
+      var chartData = initialData[0].data;
+      $(container).addClass('chart-pie');
 
       // Create the pie layout function.
-      // This function will add convenience
-      // data to our existing data, like
-      // the start angle and end angle
-      // for each data element.
-      jhw_pie = d3.layout.pie()
-      jhw_pie.value(function (d, i) {
-          // Tells the layout function what
-          // property of our data object to
-          // use as the value.
-          return d.instances;
+      var pie = d3.layout.pie().value(function (d) {
+        // what property of our data object to use
+        return d.value;
       });
 
       // Store our chart dimensions
-      cDim = {
-          height: 500,
-          width: 500,
-          innerRadius: 50,
-          outerRadius: 150,
-          labelRadius: 175
-      }
+      var dims = {
+        height: parseInt($(container).parent().height()),  //header + 20 px padding
+        width: parseInt($(container).parent().width())
+      };
 
-      // Set the size of our SVG element
-      svg.attr({
-          height: cDim.height,
-          width: cDim.width
-      });
+      dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 15);
+      dims.innerRadius = isDonut ? dims.outerRadius - 20 : 0;
+      dims.labelRadius = dims.outerRadius + 15;
 
-      // This translate property moves the origin of the group's coordinate
-      // space to the center of the SVG element, saving us translating every
-      // coordinate individually.
-      canvas.attr("transform", "translate(" + (cDim.width / 2) + "," + (cDim.width / 2) + ")");
+      svg.attr('width', '100%')
+        .attr('height', '100%')
+        .attr('viewBox','0 0 ' + dims.width + ' ' + dims.height);
+        //.attr('preserveAspectRatio','xMaxYMax');
+        //http://git.infor.com/projects/SOHO/repos/controls/commits/e796f46c0ad00f92c67b6eb87ac64a3d83ee2e25
 
-      pied_data = jhw_pie(data);
+      // move the origin of the group's coordinate space to the center of the SVG element
+      arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2)) + ')');
+      labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2)) + ')');
 
-      // The pied_arc function we make here will calculate the path
-      // information for each wedge based on the data set. This is
-      // used in the "d" attribute.
-      pied_arc = d3.svg.arc()
-          .innerRadius(50)
-          .outerRadius(150);
+      var pieData = pie(chartData);
 
-      // This is an ordinal scale that returns 10 predefined colors.
-      // It is part of d3 core.
-      pied_colors = d3.scale.category10();
+      // calculate the path information for each wedge
+      var pieArcs = d3.svg.arc()
+          .innerRadius(dims.innerRadius)
+          .outerRadius(dims.outerRadius);
 
-      // Let's start drawing the arcs.
-      enteringArcs = art.selectAll(".wedge").data(pied_data).enter();
+      // Draw the arcs.
+      var enteringArcs = arcs.selectAll('.arc').data(pieData).enter();
 
-      enteringArcs.append("path")
-          .attr("class", "wedge")
-          .attr("d", pied_arc)
-          .style("fill", function (d, i) {
-          return pied_colors(i);
-      });
+      var g = enteringArcs.append('g')
+          .attr('class', 'arc')
+          .attr('d', pieArcs)
+          //.style('fill', function(d, i) { return charts.colors(i); })
+          .on('click', function (d, i) {
+
+            var color = charts.colors(i);
+            d3.select('.chart-container .is-selected')
+              .classed('is-selected', false)
+              .style('stroke', '#fff')
+              .style('stroke-width', '1px')
+              .attr('transform', '');
+
+            var path = d3.select(this)
+                .classed('is-selected', true)
+                .style('stroke', color)
+                .style('stroke-width', 0)
+                .attr('transform', 'scale(1.025, 1.025)');
+
+            $(container).trigger('selected', [path[0], d]);
+          });
+
+      g.append('path')
+        .style('fill', function(d, i) { return charts.colors(i); })
+        .transition().duration(750)
+        .attrTween('d', function(d) {
+          var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+         return function(t) {
+             d.endAngle = i(t);
+             return pieArcs(d);
+           };
+        });
 
       // Now we'll draw our label lines, etc.
-      enteringLabels = labels.selectAll(".label").data(pied_data).enter();
-      labelGroups = enteringLabels.append("g").attr("class", "label");
-      labelGroups.append("circle").attr({
+      var enteringLabels = labels.selectAll('.label').data(pieData).enter();
+      var labelGroups = enteringLabels.append('g').attr('class', 'label');
+      labelGroups.append('circle').attr({
           x: 0,
           y: 0,
           r: 2,
-          fill: "#000",
-          transform: function (d, i) {
-              centroid = pied_arc.centroid(d);
-              return "translate(" + pied_arc.centroid(d) + ")";
+          fill: '#000000',
+          transform: function (d) {
+            var x = pieArcs.centroid(d)[0],
+              y = pieArcs.centroid(d)[1];
+
+            return 'translate(' + x + ',' + y + ')';
           },
-              'class': "label-circle"
+          'class': 'label-circle'
       });
 
-      // "When am I ever going to use this?" I said in
-      // 10th grade trig.
-      textLines = labelGroups.append("line").attr({
-          x1: function (d, i) {
-              return pied_arc.centroid(d)[0];
+      var textLines = labelGroups.append('line').attr({
+          x1: function (d) {
+            return pieArcs.centroid(d)[0];
           },
-          y1: function (d, i) {
-              return pied_arc.centroid(d)[1];
+          y1: function (d) {
+            return pieArcs.centroid(d)[1];
           },
-          x2: function (d, i) {
-              centroid = pied_arc.centroid(d);
-              midAngle = Math.atan2(centroid[1], centroid[0]);
-              x = Math.cos(midAngle) * cDim.labelRadius;
-              return x;
+          x2: function (d) {
+            var centroid = pieArcs.centroid(d),
+              midAngle = Math.atan2(centroid[1], centroid[0]),
+              x = Math.cos(midAngle) * dims.labelRadius;
+            return x;
           },
-          y2: function (d, i) {
-              centroid = pied_arc.centroid(d);
-              midAngle = Math.atan2(centroid[1], centroid[0]);
-              y = Math.sin(midAngle) * cDim.labelRadius;
-              return y;
+          y2: function (d) {
+            var centroid = pieArcs.centroid(d),
+             midAngle = Math.atan2(centroid[1], centroid[0]),
+             y = Math.sin(midAngle) * dims.labelRadius;
+
+            return y;
           },
-              'class': "label-line"
+          'class': 'label-line'
       });
 
-      textLabels = labelGroups.append("text").attr({
-          x: function (d, i) {
-              centroid = pied_arc.centroid(d);
-              midAngle = Math.atan2(centroid[1], centroid[0]);
-              x = Math.cos(midAngle) * cDim.labelRadius;
-              sign = (x > 0) ? 1 : -1
-              labelX = x + (5 * sign)
-              return labelX;
+      var textLabels = labelGroups.append('text').attr({
+          x: function (d) {
+            var centroid = pieArcs.centroid(d),
+              midAngle = Math.atan2(centroid[1], centroid[0]),
+              x = Math.cos(midAngle) * dims.labelRadius,
+              sign = (x > 0) ? 1 : -1,
+              labelX = x + (5 * sign);
+
+            return labelX;
           },
-          y: function (d, i) {
-              centroid = pied_arc.centroid(d);
-              midAngle = Math.atan2(centroid[1], centroid[0]);
-              y = Math.sin(midAngle) * cDim.labelRadius;
-              return y;
+          y: function (d) {
+            var centroid = pieArcs.centroid(d),
+              midAngle = Math.atan2(centroid[1], centroid[0]),
+              y = Math.sin(midAngle) * dims.labelRadius;
+
+            return y;
           },
-              'text-anchor': function (d, i) {
-              centroid = pied_arc.centroid(d);
-              midAngle = Math.atan2(centroid[1], centroid[0]);
-              x = Math.cos(midAngle) * cDim.labelRadius;
-              return (x > 0) ? "start" : "end";
+          'text-anchor': function (d) {
+            var centroid = pieArcs.centroid(d),
+             midAngle = Math.atan2(centroid[1], centroid[0]),
+              x = Math.cos(midAngle) * dims.labelRadius;
+
+            return (x > 0) ? 'start' : 'end';
           },
-              'class': 'label-text'
+          'class': 'label-text'
       }).text(function (d) {
-          return d.data.label
+        return d.data.name;
       });
 
-      alpha = 0.5;
+      if (isDonut) {
+        arcs.append('text')
+        .attr('dy', '.35em')
+        .style('text-anchor', 'middle')
+        .attr('class', 'chart-donut-text')
+        .text(centerLabel);
+      }
+
+      //Calculate Percents for Legend
+      var total = d3.sum(chartData, function(d){ return d.value; }),
+        series = chartData.map(function (d, i) {
+          d.percent = d3.round(100*(d.value/total)) + '%';
+          d.elem = enteringArcs[0][i];
+          return {name: d.name, percent:d.percent, elem: d.elem};
+        });
+
+      console.log(series, total);
+
+      var alpha = 0.5,
       spacing = 20;
 
       function relax() {
-          again = false;
-          textLabels.each(function (d, i) {
-              a = this;
-              da = d3.select(a);
-              y1 = da.attr("y");
-              textLabels.each(function (d, j) {
-                  b = this;
-                  // a & b are the same element and don't collide.
-                  if (a == b) return;
-                  db = d3.select(b);
-                  // a & b are on opposite sides of the chart and
-                  // don't collide
-                  if (da.attr("text-anchor") != db.attr("text-anchor")) return;
-                  // Now let's calculate the distance between
-                  // these elements.
-                  y2 = db.attr("y");
-                  deltaY = y1 - y2;
+        var again = false;
+        textLabels.each(function () {
+            var a = this,
+              da = d3.select(this),
+              y1 = da.attr('y');
 
-                  // Our spacing is greater than our specified spacing,
-                  // so they don't collide.
-                  if (Math.abs(deltaY) > spacing) return;
+        textLabels.each(function () {
+              var b = this;
+              // a & b are the same element and don't collide.
+              if (a === b) {
+                return;
+              }
+              var db = d3.select(this);
 
-                  // If the labels collide, we'll push each
-                  // of the two labels up and down a little bit.
-                  again = true;
-                  sign = deltaY > 0 ? 1 : -1;
-                  adjust = sign * alpha;
-                  da.attr("y",+y1 + adjust);
-                  db.attr("y",+y2 - adjust);
-              });
+              // a & b are on opposite sides of the chart and don't collide
+              if (da.attr('text-anchor') !== db.attr('text-anchor')) {
+                return;
+              }
+
+              // calculate the distance between these elements.
+              var y2 = db.attr('y'),
+                deltaY = y1 - y2;
+
+              // they don't collide.
+              if (Math.abs(deltaY) > spacing) {
+                return;
+              }
+
+              // If the labels collide, we'll push each of the two labels up and down
+              again = true;
+              var sign = deltaY > 0 ? 1 : -1,
+                adjust = sign * alpha;
+
+              da.attr('y',+y1 + adjust);
+              db.attr('y',+y2 - adjust);
           });
-          // Adjust our line leaders here
-          // so that they follow the labels.
-          if(again) {
-              labelElements = textLabels[0];
-              textLines.attr("y2",function(d,i) {
-                  labelForLine = d3.select(labelElements[i]);
-                  return labelForLine.attr("y");
-              });
-              relax();
-          }
+        });
+
+        // Adjust our line leaders
+        if (again) {
+          var labelElements = textLabels[0];
+          textLines.attr('y2',function(d,i) {
+            var labelForLine = d3.select(labelElements[i]);
+            return labelForLine.attr('y');
+          });
+          relax();
+        }
       }
 
       relax();
+      var timeout;
+
+      //Handle Resize / Redraw
+      function resizePie() {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+          $(container).empty();
+          charts.Pie(initialData, isDonut);
+        }, 100);
+      }
+
+      $(window).off('resize.pie').on('resize.pie', resizePie);
 
       return $(container);
     };

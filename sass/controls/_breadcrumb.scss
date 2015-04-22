@@ -34,18 +34,18 @@
     }
 
     &:focus {
-      border: 1px solid $primary-color;
+      border: 1px solid $breadcrumb-color;
       border-radius: 2px;
-      color: $primary-color;
+      color: $breadcrumb-color;
     }
 
     &:active {
-      color: $breadcrumb-active-bg-color;
+      color: $breadcrumb-color;
       text-decoration: underline;
     }
 
     &.current {
-      font-weight: 500;
+      font-weight: 600;
     }
   }
 

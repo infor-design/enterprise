@@ -268,6 +268,7 @@
             e.preventDefault();
             if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
               focus.closest('.popupmenu').removeClass('is-open').parent().prev('a').focus();
+              focus.closest('.popupmenu').removeClass('is-open').parent().parent().removeClass('is-submenu-open');
             }
           }
 
@@ -438,6 +439,7 @@
           if (canClose) { //We are moving slopie to the menu
             menuToClose.removeClass('is-open').removeAttr('style');
             menuToClose.parent('.wrapper').removeAttr('style');
+            menuToClose.parent().parent().removeClass('is-submenu-open');
           }
           clearTimeout(timeout);
         });
@@ -518,6 +520,8 @@
             menu.height(menuHeight);
           }
         }
+
+        li.addClass('is-submenu-open');
       },
 
       detach: function () {

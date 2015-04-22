@@ -15,7 +15,8 @@ $header-bg-color: #454545;
   width: 100%;
 
   .row {
-    max-width: 100%;
+    max-width: 100% !important;
+    width: 100%;
   }
 
   > * {

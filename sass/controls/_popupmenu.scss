@@ -88,7 +88,8 @@
     position: static;
     white-space: nowrap;
 
-    &:focus {
+    &:focus,
+    &.is-submenu-open {
       background-color: $menu-hover-color;
     }
 

@@ -43,6 +43,10 @@ app.configure(function() {
     res.render('controls/index', controlOptions);
   });
 
+  app.get('/controls', function(req, res) {
+    res.render('controls/index', controlOptions);
+  });
+
   app.get('/controls/*', function(req, res) {
     var end = req.url.replace('/controls/','');
     res.render('controls/' + end, controlOptions);

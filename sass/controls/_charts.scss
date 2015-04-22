@@ -23,7 +23,7 @@
   .axis line {
     fill: none;
     shape-rendering: crispEdges;
-    stroke: #c2c2c2;  //Make a Variable
+    stroke: $font-color;
   }
 
   .axis.x .domain {
@@ -43,6 +43,14 @@
     font-weight: lighter;
   }
 
+  .label-line {
+    stroke: $graphite06;
+  }
+
+  .label-circle {
+    fill: $graphite06;
+  }
+
   // Bar Chart Style
   .bar,
   .arc {
@@ -50,7 +58,7 @@
   }
 
   .arc {
-    stroke: #ffffff;
+    stroke: $inverse-color;
   }
 
   .bar {
@@ -85,7 +93,7 @@
 
 .chart-swatch > span,
 .chart-swatch > b {
-  color: #ffffff;
+  color: $inverse-color;
   display: table-cell;
   line-height: 12px;
   padding-left: 10px;
@@ -97,7 +105,7 @@
 }
 
 .chart-tooltip-total {
-  color: #ffffff;
+  color: $inverse-color;
   display: block;
   margin-bottom: 5px;
   text-align: center;
@@ -106,12 +114,6 @@
 .chart-legend {
   margin-top: 10px;
   text-align: center;
-}
-
-.is-below {
-  .chart-legend-color {
-    top: 0;
-  }
 }
 
 .chart-legend-color {
@@ -128,92 +130,6 @@
   width: auto;
   @include ellipsis;
   @include font-size(14);
-}
-
-
-// Legend on the side... TODO - Use Lines.
-.vertical-legend {
-  margin: 0 auto;
-  max-width: 500px;
-  width: 100%;
-
-  .chart-legend {
-    float: right;
-    padding-right: 4px;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40%;
-
-    .chart-legend-item {
-      display: block;
-      padding-top: 5px;
-      position: relative;
-      text-align: left;
-    }
-
-    .chart-legend-percent {
-      font-weight: bold;
-      margin-left: 7px;
-      vertical-align: top;
-    }
-
-    .chart-legend-item-text {
-      display: inline-block;
-      @include ellipsis;
-      padding-right: 5px;
-    }
-
-    &.is-below {
-      margin: 20px 0;
-      text-align: center;
-
-      .chart-legend-item {
-        margin-right: 20px;
-      }
-    }
-
-  }
-}
-
-// Pie Charts Specifics
-.chart-pie {
-  float: left;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 56%;
-
-
-  @include respond-to(phone) {
-    float: none;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  @include respond-to(tabletdown) {
-    float: none;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  svg {
-    @include respond-to(phone) {
-      width: 60%;
-    }
-
-    @include respond-to(tablet) {
-      width: 60%;
-    }
-  }
-}
-
-.one-third .chart-pie {
-  svg {
-    @include respond-to(tabletdown) {
-      width: 60%;
-    }
-  }
 }
 
 // Spark Line Charts
@@ -242,9 +158,16 @@
   }
 }
 
+// Pie Charts
+.chart-pie {
+  height: inherit;
+  padding: 20px;
+  width: inherit;
+}
+
 // Progess Bar Charts
 .chart-progressbar {
-  background-color: #d2d2d2;
+  background-color: $graphite03;
   height: 20px;
   margin-bottom: 20px;
   width: 100%;
