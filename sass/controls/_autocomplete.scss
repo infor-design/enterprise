@@ -12,7 +12,8 @@
   li {
     color: $autocomplete-light-text;
 
-    &.is-selected {
+    &.is-selected,
+    &:hover {
       background-color: $menu-hover-color;
     }
   }
