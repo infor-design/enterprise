@@ -100,9 +100,10 @@
     // Expand / Collapse Button
     Expander: function (row, cell, value) {
       var button = '<button class="btn-icon datagrid-expand-btn">'+
-        '<svg class="icon" aria-hidden="true" focusable="false">'+
-        '<use xlink:href="#icon-caret-down"></use>'+
-        '</svg><span>Expand/Collapse</span>'+
+        '<span class="icon plus-minus"></span>' +
+        //'<svg class="icon" aria-hidden="true" focusable="false">'+
+        //'<use xlink:href="#icon-caret-down"></use>'+
+        //'</svg><span>Expand/Collapse</span>'+
         '</button>' + '<span> ' + value + '</span>';
 
       return button;
@@ -409,11 +410,13 @@
 
         if (expandRow.hasClass('is-expanded')) {
           expandRow.removeClass('is-expanded');
-          expandButton.removeClass('is-expanded');
+          expandButton.removeClass('is-expanded')
+            .find('.plus-minus').removeClass('active');
           detail.height(0);
         } else {
           expandRow.addClass('is-expanded');
-          expandButton.addClass('is-expanded');
+          expandButton.addClass('is-expanded')
+            .find('.plus-minus').addClass('active');
           detail.height(190);
         }
       },
