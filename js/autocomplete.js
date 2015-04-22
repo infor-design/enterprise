@@ -89,11 +89,6 @@
           this.settings.template :
           resultTemplate;
 
-        // Error out if the Template system can't be found
-        if (!Tmpl) {
-          throw new Error('Could not load SoHo Xi Template Control');
-        }
-
         for (var i = 0; i < items.length; i++) {
           var isString = typeof items[i] === 'string',
             option = (isString ? items[i] : items[i].label),
@@ -124,11 +119,17 @@
               dataset.value = items[i].value;
             }
 
-            if (Tmpl) {
+            if (typeof Tmpl !== 'undefined') {
               var compiledTmpl = Tmpl.compile(this.tmpl),
                 renderedTmpl = compiledTmpl.render(dataset);
 
               self.list.append(renderedTmpl);
+            } else {
+              var listItem = $('<li role="listitem"></li>');
+              listItem.attr('id', dataset.listItemId);
+              listItem.attr('data-value', dataset.value);
+              listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
+              self.list.append(listItem);
             }
           }
         }

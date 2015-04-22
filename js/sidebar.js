@@ -68,8 +68,6 @@
             self.trackedHeaders.each(function (i) {
               var elem = $(this);
 
-              console.log(isClick);
-
               if (elem.offset().top - $(window).scrollTop() < headerHeight) {
                self.tracker.find('.is-active').removeClass('is-active');
                $('[data-tracker="heading-'+ (i+1) +'"]').addClass('is-active');
@@ -81,7 +79,7 @@
               }
             });
 
-          }, 300);
+          }, 100);
 
         });
 
@@ -107,13 +105,16 @@
             e.stopPropagation();
             e.preventDefault();
             $(this).trigger('click');
-          }).on('click.sidebar', 'a', function () {
+          }).on('click.sidebar', 'a', function (e) {
+            e.preventDefault();
+
             var idx = $(this).attr('data-tracker').replace('heading-', ''),
               target = $(self.trackedHeaders[idx]);
 
             isClick = true;
             self.tracker.find('.is-active').removeClass('is-active');
-            $('html, body').animate({scrollTop: target.offset().top - 100}, 100);
+
+            $('html, body').animate({scrollTop: target.offset().top - 100}, 250);
             $(this).addClass('is-active');
           });
         }

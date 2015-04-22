@@ -13,11 +13,11 @@
  *  limitations under the License.
  */
 
-var Tmpl = {}; // jshint ignore:line
+var Tmplx = {}; // jshint ignore:line
 
-(function (Tmpl) {
+(function (Tmplx) {
 
-  Tmpl.Template = function (codeObj, text, compiler, options) {
+  Tmplx.Template = function (codeObj, text, compiler, options) {
     codeObj = codeObj || {};
     this.r = codeObj.code || this.r;
     this.c = compiler;
@@ -39,7 +39,7 @@ var Tmpl = {}; // jshint ignore:line
     return String((val === null || val === undefined) ? '' : val);
   }
 
-  function TmplEscape(str) {
+  function TmplxEscape(str) {
     str = coerceToString(str);
     return hChars.test(str) ?
       str
@@ -51,12 +51,12 @@ var Tmpl = {}; // jshint ignore:line
       str;
   }
 
-  Tmpl.Template.prototype = {
+  Tmplx.Template.prototype = {
     // render: replaced by generated code.
     r: function (context, partials, indent) { return ''; }, // jshint ignore:line
 
     // variable escaping
-    v: TmplEscape,
+    v: TmplxEscape,
 
     // triple stache
     t: coerceToString,
@@ -344,9 +344,9 @@ var Tmpl = {}; // jshint ignore:line
     return Object.prototype.toString.call(a) === '[object Array]';
   };
 
-})(typeof exports !== 'undefined' ? exports : Tmpl);
+})(typeof exports !== 'undefined' ? exports : Tmplx);
 
-(function (Tmpl) {
+(function (Tmplx) {
   // Setup regex  assignments
   // remove whitespace according to Mustache spec
   var rIsWhitespace = /\S/,
@@ -357,13 +357,13 @@ var Tmpl = {}; // jshint ignore:line
       rLineSep = /\u2028/,
       rParagraphSep = /\u2029/;
 
-  Tmpl.tags = {
+  Tmplx.tags = {
     '#': 1, '^': 2, '<': 3, '$': 4,
     '/': 5, '!': 6, '>': 7, '=': 8, '_v': 9,
     '{': 10, '&': 11, '_t': 12
   };
 
-  Tmpl.scan = function scan(text, delimiters) {
+  Tmplx.scan = function scan(text, delimiters) {
     var len = text.length,
         IN_TEXT = 0,
         IN_TAG_TYPE = 1,
@@ -390,7 +390,7 @@ var Tmpl = {}; // jshint ignore:line
       var isAllWhitespace = true;
       for (var j = lineStart; j < tokens.length; j++) {
         isAllWhitespace =
-          (Tmpl.tags[tokens[j].tag] < Tmpl.tags._v) ||
+          (Tmplx.tags[tokens[j].tag] < Tmplx.tags._v) ||
           (tokens[j].tag == '_t' && tokens[j].text.match(rIsWhitespace) === null); // jshint ignore:line
         if (!isAllWhitespace) {
           return false;
@@ -455,7 +455,7 @@ var Tmpl = {}; // jshint ignore:line
         }
       } else if (state === IN_TAG_TYPE) {
         i += otag.length - 1;
-        tag = Tmpl.tags[text.charAt(i + 1)];
+        tag = Tmplx.tags[text.charAt(i + 1)];
         tagType = tag ? text.charAt(i + 1) : '_v';
         if (tagType === '=') {
           i = changeDelimiters(text, i);
@@ -536,7 +536,7 @@ var Tmpl = {}; // jshint ignore:line
         throw new Error('Illegal content in < super tag.');
       }
 
-      if (Tmpl.tags[token.tag] <= Tmpl.tags.$ || isOpener(token, customTags)) {
+      if (Tmplx.tags[token.tag] <= Tmplx.tags.$ || isOpener(token, customTags)) {
         stack.push(token);
         token.nodes = buildTree(tokens, token.tag, stack, customTags);
       } else if (token.tag === '/') {
@@ -596,15 +596,15 @@ var Tmpl = {}; // jshint ignore:line
     return 'partials: {' + partials.join(',') + '}, subs: ' + stringifySubstitutions(codeObj.subs);
   }
 
-  Tmpl.stringify = function(codeObj, text, options) { // jshint ignore:line
-    return '{code: function (c,p,i) { ' + Tmpl.wrapMain(codeObj.code) + ' },' + stringifyPartials(codeObj) +  '}';
+  Tmplx.stringify = function(codeObj, text, options) { // jshint ignore:line
+    return '{code: function (c,p,i) { ' + Tmplx.wrapMain(codeObj.code) + ' },' + stringifyPartials(codeObj) +  '}';
   };
 
   var serialNo = 0;
-  Tmpl.generate = function(tree, text, options) {
+  Tmplx.generate = function(tree, text, options) {
     serialNo = 0;
     var context = { code: '', subs: {}, partials: {} };
-    Tmpl.walk(tree, context);
+    Tmplx.walk(tree, context);
 
     if (options.asString) {
       return this.stringify(context, text, options);
@@ -613,19 +613,19 @@ var Tmpl = {}; // jshint ignore:line
     return this.makeTemplate(context, text, options);
   };
 
-  Tmpl.wrapMain = function(code) {
+  Tmplx.wrapMain = function(code) {
     return 'var t=this;t.b(i=i||"");' + code + 'return t.fl();';
   };
 
-  Tmpl.template = Tmpl.Template;
+  Tmplx.template = Tmplx.Template;
 
-  Tmpl.makeTemplate = function(codeObj, text, options) {
+  Tmplx.makeTemplate = function(codeObj, text, options) {
     var template = this.makePartials(codeObj);
     template.code = new Function('c', 'p', 'i', this.wrapMain(codeObj.code)); // jshint ignore:line
     return new this.template(template, text, this, options);
   };
 
-  Tmpl.makePartials = function(codeObj) {
+  Tmplx.makePartials = function(codeObj) {
     var key, template = {subs: {}, partials: codeObj.partials, name: codeObj.name};
     for (key in template.partials) {
       template.partials[key] = this.makePartials(template.partials[key]);
@@ -661,25 +661,25 @@ var Tmpl = {}; // jshint ignore:line
     context.code += 't.b(t.t(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,0)));';
   }
 
-  Tmpl.codegen = {
+  Tmplx.codegen = {
     '#': function(node, context) {
       context.code += 'if(t.s(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,1),' +
                       'c,p,0,' + node.i + ',' + node.end + ',"' + node.otag + ' ' + node.ctag + '")){' +
                       't.rs(c,p,' + 'function(c,p,t){';
-      Tmpl.walk(node.nodes, context);
+      Tmplx.walk(node.nodes, context);
       context.code += '});c.pop();}';
     },
 
     '^': function(node, context) {
       context.code += 'if(!t.s(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,1),c,p,1,0,0,"")){';
-      Tmpl.walk(node.nodes, context);
+      Tmplx.walk(node.nodes, context);
       context.code += '};';
     },
 
     '>': createPartial,
     '<': function(node, context) {
       var ctx = {partials: {}, code: '', subs: {}, inPartial: true};
-      Tmpl.walk(node.nodes, ctx);
+      Tmplx.walk(node.nodes, ctx);
       var template = context.partials[createPartial(node, context)];
       template.subs = ctx.subs;
       template.partials = ctx.partials;
@@ -687,7 +687,7 @@ var Tmpl = {}; // jshint ignore:line
 
     '$': function(node, context) {
       var ctx = {subs: {}, code: '', partials: context.partials, prefix: node.n};
-      Tmpl.walk(node.nodes, ctx);
+      Tmplx.walk(node.nodes, ctx);
       context.subs[node.n] = ctx.code;
       if (!context.inPartial) {
         context.code += 't.sub("' + esc(node.n) + '",c,p,i);';
@@ -715,10 +715,10 @@ var Tmpl = {}; // jshint ignore:line
     return 't.b(' + s + ');';
   }
 
-  Tmpl.walk = function(nodelist, context) {
+  Tmplx.walk = function(nodelist, context) {
     var func;
     for (var i = 0, l = nodelist.length; i < l; i++) {
-      func = Tmpl.codegen[nodelist[i].tag];
+      func = Tmplx.codegen[nodelist[i].tag];
       if (func) {
         func(nodelist[i], context);
       }
@@ -726,20 +726,20 @@ var Tmpl = {}; // jshint ignore:line
     return context;
   };
 
-  Tmpl.parse = function(tokens, text, options) {
+  Tmplx.parse = function(tokens, text, options) {
     options = options || {};
     return buildTree(tokens, '', [], options.sectionTags || []);
   };
 
-  Tmpl.cache = {};
+  Tmplx.cache = {};
 
-  Tmpl.cacheKey = function(text, options) {
+  Tmplx.cacheKey = function(text, options) {
     return [text, !!options.asString, !!options.disableLambda, options.delimiters, !!options.modelGet].join('||');
   };
 
-  Tmpl.compile = function(text, options) {
+  Tmplx.compile = function(text, options) {
     options = options || {};
-    var key = Tmpl.cacheKey(text, options);
+    var key = Tmplx.cacheKey(text, options);
     var template = this.cache[key];
 
     if (template) {
@@ -754,5 +754,5 @@ var Tmpl = {}; // jshint ignore:line
     this.cache[key] = template;
     return template;
   };
-})(typeof exports !== 'undefined' ? exports : Tmpl);
+})(typeof exports !== 'undefined' ? exports : Tmplx);
 
