@@ -41,6 +41,10 @@
           }
         }
 
+        if (this.element.hasClass('btn-actions') && !this.element.data('tooltip')) {
+          this.element.attr('title', Locale.translate('MoreActions')).tooltip();
+        }
+
         this.element.on('touchstart.button mousedown.button', function (e) {
           if (!self.isTouch && e.which !== 1) {
             return false;
@@ -115,7 +119,7 @@
           }, 400);
 
           // On mouseup or on mouseleave, set the mousedown flag to 'off' and try to destroy the ripple
-          element.on('mouseup mouseleave', function() {
+          element.on('mouseup.button mouseleave.button', function() {
             ripple.data('mousedown', 'off');
             // If the transition 'on' is finished then we can destroy the ripple with transition 'out'
             if (ripple.data('animating') === 'off') {
@@ -137,8 +141,23 @@
         ripple.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
           ripple.remove();
         });
-      }
+      },
 
+      destroy: function() {
+        this.element.off('touchstart.button mousedown.button mouseup.button mouseleave.button');
+        var wrapper = this.element.find('.ripple-wrapper'),
+          ripples = wrapper.find('.ripple');
+        if (ripples.length) {
+          ripples.remove();
+        }
+        wrapper.remove();
+
+        if (this.element.hasClass('btn-actions')) {
+          this.element.data('tooltip').destroy();
+        }
+
+        $.removeData(this.element[0], pluginName);
+      }
     };
 
     // Initialize the plugin (Once)

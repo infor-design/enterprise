@@ -1,13 +1,16 @@
 // Icons and Icon Buttons
 //================================================== //
 
-// Svg Styles
-svg.icon {
+.icon {
   display: inline-block;
-  fill: #999999;
   height: 32px;
   position: relative;
   width: 32px;
+}
+
+// Svg Styles
+svg.icon {
+  fill: #999999;
 
   // Specific Buttons
   &.icon-error,
@@ -77,4 +80,42 @@ svg.icon-tree {
     position: relative;
     width: 45px;
   }
+}
+
+// Psuedo-element Icons
+//================================================== //
+
+.icon.plus-minus {
+  display: inline-block;
+  position: relative;
+
+  &::before,
+  &::after {
+    background-color: $font-color-light;
+    border-radius: 2px;
+    content: '';
+    height: 2px;
+    left: .65em;
+    position: absolute;
+    top: 1.4em;
+    width: 1.5em;
+    @include css3(transform-origin, 50% 50% 0);
+    @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s);
+  }
+
+  &::before {
+    @include css3(transform, rotate(90deg));
+  }
+
+  &::after {
+    @include css3(transform, rotate(0deg));
+  }
+
+  &.active {
+    &::before,
+    &::after {
+      @include css3(transform, rotate(180deg));
+    }
+  }
+
 }

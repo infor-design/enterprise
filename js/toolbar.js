@@ -74,7 +74,7 @@
         this.moreButton = this.element.find('.btn-actions');
         if (!this.moreButton.length) {
           var container = $('<div class="more"></div>').appendTo(this.element);
-          this.moreButton = $('<button class="btn-actions" data-init="true" tabindex="-1"></button>').appendTo(container);
+          this.moreButton = $('<button class="btn-actions" data-init="true" tabindex="-1" title="'+ Locale.translate('MoreActions') +'"></button>').appendTo(container);
           $('<svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg>').appendTo(this.moreButton);
           $('<span class="audible">'+Locale.translate('Actions')+'</span>').appendTo(this.moreButton);
         }
@@ -83,6 +83,9 @@
         }
         if (!this.moreButton.data('button')) {
           this.moreButton.button();
+        }
+        if (!this.moreButton.data('tooltip')) {
+          this.moreButton.tooltip();
         }
         this.moreButton.attr('tabindex', '-1');
 
@@ -138,11 +141,15 @@
 
         // if the button that needs to be selected is overflowed, don't make it tabbable, but make
         // the more button tabbable instead.
+        var tooltip = this.moreButton.data('tooltip');
         if (activeButton[0] !== this.moreButton[0] && this.isButtonOverflowed(activeButton)) {
           this.activeButton = this.moreButton.attr('tabindex', '0');
           activeButton.addClass('is-selected');
         } else {
           this.activeButton = activeButton.addClass('is-selected').attr('tabindex', '0');
+          if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
+            tooltip.hide();
+          }
         }
         this.activeButton.focus();
       },
@@ -185,6 +192,8 @@
               self.setActiveButton(self.getFirstVisibleButton());
               break;
           }
+        }).on('focus.popupmenu', function() {
+          $(this).data('tooltip').show();
         });
 
         $(window).on('resize.toolbar.' + this.id, function() {
@@ -434,6 +443,7 @@
           this.popupmenu.destroy();
         }
         this.moreButton.unwrap();
+        this.moreButton.data('tooltip').destroy();
         this.moreButton.off().remove();
         this.buttonset.find('button').removeAttr('tabindex');
         this.buttonset.off();

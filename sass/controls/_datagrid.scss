@@ -246,14 +246,19 @@ td .btn-actions {
 .datagrid-expand-btn {
   background-color: transparent;
   margin-left: -12px;
-  @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s);
 
   svg {
     height: 24px;
     width: 24px;
   }
 
-  span {
+  .icon.plus-minus {
+    left: -1.4em;
+    position: relative;
+    top: -.3em;
+  }
+
+  span:not(.icon) {
     color: transparent;
   }
 
@@ -267,9 +272,6 @@ td .btn-actions {
     }
   }
 
-  &.is-expanded {
-    transform: rotate(-180deg);
-  }
 }
 
 //Grid Expandable Area

@@ -31,24 +31,49 @@ $expandable-area-border-color: $font-color-light;
   > a {
     cursor: pointer;
     display: block;
-    padding: 1rem 0 1rem 3rem;
-    //      @include css3(user-select, none);
+    padding: .5rem 0;
 
-    &::before {
-      content: '+';
-      left: -1.5rem;
-      position: relative;
-      text-align: center;
+    > * {
+      vertical-align: middle;
+    }
+
+    > .icon.plus-minus {
+      border: 1px solid transparent;
+      @include font-size(10);
+      margin-right: 1em;
+
+      &::before,
+      &::after {
+        background-color: $font-color;
+      }
     }
   }
 
   &[aria-expanded="true"] {
-    > a::before {
-      content: '–';
-    }
-
     + .expandable-pane {
       display: block;
+    }
+  }
+
+  &.is-focused {
+    color: $primary-color;
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    > a > .icon.plus-minus {
+      border: 1px solid $primary-color;
+      border-radius: 2px;
+
+      &::before,
+      &::after {
+        background-color: $primary-color;
+      }
     }
   }
 
