@@ -154,14 +154,6 @@
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
       },
 
-      toggleMenu: function() {
-        if (this.menu.hasClass('is-open')) {
-          this.closeMenu();
-        } else {
-          this.openMenu();
-        }
-      },
-
       openMenu: function() {
         if (this.isAnimating === true) {
           return;
