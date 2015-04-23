@@ -237,7 +237,7 @@
 
       // Teardown
       destroy: function() {
-        this.off('start.busyindicator complete.busyindicator close.busyindicator updated.busyindicator');
+        this.element.off('start.busyindicator complete.busyindicator close.busyindicator updated.busyindicator');
         $.removeData(this.element[0], pluginName);
       }
     };

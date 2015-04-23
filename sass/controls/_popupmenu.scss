@@ -184,6 +184,12 @@
       z-index: 4000;
     }
 
+    .icon.arrow {
+      fill: $graphite10;
+      height: 32px;
+      width: 32px;
+    }
+
     .popupmenu.is-open {
       display: block;
       visibility: visible;

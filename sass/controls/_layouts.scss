@@ -167,6 +167,10 @@ body.no-scroll {
         border-left: 3px solid $azure06;
       }
     }
+
+    .section-tracker + h3 {
+      margin-top: 25px;
+    }
   }
 
   .tag-list .tag {
@@ -195,7 +199,7 @@ body.no-scroll {
   }
 }
 
-@include respond-to(phablet) {
+@include respond-to(tabletdown) {
   .editorial {
     .main .content {
       min-width: 100%;

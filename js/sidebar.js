@@ -62,6 +62,7 @@
           if (isClick) {
             return;
           }
+
           clearInterval(timeout);
           timeout = setTimeout(function () {
 

@@ -35,6 +35,7 @@
 | MUA (M3H5 Client) |   | Michael Quibin , Jack Rubillar |
 | Optiva |   | Bert Cushman |
 | PMServerAdmin |   | Mike Campbell |
+| Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> |
 | (Infor) PLM Discrete |   | Srinivasulu Vadakattu |
 | PCM | Knockout App | Tim Dunham |
 | Rhythm | Node Js app with Marionette | Thim Orskov |
@@ -49,3 +50,8 @@
 | System I |   | Richard Sankey |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  |
 | Xtreme Support | ASP| Raj S. Joshi |
+
+# Teams Using SoHo XI
+| Home Pages | | Fredrik Erikkson |
+| Mongoose | | Bryan Petit |
+

@@ -34,7 +34,6 @@ label,
 p,
 small,
 span {
-  //font-family: Helvetica Neue, Helvetica, Arial !important;
   font-weight: 100;
   @include font-size(20);
 }
@@ -130,6 +129,10 @@ span {
   .tags {
     margin: 10px 10px 0 5px;
   }
+}
+
+.site-hero.component .row {
+  max-width: 1080px !important;
 }
 
 .site-home.gallery-thumbs {
@@ -337,7 +340,6 @@ span {
 
 .editorial {
 
-
   .hero {
     height: auto !important;
 
@@ -377,6 +379,10 @@ span {
     @include font-size(29);
   }
 
+  h1 {
+    @include font-size(60);
+  }
+
   p {
     @include font-size(16);
     line-height: 28px;
@@ -391,10 +397,39 @@ span {
       margin-bottom: 40px;
     }
   }
+
+  figure {
+    margin: 0;
+  }
+
+  figcaption {
+    color: $graphite04;
+    @include font-size(14);
+    font-weight: normal;
+    margin-top: 20px;
+  }
+
+  .article {
+    margin-bottom: 80px;
+  }
+
+  &.detail {
+    .author {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .article h2 {
+      padding-top: 20px;
+    }
+
+    .article h3 {
+      @include font-size(22);
+      padding-top: 20px;
+    }
+  }
+
 }
-
-
-
 
 // Code For Gallery Page
 //==================================================//
@@ -528,7 +563,8 @@ section.alt-bgrnd {
   background-color: $body-bg-color;
 }
 
-section.light-bgrnd {
+section.light-bgrnd,
+div.light-bgrnd {
   background-color: $inverse-color;
 }
 
@@ -539,6 +575,7 @@ section.light-bgrnd {
     background-color: $code-color;
     height: 275px;
     padding-top: 25px;
+    margin-top: 80px;
   }
 
   .site-category-header {
@@ -665,10 +702,8 @@ section.light-bgrnd {
   }
 }
 
-.guide-example {
-  display: table-cell;
-  padding-top: 30px;
-  width: 70%;
+.editorial.component {
+  margin-bottom: 80px;
 
   h2 {
     @include font-size(40);
@@ -694,6 +729,32 @@ section.light-bgrnd {
     li {
       margin-bottom: 15px;
     }
+  }
+
+  .example-tag {
+    background-color: $code-color;
+    color: #ffffff;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    height: 31px;
+    line-height: 18px;
+    margin-bottom: 10px;
+    padding: 7px 12px;
+    text-transform: uppercase;
+    width: 80px;
+  }
+
+  .example {
+    padding: 45px 0 50px 0;
+  }
+
+  .listview-table + h2 {
+    margin-top: 40px;
+  }
+
+  .main .content {
+    padding: 0 30px 50px;
   }
 }
 
@@ -736,30 +797,6 @@ section.light-bgrnd {
   }
 }
 
-.guide-example {
-  display: block;
-  width: 100%;
-
-  .example-tag {
-    background-color: $code-color;
-    color: #ffffff;
-    display: block;
-    font-size: 12px;
-    font-weight: bold;
-    height: 31px;
-    line-height: 18px;
-    margin-bottom: 10px;
-    padding: 7px 12px;
-    text-transform: uppercase;
-    width: 80px;
-  }
-
-  .example {
-    padding: 45px 0 50px 0;
-  }
-
-}
-
 .tags {
   margin: 15px 0 50px;
 
@@ -768,154 +805,13 @@ section.light-bgrnd {
   }
 }
 
-.site-sidebar {
-  display: table-cell;
-  padding-left: 25px;
-  width: 30%;
-
-  h3 {
-    @include font-size(20);
-  }
-}
-
-.site-copy {
-  .row {
-    padding: 40px 0 70px;
-  }
-
-  img {
-    margin: 25px 0 0;
-  }
-
-  .author + img {
-    margin: 50px 0 0;
-  }
-
-  p {
-    @include font-size(16);
-    line-height: 30px;
-    margin-bottom: 15px;
-    padding-right: 20px;
-  }
-
-  //TODO: Make these text sizes align with soho XI heading
-  figcaption {
-    @include font-size(14);
-    color: #666666;
-    font-size: 1.4rem;
-    font-weight: 300;
-    padding: 12px 0;
-    width: 84%;
-  }
-
-  figure {
-    margin: 0;
-    padding: 0;
-  }
-
-  ul,
-  ol {
-    font-weight: lighter;
-    @include font-size(16);
-    line-height: 30px;
-    list-style: inside none disc;
-    margin: -10px 20px 20px;
-  }
-
-  ol {
-    list-style: inside none number;
-  }
-
-  li > ul,
-  li > ol {
-     padding-top: 20px;
-  }
-
-  h3 + ul,
-  h3 + ol {
-    padding-top: 20px;
-  }
-
-  h2 + ul,
-  h2 + ol {
-    padding-top: 20px;
-  }
-
-  h1 {
-    @include font-size(40);
-  }
-
-  .author {
-    @include font-size(16);
-  }
-
-  h2 {
-    @include font-size(30);
-    margin: 40px 0 20px;
-  }
-
-  h3 {
-    @include font-size(22);
-    margin: 20px 0;
-    clear: both;
-  }
-
-  .tab-container {
-    margin-top: 20px;
-
-    ul {
-      margin: 0;
-
-      a {
-        @include font-size(18);
-      }
-    }
-  }
-
-  .related-controls {
-
-    .guide-related-control {
-      border-bottom: 1px solid #d6d6d6;
-      display: block;
-      padding: 10px 0;
-    }
-
-    .hyperlink {
-      @include font-size(16);
-    }
-
-    > div {
-      border-bottom: 1px solid #d6d6d6;
-      padding: 10px 0;
-    }
-  }
-
-  .listview-table {
-    margin: 20px 0;
-  }
-}
-
 // Media Queries for Guide/Controls Category Pages
 //==================================================//
 
 @include respond-to(tabletdown) {
-
-  .site-sidebar {
-    display: block;
-    padding-left: 0;
-    text-align: left;
-    width: 100%;
-
-    .tags,
-    h3 {
-      text-align: left;
-    }
-  }
-
   .site-categories {
     padding-bottom: 0;
   }
-
 }
 
 // Syntax High Lighting
