@@ -52,6 +52,7 @@
 | Xtreme Support | ASP| Raj S. Joshi |
 
 # Teams Using SoHo XI
+
 | Home Pages | | Fredrik Erikkson |
 | Mongoose | | Bryan Petit |
-
+| Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> |
