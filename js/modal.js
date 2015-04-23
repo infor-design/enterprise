@@ -231,10 +231,18 @@
           this.element.attr('aria-labeledby', id);
         }
 
+        $(window).on('resize.modal-' + this.id, function() {
+          self.resize();
+        });
+
         //Center
-        self.element.css({top:'50%', left:'50%', margin:'-'+(self.element.outerHeight() / 2)+'px 0 0 -'+(self.element.outerWidth() / 2)+'px'});
         this.element.css({'display': ''});
         setTimeout(function() {
+          // TODO: Figure out why we need to do this twice in some cases
+          if (self.element.css('margin') !== undefined) {
+            self.resize();
+          }
+          self.resize();
           self.element.addClass('is-visible').attr('role', (settings.isAlert ? 'alertdialog' : 'dialog'));
           self.element.attr('aria-hidden', 'false');
           self.overlay.attr('aria-hidden', 'false');
@@ -271,6 +279,12 @@
         setTimeout(function () {
           self.element.find('.btn-modal-primary').focus();
         }, 10);
+      },
+
+      resize: function() {
+        this.element.css({
+          margin : '-' + (this.element.outerHeight() / 2) + 'px 0 0 -' + (this.element.outerWidth() / 2) + 'px'
+        });
       },
 
       isOnTop: function () {
@@ -328,6 +342,8 @@
         if (elemCanClose === false) {
           return false;
         }
+
+        $(window).off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');
         this.element.css('visibility', 'visible');
