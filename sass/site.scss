@@ -54,6 +54,32 @@ span {
   height: 540px;
   overflow: hidden;
   padding-top: 85px;
+  position: relative;
+
+  .hero-img {
+    background-position: 55% 60%;
+    background-size: cover;
+    bottom: 0;
+    left: 0;
+    max-height: 540px;
+    max-width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    &::after {
+      content: '';
+      display: block;
+      padding-top: 33.333%;
+      width: 100%;
+    }
+  }
+
+  &.home {
+    .hero-img {
+      background-image: url('/assets/site/0.0_Soho_xi_home_2260_blue_02.jpg');
+    }
+  }
 
   img {
     height: auto;
