@@ -150,7 +150,8 @@
       },
 
       adjustHeight: function() {
-        var offset = this.scrollTarget.height() - $(window).scrollTop();
+        var isSticky = this.scrollTarget.is('.is-sticky'),
+          offset = this.scrollTarget.height() - (!isSticky ? $(window).scrollTop() : 0);
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
       },
 
