@@ -36,6 +36,7 @@
     // Initialize the plugin (Once)
     return this.each(function() {
       var self = this,
+        $self = $(this),
         eventName = $.fn.transitionEndName,
         dim = settings.direction === 'horizontal' ? 'width' : 'height',
         cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
@@ -43,28 +44,25 @@
         timeout;
 
       function transitionEndCallback() {
-        if (!eventName) {
+        if (timeout) {
           clearTimeout(timeout);
         }
-
+        $self.off(eventName + '.animateOpen');
         self.style.transition = '';
         self.style[dim] = distance;
-        $(self).trigger('animateOpenComplete');
+        $self.trigger('animateOpenComplete');
       }
 
       // Clear any previous attempt at this animation when the animation starts new
-      $(this).one('animateOpenStart.animation', function(e) {
+      $self.one('animateOpenStart.animation', function(e) {
         e.stopPropagation();
-        $(this).off(eventName + '.animation');
+        $self.off(eventName + '.animateOpen');
       });
-      $(this).trigger('animateOpenStart');
+      $self.trigger('animateOpenStart');
 
       // Trigger the callback either by Timeout or by TransitionEnd
       if (eventName) {
-        $(this).one(eventName + '.animation', transitionEndCallback);
-      } else {
-        // Fallback for non-"transitionEnd" browsers
-        timeout = setTimeout(transitionEndCallback, settings.timing);
+        $self.one(eventName + '.animateOpen', transitionEndCallback);
       }
 
       // Animate
@@ -75,7 +73,14 @@
       // next line forces a repaint
       this['offset' + cDim]; // jshint ignore:line
       this.style.transition = dim + ' ' + settings.timing + 'ms ' + settings.transition;
+
+      timeout = setTimeout(transitionEndCallback, settings.timing);
       this.style[dim] = endVal;
+
+      // Trigger immediately if this element is invisible
+      if ($self.is(':hidden')) {
+        transitionEndCallback();
+      }
     });
   };
 
@@ -93,31 +98,31 @@
     // Initialize the plugin (Once)
     return this.each(function() {
       var self = this,
+        $self = $(this),
         eventName = $.fn.transitionEndName,
         dim = settings.direction === 'horizontal' ? 'width' : 'height',
         cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
         timeout;
 
       function transitionEndCallback() {
-        if (!eventName) {
+        if (timeout) {
           clearTimeout(timeout);
         }
+        $self.off(eventName + '.animatedClosed');
         self.style.transition = '';
-        $(self).trigger('animateClosedComplete');
+        $self.trigger('animateClosedComplete');
       }
 
       // Clear any previous attempt at this animation when the animation starts new
-      $(this).one('animateClosedStart', function(e) {
+      $self.one('animateClosedStart', function(e) {
         e.stopPropagation();
-        $(this).off(eventName + '.animation');
+        $self.off(eventName + '.animatedClosed');
       });
-      $(this).trigger('animateClosedStart');
+      $self.trigger('animateClosedStart');
 
       // Trigger the callback either by Timeout or by TransitionEnd
       if (eventName) {
-        $(this).one(eventName + '.animation', transitionEndCallback);
-      } else {
-        timeout = setTimeout(transitionEndCallback, settings.timing);
+        $self.one(eventName + '.animatedClosed', transitionEndCallback);
       }
 
       // Animate
@@ -125,7 +130,14 @@
       // next line forces a repaint
       this['offset' + cDim]; // jshint ignore:line
       this.style.transition = dim + ' ' + settings.timing + 'ms ' + settings.transition;
+
+      timeout = setTimeout(transitionEndCallback, settings.timing);
       this.style[dim] = '0px';
+
+      // Trigger immediately if this element is invisible
+      if ($self.is(':hidden')) {
+        transitionEndCallback();
+      }
     });
   };
 

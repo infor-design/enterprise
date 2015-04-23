@@ -94,7 +94,7 @@ $accordion-focused-text-color: #ffffff;
   .accordion-pane {
     @include font-size(16);
     overflow: hidden;
-    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
+    //@include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
 
     .accordion-pane {
       padding-left: 2em;
