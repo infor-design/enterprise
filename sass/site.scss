@@ -17,7 +17,7 @@
 
 $site-maxwidth: 960px;
 $home-color: $azure05;
-$vision-color: $emerald08;
+$vision-color: $emerald07;
 $gallery-color: #ac6cbc;
 $code-color: $azure05;
 $code-color-alt: $azure07;
@@ -96,6 +96,7 @@ span {
     vertical-align: top;
   }
 
+  h1,
   h2 {
     color: $inverse-color;
     display: block;
@@ -413,6 +414,27 @@ span {
     @include font-size(16);
     line-height: 28px;
     margin: 35px 0;
+  }
+
+  ul,
+  ol {
+    color: #666666;
+    @include font-size(16);
+    font-weight: lighter;
+    line-height: 28px;
+    list-style: inside none disc;
+  }
+
+  ol {
+    list-style: inside none num;
+  }
+
+  a.hyperlink {
+    @include font-size(16);
+  }
+
+  li {
+    margin-bottom: 10px;
   }
 
   .article-brief {
@@ -741,6 +763,18 @@ div.light-bgrnd {
     @include font-size(16);
     line-height: 24px;
     padding-bottom: 20px;
+
+    + p {
+      margin-top: 0;
+    }
+
+    + h2 {
+      padding-top: 20px;
+    }
+  }
+
+  p:empty {
+    border: 1px dotted #999;
   }
 
   ol,
@@ -754,6 +788,10 @@ div.light-bgrnd {
 
     li {
       margin-bottom: 15px;
+    }
+
+    + h2 {
+      padding-top: 20px;
     }
   }
 

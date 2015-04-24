@@ -252,9 +252,10 @@
         }
 
         var isEvent = e !== undefined && e.type !== undefined,
-          target = isEvent ? $(e.target) : e;
+          target = isEvent ? $(e.target) : e,
+          href = target.attr('href');
 
-        if (isEvent) {
+        if (isEvent && (href === '' || href === '#')) {
           e.preventDefault();
         }
 

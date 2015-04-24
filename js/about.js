@@ -78,7 +78,7 @@
         this.settings.version = version !== undefined ? version.toString() : this.settings.version;
 
         // Get the default copyright text and cut in the current year
-        this.defaultCopyright = Locale.translate('AboutText') + ' <a href="http://www.infor.com" target="_blank">www.infor.com</a>.';
+        this.defaultCopyright = Locale.translate('AboutText') + ' <a class="hyperlink" href="http://www.infor.com" target="_blank">www.infor.com</a>.';
         this.defaultCopyright = this.defaultCopyright.replace('{0}', this.settings.copyrightYear);
 
         return this;

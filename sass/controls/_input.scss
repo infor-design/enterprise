@@ -117,7 +117,7 @@ textarea {
     color: $input-color;
   }
 
-  .almost-empty {
+  &.almost-empty {
     color: $error-color;
   }
 }

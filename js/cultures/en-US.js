@@ -62,7 +62,7 @@
       'Amber': {id: 'Amber', value: 'Amber', comment: 'Color in our color pallette'},
       'Amethyst': {id: 'Amethyst', value: 'Amethyst', comment: 'Color in our color pallette'},
       'Azure': {id: 'Azure', value: 'Azure', comment: 'Color in our color pallette'},
-      'AboutText': {id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners.'},
+      'AboutText': {id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners'},
       'Blockquote': {id: 'Blockquote', value: 'Block quote', comment: 'insert a block quote in the editor'},
       'Calendar': {id: 'Calendar', value: 'Calendar', comment: 'Inline Text for the title of the Calendar control'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. To change the selection use the arrow keys.', comment: 'Audible Text for drop down list help'},

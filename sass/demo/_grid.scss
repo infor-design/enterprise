@@ -4,11 +4,15 @@
 
 .demo-grid { // make this adjacent to the .row class on a grid
   > * > .content {
-    background: none repeat scroll 0 0 #dadada;
-    color: #444444;
+    background: none repeat scroll 0 0 #D8D8D8;
+    color: #5C5C5C;
     margin-bottom: 20px;
     padding-bottom: 10px;
     padding-top: 10px;
     text-align: center;
+  }
+
+  h2 {
+    padding-top: 11px;
   }
 }

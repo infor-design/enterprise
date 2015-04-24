@@ -9,12 +9,13 @@
   display: inline-block;
   @include font-size(14);
   font-weight: 400;
-  height: 30px;
-  line-height: 33px;
+  height: 28px;
+  line-height: 28px;
   margin: 0 0 8px;
-  padding: 0 12px;
+  padding: 0 12px 0 12px;
   text-decoration: none;
   vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
 
   &.error {
     background-color: $ruby06;

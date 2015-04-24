@@ -89,7 +89,6 @@
           remaining = (parseInt(max)-length),
           text = remaining.toString() + ' Characters Left';
 
-          //TODO Localize
           if (self.counter) {
             if (length === 0) {
               text = 'Character count maximum of ' + max;
