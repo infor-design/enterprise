@@ -102,10 +102,7 @@
       handleEvents: function() {
         var self = this;
 
-        this.anchors.on('touchend.accordion touchcancel.accordion', function(e) {
-          e.preventDefault();
-          $(e.target).click();
-        }).on('click.accordion', function(e) {
+        this.anchors.onTouchClick('accordion').on('click.accordion', function(e) {
           self.handleClick(e);
         }).on('keydown.accordion', function(e) {
           self.handleKeydown(e);
@@ -410,7 +407,8 @@
         this.anchors
           //.removeAttr('tabindex')
           .removeAttr('aria-selected')
-          .off('touchend.accordion touchcancel.accordion click.accordion keydown.accordion focus.accordion blur.accordion');
+          .offTouchClick('accordion')
+          .off('click.accordion keydown.accordion focus.accordion blur.accordion');
         this.element
           .off('updated')
           .removeAttr('role')
