@@ -44,6 +44,8 @@
 
       setup: function() {
         this.hasTrigger = false;
+        this.isAnimating = false;
+
         if (this.element.hasClass('application-menu')) {
           this.menu = this.element;
         }
@@ -77,7 +79,9 @@
             e.preventDefault();
             $(e.target).click();
           }).on('click.applicationmenu', function() {
-            self.toggleMenu();
+            if (!self.menu.hasClass('is-open') && self.isAnimating === false) {
+              self.openMenu();
+            }
           });
         }
 
@@ -146,21 +150,29 @@
       },
 
       adjustHeight: function() {
-        var offset = this.scrollTarget.height() - $(window).scrollTop();
+        var isSticky = this.scrollTarget.is('.is-sticky'),
+          offset = this.scrollTarget.height() - (!isSticky ? $(window).scrollTop() : 0);
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
       },
 
-      toggleMenu: function() {
-        if (this.menu.hasClass('is-open')) {
-          this.closeMenu();
-        } else {
-          this.openMenu();
-        }
-      },
-
       openMenu: function() {
+        if (this.isAnimating === true) {
+          return;
+        }
+
         var self = this,
           transitionEnd = $.fn.transitonEndName;
+
+        this.isAnimating = true;
+
+        function isOpen() {
+          if (self.timeout !== null) {
+            clearTimeout(self.timeout);
+            self.timeout = null;
+          }
+
+          self.isAnimating = false;
+        }
 
         this.menu
           .off(transitionEnd + '.applicationmenu')
@@ -170,6 +182,9 @@
         this.menu.addClass('is-open')
           .find('.is-selected > a')
           .focus();
+
+        this.menu.one(transitionEnd + '.applicationmenu', isOpen);
+        this.timeout = setTimeout(isOpen, 300);
 
         // Events that will close the nav menu
         // On a timer to prevent conflicts with the Trigger button's click events
@@ -188,12 +203,30 @@
       },
 
       closeMenu: function() {
+        if (this.isAnimating === true) {
+          return;
+        }
+
         var self = this,
           transitionEnd = $.fn.transitionEndName;
 
-        this.menu.one(transitionEnd + '.applicationmenu', function() {
-          self.menu.css('display', 'none');
-        });
+        this.isAnimating = true;
+
+        function close() {
+          if (self.timeout !== null) {
+            clearTimeout(self.timeout);
+            self.timeout = null;
+          }
+
+          self.menu
+            .off(transitionEnd + '.applicationmenu')
+            .css('display', 'none');
+          self.isAnimating = false;
+        }
+
+        this.menu.one(transitionEnd + '.applicationmenu', close);
+        this.timeout = setTimeout(close, 300);
+
         this.menu.removeClass('is-open').find('[tabindex]');
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu keydown.applicationmenu');
       },
