@@ -1,0 +1,23 @@
+// Modal Search
+//================================================== //
+//
+
+.modal.modal-search {
+  background-color: transparent;
+
+  .modal-content {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+}
+
+.modal-search {
+  background-color: #ffffff;
+}
+
+.modal-engaged {
+  .overlay.modal-search {
+    opacity: .9;
+  }
+}

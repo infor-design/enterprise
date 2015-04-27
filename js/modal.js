@@ -287,6 +287,10 @@
         });
       },
 
+      isOpen: function() {
+        return this.element.is('.is-visible');
+      },
+
       isOnTop: function () {
         var max = 0,
           dialog = this.element;
