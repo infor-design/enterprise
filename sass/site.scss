@@ -5,13 +5,6 @@
 @import 'mixins';
 @import 'config';
 
-@import 'controls/grid';
-@import 'controls/typography';
-@import 'controls/header';
-@import 'controls/icons';
-@import 'controls/input';
-
-
 // Home Page
 //==================================================//
 
@@ -377,7 +370,7 @@ span {
       height: 500px;
     }
 
-    .copy {
+   .copy {
       margin: 40px auto 0;
       max-width: 880px;
       text-align: center;
@@ -406,6 +399,10 @@ span {
     @include font-size(29);
   }
 
+  h3 {
+    margin: 30px 0;
+  }
+
   h1 {
     @include font-size(60);
   }
@@ -413,7 +410,15 @@ span {
   p {
     @include font-size(16);
     line-height: 28px;
-    margin: 35px 0;
+    margin: 20px 0;
+  }
+
+  p:first-child {
+    margin-top: 40px;
+  }
+
+  small + img + p {
+    padding-top: 25px;
   }
 
   ul,
@@ -477,6 +482,15 @@ span {
     }
   }
 
+}
+
+code.snippet {
+  background-color: #ebebeb;
+  color: #1a1a1a;
+  font-family: helvetica, arial;
+  line-height: 30px;
+  margin-top: 10px;
+  padding: 4px 1px;
 }
 
 // Code For Gallery Page
@@ -560,6 +574,7 @@ span {
     z-index: 6;
   }
 }
+
 
 // Media Queries For Vision Page and Shared
 //==================================================//
@@ -733,20 +748,24 @@ div.light-bgrnd {
 
 // Guide/Controls Category Pages
 //==================================================//
-.guide-category {
-
-  .site-categories {
-    max-width: 70%;
-
-    h2 {
-      padding: 0 0 40px;
-      text-align: left;
-    }
-  }
-
+.vision {
   .site-category-icon {
-    height: 220px;
-    width: 220px;
+    background-color: $emerald07;
+    height: 200px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    width: 200px;
+
+    h3 {
+      color: $inverse-color;
+      @include font-size(22);
+      padding-top: 82px !important;
+    }
+
+    &:nth-child(2n) {
+      background-color: $emerald08;
+    }
   }
 }
 
@@ -762,7 +781,6 @@ div.light-bgrnd {
     color: #666666;
     @include font-size(16);
     line-height: 24px;
-    padding-bottom: 20px;
 
     + p {
       margin-top: 0;
@@ -817,8 +835,27 @@ div.light-bgrnd {
     margin-top: 40px;
   }
 
+  .listview-table tr,
+  .listview-table td {
+    @include font-size(16);
+    line-height: 1.5em;
+  }
+
+  .listview-table tr:hover,
+  .listview-table tr:focus {
+    background-color: transparent !important;
+  }
+
   .main .content {
     padding: 0 30px 50px;
+  }
+
+  .code {
+    background-color: #ebebeb;
+    color: #4d4d4c;
+    font-size: inherit;
+    margin: 0 4px;
+    padding: 3px;
   }
 }
 
@@ -914,7 +951,7 @@ pre[class*="language-"] {
 // Code blocks
 pre[class*="language-"] {
   margin: .5em 0;
-  overflow: auto;
+  overflow: hidden;
   padding: 20px;
 }
 

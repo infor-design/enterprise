@@ -81,7 +81,7 @@ label,
 
 label.side,
 .label.side {
-  color: $font-color;
+  color: $label-color;
   display: inline-block;
   //float: left;
   @include font-size(14);

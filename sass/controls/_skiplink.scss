@@ -18,7 +18,8 @@
   z-index: 100;
 
   &:hover {
-    color: #383838;
+    color: $primary-color;
+    text-decoration: underline;
   }
 }
 

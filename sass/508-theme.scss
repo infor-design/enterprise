@@ -7,13 +7,49 @@
 @import 'config';
 
 //Theme Overrides
-$primary-color: #0977d5;
+$primary-color: $azure08;
+$primary-color-text: $azure08;
+
 $primary-button-bg-color: $primary-color;
+$hyperlink-color: $primary-color;
+$hyperlink-hover-color: $azure09;
+$hyperlink-active-color: $azure09;
+
+$primary-btn-bg-color: $azure07;  //Azure 09 WCAG AAA
+$primary-btn-hover-bg-color: $azure10;
+$primary-btn-focus-bg-color: $azure09;
+$primary-btn-active-bg-color: $azure10;
+
+// Secondary/Normal Buttons
+$btn-color: $inverse-color;
+$btn-bg-color: $slate05;  //slate06 WCAG AAAA
+$btn-hover-bg-color: $slate06;
+$btn-focus-bg-color: $slate05;
+$btn-focus-border-color: $primary-color;
+$btn-active-bg-color: $slate07;
+$btn-disabled-color: $inverse-color;
+$btn-disabled-bg-color: $slate03;
+
+// Text Color
+$font-color-extradark: $graphite10;
+$font-color-dark: $graphite09;
+$font-color: $graphite07;
+$font-color-light: $graphite05;
+$label-color: $graphite07;
+
+//Text that is disabled
+$disabled-color: #707070;
+$input-disabled-color: #707070;
+$input-disabled-bg-color: #f4f4f4;
 
 // Core Controls
 @import 'controls';
 
-//Other Overrides with no Settings
-.link {
-  text-decoration: underline;
+// Other Overrides
+
+// Show Underline
+.hyperlink {
+  border-bottom: 1px solid $hyperlink-color;
+  margin-left: -3px;
+  padding: 2px !important;
 }

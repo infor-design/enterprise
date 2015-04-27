@@ -130,6 +130,7 @@
       setContent: function(content) {
         if (this.isPopover) {
           this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
+          settings.content.removeClass('hidden');
           this.tooltip.removeClass('tooltip').addClass('popover');
 
           if (settings.title !== null) {

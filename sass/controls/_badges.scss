@@ -8,8 +8,8 @@
   color: #ffffff;
   display: inline-block;
   @include font-size(14);
-  font-weight: 400;
-  height: 28px;
+  font-weight: 300;
+  height: 27px;
   line-height: 28px;
   margin: 0 0 8px;
   padding: 0 12px 0 12px;
@@ -24,6 +24,12 @@
   &.graphite03,
   &.graphite02 {
     color: $font-color-dark;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .tag {
+    line-height: 27px;
   }
 }
 

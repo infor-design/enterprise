@@ -27,15 +27,17 @@
        $(container).append('<p class="chart-message">'+Locale.translate('Unsupported')+'</p>');
       return null;
     }
-    this.options = {
-      colorRange: ['#7CC0B5', '#1D5F8A', '#806594', '#ABAEB7', '#56932E', '#F4C951',
-                    '#0E5B52', '#8DC9E6', '#4B2A5E', '#656871', '#0E5B52', '#DE8181']};
 
-    this.colors = d3.scale.ordinal().range(charts.options.colorRange);
+    var colorRange = ['#1D5F8A', '#8ED1C6', '#9279A6', '#5C5C5C', '#F2BC41', '#66A140',
+     '#B94E4E', '#8DC9E6', '#DB7726', '#317C73', '#EB9D9D', '#999999', '#488421', '#C7B4DB', '#54A1D3', '#6E5282',
+     '#AFDC91', '#69ADA3', '#DB7726', '#D8D8D8'];
+
+    this.pieColors = d3.scale.ordinal().range(colorRange);
     this.greyColors = d3.scale.ordinal().range(['#737373', '#999999', '#bdbdbd', '#d8d8d8']);
+    this.barColors = d3.scale.ordinal().range(colorRange);
 
     // Function to Add a Legend
-    this.addLegend = function(series, chartType) {
+    this.addLegend = function(series) {
       var legend = $('<div class="chart-legend"></div>');
       if (series.length === 0) {
         return;
@@ -47,7 +49,7 @@
         }
 
         var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
-          color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
+          color = $('<div class="chart-legend-color"></div>').css('background-color', charts.barColors(i)),
           textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
         if (series[i].percent) {
@@ -61,16 +63,6 @@
 
       legend.on('click.chart focus.chart', '.chart-legend-item', function () {
         var idx = $(this).index();
-
-        // trigger the click event
-        if (chartType ==='pie') {
-          var e = document.createEvent('UIEvents');
-          e.initUIEvent('click', true, true, window, 1);
-          if (series[idx].elem) {
-            series[idx].elem.dispatchEvent(e);
-          }
-          return;
-        }
 
         // For Bar and series charts
         var triggerIdx = $(this).index(),
@@ -119,16 +111,18 @@
 
     this.Bar = function(dataset) {
       var margins = {
-        top: 20,
-        left: 50,
-        right: 20,
-        bottom: 5
+        top: 30,
+        left: 30,
+        right: 30,
+        bottom: 30
       };
 
-      var w = 480,
-        h = 300,
-        barWidth = 24,
-        spaceWidth = 10,
+      var isSingular = (dataset.length === 1);
+
+      var w = $(container).parent().width() - margins.left - margins.right,
+        h = $(container).parent().height() - margins.top - (isSingular ? 0 : 20),
+        barWidth = 30,
+        spaceWidth = 30,
         y,
         stack,
         x = d3.scale.ordinal().rangeRoundBands([0, w - margins.left - margins.right]);
@@ -139,7 +133,7 @@
         .attr('width', w)
         .attr('height', h)
         .append('g')
-        .attr('transform', 'translate(' + (margins.left) + ',' + (h - margins.top) + ')');
+        .attr('transform', 'translate(' + (margins.left) + ',' + (h - margins.top + 8) + ')');
 
       //Map the Series Tags for the Legend
       var series = dataset.map(function (d) {
@@ -198,8 +192,8 @@
         .data(dataset)
       .enter().append('g')
         .attr('class', 'bar-group')
-        .style('fill', function(d, i) { return charts.colors(i); })
-        .style('stroke', function(d, i) { return charts.colors(i); });
+        .style('fill', function(d, i) { return (isSingular ? '#368AC0' : charts.barColors(i)); })
+        .style('stroke', function(d, i) { return (isSingular ? '#368AC0' : charts.barColors(i)); });
 
       // Add a rect for each
       stack.selectAll('rect')
@@ -208,8 +202,14 @@
         .attr('class', 'bar')
         .attr('x', function(d) { return x(d.x) + spaceWidth; })
         .attr('width', barWidth)
-        .attr('y', function(d) { return y(d.y); })
-        .attr('height', function(d) { return -y(d.y0) - y(d.y); })
+        .attr('y', function(d) { return y(d.y0);})//(true ? 100 : y(d.y)); })
+        .attr('height', function(d) {
+          var h = -y(d.y0) - y(d.y);
+          if (h < 0) {
+            h = 0;
+          }
+          return h;
+        })
         .transition().duration(1000)
           .attr('y', function(d) { return -y(d.y0) - y(d.y); })
           .attr('height', function(d) { return y(d.y); });
@@ -220,11 +220,7 @@
 
           var shape = $(this),
               content = '',
-              contW = shape.closest('.chart-container').width(),
-              svgW = shape.closest('.chart-container > svg').width(),
-              svgStart = (contW - svgW) / 2,
-              contStart = shape.closest('.chart-container').closest('.widget').position().left,
-              xPos = svgStart + parseFloat(shape.attr('x')) + barWidth + contStart,
+              xPos,
               yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
 
           if (dataset.length === 1) {
@@ -232,10 +228,14 @@
           } else {
            content = '<div class="chart-swatch">';
            for (var j = 0; j < dataset.length; j++) {
-            content += '<div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + dataset[j][i].y + ' </b></br>';
+            content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.barColors(j))+';"></div><span>' + series[j].name + '</span><b> ' + dataset[j][i].y + ' </b></br>';
            }
            content += '</div>';
           }
+
+          var size = charts.getTooltipSize(content);
+          xPos = shape.offset().left - (size.width /2) + (barWidth/2);
+          console.log(xPos);
 
           charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'})
               .find('.tooltip-content')
@@ -406,7 +406,7 @@
         .append('g')
         .attr('class', 'series-group')
         .style('fill', function (d, i) {
-          return charts.colors(i);
+          return charts.barColors(i);
         });
 
       rects = groups.selectAll('rect')
@@ -446,7 +446,7 @@
               totals[k] = dataset[k][i].x;
             }
 
-            content += '<div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></br>';
+            content += '<div style="background-color:'+charts.barColors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></br>';
            }
            content += '</div>';
           }
@@ -570,10 +570,11 @@
         }
       }
 
-      $(window).on('resize.charts load.charts', resizeVertBar);
+      $(window).off('resize.charts load.charts')
+          .on('resize.charts load.charts', resizeVertBar);
 
       //Add Legends
-      charts.addLegend(series, 'bar');
+      charts.addLegend(series);
       charts.appendTooltip();
       return $(container);
     };
@@ -600,8 +601,8 @@
         width: parseInt($(container).parent().width())
       };
 
-      dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 15);
-      dims.innerRadius = isDonut ? dims.outerRadius - 20 : 0;
+      dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 10 : 30));
+      dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
       dims.labelRadius = dims.outerRadius + 15;
 
       svg.attr('width', '100%')
@@ -611,8 +612,8 @@
         //http://git.infor.com/projects/SOHO/repos/controls/commits/e796f46c0ad00f92c67b6eb87ac64a3d83ee2e25
 
       // move the origin of the group's coordinate space to the center of the SVG element
-      arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2)) + ')');
-      labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2)) + ')');
+      arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ? 0 : 10))  + ')');
+      labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ?0 : 10)) + ')');
 
       var pieData = pie(chartData);
 
@@ -627,10 +628,9 @@
       var g = enteringArcs.append('g')
           .attr('class', 'arc')
           .attr('d', pieArcs)
-          //.style('fill', function(d, i) { return charts.colors(i); })
           .on('click', function (d, i) {
 
-            var color = charts.colors(i);
+            var color = charts.pieColors(i);
             d3.select('.chart-container .is-selected')
               .classed('is-selected', false)
               .style('stroke', '#fff')
@@ -647,7 +647,7 @@
           });
 
       g.append('path')
-        .style('fill', function(d, i) { return charts.colors(i); })
+        .style('fill', function(d, i) { return charts.pieColors(i); })
         .transition().duration(750)
         .attrTween('d', function(d) {
           var i = d3.interpolate(d.startAngle+0.1, d.endAngle);

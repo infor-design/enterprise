@@ -7,7 +7,7 @@
 $body-bg-color: #f5f5f5;
 
 // Base Colors
-$header-color: #5c5c5c;
+$header-color: $graphite06;
 $primary-color: $azure06;
 $primary-color-text: $azure08;
 $inverse-color: #ffffff;
@@ -208,16 +208,12 @@ $tab-hover-color: $font-color-extradark;
 // Contextual Action Panel
 $contextual-panel-bg: #d8d8d8;
 
-//Color Of Labels and Some Hs
-$label-color: #666666;  //Was #6666666
-
 //Text that is disabled
 $disabled-color: #cccccc;
+$switch-disabled-label-color: #707070;
 
 //The hyperlink Style
 $hyperlink-color: $primary-color;
-$hyperlink-hover-color: $primary-color-text;
-$hyperlink-active-color: $primary-color-text;
 
 // Rating (Stars)
 $rating-bg-color: #ffd042;

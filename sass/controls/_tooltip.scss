@@ -135,6 +135,15 @@
     color: #1a1a1a;
     max-width: none;
   }
+
+  .tooltip-content {
+    padding: 20px;
+
+    > div {
+      overflow: hidden;
+    }
+  }
+
 }
 
 .popover p,
@@ -150,16 +159,14 @@
 }
 
 .tooltip-title {
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #ebebeb;
-  border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid $graphite02;
   color: #1a1a1a;
   font-family: $font-regular;
-  @include font-size(15);
+  @include font-size(16);
   font-weight: normal;
   line-height: 18px;
   margin: 0;
-  padding: 8px 14px;
+  padding: 10px 20px;
 }
 
 .tooltip-content {

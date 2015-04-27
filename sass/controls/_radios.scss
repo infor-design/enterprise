@@ -91,7 +91,7 @@
 }
 
 .radio:disabled + label {
-  color: #aaaaaa;
+  color: $disabled-color;
   cursor: default;
 }
 

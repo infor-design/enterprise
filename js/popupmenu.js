@@ -521,6 +521,7 @@
           }
         }
 
+        li.parent().find('.is-submenu-open').removeClass('is-submenu-open');
         li.addClass('is-submenu-open');
       },
 

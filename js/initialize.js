@@ -82,9 +82,10 @@
 
           obj.popover({content: $('#'+ obj.attr('data-popover')),
               trigger: trigger ? trigger : 'click',
-              title: title ? title : 'Title Missing',
+              title: title ? title : undefined,
               placement: 'right'
           });
+          console.log($('#'+ obj.attr('data-popover')));
         });
 
         //Tree

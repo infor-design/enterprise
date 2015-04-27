@@ -23,7 +23,7 @@
   .axis line {
     fill: none;
     shape-rendering: crispEdges;
-    stroke: $font-color;
+    stroke: $graphite03;
   }
 
   .axis.x .domain {
@@ -32,7 +32,7 @@
 
   // Text Color
   text {
-    fill: $font-color;
+    fill: $graphite04;
     font-family: $font-regular;
     font-weight: lighter;
     @include font-size(14);
@@ -112,7 +112,7 @@
 }
 
 .chart-legend {
-  margin-top: 10px;
+  margin-top: 15px;
   text-align: center;
 }
 
@@ -120,13 +120,14 @@
   display: inline-block;
   height: 12px;
   margin-left: 20px;
-  margin-right: 7px;
+  margin-right: 12px;
   position: relative;
-  top: -8px;
+  top: 1px;
   width: 12px;
 }
 
 .chart-legend-item-text {
+  color: $graphite04;
   width: auto;
   @include ellipsis;
   @include font-size(14);

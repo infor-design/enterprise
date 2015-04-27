@@ -105,6 +105,11 @@
             }
           }
 
+          //Direct Match
+          if (option.toLowerCase().indexOf(term) === 0) {
+            containsTerm = true;
+          }
+
           if (containsTerm) {
             matchingOptions.push(option);
 

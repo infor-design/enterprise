@@ -2,49 +2,47 @@
 //================================================== //
 
 .hyperlink {
-  border: 1px solid transparent;
+  border-bottom: 1px solid transparent;
   border-radius: 2px;
   color: $hyperlink-color;
   cursor: pointer;
   font-family: $font-regular;
   @include font-size(14);
+  left: -9px;
   line-height: 25px;
-  margin-left: -5px;
-  padding: 7px;
+  padding: 7px 9px;
   position: relative;
   text-decoration: none;
-  @include transition(all .3ms);
+  top: 3px;
+  @include transition(all .3s);
   white-space: nowrap;
 
   // Mouse Over States is Same as the focus
-  &:hover {
-    color: $hyperlink-hover-color;
+  &:hover,
+  &:active,
+  &:hover:focus {
     text-decoration: underline;
   }
 
   &:focus {
-    border-color: $hyperlink-color;
-    color: $hyperlink-color;
-  }
-
-  &:active {
     border-color: transparent;
-    color: $hyperlink-active-color;
+    box-shadow: 0 0 0 1px $hyperlink-color;
+    color: $hyperlink-color;
   }
 
   //Disabled
   &[disabled] {
-    color: #b6b6b6;
+    color: $disabled-color;
 
     &:hover {
       border-bottom-color: transparent;
-      color: #b6b6b6;
+      color: $disabled-color;
       cursor: default;
       text-decoration: none;
     }
 
     &:active {
-      color: #b6b6b6;
+      color: $disabled-color;
     }
   }
 }
