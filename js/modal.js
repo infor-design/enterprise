@@ -231,6 +231,12 @@
           this.element.attr('aria-labeledby', id);
         }
 
+        this.mainContent = $('body').children('.scrollable-container');
+        if (!this.mainContent.length) {
+          this.mainContent = $('body');
+        }
+        this.mainContent.addClass('no-scroll');
+
         $(window).on('resize.modal-' + this.id, function() {
           self.resize();
         });
@@ -285,6 +291,10 @@
         this.element.css({
           margin : '-' + (this.element.outerHeight() / 2) + 'px 0 0 -' + (this.element.outerWidth() / 2) + 'px'
         });
+      },
+
+      isOpen: function() {
+        return this.element.is('.is-visible');
       },
 
       isOnTop: function () {
@@ -343,6 +353,7 @@
           return false;
         }
 
+        this.mainContent.removeClass('no-scroll');
         $(window).off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');

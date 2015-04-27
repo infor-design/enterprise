@@ -82,6 +82,7 @@ module.exports = function(grunt) {
             'js/multiselect.js',
             'js/message.js',
             'js/modal.js',
+            'js/modalsearch.js',
             'js/rating.js',
             'js/resize.js',
             'js/searchfield.js',

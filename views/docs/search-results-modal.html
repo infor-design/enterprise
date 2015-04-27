@@ -1,0 +1,66 @@
+    <div id="site-modal-search" class="modal-search modal">
+      <div class="modal-content container search-results">
+
+        <div class="row">
+          <div class="twelve columns">
+
+            <div class="masthead toolbar">
+              <div class="title">
+                <button class="masthead-square"></button>
+                <h1 class="masthead-appname">Search Results</h1>
+              </div>
+              <div class="buttonset">
+                <button class="btn-icon">
+                  <svg class="icon">
+                    <use xlink:href="#icon-sr-prev"></use>
+                  </svg>
+                  <span>Previous</span>
+                </button>
+
+                <button class="btn-icon">
+                  <svg class="icon">
+                    <use xlink:href="#icon-sr-next"></use>
+                  </svg>
+                  <span>Next</span>
+                </button>
+
+                <button class="btn-icon">
+                  <svg class="icon">
+                    <use xlink:href="#icon-sr-history"></use>
+                  </svg>
+                  <span>History</span>
+                </button>
+
+                <div class="separator"></div>
+
+                <button class="btn-icon">
+                  <svg class="icon">
+                    <use xlink:href="#icon-sr-close"></use>
+                  </svg>
+                  <span>Close</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="twelve columns">
+            <div class="field">
+              <!-- use data-source="http://usmvvwdev53/search/results?q=" below on the Site to make it work -->
+              <input id="big-search-field" aria-label="Search" class="search" data-source="/search/results?q="/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="twelve columns">
+            <div class="search-all">
+              <!-- {# NOTE: Search results template is rendered inside this block #} -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
