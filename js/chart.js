@@ -62,8 +62,6 @@
       }
 
       legend.on('click.chart focus.chart', '.chart-legend-item', function () {
-        var idx = $(this).index();
-
         // For Bar and series charts
         var triggerIdx = $(this).index(),
             bars = $(container).find('.bar'),
