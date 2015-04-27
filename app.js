@@ -3,6 +3,7 @@ var express = require('express'),
   app = express(),
   path = require('path'),
   mmm = require('mmm'),
+  http = require('http'),
   colors = require('colors'); // jshint ignore:line
   //uploadRouter = require('./src/routers/upload-router')(app); // jshint ignore:line
 
@@ -295,6 +296,48 @@ app.configure(function() {
 
   app.get('/api/nav-items', function(req, res) {
     res.render('tests/accordion-api-options.html');
+  });
+
+  // TODO: Make this work with XSS to return a copy of the SoHo Site Search Results for testing the Modal Search plugin.
+  // Calls out to Craft CMS's search results page.
+  // NOTE: Doesn't actually get rendered, just passed along.
+  app.post('/api/site-search', function(req, res) {
+    var opts = {
+      host: 'usmvvwdev53',
+      port: '80',
+      path: '/search/results', // ?q=[SEARCH TERM GOES HERE]
+      method: 'POST',
+      headers: req.headers
+    },
+    creq = http.request(opts, function(cres) {
+      // set encoding
+      cres.setEncoding('utf8');
+
+      // wait
+      cres.on('data', function(chunk){
+        res.write(chunk);
+      });
+
+      cres.on('close', function(){
+        // closed, let's end client request as well
+        res.writeHead(cres.statusCode);
+        res.end();
+      });
+
+      cres.on('end', function(){
+        // finished, let's finish client request as well
+        res.writeHead(cres.statusCode);
+        res.end();
+      });
+
+    }).on('error', function(e) {
+      // we got an error, return 500 error to client and log error
+      console.log(e.message);
+      res.writeHead(500);
+      res.end();
+    });
+
+    creq.end();
   });
 
   // RESTful routes
