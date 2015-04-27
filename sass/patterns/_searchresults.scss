@@ -8,7 +8,7 @@ $sr-result-bottom-border-color: $hr-top-color;
   margin-top: 3em;
 
   .masthead {
-    background-color: $body-bg-color;
+    background-color: transparent;
     color: $sr-masthead-text-color;
     margin-bottom: 3em;
     position: relative;
@@ -50,6 +50,12 @@ $sr-result-bottom-border-color: $hr-top-color;
     border-bottom: 1px solid $sr-result-bottom-border-color;
     margin-bottom: 3rem;
     padding-bottom: 3rem;
+
+    &.none {
+      border-bottom: 0;
+      @include font-size(18);
+      text-align: center;
+    }
 
     > * {
       display: inline-block;
