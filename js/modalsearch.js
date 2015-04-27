@@ -52,7 +52,7 @@
         this.modal = this.element.data('modal');
         this.overlay = this.modal.overlay;
         this.searchInput = this.modal.element.find('#big-search-field');
-        this.searchResults = this.modal.element.find('.search-results-list');
+        this.searchResults = this.modal.element.find('.search-all');
 
         this.modal.element.add(this.overlay).addClass('modal-search');
 
@@ -118,7 +118,7 @@
           .trigger('requeststart', [term]);
 
         // Source is always a URL
-        var request = $.getJSON(sourceURL + term);
+        var request = $.get(sourceURL + term);
         request.done(function(data) {
           done(term, data);
         }).fail(function() {

@@ -231,6 +231,12 @@
           this.element.attr('aria-labeledby', id);
         }
 
+        this.mainContent = $('body').children('.scrollable-container');
+        if (!this.mainContent.length) {
+          this.mainContent = $('body');
+        }
+        this.mainContent.addClass('no-scroll');
+
         $(window).on('resize.modal-' + this.id, function() {
           self.resize();
         });
@@ -347,6 +353,7 @@
           return false;
         }
 
+        this.mainContent.removeClass('no-scroll');
         $(window).off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');

@@ -67,10 +67,12 @@ $sr-result-bottom-border-color: $hr-top-color;
       line-height: 1.5em;
     }
 
-    .description {
+    .description,
+    .description > a {
       color: $primary-color;
       @include font-size(18);
       line-height: 1.5em;
+      text-decoration: none;
     }
 
     .detail {
