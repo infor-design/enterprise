@@ -130,7 +130,7 @@
       },
 
       handleClick: function(e) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           e.preventDefault();
           e.stopPropagation();
           return false;
@@ -141,7 +141,7 @@
       },
 
       handleFocus: function(e, anchor) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           e.preventDefault();
           return false;
         }
@@ -149,7 +149,7 @@
       },
 
       handleBlur: function(e, anchor) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           e.preventDefault();
           return false;
         }
@@ -157,7 +157,7 @@
       },
 
       handleKeydown: function(e) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           return false;
         }
 
@@ -254,7 +254,7 @@
 
       // NOTE: "e" is either an event or a jQuery object
       handleSelected: function(e) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           return false;
         }
 
