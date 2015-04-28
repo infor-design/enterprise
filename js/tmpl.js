@@ -14,8 +14,24 @@
  */
 
 var Tmpl = {}; // jshint ignore:line
+(function (factory) {
 
-(function (Tmpl) {
+  'use strict';
+
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module depending on jQuery.
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    //Support for Atom/CommonJS
+    module.exports = factory;
+  } else {
+    // Register with Browser globals
+    factory(window.jQuery || window.Zepto);
+  }
+
+}(function () {
+
+  window.Tmpl = {};
 
   Tmpl.Template = function (codeObj, text, compiler, options) {
     codeObj = codeObj || {};
@@ -344,9 +360,6 @@ var Tmpl = {}; // jshint ignore:line
     return Object.prototype.toString.call(a) === '[object Array]';
   };
 
-})(typeof exports !== 'undefined' ? exports : Tmpl);
-
-(function (Tmpl) {
   // Setup regex  assignments
   // remove whitespace according to Mustache spec
   var rIsWhitespace = /\S/,
@@ -754,5 +767,6 @@ var Tmpl = {}; // jshint ignore:line
     this.cache[key] = template;
     return template;
   };
-})(typeof exports !== 'undefined' ? exports : Tmpl);
+
+}));
 

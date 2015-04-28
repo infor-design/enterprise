@@ -1,14 +1,22 @@
 /**
 * Tooltip and Popover Control
 */
+
 (function (factory) {
+
+  'use strict';
+
   if (typeof define === 'function' && define.amd) {
-      // AMD. Register as an anonymous module depending on jQuery.
-      define(['jquery'], factory);
+    // AMD. Register as an anonymous module depending on jQuery.
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    //Support for Atom/CommonJS
+    module.exports = factory;
   } else {
-      // No AMD. Register plugin with global jQuery object.
-      factory(window.jQuery || window.Zepto);
+    // Register with Browser globals
+    factory(window.jQuery || window.Zepto);
   }
+
 }(function ($) {
 
   $.fn.tooltip = function(options, args) {

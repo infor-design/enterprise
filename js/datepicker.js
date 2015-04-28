@@ -2,18 +2,20 @@
 * Datepicker Control (TODO link to docs)
 */
 (function(factory) {
+
   'use strict';
 
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module depending on jQuery.
     define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
-    //Support for Atom/CommonJS - Not Tested TODO
+    //Support for Atom/CommonJS
     module.exports = factory;
   } else {
     // Register with Browser globals
     factory(window.jQuery || window.Zepto);
   }
+
 }(function($) {
 
   'use strict';

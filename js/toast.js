@@ -2,7 +2,8 @@
 * Toast Control (TODO: bitly link to docs)
 */
 
-(function(factory) {
+(function (factory) {
+
   'use strict';
 
   if (typeof define === 'function' && define.amd) {
@@ -15,7 +16,8 @@
     // Register with Browser globals
     factory(window.jQuery || window.Zepto);
   }
-}(function($) {
+
+}(function ($) {
 
   'use strict';
 

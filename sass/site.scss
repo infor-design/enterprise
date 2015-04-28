@@ -28,7 +28,7 @@ p,
 small,
 span {
   font-weight: 100;
-  @include font-size(20);
+  @include font-size(16);
 }
 
 // Header Adjustments
@@ -109,7 +109,7 @@ span {
     border-bottom: 1px solid $inverse-color;
     color: $inverse-color;
     display: inline-block;
-    @include font-size(20);
+    @include font-size(16);
     font-weight: 300;
     line-height: 25px;
     position: relative;
@@ -174,7 +174,7 @@ span {
   }
 
   p {
-    @include font-size(20);
+    @include font-size(16);
     font-weight: 300;
     line-height: 25px;
     margin: 25px 0 30px;
@@ -254,21 +254,31 @@ span {
   .article-brief {
     background-color: $inverse-color;
     border: 1px solid $graphite02;
+    display: table;
     margin-top: 20px;
+    margin-bottom: 0;
 
     &:first-child {
       margin-top: 50px;
     }
 
     img {
-      height: 250px;
+      display: table-cell;
+      height: 285px;
+      margin-bottom: 0 !important;
+      vertical-align: middle;
       width: 40%;
     }
 
+    p {
+      margin: 5px 0;
+      max-height: 100px;
+    }
+
     .copy {
-      display: inline-block;
+      display: table-cell;
       float: right;
-      padding: 30px;
+      padding: 20px;
       width: 60%;
     }
 
@@ -276,6 +286,48 @@ span {
       @include font-size(28);
       margin-bottom: 10px;
     }
+
+    .btn-primary {
+      margin-bottom: 0;
+    }
+
+    .author {
+      display: block;
+      padding-bottom: 10px;
+    }
+  }
+
+}
+
+.alt-bgrnd.site-home.editorial {
+  padding-bottom: 50px;
+}
+
+@include respond-to(phablet) {
+  .site-home .article-brief {
+    display: table;
+
+    img {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .copy {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    p {
+      max-height: unset;
+    }
+  }
+
+  .site-text-section h2,
+  .site-howto-nav h2,
+  .site-recent h2 {
+    padding: 0 20px;
   }
 
 }
