@@ -61,6 +61,14 @@ button {
     }
   }
 
+  &[disabled],
+  &[disabled]:hover {
+    background-color: $btn-disabled-bg-color;
+    box-shadow: none;
+    color: $btn-disabled-color;
+    cursor: default;
+  }
+
   .ripple {
     background-color: #ffffff;
   }
