@@ -40,9 +40,12 @@
   overflow: auto;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 body.no-scroll {
   height: 100%;
-  overflow: hidden;
 }
 
 // Two Column Layout

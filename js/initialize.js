@@ -178,6 +178,8 @@
 
         elem.find('.expandable-area').expandablearea();
 
+        elem.find('.modal-search').modalsearch();
+
         // TODO: Decide whether or not we are removing this completely
         //$('body').flyingfocus();
       });
