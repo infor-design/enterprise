@@ -88,11 +88,20 @@
         });
 
         this.element.find('a + .accordion-pane').parent().each(function() {
-          var header = $(this);
+          var header = $(this),
+            pane = header.children('.accordion-pane');
+
+          pane.addClass('no-transition');
           if (header.hasClass('is-expanded')) {
             header.attr('aria-expanded', 'true');
+            pane.one('animateOpenComplete', function() {
+              $(this).removeClass('no-transition');
+            });
             self.openHeader(header);
           } else {
+            pane.one('animateClosedComplete', function() {
+              $(this).removeClass('no-transition');
+            });
             self.closeHeader(header);
           }
         });
