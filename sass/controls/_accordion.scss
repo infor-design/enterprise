@@ -44,7 +44,7 @@ $accordion-focused-text-color: #ffffff;
 
     > .title,
       .panel {
-      margin-left: 2.5em;
+      margin-left: .4em;
     }
 
     > .panel {
@@ -97,6 +97,11 @@ $accordion-focused-text-color: #ffffff;
 
     .accordion-pane {
       padding-left: 2em;
+    }
+
+    a > .title,
+    a > .panel {
+      margin-left: 2.5em;
     }
 
     .accordion-header[aria-expanded] {
