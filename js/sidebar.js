@@ -49,7 +49,13 @@
         this.trackedHeaders = $('.editorial > .main > .content').find('h2, h3');
 
         //Handle Scrolling events
-        $(window).on('scroll.sidebar', function () {
+        var scrollDiv = $(this.element).closest('.scrollable-container'),
+          container = (scrollDiv.length ===1 ? scrollDiv : $(window));
+
+        container.on('scroll.sidebar', function () {
+          if (!sidebar.is(':visible')) {
+            return;
+          }
 
           var offsetScrollTop = sidebar.offset().top - 30;
 
@@ -63,24 +69,28 @@
             return;
           }
 
+          if (this.tracker) {
+            return;
+          }
+
           clearInterval(timeout);
           timeout = setTimeout(function () {
 
             self.trackedHeaders.each(function (i) {
               var elem = $(this);
 
-              if (elem.offset().top - $(window).scrollTop() < headerHeight) {
+              if (elem.offset().top - container.scrollTop() < 0) {
                self.tracker.find('.is-active').removeClass('is-active');
                $('[data-tracker="heading-'+ (i+1) +'"]').addClass('is-active');
               }
 
-              if ($(window).scrollTop() < headerHeight) {
+              if (container.scrollTop() < headerHeight) {
                self.tracker.find('.is-active').removeClass('is-active');
                $('[data-tracker="heading-0"]').addClass('is-active');
               }
             });
 
-          }, 100);
+          }, 300);
 
         });
 

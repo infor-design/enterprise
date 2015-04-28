@@ -551,11 +551,13 @@
             this.ticks[i].element.addClass('complete');
             if (color) {
               this.ticks[i].element.css('background-color', color);
+              this.ticks[i].element.addClass('inherit');
             }
           } else {
             this.ticks[i].element.removeClass('complete');
             if (color) {
               this.ticks[i].element.css('background-color', '');
+              this.ticks[i].element.removeClass('inherit');
             }
           }
         }

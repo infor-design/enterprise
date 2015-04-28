@@ -17,7 +17,7 @@
   }
 
   > .tick {
-    background-color: $slider-bg-color;
+    background-color: transparent;
     border-radius: 12px;
     cursor: pointer;
     display: inline-block;
@@ -33,14 +33,29 @@
     -webkit-user-select: none;
     width: 12px;
 
-    &.complete {
+    &.complete:after {
       background-color: $slider-active-bg-color;
     }
 
+    &:after {
+      background-color: $slider-bg-color;
+      border-radius: 50%;
+      content: '';
+      height: 12px;
+      margin-left: -6px;
+      position: absolute;
+      width: 12px;
+    }
+
+    &.inherit:after {
+      background-color: inherit !important;
+    }
+
     > .label {
+      left: 3px;
       position: absolute;
       text-overflow: ellipsis;
-      top: 24px;
+      top: 26px;
       white-space: nowrap;
     }
 
@@ -130,7 +145,7 @@
   &:focus {
     &::before,
     &::after {
-      @include scale(1);
+      @include scale(.96);
     }
   }
 

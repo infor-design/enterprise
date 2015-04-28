@@ -132,11 +132,11 @@ small,
 }
 
 .alert-text {
-  color: #ed1c24;
+  color: $alert-red;
   padding-left: 15px;
 
   &:before {
-    background-color: #ed1c24;
+    background-color: $alert-red;
     border-radius: 50%;
     content: '';
     height: 8px;

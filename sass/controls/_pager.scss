@@ -28,16 +28,16 @@
       text-decoration: none;
       transition: all .2s ease;
       width: 30px;
+
+      &:focus {
+        border-color: $pager-focus-border-color;
+      }
     }
 
     &.selected a {
       background-color: $pager-selected-color;
       color: #ffffff;
     }
-  }
-
-  li a:focus {
-    border-color: $pager-focus-border-color;
   }
 
   li:not(.selected) a:hover:not([disabled]) {
@@ -63,7 +63,8 @@
 }
 
 // Buttons
-.pager-prev svg, .pager-next svg {
+.pager-prev svg,
+.pager-next svg {
   height: 17px;
   left: 1px;
   top: 4px;
@@ -71,6 +72,9 @@
 }
 
 .pager-toolbar li a[disabled] svg {
-  fill: #999;
+  fill: #999999;
 }
 
+.pager-content li {
+  @include font-size(14);
+}

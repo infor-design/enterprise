@@ -67,12 +67,13 @@
         events = (attribs ? attribs : 'blur.validate change.validate');
 
         field.on(events, function () {
+
           var field = $(this);
           if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
             return;
           }
 
-          if (clickObj !== null && (clickObj.is('.dropdown-option') || clickObj.closest('.modal').length === 1)) {
+          if (clickObj !== null && clickObj.is('.dropdown-option')) {
             return;
           }
 

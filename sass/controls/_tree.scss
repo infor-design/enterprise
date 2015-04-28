@@ -44,16 +44,10 @@
     }
 
     &[disabled] {
-      color: $tree-disabled-color;
-      cursor: default;
-
-      svg {
-        opacity: .4;
-      }
+      opacity: $tree-disabled-opacity;
     }
 
     &[disabled]:hover {
-      color: $tree-disabled-color;
       text-decoration: none;
     }
   }

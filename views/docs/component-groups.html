@@ -20,104 +20,103 @@
 </head>
 <body>
 
-  {{> includes/header-hamburger}}
+  {{> includes/header}}
+  <div class="scrollable-container">
+    <div class="editorial light-bgrnd detail">
 
-  <div class="editorial light-bgrnd detail">
-
-    <div class="hero">
-      <!--{% set heroImage = category.heroImage.first() %}
-      {% if heroImage %}
-        <div class="image" style="background-image:url({{ heroImage.url }})"></div>
-      {% else %}
-        <div class="image" style="background-image:url('/assets/heros/article-hero-example1.jpg')"></div>
-      {% endif %} -->
-      <div class="image" style="background-image:url('/assets/site/article-hero-example1.jpg')"></div>
-    </div>
-
-    <div role="main" class="main" id="maincontent">
-      <div class="content">
-
-        <div class="article">
-        <!--  <h1>{{ category.title }}</h1>
-          <small class="author">Last Changed: {{ category.dateUpdated.format('F j, Y') }}</small>
-        {% set asset = category.mainImage.first() %}
-        {% if asset %}
-          <img src="{{ asset.url }}" alt="{{ asset.title }}"/>
-        {% endif %}
-          {{ category.body }}-->
-
-          <h1>Navigating an Application</h1>
-          <small class="author">Last Changed: May 1st, 2015</small>
-          <img src="/assets/site/article-example2.jpg" alt="asset.title"/>
-
-          <p>Application menus allow users to navigate through all available pages within an application. If an application supports multiple open pages, users can then use module tabs to navigate between all open pages.</p>
-
-          <p>The type of application menu you use depends on the size and complexity of your application.</p>
-          <ul>
-            <li>The fly-out application menu works best for more complex applications, and has more flexibility to accomodate multiple levels of navigation. However, it only provides visibility into the currently selected option.</li>
-            <li>The mega menu works best for simpler applications, or for role-specific navigation. It works best with only 2 levels of navigation, and provides visibility into all the options within a specific category. You can also include action buttons for the most commonly performed actions directly on the mega menu.</li>
-          </ul>
-          <p>Regardless of which approach you choose, the application menu should be a fall back method of navigating. Ideally, applications will be organized by role and task, with role-based home pages serving as the primary entry point and main method of navigation. Users should only need to access an application menu when they are performing infrequent tasks that are not part of their regular role.</p>
-          <p>In addition to menu navigation, in certain applications users can open multiple home pages, workbenches, or forms at one time. For these applications, use module tabs to provide navigation among all open pages.
-          </p>
-
-          <section class="vision site-categories">
-          <h2>Related Soho Controls</h2>
-
-          <div class="row blockgrid">
-            <a href="#" class="site-category-icon">
-              <h3>Fly out Navigation Menu</h3>
-            </a>
-            <a href="#" class="site-category-icon">
-              <h3>Mega Menus</h3>
-            </a>
-            <a href="#" class="site-category-icon">
-              <h3>Module Tabs</h3>
-            </a>
-            <a href="#" class="site-category-icon">
-               <h3>Sign in Form</h3>
-            </a>
-            <a href="#" class="site-category-icon">
-              <h3>Bar Chart</h3>
-            </a>
-          </div>
-          </section>
-
-        </div>
+      <div class="hero">
+        <!--{% set heroImage = category.heroImage.first() %}
+        {% if heroImage %}
+          <div class="image" style="background-image:url({{ heroImage.url }})"></div>
+        {% else %}
+          <div class="image" style="background-image:url('/assets/heros/article-hero-example1.jpg')"></div>
+        {% endif %} -->
+        <div class="image" style="background-image:url('/assets/site/article-hero-example1.jpg')"></div>
       </div>
 
-      <div role="complementary" class="sidebar-nav">
+      <div role="main" class="main" id="maincontent">
         <div class="content">
 
-          <h3>Categories/Topics</h3>
-          <div class="tag-list">
+          <div class="article">
+          <!--  <h1>{{ category.title }}</h1>
+            <small class="author">Last Changed: {{ category.dateUpdated.format('F j, Y') }}</small>
+          {% set asset = category.mainImage.first() %}
+          {% if asset %}
+            <img src="{{ asset.url }}" alt="{{ asset.title }}"/>
+          {% endif %}
+            {{ category.body }}-->
 
-           <!-- {% set allEntries = craft.entries.section('vision').limit(null) %}
-            {% set categoriesInUse = craft.categories.relatedTo(allEntries) %}
-            {% for tag in categoriesInUse %}
-                <a href="#" class="tag graphite02">{{ tag.title }}</a>
-            {% endfor %}-->
-             <a href="#" class="tag graphite02">tag.title</a>
+            <h1>Navigating an Application</h1>
+            <small class="author">Last Changed: May 1st, 2015</small>
+            <img src="/assets/site/article-example2.jpg" alt="asset.title"/>
+
+            <p>Application menus allow users to navigate through all available pages within an application. If an application supports multiple open pages, users can then use module tabs to navigate between all open pages.</p>
+
+            <p>The type of application menu you use depends on the size and complexity of your application.</p>
+            <ul>
+              <li>The fly-out application menu works best for more complex applications, and has more flexibility to accomodate multiple levels of navigation. However, it only provides visibility into the currently selected option.</li>
+              <li>The mega menu works best for simpler applications, or for role-specific navigation. It works best with only 2 levels of navigation, and provides visibility into all the options within a specific category. You can also include action buttons for the most commonly performed actions directly on the mega menu.</li>
+            </ul>
+            <p>Regardless of which approach you choose, the application menu should be a fall back method of navigating. Ideally, applications will be organized by role and task, with role-based home pages serving as the primary entry point and main method of navigation. Users should only need to access an application menu when they are performing infrequent tasks that are not part of their regular role.</p>
+            <p>In addition to menu navigation, in certain applications users can open multiple home pages, workbenches, or forms at one time. For these applications, use module tabs to provide navigation among all open pages.
+            </p>
+
+            <section class="vision site-categories">
+            <h2>Related Soho Controls</h2>
+
+            <div class="row blockgrid">
+              <a href="#" class="site-category-icon">
+                <h3>Fly out Navigation Menu</h3>
+              </a>
+              <a href="#" class="site-category-icon">
+                <h3>Mega Menus</h3>
+              </a>
+              <a href="#" class="site-category-icon">
+                <h3>Module Tabs</h3>
+              </a>
+              <a href="#" class="site-category-icon">
+                 <h3>Sign in Form</h3>
+              </a>
+              <a href="#" class="site-category-icon">
+                <h3>Bar Chart</h3>
+              </a>
+            </div>
+            </section>
+
           </div>
+        </div>
 
-          <h3>Additional Resource Links</h3>
-          <div class="link-list">
-            <div><a href="#" class="hyperlink">Outside link to site</a></div>
-            <div><a href="#" class="hyperlink">External link to site</a></div>
-            <div><a href="#" class="hyperlink">More links to site</a></div>
-            <div><a href="#" class="hyperlink">Alternate website links</a></div>
+        <div role="complementary" class="sidebar-nav">
+          <div class="content">
+
+            <h3>Categories/Topics</h3>
+            <div class="tag-list">
+
+             <!-- {% set allEntries = craft.entries.section('vision').limit(null) %}
+              {% set categoriesInUse = craft.categories.relatedTo(allEntries) %}
+              {% for tag in categoriesInUse %}
+                  <a href="#" class="tag graphite02">{{ tag.title }}</a>
+              {% endfor %}-->
+               <a href="#" class="tag graphite02">tag.title</a>
+            </div>
+
+            <h3>Additional Resource Links</h3>
+            <div class="link-list">
+              <div><a href="#" class="hyperlink">Outside link to site</a></div>
+              <div><a href="#" class="hyperlink">External link to site</a></div>
+              <div><a href="#" class="hyperlink">More links to site</a></div>
+              <div><a href="#" class="hyperlink">Alternate website links</a></div>
+            </div>
+
           </div>
-
         </div>
       </div>
     </div>
+
+    {{> controls/svg}}
+    {{> docs/svg}}
+    {{> docs/footer}}
   </div>
-
-
-
-  {{> controls/svg}}
-  {{> docs/svg}}
-  {{> docs/footer}}
 
 </body>
 </html>

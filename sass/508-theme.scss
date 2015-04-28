@@ -20,6 +20,18 @@ $primary-btn-hover-bg-color: $azure10;
 $primary-btn-focus-bg-color: $azure09;
 $primary-btn-active-bg-color: $azure10;
 
+//Slider
+$slider-active-bg-color: $primary-color;
+
+//Pager
+$pager-selected-color: $primary-color;
+
+//Tree
+$tree-selected-color: $primary-color;
+
+// Alerts
+$alert-red: $ruby09;
+
 // Secondary/Normal Buttons
 $btn-color: $inverse-color;
 $btn-bg-color: $slate05;  //slate06 WCAG AAAA
@@ -50,4 +62,9 @@ $input-disabled-bg-color: #f4f4f4;
 // Show Underline
 .hyperlink {
   text-decoration: underline;
+}
+
+// Force High Contrast
+.slider-wrapper .label {
+  color: #1a1a1a !important;
 }

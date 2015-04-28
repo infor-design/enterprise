@@ -146,7 +146,7 @@ $datepicker-today-color: #1a1a1a;
 $datepicker-hover-bg-color: #ededed;
 
 //Pager
-$pager-selected-color: #0086e6;
+$pager-selected-color: $primary-color;
 $pager-focus-border-color: $input-focus-border-color;
 
 // Toolbar
@@ -198,7 +198,7 @@ $tree-icon-color: #7a7a7a;
 $tree-line-color: $switch-unchecked-color;
 $tree-link-color: $font-color-extradark;
 $tree-folder-link-color: $font-color-extradark;
-$tree-disabled-color: $switch-disabled-color;
+$tree-disabled-opacity: .5;
 
 // Tabs
 $tab-selected-color: #0371cf;  //TODO: $primary-color;

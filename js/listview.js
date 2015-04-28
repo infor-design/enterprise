@@ -133,6 +133,10 @@
         var ds = this.settings.dataset,
           self = this;
 
+        if (!ds) {
+          return;
+        }
+
         if (ds.indexOf('http') === 0 || ds.indexOf('/') === 0) {
           $.getJSON(ds, function(data) {
             self.render(data);
@@ -280,8 +284,7 @@
             countSpan = toolbar.find('.listview-selection-count');
           }
 
-          //TODO - Localize
-          countSpan.text(self.selectedItems.length + ' selected');
+          countSpan.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
         } else {
           toolbar.removeClass('is-visible');
           setTimeout(function () {

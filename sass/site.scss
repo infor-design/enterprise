@@ -155,10 +155,6 @@ span {
   max-width: 1080px !important;
 }
 
-.site-home.gallery-thumbs {
-  padding: 10px 0 40px;
-}
-
 .site-text-section,
 .site-howto-nav,
 .site-recent {
@@ -171,7 +167,6 @@ span {
   }
 
   h2 {
-    color: #666666;
     @include font-size(40);
     font-weight: 300;
     line-height: 40px;
@@ -179,7 +174,6 @@ span {
   }
 
   p {
-    color: #666666;
     @include font-size(20);
     font-weight: 300;
     line-height: 25px;
@@ -252,6 +246,39 @@ span {
   }
 }
 
+.site-home {
+  .row {
+    max-width: 767px;
+  }
+
+  .article-brief {
+    background-color: $inverse-color;
+    border: 1px solid $graphite02;
+    margin-top: 20px;
+
+    &:first-child {
+      margin-top: 50px;
+    }
+
+    img {
+      height: 250px;
+      width: 40%;
+    }
+
+    .copy {
+      display: inline-block;
+      float: right;
+      padding: 30px;
+      width: 60%;
+    }
+
+    h2 {
+      @include font-size(28);
+      margin-bottom: 10px;
+    }
+  }
+
+}
 
 // Footer
 //==================================================//
@@ -260,7 +287,9 @@ span {
   background-color: #e3e3e3;
   border-top: 1px solid #ffffff;
   clear: both;
+  position: relative;
   text-align: center;
+  z-index: 1;
 
   nav {
 
@@ -509,73 +538,6 @@ code.snippet {
   }
 }
 
-.gallery-thumbs {
-  padding: 50px 0;
-}
-
-.gallery-thumb {
-  backface-visibility: hidden;
-  background-color: #ffffff;
-  border: 1px solid #e1e1e1;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  color: #666666;
-  height: 480px;
-  margin: 20px 0 0 20px !important;
-  overflow: hidden;
-  text-decoration: none;
-  transform: translateZ(0);
-  width: 330px;
-
-  &:focus {
-    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $azure05;
-  }
-
-  &:visited {
-    color: #666666;
-  }
-
-  h3 {
-    @include font-size(24);
-    color: $graphite07;
-    margin: 30px 20px 0;
-
-    + span {
-      @include font-size(16);
-      color: $graphite07;
-      display: block;
-      margin-left: 20px;
-      margin-top: 5px;
-      padding-bottom: 20px;
-    }
-  }
-
-  p {
-    @include font-size(16);
-    line-height: 22px;
-    margin: 0 20px;
-  }
-
-  .tags {
-    border-top: 1px solid #e1e1e1;
-    margin-top: 20px;
-    padding-top: 7px;
-    text-align: center;
-  }
-
-  .gallery-overlay {
-    background-color: $amethyst05;
-    display: block;
-    height: 480px;
-    opacity: .8;
-    overflow: hidden;
-    position: absolute;
-    visibility: visible;
-    width: 330px;
-    z-index: 6;
-  }
-}
-
-
 // Media Queries For Vision Page and Shared
 //==================================================//
 
@@ -638,7 +600,6 @@ div.light-bgrnd {
     background-color: $code-color;
     height: 275px;
     padding-top: 25px;
-    margin-top: 80px;
   }
 
   .site-category-header {
@@ -760,7 +721,7 @@ div.light-bgrnd {
     h3 {
       color: $inverse-color;
       @include font-size(22);
-      padding-top: 82px !important;
+      padding-top: 54px !important;
     }
 
     &:nth-child(2n) {
@@ -912,6 +873,20 @@ div.light-bgrnd {
 @include respond-to(tabletdown) {
   .site-categories {
     padding-bottom: 0;
+  }
+}
+
+// 404 Page
+//==================================================//
+
+.scrollable-container {
+  .site-error {
+    background-image: url('/assets/site/404-error.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    height: calc(100% - 95px);
+    width: 100%;
   }
 }
 

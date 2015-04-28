@@ -178,7 +178,7 @@
 
         //Make an ajax call and wait
         this.element.trigger('paging', {currentPage: this.currentPage(), callback: function () {
-          //TODO
+          //TODO - Not sure what
         }});
 
         //Render page objects

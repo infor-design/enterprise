@@ -52,7 +52,8 @@ button {
 
   &:focus {
     border: 1px solid $primary-btn-bg-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+    //box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-btn-bg-color;
 
     &:active {
       background-color: $primary-btn-bg-color;
@@ -87,7 +88,8 @@ a.btn-primary {
 
   &:focus {
     border: 1px solid $btn-focus-bg-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
+    //box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $btn-focus-border-color;
 
     &:active {
       background-color: $btn-focus-bg-color;
@@ -136,7 +138,8 @@ a.btn-primary {
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $tertiary-btn-hover-color;
+    //box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $tertiary-btn-hover-color;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-hover-color;
     color: $tertiary-btn-color;
 
     &:active {

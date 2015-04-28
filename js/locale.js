@@ -37,12 +37,18 @@
     },
 
     //Get the Path of the Script
-    scriptPath: function(partialPath) {
-     var scripts = document.getElementsByTagName('script');
+    scriptPath: function() {
+     var scripts = document.getElementsByTagName('script'),
+      partialPathMin = 'sohoxi.min.js',
+      partialPath = 'sohoxi.js';
+
       for (var i = 0; i < scripts.length; i++) {
         var src = scripts[i].src;
+        if (src.indexOf(partialPathMin) > -1) {
+          return src.replace(partialPath,'');
+        }
         if (src.indexOf(partialPath) > -1) {
-          return src.replace(new RegExp('(.*)'+partialPath+'\\.js$'), '$1');
+          return src.replace(partialPath,'');
         }
       }
     },
@@ -61,7 +67,7 @@
 
         //fetch the local and cache it
         $.ajax({
-          url: this.scriptPath('sohoxi') + 'cultures/' + this.currentLocale.name + '.js',
+          url: this.scriptPath() + 'cultures/' + this.currentLocale.name + '.js',
           dataType: 'script',
           success: function () {
             self.currentLocale.name = locale;
