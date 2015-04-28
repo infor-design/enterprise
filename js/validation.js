@@ -382,17 +382,17 @@
           this.message = Locale.translate('InvalidDate');
           value = value.replace(/ /g, '');
           var dateFormat = Locale.calendar().dateFormat.short,
-            parsedDate = Locale.parseDate(value);
+          parsedDate = Locale.parseDate(value);
 
-          if (parsedDate === undefined && dateFormat) {
-            parsedDate = Locale.parseDate(value, dateFormat);
-          }
+          if (parsedDate === undefined && dateFormat) {
+            parsedDate = Locale.parseDate(value, dateFormat);
+          }
 
-          if (parsedDate === undefined && value !== '') {
-            return false;
-          }
+          if (parsedDate === undefined && value !== '') {
+            return false;
+          }
 
-          return true;
+          return true;
         },
         message: 'Invalid Date'
       },

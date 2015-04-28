@@ -197,7 +197,7 @@ span {
 
   .site-navbox {
     background-color: $vision-color;
-    background-image: url('/assets/site/lego-turq@2x.png');
+    background-image: url('/assets/site/lego-vision.png');
     background-position: center 15%;
     background-repeat: no-repeat;
     background-size: 102px 82px;
@@ -211,19 +211,9 @@ span {
       box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px #00c3b5;
     }
 
-    &.visual-gallery {
-
-      background-color: $gallery-color;
-      background-image: url('/assets/site/lego-amethyst@2x.png');
-
-      &:focus {
-        box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px #c77cff;
-      }
-    }
-
     &.controls {
       background-color: $code-color;
-      background-image: url('/assets/site/lego-ruby@2x.png');
+      background-image: url('/assets/site/lego-controls.png');
 
       &:focus {
         box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px #ff6545;
