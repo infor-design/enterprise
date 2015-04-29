@@ -12,9 +12,9 @@ document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></htm
 $ = jQuery = require('jquery'); // jshint ignore:line
 
 //Load the Locale.js we are testing
-require('../../../js/Locale.js');
+require('../../../js/locale.js');
 Locale = window.Locale; // jshint ignore:line
-
+console.log(Locale, window.Locale)
 //Load the Locales because Ajax doesnt work
 require('../../../js/cultures/en-US.js');
 require('../../../js/cultures/de-DE.js');

@@ -12,14 +12,14 @@
   'use strict';
 
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module depending on jQuery.
+    // AMD. Register as an anonymous module.
     define(['jquery'], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    //Support for Atom/CommonJS
-    module.exports = factory;
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
   } else {
-    // Register with Browser globals
-    factory(window.jQuery || window.Zepto);
+    // Browser globals
+    factory(jQuery);
   }
 
 }(function ($) {
