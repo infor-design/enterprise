@@ -32,6 +32,10 @@
   border: 1px solid $radio-selected-color;
 }
 
+.radio:hover + label:before {
+  border-color: $primary-color;
+}
+
 .radio-label {
   display: inline-block;
   line-height: 20px;
