@@ -498,11 +498,13 @@ span {
     @include font-size(16);
     font-weight: lighter;
     line-height: 28px;
-    list-style: inside none disc;
+    list-style: initial;
+    list-style-type: disc;
+    list-style-position: inside;
   }
 
   ol {
-    list-style: inside none num;
+    list-style-type: decimal;
   }
 
   a.hyperlink {
@@ -804,7 +806,9 @@ div.light-bgrnd {
     @include font-size(16);
     font-weight: lighter;
     line-height: 24px;
-    list-style: inside none disc;
+    list-style: initial;
+    list-style-type: disc;
+    list-style-position: inside;
     margin: 0 0 20px 30px;
 
     li {

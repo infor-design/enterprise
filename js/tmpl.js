@@ -363,7 +363,6 @@ var Tmpl = {}; // jshint ignore:line
   // Setup regex  assignments
   // remove whitespace according to Mustache spec
   var rIsWhitespace = /\S/,
-      rQuot = /\"/g,
       rNewline =  /\n/g,
       rCr = /\r/g,
       rSlash = /\\/g,
