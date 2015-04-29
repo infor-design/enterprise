@@ -91,10 +91,15 @@ textarea {
     border-color: $error-color;
   }
 
+  &.error {
+    padding: 10px 25px 10px 10px;
+  }
+
   + .icon-error {
     left: 1px !important;
     top: -80px !important;
   }
+
 }
 
 .ie textarea {
