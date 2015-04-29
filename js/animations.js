@@ -78,8 +78,8 @@
       timeout = setTimeout(transitionEndCallback, settings.timing);
       this.style[dim] = endVal;
 
-      // Trigger immediately if this element is invisible
-      if ($self.is(':hidden')) {
+      // Trigger immediately if this element is invisible or has the 'no-transition' class
+      if ($self.is(':hidden') || $self.is('.no-transition')) {
         transitionEndCallback();
       }
     });
@@ -135,8 +135,8 @@
       timeout = setTimeout(transitionEndCallback, settings.timing);
       this.style[dim] = '0px';
 
-      // Trigger immediately if this element is invisible
-      if ($self.is(':hidden')) {
+      // Trigger immediately if this element is invisible or has the 'no-transition' class
+      if ($self.is(':hidden') || $self.is('.no-transition')) {
         transitionEndCallback();
       }
     });

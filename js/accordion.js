@@ -88,11 +88,20 @@
         });
 
         this.element.find('a + .accordion-pane').parent().each(function() {
-          var header = $(this);
+          var header = $(this),
+            pane = header.children('.accordion-pane');
+
+          pane.addClass('no-transition');
           if (header.hasClass('is-expanded')) {
             header.attr('aria-expanded', 'true');
+            pane.one('animateOpenComplete', function() {
+              $(this).removeClass('no-transition');
+            });
             self.openHeader(header);
           } else {
+            pane.one('animateClosedComplete', function() {
+              $(this).removeClass('no-transition');
+            });
             self.closeHeader(header);
           }
         });
@@ -121,7 +130,7 @@
       },
 
       handleClick: function(e) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           e.preventDefault();
           e.stopPropagation();
           return false;
@@ -132,7 +141,7 @@
       },
 
       handleFocus: function(e, anchor) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           e.preventDefault();
           return false;
         }
@@ -140,7 +149,7 @@
       },
 
       handleBlur: function(e, anchor) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           e.preventDefault();
           return false;
         }
@@ -148,7 +157,7 @@
       },
 
       handleKeydown: function(e) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           return false;
         }
 
@@ -245,7 +254,7 @@
 
       // NOTE: "e" is either an event or a jQuery object
       handleSelected: function(e) {
-        if (this.element.prop('disabled') === true) {
+        if (this.element.hasClass('is-disabled')) {
           return false;
         }
 
