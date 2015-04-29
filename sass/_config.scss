@@ -123,9 +123,10 @@ $checkbox-disabled-arrow-color: #f4f4f4;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Switch
-$switch-checked-color: #4fb521;
-$switch-unchecked-color: #bdbdbd;
-$switch-disabled-color: #d8d8d8;
+$switch-checked-color: $primary-color;
+$switch-checked-bg-color: $azure01;
+$switch-unchecked-color: $font-color;
+$switch-disabled-color: $input-disabled-border-color;
 $switch-disabled-label-color: #aaaaaa;
 
 // Radio Buttons
