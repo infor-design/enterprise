@@ -312,7 +312,9 @@
             });
           }
           header.attr('aria-expanded', 'true').addClass('is-expanded');
-          header.children('.accordion-pane').css('display','block').animateOpen();
+          header.children('.accordion-pane').css('display','block').one('animateOpenComplete', function() {
+            header.trigger('expanded-accordion');
+          }).animateOpen();
         }
 
         if (source && source !== null && source !== undefined && !childPane.contents().length) {
@@ -334,6 +336,7 @@
         header.children('.accordion-pane').one('animateClosedComplete', function(e) {
           e.stopPropagation();
           $(this).add($(this).find('.accordion-pane')).css('display', 'none');
+            header.trigger('collapsed-accordion');
         }).animateClosed();
       },
 
