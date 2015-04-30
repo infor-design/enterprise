@@ -54,7 +54,7 @@
     border-radius: 2px 2px 0 0;
     cursor: pointer;
     display: inline-block;
-    padding: 6px 6px 8px;
+    padding: 5px 6px 7px;
     position: relative;
     @include css3(transition, background-color .25s ease);
 
@@ -154,8 +154,13 @@
       display: inline-block;
       @include font-size(14);
       font-weight: normal;
-      padding: 8px 11px 6px;
+      line-height: 16px;
+      padding: 7px 11px;
       text-decoration: none;
+
+      > * {
+        line-height: 1.14;
+      }
     }
 
     .count {
@@ -288,20 +293,24 @@
   &.has-counts {
 
     .animated-bar {
-      top: 65px;
+      top: 71px;
     }
 
     .tab-list {
-      height: 68px;
+      height: 74px;
     }
 
     .tab-more {
       padding: 16px 0 16px 14px;
     }
 
-    > li.dismissible {
-      .icon {
-        position: static;
+    li {
+      padding: 7px 6px 8px;
+
+      &.dismissible {
+        .icon {
+          position: static;
+        }
       }
     }
   }
