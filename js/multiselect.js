@@ -43,8 +43,7 @@
 
       init: function() {
         this
-          .build()
-          .handleEvents();
+          .build();
       },
 
       build: function() {
@@ -65,18 +64,6 @@
         this.dropdown = this.element.data('dropdown');
 
         return this;
-      },
-
-      handleEvents: function() {
-        return this;
-      },
-
-      handleOptionFromDropdown: function(option, isAdded) {
-        if (isAdded) {
-          this.addOptionText(option);
-        } else {
-          this.removeOptionText(option);
-        }
       },
 
       enable: function() {
