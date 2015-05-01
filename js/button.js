@@ -49,7 +49,7 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
 
-        this.element.on('touchstart.button mousedown.button', function (e) {
+        this.element.onTouchClick(pluginName).on('touchstart.button mousedown.button', function (e) {
           if (!self.isTouch && e.which !== 1) {
             return false;
           }
@@ -148,7 +148,7 @@
       },
 
       destroy: function() {
-        this.element.off('touchstart.button mousedown.button mouseup.button mouseleave.button');
+        this.element.offTouchClick(pluginName).off('touchstart.button mousedown.button mouseup.button mouseleave.button');
         var wrapper = this.element.find('.ripple-wrapper'),
           ripples = wrapper.find('.ripple');
         if (ripples.length) {
