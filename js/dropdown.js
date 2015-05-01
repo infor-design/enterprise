@@ -382,6 +382,8 @@
         }
 
         self.list.addClass('search-mode');
+        self.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
+          .children('use').attr('xlink:href', '#icon-search');
         self.listUl.find('li').hide();
 
         $.each(self.element[0].options, function () {
@@ -476,9 +478,8 @@
             // that rely on dropdown may need to trigger routines when the Esc key is pressed.
             break;
           }
-          case 32: //spacebar
-          case 13: {  //enter
-
+          //case 32: // spacebar // TODO: Figure Out what to do about using Spacebar.
+          case 13: { //enter
             if (self.isOpen()) {
               e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
@@ -498,7 +499,10 @@
               this.highlightOption(next);
               next.parent().find('.is-focused').removeClass('is-focused');
               next.addClass('is-focused');
-              self.selectOption(next);
+
+              if (this.settings.multiple === false) {
+                self.selectOption(next);
+              }
             }
 
             e.stopPropagation();
@@ -511,7 +515,10 @@
               this.highlightOption(next);
               next.parent().find('.is-focused').removeClass('is-focused');
               next.addClass('is-focused');
-              self.selectOption(next);
+
+              if (this.settings.multiple === false) {
+                self.selectOption(next);
+              }
             }
 
             e.stopPropagation();
@@ -534,7 +541,7 @@
           }
         }
 
-        if (!self.isOpen() && !self.isControl(e.keyCode)) {
+        if (!self.isOpen() && !self.isControl(e.which)) {
           self.toggleList();
           self.searchInput.val('');
         }
@@ -614,7 +621,14 @@
 
         this.list.appendTo('body').show();
         this.position();
+
         this.highlightOption(current, true);
+        if (this.settings.multiple && this.listUl.find('.is-selected').length > 0) {
+          this.highlightOption(this.listUl.find('.dropdown-option').eq(0));
+          setTimeout(function() {
+            self.listUl.scrollTop(0);
+          }, 0);
+        }
         this.searchInput.val(current.text()).focus();
         this.handleSearchEvents();
 
@@ -834,7 +848,7 @@
         this.open();
       },
 
-      highlightOption: function(listOption) {
+      highlightOption: function(listOption, noScroll) {
         if (!listOption) {
           return listOption;
         }
@@ -858,7 +872,9 @@
           this.input.attr('aria-activedescendant', listOption.attr('id'));
           this.searchInput.attr('aria-activedescendant', listOption.attr('id'));
 
-          this.scrollToOption(listOption);
+          if (!noScroll || noScroll === false || noScroll === undefined) {
+            this.scrollToOption(listOption);
+          }
         }
 
         return;
@@ -932,6 +948,7 @@
         } else {
           // Working with a single select
           val = code;
+          this.listUl.find('li.is-selected').removeClass('is-selected').attr('aria-selected', 'false');
           li.addClass('is-selected').attr({'aria-selected': 'true'});
           this.previousActiveDescendant = option.val();
           text = option.text();
