@@ -651,7 +651,8 @@
         this.list.appendTo('body').show();
         this.position();
 
-        this.highlightOption(current, true);
+        var noScroll = this.settings.multiple;
+        this.highlightOption(current, noScroll);
         if (this.settings.multiple && this.listUl.find('.is-selected').length > 0) {
           this.highlightOption(this.listUl.find('.dropdown-option').eq(0));
           setTimeout(function() {
