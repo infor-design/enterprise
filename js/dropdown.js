@@ -742,12 +742,13 @@
 
         this.element.trigger('dropdownopen'); // TODO: Change event name?
 
-        this.element.off('change.dropdown').one('change.dropdown', function() {
+        this.element.off('change.dropdown').on('change.dropdown', function() {
           var idx = self.element.find('option:selected').index(),
             cur = $(self.element[0].options[idx]);
 
           //Select the clicked item
           self.selectOption(cur);
+          self.input.val(cur.text());
           self.element.hide().css({'position': '', 'left': ''});
           setTimeout(function() {
             self.input.focus();
