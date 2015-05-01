@@ -296,4 +296,4 @@ window.Locale = {
   }
 };
 
-Locale.set('en-US');
+window.Locale.set('en-US');
