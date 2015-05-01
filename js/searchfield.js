@@ -2,192 +2,173 @@
 * Searchfield Control (TODO: bitly link to soho xi docs)
 */
 
-(function (factory) {
-
+$.fn.searchfield = function(options) {
   'use strict';
 
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
+  // Settings and Options
+  var pluginName = 'searchfield',
+      defaults = {
+        allResultsCallback: undefined,
+        source: [],
+        template: undefined // Template that can be passed
+      },
+      settings = $.extend({}, defaults, options);
+
+  // Plugin Constructor
+  function SearchField(element) {
+    this.settings = settings;
+    this.element = $(element);
+    this.init();
   }
 
-}(function ($) {
+  // Plugin Methods
+  SearchField.prototype = {
 
-  'use strict';
+    init: function() {
+      this.build().setupEvents();
+    },
 
-  $.fn.searchfield = function(options) {
+    build: function() {
+      if (!this.element.parent().hasClass('searchfield-wrapper')) {
+        this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
+      }
 
-    // Settings and Options
-    var pluginName = 'searchfield',
-        defaults = {
-          allResultsCallback: undefined,
-          source: [],
-          template: undefined // Template that can be passed
-        },
-        settings = $.extend({}, defaults, options);
+      // Add Icon
+      if (this.wrapper.find('.icon').length === 0) {
+        $('<svg class="icon"><use xlink:href="#icon-search-field"/></svg>').insertAfter(this.element);
+      }
 
-    // Plugin Constructor
-    function SearchField(element) {
-      this.settings = settings;
-      this.element = $(element);
-      this.init();
-    }
+      // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
+      // Autocomplete settings are fed the same settings as Searchfield
+      this.element.autocomplete(this.settings);
+      this.autocomplete = this.element.data('autocomplete');
 
-    // Plugin Methods
-    SearchField.prototype = {
+      //Prevent browser typahead
+      this.element.attr('autocomplete','off');
+      return this;
+    },
 
-      init: function() {
-        this.build().setupEvents();
-      },
+    setupEvents: function() {
+      var self = this;
 
-      build: function() {
-        if (!this.element.parent().hasClass('searchfield-wrapper')) {
-          this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
+      this.element.on('updated.searchfield', function() {
+        self.update();
+      });
+
+      // Insert the "view more results" link on the Autocomplete control's "populated" event
+      this.element.on('populated.searchfield', function(e, items) {
+        if (items.length > 0 ) {
+          self.addMoreLink();
+        } else {
+          self.addNoneLink();
         }
+      });
 
-        // Add Icon
-        if (this.wrapper.find('.icon').length === 0) {
-          $('<svg class="icon"><use xlink:href="#icon-search-field"/></svg>').insertAfter(this.element);
-        }
+      // Override the 'click' listener created by Autocomplete (which overrides the default Popupmenu method)
+      // to act differntly when the More Results link is activated.
+      this.element.on('autocomplete-list-open.searchfield', function(e, items) {
+        var list = $('#autocomplete-list');
 
-        // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
-        // Autocomplete settings are fed the same settings as Searchfield
-        this.element.autocomplete(this.settings);
-        this.autocomplete = this.element.data('autocomplete');
+        list.off('click').on('click.autocomplete', 'a', function (e) {
+          var a = $(e.currentTarget),
+            ret = a.text().trim(),
+            isMoreLink = a.hasClass('more-results'),
+            isNoneLink = a.hasClass('no-results');
 
-        //Prevent browser typahead
-        this.element.attr('autocomplete','off');
-        return this;
-      },
-
-      setupEvents: function() {
-        var self = this;
-
-        this.element.on('updated.searchfield', function() {
-          self.update();
-        });
-
-        // Insert the "view more results" link on the Autocomplete control's "populated" event
-        this.element.on('populated.searchfield', function(e, items) {
-          if (items.length > 0 ) {
-            self.addMoreLink();
-          } else {
-            self.addNoneLink();
+          if (!isMoreLink && !isNoneLink) {
+            // Only write text into the field on a regular result pick.
+            self.element.attr('aria-activedescendant', a.parent().attr('id'));
           }
-        });
 
-        // Override the 'click' listener created by Autocomplete (which overrides the default Popupmenu method)
-        // to act differntly when the More Results link is activated.
-        this.element.on('autocomplete-list-open.searchfield', function(e, items) {
-          var list = $('#autocomplete-list');
-
-          list.off('click').on('click.autocomplete', 'a', function (e) {
-            var a = $(e.currentTarget),
-              ret = a.text().trim(),
-              isMoreLink = a.hasClass('more-results'),
-              isNoneLink = a.hasClass('no-results');
-
-            if (!isMoreLink && !isNoneLink) {
-              // Only write text into the field on a regular result pick.
-              self.element.attr('aria-activedescendant', a.parent().attr('id'));
+          if (isMoreLink) {
+            // Trigger callback if one is defined
+            var callback = self.settings.allResultsCallback;
+            if (callback && typeof callback === 'function') {
+              callback(ret);
             }
+          }
 
-            if (isMoreLink) {
-              // Trigger callback if one is defined
-              var callback = self.settings.allResultsCallback;
-              if (callback && typeof callback === 'function') {
-                callback(ret);
+          if (a.parent().attr('data-value')) {
+            for (var i = 0; i < items.length; i++) {
+              if (items[i].value.toString() === a.parent().attr('data-value')) {
+                ret = items[i];
               }
             }
+          }
 
-            if (a.parent().attr('data-value')) {
-              for (var i = 0; i < items.length; i++) {
-                if (items[i].value.toString() === a.parent().attr('data-value')) {
-                  ret = items[i];
-                }
-              }
-            }
+          self.element.trigger('selected', [a]);
 
-            self.element.trigger('selected', [a]);
+          self.element.data('popupmenu').close();
 
-            self.element.data('popupmenu').close();
-
-            e.preventDefault();
-            return false;
-          });
-
-          // Override the focus event created by the Autocomplete control to make the more link
-          // and no-results link blank out the text inside the input.
-          list.find('.more-results, .no-results').off('focus').on('focus.searchfield', function () {
-            var anchor = $(this);
-            list.find('li').removeClass('is-selected');
-            anchor.parent('li').addClass('is-selected');
-            self.element.val('');
-          });
-
+          e.preventDefault();
+          return false;
         });
 
-        return this;
-      },
+        // Override the focus event created by the Autocomplete control to make the more link
+        // and no-results link blank out the text inside the input.
+        list.find('.more-results, .no-results').off('focus').on('focus.searchfield', function () {
+          var anchor = $(this);
+          list.find('li').removeClass('is-selected');
+          anchor.parent('li').addClass('is-selected');
+          self.element.val('');
+        });
 
-      addMoreLink: function() {
-        var list = $('#autocomplete-list'),
-          val = this.element.val();
+      });
 
-        $('<li class="separator" role="presentation"></li>').appendTo(list);
-        var more = $('<li role="presentation"></li>').appendTo(list);
-        this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' <i>' + val + '</i></span>').appendTo(more);
-      },
+      return this;
+    },
 
-      addNoneLink: function() {
-        var list = $('#autocomplete-list'),
-          none = $('<li role="presentation"></li>').appendTo(list);
+    addMoreLink: function() {
+      var list = $('#autocomplete-list'),
+        val = this.element.val();
 
-        this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('NoResults') + '</span>').appendTo(none);
-      },
+      $('<li class="separator" role="presentation"></li>').appendTo(list);
+      var more = $('<li role="presentation"></li>').appendTo(list);
+      this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' <i>' + val + '</i></span>').appendTo(more);
+    },
 
-      // Triggered by the "updated.searchfield" event
-      update: function() {
-        this.autocomplete.destroy();
-        this.build();
-      },
+    addNoneLink: function() {
+      var list = $('#autocomplete-list'),
+        none = $('<li role="presentation"></li>').appendTo(list);
 
-      enable: function() {
-        this.element.prop('disabled', false);
-      },
+      this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('NoResults') + '</span>').appendTo(none);
+    },
 
-      disable: function() {
-        this.element.prop('disabled', true);
-      },
+    // Triggered by the "updated.searchfield" event
+    update: function() {
+      this.autocomplete.destroy();
+      this.build();
+    },
 
-      // Teardown - Remove added markup and events
-      destroy: function() {
-        this.element.off('updated.searchfield populated.searchfield');
-        this.autocomplete.destroy();
+    enable: function() {
+      this.element.prop('disabled', false);
+    },
 
-        this.element.next('.icon').remove();
-        if (this.element.parent().hasClass('searchfield-wrapper')) {
-          this.element.unwrap();
-        }
-        $.removeData(this.element[0], pluginName);
+    disable: function() {
+      this.element.prop('disabled', true);
+    },
+
+    // Teardown - Remove added markup and events
+    destroy: function() {
+      this.element.off('updated.searchfield populated.searchfield');
+      this.autocomplete.destroy();
+
+      this.element.next('.icon').remove();
+      if (this.element.parent().hasClass('searchfield-wrapper')) {
+        this.element.unwrap();
       }
-    };
-
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.update();
-      } else {
-        instance = $.data(this, pluginName, new SearchField(this, settings));
-      }
-    });
+      $.removeData(this.element[0], pluginName);
+    }
   };
-}));
+
+  // Initialize the plugin (Once)
+  return this.each(function() {
+    var instance = $.data(this, pluginName);
+    if (instance) {
+      instance.settings = $.extend({}, instance.settings, options);
+      instance.update();
+    } else {
+      instance = $.data(this, pluginName, new SearchField(this, settings));
+    }
+  });
+};

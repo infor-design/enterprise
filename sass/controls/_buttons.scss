@@ -52,8 +52,7 @@ button {
 
   &:focus {
     border: 1px solid $primary-btn-bg-color;
-    //box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-btn-bg-color;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
 
     &:active {
       background-color: $primary-btn-bg-color;

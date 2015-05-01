@@ -56,6 +56,8 @@
 | Home Pages | | Fredrik Erikkson |
 | Mongoose | | Bryan Petit |
 | Rhythm Widgets | | Eric Martensson |
+| SXE | | Peter Cullen |
+| S3 | | Rajan Shanmugavelu |
 | Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> |
 

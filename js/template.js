@@ -1,9 +1,8 @@
 /**
 * XYZ Control (TODO: bitly link to soho xi docs)
 */
-
 (function(factory) {
-  'use strict';
+
 
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -18,9 +17,10 @@
 
 }(function($) {
 
-  'use strict';
+  //NOTE: Just this part in files.
 
   $.fn.pluginname = function(options) {
+    'use strict';
 
     // Settings and Options
     var pluginName = 'pluginName',
@@ -64,4 +64,5 @@
       }
     });
   };
+
 }));

@@ -13,23 +13,7 @@
  *  limitations under the License.
  */
 
-var Tmpl = {}; // jshint ignore:line
-(function (factory) {
-
-  'use strict';
-
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-
-}(function () {
+  var Tmpl = {}; // jshint ignore:line
 
   window.Tmpl = {};
 
@@ -44,6 +28,15 @@ var Tmpl = {}; // jshint ignore:line
     this.buf = '';
   };
 
+  // Setup regex  assignments
+  // remove whitespace according to Mustache spec
+  var rIsWhitespace = /\S/,
+      rNewline =  /\n/g,
+      rCr = /\r/g,
+      rSlash = /\\/g,
+      rLineSep = /\u2028/,
+      rParagraphSep = /\u2029/;
+
   var rAmp = /&/g,
       rLt = /</g,
       rGt = />/g,
@@ -51,8 +44,124 @@ var Tmpl = {}; // jshint ignore:line
       rQuot = /\"/g,
       hChars = /[&<>\"\']/;
 
+  //Find a key in an object
+  function findInScope(key, scope, doModelGet) {
+    var val;
+
+    if (scope && typeof scope === 'object') {
+
+      if (scope[key] !== undefined) {
+        val = scope[key];
+
+      // try lookup with get for backbone or similar model data
+      } else if (doModelGet && scope.get && typeof scope.get === 'function') {
+        val = scope.get(key);
+      }
+    }
+
+    return val;
+  }
+
+  function write(s) {
+    return 't.b(' + s + ');';
+  }
+
+  function isOpener(token, tags) {
+    for (var i = 0, l = tags.length; i < l; i++) {
+      if (tags[i].o === token.n) {
+        token.tag = '#';
+        return true;
+      }
+    }
+  }
+
+  function isCloser(close, open, tags) {
+    for (var i = 0, l = tags.length; i < l; i++) {
+      if (tags[i].c === close && tags[i].o === open) {
+        return true;
+      }
+    }
+  }
+
+  function esc(s) {
+    return s.replace(rSlash, '\\\\')
+            .replace(rQuot, '\\\'')
+            .replace(rNewline, '\\n')
+            .replace(rCr, '\\r')
+            .replace(rLineSep, '\\u2028')
+            .replace(rParagraphSep, '\\u2029');
+  }
+
+  function createSpecializedPartial(instance, subs, partials, stackSubs, stackPartials, stackText) {
+    function PartialTemplate() {}
+    PartialTemplate.prototype = instance;
+    function Substitutions() {}
+    Substitutions.prototype = instance.subs;
+    var key;
+    var partial = new PartialTemplate();
+    partial.subs = new Substitutions();
+    partial.subsText = {};  //hehe. substext.
+    partial.buf = '';
+
+    stackSubs = stackSubs || {};
+    partial.stackSubs = stackSubs;
+    partial.subsText = stackText;
+    for (key in subs) {
+      if (!stackSubs[key]) {
+        stackSubs[key] = subs[key];
+      }
+    }
+    for (key in stackSubs) {
+      partial.subs[key] = stackSubs[key];
+    }
+
+    stackPartials = stackPartials || {};
+    partial.stackPartials = stackPartials;
+    for (key in partials) {
+      if (!stackPartials[key]) {
+       stackPartials[key] = partials[key];
+      }
+    }
+    for (key in stackPartials) {
+      partial.partials[key] = stackPartials[key];
+    }
+
+    return partial;
+  }
+
+  var isArray = Array.isArray || function(a) {
+    return Object.prototype.toString.call(a) === '[object Array]';
+  };
+
   function coerceToString(val) {
     return String((val === null || val === undefined) ? '' : val);
+  }
+
+  function cleanTripleStache(token) {
+    if (token.n.substr(token.n.length - 1) === '}') {
+      token.n = token.n.substring(0, token.n.length - 1);
+    }
+  }
+
+  function trim(s) {
+    if (s.trim) {
+      return s.trim();
+    }
+
+    return s.replace(/^\s*|\s*$/g, '');
+  }
+
+  function tagChange(tag, text, index) {
+    if (text.charAt(index) !== tag.charAt(0)) {
+      return false;
+    }
+
+    for (var i = 1, l = tag.length; i < l; i++) {
+      if (text.charAt(index + i) !== tag.charAt(i)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   function TmplEscape(str) {
@@ -301,74 +410,6 @@ var Tmpl = {}; // jshint ignore:line
     }
   };
 
-  //Find a key in an object
-  function findInScope(key, scope, doModelGet) {
-    var val;
-
-    if (scope && typeof scope === 'object') {
-
-      if (scope[key] !== undefined) {
-        val = scope[key];
-
-      // try lookup with get for backbone or similar model data
-      } else if (doModelGet && scope.get && typeof scope.get === 'function') {
-        val = scope.get(key);
-      }
-    }
-
-    return val;
-  }
-
-  function createSpecializedPartial(instance, subs, partials, stackSubs, stackPartials, stackText) {
-    function PartialTemplate() {}
-    PartialTemplate.prototype = instance;
-    function Substitutions() {}
-    Substitutions.prototype = instance.subs;
-    var key;
-    var partial = new PartialTemplate();
-    partial.subs = new Substitutions();
-    partial.subsText = {};  //hehe. substext.
-    partial.buf = '';
-
-    stackSubs = stackSubs || {};
-    partial.stackSubs = stackSubs;
-    partial.subsText = stackText;
-    for (key in subs) {
-      if (!stackSubs[key]) {
-        stackSubs[key] = subs[key];
-      }
-    }
-    for (key in stackSubs) {
-      partial.subs[key] = stackSubs[key];
-    }
-
-    stackPartials = stackPartials || {};
-    partial.stackPartials = stackPartials;
-    for (key in partials) {
-      if (!stackPartials[key]) {
-       stackPartials[key] = partials[key];
-      }
-    }
-    for (key in stackPartials) {
-      partial.partials[key] = stackPartials[key];
-    }
-
-    return partial;
-  }
-
-  var isArray = Array.isArray || function(a) {
-    return Object.prototype.toString.call(a) === '[object Array]';
-  };
-
-  // Setup regex  assignments
-  // remove whitespace according to Mustache spec
-  var rIsWhitespace = /\S/,
-      rNewline =  /\n/g,
-      rCr = /\r/g,
-      rSlash = /\\/g,
-      rLineSep = /\u2028/,
-      rParagraphSep = /\u2029/;
-
   Tmpl.tags = {
     '#': 1, '^': 2, '<': 3, '$': 4,
     '/': 5, '!': 6, '>': 7, '=': 8, '_v': 9,
@@ -503,33 +544,6 @@ var Tmpl = {}; // jshint ignore:line
     return tokens;
   };
 
-  function cleanTripleStache(token) {
-    if (token.n.substr(token.n.length - 1) === '}') {
-      token.n = token.n.substring(0, token.n.length - 1);
-    }
-  }
-
-  function trim(s) {
-    if (s.trim) {
-      return s.trim();
-    }
-
-    return s.replace(/^\s*|\s*$/g, '');
-  }
-
-  function tagChange(tag, text, index) {
-    if (text.charAt(index) !== tag.charAt(0)) {
-      return false;
-    }
-
-    for (var i = 1, l = tag.length; i < l; i++) {
-      if (text.charAt(index + i) !== tag.charAt(i)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   // the tags allowed inside super templates
   var allowedInSuper = {'_t': true, '\n': true, '$': true, '/': true};
 
@@ -573,23 +587,6 @@ var Tmpl = {}; // jshint ignore:line
     }
 
     return instructions;
-  }
-
-  function isOpener(token, tags) {
-    for (var i = 0, l = tags.length; i < l; i++) {
-      if (tags[i].o === token.n) {
-        token.tag = '#';
-        return true;
-      }
-    }
-  }
-
-  function isCloser(close, open, tags) {
-    for (var i = 0, l = tags.length; i < l; i++) {
-      if (tags[i].c === close && tags[i].o === open) {
-        return true;
-      }
-    }
   }
 
   function stringifySubstitutions(obj) {
@@ -647,15 +644,6 @@ var Tmpl = {}; // jshint ignore:line
     }
     return template;
   };
-
-  function esc(s) {
-    return s.replace(rSlash, '\\\\')
-            .replace(rQuot, '\\\'')
-            .replace(rNewline, '\\n')
-            .replace(rCr, '\\r')
-            .replace(rLineSep, '\\u2028')
-            .replace(rParagraphSep, '\\u2029');
-  }
 
   function chooseMethod(s) {
     return (~s.indexOf('.')) ? 'd' : 'f';
@@ -723,10 +711,6 @@ var Tmpl = {}; // jshint ignore:line
     '&': tripleStache
   };
 
-  function write(s) {
-    return 't.b(' + s + ');';
-  }
-
   Tmpl.walk = function(nodelist, context) {
     var func;
     for (var i = 0, l = nodelist.length; i < l; i++) {
@@ -766,6 +750,3 @@ var Tmpl = {}; // jshint ignore:line
     this.cache[key] = template;
     return template;
   };
-
-}));
-

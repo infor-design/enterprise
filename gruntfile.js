@@ -7,7 +7,8 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    banner: '/*!\n Soho XI Controls v<%= pkg.version %> \n Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n Revision: <%= meta.revision %> \n */ \n ',
+    banner: '/**\n* Soho XI Controls v<%= pkg.version %> \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n' +
+            '(function(factory) {\n\n  if (typeof define === \'function\' && define.amd) {\n    // AMD. Register as an anonymous module\n    define([\'jquery\'], factory);\n  } else if (typeof exports === \'object\') {\n    // Node/CommonJS\n    module.exports = factory(require(\'jquery\'));\n} else {\n    // Browser globals \n    factory(jQuery);\n  }\n\n}(function($) {\n\n',
 
     sass: {
       options: {
@@ -46,13 +47,14 @@ module.exports = function(grunt) {
       options: {
         separator: '',
         banner: '<%= banner %>',
-        footer: '//# sourceURL=<%= pkg.name %>.js'
+        footer: '\n}));\n//# sourceURL=<%= pkg.name %>.js'
       },
       basic: {
         files: {
           'dist/js/<%= pkg.name %>.js': [
             'js/utils.js',
             'js/animations.js',
+            'js/locale.js',
             'js/about.js',
             'js/accordion.js',
             'js/applicationmenu.js',
@@ -74,7 +76,6 @@ module.exports = function(grunt) {
             'js/header.js',
             'js/initialize.js',
             'js/listview.js',
-            'js/locale.js',
             'js/pager.js',
             'js/popupmenu.js',
             'js/progress.js',
