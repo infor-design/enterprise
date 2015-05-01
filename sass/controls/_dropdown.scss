@@ -183,13 +183,6 @@ input.dropdown {
       background-color: $menu-hover-color;
     }
 
-    /*
-    li.is-selected {
-      //background-color: $inverse-color;
-      color: #333333;
-    }
-    */
-
     li.is-focused,
     li.is-selected.is-focused,
     li:hover:not(.group-label) {
