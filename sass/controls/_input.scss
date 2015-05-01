@@ -299,12 +299,3 @@ textarea.error:focus,
 .input-full {
   width: 100%;
 }
-
-// small breakpoint change for inputs
-@include respond-to(phone) {
-
-  input {
-    width: auto;
-  }
-
-}
