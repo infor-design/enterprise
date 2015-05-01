@@ -120,6 +120,11 @@
     line-height: 23px;
   }
 
+  .is-toolbar-open {
+    height: calc(100% - 50px);
+    margin-top: 50px;
+  }
+
   button {
     background-color: transparent;
     border-radius: 0;
@@ -194,7 +199,7 @@
   margin: 0;
   overflow: hidden;
   position: absolute;
-  @include transition(height .2s ease-out 0s);
+  @include transition(height 1.2s ease-out 0s);
   text-align: right;
   width: 100%;
   z-index: 20;

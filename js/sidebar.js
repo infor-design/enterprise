@@ -1,5 +1,5 @@
 /**
-* Side Bar Menu Control (TODO: bitly link to soho xi docs)
+* Side Bar Menu Control
 */
 
 $.fn.sidebar = function() {
@@ -23,14 +23,11 @@ $.fn.sidebar = function() {
 
     handleEvents: function() {
       var self = this,
-        timeout,
-        isClick = false,
         header = $('.header').first(),
-        sidebar = $('.sidebar-nav'),
-        headerHeight = header.outerHeight();
+        sidebar = $('.sidebar-nav');
 
-      this.tracker = $('.section-tracker');
-      this.trackedHeaders = $('.editorial > .main > .content').find('h2, h3');
+      this.sectionList = $('.section-list');
+      this.sections = $('.editorial > .main > .content').find('h2, h3');
 
       //Handle Scrolling events
       var scrollDiv = $(this.element).closest('.scrollable-container'),
@@ -49,69 +46,19 @@ $.fn.sidebar = function() {
           sidebar.removeClass('is-sticky');
         }
 
-        if (isClick) {
-          return;
-        }
-
-        if (this.tracker) {
-          return;
-        }
-
-        clearInterval(timeout);
-        timeout = setTimeout(function () {
-
-          self.trackedHeaders.each(function (i) {
-            var elem = $(this);
-
-            if (elem.offset().top - container.scrollTop() < 0) {
-             self.tracker.find('.is-active').removeClass('is-active');
-             $('[data-tracker="heading-'+ (i+1) +'"]').addClass('is-active');
-            }
-
-            if (container.scrollTop() < headerHeight) {
-             self.tracker.find('.is-active').removeClass('is-active');
-             $('[data-tracker="heading-0"]').addClass('is-active');
-            }
-          });
-
-        }, 300);
-
       });
 
-      if (this.tracker) {
+      if (this.sectionList) {
         //append the links for the heading elements
-        this.trackedHeaders.each(function (i) {
+        this.sections.each(function (i) {
           var item = $(this),
-            trackerItem = $('<a href="#" class="tracker-item">' + item.text() + '</a>');
+            id = 'heading'+i,
+            link = $(' <div><a href="#' + id + '" class="hyperlink">' + item.text() + '</a></div>');
 
-          trackerItem.attr('data-tracker', 'heading-'+i);
-          if (item.is('h3')) {
-            trackerItem.addClass('is-indented');
-          }
-          if (i === 0) {
-            trackerItem.addClass('is-active');
-          }
-          self.tracker.append(trackerItem);
-
+          item.attr('id', id);
+          self.sectionList.append(link);
         });
 
-        //Get Rid of the 300ms Delay - Handle Clicking side bar menu items to access sections
-        this.tracker.on('touchcancel.sidebar touchend.sidebar', 'a', function (e) {
-          e.stopPropagation();
-          e.preventDefault();
-          $(this).trigger('click');
-        }).on('click.sidebar', 'a', function (e) {
-          e.preventDefault();
-
-          var idx = $(this).attr('data-tracker').replace('heading-', ''),
-            target = $(self.trackedHeaders[idx]);
-
-          isClick = true;
-          self.tracker.find('.is-active').removeClass('is-active');
-
-          $('html, body').animate({scrollTop: target.offset().top - 100}, 250);
-          $(this).addClass('is-active');
-        });
       }
     },
 

@@ -9,7 +9,6 @@
 
 $site-maxwidth: 1080px;
 $vision-color: $emerald07;
-$gallery-color: #ac6cbc;
 $code-color: $azure05;
 $code-color-alt: $azure07;
 
@@ -42,7 +41,7 @@ span {
 
 .site-hero {
   background-color: transparent;
-  height: 200px;
+  height: 540px;
   overflow: hidden;
   padding-top: 85px;
   position: relative;
@@ -288,6 +287,7 @@ span {
     h2 {
       @include font-size(28);
       margin-bottom: 10px;
+      line-height: 34px;
     }
 
     .btn-primary {
@@ -414,10 +414,6 @@ span {
     }
   }
 
-  .gallery-thumb {
-    margin: 20px 0 0 !important;
-  }
-
 }
 
 @include respond-to(tablet) {
@@ -492,7 +488,13 @@ span {
   }
 
   h2 {
-    @include font-size(29);
+    @include font-size(30);
+
+    &:first-child {
+      border-top: 0 none;
+      margin-top: 0;
+      padding-top: 0;
+    }
   }
 
   img + h2 {
@@ -509,8 +511,8 @@ span {
 
   p {
     @include font-size(16);
-    line-height: 28px;
-    margin: 20px 0;
+    line-height: 24px;
+    margin: 15px 0;
   }
 
   p:first-child {
@@ -595,21 +597,6 @@ code.snippet {
   padding: 4px 1px;
 }
 
-// Code For Gallery Page
-//==================================================//
-
-.gallery {
-  &.site-hero {
-    background-color: $gallery-color;
-  }
-}
-
-.gallery-headline {
-  h2 {
-    @include font-size(40);
-    margin: 30px 40px 40px;
-  }
-}
 
 // Media Queries For Vision Page and Shared
 //==================================================//
@@ -669,13 +656,9 @@ div.light-bgrnd {
 .component {
   background-color: $inverse-color;
 
-  h2 {
-    margin-top: 0;
-  }
-
   &.site-hero {
     background-color: $code-color;
-    height: 275px;
+    height: 200px;
     padding-top: 25px;
   }
 
@@ -686,6 +669,21 @@ div.light-bgrnd {
   &.site-text-section {
     background-color: $inverse-color;
     padding: 20px 0 60px;
+  }
+
+  .main h2 {
+    border-top: 1px solid #d8d8d8;
+    line-height: 70px;
+    margin-top: 50px;
+
+    &:first-child {
+      border-top: 0;
+      margin-top: 0;
+    }
+  }
+
+  &.site-text-section h2 {
+    margin-top: 0;
   }
 
 }
@@ -731,6 +729,7 @@ div.light-bgrnd {
 
   .blockgrid {
     margin-left: -10px;
+    margin-top: 40px;
     padding-right: 0;
     text-align: center;
   }
@@ -784,7 +783,7 @@ div.light-bgrnd {
     margin: 0 0 20px 30px;
 
     li {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     + h2 {
@@ -794,10 +793,6 @@ div.light-bgrnd {
 
   .example {
     padding: 45px 0 50px 0;
-  }
-
-  .listview-table + h2 {
-    margin-top: 40px;
   }
 
   .listview-table tr,
@@ -933,7 +928,7 @@ div.light-bgrnd {
   }
 
   .content {
-    margin: -325px auto 158px;
+    margin: -432px auto 158px;
     position: relative;
     text-align: center;
     vertical-align: middle;

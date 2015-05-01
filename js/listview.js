@@ -15,9 +15,8 @@ $.fn.listview = function(options) {
       dataset: null,  //Object or Arrray or url
       template: null,  //Html Template String
       description: null,  //Audible Label (or use parent title)
-      selectable: 'single', //false, 'single' or 'multiple'
-      toolbar: true
-    },
+      selectable: 'single' //false, 'single' or 'multiple'
+   },
     settings = $.extend({}, defaults, options);
 
   // Plugin Constructor
@@ -253,12 +252,16 @@ $.fn.listview = function(options) {
       li.attr('aria-selected', !isChecked);
       this.element.trigger('selectionchange', [this.selectedItems]);
 
-      var toolbar = this.element.closest('.card').find('.listview-toolbar');
+      var toolbar = this.element.closest('.card').find('.listview-toolbar'),
+        top = self.element.scrollTop();
+
       if (self.selectedItems.length > 0) {
         toolbar.show();
         setTimeout(function () {
+          self.element.addClass('.is-toolbar-open');
           toolbar.addClass('is-visible');
         }, 0);
+
 
         var count = toolbar.find('.listview-selection-count'),
           countSpan;
@@ -270,11 +273,21 @@ $.fn.listview = function(options) {
         }
 
         countSpan.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
+
+        /* Adjust Scrollbar
+        if (li.index() > 1 && toolbar.length > 0) {
+          self.element.scrollTop((top + li.outerHeight()) + 'px');
+        }*/
+
       } else {
         toolbar.removeClass('is-visible');
         setTimeout(function () {
           toolbar.hide();
-        }, 750);
+        }, 300);
+
+        /* Adjust Scrollbar
+        self.element.removeClass('.is-toolbar-open');
+        self.element.scrollTop((top - li.outerHeight()) + 'px');*/
       }
     },
 
