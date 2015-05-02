@@ -2,74 +2,57 @@
 * File Upload Control (TODO: bitly link to soho xi docs)
 */
 
-(function (factory) {
+$.fn.fileupload = function() {
 
   'use strict';
 
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
+  // Settings and Options
+  var pluginName = 'fileupload';
+
+  // Plugin Constructor
+  function Plugin(element) {
+    this.element = $(element);
+    this.init();
   }
 
-}(function ($) {
+  // Plugin Methods
+  Plugin.prototype = {
 
-  'use strict';
+    init: function() {
+      this.build();
+    },
 
-  $.fn.fileupload = function() {
+    // Example Method
+    build: function() {
+      var elem = this.element;
 
-    // Settings and Options
-    var pluginName = 'fileupload';
+      elem.parent('.field').addClass('field-fileupload');
 
-    // Plugin Constructor
-    function Plugin(element) {
-      this.element = $(element);
-      this.init();
-    }
-
-    // Plugin Methods
-    Plugin.prototype = {
-
-      init: function() {
-        this.build();
-      },
-
-      // Example Method
-      build: function() {
-        var elem = this.element;
-
-        elem.parent('.field').addClass('field-fileupload');
-
-        elem.find('span').attr({'tabindex': '0', 'role' : 'button'})
-          .on('keypress.fileupload', function (e) {
-            if (e.which === 13) {
-              elem.find('input').trigger('click');
-            }
-          });
-
-        elem.find('input').attr('tabindex', '-1').on('change.fileupload', function () {
-          var fileInput = $(this);
-          elem.prev('input').val(fileInput.val());
+      elem.find('span').attr({'tabindex': '0', 'role' : 'button'})
+        .on('keypress.fileupload', function (e) {
+          if (e.which === 13) {
+            elem.find('input').trigger('click');
+          }
         });
-      },
 
-      // Teardown - Remove added markup and events
-      destroy: function() {
-        $.removeData(this.element[0], pluginName);
-      }
-    };
+      elem.find('input').attr('tabindex', '-1').on('change.fileupload', function () {
+        var fileInput = $(this);
+        elem.prev('input').val(fileInput.val());
+      });
+    },
 
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (!instance) {
-        instance = $.data(this, pluginName, new Plugin(this));
-      }
-    });
+    // Teardown - Remove added markup and events
+    destroy: function() {
+      $.removeData(this.element[0], pluginName);
+    }
   };
-}));
+
+  // Initialize the plugin (Once)
+  return this.each(function() {
+    var instance = $.data(this, pluginName);
+    if (!instance) {
+      instance = $.data(this, pluginName, new Plugin(this));
+    }
+  });
+};
+

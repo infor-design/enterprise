@@ -294,6 +294,18 @@ app.configure(function() {
     res.end(JSON.stringify(tasks));
   });
 
+  //Sample Periods
+  app.get('/api/periods', function(req, res) {
+    var tasks = [{ id: 1, city: 'London', location: 'Corporate FY15', alert: true, daysLeft: '3', hoursLeft: '23'},
+     { id: 1, city: 'New York', location: 'Corporate FY15', alert: false, daysLeft: '25', hoursLeft: '11'},
+     { id: 1, city: 'Vancouver', location: 'Corporate FY15', alert: false, daysLeft: '30', hoursLeft: '23'},
+     { id: 1, city: 'Tokyo', location: 'Corporate FY15', alert: false, daysLeft: '35', hoursLeft: '13'}
+   ];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(tasks));
+  });
+
   app.get('/api/nav-items', function(req, res) {
     res.render('tests/accordion-api-options.html');
   });

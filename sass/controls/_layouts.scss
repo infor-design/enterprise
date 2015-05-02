@@ -109,6 +109,7 @@ body.no-scroll {
       display: inline-block;
       float: left;
       margin-top: 40px;
+      margin-bottom: 50px;
       max-width: calc(100% - 370px);
       min-width: 300px;
       padding: 0 30px;
@@ -144,35 +145,6 @@ body.no-scroll {
       &:not(:first-child) {
         border-top: 1px solid $graphite02;
       }
-    }
-
-    .tracker-item {
-      border-left: 3px solid transparent;
-      color: $graphite05;
-      display: block;
-      @include font-size(14);
-      overflow: hidden;
-      padding: 8px 0;
-      @include css3(transition, border-color .25s ease);
-      text-decoration: none;
-      text-indent: 10px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 240px;
-
-      &.is-indented {
-        @include font-size(12);
-        margin-left: 15px;
-      }
-
-      &.is-active,
-      &:hover {
-        border-left: 3px solid $azure06;
-      }
-    }
-
-    .section-tracker + h3 {
-      margin-top: 25px;
     }
   }
 

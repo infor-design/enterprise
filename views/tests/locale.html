@@ -17,14 +17,10 @@
             output.append('<span>' + value + '</span><br>');
           };
 
-      setTimeout(function () {
-        Locale.set('vi-VN');
-
-        append(Locale.formatNumber(12345.123, {style: 'currency'}));
-
-        append(Locale.formatDate(new Date(2015, 2, 7, 13, 40), {date: 'full'}));
-      }, 1000);
-
+        Locale.set('vi-VN').done(function () {
+          append(Locale.formatNumber(12345.123, {style: 'currency'}));
+          append(Locale.formatDate(new Date(2015, 2, 7, 13, 40), {date: 'full'}));
+        });
 
       });
     </script>

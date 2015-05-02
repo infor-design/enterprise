@@ -1,7 +1,7 @@
 <div class="row">
   <div class="twelve columns">
-    <h1>Simple List</h1>
-    <span class="label">Data Sets</span>
+    <h1>List View</h1>
+    <span class="label">Readonly</span>
     <hr>
   </div>
 </div>
@@ -11,50 +11,10 @@
 
 <div class="row">
   <div class="one-third column">
-
-    <script id="employee-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-           <li>
-            <p>{{firstName}} {{lastName}}, {{title}}</p>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
-
-    <div class="card" >
-      <div class="card-header">
-        <h2 class="card-title">Employee Information</h2>
-        <button class="btn-actions">
-          <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
-            <use xlink:href="#action-button"></use>
-          </svg>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Add new action item</a></li>
-          <li><a href="#">Regular action</a></li>
-          <li><a href="#">Individual Action</a></li>
-        </ul>
-      </div>
-
-      <div class="card-content">
-        <div class="listview" data-tmpl="employee-tmpl" data-dataset="/api/people"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="one-third column">
-
     <script id="task-tmpl" type="text/html">
       <ul>
         {{#dataset}}
-          {{#error}}
-            <li class="error">
-          {{/error}}
-          {{^error}}
-            <li>
-          {{/error}}
+           <li>
             <p class="listview-heading">Task #{{task}}</p>
             <p class="listview-subheading">{{desc}}</p>
             <p class="listview-micro">Due: {{date}}</p>
@@ -87,34 +47,51 @@
 </div>
 
 <div class="row">
-  <div class="two-thirds column">
+  <div class="twelve columns">
+    <h1>List View</h1>
+    <span class="label">Single Row Select & Contextual Toolbar</span>
+    <hr>
+  </div>
+</div>
 
-    <script id="drilldown-tmpl" type="text/html">
-      <table class="listview-table">
-        <tr>
-          <th scope="col">Drilldown</th>
-          <th scope="col">Name</th>
-          <th scope="col">Title</th>
-          <th scope="col">status</th>
-        </tr>
+<div class="row">
+  <div class="one-third column">
+    <script id="period-end-tmpl" type="text/html">
+      <ul>
         {{#dataset}}
-          <tr>
-            <td>
-              <button data-id="{{id}}" class="btn-icon small"><svg class="icon" focusable="false" aria-hidden="true">
-                   <use xlink:href="#icon-drilldown"></use></svg><span>Drilldown</span>
-              </button>
-            </td>
-            <td>{{firstName}} {{lastName}}</td>
-            <td>{{title}}</td>
-            <td>{{status}}</td>
-          </tr>
+          {{#alert}}
+            <li class="error">
+          {{/alert}}
+          {{^alert}}
+            <li>
+          {{/alert}}
+            <p class="listview-heading">{{city}}</p>
+            <p class="listview-subheading">{{location}}</p>
+            <div class="l-pull-right">
+              {{#alert}}
+                <svg class="icon icon-error">
+                  <use xlink:href="#icon-error"/>
+                </svg>
+               {{/alert}}
+
+              {{#alert}}
+                <span class="days error">{{ daysLeft }}</span><span class="day-sign error">d</span>
+                <span class="hours error">{{ hoursLeft }}</span><span class="hour-sign error">h</span>
+              {{/alert}}
+              {{^alert}}
+                <span class="days">{{ daysLeft }}</span><span class="day-sign">d</span>
+                <span class="hours">{{ hoursLeft }}</span><span class="hour-sign">h</span>
+              {{/alert}}
+
+            </div>
+          </li>
         {{/dataset}}
-      </table>
+      </ul>
     </script>
 
     <div class="card" >
       <div class="card-header">
-        <h2 class="card-title">Employee Information</h2>
+        <h2 class="card-title">Tasks</h2>
         <button class="btn-actions">
           <span class="audible">Actions</span>
           <svg class="icon" focusable="false">
@@ -122,16 +99,28 @@
           </svg>
         </button>
         <ul class="popupmenu">
-          <li><a href="#">Action One</a></li>
-          <li><a href="#">Action Two</a></li>
-          <li><a href="#">Action Three</a></li>
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
         </ul>
       </div>
 
       <div class="card-content">
-        <div class="listview" id="emp-listview" data-tmpl="drilldown-tmpl" data-dataset="/api/people"></div>
+        <div class="listview-toolbar">
+          <button class="btn-toolbar" title="Assign Selected Items" type="button">Assign</button>
+          <button class="btn-toolbar" title="Remove Selected Items" type="button">Remove</button>
+        </div>
+        <div class="listview" id="period-end" data-tmpl="period-end-tmpl" data-dataset="/api/periods" data-selectable="single"></div>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <h1>List View</h1>
+    <span class="label">Multi Row Select & Contextual Toolbar</span>
+    <hr>
   </div>
 </div>
 
@@ -164,7 +153,7 @@
       <div class="card-content">
         <div class="listview-toolbar">
           <button class="btn-toolbar" title="Assign Selected Items" type="button">Assign</button>
-          <button class="btn-toolbar" title="Remove Selected Items"type="button">Remove</button>
+          <button class="btn-toolbar" title="Remove Selected Items" type="button">Remove</button>
         </div>
         <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
       </div>
@@ -173,87 +162,15 @@
 </div>
 
 <div class="row">
-  <div class="one-third column">
-   <script id="alerts-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          <li>
-            {{#escalated}}
-              <small class="alert-text">Escalated ({{escalated}}X)</small>
-            {{/escalated}}
-            <span class="listview-micro l-pull-right">{{time}}</span>
-            <p class="listview-heading">{{taskName}}</p>
-            <p class="listview-subheading">{{desc}}</p>
-            <p class="listview-micro">{{comments}} Comments</p>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
-
-    <div class="card" >
-      <div class="card-header">
-        <h2 class="card-title">My Alerts</h2>
-        <button class="btn-actions">
-          <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
-            <use xlink:href="#action-button"></use>
-          </svg>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Action One</a></li>
-          <li><a href="#">Action Two</a></li>
-        </ul>
-      </div>
-
-      <div class="card-content">
-        <div class="listview" data-tmpl="alerts-tmpl" data-dataset="/api/tasks"></div>
-      </div>
-    </div>
+  <div class="twelve columns">
+    <h1>List View</h1>
+    <span class="label">Editable (Limited)</span>
+    <hr>
   </div>
 </div>
 
 <div class="row">
-  <div class="one-third column">
-   <script id="team-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          <li>
-            {{#escalated}}
-              <small class="alert-text">Escalated ({{escalated}}X)</small>
-            {{/escalated}}
-            <img class="listview-thumbnail" alt="Photo of {{firstName}}" src="{{img}}"></img>
-            <p class="listview-heading">{{firstName}} {{lastName}}</p>
-            <p class="listview-subheading">{{title}}</p>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
-
-    <div class="card" >
-      <div class="card-header">
-        <h2 class="card-title">My Team</h2>
-        <button class="btn-actions">
-          <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
-            <use xlink:href="#action-button"></use>
-          </svg>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Action One</a></li>
-          <li><a href="#">Action Two</a></li>
-        </ul>
-      </div>
-
-      <div class="card-content">
-        <div class="listview" data-tmpl="team-tmpl" data-dataset="/api/people"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="row">
-  <div style="width: 537px;margin-left: 20px">
+  <div class="two-thirds column">
    <script id="share-rbhp-tmpl" type="text/html">
       <ul>
         {{#dataset}}
@@ -315,24 +232,50 @@
   </div>
 </div>
 
-<script>
-  $('#emp-listview').on('click', 'button', function () {
-    console.log('Drill Down on: '+ $(this).attr('data-id'));
-  });
+<div class="row">
+  <div class="twelve columns">
+    <h1>List View</h1>
+    <span class="label">Status Indicator (Alert)</span>
+    <hr>
+  </div>
+</div>
 
-  $('#task-listview, #emp-listview, #multiselect-listview').on('selectionchange',function (e, args) {
-    console.log(args);
-  });
+<div class="row">
+  <div class="one-third column">
+   <script id="alerts-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          <li>
+            {{#escalated}}
+              <small class="alert-text">Escalated ({{escalated}}X)</small>
+            {{/escalated}}
+            <span class="listview-micro l-pull-right">{{time}}</span>
+            <p class="listview-heading">{{taskName}}</p>
+            <p class="listview-subheading">{{desc}}</p>
+            <p class="listview-micro">{{comments}} Comments</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
 
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">My Alerts</h2>
+        <button class="btn-actions">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false">
+            <use xlink:href="#action-button"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
 
-  //TODO: Thought should we put this inside?
-  var shareList = $('#share-rbhp').on('click', 'button', function (e) {
-    var api = shareList.data('listview');
-    api.remove($(this).closest('li'));
-    //api.clear();
-   });
-
-</script>
-
-
-
+      <div class="card-content">
+        <div class="listview" data-tmpl="alerts-tmpl" data-dataset="/api/tasks"></div>
+      </div>
+    </div>
+  </div>
+</div>

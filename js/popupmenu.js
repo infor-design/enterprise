@@ -2,613 +2,594 @@
 * Responsive Popup Menu Control (Context)
 * @name popupmenu
 */
-(function (factory) {
 
-  'use strict';
+$.fn.popupmenu = function(options) {
 
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
+  // Settings and Options
+  var pluginName = 'popupmenu',
+    defaults = {
+      menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
+      trigger: 'click',  //click, rightClick, immediate
+      autoFocus: true,
+      mouseFocus: true,
+      eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
+    },
+    settings = $.extend({}, defaults, options);
+
+  // Plugin Constructor
+  function PopupMenu(element) {
+    this.settings = $.extend({}, settings);
+    this.element = $(element);
+    this.init();
   }
 
-}(function ($) {
+  // Plugin Object
+  PopupMenu.prototype = {
+    init: function() {
+      this.setup();
+      this.addMarkup();
+      this.handleEvents();
+    },
 
+    setup: function() {
+      if (this.element.attr('data-popupmenu') && (this.settings.menu === null || this.settings.menu === undefined)) {
+        this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
+      }
+      // Backwards compatibility for "menuId" menu options coming from other controls
+      // that utilize the Popupmenu.
+      if (this.settings.menuId) {
+        this.settings.menu = this.settings.menuId;
+        this.settings.menuId = undefined;
+      }
 
-  $.fn.popupmenu = function(options) {
+      // keep track of how many popupmenus there are with an ID.
+      // Used for managing events that are bound to $(document)
+      this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
+    },
 
-    // Settings and Options
-    var pluginName = 'popupmenu',
-      defaults = {
-        menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
-        trigger: 'click',  //click, rightClick, immediate
-        autoFocus: true,
-        mouseFocus: true,
-        eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
-      },
-      settings = $.extend({}, defaults, options);
+    //Add markip including Aria
+    addMarkup: function () {
+      var id;
 
-    // Plugin Constructor
-    function PopupMenu(element) {
-      this.settings = $.extend({}, settings);
-      this.element = $(element);
-      this.init();
-    }
+      switch(typeof this.settings.menu) {
+        case 'string': // ID Selector
+          id = this.settings.menu;
+          this.menu = $('#' + this.settings.menu);
+          break;
+        case 'object': // jQuery Object
+          if (this.settings.menu === null) {
+            this.menu = this.element.next('.popupmenu');
+          } else {
+            this.menu = $(this.settings.menu);
+          }
 
-    // Plugin Object
-    PopupMenu.prototype = {
-      init: function() {
-        this.setup();
-        this.addMarkup();
-        this.handleEvents();
-      },
-
-      setup: function() {
-        if (this.element.attr('data-popupmenu') && (this.settings.menu === null || this.settings.menu === undefined)) {
-          this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
-        }
-        // Backwards compatibility for "menuId" menu options coming from other controls
-        // that utilize the Popupmenu.
-        if (this.settings.menuId) {
-          this.settings.menu = this.settings.menuId;
-          this.settings.menuId = undefined;
-        }
-
-        // keep track of how many popupmenus there are with an ID.
-        // Used for managing events that are bound to $(document)
-        this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
-      },
-
-      //Add markip including Aria
-      addMarkup: function () {
-        var id;
-
-        switch(typeof this.settings.menu) {
-          case 'string': // ID Selector
-            id = this.settings.menu;
-            this.menu = $('#' + this.settings.menu);
-            break;
-          case 'object': // jQuery Object
-            if (this.settings.menu === null) {
-              this.menu = this.element.next('.popupmenu');
-            } else {
-              this.menu = $(this.settings.menu);
-            }
-
+          id = this.menu.attr('id');
+          if (!id || id === '') {
+            this.menu.attr('id', 'popupmenu-' + this.id);
             id = this.menu.attr('id');
-            if (!id || id === '') {
-              this.menu.attr('id', 'popupmenu-' + this.id);
-              id = this.menu.attr('id');
-            }
-            break;
-        }
-
-        if (this.menu.length === 0) {
-          return false;
-        }
-
-        // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
-        // to prevent containment issues.
-        if (this.menu.parent().not('body').length > 0) {
-          this.originalParent = this.menu.parent();
-          this.menu.detach().appendTo('body');
-        }
-
-        this.menu.addClass('popupmenu')
-          .attr('role', 'menu').attr('aria-hidden', 'true')
-          .wrap('<div class="popupmenu-wrapper"></div>');
-
-        //Enforce Correct Modality
-        this.menu.parent('.popupmenu-wrapper').attr('role', 'application');
-
-        // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
-        this.menu.find('.popupmenu').each(function(i, elem) {
-          var popup = $(elem);
-
-          if (!(popup.parent().hasClass('wrapper'))) {
-            popup.wrap('<div class="wrapper"></div>');
           }
+          break;
+      }
 
-        });
+      if (this.menu.length === 0) {
+        return false;
+      }
 
-        // If action button menu, append arrow markup
-        var containerClass = this.element.parent().attr('class');
-        if (containerClass !==undefined && (this.element.hasClass('btn-actions') || containerClass.indexOf('more') >= 0 || containerClass.indexOf('btn-group') >= 0)) {
-          var arrow = $('<div class="arrow"></div>');
-          this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
+      // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
+      // to prevent containment issues.
+      if (this.menu.parent().not('body').length > 0) {
+        this.originalParent = this.menu.parent();
+        this.menu.detach().appendTo('body');
+      }
+
+      this.menu.addClass('popupmenu')
+        .attr('role', 'menu').attr('aria-hidden', 'true')
+        .wrap('<div class="popupmenu-wrapper"></div>');
+
+      //Enforce Correct Modality
+      this.menu.parent('.popupmenu-wrapper').attr('role', 'application');
+
+      // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
+      this.menu.find('.popupmenu').each(function(i, elem) {
+        var popup = $(elem);
+
+        if (!(popup.parent().hasClass('wrapper'))) {
+          popup.wrap('<div class="wrapper"></div>');
         }
 
-        //TODO: Follow up 'button expanded' in JAWS
-        this.element.attr('aria-haspopup', true)
-          .attr('aria-expanded', 'false');
+      });
 
-        if (!this.element.is('button')) {
-          this.element.attr('aria-owns', id);
+      // If action button menu, append arrow markup
+      var containerClass = this.element.parent().attr('class');
+      if (containerClass !==undefined && (this.element.hasClass('btn-actions') || containerClass.indexOf('more') >= 0 || containerClass.indexOf('btn-group') >= 0)) {
+        var arrow = $('<div class="arrow"></div>');
+        this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
+      }
+
+      //TODO: Follow up 'button expanded' in JAWS
+      this.element.attr('aria-haspopup', true)
+        .attr('aria-expanded', 'false');
+
+      if (!this.element.is('button')) {
+        this.element.attr('aria-owns', id);
+      }
+
+      this.menu.find('li').attr('role', 'presentation');
+      this.menu.find('.popupmenu').parent().parent().addClass('submenu');
+      this.menu.find('.submenu').children('a').each(function(i, value) {
+        var item = $(value);
+
+        if (item.find('span').length === 0) {
+          var text = $(item).text();
+          item.html('<span>' + text + '<span>');
         }
-
-        this.menu.find('li').attr('role', 'presentation');
-        this.menu.find('.popupmenu').parent().parent().addClass('submenu');
-        this.menu.find('.submenu').children('a').each(function(i, value) {
-          var item = $(value);
-
-          if (item.find('span').length === 0) {
-            var text = $(item).text();
-            item.html('<span>' + text + '<span>');
-          }
-          if (item.find('svg.arrow').length === 0) {
-            item.append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
-          }
-          item.attr('aria-haspopup', 'true');
-
-        });
-
-        var anchor = this.menu.find('a');
-        anchor.attr('tabindex', '-1').attr('role', 'menuitem');
-
-        //Add Checked indication
-        anchor.each(function () {
-          var a = $(this);
-          if (a.parent().hasClass('is-checked')) {
-            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
-          }
-          if (a.parent().hasClass('is-not-checked')) {
-            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'false'});
-          }
-        });
-
-        this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
-
-      },
-
-      handleEvents: function() {
-        var self = this;
-
-        if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
-          this.element.on('click.popupmenu', function (e) {
-            $(this).focus();
-            if (self.menu.hasClass('is-open')){
-              self.close();
-            } else {
-              self.open(e);
-            }
-          });
+        if (item.find('svg.arrow').length === 0) {
+          item.append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
         }
-        //settings.trigger
-        if (this.settings.trigger === 'rightClick') {
-          this.menu.parent().on('contextmenu.popupmenu', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          });
+        item.attr('aria-haspopup', 'true');
 
-          this.element.on('contextmenu.popupmenu', function (e) {
-            e.preventDefault();
-            return false;
-          }).on('mousedown.popupmenu', function (e) {
-            if (e.button === 2) {
-              self.open(e);
-            }
-            e.stopPropagation();
-          });
+      });
+
+      var anchor = this.menu.find('a');
+      anchor.attr('tabindex', '-1').attr('role', 'menuitem');
+
+      //Add Checked indication
+      anchor.each(function () {
+        var a = $(this);
+        if (a.parent().hasClass('is-checked')) {
+          a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
         }
-
-        if (this.settings.trigger === 'immediate') {
-          this.open(this.settings.eventObj);
+        if (a.parent().hasClass('is-not-checked')) {
+          a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'false'});
         }
+      });
 
-        this.element.on('keydown.popupmenu', function (e) {
-          if (e.shiftKey && e.which === 121) {  //Shift F10
-            self.open(e, true);
+      this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
+
+    },
+
+    handleEvents: function() {
+      var self = this;
+
+      if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
+        this.element.on('click.popupmenu', function (e) {
+          $(this).focus();
+          if (self.menu.hasClass('is-open')){
+            self.close();
+          } else {
+            self.open(e);
           }
         });
-
-      },
-
-      handleKeys: function () {
-        var self = this;
-        //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
-
-        //Handle Events in Anchors
-        this.menu.on('click.popmenu', 'a', function (e) {
-          var anchor = $(this),
-            href = anchor.attr('href');
-
-          if (anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
-            //Do not close parent items of submenus on click
-            return;
-          }
-
-          if (anchor.find('input[checkbox]').length > 0) {
-            return;
-          }
-
-          self.element.trigger('selected', [anchor]);
-          self.close();
-
-          if (self.element.is('.autocomplete')) {
-            return;
-          }
-
-          if (href && href.charAt(0) !== '#') {
-             return true;
-          }
-
+      }
+      //settings.trigger
+      if (this.settings.trigger === 'rightClick') {
+        this.menu.parent().on('contextmenu.popupmenu', function (e) {
           e.preventDefault();
           e.stopPropagation();
-
+          return false;
         });
 
-        var excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
-        //Select on Focus
-        if (this.settings.mouseFocus) {
-          this.menu.on('mouseenter.popupmenu', 'a', function () {
-            $(this).focus();
-          });
-        }
-
-        $(document).on('keydown.popupmenu.' + this.id, function (e) {
-          var key = e.which,
-            focus;
-
-          //Close on escape
-          if (key === 27) {
-            self.close();
+        this.element.on('contextmenu.popupmenu', function (e) {
+          e.preventDefault();
+          return false;
+        }).on('mousedown.popupmenu', function (e) {
+          if (e.button === 2) {
+            self.open(e);
           }
-
-          if (key === 9) {
-            self.close();
-          }
-
-          //Select Checkboxes
-          if (key === 32) {
-            $(e.target).find('input:checkbox').trigger('click');
-          }
-
-          focus = self.menu.find(':focus');
-
-          //Right Close Submenu
-          if (key === 37) {
-            e.preventDefault();
-            if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
-              focus.closest('.popupmenu').removeClass('is-open').parent().prev('a').focus();
-              focus.closest('.popupmenu').removeClass('is-open').parent().parent().removeClass('is-submenu-open');
-            }
-          }
-
-          //Up on Up
-          if (key === 38) {
-             e.preventDefault();
-
-            //Go back to Top on the last one
-            if (focus.parent().prevAll(excludes).length === 0) {
-              self.menu.parent().find(excludes).last().find('a').focus();
-              return;
-            }
-            focus.parent().prevAll(excludes).first().find('a').focus();
-          }
-
-          //Right Open Submenu
-          if (key === 39) {
-            e.preventDefault();
-            if (focus.parent().hasClass('submenu')) {
-              self.showSubmenu(focus.parent());
-              focus.parent().find('.popupmenu a:first').focus();
-            }
-          }
-
-          //Down
-          if (key === 40) {
-            e.preventDefault();
-            //Go back to Top on the last one
-            if (focus.parent().nextAll(excludes).length === 0) {
-              if (focus.length === 0) {
-                self.menu.parent().find(excludes).first().find('a').focus();
-              } else {
-                focus.closest('.popupmenu').find(excludes).first().find('a').focus();
-              }
-              return;
-            }
-            focus.parent().nextAll(excludes).first().find('a').focus();
-          }
+          e.stopPropagation();
         });
-      },
+      }
 
-      position: function(e) {
-        var target = (e ? $(e.target) : this.element),
-          wrapper = this.menu.parent('.popupmenu-wrapper'),
-          menuWidth = this.menu.outerWidth(),
-          menuHeight = this.menu.outerHeight(),
-          xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 34 : 0;
+      if (this.settings.trigger === 'immediate') {
+        this.open(this.settings.eventObj);
+      }
 
-        if (this.settings.trigger === 'rightClick' || (e !== null && e !== undefined && this.settings.trigger === 'immediate')) {
-          wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
-                        'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
-        } else {
-          wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0) - xOffset,
-                        'top': target.offset().top + 10 - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight() });
+      this.element.on('keydown.popupmenu', function (e) {
+        if (e.shiftKey && e.which === 121) {  //Shift F10
+          self.open(e, true);
+        }
+      });
+
+    },
+
+    handleKeys: function () {
+      var self = this;
+      //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
+
+      //Handle Events in Anchors
+      this.menu.on('click.popmenu', 'a', function (e) {
+        var anchor = $(this),
+          href = anchor.attr('href');
+
+        if (anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
+          //Do not close parent items of submenus on click
+          return;
         }
 
-        //Handle Case where menu is off bottom
-        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          if (this.element.is(':not(.autocomplete)')) {
-            wrapper.css({'top': ($(window).height() + $(document).scrollTop()) - menuHeight});
-
-            //Did it fit?
-            if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
-              wrapper.css('top', 0);
-              wrapper.css('top', $(document).scrollTop() + (wrapper.offset().top * -1));
-              menuHeight = wrapper.outerHeight();
-            }
-          }
-
-          // Do one more check to see if the bottom edge bleeds off the screen.
-          // If it does, shrink the menu's Y size.
-          if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-            var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
-            menuHeight = menuHeight - differenceX - 32;
-            this.menu.height(menuHeight);
-          }
+        if (anchor.find('input[checkbox]').length > 0) {
+          return;
         }
 
-        //Handle Case where menu is off the bottom
-        if ((wrapper.offset().left + menuWidth) > $(window).width()) {
-          wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
+        self.element.trigger('selected', [anchor]);
+        self.close();
+
+        if (self.element.is('.autocomplete')) {
+          return;
         }
 
-        if (this.element.hasClass('btn-menu')) {
-          //move the arrow - might need better logic here.
-          wrapper.find('.arrow').css('left', '25%');
-        }
-      },
-
-      open: function(e) {
-        var self = this;
-        this.element.trigger('beforeOpen', [this.menu]);
-
-        $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
-        this.menu.addClass('is-open').attr('aria-hidden', 'false');
-
-        self.position(e);
-
-        if (this.element.closest('.header').length > 0) {
-          this.menu.parent().css('z-index', '9001');
+        if (href && href.charAt(0) !== '#') {
+           return true;
         }
 
-        //Close on Document Click ect..
-        setTimeout(function () {
-          $(document).on('click.popupmenu.' + this.id, function (e) {
-            if (e.button === 2) {
-              return;
-            }
+        e.preventDefault();
+        e.stopPropagation();
 
-            if ($(e.target).closest('.popupmenu').length === 0) {
-              self.close();
-            }
-          });
+      });
 
-          $(window).on('scroll.popupmenu resize.popupmenu', function () {
-            self.close();
-          });
-          self.element.trigger('open', [self.menu]);
-        }, 400);
-
-        //Hide on iFrame Clicks - only works if on same domain
-        $('iframe').each(function () {
-          var frame = $(this);
-          frame.ready(function () {
-
-            try {
-              frame.contents().find('body').on('click.popupmenu', function () {
-                self.close();
-              });
-            } catch (e)  {
-              //Ignore security errors on out of iframe
-            }
-
-          });
+      var excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
+      //Select on Focus
+      if (this.settings.mouseFocus) {
+        this.menu.on('mouseenter.popupmenu', 'a', function () {
+          $(this).focus();
         });
+      }
 
-        this.handleKeys();
-        this.element.attr('aria-expanded', 'true');
+      $(document).on('keydown.popupmenu.' + this.id, function (e) {
+        var key = e.which,
+          focus;
 
-        //hide and decorate submenus - we use a variation on
-        var tracker = 0, startY, menuToClose, timeout;
-
-        self.menu.find('.popupmenu').removeClass('is-open');
-        self.menu.on('mouseenter.popupmenu', '.submenu', function (e) {
-          var menuitem = $(this);
-          startY = e.pageX;
-
-          clearTimeout(timeout);
-          timeout = setTimeout(function () {
-            self.showSubmenu(menuitem);
-          }, 300);
-
-          $(document).on('mousemove.popupmenu.' + this.id, function (e) {
-            tracker = e.pageX;
-          });
-        }).on('mouseleave.popupmenu', '.submenu', function () {
-          $(document).off('mousemove.popupmenu.' + this.id);
-
-          menuToClose = $(this).find('ul');
-
-          var isLeft = parseInt(menuToClose.parent('.wrapper').css('left')) < 0,
-            canClose = (tracker - startY) < 3.5;
-
-          if (isLeft) {
-            canClose = (tracker - startY) >= 0;
-          }
-
-          if (canClose) { //We are moving slopie to the menu
-            menuToClose.removeClass('is-open').removeAttr('style');
-            menuToClose.parent('.wrapper').removeAttr('style');
-            menuToClose.parent().parent().removeClass('is-submenu-open');
-          }
-          clearTimeout(timeout);
-        });
-
-        if (self.settings.autoFocus) {
-          setTimeout(function () {
-            self.menu.parent().find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
-          }, 1);
-        }
-      },
-
-      showSubmenu: function (li) {
-        var wrapper = li.children('.wrapper').filter(':first');
-
-        // Wrap if not wrapped (dynamic menu situation)
-        if (wrapper.length === 0) {
-          var ul = li.children('ul').filter(':first');
-          ul.wrap('<div class="wrapper"></div>');
-          wrapper = ul.parent();
+        //Close on escape
+        if (key === 27) {
+          self.close();
         }
 
-        var menu = wrapper.children('.popupmenu'),
-          mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
-        li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
+        if (key === 9) {
+          self.close();
+        }
 
-        wrapper.css({
-          'left': li.position().left + li.outerWidth(),
-          'top': (parseInt(li.position().top) - 11) + 'px'
-        }).children('.popupmenu').addClass('is-open');
+        //Select Checkboxes
+        if (key === 32) {
+          $(e.target).find('input:checkbox').trigger('click');
+        }
 
-        //Handle Case where the menu is off to the right
-        var menuWidth = menu.outerWidth();
-        if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
-          wrapper.css('left', -9999);
-          menuWidth = menu.outerWidth();
-          wrapper.css('left', li.position().left - menuWidth);
+        focus = self.menu.find(':focus');
+
+        //Right Close Submenu
+        if (key === 37) {
+          e.preventDefault();
+          if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
+            focus.closest('.popupmenu').removeClass('is-open').parent().prev('a').focus();
+            focus.closest('.popupmenu').removeClass('is-open').parent().parent().removeClass('is-submenu-open');
+          }
+        }
+
+        //Up on Up
+        if (key === 38) {
+           e.preventDefault();
+
+          //Go back to Top on the last one
+          if (focus.parent().prevAll(excludes).length === 0) {
+            self.menu.parent().find(excludes).last().find('a').focus();
+            return;
+          }
+          focus.parent().prevAll(excludes).first().find('a').focus();
+        }
+
+        //Right Open Submenu
+        if (key === 39) {
+          e.preventDefault();
+          if (focus.parent().hasClass('submenu')) {
+            self.showSubmenu(focus.parent());
+            focus.parent().find('.popupmenu a:first').focus();
+          }
+        }
+
+        //Down
+        if (key === 40) {
+          e.preventDefault();
+          //Go back to Top on the last one
+          if (focus.parent().nextAll(excludes).length === 0) {
+            if (focus.length === 0) {
+              self.menu.parent().find(excludes).first().find('a').focus();
+            } else {
+              focus.closest('.popupmenu').find(excludes).first().find('a').focus();
+            }
+            return;
+          }
+          focus.parent().nextAll(excludes).first().find('a').focus();
+        }
+      });
+    },
+
+    position: function(e) {
+      var target = (e ? $(e.target) : this.element),
+        wrapper = this.menu.parent('.popupmenu-wrapper'),
+        menuWidth = this.menu.outerWidth(),
+        menuHeight = this.menu.outerHeight(),
+        xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 34 : 0;
+
+      if (this.settings.trigger === 'rightClick' || (e !== null && e !== undefined && this.settings.trigger === 'immediate')) {
+        wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
+                      'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
+      } else {
+        wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0) - xOffset,
+                      'top': target.offset().top + 10 - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight() });
+      }
+
+      //Handle Case where menu is off bottom
+      if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+        if (this.element.is(':not(.autocomplete)')) {
+          wrapper.css({'top': ($(window).height() + $(document).scrollTop()) - menuHeight});
+
           //Did it fit?
-          if (wrapper.offset().left < 0) {
-            //No. Push the menu's left offset onto the screen.
-            wrapper.css('left', 0);
-            menuWidth = menu.outerWidth();
-          }
-          // Do one more check to see if the right edge bleeds off the screen.
-          // If it does, shrink the menu's X size.
-          if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
-            var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
-            menuWidth = menuWidth - differenceY;
-            menu.width(menuWidth);
-          }
-        }
-
-        //Handle Case where menu is off bottom
-        var menuHeight = menu.outerHeight();
-        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          // First try bumping up the menu to sit just above the bottom edge of the window.
-          var bottomEdgeCoord = wrapper.offset().top + menuHeight,
-            differenceFromBottomY = bottomEdgeCoord - ($(window).height() + $(document).scrollTop());
-          wrapper.css('top', wrapper.position().top - differenceFromBottomY);
-
-          // Does it fit?
-          if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-            // No. Bump the menu up higher based on the menu's height and the extra space from the main wrapper.
-            wrapper.css('top', ($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset);
-          }
-
-          // Does it fit now?
           if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
-            // No. Push the menu down onto the screen from the top of the window edge.
             wrapper.css('top', 0);
-            wrapper.css('top', (wrapper.offset().top * -1));
-            menuHeight = menu.outerHeight();
-          }
-          // Do one more check to see if the bottom edge bleeds off the screen.
-          // If it does, shrink the menu's Y size and make it scrollable.
-          if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-            var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
-            menuHeight = menuHeight - differenceX - 32;
-            menu.height(menuHeight);
+            wrapper.css('top', $(document).scrollTop() + (wrapper.offset().top * -1));
+            menuHeight = wrapper.outerHeight();
           }
         }
 
-        li.parent().find('.is-submenu-open').removeClass('is-submenu-open');
-        li.addClass('is-submenu-open');
-      },
+        // Do one more check to see if the bottom edge bleeds off the screen.
+        // If it does, shrink the menu's Y size.
+        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+          var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
+          menuHeight = menuHeight - differenceX - 32;
+          this.menu.height(menuHeight);
+        }
+      }
 
-      detach: function () {
-        $(document).off('click.popupmenu keydown.popupmenu');
-        $(window).off('scroll.popupmenu resize.popupmenu');
-        this.menu.off('click.popmenu');
+      //Handle Case where menu is off the bottom
+      if ((wrapper.offset().left + menuWidth) > $(window).width()) {
+        wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
+      }
 
-        $('iframe').each(function () {
-          var frame = $(this);
+      if (this.element.hasClass('btn-menu')) {
+        //move the arrow - might need better logic here.
+        wrapper.find('.arrow').css('left', '25%');
+      }
+    },
+
+    open: function(e) {
+      var self = this;
+      this.element.trigger('beforeOpen', [this.menu]);
+
+      $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
+      this.menu.addClass('is-open').attr('aria-hidden', 'false');
+
+      self.position(e);
+
+      if (this.element.closest('.header').length > 0) {
+        this.menu.parent().css('z-index', '9001');
+      }
+
+      //Close on Document Click ect..
+      setTimeout(function () {
+        $(document).on('click.popupmenu.' + this.id, function (e) {
+          if (e.button === 2) {
+            return;
+          }
+
+          if ($(e.target).closest('.popupmenu').length === 0) {
+            self.close();
+          }
+        });
+
+        $(window).on('scroll.popupmenu resize.popupmenu', function () {
+          self.close();
+        });
+        self.element.trigger('open', [self.menu]);
+      }, 400);
+
+      //Hide on iFrame Clicks - only works if on same domain
+      $('iframe').each(function () {
+        var frame = $(this);
+        frame.ready(function () {
+
           try {
-            frame.contents().find('body').off('click.popupmenu');
-          } catch (e) {
+            frame.contents().find('body').on('click.popupmenu', function () {
+              self.close();
+            });
+          } catch (e)  {
             //Ignore security errors on out of iframe
           }
+
         });
-      },
+      });
 
-      close: function () {
-        this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
-        this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
-        this.menu.find('.submenu').off('mouseenter mouseleave');
-        this.menu.find('.popupmenu').css({'left': '', 'top': '', 'height': '', 'width': ''});
+      this.handleKeys();
+      this.element.attr('aria-expanded', 'true');
 
-        this.element.on('close.popupmenu', function (e) {
-          $(this).off('close.popupmenu');
-          e.stopPropagation();
-        }); //do not propapagate events to parent
+      //hide and decorate submenus - we use a variation on
+      var tracker = 0, startY, menuToClose, timeout;
 
-        // Close all events
-        $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
-        this.menu.off('click.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
+      self.menu.find('.popupmenu').removeClass('is-open');
+      self.menu.on('mouseenter.popupmenu', '.submenu', function (e) {
+        var menuitem = $(this);
+        startY = e.pageX;
 
-        this.element.trigger('close');
-        this.element.focus().attr('aria-expanded', 'false');
-        this.detach();
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+          self.showSubmenu(menuitem);
+        }, 300);
 
-        if (this.settings.trigger === 'immediate') {
-          this.destroy();
-        }
-      },
-
-      destroy: function() {
-        this.menu.parent().off('contextmenu.popupmenu');
-        if (this.element.hasClass('btn-actions')) {
-          this.menu.parent().removeClass('bottom').find('.arrow').remove();
-        }
-        if (this.originalParent) {
-          this.menu.detach().appendTo(this.originalParent);
-        }
-        this.menu.find('.submenu').children('a').each(function(i, item) {
-          var text = $(item).find('span').text();
-          $(item).find('span, svg').remove();
-          $(item).text(text);
+        $(document).on('mousemove.popupmenu.' + this.id, function (e) {
+          tracker = e.pageX;
         });
-        this.menu.unwrap().find('.popupmenu').unwrap();
-        $.removeData(this.element[0], pluginName);
-        this.detach();
-        this.element
-          .removeAttr('aria-owns')
-          .removeAttr('aria-expanded')
-          .removeAttr('aria-haspopup')
-          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
-        this.menu.trigger('destroy');
-      }
-    };
+      }).on('mouseleave.popupmenu', '.submenu', function () {
+        $(document).off('mousemove.popupmenu.' + this.id);
 
-    // Initializing the Control Once or Call Methods.
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        if (typeof instance[options] === 'function') {
-          instance[options]();
+        menuToClose = $(this).find('ul');
+
+        var isLeft = parseInt(menuToClose.parent('.wrapper').css('left')) < 0,
+          canClose = (tracker - startY) < 3.5;
+
+        if (isLeft) {
+          canClose = (tracker - startY) >= 0;
         }
-        instance.settings = $.extend({}, instance.settings, options);
-      } else {
-        instance = $.data(this, pluginName, new PopupMenu(this, settings));
+
+        if (canClose) { //We are moving slopie to the menu
+          menuToClose.removeClass('is-open').removeAttr('style');
+          menuToClose.parent('.wrapper').removeAttr('style');
+          menuToClose.parent().parent().removeClass('is-submenu-open');
+        }
+        clearTimeout(timeout);
+      });
+
+      if (self.settings.autoFocus) {
+        setTimeout(function () {
+          self.menu.parent().find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+        }, 1);
       }
-    });
+    },
+
+    showSubmenu: function (li) {
+      var wrapper = li.children('.wrapper').filter(':first');
+
+      // Wrap if not wrapped (dynamic menu situation)
+      if (wrapper.length === 0) {
+        var ul = li.children('ul').filter(':first');
+        ul.wrap('<div class="wrapper"></div>');
+        wrapper = ul.parent();
+      }
+
+      var menu = wrapper.children('.popupmenu'),
+        mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
+      li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
+
+      wrapper.css({
+        'left': li.position().left + li.outerWidth(),
+        'top': (parseInt(li.position().top) - 11) + 'px'
+      }).children('.popupmenu').addClass('is-open');
+
+      //Handle Case where the menu is off to the right
+      var menuWidth = menu.outerWidth();
+      if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+        wrapper.css('left', -9999);
+        menuWidth = menu.outerWidth();
+        wrapper.css('left', li.position().left - menuWidth);
+        //Did it fit?
+        if (wrapper.offset().left < 0) {
+          //No. Push the menu's left offset onto the screen.
+          wrapper.css('left', 0);
+          menuWidth = menu.outerWidth();
+        }
+        // Do one more check to see if the right edge bleeds off the screen.
+        // If it does, shrink the menu's X size.
+        if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+          var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
+          menuWidth = menuWidth - differenceY;
+          menu.width(menuWidth);
+        }
+      }
+
+      //Handle Case where menu is off bottom
+      var menuHeight = menu.outerHeight();
+      if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+        // First try bumping up the menu to sit just above the bottom edge of the window.
+        var bottomEdgeCoord = wrapper.offset().top + menuHeight,
+          differenceFromBottomY = bottomEdgeCoord - ($(window).height() + $(document).scrollTop());
+        wrapper.css('top', wrapper.position().top - differenceFromBottomY);
+
+        // Does it fit?
+        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+          // No. Bump the menu up higher based on the menu's height and the extra space from the main wrapper.
+          wrapper.css('top', ($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset);
+        }
+
+        // Does it fit now?
+        if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
+          // No. Push the menu down onto the screen from the top of the window edge.
+          wrapper.css('top', 0);
+          wrapper.css('top', (wrapper.offset().top * -1));
+          menuHeight = menu.outerHeight();
+        }
+        // Do one more check to see if the bottom edge bleeds off the screen.
+        // If it does, shrink the menu's Y size and make it scrollable.
+        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
+          var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
+          menuHeight = menuHeight - differenceX - 32;
+          menu.height(menuHeight);
+        }
+      }
+
+      li.parent().find('.is-submenu-open').removeClass('is-submenu-open');
+      li.addClass('is-submenu-open');
+    },
+
+    detach: function () {
+      $(document).off('click.popupmenu keydown.popupmenu');
+      $(window).off('scroll.popupmenu resize.popupmenu');
+      this.menu.off('click.popmenu');
+
+      $('iframe').each(function () {
+        var frame = $(this);
+        try {
+          frame.contents().find('body').off('click.popupmenu');
+        } catch (e) {
+          //Ignore security errors on out of iframe
+        }
+      });
+    },
+
+    close: function () {
+      this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
+      this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
+      this.menu.find('.submenu').off('mouseenter mouseleave');
+      this.menu.find('.popupmenu').css({'left': '', 'top': '', 'height': '', 'width': ''});
+
+      this.element.on('close.popupmenu', function (e) {
+        $(this).off('close.popupmenu');
+        e.stopPropagation();
+      }); //do not propapagate events to parent
+
+      // Close all events
+      $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
+      this.menu.off('click.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
+
+      this.element.trigger('close');
+      this.element.focus().attr('aria-expanded', 'false');
+      this.detach();
+
+      if (this.settings.trigger === 'immediate') {
+        this.destroy();
+      }
+    },
+
+    destroy: function() {
+      this.menu.parent().off('contextmenu.popupmenu');
+      if (this.element.hasClass('btn-actions')) {
+        this.menu.parent().removeClass('bottom').find('.arrow').remove();
+      }
+      if (this.originalParent) {
+        this.menu.detach().appendTo(this.originalParent);
+      }
+      this.menu.find('.submenu').children('a').each(function(i, item) {
+        var text = $(item).find('span').text();
+        $(item).find('span, svg').remove();
+        $(item).text(text);
+      });
+      this.menu.unwrap().find('.popupmenu').unwrap();
+      $.removeData(this.element[0], pluginName);
+      this.detach();
+      this.element
+        .removeAttr('aria-owns')
+        .removeAttr('aria-expanded')
+        .removeAttr('aria-haspopup')
+        .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
+      this.menu.trigger('destroy');
+    }
   };
 
-}));
+  // Initializing the Control Once or Call Methods.
+  return this.each(function() {
+    var instance = $.data(this, pluginName);
+    if (instance) {
+      if (typeof instance[options] === 'function') {
+        instance[options]();
+      }
+      instance.settings = $.extend({}, instance.settings, options);
+    } else {
+      instance = $.data(this, pluginName, new PopupMenu(this, settings));
+    }
+  });
+};

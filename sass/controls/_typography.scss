@@ -44,15 +44,23 @@ h4 {
 }
 
 h1 {
-  @include font-size(24);
+  @include font-size(28);
+
+  + p {
+    margin: 20px 0;
+  }
 }
 
 h2 {
-  @include font-size(20);
+  @include font-size(24);
+
+  + p {
+    margin: 20px 0;
+  }
 }
 
 h3 {
-  @include font-size(18);
+  @include font-size(20);
 }
 
 h4 {

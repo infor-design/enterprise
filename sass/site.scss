@@ -1,17 +1,14 @@
 // Site Styling
 //==================================================//
 
-@import 'reset';
 @import 'mixins';
 @import 'config';
 
 // Home Page
 //==================================================//
 
-$site-maxwidth: 960px;
-$home-color: $azure05;
+$site-maxwidth: 1080px;
 $vision-color: $emerald07;
-$gallery-color: #ac6cbc;
 $code-color: $azure05;
 $code-color-alt: $azure07;
 
@@ -74,6 +71,17 @@ span {
     }
   }
 
+  &.components {
+    .hero-img {
+      background-image: url("/assets/site/0.0_Soho_xi_home_2260_green_02.jpg");
+    }
+
+    + .site-text-section {
+      margin-top: 60px;
+    }
+
+  }
+
   img {
     height: auto;
     margin-top: -7px;
@@ -126,10 +134,14 @@ span {
 
     li:after {
       color: $inverse-color;
+      @include font-size(16);
+      padding: 0 12px 0 3px;
+      position: relative;
+      top: 4px;
     }
 
     a {
-      border-bottom: 1px solid transparent;
+      border: 1px solid transparent;
       color: $inverse-color !important;
 
       &:after {
@@ -208,7 +220,7 @@ span {
     width: 300px;
 
     &:focus {
-      box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px #00c3b5;
+      box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px $vision-color;
     }
 
     &.controls {
@@ -216,7 +228,7 @@ span {
       background-image: url('/assets/site/lego-controls.png');
 
       &:focus {
-        box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px #ff6545;
+        box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px $code-color;
       }
     }
 
@@ -275,6 +287,7 @@ span {
     h2 {
       @include font-size(28);
       margin-bottom: 10px;
+      line-height: 34px;
     }
 
     .btn-primary {
@@ -337,7 +350,9 @@ span {
 
     .icon-logo {
       float: left;
-      margin: 30px 0;
+      height: 50px;
+      margin: 22px 0;
+      width: 50px;
     }
 
     ul {
@@ -375,6 +390,7 @@ span {
   .site-text-section > div,
   .site-howto-nav > div {
     max-width: 80%;
+    padding: 0 20px;
   }
 }
 
@@ -385,16 +401,17 @@ span {
     max-width: 80%;
   }
 
+  .component-group.site-text-section > div {
+    max-width: 80%;
+    padding: 0 20px;
+  }
+
   .site-footer nav {
     margin: 0 30px;
 
     ul {
       display: none;
     }
-  }
-
-  .gallery-thumb {
-    margin: 20px 0 0 !important;
   }
 
 }
@@ -413,7 +430,11 @@ span {
 
   .site-text-section > div,
   .site-howto-nav > div {
-    max-width: $breakpoint-phone-to-tablet;
+    max-width: 80%;
+  }
+
+  .component-group.site-text-section > div {
+    padding: 0 20px;
   }
 
   .site-footer nav {
@@ -467,7 +488,17 @@ span {
   }
 
   h2 {
-    @include font-size(29);
+    @include font-size(30);
+
+    &:first-child {
+      border-top: 0 none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  img + h2 {
+    padding-top: 40px;
   }
 
   h3 {
@@ -480,8 +511,8 @@ span {
 
   p {
     @include font-size(16);
-    line-height: 28px;
-    margin: 20px 0;
+    line-height: 24px;
+    margin: 15px 0;
   }
 
   p:first-child {
@@ -566,21 +597,6 @@ code.snippet {
   padding: 4px 1px;
 }
 
-// Code For Gallery Page
-//==================================================//
-
-.gallery {
-  &.site-hero {
-    background-color: $gallery-color;
-  }
-}
-
-.gallery-headline {
-  h2 {
-    @include font-size(40);
-    margin: 30px 40px 40px;
-  }
-}
 
 // Media Queries For Vision Page and Shared
 //==================================================//
@@ -642,51 +658,8 @@ div.light-bgrnd {
 
   &.site-hero {
     background-color: $code-color;
-    height: 275px;
+    height: 200px;
     padding-top: 25px;
-  }
-
-  .site-category-header {
-    background-color: $ruby07;
-  }
-
-  .site-category-content {
-    background-color: $ruby06;
-  }
-
-  &.site-categories {
-    padding-bottom: 70px;
-  }
-
-  &.site-category-box {
-    background-color: $body-bg-color;
-
-    .hyperlink {
-      color: $inverse-color;
-      display: inline-block;
-      line-height: 24px;
-      margin-bottom: -3px;
-      margin-left: 0;
-      padding: 1px 9px;
-
-      &:focus {
-        border-color: $inverse-color;
-      }
-
-      .ripple {
-        background-color: $inverse-color;
-      }
-    }
-
-    &.alt-bgrnd {
-      .site-category-header {
-        background-color: $code-color;
-      }
-
-      .site-category-content {
-        background-color: $amber09;
-      }
-    }
   }
 
   &.container {
@@ -698,65 +671,35 @@ div.light-bgrnd {
     padding: 20px 0 60px;
   }
 
-  .site-categories {
-    text-align: left;
+  .main h2 {
+    border-top: 1px solid #d8d8d8;
+    line-height: 70px;
+    margin-top: 50px;
 
-    h2 {
-      padding: 25px 0 0;
-      text-align: left;
-    }
-
-    .site-category-icon {
-      background-color: $code-color;
-      float: left;
-      height: 225px;
-      width: 225px;
-
-      &:nth-child(2n) {
-        background-color: $amber07;
-      }
+    &:first-child {
+      border-top: 0;
+      margin-top: 0;
     }
   }
 
-  &.site-category-icon {
-    background-color: $amber07;
-    vertical-align: top;
-
-    &:focus {
-      box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $amber07;
-    }
-
-    .site-icon {
-      background-color: $amber06;
-    }
+  &.site-text-section h2 {
+    margin-top: 0;
   }
 
-  &.site-categories {
-    h2 {
-      padding: 50px 0 40px;
-    }
-  }
-
-  &.site-category-icon:nth-child(even) {
-    background-color: $amber05;
-
-    &:focus {
-      box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px $amber05;
-    }
-
-    .site-icon {
-      background-color: $amber06;
-    }
-  }
 }
 
-
-// Guide/Controls Category Pages
+// Controls Category Pages
 //==================================================//
-.vision {
+.components {
+
+  &.site-hero {
+    padding-top: 0;
+  }
+
   .site-category-icon {
-    background-color: $emerald07;
+    background-color: $code-color;
     height: 200px;
+    margin: 0 10px 10px 0px;
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
@@ -765,12 +708,36 @@ div.light-bgrnd {
     h3 {
       color: $inverse-color;
       @include font-size(22);
-      padding-top: 54px !important;
+      padding-top: 85px !important;
+      margin: 0;
     }
 
     &:nth-child(2n) {
-      background-color: $emerald08;
+      background-color: $code-color-alt;
     }
+
+    &:focus {
+      outline: 2px solid #54a1d3;
+      outline-offset: 3px;
+    }
+
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+
+  .blockgrid {
+    margin-left: -10px;
+    margin-top: 40px;
+    padding-right: 0;
+    text-align: center;
+  }
+}
+
+.site-text-section.component-group {
+  p {
+    text-align: left;
   }
 }
 
@@ -778,7 +745,7 @@ div.light-bgrnd {
   margin-bottom: 80px;
 
   h2 {
-    @include font-size(40);
+    @include font-size(30);
     padding-bottom: 5px;
   }
 
@@ -794,6 +761,10 @@ div.light-bgrnd {
     + h2 {
       padding-top: 20px;
     }
+  }
+
+  pre + h2 {
+    padding-top: 20px;
   }
 
   p:empty {
@@ -812,7 +783,7 @@ div.light-bgrnd {
     margin: 0 0 20px 30px;
 
     li {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     + h2 {
@@ -820,26 +791,8 @@ div.light-bgrnd {
     }
   }
 
-  .example-tag {
-    background-color: $code-color;
-    color: #ffffff;
-    display: block;
-    font-size: 12px;
-    font-weight: bold;
-    height: 31px;
-    line-height: 18px;
-    margin-bottom: 10px;
-    padding: 7px 12px;
-    text-transform: uppercase;
-    width: 80px;
-  }
-
   .example {
     padding: 45px 0 50px 0;
-  }
-
-  .listview-table + h2 {
-    margin-top: 40px;
   }
 
   .listview-table tr,
@@ -853,39 +806,51 @@ div.light-bgrnd {
     background-color: transparent !important;
   }
 
-  .main .content {
-    padding: 0 30px 50px;
-  }
-
   .code {
     background-color: #ebebeb;
+    border: 1px solid #d2d2d2;
+    border-radius: 3px;
     color: #4d4d4c;
     font-size: inherit;
-    margin: 0 4px;
-    padding: 3px;
+    padding: 1px 9px;
   }
 }
 
 .timestamp {
   color: #ffffff;
   display: block;
-  @include font-size(12);
+  font-size: 1.2rem;
+  font-weight: normal;
   margin-right: 30px;
-  margin-top: -30px;
+  margin-top: 0;
   padding: 5px;
   position: absolute;
   right: 1px;
-  top: 1px;
+  text-transform: uppercase;
+  top: 15px;
 
   + p {
     padding-top: 15px;
   }
 }
 
+.example-section {
+  background-color: $body-bg-color;
+  border-bottom: 1px solid #d2d2d2;
+  padding: 50px 0;
+
+  .row {
+    max-width: $site-maxwidth;
+    padding: 0 30px;
+  }
+}
+
+
 .asset-item {
   background-color: #ffffff;
   color: #666666;
   height: 125px;
+  min-height: 300px;
   text-decoration: none;
   width: 125px;
 
@@ -913,28 +878,98 @@ div.light-bgrnd {
   }
 }
 
-// Media Queries for Guide/Controls Category Pages
+.site-categories {
+  padding-bottom: 80px;
+  .row {
+    padding-right: 0;
+  }
+}
+
+// Component Group Adjustments
 //==================================================//
 
-@include respond-to(tabletdown) {
-  .site-categories {
-    padding-bottom: 0;
+.component-group.editorial {
+  .content {
+    display: block !important;
+    margin: 0 0 0 -15px !important;
+    float: none !important;
+    max-width: $site-maxwidth !important;
+  }
+
+}
+
+.component-group.site-text-section {
+  h2 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .blockgrid {
+    text-align: left;
   }
 }
 
 // 404 Page
 //==================================================//
 
-.scrollable-container {
-  .site-error {
-    background-image: url('/assets/site/404-error.jpg');
+.error-page {
+  background-color: #cd0103;
+  height: 100%;
+  position: relative;
+
+  .hero-error {
+    background-image: url('/assets/site/error-bg-404.jpg');
+    background-position: center center;
     background-repeat: no-repeat;
-    background-size: cover;
     display: block;
-    height: calc(100% - 95px);
-    width: 100%;
+    height: 900px;
+    width: auto;
+  }
+
+  .content {
+    margin: -432px auto 158px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 700px;
+
+    h1 {
+      @include font-size(40);
+      color: #ffffff;
+      margin-bottom: 40px;
+    }
+
+    p {
+      @include font-size(22);
+      color: $inverse-color;
+      margin-bottom: 60px;
+    }
+
+    .home {
+      background-color: #ffffff;
+      color: #cc0000;
+      @include font-size(19);
+      padding: 15px 30px;
+      text-decoration: none;
+    }
+  }
+
+}
+
+@include respond-to(tabletdown) {
+  .error-page {
+    .content {
+      width: 80%;
+    }
+  }
+
+  .component-group.editorial .content {
+    margin: 0 auto !important;
+    max-width: 100% !important;
   }
 }
+
 
 // Syntax High Lighting
 //==================================================//

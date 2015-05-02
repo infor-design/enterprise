@@ -320,7 +320,7 @@ $.fn.accordion = function(options) {
       header.children('.accordion-pane').one('animateClosedComplete', function(e) {
         e.stopPropagation();
         $(this).add($(this).find('.accordion-pane')).css('display', 'none');
-          header.trigger('collapsed-accordion');
+        header.trigger('collapsed-accordion');
       }).animateClosed();
     },
 

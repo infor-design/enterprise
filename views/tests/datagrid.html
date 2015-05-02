@@ -1,18 +1,4 @@
-<div class="row">
-  <div class="twelve columns">
-    <h1>Datagrid</h1>
-    <span class="label">(JSON)</span>
-    <hr>
-  </div>
-</div>
-
-<div class="row">
-  <div class="twelve columns">
-    <div id="datagrid">
-    </div>
-  </div>
-</div>
-
+<!-- Setup -->
 <ul id="grid-actions-menu" class="popupmenu">
   <li><a href="#">Action One</a></li>
   <li><a href="#">Action Two</a></li>
@@ -20,6 +6,23 @@
 </ul>
 
 {{={{{ }}}=}}
+
+<!-- Readonly Grid -->
+<div class="row">
+  <div class="twelve columns">
+    <h1>Datagrid</h1>
+    <span class="label">Readonly - Single Row Select</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="readonly-datagrid">
+    </div>
+  </div>
+</div>
+
 <script>
     $('body').on('initialized', function () {
      //Locale.set('en-US').done(function () {
@@ -58,7 +61,7 @@
       columns.push({ id: 'comment', name: 'Comment', field: 'comment', width: 200, formatter: Formatters.TextArea});
 
       //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
+      grid = $('#readonly').datagrid({
         columns: columns,
         idProperty:'officeId',
         dataset: data,

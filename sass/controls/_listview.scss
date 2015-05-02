@@ -30,6 +30,30 @@
     float: left;
     margin-right: 15px;
     margin-top: -1px;
+
+    &.pending::before {
+      left: .35em !important;
+    }
+  }
+
+  li.error {
+    border-left: 3px solid $error-color;
+    padding: 15px 20px 15px 17px;
+  }
+
+  .days,
+  .hours {
+    @include font-size(24);
+    position: relative;
+    top: -3px;
+  }
+
+  .day-sign,
+  .hour-sign {
+    @include font-size(16);
+    margin-right: 5px;
+    position: relative;
+    top: -3px;
   }
 
   .dropdown-wrapper {
@@ -38,7 +62,14 @@
 
   .l-pull-right {
     position: relative;
-    top: -48px;
+    top: -29px;
+
+    .icon.icon-error {
+      left: -10px;
+      position: relative;
+      top: 0;
+      vertical-align: top;
+    }
   }
 
   .field {
@@ -89,14 +120,19 @@
     line-height: 23px;
   }
 
+  .is-toolbar-open {
+    height: calc(100% - 50px);
+    margin-top: 50px;
+  }
+
   button {
     background-color: transparent;
     border-radius: 0;
     margin: 0 15px;
 
     svg {
-      height: 25px;
-      margin-top: -3px;
+      height: 23px;
+      margin-top: -5px;
       width: 30px;
     }
   }
@@ -110,7 +146,6 @@
   li.is-selected,
   tr.is-selected {
     background-color: $azure01; //bde7ff
-    padding: 15px 20px;
 
     &:hover {
       background-color: $azure01;
@@ -161,16 +196,21 @@
   border-radius: 2px 2px 0 0;
   display: none;
   height: 0;
-  margin: -50px 0 0;
+  margin: 0;
   overflow: hidden;
   position: absolute;
-  @include transition(height .2s ease-out 0s);
+  @include transition(height 1.2s ease-out 0s);
   text-align: right;
   width: 100%;
   z-index: 20;
 
   &.is-visible {
     height: 52px;
+
+    + .listview {
+      height: calc(100% - 50px);
+      margin-top: 50px;
+    }
   }
 
   button {

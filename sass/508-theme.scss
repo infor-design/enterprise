@@ -61,7 +61,11 @@ $input-disabled-bg-color: #f4f4f4;
 
 // Show Underline
 .hyperlink {
-  text-decoration: underline;
+  border-bottom: 1px solid $primary-color;
+
+  &[disabled] {
+    border-bottom: 1px solid transparent;
+  }
 }
 
 // Force High Contrast
