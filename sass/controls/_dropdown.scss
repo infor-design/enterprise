@@ -82,6 +82,10 @@ input.dropdown {
   width: auto;
   z-index: 4501;
 
+  &:active {
+    outline: 0;
+  }
+
   ul {
     color: $menu-color;
     font-family: $font-regular;
@@ -138,6 +142,27 @@ input.dropdown {
     }
   }
 
+  // Added to the dropdown list when doing a search
+  &.search-mode {
+
+    li {
+      color: $dropdown-search-color;
+
+      &.is-focused {
+        color: $azure01;
+
+        i {
+          color: $inverse-color;
+        }
+      }
+
+      &.is-disabled {
+        color: #b6b6b6;
+      }
+    }
+
+  }
+
   &.multiple {
 
     ul {
@@ -145,7 +170,7 @@ input.dropdown {
     }
 
     li:not(.group-label):before {
-      top: 5px;
+      top: 6px;
       @include checkbox-unchecked-before-style;
     }
 
@@ -154,12 +179,15 @@ input.dropdown {
     }
 
     li.is-focused:not(.group-label):before {
-      @include checkbox-checked-before-style;
+      @include checkbox-unchecked-before-style;
+      background-color: $menu-hover-color;
     }
 
-    li.is-selected {
-      background-color: $inverse-color;
-      color: #333333;
+    li.is-focused,
+    li.is-selected.is-focused,
+    li:hover:not(.group-label) {
+      background-color: $menu-hover-color;
+      color: $font-color-dark;
     }
 
     li.is-selected:not(.group-label):before {
@@ -181,29 +209,12 @@ input.dropdown {
       left: 25px;
       margin-top: 8px;
     }
-  }
 
-  // Added to the dropdown list when doing a search
-  &.search-mode {
-    li {
-      color: $dropdown-search-color;
-
-      &.is-focused {
-        color: $azure01;
-
+    &.search-mode {
+      li {
         i {
-          color: $inverse-color;
+          color: $azure06;
         }
-      }
-
-      &.is-disabled {
-        color: #b6b6b6;
-      }
-    }
-
-    &.multiple {
-      li.is-selected {
-        color: $azure01;
       }
     }
   }
@@ -231,7 +242,13 @@ input.dropdown {
     fill: $input-border-color;
     margin-left: -32px;
     position: absolute;
-    transform: rotate(180deg);
+    @include css3(transform, rotate(180deg));
+
+    &.search {
+      height: 18px;
+      margin-top: 7px;
+      @include css3(transform, rotate(0deg));
+    }
   }
 }
 

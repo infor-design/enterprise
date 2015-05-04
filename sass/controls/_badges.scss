@@ -102,6 +102,37 @@
     }
   }
 
+  &.checked {
+    &::after {
+      border-color: $checkbox-arrow-color;
+      border-style: solid;
+      border-width: 2px 2px 0 0;
+      content: '';
+      height: 10px;
+      left: 8px;
+      margin-top: 4px;
+      position: absolute;
+      @include css3(transform, scaleX(-1) rotate(135deg));
+      width: 4px;
+    }
+  }
+
+  &.exclamation {
+    &::before {
+      color: #ffffff;
+      content: '!';
+      display: inline-block;
+      font-size: 1.4em;
+      font-weight: bold;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      top: 0;
+      width: 100%;
+    }
+  }
+
   &.large {
     height: 32px;
     @include font-size(20);
