@@ -84,7 +84,7 @@ $datagrid-header-height: 40px;
     .hyperlink {
       color: $primary-color;
       display: block;
-      margin-left: -8px;
+      line-height: inherit;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -96,10 +96,21 @@ $datagrid-header-height: 40px;
     //Row Height Feature
     &.tall-rowheight td {
       height: 100px;
+      line-height: 100px;
     }
 
     &.short-rowheight td {
       height: 22px;
+      line-height: 22px;
+    }
+
+    .datagrid-cell-wrapper {
+      border: 1px solid transparent;
+      display: block;
+      height: 100%;
+      margin: 0;
+      padding: 0 20px;
+      width: 100%;
     }
   }
 
@@ -109,14 +120,19 @@ $datagrid-header-height: 40px;
     border-left: 1px solid #d8d8d8;
     color: $font-color-extradark;
     height: 48px;
+    line-height: 48px;
     max-width: 100px;
+    outline: none;
     overflow: hidden;
-    padding: 0 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     &:last-child {
       border-right: 1px solid #d8d8d8;
+    }
+
+    &:focus .datagrid-cell-wrapper {
+      border: 1px solid $primary-color;
     }
 
     span {

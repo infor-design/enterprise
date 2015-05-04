@@ -245,7 +245,7 @@ window.Chart = function(container) {
         svg.selectAll('.label').style('font-weight', 'normal');
         svg.selectAll('.bar-group rect').style('opacity', 1);
         svg.selectAll('.is-selected').classed('is-selected', false);
-        if (!this.classList.contains('is-selected')) {
+        if (this.classList && !this.classList.contains('is-selected')) {
           bar.classed('is-selected', true);
           svg.selectAll('.label:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
           svg.selectAll('.bar:not(.is-selected)').style('opacity', 0.5);
@@ -467,7 +467,7 @@ window.Chart = function(container) {
       svg.selectAll('.bar').style('opacity', 1);
       d3.select(this.parentNode).style('opacity', 1);
 
-      if (this.classList.contains('is-selected')) {
+      if (this.classList && this.classList.contains('is-selected')) {
         svg.selectAll('.is-selected').classed('is-selected', false);
       } else {
         svg.selectAll('.is-selected').classed('is-selected', false);
@@ -688,6 +688,7 @@ window.Chart = function(container) {
         'class': 'label-line'
     });
 
+    var total = d3.sum(chartData, function(d){ return d.value; });
     var textLabels = labelGroups.append('text').attr({
         x: function (d) {
           var centroid = pieArcs.centroid(d),
@@ -717,6 +718,17 @@ window.Chart = function(container) {
       return d.data.name;
     });
 
+    textLabels.append('tspan').text(function(d) {
+      return d3.round(100*(d.value/total)) + '%';
+    })
+    .attr('dx', '-50')
+    .attr('dy', '-20px')
+    .style('font-weight', 'bold')
+    .style('font-size', '24px')
+    .style('fill', function (d, i) {
+      return charts.pieColors(i);
+    });
+
     if (isDonut) {
       arcs.append('text')
       .attr('dy', '.35em')
@@ -726,17 +738,19 @@ window.Chart = function(container) {
     }
 
     //Calculate Percents for Legend
-    var total = d3.sum(chartData, function(d){ return d.value; }),
-      series = chartData.map(function (d, i) {
+    var series = chartData.map(function (d, i) {
         d.percent = d3.round(100*(d.value/total)) + '%';
         d.elem = enteringArcs[0][i];
-        return {name: d.name, percent:d.percent, elem: d.elem};
+
+        if (parseInt(d.percent) > 10) {
+          d3.select(textLines[0][i]).style('stroke', 'transparent');
+          d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
+        }
+        return {name: d.name, percent: d.percent, elem: d.elem};
       });
 
-    console.log(series, total);
-
     var alpha = 0.5,
-    spacing = 20;
+    spacing = 50;
 
     function relax() {
       var again = false;

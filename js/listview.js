@@ -252,8 +252,8 @@ $.fn.listview = function(options) {
       li.attr('aria-selected', !isChecked);
       this.element.trigger('selectionchange', [this.selectedItems]);
 
-      var toolbar = this.element.closest('.card').find('.listview-toolbar'),
-        top = self.element.scrollTop();
+      var toolbar = this.element.closest('.card').find('.listview-toolbar');
+      //top = self.element.scrollTop();
 
       if (self.selectedItems.length > 0) {
         toolbar.show();

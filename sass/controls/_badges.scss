@@ -18,7 +18,15 @@
   -webkit-font-smoothing: antialiased;
 
   &.error {
-    background-color: $ruby06;
+    background-color: $alert-red;
+  }
+
+  &.alert {
+    background-color: $alert-orange;
+  }
+
+  &.good {
+    background-color: $alert-green;
   }
 
   &.graphite03,
@@ -47,15 +55,15 @@
   width: 22px;
 
   &.error {
-    background-color: $ruby06;
+    background-color: $alert-red;
   }
 
   &.alert {
-    background-color: $amber06;
+    background-color: $alert-orange;
   }
 
   &.good {
-    background-color: $emerald06;
+    background-color: $alert-green;
   }
 
   &.pending {
@@ -85,12 +93,12 @@
     }
 
     [class*='ie'] &:before {
-      left: 3px;
-      top: 3px;
+      left: 3px !important;
+      top: 2.5px;
     }
 
     &.current {
-      background-color: $amber06;
+      background-color: $alert-orange;
     }
   }
 

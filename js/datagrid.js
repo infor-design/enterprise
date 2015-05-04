@@ -39,7 +39,7 @@ window.Formatters = {
   },
 
   Hyperlink: function(row, cell, value) {
-    return '<a href="#" class="hyperlink">' + value + '</a>';
+    return '<a href="#" tabindex="-1" class="hyperlink">' + value + '</a>';
   },
 
   Template: function(row, cell, value, col, item) {
@@ -148,6 +148,7 @@ $.fn.datagrid = function(options) {
      this.render();
      this.createResizeHandle();
      this.handleEvents();
+     this.handleKeys();
     },
 
     initSettings: function () {
@@ -158,7 +159,7 @@ $.fn.datagrid = function(options) {
     render: function () {
       var self = this;
 
-      self.table = $('<table></table>').addClass('datagrid');
+      self.table = $('<table role="grid"></table>').addClass('datagrid');
       self.table.empty();
       self.renderHeader();
       self.renderRows();
@@ -175,7 +176,7 @@ $.fn.datagrid = function(options) {
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable);
 
-        headerRow += '<th scope="col" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
+        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
          ' data-column-id="'+ column.id + '" data-field="'+ column.field +'"'+ (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
         headerRow += '<div class="datagrid-column-wrapper"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
@@ -228,13 +229,20 @@ $.fn.datagrid = function(options) {
 
     //Render the Rows
     renderRows: function() {
-      var rowHtml, tableHtml = '<tbody>',
+      var rowHtml, tableHtml = '',
         self=this;
 
-      self.table.find('tbody').remove();
+      var body = self.table.find('tbody');
+      if (body.length === 0) {
+        self.tableBody = $('<tbody></tbody>');
+        self.table.append(self.tableBody);
+      }
+
+      self.tableBody.empty();
 
       for (var i = 0; i < settings.dataset.length; i++) {
-        rowHtml = '<tr '+ (settings.rowHeight !== 'medium' ? 'class="' + settings.rowHeight + '-rowheight"' : '') +'>';
+        rowHtml = '<tr role="gridcell" aria-colindex="' + (i+1) + '" '+ (settings.rowHeight !== 'medium' ? 'class="' + settings.rowHeight + '-rowheight"' : '') +'>';
+        console.log(i);
 
         for (var j = 0; j < settings.columns.length; j++) {
           var col = settings.columns[j],
@@ -256,8 +264,8 @@ $.fn.datagrid = function(options) {
           cssClass += (col.readonly ? 'is-readonly ' : '');
           cssClass += (col.cssClass ? col.cssClass : '');
 
-          rowHtml += '<td' + (cssClass ? ' class="' + cssClass + '"' : '') + '>';
-          rowHtml += formatted + '</td>';
+          rowHtml += '<td' + (cssClass ? ' class="' + cssClass + '"' : '') + '><div class="datagrid-cell-wrapper">';
+          rowHtml += formatted + '</div></td>';
         }
 
         rowHtml += '</tr>';
@@ -280,22 +288,30 @@ $.fn.datagrid = function(options) {
         tableHtml += rowHtml;
       }
 
-      tableHtml += '</tbody>';
-      self.table.append(tableHtml);
+      self.tableBody.append(tableHtml);
     },
 
     //Trigger event on parent and compose the args
-    triggerRowEvent: function (eventName, e) {
+    triggerRowEvent: function (eventName, e, stopPropagation) {
       var self = this,
           row = $(e.currentTarget).index(),
           cell = $(e.target).closest('td').index(),
           item = self.settings.dataset[row];
 
-      e.stopPropagation();
-      e.preventDefault();
+      if (stopPropagation) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
 
       self.element.trigger(eventName, [{row: row, cell: cell, item: item, originalEvent: e}]);
       return false;
+    },
+
+    //Returns a cell node
+    cellNode: function (row, cell) {
+      var rowNode = this.table.find('tr:visible').eq(row);
+
+      return rowNode.find('td:visible').eq(cell);
     },
 
     // Attach All relevant events
@@ -303,7 +319,12 @@ $.fn.datagrid = function(options) {
       var self = this;
 
       //Sorting - If Shift is Down then Multiples
-      this.element.on('click.datagrid', 'th.is-sortable', function () {
+
+      this.element.on('touchcancel.datagrid touchend.datagrid', 'th.is-sortable', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).trigger('click');
+      }).on('click.datagrid', 'th.is-sortable', function () {
         self.setSortColumn($(this).attr('data-field'));
       });
 
@@ -334,17 +355,22 @@ $.fn.datagrid = function(options) {
       });
 
       var body = this.table.find('tbody');
-      body.on('click.datagrid', 'td', function (e) {
-        self.triggerRowEvent('click', e);
+      body.on('touchcancel.datagrid touchend.datagrid', 'td', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).trigger('click');
+      }).on('click.datagrid', 'td', function (e) {
+        self.triggerRowEvent('click', e, true);
+        self.setActiveCell($(e.target).closest('td'));
       });
 
       body.on('dblclick.datagrid', 'tr', function (e) {
-        self.triggerRowEvent('dblclick', e);
+        self.triggerRowEvent('dblclick', e, true);
       });
 
       //Handle Context Menu Option
       body.on('contextmenu.datagrid', 'tr', function (e) {
-        self.triggerRowEvent('contextmenu', e);
+        self.triggerRowEvent('contextmenu', e, (self.settings.menuId ? true : false));
 
         if (self.settings.menuId) {
           e.preventDefault();
@@ -386,7 +412,84 @@ $.fn.datagrid = function(options) {
 
     },
 
-    //TODO: Views
+    // Handle all keyboard behavior
+    activeCell: {node: null, cell: null, row: null},
+
+    handleKeys: function () {
+      var self = this;
+
+      // Set tab index to first cell
+      self.activeCell = {node: self.cellNode(1, 0).attr('tabindex', '0'), cell: 0, row: 1};
+      self.table.on('keydown.datagrid', 'td', function (e) {
+        var key = e.which;
+
+        //Left and Right Navigation
+        if (key === 37) {
+          self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
+        }
+        if (key === 39) {
+          self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
+        }
+
+        //Up and Down
+        if (key === 38) {
+          self.setActiveCell(self.activeCell.row-1, self.activeCell.cell);
+        }
+        if (key === 40) {
+          self.setActiveCell(self.activeCell.row+1, self.activeCell.cell);
+        }
+
+        /*Set focus to the grid and enter Applications Mode if using a screen reader like JAWS or NVDA.
+        Press Up or Down to navigate by row. (Infinite scrolling is supported)
+        Press Control+Spacebar to announce the current row when using a screen reader.
+        Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
+        Press Left or Right to navigate left or right by cell.
+        Press Home or End to move to the first or last cell on the current row.
+        Press Control+Home or Control+End to move to the first row on the first page or the last row on the last page.
+        Press PageUp or PageDown to open the previous or next page and set focus to the first row.
+        Press Alt+PageUp or Alt+PageDown to open the first or last page and set focus to the first row.
+        For mode 'Selectable':
+        Press Space to toggle row selection, or click to activate using a mouse.
+        If multiSelect is enabled, press Control+A to select all rows on the current page.
+        If Delete is enabled, press Delete to remove all selected rows.
+        For mode 'Editable':
+        Press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
+        */
+      });
+    },
+
+    setActiveCell: function (row, cell) {
+      var self = this,
+        prevCell = self.activeCell;
+
+      //Support passing the yd in
+      if (row instanceof jQuery) {
+        cell = row.index();
+        row = row.parent().index()+1;
+      }
+
+      if (row < 0 || cell < 0) {
+        return;
+      }
+
+      //Remove previous tab index
+      if (prevCell.node && prevCell.node.length ===1) {
+        self.activeCell.node.removeAttr('tabindex');
+      }
+
+      //Find the cell if it exists
+      self.activeCell.node = self.cellNode(row, cell).attr('tabindex', '0');
+
+      if (self.activeCell.node && prevCell.node.length === 1) {
+        self.activeCell.row = row;
+        self.activeCell.cell = cell;
+      } else {
+        self.activeCell = prevCell;
+      }
+
+      self.activeCell.node.focus();
+    },
+
     saveView: function () {
       // Save - Expanded Rows
       // Columns
@@ -426,6 +529,10 @@ $.fn.datagrid = function(options) {
       this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc');
       this.headerRow.find('[data-field="' +field + '"]').addClass((this.sortColumn.sortAsc ? 'is-sorted-asc' : 'is-sorted-desc'));
       this.renderRows();
+
+      if (this.activeCell.node.length === 1) {
+        this.setActiveCell(this.activeCell.row, this.activeCell.cell);
+      }
     },
 
     //Generate Resize Handles
