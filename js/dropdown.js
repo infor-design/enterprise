@@ -3,6 +3,7 @@
 */
 
 $.fn.dropdown = function(options) {
+
   'use strict';
 
   // Dropdown Settings and Options
@@ -148,7 +149,7 @@ $.fn.dropdown = function(options) {
       }
 
       if (self.settings.multiple) {
-        self.list.addClass('multiple');
+        self.list.addClass('multiple').attr('aria-multiselectable', 'true');
       }
 
       // Move all selected options to the top of the list if the setting is true.
@@ -290,10 +291,6 @@ $.fn.dropdown = function(options) {
         self.setValue();
       }).on('openList.dropdown', function() {
         self.toggleList();
-      }).on('simulateKeyDown.dropdown', function(e, origE) {
-        self.handleKeyDown(self.input, origE);
-      }).on('simulateKeyPress.dropdown', function(e, origE) {
-        self.ignoreKeys(self.input, origE);
       });
 
       //for form resets.
@@ -314,7 +311,6 @@ $.fn.dropdown = function(options) {
         return false;
       }
 
-      // TODO: Prevent Backspace from returning to the previous page.
       if (charCode === 8 && input.hasClass('dropdown')) {
         e.stopPropagation();
         e.preventDefault();
@@ -332,6 +328,10 @@ $.fn.dropdown = function(options) {
     handleSearchEvents: function () {
       var self = this, timer;
 
+      // Used to determine how spacebar should function.  False means space will select/deselect.  True means
+      // Space will add a space inside the search input.
+      this.searchKeyMode = false;
+
       this.searchInput.on('keydown.dropdown', function(e) {
         var searchInput = $(this);
 
@@ -341,11 +341,6 @@ $.fn.dropdown = function(options) {
 
         if (!self.handleKeyDown(searchInput, e)) {
           return;
-        }
-
-        //Open List and Filter results
-        if (self.searchInput.val() === self.getOptionText()) {
-          self.searchInput.val('');
         }
 
         clearTimeout(timer);
@@ -366,6 +361,8 @@ $.fn.dropdown = function(options) {
       }
 
       self.list.addClass('search-mode');
+      self.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
+        .children('use').attr('xlink:href', '#icon-search');
       self.listUl.find('li').hide();
 
       $.each(self.element[0].options, function () {
@@ -413,13 +410,15 @@ $.fn.dropdown = function(options) {
     handleKeyDown: function(input, e) {
       var selectedIndex = this.element[0].selectedIndex,
           options = this.element[0].options,
+          key = e.which,
           self = this,
           excludes = 'li:visible:not(.separator):not(.group-label):not(.is-disabled)',
           next;
 
-      //Down and Up arrow to open
-      if (!self.isOpen() && (e.keyCode === 38 || e.keyCode === 40)) {
+      //Down arrow, Up arrow, or Spacebar to open
+      if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
         self.toggleList();
+        return;
       }
 
       if (self.isOpen()) {
@@ -432,27 +431,41 @@ $.fn.dropdown = function(options) {
         });
       }
 
-      switch (e.which) {
+      switch (key) {
         case 46: { //del
           e.stopPropagation();
           return false;
         }
         case 9: {  //tab - save the current selection
+          // If "search mode" is currently off, Tab should turn this mode on and place focus back
+          // into the SearchInput.  If search mode is on, Tab should 'select' the currently highlighted
+          // option in the list, update the SearchInput and close the list.
           if (self.isOpen()) {
-            this.selectOption($(options[selectedIndex]));
-            if (self.isOpen()) {  // Close the option list
-              self.closeList(false);
-              this.activate();
+
+            // In multi-select mode, commiting changes works differently and should not be done with tab
+            if (this.settings.multiple === false) {
+              this.selectOption($(options[selectedIndex]));
             }
+
+            // Don't close the option list if not in Search Key Mode
+            if (this.searchKeyMode === false) {
+              this.searchKeyMode = true;
+              self.activate(true); // Activate search input
+              e.preventDefault();
+              return true;
+            }
+
+            self.closeList(false);
+            this.activate();
           }
-          // allow tab to propagate
+          // allow tab to propagate otherwise
           return true;
         }
         case 27: { //Esc - Close the Combo and Do not change value
           if (self.isOpen()) {
             // Close the option list
             self.closeList(true);
-            self.input.focus();
+            self.activate();
             e.stopPropagation();
             return false;
           }
@@ -460,10 +473,13 @@ $.fn.dropdown = function(options) {
           // that rely on dropdown may need to trigger routines when the Esc key is pressed.
           break;
         }
-        case 32: //spacebar
-        case 13: {  //enter
-
+        case 32: // spacebar // TODO: Figure Out what to do about using Spacebar.
+        case 13: { //enter
           if (self.isOpen()) {
+            if (key === 32 && self.searchKeyMode === true) {
+              break;
+            }
+
             e.preventDefault();
             self.selectOption($(options[selectedIndex])); // store the current selection
             if (self.settings.closeOnSelect) {
@@ -471,18 +487,17 @@ $.fn.dropdown = function(options) {
               self.activate();
             }
           }
-
           e.stopPropagation();
           return false;
         }
         case 38: {  //up
+          this.searchKeyMode = false;
 
           if (selectedIndex > 0) {
             next = $(options[selectedIndex - 1]);
             this.highlightOption(next);
             next.parent().find('.is-focused').removeClass('is-focused');
             next.addClass('is-focused');
-            self.selectOption(next);
           }
 
           e.stopPropagation();
@@ -490,12 +505,13 @@ $.fn.dropdown = function(options) {
           return false;
         }
         case 40: {  //down
+          this.searchKeyMode = false;
+
           if (selectedIndex < options.length - 1) {
             next = $(options[selectedIndex + 1]);
             this.highlightOption(next);
             next.parent().find('.is-focused').removeClass('is-focused');
             next.addClass('is-focused');
-            self.selectOption(next);
           }
 
           e.stopPropagation();
@@ -503,6 +519,8 @@ $.fn.dropdown = function(options) {
           return false;
         }
         case 35: { //end
+          this.searchKeyMode = false;
+
           var last = $(options[options.length - 1]);
           this.highlightOption(last);
 
@@ -510,6 +528,8 @@ $.fn.dropdown = function(options) {
           return false;
         }
         case 36: {  //home
+          this.searchKeyMode = false;
+
           var first = $(options[0]);
           this.highlightOption(first);
 
@@ -518,10 +538,16 @@ $.fn.dropdown = function(options) {
         }
       }
 
-      if (!self.isOpen() && !self.isControl(e.keyCode)) {
+      if (self.isOpen() && self.isControl(key) && key !== 8) {
+        return false;
+      }
+
+      if (!self.isOpen() && !self.isControl(key)) {
         self.toggleList();
         self.searchInput.val('');
       }
+
+      this.searchKeyMode = true;
       return true;
     },
 
@@ -535,10 +561,21 @@ $.fn.dropdown = function(options) {
     },
 
     // Focus the Element
-    activate: function () {
-      this.input.focus();
-      if (this.input[0].setSelectionRange&& !this.input[0].readOnly) {
-        this.input[0].setSelectionRange(0, 0);  //scroll to left
+    activate: function (useSearchInput) {
+      var input = this.input;
+      if (useSearchInput) {
+        input = this.searchInput;
+      }
+
+      input.focus();
+      if (input[0].readOnly === true) {
+        return;
+      }
+
+      if (input[0].setSelectionRange) {
+        input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
+      } else {
+        input[0].select();
       }
     },
 
@@ -598,8 +635,18 @@ $.fn.dropdown = function(options) {
 
       this.list.appendTo('body').show();
       this.position();
-      this.highlightOption(current, true);
-      this.searchInput.val(current.text()).focus();
+
+      var noScroll = this.settings.multiple;
+      this.highlightOption(current, noScroll);
+      if (this.settings.multiple && this.listUl.find('.is-selected').length > 0) {
+        this.highlightOption(this.listUl.find('.dropdown-option').eq(0));
+        setTimeout(function() {
+          self.listUl.scrollTop(0);
+        }, 0);
+      }
+
+      this.searchInput.val(!this.settings.multiple ? current.text() : this.input.val());
+      this.activate(true); // Focus the Search Input
       this.handleSearchEvents();
 
       this.element.trigger('dropdownopen'); // TODO: Change event name?
@@ -636,7 +683,7 @@ $.fn.dropdown = function(options) {
           self.closeList();
           self.activate();
         } else {
-          self.searchInput.focus();
+          self.activate(true);
         }
       });
 
@@ -681,12 +728,13 @@ $.fn.dropdown = function(options) {
 
       this.element.trigger('dropdownopen'); // TODO: Change event name?
 
-      this.element.off('change.dropdown').one('change.dropdown', function() {
+      this.element.off('change.dropdown').on('change.dropdown', function() {
         var idx = self.element.find('option:selected').index(),
           cur = $(self.element[0].options[idx]);
 
         //Select the clicked item
         self.selectOption(cur);
+        self.input.val(cur.text());
         self.element.hide().css({'position': '', 'left': ''});
         setTimeout(function() {
           self.input.focus();
@@ -767,6 +815,8 @@ $.fn.dropdown = function(options) {
         this.touchmove = false;
       }
 
+      this.searchInput.off('keydown.dropdown');
+
       this.list.hide().remove();
       this.list.off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list');
       this.listUl.find('li').show();
@@ -818,7 +868,7 @@ $.fn.dropdown = function(options) {
       this.open();
     },
 
-    highlightOption: function(listOption) {
+    highlightOption: function(listOption, noScroll) {
       if (!listOption) {
         return listOption;
       }
@@ -842,7 +892,9 @@ $.fn.dropdown = function(options) {
         this.input.attr('aria-activedescendant', listOption.attr('id'));
         this.searchInput.attr('aria-activedescendant', listOption.attr('id'));
 
-        this.scrollToOption(listOption);
+        if (!noScroll || noScroll === false || noScroll === undefined) {
+          this.scrollToOption(listOption);
+        }
       }
 
       return;
@@ -916,6 +968,7 @@ $.fn.dropdown = function(options) {
       } else {
         // Working with a single select
         val = code;
+        this.listUl.find('li.is-selected').removeClass('is-selected').attr('aria-selected', 'false');
         li.addClass('is-selected').attr({'aria-selected': 'true'});
         this.previousActiveDescendant = option.val();
         text = option.text();
@@ -1046,18 +1099,6 @@ $.fn.dropdown = function(options) {
       }
     },
 
-    destroy: function() {
-      $.removeData(this.element[0], pluginName);
-      this.closeList();
-      this.instructions.remove();
-      this.input.prev('label').remove();
-      this.input.off().remove();
-      this.icon.remove();
-      this.wrapper.remove();
-      this.element.removeAttr('style');
-      this.orgLabel.removeAttr('style');
-    },
-
     disable: function() {
       this.element.prop('disabled', true);
       this.input.prop('disabled', true);
@@ -1077,6 +1118,18 @@ $.fn.dropdown = function(options) {
       } else {
         this.element.prop('multiple', false);
       }
+    },
+
+    destroy: function() {
+      $.removeData(this.element[0], pluginName);
+      this.closeList();
+      this.instructions.remove();
+      this.input.prev('label').remove();
+      this.input.off().remove();
+      this.icon.remove();
+      this.wrapper.remove();
+      this.element.removeAttr('style');
+      this.orgLabel.removeAttr('style');
     }
 
   };
