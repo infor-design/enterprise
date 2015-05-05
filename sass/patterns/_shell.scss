@@ -51,10 +51,12 @@
   padding: 0;
 }
 
+
 // User Button
 .mingle-user-btn {
   color: #b2b2b2;
-  padding: 0 10px;
+  padding: 0 20px;
+  top: 10px;
   position: relative;
   transition: all .3s ease 0s;
   width: auto;
@@ -86,6 +88,7 @@
   opacity: .8;
 }
 
+
 // App Launcher Modul
 .mingle-app-name {
   color: #b2b2b2;
@@ -93,6 +96,7 @@
   position: absolute;
   text-align: left;
   top: 11px;
+  left: 80px;
   transition: color .3s ease-in-out 0s;
   width: 300px;
 }
@@ -108,7 +112,7 @@
   padding: 0;
   text-indent: 5px;
   transition: opacity .3s ease-in-out 0s;
-  vertical-align: middle;
+  vertical-align: inherit;
   width: 30px;
 }
 
@@ -301,7 +305,7 @@
   border-bottom-color: #333333;
   border-top-width: 0;
   left: 4%;
-  top: -10px;
+  top: -32px;
 }
 
 .popover .arrow {
@@ -312,6 +316,12 @@
   position: absolute;
   width: 0;
   border-width: 11px;
+  border: none;
+}
+
+.popover.bottom .arrow:after {
+  border-bottom-color: #000000;
+  top: 22px;
 }
 
 // App Launcher Module
@@ -459,7 +469,7 @@
 }
 
 .share-popup .arrow {
-  left: 299px !important;
+  left: 324px !important;
 }
 
 .share-title {
