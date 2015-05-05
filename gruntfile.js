@@ -52,54 +52,54 @@ module.exports = function(grunt) {
       basic: {
         files: {
           'dist/js/<%= pkg.name %>.js': [
-            'js/utils.js',
-            'js/animations.js',
-            'js/locale.js',
-            'js/about.js',
-            'js/accordion.js',
-            'js/applicationmenu.js',
-            'js/autocomplete.js',
-            'js/busyindicator.js',
-            'js/button.js',
-            'js/chart.js',
-            'js/colorpicker.js',
-            'js/contextualactionpanel.js',
-            'js/datepicker.js',
-            'js/datagrid.js',
-            'js/dropdown.js',
-            'js/drag.js',
-            'js/editor.js',
-            'js/expandablearea.js',
-            'js/flyingfocus.js',
-            'js/form.js',
-            'js/fileupload.js',
-            'js/header.js',
-            'js/initialize.js',
-            'js/listview.js',
-            'js/pager.js',
-            'js/popupmenu.js',
-            'js/progress.js',
-            'js/mask.js',
-            'js/multiselect.js',
-            'js/message.js',
-            'js/modal.js',
-            'js/modalsearch.js',
-            'js/rating.js',
-            'js/resize.js',
-            'js/searchfield.js',
-            'js/sidebar.js',
-            'js/slider.js',
-            'js/spinbox.js',
-            'js/shell.js',
-            'js/toast.js',
-            'js/tabs.js',
-            'js/textarea.js',
-            'js/timepicker.js',
-            'js/tmpl.js',
-            'js/toolbar.js',
-            'js/tooltip.js',
-            'js/tree.js',
-            'js/validation.js'
+            'temp/amd/utils.js',
+            'temp/amd/animations.js',
+            'temp/amd/locale.js',
+            'temp/amd/about.js',
+            'temp/amd/accordion.js',
+            'temp/amd/applicationmenu.js',
+            'temp/amd/autocomplete.js',
+            'temp/amd/busyindicator.js',
+            'temp/amd/button.js',
+            'temp/amd/chart.js',
+            'temp/amd/colorpicker.js',
+            'temp/amd/contextualactionpanel.js',
+            'temp/amd/datepicker.js',
+            'temp/amd/datagrid.js',
+            'temp/amd/dropdown.js',
+            'temp/amd/drag.js',
+            'temp/amd/editor.js',
+            'temp/amd/expandablearea.js',
+            'temp/amd/flyingfocus.js',
+            'temp/amd/form.js',
+            'temp/amd/fileupload.js',
+            'temp/amd/header.js',
+            'temp/amd/initialize.js',
+            'temp/amd/listview.js',
+            'temp/amd/pager.js',
+            'temp/amd/popupmenu.js',
+            'temp/amd/progress.js',
+            'temp/amd/mask.js',
+            'temp/amd/multiselect.js',
+            'temp/amd/message.js',
+            'temp/amd/modal.js',
+            'temp/amd/modalsearch.js',
+            'temp/amd/rating.js',
+            'temp/amd/resize.js',
+            'temp/amd/searchfield.js',
+            'temp/amd/sidebar.js',
+            'temp/amd/shell.js',
+            'temp/amd/slider.js',
+            'temp/amd/spinbox.js',
+            'temp/amd/toast.js',
+            'temp/amd/tabs.js',
+            'temp/amd/textarea.js',
+            'temp/amd/timepicker.js',
+            'temp/amd/tmpl.js',
+            'temp/amd/toolbar.js',
+            'temp/amd/tooltip.js',
+            'temp/amd/tree.js',
+            'temp/amd/validation.js'
           ]
         }
       }
@@ -135,6 +135,11 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/vendor/d3.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'}
+        ]
+      },
+      amd: {
+        files: [
+          {expand: true, flatten: true, src: ['js/*.*'], dest: 'temp/amd/', filter: 'isFile'}
         ]
       }
     },
@@ -185,11 +190,37 @@ module.exports = function(grunt) {
 
     meta: {
       revision: undefined
-    }
+    },
+
+    strip_code: { // jshint ignore:line
+      options: {
+        start_comment: 'start-amd-strip-block', // jshint ignore:line
+        end_comment: 'end-amd-strip-block' // jshint ignore:line
+      },
+      src: {
+        src: 'temp/amd/*.js'
+      }
+    },
+
+    clean: {
+      amd: ['temp']
+    },
 
   });
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
-  grunt.registerTask('default', ['revision', 'jshint', 'sass', 'concat', 'uglify', 'copy:main', 'cssmin', 'usebanner']);
+  grunt.registerTask('default', [
+    'revision',
+    'jshint',
+    'sass',
+    'copy:amd',
+    'strip_code',
+    'concat',
+    'clean',
+    'uglify',
+    'copy:main',
+    'cssmin',
+    'usebanner'
+  ]);
 };
