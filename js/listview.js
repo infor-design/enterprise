@@ -35,7 +35,7 @@
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function ListView(element) {
       this.element = $(element);
       this.settings = settings;
       this.init();
@@ -43,7 +43,7 @@
     }
 
     // Plugin Object
-    Plugin.prototype = {
+    ListView.prototype = {
       init: function() {
         this.setup();
         this.refresh();
@@ -318,7 +318,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new ListView(this, settings));
       }
     });
   };
