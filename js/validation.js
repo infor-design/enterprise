@@ -255,6 +255,11 @@
         }
       }
 
+      //Add error classes to pseudo-markup for certain controls
+      if (field.is('.dropdown, .multiselect')) {
+        field.data('dropdown').input.addClass('error');
+      }
+
       //setup tooltip with appendedMsg
       if (inline) {
         field.attr('data-placeholder', field.attr('placeholder'));
@@ -319,6 +324,11 @@
       if (loc.attr('data-placeholder')) {
         loc.attr('placeholder',loc.attr('data-placeholder'));
         loc.removeAttr('data-placeholder');
+      }
+
+      //Remove error classes from pseudo-markup for certain controls
+      if (field.is('.dropdown, .multiselect')) {
+        field.data('dropdown').input.removeClass('error');
       }
     }
   };
