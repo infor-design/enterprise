@@ -639,6 +639,27 @@
   text-decoration: none;
 }
 
+.accordion a {
+  color: #ffffff;
+}
+
+.accordion .accordion-pane {
+  background: #000;
+}
+@include respond-to(phablet) {
+  .popover {
+    top: 35px;
+    width: 100%;
+    max-width: none;
+    left: 0 !important;
+  }
+
+  .popover .arrow {
+    display: none;
+  }
+  
+}
+
 @include respond-to(phone) {
   .mingle-app-name {
     display: none;
