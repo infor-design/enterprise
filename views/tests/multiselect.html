@@ -2,6 +2,13 @@
   <div class="twelve columns">
     <h1>Multiselect</h1>
     <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <h3>Multiselect Controls with External Source</h3>
 
     <div class="field">
       <label for="states-multi" class="label">States (Max 10)</label>
@@ -13,6 +20,8 @@
       <select multiple data-maxselected="5" data-source="/api/towns" data-init="false" id="towns-multi-optgroup" name="towns-multi-optgroup" class="multiselect">
       </select>
     </div>
+
+    <h3>Disabled Multisect</h3>
 
     <div class="field">
       <label for="fruits-multi" class="label">Fruits (disabled)</label><br />
@@ -28,4 +37,25 @@
       </select>
     </div>
   </div>
+
+  <div class="six columns">
+
+    <h3>Validated Multiselect Fields</h3>
+
+    <div class="field">
+      <label for="validated-multi">Choose An Option (Up to 3)</label>
+      <select multiple id="validated-multi" data-validate="required" data-maxselected="3" class="multiselect">
+        <option selected>Cool</option>
+        <option>Awesome</option>
+        <option>Groovy</option>
+        <option>Jammin'</option>
+        <option>Radical</option>
+        <option>Gnarly</option>
+        <option>Schway</option>
+        <option>Neato</option>
+      </select>
+    </div>
+
+  </div>
+
 </div>
