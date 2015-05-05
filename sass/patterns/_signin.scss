@@ -1,5 +1,6 @@
-/* Sign In Page Pattern
-================================================== */
+// Sign In Page Pattern
+//================================================== //
+
 .wrapper {
   display: table;
   height: 100%;
@@ -7,45 +8,59 @@
 }
 
 .signin {
-  width: 300px;
   display: table-cell;
+  text-align: center;
   vertical-align: middle;
+  width: 300px;
+
+  form {
+    margin-top: -100px;
+  }
+
+  label {
+    text-align: left;
+  }
 
   h1 {
-    text-align: center;
     @include rem(padding, 2rem);
+    margin-bottom: 40px;
+    margin-top: 20px;
     padding-top: 0;
+    text-align: center;
   }
 
-  .forgot {
-    float: right;
+  .icon.icon-logo + .field {
+    margin-top: 60px;
   }
 
-  .btn-default {
+  .hyperlink {
+    display: inline-block;
+    padding-top: 15px;
+    text-align: center;
+  }
+
+  .btn-primary {
     width: 100%;
   }
 
-  .small-text {
-    text-align: center;
-    text-transform: uppercase;
-    display: block;
-    @include rem(padding-top, 4rem);
-  }
-
   .icon-logo {
-    margin: 0 auto;
     display: block;
+    height: 90px;
+    margin: 0 auto;
+    width: 90px;
   }
 
   .icon-error {
-    float: right;
     left: 100% !important;
-    margin-left: -23px;
+    margin-left: -25px;
     position: absolute !important;
-    top: 9px !important;
+    top: 23px !important;
     width: 16px !important;
   }
 
+  input {
+    width: 100%;
+  }
 }
 
 
