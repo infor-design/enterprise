@@ -3,7 +3,7 @@
 
 SoHo XI provides comprehensive tools for product development teams to create use experiences that are: Intuitive, Engaging, Purposeful, Relevant Functional and Beautiful.
 
-The SoHo XI Control library is a framework independent UI (js and css) library that is pattern focused, template drive, touch enabled, responsive, accessible and configurable.
+The SoHo XI Control library is a framework independent UI (js and css) library that is pattern focused, template driven, touch enabled, responsive, accessible and themable.
 
 For guidelines on when and where to use the controls see the [Soho Style Guide](http://soho.infor.com).
 
@@ -241,7 +241,8 @@ The documentation will be generated created inline in the pages (soon but not ye
  - test your page with Jaws (download http://www.freedomscientific.com/Downloads/ProductDemos) http://www.washington.edu/itconnect/learn/accessible/atc/quickstarts/jaws-2/
  - commit and pull request
  - close jira and quote the Jira number on the commit message
-
+ - document on the cms site
+ -
 <a name="qa-documentation"></a>
 ## QA Documentation
 

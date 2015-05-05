@@ -112,7 +112,7 @@ $busy-indicator-check-color: $inverse-color;
   left: 2px;
   position: absolute;
   top: -3px;
-  @include css3-prop-transition(transform, 500ms);
+  @include transition(transform 500ms ease);
   @include css3(transform, scale3d(1, 1, 1));
   width: 14px;
 }

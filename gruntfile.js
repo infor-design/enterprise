@@ -90,6 +90,7 @@ module.exports = function(grunt) {
             'js/sidebar.js',
             'js/slider.js',
             'js/spinbox.js',
+            'js/shell.js',
             'js/toast.js',
             'js/tabs.js',
             'js/textarea.js',

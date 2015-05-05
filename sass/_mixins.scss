@@ -54,13 +54,6 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   }
 }
 
-// vendor prefixes a CSS transition defintion for a CSS3 property that is also vendor-prefixed
-@mixin css3-prop-transition($property, $value) {
-  @each $prefix in $prefixes {
-    #{$prefix}transition: #{$prefix}#{$property} $value;
-  }
-}
-
 // vendor prefixed transitions for regular properties (non-vendor prefixed)
 @mixin transition($transitions-list...) {
   @each $prefix in $prefixes {

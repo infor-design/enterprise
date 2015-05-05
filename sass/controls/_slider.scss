@@ -115,7 +115,7 @@
     position: absolute;
     @include scale(0);
     top: -15px;
-    @include css3-prop-transition(transform, 200ms);
+    @include transition(transform 200ms ease 0s);
     width: 40px;
     z-index: 19;
   }
@@ -130,7 +130,7 @@
     opacity: .1;
     position: absolute;
     top: -15px;
-    @include css3-prop-transition(transform, 200ms);
+    @include transition(transform 200ms ease 0s);
     @include scale(0);
     z-index: 19;
   }

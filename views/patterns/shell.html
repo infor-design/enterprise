@@ -1,0 +1,163 @@
+<body>
+  <!--Replace with masthead?? -->
+  <header class="mingle-header">
+    <svg class="icon icon-logo">
+      <use xlink:href="#icon-logo"></use>
+    </svg>
+
+    <!--App Launcher and Popup-->
+    <button class="mingle-app-launcher" type="button" data-toggle="popover">
+      <i class="mingle-icon"></i>
+      <span class="mingle-app-name">Active Product Name Text</span>
+      <span class="audible">click to change Application</span>
+    </button>
+    <div class="popover bottom">
+      <div class="arrow"></div>
+      <div class="popover-content appl-popup">
+        <button class="appl-icon relationship" type="button"><span>Supplier Relationship Management</span></button>
+        <button class="appl-icon process" type="button"><span>PLM Process</span></button>
+        <button class="appl-icon assets" type="button"><span>Enterprise Asset Management</span></button>
+        <button class="appl-icon government" type="button"><span>Public Sector</span></button>
+        <button class="appl-icon marketing" type="button"><span>Epiphany Marketing</span></button>
+        <button class="appl-icon supplier" type="button"><span>Supplier Exchange</span></button>
+        <button class="appl-icon hcm" type="button"><span>Human Capital Management</span></button>
+        <button class="appl-icon hospitality" type="button"><span>Hospitality Management System</span></button>
+      </div>
+    </div>
+
+    <div class="l-right">
+      <!--Users Button-->
+      <button class="mingle-user-btn has-update" data-toggle="popover">Firstname Lastname</button>
+      <div class="popover bottom usr-popup">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <a class="usr-popup-alert-link" href="#">Alerts <span class="alerts-badge">12</span></a>
+          <a class="usr-popup-alert-link" href="#">Tasks <span class="alerts-badge">11</span></a>
+          <a class="usr-popup-alert-link" href="#">Notifications <span class="alerts-badge">10</span></a>
+          <a class="usr-popup-alert-link" href="#">Posts <span class="alerts-badge">12</span></a>
+
+          <a href="#" class="usr-popup-link">Settings</a>
+          <a href="#" class="usr-popup-link">Help</a>
+          <a href="#" class="usr-popup-link">About</a>
+          <a href="#" class="usr-popup-link">Sign out</a>
+        </div>
+      </div>
+
+      <!--Share Button-->
+      <button class="mingle-share-btn" type="button" title="Share using Ming.le" data-toggle="popover" aria-haspopup="true">
+        <i class="mingle-icon"></i>
+      </button>
+      <div class="popover bottom share-popup">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <span class="share-title">Share</span>
+          <label class="audible" for="sharebox">Connections</label>
+          <textarea class="share-popup-editbox" id="sharebox" name="sharebox">Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</textarea>
+          <button class="share-icon-btn clip">Add Attachment</button>
+          <button class="share-icon-btn photo">Add Screen Shot</button>
+          <label for="connections" class="audible">Connections</label>
+          <select class="share-connections" id="connections">
+            <option value="NYC">New York Team</option>
+            <option value="FIN" selected>Financials Team (Global)</option>
+            <option value="MAN">Financials Team (New York)</option>
+          </select>
+          <button class="share-alert-btn"><span>Drillback</span><span class="alerts-badge">1</span></button>
+          <button class="share-alert-btn"><span>Social Objects</span><span class="alerts-badge">2</span></button>
+          <button class="share-share-btn">Share</button>
+        </div>
+      </div>
+
+      <!--Search Field-->
+      <label for="search" class="audible">Enterprise Search</label>
+      <input type="text" class="mingle-search" id="search" placeholder="Enterprise Search" onclick="this.select()">
+      <div class="popover bottom search-popup">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <ul>
+            <li class="clear">
+              <strong>Category Text</strong>
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            <li class="clear">
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            <li class="clear">
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            </ul>
+            <ul>
+            <li class="clear">
+              <strong>Category Text</strong>
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            <li class="clear">
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            <li class="clear">
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            </ul>
+            <ul>
+            <li class="clear">
+              <strong>Category Text</strong>
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            <li class="clear">
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            <li class="clear">
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            <li class="clear">
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+            </ul>
+            <ul>
+            <li class="clear">
+              <strong>Category Text</strong>
+              <span>
+                <a href="#">Search Result Text</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <button class="mingle-sidebar-btn" type="button" title="Hide/Show Context Apps">
+        <i class="mingle-icon"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="mingle-container">
+    <div class="mingle-application">
+
+    </div>
+    <div class="mingle-sidebar"></div>
+  </div>
+
+  {{> controls/svg}}
+  <script>
+    $('body').shell();
+  </script>
+
