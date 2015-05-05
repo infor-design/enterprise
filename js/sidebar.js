@@ -2,79 +2,98 @@
 * Side Bar Menu Control
 */
 
-$.fn.sidebar = function() {
-  'use strict';
-
-  // Settings and Options
-  var pluginName = 'sidebar';
-
-  // Plugin Constructor
-  function Sidebar(element) {
-    this.element = $(element);
-    this.init();
+/* start-amd-strip-block */
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
   }
+}(function($) {
+/* end-amd-strip-block */
 
-  // Plugin Methods
-  Sidebar.prototype = {
+  $.fn.sidebar = function() {
+    'use strict';
 
-    init: function() {
-      this.handleEvents();
-    },
+    // Settings and Options
+    var pluginName = 'sidebar';
 
-    handleEvents: function() {
-      var self = this,
-        header = $('.header').first(),
-        sidebar = $('.sidebar-nav');
+    // Plugin Constructor
+    function Sidebar(element) {
+      this.element = $(element);
+      this.init();
+    }
 
-      this.sectionList = $('.section-list');
-      this.sections = $('.editorial > .main > .content').find('h2, h3');
+    // Plugin Methods
+    Sidebar.prototype = {
 
-      //Handle Scrolling events
-      var scrollDiv = $(this.element).closest('.scrollable-container'),
-        container = (scrollDiv.length ===1 ? scrollDiv : $(window));
+      init: function() {
+        this.handleEvents();
+      },
 
-      container.on('scroll.sidebar', function () {
-        if (!sidebar.is(':visible')) {
-          return;
-        }
+      handleEvents: function() {
+        var self = this,
+          header = $('.header').first(),
+          sidebar = $('.sidebar-nav');
 
-        var offsetScrollTop = sidebar.offset().top - 30;
+        this.sectionList = $('.section-list');
+        this.sections = $('.editorial > .main > .content').find('h2, h3');
 
-        if (header.offset().top + header.outerHeight() > offsetScrollTop) {
-          sidebar.addClass('is-sticky');
-        } else {
-          sidebar.removeClass('is-sticky');
-        }
+        //Handle Scrolling events
+        var scrollDiv = $(this.element).closest('.scrollable-container'),
+          container = (scrollDiv.length ===1 ? scrollDiv : $(window));
 
-      });
+        container.on('scroll.sidebar', function () {
+          if (!sidebar.is(':visible')) {
+            return;
+          }
 
-      if (this.sectionList) {
-        //append the links for the heading elements
-        this.sections.each(function (i) {
-          var item = $(this),
-            id = 'heading'+i,
-            link = $(' <div><a href="#' + id + '" class="hyperlink">' + item.text() + '</a></div>');
+          var offsetScrollTop = sidebar.offset().top - 30;
 
-          item.attr('id', id);
-          self.sectionList.append(link);
+          if (header.offset().top + header.outerHeight() > offsetScrollTop) {
+            sidebar.addClass('is-sticky');
+          } else {
+            sidebar.removeClass('is-sticky');
+          }
+
         });
 
-      }
-    },
+        if (this.sectionList) {
+          //append the links for the heading elements
+          this.sections.each(function (i) {
+            var item = $(this),
+              id = 'heading'+i,
+              link = $(' <div><a href="#' + id + '" class="hyperlink">' + item.text() + '</a></div>');
 
-    // Teardown - Remove added markup and events
-    destroy: function() {
-      $.removeData(this.element[0], pluginName);
-      $(window).add('.editorial').off('scroll.sidebar');
-      this.tracker.offf('touchcancel.sidebar touchend.sidebar click.sidebar');
-    }
+            item.attr('id', id);
+            self.sectionList.append(link);
+          });
+
+        }
+      },
+
+      // Teardown - Remove added markup and events
+      destroy: function() {
+        $.removeData(this.element[0], pluginName);
+        $(window).add('.editorial').off('scroll.sidebar');
+        this.tracker.offf('touchcancel.sidebar touchend.sidebar click.sidebar');
+      }
+    };
+
+    // Initialize the plugin just once
+    return this.each(function() {
+      var instance = $.data(this, pluginName);
+      if (!instance) {
+        instance = $.data(this, pluginName, new Sidebar(this));
+      }
+    });
   };
 
-  // Initialize the plugin just once
-  return this.each(function() {
-    var instance = $.data(this, pluginName);
-    if (!instance) {
-      instance = $.data(this, pluginName, new Sidebar(this));
-    }
-  });
-};
+/* start-amd-strip-block */
+}));
+/* end-amd-strip-block */

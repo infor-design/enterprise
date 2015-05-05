@@ -1,11 +1,13 @@
 /**
 * XYZ Control (TODO: bitly link to soho xi docs)
 */
+
+// NOTE:  There are AMD Blocks available
+
+/* start-amd-strip-block */
 (function(factory) {
-
-
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
+    // AMD. Register as an anonymous module
     define(['jquery'], factory);
   } else if (typeof exports === 'object') {
     // Node/CommonJS
@@ -14,10 +16,10 @@
     // Browser globals
     factory(jQuery);
   }
-
 }(function($) {
+/* end-amd-strip-block */
 
-  //NOTE: Just this part in files.
+  //NOTE: Just this part will show up in SoHo Xi Builds.
 
   $.fn.pluginname = function(options) {
     'use strict';
@@ -65,4 +67,6 @@
     });
   };
 
+/* start-amd-strip-block */
 }));
+/* end-amd-strip-block */
