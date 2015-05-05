@@ -89,12 +89,6 @@
           this.label.attr('class', this.orgLabel.attr('class'));
         }
 
-        /*
-        if (this.orgLabel.hasClass('side')) {
-          this.label.addClass('side');
-        }
-        */
-
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
           .text(Locale.translate('ChangeSelection'))
           .insertAfter(this.label);
