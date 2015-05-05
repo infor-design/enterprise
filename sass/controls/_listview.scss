@@ -198,21 +198,17 @@ $listview-selected-text-color: $inverse-color;
   background-color: $listview-selected-bg-color;
   border-radius: 2px 2px 0 0;
   display: none;
-  height: 0;
   margin: 0;
   overflow: hidden;
-  position: absolute;
-  @include transition(height 1.2s ease-out 0s);
   text-align: right;
-  width: 100%;
   z-index: 20;
 
   &.is-visible {
     height: 52px;
 
     + .listview {
+      @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
       height: calc(100% - 50px);
-      margin-top: 50px;
     }
   }
 

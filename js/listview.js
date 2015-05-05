@@ -271,12 +271,10 @@
         //top = self.element.scrollTop();
 
         if (self.selectedItems.length > 0) {
-          toolbar.show();
-          setTimeout(function () {
+          toolbar.css('display','block').one('animateOpenComplete', function() {
             self.element.addClass('.is-toolbar-open');
             toolbar.addClass('is-visible');
-          }, 0);
-
+          }).animateOpen();
 
           var count = toolbar.find('.listview-selection-count'),
             countSpan;
@@ -295,10 +293,10 @@
           }*/
 
         } else {
-          toolbar.removeClass('is-visible');
-          setTimeout(function () {
-            toolbar.hide();
-          }, 300);
+          toolbar.removeClass('is-visible').one('animateClosedComplete', function(e) {
+            e.stopPropagation();
+            $(this).css('display', 'none');
+          }).animateClosed();
 
           /* Adjust Scrollbar
           self.element.removeClass('.is-toolbar-open');
