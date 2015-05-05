@@ -58,10 +58,12 @@
     // Actual DropDown Code
     Dropdown.prototype = {
       init: function() {
-        var id = this.element.attr('id')+'-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
+        var orgId = this.element.attr('id'),
+          id = orgId + '-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
-        this.orgLabel = $('label[for="' + this.element.attr('id') + '"]');
+        this.orgLabel = orgId !== undefined ? $('label[for="' + this.element.attr('id') + '"]') :
+          this.element.prev('label, .label').length ? this.element.prev('label, .label') : $();
 
         this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.element);
 
@@ -83,9 +85,15 @@
           this.wrapper.append(this.input, this.trigger, this.icon);
         }
 
+        if (this.orgLabel.length) {
+          this.label.attr('class', this.orgLabel.attr('class'));
+        }
+
+        /*
         if (this.orgLabel.hasClass('side')) {
           this.label.addClass('side');
         }
+        */
 
         this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
           .text(Locale.translate('ChangeSelection'))
