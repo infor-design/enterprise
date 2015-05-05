@@ -137,7 +137,7 @@ input.checkbox:disabled + label,
 input.checkbox:disabled + input[type="hidden"] + label,
 span.checkbox > input:disabled + label {
   cursor: default;
-  @include opacity($checkbox-disabled-opacity);
+  color: $checkbox-disabled-font-color;
 }
 
 input.checkbox:disabled:not(:checked) + label:before,
@@ -193,4 +193,31 @@ span.checkbox > input:focus + label:before {
 
 .checkbox:not(.isPartial):checked + label:after {
   @include checkbox-animation;
+}
+
+// Print Support
+@media print {
+  .checkbox + label:before {
+    content: none;
+  }
+
+  input.checkbox,
+  span.checkbox > input {
+    left: unset;
+    position: unset;
+    width: unset;
+  }
+
+  input.checkbox + label,
+  input.checkbox + input[type="hidden"] + label,
+  span.checkbox > label {
+    padding-left: 8px;
+  }
+
+  input.checkbox + label::before,
+  input.checkbox + input[type="hidden"] + label::before,
+  span.checkbox > label::before {
+    content: none;
+    margin-left: 0;
+  }
 }

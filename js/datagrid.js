@@ -153,6 +153,7 @@ $.fn.datagrid = function(options) {
 
     initSettings: function () {
       this.sortColumn = {columnId: null, sortAsc: true};
+      this.gridCount = $('.datagrid').length + 1;
     },
 
     //Render the Header and Rows
@@ -166,6 +167,10 @@ $.fn.datagrid = function(options) {
       self.element.addClass('datagrid-container').append(self.table);
     },
 
+    uniqueID: function (gridCount, suffix) {
+      return 'datagrid-' + gridCount + suffix;
+    },
+
     //Render the Header
     renderHeader: function() {
       var self = this,
@@ -173,11 +178,17 @@ $.fn.datagrid = function(options) {
 
       for (var j = 0; j < settings.columns.length; j++) {
         var column = settings.columns[j],
+          uniqueId = self.uniqueID(self.gridCount, '-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable);
 
+
+        if (column.hidden) {
+          continue;
+        }
+
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
-         ' data-column-id="'+ column.id + '" data-field="'+ column.field +'"'+ (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
+         ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"'+ (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
         headerRow += '<div class="datagrid-column-wrapper"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
         if (isSortable) {
@@ -241,14 +252,19 @@ $.fn.datagrid = function(options) {
       self.tableBody.empty();
 
       for (var i = 0; i < settings.dataset.length; i++) {
-        rowHtml = '<tr role="gridcell" aria-colindex="' + (i+1) + '" '+ (settings.rowHeight !== 'medium' ? 'class="' + settings.rowHeight + '-rowheight"' : '') +'>';
-        console.log(i);
+        rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" '+
+                  (settings.rowHeight !== 'medium' ? 'class="' + settings.rowHeight +
+                   '-rowheight"' : '') +'>';
 
         for (var j = 0; j < settings.columns.length; j++) {
           var col = settings.columns[j],
               cssClass = '',
               formatter = (col.formatter ? col.formatter : self.defaultFormatter),
               formatted = '';
+
+          if (col.hidden) {
+            continue;
+          }
 
           formatted = formatter(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i]).toString();
           if (formatted.indexOf('<span class="is-readonly">') === 0) {
@@ -264,7 +280,10 @@ $.fn.datagrid = function(options) {
           cssClass += (col.readonly ? 'is-readonly ' : '');
           cssClass += (col.cssClass ? col.cssClass : '');
 
-          rowHtml += '<td' + (cssClass ? ' class="' + cssClass + '"' : '') + '><div class="datagrid-cell-wrapper">';
+          rowHtml += '<td role="gridcell" aria-colindex="' + (j+1) + '" '+
+              ' aria-describedby="' + self.uniqueID(self.gridCount, '-header-' + j) + '"' +
+             (cssClass ? ' class="' + cssClass + '"' : '') +
+              '><div class="datagrid-cell-wrapper">';
           rowHtml += formatted + '</div></td>';
         }
 
@@ -421,17 +440,19 @@ $.fn.datagrid = function(options) {
       // Set tab index to first cell
       self.activeCell = {node: self.cellNode(1, 0).attr('tabindex', '0'), cell: 0, row: 1};
       self.table.on('keydown.datagrid', 'td', function (e) {
-        var key = e.which;
+        var key = e.which,
+          handled = false;
 
-        //Left and Right Navigation
+        //Left and Right to navigate by cell.
         if (key === 37) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
         }
+
         if (key === 39) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
         }
 
-        //Up and Down
+        //Up and Down to navigate by row.
         if (key === 38) {
           self.setActiveCell(self.activeCell.row-1, self.activeCell.cell);
         }
@@ -439,11 +460,26 @@ $.fn.datagrid = function(options) {
           self.setActiveCell(self.activeCell.row+1, self.activeCell.cell);
         }
 
-        /*Set focus to the grid and enter Applications Mode if using a screen reader like JAWS or NVDA.
-        Press Up or Down to navigate by row. (Infinite scrolling is supported)
-        Press Control+Spacebar to announce the current row when using a screen reader.
-        Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
-        Press Left or Right to navigate left or right by cell.
+        //Press Control+Spacebar to announce the current row when using a screen reader.
+        if (key === 32 && e.ctrlKey && self.activeCell.node) {
+          var row = self.activeCell.node.closest('tr'),
+            string = '';
+
+          row.children().each(function () {
+            var cell = $(this);
+            //Read Header
+            //string += $('#' + cell.attr('aria-describedby')).text() + ' ' + cell.text() + ' ';
+            string += cell.text() + ' ';
+          });
+          $('body').toast({title: '', audibleOnly: true, message: string});
+          handled = true;
+        }
+
+        if (handled) {
+          e.preventDefault();
+          return false;
+        }
+        /*Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
         Press Home or End to move to the first or last cell on the current row.
         Press Control+Home or Control+End to move to the first row on the first page or the last row on the last page.
         Press PageUp or PageDown to open the previous or next page and set focus to the first row.

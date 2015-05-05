@@ -141,7 +141,7 @@ span {
     }
 
     a {
-      border: 1px solid transparent;
+      border-bottom: 1px solid transparent;
       color: $inverse-color !important;
 
       &:after {
@@ -149,7 +149,8 @@ span {
       }
 
       &:focus {
-        border: 1px solid #ffffff;
+        border-bottom: 1px solid #ffffff;
+        outline: none;
       }
     }
   }
@@ -539,7 +540,12 @@ span {
   }
 
   a.hyperlink {
+    display: block;
     @include font-size(16);
+    max-width: 235px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   li {
@@ -806,14 +812,23 @@ div.light-bgrnd {
     background-color: transparent !important;
   }
 
-  .code {
-    background-color: #ebebeb;
-    border: 1px solid #d2d2d2;
-    border-radius: 3px;
-    color: #4d4d4c;
-    font-size: inherit;
-    padding: 1px 9px;
-  }
+}
+
+.code {
+  background-color: #ebebeb;
+  border: 1px solid #d2d2d2;
+  border-radius: 3px;
+  color: #4d4d4c;
+  font-size: inherit;
+  padding: 1px 9px;
+}
+
+.site-text-section .code {
+  @include font-size(16);
+  line-height: 1.5em;
+  margin: 0 auto;
+  text-align: left;
+  width: 300px;
 }
 
 .timestamp {

@@ -58,15 +58,14 @@
       columns.push({ id: 'ordered', name: 'Ordered', field: 'ordered', width: 200, formatter: Formatters.Checkbox});
       columns.push({ id: '', name: 'Actions', field: '', width: 200, formatter: Formatters.Actions, menuId: 'grid-actions-menu'});
       columns.push({ id: 'nested', name: 'Nested Prop', field: 'setting.optionOne', width: 200, formatter: Formatters.Text});
-      columns.push({ id: 'comment', name: 'Comment', field: 'comment', width: 200, formatter: Formatters.TextArea});
+      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.TextArea});
 
       //Init and get the api for the grid
-      grid = $('#readonly').datagrid({
+      grid = $('#readonly-datagrid').datagrid({
         columns: columns,
-        idProperty:'officeId',
         dataset: data,
-        rowHeight: 'tall',
-        menuId: 'grid-actions-menu'
+        //rowHeight: 'tall',
+        //menuId: 'grid-actions-menu'
       }).on('click', function (e, args) {
         console.log('Row Was Clicked', args);
       }).on('dblclick', function (e, args) {

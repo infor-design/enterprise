@@ -592,9 +592,9 @@ window.Chart = function(container) {
       width: parseInt($(container).parent().width())
     };
 
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 10 : 30));
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 20 : 50));
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
-    dims.labelRadius = dims.outerRadius + 15;
+    dims.labelRadius = dims.outerRadius + 11;
 
     svg.attr('width', '100%')
       .attr('height', '100%')
@@ -603,8 +603,8 @@ window.Chart = function(container) {
       //http://git.infor.com/projects/SOHO/repos/controls/commits/e796f46c0ad00f92c67b6eb87ac64a3d83ee2e25
 
     // move the origin of the group's coordinate space to the center of the SVG element
-    arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ? 0 : 10))  + ')');
-    labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ?0 : 10)) + ')');
+    arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ? 0 : 15))  + ')');
+    labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ? 0 : 15)) + ')');
 
     var pieData = pie(chartData);
 
@@ -695,7 +695,7 @@ window.Chart = function(container) {
             midAngle = Math.atan2(centroid[1], centroid[0]),
             x = Math.cos(midAngle) * dims.labelRadius,
             sign = (x > 0) ? 1 : -1,
-            labelX = x + (5 * sign);
+            labelX = x + (1 * sign);
 
           return labelX;
         },
@@ -704,7 +704,7 @@ window.Chart = function(container) {
             midAngle = Math.atan2(centroid[1], centroid[0]),
             y = Math.sin(midAngle) * dims.labelRadius;
 
-          return y;
+          return (y);
         },
         'text-anchor': function (d) {
           var centroid = pieArcs.centroid(d),
@@ -724,7 +724,7 @@ window.Chart = function(container) {
     .attr('dx', '-50')
     .attr('dy', '-20px')
     .style('font-weight', 'bold')
-    .style('font-size', '24px')
+    .style('font-size', '22px')
     .style('fill', function (d, i) {
       return charts.pieColors(i);
     });
@@ -738,7 +738,7 @@ window.Chart = function(container) {
     }
 
     //Calculate Percents for Legend
-    var series = chartData.map(function (d, i) {
+    chartData.map(function (d, i) {
         d.percent = d3.round(100*(d.value/total)) + '%';
         d.elem = enteringArcs[0][i];
 

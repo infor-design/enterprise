@@ -98,7 +98,32 @@
   cursor: default;
 }
 
-.radio:checked:focus + label:before, .radio:not(:checked):focus + label:before {
+.radio:checked:focus + label:before,
+.radio:not(:checked):focus + label:before {
   box-shadow: $radio-focus-shadow;
 }
 
+// Print Support
+@media print {
+  .radio:not(:checked) + label::before,
+  .radio:checked + label::before {
+    content: none;
+  }
+
+  .radio:not(:checked),
+  .radio:checked {
+    left: unset;
+    position: unset;
+    width: unset;
+  }
+
+  .radio:not(:checked) + label,
+  .radio:checked + label {
+    padding-left: 9px;
+  }
+
+  .radio:not(:checked) + label::after,
+  .radio:checked + label::after {
+    border: 0;
+  }
+}
