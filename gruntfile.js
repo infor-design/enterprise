@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     watch: {
       source: {
         files: ['sass/**/*.scss', 'views/docs/**.html', 'views/**.html', 'views/controls/**.html', 'js/*/*.js', 'js/*.js', 'js/cultures/*.*'],
-        tasks: ['revision', 'sass', 'concat', 'uglify', 'copy'],
+        tasks: ['sohoxi-watch'],
         options: {
           livereload: true
         }
@@ -220,5 +220,10 @@ module.exports = function(grunt) {
     'copy:main',
     'cssmin',
     'usebanner'
+  ]);
+
+  // Don't do any uglify/minify/jshint while the Dev Watch is running.
+  grunt.registerTask('sohoxi-watch', [
+    'revision', 'sass', 'copy:amd', 'strip_code', 'concat', 'clean', 'copy:main', 'usebanner'
   ]);
 };
