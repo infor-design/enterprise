@@ -42,8 +42,21 @@
         this.settings = settings;
         this.initPopover();
         this.initSideBar();
-        //this.initSearch();
+        this.initSearch();
       },
+
+      initSearch: function () {
+        var self = this;
+
+        $('#search').on('keypress', function (e) {
+          var search = $(this);
+
+          if (e.which === 13) {
+            self.openPopover(search.next('.popover'), parseInt(search.offset().left, 10) - 8);
+          }
+        });
+      },
+
       initSideBar: function () {
         $('.mingle-sidebar-btn').on('click.shell', function () {
           $('.mingle-sidebar').toggleClass('is-closed');

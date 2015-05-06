@@ -22,20 +22,17 @@
   }
 
   h1 {
-    @include rem(padding, 2rem);
-    margin-bottom: 40px;
-    margin-top: 20px;
-    padding-top: 0;
+    @include font-size(24);
+    color: #454545;
+    margin-bottom: 30px;
+    padding: 0;
     text-align: center;
-  }
-
-  .icon.icon-logo + .field {
-    margin-top: 60px;
+    margin-top: -20px;
   }
 
   .hyperlink {
     display: inline-block;
-    padding-top: 15px;
+    padding-top: 20px;
     text-align: center;
   }
 
@@ -46,7 +43,7 @@
   .icon-logo {
     display: block;
     height: 90px;
-    margin: 0 auto;
+    margin: 0 auto 40px;
     width: 90px;
   }
 
