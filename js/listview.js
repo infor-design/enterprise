@@ -287,20 +287,12 @@
 
           countSpan.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
 
-          /* Adjust Scrollbar
-          if (li.index() > 1 && toolbar.length > 0) {
-            self.element.scrollTop((top + li.outerHeight()) + 'px');
-          }*/
-
         } else {
           toolbar.removeClass('is-visible').one('animateClosedComplete', function(e) {
             e.stopPropagation();
             $(this).css('display', 'none');
           }).animateClosed();
 
-          /* Adjust Scrollbar
-          self.element.removeClass('.is-toolbar-open');
-          self.element.scrollTop((top - li.outerHeight()) + 'px');*/
         }
       },
 
