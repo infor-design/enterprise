@@ -327,6 +327,10 @@
   margin-top: 15px;
 }
 
+.mingle-app-launcher + .popover.bottom .arrow {
+  left: 36px;
+}
+
 .appl-icon {
   background-position: center 6px;
   background-repeat: no-repeat;
@@ -643,6 +647,10 @@
 
 .accordion .accordion-pane {
   background: #000;
+}
+
+.appl-icon{
+  width: 100px;
 }
 @include respond-to(phablet) {
   .popover {
