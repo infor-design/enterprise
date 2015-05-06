@@ -1,11 +1,11 @@
 /**
 * Shell Control Prototype (TODO: bitly link to soho xi docs)
 */
+
+/* start-amd-strip-block */
 (function(factory) {
-
-
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
+    // AMD. Register as an anonymous module
     define(['jquery'], factory);
   } else if (typeof exports === 'object') {
     // Node/CommonJS
@@ -14,8 +14,8 @@
     // Browser globals
     factory(jQuery);
   }
-
 }(function($) {
+/* end-amd-strip-block */
 
   //NOTE: Just this part in files.
 
@@ -143,4 +143,7 @@
     });
   };
 
+/* start-amd-strip-block */
 }));
+/* end-amd-strip-block */
+
