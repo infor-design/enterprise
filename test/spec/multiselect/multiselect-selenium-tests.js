@@ -45,7 +45,7 @@ describe('Multiselect [selenium]', function(){
       .call(done);
   });
 
-  it('activates/deactivates a dropdown list by clicking', function(done) {
+  it.skip('activates/deactivates a dropdown list by clicking', function(done) {
     runner.client
       // Sanity check to make sure the Dropdown List isn't already there
       .isExisting(DDLIST, function(err, result) {
@@ -72,7 +72,7 @@ describe('Multiselect [selenium]', function(){
       .call(done);
   });
 
-  it('activates a dropdown list when using the Up/Down Arrow keys', function(done) {
+  it.skip('activates a dropdown list when using the Up/Down Arrow keys', function(done) {
     runner.client
       // Focus the Multi-Select and press the down arrow
       .addValue(STATES_TEXTBOX, ['Down Arrow'], globals.noError)
@@ -144,7 +144,7 @@ describe('Multiselect [selenium]', function(){
       .call(done);
   });
 
-  it('can be destroyed', function(done) {
+  it.skip('can be destroyed', function(done) {
     runner.client
       // Run the destroy() method
       .execute('$("#states-multi").data("multiselect").destroy();')
@@ -157,7 +157,7 @@ describe('Multiselect [selenium]', function(){
       .call(done);
   });
 
-  it('can be invoked', function(done) {
+  it.skip('can be invoked', function(done) {
     runner.client
       // Attempt to reinvoke the multi-select
       .execute('$("#states-multi").multiselect();')
@@ -181,7 +181,7 @@ describe('Multiselect [selenium]', function(){
       .call(done);
   });
 
-  it('can be enabled', function(done) {
+  it.skip('can be enabled', function(done) {
     runner.client
       // Try clicking the disabled field.  The Dropdown menu should not open.
       .click(FRUITS_TEXTBOX, globals.noError)
@@ -204,7 +204,7 @@ describe('Multiselect [selenium]', function(){
       .call(done);
   });
 
-  it('can be disabled', function(done) {
+  it.skip('can be disabled', function(done) {
     runner.client
       // Try clicking the disabled field.  The Dropdown menu should open.
       .click(FRUITS_TEXTBOX, globals.noError)
