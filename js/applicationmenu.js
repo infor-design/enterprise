@@ -208,7 +208,7 @@
         }
 
         var self = this,
-          transitionEnd = $.fn.transitionEndName;
+          transitionEnd = $.fn.transitionEndName();
 
         this.isAnimating = true;
 

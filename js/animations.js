@@ -36,7 +36,7 @@
     return this.each(function() {
       var self = this,
         $self = $(this),
-        eventName = $.fn.transitionEndName,
+        eventName = $.fn.transitionEndName(),
         dim = settings.direction === 'horizontal' ? 'width' : 'height',
         cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
         distance = !isNaN(settings.distance) ? parseInt(settings.distance, 10) + 'px' : 'auto',
@@ -98,7 +98,7 @@
     return this.each(function() {
       var self = this,
         $self = $(this),
-        eventName = $.fn.transitionEndName,
+        eventName = $.fn.transitionEndName(),
         dim = settings.direction === 'horizontal' ? 'width' : 'height',
         cDim = dim.charAt(0).toUpperCase() + dim.slice(1),
         timeout;

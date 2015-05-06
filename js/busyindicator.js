@@ -37,17 +37,6 @@
       this.init();
     }
 
-    // Check to see if the current browser supports CSS3 Animation
-    function browserSupportsAnimation() {
-      var s = document.createElement('p').style,
-        supportsAnimation = 'animation' in s ||
-                              'WebkitAnimation' in s ||
-                              'MozAnimation' in s ||
-                              'msAnimation' in s ||
-                              'OAnimation' in s;
-      return supportsAnimation;
-    }
-
     // Plugin Methods
     BusyIndicator.prototype = {
 
@@ -118,7 +107,7 @@
           container = $('<div class="busy-indicator-ball-container"></div>'),
           ball = $('<div class="busy-indicator-ball"></div>');
 
-        if (!browserSupportsAnimation()) {
+        if (!$.fn.cssPropSupport('animation')) {
           ball.appendTo(bowl);
         } else {
           container.appendTo(bowl);
@@ -149,7 +138,7 @@
         this.element.trigger('started.busyindicator');
 
         // Start the JS Animation Loop if IE9
-        if (!browserSupportsAnimation()) {
+        if (!$.fn.cssPropSupport('animation')) {
           self.isAnimating = true;
           self.animateWithJS();
         }
@@ -169,7 +158,7 @@
         this.label = $('<span>'+Locale.translate('Completed')+'</span>').appendTo(this.container);
         this.loader.removeClass('active').addClass('complete');
 
-        if (!browserSupportsAnimation()) {
+        if (!$.fn.cssPropSupport('animation')) {
           self.isAnimating = false;
         }
 

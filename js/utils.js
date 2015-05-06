@@ -39,11 +39,16 @@
       }).length;
   }
 
-  $.fn.transitionSupport = (function() {
+  // Check for CSS Property Support in a cross browser way
+  $.fn.cssPropSupport = function(prop) {
     'use strict';
 
+    if (!prop) {
+      return null;
+    }
+
     var el = $('<div></div>')[0],
-      prop = 'transition',
+      prop = prop.toString(),
       prefixes = ['Moz', 'Webkit', 'O', 'ms'],
       prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
 
@@ -62,11 +67,11 @@
 
     $(el).remove();
     return null;
-  })();
+  };
 
   // Returns the name of the TransitionEnd event.
-  $.fn.transitionEndName = (function() {
-    var prop = $.fn.transitionSupport,
+  $.fn.transitionEndName = function() {
+    var prop = $.fn.cssPropSupport('transition'),
       eventNames = {
         'WebkitTransition' :'webkitTransitionEnd',
         'MozTransition'    :'transitionend',
@@ -76,7 +81,7 @@
       };
 
     return eventNames[prop] || null;
-  })();
+  };
 
   // From jQueryUI Core: https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93
   // Adapted from:  http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus
