@@ -255,7 +255,7 @@
 
 // Popover Module
 
-.popover {
+.mingle-popover {
   background-color: #333333;
   border: medium none;
   border-radius: 2px;
@@ -286,8 +286,8 @@
   }
 }
 
-.popover.open
-.popover .arrow {
+.mingle-popover.open
+.mingle-popover .arrow {
   border-color: rgba(0, 0, 0, 0);
   border-style: solid;
   display: block;
@@ -299,14 +299,14 @@
   margin-top: 12px;
 }
 
-.popover.bottom .arrow {
+.mingle-popover.bottom .arrow {
   border-bottom-color: #333333;
   border-top-width: 0;
   left: 4%;
   top: -32px;
 }
 
-.popover .arrow {
+.mingle-popover .arrow {
   border-color: transparent;
   border-style: solid;
   display: block;
@@ -317,7 +317,7 @@
   border: none;
 }
 
-.popover.bottom .arrow:after {
+.mingle-popover.bottom .arrow:after {
   border-bottom-color: #000000;
   top: 22px;
 }
@@ -327,7 +327,7 @@
   margin-top: 15px;
 }
 
-.mingle-app-launcher + .popover.bottom .arrow {
+.mingle-app-launcher + .mingle-popover.bottom .arrow {
   left: 36px;
 }
 
@@ -466,7 +466,7 @@
 }
 
 // Share Popup Module
-.share-popup .popover-content {
+.share-popup .mingle-popover-content {
   margin-top: 5px;
 }
 
@@ -588,13 +588,13 @@
   width: 318px;
 }
 
-.search-popup .popover-content {
+.search-popup .mingle-popover-content {
   background: #333;
   padding: 12px 0;
   position: relative;
 }
 
-.search-popup .popover-content:after {
+.search-popup .mingle-popover-content:after {
   background: #595959;
   content: '';
   height: 100%;
@@ -654,7 +654,7 @@
 }
 @include respond-to(phablet) {
   .mingle-header {
-    .popover {
+    .mingle-popover {
       top: 35px;
       width: 100%;
       max-width: none;
@@ -662,7 +662,7 @@
       padding: 0;
     }
 
-    .popover .arrow {
+    .mingle-popover .arrow {
       display: none;
     }
 

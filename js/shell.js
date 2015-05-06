@@ -52,7 +52,7 @@
           var search = $(this);
 
           if (e.which === 13) {
-            self.openPopover(search.next('.popover'), parseInt(search.offset().left, 10) - 8);
+            self.openPopover(search.next('.mingle-popover'), parseInt(search.offset().left, 10) - 8);
           }
         });
       },
@@ -71,7 +71,7 @@
 
         $('button[data-toggle="popover"]').attr('aria-haspopup', 'true').on('click', function() {
           var btn = $(this),
-            popup = btn.next('.popover'),
+            popup = btn.next('.mingle-popover'),
             left = 0;
 
           if (popup.hasClass('open')) {
@@ -111,7 +111,7 @@
         //add events to close on clickout
         setTimeout(function() {
           $(document).on('click.shell', function(e) {
-            if ($(e.target).closest('.popover').length > 0) {
+            if ($(e.target).closest('.mingle-popover').length > 0) {
               return;
             }
             self.closePopover(popup);

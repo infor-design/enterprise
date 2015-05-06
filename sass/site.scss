@@ -198,6 +198,34 @@ span {
   img {
     margin-bottom: 75px;
   }
+
+  a,
+  ul {
+    @include font-size(16);
+  }
+
+  ul {
+    list-style: initial;
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+}
+
+.site-text-section.component {
+  p,
+  ul,
+  h2 {
+    text-align: left;
+  }
+
+  h2 {
+    padding: 0 10%;
+  }
+
+  ul {
+    padding: 0 10%;
+    line-height: 25px;
+  }
 }
 
 .site-howto-nav {
@@ -677,7 +705,7 @@ div.light-bgrnd {
 
   &.site-text-section {
     background-color: $inverse-color;
-    padding: 20px 0 60px;
+    padding: 20px 0 40px;
   }
 
   .main h2 {
