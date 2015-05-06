@@ -8,7 +8,7 @@
     <!--App Launcher and Popup-->
     <button class="mingle-app-launcher" type="button" data-toggle="popover">
       <i class="mingle-icon"></i>
-      <span class="mingle-app-name">Active Product Name Text</span>
+      <span class="mingle-app-name">Infor M3</span>
       <span class="audible">click to change Application</span>
     </button>
     <div class="popover bottom">
@@ -27,7 +27,11 @@
 
     <div class="l-right">
       <!--Users Button-->
-      <button class="mingle-user-btn has-update" data-toggle="popover">Firstname Lastname</button>
+      <button class="mingle-user-btn" data-toggle="popover"> 
+        <svg class="icon icon-mingle-user">
+          <use xlink:href="#icon-mingle-user"></use>
+        </svg>
+      </button>
       <div class="popover bottom usr-popup">
         <div class="arrow"></div>
         <div class="popover-content">
@@ -45,25 +49,129 @@
 
       <!--Share Button-->
       <button class="mingle-share-btn" type="button" title="Share using Ming.le" data-toggle="popover" aria-haspopup="true">
-        <i class="mingle-icon"></i>
+        <svg class="icon icon-mingle-share">
+          <use xlink:href="#icon-mingle-share"></use>
+        </svg>
       </button>
       <div class="popover bottom share-popup">
         <div class="arrow"></div>
         <div class="popover-content">
-          <span class="share-title">Share</span>
-          <label class="audible" for="sharebox">Connections</label>
-          <textarea class="share-popup-editbox" id="sharebox" name="sharebox">Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</textarea>
-          <button class="share-icon-btn clip">Add Attachment</button>
-          <button class="share-icon-btn photo">Add Screen Shot</button>
-          <label for="connections" class="audible">Connections</label>
-          <select class="share-connections" id="connections">
-            <option value="NYC">New York Team</option>
-            <option value="FIN" selected>Financials Team (Global)</option>
-            <option value="MAN">Financials Team (New York)</option>
-          </select>
-          <button class="share-alert-btn"><span>Drillback</span><span class="alerts-badge">1</span></button>
-          <button class="share-alert-btn"><span>Social Objects</span><span class="alerts-badge">2</span></button>
-          <button class="share-share-btn">Share</button>
+          <div class="accordion">
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">
+                  <svg class="icon icon-mingle-user">
+                    <use xlink:href="#icon-mingle-user"></use>
+                  </svg>
+                  My Account
+                </span>
+              </a>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  My Account Info Here
+                  <hr>
+                  <a href="#" class="hyperlink">Notifications</a>
+                  <a href="#" class="hyperlink">System Administration</a>
+                  <a href="#" class="hyperlink">User Settings</a>
+                  <a href="#" class="hyperlink">Help</a>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">Search</span>
+              </a>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">Share to Infor Ming.le</span>
+              </a>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">Bookmarks</span>
+              </a>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  Bookmark this page <br \>Manage Bookmarks
+                  <hr>
+                  <a href="#" class="hyperlink">Bookmark 1</a>
+                  <a href="#" class="hyperlink">Bookmark 2</a>
+                  <a href="#" class="hyperlink">Bookmark 3</a>
+                  <a href="#" class="hyperlink">Bookmark 4</a>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">View Context Apps</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Bookmark Button-->
+      <button class="mingle-share-btn" type="button" title="Bookmarks" data-toggle="popover" aria-haspopup="true">
+        <svg class="icon icon-mingle-bookmark">
+          <use xlink:href="#icon-mingle-bookmark"></use>
+        </svg>
+      </button>
+      <div class="popover bottom share-popup">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <div class="accordion">
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">
+                  <svg class="icon icon-mingle-user">
+                    <use xlink:href="#icon-mingle-user"></use>
+                  </svg>
+                  My Account
+                </span>
+              </a>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  My Account Info Here
+                  <hr>
+                  <a href="#" class="hyperlink">Notifications</a>
+                  <a href="#" class="hyperlink">System Administration</a>
+                  <a href="#" class="hyperlink">User Settings</a>
+                  <a href="#" class="hyperlink">Help</a>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">Search</span>
+              </a>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">Share to Infor Ming.le</span>
+              </a>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">Bookmarks</span>
+              </a>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  Bookmark this page <br \>Manage Bookmarks
+                  <hr>
+                  <a href="#" class="hyperlink">Bookmark 1</a>
+                  <a href="#" class="hyperlink">Bookmark 2</a>
+                  <a href="#" class="hyperlink">Bookmark 3</a>
+                  <a href="#" class="hyperlink">Bookmark 4</a>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-header">
+              <a href="#">
+                <span class="title">View Context Apps</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -159,5 +267,8 @@
   {{> controls/svg}}
   <script>
     $('body').shell();
+    $('.accordion').accordion({
+      allowOnePane: true
+    });
   </script>
 
