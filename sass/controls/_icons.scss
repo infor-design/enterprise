@@ -16,7 +16,7 @@ svg.icon {
   &.icon-error,
   &.icon-validated {
     display: inline;
-    fill: $error-icon-fill;
+    fill: $alert-red;
     height: 22px;
     top: 6px;
     width: 22px;
@@ -79,6 +79,20 @@ svg.icon-tree {
     margin-top: 25px;
     position: relative;
     width: 45px;
+  }
+
+}
+
+.drilldown.btn-icon {
+  border-radius: 0;
+
+  svg {
+    height: 23px;
+    width: 23px;
+  }
+
+  span {
+    color: transparent;
   }
 }
 

@@ -180,10 +180,10 @@ $breadcrumb-disabled-color: $graphite02;
 $breadcrumb-color: #666666;
 
 //States
-$error-color: #ed1c24;
-$error-icon-fill: #d5000e;
+$error-color: $alert-red;
+$error-icon-fill: $alert-red;
 $dirty-icon-fill: #ffa800;
-$validated-icon-fill: #2db329;
+$validated-icon-fill: $alert-green;
 
 // Color Picker
 $colorpicker-initial-bg-color: #999999;

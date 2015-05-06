@@ -540,12 +540,7 @@ span {
   }
 
   a.hyperlink {
-    display: block;
     @include font-size(16);
-    max-width: 235px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   li {
@@ -645,6 +640,14 @@ code.snippet {
     display: block;
     width: 100% !important;
   }
+}
+
+.sidebar-nav a {
+  display: block;
+  max-width: 235px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 // Guide/Controls Pages

@@ -28,9 +28,7 @@
 }(function() {
 /* end-amd-strip-block */
 
-  var Tmpl = {}; // jshint ignore:line
-
-  window.Tmpl = {};
+  var Tmpl = window.Tmpl = {};
 
   Tmpl.Template = function (codeObj, text, compiler, options) {
     codeObj = codeObj || {};
