@@ -207,11 +207,14 @@ $listview-selected-text-color: $inverse-color;
   text-align: right;
   z-index: 20;
 
+  + .listview {
+    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
+  }
+
   &.is-visible {
     height: 52px;
 
     + .listview {
-      @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
       height: calc(100% - 50px);
     }
   }

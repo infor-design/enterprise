@@ -29,9 +29,9 @@ small,
 span,
 ul {
   font-family: $font-regular;
-  -webkit-font-smoothing: antialiased;
+  //-webkit-font-smoothing: antialiased;
   //-moz-osx-font-smoothing: grayscale;
-  font-weight: normal;
+  font-weight: lighter;
   line-height: normal;
 }
 
