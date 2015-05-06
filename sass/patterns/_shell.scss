@@ -55,8 +55,6 @@
 // User Button
 .mingle-user-btn {
   color: #b2b2b2;
-  padding: 0 20px;
-  top: 10px;
   position: relative;
   transition: all .3s ease 0s;
   width: auto;
@@ -652,12 +650,22 @@
     width: 100%;
     max-width: none;
     left: 0 !important;
+    padding: 0;
   }
 
   .popover .arrow {
     display: none;
   }
-  
+
+  .mingle-app-name {
+    left: 40px;
+  }
+
+  svg.icon-logo {
+    position: absolute;
+    left: 50%;
+    margin-left: -17px;
+  }
 }
 
 @include respond-to(phone) {
