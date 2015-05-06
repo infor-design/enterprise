@@ -65,13 +65,17 @@ $listview-selected-text-color: $inverse-color;
 
   .l-pull-right {
     position: relative;
-    top: -50px;
+    top: -30px;
 
     .icon.icon-error {
       left: -10px;
       position: relative;
-      top: 0;
+      top: -3px;
       vertical-align: top;
+    }
+
+    &.listview-micro {
+      top: -50px;
     }
   }
 
