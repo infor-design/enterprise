@@ -653,26 +653,28 @@
   width: 100px;
 }
 @include respond-to(phablet) {
-  .popover {
-    top: 35px;
-    width: 100%;
-    max-width: none;
-    left: 0 !important;
-    padding: 0;
-  }
+  .mingle-header {
+    .popover {
+      top: 35px;
+      width: 100%;
+      max-width: none;
+      left: 0 !important;
+      padding: 0;
+    }
 
-  .popover .arrow {
-    display: none;
-  }
+    .popover .arrow {
+      display: none;
+    }
 
-  .mingle-app-name {
-    left: 40px;
-  }
+    .mingle-app-name {
+      left: 40px;
+    }
 
-  svg.icon-logo {
-    position: absolute;
-    left: 50%;
-    margin-left: -17px;
+    svg.icon-logo {
+      position: absolute;
+      left: 50%;
+      margin-left: -17px;
+    }
   }
 }
 
