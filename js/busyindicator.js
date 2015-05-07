@@ -191,7 +191,6 @@
       // Removes the appended markup and hides any trace of the indicator
       close: function() {
         var self = this;
-        this.label.addClass('audible').text(Locale.translate('Completed'));
         //this.isAnimating = false;
 
         this.container.addClass('is-hidden');

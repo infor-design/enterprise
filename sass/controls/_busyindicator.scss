@@ -36,7 +36,7 @@ $busy-indicator-check-color: $inverse-color;
 .busy-indicator {
   display: inline-block;
   height: $busy-indicator-size;
-  margin: 2em;
+  margin: .8em;
   @include opacity(1);
   position: relative;
   vertical-align: middle;
@@ -60,12 +60,12 @@ $busy-indicator-check-color: $inverse-color;
 
   // Animation doesn't happen when the container is hidden
   &:not(.is-hidden) > .bar {
-    @include css3(animation, stretchdelay 1.2s infinite ease-in-out);
-
-    &.two { @include css3(animation-delay, -1.1s); }
-    &.three { @include css3(animation-delay, -1s); }
-    &.four { @include css3(animation-delay, -.9s); }
-    &.five { @include css3(animation-delay, -.8s); }
+    @include css3(animation, stretchdelay 1s infinite ease-in-out);
+    &.one { @include css3(animation-delay, -.5s); }
+    &.two { @include css3(animation-delay, -.4s); }
+    &.three { @include css3(animation-delay, -.3s); }
+    &.four { @include css3(animation-delay, -.2s); }
+    &.five { @include css3(animation-delay, -.1s); }
   }
 
 }
@@ -85,8 +85,8 @@ $busy-indicator-check-color: $inverse-color;
 
 // Animation Keyframes
 @include keyframes(stretchdelay) {
-  0%, 40%, 100% { @include css3(transform, scaleY(.4)); }
-  20% { @include css3(transform, scaleY(1)); }
+  0%, 70%, 100% { @include css3(transform, scaleY(.4)); }
+  35% { @include css3(transform, scaleY(1)); }
 }
 
 // Display changes based on host element type
@@ -95,7 +95,11 @@ input + .busy-indicator-container,
   position: absolute;
 
   + .busy.overlay {
-    visibility: hidden;
+    @include opacity(.5);
+
+    &.is-hidden {
+      @include opacity(0);
+    }
   }
 
   .busy-indicator {
