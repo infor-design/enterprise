@@ -308,8 +308,8 @@
 
       field.next('.icon-error').off('click.validate').remove();
       if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
-        field.next().next().removeClass('error') // #shdo
-          .next().next().off('click.validate').remove(); // SVG Error Icon
+        field.next().next().removeClass('error'); // #shdo
+        field.parent().find('.dropdown-wrapper > .icon-error').off('click.validate').remove(); // SVG Error Icon
       }
       field.next().next('.icon-error').remove();
       field.next('.inforCheckboxLabel').next('.icon-error').remove();
