@@ -78,7 +78,6 @@ $busy-indicator-check-color: $inverse-color;
   @include transition(opacity 500ms);
   visibility: visible;
 
-
   &.is-hidden {
     @include opacity(0);
   }
@@ -95,9 +94,14 @@ input + .busy-indicator-container,
 .dropdown-wrapper > .busy-indicator-container {
   position: absolute;
 
+  + .busy.overlay {
+    visibility: hidden;
+  }
+
   .busy-indicator {
-    height: 34px;
-    margin: .35em .3em .3em;
+    background-color: $body-bg-color;
+    height: 28px;
+    margin: .33em .3em .3em;
     position: absolute;
     right: 0;
     width: 40px;
