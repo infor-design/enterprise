@@ -262,11 +262,6 @@ textarea.error:focus,
   }
 }
 
-// Trigger Fields
-.icon + .icon-error {
-  left: -19px !important;
-}
-
 // Text Selection
 ::selection {
   background: $primary-color;
