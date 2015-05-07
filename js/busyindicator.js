@@ -33,27 +33,18 @@
 
     // Plugin Constructor
     function BusyIndicator(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
-    }
-
-    // Check to see if the current browser supports CSS3 Animation
-    function browserSupportsAnimation() {
-      var s = document.createElement('p').style,
-        supportsAnimation = 'animation' in s ||
-                              'WebkitAnimation' in s ||
-                              'MozAnimation' in s ||
-                              'msAnimation' in s ||
-                              'OAnimation' in s;
-      return supportsAnimation;
     }
 
     // Plugin Methods
     BusyIndicator.prototype = {
 
       init: function() {
-        this.setup();
-        this.setupEvents();
+        this
+          .setup()
+          .handleEvents();
       },
 
       // Sanitize incoming option values
@@ -63,30 +54,31 @@
           completionTime = this.element.attr('data-completion-time'),
           closeTime = this.element.attr('data-close-time');
 
-        this.blockUI = blockUI !== undefined ? blockUI : settings.blockUI;
-        this.loadingText = settings.text ? settings.text : Locale.translate('Loading');
-        this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(settings.delay) && settings.delay >= 20 ? settings.delay : 20;
-        this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : settings.timeToComplete;
-        this.closeTime = closeTime !== undefined && !isNaN(closeTime) ? parseInt(closeTime, 10) : settings.timeToClose;
+        this.blockUI = blockUI !== undefined ? blockUI : this.settings.blockUI;
+        this.loadingText = this.settings.text ? this.settings.text : Locale.translate('Loading');
+        this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(this.settings.delay) && this.settings.delay >= 20 ? this.settings.delay : 20;
+        this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : this.settings.timeToComplete;
+        this.closeTime = closeTime !== undefined && !isNaN(closeTime) ? parseInt(closeTime, 10) : this.settings.timeToClose;
+
+        return this;
       },
 
-      setupEvents: function() {
+      handleEvents: function() {
         var self = this;
         self.element.on('start.busyindicator', function(e) {
           e.stopPropagation();
           self.activate();
-        }).on('started.busyindicator', function() {
-          // Completed/Close events are only active once the indicator is "started"
+        }).on('afterStart.busyindicator', function() {
+          // Complete event is only active once the indicator is "started"
           self.element.on('complete.busyindicator', function(e) {
-            e.stopPropagation();
-            self.complete();
-          }).on('close.busyindicator', function(e) {
             e.stopPropagation();
             self.close();
           });
         }).on('updated.busyindicator', function() {
           self.setup();
         });
+
+        return this;
       },
 
       // Builds and starts the indicator
@@ -100,10 +92,14 @@
           }
           this.label.remove();
           this.label = $('<span>' + this.loadingText + '</span>').appendTo(this.container);
-          this.loader.removeClass('complete').addClass('active');
+
+          if (this.element.is('input, .dropdown, .multiselect')) {
+            this.label.addClass('audible');
+          }
+
           this.container
             .removeClass('is-hidden')
-            .trigger('started.busyindicator');
+            .trigger('afterStart');
           return;
         }
 
@@ -114,18 +110,12 @@
         });
         this.loader = $('<div class="busy-indicator active"></div>').appendTo(this.container);
 
-        var bowl = $('<div class="busy-indicator-bowl"></div>').appendTo(this.loader),
-          container = $('<div class="busy-indicator-ball-container"></div>'),
-          ball = $('<div class="busy-indicator-ball"></div>');
+        $('<div class="bar one"></div>' +
+          '<div class="bar two"></div>' +
+          '<div class="bar three"></div>' +
+          '<div class="bar four"></div>' +
+          '<div class="bar five"></div>').appendTo(this.loader);
 
-        if (!browserSupportsAnimation()) {
-          ball.appendTo(bowl);
-        } else {
-          container.appendTo(bowl);
-          ball.appendTo(container);
-        }
-
-        $('<div class="complete-check"></div>').appendTo(this.loader);
         this.label = $('<span>'+ this.loadingText +'</span>').appendTo(this.container);
         if (this.blockUI) {
           this.originalPositionProp = this.element.css('position');
@@ -135,7 +125,41 @@
         }
 
         // Append the markup to the page
-        this.container.appendTo(this.element);
+        // Use special positioning logic for compatibility with certain controls
+        if (this.element.is('input, .dropdown, .multiselect')) {
+          this.label.addClass('audible');
+
+          var target;
+
+          if (this.element.is('input')) {
+            target = this.element;
+            this.container.insertAfter(this.element);
+          } else {
+            var dd = this.element.data('dropdown');
+            target = dd.input;
+            this.container.appendTo(target.parent());
+          }
+
+          if (this.overlay) {
+            this.overlay.insertAfter(this.container);
+          }
+
+          var rect = target.position(),
+            h = target.outerHeight(),
+            w = target.outerWidth();
+
+          this.container.add(this.overlay).css({
+            left: rect.left,
+            top: rect.top,
+            bottom: rect.top + h,
+            right: rect.left + w,
+            height: h,
+            width: w
+          });
+        } else {
+          // Normal Operations
+          this.container.appendTo(this.element);
+        }
 
         // Fade in shortly after adding the markup to the page (prevents the indicator from abruptly showing)
         setTimeout(function() {
@@ -146,45 +170,30 @@
         }, self.delay);
 
         // Lets external code know that we've successully kicked off.
-        this.element.trigger('started.busyindicator');
+        this.element.trigger('afterStart');
 
+        /*
         // Start the JS Animation Loop if IE9
-        if (!browserSupportsAnimation()) {
+        if (!$.fn.cssPropSupport('animation')) {
           self.isAnimating = true;
           self.animateWithJS();
         }
+        */
 
         // Triggers complete if the "timeToComplete" option is set.
         if (this.completionTime > 0) {
           setTimeout(function() {
-            self.element.trigger('complete.busyindicator');
+            self.element.trigger('complete');
           }, self.completionTime);
-        }
-      },
-
-      // Creates the checkmark and shows a complete state
-      complete: function() {
-        var self = this;
-        this.label.remove();
-        this.label = $('<span>'+Locale.translate('Completed')+'</span>').appendTo(this.container);
-        this.loader.removeClass('active').addClass('complete');
-
-        if (!browserSupportsAnimation()) {
-          self.isAnimating = false;
-        }
-
-        this.element.trigger('completed.busyindicator');
-
-        if (this.closeTime > 0) {
-          setTimeout(function() {
-            self.element.trigger('close.busyindicator');
-          }, self.closeTime);
         }
       },
 
       // Removes the appended markup and hides any trace of the indicator
       close: function() {
         var self = this;
+        this.label.addClass('audible').text(Locale.translate('Completed'));
+        //this.isAnimating = false;
+
         this.container.addClass('is-hidden');
         if (this.overlay) {
           this.overlay.addClass('is-hidden');
@@ -200,44 +209,79 @@
             self.element.css('position', self.originalPositionProp);
             self.originalPositionProp = undefined;
           }
-          self.element.trigger('closed.busyindicator');
-          self.element.off('complete.busyindicator close.busyindicator');
+          self.element.trigger('afterComplete.busyindicator');
+          self.element.off('complete.busyindicator');
         }, 500);
       },
 
       // Browsers that don't support CSS-based animation can still show the animating Busy Indicator.
       animateWithJS: function() {
         var self = this,
-          ball = this.container.find('.busy-indicator-ball'),
-          bowl = this.container.find('.busy-indicator-bowl'),
-          bowlPos = bowl.position(),
-          bowlX = Math.floor(parseInt(bowlPos.left) + (bowl.width()/2)),
-          bowlY = Math.floor(parseInt(bowlPos.top) + (bowl.height()/2)),
-          radius = 25,
-          t = 0;
+          bar1 = this.container.find('.bar.one'),
+          bar2 = this.container.find('.bar.two'),
+          bar3 = this.container.find('.bar.three'),
+          bar4 = this.container.find('.bar.four'),
+          bar5 = this.container.find('.bar.five'),
+          t = 0,
+          interval;
 
         // Animation Loop
         function animate() {
-          t += 0.1;
-          var newLeft = Math.floor(bowlX + (radius * Math.cos(t))) - (ball.width()/2),
-            newTop = Math.floor(bowlY + (radius * Math.sin(t))) - (ball.height()/2);
+          if (!self.isAnimating) {
+            clearInterval(interval);
+            return;
+          }
 
-          ball.animate({
-            left: newLeft,
-            top: newTop
-          }, 10, 'linear', function() {
-            if (self.isAnimating) {
-              animate();
-            }
-          });
+          t += 1;
+
+          if (t === 1) {
+            bar1.addClass('half');
+          }
+          if (t === 13) {
+            bar1.removeClass('half').addClass('full');
+            bar2.addClass('half');
+          }
+          if (t === 26) {
+            bar1.removeClass('full').addClass('half');
+            bar2.removeClass('half').addClass('full');
+            bar3.addClass('half');
+          }
+          if (t === 39) {
+            bar1.removeClass('half');
+            bar2.removeClass('full').addClass('half');
+            bar3.removeClass('half').addClass('full');
+            bar4.addClass('half');
+          }
+          if (t === 51) {
+            bar2.removeClass('half');
+            bar3.removeClass('full').addClass('half');
+            bar4.removeClass('half').addClass('full');
+            bar5.addClass('half');
+          }
+          if (t === 64) {
+            bar3.removeClass('half');
+            bar4.removeClass('full').addClass('half');
+            bar5.removeClass('half').addClass('full');
+          }
+          if (t === 77) {
+            bar4.removeClass('half');
+            bar5.removeClass('full').addClass('half');
+          }
+          if (t === 90) {
+            bar5.removeClass('half');
+          }
+
+          if (t === 200) {
+            t = 0;
+          }
         }
 
-        animate();
+        setInterval(animate, 5);
       },
 
       // Teardown
       destroy: function() {
-        this.element.off('start.busyindicator complete.busyindicator close.busyindicator updated.busyindicator');
+        this.element.off('start.busyindicator complete.busyindicator afterStart.busyindicator afterComplete.busyindicator updated.busyindicator');
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -246,10 +290,9 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend(instance.settings, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
       } else {
         instance = $.data(this, pluginName, new BusyIndicator(this, settings));
-        instance.settings = settings;
       }
     });
   };

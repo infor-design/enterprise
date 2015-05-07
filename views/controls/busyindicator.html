@@ -3,48 +3,73 @@
     <h1>Busy Indicator</h1>
     <span class="label">Click on the buttons to bring up the busy indicator</span>
     <hr>
+  </div>
+</div>
 
+<div class="row">
+  <div class="one-half column">
+
+    <span class="label">Regular Example (UI Blocking)</span>
+    <form id="busy-form" class="busy" action="#" method="POST" data-completion-time="2000" data-close-time="3000">
+      <div class="field">
+        <label for="busy-field-name">Name</label>
+        <input id="busy-field-name" name="busy-field-name" />
+      </div>
+      <div class="field">
+        <label for="busy-field-address">Address</label>
+        <input id="busy-field-address" name="busy-field-address" />
+      </div>
+      <div class="field">
+        <label for="busy-field-cats">Number of Cats</label>
+        <input id="busy-field-cats" name="busy-field-cats" />
+      </div>
+      <div class="field">
+        <button type="reset" class="btn-secondary">Clear</button>
+        <button type="submit" class="btn-primary">Submit</button>
+      </div>
+    </form>
+
+  </div>
+  <div class="one-half column">
+
+    <span class="label">Standalone Example (Non-UI-Blocking), Controlled with Events</span>
     <div class="row">
       <div class="one-half column">
-
-        <span class="label">Regular Example (UI Blocking)</span>
-        <form id="busy-form" class="busy" action="#" method="POST" data-completion-time="2000" data-close-time="3000">
-          <div class="field">
-            <label for="busy-field-name">Name</label>
-            <input id="busy-field-name" name="busy-field-name" />
-          </div>
-          <div class="field">
-            <label for="busy-field-address">Address</label>
-            <input id="busy-field-address" name="busy-field-address" />
-          </div>
-          <div class="field">
-            <label for="busy-field-cats">Number of Cats</label>
-            <input id="busy-field-cats" name="busy-field-cats" />
-          </div>
-          <div class="field">
-            <button type="reset" class="btn-secondary">Clear</button>
-            <button type="submit" class="btn-primary">Submit</button>
-          </div>
-        </form>
-
+        <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button><br />
+        <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button><br />
       </div>
-
       <div class="one-half column">
-
-        <span class="label">Standalone Example (Non-UI-Blocking), Controlled with Events</span>
-        <div class="row">
-          <div class="one-half column">
-            <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button><br />
-            <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button><br />
-            <button class="btn" id="busy-close-trigger" type="button">Fire "close" Event</button>
-          </div>
-          <div class="one-half column">
-            <div id="standalone-busy" class="busy card"></div>
-          </div>
-        </div>
-
+        <div id="standalone-busy" class="busy card"></div>
       </div>
     </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <span class="label" for="busy-input">Busy Input Field</span>
+      <input class="busy" type="text" id="busy-input" data-block-ui="false" data-completion-time="2000" data-close-time="3000"/>
+
+      <br><button class="btn" id="trigger-busy-input" type="button">Load</button>
+    </div>
+  </div>
+
+  <div class="one-half column">
+    <div class="field">
+      <span class="label" for="busy-dropdown">Busy Dropdown</span>
+      <select class="dropdown busy" id="busy-dropdown" data-block-ui="false" data-completion-time="2000" data-close-time="3000">
+        <option selected>Busy</option>
+        <option>Preoccupied</option>
+        <option>Distracted</option>
+        <option>Engaged</option>
+      </select>
+
+      <br><button class="btn" id="trigger-busy-dropdown" type="button">Load</button>
+    </div>
+  </div>
+</div>
 
     <script type="text/javascript">
       $(document).ready(function() {
@@ -59,14 +84,19 @@
           $('#standalone-busy').trigger('complete.busyindicator');
         });
 
-        $('#busy-close-trigger').click(function(e) {
-          e.preventDefault();
-          $('#standalone-busy').trigger('close.busyindicator');
-        });
-
         $('#busy-form button[type="submit"]').click(function(e) {
           e.preventDefault();
           $('#busy-form').trigger('start.busyindicator');
+        });
+
+        $('#trigger-busy-input').click(function(e) {
+          e.preventDefault();
+          $('#busy-input').trigger('start');
+        });
+
+        $('#trigger-busy-dropdown').click(function(e) {
+          e.preventDefault();
+          $('#busy-dropdown').trigger('start');
         });
 
       });
