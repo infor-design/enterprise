@@ -102,6 +102,8 @@
 
         $(window).on('scroll.applicationmenu', function() {
           self.adjustHeight();
+        }).on('resize.applicationmenu', function() {
+          self.testWidth();
         });
 
         return this;
@@ -155,6 +157,16 @@
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
       },
 
+      isLargerThanBreakpoint: function() {
+        return $(window).width() > 1280;
+      },
+
+      testWidth: function() {
+        if (this.isLargerThanBreakpoint() && !this.menu.hasClass('is-open') && this.isAnimating === false) {
+          this.openMenu();
+        }
+      },
+
       openMenu: function() {
         if (this.isAnimating === true) {
           return;
@@ -203,7 +215,7 @@
       },
 
       closeMenu: function() {
-        if (this.isAnimating === true) {
+        if (this.isAnimating === true || this.isLargerThanBreakpoint() === true) {
           return;
         }
 
