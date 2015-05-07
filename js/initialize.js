@@ -179,8 +179,7 @@
 
         elem.find('.modal-search').modalsearch();
 
-        // TODO: Decide whether or not we are removing this completely
-        //$('body').flyingfocus();
+        elem.find('.signin').signin();
       });
 
       self.trigger('initialized');

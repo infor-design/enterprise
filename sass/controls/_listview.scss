@@ -202,6 +202,7 @@ $listview-selected-text-color: $inverse-color;
   background-color: $listview-selected-bg-color;
   border-radius: 2px 2px 0 0;
   display: none;
+  height: 0;
   margin: 0;
   overflow: hidden;
   text-align: right;
@@ -224,6 +225,7 @@ $listview-selected-text-color: $inverse-color;
     @include font-size(12);
     font-weight: bold;
     margin-top: 9px;
+    min-width: 50px;
     text-transform: uppercase;
 
     &:focus {
@@ -237,10 +239,6 @@ $listview-selected-text-color: $inverse-color;
       > span {
         color: $listview-selected-text-color;
       }
-    }
-
-    &:last-child {
-      margin-right: 20px;
     }
 
     .ripple {

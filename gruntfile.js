@@ -89,6 +89,7 @@ module.exports = function(grunt) {
             'temp/amd/searchfield.js',
             'temp/amd/sidebar.js',
             'temp/amd/shell.js',
+            'temp/amd/signin.js',
             'temp/amd/slider.js',
             'temp/amd/spinbox.js',
             'temp/amd/toast.js',

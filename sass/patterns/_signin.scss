@@ -9,13 +9,10 @@
 
 .signin {
   display: table-cell;
-  text-align: center;
+  margin-top: -100px;
   vertical-align: middle;
+  text-align: center;
   width: 300px;
-
-  form {
-    margin-top: -100px;
-  }
 
   label {
     text-align: left;
@@ -25,9 +22,9 @@
     @include font-size(24);
     color: #454545;
     margin-bottom: 30px;
+    margin-top: -20px;
     padding: 0;
     text-align: center;
-    margin-top: -20px;
   }
 
   .hyperlink {

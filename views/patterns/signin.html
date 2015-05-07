@@ -2,7 +2,6 @@
 <div class="wrapper">
   <section class="signin" role="main">
 
-    <form id="signin" data-validate-on="submit">
       <svg viewBox="0 0 34 34" class="icon icon-logo" focusable="false" aria-hidden="true" aria-label="Infor Logo">
         <use xlink:href="#icon-logo"></use>
       </svg>
@@ -10,8 +9,8 @@
       <h1>Application Name</h1>
 
       <div class="field">
-        <label for="email">Email</label>
-        <input type="text" id="email" autocomplete="off" data-validate="required">
+        <label for="username">Email</label>
+        <input type="text" name="username" id="username" autocomplete="off" data-validate="required">
       </div>
 
       <div class="field">
@@ -19,9 +18,16 @@
         <input type="password" id="password" data-validate="required">
         <!-- TODO: Caps Lock Indicator -->
       </div>
-      <button class="btn-primary" type="submit">Sign in</button>
-      <a class="hyperlink" href="#">Forgot Password?</a>
-    </form>
+
+      <form id="signin" data-validate-on="submit" autocomplete="off">
+          <button class="btn-primary" type="submit">Sign in</button>
+          <a class="hyperlink" href="#">Forgot Password?</a>
+
+          <label for="username-hidden" class="audible">Username</label>
+          <input type="hidden" name="username-hidden" id="username-hidden" >
+          <label for="password-hidden" class="audible">Password</label>
+          <input type="hidden" id="password-hidden" name="password-hidden">
+      </form>
   </section>
 </div>
 {{> controls/svg}}

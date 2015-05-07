@@ -48,9 +48,9 @@
     }
 
     var el = $('<div></div>')[0],
-      prop = prop.toString(),
+      propStr = prop.toString(),
       prefixes = ['Moz', 'Webkit', 'O', 'ms'],
-      prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
+      prop_ = propStr.charAt(0).toUpperCase() + propStr.substr(1);
 
     if (prop in el.style) {
       $(el).remove();
