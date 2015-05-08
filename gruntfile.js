@@ -7,8 +7,8 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    banner: '/**\n* Soho XI Controls v<%= pkg.version %> \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n' +
-            '(function(factory) {\n\n  if (typeof define === \'function\' && define.amd) {\n    // AMD. Register as an anonymous module\n    define([\'jquery\'], factory);\n  } else if (typeof exports === \'object\') {\n    // Node/CommonJS\n    module.exports = factory(require(\'jquery\'));\n} else {\n    // Browser globals \n    factory(jQuery);\n  }\n\n}(function($) {\n\n',
+    banner: '/**\n* Soho XI Controls v<%= pkg.version %> \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n',
+    amdHeader: '(function(factory) {\n\n  if (typeof define === \'function\' && define.amd) {\n    // AMD. Register as an anonymous module\n    define([\'jquery\'], factory);\n  } else if (typeof exports === \'object\') {\n    // Node/CommonJS\n    module.exports = factory(require(\'jquery\'));\n} else {\n    // Browser globals \n    factory(jQuery);\n  }\n\n}(function($) {\n\n',
 
     sass: {
       options: {
@@ -46,7 +46,7 @@ module.exports = function(grunt) {
     concat: {
       options: {
         separator: '',
-        banner: '<%= banner %>',
+        banner: '<%= banner %>'+'<%= amdHeader %>',
         footer: '\n}));\n//# sourceURL=<%= pkg.name %>.js'
       },
       basic: {
@@ -109,7 +109,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '<%= banner %>',
+          banner: '<%= banner %>'+'<%= amdHeader %>',
           sourceMap: true,
           sourceMapName: 'dist/js/sohoxi.map',
           separator: ';'
