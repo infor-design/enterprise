@@ -56,6 +56,7 @@
 | Home Pages | | Fredrik Erikkson |
 | Mongoose | | Bryan Petit |
 | Rhythm Widgets | | Eric Martensson |
+| SmartStream | ASP | Wim Denayer |
 | SXE | | Peter Cullen |
 | S3 | | Rajan Shanmugavelu |
 | Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> |

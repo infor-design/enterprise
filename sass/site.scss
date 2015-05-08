@@ -186,6 +186,11 @@ span {
     margin-top: 30px;
   }
 
+  pre[class*="language-"] {
+    left: 10%;
+    width: calc(100% - 20%);
+  }
+
   p {
     @include font-size(16);
     font-weight: 300;
@@ -207,7 +212,12 @@ span {
   ul {
     list-style: initial;
     list-style-type: disc;
-    list-style-position: inside;
+    list-style-position: unset;
+    margin-left: 20px;
+
+    li {
+    margin-bottom: 5px;
+    }
   }
 }
 
@@ -560,7 +570,7 @@ span {
     line-height: 28px;
     list-style: initial;
     list-style-type: disc;
-    list-style-position: inside;
+    list-style-position: unset;
   }
 
   ol {
@@ -816,7 +826,7 @@ div.light-bgrnd {
     line-height: 24px;
     list-style: initial;
     list-style-type: disc;
-    list-style-position: inside;
+    list-style-position: unset;
     margin: 0 0 20px 30px;
 
     li {

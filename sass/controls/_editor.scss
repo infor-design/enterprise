@@ -125,6 +125,18 @@
     span {
       @include font-size(16);
     }
+
+    &.is-active {
+      color: $primary-color;
+
+      span {
+        color: $primary-color;
+      }
+
+      svg {
+        fill: $primary-color;
+      }
+    }
   }
 
   .editor-btn.underline {

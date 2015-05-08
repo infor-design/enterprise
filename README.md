@@ -53,7 +53,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 * Install sass: http://sass-lang.com/
 * Install postgresql (for sample data): http://www.postgresql.org/download/
 
-## Git The Code
+## Get The Code
 
 * First clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
 * Move into your new repo: `cd sohoxi`
