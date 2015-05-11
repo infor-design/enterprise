@@ -23,7 +23,9 @@
 
     // Settings and Options
     var pluginName = 'applicationmenu',
-        defaults = {},
+        defaults = {
+          triggers: [] // An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+        },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -45,14 +47,13 @@
       setup: function() {
         this.hasTrigger = false;
         this.isAnimating = false;
+        this.triggers = $();
 
-        if (this.element.hasClass('application-menu')) {
-          this.menu = this.element;
-        }
-        if (!this.menu && this.element.next('.application-menu')) {
-          this.hasTrigger = true;
-          this.menu = this.element.next('.application-menu');
-        }
+        this.menu = this.element;
+
+        // Pull in the list of Nav Menu trigger elements and store them internally.
+        this.modifyTriggers(this.settings.triggers, false, true);
+
         this.scrollTarget = this.menu.parents('.header');
         if (this.menu.parents('.masthead').length > 0) {
           this.scrollTarget = this.menu.parents('.masthead');
@@ -74,8 +75,8 @@
 
         // Setup click events on this.element if it's not the menu itself
         // (this means that it's a trigger button)
-        if (this.hasTrigger) {
-          this.element.on('touchend.applicationmenu touchcancel.applicationmenu', function(e) {
+        if (this.triggers.length) {
+          this.triggers.on('touchend.applicationmenu touchcancel.applicationmenu', function(e) {
             e.preventDefault();
             $(e.target).click();
           }).on('click.applicationmenu', function() {
@@ -115,8 +116,8 @@
         if (key === 27) { // Escape
           e.preventDefault();
           this.closeMenu();
-          if (this.hasTrigger) {
-            this.element.focus();
+          if (this.triggers.length) {
+            this.triggers.eq(0).focus();
           }
           return false;
         }
@@ -243,17 +244,52 @@
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu keydown.applicationmenu');
       },
 
+      // Externally Facing function that can be used to add/remove application nav menu triggers.
+      // If the 'remove' argument is defined, triggers that are defined will be removed internally instead of added.
+      // If the 'norebuild' argument is defined, this control's events won't automatically be rebound to include
+      // the new triggers.
+      modifyTriggers: function(triggers, remove, norebuild) {
+        if (!triggers || !triggers.length) {
+          return;
+        }
+        var changed = $();
+
+        $.each(triggers, function(i, obj) {
+          changed = changed.add($(obj));
+        });
+
+        this.triggers = !remove ? this.triggers.add(changed) : this.triggers.not(changed);
+
+        if (norebuild && norebuild === true) {
+          return;
+        }
+
+        this.updated();
+      },
+
+      unbind: function() {
+        this.accordion.off('blur.applicationmenu');
+        this.menu.off('animateOpenComplete animateClosedComplete');
+        $(window).off('scroll.applicationmenu');
+        $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
+
+        return this;
+      },
+
+      updated: function() {
+        this
+          .unbind()
+          .handleEvents();
+      },
+
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.accordion.off('blur.applicationmenu');
+        this.unbind();
         this.menu
           .detach()
           .appendTo(this.originalParent)
           .removeClass('short')
           .removeAttr('style');
-        this.menu.off('animateOpenComplete animateClosedComplete');
-        $(window).off('scroll.applicationmenu');
-        $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -263,6 +299,7 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new ApplicationMenu(this, settings));
       }
