@@ -172,7 +172,7 @@
         }
 
         this.setContent(this.content);
-        this.element.trigger('beforeOpen', [this.tooltip]);
+        this.element.trigger('beforeShow', [this.tooltip]);
 
         this.tooltip.removeAttr('style');
         this.tooltip.removeClass('bottom right left top offset is-error').addClass(settings.placement);
@@ -183,7 +183,7 @@
 
         this.tooltip.removeClass('is-hidden');
         this.position();
-        this.element.trigger('open', [this.tooltip]);
+        this.element.trigger('show', [this.tooltip]);
 
         setTimeout(function () {
           $(document).on('mouseup.tooltip', function (e) {
@@ -328,7 +328,7 @@
         }
 
         // TODO document breaking change
-        this.element.trigger('close', [this.tooltip]);
+        // this.element.trigger('close', [this.tooltip]);
         this.element.trigger('hide', [this.tooltip]);
       },
 

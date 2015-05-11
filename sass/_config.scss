@@ -202,7 +202,7 @@ $tree-folder-link-color: $font-color-extradark;
 $tree-disabled-opacity: .5;
 
 // Tabs
-$tab-selected-color: #0371cf;  //TODO: $primary-color;
+$tab-selected-color: $primary-color;  //TODO: $primary-color;
 $tab-border-color: #b6b6b6;
 $tab-hover-color: $font-color-extradark;
 

@@ -50,144 +50,174 @@
   padding: 0;
   width: 100%;
 
-  > li {
-    border-radius: 2px 2px 0 0;
-    cursor: pointer;
+  .separator {
+    cursor: default;
     display: inline-block;
-    padding: 5px 6px 7px;
+    margin: 0 12px;
+    padding: 11px 0;
     position: relative;
-    @include css3(transition, background-color .25s ease);
-
-    > * {
-      vertical-align: middle;
-    }
-
-    &:first-child {
-      padding-left: 0;
-
-      a {
-        padding-left: 0;
-      }
-    }
+    @include css3(user-select, none);
 
     &:before {
-      @include tab-after-off;
+      border-left: 1px solid $tab-border-color;
+      content: '';
+      display: block;
+      height: 100%;
+      position: absolute;
+      top: calc(50% - 6px);
+      @include css3(transition, none);
+      width: 1px;
+    }
+
+    &:after {
+      display: none;
+      @include css3(transition, none);
     }
 
     &:hover {
-      color: $tab-hover-color;
-
-      a {
-        color: $tab-hover-color;
-      }
-
-      .icon {
-        fill: $tab-hover-color;
-      }
+      background-color: transparent;
     }
 
-    &:not(.separator):hover {
-      &::before {
-        @include tab-after-hover;
-      }
-
-      &:first-child::before {
-        left: 0;
-        width: calc(100% - 17px);
-      }
+    &:hover:before {
+      background-color: transparent;
     }
+  }
+}
 
-    &.is-focused {
-      &:after {
-        @include tab-outline-focus;
-      }
-    }
+.tab {
+  border-radius: 2px 2px 0 0;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 6px 7px;
+  position: relative;
+  @include css3(transition, background-color .25s ease);
 
-    &.dismissible {
-      .icon {
-        height: 24px;
-        margin-right: 4px;
-        position: relative;
-        width: 24px;
-      }
-    }
+  > * {
+    vertical-align: middle;
+  }
 
-    &.has-popupmenu {
-      .icon {
-        margin: -2px;
-      }
-    }
-
-    &.separator {
-      cursor: default;
-      margin: 0 12px;
-      padding: 11px 0;
-      @include css3(user-select, none);
-
-      &:before {
-        border-left: 1px solid $tab-border-color;
-        content: '';
-        display: block;
-        height: 100%;
-        position: absolute;
-        top: calc(50% - 6px);
-        @include css3(transition, none);
-        width: 1px;
-      }
-
-      &:after {
-        display: none;
-        @include css3(transition, none);
-      }
-
-      &:hover {
-        background-color: transparent;
-      }
-
-      &:hover:before {
-        background-color: transparent;
-      }
-    }
+  &:first-child {
+    padding-left: 0;
 
     a {
-      color: $font-color;
-      display: inline-block;
-      @include font-size(14);
-      font-weight: normal;
-      line-height: 16px;
-      padding: 7px 11px;
-      text-decoration: none;
+      padding-left: 0;
+    }
+  }
 
-      > * {
-        line-height: 1.14;
-      }
+  &:before {
+    @include tab-after-off;
+  }
+
+  &:not(.is-disabled):hover {
+    color: $tab-hover-color;
+
+    a {
+      color: $tab-hover-color;
     }
 
+    .icon {
+      fill: $tab-hover-color;
+    }
+  }
+
+  &:not(.separator):hover {
+    &::before {
+      @include tab-after-hover;
+    }
+
+    &:first-child::before {
+      left: 0;
+      width: calc(100% - 17px);
+    }
+  }
+
+  &.is-focused {
+    &:after {
+      @include tab-outline-focus;
+    }
+  }
+
+  &.is-disabled {
+    color: $disabled-color;
+
+    > a,
+    &:hover > a,
+    &.is-selected > a,
     .count {
-      display: block;
-      font-size: 180%;
+      color: $disabled-color !important;
+      cursor: default;
     }
 
-    &.is-selected {
-      a {
-        color: $tab-selected-color;
+    &:hover {
+      cursor: default;
 
-        > .count {
-          color: $tab-selected-color;
-        }
+      &::before {
+        content: none !important;
       }
+    }
+  }
 
-      .icon {
-        fill: $tab-selected-color;
+  &.dismissible {
+    .icon {
+      height: 24px;
+      margin-right: 4px;
+      position: relative;
+      width: 24px;
+    }
+  }
+
+  &.has-popupmenu {
+    .icon {
+      margin: -2px;
+    }
+  }
+
+  a {
+    color: $font-color;
+    display: inline-block;
+    @include font-size(14);
+    font-weight: normal;
+    line-height: 16px;
+    padding: 7px 11px;
+    text-decoration: none;
+
+    > * {
+      line-height: 1.14;
+    }
+  }
+
+  .count {
+    display: block;
+    font-size: 180%;
+  }
+
+  &.is-selected {
+    a {
+      color: $tab-selected-color;
+
+      > .count {
+        color: $tab-selected-color;
       }
 
       &:hover {
-        background: rgba($tab-hover-color, 0);
-      }
+        color: $tab-hover-color;
 
-      &:hover:before {
-        background: $primary-color;
+        > .count {
+          color: $tab-hover-color;
+        }
       }
+    }
+
+    .icon {
+      fill: $tab-selected-color;
+    }
+
+    &:hover {
+      background: rgba($tab-hover-color, 0);
+    }
+
+    &:hover:not(.is-disabled):before {
+      background: $primary-color;
     }
   }
 }
@@ -248,8 +278,8 @@
   }
 
   .icon {
-    width: 12px;
     margin: 0 0 0 8px;
+    width: 12px;
   }
 
   &.popup-is-open,
@@ -304,8 +334,16 @@
       padding: 16px 0 16px 14px;
     }
 
-    li {
+    .tab {
       padding: 7px 6px 8px;
+
+      &:first-child {
+        padding-left: 0;
+
+        a {
+          padding-left: 0;
+        }
+      }
 
       &.dismissible {
         .icon {
@@ -318,15 +356,54 @@
   .animated-bar {
     top: 40px;
   }
+
+  // Entire tab control disabled state
+  &.is-disabled {
+
+    .tab,
+    .separator {
+      cursor: default;
+    }
+
+    .tab {
+      color: $disabled-color;
+
+      &::before {
+        content: none !important;
+      }
+
+      > a,
+      &:hover > a,
+      &.is-selected > a,
+      .count {
+        color: $disabled-color !important;
+        cursor: default;
+      }
+    }
+
+    .separator {
+      &::before {
+        border-left-color: $input-disabled-border-color;
+      }
+    }
+
+    .animated-bar {
+      background-color: rgba($disabled-color, 0);
+
+      &.visible {
+        background-color: rgba($disabled-color, 1);
+      }
+    }
+
+  }
+
 }
 
 // IE-specific padding for tab-list
 //
 .ie {
-  .tab-list {
-    > li {
-      padding: 6px;
-    }
+  .tab {
+    padding: 6px;
   }
 
   .tab-more {
@@ -340,10 +417,10 @@
 
     .tab-list {
       height: 74px !important;
+    }
 
-      > li {
-        padding: 7px 6px 8px;
-      }
+    .tab {
+      padding: 7px 6px 8px;
     }
 
     .tab-more {

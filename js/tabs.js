@@ -179,6 +179,10 @@
 
         // Setup the "more" function
         self.moreButton.on('click.tabs', function(e) {
+          if (self.element.is('.is-disabled')) {
+            return;
+          }
+
           if (!(self.container.hasClass('has-more-button'))) {
             e.stopPropagation();
           }
@@ -189,6 +193,11 @@
             self.buildPopupMenu();
           }
         }).on('keydown.tabs', function(e) {
+          if (self.element.is('.is-disabled')) {
+            e.preventDefault();
+            return false;
+          }
+
           switch(e.which) {
             case 37: // left
             case 38: // up
@@ -217,6 +226,10 @@
       },
 
       handleClick: function(li) {
+        if (this.element.is('.is-disabled')) {
+          return;
+        }
+
         var nonVisibleExcludes = ':not(.separator):not(:hidden)',
           a = li.children('a');
 
@@ -240,8 +253,12 @@
       },
 
       handleFocus: function(a) {
+        if (this.element.is('.is-disabled')) {
+          return;
+        }
+
         var invisibleExcludes = ':not(.separator):not(:hidden)',
-          allExcludes = invisibleExcludes + ':not(:disabled)',
+          allExcludes = invisibleExcludes + ':not(.is-disabled)',
           li = a.parent();
 
         this.tablist.children('li' + allExcludes).add(this.moreButton).removeClass('is-selected');
@@ -259,6 +276,11 @@
       },
 
       handleKeyDown: function(e) {
+        if (this.element.is('.is-disabled')) {
+          e.preventDefault();
+          return false;
+        }
+
         if (e.shiftKey || e.ctrlKey || e.metaKey || (e.altKey && e.which !== 8)) {
           return;
         }
@@ -270,7 +292,7 @@
         }
 
         var self = this,
-          allExcludes = ':not(.separator):not(:disabled):not(:hidden)',
+          allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)',
           currentLi = $(e.currentTarget).parent(),
           targetLi,
           tabs = self.tablist.children('li' + allExcludes);
@@ -527,7 +549,7 @@
         var count = targetLiIndex - 1;
         while (count > -1) {
           count = -1;
-          if (prevLi.is('.separator') || prevLi.is(':hidden') || prevLi.is(':disabled')) {
+          if (prevLi.is('.separator') || prevLi.is(':hidden') || prevLi.is('.is-disabled')) {
             prevLi = prevLi.prev();
             count = count - 1;
           }
@@ -543,22 +565,40 @@
         return this;
       },
 
-      // Hides a tab
-      hide: function(tabId) {
+      getTabFromId: function(tabId) {
         if (!tabId) {
           return;
         }
-        this.anchors.filter('[href="#' + tabId + '"]').parent().addClass('hidden');
-        return this;
+        var anchor = this.anchors.filter('[href="#' + tabId + '"]');
+        if (!anchor.length) {
+          return;
+        }
+
+        return anchor.parent();
+      },
+
+      // Hides a tab
+      hide: function(tabId) {
+        var tab = this.getTabFromId(tabId);
+        return tabId ? tab.addClass('hidden') : null;
       },
 
       // Shows a tab
       show: function(tabId) {
-        if (!tabId) {
-          return;
-        }
-        this.anchors.filter('[href="#' + tabId + '"]').parent().removeClass('hidden');
-        return this;
+        var tab = this.getTabFromId(tabId);
+        return tabId ? tab.removeClass('hidden') : null;
+      },
+
+      // Disables an individual tab
+      disableTab: function(tabId) {
+        var tab = this.getTabFromId(tabId);
+        return tabId ? tab.addClass('is-disabled') : null;
+      },
+
+      // Enables an individual tab
+      enableTab: function(tabId) {
+        var tab = this.getTabFromId(tabId);
+        return tabId ? tab.removeClass('is-disabled') : null;
       },
 
       setOverflow: function () {
@@ -616,6 +656,9 @@
               popupLi
                 .appendTo(menuHtml)
                 .attr('data-tab-href', $(item).children('a').attr('href'));
+                // Remove onclick methods from the popup <li> because they are called
+                // on the "select" event in context of the original button
+              popupLi.children('a').removeAttr('onclick');
             }
           }
         });
@@ -633,14 +676,22 @@
         self.positionFocusState(self.moreButton, true);
         self.focusBar(self.moreButton);
 
-        self.popupmenu.element.on('close.popupmenu', function() {
-          $(this).off('close.popupmenu');
+        self.popupmenu.element.on('close.tabs', function() {
+          $(this).off('close.tabs selected.tabs');
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
           self.positionFocusState(undefined, true);
           self.focusBar();
         }).on('selected.tabs', function(e, anchor) {
+          var href = anchor.attr('href'),
+            tab = self.getTabFromId(href.substr(1, href.length)),
+            a = tab.children('a');
+
           self.activate(anchor.attr('href'));
+          // Fire an onclick event associated with the original tab from the spillover menu
+          if (tab && typeof a[0].onclick === 'function') {
+            a[0].onclick.apply(a[0]);
+          }
         });
 
         var menu = self.popupmenu.menu;
@@ -861,6 +912,14 @@
         if (focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
           self.defocusBar();
         }
+      },
+
+      disable: function() {
+        this.element.prop('disabled', true).addClass('is-disabled');
+      },
+
+      enable: function() {
+        this.element.prop('disabled', false).removeClass('is-disabled');
       },
 
       destroy: function(){
