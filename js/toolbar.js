@@ -279,13 +279,15 @@
           if (!e || e.type !== 'selected') {
             button.trigger('click');
           }
+
+          // Fire an onClick associated with the original button if it exists.
+          if (typeof button[0].onclick === 'function') {
+            button[0].onclick.apply(button[0]);
+          }
         }
 
         if (self.popupmenu) {
           self.popupmenu.close();
-          self.moreButton.removeClass('popup-is-open');
-          $('#toolbar-overflow-menu').remove();
-          $(document).off('keydown.popupmenu');
         }
 
         // Generate new list markup for menu if it doesn't exist
@@ -376,18 +378,22 @@
         menuHtml.on('focus.popupmenu', 'a', function() {
           menuHtml.find('li').removeClass('is-selected');
           $(this).parent().addClass('is-selected');
-        }).on('destroy.popupmenu', function() {
-          menuHtml.off().remove();
         });
 
-        self.moreButton.one('close.popupmenu', function() {
-          $(this).off('selected.popupmenu close.popupmenu');
-          $(document).off(this.popupmenuKeyboardEvent);
-          this.popupmenuKeyboardEvent = undefined;
-          self.moreButton.removeClass('popup-is-open');
-        }).on('selected.popupmenu', function(e) {
+        self.popupmenu.element.on('selected.toolbar', function(e) {
           // internal popupmenu event that fires when an option is clicked
           selectListOption(e);
+        }).on('close.toolbar', function() {
+          $(this).off('close.toolbar selected.toolbar');
+          self.moreButton
+            .removeClass('popup-is-open')
+            .off('close.popupmenu');
+          menuHtml.off('focus.popupmenu');
+          $(document).off(this.popupmenuKeyboardEvent);
+          this.popupmenuKeyboardEvent = undefined;
+        }).one('destroy.toolbar', function() {
+          $(this).remove();
+          $('#toolbar-overflow-menu').remove();
         });
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.

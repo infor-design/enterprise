@@ -656,6 +656,9 @@
               popupLi
                 .appendTo(menuHtml)
                 .attr('data-tab-href', $(item).children('a').attr('href'));
+                // Remove onclick methods from the popup <li> because they are called
+                // on the "select" event in context of the original button
+              popupLi.children('a').removeAttr('onclick');
             }
           }
         });
@@ -673,14 +676,22 @@
         self.positionFocusState(self.moreButton, true);
         self.focusBar(self.moreButton);
 
-        self.popupmenu.element.on('close.popupmenu', function() {
-          $(this).off('close.popupmenu');
+        self.popupmenu.element.on('close.tabs', function() {
+          $(this).off('close.tabs selected.tabs');
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
           self.positionFocusState(undefined, true);
           self.focusBar();
         }).on('selected.tabs', function(e, anchor) {
+          var href = anchor.attr('href'),
+            tab = self.getTabFromId(href.substr(1, href.length)),
+            a = tab.children('a');
+
           self.activate(anchor.attr('href'));
+          // Fire an onclick event associated with the original tab from the spillover menu
+          if (tab && typeof a[0].onclick === 'function') {
+            a[0].onclick.apply(a[0]);
+          }
         });
 
         var menu = self.popupmenu.menu;
