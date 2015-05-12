@@ -107,6 +107,10 @@
           self.testWidth();
         });
 
+        // Do an initial width test to roll the menu out if our breakpoint is the higher one
+        this.menu.addClass('no-transition');
+        this.testWidth();
+
         return this;
       },
 
