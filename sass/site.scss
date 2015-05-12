@@ -296,7 +296,7 @@ span {
 
 .site-home {
   .row {
-    max-width: 767px;
+    max-width: 880px;
   }
 
 }
@@ -463,7 +463,7 @@ span {
 
    .copy {
       margin: 40px auto 0;
-      max-width: 880px;
+      max-width: 767px;
       text-align: center;
       padding: 0 40px;
 
@@ -480,6 +480,14 @@ span {
     font-weight: bold;
     line-height: 30px;
     text-transform: uppercase;
+
+    + .tags {
+      margin: -15px 0 25px;
+
+      ul {
+        margin-left: 0;
+      }
+    }
   }
 
   .btn-primary {
@@ -505,7 +513,7 @@ span {
   }
 
   h1 {
-    @include font-size(60);
+    @include font-size(40);
   }
 
   p {
@@ -526,6 +534,7 @@ span {
   ol {
     color: #666666;
     @include font-size(16);
+    margin-left: 20px;
     font-weight: lighter;
     line-height: 28px;
     list-style: initial;
@@ -548,6 +557,7 @@ span {
   .article-brief {
     border-bottom: 1px solid $graphite02;
     margin-bottom: 40px;
+    padding: 0 20px;
 
     img {
       margin-bottom: 40px;
@@ -582,6 +592,14 @@ span {
     .article h3 {
       @include font-size(22);
       padding-top: 20px;
+    }
+  }
+
+  .main {
+    max-width: 767px !important;
+
+    .content {
+      max-width: 767px  !important;
     }
   }
 
