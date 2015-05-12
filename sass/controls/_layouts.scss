@@ -34,12 +34,6 @@
   margin-top: 30px;
 }
 
-//Scroll Under the Header
-.scrollable-container {
-  height: calc(100% - 80px);
-  overflow: auto;
-}
-
 .no-scroll {
   overflow: hidden;
 }
@@ -50,9 +44,6 @@ body.no-scroll {
 
 // Two Column Layout
 .two-column {
-  height: calc(100% - 80px);
-  margin: 0 auto 20px;
-  overflow: scroll;
 
   .main,
   .sidebar {
@@ -94,7 +85,56 @@ body.no-scroll {
   }
 }
 
+// Modifications to Page Content based on different header types
+//==============================================================
+
+// Makes the internal content section of the page a scrollable <div>
+// Use this in conjunction with a "no-scroll" class on the body tag
+.page-container.scrollable {
+  bottom: 0;
+  height: calc(100% - 80px);
+  margin: 0 auto;
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+}
+
+.header {
+  + .container,
+  + .site-content,
+  + .site-hero,
+  + .application-menu + .site-hero,
+  + .svg-icons + .container {
+    margin-top: 80px;
+  }
+
+  + .page-container.scrollable {
+    margin-top: 80px;
+  }
+}
+
+.masthead {
+  + .header.is-sticky {
+
+    + .page-container,
+    + .site-content,
+    + .site-hero,
+    + .application-nav + .site-hero,
+    + .svg-icons + .page-container {
+      margin-top: 135px;
+    }
+
+    + .page-container.scrollable,
+    + .application-menu + .page-container.scrollable {
+      height: calc(100% - 114px);
+      -webkit-overflow-scrolling: touch;
+    }
+
+  }
+}
+
 // Editorial Pattern
+//==============================================================
 .editorial {
   background-color: $inverse-color;
 

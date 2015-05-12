@@ -82,36 +82,33 @@
   </div>
 </div>
 
-    <script type="text/javascript">
-      $(document).ready(function() {
+<script type="text/javascript">
+  $(document).ready(function() {
 
-        $('#busy-start-trigger').click(function(e) {
-          e.preventDefault();
-          $('#standalone-busy').trigger('start.busyindicator');
-        });
+    $('#busy-start-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('start.busyindicator');
+    });
 
-        $('#busy-complete-trigger').click(function(e) {
-          e.preventDefault();
-          $('#standalone-busy').trigger('complete.busyindicator');
-        });
+    $('#busy-complete-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('complete.busyindicator');
+    });
 
-        $('#busy-form button[type="submit"]').click(function(e) {
-          e.preventDefault();
-          $('#busy-form').trigger('start.busyindicator');
-        });
+    $('#busy-form button[type="submit"]').click(function(e) {
+      e.preventDefault();
+      $('#busy-form').trigger('start.busyindicator');
+    });
 
-        $('#trigger-busy-input').click(function(e) {
-          e.preventDefault();
-          $('#busy-input').trigger('start');
-        });
+    $('#trigger-busy-input').click(function(e) {
+      e.preventDefault();
+      $('#busy-input').trigger('start');
+    });
 
-        $('#trigger-busy-dropdown').click(function(e) {
-          e.preventDefault();
-          $('#busy-dropdown').trigger('start');
-        });
+    $('#trigger-busy-dropdown').click(function(e) {
+      e.preventDefault();
+      $('#busy-dropdown').trigger('start');
+    });
 
-      });
-    </script>
-
-  </div>
-</div>
+  });
+</script>

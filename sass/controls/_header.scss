@@ -115,23 +115,7 @@ $header-bg-color: #454545;
 
   // Sticky Header
   &.is-sticky {
-    position: fixed;
-    top: 0;
     z-index: 9000;
-
-    + .container,
-    + .site-content,
-    + .site-hero,
-    + .application-menu + .site-hero,
-    + .svg-icons + .container {
-      margin-top: 80px;
-    }
-
-    + .scrollable-container,
-    + .svg-icons + .scrollable-container {
-      margin-top: 80px;
-    }
-
   }
 }
 
