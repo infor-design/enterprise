@@ -221,6 +221,13 @@ span {
   }
 }
 
+.site-recent {
+  h2 {
+    text-align: left;
+    margin-bottom: 40px;
+  }
+}
+
 .site-text-section.component {
   p,
   ul,
@@ -290,53 +297,6 @@ span {
 .site-home {
   .row {
     max-width: 767px;
-  }
-
-  .article-brief {
-    background-color: $inverse-color;
-    border: 1px solid $graphite02;
-    display: table;
-    margin-top: 20px;
-    margin-bottom: 0;
-
-    &:first-child {
-      margin-top: 50px;
-    }
-
-    img {
-      display: table-cell;
-      height: 285px;
-      margin-bottom: 0 !important;
-      vertical-align: middle;
-      width: 40%;
-    }
-
-    p {
-      margin: 5px 0;
-      max-height: 100px;
-    }
-
-    .copy {
-      display: table-cell;
-      float: right;
-      padding: 20px;
-      width: 60%;
-    }
-
-    h2 {
-      @include font-size(28);
-      margin-bottom: 10px;
-      line-height: 34px;
-    }
-
-    .btn-primary {
-      margin-bottom: 0;
-    }
-
-    .author {
-      display: block;
-      padding-bottom: 10px;
-    }
   }
 
 }

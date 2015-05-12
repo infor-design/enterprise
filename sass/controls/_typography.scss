@@ -28,7 +28,6 @@ p,
 small,
 span,
 ul {
-  font-family: $font-regular;
   //-webkit-font-smoothing: antialiased;
   //-moz-osx-font-smoothing: grayscale;
   font-weight: lighter;
@@ -40,6 +39,7 @@ h2,
 h3,
 h4 {
   color: $font-color-dark;
+  font-weight: lighter;
   @include rem(margin-bottom, 1rem);
 }
 

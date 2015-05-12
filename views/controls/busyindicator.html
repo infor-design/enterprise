@@ -30,35 +30,46 @@
     </form>
 
   </div>
+
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <span class="label">Standalone Example (Non-UI-Blocking), Controlled with Events</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
   <div class="one-half column">
 
-    <span class="label">Standalone Example (Non-UI-Blocking), Controlled with Events</span>
-    <div class="row">
-      <div class="one-half column">
-        <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button><br />
-        <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button><br />
-      </div>
-      <div class="one-half column">
-        <div id="standalone-busy" class="busy card"></div>
-      </div>
-    </div>
+    <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button><br />
+    <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button><br />
+    <div id="standalone-busy" class="busy card"></div>
 
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <span class="label">On Input Fields</span>
+    <hr>
   </div>
 </div>
 
 <div class="row">
   <div class="one-half column">
     <div class="field">
-      <span class="label" for="busy-input">Busy Input Field</span>
+      <label class="label" for="busy-input">Busy Input Field</label>
       <input class="busy" type="text" id="busy-input" data-block-ui="false" data-completion-time="2000" data-close-time="3000"/>
 
-      <br><button class="btn" id="trigger-busy-input" type="button">Load</button>
+      <br><button class="btn" id="trigger-busy-input" type="button">Load</button><br><br>
     </div>
   </div>
 
   <div class="one-half column">
     <div class="field">
-      <span class="label" for="busy-dropdown">Busy Dropdown</span>
+      <label class="label" for="busy-dropdown">Busy Dropdown</label>
       <select class="dropdown busy" id="busy-dropdown" data-block-ui="false" data-completion-time="2000" data-close-time="3000">
         <option selected>Busy</option>
         <option>Preoccupied</option>
@@ -66,7 +77,7 @@
         <option>Engaged</option>
       </select>
 
-      <br><button class="btn" id="trigger-busy-dropdown" type="button">Load</button>
+      <br><button class="btn" id="trigger-busy-dropdown" type="button">Load</button><br><br>
     </div>
   </div>
 </div>

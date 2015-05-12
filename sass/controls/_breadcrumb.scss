@@ -30,18 +30,18 @@
     }
 
     &:hover {
-      text-decoration: underline;
+      border-bottom: 1px solid $breadcrumb-color;
     }
 
     &:focus {
-      border: 1px solid $breadcrumb-color;
+      border-bottom: 1px solid $breadcrumb-color;
       border-radius: 2px;
       color: $breadcrumb-color;
     }
 
     &:active {
+      border-bottom: 1px solid $breadcrumb-color;
       color: $breadcrumb-color;
-      text-decoration: underline;
     }
 
     &.current {
