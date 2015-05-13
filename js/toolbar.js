@@ -284,6 +284,11 @@
           if (typeof button[0].onclick === 'function') {
             button[0].onclick.apply(button[0]);
           }
+
+          // Fire Angular Events
+          if (button.attr('ng-click') || button.attr('data-ng-click')) {
+            button.trigger('click');
+          }
         }
 
         if (self.popupmenu) {

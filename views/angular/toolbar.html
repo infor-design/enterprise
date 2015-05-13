@@ -1,5 +1,5 @@
 
-  <div class="row" data-ng-controller="demo">
+ <div class="row" data-ng-controller="demo">
     <div class="twelve columns">
 
       <div id="datagrid-toolbar" class="toolbar" role="toolbar">
@@ -7,56 +7,22 @@
           Title of This Class of Toolbar
         </div>
         <div class="buttonset">
-          <button class="btn-icon has-text" type="button" data-ng-click="test()">
-            <svg class="icon">
-              <use xlink:href="#icon-datagrid-categories"></use>
-            </svg>
-            <span>Category</span>
+          <button class="btn-tertiary" type="button" data-ng-click="test()">
+            <span>Orders</span>
           </button>
-          <button class="btn-icon has-text" type="button" ng-click="test()">
-            <svg class="icon">
-              <use xlink:href="#icon-calendar-date"></use>
-            </svg>
+          <button class="btn-tertiary" type="button" data-ng-click="test()">
             <span>Date</span>
           </button>
-          <button class="btn-icon has-text" type="button" data-ng-click="test()">
-            <svg class="icon">
-              <use xlink:href="#icon-datagrid-search"></use>
-            </svg>
+          <button class="btn-tertiary" type="button" data-ng-click="test()">
             <span>Keyword</span>
           </button>
-
-          <div class="overflow-break"></div>
-
-          <button class="btn-tertiary has-text" type="button" data-ng-click="test()">
-            <span>Option #1</span>
+          <button class="btn-tertiary" type="button" data-ng-click="test()">
+            <span>Options</span>
           </button>
-
-          <button class="btn-menu" type="button" data-ng-click="test()">
-            <span>Option #2</span>
+          <button class="btn-tertiary" type="button" data-ng-click="test()">
+            <span>Category</span>
           </button>
-          <ul class="popupmenu is-padded">
-            <li><a href="#">Sub Option #1</a></li>
-            <li><a href="#">Sub Option #2</a></li>
-            <li><a href="#">Sub Option #3</a></li>
-            <li class="is-checked"><a href="#">Sub Option #4</a></li>
-            <li><a href="#">Sub Option #5</a></li>
-            <li><a href="#">Sub Option #6</a></li>
-          </ul>
-
-          <button class="btn-menu" type="button" data-ng-click="test()">
-            <span>Option #3</span>
-          </button>
-          <ul class="popupmenu is-padded">
-            <li><a href="#">Sub Option #1</a></li>
-            <li><a href="#">Sub Option #2</a></li>
-            <li><a href="#">Sub Option #3</a></li>
-            <li class="is-checked"><a href="#">Sub Option #4</a></li>
-            <li><a href="#">Sub Option #5</a></li>
-            <li><a href="#">Sub Option #6</a></li>
-          </ul>
-
-        </div>
+         </div>
       </div>
 
     </div>
@@ -74,6 +40,7 @@
         alert('You Hit Click.');
       };
 
+      $('.toolbar').toolbar();
     });
 
   </script>
