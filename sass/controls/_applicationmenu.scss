@@ -78,3 +78,20 @@
   }
 
 }
+
+// On large + extra-large breakpoints, the .page-content element will shift to the left while the menu is open
+@media (min-width: $breakpoint-tablet-to-desktop) {
+  .application-menu {
+    + .page-container {
+      margin: 0 0 0 auto;
+      @include transition(width 300ms cubic-bezier(.17, .04, .03, .94));
+      width: 100%;
+    }
+
+    &.is-open {
+      + .page-container {
+        width: calc(100% - 300px);
+      }
+    }
+  }
+}

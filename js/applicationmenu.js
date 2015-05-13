@@ -196,6 +196,7 @@
           .css('display', '');
         // next line forces a repaint
         this.menu[0].offsetHeight; //jshint ignore:line
+        this.menu.removeClass('no-transition');
         this.menu.addClass('is-open')
           .find('.is-selected > a')
           .focus();
