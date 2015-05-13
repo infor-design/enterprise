@@ -2,8 +2,6 @@
 //==================================================//
 
 .homepage {
-  margin-bottom: 20px;
-  margin-top: 0 !important;
   padding-top: 20px;
 }
 
@@ -84,9 +82,3 @@
   overflow: hidden;
   text-align: center;
 }
-
-.is-sticky + .application-menu + .homepage {
-  padding-top: 134px;
-}
-
-

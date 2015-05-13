@@ -167,7 +167,9 @@
 
         elem.find('.about').about();
 
-        elem.find('.application-menu-trigger').applicationmenu();
+        elem.find('#application-menu').applicationmenu({
+          triggers: elem.find('.application-menu-trigger')
+        });
 
         elem.find('.accordion').accordion();
 

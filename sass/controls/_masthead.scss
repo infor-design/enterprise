@@ -4,30 +4,8 @@
 .masthead {
   background-color: #454545;
   height: 34px;
-  position: fixed;
-  top: 0;
   width: 100%;
   z-index: 9000;
-
-  + .header.is-sticky {
-    top: 34px;
-
-    + .container,
-    + .site-content,
-    + .site-hero,
-    + .application-nav + .site-hero,
-    + .svg-icons + .container {
-      margin-top: 135px;
-    }
-
-    + .scrollable-container,
-    + .svg-icons + .scrollable-container {
-      height: calc(100% - 104px);
-      margin-top: 104px !important;
-      -webkit-overflow-scrolling: touch;
-    }
-
-  }
 }
 
 .twelve {

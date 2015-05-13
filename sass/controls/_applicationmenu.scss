@@ -1,13 +1,15 @@
 // Application Menu Control
 //================================================== //
 
+$application-menu-width: 300px;
+
 .application-menu {
   background-color: #383838;
   @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, 0));
   bottom: 0;
   color: #acadae;
   height: 100%;
-  left: -300px;
+  left: -$application-menu-width;
   overflow-x: hidden;
   overflow-y: auto;
   position: fixed;
@@ -17,12 +19,17 @@
     -o-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
     -webkit-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
     box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
-  width: 300px;
+  width: $application-menu-width;
   z-index: 9000;
 
   &.is-open {
     left: 0;
     @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
+  }
+
+  // Add animation to the page container when Nav is in use
+  + .page-container {
+    @include transition(width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
   .panel.logout {
@@ -77,4 +84,24 @@
     padding: 2rem 2rem 2rem 2.5rem;
   }
 
+}
+
+// On large + extra-large breakpoints, the .page-content element will shift to the left while the menu is open
+@media (min-width: $breakpoint-tablet-to-desktop) {
+  .application-menu {
+    + .page-container {
+      margin: 0 0 0 auto;
+      width: 100%;
+    }
+
+    &.is-open {
+      + .page-container {
+        width: calc(100% - 300px);
+
+        &.scrollable {
+          right: 0;
+        }
+      }
+    }
+  }
 }
