@@ -27,8 +27,7 @@
         trigger: 'click',  //click, rightClick, immediate
         autoFocus: true,
         mouseFocus: true,
-        eventObj: undefined,  //Can pass in the event object so you can do a right click with immediate
-        addIframeEvents: false
+        eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
       },
       settings = $.extend({}, defaults, options);
 
@@ -397,22 +396,20 @@
         }, 400);
 
         //Hide on iFrame Clicks - only works if on same domain
-        if (this.settings.addIframeEvents) {
-          $('iframe').each(function () {
-            var frame = $(this);
-            frame.ready(function () {
+        $('iframe').each(function () {
+          var frame = $(this);
+          frame.ready(function () {
 
-              try {
-                frame.contents().find('body').on('click.popupmenu', function () {
-                  self.close();
-                });
-              } catch (e)  {
-                //Ignore security errors on out of iframe
-              }
+            try {
+              frame.contents().find('body').on('click.popupmenu', function () {
+                self.close();
+              });
+            } catch (e)  {
+              //Ignore security errors on out of iframe
+            }
 
-            });
           });
-        }
+        });
 
         this.handleKeys();
         this.element.attr('aria-expanded', 'true');

@@ -112,7 +112,7 @@ describe('Toolbar [selenium]', function(){
       .isExisting('#toolbar-overflow-menu', function(err, result) {
         globals.noError(err);
         should.exist(result);
-        result.should.equal(false);
+        result.should.equal(true);
       })
       .call(done);
   });
