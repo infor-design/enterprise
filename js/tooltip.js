@@ -91,7 +91,7 @@
                 self.show();
               }, delay);
             })
-            .on('mouseleave.tooltip mousedown.tooltip', function() {
+            .on('mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip', function() {
                 clearTimeout(timer);
                 setTimeout(function() {
                   self.hide();
@@ -135,6 +135,7 @@
       },
 
       setContent: function(content) {
+
         if (this.isPopover) {
           this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
           settings.content.removeClass('hidden');

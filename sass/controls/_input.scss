@@ -96,17 +96,9 @@ textarea {
   }
 
   + .icon-error {
-    left: 1px !important;
-    top: -80px !important;
+    left: 362px !important;
   }
 
-}
-
-.ie textarea {
-  + .icon-error {
-    left: -20px !important;
-    top: -40px !important;
-  }
 }
 
 .textarea-wordcount {
@@ -296,11 +288,3 @@ textarea.error:focus,
   width: 100%;
 }
 
-// small breakpoint change for inputs
-@include respond-to(phone) {
-
-  input {
-    width: auto;
-  }
-
-}

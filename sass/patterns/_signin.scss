@@ -33,7 +33,9 @@
     text-align: center;
   }
 
-  .btn-primary {
+  .field,
+  .btn-primary,
+  input {
     width: 100%;
   }
 
@@ -44,17 +46,6 @@
     width: 90px;
   }
 
-  .icon-error {
-    left: 100% !important;
-    margin-left: -25px;
-    position: absolute !important;
-    top: 23px !important;
-    width: 16px !important;
-  }
-
-  input {
-    width: 100%;
-  }
 }
 
 
