@@ -151,8 +151,8 @@
         var self = this;
 
         // Bind all "a" and "li" events to the tablist so that we can add/remove without issue
-        self.tablist.on('click.tabs', '> li', function() {
-          self.handleClick($(this));
+        self.tablist.on('click.tabs', '> li', function(e) {
+          self.handleClick(e, $(this));
         }).on('click.tabs', 'a', function(e) {
           // Clicking the 'a' triggers the click on the 'li'
           e.preventDefault();
@@ -164,8 +164,8 @@
             e.stopPropagation();
             self.remove($(this).prev().attr('href'));
           }
-        }).on('focus.tabs', 'a', function() {
-          self.handleFocus($(this));
+        }).on('focus.tabs', 'a', function(e) {
+          self.handleFocus(e, $(this));
         }).on('keydown.tabs', 'a', function(e) {
           self.handleKeyDown(e);
         });
@@ -225,8 +225,9 @@
         return this;
       },
 
-      handleClick: function(li) {
+      handleClick: function(e, li) {
         if (this.element.is('.is-disabled')) {
+          e.preventDefault();
           return;
         }
 
@@ -252,8 +253,9 @@
         this.focusBar(li);
       },
 
-      handleFocus: function(a) {
+      handleFocus: function(e, a) {
         if (this.element.is('.is-disabled')) {
+          e.preventDefault();
           return;
         }
 
@@ -412,22 +414,25 @@
           'aria-selected': 'false',
           'aria-expanded': 'false',
           'tabindex': '-1'
-        }).parent().removeClass('is-selected');
+        });
         this.moreButton.attr({
           'tabindex': '-1'
         });
 
         //show current tab
-        if (!this.isTabOverflowed(a.parent())) {
-        a.attr({
-            'aria-selected': 'true',
-            'aria-expanded': 'true',
-            'tabindex': '0'
-          }).parent().addClass('is-selected');
-        } else {
-          this.moreButton.attr({
-            'tabindex': '0'
-          });
+        if (a.length && this.element.is(':not(.is-disabled)')) {
+          a.parent().removeClass('is-selected');
+          if (!this.isTabOverflowed(a.parent())) {
+            a.attr({
+              'aria-selected': 'true',
+              'aria-expanded': 'true',
+              'tabindex': '0'
+            }).parent().addClass('is-selected');
+          } else {
+            this.moreButton.attr({
+              'tabindex': '0'
+            });
+          }
         }
       },
 
@@ -916,10 +921,12 @@
 
       disable: function() {
         this.element.prop('disabled', true).addClass('is-disabled');
+        this.updateAria($());
       },
 
       enable: function() {
         this.element.prop('disabled', false).removeClass('is-disabled');
+        this.updateAria(this.tablist.find('.is-selected > a'));
       },
 
       destroy: function(){
