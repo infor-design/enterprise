@@ -483,7 +483,7 @@
           }
           this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
         }
-        this.trigger.off('hide open');
+        this.trigger.off('hide.timepicker show.timepicker');
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
         $('#timepicker-popup').remove();
