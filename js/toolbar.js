@@ -88,7 +88,7 @@
         }
         this.moreButton.attr('tabindex', '-1');
 
-        this.buttons = this.buttonset.find('button');
+        this.buttons = this.buttonset.find('button').add(this.element.children('.title').find('button'));
         this.buttons.attr('tabindex', '-1');
         var active = this.buttons.filter('.is-selected');
         if (active.length) {
@@ -161,13 +161,13 @@
       handleEvents: function() {
         var self = this;
 
-        this.buttonset.on('keydown.toolbar', 'button', function(e) {
+        this.buttons.on('keydown.toolbar', function(e) {
           self.handleKeys(e);
-        }).on('touchend.toolbar touchcancel.toolbar', 'button', function(e) {
+        }).on('touchend.toolbar touchcancel.toolbar', function(e) {
           e.preventDefault();
           e.stopPropagation();
           $(e.target).click();
-        }).on('click.toolbar', 'button', function(e) {
+        }).on('click.toolbar', function(e) {
           self.handleClick(e);
         });
 
@@ -455,8 +455,8 @@
         this.moreButton.unwrap();
         this.moreButton.data('tooltip').destroy();
         this.moreButton.off().remove();
-        this.buttonset.find('button').removeAttr('tabindex');
-        this.buttonset.off();
+        this.buttons.removeAttr('tabindex');
+        this.buttons.off();
         this.buttonset.find('.overflow-break').css('display', 'none');
         $(document).off(this.popupmenuKeyboardEvent);
         $(window).off('resize.toolbar.' + this.id);
