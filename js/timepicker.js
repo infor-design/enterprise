@@ -290,7 +290,7 @@
           offset: {top: 27, left: 0},
           width: '200',
           tooltipElement: '#timepicker-popup'})
-        .on('open', function(e, ui) {
+        .on('show.timepicker', function(e, ui) {
           ui.find('select').dropdown();
           ui.find('button').button();
 
@@ -371,7 +371,7 @@
         });
 
         // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
-        self.trigger.on('hide', function() {
+        self.trigger.on('hide.timepicker', function() {
           self.onPopupHide();
         });
       },

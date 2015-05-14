@@ -92,25 +92,33 @@
         self.validate($(this), true);
       });
 
-      this.inputs.filter('select').filter(attribs).on('change.validate', function () {
-        self.validate($(this), true);
-      }).on('dropdownopen.validate', function() {
-        var field = $(this),
-          tooltip = field.data('tooltip');
-          if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
-            tooltip.hide();
-          }
-      }).on('dropdownclose.validate', function() {
-        var field = $(this),
-          tooltip = field.data('tooltip');
-          if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
-            tooltip.show();
-          }
-      }).data('dropdown').input.on('blur.validate', function() {
-        var selectId = $(this).attr('id');
-        selectId = selectId.substring(0, selectId.length - 5);
-        self.validate($('#' + selectId), true);
-      });
+      var selects = this.inputs.filter('select').filter(attribs);
+
+      if (selects.length) {
+        selects.on('change.validate', function () {
+          self.validate($(this), true);
+        }).on('dropdownopen.validate', function() {
+          var field = $(this),
+            tooltip = field.data('tooltip');
+            if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
+              tooltip.hide();
+            }
+        }).on('dropdownclose.validate', function() {
+          var field = $(this),
+            tooltip = field.data('tooltip');
+            if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
+              tooltip.show();
+            }
+        });
+
+        selects.filter(function() {
+          return $(this).data('dropdown') !== undefined;
+        }).data('dropdown').input.on('blur.validate', function() {
+          var selectId = $(this).attr('id');
+          selectId = selectId.substring(0, selectId.length - 5);
+          self.validate($('#' + selectId), true);
+        });
+      }
 
       //Attach to Form Submit and Validate
       if (this.element.is('form')) {
@@ -226,7 +234,7 @@
         field = field.next('.inforListBox');
       } else if (field.is('.inforSwapList')) {
         field = field.find('.inforSwapListRight div.inforListBox');
-      } else if (field.is('select')) {
+      } else if (field.is('select') && field.data('dropdown') !== undefined) {
         field = field.data('dropdown').input;
       }
       return field;
@@ -262,7 +270,7 @@
       }
 
       //Add error classes to pseudo-markup for certain controls
-      if (field.is('.dropdown, .multiselect')) {
+      if (field.is('.dropdown, .multiselect') && field.data('dropdown') !== undefined) {
         var input = field.data('dropdown').input;
         input.addClass('error').attr('placeholder', message);
       }
