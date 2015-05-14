@@ -32,7 +32,7 @@
 
   // Text Color
   text {
-    fill: $graphite04;
+    fill: $graphite05;
     font-family: $font-regular;
     font-weight: lighter;
     @include font-size(14);
@@ -127,7 +127,7 @@
 }
 
 .chart-legend-item-text {
-  color: $graphite04;
+  color: $graphite05;
   width: auto;
   @include ellipsis;
   @include font-size(14);

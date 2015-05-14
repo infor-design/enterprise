@@ -55,11 +55,14 @@ $label-color: $graphite10;
 $disabled-color: #707070;
 $input-disabled-color: #707070;
 $input-disabled-bg-color: #f4f4f4;
+$checkbox-disabled-font-color: $disabled-color;
+
+// Misc Controls
+$tab-selected-color: $primary-color;
 
 // Core Controls
 @import 'controls';
 
-// Other Overrides
 
 // Show Underline
 .hyperlink {

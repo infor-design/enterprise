@@ -200,14 +200,6 @@ label.required:after,
   color: $error-color;
 }
 
-.field .icon-error,
-.field .icon-validated {
-  display: inline-block !important;
-  margin-left: -30px;
-  margin-top: -1px;
-  top: 4px;
-}
-
 input.error,
 textarea.error,
 .editor.error {

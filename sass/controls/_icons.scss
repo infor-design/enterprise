@@ -17,10 +17,6 @@ svg.icon {
   &.icon-validated {
     fill: $alert-red;
     height: 22px;
-    position: absolute;
-    left: 300px;
-    top: 23px;
-    vertical-align: top;
     width: 22px;
   }
 
@@ -58,6 +54,16 @@ svg.icon-tree {
   stroke: #999999;
 }
 
+.field .icon-error,
+.field .icon-validated {
+  display: inline-block !important;
+  position: absolute;
+  margin-left: -30px;
+  margin-top: -1px;
+  left: 300px;
+  top: 23px;
+  vertical-align: top;
+}
 
 .img-placeholder {
   background-color: #ececec;

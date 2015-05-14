@@ -54,6 +54,7 @@
 # Teams Using SoHo XI
 
 | Home Pages | | Fredrik Erikkson |
+| Pathway | | Jesser Susi |
 | Mongoose | | Bryan Petit |
 | Rhythm Widgets | | Eric Martensson |
 | SmartStream | ASP | Wim Denayer |

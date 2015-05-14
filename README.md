@@ -26,7 +26,7 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 * Globalization
 * Input Formatting
 * Validation
-* Analytics
+* Analytics - Future
 
 ## Upgrade Guide (from 3.x)
 
