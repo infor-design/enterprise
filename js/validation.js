@@ -106,6 +106,10 @@
           if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
             tooltip.show();
           }
+      }).data('dropdown').input.on('blur.validate', function() {
+        var selectId = $(this).attr('id');
+        selectId = selectId.substring(0, selectId.length - 5);
+        self.validate($('#' + selectId), true);
       });
 
       //Attach to Form Submit and Validate
@@ -223,7 +227,7 @@
       } else if (field.is('.inforSwapList')) {
         field = field.find('.inforSwapListRight div.inforListBox');
       } else if (field.is('select')) {
-        field = field.next().next('.dropdown');
+        field = field.data('dropdown').input;
       }
       return field;
     },
