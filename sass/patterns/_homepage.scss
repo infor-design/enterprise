@@ -2,6 +2,7 @@
 //==================================================//
 .card,
 .widget {
+  @include css3(transform, translateZ(0));
   background-color: $cardlist-bg-color;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
