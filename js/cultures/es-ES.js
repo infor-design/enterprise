@@ -1,10 +1,14 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
-      // AMD. Register as an anonymous module depending on jQuery.
-      define('es-ES', ['jquery'], factory);
+    // AMD. Register as an anonymous module
+    define('cultures/es-ES', ['jquery'], factory);
+    factory();
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
   } else {
-      // No AMD. Register plugin with global jQuery object.
-      factory(jQuery);
+    // Browser globals
+    factory(jQuery);
   }
 }(function () {
 

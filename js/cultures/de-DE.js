@@ -1,9 +1,13 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module depending on jQuery.
-    define('de-DE', ['jquery'], factory);
+    // AMD. Register as an anonymous module
+    define('cultures/de-DE', ['jquery'], factory);
+    factory();
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
   } else {
-    // No AMD. Register plugin with global jQuery object.
+    // Browser globals
     factory(jQuery);
   }
 }(function () {
