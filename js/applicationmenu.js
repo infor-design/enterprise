@@ -52,6 +52,9 @@
 
         this.menu = this.element;
 
+        var openOnLarge = this.element.attr('data-open-on-large');
+        this.settings.openOnLarge = openOnLarge !== undefined ? openOnLarge === 'true' : this.settings.openOnLarge;
+
         // Pull in the list of Nav Menu trigger elements and store them internally.
         this.modifyTriggers(this.settings.triggers, false, true);
 
@@ -200,6 +203,7 @@
           }
 
           self.isAnimating = false;
+          self.element.trigger('applicationmenuopen');
         }
 
         this.menu
@@ -257,6 +261,7 @@
             .off(transitionEnd + '.applicationmenu')
             .css('display', 'none');
           self.isAnimating = false;
+          self.element.trigger('applicationmenuclose');
         }
 
         this.menu.one(transitionEnd + '.applicationmenu', close);
