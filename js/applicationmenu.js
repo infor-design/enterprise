@@ -24,6 +24,7 @@
     // Settings and Options
     var pluginName = 'applicationmenu',
         defaults = {
+          openOnLarge: true, // If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
           triggers: [] // An Array of jQuery-wrapped elements that are able to open/close this nav menu.
         },
         settings = $.extend({}, defaults, options);
@@ -103,13 +104,17 @@
 
         $(window).on('scroll.applicationmenu', function() {
           self.adjustHeight();
-        }).on('resize.applicationmenu', function() {
-          self.testWidth();
         });
 
-        // Do an initial width test to roll the menu out if our breakpoint is the higher one
-        this.menu.addClass('no-transition');
-        this.testWidth();
+        if (this.settings.openOnLarge) {
+          $(window).on('resize.applicationmenu', function() {
+            self.testWidth();
+          });
+
+          // Do an initial width test to roll the menu out if our breakpoint is the higher one
+          this.menu.addClass('no-transition');
+          this.testWidth();
+        }
 
         return this;
       },
@@ -167,12 +172,18 @@
       },
 
       testWidth: function() {
-        if (this.isLargerThanBreakpoint() && !this.menu.hasClass('is-open') && this.isAnimating === false) {
-          this.openMenu();
+        if (this.isLargerThanBreakpoint()) {
+          if (!this.menu.hasClass('is-open') && this.isAnimating === false) {
+            this.openMenu(true);
+          }
+        } else {
+          if (!this.element.find(document.activeElement).length && this.menu.is('.is-open') && this.isAnimating === false) {
+            this.closeMenu();
+          }
         }
       },
 
-      openMenu: function() {
+      openMenu: function(noFocus) {
         if (this.isAnimating === true) {
           return;
         }
@@ -197,9 +208,11 @@
         // next line forces a repaint
         this.menu[0].offsetHeight; //jshint ignore:line
         this.menu.removeClass('no-transition');
-        this.menu.addClass('is-open')
-          .find('.is-selected > a')
-          .focus();
+        this.menu.addClass('is-open');
+
+        if (!noFocus || noFocus !== true) {
+          this.menu.find('.is-selected > a').focus();
+        }
 
         this.menu.one(transitionEnd + '.applicationmenu', isOpen);
         this.timeout = setTimeout(isOpen, 300);
@@ -221,7 +234,11 @@
       },
 
       closeMenu: function() {
-        if (this.isAnimating === true || this.isLargerThanBreakpoint() === true) {
+        if (this.isAnimating === true) {
+          return;
+        }
+
+        if (this.settings.openOnLarge === true && this.isLargerThanBreakpoint() === true) {
           return;
         }
 

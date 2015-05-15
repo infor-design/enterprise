@@ -464,14 +464,6 @@
                 this.selectOption($(options[selectedIndex]));
               }
 
-              // Don't close the option list if not in Search Key Mode
-              if (this.searchKeyMode === false) {
-                this.searchKeyMode = true;
-                self.activate(true); // Activate search input
-                e.preventDefault();
-                return true;
-              }
-
               self.closeList(false);
               this.activate();
             }
