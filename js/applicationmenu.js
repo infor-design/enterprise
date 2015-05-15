@@ -203,6 +203,7 @@
           }
 
           self.isAnimating = false;
+          self.element.trigger('applicationmenuopen');
         }
 
         this.menu
@@ -260,6 +261,7 @@
             .off(transitionEnd + '.applicationmenu')
             .css('display', 'none');
           self.isAnimating = false;
+          self.element.trigger('applicationmenuclose');
         }
 
         this.menu.one(transitionEnd + '.applicationmenu', close);
