@@ -49,6 +49,26 @@
       handleKeys: function() {
         var form = this.element.find('form');
 
+        //-----------------------------------------------------------
+        var isCapslock = function(e) {
+          e = (e) ? e : window.event;
+          var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
+           shifton = (e.shiftKey) ? e.shiftKey : ((e.modifiers) ? (!!(e.modifiers & 4)) : false);
+
+          if (charCode >= 97 && charCode <= 122 && shifton) {
+            return true;
+          }
+          if (charCode >= 65 && charCode <= 90 && !shifton) {
+            return true;
+          }
+          return false;
+        };
+        var passwordFields = this.element.find('[type="password"]');
+        passwordFields.on('keypress.signin', function (e) {
+          console.log(isCapslock(e));
+        });
+        //-----------------------------------------------------------
+
         /* TODO: Caps Like Down
           var passwordFields = this.element.find('[type="password"]'),
           passwordFields.on('keypress.signin', function (e) {
@@ -74,8 +94,13 @@
         });*/
 
         form.on('submit.signin', function () {
-          $('#username-hidden').val($('#username').val());
-          $('#password-hidden').val($('#password').val());
+          var $cPass = $('#confirm-password');
+          if($cPass.length && ((!($cPass.val()).length) || ($cPass.hasClass('error')))) {
+            return false;
+          }
+          $('#username').val($('#username-dsp').val());
+          $('#password').val($('#password-dsp').val());
+          $('#new-password').val($('#new-password-dsp').val());
           //console.log($(this).serialize());
         });
 
