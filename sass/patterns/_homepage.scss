@@ -47,7 +47,9 @@
 // Different Widget Heights and Widths
 
 .homepage {
+  height: calc(100% - 80px);
   margin: 0 auto;
+  overflow: auto;
   padding: 20px 0;
   position: relative;
 

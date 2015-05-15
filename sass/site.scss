@@ -73,11 +73,23 @@ span {
 
   &.components {
     .hero-img {
-      background-image: url("/assets/site/0.0_Soho_xi_home_2260_green_02.jpg");
+      background-image: url('/assets/site/0.0_Soho_xi_home_2260_green_02.jpg');
     }
 
     + .site-text-section {
-      margin-top: 60px;
+      h2 {
+        text-align: left;
+      }
+
+      .site-component {
+        float: left;
+        height: 100px !important;
+        margin: 10px;
+        min-height: 0;
+        text-align: center;
+        text-decoration: none;
+        width: 300px !important;
+      }
     }
 
   }
