@@ -44,6 +44,12 @@ input.dropdown {
     }
   }
 
+  &:hover {
+    + .icon {
+      fill: $primary-color;
+    }
+  }
+
   // Icon States
   + .icon {
     background-color: inherit;

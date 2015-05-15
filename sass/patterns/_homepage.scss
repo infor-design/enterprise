@@ -1,15 +1,11 @@
 // Home Page Pattern
 //==================================================//
-
-.homepage {
-  padding-top: 20px;
-}
-
 .card,
 .widget {
   background-color: $cardlist-bg-color;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
+  height: 370px;
   margin-bottom: 20px;
   min-height: 360px;
   position: relative;
@@ -48,31 +44,76 @@
   }
 }
 
-// Double and Triple Height Widths
-.double-height {
-  height: 740px;
-  min-height: 740px;
+// Different Widget Heights and Widths
 
-  .widget-content,
-  .card-content {
-    height: 680px;
-    min-height: 680px;
+.homepage {
+  margin: 0 auto;
+  padding: 20px 0;
+  position: relative;
+
+  .card,
+  .widget {
+    height: 370px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 360px;
+
+    &:last-child::after {
+      content: '';
+      display: inline-block;
+      height: 20px;
+      position: absolute;
+      top: 370px;
+      width: 10px;
+    }
+  }
+
+  > .content {
+    left: 50%;
+    margin-left: -500px;
+    position: absolute;
   }
 }
 
-.double-width {
-  position: absolute;
-  width: calc(66.66% - 40px);
+.header + .homepage {
+  height: calc(100% - 80px);
+  overflow: scroll;
 }
 
-.triple-height {
-  height: 1120px;
-  min-height: 1120px;
+.card.double-height,
+.widget.double-height {
+  height: 760px;
+}
 
-  .widget-content,
-  .card-content {
-    height: 1070px;
-    min-height: 1070px;
+.card.double-width,
+.widget.double-width {
+  width: 740px; // 660
+}
+
+.card.triple-width,
+.widget.triple-width {
+  width: 1120px; //1000
+}
+
+@media screen and (max-width: 1120px) {  //1000
+  // all things larger than 740px
+  .card.triple-width,
+  .widget.triple-width {
+    width: 740px; // 660
+  }
+}
+
+@media screen and (max-width: 740px) { //660
+  //all things smaller than 740px
+  .card.double-width,
+  .widget.double-width {
+    width: 360px; //320
+  }
+
+  .card.triple-width,
+  .widget.triple-width {
+    width: 360px; //320
   }
 }
 

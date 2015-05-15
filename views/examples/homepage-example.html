@@ -1,12 +1,10 @@
 <body class="no-scroll">
-  {{> includes/masthead}}
-  {{> includes/header-sticky}}
+  {{> includes/header}}
 
-  <section id="maincontent" class="homepage page-container scrollable" role="main">
+<div id="maincontent" class="homepage" data-columns="3" id="maincontent" role="main">
+    <div class="content">
 
-    <div class="row">
-      <div class="full column">
-        <div class="widget">
+        <div class="widget triple-width">
           <div class="widget-header">
             <h2 class="widget-title">Chart Title</h2>
             <button class="btn-actions">
@@ -27,79 +25,74 @@
 
           </div>
         </div>
-      </div>
-    </div>
 
-    <script>
-      var dataset = [{
-          data: [{
-              name: '2008',
-              value: 123
+        <script>
+          var dataset = [{
+              data: [{
+                  name: '2008',
+                  value: 123
+              }, {
+                  name: '2009',
+                  value: 234
+              }, {
+                  name: '2010',
+                  value: 345
+              }],
+              name: 'Series 1'
           }, {
-              name: '2009',
-              value: 234
-          }, {
-              name: '2010',
-              value: 345
-          }],
-          name: 'Series 1'
-      }, {
-          data: [{
-              name: '2008',
-              value: 235
-          }, {
-              name: '2009',
-              value: 267
-          }, {
-              name: '2010',
-              value: 573
-          }],
-          name: 'Series 2'
-      }];
+              data: [{
+                  name: '2008',
+                  value: 235
+              }, {
+                  name: '2009',
+                  value: 267
+              }, {
+                  name: '2010',
+                  value: 573
+              }],
+              name: 'Series 2'
+          }];
 
-      $('#bar-stacked-example').chart({type: 'bar', dataset: dataset});
-    </script>
+          $('#bar-stacked-example').chart({type: 'bar', dataset: dataset});
+        </script>
 
-    {{={{{ }}}=}}
-    <script id="alerts-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          <li>
-            {{#escalated}}
-              <small class="alert-text">Escalated ({{escalated}}X)</small>
-            {{/escalated}}
-            <span class="listview-micro l-pull-right">{{time}}</span>
-            <p class="listview-heading">{{taskName}}</p>
-            <p class="listview-subheading">{{desc}}</p>
-            <p class="listview-micro">{{comments}} Comments</p>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
+        {{={{{ }}}=}}
+        <script id="alerts-tmpl" type="text/html">
+          <ul>
+            {{#dataset}}
+              <li>
+                {{#escalated}}
+                  <small class="alert-text">Escalated ({{escalated}}X)</small>
+                {{/escalated}}
+                <span class="listview-micro l-pull-right">{{time}}</span>
+                <p class="listview-heading">{{taskName}}</p>
+                <p class="listview-subheading">{{desc}}</p>
+                <p class="listview-micro">{{comments}} Comments</p>
+              </li>
+            {{/dataset}}
+          </ul>
+        </script>
 
-    <div class="row">
-      <div class="one-third column">
-        <div class="widget">
-          <div class="widget-header">
-            <h2 class="widget-title">Alerts</h2>
-            <button class="btn-actions">
-              <span class="audible">Actions</span>
-              <svg class="icon" focusable="false">
-                <use xlink:href="#action-button"></use>
-              </svg>
-            </button>
-            <ul class="popupmenu actions top">
-              <li><a href="#">Action One</a></li>
-              <li><a href="#">Action Two</a></li>
-            </ul>
-          </div>
 
-          <div class="widget-content">
-          <div class="listview" data-tmpl="alerts-tmpl" data-dataset="/api/tasks"></div>
-          </div>
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Alerts</h2>
+          <button class="btn-actions">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false">
+              <use xlink:href="#action-button"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+        </div>
+
+        <div class="widget-content">
+        <div class="listview" data-tmpl="alerts-tmpl" data-dataset="/api/tasks"></div>
         </div>
       </div>
-
       <script id="multiselect-tmpl" type="text/html">
         <ul>
           {{#dataset}}
@@ -110,51 +103,46 @@
         </ul>
       </script>
 
-      <div class="one-third column">
-        <div class="widget">
-          <div class="widget-header">
-            <h2 class="widget-title">Tasks</h2>
-            <button class="btn-actions">
-              <span class="audible">Actions</span>
-              <svg class="icon" focusable="false">
-                <use xlink:href="#action-button"></use>
-              </svg>
-            </button>
-            <ul class="popupmenu actions top">
-              <li><a href="#">Action One</a></li>
-              <li><a href="#">Action Two</a></li>
-            </ul>
-          </div>
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Tasks</h2>
+          <button class="btn-actions">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false">
+              <use xlink:href="#action-button"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+        </div>
 
-          <div class="widget-content">
-            <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
-          </div>
+        <div class="widget-content">
+          <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
         </div>
       </div>
 
-      <div class="one-third column">
-        <div class="widget">
-          <div class="widget-header">
-            <h2 class="widget-title">Business Insight</h2>
-            <button class="btn-actions">
-              <span class="audible">Actions</span>
-              <svg class="icon" focusable="false">
-                <use xlink:href="#action-button"></use>
-              </svg>
-            </button>
-            <ul class="popupmenu actions top">
-              <li><a href="#">Action One</a></li>
-              <li><a href="#">Action Two</a></li>
-            </ul>
-          </div>
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Business Insight</h2>
+          <button class="btn-actions">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false">
+              <use xlink:href="#action-button"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+        </div>
 
-          <div class="widget-content">
-            <div id="pie-chart-example" class="chart-container">
-            </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
           </div>
         </div>
       </div>
-
       <script>
         var pieData = [{
             data: [{
@@ -179,10 +167,7 @@
           }];
 
         $('#pie-chart-example').chart({type: 'pie', dataset: pieData});
-
-
       </script>
 
-    </div>
-  </section>
-
+  </div>
+</div>

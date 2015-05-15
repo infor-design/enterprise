@@ -182,6 +182,8 @@
         elem.find('.modal-search').modalsearch();
 
         elem.find('.signin').signin();
+
+        elem.find('.homepage').homepage();
       });
 
       self.trigger('initialized');

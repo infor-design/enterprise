@@ -1,5 +1,14 @@
-<body class="no-scroll">
-  {{> includes/header}}
+{{> layouts/header-sticky}}
+
+<div id="maincontent" class="page-container scrollable">
+
+  <div class="row">
+    <div class="twelve columns" id="maincontent">
+      <h1>Masonry (Home Page)</h1>
+      <span class="label">Layouts</span>
+      <hr>
+    </div>
+  </div>
 
   <div id="maincontent" class="homepage" data-columns="3" id="maincontent" role="main">
     <div class="content">
@@ -80,4 +89,6 @@
     </div>
   </div>
 
-  {{> controls/svg}}
+</div>
+
+{{> footer}}
