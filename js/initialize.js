@@ -106,10 +106,6 @@
         //Format
         elem.find('input[data-mask]').mask();
 
-        //Validation
-        elem.find('[data-validate]').validate();
-        elem.find('[data-validate-on="submit"]').validate();
-
         //Cardstack
         elem.find('.listview').each(function () {
           var cs = $(this),
@@ -184,6 +180,11 @@
         elem.find('.signin').signin();
 
         elem.find('.homepage').homepage();
+
+        //Validation
+        //Should be one of the last items to invoke
+        elem.find('[data-validate]').validate();
+        elem.find('[data-validate-on="submit"]').validate();
       });
 
       self.trigger('initialized');
