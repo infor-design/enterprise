@@ -48,16 +48,25 @@
 
       init: function() {
         this.settings = settings;
-        this.setBlockSizes();
         this.handleEvents();
+        this.resize(this);
        },
 
-      setBlockSizes: function () {
+      setBlockSizes: function (phone, tablet) {
         var self = this;
 
         this.blocks = [];
         this.element.find('.card, .widget').each(function () {
           var card = $(this);
+
+          if (phone && (card.hasClass('triple-width') || card.hasClass('double-width'))) {
+            card.addClass('to-single');
+          } else if (tablet && (card.hasClass('triple-width'))) {
+            card.addClass('to-double');
+          } else {
+            card.removeClass('to-single to-double');
+          }
+
           self.blocks.push({w: card.width(), h: card.height(), elem: card, text: card.text()});
         });
 
@@ -100,13 +109,13 @@
 
         //$('.card').first().text(self.element.outerWidth() + '' window.screen.width));
 
-        self.setBlockSizes();
-
-        // Find the Breakpoints
+         // Find the Breakpoints
         var xl = (elemWidth >= bpXL),
           desktop = (elemWidth >= bpDesktop && elemWidth <= bpXL),
           tablet = (elemWidth >= bpTablet && elemWidth <= bpDesktop),
           phone = (elemWidth <= bpTablet);
+
+        self.setBlockSizes(phone, tablet, desktop);
 
         if (xl && self.settings.columns === 4) {
           bp = bpXL;
@@ -168,7 +177,8 @@
       findNode: function(root, w, h) {
         if (root.used) {
           return this.findNode(root.right, w, h) || this.findNode(root.down, w, h);
-        } else if ((w <= root.w) && (h <= root.h)) {
+        }
+        else if ((w <= root.w) && (h <= root.h)) {
           return root;
         } else {
           return null;

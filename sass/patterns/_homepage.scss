@@ -2,7 +2,6 @@
 //==================================================//
 .card,
 .widget {
-  @include css3(transform, translateZ(0));
   background-color: $cardlist-bg-color;
   border: 1px solid #d8d8d8;
   border-radius: 2px;
@@ -48,9 +47,7 @@
 // Different Widget Heights and Widths
 
 .homepage {
-  height: calc(100% - 80px);
   margin: 0 auto;
-  overflow: auto;
   padding: 20px 0;
   position: relative;
 
@@ -79,7 +76,8 @@
   }
 }
 
-.header + .homepage {
+.header + .homepage,
+.header + nav + .homepage {
   height: calc(100% - 80px);
   overflow: scroll;
 }
@@ -99,25 +97,19 @@
   width: 1120px; //1000
 }
 
-@media screen and (max-width: 1120px) {  //1000
-  // all things larger than 740px
-  .card.triple-width,
-  .widget.triple-width {
-    width: 740px; // 660
-  }
+.card.triple-width.to-double,
+.widget.triple-width.to-double {
+  width: 740px; // 660
 }
 
-@media screen and (max-width: 740px) { //660
-  //all things smaller than 740px
-  .card.double-width,
-  .widget.double-width {
-    width: 360px; //320
-  }
+.card.triple-width.to-single,
+.widget.triple-width.to-single {
+  width: 360px; // 660
+}
 
-  .card.triple-width,
-  .widget.triple-width {
-    width: 360px; //320
-  }
+.card.double-width.to-single,
+.widget.double-width.to-single {
+  width: 360px; //320
 }
 
 // Centering
