@@ -166,12 +166,13 @@
       },
 
       findNode: function(root, w, h) {
-        if (root.used)
+        if (root.used) {
           return this.findNode(root.right, w, h) || this.findNode(root.down, w, h);
-        else if ((w <= root.w) && (h <= root.h))
+        } else if ((w <= root.w) && (h <= root.h)) {
           return root;
-        else
+        } else {
           return null;
+        }
       },
 
       splitNode: function(node, w, h) {
