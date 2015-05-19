@@ -85,6 +85,13 @@
 
 }
 
+.ie9 {
+  .slider-wrapper > .tick::after {
+    margin-left: 0px;
+    z-index: -1;
+  }
+}
+
 .slider-handle {
   background-color: $slider-active-bg-color;
   border: 6px solid $slider-active-bg-color;
