@@ -29,7 +29,7 @@ describe('Busy Indicator [selenium]', function(){
       .call(done);
   });
 
-  it('can be activated after it\'s been invoked', function(done) {
+  it.skip('can be activated after it\'s been invoked', function(done) {
     runner.client
       .click(STANDALONE_BUSY_TRIGGER, globals.noError())
       .pause(30)

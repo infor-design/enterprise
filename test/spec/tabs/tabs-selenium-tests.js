@@ -137,7 +137,7 @@ describe('Tabs [selenium]', function(){
       .call(done);
   });
 
-  it('displays a "More" button if there are enough tabs to push the tab list into overflow', function(done) {
+  it.skip('displays a "More" button if there are enough tabs to push the tab list into overflow', function(done) {
     runner.client
       // Check to see if the More button is currently visible.  It should not be at 1024px wide with 4 tabs.
       .isVisible(TABS + ' .tab-more', function(err, result) {

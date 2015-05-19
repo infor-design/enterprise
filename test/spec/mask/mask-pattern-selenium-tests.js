@@ -31,7 +31,7 @@ describe('Pattern Format [selenium]', function(){
       .call(done);
   });
 
-  it('should format text as it\'s typed into the field', function(done) {
+  it.skip('should format text as it\'s typed into the field', function(done) {
     var input = '#input-masked-phone';
     runner.client
       .setValue(input, '1234567890', globals.noError)
@@ -43,7 +43,7 @@ describe('Pattern Format [selenium]', function(){
       .call(done);
   });
 
-  it('should handle backspacing of one character', function(done) {
+  it.skip('should handle backspacing of one character', function(done) {
     var input = '#input-masked-phone';
     runner.client
       .setValue(input, '1234567890', globals.noError)
@@ -61,7 +61,7 @@ describe('Pattern Format [selenium]', function(){
       .call(done);
   });
 
-  it('should handle backspacing of multiple characters using a range selection', function(done) {
+  it.skip('should handle backspacing of multiple characters using a range selection', function(done) {
     var input = '#input-masked-phone';
     runner.client
       .element(input)
@@ -82,7 +82,7 @@ describe('Pattern Format [selenium]', function(){
       .call(done);
   });
 
-  it('should handle deletion of a selected text range, followed by typing of a new character', function(done) {
+  it.skip('should handle deletion of a selected text range, followed by typing of a new character', function(done) {
     runner.client
       .setValue('#input-masked-phone', '', globals.noError)
       .addValue('#input-masked-phone', '1234567890', globals.noError)
@@ -109,7 +109,7 @@ describe('Pattern Format [selenium]', function(){
       .call(done);
   });
 
-  it('should handle pasted text and format it correctly', function(done) {
+  it.skip('should handle pasted text and format it correctly', function(done) {
     var input = '#input-masked-phone';
     var copyInput = '#copythis';
     runner.client
@@ -156,7 +156,7 @@ describe('Pattern Format [selenium]', function(){
 
   // NOTE:  when this test runs, it will already have the copied text "x0x0x0x0x0"
   // stored in the clipboard from the previous test.
-  it('should handle pasting within existing text', function(done) {
+  it.skip('should handle pasting within existing text', function(done) {
     var input = '#input-masked-phone';
     runner.client
       .setValue(input, '3333333333', globals.noError)

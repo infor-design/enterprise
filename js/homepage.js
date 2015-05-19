@@ -49,7 +49,6 @@
       init: function() {
         this.settings = settings;
         this.handleEvents();
-        this.resize(this);
        },
 
       setBlockSizes: function (phone, tablet) {
@@ -83,24 +82,28 @@
         $(window).on('resize.homepage', function() {
           clearTimeout(timeout);
           timeout = setTimeout(function () {
-            self.resize(self);
+            self.resize(self, self.settings.animate);
           }, 100);
         });
 
         $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
-          self.resize(self);
+          self.resize(self, self.settings.animate);
         });
 
         //Initial Sizing
-        self.resize(self);
+        self.resize(self, false);
       },
 
       initBreakpoint: function (w, h) {
         this.root = { x: 0, y: 0, w: w, h: h };
       },
 
+      refresh: function(animate) {
+        this.resize(this, (animate ? animate : this.settings.animate));
+      },
+
       // Resize Method
-      resize: function(self) {
+      resize: function(self, animate) {
         //Sizes of "breakpoints" is  320, 660, 1000 , 1340 (for 320)
         //or 360, 740, 1120, 1500 or (for 360)
         var bpXL = (self.settings.widgetWidth * 4) + (self.settings.gutterSize * 3),
@@ -148,7 +151,7 @@
           if (block.fit) {
             pos = {left: block.fit.x, top: block.fit.y};
 
-            if (self.settings.animate) {
+            if (animate) {
               block.elem.animate(pos, self.settings.timeout, self.settings.easing);
             }
             else {
@@ -156,7 +159,7 @@
             }
             //block.elem.attr('tabindex', n);
           } else {
-           //Error Shouldnt Happen... But when it does it Doesnt Fit
+           //Error Shouldnt Happen... but when it does it Doesnt Fit
           }
         }
 
