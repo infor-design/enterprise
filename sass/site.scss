@@ -244,16 +244,46 @@ span {
   p,
   ul,
   h2 {
+    padding: 0;
     text-align: left;
   }
 
   h2 {
-    padding: 0 10%;
+    padding: 40px 0 0;
+  }
+}
+
+.site-component.card {
+  height: 150px;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+  text-decoration: none;
+  width: 320px;
+
+  img {
+    display: table-cell;
+    height: inherit;
+    float: left;
+    width: 50%;
   }
 
-  ul {
-    padding: 0 10%;
-    line-height: 25px;
+  .title {
+    color: #5c5c5c;
+    display: table;
+    height: inherit;
+    left: 150px;
+    margin-left: 15px;
+    position: absolute;
+    width: 45%;
+
+    span {
+      display: table-cell;
+      @include font-size(22);
+
+      text-align: center;
+      vertical-align: middle;
+    }
   }
 }
 
@@ -407,6 +437,11 @@ span {
 
 @include respond-to(phablet) {
 
+  .components .blockgrid {
+    padding: 0 20px;
+    text-align: center;
+  }
+
   .site-text-section > div,
   .site-howto-nav > div {
     max-width: 80%;
@@ -414,7 +449,6 @@ span {
 
   .component-group.site-text-section > div {
     max-width: 80%;
-    padding: 0 20px;
   }
 
   .site-footer nav {
@@ -598,7 +632,7 @@ span {
     }
 
     .article h2 {
-      padding-top: 20px;
+      padding: 10px 0;
     }
 
     .article h3 {
@@ -705,7 +739,7 @@ div.light-bgrnd {
 
   &.site-text-section {
     background-color: $inverse-color;
-    padding: 20px 0 40px;
+    padding: 20px 20px 40px;
   }
 
   .main h2 {
@@ -762,13 +796,15 @@ div.light-bgrnd {
 
   h2 {
     margin-top: 0;
+    text-align: left;
   }
 
   .blockgrid {
+    margin-bottom: 40px;
     margin-left: -10px;
     margin-top: 40px;
     padding-right: 0;
-    text-align: center;
+    text-align: left;
   }
 }
 

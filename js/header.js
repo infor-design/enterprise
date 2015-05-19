@@ -59,7 +59,7 @@
           if (link.attr('data-theme')) {
             $('body').fadeOut('fast', function() {
               $('#stylesheet').attr('href', '/stylesheets/'+ link.attr('data-theme') +'.css');
-              $(this).fadeIn('fast');
+              $(this).fadeIn('slow');
             });
             return;
           }

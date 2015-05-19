@@ -173,7 +173,7 @@
   margin-bottom: 20px;
   width: 100%;
 
-  span {
+  span:not(.audible) {
     color: $inverse-color;
     @include font-size(12);
     font-weight: 400;
@@ -196,7 +196,7 @@
     transition: width .5s ease 0s;
     width: 60%;
 
-    span {
+    span:not(.audible) {
       color: $inverse-color;
       left: 100%;
       margin-left: -32px;

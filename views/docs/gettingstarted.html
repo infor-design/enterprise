@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>{{title}}</title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="/stylesheets/site.css" type="text/css">
+  <link rel="stylesheet" id="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+
+  <!-- jQuery and Plugin Code-->
+  <script src="/js/jquery-2.1.3.min.js"></script>
+  <script src="/js/sohoxi.js"></script>
+
+</head>
+<body class="no-scroll">
+
+{{> includes/header}}
+  <div class="page-container scrollable">
+
+    <section class="site-hero components">
+      <div class="hero-img" role="presentation"></div>
+      <div class="row">
+        <div class="full column">
+          <h2>SoHo Xi <br> Components
+            <br><a href="http://107.170.15.202:4000/" target="_blank">View All Components</a>
+          </h2>
+
+        </div>
+      </div>
+    </section>
+
+    <section role="main" class="site-text-section light-bgrnd component" >
+      <div class="row">
+        <h2>Soho Xi Components</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. </p>
+        <p>
+        Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. Nunc sodales posuere urna eu lacinia. Ut vehicula blandit velit at laoreet. In vitae aliquam mauris, at placerat enim. Nam quis velit a ante iaculis</p>
+      </div>
+    </section>
+
+    <section role="main" class="site-text-section light-bgrnd component" >
+      <div class="row">
+        <h2>Using the Soho Xi controls library</h2>
+        <p>Download it here ..... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. </p>
+        <p>
+        Use it this way .....Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. Nunc sodales posuere urna eu lacinia. Ut vehicula blandit velit at laoreet. In vitae aliquam mauris, at placerat enim. Nam quis velit a ante iaculis</p>
+      </div>
+    </section>
+
+    <section role="main" class="site-text-section dark-bgrnd components site-categories" id="maincontent">
+      <div class="row">
+        <h2>Component Categories</h2>
+
+        <div class="row blockgrid">
+        <a href="#" class="site-category-icon">
+          <h3>Selecting From a List</h3>
+        </a>
+        <a href="#" class="site-category-icon">
+          <h3>User Input</h3>
+        </a>
+        <a href="#" class="site-category-icon">
+          <h3>Charts and BI</h3>
+        </a>
+        <a href="#" class="site-category-icon">
+          <h3>Other Things</h3>
+        </a>
+        <a href="#" class="site-category-icon">
+          <h3>This and That</h3>
+        </a>
+      </div>
+      </div>
+    </section>
+
+    {{> controls/svg}}
+    {{> docs/svg}}
+    {{> docs/footer}}
+  </div>
+
+</body>
+</html>

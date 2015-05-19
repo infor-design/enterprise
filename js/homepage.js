@@ -87,6 +87,10 @@
           }, 100);
         });
 
+        $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
+          self.resize(self);
+        });
+
         //Initial Sizing
         self.resize(self);
       },
