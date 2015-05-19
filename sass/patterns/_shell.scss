@@ -43,14 +43,32 @@
 
 // Header
 .mingle-header {
-  background-color: #666666;
+  background-color: #414247;
   height: 34px;
   line-height: normal;
   margin: 0;
   overflow: hidden;
   padding: 0;
-}
 
+  .icon-logo {
+    height: 25px;
+    left: 4px;
+    top: -5px;
+    width: 25px;
+  }
+
+  svg {
+    fill: #b9babd;
+    height: 22px;
+    margin-right: 10px;
+    top: 4px;
+    width: 22px;
+  }
+
+  .audible {
+    color: #ffffff;
+  }
+}
 
 // User Button
 .mingle-user-btn {
@@ -62,6 +80,7 @@
   &:hover {
     color: #e5e5e5;
   }
+
 }
 
 .has-update:after {
@@ -76,25 +95,29 @@
 }
 
 // Share Button Module
+.mingle-share-btn {
+  top: 2px;
 
-.mingle-share-btn .mingle-icon {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAA////pdmf3QAAAAF0Uk5TAEDm2GYAAAAXSURBVAjXY2Dg/8DAQCbxHwiIISiwAwBlkzfJzgOgGgAAAABJRU5ErkJggg==');
-  background-position: center center;
+  .mingle-icon {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAA////pdmf3QAAAAF0Uk5TAEDm2GYAAAAXSURBVAjXY2Dg/8DAQCbxHwiIISiwAwBlkzfJzgOgGgAAAABJRU5ErkJggg==');
+    background-position: center center;
+  }
 }
+
 
 .mingle-share-btn:hover .mingle-icon {
   opacity: .8;
 }
 
-
 // App Launcher Modul
 .mingle-app-name {
-  color: #b2b2b2;
+  color: #b9babd  ;
+  left: 67px;
+  @include font-size(12);
   margin-left: 2px;
   position: absolute;
   text-align: left;
   top: 11px;
-  left: 80px;
   transition: color .3s ease-in-out 0s;
   width: 300px;
 }
@@ -115,7 +138,7 @@
 }
 
 .mingle-app-launcher {
-  margin-left: 7px;
+  margin-left: -3px;
 
   .mingle-icon {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABGdBTUEAALGPC/xhBQAAAAZQTFRFAAAA////pdmf3QAAAAF0Uk5TAEDm2GYAAAAUSURBVAjXY/j/gf8/A5kEsYACOwB19ke5qWqFQwAAAABJRU5ErkJggg==');
