@@ -9,24 +9,24 @@
       <h1>Application Name</h1>
 
       <div class="field">
-        <label for="username">Email</label>
-        <input type="text" name="username" id="username" autocomplete="off" data-validate="required">
+        <label for="username-dsp">Email</label>
+        <input type="text" name="username-dsp" id="username-dsp" autocomplete="off" data-validate="required">
       </div>
 
       <div class="field">
-        <label for="password">Password</label>
-        <input type="password" id="password" data-validate="required">
+        <label for="password-dsp">Password</label>
+        <input type="password" id="password-dsp" data-validate="required">
         <!-- TODO: Caps Lock Indicator -->
       </div>
 
       <form id="signin" data-validate-on="submit" autocomplete="off">
           <button class="btn-primary" type="submit">Sign in</button>
-          <a class="hyperlink" href="#">Forgot Password?</a>
+          <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
 
-          <label for="username-hidden" class="audible">Username</label>
-          <input type="hidden" name="username-hidden" id="username-hidden" >
-          <label for="password-hidden" class="audible">Password</label>
-          <input type="hidden" id="password-hidden" name="password-hidden">
+          <label for="username" class="audible">Username</label>
+          <input type="hidden" name="username" id="username" >
+          <label for="password" class="audible">Password</label>
+          <input type="hidden" id="password" name="password">
       </form>
   </section>
 </div>

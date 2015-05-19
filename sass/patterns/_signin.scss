@@ -26,6 +26,10 @@
     padding: 0;
     text-align: center;
   }
+  &.sent h1,
+  &.sent p {
+    margin: 0;
+  }
 
   .hyperlink {
     display: inline-block;
@@ -45,8 +49,13 @@
     margin: 0 auto 40px;
     width: 90px;
   }
-
 }
 
-
-
+.password-hint {
+  strong {
+    font-weight: bold;
+  }
+  li {
+    list-style: inside;
+  }
+}

@@ -71,6 +71,20 @@
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate');
 
+        if (events.indexOf('{') > -1) {
+          events = JSON.parse(events.replace(/'/g, '"'));
+        }
+
+        if(typeof events === 'object') {
+          var e = '';
+          for(var k in events) {
+            e += events[k] +' ';            
+          } 
+          e = e.split(' ').join('.validate ');
+          events = e;
+          // console.log(e);
+        }
+
         field.on(events, function () {
 
           var field = $(this);
@@ -430,6 +444,53 @@
           return true;
         },
         message: 'Invalid Date'
+      },
+      email: {
+        check: function (value,field) {
+          this.message = Locale.translate('EmailValidation');
+          var $btnSubmit = $('form button[type="submit"]', field.closest('.signin')),
+            re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+            ck = (value.length) ? re.test(value) : false;
+
+          if (ck) {
+            $btnSubmit.removeAttr('disabled');
+          } else {
+            $btnSubmit.attr('disabled','true');
+          }
+          return (value.length) ? ck : true;
+        },
+        message: 'EmailValidation'
+      },
+      passwordReq: {
+        check: function (value) {
+          this.message = Locale.translate('PasswordValidation');
+          /* Must be at least 10 characters which contain at least 
+          ** one lowercase letter,
+          ** one uppercase letter, 
+          ** one numeric digit
+          ** and one special character */
+          var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/;
+          return (value.length) ? value.match(re) : true;
+        },
+        message: 'PasswordValidation'
+      },
+      passwordConfirm: {
+        check: function (value, field) {
+          this.message = Locale.translate('PasswordConfirmValidation');
+          var $btnSubmit = $('form button[type="submit"]', field.closest('.signin')),
+            v = $('input[type="password"]:not('+ field.attr('id') +')', field.closest('.signin')).eq(0).val(),
+            re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/,
+            isV = (v.length) ? (v.match(re) !== -1) : false,
+            ck = (value === v) ? isV : false;
+
+          if (ck) {
+            $btnSubmit.removeAttr('disabled');
+          } else {
+            $btnSubmit.attr('disabled','true');
+          }
+          return (value.length) ? ck : true;
+        },
+        message: 'PasswordConfirmValidation'
       },
       time: {
         check: function(value, field) {

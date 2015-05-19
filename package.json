@@ -26,11 +26,11 @@
     "grunt-git-revision": "0.0.1",
     "grunt-mocha-cli": "^1.9.0",
     "grunt-nodemon": "^0.4.0",
-    "grunt-sass": "^0.12.1",
+    "grunt-sass": "*",
     "grunt-shell": "^1.0.0",
     "grunt-strip-code": "^0.1.2",
     "jquery": "^2.1.1",
-    "jsdom": "^1.0.0-pre.7",
+    "jsdom": "*",
     "jshint": "^2.5.5",
     "load-grunt-tasks": "^0.6.0",
     "mmm": "^0.2.2",
@@ -40,6 +40,6 @@
     "spec-xunit-file": "0.0.1-1",
     "webdriverio": "^2.4.0",
     "webdriverjs-selenium-bundle": "0.0.2",
-    "zombie": "^2.5.1"
+    "zombie": "*"
   }
 }
