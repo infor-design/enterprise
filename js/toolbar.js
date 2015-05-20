@@ -68,7 +68,8 @@
         if (!this.buttonset.length) {
           this.buttonset = $('<div class="buttonset"></div>').appendTo(this.buttonset);
         }
-        this.buttonset.find('.overflow-break').css('display', '');
+
+        this.overflowBreak = this.buttonset.find('.overflow-break').css('display', '');
 
         this.moreButton = this.element.find('.btn-actions');
         if (!this.moreButton.length) {
@@ -88,14 +89,21 @@
         }
         this.moreButton.attr('tabindex', '-1');
 
-        this.buttons = this.buttonset.find('button').add(this.element.children('.title').find('button'));
+        this.buttons = this.buttonset.children('button, input').add(this.element.children('.title').find('button'));
         this.buttons.attr('tabindex', '-1');
+
         var active = this.buttons.filter('.is-selected');
         if (active.length) {
           this.activeButton = active.first().attr('tabindex', '0');
           this.buttons.not(this.activeButton).removeClass('is-selected');
         } else {
-          this.activeButton = this.buttons.filter(':visible:not(:disabled)').first().attr('tabindex', '0');
+          active = this.buttons.filter(':visible:not(:disabled)').first();
+          this.activeButton = active.attr('tabindex', '0');
+        }
+
+        if (this.overflowBreak && this.isButtonOverflowed(active)) {
+          active.attr('tabindex', '-1');
+          this.activeButton = this.moreButton.addClass('is-selected').attr('tabindex', '0');
         }
 
         this.setOverflow();
@@ -228,6 +236,11 @@
         if (!button || button.length === 0) {
           return true;
         }
+
+        if (button.prevAll('.overflow-break').length) {
+          return true;
+        }
+
         if (this.buttonset.scrollTop() > 0) {
           this.buttonset.scrollTop(0);
         }
