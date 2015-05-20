@@ -48,7 +48,10 @@
 
       init: function() {
         this.settings = settings;
-        this.handleEvents();
+        this.attachEvents();
+
+        //Initial Sizing
+        this.resize(this, false);
        },
 
       setBlockSizes: function (phone, tablet) {
@@ -61,7 +64,7 @@
           if (phone && (card.hasClass('triple-width') || card.hasClass('double-width'))) {
             card.addClass('to-single');
           } else if (tablet && (card.hasClass('triple-width'))) {
-            card.addClass('to-double');
+            card.addClass('to-double').removeClass('to-single');
           } else {
             card.removeClass('to-single to-double');
           }
@@ -74,7 +77,7 @@
 
       },
 
-      handleEvents: function () {
+      attachEvents: function () {
         var self = this,
           timeout;
 
@@ -90,8 +93,6 @@
           self.resize(self, self.settings.animate);
         });
 
-        //Initial Sizing
-        self.resize(self, false);
       },
 
       initBreakpoint: function (w, h) {
@@ -199,9 +200,14 @@
         return node;
       },
 
+      detachEvents: function () {
+        $(window).off('resize.homepage');
+        $('.application-menu').off('applicationmenuopen.homepage applicationmenuclose.homepage');
+      },
+
       // Teardown - Remove added markup and events
       destroy: function() {
-        $(window).off('resize.homepage');
+        this.detachEvents();
         $.removeData(this.element[0], pluginName);
       }
     };
