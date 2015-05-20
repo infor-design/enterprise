@@ -49,20 +49,26 @@ body.no-scroll {
   .sidebar {
     background-color: $inverse-color;
     display: inline-block;
-    float: left;
-    height: 100%;
-    height: auto;
+
+    &.scrollable {
+      height: calc(100% - 3px);
+      width: 100%;
+    }
+
+    &.scrollable-y {
+      height: calc(100% - 3px);
+    }
   }
 
   .main {
     border-right: 1px solid $graphite02;
-    width: 75%;
+    width: calc(75% - 2px);
   }
 
   .sidebar {
     background-color: $body-bg-color;
     height: auto;
-    width: 25%;
+    width: calc(25% - 1px);
 
     & + .main {
       border-left: 1px solid $graphite02;
@@ -75,12 +81,99 @@ body.no-scroll {
   }
 }
 
+.three-column {
+
+  .main,
+  .sidebar {
+    background-color: $inverse-color;
+    display: inline-block;
+
+    &.scrollable {
+      height: calc(100% - 3px);
+      width: 100%;
+    }
+
+    &.scrollable-x {
+      width: 100%;
+    }
+
+    &.scrollable-y {
+      height: calc(100% - 3px);
+    }
+  }
+
+  .main {
+    border-left: 1px solid $graphite02;
+    border-right: 1px solid $graphite02;
+    width: calc(60% - 3px);
+
+    &.scrollable,
+    &.scrollable-y {
+      border-left: 0;
+      border-right: 0;
+    }
+
+    + .sidebar {
+      float: right;
+    }
+  }
+
+  .sidebar {
+    background-color: $body-bg-color;
+    width: 20%;
+  }
+
+}
+
 @include respond-to(phone) {
   .two-column {
     .main,
     .sidebar {
       display: block;
       width: 100%;
+
+      &.scrollable,
+      &.scrollable-y {
+        height: auto;
+        overflow: visible;
+      }
+    }
+
+    .main {
+      border: 0;
+      border-bottom: 1px solid $graphite02;
+    }
+
+    .sidebar + .main {
+      border-bottom: 0;
+      border-top: 1px solid $graphite02;
+    }
+  }
+
+}
+
+@include respond-to(tabletdown) {
+  .three-column {
+    .main,
+    .sidebar {
+      display: block;
+      width: 100%;
+
+      &.scrollable,
+      &.scrollable-y {
+        height: auto;
+        overflow: visible;
+      }
+    }
+
+    .main {
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 1px solid $graphite02;
+    }
+
+    .sidebar + .main {
+      border-top: 1px solid $graphite02;
     }
   }
 }
@@ -90,11 +183,24 @@ body.no-scroll {
 
 // Makes the internal content section of the page a scrollable <div>
 // Use this in conjunction with a "no-scroll" class on the body tag
-.page-container.scrollable {
-  bottom: 0;
-  height: calc(100% - 80px);
-  margin: 0 auto;
+.scrollable {
   overflow: auto;
+}
+
+.scrollable-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scrollable-y {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.page-container {
+  bottom: 0;
+  height: 100%;
+  margin: 0 auto;
   position: absolute;
   width: 100%;
 }
@@ -108,7 +214,9 @@ body.no-scroll {
     margin-top: 80px;
   }
 
-  + .page-container.scrollable {
+  + .page-container,
+  + .application-menu + .page-container {
+    height: calc(100% - 80px);
     margin-top: 80px;
   }
 }
@@ -124,10 +232,10 @@ body.no-scroll {
       margin-top: 135px;
     }
 
-    + .page-container.scrollable,
-    + .application-menu + .page-container.scrollable {
+    + .page-container,
+    + .application-menu + .page-container {
       height: calc(100% - 114px);
-      -webkit-overflow-scrolling: touch;
+      margin-top: 114px;
     }
 
   }
@@ -148,8 +256,8 @@ body.no-scroll {
     .content {
       display: inline-block;
       float: left;
-      margin-top: 40px;
       margin-bottom: 50px;
+      margin-top: 40px;
       max-width: calc(100% - 370px);
       min-width: 300px;
       padding: 0 30px;
@@ -236,50 +344,12 @@ body.no-scroll {
   width: 100%;
 }
 
-// Three Column Layout
-.threecolumn-layout {
-  height: calc(100% - 110px); //header - top and bottom margin
-  margin: 20px auto 0;
-  max-width: $breakpoint-tablet-to-desktop;
-
-  > * {
-    display: inline-block;
-    float: left;
-    height: 100%;
-
-    &:nth-child(1) {
-      width: 25%;
-    }
-
-    &:nth-child(2) {
-      height: auto;
-      margin: 0 20px;
-      width: calc(50% - 40px);
-    }
-
-    &:nth-child(3) {
-      width: 25%;
-    }
-  }
-
-}
-
-// Respond Off Canvas on left and right column
-@include respond-to(tabletdown) {
-  .threecolumn-layout {
-    margin: 20px;
-
-    > *:nth-child(1) {
-      display: none;
-    }
-
-    > *:nth-child(2) {
-      margin: 0;
-      width: 100%;
-    }
-
-    > *:nth-child(3) {
-      display: none;
-    }
-  }
+// Scrollable Canvas
+//==============================================================
+.scrollable.canvas,
+.scrollable-x.canvas,
+.scrollable-y.canvas {
+  -webkit-overflow-scrolling: touch;
+  min-height: calc(100% - 80px);
+  min-width: 100%;
 }

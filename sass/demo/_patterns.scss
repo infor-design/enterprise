@@ -1,0 +1,93 @@
+// Demo Patterns
+// Used for keeping inline CSS out of the demos in the patterns folder
+//================================================== //
+
+// Contained Scrolling Example's definitions for columns
+//================================================== //
+@mixin striped-bg-light {
+  background: repeating-linear-gradient(
+    45deg,
+    #ffffff,
+    #ffffff 10px,
+    #fafafa 10px,
+    #fafafa 20px
+  );
+}
+
+.contained-scrolling-left-col {
+  background-color: #ffffff;
+  display: inline-block;
+  height: calc(100% - 45px);
+  margin-left: 20px;
+  margin-top: 20px;
+  min-height: 0;
+  width: calc(30% - 20px);
+
+  > .content {
+    @include striped-bg-light;
+    height: 5000px;
+    width: 3000px;
+  }
+}
+
+.contained-scrolling-right-top {
+  background-color: #ffffff;
+  display: inline-block;
+  height: calc(42% - 20px);
+  margin-left: 20px;
+  margin-top: 20px;
+  min-height: 0;
+  position: absolute;
+  top: 0;
+  width: calc(70% - 40px);
+
+  > .content {
+    @include striped-bg-light;
+    height: 5000px;
+    width: 3000px;
+  }
+}
+
+.contained-scrolling-right-bottom {
+  background-color: #ffffff;
+  display: inline-block;
+  height: calc(55% - 25px);
+  margin-left: 20px;
+  margin-top: 20px;
+  min-height: 0;
+  width: calc(70% - 40px);
+
+  > .content {
+    @include striped-bg-light;
+    height: 5000px;
+    width: 3000px;
+  }
+}
+
+.demo-stripes {
+  @include striped-bg-light;
+
+  &.darker {
+    background: repeating-linear-gradient(
+      45deg,
+      #f3f3f3,
+      #f3f3f3 10px,
+      #ededed 10px,
+      #ededed 20px
+    );
+  }
+}
+
+.demo-column-content {
+  > .content {
+    min-height: 5000px;
+  }
+}
+
+@include respond-to(tabletdown) {
+  .demo-column-content {
+    > .content {
+      min-height: 500px;
+    }
+  }
+}
