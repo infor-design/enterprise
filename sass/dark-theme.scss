@@ -11,15 +11,16 @@ $body-bg-color: #323232;
 $header-color: #454545;
 
 $inverse-color: #ffffff;
-$primary-color: #47b2f0;  // 117cba Would Be awesome
-$primary-button-bg-color: #47b2f0;
+$primary-color: $azure07;  // 117cba Would Be awesome
+$primary-button-bg-color: $azure07;
 
 // Text Color
 $font-color-dark: #ffffff;
 $font-color: #ffffff;
-$font-color-light: #999999; //Was 999999 in design
+$font-color-light: #999999;
 $font-color-disabled: #999999;
-$label-color: #999999;
+$label-color: #ffffff;
+$small-text-color: #9999cc;
 
 $hr-top-color: #282828;
 $hr-bottom-color: #595858;

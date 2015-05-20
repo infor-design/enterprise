@@ -74,16 +74,23 @@ $datagrid-header-height: 40px;
 
     // Hover States
     &:hover td {
-      background-color: #e4e4e4;
+      background-color: $datagrid-row-hover-color;
 
       .is-readonly {
-        background-color: #e4e4e4;
+        background-color: $datagrid-row-hover-color;
       }
+    }
+
+    &.is-selected td,
+    &.is-selected .datagrid-cell-wrapper,
+    &.is-selected .is-readonly {
+      background-color: $datagrid-row-selected-color !important;
     }
 
     .hyperlink {
       color: $primary-color;
       display: block;
+      height: 35px;
       line-height: inherit;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -91,6 +98,19 @@ $datagrid-header-height: 40px;
 
     .btn-icon span {
       color: transparent;
+    }
+
+    .badge {
+      top: 10px;
+
+      &:before {
+        margin-top: -10px;
+      }
+    }
+
+    .tag {
+      line-height: 31px;
+      margin-top: 5px;
     }
 
     //Row Height Feature
@@ -319,4 +339,8 @@ td .btn-actions {
     padding: 0 0 0 30px;
     vertical-align: top;
   }
+}
+
+.datagrid-result-count {
+  @include font-size(14);
 }

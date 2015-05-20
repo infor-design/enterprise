@@ -1,8 +1,6 @@
 /**
-* SignIn Control (TODO: bitly link to soho xi docs)
+* SignIn Control
 */
-
-// NOTE:  There are AMD Blocks available
 
 /* start-amd-strip-block */
 (function(factory) {
@@ -18,8 +16,6 @@
   }
 }(function($) {
 /* end-amd-strip-block */
-
-  //NOTE: Just this part will show up in SoHo Xi Builds.
 
   $.fn.signin = function(options) {
     'use strict';
@@ -45,11 +41,9 @@
         this.handleKeys();
       },
 
-
       handleKeys: function() {
         var form = this.element.find('form');
 
-        //-----------------------------------------------------------
         var isCapslock = function(e) {
           e = (e) ? e : window.event;
           var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
@@ -63,45 +57,20 @@
           }
           return false;
         };
+
         var passwordFields = this.element.find('[type="password"]');
         passwordFields.on('keypress.signin', function (e) {
           console.log(isCapslock(e));
         });
-        //-----------------------------------------------------------
-
-        /* TODO: Caps Like Down
-          var passwordFields = this.element.find('[type="password"]'),
-          passwordFields.on('keypress.signin', function (e) {
-
-          if (e.which === 13) {
-            form.submit();
-          }
-
-
-          var input = $(this);
-          setTimeout(function () {
-            var key = String.fromCharCode(e.which),
-              val = input.val();
-
-            if (val === '') {
-              return;
-            }
-
-            if (key.toUpperCase() === key && key.toLowerCase() !== key && !e.shiftKey ) {
-               console.log();
-            }
-          }, 10);
-        });*/
 
         form.on('submit.signin', function () {
-          var $cPass = $('#confirm-password');
-          if($cPass.length && ((!($cPass.val()).length) || ($cPass.hasClass('error')))) {
+          var confirmPassword = $('#confirm-password');
+          if (confirmPassword.length && ((!(confirmPassword.val()).length) || (confirmPassword.hasClass('error')))) {
             return false;
           }
           $('#username').val($('#username-dsp').val());
           $('#password').val($('#password-dsp').val());
           $('#new-password').val($('#new-password-dsp').val());
-          //console.log($(this).serialize());
         });
 
       },

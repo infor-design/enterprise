@@ -8,9 +8,9 @@
 //==================================================//
 
 $site-maxwidth: 1080px;
-$vision-color: $emerald07;
-$code-color: $azure05;
-$code-color-alt: $azure07;
+$vision-color: $azure05;
+$code-color: $emerald06;
+$code-color-alt: $emerald08;
 
 body {
   background-color: $inverse-color !important;
@@ -297,7 +297,7 @@ span {
 
   .site-navbox {
     background-color: $vision-color;
-    background-image: url('/assets/site/lego-vision.png');
+    background-image: url('/assets/site/blue-lego.png');
     background-position: center 15%;
     background-repeat: no-repeat;
     background-size: 102px 82px;
@@ -313,7 +313,7 @@ span {
 
     &.controls {
       background-color: $code-color;
-      background-image: url('/assets/site/lego-controls.png');
+      background-image: url('/assets/site/green-lego.png');
 
       &:focus {
         box-shadow: 0 0 0 2px $inverse-color, 0 0 0 4px $code-color;

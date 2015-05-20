@@ -5,7 +5,7 @@
 .toolbar,
 .editor-toolbar {
   height: $toolbar-height;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   overflow: hidden;
   position: relative;
 
@@ -22,7 +22,7 @@
   .title {
     color: $font-color;
     display: inline-block;
-    @include font-size(14);
+    @include font-size(16);
     left: 0;
     margin: 5px 1em 5px 0;
     padding: 10px 0;

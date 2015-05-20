@@ -101,6 +101,7 @@
       'PressDown': {id: 'PressDown', value: 'Press Down to select a date', comment: 'the audible label for hint about how to operate the date picker'},
       'PreviousMonth': {id: 'PreviousMonth', value: 'Previous Month', comment: 'the label for the button that moves calendar to next/prev'},
       'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
+      'Results': {id: 'Results', value: 'Results', comment: 'As in showing N Results in a List'},
       'Ruby': {id: 'Ruby', value: 'Ruby', comment: 'Color in our color pallette'},
       'Selected': {id: 'Selected', value: 'Selected', comment: 'text describing a selected object'},
       'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},

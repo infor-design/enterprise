@@ -91,16 +91,36 @@ window.Formatters = {
   Expander: function (row, cell, value) {
     var button = '<button class="btn-icon datagrid-expand-btn">'+
       '<span class="icon plus-minus"></span>' +
-      //'<svg class="icon" aria-hidden="true" focusable="false">'+
-      //'<use xlink:href="#icon-caret-down"></use>'+
-      //'</svg><span>Expand/Collapse</span>'+
       '</button>' + '<span> ' + value + '</span>';
 
     return button;
-  }
+  },
+
+  // Badge / Tags and Visual Indictors
+  ClassRange: function (row, cell, value, col) {
+    var ranges = col.ranges,
+      classes = '', text='';
+
+    for (var i = 0; i < ranges.length; i++) {
+      classes = (value >= ranges[i].min && value <= ranges[i].max ? ranges[i].classes : classes);
+      text = (ranges[i].text ? ranges[i].text :classes.split(' ')[0]);
+    }
+
+    return {'classes': classes, 'text': text};
+  },
+
+  Badge: function (row, cell, value, col) {
+    var ranges = Formatters.ClassRange(row, cell, value, col);
+    return '<span class="' + ranges.classes +'"><span class="audible">'+ ranges.text + '</span></span>';
+  },
+
+  Tag: function (row, cell, value, col) {
+    var ranges = Formatters.ClassRange(row, cell, value, col);
+    return '<span class="tag ' + ranges.classes +'">'+ value + '</span>';
+  },
 
   // TODOs
-  // Badge (Visual Indictors), Tags
+  // Badge (Visual Indictors)
   // Tags (low priority)
   // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // Select (Drop Down)
@@ -129,7 +149,8 @@ $.fn.datagrid = function(options) {
         dataset: [],
         columns: [],
         rowHeight: 'medium', //(short, medium or tall)
-        menuId: null  //Id to the right click context menu
+        menuId: null,  //Id to the right click context menu
+        selectable: false //false, 'single' or 'multiple'
       },
       settings = $.extend({}, defaults, options);
 
@@ -180,8 +201,8 @@ $.fn.datagrid = function(options) {
         var column = settings.columns[j],
           uniqueId = self.uniqueID(self.gridCount, '-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
-          isResizable = (column.resizable === undefined ? true : column.resizable);
-
+          isResizable = (column.resizable === undefined ? true : column.resizable),
+          isCentered = (column.centered === undefined ? false : column.centered);
 
         if (column.hidden) {
           continue;
@@ -195,7 +216,7 @@ $.fn.datagrid = function(options) {
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
          ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"'+
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="datagrid-column-wrapper"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
+         headerRow += '<div class="datagrid-column-wrapper '+ (isCentered ? ' l-center-text' : '') +'"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
         if (isSortable) {
           headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-down"></svg></div>';
@@ -278,7 +299,7 @@ $.fn.datagrid = function(options) {
           }
 
           if (formatted.indexOf('datagrid-checkbox') > -1 ||
-            formatted.indexOf('btn-actions') > -1) {
+            formatted.indexOf('btn-actions') > -1 || formatted.indexOf('badge') > -1) {
             cssClass += ' l-center-text';
           }
 
@@ -314,6 +335,12 @@ $.fn.datagrid = function(options) {
       }
 
       self.tableBody.append(tableHtml);
+      self.displayCounts();
+    },
+
+    //Show Summary and any other count info
+    displayCounts: function() {
+      this.element.prev('.toolbar').find('.datagrid-result-count').text('(' + this.settings.dataset.length + ' ' + Locale.translate('Results') + ')');
     },
 
     //Trigger event on parent and compose the args
@@ -385,8 +412,11 @@ $.fn.datagrid = function(options) {
         e.preventDefault();
         $(this).trigger('click');
       }).on('click.datagrid', 'td', function (e) {
+        var target = $(e.target);
+
         self.triggerRowEvent('click', e, true);
-        self.setActiveCell($(e.target).closest('td'));
+        self.setActiveCell(target.closest('td'));
+        self.selectedRows(target.closest('tr'));
       });
 
       body.on('dblclick.datagrid', 'tr', function (e) {
@@ -437,6 +467,36 @@ $.fn.datagrid = function(options) {
 
     },
 
+    //Get or Set Selected Rows
+    _selectedRows: [],
+    selectedRows: function (row) {
+
+      if (row && this.settings.selectable === 'single') {
+        var idx = row.index();
+
+        if (row.hasClass('is-selected')) {
+          this._selectedRows = [];
+          row.removeClass('is-selected').removeAttr('aria-selected');
+          this.element.trigger('selected', [this._selectedRows]);
+          return;
+        }
+
+        this._lastSelectedRow = idx;
+        this._selectedRows = [];
+        this._selectedRows.push({idx: idx, data: settings.dataset[idx], elem: row});
+
+        var selectedRows = row.closest('tbody').find('tr.is-selected');
+        selectedRows.removeClass('is-selected').removeAttr('aria-selected');
+        selectedRows.find('td').removeAttr('aria-selected');
+
+        row.addClass('is-selected').attr('aria-selected', 'true');
+        row.find('td').attr('aria-selected', 'true');
+      }
+
+      this.element.trigger('selected', [this._selectedRows]);
+      return this._selectedRows;
+    },
+
     // Handle all keyboard behavior
     activeCell: {node: null, cell: null, row: null},
 
@@ -445,31 +505,43 @@ $.fn.datagrid = function(options) {
 
       // Set tab index to first cell
       self.activeCell = {node: self.cellNode(1, 0).attr('tabindex', '0'), cell: 0, row: 1};
-      self.table.on('keydown.datagrid', 'td', function (e) {
-        var key = e.which,
+      self.table.on('keyup.datagrid', 'td', function (e) {
+        var key = e.which, row,
           handled = false;
 
         //Left and Right to navigate by cell.
-        if (key === 37) {
+        if (key === 37 && !e.altKey) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
         }
 
-        if (key === 39) {
+        if (key === 39 && !e.altKey) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
         }
 
         //Up and Down to navigate by row.
-        if (key === 38) {
+        if (key === 38 && !e.altKey) {
           self.setActiveCell(self.activeCell.row-1, self.activeCell.cell);
+          handled = true;
         }
-        if (key === 40) {
+
+        if (key === 40 && !e.altKey) {
           self.setActiveCell(self.activeCell.row+1, self.activeCell.cell);
+          handled = true;
+        }
+
+        //Press Control+Home or Control+End to move to the first row on the first page or the last row on the last page.
+        if (key === 38 && e.altKey) {
+          self.setActiveCell(1, self.activeCell.cell);
+        }
+        if (key === 40 && e.altKey) {
+          row = self.activeCell.node.closest('tbody').find('tr:last').index();
+          self.setActiveCell(row+1, self.activeCell.cell);
         }
 
         //Press Control+Spacebar to announce the current row when using a screen reader.
         if (key === 32 && e.ctrlKey && self.activeCell.node) {
-          var row = self.activeCell.node.closest('tr'),
-            string = '';
+          var string = '';
+          row = self.activeCell.node.closest('tr');
 
           row.children().each(function () {
             var cell = $(this);
@@ -477,23 +549,46 @@ $.fn.datagrid = function(options) {
             //string += $('#' + cell.attr('aria-describedby')).text() + ' ' + cell.text() + ' ';
             string += cell.text() + ' ';
           });
+
           $('body').toast({title: '', audibleOnly: true, message: string});
           handled = true;
         }
 
+        //TODO: Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
+        //Press PageUp or PageDown to open the previous or next page and set focus to the first row.
+        //Press Alt+PageUp or Alt+PageDown to open the first or last page and set focus to the first row.
+        if (key === 37 && e.altKey) {
+          self.setActiveCell(self.activeCell.row, 0);
+        }
+
+        if (key === 39 && e.altKey) {
+        }
+
+        //Press Home or End to move to the first or last cell on the current row.
+        if (key === 36) {
+          self.setActiveCell(self.activeCell.row, 0);
+        }
+
+        if (key === 35) {
+          var lastCell = self.activeCell.node.closest('tr').find('td:last').index();
+          self.setActiveCell(self.activeCell.row, lastCell);
+        }
+
+        // For mode 'Selectable':
+        // Press Space to toggle row selection, or click to activate using a mouse.
+        if (key === 32 || key ===13) {
+          row = self.activeCell.node.closest('tr');
+          self.selectedRows(row);
+        }
+
+        //TODO: If multiSelect is enabled, press Control+A to select all rows on the current page.
         if (handled) {
           e.preventDefault();
+          e.stopPropagation();
           return false;
         }
-        /*Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
-        Press Home or End to move to the first or last cell on the current row.
-        Press Control+Home or Control+End to move to the first row on the first page or the last row on the last page.
-        Press PageUp or PageDown to open the previous or next page and set focus to the first row.
-        Press Alt+PageUp or Alt+PageDown to open the first or last page and set focus to the first row.
-        For mode 'Selectable':
-        Press Space to toggle row selection, or click to activate using a mouse.
-        If multiSelect is enabled, press Control+A to select all rows on the current page.
-        If Delete is enabled, press Delete to remove all selected rows.
+
+        /*
         For mode 'Editable':
         Press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
         */
@@ -504,7 +599,7 @@ $.fn.datagrid = function(options) {
       var self = this,
         prevCell = self.activeCell;
 
-      //Support passing the yd in
+      //Support passing the td in
       if (row instanceof jQuery) {
         cell = row.index();
         row = row.parent().index()+1;

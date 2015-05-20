@@ -241,7 +241,7 @@
 
         });
 
-        var excludes = 'li:not(.separator):not(.group):not(.is-disabled)';
+        var excludes = 'li:not(.separator):not(.heading):not(.group):not(.is-disabled)';
         //Select on Focus
         if (this.settings.mouseFocus) {
           this.menu.on('mouseenter.popupmenu', 'a', function () {
@@ -452,7 +452,7 @@
 
         if (self.settings.autoFocus) {
           setTimeout(function () {
-            self.menu.parent().find('li:not(.separator):not(.group):not(.is-disabled)').first().find('a').focus();
+            self.menu.parent().find('li:not(.separator):not(.heading):not(.group):not(.is-disabled)').first().find('a').focus();
           }, 1);
         }
       },

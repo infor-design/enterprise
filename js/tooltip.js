@@ -161,7 +161,12 @@
           content = this.content = settings.content.call(this.element);
         }
 
-        this.tooltip.find('.tooltip-content').html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
+        var contentArea = this.tooltip.find('.tooltip-content');
+
+        if (contentArea.prev('.arrow').length === 0) {
+          contentArea.before('<div class="arrow"></div>');
+        }
+        contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
       },
 
       show: function(newSettings) {

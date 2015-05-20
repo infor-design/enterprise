@@ -14,9 +14,8 @@
 </div>
 
 <script>
-  ///$('body').one('initialized', function () {
-
-  Locale.set('en-US').done(function () {
+  $('body').one('initialized', function () {
+    Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -52,7 +51,7 @@
       /*grid.setColumnWidth('productId', '70%');
       grid.setColumnWidth('productName', '15%');
       grid.setColumnWidth('activity', '15%');*/
-  //  });
+  });
 
  });
 

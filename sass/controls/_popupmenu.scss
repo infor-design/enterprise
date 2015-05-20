@@ -73,12 +73,19 @@
   overflow-y: auto;
   padding: 10px 0;
 
-  &.is-padded a {
+  &.is-padded a,
+   .heading {
     padding: 0 30px;
   }
 
   &.is-open {
     display: block;
+  }
+
+  .heading {
+    color: #999999;
+    line-height: 25px;
+    text-transform: uppercase;
   }
 
   li {

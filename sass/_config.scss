@@ -19,6 +19,7 @@ $font-color-dark: $graphite08;
 $font-color: $graphite06;
 $font-color-light: $graphite04;
 $label-color: $graphite06;
+$small-text-color: #616161;
 
 // Rules
 $hr-top-color: #b6b6b6;
@@ -220,6 +221,10 @@ $hyperlink-color: $primary-color;
 $rating-bg-color: #ffd042;
 $rating-border-color: #a4a4a4;
 $rating-hover-color: $primary-color;
+
+// DataGrid
+$datagrid-row-selected-color: #eaf8fe;
+$datagrid-row-hover-color: #e4e4e4;
 
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
