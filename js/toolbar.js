@@ -22,8 +22,7 @@
 
     // Settings and Options
     var pluginName = 'toolbar',
-        defaults = {
-        },
+        defaults = {},
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -78,9 +77,11 @@
           $('<svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg>').appendTo(this.moreButton);
           $('<span class="audible">'+Locale.translate('Actions')+'</span>').appendTo(this.moreButton);
         }
+        /*
         if (this.moreButton.data('popupmenu')) {
           this.moreButton.data('popupmenu').destroy();
         }
+        */
         if (!this.moreButton.data('button')) {
           this.moreButton.button();
         }
@@ -465,7 +466,7 @@
         if (this.popupmenu) {
           this.popupmenu.destroy();
         }
-        this.moreButton.unwrap();
+        //this.moreButton.unwrap();
         this.moreButton.data('tooltip').destroy();
         this.moreButton.off().remove();
         this.buttons.removeAttr('tabindex');
