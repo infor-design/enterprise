@@ -59,6 +59,15 @@ $datagrid-header-height: 40px;
     height: 40px;
     padding: 0 20px;
     position: relative;
+
+    &.l-right-text .datagrid-header-text {
+      float: right;
+    }
+
+    .sort-indicator {
+      float: right;
+      margin: -4px 6px 0 0;
+    }
   }
 
   .is-sortable:hover {
@@ -190,6 +199,18 @@ $datagrid-header-height: 40px;
           box-shadow: none;
           outline: none;
         }
+      }
+    }
+
+    &.l-right-text {
+      .datagrid-cell-wrapper {
+        text-align: right;
+      }
+    }
+
+    &.l-center-text {
+      .datagrid-cell-wrapper {
+        text-align: center;
       }
     }
 

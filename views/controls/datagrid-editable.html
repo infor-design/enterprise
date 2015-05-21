@@ -1,7 +1,7 @@
 <div class="row">
   <div class="twelve columns">
     <h1>Datagrid</h1>
-    <span class="label">Single Select</span>
+    <span class="label">Editing</span>
     <hr>
   </div>
 </div>
@@ -11,7 +11,7 @@
     <div class="toolbar" role="toolbar">
       <div class="title">
         Data Grid Header Title
-        <span class="datagrid-result-count">(123 Results)</span>
+        <span class="datagrid-result-count"></span>
       </div>
       <div class="buttonset">
 
@@ -67,12 +67,11 @@
 
         //Define Columns for the Grid.
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, Editors: Editors.Text});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, editor: Editors.Input});
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-        columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'good checked badge'}, {'min': 151, 'max': 9999, 'classes': 'error exclamation badge'}], centered: true });
-
-        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125, align: 'right', editor: Editors.Input, mask: '###'});
+        columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'good checked badge'}, {'min': 151, 'max': 9999, 'classes': 'error exclamation badge'}]});
+        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, editor: Editors.Input, mask: '###.000'});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
         //Init and get the api for the grid

@@ -26,6 +26,7 @@ window.Formatters = {
     if (typeof Locale !== undefined && true) {
        formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
     }
+
     return formatted;
   },
 
@@ -142,14 +143,36 @@ window.Formatters = {
 };
 
 window.Editors = {
-  Text: function(row, cell, value) {
+  Input: function(row, cell, value, container, column) {
+
+    this.name = 'Text';
+    this.orginalValue = value;
 
     this.init = function () {
+      this.editor = $('<input type="text"/>').appendTo(container);
 
+      if (column.align) {
+        this.editor.addClass('l-'+ column.align +'-text');
+      }
+
+      if (column.mask) {
+        this.editor.mask({pattern: column.mask});
+      }
+    };
+
+    this.val = function (value) {
+      if (value) {
+        this.editor.val(value);
+      }
+      return this.editor.val();
+    };
+
+    this.focus = function () {
+      this.editor.focus().select();
     };
 
     this.destroy = function () {
-
+      this.editor.remove();
     };
 
     this.init();
@@ -202,7 +225,6 @@ $.fn.datagrid = function(options) {
       self.renderHeader();
       self.renderRows();
       self.element.addClass('datagrid-container').append(self.table);
-
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -219,7 +241,7 @@ $.fn.datagrid = function(options) {
           uniqueId = self.uniqueID(self.gridCount, '-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable),
-          isCentered = (column.centered === undefined ? false : column.centered);
+          alignmentClass = (column.align === undefined ? false : ' l-'+ column.align +'-text');
 
         if (column.hidden) {
           continue;
@@ -233,7 +255,7 @@ $.fn.datagrid = function(options) {
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
          ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"'+
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="datagrid-column-wrapper '+ (isCentered ? ' l-center-text' : '') +'"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
+         headerRow += '<div class="datagrid-column-wrapper '+ (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
         if (isSortable) {
           headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-down"></svg></div>';
@@ -316,8 +338,12 @@ $.fn.datagrid = function(options) {
           }
 
           if (formatted.indexOf('datagrid-checkbox') > -1 ||
-            formatted.indexOf('btn-actions') > -1 || formatted.indexOf('badge') > -1) {
+            formatted.indexOf('btn-actions') > -1) {
             cssClass += ' l-center-text';
+          }
+
+          if (col.align) {
+            cssClass += ' l-'+ col.align +'-text';
           }
 
           // Add Column Css Classes
@@ -487,8 +513,8 @@ $.fn.datagrid = function(options) {
 
       // Implement Editing Functionality
       body.on('focusin.datagrid', 'td input', function (e) {
-        console.log('in');
-      }).on('focusout.datagrid', 'td input', function (e) {
+        console.log('in', e);
+      }).on('focusout.datagrid', 'td input', function () {
         self.commitCellEdit($(this));
       });
 
@@ -496,6 +522,8 @@ $.fn.datagrid = function(options) {
 
     //Get or Set Selected Rows
     _selectedRows: [],
+
+    //Get or Set Selected Rows
     selectedRows: function (row) {
 
       if (row && this.settings.selectable === 'single') {
@@ -524,9 +552,10 @@ $.fn.datagrid = function(options) {
       return this._selectedRows;
     },
 
-    // Handle all keyboard behavior
+    // Current Active Cell
     activeCell: {node: null, cell: null, row: null},
 
+    // Handle all keyboard behavior
     handleKeys: function () {
       var self = this;
 
@@ -622,59 +651,74 @@ $.fn.datagrid = function(options) {
       });
     },
 
+    //Current Cell Editor thats in Use
+    _editor: null,
+
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell) {
-      // Put the Cell into Edit Mode
       if (!this.settings.editable) {
         return;
       }
 
-      this.setActiveCell(row, cell);
+      //Locate the Editor
+      var col = this.columnSettings(cell);
+      if (!col.editor) {
+        return;
+      }
 
       //TODO: Check if cell is editable via hook function
+
+      // Put the Cell into Edit Mode
+      this.setActiveCell(row, cell);
+
       var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
         cellValue = cellNode.text();
 
       if (cellParent.hasClass('is-editing')) {
         //Already in edit mode
+        //Editor.focus
         cellNode.find('input').focus();
         return false;
       }
 
       //Editor.init
-      var editorMarkup = $('<input type="text"/>');
       cellParent.addClass('is-editing');
-      cellNode.empty().append(editorMarkup);
+      cellNode.empty();
 
-      //Editor.setValue
-      editorMarkup.val(cellValue);
-
-      //Editor.focus
-      editorMarkup.focus().select();
+      this._editor = new col.editor(row, cell, cellValue, cellNode, col);
+      this._editor.val(cellValue);
+      this._editor.focus();
     },
 
     commitCellEdit: function(input) {
 
       //Editor.getValue
-      var newValue = input.val();
+      var newValue = this._editor.val();
 
       //Format Cell again
-      var cellNode = input.parent().removeClass('.is-editing');
+      var cellNode = input.closest('td').removeClass('is-editing');
 
       //Editor.destroy
-      input.remove();
+      this._editor.destroy();
 
       //Save the Cell Edit back to the data set
-      this.updateCellValue(this.activeCell.row, this.activeCell.cell, newValue);
+      this.updateCellValue(cellNode.parent().index(), cellNode.index(), newValue);
 
-      cellNode.focus();
+    },
+
+    //Returns Column Settings from a cell
+    columnSettings: function (cell) {
+      var cellNode = this.tableBody.find('tr').find('td').eq(cell),
+        column = settings.columns[parseInt(cellNode.attr('data-idx'))];
+
+      return column;
     },
 
     updateCellValue: function (row, cell, value) {
       var rowNode = this.tableBody.find('tr').eq(row),
         cellNode = rowNode.find('td').eq(cell),
-        col = settings.columns[parseInt(cellNode.attr('data-idx'))],
+        col = this.columnSettings(cell),
         formatter = (col.formatter ? col.formatter : this.defaultFormatter);
 
       var formatted = formatter(row-1, cell, value, col, settings.dataset[row]).toString();
