@@ -46,7 +46,10 @@
         dataset: data
       }).data('datagrid');
 
-      grid.setSortColumn('activity');
+      //TODO Test: You can focus on hidden columns
+      //grid.setSortColumn('activity');
+
+      grid.setSortColumn('productId');
 
       /*grid.setColumnWidth('productId', '70%');
       grid.setColumnWidth('productName', '15%');

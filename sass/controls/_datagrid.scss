@@ -9,6 +9,7 @@ $datagrid-header-height: 40px;
   border-radius: 2px;
   clear: both;
   height: auto;
+  margin-bottom: 20px;
   overflow-x: auto;
   width: auto;
 
@@ -117,6 +118,23 @@ $datagrid-header-height: 40px;
     &.tall-rowheight td {
       height: 100px;
       line-height: 100px;
+
+      .datagrid-checkbox-wrapper {
+        top: 48px;
+      }
+
+      .datagrid-row-heading {
+        margin-top: 25px;
+      }
+
+      .btn-actions {
+        top: 13px;
+      }
+
+      .hyperlink {
+        height: 60px;
+        overflow: visible;
+      }
     }
 
     &.short-rowheight td {
@@ -151,8 +169,28 @@ $datagrid-header-height: 40px;
       border-right: 1px solid #d8d8d8;
     }
 
+    //Editing and Focus State
     &:focus .datagrid-cell-wrapper {
       border: 1px solid $primary-color;
+    }
+
+    &.is-editing {
+
+      .datagrid-cell-wrapper {
+        border: 1px solid $primary-color;
+      }
+
+      input {
+        border: 1px solid transparent;
+        outline: none;
+        padding: 9px 0 8px;
+        width: 100%;
+
+        &:focus {
+          box-shadow: none;
+          outline: none;
+        }
+      }
     }
 
     span {
@@ -256,7 +294,7 @@ td .btn-actions {
 
   &:before {
     @include checkbox-unchecked-before-style;
-    margin-left: -12px;
+    margin-left: -11px;
     margin-top: -8px;
   }
 
@@ -315,6 +353,10 @@ td .btn-actions {
   td {
     border-bottom: 0;
     height: auto;
+  }
+
+  &:not(.is-expanded) {
+    display: none;
   }
 
   .datagrid-row-detail {

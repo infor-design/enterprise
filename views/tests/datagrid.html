@@ -64,8 +64,8 @@
       grid = $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data,
-        //rowHeight: 'tall',
-        //menuId: 'grid-actions-menu'
+        rowHeight: 'tall',
+        menuId: 'grid-actions-menu'
       }).on('click', function (e, args) {
         console.log('Row Was Clicked', args);
       }).on('dblclick', function (e, args) {
