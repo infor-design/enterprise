@@ -90,11 +90,13 @@
         this.defaultMenuItems = this.moreMenu.find('li:not(.separator)').length > 0;
 
         function menuItemFilter() {
+          /*jshint validthis:true */
           return $(this).parent('.buttonset').length;
         }
 
         var menuItems = [];
         function buildMenuItem() {
+          /*jshint validthis:true */
           var item = $(this),
             popupLi = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(popupLi);
@@ -144,7 +146,7 @@
           a.text(popupLiText);
 
           // Setup data links between the buttons and their corresponding list items
-          item.data('action-button-link', a)
+          item.data('action-button-link', a);
           popupLi.data('original-button', item);
           menuItems.push(popupLi);
         }
@@ -213,8 +215,7 @@
       },
 
       handleSelected: function(e, anchor) {
-        var self = this,
-          itemLink = anchor.parent().data('original-button'),
+        var itemLink = anchor.parent().data('original-button'),
           evts;
 
         if (itemLink && itemLink.length > 0) {
@@ -370,7 +371,9 @@
       checkOverflowItems: function() {
         var self = this,
           visibleLis = [];
+
         function menuItemFilter() {
+          /*jshint validthis:true */
           return $(this).data('action-button-link');
         }
 
@@ -453,13 +456,13 @@
       },
 
       teardown: function() {
-        var self = this;
-
         function menuItemFilter() {
+          /*jshint validthis:true */
           return $(this).data('action-button-link');
         }
 
         function deconstructMenuItem() {
+          /*jshint validthis:true */
           var item = $(this),
             a = item.data('action-button-link'),
             li = a.parent();
