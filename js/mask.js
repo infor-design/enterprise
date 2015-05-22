@@ -266,9 +266,8 @@
           // backspace || delete
           if (key === 8 || key === 46 || (self.env.iPhone && key === 127)) {
             self.handleBackspace(evt);
-            //} else if (key === 13) { // enter
-            //Commented out to solve  issue in grid editor
-            //self.element.trigger('blur', evt);
+          //} else if (key === 13) { // enter
+          //Commented out to solve  issue in grid editor
           } else if (key === 27) { // escape
             self.handleEscape(evt);
           } else if (36 < key && key < 41) { // arrow keys (in Firefox)

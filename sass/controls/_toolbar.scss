@@ -25,9 +25,13 @@
     @include font-size(16);
     left: 0;
     margin: 5px 1em 5px 0;
+    max-width: 40%;
+    overflow: hidden;
     padding: 10px 0;
     position: absolute;
+    text-overflow: ellipsis;
     top: 0;
+    white-space: nowrap;
 
     > * {
       vertical-align: middle;
@@ -40,7 +44,8 @@
 
   .buttonset {
     height: $toolbar-height - 10;
-    margin: 0 5px 0 0;
+    max-width: 50%;
+    margin: 0 5px 0 calc(50% - 5px);
     padding: 0;
 
     > * {

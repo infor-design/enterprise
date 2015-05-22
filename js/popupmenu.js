@@ -125,9 +125,7 @@
         this.element.attr('aria-haspopup', true)
           .attr('aria-expanded', 'false');
 
-        if (!this.element.is('button')) {
-          this.element.attr('aria-owns', id);
-        }
+        this.element.attr('aria-owns', id);
 
         this.menu.find('li').attr('role', 'presentation');
         this.menu.find('.popupmenu').parent().parent().addClass('submenu');
@@ -160,7 +158,6 @@
         });
 
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
-
       },
 
       handleEvents: function() {
@@ -241,7 +238,7 @@
 
         });
 
-        var excludes = 'li:not(.separator):not(.heading):not(.group):not(.is-disabled)';
+        var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
         //Select on Focus
         if (this.settings.mouseFocus) {
           this.menu.on('mouseenter.popupmenu', 'a', function () {
@@ -284,7 +281,7 @@
 
             //Go back to Top on the last one
             if (focus.parent().prevAll(excludes).length === 0) {
-              self.menu.parent().find(excludes).last().find('a').focus();
+              self.menu.children(excludes).last().find('a').focus();
               return;
             }
             focus.parent().prevAll(excludes).first().find('a').focus();
@@ -305,9 +302,9 @@
             //Go back to Top on the last one
             if (focus.parent().nextAll(excludes).length === 0) {
               if (focus.length === 0) {
-                self.menu.parent().find(excludes).first().find('a').focus();
+                self.menu.children(excludes).first().find('a').focus();
               } else {
-                focus.closest('.popupmenu').find(excludes).first().find('a').focus();
+                focus.closest('.popupmenu').children(excludes).first().find('a').focus();
               }
               return;
             }
@@ -452,7 +449,7 @@
 
         if (self.settings.autoFocus) {
           setTimeout(function () {
-            self.menu.parent().find('li:not(.separator):not(.heading):not(.group):not(.is-disabled)').first().find('a').focus();
+            self.menu.children('li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first().find('a').focus();
           }, 1);
         }
       },
