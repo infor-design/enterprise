@@ -123,26 +123,27 @@ window.Formatters = {
   },
 
   // TODOs
-  // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // Select (Drop Down)
   // Multi Select
-  // Color Picker (Low)
-  // File Upload (Simple)
+  // Re Order - Drag Indicator
+  // Sparkline
   // Lookup
-  // Currency
-  // Percent
+  // Tree
   // Progress Indicator (n of 100%)
   // Process Indicator
-  // Tree
+  // Currency
+  // Percent
+  // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
+  // File Upload (Simple)
   // Text Button (1 or 2)
   // Menu Button
   // Icon Button (Approved and SoHo Xi Standard)
   // Toggle Button (No)
-  // Re Order - Drag Indicator
-  // Sparkline
+  // Color Picker (Low)
 };
 
 window.Editors = {
+  //Supports, Text, Numeric, Integer via mask
   Input: function(row, cell, value, container, column) {
 
     this.name = 'Text';
@@ -268,6 +269,33 @@ $.fn.datagrid = function(options) {
       self.headerRow = $(headerRow);
       self.table.append(self.headerRow);
 
+      this.setInitialColumnWidths();
+    },
+
+    setInitialColumnWidths: function () {
+      var total = 0;
+
+      for (var i = 0; i < settings.columns.length; i++) {
+        var column = settings.columns[i],
+          newWidth = 0;
+
+        if (column.hidden) {
+          continue;
+        }
+
+        if (column.width) {
+          newWidth = column.width;
+        } else {
+          newWidth = this.headerRow.find('th').eq(i).outerWidth();
+        }
+
+        total+= newWidth;
+        console.log(i, column, newWidth);
+        console.log(this.headerRow.find('th'));
+        //column.css('width', newWidth);
+      }
+
+      this.table.css('width', total);
     },
 
     //Explicitly Set the Width of a column.
@@ -280,19 +308,13 @@ $.fn.datagrid = function(options) {
 
         if (col.attr('data-column-id') === id) {
           col.css('width', width);
-          total += width;  //as percentage??
+          total += width;  //TODO as percentage??
         } else {
           total += col.outerWidth();
         }
 
       });
 
-      /*for (var i = 0; i < settings.columns.length; i++) {
-        if (settings.columns[i].id === id) {
-          settings.columns[i].width = width;
-          self.headerRow.find('th[data-column-id="'+ id +'"]').css('width', width);
-        }
-      }*/
       self.table.css('width', total);
     },
 
@@ -392,8 +414,8 @@ $.fn.datagrid = function(options) {
     //Trigger event on parent and compose the args
     triggerRowEvent: function (eventName, e, stopPropagation) {
       var self = this,
-          row = $(e.currentTarget).index(),
           cell = $(e.target).closest('td').index(),
+          row = $(e.target).closest('tr').index(),
           item = self.settings.dataset[row];
 
       if (stopPropagation) {
@@ -432,7 +454,7 @@ $.fn.datagrid = function(options) {
           btn = $(this).find('button'),
           cell = elem.index(),
           row = $(this).closest('tr').index(),
-          col = self.settings.columns[cell],
+          col = self.columnSettings(cell),
           item = self.settings.dataset[row];
 
         if (col.click) {
@@ -461,7 +483,6 @@ $.fn.datagrid = function(options) {
         self.triggerRowEvent('click', e, true);
         self.setActiveCell(target.closest('td'));
         self.selectedRows(target.closest('tr'));
-
         //self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
       });
 
@@ -511,10 +532,8 @@ $.fn.datagrid = function(options) {
         self.resizeHandle.css('left', leftPos + 'px');
       });
 
-      // Implement Editing Functionality
-      body.on('focusin.datagrid', 'td input', function (e) {
-        console.log('in', e);
-      }).on('focusout.datagrid', 'td input', function () {
+      // Implement Editing Commit Functionality
+      body.on('focusout.datagrid', 'td input', function () {
         self.commitCellEdit($(this));
       });
 
@@ -692,7 +711,6 @@ $.fn.datagrid = function(options) {
     },
 
     commitCellEdit: function(input) {
-
       //Editor.getValue
       var newValue = this._editor.val();
 

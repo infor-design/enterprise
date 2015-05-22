@@ -24,6 +24,18 @@
         };
     };
 
+    var chart = function () {
+        return {
+          replace: true,
+          scope: {
+            dataset: '='
+          },
+          link: function(scope, elem, attrs) {
+            elem.chart({type: attrs.chartType, dataset: scope.dataset});
+          }
+        };
+    };
+
     var other = function () {
         return {
           replace: true,
@@ -33,6 +45,7 @@
 
     angular.module('sohoxi-angular')
         .directive('dropdown', dropdown)
+        .directive('chart', chart)
         .directive('other', other);
 
 }());

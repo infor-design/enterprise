@@ -41,12 +41,26 @@
           header = $('.header').first(),
           sidebar = $('.sidebar-nav');
 
-        this.sectionList = $('.section-list');
+        this.sectionList = $('.section-tracker');
         this.sections = $('.editorial > .main > .content').find('h2, h3');
 
         //Handle Scrolling events
-        var scrollDiv = $(this.element).closest('.scrollable-container'),
+        var scrollDiv = $(this.element).closest('.scrollable'),
           container = (scrollDiv.length ===1 ? scrollDiv : $(window));
+
+        if (self.sectionList) {
+          var efficientScroll = $.fn.debounce(function() {
+
+            self.sectionList.find('.is-active').removeClass('is-active');
+            self.sections.each(function () {
+              if (self.isOnScreen(this)) {
+                $('a[href="#' + this.id + '"]').addClass('is-active');
+              }
+            });
+
+          }, 250);
+          container.on('scroll.sidebarMenu', efficientScroll);
+        }
 
         container.on('scroll.sidebar', function () {
           if (!sidebar.is(':visible')) {
@@ -64,23 +78,43 @@
         });
 
         if (this.sectionList) {
+
           //append the links for the heading elements
           this.sections.each(function (i) {
             var item = $(this),
               id = 'heading'+i,
-              link = $(' <div><a href="#' + id + '" class="hyperlink">' + item.text() + '</a></div>');
+              link = $('<div><a href="#' + id + '" class="hyperlink">' + item.text() + '</a></div>');
 
             item.attr('id', id);
             self.sectionList.append(link);
           });
 
+          this.sectionList.find('a').on('touchcancel.sidebar touchend.sidebar', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).trigger('click');
+          }).on('click.sidebar', function () {
+            var a = $(this);
+
+            a.parent().parent().find('.is-active').removeClass('is-active');
+            a.addClass('is-active');
+          });
+
         }
+      },
+
+      isOnScreen: function (element) {
+        var bounds = element.getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > 0;
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
-        $(window).add('.editorial').off('scroll.sidebar');
+        var scrollDiv = $(this.element).closest('.scrollable'),
+          container = (scrollDiv.length ===1 ? scrollDiv : $(window));
+
+        container.off('scroll.sidebar').off('scroll.sidebarMenu');
         this.tracker.offf('touchcancel.sidebar touchend.sidebar click.sidebar');
       }
     };

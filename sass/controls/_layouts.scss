@@ -249,6 +249,7 @@ body.no-scroll {
 //==============================================================
 .editorial {
   background-color: $inverse-color;
+  transform: none !important;
 
   .main {
     background-color: $inverse-color;
@@ -265,11 +266,17 @@ body.no-scroll {
       max-width: calc(100% - 370px);
       min-width: 300px;
       padding: 0 30px;
+
+      h3,
+      h2 {
+        padding: 10px 0;
+      }
     }
 
     p {
       margin-bottom: 20px;
     }
+
   }
 
   // Sticky Way Points Sidebar Nav
@@ -318,11 +325,32 @@ body.no-scroll {
     }
   }
 
-
   .hero {
     background-color: $body-bg-color;
     border-bottom: 1px solid $graphite02;
     height: 500px;
+  }
+
+  .section-tracker {
+    margin-bottom: 20px;
+
+    a {
+      border-bottom: medium none;
+      border-left: 3px solid transparent;
+      color: #999999;
+      height: 20px;
+      line-height: 30px;
+      padding: 5px 10px;
+
+      &:hover,
+      &:active,
+      &:focus,
+      &.is-active {
+        border-bottom: 0;
+        border-left: 3px solid $primary-color;
+        color: $primary-color;
+      }
+    }
   }
 }
 

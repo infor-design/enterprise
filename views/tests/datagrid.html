@@ -45,10 +45,11 @@
       var cellTemplate = '<p class="datagrid-row-heading">{{productId}}</p>' +
                         '<p class="datagrid-row-subheading">{{productName}}</p>';
 
-      columns.push({ id: '', name: 'Drill In', field: '', width: 125, formatter: Formatters.Drilldown, cssClass: 'l-center-text', click: function (e, args) {console.log('clicked', args);}});
+      columns.push({ id: 'drillDown', name: 'Drill In', field: '', width: 125, formatter: Formatters.Drilldown, cssClass: 'l-center-text', click: function (e, args) {console.log('clicked', args);}});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 125, formatter: Formatters.Template, template: cellTemplate});
       columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly });
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, click: function (e, args) {console.log('clicked', args);}});
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
+
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
       columns.push({ id: 'price1', name: 'Price', field: 'price', width: 10, formatter: Formatters.Decimal});

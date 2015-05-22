@@ -46,27 +46,29 @@ $datagrid-header-height: 40px;
 
     .datagrid-header-text {
       color: #ffffff;
+      display: table-cell;
       @include font-size(12);
       font-weight: bold;
-      line-height: 39px;
-      position: relative;
-      top: 0;
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
     }
   }
 
   //Column Resize
   .datagrid-column-wrapper {
+    display: table;
     height: 40px;
-    padding: 0 20px;
-    position: relative;
+    margin-left: 20px;
 
     &.l-right-text .datagrid-header-text {
       float: right;
+      line-height: 40px;
     }
 
     .sort-indicator {
       float: right;
-      margin: -4px 6px 0 0;
+      margin: -3px 6px 0 0;
     }
   }
 
@@ -99,7 +101,7 @@ $datagrid-header-height: 40px;
 
     .hyperlink {
       color: $primary-color;
-      display: block;
+      display: inline-block;
       height: 35px;
       line-height: inherit;
       overflow: hidden;
@@ -243,6 +245,7 @@ $datagrid-header-height: 40px;
   span {
     display: block;
     height: 10px;
+    margin-left: -2px;
   }
 }
 
