@@ -151,6 +151,7 @@
 
     // Take a date string written in the current locale and parse it into a Date Object
     parseDate: function(dateString, dateFormat) {
+      var thisLocaleCalendar = this.calendar();
 
       if (!dateString) {
         return undefined;
@@ -159,9 +160,19 @@
         dateFormat = this.calendar().dateFormat.short;
       }
 
-      var formatParts = dateFormat.split('/'),
-        dateStringParts = dateString.split('/'),
-        dateObj = {};
+      var formatParts, 
+        dateStringParts, 
+        dateObj = {},
+        isDateTime = (dateFormat !== this.calendar().dateFormat.short);
+
+      if(isDateTime) {
+        //replace [space & colon] with "/"
+        dateFormat = dateFormat.replace(/[\s:]/g,'/');
+        dateString = dateString.replace(/[\s:]/g,'/');
+      }
+
+      formatParts = dateFormat.split('/');
+      dateStringParts = dateString.split('/');
 
       if (formatParts.length === 1) {
         formatParts = dateFormat.split('.');
@@ -171,9 +182,7 @@
         dateStringParts = dateString.split('.');
       }
 
-      if (formatParts.length !== dateStringParts.length) {
-        return undefined;
-      }
+      // console.log(formatParts + ', ' + dateStringParts);
 
       // Check the incoming date string's parts to make sure the values are valid against the localized
       // Date pattern.
@@ -220,13 +229,66 @@
             }
             dateObj.year = value;
             break;
+          case 'h':
+            if(!/^(0?[1-9]|1[0-9]|2[01234])$/.test(value)) {
+              return;
+            }
+            dateObj.h = value;
+            break;
+          case 'mm':
+            if(!/^([0-5]\d)$/.test(value)) {
+              return;
+            }
+            dateObj.mm = value;
+            break;
+          case 'a':
+            if(($.inArray(value.toLowerCase(), thisLocaleCalendar.dayPeriods) === -1) &&
+              ($.inArray(value.toUpperCase(), thisLocaleCalendar.dayPeriods) === -1)) {
+              return;
+            }
+            if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[0]) ||
+             (value.toUpperCase() === thisLocaleCalendar.dayPeriods[0])) {
+              dateObj.a = 'AM';
+            }
+            if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[1]) ||
+             (value.toUpperCase() === thisLocaleCalendar.dayPeriods[1])) {
+              dateObj.a = 'PM';
+            }
+            break;
         }
       });
+      dateObj.return = new Date('error');
+      dateObj.leapYear = ((dateObj.year % 4 === 0) && (dateObj.year % 100 !== 0)) || (dateObj.year % 400 === 0);
 
-      if (!dateObj.year || (!dateObj.month && dateObj.month !==0) || !dateObj.day) {
+      if((isDateTime && !dateObj.h && !dateObj.mm)) {
         return undefined;
       }
-      return new Date(dateObj.year, dateObj.month, dateObj.day);
+      if((!dateObj.year ||(!dateObj.month && dateObj.month !==0) || !dateObj.day)) {
+        return undefined;
+      }
+      if((dateObj.leapYear && (dateObj.month === 1 && dateObj.day > 29)) ||
+        (!dateObj.leapYear && (dateObj.month === 1 && dateObj.day > 28))) {
+        return undefined;
+      }
+
+      if(isDateTime) {
+        if(dateObj.a) {
+          dateObj.return = new Date(dateObj.year +'/'+ (dateObj.month + 1) +'/'+ dateObj.day +' '+ dateObj.h +':'+ dateObj.mm +' '+ dateObj.a);
+        } else {
+          dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
+        }
+      } else {        
+        dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
+      }
+
+      if(Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date        
+        if(isNaN( dateObj.return.getTime())) { //date is not valid
+          dateObj.return = undefined;
+        }
+      } else { //not a date
+        dateObj.return = undefined;
+      }
+      return dateObj.return;
 
     },
 

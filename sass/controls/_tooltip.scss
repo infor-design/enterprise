@@ -1,6 +1,14 @@
 // Tooltips
 //================================================== /
-
+@mixin word-wrap() {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  /*word-break: break-word;*/
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
 .popover,
 .tooltip {
   background-clip: padding-box;
@@ -24,6 +32,12 @@
 }
 
 .tooltip {
+
+  @include word-wrap();
+
+  .linksClickable {
+    pointer-events: auto;
+  }
 
   &.is-clickable {
     pointer-events: initial;

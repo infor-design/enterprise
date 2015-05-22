@@ -69,6 +69,7 @@
       'AboutText': {id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners'},
       'Blockquote': {id: 'Blockquote', value: 'Block quote', comment: 'insert a block quote in the editor'},
       'Calendar': {id: 'Calendar', value: 'Calendar', comment: 'Inline Text for the title of the Calendar control'},
+      'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock On', comment: 'Caps Lock On message'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. To change the selection use the arrow keys.', comment: 'Audible Text for drop down list help'},
       'Clear': {id: 'Clear', value: 'Clear', comment: 'Hint for a Clear Action'},
       'Close': {id: 'Close', value: 'Close', comment: 'Hint for a Close Button Action'},
