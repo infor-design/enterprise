@@ -145,6 +145,17 @@
     });
   };
 
+  // Returns a key/value list of currently attached event listeners
+  $.fn.listEvents = function() {
+    var data = {};
+
+    this.each(function() {
+      data = $._data(this, 'events');
+    });
+
+    return data;
+  };
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
