@@ -29,9 +29,14 @@
   }
 
   .modal-body {
+    border: 1px solid transparent;
     max-height: 300px;
     outline: medium none;
     overflow-y: scroll;
+
+    &:focus, &.focusbody {
+      border: 1px solid $primary-color;
+    }
   }
 
   .additional-content {

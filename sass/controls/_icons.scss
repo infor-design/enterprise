@@ -139,3 +139,63 @@ svg.icon-tree {
   }
 
 }
+
+// Caps Lock
+$caps-color-arrow: #fff;
+$caps-color-background: #bdbdbd;
+
+.icon-capslock::before, .icon-capslock::after, .icon-capslock .inner::before, .icon-capslock .inner::after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 0;
+}
+.icon-capslock {
+  position: absolute;
+  overflow: hidden;
+  display: inline;
+  padding: 0;
+  right: 6px;
+  top: 25px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+.icon-capslock::before {
+  background: $caps-color-arrow none repeat scroll 0 0;
+  height: 8px;
+  left: 8px;
+  margin-top: -2px;
+  width: 9px;
+  z-index: 10;
+}
+.icon-capslock::after {
+  background: $caps-color-arrow none repeat scroll 0 0;
+  display: block;
+  height: 2px;
+  top: 19px;
+  left: 8px;
+  position: absolute;
+  width: 9px;
+}
+.icon-capslock .inner::before, .icon-capslock .inner::after {
+  background: $caps-color-background none repeat scroll 0 0;
+  margin: -12px 0 0;
+}
+.icon-capslock .inner {
+  font-size: 1px;
+}
+.icon-capslock .inner::before {
+  border-radius: 2px;
+  height: 24px;
+  width: 24px;
+}
+.icon-capslock .inner::after {
+  background: rgba($caps-color-background, 0) none repeat scroll 0 0;
+  border-color: $caps-color-arrow rgba($caps-color-background, 0);
+  border-width: 0 9px 10px;
+  border-style: solid;
+  margin-top: -10px;
+  left: 3px;
+}
+

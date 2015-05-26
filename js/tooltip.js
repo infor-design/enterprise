@@ -63,6 +63,7 @@
       addAria: function() {
         var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
         this.content =  this.element.attr('title') || settings.content;
+        this.content = this.addClassToLinks(this.content, 'linksClickable');
 
         if (!this.isPopover) {
           this.element.removeAttr('title').attr('aria-describedby', name);
@@ -73,7 +74,13 @@
         }
       },
 
-      appendTooltip: function() {
+      addClassToLinks: function(content, thisClass) {
+        var d = $('<div/>').html(content);
+        $('a', d).addClass(thisClass);
+        return d.html();
+      },
+
+      appendTooltip: function() {      
         this.tooltip = settings.tooltipElement ? $(settings.tooltipElement) : $('#tooltip');
         if (this.tooltip.length === 0) {
           var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
