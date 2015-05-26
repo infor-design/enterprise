@@ -13,9 +13,10 @@ select.dropdown {
   position: relative;
 
   .icon + .icon-error { // display errors
-    position: absolute;
     left: auto;
-    right: 22px;
+    position: absolute;
+    right: 32px;
+    top: 7px;
   }
 }
 
@@ -288,6 +289,10 @@ input.dropdown {
 
 .dropdown.error {
   border-color: $error-color;
+
+  &::-webkit-input-placeholder {
+    color: $error-color;
+  }
 }
 
 .dropdown.error:focus {
