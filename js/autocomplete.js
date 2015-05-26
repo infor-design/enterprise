@@ -62,6 +62,7 @@
 
       addMarkup: function () {
         this.element.addClass('autocomplete').attr('role', 'combobox')
+          .attr('autocomplete', 'off')
           .attr('aria-owns', 'autocomplete-list')
           .attr('aria-autocomplete', 'list')
           .attr('aria-activedescendant', '');
