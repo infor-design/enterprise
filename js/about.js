@@ -120,6 +120,8 @@
 
         this.element.attr('data-modal','about-modal');
 
+        $('.modal-body', this.modal)[0].tabIndex = 0;
+
         this.modal.appendTo('body');
         this.modal.modal();
         return this;

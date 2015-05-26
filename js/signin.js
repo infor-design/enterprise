@@ -42,42 +42,61 @@
       },
 
       handleKeys: function() {
-        var form = this.element.find('form');
+        var form = this.element.find('form'),
+          self = this,
+          cssIcon = $('<span class="icon-capslock"><span class="inner">' + Locale.translate('CapsLockOn') + '</span></span>');
 
-        var isCapslock = function(e) {
-          e = (e) ? e : window.event;
-          var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
-           shifton = (e.shiftKey) ? e.shiftKey : ((e.modifiers) ? (!!(e.modifiers & 4)) : false);
+          this.element.on('keypress.signin', '[type="password"]', function (e) {
+            var field = $(this),
+              fieldParent = field.parent('.field');
+              //TODO: Any way to prevent chrome and ie from showing???
+            if (self.isCapslock(e)) {
+              if(!$('.icon-capslock', fieldParent).length) {
+                fieldParent.append(cssIcon);
+                $('body').toast({audibleOnly: false, message: Locale.translate('CapsLockOn')});               
+              }
+            }
+            else {
+              fieldParent.find('.icon-capslock').remove();
+            }
 
-          if (charCode >= 97 && charCode <= 122 && shifton) {
-            return true;
-          }
-          if (charCode >= 65 && charCode <= 90 && !shifton) {
-            return true;
-          }
-          return false;
-        };
+            if (field.hasClass('error')) {
+              fieldParent.find('.icon-capslock').remove();
+            }
+          })
+          .on('blur.signin', '[type="password"]', function () {
+             $('.icon-capslock', $(this).parent('.field')).remove();
+          });
 
-        var passwordFields = this.element.find('[type="password"]');
-        passwordFields.on('keypress.signin', function (e) {
-          console.log(isCapslock(e));
-        });
+          form.on('submit.signin', function () {
+            var confirmPassword = $('#confirm-password');
+            if (confirmPassword.length && ((!(confirmPassword.val()).length) || (confirmPassword.hasClass('error')))) {
+              return false;
+            }
+            $('#username').val($('#username-display').val());
+            $('#password').val($('#password-display').val());
+            $('#new-password').val($('#new-password-display').val());
+          });
+      },
 
-        form.on('submit.signin', function () {
-          var confirmPassword = $('#confirm-password');
-          if (confirmPassword.length && ((!(confirmPassword.val()).length) || (confirmPassword.hasClass('error')))) {
-            return false;
-          }
-          $('#username').val($('#username-dsp').val());
-          $('#password').val($('#password-dsp').val());
-          $('#new-password').val($('#new-password-dsp').val());
-        });
+      isCapslock: function(e) {
+        e = (e) ? e : window.event;
+        var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
+         shifton = (e.shiftKey) ? e.shiftKey : ((e.modifiers) ? (!!(e.modifiers & 4)) : false);
 
+        if (charCode >= 97 && charCode <= 122 && shifton) {
+          return true;
+        }
+        if (charCode >= 65 && charCode <= 90 && !shifton) {
+          return true;
+        }
+        return false;
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
+        $('body').off('keypress.signin');
       }
     };
 

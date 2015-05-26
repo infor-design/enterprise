@@ -225,9 +225,15 @@
             self.addError(field, rule.message, rule.inline, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
+            if(rule.positive){
+              self.removePositive(field);
+            }
           } else if (errors.length === 0) {
             self.removeError(field);
             dfd.resolve();
+            if(rule.positive){
+              self.addPositive(field);
+            }
           }
         };
 
@@ -338,6 +344,12 @@
       }
     },
 
+    addPositive: function(field, thisClass) {
+      thisClass = thisClass || 'icon-validated';
+      var svg = $('<svg class="icon '+ thisClass +'" focusable="false" aria-hidden="true"><use xlink:href="#icon-validated"></use></svg>');
+      field.parent('.field').append(svg);
+    },
+
     removeError: function(field) {
       var loc = this.getField(field);
 
@@ -371,6 +383,11 @@
       if (field.is('.dropdown, .multiselect')) {
         field.data('dropdown').input.removeClass('error').removeAttr('placeholder');
       }
+    },
+
+    removePositive: function(field, thisClass) {
+      thisClass = thisClass || 'icon-validated';
+      $('.'+ thisClass, field.parent('.field')).remove();
     }
   };
 
@@ -421,6 +438,7 @@
 
   //The validation rules object
   var Validation = function () {
+    var self = this;
     this.rules = {
       required: {
         check: function (value) {
@@ -438,39 +456,40 @@
         inline: true,
         message: 'Required'
       },
+
+      //date: Validate date, datetime (24hr or 12hr am/pm)
       date: {
         check: function(value) {
           this.message = Locale.translate('InvalidDate');
-          value = value.replace(/ /g, '');
-          var dateFormat = Locale.calendar().dateFormat.short,
-          parsedDate = Locale.parseDate(value);
-
-          if (parsedDate === undefined && dateFormat) {
+          var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime : Locale.calendar().dateFormat.short,
             parsedDate = Locale.parseDate(value, dateFormat);
-          }
-
-          if (parsedDate === undefined && value !== '') {
-            return false;
-          }
-
-          return true;
+          // console.log(dateFormat + ', ' + parsedDate);          
+          return ((parsedDate === undefined) && value !== '') ? false : true;
         },
         message: 'Invalid Date'
       },
       email: {
-        check: function (value,field) {
+        check: function (value, field) {
           this.message = Locale.translate('EmailValidation');
           var $btnSubmit = $('form button[type="submit"]', field.closest('.signin')),
             re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
             ck = (value.length) ? re.test(value) : false;
 
-          if (ck) {
+          if(ck) {
             $btnSubmit.removeAttr('disabled');
           } else {
             $btnSubmit.attr('disabled','true');
           }
           return (value.length) ? ck : true;
         },
+        message: 'EmailValidation'
+      },
+      emailPositive: {
+        check: function (value, field) {
+          this.message = Locale.translate('EmailValidation');
+          return (value.length) ? self.rules.email.check(value, field) : true;
+        },
+        positive: true,
         message: 'EmailValidation'
       },
       passwordReq: {
@@ -564,6 +583,7 @@
     formFields.removeClass('error');
     $(this).find('.error').removeClass('error');
     $(this).find('.icon-error').remove();
+    $(this).find('.icon-validated').remove();
 
     setTimeout(function () {
       $('#validation-errors').addClass('is-hidden');
