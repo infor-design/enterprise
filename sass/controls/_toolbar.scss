@@ -3,7 +3,7 @@
 
 // See also Colors.scss
 .toolbar,
-.editor-toolbar {
+.formatter-toolbar {
   height: $toolbar-height;
   margin-bottom: 5px;
   overflow: hidden;
@@ -36,16 +36,11 @@
     > * {
       vertical-align: middle;
     }
-
-    + .buttonset {
-      text-align: right;
-    }
   }
 
   .buttonset {
     height: $toolbar-height - 10;
-    max-width: 50%;
-    margin: 0 5px 0 calc(50% - 5px);
+    margin: 0 5px 0 1px;
     padding: 0;
 
     > * {
@@ -111,6 +106,22 @@
   .overflow-break {
     height: 100%;
   }
+}
+
+// Styles for regular toolbar only
+.toolbar {
+  .title {
+    + .buttonset {
+      margin: 0 5px 0 calc(50% - 5px);
+      max-width: 50%;
+      text-align: right;
+    }
+  }
+}
+
+// Used in Editor, some card menus, etc.
+.formatter-toolbar {
+
 }
 
 .popupmenu.toolbar-options {
