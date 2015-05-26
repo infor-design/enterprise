@@ -141,61 +141,73 @@ svg.icon-tree {
 }
 
 // Caps Lock
-$caps-color-arrow: #fff;
+$caps-color-arrow: #ffffff;
 $caps-color-background: #bdbdbd;
 
-.icon-capslock::before, .icon-capslock::after, .icon-capslock .inner::before, .icon-capslock .inner::after {
-  position: absolute;
-  content: "";
-  top: 50%;
+.icon-capslock::before,
+.icon-capslock::after,
+.icon-capslock .inner::before,
+.icon-capslock .inner::after {
+  content: '';
   left: 0;
-}
-.icon-capslock {
   position: absolute;
-  overflow: hidden;
-  display: inline;
-  padding: 0;
-  right: 6px;
-  top: 25px;
-  z-index: 1;
-  width: 24px;
-  height: 24px;
+  top: 50%;
 }
+
+.icon-capslock {
+  display: inline;
+  height: 24px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  right: 6px;
+  top: 22px;
+  width: 24px;
+  z-index: 1;
+
+  .inner {
+    font-size: 1px;
+
+    &::before {
+      border-radius: 2px;
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  .inner::after {
+    background: rgba($caps-color-background, 0) none repeat scroll 0 0;
+    border-color: $caps-color-arrow rgba($caps-color-background, 0);
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 0 9px 10px;
+    height: 2px;
+    left: 3px;
+    margin-top: -10px;
+  }
+}
+
 .icon-capslock::before {
   background: $caps-color-arrow none repeat scroll 0 0;
   height: 8px;
   left: 8px;
-  margin-top: -2px;
+  margin-top: -3px;
   width: 9px;
   z-index: 10;
 }
+
 .icon-capslock::after {
   background: $caps-color-arrow none repeat scroll 0 0;
   display: block;
   height: 2px;
-  top: 19px;
   left: 8px;
   position: absolute;
+  top: 19px;
   width: 9px;
 }
-.icon-capslock .inner::before, .icon-capslock .inner::after {
+
+.icon-capslock .inner::before,
+.icon-capslock .inner::after {
   background: $caps-color-background none repeat scroll 0 0;
   margin: -12px 0 0;
 }
-.icon-capslock .inner {
-  font-size: 1px;
-}
-.icon-capslock .inner::before {
-  border-radius: 2px;
-  height: 24px;
-  width: 24px;
-}
-.icon-capslock .inner::after {
-  background: rgba($caps-color-background, 0) none repeat scroll 0 0;
-  border-color: $caps-color-arrow rgba($caps-color-background, 0);
-  border-width: 0 9px 10px;
-  border-style: solid;
-  margin-top: -10px;
-  left: 3px;
-}
-

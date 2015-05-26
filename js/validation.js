@@ -40,19 +40,43 @@
     },
 
     extractEvents: function (events) {
+
       if (events.indexOf('{') > -1) {
         events = JSON.parse(events.replace(/'/g, '"'));
       }
 
-      if(typeof events === 'object') {
+      if (typeof events === 'object') {
         var e = '';
-        for(var k in events) {
-          e += events[k] +' ';
+        for (var k in events) {
+          if (e.indexOf(events[k]) === -1) {
+            e += events[k] +' ';
+          }
         }
         e = e.split(' ').join('.validate ');
         events = e;
       }
       return events;
+    },
+
+    filterValidations: function (events, type) {
+      var validations = [];
+      if (!events) {
+        return [];
+      }
+
+      if (events.indexOf('{') > -1) {
+        events = JSON.parse(events.replace(/'/g, '"'));
+      }
+
+      if(typeof events === 'object') {
+        for (var k in events) {
+          if (type && events[k].indexOf(type) > -1) {
+            validations.push(k);
+          }
+        }
+      }
+
+      return validations;
     },
 
     attachEvents: function () {
@@ -188,10 +212,8 @@
     },
 
     getTypes: function(field, e) {
-      var events = field.attr('data-validation-events');
-      debugger;
-      events = this.extractEvents(events, e.type);
-      var validations;
+      var filters = this.filterValidations(field.attr('data-validation-events'), e.type),
+        validations;
 
       if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validate')) {
         validations = field.prev().prev('select').attr('data-validate').split(' ');
@@ -202,12 +224,17 @@
       if (field.attr('data-validation')) {
         validations = field.attr('data-validation').split(' ');
       }
-      if (!field.attr('data-validate')) {
+      if (field.attr('data-validate')) {
         validations = field.attr('data-validate').split(' ');
       }
 
       //Filter out not needed events
-      debugger;
+      if (filters.length > 0) {
+        validations = validations.filter(function(n) {
+          return filters.indexOf(n) !== -1;
+        });
+      }
+
       return validations;
     },
 
@@ -463,11 +490,12 @@
           this.message = Locale.translate('InvalidDate');
           var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime : Locale.calendar().dateFormat.short,
             parsedDate = Locale.parseDate(value, dateFormat);
-          // console.log(dateFormat + ', ' + parsedDate);          
+
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },
         message: 'Invalid Date'
       },
+
       email: {
         check: function (value, field) {
           this.message = Locale.translate('EmailValidation');
@@ -484,6 +512,22 @@
         },
         message: 'EmailValidation'
       },
+
+      enableSubmit: {
+        check: function (value, field) {
+          var ok = self.rules.email.check(value, field) && field.val() !== '',
+            submit = field.closest('form').find('button[type="submit"]');
+
+          if (ok) {
+            submit.enable();
+          } else {
+            submit.disable();
+          }
+          return true;
+        },
+        message: ''
+      },
+
       emailPositive: {
         check: function (value, field) {
           this.message = Locale.translate('EmailValidation');

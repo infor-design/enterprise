@@ -53,7 +53,7 @@
             if (self.isCapslock(e)) {
               if(!$('.icon-capslock', fieldParent).length) {
                 fieldParent.append(cssIcon);
-                $('body').toast({audibleOnly: false, message: Locale.translate('CapsLockOn')});               
+                $('body').toast({audibleOnly: true, message: Locale.translate('CapsLockOn')});
               }
             }
             else {
@@ -65,7 +65,7 @@
             }
           })
           .on('blur.signin', '[type="password"]', function () {
-             $('.icon-capslock', $(this).parent('.field')).remove();
+             //$('.icon-capslock', $(this).parent('.field')).remove();
           });
 
           form.on('submit.signin', function () {
