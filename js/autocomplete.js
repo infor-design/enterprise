@@ -213,7 +213,9 @@
 
             buffer = field.val();
             if (buffer === '') {
-              self.element.data('popupmenu').close();
+              if (self.element.data('popupmenu')) {
+                self.element.data('popupmenu').close();
+              }
               return;
             }
             buffer = buffer.toLowerCase();

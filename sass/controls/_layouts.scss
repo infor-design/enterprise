@@ -74,15 +74,22 @@ body.no-scroll {
     height: auto;
     width: calc(25% - 1px);
 
-    & + .main {
+    + .main {
       border-left: 1px solid $graphite02;
       border-right: 0;
     }
   }
 
-  header {
-    margin: 25px;
+  &.fixed {
+    .sidebar {
+      width: 250px;
+    }
+
+    .main {
+      width: calc(100% - 254px);
+    }
   }
+
 }
 
 .three-column {
@@ -127,10 +134,45 @@ body.no-scroll {
     width: 20%;
   }
 
+  // Adding "fixed" class and a "left" and/or "right" class will make fixed-width columns
+  // TODO: Determine actual widths
+  &.fixed {
+    &.left.right,
+    &.both {
+      .main {
+        width: calc(100% - 504px);
+      }
+      .sidebar {
+        width: 250px;
+      }
+    }
+
+    &.left {
+      .main {
+        width: calc(80% - 254px);
+      }
+
+      .sidebar:first-child {
+        width: 250px;
+      }
+    }
+
+    &.right {
+      .main {
+        width: calc(80% - 254px);
+
+        + .sidebar {
+          width: 250px;
+        }
+      }
+    }
+  }
+
 }
 
 @include respond-to(phone) {
-  .two-column {
+  .two-column,
+  .two-column.fixed {
     .main,
     .sidebar {
       display: block;
@@ -156,8 +198,9 @@ body.no-scroll {
 
 }
 
-@include respond-to(tabletdown) {
-  .three-column {
+@media (max-width: $breakpoint-phone-to-tablet - 1) {
+  .three-column,
+  .three-column.fixed {
     .main,
     .sidebar {
       display: block;

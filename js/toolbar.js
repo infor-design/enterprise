@@ -58,7 +58,7 @@
 
         // keep track of how many popupmenus there are with an ID.
         // Used for managing events that are bound to $(document)
-        this.id = (parseInt($('.toolbar, .editor-toolbar').length, 10)+1);
+        this.id = (parseInt($('.toolbar, .formatter-toolbar').length, 10)+1);
 
         // Container for main group of buttons and input fields.  Only these spill into the More menu.
         this.buttonset = this.element.children('.buttonset');
