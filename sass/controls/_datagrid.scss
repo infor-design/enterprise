@@ -149,8 +149,25 @@ $datagrid-header-height: 40px;
     }
 
     &.short-rowheight td {
-      height: 22px;
-      line-height: 22px;
+      height: 26px;
+      line-height: 26px;
+
+      span {
+        line-height: 26px;
+      }
+
+      .badge {
+        top: 0;
+
+        &:before {
+          margin-top: 0;
+        }
+      }
+
+      .tag {
+        height: 23px;
+        margin-top: 0;
+      }
     }
 
     .datagrid-cell-wrapper {
@@ -185,6 +202,15 @@ $datagrid-header-height: 40px;
       border: 1px solid $primary-color;
     }
 
+    //Keyword Search Results
+    .search-mode {
+      i {
+        font-style: normal;
+        font-weight: bold;
+      }
+    }
+
+    //Inline Editting
     &.is-editing {
 
       .datagrid-cell-wrapper {

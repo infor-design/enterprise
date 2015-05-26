@@ -240,6 +240,8 @@
               // Sanitize accordingly.
               var sourceData = isArray(settings.source) ? settings.source : [settings.source];
               done(buffer, sourceData);
+            } else if (!settings.source) {
+              return;
             } else {
               // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
               var sourceURL = settings.source.toString(),

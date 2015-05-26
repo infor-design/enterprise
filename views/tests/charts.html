@@ -7,16 +7,19 @@
 </div>
 
 <div class="row">
-  <div class="two-thirds column">
-      <div class="widget">
-        <div class="widget-header">
-          <h2 class="widget-title">Chart Title</h2>
-        </div>
-        <div class="widget-container">
-          <div id="pie-chart-example" class="chart-container">
-          </div>
+  <div class="one-third column">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">Chart Title</h2>
+      </div>
+
+      <div class="widget-content">
+
+      <div id="pie-chart-example" class="chart-container">
         </div>
       </div>
+    </div>
+    <button class="btn" id="change">Change to Donut</button>
   </div>
 </div>
 
@@ -46,7 +49,7 @@
   $('#pie-chart-example').chart({type: 'pie', dataset: pieData});
 </script>
 
-<button class="btn" id="change">Change to Donut</button>
+
 <script>
   $('#change').click(function () {
     var pieData = [{
@@ -60,7 +63,7 @@
     centerLabel: 'Donut Chart'
   }];
 
-    $('#pie-chart-example').chart({type: 'donut', dataset: pieData})
+    $('#pie-chart-example').chart({type: 'bar', dataset: pieData})
   });
 </script>
 

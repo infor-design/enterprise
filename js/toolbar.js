@@ -51,6 +51,7 @@
       },
 
       build: function() {
+
         var self = this;
         this.element.attr('role', 'toolbar');
         this.buildAriaLabel();

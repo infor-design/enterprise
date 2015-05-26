@@ -11,5 +11,45 @@
     right: 0;
     top: 0;
   }
+}
+
+// This variation Slides out on focus
+.toolbar {
+  .searchfield-wrapper {
+    margin: 4px 12px 6px 0;
+
+    + span {
+      color: $graphite06;
+      font-weight: bold;
+      @include font-size(12);
+      margin-left: -85px;
+      pointer-events: none;
+      text-transform: uppercase;
+    }
+  }
+
+  .searchfield {
+
+    border: 0;
+    color: transparent;
+    cursor: pointer;
+    padding-left: 35px;
+    transition: width .3s ease-out .1s;
+    width: 110px;
+
+    &:focus {
+      background-color: #ffffff;
+      border: 1px solid $graphite03;
+      color: initial;
+      cursor: text;
+      width: 225px;
+    }
+
+    + svg {
+      fill: $graphite06;
+      left: 2px;
+      pointer-events: none;
+    }
+  }
 
 }

@@ -190,7 +190,8 @@ $.fn.datagrid = function(options) {
         rowHeight: 'medium', //(short, medium or tall)
         menuId: null,  //Id to the right click context menu
         selectable: false, //false, 'single' or 'multiple'
-        editable: false
+        editable: false,
+        toolbar: false // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
       },
       settings = $.extend({}, defaults, options);
 
@@ -206,6 +207,7 @@ $.fn.datagrid = function(options) {
     init: function(){
      this.settings = settings;
      this.initSettings();
+     this.appendToolbar();
      this.render();
      this.createResizeHandle();
      this.handleEvents();
@@ -270,52 +272,6 @@ $.fn.datagrid = function(options) {
       self.table.append(self.headerRow);
 
       this.setInitialColumnWidths();
-    },
-
-    setInitialColumnWidths: function () {
-      var total = 0;
-
-      for (var i = 0; i < settings.columns.length; i++) {
-        var column = settings.columns[i],
-          newWidth = 0;
-
-        if (column.hidden) {
-          continue;
-        }
-
-        if (column.width) {
-          newWidth = column.width;
-        } else {
-          newWidth = this.headerRow.find('th').eq(i).outerWidth();
-        }
-
-        total+= newWidth;
-        console.log(i, column, newWidth);
-        console.log(this.headerRow.find('th'));
-        //column.css('width', newWidth);
-      }
-
-      this.table.css('width', total);
-    },
-
-    //Explicitly Set the Width of a column.
-    setColumnWidth: function(id, width) {
-      var self = this,
-        total = 0;
-
-      self.headerRow.find('th').each(function () {
-        var col = $(this);
-
-        if (col.attr('data-column-id') === id) {
-          col.css('width', width);
-          total += width;  //TODO as percentage??
-        } else {
-          total += col.outerWidth();
-        }
-
-      });
-
-      self.table.css('width', total);
     },
 
     //Return Value from the Object handling dotted notation
@@ -406,9 +362,75 @@ $.fn.datagrid = function(options) {
       self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
     },
 
+    setInitialColumnWidths: function () {
+      var total = 0;
+
+      for (var i = 0; i < settings.columns.length; i++) {
+        var column = settings.columns[i],
+          newWidth = 0;
+
+        if (column.hidden) {
+          continue;
+        }
+
+        if (column.width) {
+          newWidth = column.width;
+        } else {
+          newWidth = this.headerRow.find('th').eq(i).outerWidth();
+        }
+
+        total+= newWidth;
+        //column.css('width', newWidth);
+      }
+
+      this.table.css('width', total);
+    },
+
+    //Explicitly Set the Width of a column.
+    setColumnWidth: function(id, width) {
+      var self = this,
+        total = 0;
+
+      self.headerRow.find('th').each(function () {
+        var col = $(this);
+
+        if (col.attr('data-column-id') === id) {
+          col.css('width', width);
+          total += width;  //TODO as percentage??
+        } else {
+          total += col.outerWidth();
+        }
+
+      });
+
+      self.table.css('width', total);
+    },
+
+    //Generate Resize Handles
+    createResizeHandle: function() {
+      var self = this;
+
+      this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
+      this.table.before(this.resizeHandle);
+
+      this.resizeHandle.drag({axis: 'x', containment: 'parent'}).on('drag.datagrid', function (e, ui) {
+        var id = self.currentHeader.attr('data-column-id');
+
+        if (!self.currentHeader) {
+          return;
+        }
+
+        self.dragging = true;
+        self.setColumnWidth(id, ui.left - self.currentHeader.offset().left + 6);
+      }).on('dragend.datagrid', function () {
+        self.dragging = false;
+      });
+    },
+
     //Show Summary and any other count info
     displayCounts: function() {
-      this.element.prev('.toolbar').find('.datagrid-result-count').text('(' + this.settings.dataset.length + ' ' + Locale.translate('Results') + ')');
+      var count = this.tableBody.find('tr:visible').length;  ///this.settings.dataset.length
+      this.element.prev('.toolbar').find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
     },
 
     //Trigger event on parent and compose the args
@@ -539,14 +561,164 @@ $.fn.datagrid = function(options) {
 
     },
 
+    appendToolbar: function () {
+      if (!settings.toolbar) {
+        return;
+      }
+
+      var toolbar = $('<div class="toolbar" role="toolbar"></div>'),
+        title = '', more, self = this;
+
+        if (settings.toolbar.title) {
+          title = $('<div class="title">' + settings.toolbar.title + '  </div>');
+        }
+
+        if (settings.toolbar.results) {
+          //Actually value filled in displayResults
+          title.append('<span class="datagrid-result-count"></span>');
+        }
+        toolbar.append(title);
+
+        var buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
+        if (settings.toolbar.dateFilter) {
+          buttonSet.append('<button class="btn-icon has-text" type="button"><svg class="icon"><use xlink:href="#icon-calendar-date"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
+        }
+
+        if (settings.toolbar.keywordFilter) {
+          buttonSet.append('<label class="audible" for="gridfilter">'+ Locale.translate('Keyword') +'</label><input class="searchfield" name="searchfield" id="gridfilter"><span aria-hidden="true">' + Locale.translate('Keyword') + '</span>');
+        }
+
+        if (settings.toolbar.actions) {
+          more = $('<div class="more"></div>').appendTo(buttonSet);
+          more.append('<button class="btn-actions"><svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg><span class="audible">Grid Features</span></button>');
+          toolbar.addClass('has-more-button');
+        }
+
+        var menu = $('<ul class="popupmenu is-padded"></ul>');
+
+        if (settings.toolbar.personalize) {
+          menu.append('<li><a href="#">' + Locale.translate('PersonalizeColumns') + '</a></li>');
+        }
+
+        if (settings.toolbar.advancedFilter) {
+          menu.append('<li><a href="#">' + Locale.translate('AdvancedFilter') + '</a></li>');
+        }
+
+        if (settings.toolbar.views) {
+          menu.append('<li><a href="#">' + Locale.translate('SaveCurrentView') + '</a></li> ' +
+            '<li class="separator"></li> ' +
+            '<li class="heading">' + Locale.translate('SavedViews') + '</li>' +
+            '<li><a href="#">View One</a></li>');
+        }
+
+        if (settings.toolbar.rowHeight) {
+          menu.append('<li class="separator"></li>' +
+            '<li class="heading">' + Locale.translate('RowHeight') + '</li>' +
+            '<li><a href="#row-short">' + Locale.translate('Short') + '</a></li>' +
+            '<li class="is-checked"><a href="#row-medium">' + Locale.translate('Medium') + '</a></li>' +
+            '<li><a href="#row-tall">' + Locale.translate('Tall') + '</a></li>');
+        }
+
+        if (settings.toolbar.actions) {
+          more.append(menu);
+        }
+
+        this.element.before(toolbar);
+        toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {
+          var action = args.attr('href').substr(1);
+          if (action === 'row-short' || action === 'row-medium' || action === 'row-tall') {
+            self.rowHeight(action.substr(4));
+          }
+
+          args.closest('ul').find('.is-checked').removeClass('is-checked');
+          args.parent().addClass('is-checked');
+        });
+
+        toolbar.toolbar();
+        toolbar.find('.searchfield').searchfield().on('keypress.datagrid', function (e) {
+          if (e.keyCode === 13) {
+            self.keywordSearch($(this).val());
+          }
+        });
+    },
+
+    //Get or Set the Row Height
+    rowHeight: function(height) {
+      if (height) {
+        settings.rowHeight = height;
+      }
+
+      //TODO: Save in Grid Personalization
+      this.tableBody.find('tr').removeClass('short-rowheight medium-rowheight tall-rowheight')
+        .addClass(settings.rowHeight + '-rowheight');
+
+      return settings.rowHeight;
+    },
+
+    //Search a Term across all columns
+    keywordSearch: function(term) {
+      this.tableBody.find('tr').show();
+      this.tableBody.find('.search-mode').each(function () {
+        var cell = $(this),
+          text = cell.text();
+        cell.text(text.replace('<i>','').replace('</i>',''));
+      });
+
+      if (!term || term.length === 0) {
+        this.displayCounts();
+        return;
+      }
+
+      term = term.toLowerCase();
+
+      // Move across all visible cells and rows, highlighting
+      this.tableBody.find('tr:visible').each(function () {
+        var found = false,
+          row = $(this);
+
+          row.find('td').each(function () {
+            var cell =  $(this),
+              cellText = cell.text().toLowerCase();
+
+            if (cellText.indexOf(term) > -1) {
+              found = true;
+              cell.find('*').each(function () {
+                if (this.innerHTML === this.textContent) {
+                  var contents = this.textContent,
+                    node = $(this),
+                    exp = new RegExp('(' + term + ')', 'i');
+
+                  node.addClass('search-mode').html(contents.replace(exp, '<i>$1</i>'));
+                }
+              });
+            }
+
+          });
+
+        // Hide non matching rows
+        if (!found) {
+          row.hide();
+        }
+      });
+
+      this.displayCounts();
+    },
+
     //Get or Set Selected Rows
     _selectedRows: [],
 
-    //Get or Set Selected Rows
     selectedRows: function (row) {
 
       if (row && this.settings.selectable === 'single') {
-        var idx = row.index();
+        var idx = null;
+
+        // Handle passing in an array (single select)
+        if (Object.prototype.toString.call(row) === '[object Array]' ) {
+          idx = row[0];
+          row = this.tableBody.find('tr').eq(idx);
+        } else {
+          idx = row.index();
+        }
 
         if (row.hasClass('is-selected')) {
           this._selectedRows = [];
@@ -823,27 +995,6 @@ $.fn.datagrid = function(options) {
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
-    },
-
-    //Generate Resize Handles
-    createResizeHandle: function() {
-      var self = this;
-
-      this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
-      this.table.before(this.resizeHandle);
-
-      this.resizeHandle.drag({axis: 'x', containment: 'parent'}).on('drag.datagrid', function (e, ui) {
-        var id = self.currentHeader.attr('data-column-id');
-
-        if (!self.currentHeader) {
-          return;
-        }
-
-        self.dragging = true;
-        self.setColumnWidth(id, ui.left - self.currentHeader.offset().left + 6);
-      }).on('dragend.datagrid', function () {
-        self.dragging = false;
-      });
     },
 
     //Overridable function to conduct sorting

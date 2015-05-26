@@ -415,7 +415,7 @@
         var tracker = 0, startY, menuToClose, timeout;
 
         self.menu.find('.popupmenu').removeClass('is-open');
-        self.menu.on('mouseenter.popupmenu', '.submenu', function (e) {
+        self.menu.on('mouseenter.popupmenu touchstart.popupmenu', '.submenu', function (e) {
           var menuitem = $(this);
           startY = e.pageX;
 
@@ -482,7 +482,8 @@
           //Did it fit?
           if (wrapper.offset().left < 0) {
             //No. Push the menu's left offset onto the screen.
-            wrapper.css('left', 0);
+
+            wrapper.css('left', li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 5);
             menuWidth = menu.outerWidth();
           }
           // Do one more check to see if the right edge bleeds off the screen.

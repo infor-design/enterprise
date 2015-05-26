@@ -57,10 +57,10 @@ svg.icon-tree {
 .field .icon-error,
 .field .icon-validated {
   display: inline-block !important;
-  position: absolute;
+  left: 300px;
   margin-left: -30px;
   margin-top: -1px;
-  left: 300px;
+  position: absolute;
   top: 23px;
   vertical-align: top;
 }

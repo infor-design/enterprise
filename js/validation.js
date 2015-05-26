@@ -39,6 +39,22 @@
       this.timeout = null;
     },
 
+    extractEvents: function (events) {
+      if (events.indexOf('{') > -1) {
+        events = JSON.parse(events.replace(/'/g, '"'));
+      }
+
+      if(typeof events === 'object') {
+        var e = '';
+        for(var k in events) {
+          e += events[k] +' ';
+        }
+        e = e.split(' ').join('.validate ');
+        events = e;
+      }
+      return events;
+    },
+
     attachEvents: function () {
       var self = this,
         attribs = '[data-validate],[data-validation]',
@@ -71,21 +87,9 @@
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate');
 
-        if (events.indexOf('{') > -1) {
-          events = JSON.parse(events.replace(/'/g, '"'));
-        }
+        events = self.extractEvents(events);
 
-        if(typeof events === 'object') {
-          var e = '';
-          for(var k in events) {
-            e += events[k] +' ';            
-          } 
-          e = e.split(' ').join('.validate ');
-          events = e;
-          // console.log(e);
-        }
-
-        field.on(events, function () {
+        field.on(events, function (e) {
 
           var field = $(this);
           if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
@@ -97,7 +101,7 @@
           }
 
           setTimeout(function () {
-            self.validate(field, field.closest('.modal-engaged').length === 1 ? false : true);
+            self.validate(field, field.closest('.modal-engaged').length === 1 ? false : true, e);
           }, 150);
         });
       });
@@ -183,26 +187,34 @@
       return field.val();
     },
 
-    getTypes: function(field) {
+    getTypes: function(field, e) {
+      var events = field.attr('data-validation-events');
+      debugger;
+      events = this.extractEvents(events, e.type);
+      var validations;
+
       if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validate')) {
-        return field.prev().prev('select').attr('data-validate').split(' ');
+        validations = field.prev().prev('select').attr('data-validate').split(' ');
       }
       if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validation')) {
-        return field.prev().prev('select').attr('data-validation').split(' ');
+        validations = field.prev().prev('select').attr('data-validation').split(' ');
       }
       if (field.attr('data-validation')) {
-        return field.attr('data-validation').split(' ');
+        validations = field.attr('data-validation').split(' ');
       }
       if (!field.attr('data-validate')) {
-        return true;
+        validations = field.attr('data-validate').split(' ');
       }
-      return field.attr('data-validate').split(' ');
+
+      //Filter out not needed events
+      debugger;
+      return validations;
     },
 
-    validate: function (field, showTooltip) {
+    validate: function (field, showTooltip, e) {
       //call the validation function inline on the element
       var self = this,
-        types = self.getTypes(field),
+        types = self.getTypes(field, e),
         rule, dfd,
         dfds = [],
         errors = [],
@@ -464,9 +476,9 @@
       passwordReq: {
         check: function (value) {
           this.message = Locale.translate('PasswordValidation');
-          /* Must be at least 10 characters which contain at least 
+          /* Must be at least 10 characters which contain at least
           ** one lowercase letter,
-          ** one uppercase letter, 
+          ** one uppercase letter,
           ** one numeric digit
           ** and one special character */
           var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/;

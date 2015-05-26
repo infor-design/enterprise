@@ -8,14 +8,14 @@
   color: #ffffff;
   display: inline-block;
   @include font-size(14);
-  font-weight: 300;
+  @include antialiased();
+  font-weight: normal;
   height: 27px;
   line-height: 28px;
   margin: 0 0 8px;
-  padding: 0 12px 0 12px;
+  padding: 0 12px;
   text-decoration: none;
   vertical-align: middle;
-  -webkit-font-smoothing: antialiased;
 
   &.error {
     background-color: $alert-red;
@@ -46,7 +46,8 @@
   color: #ffffff;
   display: inline-block;
   @include font-size(13);
-  font-weight: 400;
+  @include antialiased();
+  font-weight: normla;
   height: 22px;
   line-height: 24px;
   margin: 0 10px 5px 0;

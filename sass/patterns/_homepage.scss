@@ -80,6 +80,7 @@
 .header + nav + .homepage {
   height: calc(100% - 80px);
   overflow: scroll;
+  margin-top: 0 !important;
 }
 
 .card.double-height,

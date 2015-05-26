@@ -65,6 +65,8 @@
             card.addClass('to-single');
           } else if (tablet && (card.hasClass('triple-width'))) {
             card.addClass('to-double').removeClass('to-single');
+          } else if (tablet && (card.hasClass('double-width') && card.prev().offset().top === card.offset().top)) {
+            card.addClass('to-single').removeClass('to-double');
           } else {
             card.removeClass('to-single to-double');
           }
@@ -144,7 +146,7 @@
         self.initBreakpoint(bp, 999999);
         self.element.find('.content').css('margin-left', '-' + (bp/2) + 'px');
 
-        self.fit(self.blocks);
+        self.fit(self.blocks, phone);
 
         for (var n = 0 ; n < self.blocks.length ; n++) {
           var block = self.blocks[n], pos;
@@ -170,21 +172,34 @@
       //with a fixed width and height and will fit each block into the first node where
       //it fits and then split that node into 2 parts (down and right) to track the
       //remaining whitespace.
-      fit: function(blocks) {
-        var n, node, block;
+      fit: function(blocks, phone) {
+        var n, node, block, self = this, watchNext = false;
 
         for (n = 0; n < this.blocks.length; n++) {
           block = blocks[n];
-          node = this.findNode(this.root, block.w, block.h);
+          var elem = $(block.elem);
+
+          node = this.findNode(this.root, block.w, block.h, elem);
+
           if (node) {
             block.fit = this.splitNode(node, block.w, block.h);
+          }
+
+          //Exception Rearranges
+          if (watchNext) {
+            block.fit = {x: 0, y: 386};
+            watchNext = false;
+          }
+          if (!phone && elem.hasClass('double-height double-width') && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
+            block.fit = {x: 376, y: 0};
+            watchNext = true;
           }
         }
       },
 
-      findNode: function(root, w, h) {
+      findNode: function(root, w, h, elem) {
         if (root.used) {
-          return this.findNode(root.right, w, h) || this.findNode(root.down, w, h);
+          return this.findNode(root.right, w, h, elem) || this.findNode(root.down, w, h, elem);
         }
         else if ((w <= root.w) && (h <= root.h)) {
           return root;

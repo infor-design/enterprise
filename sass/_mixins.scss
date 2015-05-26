@@ -173,6 +173,13 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   vertical-align: top;
 }
 
+@mixin antialiased {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+
+  text-rendering: optimizeLegibility !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, .004);
+}
 
 // Truncate to Ellipsis....
 @mixin ellipsis {
