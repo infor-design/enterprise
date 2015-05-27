@@ -42,7 +42,7 @@
     }
 
     ~ label:after {
-      background-color: $body-bg-color;
+      background-color: $switch-unchecked-color;
       border: solid 6px $switch-unchecked-color;
       border-radius: 50%;
       height: 10px;
@@ -82,8 +82,14 @@
   }
 
   input:disabled ~ label:after {
-    background-color: $body-bg-color;
+    background-color: $switch-disabled-color;
     border-color: $switch-disabled-color;
+  }
+
+  input:focus {
+    ~ label:after {
+      background-color: $body-bg-color;
+    }
   }
 
 }
