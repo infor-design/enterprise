@@ -898,6 +898,8 @@ $.fn.chart = function(options) {
       chartInst;
 
     if (instance) {
+      $(window).off('resize.pie');
+      alert();
       $(this).empty();
     }
 

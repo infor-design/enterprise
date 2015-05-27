@@ -13,10 +13,17 @@
   }
 }
 
+@mixin searchfield-text-style() {
+  color: $graphite06;
+  font-weight: bold;
+  @include font-size(12);
+  text-transform: uppercase;
+}
+
 // This variation Slides out on focus
 .toolbar {
   .searchfield-wrapper {
-    margin: 4px 12px 6px 0;
+    margin: 4px -12px 6px;
 
     + span {
       color: $graphite06;
@@ -31,7 +38,7 @@
   .searchfield {
 
     border: 0;
-    color: transparent;
+    @include searchfield-text-style();
     cursor: pointer;
     padding-left: 35px;
     transition: width .3s ease-out .1s;
@@ -43,6 +50,18 @@
       color: initial;
       cursor: text;
       width: 225px;
+
+      &::-webkit-input-placeholder {
+        color: transparent;
+      }
+
+      &::-moz-placeholder {
+        color: transparent;
+      }
+
+      &:-ms-input-placeholder {
+        color: transparent;
+      }
     }
 
     + svg {
@@ -50,6 +69,19 @@
       left: 2px;
       pointer-events: none;
     }
+
+    &::-webkit-input-placeholder {
+      @include searchfield-text-style();
+    }
+
+    &::-moz-placeholder {
+      @include searchfield-text-style();
+    }
+
+    &:-ms-input-placeholder {
+      @include searchfield-text-style();
+    }
+
   }
 
 }

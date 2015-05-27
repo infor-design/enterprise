@@ -62,4 +62,5 @@
 | S3 | | Rajan Shanmugavelu |
 | Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> |
+| Infor BI Business Modeling | Was ExtJS/YUI | Guido Buecker <Guido.Buecker@infor.com> |
 

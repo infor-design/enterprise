@@ -181,6 +181,8 @@
 
         elem.find('.homepage').homepage();
 
+        elem.find('.lookup').lookup();
+
         //Validation
         //Should be one of the last items to invoke
         elem.find('[data-validate]').validate();

@@ -69,6 +69,12 @@ window.Formatters = {
 
   Checkbox: function (row, cell, value, col) {
     //treat 1, true or '1' as checked
+    var isChecked = (value == undefined ? false : value == true); // jshint ignore:line
+    return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
+     (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span></div>';
+  },
+
+  SelectionCheckbox: function (row, cell, value, col) {
     var isChecked = (value==undefined ? false : value == true); // jshint ignore:line
     return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
      (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span></div>';
@@ -276,6 +282,10 @@ $.fn.datagrid = function(options) {
 
     //Return Value from the Object handling dotted notation
     fieldValue: function (obj, field) {
+      if (!field) {
+        return '';
+      }
+
       if (field.indexOf('.') > -1) {
         return field.split('.').reduce(function(o, x) { return (o ? o[x] : ''); }, obj);
       }
@@ -585,7 +595,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (settings.toolbar.keywordFilter) {
-          buttonSet.append('<label class="audible" for="gridfilter">'+ Locale.translate('Keyword') +'</label><input class="searchfield" name="searchfield" id="gridfilter"><span aria-hidden="true">' + Locale.translate('Keyword') + '</span>');
+          buttonSet.append('<label class="audible" for="gridfilter">'+ Locale.translate('Keyword') +'</label><input class="searchfield" name="searchfield" placeholder="' + Locale.translate('Keyword') + '" id="gridfilter">');
         }
 
         if (settings.toolbar.actions) {
@@ -708,9 +718,11 @@ $.fn.datagrid = function(options) {
     _selectedRows: [],
 
     selectedRows: function (row) {
+      var idx = null,
+          isSingle = this.settings.selectable === 'single',
+          isMultiple = this.settings.selectable === 'multiple';
 
-      if (row && this.settings.selectable === 'single') {
-        var idx = null;
+      if (row && (isSingle || isMultiple)) {
 
         // Handle passing in an array (single select)
         if (Object.prototype.toString.call(row) === '[object Array]' ) {
@@ -723,18 +735,22 @@ $.fn.datagrid = function(options) {
         if (row.hasClass('is-selected')) {
           this._selectedRows = [];
           row.removeClass('is-selected').removeAttr('aria-selected');
+          row.find('td').removeAttr('aria-selected');
           this.element.trigger('selected', [this._selectedRows]);
           return;
         }
 
         this._lastSelectedRow = idx;
-        this._selectedRows = [];
+
+        if (isSingle) {
+          this._selectedRows = [];
+
+          var selectedRows = row.closest('tbody').find('tr.is-selected');
+          selectedRows.removeClass('is-selected').removeAttr('aria-selected');
+          selectedRows.find('td').removeAttr('aria-selected');
+        }
+
         this._selectedRows.push({idx: idx, data: settings.dataset[idx], elem: row});
-
-        var selectedRows = row.closest('tbody').find('tr.is-selected');
-        selectedRows.removeClass('is-selected').removeAttr('aria-selected');
-        selectedRows.find('td').removeAttr('aria-selected');
-
         row.addClass('is-selected').attr('aria-selected', 'true');
         row.find('td').attr('aria-selected', 'true');
       }

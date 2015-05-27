@@ -76,6 +76,7 @@ module.exports = function(grunt) {
             'temp/amd/header.js',
             'temp/amd/homepage.js',
             'temp/amd/initialize.js',
+            'temp/amd/lookup.js',
             'temp/amd/listview.js',
             'temp/amd/pager.js',
             'temp/amd/popupmenu.js',
