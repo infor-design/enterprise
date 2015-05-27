@@ -10,6 +10,7 @@
   max-width: 100%;
   right: 0;
   top: 0;
+  z-index: 10000;
 
   .modal-content {
     background-color: transparent;
@@ -20,7 +21,7 @@
 
 .overlay.modal-search {
   background-color: #ffffff;
-  z-index: 10000;
+  z-index: 10001;
 }
 
 .modal-engaged {

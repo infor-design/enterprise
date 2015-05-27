@@ -183,6 +183,11 @@
 
         elem.find('.lookup').lookup();
 
+        elem.find('.modal-search .close').on('click', function () {
+          $('.modal-search.modal').removeClass('is-visible');
+          $('.overlay.modal-search').remove();
+        });
+
         //Validation
         //Should be one of the last items to invoke
         elem.find('[data-validate]').validate();

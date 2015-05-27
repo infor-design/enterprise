@@ -899,7 +899,7 @@ $.fn.chart = function(options) {
 
     if (instance) {
       $(window).off('resize.pie');
-      alert();
+      $(window).off('resize.charts load.charts');
       $(this).empty();
     }
 

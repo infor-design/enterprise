@@ -93,6 +93,7 @@
           pane.addClass('no-transition');
           if (header.hasClass('is-expanded')) {
             header.attr('aria-expanded', 'true');
+            header.find('.icon.plus-minus').addClass('active');
             pane.one('animateOpenComplete', function() {
               $(this).removeClass('no-transition');
             });
@@ -311,6 +312,8 @@
             });
           }
           header.attr('aria-expanded', 'true').addClass('is-expanded');
+          header.find('.icon.plus-minus').addClass('active');
+
           header.children('.accordion-pane').css('display','block').one('animateOpenComplete', function() {
             header.trigger('expanded');
           }).animateOpen();
@@ -332,6 +335,7 @@
         }
 
         header.attr('aria-expanded', 'false').removeClass('is-expanded');
+        header.find('.icon.plus-minus').removeClass('active');
         header.children('.accordion-pane').one('animateClosedComplete', function(e) {
           e.stopPropagation();
           $(this).add($(this).find('.accordion-pane')).css('display', 'none');

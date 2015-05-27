@@ -21,7 +21,7 @@ $application-menu-width: 300px;
     -webkit-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
     box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
   width: $application-menu-width;
-  z-index: 9000;
+  z-index: 500;
 
   &.is-open {
     left: 0;

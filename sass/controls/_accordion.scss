@@ -12,7 +12,7 @@ $dark-accordion-header-bg-color: #383838;
 $dark-accordion-header-border-color: #1a1a1a;
 $dark-accordion-pane-bg-color: #292929;
 
-$accorion-selected-text-color: $primary-color;
+$accordion-selected-text-color: $primary-color;
 $accordion-focused-bg-color: $primary-color;
 $accordion-focused-text-color: #ffffff;
 
@@ -104,6 +104,10 @@ $accordion-focused-text-color: #ffffff;
 
     .accordion-pane {
       padding-left: 2em;
+    }
+
+    &.indented {
+      padding-left: 28px;
     }
 
     a > .title,
@@ -226,6 +230,10 @@ $accordion-focused-text-color: #ffffff;
 
       > a {
         color: $dark-accordion-header-text-color;
+
+        .icon.plus-minus {
+          top: -13px;
+        }
       }
 
       &:before {
@@ -275,6 +283,11 @@ $accordion-focused-text-color: #ffffff;
         .icon {
           fill: $input-disabled-color;
         }
+
+        .icon.plus-minus::before,
+        .icon.plus-minus::after {
+          background-color: $input-disabled-color;
+        }
       }
     }
   }
@@ -285,15 +298,20 @@ $accordion-focused-text-color: #ffffff;
     .accordion-header.is-selected,
     .accordion-header.child-selected {
       &:before {
-        color: $accorion-selected-text-color;
+        color: $accordion-selected-text-color;
       }
 
       > a {
-        color: $accorion-selected-text-color;
+        color: $accordion-selected-text-color;
       }
 
       .icon {
-        fill: $accorion-selected-text-color;
+        fill: $accordion-selected-text-color;
+      }
+
+      .icon.plus-minus::before,
+      .icon.plus-minus::after {
+        background-color: $accordion-selected-text-color;
       }
     }
 
@@ -310,6 +328,11 @@ $accordion-focused-text-color: #ffffff;
 
       .icon {
         fill: $accordion-focused-text-color;
+      }
+
+      .icon.plus-minus::before,
+      .icon.plus-minus::after {
+        background-color: $accordion-focused-text-color;
       }
     }
 

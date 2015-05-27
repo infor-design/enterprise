@@ -7,7 +7,7 @@
 // Home Page
 //==================================================//
 
-$site-maxwidth: 1080px;
+$site-maxwidth: 968px;
 $vision-color: $azure05;
 $code-color: $emerald06;
 $code-color-alt: $emerald08;
@@ -177,7 +177,7 @@ span {
 }
 
 .site-hero.component .row {
-  max-width: 1080px !important;
+  max-width: 968px !important;
 }
 
 .site-text-section,
@@ -489,15 +489,44 @@ span {
 
 }
 
-// Vision Page
+// articles Page
 //==================================================//
 .row {
   max-width: $site-maxwidth !important;
 }
 
+.articles {
+  .editorial {
+    background-color: $body-bg-color;
+  }
+
+  .main {
+    background-color: $inverse-color;
+    width: 100%;
+
+    h1 {
+      @include font-size(30);
+      color: $graphite06;
+      margin-bottom: 30px;
+      margin-top: 45px;
+      text-align: center;
+    }
+  }
+
+  .content {
+    max-width: $site-maxwidth;
+  }
+
+}
+
 .editorial {
 
+  .main {
+    max-width: $site-maxwidth !important;
+  }
+
   .hero {
+    background-color: #ffffff !important;
     height: auto !important;
 
     .image {
@@ -509,21 +538,22 @@ span {
 
    .copy {
       margin: 40px auto 0;
-      max-width: 767px;
-      text-align: center;
+      max-width: 968px;
       padding: 0 40px;
 
       h1 {
-        @include font-size(40);
+        color: $graphite06;
+        @include font-size(30);
+        line-height: 40px;
       }
 
     }
   }
 
   .author {
-    color: #999999;
+    color: $graphite04;
     @include font-size(14);
-    font-weight: bold;
+    font-weight: normal;
     line-height: 30px;
     text-transform: uppercase;
 
@@ -641,14 +671,6 @@ span {
     }
   }
 
-  .main {
-    max-width: 767px !important;
-
-    .content {
-      max-width: 767px  !important;
-    }
-  }
-
 }
 
 code.snippet {
@@ -715,8 +737,8 @@ code.snippet {
 // Guide/Controls Pages
 //==================================================//
 
-section.alt-bgrnd {
-  background-color: $body-bg-color;
+.alt-bgrnd {
+  background-color: $body-bg-color !important;
 }
 
 section.light-bgrnd,
@@ -893,7 +915,6 @@ div.light-bgrnd {
 .code.snippet {
   @include font-size(16);
   line-height: 1.5em;
-  margin: 0 10%;
   text-align: left;
   width: 300px;
 }

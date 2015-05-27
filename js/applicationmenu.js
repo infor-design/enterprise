@@ -68,7 +68,6 @@
 
         this.originalParent = this.menu.parent();
         this.menu.detach().insertAfter($('body').find('header').first());
-        this.closeMenu();
         this.adjustHeight();
 
         return this;
@@ -116,6 +115,7 @@
 
           // Do an initial width test to roll the menu out if our breakpoint is the higher one
           this.menu.addClass('no-transition');
+          $('.page-container').addClass('no-transition');
           this.testWidth();
         }
 
@@ -204,6 +204,8 @@
 
           self.isAnimating = false;
           self.element.trigger('applicationmenuopen');
+          self.menu.removeClass('no-transition');
+          $('.page-container').removeClass('no-transition');
         }
 
         this.menu
@@ -211,7 +213,6 @@
           .css('display', '');
         // next line forces a repaint
         this.menu[0].offsetHeight; //jshint ignore:line
-        this.menu.removeClass('no-transition');
         this.menu.addClass('is-open');
 
         if (!noFocus || noFocus !== true) {
@@ -229,7 +230,7 @@
             $(e.target).click();
           }).on('click.applicationmenu', function(e) {
             if ($(e.target).parents('.application-menu').length < 1) {
-              self.closeMenu();
+              self.closeMenu($(e.target).hasClass('application-menu-trigger'));
             }
           }).on('keydown.applicationmenu', function(e) {
             self.handleKeyDown(e);
@@ -237,12 +238,12 @@
         }, 0);
       },
 
-      closeMenu: function() {
+      closeMenu: function(force) {
         if (this.isAnimating === true) {
           return;
         }
 
-        if (this.settings.openOnLarge === true && this.isLargerThanBreakpoint() === true) {
+        if (!force && this.settings.openOnLarge === true && this.isLargerThanBreakpoint() === true) {
           return;
         }
 

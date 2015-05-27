@@ -60,6 +60,7 @@
 | SmartStream | ASP | Wim Denayer |
 | SXE | | Peter Cullen |
 | S3 | | Rajan Shanmugavelu |
+| Mobile Framework | HTML5 and Cordova (Mobile Framework) | Daniel Thil |
 | Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> |
 | Infor BI Business Modeling | Was ExtJS/YUI | Guido Buecker <Guido.Buecker@infor.com> |
