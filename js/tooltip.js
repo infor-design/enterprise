@@ -63,7 +63,7 @@
       addAria: function() {
         var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
         this.content =  this.element.attr('title') || settings.content;
-        this.content = this.addClassToLinks(this.content, 'linksClickable');
+        this.content = this.addClassToLinks(this.content, 'links-clickable');
 
         if (!this.isPopover) {
           this.element.removeAttr('title').attr('aria-describedby', name);

@@ -326,6 +326,8 @@
         } else {
           field.parent('.field').append(svg);
         }
+
+        $('.icon-validated', loc.parent('.field')).remove();
       }
 
       //Add error classes to pseudo-markup for certain controls
@@ -371,10 +373,12 @@
       }
     },
 
-    addPositive: function(field, thisClass) {
-      thisClass = thisClass || 'icon-validated';
-      var svg = $('<svg class="icon '+ thisClass +'" focusable="false" aria-hidden="true"><use xlink:href="#icon-validated"></use></svg>');
-      field.parent('.field').append(svg);
+    addPositive: function(field) {
+      var svg = $('<svg class="icon icon-validated" focusable="false" aria-hidden="true"><use xlink:href="#icon-validated"></use></svg>');
+
+      if(!$('.icon-validated', field.parent('.field')).length) {
+        field.parent('.field').append(svg);
+      }
     },
 
     removeError: function(field) {
@@ -412,9 +416,8 @@
       }
     },
 
-    removePositive: function(field, thisClass) {
-      thisClass = thisClass || 'icon-validated';
-      $('.'+ thisClass, field.parent('.field')).remove();
+    removePositive: function(field) {
+      $('.icon-validated', field.parent('.field')).remove();
     }
   };
 

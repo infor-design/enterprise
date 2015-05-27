@@ -194,3 +194,13 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   outline: none;
   outline-color: transparent;
 }
+
+// Wrap longer word
+@mixin word-wrap() {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
