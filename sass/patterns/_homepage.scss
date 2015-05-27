@@ -38,8 +38,8 @@
 
   .widget-content,
   .card-content {
-    height: 310px;
-    min-height: 310px;
+    height: 315px;
+    min-height: 315px;
     overflow: auto;
   }
 }
@@ -79,13 +79,20 @@
 .header + .homepage,
 .header + nav + .homepage {
   height: calc(100% - 80px);
-  overflow: scroll;
   margin-top: 0 !important;
+  overflow: scroll;
 }
 
 .card.double-height,
 .widget.double-height {
   height: 760px;
+
+  .widget-content,
+  .card-content {
+    height: 710px;
+    min-height: 710px;
+    overflow: auto;
+  }
 }
 
 .card.double-width,
