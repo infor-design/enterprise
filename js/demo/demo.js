@@ -148,6 +148,29 @@ $(function($) {
       $(this).toggleClass('active');
     });
 
+    $('#icon-app-header').click(function() {
+      var mode = $(this).data('mode');
+      if (!mode || mode === undefined) {
+        mode = 0;
+      }
+      mode++;
+
+      switch(mode) {
+        case 1:
+          $(this).removeClass('close').addClass('go-back');
+          break;
+        case 2:
+          $(this).removeClass('go-back').addClass('close');
+          break;
+        case 3:
+          $(this).removeClass('close').removeClass('go-back');
+          mode = 0;
+          break;
+      }
+
+      $(this).data('mode', mode);
+    });
+
     //----------------------------------------------------------
     //  Examples: Tabs
     //----------------------------------------------------------

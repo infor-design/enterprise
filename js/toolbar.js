@@ -30,14 +30,14 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Toolbar2(element) {
+    function Toolbar(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Toolbar2.prototype = {
+    Toolbar.prototype = {
 
       init: function() {
         this
@@ -206,6 +206,10 @@
           self.checkOverflowItems();
         }).on('selected.toolbar', function(e, anchor) {
           self.handleSelected(e, anchor);
+        });
+
+        this.element.on('updated.toolbar', function() {
+          self.updated();
         });
 
         $(window).on('resize.toolbar-' + this.id, function() {
@@ -496,8 +500,9 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Toolbar2(this, settings));
+        instance = $.data(this, pluginName, new Toolbar(this, settings));
       }
     });
   };

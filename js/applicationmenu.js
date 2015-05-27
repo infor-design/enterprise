@@ -166,7 +166,11 @@
 
       adjustHeight: function() {
         var isSticky = this.scrollTarget.is('.is-sticky'),
-          offset = this.scrollTarget.height() - (!isSticky ? $(window).scrollTop() : 0);
+          breadcrumb = this.scrollTarget.is('.has-breadcrumb'),
+          bc = breadcrumb ? 42 : 0,
+          totalHeight = this.scrollTarget.height() + bc,
+          offset = totalHeight - (!isSticky ? $(window).scrollTop() : 0);
+
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
       },
 
@@ -207,6 +211,14 @@
           self.menu.removeClass('no-transition');
           $('.page-container').removeClass('no-transition');
         }
+
+        this.triggers.each(function() {
+          var trig = $(this);
+          if (trig.parents('.header').length > 0) {
+            trig.find('.icon.app-header').removeClass('go-back').addClass('close');
+            trig.trigger('icon-change');
+          }
+        });
 
         this.menu
           .off(transitionEnd + '.applicationmenu')
@@ -264,6 +276,14 @@
           self.isAnimating = false;
           self.element.trigger('applicationmenuclose');
         }
+
+        this.triggers.each(function() {
+          var trig = $(this);
+          if (trig.parents('.header').length > 0) {
+            trig.find('.icon.app-header').removeClass('close');
+            trig.trigger('icon-change');
+          }
+        });
 
         this.menu.one(transitionEnd + '.applicationmenu', close);
         this.timeout = setTimeout(close, 300);

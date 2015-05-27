@@ -140,6 +140,63 @@ svg.icon-tree {
 
 }
 
+// Hamburger by default,
+// Has different modes based on CSS classes
+.icon.app-header {
+
+  span:not(.audible) {
+    background-color: $font-color-light;
+    border-radius: 4px;
+    height: 2px;
+    position: absolute;
+    @include css3(transform-origin, 50% 50% 0);
+    @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s,
+      left 300ms cubic-bezier(.17, .04, .03, .94),
+      top 300ms cubic-bezier(.17, .04, .03, .94));
+    width: 20px;
+  }
+
+  span.one {
+    left: 6px;
+    top: 6.5px;
+  }
+
+  span.two {
+    left: 6px;
+    top: 12.5px;
+  }
+
+  span.three {
+    left: 6px;
+    top: 18.5px;
+  }
+
+  &.go-back {
+    span.one {
+      @include css3(transform, rotate(-45deg) translateX(-5.75px) translateY(-2.5px) scaleX(.6));
+    }
+
+    span.three {
+      @include css3(transform, rotate(45deg) translateX(-5.75px) translateY(2.5px) scaleX(.6));
+    }
+  }
+
+  &.close {
+    span.one {
+      top: 12.5px;
+      @include css3(transform, rotate(45deg));
+    }
+    span.two {
+      @include css3(transform, rotate(45deg));
+    }
+    span.three {
+      top: 12.5px;
+      @include css3(transform, rotate(-45deg));
+    }
+  }
+
+}
+
 // Caps Lock
 $caps-color-arrow: #ffffff;
 $caps-color-background: #bdbdbd;

@@ -11,7 +11,8 @@ $header-bg-color: #454545;
   display: block;
   height: $header-height;
   overflow: hidden;
-  transition: background-color 1s ease 0s;
+  @include transition(background-color 1s ease 0s,
+    height 300ms cubic-bezier(.17, .04, .03, .94));
   width: 100%;
 
   .row {
@@ -28,6 +29,7 @@ $header-bg-color: #454545;
     display: inline;
     font-family: $font-regular;
     @include font-size(20);
+    @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
     line-height: inherit;
   }
 
@@ -101,7 +103,7 @@ $header-bg-color: #454545;
   }
 
   .toolbar {
-    margin: ($header-height / 4) 0;
+    margin: 20px 20px 10px;
 
     .title {
       line-height: 30px;
@@ -114,10 +116,78 @@ $header-bg-color: #454545;
     }
   }
 
+  .title .app-header {
+    height: 32px;
+    width: 32px;
+
+    span:not(.audible) {
+      background-color: $inverse-color;
+    }
+
+  }
+
+  .breadcrumb {
+    display: block;
+    padding: 0 20px;
+
+    ol {
+      padding: 3px 0;
+    }
+
+    .hyperlink {
+      color: $inverse-color;
+
+      &:active,
+      &:hover {
+        border-bottom: 1px solid $inverse-color;
+      }
+    }
+
+    li {
+      color: $inverse-color;
+
+      &:after {
+        color: $inverse-color;
+      }
+    }
+
+    &.alternate {
+      border-bottom: 1px solid #d8d8d8;
+      background-color: $inverse-color;
+
+      ol {
+        padding: 15px 0;
+      }
+
+      .hyperlink {
+        color: $font-color-dark;
+
+        &:active,
+        &:hover {
+          border-bottom: 1px solid $font-color-dark;
+        }
+      }
+
+      li {
+        color: $font-color-dark;
+
+        &:after {
+          color: $font-color-dark;
+        }
+      }
+    }
+
+  }
+
+  .toolbar.has-title-button + .breadcrumb {
+    padding: 0 20px 0 65px;
+  }
+
   // Sticky Header
   &.is-sticky {
     z-index: 9000;
   }
+
 }
 
 // Print Style Sheet
