@@ -78,8 +78,6 @@
           var handled = false,
             key = e.keyCode || e.charCode || 0;
 
-          console.log(key, e.metaKey, e.altKey);
-
          //Arrow Down or Alt first opens the dialog
           if (key === 40 && !self.isOpen()) {
             handled = true;
@@ -273,7 +271,11 @@
           self.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected');
 
           var month = self.header.find('.month').attr('data-month'),
-            day = $(this).addClass('is-selected').attr('aria-selected', 'true').text();
+            cell = $(this),
+            day = cell.addClass('is-selected').attr('aria-selected', 'true').text();
+
+          month = (cell.hasClass('prev-month') ? month-1 : month);
+          month = (cell.hasClass('next-month') ? month+1 : month);
 
           self.currentDate = new Date(new Date().getFullYear(), month, day);
           self.insertDate(self.currentDate);
@@ -361,7 +363,7 @@
           th.removeAttr('aria-selected');
 
           if (i < leadDays) {
-            th.addClass('alt').html('<span aria-hidden="true">' + (lastMonthDays - leadDays + 1 + i) + '</span>');
+            th.addClass('alt prev-month').html('<span aria-hidden="true">' + (lastMonthDays - leadDays + 1 + i) + '</span>');
           }
 
           if (i >= leadDays && dayCnt <= thisMonthDays) {
@@ -383,7 +385,7 @@
           }
 
           if (dayCnt >= thisMonthDays + 1) {
-            th.addClass('alt').text(nextMonthDayCnt);
+            th.addClass('alt next-month').text(nextMonthDayCnt);
             nextMonthDayCnt++;
           }
 
