@@ -3,18 +3,17 @@
 
 .breadcrumb {
 
-  ol {
-    li {
-      display: inline-block;
+  li {
+    display: inline-block;
+    list-style: none;
 
-      &:after {
-        content: '/';
-        padding: 0 8px 0 3px;
-      }
+    &:after {
+      content: '/';
+      padding: 0 12px;
+    }
 
-      &:last-child:after {
-        content: none;
-      }
+    &:last-child:after {
+      content: '';
     }
   }
 
@@ -56,16 +55,4 @@
     vertical-align: middle;
   }
 
-}
-
-.header .breadcrumb {
-
-  .hyperlink {
-    color: #ffffff !important;
-    margin-left: 10px;
-  }
-
-  svg {
-    fill: #ffffff;
-  }
 }

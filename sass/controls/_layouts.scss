@@ -266,12 +266,21 @@ body.no-scroll {
     height: calc(100% - 80px);
     margin-top: 80px;
   }
+
+  &.has-breadcrumb {
+    height: 117px;
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 117px);
+      margin-top: 117px;
+    }
+  }
 }
 
 .masthead {
   + .header.is-sticky {
 
-    + .page-container,
     + .site-content,
     + .site-hero,
     + .application-nav + .site-hero,
@@ -283,6 +292,14 @@ body.no-scroll {
     + .application-menu + .page-container {
       height: calc(100% - 114px);
       margin-top: 114px;
+    }
+
+    &.has-breadcrumb {
+      + .page-container,
+      + .application-menu + .page-container {
+        height: calc(100% - 144px);
+        margin-top: 144px;
+      }
     }
 
   }
