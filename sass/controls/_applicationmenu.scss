@@ -31,7 +31,8 @@ $application-menu-width: 300px;
   // Add animation to the page container when Nav is in use
   + .page-container {
     right: 0;
-    @include transition(margin 300ms cubic-bezier(.17, .04, .03, .94),
+    @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
+      margin 300ms cubic-bezier(.17, .04, .03, .94),
       width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 

@@ -77,6 +77,7 @@
       'Completed': {id: 'Completed', value: 'Completed', comment: 'Text For a Completed Status'},
       'Date': {id: 'Date', value: 'Date', comment: 'Describes filtering by a date data type'},
       'Drilldown': {id: 'Drilldown', value: 'Drill down', comment: 'Drill by moving page flow into a record'},
+      'Drillup': {id: 'Drillup', value: 'Drill Up', comment: 'Opposite of Drilldown, move back up to a larger set of records'},
       'EnterComments': {id: 'EnterComments', value: 'Enter comments here...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Error', comment: 'Title, Spoken Text describing fact an error has occured'},
       'EmailValidation': {id: 'EmailValidation', value: 'Email address not valid', comment: 'This the rule for email validation'},
