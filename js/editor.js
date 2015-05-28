@@ -165,7 +165,6 @@
             }
             // Tab to indent list structures!
             if ( tag === 'li' ) {
-              e.preventDefault();
               // If Shift is down, outdent, otherwise indent
               if ( e.shiftKey ) {
                 document.execCommand('outdent', e);
@@ -247,6 +246,7 @@
         });
 
         this.setupTextareaEvents();
+        this.setupKeyboardEvents();
 
         return this.textarea;
       },
@@ -265,6 +265,71 @@
         $('<label class="audible" for="'+ newTextareaID +'">'+ labelContents +'</label>').appendTo(textareaContainer);
         var textarea = $('<textarea id="'+ newTextareaID +'" class="editable"></textarea>').appendTo(textareaContainer);
         return textarea;
+      },
+
+      triggerClick: function(e, btn) {
+        $('button[data-action="'+ btn +'"]').trigger('click');
+        e.preventDefault();
+      },
+
+      setupKeyboardEvents: function() {
+        var self = this,
+          keys = {
+            b: 66, // bold
+            e: 69, // justifyCenter
+            h: 72, // anchor
+            i: 73, // italic [shift: image]
+            l: 76, // justifyLeft
+            o: 79, // orderedlist [shift: unorderedlist]
+            q: 81, // append-blockquote
+            r: 82, // justifyRight
+            u: 85  // underline
+          };
+
+        this.element.parent('.field').on('keydown.editor', function(e) {
+          e = (e) ? e : window.event;
+          keys.charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false);
+
+          switch (e.ctrlKey && keys.charCode) {
+            case keys.b:
+              self.triggerClick(e, 'bold');
+              break;
+            case keys.e:
+              self.triggerClick(e, 'justifyCenter');
+              break;
+            case keys.h:
+              self.triggerClick(e, 'anchor');
+              break;
+            case keys.i:
+              if(e.shiftKey) {                
+                self.triggerClick(e, 'image');
+              } else {                
+                self.triggerClick(e, 'italic');
+              }
+              break;
+            case keys.l:
+              self.triggerClick(e, 'justifyLeft');
+              break;
+            case keys.o:
+              if(e.shiftKey) {                
+                self.triggerClick(e, 'insertunorderedlist');
+              } else {                
+                self.triggerClick(e, 'insertorderedlist');
+              }
+              break;
+            case keys.q:
+              self.triggerClick(e, 'append-blockquote');
+              break;
+            case keys.r:
+              self.triggerClick(e, 'justifyRight');
+              break;
+            case keys.u:
+              self.triggerClick(e, 'underline');
+              break;
+          }
+        });
+
+        return self;
       },
 
       setupTextareaEvents: function() {
@@ -1013,6 +1078,7 @@
         this.toolbar = undefined;
         this.element.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
         this.textarea.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
+        this.element.parent('.field').off('keydown.editor');
         this.element.prev('.label').off('click.editor');
         $(window).off('resize.editor');
         $.each(this.modals, function(i, modal) {
