@@ -312,7 +312,11 @@
             });
           }
           header.attr('aria-expanded', 'true').addClass('is-expanded');
-          header.find('.icon.plus-minus').addClass('active');
+          var plusminus = header.find('.icon.plus-minus');
+          if (plusminus.length ===0) {
+           // header.find('a').prepend('<span class="icon plus-minus" aria-hidden="true" focusable="false"></span>');
+          }
+          plusminus.addClass('active');
 
           header.children('.accordion-pane').css('display','block').one('animateOpenComplete', function() {
             header.trigger('expanded');

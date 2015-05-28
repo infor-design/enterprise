@@ -108,7 +108,7 @@
     @include tab-after-off;
   }
 
-  &:not(.is-disabled):hover {
+  &:not(.is-disabled):not(.is-selected):hover {
     color: $tab-hover-color;
 
     a {
@@ -200,10 +200,10 @@
       }
 
       &:hover {
-        color: $tab-hover-color;
+        color: $tab-selected-color;
 
         > .count {
-          color: $tab-hover-color;
+          color: $tab-selected-color;
         }
       }
     }

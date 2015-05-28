@@ -263,15 +263,15 @@
           allExcludes = invisibleExcludes + ':not(.is-disabled)',
           li = a.parent();
 
-        this.tablist.children('li' + allExcludes).add(this.moreButton).removeClass('is-selected');
+        this.tablist.children('li' + allExcludes).add(this.moreButton);
 
         if (this.isTabOverflowed(li)) {
           this.buildPopupMenu(a.attr('href'));
-          this.moreButton.addClass('is-focused is-selected');
+          this.moreButton.addClass('is-focused');
           this.positionFocusState(this.moreButton, true);
           this.focusBar(this.moreButton);
         } else {
-          li.addClass('is-focused').addClass('is-selected');
+          li.addClass('is-focused');
           this.positionFocusState(a, true);
           this.focusBar(li);
         }

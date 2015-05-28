@@ -146,7 +146,7 @@
         self.initBreakpoint(bp, 999999);
         self.element.find('.content').css('margin-left', '-' + (bp/2) + 'px');
 
-        self.fit(self.blocks, phone);
+        self.fit(self.blocks, phone, tablet);
 
         for (var n = 0 ; n < self.blocks.length ; n++) {
           var block = self.blocks[n], pos;
@@ -172,12 +172,12 @@
       //with a fixed width and height and will fit each block into the first node where
       //it fits and then split that node into 2 parts (down and right) to track the
       //remaining whitespace.
-      fit: function(blocks, phone) {
+      fit: function(blocks, phone, tablet) {
         var n, node, block, self = this, watchNext = false;
 
         for (n = 0; n < this.blocks.length; n++) {
           block = blocks[n];
-          var elem = $(block.elem);
+          var elem = $(block.elem), watch1, watch2, watch3, dropNext;
 
           node = this.findNode(this.root, block.w, block.h, elem);
 
@@ -190,18 +190,53 @@
             block.fit = {x: 0, y: 386};
             watchNext = false;
           }
-          if (!phone && elem.hasClass('double-height double-width') && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
+
+          //homepage-3up
+          if (!phone && !tablet && elem.hasClass('double-height double-width') && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
             block.fit = {x: 376, y: 0};
             watchNext = true;
           }
+
+          //homepage-5up
+          if (!phone && !tablet && elem.hasClass('double-height') && !elem.hasClass('double-width') && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
+            block.fit = {x: 376, y: 0};
+            watch1 = n+1;
+            watch2 = n+2;
+            watch3 = n+3;
+          }
+
+          if (n === watch1) {
+            block.fit = {x: 756, y: 0};
+          }
+          if (n === watch2) {
+            block.fit = {x: 0, y: 386};
+          }
+          if (n === watch3) {
+            block.fit = {x: 756, y: 386};
+          }
+
+
+          //homepage-wide
+          if (!phone && dropNext) {
+            block.fit = {x: 0, y: 388};
+            dropNext = false;
+          }
+
+          if (!phone && !tablet && !elem.hasClass('double-width') && elem.hasClass('double-height')  &&
+            self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0 &&
+            self.blocks[n-1].elem.hasClass('double-width')) {
+
+            block.fit = {x: 756, y: 0};
+            dropNext = true;
+          }
+
         }
       },
 
       findNode: function(root, w, h, elem) {
         if (root.used) {
           return this.findNode(root.right, w, h, elem) || this.findNode(root.down, w, h, elem);
-        }
-        else if ((w <= root.w) && (h <= root.h)) {
+        } else if ((w <= root.w) && (h <= root.h)) {
           return root;
         } else {
           return null;
