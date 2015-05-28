@@ -163,6 +163,7 @@
             //block.elem.attr('tabindex', n);
           } else {
            //Error Shouldnt Happen... but when it does it Doesnt Fit
+           console.log('Bad');
           }
         }
 
@@ -172,12 +173,12 @@
       //with a fixed width and height and will fit each block into the first node where
       //it fits and then split that node into 2 parts (down and right) to track the
       //remaining whitespace.
-      fit: function(blocks, phone, tablet) {
-        var n, node, block, self = this, watchNext = false;
+      fit: function(blocks) {//, phone, tablet) {
+        var n, node, block;
 
         for (n = 0; n < this.blocks.length; n++) {
           block = blocks[n];
-          var elem = $(block.elem), watch1, watch2, watch3, dropNext;
+          var elem = $(block.elem);
 
           node = this.findNode(this.root, block.w, block.h, elem);
 
@@ -186,19 +187,19 @@
           }
 
           //Exception Rearranges
-          if (watchNext) {
+          /* if (watchNext) {
             block.fit = {x: 0, y: 386};
             watchNext = false;
           }
 
           //homepage-3up
-          if (!phone && !tablet && elem.hasClass('double-height double-width') && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
+          if (!phone && !tablet && elem.hasClass('double-height double-width') && self.blocks[n-1] && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
             block.fit = {x: 376, y: 0};
             watchNext = true;
           }
 
           //homepage-5up
-          if (!phone && !tablet && elem.hasClass('double-height') && !elem.hasClass('double-width') && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
+          if (!phone && !tablet && elem.hasClass('double-height') && !elem.hasClass('double-width') && self.blocks[n-1] && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0){
             block.fit = {x: 376, y: 0};
             watch1 = n+1;
             watch2 = n+2;
@@ -215,7 +216,6 @@
             block.fit = {x: 756, y: 386};
           }
 
-
           //homepage-wide
           if (!phone && dropNext) {
             block.fit = {x: 0, y: 388};
@@ -223,12 +223,12 @@
           }
 
           if (!phone && !tablet && !elem.hasClass('double-width') && elem.hasClass('double-height')  &&
-            self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0 &&
+            self.blocks[n-1] && self.blocks[n-1].fit.x === 0 && self.blocks[n-1].fit.y ===0 &&
             self.blocks[n-1].elem.hasClass('double-width')) {
 
             block.fit = {x: 756, y: 0};
             dropNext = true;
-          }
+          } */
 
         }
       },
