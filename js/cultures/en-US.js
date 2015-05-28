@@ -85,7 +85,7 @@
       'Graphite': {id: 'Graphite', value: 'Graphite', comment: 'Color in our color pallette'},
       'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
       'InsertAnchor': {id: 'InsertAnchor', value: 'Insert Anchor', comment: 'Insert Acnhor (link) in an editor'},
-      'InsertImage': {id: 'InsertImage', value: 'Invalid Image', comment: 'Insert Image in an editor'},
+      'InsertImage': {id: 'InsertImage', value: 'Insert Image', comment: 'Insert Image in an editor'},
       'InvalidDate': {id: 'InvalidDate', value: 'Invalid Date', comment: 'validation message for wrong date format (short)'},
       'JustifyCenter': {id: 'JustifyCenter', value: 'Justify Center', comment: 'justify text to center in the editor'},
       'JustifyLeft': {id: 'JustifyLeft', value: 'Justify Left', comment: 'justify text to left in the editor'},
