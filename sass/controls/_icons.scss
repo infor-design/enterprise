@@ -3,7 +3,7 @@
 
 .icon {
   display: inline-block;
-  height: 32px;
+  height: 22px; //Older ones at 32 but now based on 40
   position: relative;
   width: 32px;
 }
@@ -40,9 +40,19 @@ svg.icon {
   }
 
   &.icon-close {
+    height: 14px;
     position: relative;
     top: -1.5px;
   }
+
+  &.icon-sohoxi {
+    fill: $inverse-color;
+    height: 22px;
+    left: -15px;
+    top: 5px;
+    width: 110px;
+  }
+
 }
 
 svg.icon-logo {
@@ -63,6 +73,11 @@ svg.icon-tree {
   position: absolute;
   top: 23px;
   vertical-align: top;
+}
+
+.timepicker + .icon + .icon-error,
+.timepicker + .icon + .icon-validated {
+  left: 130px !important;
 }
 
 .img-placeholder {
@@ -98,6 +113,10 @@ svg.icon-tree {
   }
 
   span {
+    color: transparent;
+  }
+
+  &:hover span {
     color: transparent;
   }
 }

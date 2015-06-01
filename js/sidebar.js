@@ -41,6 +41,10 @@
           header = $('.header').first(),
           sidebar = $('.sidebar-nav');
 
+        if (sidebar.attr('data-is-sticky') === 'false') {
+          return;
+        }
+
         this.sectionList = $('.section-tracker');
         this.sections = $('.editorial > .main > .content').find('h2, h3');
 
@@ -58,7 +62,7 @@
               }
             });
 
-          }, 250);
+          }, 10);
           container.on('scroll.sidebarMenu', efficientScroll);
         }
 

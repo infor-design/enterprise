@@ -5,16 +5,19 @@
     <div class="title">
       <button class="btn-icon application-menu-trigger" type="button">
         <span class="audible">Show navigation</span>
-        <span class="icon app-header">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </span>
+        <svg class="icon" focusable="false" aria-hidden="true">
+          <use xlink:href="#icon-hamburger"></use>
+        </svg>
       </button>
 
       {{> includes/applicationmenu-openlarge}}
 
-      <h1>{{title}}
+      <h1>
+        <span class="audible">{{title}}</span>
+        <svg class="icon icon-sohoxi" focusable="false" aria-hidden="true">
+          <use xlink:href="#icon-sohoxi"></use>
+        </svg>
+
       {{#subtitle}}
       <span class="seperator">|</span>
       {{/subtitle}}

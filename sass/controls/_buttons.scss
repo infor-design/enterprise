@@ -199,6 +199,11 @@ a.btn-primary {
   min-width: 32px;
   padding: 0;
 
+  svg {
+    left: 0;
+    top: -2px;
+  }
+
   > * {
     vertical-align: middle;
   }

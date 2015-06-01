@@ -258,13 +258,13 @@ body.no-scroll {
   + .site-hero,
   + .application-menu + .site-hero,
   + .svg-icons + .container {
-    margin-top: 80px;
+    margin-top: 60px;
   }
 
   + .page-container,
   + .application-menu + .page-container {
-    height: calc(100% - 80px);
-    margin-top: 80px;
+    height: calc(100% - 60px);
+    margin-top: 60px;
   }
 
   &.has-breadcrumb {
@@ -321,7 +321,6 @@ body.no-scroll {
     .content {
       display: inline-block;
       float: left;
-      margin-bottom: 50px;
       margin-top: 40px;
       max-width: calc(100% - 370px);
       min-width: 300px;
@@ -329,12 +328,14 @@ body.no-scroll {
 
       h3,
       h2 {
-        padding: 10px 0;
+        margin-bottom: 30px;
+        padding: 0;
       }
+
     }
 
     p {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
   }
@@ -349,21 +350,27 @@ body.no-scroll {
     width: 300px;
 
     .content {
-      background-color: $body-bg-color;
-      border: 1px solid $graphite02;
       height: auto;
       padding: 0 30px 30px;
       width: 300px;
     }
 
     h3 {
+      border-bottom: 1px solid  $graphite03;
       clear: both;
-      margin-bottom: 20px !important;
+      color: $graphite07;
+      @include font-size(18);
+      margin-bottom: 15px !important;
+      padding-bottom: 15px !important;
       padding-top: 30px;
 
       &:not(:first-child) {
-        border-top: 1px solid $graphite02;
+        margin-top: 35px;
       }
+    }
+
+    .tags {
+      background-color: $graphite01;
     }
   }
 
@@ -381,7 +388,7 @@ body.no-scroll {
   .is-sticky {
     .content {
       position: fixed;
-      top: 80px;
+      top: 60px;
     }
   }
 
@@ -398,8 +405,8 @@ body.no-scroll {
       border-bottom: medium none;
       border-left: 3px solid transparent;
       color: #999999;
-      height: 20px;
-      line-height: 30px;
+      height: auto;
+      line-height: 25px;
       padding: 5px 10px;
 
       &:hover,
@@ -414,7 +421,7 @@ body.no-scroll {
   }
 }
 
-@include respond-to(tabletdown) {
+@include respond-to(phone) {
   .editorial {
     .main .content {
       min-width: 100%;
@@ -442,6 +449,6 @@ body.no-scroll {
 .scrollable-x.canvas,
 .scrollable-y.canvas {
   -webkit-overflow-scrolling: touch;
-  min-height: calc(100% - 80px);
+  min-height: calc(100% - 60px);
   min-width: 100%;
 }

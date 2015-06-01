@@ -33,86 +33,141 @@
 <body class="no-scroll">
 
   {{> includes/header-openlarge}}
-  <div class="page-container scrollable">
+  <div class="page-container scrollable articles">
 
       <section class="site-hero home">
         <div class="hero-img" role="presentation"></div>
         <div class="row">
           <div class="full column">
-            <h2>Lorem ipsum dolor sit amet, consectetur adipiscing eli
-              <br><a href="#">View All Controls</a>
-            </h2>
-
-          </div>
-        </div>
-
-      </section>
-
-      <section id="maincontent" class="site-text-section" role="main">
-        <div class="row">
-          <h2>Introducing SoHo Xi: Infor’s visual language</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. </p>
-          <img src="/assets/site/app-placeholder.png" alt="Responsive Application Screen Shots"/>
-        </div>
-      </section>
-
-      <section class="site-howto-nav">
-        <div class="row">
-          <div class="full column">
-            <h2>How to navigate this site</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio.</p>
-          </div>
-        </div>
-
-        <div class="row blockgrid">
-          <div>
-            <a href="/vision" class="site-navbox">
-              <h3>Design & Methodology</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur dolor adipiscing elit.</p>
-            </a>
-          </div>
-          <div>
-            <a href="/components" class="site-navbox controls">
-              <h3>Controls & Codebase</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur dolor adipiscing elit.</p>
-            </a>
+            <h1>Introducing SoHo XI</h1>
           </div>
         </div>
       </section>
 
-      <section class="site-recent">
-        <div class="row">
-          <div class="full column">
-            <h2>Recent Articles</h2>
-          </div>
+      <div class="home menubar">
+        <div class="left">
+          <span>Build great experiences with current tools</span>
+          <button class="btn-primary">Get Components</button>
         </div>
-      </section>
 
-      <section class="alt-bgrnd site-home editorial">
+        <div class="right">
+          <span>Learn about how SoHo Xi works.</span>
+          <button class="btn-primary">View Articles</button>
+        </div>
+      </div>
+
+      <section id="maincontent" class="site-intro" role="main">
         <div class="row">
-          <div class="full-width column">
+          <h1>Design for users. <span>Design for what’s next.</span></h1>
 
-            <div class="article-brief">
-              <img src="/assets/site/article-example2.jpg" alt="A Phone Disasasbled"/>
-              <h2>Native vs. Responsive: How to Choose the Best Path for Your Application</h2>
-              <small class="author"> AUTHOR LASTNAME, April, 14, 2015</small>
-              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. In the first part of this series, I walked through a messaging application demo powered by the Kinvey application. We explored how to leverage user management, file storage and the data store.</p>
-              <a href="#" class="btn-primary">Read Article</a>
+          <div class="row">
+            <div class="one-third column">
+              <div class="site-intro-user">
+                <span class="icon"></span>
+                <h2>It’s all about the user</h2>
+                <p>User-centered design is core to SoHo Xi. To create experiences people love, you have to understand what people need and what they are trying to do. </p>
+                <a class="hyperlink">Learn more</a>
+              </div>
             </div>
 
+            <div class="one-third column">
+              <div class="site-intro-mobile">
+                <span class="icon"></span>
+                <h2>Mobile in mind</h2>
+                <p>More and more of our users will use Infor applications on mobile devices. SoHo Xi is designed to provide a consistent experience no matter the device. </p>
+                <a class="hyperlink">Learn more</a>
+              </div>
+            </div>
+
+            <div class="one-third column">
+              <div class="site-intro-accessible">
+                <span class="icon"></span>
+                <h2>More accessible than ever</h2>
+                <p>Accessibility and personalization are key features of SoHo Xi. The controls are built from the ground up to allow users to optimize their view of the application. </p>
+                <a class="hyperlink">Learn more</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <div class="main editorial articles">
+        <h1>Recent Articles</h1>
+
+        <div class="row">
+          <div class="one-third column">
              <div class="article-brief">
-              <img src="/assets/site/article-example2.jpg" alt="A Phone Disasasbled"/>
+              <img alt="A Phone Disasasbled" src="/assets/site/article-example2.jpg">
               <h2>Native vs. Responsive: How to Choose the Best Path for Your Application</h2>
-              <small class="author"> AUTHOR LASTNAME, April, 14, 2015</small>
-              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. In the first part of this series, I walked through a messaging application demo powered by the Kinvey application. We explored how to leverage user management, file storage and the data store.</p>
-              <a href="#" class="btn-primary">Read Article</a>
-            </div>
+              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. </p>
+              <div class="tags">
+                <ul>
+                  <!--{% for tag in entry.associatedTags %}
+                    <li class="tag">#</li>
+                  {% endfor %}-->
+                  <li class="tag">Tag One</li>
+                  <li class="tag">Tag Two</li>
+                </ul>
+              </div>
 
+              <a class="hyperlink" href="#">Read Article</a>
+            </div>
+          </div>
+
+          <div class="one-third column">
+            <div class="article-brief">
+              <img alt="A Phone Disasasbled" src="/assets/site/article-example2.jpg">
+              <h2>Native vs. Responsive: How to Choose the Best Path for Your Application</h2>
+              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. </p>
+              <a class="hyperlink" href="#">Read Article</a>
+            </div>
+          </div>
+
+          <div class="one-third column">
+           <div class="article-brief">
+              <img alt="A Phone Disasasbled" src="/assets/site/article-example2.jpg">
+              <h2>Native vs. Responsive: How to Choose the Best Path for Your Application</h2>
+              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. </p>
+              <a class="hyperlink" href="#">Read Article</a>
+            </div>
           </div>
         </div>
-      </section>
+
+        <div class="row">
+          <div class="one-third column">
+             <div class="article-brief">
+              <img alt="A Phone Disasasbled" src="/assets/site/article-example2.jpg">
+              <h2>Native vs. Responsive: How to Choose the Best Path for Your Application</h2>
+              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. </p>
+              <a class="hyperlink" href="#">Read Article</a>
+            </div>
+          </div>
+
+          <div class="one-third column">
+            <div class="article-brief">
+              <img alt="A Phone Disasasbled" src="/assets/site/article-example2.jpg">
+              <h2>Native vs. Responsive: How to Choose the Best Path for Your Application</h2>
+              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. </p>
+              <a class="hyperlink" href="#">Read Article</a>
+            </div>
+          </div>
+
+          <div class="one-third column">
+           <div class="article-brief">
+              <img alt="A Phone Disasasbled" src="/assets/site/article-example2.jpg">
+              <h2>Native vs. Responsive: How to Choose the Best Path for Your Application</h2>
+              <p>Mobile back end as a service (MBaaS) aims at giving app developers the ability to create seamlessly new feature-complete cross-platform native and web applications. </p>
+              <a class="hyperlink" href="#">Read Article</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
 
     {{> controls/svg}}
+    {{> docs/svg}}
     {{> docs/search-results-modal}}
     {{> docs/footer}}
   </div>

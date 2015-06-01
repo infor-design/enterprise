@@ -159,10 +159,12 @@
 
   &.dismissible {
     .icon {
-      height: 24px;
-      margin-right: 4px;
+      height: 14px !important;
+      margin-left: -2px;
+      margin-top: -1px;
+      padding-right: 1px;
       position: relative;
-      width: 24px;
+      width: 14px;
     }
   }
 

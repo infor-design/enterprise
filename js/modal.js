@@ -215,7 +215,7 @@
         });
 
         setTimeout(function () {
-          self.element.find((self.element.find('input:first').length > 1 ? 'input:first' : '.modal-title')).focus();
+          self.element.find('input, textarea').filter(':visible:first').focus();
           self.keepFocus();
           self.element.triggerHandler('open');
         }, 300);

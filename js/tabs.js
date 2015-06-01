@@ -43,7 +43,7 @@
           .build()
           .setupEvents();
 
-        this.activate(this.tablist.children('li:first-child').children('a').attr('href'), true);
+        this.activate(this.tablist.children('li:first-child').children('a').attr('href'));
         this.setOverflow();
 
         // Focus the bar on the first element, but don't animate it on page load.
@@ -109,7 +109,7 @@
            .parent().attr('role', 'presentation').addClass('tab');
 
           if (a.parent().hasClass('dismissible')) {
-            $('<svg class="icon"><use xlink:href="#icon-delete"></svg>').insertAfter(a);
+            $('<svg class="icon"><use xlink:href="#icon-close"></svg>').insertAfter(a);
           }
 
           // Find and configure dropdown tabs
@@ -146,7 +146,7 @@
 
         return this;
       },
-
+      lastClick: null,
       setupEvents: function() {
         var self = this;
 
@@ -164,8 +164,14 @@
             e.stopPropagation();
             self.remove($(this).prev().attr('href'));
           }
+        }).on('mousedown.tabs', 'a', function(e) {
+          self.lastClick = e.target;
         }).on('focus.tabs', 'a', function(e) {
-          self.handleFocus(e, $(this));
+          if (e.target !== self.lastClick) {
+            self.handleFocus(e, $(this));
+          }
+          self.lastClick = null;
+
         }).on('keydown.tabs', 'a', function(e) {
           self.handleKeyDown(e);
         });
@@ -226,6 +232,8 @@
       },
 
       handleClick: function(e, li) {
+        li.removeClass('is-focused');
+
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
           return;
@@ -236,7 +244,6 @@
 
 
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
-        li.addClass('is-selected');
 
         // Don't activate a dropdown tab, but open its popupmenu.
         if (li.is('.has-popupmenu')) {
@@ -248,9 +255,13 @@
         if (this.popupmenu) {
           this.popupmenu.close();
         }
+
+        this.lastFocus = e.target;
         a.focus();
         this.positionFocusState(a, true);
         this.focusBar(li);
+        li.addClass('is-selected');
+
       },
 
       handleFocus: function(e, a) {
@@ -365,7 +376,8 @@
         targetLi.children('a').focus();
       },
 
-      activate: function(href, noAutoFocus) {
+      activate: function(href) {
+
         var self = this,
           a = self.anchors.filter('[href="' + href + '"]'),
           ui = {
@@ -389,19 +401,16 @@
           self.element.trigger('activate', null, ui);
         });
 
-        //Init Label Widths..
-        ui.panels.find('.autoLabelWidth').each(function() {
-          var container = $(this),
-            labels = container.find('.inforLabel');
+        if (ui.oldTab.index() !== ui.newTab.index()) {
+          ui.oldTab.removeClass('is-selected');
+        }
 
-          if (labels.autoWidth) {
-            labels.autoWidth();
-          }
-        });
-
-        var headings = ui.panels.find(':first-child').filter('h3').attr('tabindex', '0');
-        if (!noAutoFocus) {
-          headings.first().focus();
+        var li = ui.newTab;
+        if (this.isTabOverflowed(li)) {
+          this.buildPopupMenu(a.attr('href'));
+          this.focusBar(this.moreButton);
+        } else {
+          this.focusBar(li);
         }
       },
 
@@ -487,7 +496,7 @@
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
-          tabHeaderMarkup.append('<svg class="icon"><use xlink:href="#icon-delete"></svg>');
+          tabHeaderMarkup.append('<svg class="icon"><use xlink:href="#icon-close"></svg>');
         }
 
         if (this.settings.tabCounts) {
@@ -820,6 +829,7 @@
       },
 
       focusBar: function(li, callback) {
+
         var self = this,
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :

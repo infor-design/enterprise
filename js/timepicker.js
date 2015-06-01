@@ -80,7 +80,7 @@
         this.trigger = this.element.next('svg.icon');
         if (this.trigger.length === 0) {
           this.trigger = $('<svg class="icon" focusable="false" aria-hidden="true">' +
-                           '<use xlink:href="#icon-timepicker"/>' +
+                           '<use xlink:href="#icon-clock"/>' +
                            '</svg>').insertAfter(this.element);
         }
 

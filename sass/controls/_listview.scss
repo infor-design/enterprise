@@ -274,15 +274,6 @@ $listview-selected-text-color: $inverse-color;
     outline: none;
   }
 
-  &.show-header th {
-    color: $graphite10;
-    display: table-cell;
-    @include font-size(16);
-    font-weight: bold;
-    padding: 10px 15px;
-    text-align: left;
-  }
-
   th {
     display: none;
   }

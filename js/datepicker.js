@@ -45,7 +45,7 @@
       build: function() {
         //Append a Button
         this.trigger = $('<svg focusable="false" aria-hidden="true" class="icon">' +
-                         '<use xlink:href="#icon-datepicker"/>' +
+                         '<use xlink:href="#icon-calendar"/>' +
                          '</svg>').insertAfter(this.element);
         this.addAria();
       },

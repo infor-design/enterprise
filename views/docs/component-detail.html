@@ -21,11 +21,10 @@
 <body class="no-scroll">
 
   {{> includes/header-openlarge}}
-  <div class="page-container scrollable">
+  <div class="page-container scrollable component" style="transform:none;">
     <div class="site-hero component">
       <div class="row">
         <div class="full column">
-          <h2>Dropdown List</h2>
 
           <div class="site-breadcrumb">
             <nav class="breadcrumb" role="navigation">
@@ -46,12 +45,12 @@
             </nav>
           </div>
 
+          <h2>Dropdown List</h2>
           <small class="timestamp">Updated January 20th, 2015</small>
 
         </div>
       </div>
     </div>
-
 
     <section class="example-section" role="main">
       <div class="row">
@@ -120,29 +119,34 @@
     </section>
 
     <div class="editorial component">
-
-      <div id="maincontent" class="main" role="main">
+      <div id="maincontent" class="main " role="main">
         <div class="content">
 
             <h2>Description</h2>
             <p>Description/use case for this component.</p>
+            <hr>
 
             <h2>Usage Guidelines</h2>
             <p>Usage & best practices (expands on info in subcategory landing page).</p>
+            <p><b>Use a drop down if:</b>
+            </p>
             <ul>
               <li>Users should be able to customize the menu.</li>
               <li>Try to restrict the hierarchy to 3-4 levels.</li>
             </ul>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. </p>
 
+            <hr>
             <h2>Dynamically generated specs</h2>
-            <p>dynamically generated specs 3 Dynamically generated visual specs (padding, etc.)</p>
+            <p>dynamically generated specs 3 Dynamically generated visual specs (padding, etc.). See the <a href="#">Other Related page</a> for more information.
+
+            </p>
 
             <table class="listview-table show-header">
               <thead>
                 <tr>
                   <th>Characteristic</th>
-                  <th>Value</th>
+                  <th><span class="audible">Value</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -157,6 +161,7 @@
               </tbody>
             </table>
 
+            <hr>
             <h2>Implementation</h2>
             <p>Technical details of this component</p>
             <p>Actual .html from HTML control</p>
@@ -168,6 +173,7 @@
             <p>Actual .js from HTML control</p>
             <pre><code class="language-javascript">var test = 'hello';</code></pre>
 
+            <hr>
             <h2>API Information</h2>
             <p>More Technical details of this component</p>
 
@@ -183,15 +189,19 @@
             <h3>States & Variations</h3>
             <p>Supported states (hover, focus, etc.).</p>
 
+            <hr>
             <h2>Accessibility Guidelines</h2>
             <p>TSection 508 & related information.</p>
 
+            <hr>
             <h2>Asset List</h2>
             <p>List of any assets associated with this control, such as svg files for icons.Photoshop files 3 Original photoshop files or related assets.</p>
 
+            <hr>
             <h2>Responsive Guidelines</h2>
             <p> How the control should respond responsively across different devices & display resolutions.</p>
 
+            <hr>
             <h2>Upgrading from Soho 3.x</h2>
             <p> Steps to upgrade from the previous version</p>
 
@@ -200,17 +210,37 @@
         <div class="sidebar-nav" role="complementary">
           <div class="content">
 
-            <h3>About This Control</h3>
-            <div class="link-list section-list">
+            <h3>About this Component</h3>
+            <div class="section-tracker">
             </div>
 
-            <h3>Related Tags</h3>
+            <h3>Categories/Topics</h3>
             <div class="tag-list">
               <a href="#" class="tag graphite02">Responsive Design</a>
               <a href="#" class="tag graphite02">Mobile First</a>
               <a href="#" class="tag graphite02">Grid Systems</a>
               <a href="#" class="tag graphite02">UI/UX</a>
               <a href="#" class="tag graphite02">Enterprise Software</a>
+            </div>
+
+            <h3>Additional Links</h3>
+            <div class="link-list">
+              <div>
+                <a href="#" class="hyperlink">Outside link to site</a>
+                <span class="timestamp">May 5, 2015</span>
+              </div>
+              <div>
+                <a href="#" class="hyperlink">External link to site</a>
+                <span class="timestamp">April 15, 2015</span>
+              </div>
+              <div>
+                <a href="#" class="hyperlink">More links to site</a>
+                <span class="timestamp">May 15, 2015</span>
+              </div>
+              <div>
+                <a href="#" class="hyperlink">Alternate website links</a>
+                <span class="timestamp">June 15, 2015</span>
+              </div>
             </div>
 
           </div>

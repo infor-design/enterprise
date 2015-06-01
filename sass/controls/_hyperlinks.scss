@@ -44,7 +44,6 @@
   margin-bottom: 40px;
 
   div {
-    border-bottom: 1px solid $graphite02;
     margin-bottom: 10px;
     padding-bottom: 5px;
 
@@ -56,6 +55,16 @@
 
   &.no-border div {
     border-bottom: 0;
+  }
+
+  .timestamp {
+    color: $graphite04;
+    display: block;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    position: unset;
+    text-transform: uppercase;
   }
 }
 

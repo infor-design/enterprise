@@ -133,8 +133,8 @@
 // Header Area of Calendar
 .calendar-header {
   border-bottom: 1px solid #eeeeee;
-  height: 74px;
-  line-height: 85px;
+  height: 70px;
+  line-height: 77px;
   position: relative;
   text-align: center;
 
@@ -153,13 +153,25 @@
     transition: border-color .3s ease;
 
     &.prev {
-      margin: 11px 5px 0 0;
+      margin: 8px 5px 0 0;
+
+      svg {
+        height: 32px;
+        left: 0;
+        top: 0;
+      }
     }
 
     &.next {
       left: auto;
       margin: 11px 0 0 5px;
       right: 20px;
+
+      svg {
+        height: 32px;
+        left: 0;
+        top: 0;
+      }
     }
 
   }
@@ -177,7 +189,7 @@
 .calendar-footer {
   border-top: 1px solid #eeeeee;
   height: 40px;
-  padding-top: 10px;
+  padding-top: 14px;
 
   .cancel {
     color: $font-color;

@@ -3,9 +3,9 @@
 
 // See also Colors.scss
 .tag {
-  background-color: $graphite05;
+  background-color: $graphite02;
   border-radius: 15px;
-  color: #ffffff;
+  color: $graphite08;
   display: inline-block;
   @include font-size(12);
   @include antialiased();
@@ -19,14 +19,17 @@
 
   &.error {
     background-color: $alert-red;
+    color: #ffffff;
   }
 
   &.alert {
     background-color: $alert-orange;
+    color: #ffffff;
   }
 
   &.good {
     background-color: $alert-green;
+    color: #ffffff;
   }
 
   &.graphite03,

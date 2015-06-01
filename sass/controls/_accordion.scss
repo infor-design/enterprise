@@ -7,8 +7,8 @@ $light-accordion-header-bg-color: #ffffff;
 $light-accordion-header-border-color: #d8d8d8;
 $light-accordion-pane-bg-color: #f2f2f2;
 
-$dark-accordion-header-text-color: #acadae;
-$dark-accordion-header-bg-color: #383838;
+$dark-accordion-header-text-color: $slate04;
+$dark-accordion-header-bg-color: $graphite08;
 $dark-accordion-header-border-color: #1a1a1a;
 $dark-accordion-pane-bg-color: #292929;
 
@@ -20,8 +20,9 @@ $accordion-focused-text-color: #ffffff;
   @include font-size(18);
 
   a {
+    border: 1px solid transparent;
     display: block;
-    padding: 1em;
+    padding: 12px 20px 14px;
     text-decoration: none;
 
     &:focus {
@@ -35,7 +36,6 @@ $accordion-focused-text-color: #ffffff;
     }
 
     > .icon {
-      height: 1.3em;
 
       + .title {
         margin-left: 0;
@@ -60,7 +60,7 @@ $accordion-focused-text-color: #ffffff;
     .badge,
     .tag {
       float: right;
-      margin-right: 0;
+      margin-right: 20px;
       position: relative;
     }
 
@@ -92,8 +92,8 @@ $accordion-focused-text-color: #ffffff;
   > .accordion-header {
     border-bottom: 1px solid transparent;
 
-    &:last-child {
-      border-bottom: 0;
+    &:first-child {
+      border-top: 1px solid $dark-accordion-header-border-color;
     }
   }
 
@@ -102,33 +102,30 @@ $accordion-focused-text-color: #ffffff;
     @include font-size(16);
     overflow: auto;
 
-    .accordion-pane {
-      padding-left: 2em;
-    }
-
-    &.indented {
-      padding-left: 28px;
+    .accordion-pane a {
+      padding: 11px 0 9px 50px !important;
+      text-transform: capitalize;
     }
 
     a > .title,
     a > .panel {
-      margin-left: 2.5em;
+      margin-left: 20px;
     }
 
     .accordion-header[aria-expanded] {
-      &:before {
-        content: '+';
-        left: 1.88em;
-        pointer-events: none;
-        position: absolute;
-        top: .9em;
+
+      .plus-minus {
+        left: 22px;
+        top: -10px;
+
+        &::before,
+        &::after {
+          width: 10px;
+        }
       }
 
-      &.is-expanded {
-        &:before {
-          content: '–';
-          left: 1.94em;
-        }
+      a {
+        padding: 6px 0 11px;
       }
     }
 
@@ -157,8 +154,12 @@ $accordion-focused-text-color: #ffffff;
     }
 
     > .accordion-header {
-      border-bottom-color: #d8d8d8;
+      border-bottom-color: $light-accordion-header-border-color;
       color: $light-accordion-header-text-color;
+
+      &:first-child {
+        border-top: 1px solid $light-accordion-header-border-color;
+      }
 
       > a {
         color: $light-accordion-header-text-color;
@@ -173,13 +174,10 @@ $accordion-focused-text-color: #ffffff;
       }
     }
 
+
     .accordion-pane {
       background-color: #f2f2f2;
-
-      a {
-        color: $light-accordion-header-text-color;
-      }
-    }
+   }
 
     .separator {
       &:before {
@@ -232,7 +230,25 @@ $accordion-focused-text-color: #ffffff;
         color: $dark-accordion-header-text-color;
 
         .icon.plus-minus {
-          top: -13px;
+          top: -11px;
+        }
+
+      }
+
+      a {
+
+        &:hover,
+        &:active {
+          color: #ffffff;
+
+          svg {
+            fill: #ffffff;
+          }
+
+          .icon.plus-minus::before,
+          .icon.plus-minus::after {
+            background-color: #ffffff;
+          }
         }
       }
 
@@ -250,6 +266,11 @@ $accordion-focused-text-color: #ffffff;
 
       a {
         color: $dark-accordion-header-text-color;
+        padding: 7px 13px 10px;
+
+        .title {
+          @include font-size(14);
+        }
       }
     }
 
@@ -289,34 +310,21 @@ $accordion-focused-text-color: #ffffff;
           background-color: $input-disabled-color;
         }
       }
+
+
     }
   }
 
   &.light,
   &.dark {
 
-    .accordion-header.is-selected,
     .accordion-header.child-selected {
-      &:before {
-        color: $accordion-selected-text-color;
-      }
 
-      > a {
-        color: $accordion-selected-text-color;
-      }
-
-      .icon {
-        fill: $accordion-selected-text-color;
-      }
-
-      .icon.plus-minus::before,
-      .icon.plus-minus::after {
-        background-color: $accordion-selected-text-color;
-      }
     }
 
-    .accordion-header.is-focused.is-selected {
+    .accordion-header.is-selected {
       background-color: $accordion-focused-bg-color;
+      border-top-color: $accordion-focused-bg-color;
 
       &:before {
         color: $accordion-focused-text-color;
@@ -324,17 +332,25 @@ $accordion-focused-text-color: #ffffff;
 
       > a {
         color: $accordion-focused-text-color;
+
+        .icon.plus-minus::before,
+        .icon.plus-minus::after {
+          background-color: $accordion-focused-text-color;
+        }
       }
 
       .icon {
         fill: $accordion-focused-text-color;
       }
 
-      .icon.plus-minus::before,
-      .icon.plus-minus::after {
-        background-color: $accordion-focused-text-color;
+    }
+
+    .accordion-header.is-focused {
+      > a {
+        border: 1px solid #54a1d3 !important;
       }
     }
 
   }
+
 }

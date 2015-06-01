@@ -93,7 +93,8 @@
           pane.addClass('no-transition');
           if (header.hasClass('is-expanded')) {
             header.attr('aria-expanded', 'true');
-            header.find('.icon.plus-minus').addClass('active');
+
+            header.find('.icon.plus-minus').first().addClass('active');
             pane.one('animateOpenComplete', function() {
               $(this).removeClass('no-transition');
             });
@@ -311,12 +312,22 @@
               }
             });
           }
+
           header.attr('aria-expanded', 'true').addClass('is-expanded');
           var plusminus = header.find('.icon.plus-minus');
-          if (plusminus.length ===0) {
-           // header.find('a').prepend('<span class="icon plus-minus" aria-hidden="true" focusable="false"></span>');
-          }
           plusminus.addClass('active');
+
+          header.find('.accordion-pane').not(':first').prev('a').each(function () {
+            var subhead = $(this),
+              plusminus = subhead.find('.icon.plus-minus');
+
+            if (plusminus.length === 0) {
+              subhead.prepend('<span class="icon plus-minus" aria-hidden="true" focusable="false"></span>');
+            } else {
+              plusminus.removeClass('active');
+            }
+
+          });
 
           header.children('.accordion-pane').css('display','block').one('animateOpenComplete', function() {
             header.trigger('expanded');
@@ -339,7 +350,7 @@
         }
 
         header.attr('aria-expanded', 'false').removeClass('is-expanded');
-        header.find('.icon.plus-minus').removeClass('active');
+        header.find('.icon.plus-minus').first().removeClass('active');
         header.children('.accordion-pane').one('animateClosedComplete', function(e) {
           e.stopPropagation();
           $(this).add($(this).find('.accordion-pane')).css('display', 'none');

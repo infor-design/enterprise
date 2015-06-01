@@ -57,7 +57,7 @@ input.dropdown {
     border-radius: 1px;
     cursor: pointer;
     display: inline-block;
-    fill: $input-border-color;
+    fill: $graphite04;
     height: 31px;
     margin-left: -33px;
     pointer-events: none;
@@ -248,7 +248,8 @@ input.dropdown {
   }
 
   .icon {
-    fill: $input-border-color;
+    fill: $graphite04;
+    height: 32px;
     margin-left: -32px;
     position: absolute;
     @include css3(transform, rotate(180deg));

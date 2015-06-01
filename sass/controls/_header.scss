@@ -2,8 +2,8 @@
 //================================================== //
 
 // Variables for this file
-$header-height: 80px;
-$header-bg-color: #454545;
+$header-height: 60px;
+$header-bg-color: #414247;
 
 // Top Header
 .header {
@@ -91,8 +91,10 @@ $header-bg-color: #454545;
   }
 
   .header-search {
+    margin-left: -3px;
+
     > .icon {
-      height: ($button-font-size * 2) + px;
+      height: 21px;
     }
   }
 
@@ -103,10 +105,11 @@ $header-bg-color: #454545;
   }
 
   .toolbar {
-    margin: 20px 20px 10px;
+    margin: 10px 20px;
 
     .title {
-      line-height: 30px;
+      line-height: 38px;
+      margin: 0;
       overflow: visible;
       padding: 0;
     }
@@ -202,6 +205,6 @@ $header-bg-color: #454545;
   }
 
   header.header .title {
-    color: #333333 !important;
+    color: #414247 !important;
   }
 }
