@@ -11,7 +11,7 @@
 
     <div class="field">
       <label for="auto-template">#auto-template (uses an alternate source and external template)</label>
-      <input data-autocomplete="source" class="autocomplete" data-tmpl="#autocomplete-with-pic" id="auto-template" placeholder="Type to Search" type="text">
+      <input data-autocomplete="source" data-init="false" dataclass="autocomplete" data-tmpl="#autocomplete-template-email" id="auto-template" placeholder="Type to Search" type="text">
     </div>
 
   </div>
@@ -19,25 +19,13 @@
 
 <!--This is only needed because it renders first on the server-->
 {{={{{ }}}=}}
-<script id="autocomplete-with-pic" type="text/html">
-  <li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}" {{/hasValue}}role="listitem">
+<script id="autocomplete-template-email" type="text/html">
+  <li id="{{listItemId}}" {{#hasValue}} data-value="{{value}}" {{/hasValue}} role="listitem">
     <a href="#" tabindex="-1">
-      <svg class="icon">
-        <use xlink:href="#icon-logo" />
-      </svg>
-      <span>
-        {{& label}}
-      </span>
+       <span>{{& label}}</span>
+       <span style="font-size: 11px; margin-top: -3px; margin-bottom: 5px; display: block;">{{& email}}</span>
+
+       <span style="display: none;" class="display-value">{{& label}} - {{& email}}</span>
     </a>
   </li>
-</script>
-
-<script>
-  $(function () {
-    $('#auto-template').autocomplete({
-      source: '/api/states?term='
-    }).on('selected', function (e, anchor) {
-      console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
-    });
-  });
 </script>

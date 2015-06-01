@@ -180,11 +180,17 @@
         });
 
         var all = self.list.find('a').on('focus', function () {
-          var anchor = $(this);
+          var anchor = $(this),
+            text = anchor.text().trim();
+
+          if (anchor.find('.value')) {
+            text = anchor.find('.value').text().trim();
+          }
 
           all.parent('li').removeClass('is-selected');
           anchor.parent('li').addClass('is-selected');
-          self.element.val(anchor.text().trim());
+
+          self.element.val(text);
         });
 
         this.noSelect = true;

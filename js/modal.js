@@ -215,7 +215,7 @@
         });
 
         setTimeout(function () {
-          self.element.find('input, textarea').filter(':visible:first').focus();
+          //self.element.find(':focusable:first').focus();
           self.keepFocus();
           self.element.triggerHandler('open');
         }, 300);

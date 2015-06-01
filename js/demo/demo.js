@@ -97,18 +97,23 @@ $(function($) {
   // Toast.html View Specifics
   var cnt = 0;
   $('#show-toast-message').on('click', function() {
-
-
     cnt ++;
     $('body').toast({title: 'Application Offline' + cnt, message: 'This is a Toast message'});
-
   });
 
 
   // Autocomplete.html View Specifics
   // Setup an alternate source for the templated Autocomplete.
   $('#auto-template').autocomplete({
-    source: '/api/states?term='
+    source: function (req, resp) {
+      var data = [];
+      data.push({ label: 'John Smith', email: 'John.Smith@example.com', value: '0' });
+      data.push({ label: 'Alex Mills', email: 'Alex.Mills@example.com', value: '1' });
+      data.push({ label: 'Steve Mills', email: 'Steve.Mills@example.com', value: '2' });
+      data.push({ label: 'Quincy Adams', email: 'Quincy.Adams@example.com', value: '3' });
+      data.push({ label: 'Paul Thompson', email: 'Paul.Thompson@example.com', value: '4' });
+      resp(req, data);
+    }
   }).on('selected', function (e, anchor) {
     console.log('Changed to: ' + $(anchor).parent().attr('data-value'));
   });
