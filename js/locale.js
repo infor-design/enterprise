@@ -19,35 +19,50 @@
 }(function($) {
 /* end-amd-strip-block */
 
+  //If a the event that a
+  var existingCulturePath = '';
+  if (window.Locale && window.Locale.culturesPath) {
+    existingCulturePath = window.Locale.culturesPath;
+  }
+
   window.Locale = {
 
     currentLocale:  {name: '', data: {}}, //default
     cultures: [],
+    culturesPath: existingCulturePath,
 
     //Sets the Lang in the Html Header
     updateLang: function () {
       $('html').attr('lang', this.currentLocale.name);
     },
 
-    //Get the Path of the Script
-    scriptPath: function() {
-     var scripts = document.getElementsByTagName('script'),
-      partialPathMin = 'sohoxi.min.js',
-      partialPath = 'sohoxi.js';
+    //Manually set the directory for the cultures
+    setCulturesPath: function(path) {
+      this.culturesPath = path;
+    },
 
-      for (var i = 0; i < scripts.length; i++) {
-        var src = scripts[i].src;
-        if (scripts[i].id === 'sohoxi-script') {
-          return src.substring(0, src.lastIndexOf('/')) + '/';
-        }
+    //Get the path to the directory with the cultures
+    getCulturesPath: function() {
+      if (!this.culturesPath) {
+        var scripts = document.getElementsByTagName('script'),
+          partialPathMin = 'sohoxi.min.js',
+          partialPath = 'sohoxi.js';
 
-        if (src.indexOf(partialPathMin) > -1) {
-          return src.replace(partialPath,'');
-        }
-        if (src.indexOf(partialPath) > -1) {
-          return src.replace(partialPath,'');
+        for (var i = 0; i < scripts.length; i++) {
+          var src = scripts[i].src;
+          if (scripts[i].id === 'sohoxi-script') {
+            return src.substring(0, src.lastIndexOf('/')) + '/';
+          }
+
+          if (src.indexOf(partialPathMin) > -1) {
+            this.setCulturesPath(src.replace(partialPath, '') + 'cultures/');
+          }
+          if (src.indexOf(partialPath) > -1) {
+            this.setCulturesPath(src.replace(partialPath, '') + 'cultures/');
+          }
         }
       }
+      return this.culturesPath;
     },
 
     addCulture: function(locale, data) {
@@ -64,7 +79,7 @@
 
         //fetch the local and cache it
         $.ajax({
-          url: this.scriptPath() + 'cultures/' + this.currentLocale.name + '.js',
+          url: this.getCulturesPath() + this.currentLocale.name + '.js',
           dataType: 'script',
           success: function () {
             self.currentLocale.name = locale;
