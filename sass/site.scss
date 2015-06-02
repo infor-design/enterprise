@@ -361,27 +361,10 @@ span {
   }
 
   .btn-primary {
-    background-color: $emerald06;
     display: inline-block;
-    font-weight: normal;
     left: 40px;
-    padding: 0;
     position: relative;
-    top: -5px;
-    vertical-align: middle;
-
-    &:hover {
-      background-color: $emerald08;
-    }
-
-    &:active {
-      background-color: $emerald08;
-    }
-
-    &:focus {
-      border-color: $emerald06;
-      box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px $emerald06;
-    }
+    top: 10px;
   }
 }
 
@@ -668,7 +651,8 @@ span {
     }
 
     img {
-      height: 150px;
+      height: 140px;
+      width: 100%;
     }
 
     .tags {
