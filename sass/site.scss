@@ -418,26 +418,6 @@ span {
     text-align: center;
   }
 
-  .site-home .article-brief {
-    display: table;
-
-    img {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .copy {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    p {
-      max-height: unset;
-    }
-  }
-
   .site-component.card {
     width: calc(100% - 40px);
   }
@@ -557,7 +537,12 @@ span {
       height: 350px;
     }
 
-   .copy {
+    .hyperlink {
+      display: inline-block;
+      margin-bottom: 40px;
+    }
+
+    .copy {
       margin: 40px auto 0;
       max-width: 968px;
       padding: 0 40px;
@@ -587,9 +572,6 @@ span {
     }
   }
 
-  .btn-primary {
-    margin-bottom: 40px;
-  }
 
   h2 {
     color: $graphite08;
@@ -683,6 +665,10 @@ span {
       padding: 20px;
       padding-bottom: 10px;
       padding-top: 0;
+    }
+
+    img {
+      height: 150px;
     }
 
     .tags {

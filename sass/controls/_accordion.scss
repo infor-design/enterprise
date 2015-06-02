@@ -24,6 +24,7 @@ $accordion-focused-text-color: #ffffff;
     display: block;
     padding: 12px 20px 14px;
     text-decoration: none;
+    text-transform: capitalize;
 
     &:focus {
       outline: 0;
@@ -104,7 +105,10 @@ $accordion-focused-text-color: #ffffff;
 
     .accordion-pane a {
       padding: 11px 0 9px 50px !important;
-      text-transform: capitalize;
+    }
+
+    &.indented a {
+      padding-left: 40px !important;
     }
 
     a > .title,

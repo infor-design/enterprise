@@ -148,7 +148,7 @@
         }
 
         this.element.addClass('is-open')
-          .popupmenu({menuId: 'autocomplete-list', mouseFocus: false, trigger: 'immediate', autoFocus: false})
+          .popupmenu({menuId: 'autocomplete-list', ariaListbox: true, mouseFocus: false, trigger: 'immediate', autoFocus: false})
           .on('close.autocomplete', function () {
             self.list.parent('.popupmenu-wrapper').remove();
             self.element.removeClass('is-open');

@@ -123,7 +123,7 @@
           });
 
           node.closest('.folder').toggleClass('is-open');
-          node.attr('aria-expanded', (node.attr('aria-expanded') === 'true' ? true : false));
+          node.attr('aria-expanded', (node.attr('aria-expanded') === 'true' ? 'false' : 'true'));
         }
 
         if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){

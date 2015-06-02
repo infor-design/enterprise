@@ -69,7 +69,7 @@
 
         this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
         this.input = $('<input type="text" readonly class="dropdown" tabindex="0"/>').attr({'role': 'combobox'})
-                        .attr({'aria-autocomplete': 'list', 'aria-owns': 'dropdown-list'})
+                        .attr({'aria-autocomplete': 'list', 'aria-controls': 'dropdown-list'})
                         .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
                         .attr({'aria-describedby' : id + '-instructions', 'id': id});
 
@@ -89,9 +89,10 @@
           this.label.attr('class', this.orgLabel.attr('class'));
         }
 
-        this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
-          .text(Locale.translate('ChangeSelection'))
-          .insertAfter(this.label);
+        // Removed as caused duplicate text with drop down role
+        //this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
+        //  .text(Locale.translate('  '))
+        //  .insertAfter(this.label);
 
         // Setup the incoming options that can be set as properties/attributes
         if (this.element.prop('multiple') && !this.settings.multiple) {
@@ -179,7 +180,7 @@
           }
           selectedOpts.each(function(i) {
             var option = $(this),
-              listOption = $('<li id="list-option'+ i +'" role="listitem" class="dropdown-option is-selected" tabindex="-1">'+ option.html()+ '</li>')
+              listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option is-selected" tabindex="-1">'+ option.html()+ '</li>')
                 .attr({'aria-selected': 'true'});
             setOptions(option, listOption);
             self.listUl.append(listOption);

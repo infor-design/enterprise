@@ -27,6 +27,7 @@
         trigger: 'click',  //click, rightClick, immediate
         autoFocus: true,
         mouseFocus: true,
+        ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
         eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
       },
       settings = $.extend({}, defaults, options);
@@ -98,7 +99,7 @@
         }
 
         this.menu.addClass('popupmenu')
-          .attr('role', 'menu').attr('aria-hidden', 'true')
+          .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu')).attr('aria-hidden', 'true')
           .wrap('<div class="popupmenu-wrapper"></div>');
 
         //Enforce Correct Modality
@@ -144,7 +145,7 @@
         });
 
         var anchor = this.menu.find('a');
-        anchor.attr('tabindex', '-1').attr('role', 'menuitem');
+        anchor.attr('tabindex', '-1').attr('role', (this.settings.ariaListbox ? 'option' : 'menuitem'));
 
         //Add Checked indication
         anchor.each(function () {

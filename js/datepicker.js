@@ -169,8 +169,14 @@
             handled = true;
           }
 
-          // Tab closes Date Picker like escape and goes to next field
+          // Tab closes Date Picker and goes to next field
           if (key === 9 && self.isOpen()) {
+            self.element.focus();
+            self.closeCalendar();
+          }
+
+          // Esc closes Date Picker and goes back to field
+          if (key === 27 && self.isOpen()) {
             self.closeCalendar();
             self.element.focus();
           }

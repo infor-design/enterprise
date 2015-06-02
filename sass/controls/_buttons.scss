@@ -96,7 +96,7 @@ a.btn-primary {
   &:focus {
     border: 1px solid $btn-focus-bg-color;
     //box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 1px $btn-focus-border-color;
+    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
 
     &:active {
       background-color: $btn-focus-bg-color;
