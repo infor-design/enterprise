@@ -50,7 +50,7 @@ describe('Autocomplete [selenium]', function(){
   });
 
   // NOTE: This test depends on the test above completing successfully
-  it('should populate the input field with the correct text when a result is clicked', function(done) {
+  it.skip('should populate the input field with the correct text when a result is clicked', function(done) {
     runner.client
       // Click the first result
       .click(LIST + ' li:first-child > a', globals.noError)
@@ -65,7 +65,7 @@ describe('Autocomplete [selenium]', function(){
 
   // NOTE: More of an integration test than a unit test (touches the backend)
   // TODO: Use a Mocking framework for this?
-  it('can have a template that changes the way results are displayed', function(done) {
+  it.skip('can have a template that changes the way results are displayed', function(done) {
     runner.client
       // Key in a value into the templated autocomplete
       .setValue(AUTO_TEMPLATE, '', globals.noError)
@@ -89,7 +89,7 @@ describe('Autocomplete [selenium]', function(){
       .call(done);
   });
 
-  it('can be destroyed', function(done) {
+  it.skip('can be destroyed', function(done) {
     runner.client
       // Run the destroy method
       .execute('$("#auto-default").data("autocomplete").destroy();', globals.noError)
