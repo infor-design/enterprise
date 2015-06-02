@@ -19,9 +19,10 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  //If a the event that a
+  //If there already exists a Locale object with a culturesPath use that path
+  //This allows manually setting the directory for the culture files to be retrieved from
   var existingCulturePath = '';
-  if (window.Locale && window.Locale.culturesPath) {
+  if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
     existingCulturePath = window.Locale.culturesPath;
   }
 
