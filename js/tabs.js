@@ -37,23 +37,10 @@
     Tabs.prototype = {
 
       init: function(){
-        var self = this;
         this
           .setup()
           .build()
           .setupEvents();
-
-        this.activate(this.tablist.children('li:first-child').children('a').attr('href'));
-        this.setOverflow();
-
-        // Focus the bar on the first element, but don't animate it on page load.
-        this.animatedBar.addClass('no-transition');
-        this.positionFocusState(self.anchors.get(0));
-        this.focusBar(undefined, function() {
-          setTimeout(function() {
-            self.animatedBar.removeClass('no-transition');
-          }, 0);
-        });
       },
 
       setup: function() {
@@ -144,21 +131,42 @@
           }
         });
 
+        // Search for existing tabs that might be selected and store them if found
+        var selected = this.tablist.children('li.is-selected').children('a');
+        if (!selected.length) {
+          selected = this.tablist.children('li:first-child').children('a');
+          selected.addClass('is-selected');
+        }
+
+        this.activate(selected.attr('href'));
+        this.setOverflow();
+
+        // Focus the bar on the 'selected' tab or more button, but don't animate it on page load.
+        this.animatedBar.addClass('no-transition');
+        this.positionFocusState(selected);
+        this.focusBar(undefined, function() {
+          setTimeout(function() {
+            self.animatedBar.removeClass('no-transition');
+          }, 0);
+        });
+
         return this;
       },
+
       lastClick: null,
+
       setupEvents: function() {
         var self = this;
 
         // Bind all "a" and "li" events to the tablist so that we can add/remove without issue
-        self.tablist.on('click.tabs', '> li', function(e) {
+        self.tablist.onTouchClick('tabs', '> li').on('click.tabs', '> li', function(e) {
           self.handleClick(e, $(this));
-        }).on('click.tabs', 'a', function(e) {
+        }).on('click.tabs touchend.tabs touchcancel.tabs', 'a', function(e) {
           // Clicking the 'a' triggers the click on the 'li'
           e.preventDefault();
           e.stopPropagation();
           $(this).parent().trigger('click');
-        }).on('click.tabs', '.icon', function(e) {
+        }).on('click.tabs touchend.tabs touchcancel.tabs', '.icon', function(e) {
           if ($(this).parent().hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
@@ -184,7 +192,7 @@
         });
 
         // Setup the "more" function
-        self.moreButton.on('click.tabs', function(e) {
+        self.moreButton.onTouchClick('tabs').on('click.tabs', function(e) {
           if (self.element.is('.is-disabled')) {
             return;
           }
@@ -242,7 +250,6 @@
         var nonVisibleExcludes = ':not(.separator):not(:hidden)',
           a = li.children('a');
 
-
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
 
         // Don't activate a dropdown tab, but open its popupmenu.
@@ -258,10 +265,9 @@
 
         this.lastFocus = e.target;
         a.focus();
+        li.addClass('is-selected');
         this.positionFocusState(a, true);
         this.focusBar(li);
-        li.addClass('is-selected');
-
       },
 
       handleFocus: function(e, a) {
@@ -270,11 +276,7 @@
           return;
         }
 
-        var invisibleExcludes = ':not(.separator):not(:hidden)',
-          allExcludes = invisibleExcludes + ':not(.is-disabled)',
-          li = a.parent();
-
-        this.tablist.children('li' + allExcludes).add(this.moreButton);
+        var li = a.parent();
 
         if (this.isTabOverflowed(li)) {
           this.buildPopupMenu(a.attr('href'));
@@ -382,7 +384,7 @@
           a = self.anchors.filter('[href="' + href + '"]'),
           ui = {
                 newTab: a.parent(),
-                oldTab: self.anchors.parents().find('.is-selected'),
+                oldTab: self.anchors.parent().filter('.is-selected'),
                 panels: self.panels.filter('[id="' + href.replace(/#/g, '') + '"]'),
                 oldPanel: self.panels.filter(':visible')
               };
@@ -401,9 +403,8 @@
           self.element.trigger('activate', null, ui);
         });
 
-        if (ui.oldTab.index() !== ui.newTab.index()) {
-          ui.oldTab.removeClass('is-selected');
-        }
+        ui.oldTab.removeClass('is-selected');
+        ui.newTab.addClass('is-selected');
 
         var li = ui.newTab;
         if (this.isTabOverflowed(li)) {
