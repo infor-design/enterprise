@@ -37,11 +37,6 @@
       $('html').attr('lang', this.currentLocale.name);
     },
 
-    //Manually set the directory for the cultures
-    setCulturesPath: function(path) {
-      this.culturesPath = path;
-    },
-
     //Get the path to the directory with the cultures
     getCulturesPath: function() {
       if (!this.culturesPath) {
@@ -56,10 +51,10 @@
           }
 
           if (src.indexOf(partialPathMin) > -1) {
-            this.setCulturesPath(src.replace(partialPath, '') + 'cultures/');
+            this.culturesPath = src.replace(partialPath, '') + 'cultures/';
           }
           if (src.indexOf(partialPath) > -1) {
-            this.setCulturesPath(src.replace(partialPath, '') + 'cultures/');
+            this.culturesPath = src.replace(partialPath, '') + 'cultures/';
           }
         }
       }
