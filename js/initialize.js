@@ -91,7 +91,6 @@
               title: title ? title : undefined,
               placement: 'right'
           });
-          console.log($('#'+ obj.attr('data-popover')));
         });
 
         //Tree

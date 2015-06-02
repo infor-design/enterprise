@@ -226,7 +226,6 @@ window.Chart = function(container) {
 
         var size = charts.getTooltipSize(content);
         xPos = shape.offset().left - (size.width /2) + (barWidth/2);
-        console.log(xPos);
 
         charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'})
             .find('.tooltip-content')

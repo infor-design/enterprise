@@ -160,8 +160,8 @@
         dateFormat = this.calendar().dateFormat.short;
       }
 
-      var formatParts, 
-        dateStringParts, 
+      var formatParts,
+        dateStringParts,
         dateObj = {},
         isDateTime = (dateFormat !== this.calendar().dateFormat.short);
 
@@ -181,8 +181,6 @@
       if (dateStringParts.length === 1) {
         dateStringParts = dateString.split('.');
       }
-
-      // console.log(formatParts + ', ' + dateStringParts);
 
       // Check the incoming date string's parts to make sure the values are valid against the localized
       // Date pattern.
@@ -277,11 +275,11 @@
         } else {
           dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
         }
-      } else {        
+      } else {
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
       }
 
-      if(Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date        
+      if(Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date
         if(isNaN( dateObj.return.getTime())) { //date is not valid
           dateObj.return = undefined;
         }

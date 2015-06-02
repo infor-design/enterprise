@@ -344,7 +344,6 @@ app.configure(function() {
 
     }).on('error', function(e) {
       // we got an error, return 500 error to client and log error
-      console.log(e.message);
       res.writeHead(500);
       res.end();
     });

@@ -55,7 +55,7 @@
           progress = $('<div class="toast-progress"></div>');
 
         if (container.length === 0) {
-          container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite" role="alert"></div>').appendTo('body');
+          container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite"></div>').appendTo('body');
         }
 
         //TODO: RTL

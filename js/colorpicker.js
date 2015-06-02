@@ -134,7 +134,7 @@
         self.updateColorMenu();
 
         // Show Menu
-        self.swatch.popupmenu({trigger: 'immediate', menuId: 'colorpicker-menu'})
+        self.swatch.popupmenu({trigger: 'immediate', ariaListbox: true, menuId: 'colorpicker-menu'})
         .on('open.colorpicker', function () {
           self.element.parent().addClass('is-open');
         })
