@@ -183,8 +183,8 @@
           var anchor = $(this),
             text = anchor.text().trim();
 
-          if (anchor.find('.value')) {
-            text = anchor.find('.value').text().trim();
+          if (anchor.find('.display-value').length > 0) {
+            text = anchor.find('.display-value').text().trim();
           }
 
           all.parent('li').removeClass('is-selected');
