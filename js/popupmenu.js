@@ -210,7 +210,7 @@
         //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
         //Handle Events in Anchors
-        this.menu.on('click.popmenu', 'a', function (e) {
+        this.menu.on('click.popmenu touchend.popupmenu touchcancel.popupmenu', 'a', function (e) {
           var anchor = $(this),
             href = anchor.attr('href');
 
@@ -236,7 +236,6 @@
 
           e.preventDefault();
           e.stopPropagation();
-
         });
 
         var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
@@ -533,12 +532,12 @@
       detach: function () {
         $(document).off('click.popupmenu keydown.popupmenu');
         $(window).off('scroll.popupmenu resize.popupmenu');
-        this.menu.off('click.popmenu');
+        this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
 
         $('iframe').each(function () {
           var frame = $(this);
           try {
-            frame.contents().find('body').off('click.popupmenu');
+            frame.contents().find('body').off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
           } catch (e) {
             //Ignore security errors on out of iframe
           }
@@ -558,7 +557,7 @@
 
         // Close all events
         $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
-        this.menu.off('click.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
+        this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
         this.element.trigger('close');
         this.element.focus().attr('aria-expanded', 'false');
