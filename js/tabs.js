@@ -37,10 +37,23 @@
     Tabs.prototype = {
 
       init: function(){
+        var self = this;
         this
           .setup()
           .build()
           .setupEvents();
+
+        this.activate(this.tablist.children('li:first-child').children('a').attr('href'));
+        this.setOverflow();
+
+        // Focus the bar on the first element, but don't animate it on page load.
+        this.animatedBar.addClass('no-transition');
+        this.positionFocusState(self.anchors.get(0));
+        this.focusBar(undefined, function() {
+          setTimeout(function() {
+            self.animatedBar.removeClass('no-transition');
+          }, 0);
+        });
       },
 
       setup: function() {
@@ -104,26 +117,13 @@
           if (dd.length > 0 && dd.is('ul')) {
             var li = a.parent();
 
-           li.addClass('has-popupmenu').popupmenu({
+            li.addClass('has-popupmenu').popupmenu({
               menu: dd,
               trigger: 'click'
-            }, function (href) {
-              self.activate(href);
-              self.panels.filter(href).find('h3:first-child').focus();
-              self.updateAria(a);
-            });
-
-            li.data('popupmenu').menu.on('keydown.popupmenu', 'a', function(e) {
-              switch(e.which) {
-                case 27: // escape
-                  li.addClass('is-selected');
-                  a.focus();
-                  break;
-              }
             });
 
             a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
-            $('<svg class="icon"><use xlink:href="#icon-arrow-down"></svg>').insertAfter(a);
+            $('<svg class="icon icon-more"><use xlink:href="#text-arrow"></svg>').insertAfter(a);
           }
 
           if (self.settings.tabCounts && $(this).find('.count').length === 0) {
@@ -131,106 +131,103 @@
           }
         });
 
-        // Search for existing tabs that might be selected and store them if found
-        var selected = this.tablist.children('li.is-selected').children('a');
-        if (!selected.length) {
-          selected = this.tablist.children('li:first-child').children('a');
-          selected.addClass('is-selected');
-        }
-
-        this.activate(selected.attr('href'));
-        this.setOverflow();
-
-        // Focus the bar on the 'selected' tab or more button, but don't animate it on page load.
-        this.animatedBar.addClass('no-transition');
-        this.positionFocusState(selected);
-        this.focusBar(undefined, function() {
-          setTimeout(function() {
-            self.animatedBar.removeClass('no-transition');
-          }, 0);
-        });
-
         return this;
       },
-
-      lastClick: null,
 
       setupEvents: function() {
         var self = this;
 
-        // Bind all "a" and "li" events to the tablist so that we can add/remove without issue
-        self.tablist.onTouchClick('tabs', '> li').on('click.tabs', '> li', function(e) {
-          self.handleClick(e, $(this));
-        }).on('click.tabs touchend.tabs touchcancel.tabs', 'a', function(e) {
-          // Clicking the 'a' triggers the click on the 'li'
+        // Clicking the 'a' triggers the click on the 'li'
+        function routeAnchorClick(e) {
           e.preventDefault();
           e.stopPropagation();
           $(this).parent().trigger('click');
-        }).on('click.tabs touchend.tabs touchcancel.tabs', '.icon', function(e) {
+        }
+
+        // Some tabs have icons that can be clicked and manipulated
+        function handleIconClick(e) {
           if ($(this).parent().hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
             self.remove($(this).prev().attr('href'));
           }
-        }).on('mousedown.tabs', 'a', function(e) {
-          self.lastClick = e.target;
-        }).on('focus.tabs', 'a', function(e) {
-          if (e.target !== self.lastClick) {
-            self.handleFocus(e, $(this));
-          }
-          self.lastClick = null;
+        }
 
-        }).on('keydown.tabs', 'a', function(e) {
-          self.handleKeyDown(e);
-        });
-
-        self.tablist.find('a').on('blur.tabs', function() {
+        function handleTabBlur() {
           $(this).parent().removeClass('is-focused');
-          setTimeout(function() {
-            self.checkFocusedElements();
-          }, 10);
-        });
+        }
+
+        // Any events bound to individual tabs (li) and their anchors (a) are bound to the tablist
+        // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
+        self.tablist
+          .onTouchClick('tabs', '> li')
+          .on('click.tabs', '> li', function(e) {
+            self.handleTabClick(e, $(this));
+          })
+          .on('click.tabs touchend.tabs touchcancel.tabs', 'a', routeAnchorClick)
+          .on('click.tabs touchend.tabs touchcancel.tabs', '.icon', handleIconClick)
+          .on('focus.tabs', 'a', function(e) {
+            self.handleTabFocus(e, $(this));
+          })
+          .on('blur.tabs', 'a', handleTabBlur)
+          .on('keydown.tabs', 'a', function(e) {
+            self.handleTabKeyDown(e);
+          });
+
+        // Setup events on Dropdown Tabs
+        function dropdownTabEvents(i, tab) {
+          var li = $(tab),
+            a = li.children('a'),
+            menu = li.data('popupmenu').menu;
+
+          menu.on('keydown.popupmenu', 'a', function(e) {
+            switch(e.which) {
+              case 27: // escape
+                li.addClass('is-selected');
+                a.focus();
+                break;
+            }
+          });
+
+          li.on('selected.tabs', function(e, anchor) {
+            var href = $(anchor).attr('href');
+            self.activate(href);
+            a.focus();
+            self.updateAria(a);
+            self.focusBar(li);
+            self.positionFocusState();
+          });
+        }
+
+        var ddTabs = self.tablist.find('li').filter('.has-popupmenu');
+        ddTabs.each(dropdownTabEvents);
 
         // Setup the "more" function
-        self.moreButton.onTouchClick('tabs').on('click.tabs', function(e) {
-          if (self.element.is('.is-disabled')) {
-            return;
-          }
+        self.moreButton
+          .onTouchClick('tabs')
+          .on('click.tabs', function(e) {
+            self.handleMoreButtonClick(e);
+          })
+          .on('keydown.tabs', function(e) {
+            self.handleMoreButtonKeydown(e);
+          });
 
-          if (!(self.container.hasClass('has-more-button'))) {
-            e.stopPropagation();
-          }
-          if (self.moreButton.hasClass('popup-is-open')) {
-            self.popupmenu.close();
-            self.moreButton.removeClass('popup-is-open');
-          } else {
-            self.buildPopupMenu();
-          }
-        }).on('keydown.tabs', function(e) {
-          if (self.element.is('.is-disabled')) {
-            e.preventDefault();
-            return false;
-          }
+        // Check whether or not all of the tabs + more button are de-focused.
+        // If true, the focus-state and animated bar need to revert positions
+        // back to the currently selected tab.
+        this.element.on('focusout.tabs', function allTabsFocusOut() {
+          var noFocusedTabs = !$.contains(self.element[0], document.activeElement),
+            noPopupMenusOpen = self.tablist.find('[aria-expanded="true"]').length === 0;
 
-          switch(e.which) {
-            case 37: // left
-            case 38: // up
-              e.preventDefault();
-              self.findLastVisibleTab();
-              break;
-            case 13: // enter
-            case 32: // spacebar
-              e.preventDefault(); //jshint ignore:line
-            case 39: // right
-            case 40: // down
-              e.preventDefault();
-              self.buildPopupMenu(self.tablist.find('.is-selected').children('a').attr('href'));
-              break;
+          if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected')) {
+            self.focusBar(self.tablist.find('.is-selected').first());
+            self.positionFocusState();
           }
+          self.checkFocusedElements();
         });
 
         // Check to see if we need to add/remove the more button on resize
-        $(window).on('resize.tabs' + this.tabsIndex, function() {
+        $(window).on('resize.tabs' + this.tabsIndex, function resizeTabs() {
           self.setOverflow();
           self.positionFocusState();
           self.focusBar();
@@ -239,9 +236,7 @@
         return this;
       },
 
-      handleClick: function(e, li) {
-        li.removeClass('is-focused');
-
+      handleTabClick: function(e, li) {
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
           return;
@@ -250,7 +245,9 @@
         var nonVisibleExcludes = ':not(.separator):not(:hidden)',
           a = li.children('a');
 
+
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
+        li.addClass('is-selected');
 
         // Don't activate a dropdown tab, but open its popupmenu.
         if (li.is('.has-popupmenu')) {
@@ -262,15 +259,28 @@
         if (this.popupmenu) {
           this.popupmenu.close();
         }
-
-        this.lastFocus = e.target;
         a.focus();
-        li.addClass('is-selected');
         this.positionFocusState(a, true);
         this.focusBar(li);
       },
 
-      handleFocus: function(e, a) {
+      handleMoreButtonClick: function(e) {
+        if (this.element.is('.is-disabled')) {
+          return;
+        }
+
+        if (!(this.container.hasClass('has-more-button'))) {
+          e.stopPropagation();
+        }
+        if (this.moreButton.hasClass('popup-is-open')) {
+          this.popupmenu.close();
+          this.moreButton.removeClass('popup-is-open');
+        } else {
+          this.buildPopupMenu();
+        }
+      },
+
+      handleTabFocus: function(e, a) {
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
           return;
@@ -290,7 +300,7 @@
         }
       },
 
-      handleKeyDown: function(e) {
+      handleTabKeyDown: function(e) {
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
           return false;
@@ -378,13 +388,35 @@
         targetLi.children('a').focus();
       },
 
-      activate: function(href) {
+      handleMoreButtonKeydown: function(e) {
+        if (this.element.is('.is-disabled')) {
+          e.preventDefault();
+          return false;
+        }
 
+        switch(e.which) {
+          case 37: // left
+          case 38: // up
+            e.preventDefault();
+            this.findLastVisibleTab();
+            break;
+          case 13: // enter
+          case 32: // spacebar
+            e.preventDefault(); //jshint ignore:line
+          case 39: // right
+          case 40: // down
+            e.preventDefault();
+            this.buildPopupMenu(this.tablist.find('.is-selected').children('a').attr('href'));
+            break;
+        }
+      },
+
+      activate: function(href) {
         var self = this,
           a = self.anchors.filter('[href="' + href + '"]'),
           ui = {
                 newTab: a.parent(),
-                oldTab: self.anchors.parent().filter('.is-selected'),
+                oldTab: self.anchors.parents().filter('.is-selected'),
                 panels: self.panels.filter('[id="' + href.replace(/#/g, '') + '"]'),
                 oldPanel: self.panels.filter(':visible')
               };
@@ -406,13 +438,15 @@
         ui.oldTab.removeClass('is-selected');
         ui.newTab.addClass('is-selected');
 
-        var li = ui.newTab;
-        if (this.isTabOverflowed(li)) {
-          this.buildPopupMenu(a.attr('href'));
-          this.focusBar(this.moreButton);
-        } else {
-          this.focusBar(li);
-        }
+        //Init Label Widths..
+        ui.panels.find('.autoLabelWidth').each(function() {
+          var container = $(this),
+            labels = container.find('.inforLabel');
+
+          if (labels.autoWidth) {
+            labels.autoWidth();
+          }
+        });
       },
 
       updateAria: function(a) {
@@ -691,34 +725,43 @@
         self.positionFocusState(self.moreButton, true);
         self.focusBar(self.moreButton);
 
-        self.popupmenu.element.on('close.tabs', function() {
+        function closeMenu() {
           $(this).off('close.tabs selected.tabs');
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
           self.positionFocusState(undefined, true);
           self.focusBar();
-        }).on('selected.tabs', function(e, anchor) {
+        }
+
+        function selectMenuOption(e, anchor) {
           var href = anchor.attr('href'),
             tab = self.getTabFromId(href.substr(1, href.length)),
             a = tab.children('a');
 
           self.activate(anchor.attr('href'));
+
           // Fire an onclick event associated with the original tab from the spillover menu
           if (tab && typeof a[0].onclick === 'function') {
             a[0].onclick.apply(a[0]);
           }
-        });
+        }
+
+        self.popupmenu.element
+          .on('close.tabs', closeMenu)
+          .on('selected.tabs', selectMenuOption);
 
         var menu = self.popupmenu.menu;
 
         // Add the "is-selected" class to the currently focused item in this popup menu.
-        menu.on('focus.popupmenu', 'a', function() {
+        function handleAnchorFocus() {
           $(this).parents('ul').find('li').removeClass('is-selected');
           $(this).parent().addClass('is-selected');
           self.moreButton.addClass('is-selected');
           self.positionFocusState(undefined, true);
           self.focusBar();
-        }).on('keydown.popupmenu', 'a', function(e) {
+        }
+
+        function handleAnchorKeydown(e) {
           var target = $(e.currentTarget);
           switch(e.which) {
             case 13:
@@ -729,10 +772,17 @@
               self.activate(target.attr('href'));
               break;
           }
-        }).on('destroy.popupmenu', function() {
+        }
+
+        function handleDestroy() {
           menu.off();
           $('#tab-container-popupmenu').remove();
-        });
+        }
+
+        menu
+          .on('focus.popupmenu', 'a', handleAnchorFocus)
+          .on('keydown.popupmenu', 'a', handleAnchorKeydown)
+          .on('destroy.popupmenu', handleDestroy);
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
         // Otherwise, focus the first item in the list.
@@ -748,7 +798,7 @@
         // pressing certain keys.  We override this here so that the controls act in a manner as if all tabs
         // are still visible (for accessiblity reasons), meaning you can use left and right to navigate the
         // popup menu options as if they were tabs.
-        $(document).bindFirst('keydown.popupmenu', function(e) {
+        $(document).bindFirst('keydown.popupmenu', function handlePopupMenuKeydown(e) {
           var key = e.which,
             targetHref = '';
 
@@ -830,7 +880,6 @@
       },
 
       focusBar: function(li, callback) {
-
         var self = this,
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
@@ -961,6 +1010,9 @@
           });
         }
 
+        this.tablist
+          .off();
+
         this.anchors
           .off()
           .removeAttr('role')
@@ -968,6 +1020,7 @@
           .removeAttr('aria-selected')
           .removeAttr('tabindex');
 
+        this.element.off('focusout.tabs');
         $(window).off('resize.tabs' + this.tabsIndex);
         this.tabsIndex = undefined;
 
