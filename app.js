@@ -65,6 +65,17 @@ app.configure(function() {
     res.render('patterns/' + end, patternOptions);
   });
 
+  app.get('/tests/amd/*', function (req, res) {
+    var amdOptions = {
+        title: 'SoHo XI',
+        subtitle: 'AMD tests',
+        layout: 'tests/layout',
+        amd: true
+      };
+    var end = req.url.replace('/tests/amd/','');
+    res.render('tests/' + end, amdOptions);
+  });
+
   //Tests Index Page and controls sub pages
   app.get('/tests/*', function(req, res) {
     var testOptions = {
@@ -342,7 +353,7 @@ app.configure(function() {
         res.end();
       });
 
-    }).on('error', function(e) {
+    }).on('error', function() {
       // we got an error, return 500 error to client and log error
       res.writeHead(500);
       res.end();

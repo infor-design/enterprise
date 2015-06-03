@@ -13,9 +13,11 @@
 </script>
 {{/enableLiveReload}}
 
+{{^amd}}
 <script>
   // Init All SoHo XI Controls Stuff on Document Ready test
   $(function() {
     $('body').initialize('en-US');
   });
 </script>
+{{/amd}}

@@ -7,23 +7,26 @@
       <span>Test Conversions</span><br><br>
     </div>
 
-    <script src="/js/cultures/en-US.js"></script>
     <script>
-      $(function() {
-      // Handler for .ready() called.
-
-          var output = $('#output');
-          var append = function (value) {
-            output.append('<span>' + value + '</span><br>');
-          };
+      function loadDone() {
+        var output = $('#output');
+        var append = function (value) {
+          output.append('<span>' + value + '</span><br>');
+        };
 
         Locale.set('vi-VN').done(function () {
           append(Locale.formatNumber(12345.123, {style: 'currency'}));
           append(Locale.formatDate(new Date(2015, 2, 7, 13, 40), {date: 'full'}));
         });
-
-      });
+      }
     </script>
 
+    {{^amd}}
+    <script>
+      $(function() {
+        loadDone();
+      });
+    </script>
+    {{/amd}}
   </div>
 </div>
