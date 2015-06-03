@@ -3,14 +3,15 @@
 
   <div class="toolbar">
     <div class="title">
-      <h1>{{title}}
-      {{#subtitle}}
+      <h1>
         <svg class="icon icon-sohoxi">
           <use xlink:href="#icon-sohoxi"></use>
         </svg>
-      <span class="seperator">|</span>
-      {{/subtitle}}
-      {{subtitle}}</h1>
+        {{#subtitle}}
+          <span class="seperator">|</span>
+        {{/subtitle}}
+        {{subtitle}}
+      </h1>
     </div>
 
     <div class="buttonset">

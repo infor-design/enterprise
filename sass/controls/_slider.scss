@@ -5,6 +5,8 @@
   height: 4px;
   margin: 25px 4% 50px;
   position: relative;
+  @include css3(touch-callout, none);
+  @include css3(user-select, none);
   width: 92%;
 
   .slider-hit-area {
@@ -87,7 +89,7 @@
 
 .ie9 {
   .slider-wrapper > .tick::after {
-    margin-left: 0px;
+    margin-left: 0;
     z-index: -1;
   }
 }
@@ -105,6 +107,7 @@
   margin-top: -10px;
   position: absolute;
   width: 24px;
+  @include css3(touch-callout, none);
   z-index: 20;
 
   &.is-animated {
