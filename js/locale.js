@@ -51,7 +51,7 @@
           }
 
           if (src.indexOf(partialPathMin) > -1) {
-            this.culturesPath = src.replace(partialPath, '') + 'cultures/';
+            this.culturesPath = src.replace(partialPathMin, '') + 'cultures/';
           }
           if (src.indexOf(partialPath) > -1) {
             this.culturesPath = src.replace(partialPath, '') + 'cultures/';

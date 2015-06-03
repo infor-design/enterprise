@@ -60,6 +60,7 @@
               if (self.isOnScreen(this)) {
                 $('a[href="#' + this.id + '"]').addClass('is-active');
               }
+              return;
             });
 
           }, 10);
@@ -87,7 +88,7 @@
           this.sections.each(function (i) {
             var item = $(this),
               id = 'heading'+i,
-              link = $('<div><a href="#' + id + '" class="hyperlink">' + item.text() + '</a></div>');
+              link = $('<div><a href="#' + id + '" class="hyperlink' + (i === 0 ? ' is-active' : '') + '">' + item.text() + '</a></div>');
 
             item.attr('id', id);
             self.sectionList.append(link);

@@ -29,10 +29,12 @@
 
     > .btn-actions {
       background-color: $actionbutton-bg-color;
-      float: none;
       position: absolute;
       right: 10px;
-      top: 9px;
+      top: 8px;
+      padding: 0;
+      line-height: normal;
+      margin: 0;
     }
   }
 

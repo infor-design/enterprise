@@ -17,7 +17,6 @@ button {
 .btn-destructive,
 .btn-tertiary,
 .btn-icon,
-.btn-split,
 .btn-menu {
   background-color: transparent;
   border: 1px solid transparent;
@@ -36,6 +35,18 @@ button {
   position: relative;
   text-transform: uppercase;
   width: auto;
+}
+
+.btn-menu {
+  .icon {
+    height: 32px;
+  }
+}
+
+.btn-actions {
+  .icon {
+    vertical-align: middle;
+  }
 }
 
 // standard, primary, destructive
@@ -121,7 +132,6 @@ a.btn-primary {
 .btn-destructive,
 .btn-tertiary,
 .btn-menu,
-.btn-split,
 .btn-icon,
 .btn-actions {
   border-radius: 18px;

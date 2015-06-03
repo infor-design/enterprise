@@ -8,8 +8,8 @@
 .draggable {
   cursor: move;
   -ms-touch-action: none;
-
-  // transition: all .2s ease;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
   z-index: 7000;
 
   &.animated {

@@ -117,7 +117,7 @@ span {
     border-bottom: 1px solid $inverse-color;
     color: $inverse-color;
     display: inline-block;
-    @include font-size(16);
+    @include font-size(12);
     font-weight: 300;
     line-height: 25px;
     position: relative;
@@ -134,23 +134,29 @@ span {
 
     li:after {
       color: $graphite08;
-      @include font-size(16);
-      padding: 0 12px 0 3px;
+      font-size: 1.2rem !important;
+      padding: 0 10px 0 7px;
       position: relative;
-      top: 4px;
+      top: 1px;
     }
 
     a {
       border-bottom: 1px solid transparent;
+      font-size: 1.2rem !important;
       color: $graphite08 !important;
+      line-height: 17px !important;
 
       &:after {
         content: none;
       }
 
       &:focus {
-        border-bottom: 1px solid $graphite08;
+        border-bottom: 1px solid $graphite08 !important;
         outline: none;
+      }
+
+      &:hover {
+        border-bottom: 1px solid $graphite08 !important;
       }
     }
   }
@@ -342,11 +348,16 @@ span {
 
   .title {
     color: $graphite08;
+    display: inline-block;
     @include font-size(18);
-    line-height: 75px;
-    margin-left: 20px;
+    height: inherit;
+    margin-left: 10px;
+    overflow: hidden;
     text-decoration: none;
-    vertical-align: top;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 219px;
   }
 
   &:focus {
@@ -357,6 +368,7 @@ span {
 
 .kitchen-sink {
   p {
+    margin-left: -40px !important;
     text-align: center !important;
   }
 
@@ -394,11 +406,6 @@ span {
     .left {
       border-bottom: 1px solid #d8d8d8;
     }
-  }
-
-  .site-hero h1 {
-    font-size: 5rem;
-    text-align: center;
   }
 
   .site-component.card {
@@ -640,6 +647,11 @@ span {
       @include font-size(20);
       color: $graphite07;
       padding: 20px 20px 10px;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
     }
 
     p {
@@ -788,6 +800,7 @@ div.light-bgrnd {
     background-color: $inverse-color;
     height: 210px;
 
+    h1,
     h2 {
       color: $graphite07;
     }
@@ -919,6 +932,7 @@ div.light-bgrnd {
     }
 
     a:not(.tag) {
+      display: inline-block;
       @include font-size(14);
       line-height: 20px;
     }
@@ -1017,10 +1031,10 @@ div.light-bgrnd {
 }
 
 .code {
-  background-color: #ebebeb;
+  background-color: #5c5c5c;
   border: 1px solid #d2d2d2;
   border-radius: 3px;
-  color: #4d4d4c;
+  color: #ffffff;
   font-size: inherit;
   padding: 1px 9px;
 }
@@ -1182,7 +1196,7 @@ div.light-bgrnd {
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: $azure03;
+  color: #ffffff;
   direction: ltr;
   @include font-size(16);
   -moz-hyphens: none;
@@ -1190,7 +1204,6 @@ pre[class*="language-"] {
   -webkit-hyphens: none;
   hyphens: none;
   font-family: Helvetica,Arial;
-  font-weight: lighter;
   line-height: 1.5;
 
   -moz-tab-size: 4;
@@ -1207,7 +1220,7 @@ pre[class*="language-"] {
 .token.tag {
   font-family: Helvetica,Arial;
   @include font-size(16);
-  font-weight: lighter;
+  font-weight: normal;
 }
 
 // Code blocks
@@ -1256,6 +1269,10 @@ pre[class*="language-"] {
 
 .token.property {
   color: $ruby02;
+}
+
+.token.function {
+  color: $azure03;
 }
 
 .token.boolean,
