@@ -217,7 +217,7 @@
         // back to the currently selected tab.
         this.element.on('focusout.tabs', function allTabsFocusOut() {
           var noFocusedTabs = !$.contains(self.element[0], document.activeElement),
-            noPopupMenusOpen = self.tablist.find('[aria-expanded="true"]').length === 0;
+            noPopupMenusOpen = self.tablist.children('[aria-expanded="true"]').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected')) {
             self.focusBar(self.tablist.find('.is-selected').first());
