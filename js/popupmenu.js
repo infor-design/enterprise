@@ -210,7 +210,7 @@
         //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
         //Handle Events in Anchors
-        this.menu.onTouchClick('popupmenu', 'a').on('click.popmenu', 'a', function (e) {
+        this.menu.on('click.popmenu', 'a', function (e) {
           var anchor = $(this),
             href = anchor.attr('href');
 
@@ -558,7 +558,7 @@
 
         // Close all events
         $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
-        this.menu.offTouchClick('popupmenu', 'a').off('click.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
+        this.menu.off('click.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
         this.element.trigger('close');
         this.element.focus().attr('aria-expanded', 'false');
