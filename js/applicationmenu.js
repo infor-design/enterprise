@@ -24,7 +24,8 @@
     // Settings and Options
     var pluginName = 'applicationmenu',
         defaults = {
-          openOnLarge: false, // If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
+          breakpoint: 'large', // can be 'tablet' (+720), 'desktop' +(1024), or 'large' (+1280);
+          openOnLarge: true, // If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
           triggers: [] // An Array of jQuery-wrapped elements that are able to open/close this nav menu.
         },
         settings = $.extend({}, defaults, options);
@@ -54,6 +55,15 @@
 
         var openOnLarge = this.element.attr('data-open-on-large');
         this.settings.openOnLarge = openOnLarge !== undefined ? openOnLarge === 'true' : this.settings.openOnLarge;
+
+        var breakpoints = {
+          'tablet': 767,
+          'desktop': 1024,
+          'large': 1280
+        },
+        dataBreakpoint = this.element.attr('data-breakpoint');
+        this.settings.breakpoint = breakpoints[dataBreakpoint] !== undefined ? dataBreakpoint : this.settings.breakpoint;
+        this.breakpoint = breakpoints[this.settings.breakpoint];
 
         // Pull in the list of Nav Menu trigger elements and store them internally.
         this.modifyTriggers(this.settings.triggers, false, true);
@@ -175,7 +185,7 @@
       },
 
       isLargerThanBreakpoint: function() {
-        return $(window).width() > 1280;
+        return $(window).width() > this.breakpoint;
       },
 
       testWidth: function() {
