@@ -25,7 +25,7 @@
     var pluginName = 'applicationmenu',
         defaults = {
           breakpoint: 'large', // can be 'tablet' (+720), 'desktop' +(1024), or 'large' (+1280);
-          openOnLarge: true, // If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
+          openOnLarge: false, // If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
           triggers: [] // An Array of jQuery-wrapped elements that are able to open/close this nav menu.
         },
         settings = $.extend({}, defaults, options);

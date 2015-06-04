@@ -831,26 +831,6 @@ div.light-bgrnd {
     margin-top: 40px;
   }
 
-  a:not(.tag):not(.btn-primary):not(.card) {
-    border-bottom: 1px solid transparent;
-    color: $hyperlink-color;
-    cursor: pointer;
-    @include font-size(16);
-    line-height: 25px;
-    text-decoration: none;
-    @include transition(all .3s);
-    white-space: nowrap;
-
-    // Mouse Over States is Same as the focus
-    &:hover,
-    &:active,
-    &:focus,
-    &:hover {
-      border-bottom: 1px solid $hyperlink-color;
-    }
-
-  }
-
   b {
     color: 000000;
     font-weight: bold;
@@ -873,6 +853,30 @@ div.light-bgrnd {
     margin-bottom: 60px;
   }
 
+}
+
+
+// Link Style in Case Forgotten
+.editorial.component > .main > .content {
+
+  a:not(.tag):not(.btn-primary):not(.card) {
+    border-bottom: 1px solid transparent;
+    color: $hyperlink-color;
+    cursor: pointer;
+    @include font-size(16);
+    line-height: 25px;
+    text-decoration: none;
+    @include transition(all .3s);
+    white-space: nowrap;
+
+    // Mouse Over States is Same as the focus
+    &:hover,
+    &:active,
+    &:focus,
+    &:hover {
+      border-bottom: 1px solid $hyperlink-color;
+    }
+  }
 }
 
 // Controls Category Pages
@@ -1031,10 +1035,9 @@ div.light-bgrnd {
 }
 
 .code {
-  background-color: #5c5c5c;
+  background-color: $graphite02;
   border: 1px solid #d2d2d2;
   border-radius: 3px;
-  color: #ffffff;
   font-size: inherit;
   padding: 1px 9px;
 }

@@ -7,8 +7,8 @@
 </div>
 
 <div class="row">
-  <div class="six columns">
 
+  <div class="six columns">
     <ul id="light-accordion" class="accordion light">
       <li class="accordion-header">
         <a href="#">
@@ -167,14 +167,17 @@
         </div>
       </li>
     </ul>
-
   </div>
+
   <div class="six columns">
 
     <div id="dark-accordion" class="accordion dark" data-allow-one-pane="true">
       <div class="accordion-header">
         <a href="#">
-          <span class="title">Bookmarks</span>
+          <svg class="icon">
+            <use xlink:href="#icon-home"></use>
+          </svg>
+          <span class="title">Home</span>
         </a>
         <div class="accordion-pane">
           <div class="accordion-header">
@@ -196,6 +199,9 @@
       </div>
       <div class="accordion-header">
         <a href="#">
+          <svg class="icon">
+            <use xlink:href="#icon-mingle-history"></use>
+          </svg>
           <span class="title">History</span>
         </a>
         <div class="accordion-pane">
@@ -220,6 +226,9 @@
         </div>
       </div>
       <div class="accordion-header">
+
+        <button tabindex="-1" class="plus-minus"><span focusable="false" aria-hidden="true" class="icon plus-minus"></span><span class="audible">Expand/Collapse</span></button>
+
         <a href="#">
           <span class="title">Roles</span>
         </a>

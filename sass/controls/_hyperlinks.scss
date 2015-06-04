@@ -9,14 +9,13 @@
   @include font-size(14);
   line-height: 22px;
   text-decoration: none;
-  @include transition(all .3s);
+  @include transition(border .3s);
   white-space: nowrap;
 
   // Mouse Over States is Same as the focus
-  &:hover,
-  &:active,
-  &:focus,
-  &:hover {
+  &:active:not([disabled]),
+  &:focus:not([disabled]),
+  &:hover:not([disabled]) {
     border-bottom: 1px solid $hyperlink-color;
   }
 
@@ -25,13 +24,12 @@
     color: $disabled-color;
 
     &:hover {
-      border-bottom-color: transparent;
-      color: $disabled-color;
       cursor: default;
+      border-bottom: 1px solid transparent;
     }
 
     &:active {
-      color: $disabled-color;
+      border-bottom: 1px solid transparent;
     }
 
     &:focus {
