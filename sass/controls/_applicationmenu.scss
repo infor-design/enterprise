@@ -28,6 +28,11 @@ $application-menu-width: 300px;
     @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
   }
 
+  button.plus-minus {
+    left: 18px;
+    top: -4px;
+  }
+
   // Add animation to the page container when Nav is in use
   + .page-container {
     right: 0;
