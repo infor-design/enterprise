@@ -318,6 +318,7 @@
             self.updateTooltip(handle);
             self.element.trigger('sliding', handle, rangeVal);
           }
+
           return;
         }
 
@@ -361,17 +362,25 @@
           });
         });
 
-        self.wrapper.on('touchend.slider touchcancel.slider', function(e) {
+        self.wrapper.on('click.slider touchend.slider touchcancel.slider', function(e) {
+          self.handleRangeClick(e);
+        });
+
+        return self;
+      },
+
+      // User is interacting with the Slider Range (not the handle or ticks)
+      handleRangeClick: function(e) {
           e.preventDefault();
-          e.target.click();
-        }).on('click.slider', function(e) {
-          e.preventDefault();
-          if (self.isDisabled()) {
+          if (this.isDisabled()) {
             return;
           }
 
-          var mouseX = e.pageX - self.wrapper.offset().left - $(document).scrollLeft(),
-            mouseY = e.pageY - self.wrapper.offset().top - $(document).scrollTop(),
+          var self = this,
+            pageX = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageX : e.pageX,
+            pageY = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageY : e.pageY,
+            mouseX = pageX - self.wrapper.offset().left - $(document).scrollLeft(),
+            mouseY = pageY - self.wrapper.offset().top - $(document).scrollTop(),
             clickCoords = [mouseX,mouseY],
             fhX = (self.handles[0].offset().left + (self.handles[0].width()/2)) - self.wrapper.offset().left - $(document).scrollLeft(),
             fhY = (self.handles[0].offset().top + (self.handles[0].height()/2)) - self.wrapper.offset().top - $(document).scrollTop(),
@@ -420,10 +429,6 @@
           if (!self.settings.tooltip) {
             targetHandle.focus();
           }
-
-        });
-
-        return self;
       },
 
       activateHandle: function(handle) {

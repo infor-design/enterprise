@@ -58,9 +58,11 @@
             self.sectionList.find('.is-active').removeClass('is-active');
             self.sections.each(function () {
               if (self.isOnScreen(this)) {
-                $('a[href="#' + this.id + '"]').addClass('is-active');
+                var tag = $('a[href="#' + this.id + '"]');
+
+                tag.addClass('is-active');
+                tag.parent().prev().find('a').removeClass('is-active');
               }
-              return;
             });
 
           }, 10);
@@ -103,6 +105,7 @@
 
             a.parent().parent().find('.is-active').removeClass('is-active');
             a.addClass('is-active');
+
           });
 
         }

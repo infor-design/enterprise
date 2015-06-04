@@ -119,8 +119,9 @@
   // Custom Touch Event Handler that simply passes Touch Event Handlers onto a Click Event Handler.
   // Used for avoiding the 300ms wait time that click events have in most mobile environments
   // if 'one' is defined, it only listens once.
-  $.fn.onTouchClick = function(eventNamespace, one) {
+  $.fn.onTouchClick = function(eventNamespace, filter, one) {
     eventNamespace = (eventNamespace !== null || eventNamespace !== undefined ? '.' + eventNamespace : '');
+    filter = (filter !== null || filter !== undefined ? filter : '');
 
     return this.each(function() {
       var self = $(this),
@@ -137,11 +138,12 @@
   };
 
   // Reverses the .onTouchClick() method and turns off a matching event listener
-  $.fn.offTouchClick = function(eventNamespace) {
+  $.fn.offTouchClick = function(eventNamespace, filter) {
     eventNamespace = (eventNamespace !== null || eventNamespace !== undefined ? '.' + eventNamespace : '');
+    filter = (filter !== null || filter !== undefined ? filter : '');
 
     return this.each(function() {
-      return $(this).off('touchend' + eventNamespace + ' touchcancel' + eventNamespace);
+      return $(this).off('touchend' + eventNamespace + ' touchcancel' + eventNamespace, filter);
     });
   };
 

@@ -265,7 +265,7 @@
         li.attr('tabindex', 0);
 
         li.attr('aria-selected', !isChecked);
-        this.element.trigger('selectionchange', [this.selectedItems]);
+        this.element.trigger('selected', [this.selectedItems]);
 
         var toolbar = this.element.closest('.card').find('.listview-toolbar');
         //top = self.element.scrollTop();

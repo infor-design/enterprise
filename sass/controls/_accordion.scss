@@ -7,10 +7,10 @@ $light-accordion-header-bg-color: #ffffff;
 $light-accordion-header-border-color: #d8d8d8;
 $light-accordion-pane-bg-color: #f2f2f2;
 
-$dark-accordion-header-text-color: $slate04;
-$dark-accordion-header-bg-color: $graphite08;
-$dark-accordion-header-border-color: #1a1a1a;
-$dark-accordion-pane-bg-color: #292929;
+$dark-accordion-header-text-color: $slate03;
+$dark-accordion-header-bg-color: $slate08;
+$dark-accordion-header-border-color: $slate09;
+$dark-accordion-pane-bg-color: $slate09;
 
 $accordion-selected-text-color: $primary-color;
 $accordion-focused-bg-color: $primary-color;
@@ -22,7 +22,7 @@ $accordion-focused-text-color: #ffffff;
   a {
     border: 1px solid transparent;
     display: block;
-    padding: 12px 20px 14px;
+    padding: 14px 20px 12px;
     text-decoration: none;
     text-transform: capitalize;
 
@@ -37,6 +37,7 @@ $accordion-focused-text-color: #ffffff;
     }
 
     > .icon {
+      top: -1px;
 
       + .title {
         margin-left: 0;
@@ -65,6 +66,29 @@ $accordion-focused-text-color: #ffffff;
       position: relative;
     }
 
+  }
+
+  button.plus-minus {
+    display: inline-block;
+    height: 35px;
+    left: 22px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 2px;
+    width: 35px;
+
+    + a .title {
+      padding-left: 30px;
+    }
+
+    &:hover {
+      .icon.plus-minus::after,
+      .icon.plus-minus::before {
+          background-color: #ffffff;
+
+       }
+    }
   }
 
   .accordion-header {
@@ -165,7 +189,7 @@ $accordion-focused-text-color: #ffffff;
         border-top: 1px solid $light-accordion-header-border-color;
       }
 
-      > a {
+      a {
         color: $light-accordion-header-text-color;
       }
 
@@ -177,7 +201,6 @@ $accordion-focused-text-color: #ffffff;
         color: $light-accordion-header-text-color;
       }
     }
-
 
     .accordion-pane {
       background-color: #f2f2f2;
@@ -234,7 +257,21 @@ $accordion-focused-text-color: #ffffff;
         color: $dark-accordion-header-text-color;
 
         .icon.plus-minus {
-          top: -11px;
+          display: inline-block;
+          height: 20px;
+          margin-right: 40px;
+          position: absolute;
+          width: 20px;
+
+          &::before,
+          &::after {
+            left: 8px;
+            top: 22px;
+          }
+
+          + .title {
+            margin-left: 38px;
+          }
         }
 
       }
@@ -341,6 +378,11 @@ $accordion-focused-text-color: #ffffff;
         .icon.plus-minus::after {
           background-color: $accordion-focused-text-color;
         }
+      }
+
+      > .plus-minus > .plus-minus::before,
+      > .plus-minus > .plus-minus::after {
+        background-color: $accordion-focused-text-color;
       }
 
       .icon {

@@ -158,6 +158,8 @@
   }
 
   &.dismissible {
+    padding-right: 21px;
+
     .icon {
       height: 14px !important;
       margin-left: -2px;
@@ -170,7 +172,8 @@
 
   &.has-popupmenu {
     .icon {
-      margin: -2px;
+      margin: 0 8px;
+      width: 12px;
     }
   }
 

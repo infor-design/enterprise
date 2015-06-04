@@ -113,6 +113,11 @@
       handleEvents: function() {
         var self = this;
 
+
+        this.element.onTouchClick('accordion', '.plus-minus').on('click.accordion', '.plus-minus', function(e) {
+          self.handleClick(e);
+        });
+
         this.anchors.onTouchClick('accordion').on('click.accordion', function(e) {
           self.handleClick(e);
         }).on('keydown.accordion', function(e) {
@@ -131,13 +136,24 @@
       },
 
       handleClick: function(e) {
-        if (this.element.hasClass('is-disabled')) {
+        var link = $(e.target);
+
+        if (this.element.hasClass('is-disabled') || link.hasClass('is-disabled')) {
           e.preventDefault();
           e.stopPropagation();
           return false;
         }
 
-        this.setActiveAnchor($(e.target));
+        if (link.prev().is('.plus-minus')) {
+          this.setActiveAnchor(link);
+          return false;
+        }
+
+        if (link.is('button.plus-minus')) {
+          link = link.next('a');
+        }
+
+        this.setActiveAnchor(link);
         this.handleSelected(e);
       },
 
@@ -265,6 +281,10 @@
 
         if (isEvent && (href === '' || href === '#')) {
           e.preventDefault();
+        }
+
+        if ((target).hasClass('is-disabled')) {
+          return false;
         }
 
         this.element.trigger('selected', [target]);

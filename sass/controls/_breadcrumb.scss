@@ -28,18 +28,18 @@
       color: $breadcrumb-color;
     }
 
-    &:hover {
-      border-bottom: 1px solid $breadcrumb-color;
+    &:hover:not([disabled]) {
+      border-bottom: 1px solid $breadcrumb-color !important;
     }
 
     &:focus {
-      border-bottom: 1px solid $breadcrumb-color;
+      border-bottom: 1px solid $breadcrumb-color !important;
       border-radius: 2px;
       color: $breadcrumb-color;
     }
 
     &:active {
-      border-bottom: 1px solid $breadcrumb-color;
+      border-bottom: 1px solid $breadcrumb-color !important;
       color: $breadcrumb-color;
     }
 

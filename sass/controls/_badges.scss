@@ -23,8 +23,8 @@
   }
 
   &.alert {
-    background-color: $alert-orange;
-    color: #ffffff;
+    background-color: $alert-yellow;
+    color: $font-color-dark;
   }
 
   &.good {
@@ -63,7 +63,7 @@
   }
 
   &.alert {
-    background-color: $alert-orange;
+    background-color: $alert-yellow;
   }
 
   &.good {
