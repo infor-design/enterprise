@@ -66,7 +66,7 @@
 
       // Return [x and y] where we can fit this block
       getAvailability: function(block) {
-        var i, j, l, cols,
+        var i, j, n, l, cols, heightCheck,
           self = this, 
           rows = self.rowsAndCols.length, 
           smallest = {},
@@ -75,11 +75,21 @@
         // Loop thru each row and column soon it found first available spot
         // Then check for if block's width can fit in(yes), asign to [smallest] and break both loops
         for (i = 0, l = rows; i < l && !abort; i++) {
-          for (j = 0, cols = self.rowsAndCols[i].length; j < cols && !abort; j++) {
+          for (j = 0, heightCheck = true, cols = self.rowsAndCols[i].length; j < cols && !abort; j++) {
             if ((self.rowsAndCols[i][j]) && ((block.w + j) <= cols)) {
-              smallest.row = i;
-              smallest.col = j;
-              abort = true;
+              if ((block.h > 1) && (rows > (i+1))) {
+                for (n = 0; n < block.h; n++) {
+                  if (!self.rowsAndCols[i + n][j]) {
+                    heightCheck = false;
+                    break;
+                  }
+                }
+              }
+              if (heightCheck) {
+                smallest.row = i;
+                smallest.col = j;
+                abort = true;
+              }
             }
           }
         }
