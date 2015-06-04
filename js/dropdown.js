@@ -1133,7 +1133,6 @@
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.closeList();
-        this.instructions.remove();
         this.input.prev('label').remove();
         this.input.off().remove();
         this.icon.remove();
