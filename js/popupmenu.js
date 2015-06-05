@@ -350,9 +350,18 @@
           }
         }
 
-        //Handle Case where menu is off the bottom
+        //Handle Case where menu is off the right
         if ((wrapper.offset().left + menuWidth) > $(window).width()) {
           wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
+        }
+
+        wrapper.find('.arrow').removeAttr('style');
+
+        //Handle Case where menu is off the left
+        if (wrapper.offset().left < 0) {
+          wrapper.css({'left': 20});
+          //move the arrow - might need better logic here.
+          wrapper.find('.arrow').css({'left': '20px', 'right': 'unset'});
         }
 
         if (this.element.hasClass('btn-menu')) {
