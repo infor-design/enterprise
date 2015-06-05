@@ -56,6 +56,7 @@
 | Home Pages | | Fredrik Erikkson |
 | Pathway | | Jesser Susi |
 | Mongoose | | Bryan Petit |
+| Requisitions | | Todd Dooner and Brent Dahlen |
 | Rhythm Widgets | | Eric Martensson |
 | SmartStream | ASP | Wim Denayer |
 | SXE | | Peter Cullen |

@@ -10,6 +10,7 @@ select.dropdown {
 .dropdown-wrapper {
   display: inline-block;
   margin-bottom: 20px;
+  max-width: 100%;
   position: relative;
 
   .icon + .icon-error { // display errors

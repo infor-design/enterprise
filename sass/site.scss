@@ -7,7 +7,7 @@
 // Home Page
 //==================================================//
 
-$site-maxwidth: 960px;  //320x3 + two 30px gutters
+$site-maxwidth: 980px;  //320x3 + two 30px gutters
 $vision-color: $azure05;
 $code-color: $emerald06;
 $code-color-alt: $emerald08;
@@ -510,6 +510,43 @@ span {
 
 }
 
+.articles-columns {
+/*
+  -moz-column-gap: 30px;
+  -webkit-column-gap: 30px;
+  column-gap: 30px;
+
+  -moz-columns: 3 auto;
+  -webkit-columns: 3 auto;
+  columns: 3 auto;
+*/
+
+  -moz-column-gap: 30px;
+  -webkit-column-gap: 30px;
+  column-gap: 30px;
+
+  -moz-column-width: 305px;
+  -webkit-column-width: 305px;
+  column-width: 305px;
+
+  margin: 50px auto;
+  max-width: 1020px;
+  text-align: center;
+
+  margin: 50px auto;
+  text-align: center;
+
+  .article-brief {
+    -moz-column-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    column-break-inside: avoid;
+
+    display: inline-block;
+    max-width: 310px;
+    vertical-align: top;
+  }
+}
+
 .editorial {
 
   .main {
@@ -642,6 +679,7 @@ span {
     border: 1px solid $graphite02;
     margin-bottom: 30px;
     margin-right: 5px;
+    text-align: left;
 
     h2 {
       @include font-size(20);
@@ -859,7 +897,7 @@ div.light-bgrnd {
 // Link Style in Case Forgotten
 .editorial.component > .main > .content {
 
-  a:not(.tag):not(.btn-primary):not(.card) {
+  a:not(.tag):not(.btn-primary):not(.card):not(.asset-item) {
     border-bottom: 1px solid transparent;
     color: $hyperlink-color;
     cursor: pointer;
@@ -1080,26 +1118,23 @@ div.light-bgrnd {
 }
 
 .asset-item {
-  background-color: #ffffff;
-  color: #666666;
-  height: 125px;
-  min-height: 300px;
+  cursor: pointer;
+  height: 100px;
   text-decoration: none;
   width: 125px;
 
-  &:hover {
-    background-color: $azure07;
-  }
-
   img {
-    height: 100px;
-    margin: 3px 0 0 !important;
+    height: 22px;
+    margin: 0;
   }
 
   span {
+    color: #333;
+    display: block;
     font-size: 16px;
-    position: relative;
-    top: -27px;
+    overflow: hidden;
+    padding: 0 20px;
+    vertical-align: top;
   }
 }
 
@@ -1150,7 +1185,7 @@ div.light-bgrnd {
 
   .content {
     margin: 120px 0;
-    padding: 30px;
+    padding: 100px 50px;
     position: absolute;
     text-align: center;
     top: 10px;
@@ -1158,13 +1193,13 @@ div.light-bgrnd {
     width: 100%;
 
     h1 {
-      @include font-size(30);
+      @include font-size(40);
       color: #ffffff;
       margin-bottom: 40px;
     }
 
     p {
-      @include font-size(18);
+      @include font-size(22);
       color: $inverse-color;
       margin-bottom: 60px;
     }
@@ -1181,11 +1216,6 @@ div.light-bgrnd {
 }
 
 @include respond-to(tabletdown) {
-  .error-page {
-    .content {
-      width: 80%;
-    }
-  }
 
   .component-group.editorial .content {
     margin: 0 auto !important;

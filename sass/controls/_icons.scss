@@ -16,8 +16,8 @@ svg.icon {
   &.icon-error,
   &.icon-validated {
     fill: $alert-red;
-    height: 22px;
-    width: 22px;
+    height: 18px;
+    width: 18px;
   }
 
   &.icon-validated {
@@ -28,6 +28,7 @@ svg.icon {
     fill: $dirty-icon-fill;
     margin-left: -12px;
     margin-top: -12px;
+    height: 32px;
     pointer-events: none;
     position: absolute;
     @include css3(transform, rotate(135deg));
@@ -68,10 +69,9 @@ svg.icon-tree {
 .field .icon-validated {
   display: inline-block !important;
   left: 300px;
-  margin-left: -30px;
-  margin-top: -1px;
+  margin-left: -29px;
   position: absolute;
-  top: 23px;
+  top: 25px;
   vertical-align: top;
 }
 

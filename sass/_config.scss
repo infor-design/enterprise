@@ -48,14 +48,16 @@ $tertiary-btn-active-color: $primary-color;
 $tertiary-btn-disabled-color: #b6b6b6;
 
 // Input Fields
-$input-border-color: #bdbdbd;
-$input-color: #1a1a1a;
-$input-disabled-bg-color: #ececec;
-$input-disabled-border-color: #d2d2d2;
-$input-disabled-color: #999999; //Was #737373 in design
+$input-border-color: #b0b0b0;
+$input-color: $graphite08;
+$input-disabled-bg-color: transparent;
+$input-disabled-border-color: #dadada;
+$input-disabled-color: #cccccc;
 $input-focus-border-color: $primary-color;
-$input-placeholder-color: #999999;
-$input-readonly-border-color: #d2d2d2;
+$input-placeholder-color: $graphite04;
+$input-readonly-border-color: #dadada;
+$input-readonly-bg-color: #e9e9e9;
+$input-readonly-color: $graphite04;
 
 // Autocomplete
 $autocomplete-light-text: #777777;
@@ -183,7 +185,7 @@ $breadcrumb-color: #666666;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
-$dirty-icon-fill: #ffa800;
+$dirty-icon-fill: $alert-yellow;
 $validated-icon-fill: $alert-green;
 
 // Color Picker

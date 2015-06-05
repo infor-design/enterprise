@@ -28,9 +28,8 @@ p,
 small,
 span,
 ul {
-  //-webkit-font-smoothing: antialiased;
-  //-moz-osx-font-smoothing: grayscale;
-  font-weight: lighter;
+  @include antialiased();
+  font-weight: normal;
   line-height: normal;
 }
 
