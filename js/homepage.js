@@ -55,13 +55,17 @@
         this.resize(this, false);
       },
 
-      initColumns: function() {        
-        this.rowsAndCols = [];// Keeping all blocks as rows and columns
-        this.rowsAndCols[0] = [];
+      initColumns: function(row) {        
+        this.rowsAndCols[row] = [];
 
         for (var i = 0, l = this.settings.columns; i < l; i++) {
-          this.rowsAndCols[0][i] = true;// Make all columns available in first row[true]
+          this.rowsAndCols[row][i] = true;// Make all columns available in first row[true]
         }
+      },
+
+      initRowsAndCols: function() {
+        this.rowsAndCols = [];// Keeping all blocks as rows and columns
+        this.initColumns(0);
       },
 
       // Return [x and y] where we can fit this block
@@ -97,10 +101,7 @@
         // If did not found any available spot from previous loops
         // Add new row and asign to [smallest] first column in this new row
         if (!Object.getOwnPropertyNames(smallest).length) {
-          self.rowsAndCols[rows] = []; 
-          for (i = 0, l = self.settings.columns; i < l; i++) {
-            self.rowsAndCols[rows][i] = true;
-          }
+          self.initColumns(rows);
           smallest.row = rows;
           smallest.col = 0;
         }
@@ -128,7 +129,9 @@
             // Left to right
             for (i = r, l = block.h + r; i < l; i++) {
               for (j = c, l2 = block.w + c; j < l2; j++) {
-                self.rowsAndCols[i] = self.rowsAndCols[i] || [];
+                if (!self.rowsAndCols[i]) {
+                  self.initColumns(i);
+                }
                 self.rowsAndCols[i][j] = false;
               }
             }
@@ -136,7 +139,9 @@
             // Top to bottom
             for (i = r, l = block.h + r; i < l; i++) {
               for (j = c, l2 = block.h + c; j < l2; j++) {
-                self.rowsAndCols[i] = self.rowsAndCols[i] || [];
+                if (!self.rowsAndCols[i]) {
+                  self.initColumns(i);
+                }
                 self.rowsAndCols[i][c] = false;
               }
             }
@@ -153,13 +158,9 @@
         // If reach to end of columns and next row is not avaiable then add new row
         // Make all columns available, if not assigned earlier as unavailable
         if (addRow) {
-          var newRow = r +1;
-          self.rowsAndCols[newRow] = self.rowsAndCols[newRow] || [];
-          for (i = 0, l = self.settings.columns; i < l; i++) {
-            if (self.rowsAndCols[newRow][i] === undefined) {
-              self.rowsAndCols[newRow][i] = true;
-            }
-          }              
+          if (!self.rowsAndCols[r +1]) {
+            self.initColumns(r +1);
+          }
         }
       },
 
@@ -239,7 +240,7 @@
         self.element.find('.content').css('margin-left', '-' + (bp/2) + 'px');
 
         this.setBlocks(); //setup blocks
-        this.initColumns(); //setup colums
+        this.initRowsAndCols(); //setup colums
 
         // Loop thru each block, make fit where available and
         // If block more wider than available size, make as  available size
