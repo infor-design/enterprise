@@ -117,6 +117,10 @@ $listview-selected-text-color: $inverse-color;
     &:focus {
       background-color: $menu-hover-color;
       outline: none;
+      
+      &:focus {
+        border: 1px solid $primary-color;
+      }
     }
 
   }
@@ -145,9 +149,34 @@ $listview-selected-text-color: $inverse-color;
   }
 
   // Selection Styling
+
   &.is-selectable li,
   &.is-selectable tr {
     cursor: pointer;
+    
+    &.is-disabled {
+      cursor: default;
+    }
+  }
+
+  .is-disabled {
+    @include unselectable;
+    color: $input-disabled-color;
+    cursor: default;
+    -webkit-text-fill-color: $input-disabled-color;
+    
+    p {
+      color: $input-disabled-color;
+      -webkit-text-fill-color: $input-disabled-color;
+    }
+
+    &:before {
+      border-color: $input-disabled-color !important;
+    }
+
+    &:hover {
+      background-color: inherit;
+    }
   }
 
   li.is-selected,
@@ -176,7 +205,7 @@ $listview-selected-text-color: $inverse-color;
   &.is-muliselect li:before {
     @include checkbox-unchecked-before-style;
     left: 14px;
-    margin-left: 0;
+    margin-left: 0;    
   }
 
   &.is-muliselect li {

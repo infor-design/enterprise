@@ -30,7 +30,9 @@
         dataset: null,  //Object or Arrray or url
         template: null,  //Html Template String
         description: null,  //Audible Label (or use parent title)
-        selectable: 'single' //false, 'single' or 'multiple'
+        selectable: 'single', //false, 'single' or 'multiple'
+        selectOnfocus: true, //true or false
+        isDisabledClass: 'is-disabled' //true or false
      },
       settings = $.extend({}, defaults, options);
 
@@ -52,10 +54,16 @@
 
       setup: function() {
         var self = this,
-          card = this.element.closest('.card');
+          card = this.element.closest('.card'),
+          thisSelectable = this.element.attr('data-selectable'),
+          thisselectOnfocus = this.element.attr('data-select-onfocus');
 
-        if (this.element.attr('data-selectable')) {
-          this.settings.selectable = this.element.attr('data-selectable');
+        if (thisSelectable && thisSelectable.length) {
+          this.settings.selectable = thisSelectable;
+        }
+
+        if (thisselectOnfocus && thisselectOnfocus.length) {
+          this.settings.selectOnfocus = JSON.parse(thisselectOnfocus);
         }
 
         self.actionButton = card.find('.btn-actions');
@@ -121,6 +129,12 @@
           // Add Aria
           row.attr({'aria-posinset': i+1, 'aria-setsize': items.length});
 
+          // Add Aria disabled
+          if (row.hasClass(self.settings.isDisabledClass)) {
+            row.attr('aria-disabled','true');
+          }
+
+
         });
 
        this.element.initialize();
@@ -151,9 +165,25 @@
           isSelect = false;
 
         this.element.on('focus.listview', 'li, tr', function () {
-          if (!isSelect) {
-            self.select($(this));
-            isSelect = false;
+          var item = $(this);
+
+          // First element if disabled
+          if ((item.attr('id') === item.parent().children().first().attr('id')) &&
+             (item.hasClass(self.settings.isDisabledClass))) {
+
+            var e = $.Event('keydown.listview');
+              e.keyCode= 40; // move down
+            isSelect = true;
+            item.trigger(e);
+          }
+
+          if ((!isSelect) && 
+              (!item.hasClass(self.settings.isDisabledClass)) && 
+              (self.settings.selectOnfocus) && 
+              (self.settings.selectable !== 'multiple')) {
+
+            self.select(item);
+            isSelect = true;
           }
         });
 
@@ -164,18 +194,17 @@
             key = e.keyCode || e.charCode || 0,
             metaKey = e.metaKey;
 
-          if (item.hasClass('is-disabled')) {
-            return;
-          }
-
            if (item.index() === 0 && e.keyCode === 38) {
-             e.preventDefault();
              return;
           }
 
           if ((key === 40 || key === 38) && !metaKey) {// move down or up
             var newItem = list.children().eq(item.index() + (e.keyCode === 40 ? 1 : -1));
-            self.focus(newItem);
+            if (newItem.hasClass(self.settings.isDisabledClass)) {
+              self.focus((e.keyCode === 40 ? newItem.next() : newItem.prev()));
+            } else {
+              self.focus(newItem);
+            }
             e.preventDefault();
           }
 
@@ -193,6 +222,10 @@
             return false;
           }
 
+          if (key === 32) { // Space to toggle selection
+            self.select(item);
+          }
+
         });
 
         // Selection View Click/Touch
@@ -200,10 +233,13 @@
           this.element.addClass('is-selectable');
 
           this.element.on('click.listview touchend.listview', 'li, tr', function () {
-           var item = $(this);
-           isSelect = true;
-           self.select(item);
-           item.focus();
+            var item = $(this);
+
+            if (!item.hasClass(this.settings.isDisabledClass)) {
+              isSelect = true;
+              self.select(item);
+              item.focus();
+            }
           });
         }
 
@@ -218,7 +254,10 @@
       focus: function (item) {
         item.removeAttr('tabindex');
         item.attr('tabindex', 0).focus();
-        this.select(item);
+
+        if (this.settings.selectOnfocus && (this.settings.selectable !== 'multiple')) {
+          this.select(item);
+        }
       },
 
       // Remove Either the list element or index
@@ -244,6 +283,7 @@
         isChecked = li.hasClass('is-selected');
 
         if (this.settings.selectable !== 'multiple') {
+          li.parent().children().removeAttr('aria-selected');
           li.parent().find('.is-selected').removeClass('is-selected');
           self.selectedItems[0] = $(this);
         }
