@@ -89,11 +89,6 @@
           this.label.attr('class', this.orgLabel.attr('class'));
         }
 
-        // Removed as caused duplicate text with drop down role
-        //this.instructions = $('<span id="' + id + '-instructions" class="audible"></span>')
-        //  .text(Locale.translate('  '))
-        //  .insertAfter(this.label);
-
         // Setup the incoming options that can be set as properties/attributes
         if (this.element.prop('multiple') && !this.settings.multiple) {
           this.settings.multiple = true;
@@ -140,7 +135,7 @@
         var self = this,
           upTopOpts = 0;
         //Keep a list generated and append as needed
-        self.list = $('<div class="dropdown-list" id="dropdown-list">');
+        self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
         self.listUl = $('<ul tabindex="-1" role="listbox"></ul>').appendTo(self.list);
         self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
 
@@ -176,12 +171,17 @@
           var selectedOpts = self.element.find('option:selected');
           // Show a "selected" header if any options have been selected.
           if (selectedOpts.length > 0) {
-            self.listUl.append($('<li role="presentation" class="group-label"></li>').text(Locale.translate('Selected') + ' ' + this.label.text()));
+            self.listUl.append($('<li role="presentation" class="group-label" focusable="false"></li>').text(Locale.translate('Selected') + ' ' + this.label.text()));
           }
           selectedOpts.each(function(i) {
             var option = $(this),
-              listOption = $('<li id="list-option'+ i +'" role="option" class="dropdown-option is-selected" tabindex="-1">'+ option.html()+ '</li>')
+              listOption = $('<li role="presentation" class="dropdown-option is-selected" tabindex="-1">' +
+                '<a role="option" href="#" id="list-option'+ i +'" >' +
+                option.html() +
+                '</a>' +
+                '</li>')
                 .attr({'aria-selected': 'true'});
+
             setOptions(option, listOption);
             self.listUl.append(listOption);
             upTopOpts++;
@@ -199,7 +199,7 @@
 
           // Add Group Header if this is an <optgroup>
           if (option.is(':first-child') && option.parent().is('optgroup')) {
-            var groupHeader = $('<li role="presentation" class="group-label"></li>').text(option.parent().attr('label'));
+            var groupHeader = $('<li role="presentation" class="group-label" focusable="false"></li>').text(option.parent().attr('label'));
             self.listUl.append(groupHeader);
           }
 
@@ -207,7 +207,11 @@
             return;
           }
 
-          listOption = $('<li id="list-option'+ count +'" role="listitem" class="dropdown-option" tabindex="-1">'+ option.html() + '</li>');
+          listOption = $('<li role="presentation" class="dropdown-option" tabindex="-1">' +
+            '<a role="option" href="#" id="list-option'+ count +'">' +
+            option.html() +
+            '</a>' +
+            '</li>');
 
           self.listUl.append(listOption);
           listOption.attr({'aria-selected':'false'});
@@ -407,15 +411,15 @@
             //Highlight Term
             var exp = new RegExp('(' + term + ')', 'i'),
             text = listOpt.text().replace(exp, '<i>$1</i>');
-            listOpt.show().html(text);
+            listOpt.show().children('a').html(text);
           }
         });
 
         // Set ARIA-activedescendant to the first search term
         var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
         self.highlightOption(topItem);
-        self.input.attr('aria-activedescendant', topItem.attr('id'));
-        self.searchInput.attr('aria-activedescendant', topItem.attr('id'));
+        //self.input.attr('aria-activedescendant', topItem.attr('id'));
+        //self.searchInput.attr('aria-activedescendant', topItem.children('a').attr('id'));
 
         term = '';
 
@@ -558,6 +562,7 @@
         }
 
         this.searchKeyMode = true;
+        self.searchInput.attr('aria-activedescendant', '');
         return true;
       },
 
@@ -639,7 +644,8 @@
         }
 
         this.input.attr('aria-expanded', 'true');
-        this.input.attr('aria-activedescendant', current.attr('id'));
+        //this.input.attr('aria-activedescendant', current.attr('id'));
+        this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones
 
@@ -695,6 +701,13 @@
           } else {
             self.activate(true);
           }
+        })
+        .on('click.list', 'li > a', function(e) {
+          // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
+          e.preventDefault();
+          e.stopPropagation();
+          $(e.target).parent().trigger('click');
+          return false;
         });
 
         $(window).on('resize.dropdown', function() {
@@ -830,7 +843,8 @@
         this.list.hide().remove();
         this.list.off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list');
         this.listUl.find('li').show();
-        this.input.removeClass('is-open').attr('aria-expanded', 'false').removeAttr('aria-activedescendant');
+        this.input.removeClass('is-open').attr('aria-expanded', 'false');
+        this.searchInput.removeAttr('aria-activedescendant');
         $(document).off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
         $(window).off('resize.dropdown');
 
@@ -899,8 +913,8 @@
           listOption.addClass('is-focused').attr({'tabindex': '0'});
 
           // Set activedescendent for new option
-          this.input.attr('aria-activedescendant', listOption.attr('id'));
-          this.searchInput.attr('aria-activedescendant', listOption.attr('id'));
+          //this.input.attr('aria-activedescendant', listOption.attr('id'));
+          this.searchInput.attr('aria-activedescendant', listOption.children('a').attr('id'));
 
           if (!noScroll || noScroll === false || noScroll === undefined) {
             this.scrollToOption(listOption);
