@@ -5,7 +5,7 @@
 // Public Variable with some sample data
 var demoTasks = [];
 demoTasks.push({task:'063001', error: true, date: '10/11/2015' ,desc: 'Special fields test - New item has been created.'});
-demoTasks.push({task:'063002', date: '10/11/2015' , desc: 'Part #4212132 has low inventory level'});
+demoTasks.push({task:'063002', date: '10/11/2015' , desc: 'Part #4212132 has low inventory level', disabled: true});
 demoTasks.push({task:'063003', date: '10/07/2015' , desc: 'Check #112412 parts ordering.'});
 demoTasks.push({task:'063004', date: '10/07/2015' , desc: 'Special fields test - New item has been created.'});
 demoTasks.push({task:'063005', date: '10/11/2015' , desc: 'Call XYZ Inc at 5 PM'});
