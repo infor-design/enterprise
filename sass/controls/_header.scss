@@ -30,7 +30,7 @@ $header-bg-color: #414247;
     font-family: $font-regular;
     @include font-size(20);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
-    line-height: inherit;
+    line-height: 44px;
   }
 
   .hamburger-menu + h {
@@ -39,10 +39,10 @@ $header-bg-color: #414247;
 
   .seperator {
     color: $inverse-color;
-    @include font-size(20);
+    @include font-size(22);
     padding: 0 4px 0 5px;
     position: relative;
-    top: -2px;
+    top: 1px;
   }
 
   .btn-tertiary,
@@ -123,10 +123,15 @@ $header-bg-color: #414247;
     height: 32px;
     width: 32px;
 
-    span:not(.audible) {
+    &.icon > span {
+      background-color: $slate02;
+    }
+  }
+
+  .btn-icon:hover {
+    span:not(.icon) {
       background-color: $inverse-color;
     }
-
   }
 
   .breadcrumb {

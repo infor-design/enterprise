@@ -14,3 +14,74 @@
     background: nth($color-vars, $i);
   }
 }
+
+// Palette Shapes
+.palette-color {
+  color: #ffffff;
+  @include font-size(14);
+  font-weight: bold;
+  height: 43px;
+  margin: 0 20px 0 0;
+  padding-top: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 120px;
+
+  span {
+    color: #ffffff;
+  }
+
+  .dark-color {
+    color: #0a0a0a;
+  }
+
+  .light-color {
+    color: #ffffff;
+  }
+}
+
+.palette-label {
+  margin-top: 14px;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.palette-table {
+  overflow-x: auto;
+  padding-bottom: 20px;
+  width: auto;
+
+  td:first-child {
+    border-right: 7px solid #e6e6e6;
+    color: #666666;
+    font-size: 1.8rem;
+    padding-right: 10px;
+  }
+
+  td:nth-child(2),
+  th:nth-child(2) {
+    padding-left: 10px;
+  }
+
+  tr {
+    border-bottom: 2px solid transparent;
+  }
+
+  th {
+    color: #666666;
+    font-size: 1.8rem;
+    padding-bottom: 20px;
+    text-align: left;
+  }
+
+  table {
+    border: 0 none;
+    border-collapse: unset;
+    width: 100%;
+  }
+}
+
+// Personalization Colors
+.personalization-bg-color {
+  background-color: #ffffff;
+}

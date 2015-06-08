@@ -32,6 +32,11 @@
     color: #ffffff;
   }
 
+  &.info {
+    background-color: $azure07;
+    color: #ffffff;
+  }
+
   &.graphite03,
   &.graphite02 {
     color: $font-color-dark;
@@ -68,6 +73,10 @@
 
   &.good {
     background-color: $alert-green;
+  }
+
+  &.info {
+    background-color: $azure07;
   }
 
   &.pending {

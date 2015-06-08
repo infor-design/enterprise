@@ -121,8 +121,12 @@ $datagrid-header-height: 40px;
     }
 
     .tag {
-      line-height: 31px;
+      line-height: 28px;
       margin-top: 5px;
+
+      &[class*='azure'] {
+        color: #ffffff;
+      }
     }
 
     //Row Height Feature

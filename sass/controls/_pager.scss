@@ -7,6 +7,7 @@
   margin-bottom: 20px;
   max-height: 38px;
   overflow: hidden;
+  text-align: center;
 
   li {
     border: 1px solid transparent;
@@ -58,13 +59,14 @@
   }
 
   li a[disabled] svg {
-    fill: #999;
+    fill: #999999;
   }
 }
 
 // Buttons
 .pager-prev svg,
 .pager-next svg {
+  fill: #333333;
   height: 17px;
   left: 1px;
   top: 4px;

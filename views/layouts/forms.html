@@ -102,25 +102,34 @@
 
   <form id="example-mulitcolumn-form">
     <div class="row demo-grid">
-      <div class="six columns">
-        <div class="field l-pull-left">
-          <label for="example-mulitcolumn-first">First Name</label>
-          <input type="text" id="example-mulitcolumn-first" name="first-name">
+      <div class="full column">
+
+        <div class="compound-field">
+
+          <div class="field compound-field">
+            <label for="example-mulitcolumn-first">First Name</label>
+            <input type="text" id="example-mulitcolumn-first" name="first-name">
+          </div>
+
+          <div class="field compound-field">
+            <label for="example-mulitcolumn-last">Last Name</label>
+            <input type="text" id="example-mulitcolumn-last" class="input-sm" name="last-name">
+          </div>
+
         </div>
 
-        <div class="field ">
-          <label for="example-mulitcolumn-last">Last Name</label>
-          <input type="text" id="example-mulitcolumn-last" class="input-sm" name="last-name">
-        </div>
+        <div class="compound-field">
 
-        <div class="field l-pull-left">
-          <label for="example-mulitcolumn-phone">Phone</label>
-          <input type="text" id="example-mulitcolumn-phone" class="input-sm" name="phone">
-        </div>
+          <div class="field">
+            <label for="example-mulitcolumn-phone">Phone</label>
+            <input type="text" id="example-mulitcolumn-phone" class="input-sm" name="phone">
+          </div>
 
-        <div class="field">
-          <label for="example-mulitcolumn-ext">Ext</label>
-          <input type="text" id="example-mulitcolumn-ext" class="input-xs" name="ext">
+          <div class="field compound-field">
+            <label for="example-mulitcolumn-ext">Ext</label>
+            <input type="text" id="example-mulitcolumn-ext" class="input-xs" name="ext">
+          </div>
+
         </div>
 
         <button class="btn-primary" type="submit">Register</button>

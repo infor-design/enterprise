@@ -369,7 +369,10 @@ $.fn.datagrid = function(options) {
       self.displayCounts();
 
       //Set Tab Index and active Cell
-      self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
+      setTimeout(function () {
+        self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
+
+      }, 100);
     },
 
     setInitialColumnWidths: function () {

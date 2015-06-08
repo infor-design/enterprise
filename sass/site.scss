@@ -1046,12 +1046,16 @@ div.light-bgrnd {
     padding: 45px 0 50px 0;
   }
 
+  .listview-table {
+    margin-top: 20px;
+  }
+
   .listview-table tr,
   .listview-table td {
     color: $graphite08;
     @include font-size(16);
     line-height: 1.5em;
-    padding: 10px 0;
+    padding: 15px 0;
   }
 
   .listview-table tr {
@@ -1062,7 +1066,7 @@ div.light-bgrnd {
     color: $graphite06;
     display: table-cell;
     @include font-size(18);
-    padding: 10px 0;
+    padding: 10px 80px 10px 0;
     text-align: left;
   }
 

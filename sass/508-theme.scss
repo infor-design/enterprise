@@ -77,3 +77,9 @@ $tab-selected-color: $primary-color;
 .slider-wrapper .label {
   color: #1a1a1a !important;
 }
+
+.accordion.dark .badge,
+.accordion.dark .tag {
+  background-color: $amber05;
+  color: $graphite10;
+}

@@ -33,7 +33,7 @@ $primary-btn-active-bg-color: $azure08;
 
 // Secondary/Normal Buttons
 $btn-color: $inverse-color;
-$btn-bg-color: $slate03;
+$btn-bg-color: $slate04;
 $btn-hover-bg-color: #9a9ca4;
 $btn-focus-bg-color: #acaeb7;
 $btn-focus-border-color: $primary-color;
@@ -224,6 +224,10 @@ $rating-bg-color: #ffd042;
 $rating-border-color: #a4a4a4;
 $rating-hover-color: $primary-color;
 
+//Charts
+$chart-line-color: $graphite03;
+$chart-font-color: $graphite06;
+
 // DataGrid
 $datagrid-row-selected-color: #eaf8fe;
 $datagrid-row-hover-color: #e4e4e4;
@@ -236,15 +240,3 @@ $breakpoint-wide-tablet: 968px;
 $breakpoint-tablet-to-desktop: 1280px;
 $breakpoint-desktop-to-extralarge: 1600px;
 
-//Docs
-$highlight-color: #078cd9;
-$highlight-color-rgba: rgba(0, 194, 180, .97);
-$highlight-color-gallery: #d5000e;
-$callout-icon-bd: $popover-separator-color;
-$callout-icon-hover-bd: #ffffff;
-$callout-bd: $callout-icon-hover-bd;
-$callout-hover-bd: #078cd9;
-$callout-icon-vision: #ad3db6;
-$callout-icon-gallery: #d5000e;
-$callout-icon-guide: #ff8400;
-$divider-color: #d8d8d8;

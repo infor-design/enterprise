@@ -27,7 +27,7 @@ window.Chart = function(container) {
 
   this.pieColors = d3.scale.ordinal().range(colorRange);
   this.greyColors = d3.scale.ordinal().range(['#737373', '#999999', '#bdbdbd', '#d8d8d8']);
-  this.barColors = d3.scale.ordinal().range(colorRange);
+  this.colors = d3.scale.ordinal().range(colorRange);
 
   // Function to Add a Legend
   this.addLegend = function(series) {
@@ -42,7 +42,7 @@ window.Chart = function(container) {
       }
 
       var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
-        color = $('<div class="chart-legend-color"></div>').css('background-color', charts.barColors(i)),
+        color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
       if (series[i].percent) {
@@ -70,7 +70,7 @@ window.Chart = function(container) {
 
     });
 
-    $(container).after(legend);
+    $(container).append(legend);
   };
 
   //Add Toolbar to the page
@@ -183,8 +183,8 @@ window.Chart = function(container) {
       .data(dataset)
     .enter().append('g')
       .attr('class', 'bar-group')
-      .style('fill', function(d, i) { return (isSingular ? '#368AC0' : charts.barColors(i)); })
-      .style('stroke', function(d, i) { return (isSingular ? '#368AC0' : charts.barColors(i)); });
+      .style('fill', function(d, i) { return (isSingular ? '#368AC0' : charts.colors(i)); })
+      .style('stroke', function(d, i) { return (isSingular ? '#368AC0' : charts.colors(i)); });
 
     // Add a rect for each
     stack.selectAll('rect')
@@ -219,7 +219,7 @@ window.Chart = function(container) {
         } else {
          content = '<div class="chart-swatch">';
          for (var j = 0; j < dataset.length; j++) {
-          content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.barColors(j))+';"></div><span>' + series[j].name + '</span><b> ' + dataset[j][i].y + ' </b></br>';
+          content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + series[j].name + '</span><b> ' + dataset[j][i].y + ' </b></br>';
          }
          content += '</div>';
         }
@@ -396,8 +396,10 @@ window.Chart = function(container) {
       .append('g')
       .attr('class', 'series-group')
       .style('fill', function (d, i) {
-        return charts.barColors(i);
+        return charts.colors(i);
       });
+
+    var maxBarHeight = 40;
 
     rects = groups.selectAll('rect')
       .data(function (d) {
@@ -412,10 +414,10 @@ window.Chart = function(container) {
       return xScale(d.x0);
     })
     .attr('y', function (d) {
-      return yScale(d.y);
+      return yScale(d.y) + ((yScale.rangeBand() - maxBarHeight)/2);
     })
     .attr('height', function () {
-      return yScale.rangeBand();
+      return Math.min.apply(null, [yScale.rangeBand(), maxBarHeight]);
     })
     .attr('width', 0) //Animated in later
     .on('mouseenter', function (d, i) {
@@ -436,7 +438,7 @@ window.Chart = function(container) {
             totals[k] = dataset[k][i].x;
           }
 
-          content += '<div style="background-color:'+charts.barColors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></br>';
+          content += '<div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></br>';
          }
          content += '</div>';
         }
@@ -598,8 +600,6 @@ window.Chart = function(container) {
     svg.attr('width', '100%')
       .attr('height', '100%')
       .attr('viewBox','0 0 ' + dims.width + ' ' + dims.height);
-      //.attr('preserveAspectRatio','xMaxYMax');
-      //http://git.infor.com/projects/SOHO/repos/controls/commits/e796f46c0ad00f92c67b6eb87ac64a3d83ee2e25
 
     // move the origin of the group's coordinate space to the center of the SVG element
     arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ? 0 : 15))  + ')');
@@ -703,7 +703,7 @@ window.Chart = function(container) {
             midAngle = Math.atan2(centroid[1], centroid[0]),
             y = Math.sin(midAngle) * dims.labelRadius;
 
-          return (y);
+          return (y > 0) ? y + 25 : y;
         },
         'text-anchor': function (d) {
           var centroid = pieArcs.centroid(d),
@@ -818,14 +818,28 @@ window.Chart = function(container) {
     return $(container);
   };
 
+  //TODO: Test this with two charts on the page.
+  this.handleResize = function () {
+    var timeout = null;
+
+    //Handle Resize / Redraw
+    function resizeCharts() {
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        var api = $(container).data('chart');
+
+        $(container).empty();
+        api.initChartType(api.settings);
+      }, 100);
+    }
+
+    $(window).off('resize.charts').on('resize.charts', resizeCharts);
+
+  };
+
   // Donut Chart - Same as Pie but inner radius
   this.Ring = function(chartData) {
     return charts.Pie(chartData, true);
-  };
-
-  // Column Chart - Sames as bar but reverse axis
-  this.Column = function(chartData) {
-    return charts.Bar(chartData, true);
   };
 
   this.Sparkline = function(chartData) {
@@ -867,6 +881,7 @@ window.Chart = function(container) {
       .data(chartData[0].data)
     .enter()
       .append('circle')
+      .style('cursor', 'pointer')
       .attr('class', 'point')
       .attr('cx', function(d, i) { return x(i); })
       .attr('cy', function(d) { return y(d); })
@@ -880,14 +895,315 @@ window.Chart = function(container) {
         var rect = d3.select(this)[0][0].getBoundingClientRect(),
           content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> '+ Locale.translate('Peak') +': ': '') + '<b>' + d  + '</b></p>',
           size = charts.getTooltipSize(content),
-          x = rect.x - (size.width /2) + 6,
+          x = rect.x - (size.width /2) + 6 + $(window).scrollTop(),
           y = rect.y - size.height - 18;
 
         charts.showTooltip(x, y, content, 'top');
       }).on('mouseleave', function() {
         charts.hideTooltip();
       });
+
+    return $(container);
   };
+
+  // Column Chart - Sames as bar but reverse axis
+  this.Column = function(chartData) {
+
+   var dataset = chartData,
+      parent = $(container).parent(),
+      margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = parent.width() - margin.left - margin.right,
+      height = parent.height() - margin.top - margin.bottom,
+      isSingular = (dataset.length === 1);
+
+    $(container).addClass('column-chart');
+
+    var x0 = d3.scale.ordinal()
+        .rangeRoundBands([0, width], 0.1);
+
+    var x1 = d3.scale.ordinal();
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x0)
+        .tickSize(0)
+        .tickPadding(10)
+        .orient('bottom');
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .tickSize(-width)
+        .orient('left');
+
+    var svg = d3.select(container).append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    // Get the Different Names
+    var names = dataset.map(function (d) {
+      return d.name;
+    });
+
+    //Get the Maxes of each series
+    var maxes = dataset.map(function (d) {
+      return d3.max(d.data, function(d){ return d.value;});
+    });
+
+    //List the values along the x axis
+    var xAxisValues = dataset[0].data.map(function (d) {return d.name;});
+    x0.domain(names);
+
+    x1.domain(xAxisValues).rangeRoundBands([0, x0.rangeBand()]);
+    y.domain([0, d3.max(maxes)]);
+
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis);
+
+    svg.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis);
+
+    //Make an Array of objects with name + array of all values
+    var dataArray = [];
+    chartData.forEach(function(d) {
+      dataArray.push({name: d.name, values: d.data});
+    });
+
+    var xValues = svg.selectAll('.x-value')
+        .data(dataArray)
+      .enter().append('g')
+        .attr('class', 'g')
+        .attr('transform', function(d) {
+          return 'translate(' + x0(d.name) + ',0)';
+        });
+
+    var barMaxWidth = 25;
+
+    xValues.selectAll('rect')
+        .data(function(d) { return d.values; })
+      .enter().append('rect')
+        .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
+        .attr('x', function(d) {
+          return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
+        })
+        .attr('y', function(d) {
+          return y(d.value);
+        })
+        .attr('height', function(d) {
+          return height - y(d.value);
+        })
+        .style('fill', function(d, i) {
+          return (isSingular ? '#368AC0' : charts.colors(i));
+        });
+
+    var legend = svg.selectAll('.legend')
+        .data(xAxisValues.slice().reverse())
+      .enter().append('g')
+        .attr('class', 'legend')
+        .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
+
+    legend.append('rect')
+        .attr('x', width - 18)
+        .attr('width', 18)
+        .attr('height', 18)
+        .style('fill', function(d, i) { return (isSingular ? '#368AC0' : charts.colors(i)); });
+
+    legend.append('text')
+        .attr('x', width - 24)
+        .attr('y', 9)
+        .attr('dy', '.35em')
+        .style('text-anchor', 'end')
+        .text(function(d) { return d; });
+
+    return $(container);
+  };
+
+
+  this.Line = function(chartData) {
+    $(container).addClass('line-chart');
+
+    //Append the SVG in the parent area.
+    var dataset = chartData,
+      parent = $(container).parent(),
+      margin = {top: 30, right: 55, bottom: 35, left: 65},
+      width = parent.width() - margin.left - margin.right,
+      height = parent.height() - margin.top - margin.bottom - 30; //legend
+
+    var svg = d3.select(container).append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    //Calculate the Domain X and Y Ranges
+    var x = d3.scale.linear().range([0, width]),
+      y = d3.scale.linear().range([height, 0]);
+
+    var maxes = dataset.map(function (d) {
+      return d3.max(d.data, function(d){ return d.value;});
+    });
+
+    var entries = d3.max(dataset.map(function(d){ return d.data.length;})) -1,
+      xScale = x.domain([0, entries]),
+      yScale = y.domain([0, d3.max(maxes)]).nice();
+
+    var names = dataset[0].data.map(function (o) {
+      return o.name;
+    });
+
+    var xAxis = d3.svg.axis()
+      .scale(xScale)
+      .orient('bottom')
+      .tickSize(0)
+      .ticks(entries)
+      .tickPadding(10)
+      .tickFormat(function (d, i) {
+        return names[i];
+      });
+
+    var yAxis = d3.svg.axis()
+      .scale(yScale)
+      .tickSize(-(width + 20))
+      .tickPadding(20)
+      .orient('left');
+
+    //Append The Axis to the svg
+    svg.append('g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + height + ')')
+    .call(xAxis);
+
+    svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis);
+
+    //Offset the tick inside, uses the fact that the yAxis has 20 added.
+    svg.selectAll('.tick line').attr('x1', '-10');
+
+    // Create the line generator
+    var line = d3.svg.line()
+      .x(function(d, i) {
+        return xScale(i);
+      })
+      .y(function(d) {
+        return yScale(d.value);
+      });
+
+    //append the three lines.
+    dataset.forEach(function(d, i) {
+
+      var lineGroups = svg.append('g')
+        .attr('class', 'line-group');
+
+      var path = lineGroups.append('path')
+        .attr('d', line(d.data))
+        .attr('stroke', charts.colors(i))
+        .attr('stroke-width', 2)
+        .attr('fill', 'none');
+
+      // Add animation
+      var totalLength = path.node().getTotalLength();
+      path
+        .attr('stroke-dasharray', totalLength + ' ' + totalLength)
+        .attr('stroke-dashoffset', totalLength)
+        .transition()
+          .duration(750)
+          .ease('cubic')
+          .attr('stroke-dashoffset', 0);
+
+      lineGroups.selectAll('circle')
+        .data(d.data)
+        .enter()
+        .append('circle')
+        .attr('class', 'dot')
+        .attr('cx', function (d, i) { return xScale(i); })
+        .attr('cy', function (d) { return yScale(d.value); })
+        .attr('r', 5)
+        .style('stroke', '#ffffff')
+        .style('stroke-width', 2)
+        .style('fill', charts.colors(i))
+        .on('mouseenter.chart', function(d) {
+          var rect = d3.select(this)[0][0].getBoundingClientRect() ,
+            content = '<p><b>' + d.name + ' </b> ' + d.value + '</p>',
+            size = charts.getTooltipSize(content),
+            x = rect.x - (size.width /2) + 6 + $(window).scrollTop(),
+            y = rect.y - size.height - 18;
+
+          charts.showTooltip(x, y, content, 'top');
+
+          //Circle associated with hovered point
+          d3.select(this).attr('r', 7);
+        }).on('mouseleave.chart', function() {
+          charts.hideTooltip();
+
+          d3.select(this).attr('r', 5);
+        }).on('click.chart', function(d) {
+          charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
+        });
+    });
+
+    var series = dataset.map(function (d) {
+      return {name: d.name};
+    });
+
+    charts.addLegend(series);
+    charts.appendTooltip();
+    charts.handleResize();
+
+    return $(container);
+  };
+
+  //Select the element and fire the event, make the inverse selector opace
+  this.selectElement = function(elem, inverse, data) {
+    var isSelected = elem.classed('is-selected');
+
+    inverse.classed('is-not-selected', false)
+      .classed('is-selected', false)
+      .classed('is-not-selected', !isSelected);
+
+     elem.classed('is-not-selected', false)
+        .classed('is-selected', !isSelected);
+
+    //Fire Events
+     $(container).trigger('selected', [elem, data]);
+  },
+
+  this.initChartType = function (options) {
+    if (options.type === 'pie') {
+      this.Pie(options.dataset);
+    }
+    if (options.type === 'bar') {
+      this.VerticalBar(options.dataset);
+    }
+    if (options.type === 'bar-normalized') {
+      this.VerticalBar(options.dataset, true);
+    }
+    if (options.type === 'bar-grouped') {
+      this.VerticalBar(options.dataset, false, true);
+    }
+    if (options.type === 'column') {
+      this.Bar(options.dataset, false, true);
+    }
+    if (options.type === 'column-grouped') {
+      this.Column(options.dataset);
+    }
+    if (options.type === 'donut') {
+      this.Pie(options.dataset, true);
+    }
+    if (options.type === 'sparkline') {
+      this.Sparkline(options.dataset);
+    }
+    if (options.type === 'line') {
+      this.Line(options.dataset);
+    }
+  };
+
 };
 
 //Make it a plugin
@@ -897,6 +1213,7 @@ $.fn.chart = function(options) {
       chartInst;
 
     if (instance) {
+      $(window).off('resize.line');
       $(window).off('resize.pie');
       $(window).off('resize.charts load.charts');
       $(this).empty();
@@ -904,31 +1221,12 @@ $.fn.chart = function(options) {
 
     chartInst = new Chart(this, options);
     instance = $.data(this, 'chart', chartInst);
+    instance.settings = options;
 
     if ($.isEmptyObject(chartInst)) {
      return;
     }
-    if (options.type === 'pie') {
-      chartInst.Pie(options.dataset);
-    }
-    if (options.type === 'bar') {
-      chartInst.VerticalBar(options.dataset);
-    }
-    if (options.type === 'bar-normalized') {
-      chartInst.VerticalBar(options.dataset, true);
-    }
-    if (options.type === 'bar-grouped') {
-      chartInst.VerticalBar(options.dataset, false, true);
-    }
-    if (options.type === 'column') {
-      chartInst.Bar(options.dataset, false, true);
-    }
-    if (options.type === 'donut') {
-      chartInst.Pie(options.dataset, true);
-    }
-    if (options.type === 'sparkline') {
-      chartInst.Sparkline(options.dataset);
-    }
+    chartInst.initChartType(options);
 
   });
 };

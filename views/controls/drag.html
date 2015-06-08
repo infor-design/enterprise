@@ -6,8 +6,18 @@
     <span class="label">Supported Interaction Scenarios</span>
     <hr>
 
+    <span class="label">Draggable - Free</span>
+    <div class="draggable" style="border: 1px solid #999999;position:absolute; top:140px; width:50px; height:50px; background:#ffffff;">Free</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <span class="label">Draggable - Clone</span>
-    <div class="draggable" style="border: 1px solid #999999;position:absolute; top:235px; width:50px; height:50px; background:#ffffff;">Free</div>
+    <div class="draggable clone" style="border: 1px solid #999999;position:absolute; top:240px; width:50px; height:50px; background:#ffffff;">Clone</div>
 
     <br>
     <br>
@@ -55,7 +65,8 @@
 
   $('.draggable.x-only.collision').drag({axis: 'x', containment: 'parent', obstacle: '.collision'});
   $('.draggable.x-only').drag({axis: 'x', containment: 'parent'});
-  $('.draggable').drag({containment: 'document', clone: 'true'});
+  $('.draggable.clone').drag({containment: 'document', clone: 'true'});
+  $('.draggable').drag({containment: 'document'});
   $('.resizable').resize();
 
 </script>
