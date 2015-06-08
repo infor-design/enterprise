@@ -1172,7 +1172,7 @@ window.Chart = function(container) {
 
     //Fire Events
      $(container).trigger('selected', [elem, data]);
-  },
+  };
 
   this.initChartType = function (options) {
     if (options.type === 'pie') {
