@@ -367,7 +367,11 @@
 
           clearTimeout(timer);
           timer = setTimeout(function () {
-            self.filterList(searchInput.val().toLowerCase());
+            if (searchInput.val() === '') {
+              self.resetList();
+            } else {
+              self.filterList(searchInput.val().toLowerCase());
+            }
           }, 100);
 
         });
@@ -427,6 +431,23 @@
         if (self.list.hasClass('is-ontop')) {
           self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
         }
+      },
+
+      // Removes filtering from an open Dropdown list and turns off "search mode"
+      resetList: function() {
+        this.list.removeClass('search-mode');
+        this.list.find('.icon').attr('class', 'icon') // needs to be 'attr' here because .addClass() doesn't work with SVG
+          .children('use').attr('xlink:href', '#icon-arrow-down');
+
+        function stripHtml(obj) {
+          return obj[0].textContent || obj[0].innerText;
+        }
+
+        var lis = this.listUl.find('li');
+        lis.removeAttr('style').each(function() {
+          var a = $(this).children('a');
+          a.text(stripHtml(a));
+        });
       },
 
       handleKeyDown: function(input, e) {
