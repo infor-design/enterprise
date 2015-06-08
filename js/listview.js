@@ -31,8 +31,7 @@
         template: null,  //Html Template String
         description: null,  //Audible Label (or use parent title)
         selectable: 'single', //false, 'single' or 'multiple'
-        selectOnfocus: true, //true or false
-        isDisabledClass: 'is-disabled' //true or false
+        selectOnfocus: true //true or false
      },
       settings = $.extend({}, defaults, options);
 
@@ -130,7 +129,7 @@
           row.attr({'aria-posinset': i+1, 'aria-setsize': items.length});
 
           // Add Aria disabled
-          if (row.hasClass(self.settings.isDisabledClass)) {
+          if (row.hasClass('is-disabled')) {
             row.attr('aria-disabled','true');
           }
 
@@ -169,7 +168,7 @@
 
           // First element if disabled
           if ((item.attr('id') === item.parent().children().first().attr('id')) &&
-             (item.hasClass(self.settings.isDisabledClass))) {
+             (item.hasClass('is-disabled'))) {
 
             var e = $.Event('keydown.listview');
               e.keyCode= 40; // move down
@@ -177,9 +176,9 @@
             item.trigger(e);
           }
 
-          if ((!isSelect) && 
-              (!item.hasClass(self.settings.isDisabledClass)) && 
-              (self.settings.selectOnfocus) && 
+          if ((!isSelect) &&
+              (!item.hasClass('is-disabled')) &&
+              (self.settings.selectOnfocus) &&
               (self.settings.selectable !== 'multiple')) {
 
             self.select(item);
@@ -200,7 +199,7 @@
 
           if ((key === 40 || key === 38) && !metaKey) {// move down or up
             var newItem = list.children().eq(item.index() + (e.keyCode === 40 ? 1 : -1));
-            if (newItem.hasClass(self.settings.isDisabledClass)) {
+            if (newItem.hasClass('is-disabled')) {
               self.focus((e.keyCode === 40 ? newItem.next() : newItem.prev()));
             } else {
               self.focus(newItem);
@@ -235,7 +234,7 @@
           this.element.on('click.listview touchend.listview', 'li, tr', function () {
             var item = $(this);
 
-            if (!item.hasClass(this.settings.isDisabledClass)) {
+            if (!item.hasClass('is-disabled')) {
               isSelect = true;
               self.select(item);
               item.focus();
