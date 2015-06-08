@@ -46,6 +46,9 @@
           self = this,
           cssIcon = $('<span class="icon-capslock"><span class="inner">' + Locale.translate('CapsLockOn') + '</span></span>');
 
+          // Disable default [caps lock on] popup in IE
+          document.msCapsLockWarningOff = true;
+
           this.element.on('keypress.signin', '[type="password"]', function (e) {
             var field = $(this),
               fieldParent = field.parent('.field');
