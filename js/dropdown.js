@@ -223,7 +223,7 @@
         });
 
         //Add Input Element and
-        this.searchInput = $('<input type="text" class="dropdown-search" id="dropdown-search">');
+        this.searchInput = $('<input type="text" class="dropdown-search" id="dropdown-search" aria-autocomplete="list">');
         this.list.prepend(this.searchInput);
         this.searchInput.before('<label for="dropdown-search" class="audible">Search</label>');
       },

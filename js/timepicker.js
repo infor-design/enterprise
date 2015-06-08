@@ -93,7 +93,10 @@
       },
 
       addAria: function () {
-        this.element.attr('aria-haspopup', true);
+        this.element.attr({
+          'aria-haspopup': 'true',
+          'role': 'combobox'
+        });
 
         //TODO: Confirm this with Accessibility Team
         this.label = $('label[for="'+ this.element.attr('id') + '"]');
