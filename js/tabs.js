@@ -174,6 +174,17 @@
             self.handleTabKeyDown(e);
           });
 
+        // Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
+        // a change in focus, or a click.  Keystroke focus changes cause different visual situations
+        function addClickFocusData() {
+          self.focusState.removeClass('is-visible');
+          if (!$(this).is(':focus')) {
+            $(this).children('a').data('focused-by-click', true);
+          }
+        }
+        self.tablist.on('mousedown.tabs', '> li', addClickFocusData);
+        self.moreButton.on('mousedown.tabs', addClickFocusData);
+
         // Setup events on Dropdown Tabs
         function dropdownTabEvents(i, tab) {
           var li = $(tab),
@@ -210,6 +221,9 @@
           })
           .on('keydown.tabs', function(e) {
             self.handleMoreButtonKeydown(e);
+          })
+          .on('focus.tabs', function(e) {
+            self.handleMoreButtonFocus(e);
           });
 
         // Check whether or not all of the tabs + more button are de-focused.
@@ -219,7 +233,7 @@
           var noFocusedTabs = !$.contains(self.element[0], document.activeElement),
             noPopupMenusOpen = self.tablist.children('[aria-expanded="true"]').length === 0;
 
-          if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected')) {
+          if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
             self.focusBar(self.tablist.find('.is-selected').first());
             self.positionFocusState();
           }
@@ -260,7 +274,8 @@
           this.popupmenu.close();
         }
         a.focus();
-        this.positionFocusState(a, true);
+        this.focusState.removeClass('is-visible');
+        this.positionFocusState(a);
         this.focusBar(li);
       },
 
@@ -278,6 +293,7 @@
         } else {
           this.buildPopupMenu();
         }
+        this.focusState.removeClass('is-visible');
       },
 
       handleTabFocus: function(e, a) {
@@ -286,18 +302,33 @@
           return;
         }
 
-        var li = a.parent();
+        var li = a.parent(),
+          focusedByKeyboard = a.data('focused-by-click') !== true;
+        $.removeData(a[0], 'focused-by-click');
 
         if (this.isTabOverflowed(li)) {
           this.buildPopupMenu(a.attr('href'));
           this.moreButton.addClass('is-focused');
-          this.positionFocusState(this.moreButton, true);
+          this.positionFocusState(this.moreButton);
           this.focusBar(this.moreButton);
         } else {
           li.addClass('is-focused');
-          this.positionFocusState(a, true);
+          this.positionFocusState(a, focusedByKeyboard);
           this.focusBar(li);
         }
+      },
+
+      handleMoreButtonFocus: function(e) {
+        if (this.element.is('.is-disabled')) {
+          e.preventDefault();
+          return;
+        }
+
+        var focusedByKeyboard = this.moreButton.data('focused-by-click') !== true;
+        $.removeData(this.moreButton[0], 'focused-by-click');
+
+        this.focusState.removeClass('is-visible');
+        this.positionFocusState(this.moreButton, focusedByKeyboard);
       },
 
       handleTabKeyDown: function(e) {
@@ -359,6 +390,7 @@
               return;
             }
             self.activate(currentLi.children('a').attr('href'));
+            self.focusState.removeClass('is-visible');
             return;
           case 38:
             e.preventDefault(); // jshint ignore:line
@@ -385,7 +417,8 @@
           return;
         }
 
-        targetLi.children('a').focus();
+        var a = targetLi.children('a').focus();
+        self.positionFocusState(a, true);
       },
 
       handleMoreButtonKeydown: function(e) {
@@ -407,6 +440,7 @@
           case 40: // down
             e.preventDefault();
             this.buildPopupMenu(this.tablist.find('.is-selected').children('a').attr('href'));
+            this.positionFocusState(this.moreButton, true);
             break;
         }
       },
@@ -608,7 +642,7 @@
         }
 
         var a = prevLi.children('a');
-        this.positionFocusState(a, true);
+        this.positionFocusState(a);
         this.activate(a.attr('href'));
         this.focusBar(prevLi);
         return this;
@@ -722,14 +756,13 @@
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
-        self.positionFocusState(self.moreButton, true);
         self.focusBar(self.moreButton);
 
         function closeMenu() {
           $(this).off('close.tabs selected.tabs');
           self.moreButton.removeClass('popup-is-open');
           self.setMoreActive();
-          self.positionFocusState(undefined, true);
+          self.positionFocusState(undefined);
           self.focusBar();
         }
 
@@ -746,7 +779,7 @@
           }
         }
 
-        self.popupmenu.element
+        self.moreButton
           .on('close.tabs', closeMenu)
           .on('selected.tabs', selectMenuOption);
 
@@ -757,7 +790,6 @@
           $(this).parents('ul').find('li').removeClass('is-selected');
           $(this).parent().addClass('is-selected');
           self.moreButton.addClass('is-selected');
-          self.positionFocusState(undefined, true);
           self.focusBar();
         }
 
@@ -776,6 +808,7 @@
 
         function handleDestroy() {
           menu.off();
+          self.focusState.removeClass('is-visible');
           $('#tab-container-popupmenu').remove();
         }
 
@@ -872,11 +905,12 @@
       },
 
       findLastVisibleTab: function() {
-        var targetFocus = this.tablist.children('li:first-child');
+        var tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)'),
+          targetFocus = tabs.first();
         while(!(this.isTabOverflowed(targetFocus))) {
-          targetFocus = targetFocus.next('li');
+          targetFocus = tabs.eq(tabs.index(targetFocus) + 1);
         }
-        targetFocus.prev().find('a').focus();
+        tabs.eq(tabs.index(targetFocus) - 1).find('a').focus();
       },
 
       focusBar: function(li, callback) {
