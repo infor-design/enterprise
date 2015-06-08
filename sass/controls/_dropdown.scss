@@ -126,7 +126,9 @@ input.dropdown {
     }
 
     &.is-disabled {
-      color: #b6b6b6;
+      > a {
+        color: #b6b6b6;
+      }
 
       &:hover,
       &.hover {
@@ -145,6 +147,10 @@ input.dropdown {
       background-color: $primary-color;
       color: $inverse-color;
 
+      > a {
+        color: $inverse-color;
+      }
+
       &:not(.group-label):before {
         @include checkbox-checked-before-style;
         border-color: $inverse-color;
@@ -152,14 +158,23 @@ input.dropdown {
     }
   }
 
+  a {
+    color: $menu-color;
+    text-decoration: none;
+  }
+
   // Added to the dropdown list when doing a search
   &.search-mode {
 
     li {
-      color: $dropdown-search-color;
+      i {
+        color: $azure06;
+      }
 
       &.is-focused {
-        color: $azure01;
+        a {
+          color: $azure01;
+        }
 
         i {
           color: $inverse-color;
@@ -167,7 +182,9 @@ input.dropdown {
       }
 
       &.is-disabled {
-        color: #b6b6b6;
+        a {
+          color: #b6b6b6;
+        }
       }
     }
 
@@ -197,7 +214,10 @@ input.dropdown {
     li.is-selected.is-focused,
     li:hover:not(.group-label) {
       background-color: $menu-hover-color;
-      color: $font-color-dark;
+
+      > a {
+        color: $font-color-dark;
+      }
     }
 
     li.is-selected:not(.group-label):before {
@@ -220,8 +240,12 @@ input.dropdown {
       margin-top: 8px;
     }
 
+    a {
+      color: $font-color-dark;
+    }
+
     &.search-mode {
-      li {
+      a {
         i {
           color: $azure06;
         }
