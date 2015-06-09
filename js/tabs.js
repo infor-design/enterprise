@@ -176,10 +176,16 @@
 
         // Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
         // a change in focus, or a click.  Keystroke focus changes cause different visual situations
-        function addClickFocusData() {
+        function addClickFocusData(e) {
+          var tab = $(this);
+          if (tab.is('.is-disabled')) {
+            e.preventDefault();
+            return false;
+          }
+
           self.focusState.removeClass('is-visible');
-          if (!$(this).is(':focus')) {
-            $(this).children('a').data('focused-by-click', true);
+          if (!tab.is(':focus')) {
+            tab.children('a').data('focused-by-click', true);
           }
         }
         self.tablist.on('mousedown.tabs', '> li', addClickFocusData);
@@ -251,9 +257,10 @@
       },
 
       handleTabClick: function(e, li) {
-        if (this.element.is('.is-disabled')) {
+        if (this.element.is('.is-disabled') || (li && li.is('.is-disabled'))) {
+          e.stopPropagation();
           e.preventDefault();
-          return;
+          return false;
         }
 
         var nonVisibleExcludes = ':not(.separator):not(:hidden)',
@@ -280,8 +287,10 @@
       },
 
       handleMoreButtonClick: function(e) {
-        if (this.element.is('.is-disabled')) {
-          return;
+        if (this.element.is('.is-disabled') || this.moreButton.is('.is-disabled')) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
         }
 
         if (!(this.container.hasClass('has-more-button'))) {
@@ -299,7 +308,7 @@
       handleTabFocus: function(e, a) {
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
-          return;
+          return false;
         }
 
         var li = a.parent(),
@@ -662,6 +671,7 @@
       // Hides a tab
       hide: function(tabId) {
         var tab = this.getTabFromId(tabId);
+        this.findPreviousAvailableTab(tabId);
         return tabId ? tab.addClass('hidden') : null;
       },
 
@@ -674,6 +684,7 @@
       // Disables an individual tab
       disableTab: function(tabId) {
         var tab = this.getTabFromId(tabId);
+        this.findPreviousAvailableTab(tabId);
         return tabId ? tab.addClass('is-disabled') : null;
       },
 
@@ -681,6 +692,27 @@
       enableTab: function(tabId) {
         var tab = this.getTabFromId(tabId);
         return tabId ? tab.removeClass('is-disabled') : null;
+      },
+
+      // Takes a tab ID and returns a jquery object containing the previous available tab
+      findPreviousAvailableTab: function(tabId) {
+        var tab = this.getTabFromId(tabId),
+          filter = 'li:not(.separator):not(.hidden):not(.is-disabled)',
+          tabs = this.tablist.find(filter),
+          target = tabs.eq(tabs.index(tab) - 1);
+
+        while(target.length && !target.is(filter)) {
+          target = tabs.eq(tabs.index(target) - 1);
+        }
+
+        if (tab.is('.is-selected') && target.length) {
+          this.activate(target.children('a').attr('href'));
+          target.children('a').focus();
+          this.focusBar(target);
+          this.positionFocusState();
+        }
+
+        return target;
       },
 
       setOverflow: function () {
@@ -842,7 +874,7 @@
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
-              $(self.anchors.filter('[href="' + first.attr('data-tab-href') + '"]')).parent().prev().children('a').focus();
+              self.findLastVisibleTab();
             }
           }
 
@@ -854,7 +886,7 @@
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
-              self.anchors.first().focus();
+              self.findFirstVisibleTab();
             }
           }
 
@@ -910,6 +942,11 @@
           targetFocus = tabs.eq(tabs.index(targetFocus) + 1);
         }
         tabs.eq(tabs.index(targetFocus) - 1).find('a').focus();
+      },
+
+      findFirstVisibleTab: function() {
+        var tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)');
+        tabs.eq(0).find('a').focus();
       },
 
       focusBar: function(li, callback) {
