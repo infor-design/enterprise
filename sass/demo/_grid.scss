@@ -4,8 +4,8 @@
 
 .demo-grid { // make this adjacent to the .row class on a grid
   > * > .content {
-    background: none repeat scroll 0 0 #D8D8D8;
-    color: #5C5C5C;
+    background: none repeat scroll 0 0 $graphite02;
+    color: $graphite07;
     margin-bottom: 20px;
     padding-bottom: 10px;
     padding-top: 10px;

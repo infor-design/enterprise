@@ -2,6 +2,7 @@
 //================================================== //
 
 .hyperlink {
+  @include antialiased();
   border-bottom: 1px solid transparent;
   color: $hyperlink-color;
   cursor: pointer;
@@ -19,13 +20,13 @@
     border-bottom: 1px solid $hyperlink-color;
   }
 
-  //Disabled
+  // Disabled
   &[disabled] {
     color: $disabled-color;
 
     &:hover {
-      cursor: default;
       border-bottom: 1px solid transparent;
+      cursor: default;
     }
 
     &:active {
@@ -38,6 +39,7 @@
   }
 }
 
+// Links Stacked
 .link-list {
   margin-bottom: 40px;
 

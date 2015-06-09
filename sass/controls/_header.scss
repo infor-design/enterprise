@@ -3,7 +3,6 @@
 
 // Variables for this file
 $header-height: 60px;
-$header-bg-color: #414247;
 
 // Top Header
 .header {
@@ -28,6 +27,7 @@ $header-bg-color: #414247;
     color: $inverse-color;
     display: inline;
     font-family: $font-regular;
+    font-weight: normal;
     @include font-size(20);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
     line-height: 44px;
@@ -45,8 +45,6 @@ $header-bg-color: #414247;
     top: 1px;
   }
 
-  .btn-tertiary,
-  .btn-destructive,
   .btn-actions,
   .btn-icon,
   .btn-menu {
@@ -54,7 +52,7 @@ $header-bg-color: #414247;
     border: 1px solid transparent;
 
     .icon {
-      fill: $slate03;
+      fill: $header-icon-color;
     }
 
     &:focus,
@@ -70,15 +68,6 @@ $header-bg-color: #414247;
     &[aria-expanded="true"] {
       border: 1px solid $inverse-color;
       box-shadow: none;
-    }
-
-    &.hamburger-menu {
-      position: relative;
-      top: -2px;
-
-      .icon {
-        height: 26px;
-      }
     }
 
     .ripple {
@@ -120,11 +109,11 @@ $header-bg-color: #414247;
   }
 
   .title .app-header {
-    height: 32px;
+    height: 28px;
     width: 32px;
 
     &.icon > span {
-      background-color: $slate02;
+      background-color: $header-icon-color;
     }
   }
 
@@ -168,19 +157,19 @@ $header-bg-color: #414247;
       }
 
       .hyperlink {
-        color: $font-color-dark;
+        color: $font-color-highcontrast;
 
         &:active,
         &:hover {
-          border-bottom: 1px solid $font-color-dark;
+          border-bottom: 1px solid $font-color-highcontrast;
         }
       }
 
       li {
-        color: $font-color-dark;
+        color: $font-color-highcontrast;
 
         &:after {
-          color: $font-color-dark;
+          color: $font-color-highcontrast;
         }
       }
     }
@@ -198,6 +187,21 @@ $header-bg-color: #414247;
 
 }
 
+//Hide Text
+@media (max-width: $breakpoint-slim) {
+  .header h1 {
+    display: inline-block;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .header .btn-icon {
+    margin-top: -10px;
+  }
+}
+
 // Print Style Sheet
 @media print {
   body {
@@ -205,11 +209,16 @@ $header-bg-color: #414247;
     width: 100%;
   }
 
-  header.header {
+  header.header,
+  .masthead {
     background-color: transparent !important;
   }
 
   header.header .title {
-    color: #414247 !important;
+    color: $graphite07 !important;
+  }
+
+  svg {
+    fill: $graphite07 !important;
   }
 }

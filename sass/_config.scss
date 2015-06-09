@@ -4,26 +4,30 @@
 @import 'colorpalette';
 
 // Form Background Color
-$body-bg-color: #f5f5f5;
+$body-bg-color:  $graphite01;
+$header-bg-color: $slate07;
+$header-icon-color: #eff0f4;
+$panel-bg-color: $white;
+$panel-border-color: $graphite02;
 
 // Base Colors
-$header-color: $graphite06;
 $primary-color: $azure06;
-$primary-color-text: $azure08;
 $inverse-color: #ffffff;
-$secondary-color: #69d2ce;
+
+//The hyperlink Style
+$hyperlink-color: $primary-color;
 
 // Text Color
-$font-color-extradark: $graphite10;
-$font-color-dark: $graphite08;
+$font-color-extrahighcontrast: $graphite10;
+$font-color-highcontrast: $graphite08;
 $font-color: $graphite06;
-$font-color-light: $graphite04;
+$font-color-lowcontrast: $graphite04;
 $label-color: $graphite06;
-$small-text-color: #616161;
+$disabled-color: $graphite03;
 
 // Rules
-$hr-top-color: #b6b6b6;
-$hr-bottom-color: #ffffff;
+$hr-top-color: $graphite03;
+$hr-bottom-color: $white;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
@@ -42,10 +46,15 @@ $btn-disabled-color: #f0f1f2;
 $btn-disabled-bg-color: #cecfd4;
 
 // Tertiary Buttons
-$tertiary-btn-color: $header-color;
+$tertiary-btn-color: $slate06;
 $tertiary-btn-hover-color: $primary-color;
 $tertiary-btn-active-color: $primary-color;
 $tertiary-btn-disabled-color: #b6b6b6;
+
+// Icons
+$icon-color: $font-color-lowcontrast;
+$caps-color-arrow: #ffffff;
+$caps-color-background: #bdbdbd;
 
 // Input Fields
 $input-border-color: #b0b0b0;
@@ -62,6 +71,9 @@ $input-readonly-color: $graphite04;
 // Autocomplete
 $autocomplete-light-text: #777777;
 
+// Expandable Area
+$expandable-area-border-color: $font-color-lowcontrast;
+
 // Context Menu
 $menu-hover-color: #ededed;
 $menu-border-color: $primary-color;
@@ -74,7 +86,7 @@ $dropdown-disabled-bg-color: #ececec;
 $dropdown-disabled-border-color: #d2d2d2;
 $dropdown-disabled-color: #999999;
 $dropdown-focus-border-color: $input-focus-border-color;
-$dropdown-filter-color: $font-color-extradark;
+$dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
 $dropdown-search-color: $autocomplete-light-text;
 
@@ -104,7 +116,8 @@ $menubutton-disabled-border-color: $input-disabled-border-color;
 $menubutton-disabled-color: $input-disabled-color;
 
 // popupmenu Button
-$popupmenu-color: #1a1a1a;
+$popupmenu-color: $font-color-extrahighcontrast;
+$popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $inverse-color;
 
 // Action Button
@@ -200,24 +213,20 @@ $tree-border-color: #e0e0e0;
 $tree-selected-color: $primary-color;
 $tree-icon-color: #7a7a7a;
 $tree-line-color: $switch-unchecked-color;
-$tree-link-color: $font-color-extradark;
-$tree-folder-link-color: $font-color-extradark;
+$tree-link-color: $font-color-extrahighcontrast;
+$tree-folder-link-color: $font-color-extrahighcontrast;
 $tree-disabled-opacity: .5;
 
 // Tabs
 $tab-selected-color: $primary-color;  //TODO: $primary-color;
 $tab-border-color: #b6b6b6;
-$tab-hover-color: $font-color-extradark;
+$tab-hover-color: $font-color-extrahighcontrast;
 
 // Contextual Action Panel
 $contextual-panel-bg: #d8d8d8;
 
-//Text that is disabled
-$disabled-color: #cccccc;
+// Switches
 $switch-disabled-label-color: #707070;
-
-//The hyperlink Style
-$hyperlink-color: $primary-color;
 
 // Rating (Stars)
 $rating-bg-color: #ffd042;
@@ -232,8 +241,14 @@ $chart-font-color: $graphite06;
 $datagrid-row-selected-color: #eaf8fe;
 $datagrid-row-hover-color: #e4e4e4;
 
+// Search Results
+$sr-masthead-text-color: $font-color;
+$sr-result-bottom-border-color: $hr-top-color;
+$sr-masthead-item-color: $font-color-lowcontrast;
+
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
+$breakpoint-slim: 400px;
 $breakpoint-phablet: 610px;
 $breakpoint-phone-to-tablet: 767px;
 $breakpoint-wide-tablet: 968px;

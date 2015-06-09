@@ -1,9 +1,6 @@
 // Search Results Pattern
 //================================================== */
 
-$sr-masthead-text-color: $font-color;
-$sr-result-bottom-border-color: $hr-top-color;
-
 .container.search-results {
   margin-top: 3em;
 
@@ -62,7 +59,7 @@ $sr-result-bottom-border-color: $hr-top-color;
     }
 
     .type {
-      color: $font-color-light;
+      color: $sr-masthead-item-color;
       @include font-size(14);
       line-height: 1.5em;
     }
@@ -81,7 +78,7 @@ $sr-result-bottom-border-color: $hr-top-color;
       margin-right: .3em;
 
       + span {
-        color: $font-color-extradark;
+        color: $font-color-extrahighcontrast;
         @include font-size(16);
         line-height: 1.5em;
       }

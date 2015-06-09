@@ -137,10 +137,10 @@
 
     &.is-selected {
       background-color: $menu-hover-color;
-      color: $font-color-dark;
+      color: $font-color-highcontrast;
 
       > .icon {
-        fill: $font-color-dark;
+        fill: $font-color-highcontrast;
       }
     }
   }

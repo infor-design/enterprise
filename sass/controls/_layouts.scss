@@ -290,8 +290,7 @@ body.no-scroll {
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 114px);
-      margin-top: 114px;
+      height: calc(100% - 95px);
     }
 
     &.has-breadcrumb {
@@ -441,6 +440,20 @@ body.no-scroll {
   max-width: 100%;
   vertical-align: middle;
   width: 100%;
+}
+
+// Banner Detail Pattern
+.banner-detail {
+  .banner {
+    background-color: $panel-bg-color;
+    border-bottom: 1px solid $panel-border-color;
+    height: 320px;
+  }
+
+  .detail {
+    background-color: $body-bg-color;
+    height: calc(100% - 320px);
+  }
 }
 
 // Scrollable Canvas
