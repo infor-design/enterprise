@@ -35,8 +35,8 @@ svg.icon {
     z-index: 10;
 
     &.checked {
-      margin-left: -9px;
-      margin-top: -9px;
+      margin-left: -14px;
+      margin-top: -20px;
     }
   }
 
@@ -77,6 +77,11 @@ svg.icon-tree {
 
 .timepicker + .icon + .icon-error,
 .timepicker + .icon + .icon-validated {
+  left: 130px !important;
+}
+
+.datepicker + .icon + .icon-error,
+.datepicker + .icon + .icon-validated {
   left: 130px !important;
 }
 

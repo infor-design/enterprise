@@ -153,8 +153,8 @@
     }
 
     &:focus {
-      // border-color: $primary-color; - TODO: Design Variation
-      text-decoration: underline;
+      @include focus-state();
+      box-shadow: none;
     }
 
     &[disabled],

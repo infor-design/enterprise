@@ -230,6 +230,8 @@
           return;
         }
 
+        $('#validation-tooltip').addClass('is-hidden');
+
         if (this.popup && this.popup.is(':visible')) {
           self.closeCalendar();
         }

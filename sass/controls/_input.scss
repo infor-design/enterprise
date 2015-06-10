@@ -83,10 +83,8 @@ textarea[readonly] {
 }
 
 input:focus,
-textarea:focus,
-input.is-active {
-  border-color: $input-focus-border-color;
-  box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+textarea:focus {
+  @include focus-state();
 }
 
 // Text Area

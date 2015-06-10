@@ -29,6 +29,7 @@
 .colorpicker {
   border: 0 !important;
   padding: 11px 10px 8px;
+  max-height: 34px;
   width: 90px; //Small Size
 
   // Color Piece
@@ -37,13 +38,12 @@
     border-left: 1px solid $input-border-color;
     cursor: pointer;
     display: inline-block;
-    height: 35px;
+    height: 34px;
     left: -10px;
     position: relative;
     top: 0;
     vertical-align: top;
     width: 40px;
-    @include css3(transition, background-color .5s ease);
 
     // Trigger Button
     .icon {
@@ -53,7 +53,7 @@
       width: 34px;
     }
 
-    &:hover .icon {
+    &:hover:not(:disabled) .icon {
       fill: $primary-color;
     }
 
@@ -68,6 +68,7 @@
 
   &:disabled + .swatch {
     cursor: default;
+    opacity: .6;
   }
 
   //Open/Focus State is in the input

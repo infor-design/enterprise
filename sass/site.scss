@@ -16,18 +16,6 @@ body {
   background-color: $inverse-color !important;
 }
 
-h1,
-h2,
-h3,
-h4,
-label,
-p,
-small,
-span {
-  font-weight: 100;
-  @include font-size(16);
-}
-
 // Header Adjustments
 .header {
   h1 {
@@ -118,7 +106,6 @@ span {
     color: $inverse-color;
     display: inline-block;
     @include font-size(12);
-    font-weight: 300;
     line-height: 25px;
     position: relative;
     text-decoration: none;
@@ -208,9 +195,9 @@ span {
 
 .site-intro {
   h1 {
-    color: $graphite08;
+    color: $graphite06;
     @include font-size(36);
-    font-weight: lighter;
+    @include antialiased();
     margin: 70px 0 45px;
     text-align: center;
 
@@ -276,7 +263,7 @@ span {
   h2 {
     color: $graphite08;
     @include font-size(28);
-    font-weight: 300;
+    font-weight: lighter;
     line-height: 40px;
   }
 
@@ -287,7 +274,6 @@ span {
 
   p {
     @include font-size(16);
-    font-weight: 300;
     line-height: 25px;
     margin: 25px 0 30px;
     padding: 0 10%;
@@ -347,7 +333,7 @@ span {
   }
 
   .title {
-    color: $graphite08;
+    color: $graphite06;
     display: inline-block;
     @include font-size(18);
     height: inherit;
@@ -636,7 +622,7 @@ span {
   }
 
   p {
-    color: $graphite07;
+    color: $graphite06;
     @include font-size(16);
     line-height: 24px;
     margin: 15px 0;
@@ -652,10 +638,10 @@ span {
 
   ul,
   ol {
-    color: $graphite07;
+    color: $graphite06;
     @include font-size(16);
     margin-left: 20px;
-    font-weight: lighter;
+    @include antialiased();
     line-height: 28px;
     list-style: initial;
     list-style-type: disc;
@@ -737,9 +723,10 @@ span {
     margin-bottom: 80px;
 
     h1 {
-      color: $graphite07;
+      color: $graphite06;
       @include font-size(28);
       font-weight: lighter;
+      @include antialiased();
     }
   }
 
@@ -763,8 +750,8 @@ span {
 
 code.snippet {
   background-color: #ebebeb;
-  color: #1a1a1a;
-  font-family: helvetica, arial;
+  color: $graphite07;
+  font-family: 'Source Code Pro', monospace;
   line-height: 30px;
   margin-top: 10px;
   padding: 4px 1px;
@@ -840,7 +827,7 @@ div.light-bgrnd {
 
     h1,
     h2 {
-      color: $graphite07;
+      color: $graphite06;
     }
 
     .timestamp {
@@ -879,9 +866,9 @@ div.light-bgrnd {
   }
 
   h3 {
-    color: $graphite08;
+    color: $graphite07;
     @include font-size(24);
-    font-weight: lighter;
+    @include antialiased();
     margin-left: 40px;
     margin-top: 20px;
     text-align: left;
@@ -950,7 +937,7 @@ div.light-bgrnd {
 
 .editorial.component {
   background-color: $body-bg-color;
-  margin-bottom: 80px;
+  padding-bottom: 70px;
 
   .content {
     background-color: $body-bg-color;
@@ -961,7 +948,7 @@ div.light-bgrnd {
 
     .content {
       max-height: calc(100% - 150px);
-      overflow: scroll;
+      overflow: auto;
     }
 
     h3 {
@@ -1001,7 +988,7 @@ div.light-bgrnd {
   }
 
   p {
-    color: $graphite08;
+    color: $graphite06;
     @include font-size(16);
     line-height: 24px;
 
@@ -1024,9 +1011,9 @@ div.light-bgrnd {
 
   ol,
   ul {
-    color: $graphite08;
+    color: $graphite06;
     @include font-size(16);
-    font-weight: lighter;
+    @include antialiased();
     line-height: 24px;
     list-style: initial;
     list-style-type: disc;
@@ -1052,7 +1039,7 @@ div.light-bgrnd {
 
   .listview-table tr,
   .listview-table td {
-    color: $graphite08;
+    color: $graphite06;
     @include font-size(16);
     line-height: 1.5em;
     padding: 15px 0;
@@ -1232,7 +1219,6 @@ div.light-bgrnd {
 
 }
 
-
 // Syntax High Lighting
 //==================================================//
 
@@ -1241,18 +1227,9 @@ pre[class*="language-"] {
   color: #ffffff;
   direction: ltr;
   @include font-size(16);
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  -webkit-hyphens: none;
-  hyphens: none;
-  font-family: Helvetica,Arial;
-  line-height: 1.5;
-
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
+  font-family: 'Source Code Pro', monospace;
+  line-height: normal;
   text-align: left;
-
   white-space: pre;
   word-break: normal;
   word-spacing: normal;
@@ -1260,9 +1237,8 @@ pre[class*="language-"] {
 
 .token,
 .token.tag {
-  font-family: Helvetica,Arial;
   @include font-size(16);
-  font-weight: normal;
+  line-height: normal;
 }
 
 // Code blocks
@@ -1367,8 +1343,8 @@ pre[class*='language-'] {
 
   > code[data-language] {
     display: block;
-    max-height: 28em;
-    overflow: scroll;
+    max-height: 32em;
+    overflow: auto;
   }
 
   > code[data-language]::before {
@@ -1377,11 +1353,10 @@ pre[class*='language-'] {
     color: $inverse-color;
     content: attr(data-language);
     display: inline-block;
+    font-family: helvetica,arial;
     @include font-size(11);
-    font-family: Helvetica,Arial;
-    font-size: 1.1rem;
-    line-height: 14px;
-    padding: 5px;
+    line-height: normal;
+    padding: 10px;
     position: absolute;
     right: 0;
     text-transform: uppercase;

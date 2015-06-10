@@ -9,16 +9,18 @@
 <div class="row">
   <div class="twelve columns">
 
-    <div class="field">
-      <input type="radio" name="options" class="radio" id="option1">
-      <label for="option1" class="radio-label">Option 1</label><br>
-
-      <input type="radio" checked name="options" class="radio" id="option2">
-      <label for="option2" class="radio-label">Option 2</label><br>
-
-      <input type="radio" disabled name="options" class="radio" id="option3">
-      <label for="option3" class="radio-label">Option 3</label><br>
-    </div>
+    <fieldset class="radio-group">
+    <legend>Select delivery method</legend>
+        <input type="radio" class="radio" name="delivery" id="delivery1" value="in" />
+        <label for="delivery1" class="radio-label">Dine in</label>
+        <br>
+        <input type="radio" class="radio" name="delivery" id="delivery2" value="out" />
+        <label for="delivery2" class="radio-label">Carry out</label>
+        <br>
+        <input type="radio" class="radio" name="delivery" id="delivery3" value="delivery" />
+        <label for="delivery3" class="radio-label">Delivery</label>
+    </fieldset>
 
   </div>
 </div>
+

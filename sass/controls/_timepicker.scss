@@ -6,10 +6,10 @@
 
   + .icon {
     cursor: pointer;
-    fill: #999999;
-    height: 18px;
-    margin-left: -30px;
-    margin-top: 9px;
+    fill: $graphite05;
+    height: 19px;
+    margin-left: -32px;
+    margin-top: 8px;
     position: absolute;
     @include css3(user-select, none);
 

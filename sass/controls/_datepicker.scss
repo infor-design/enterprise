@@ -6,12 +6,12 @@
 
   + .icon {
     cursor: pointer;
-    fill: #999999;
-    height: 33px;
+    fill: $graphite04;
+    height: 24px;
     margin-left: -25px;
-    margin-top: 1px;
+    margin-top: 5px;
     position: absolute;
-    width: 20px;
+    width: 18px;
     z-index: 1;
 
     &:hover {
@@ -26,7 +26,7 @@
   &:disabled {
     + .icon {
       cursor: default;
-      fill: #c3c3c3;
+      fill: $input-disabled-border-color;
     }
   }
 }

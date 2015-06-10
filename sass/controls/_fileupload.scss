@@ -7,18 +7,48 @@ label.fileupload {
   top: 12px;
 
   // Label
-  span {
-    color: #ffffff;
+  span:not(.audible) {
     cursor: pointer;
     display: inline-block;
-    height: 36px;
+    height: 32px;
+    left: -35px;
+    outline: 0;
+    padding-top: 8px;
     position: relative;
+    text-align: center;
+    top: 6px;
+    width: 34px;
+
+    &:hover {
+      svg {
+        fill: $primary-color;
+      }
+    }
+
+    svg {
+      height: 17px;
+      width: 17px;
+    }
   }
 
   // Make this flow offscreen
   input[type="file"] {
     left: -1000px;
     position: fixed;
+
+    &:disabled + span:not(.audible) {
+      cursor: default;
+
+      svg {
+        fill: $input-disabled-border-color;
+      }
+
+      &:hover {
+        svg {
+          fill: $input-disabled-border-color;
+        }
+      }
+    }
   }
 
 }

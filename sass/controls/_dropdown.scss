@@ -33,16 +33,15 @@ input.dropdown {
   vertical-align: middle;
 
   &[disabled] {
-    background-color: $dropdown-disabled-bg-color;
-    border-color: $dropdown-disabled-border-color;
-    color: $dropdown-disabled-color;
+    background-color: $input-disabled-bg-color;
+    border-color: $input-disabled-border-color;
+    color: $input-disabled-color;
     cursor: default;
-    -webkit-text-fill-color: $dropdown-disabled-color;
 
     + .icon {
-      background-color: $dropdown-disabled-bg-color;
+      background-color: $input-disabled-bg-color;
       cursor: default;
-      fill: #999999;
+      fill: $input-disabled-border-color;
     }
   }
 
@@ -273,7 +272,7 @@ input.dropdown {
   }
 
   .icon {
-    fill: $graphite04;
+    fill: $graphite05;
     height: 32px;
     margin-left: -32px;
     position: absolute;

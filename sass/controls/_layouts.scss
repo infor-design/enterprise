@@ -306,12 +306,14 @@ body.no-scroll {
 
 // Editorial Pattern
 //==============================================================
+.no-transform {
+  transform: none !important;
+}
+
 .editorial {
   background-color: $inverse-color;
-  transform: none !important;
 
   .main {
-    background-color: $inverse-color;
     height: auto;
     margin: 0 auto;
     max-width: 1080px;//$breakpoint-wide-tablet;
@@ -319,7 +321,6 @@ body.no-scroll {
 
     .content {
       display: inline-block;
-      float: left;
       margin-top: 40px;
       max-width: calc(100% - 265px);
       min-width: 300px;
@@ -357,7 +358,7 @@ body.no-scroll {
     h3 {
       border-bottom: 1px solid  $graphite03;
       clear: both;
-      color: $graphite07;
+      color: $graphite06;
       @include font-size(18);
       margin-bottom: 15px !important;
       padding-bottom: 15px !important;
@@ -403,7 +404,7 @@ body.no-scroll {
     a {
       border-bottom: medium none;
       border-left: 3px solid transparent;
-      color: #999999;
+      color: $graphite05;
       height: auto;
       line-height: 25px;
       padding: 5px 10px;

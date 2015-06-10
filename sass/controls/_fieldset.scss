@@ -5,6 +5,7 @@ fieldset {
   > legend {
     @include font-size(16);
     @include antialiased();
-    padding-bottom: 20px;
+    padding-bottom: 30px;
+    padding-top: 10px;
   }
 }

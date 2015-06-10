@@ -223,6 +223,8 @@
           elem.find('[data-validate]').validate();
           elem.find('[data-validate-on="submit"]').validate();
         }
+
+        elem.find('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
       });
 
       self.trigger('initialized');

@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>All Trigger Fields</h1>
+    <span class="label">Input Fields</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+     <div class="field">
+        <label for="time-field" class="label">Time Field (default settings)</label>
+        <input id="time-field" class="timepicker" name="time-field" type="text">
+      </div>
+
+      <div class="field">
+        <label for="time-field-disabled" class="label">Time Field (Disabled)</label>
+        <input id="time-field-disabled" class="timepicker" disabled name="time-field-disabled" type="text">
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="date-field" class="label">Date Field</label>
+      <input id="date-field" class="datepicker" placeholder="M / D / YYYY" name="date-field" type="text">
+    </div>
+
+    <div class="field">
+      <label for="date-field-disabled" class="label">Date Field (Disabled)</label>
+      <input id="date-field-disabled" class="datepicker" disabled name="date-field-disabled" type="text">
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="towns-optgroup" class="label">Towns w/ OptGroups</label>
+      <select data-init="false" id="towns-optgroup" name="towns-optgroup" class="dropdown">
+        <optgroup label="Burlington County">
+          <option>Bordentown</option>
+          <option>Burlington Township</option>
+          <option selected>Cinnaminson</option>
+          <option>Delran</option>
+          <option>Evesham</option>
+          <option>Moorestown</option>
+          <option>Mount Laurel</option>
+          <option>Palmyra</option>
+        </optgroup>
+        <optgroup label="Camden County">
+          <option>Brooklawn</option>
+          <option>Camden</option>
+          <option>Cherry Hill</option>
+          <option>Erial</option>
+          <option>Haddonfield</option>
+          <option>Pennsauken</option>
+          <option>Pine Hill</option>
+          <option>Sicklerville</option>
+        </optgroup>
+        <optgroup label="Gloucester County">
+          <option>Cross Keys</option>
+          <option>Deptford</option>
+          <option>Glassboro</option>
+          <option>Mullica Hill</option>
+          <option>Turnersville</option>
+          <option>Washington Township</option>
+          <option>Woodbury Heights</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="states-disabled" class="label">States (Disabled)</label>
+      <select id="states-disabled" disabled name="states-disabled" class="dropdown">
+        <option value="AL">Alabama</option>
+        <option value="AK" selected>Alaska</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="background-color">Color Picker</label>
+      <input class="colorpicker" value="#ffa800" id="background-color" type="text" />
+    </div>
+
+    <div class="field">
+      <label for="text-color">Choose Color</label>
+      <input class="colorpicker" value="#ffa800" disabled id="text-color" type="text" />
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label class="fileupload">
+          <span class="audible">Upload a File</span>
+          <input type="file" name="file-input" />
+      </label>
+    </div>
+
+    <div class="field">
+      <label class="fileupload">
+          <span class="audible">Upload a File</span>
+          <input type="file"  name="file-name-disabled" disabled/>
+      </label>
+    </div>
+
+  </div>
+</div>
+

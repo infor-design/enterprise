@@ -57,10 +57,10 @@ $caps-color-arrow: #ffffff;
 $caps-color-background: #bdbdbd;
 
 // Input Fields
-$input-border-color: #b0b0b0;
+$input-border-color: $graphite03;
 $input-color: $graphite08;
 $input-disabled-bg-color: transparent;
-$input-disabled-border-color: #dadada;
+$input-disabled-border-color: $graphite02;
 $input-disabled-color: #cccccc;
 $input-focus-border-color: $primary-color;
 $input-placeholder-color: $graphite04;
@@ -82,9 +82,6 @@ $menu-underline-color: $primary-color;
 
 // Drop down
 $dropdown-bg-color: transparent;
-$dropdown-disabled-bg-color: #ececec;
-$dropdown-disabled-border-color: #d2d2d2;
-$dropdown-disabled-color: #999999;
 $dropdown-focus-border-color: $input-focus-border-color;
 $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
