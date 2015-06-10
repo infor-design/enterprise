@@ -7,7 +7,6 @@
   margin-bottom: 20px;
   max-height: 38px;
   overflow: hidden;
-  text-align: center;
 
   li {
     border: 1px solid transparent;
@@ -29,15 +28,21 @@
       text-decoration: none;
       transition: all .2s ease;
       width: 30px;
+      position: relative;
+      border: 1px solid transparent;
 
       &:focus {
-        border-color: $pager-focus-border-color;
+        @include css3(box-shadow, 0 0 1px 1px $pager-focus-border-color inset);
       }
     }
 
     &.selected a {
       background-color: $pager-selected-color;
       color: #ffffff;
+      
+      &:focus {
+        @include css3(box-shadow, 0 0 1px 1px #fff inset);
+      }
     }
   }
 
@@ -59,14 +64,13 @@
   }
 
   li a[disabled] svg {
-    fill: #999999;
+    fill: #999;
   }
 }
 
 // Buttons
 .pager-prev svg,
 .pager-next svg {
-  fill: #333333;
   height: 17px;
   left: 1px;
   top: 4px;
