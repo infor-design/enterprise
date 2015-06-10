@@ -5,13 +5,15 @@
   width: 150px;
 
   + .icon {
+    background: url(about:blank) no-repeat 0 0 transparent;
     cursor: pointer;
     fill: #999999;
     height: 33px;
     margin-left: -25px;
     margin-top: 1px;
+    padding-right: 5px;
     position: absolute;
-    width: 20px;
+    width: 25px;
     z-index: 1;
 
     &:hover {
