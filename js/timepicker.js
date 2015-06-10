@@ -94,7 +94,7 @@
 
       addAria: function () {
         this.element.attr({
-          'aria-haspopup': 'true',
+          'aria-expanded': 'false',
           'role': 'combobox'
         });
 
@@ -294,7 +294,9 @@
           width: '200',
           tooltipElement: '#timepicker-popup'})
         .on('show.timepicker', function(e, ui) {
-          ui.find('select').dropdown();
+          ui.find('select').dropdown({
+            //noSearch: true
+          });
           ui.find('button').button();
 
           // reposition the popover
@@ -467,6 +469,8 @@
           self.buildStandardPopup();
           self.setupStandardEvents();
         }
+
+        this.element.attr({'aria-expanded': 'true'});
       },
 
       // Triggers the "hide" method on the tooltip plugin.  The Timepicker officially "closes" after the popover's
@@ -486,6 +490,7 @@
           }
           this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
         }
+        this.element.attr({'aria-expanded': 'false'});
         this.trigger.off('hide.timepicker show.timepicker');
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
