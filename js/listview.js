@@ -27,11 +27,11 @@
     // Settings and Options
     var pluginName = 'listview',
       defaults = {
-        dataset: null,  //Object or Arrray or url
+        dataset: null,  //Object or Array or url
         template: null,  //Html Template String
         description: null,  //Audible Label (or use parent title)
         selectable: 'single', //false, 'single' or 'multiple'
-        selectOnfocus: true //true or false
+        selectOnFocus: true //true or false
      },
       settings = $.extend({}, defaults, options);
 
@@ -54,15 +54,16 @@
       setup: function() {
         var self = this,
           card = this.element.closest('.card'),
-          thisSelectable = this.element.attr('data-selectable'),
-          thisSelectOnfocus = this.element.attr('data-select-onfocus');
+          selectable = this.element.attr('data-selectable'),
+          selectOnFocus = this.element.attr('data-select-onfocus');
 
-        if (thisSelectable && thisSelectable.length) {
-          this.settings.selectable = thisSelectable;
+        if (selectable && selectable.length) {
+          this.settings.selectable = selectable;
         }
 
-        if (thisSelectOnfocus && thisSelectOnfocus.length) {
-          this.settings.selectOnfocus = JSON.parse(thisSelectOnfocus);
+        if (selectOnFocus && selectOnFocus.length) {
+          this.settings.selectOnFocus = JSON.parse(selectOnFocus);
+
         }
 
         self.actionButton = card.find('.btn-actions');
@@ -178,7 +179,7 @@
 
           if ((!isSelect) &&
               (!item.hasClass('is-disabled')) &&
-              (self.settings.selectOnfocus) &&
+              (self.settings.selectOnFocus) &&
               (self.settings.selectable !== 'multiple')) {
 
             self.select(item);
@@ -255,7 +256,7 @@
         item.removeAttr('tabindex');
         item.attr('tabindex', 0).focus();
 
-        if (this.settings.selectOnfocus && (this.settings.selectable !== 'multiple')) {
+        if (this.settings.selectOnFocus && (this.settings.selectable !== 'multiple')) {
           this.select(item);
         }
       },

@@ -1,91 +1,81 @@
 // Expandable Area (accordion like, single-paned content area)
 //================================================== //
-$expandable-area-border-color: $font-color-light;
 
 .expandable-area {
 
-  &:first-child {
-    .expandable-header {
-      border-top: 1px solid $expandable-area-border-color;
-    }
-  }
-
-  &.is-expanded + .expandable-area {
-    .expandable-header {
-      border-top: 1px solid $expandable-area-border-color;
-    }
-  }
-
-}
-
-.expandable-header {
-  border-bottom: 1px solid $expandable-area-border-color;
-  border-top: 0;
-  @include font-size(16);
-  position: relative;
-
-  > * {
-    vertical-align: middle;
-  }
-
-  > a {
-    cursor: pointer;
-    display: block;
-    padding: .5rem 0;
+  .expandable-header {
+    border-top: 1px solid $expandable-area-border-color;
+    @include font-size(16);
+    position: relative;
 
     > * {
-      vertical-align: middle;
+      vertical-align: top;
     }
 
-    > .icon.plus-minus {
-      border: 1px solid transparent;
-      @include font-size(10);
-      margin-right: 1em;
-
-      &::before,
-      &::after {
-        background-color: $font-color;
-      }
-    }
-  }
-
-  &[aria-expanded="true"] {
-    + .expandable-pane {
+    > a {
+      cursor: pointer;
       display: block;
-    }
-  }
+      padding: 15px 0 15px 5px;
 
-  &.is-focused {
-    color: $primary-color;
+      > * {
+        vertical-align: middle;
+      }
 
-    &::-moz-focus-inner {
-      border: 0;
-    }
+      > .icon.plus-minus {
+        border: 1px solid transparent;
+        @include font-size(10);
+        height: 30px;
+        margin-right: 1em;
+        margin-top: -4px;
+        width: 30px;
 
-    &:focus {
-      outline: none;
-    }
-
-    > a > .icon.plus-minus {
-      border: 1px solid $primary-color;
-      border-radius: 2px;
-
-      &::before,
-      &::after {
-        background-color: $primary-color;
+        &::before,
+        &::after {
+          background-color: $font-color;
+        }
       }
     }
+
+    &[aria-expanded="true"] {
+      + .expandable-pane {
+        display: block;
+      }
+    }
+
+    &.is-focused {
+      color: $primary-color;
+
+      &::-moz-focus-inner {
+        border: 0;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      > a > .icon.plus-minus {
+        border: 1px solid $primary-color;
+        border-radius: 2px;
+
+        &::before,
+        &::after {
+          background-color: $primary-color;
+        }
+      }
+    }
+
   }
 
-}
+  .expandable-pane {
+    @include font-size(14);
+    font-weight: 100;
+    overflow: hidden;
 
-.expandable-pane {
-  @include font-size(14);
-  font-weight: 100;
-  overflow: hidden;
-  @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
+    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
 
-  > .content {
-    padding: 1.5rem 1.5rem 1.5rem 4.3rem;
+    > .content {
+      padding: 0 50px 15px;
+    }
   }
+
 }

@@ -1,11 +1,10 @@
 // Simple List
 //================================================== //
 
-$listview-selected-bg-color: $primary-color;
 $listview-selected-text-color: $inverse-color;
 
 .listview {
-  background-color: #ffffff;
+  background-color: $inverse-color;
   font-family: $font-regular;
   height: inherit;
   overflow: auto;
@@ -13,19 +12,20 @@ $listview-selected-text-color: $inverse-color;
   width: 100%;
 
   .listview-heading {
+    color: $font-color-extrahighcontrast;
     @include font-size(16);
-    color: #1a1a1a;
+    font-weight: lighter;
     @include ellipsis();
   }
 
   .listview-subheading {
     @include font-size(14);
-    color: #666666;
+    color: $font-color;
   }
 
   .listview-micro {
+    color: $font-color;
     @include font-size(12);
-    color: #666666;
     line-height: 18px;
   }
 
@@ -39,9 +39,27 @@ $listview-selected-text-color: $inverse-color;
     }
   }
 
-  li.error {
-    border-left: 3px solid $error-color;
-    padding: 15px 20px 15px 17px;
+  li {
+    border: 1px solid transparent;
+    border-bottom: 1px solid $graphite03;
+    color: $font-color;
+    padding: 15px 20px;
+    @include transition(background-color .15s ease 0s);
+
+    &:hover,
+    &:focus {
+      background-color: $menu-hover-color;
+      outline: none;
+
+      &:focus {
+        @include css3(box-shadow, 0 0 1px 1px $primary-color inset);
+      }
+    }
+
+    &.error {
+      border-left: 3px solid $error-color !important;
+      padding: 15px 20px 15px 17px;
+    }
   }
 
   .days,
@@ -84,10 +102,10 @@ $listview-selected-text-color: $inverse-color;
   }
 
   .checkbox-label {
-    color: #1a1a1a;
+    color: $font-color-highcontrast;
     left: 10px;
     position: relative;
-    top: 3px;
+    top: 10px;
   }
 
   .listview-thumbnail {
@@ -107,27 +125,10 @@ $listview-selected-text-color: $inverse-color;
     width: auto;
   }
 
-  li {
-    border-bottom: 1px solid #e5e5e5;
-    color: #1a1a1a;
-    padding: 15px 20px;
-    @include transition(background-color .15s ease 0s);
-
-    &:hover,
-    &:focus {
-      background-color: $menu-hover-color;
-      outline: none;
-      
-      &:focus {
-        @include css3(box-shadow, 0 0 1px 1px $primary-color inset);
-      }
-    }
-
-  }
 
   p {
+    color: $font-color-highcontrast;
     @include font-size(14);
-    color: #1a1a1a;
     line-height: 23px;
   }
 
@@ -149,11 +150,10 @@ $listview-selected-text-color: $inverse-color;
   }
 
   // Selection Styling
-
   &.is-selectable li,
   &.is-selectable tr {
     cursor: pointer;
-    
+
     &.is-disabled {
       cursor: default;
     }
@@ -164,7 +164,7 @@ $listview-selected-text-color: $inverse-color;
     color: $input-disabled-color;
     cursor: default;
     -webkit-text-fill-color: $input-disabled-color;
-    
+
     p {
       color: $input-disabled-color;
       -webkit-text-fill-color: $input-disabled-color;
@@ -205,7 +205,7 @@ $listview-selected-text-color: $inverse-color;
   &.is-muliselect li:before {
     @include checkbox-unchecked-before-style;
     left: 14px;
-    margin-left: 0;    
+    margin-left: 0;
   }
 
   &.is-muliselect li {
@@ -228,7 +228,7 @@ $listview-selected-text-color: $inverse-color;
 }
 
 .listview-toolbar {
-  background-color: $listview-selected-bg-color;
+  background-color: $primary-color;
   border-radius: 2px 2px 0 0;
   display: none;
   height: 0;
@@ -258,7 +258,7 @@ $listview-selected-text-color: $inverse-color;
     text-transform: uppercase;
 
     &:focus {
-      box-shadow: 0 0 0 2px $listview-selected-bg-color, 0 0 0 3px $listview-selected-text-color;
+      box-shadow: 0 0 0 2px $primary-color, 0 0 0 3px $listview-selected-text-color;
     }
 
     &:hover,
@@ -291,24 +291,32 @@ $listview-selected-text-color: $inverse-color;
   tr,
   td {
     @include font-size(14);
-    color: #1a1a1a;
+    color: $font-color-extrahighcontrast;
     font-weight: lighter;
     padding: 13px 15px;
     @include transition(background-color .15s ease 0s);
   }
 
-  tr:hover,
-  tr:focus {
-    background-color: $listview-selected-bg-color;
+  tr {
+    border-bottom: 1px solid $graphite02;
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+  }
+
+  tr:hover:not(.is-selected) {
+    background-color: $menu-hover-color;
     outline: none;
+  }
+
+  tr:focus {
+    border-left: 1px solid $input-focus-border-color;
+    border-right: 1px solid $input-focus-border-color;
+    outline: 1px solid $input-focus-border-color;
   }
 
   th {
     display: none;
   }
 
-  tr {
-    border-bottom: 1px solid #e5e5e5;
-  }
 }
 

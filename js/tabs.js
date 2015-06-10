@@ -384,7 +384,6 @@
             return;
           case 13:
           case 32:
-            e.preventDefault();
             if (currentLi.hasClass('has-popupmenu')) {
               currentLi.data('popupmenu').open();
               return;

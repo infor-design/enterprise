@@ -1,0 +1,48 @@
+// Soho Xi - 508 - High Contrast Theme
+//================================================== //
+
+// Standard CSS reset stuff here
+@import 'reset';
+@import 'mixins';
+@import 'config';
+
+//Override Config
+//================================================== //
+
+// Form Background Color
+$body-bg-color:  $slate02;
+$header-bg-color: $slate09;
+$header-icon-color: #eff0f4;
+
+// Base Colors
+$primary-color: $azure07;
+$inverse-color: #ffffff;
+
+//The hyperlink Style
+$hyperlink-color: $azure09;
+
+// Text Color
+$font-color-extrahighcontrast: $slate10;
+$font-color-highcontrast: $slate10;
+$font-color: $slate08;
+$font-color-lowcontrast: $slate06;
+$label-color: $slate08;
+$disabled-color: rgba(86, 86, 86, .6);
+
+// Rules
+$hr-top-color: $slate02;
+$hr-bottom-color: $slate05;
+
+//================================================== //
+// Core Controls
+@import 'controls';
+
+//================================================== //
+// Other Overrides
+.hyperlink {
+  border-bottom: 1px solid $hyperlink-color;
+
+  &[disabled] {
+    border-bottom: 1px solid transparent;
+  }
+}

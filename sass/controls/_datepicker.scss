@@ -47,7 +47,7 @@
   // Header
   thead {
     th {
-      color: $font-color-dark;
+      color: $font-color-highcontrast;
       font-family: $font-regular;
       @include rem(font-size, 1.2rem);
       margin: 20px;
@@ -60,7 +60,7 @@
   td {
     border: 1px solid transparent;
     border-radius: 35px;
-    color: $font-color-dark;
+    color: $font-color-highcontrast;
     cursor: pointer;
     font-family: $font-regular;
     @include rem(font-size, 1.2rem);
@@ -179,7 +179,7 @@
   .month,
   .year {
     @include font-size(20);
-    color: $font-color-dark;
+    color: $font-color-highcontrast;
     text-transform: capitalize;
   }
 }

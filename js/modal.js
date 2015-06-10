@@ -95,10 +95,8 @@
 
       addButtons: function(buttons) {
         var body = this.element.find('.modal-body'),
-            self = this,
-            btnWidth = 100,
-            buttonset,
-            isPanel = false;
+            self = this, btnWidth = 100,
+            buttonset, isPanel = false;
 
         this.modalButtons = buttons;
 
@@ -113,6 +111,11 @@
             }
             self.close();
           });
+
+          if (body.find('[data-validate]').length > 0) {
+            inlineBtns.filter('.btn-modal-primary').attr('disabled', 'true');
+          }
+
           return;
         }
 
@@ -174,6 +177,7 @@
           btn.button();
           buttonset.append(btn);
         });
+
       },
 
       sizeInner: function () {

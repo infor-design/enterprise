@@ -125,8 +125,9 @@
   }
 
   a {
+    @include antialiased();
     border: 1px solid transparent;
-    color: $popupmenu-color;
+    color: $font-color;
     display: block;
     @include font-size(14);
     padding: 0 30px 0 20px;
@@ -135,7 +136,6 @@
     white-space: nowrap;
 
     > span {
-      -moz-osx-font-smoothing: initial;
       color: inherit;
       font-family: inherit;
       font-weight: inherit;
@@ -154,7 +154,7 @@
 
   //Text Underline on Terms
   i {
-    color: $font-color-extradark;
+    color: $font-color-extrahighcontrast;
     font-family: $font-regular;
     font-style: normal;
   }
@@ -162,7 +162,7 @@
   //Icon Positioning
   .icon,
   b {
-    fill: $font-color-light;
+    fill: $popupmenu-color-filtered-text;
     position: absolute;
   }
 

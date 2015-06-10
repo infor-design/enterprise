@@ -1,82 +1,39 @@
-// Soho XI - Dark UI Theme
-//================================================== */
+// Soho Xi - 508 - Dark Theme
+//================================================== //
 
 // Standard CSS reset stuff here
 @import 'reset';
 @import 'mixins';
 @import 'config';
 
-//Theme Config Overrides
-$body-bg-color: #323232;
-$header-color: #454545;
+//Override Config
+//================================================== //
 
+// Form Background Color
+$body-bg-color:  $slate08;
+$header-bg-color: $slate09;
+$header-icon-color: #eff0f4;
+
+// Base Colors
+$primary-color: $azure06;
 $inverse-color: #ffffff;
-$primary-color: $azure07;  // 117cba Would Be awesome
-$primary-button-bg-color: $azure07;
+
+//The hyperlink Style
+$hyperlink-color: $azure04;
 
 // Text Color
-$font-color-dark: #ffffff;
-$font-color: #ffffff;
-$font-color-light: #999999;
-$font-color-disabled: #999999;
-$label-color: #ffffff;
-$small-text-color: #9999cc;
+$font-color-extrahighcontrast: $white;
+$font-color-highcontrast: $slate01;
+$font-color: $slate02;
+$font-color-lowcontrast: $slate03;
+$label-color: $slate03;
+$disabled-color: $graphite04;
 
-$hr-top-color: #282828;
-$hr-bottom-color: #595858;
+// Rules
+$hr-top-color: $slate10;
+$hr-bottom-color: $slate08;
 
-// Input Fields
-$input-border-color: #737373;
-$input-disabled-color: #999999;
-$input-disabled-bg-color: #444444;
-$input-disabled-border-color: #444444;
-$input-color: #ffffff;
-$input-placeholder-color: #666666;
-$input-readonly-border-color: #444444;
-
-// Drop Down
-$dropdown-disabled-border-color: #444444;
-$dropdown-disabled-bg-color: #444444;
-$dropdown-disabled-border-color: #444444;
-$dropdown-color: $body-bg-color;
-
-// Checkboxes
-$checkbox-color: $primary-color;
-$checkbox-border-color: #999999;
-$checkbox-disabled-color: #666666;
-$checkbox-disabled-font-color: #666666;
-
-// Switch
-$switch-checked-color: #6ec90d;
-$switch-unchecked-color: #999999;
-$switch-disabled-color: #444444;
-$switch-disabled-label-color: #666666;
-
-// Menu Button
-$menubutton-disabled-bg-color: #444444;
-$menubutton-disabled-border-color: #444444;
-$menubutton-disabled-color: #737373;
-
-// Tree
-$tree-selected-color: $primary-color;
-
-//Slider
-$slider-bg-color: #737373;
-$slider-active-bg-color: $primary-color;
-$slider-disabled-color: #444444;
-
-// Specific overrides
-.header .field.aligned input {
-  background-color: transparent !important;
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
-}
-
+//================================================== //
 // Core Controls
 @import 'controls';
-
-//Other Overrides with no Settings
-.link {
-  text-decoration: underline;
-}
 

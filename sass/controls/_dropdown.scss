@@ -216,7 +216,7 @@ input.dropdown {
       background-color: $menu-hover-color;
 
       > a {
-        color: $font-color-dark;
+        color: $font-color-highcontrast;
       }
     }
 
@@ -241,7 +241,7 @@ input.dropdown {
     }
 
     a {
-      color: $font-color-dark;
+      color: $font-color-highcontrast;
     }
 
     &.search-mode {

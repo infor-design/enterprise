@@ -1118,6 +1118,10 @@ div.light-bgrnd {
   .row {
     max-width: $site-maxwidth;
     padding: 0 30px;
+
+    &.expanded {
+      max-width: 1280px !important;
+    }
   }
 }
 

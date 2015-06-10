@@ -471,8 +471,7 @@
     var self = this;
     this.rules = {
       required: {
-        check: function (value) {
-          this.message = Locale.translate('Required');
+        isNotEmpty: function(value) {
           if (typeof value === 'string') {
             // strip out any HTML tags and focus only on text content.
             value = $.trim(value.replace(/<\/?[^>]*>/g, ''));
@@ -481,7 +480,28 @@
             }
             return true;
           }
+
           return (value ? true : false);
+        },
+        check: function (value, field) {
+          var self = this;
+
+          //Check all required fields filled on modal
+          var allFilled = true;
+          field.closest('.modal').find('input.required, textarea.required, select.required').each(function () {
+            if (!self.isNotEmpty($(this).val())) {
+              allFilled = false;
+            }
+          });
+
+          if (allFilled) {
+            field.closest('.modal').find('.btn-modal-primary').removeAttr('disabled');
+          } else {
+            field.closest('.modal').find('.btn-modal-primary').attr('disabled', 'disabled');
+          }
+
+          this.message = Locale.translate('Required');
+          return this.isNotEmpty(value);
         },
         inline: true,
         message: 'Required'
@@ -502,8 +522,8 @@
       email: {
         check: function (value) {
           this.message = Locale.translate('EmailValidation');
-          var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-          return (value.length) ? re.test(value) : true;
+          var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+          return (value.length) ? regex.test(value) : true;
         },
         message: 'EmailValidation'
       },
@@ -539,20 +559,22 @@
           ** one uppercase letter,
           ** one numeric digit
           ** and one special character */
-          var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/;
-          return (value.length) ? value.match(re) : true;
+          var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/;
+          return (value.length) ? value.match(regex) : true;
         },
         message: 'PasswordValidation'
       },
+
       passwordConfirm: {
         check: function (value, field) {
           this.message = Locale.translate('PasswordConfirmValidation');
           var passwordValue = $('input[type="password"]:not('+ field.attr('id') +')', field.closest('.signin')).eq(0).val(),
-            ck = ((value === passwordValue) && (self.rules.passwordReq.check(passwordValue)));
-          return (value.length) ? ck : true;
+            check = ((value === passwordValue) && (self.rules.passwordReq.check(passwordValue)));
+          return (value.length) ? check : true;
         },
         message: 'PasswordConfirmValidation'
       },
+
       time: {
         check: function(value, field) {
           value = value.replace(/ /g, '');

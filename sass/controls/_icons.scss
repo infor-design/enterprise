@@ -130,7 +130,7 @@ svg.icon-tree {
 
   &::before,
   &::after {
-    background-color: $font-color-light;
+    background-color: $icon-color;
     border-radius: 2px;
     content: '';
     height: 2px;
@@ -164,7 +164,7 @@ svg.icon-tree {
 .icon.app-header {
 
   span:not(.audible) {
-    background-color: $font-color-light;
+    background-color: $icon-color;
     border-radius: 4px;
     height: 2px;
     position: absolute;
@@ -205,9 +205,11 @@ svg.icon-tree {
       top: 12.5px;
       @include css3(transform, rotate(45deg));
     }
+
     span.two {
       @include css3(transform, rotate(45deg));
     }
+
     span.three {
       top: 12.5px;
       @include css3(transform, rotate(-45deg));
@@ -217,9 +219,6 @@ svg.icon-tree {
 }
 
 // Caps Lock
-$caps-color-arrow: #ffffff;
-$caps-color-background: #bdbdbd;
-
 .icon-capslock::before,
 .icon-capslock::after,
 .icon-capslock .inner::before,
