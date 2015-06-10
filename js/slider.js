@@ -36,6 +36,7 @@
 
     // Plugin Constructor
     function Slider(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -366,6 +367,11 @@
           self.handleRangeClick(e);
         });
 
+        // Slider Control listens to 'updated' trigger on its base element to update values
+        self.element.on('updated.slider', function() {
+          self.updated();
+        });
+
         return self;
       },
 
@@ -605,7 +611,6 @@
           higherTicks[0].label.css('color', higherTicks[0].element.css('background-color'));
         }
 
-
         // Convert the stored values from ranged to percentage
         percentages[0] = this.convertValueToPercentage(newVal[0]);
         if (newVal[1] !== undefined) {
@@ -773,6 +778,14 @@
         return this.element.prop('disabled');
       },
 
+      // Settings and markup are complicated in the slider so we just destroy and re-invoke it
+      // with fresh settings.
+      updated: function() {
+        this.element.removeAttr('value');
+        this.destroy();
+        this.init();
+      },
+
       destroy: function() {
         var self = this;
         $.each(self.handles, function (i, handle) {
@@ -790,13 +803,10 @@
       if (instance) {
         if (typeof instance[options] === 'function') {
           instance[options]();
+        } else {
+          instance.settings = $.extend({}, instance.settings, options);
         }
-        instance.settings = $.extend({}, defaults, options);
-        // Settings and markup are complicated in the slider so we just destroy and re-invoke it
-        // with fresh settings.
-        instance.element.removeAttr('value');
-        instance.destroy();
-        instance.element.slider(instance.settings);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Slider(this, settings));
       }
