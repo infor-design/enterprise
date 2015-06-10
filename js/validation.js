@@ -520,26 +520,18 @@
       },
 
       email: {
-        check: function (value, field) {
+        check: function (value) {
           this.message = Locale.translate('EmailValidation');
-          var $btnSubmit = $('form button[type="submit"]', field.closest('.signin')),
-            re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
-            ck = (value.length) ? re.test(value) : false;
-
-          if(ck) {
-            $btnSubmit.removeAttr('disabled');
-          } else {
-            $btnSubmit.attr('disabled','true');
-          }
-          return (value.length) ? ck : true;
+          var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+          return (value.length) ? regex.test(value) : true;
         },
         message: 'EmailValidation'
       },
 
       enableSubmit: {
         check: function (value, field) {
-          var ok = self.rules.email.check(value, field) && field.val() !== '',
-            submit = field.closest('form').find('button[type="submit"]');
+          var submit = field.closest('.signin').find('button[type="submit"]'),
+            ok = ((value.length) && (self.rules.email.check(value) || self.rules.passwordConfirm.check(value, field)));
 
           if (ok) {
             submit.enable();
@@ -576,17 +568,8 @@
       passwordConfirm: {
         check: function (value, field) {
           this.message = Locale.translate('PasswordConfirmValidation');
-          var btnSubmit = $('form button[type="submit"]', field.closest('.signin')),
-            val = $('input[type="password"]:not('+ field.attr('id') +')', field.closest('.signin')).eq(0).val(),
-            regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/,
-            isValid = (val.length) ? (val.match(regex) !== -1) : false,
-            check = (value === val) ? isValid : false;
-
-          if (check) {
-            btnSubmit.removeAttr('disabled');
-          } else {
-            btnSubmit.attr('disabled','true');
-          }
+          var passwordValue = $('input[type="password"]:not('+ field.attr('id') +')', field.closest('.signin')).eq(0).val(),
+            check = ((value === passwordValue) && (self.rules.passwordReq.check(passwordValue)));
           return (value.length) ? check : true;
         },
         message: 'PasswordConfirmValidation'
