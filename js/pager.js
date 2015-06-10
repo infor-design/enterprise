@@ -113,7 +113,7 @@
         //Set selected Page
         lis.eq(pageNum-1).addClass('selected').attr('aria-selected', true)
           .find('a').attr('aria-disabled', true)
-            .find('.audible').html(Locale.translate('CurrentlyPageOn'));
+            .find('.audible').html(Locale.translate('PageOn'));
 
         this.renderBar();
         this.renderPages();
@@ -130,7 +130,7 @@
           for (i = pages; i > 0; i--) {
             if(i === 1) {
               thisClass = 'class="selected"';
-              thisText = Locale.translate('CurrentlyPageOn');
+              thisText = Locale.translate('PageOn');
               isAriaSelected = 'aria-selected="true"';
               isAriaDisabled = 'aria-disabled="true"';
             } else {
