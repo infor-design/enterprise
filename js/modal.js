@@ -93,6 +93,28 @@
         this.addButtons(settings.buttons);
       },
 
+      disableSubmit: function () {
+        var body = this.element.find('.modal-body'),
+          fields = body.find('[data-validate]'),
+          inlineBtns = body.find('.modal-buttonset button');
+
+        if (fields.length > 0) {
+          var allEmpty = true;
+          fields.each(function () {
+
+            var field = $(this);
+            if (field.val() !== '') {
+              allEmpty = false;
+            }
+          });
+
+          if (allEmpty) {
+            inlineBtns.filter('.btn-modal-primary').attr('disabled', 'true');
+          }
+        }
+
+      },
+
       addButtons: function(buttons) {
         var body = this.element.find('.modal-body'),
             self = this, btnWidth = 100,
@@ -111,10 +133,6 @@
             }
             self.close();
           });
-
-          if (body.find('[data-validate]').length > 0) {
-            inlineBtns.filter('.btn-modal-primary').attr('disabled', 'true');
-          }
 
           return;
         }
@@ -226,6 +244,8 @@
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
 
+        self.disableSubmit();
+
         // Ensure aria-labelled by points to the id
         if (settings.isAlert) {
           this.element.attr('aria-labeledby', 'message-title');
@@ -294,7 +314,7 @@
 
         setTimeout(function () {
           self.element.find('.btn-modal-primary').focus();
-        }, 10);
+        }, 0);
       },
 
       resize: function() {
@@ -332,8 +352,8 @@
       },
 
       keepFocus: function() {
-        var self = this,
-          tabbableElements = self.getTabbableElements();
+        var self = this, tabbableElements;
+          //tabbableElements = self.getTabbableElements();
 
           $(self.element).on('keypress.modal keydown.modal', function (e) {
             var keyCode = e.which || e.keyCode;
@@ -343,6 +363,8 @@
             }
 
             if (keyCode === 9) {
+              tabbableElements = self.getTabbableElements();
+
               // Move focus to first element that can be tabbed if Shift isn't used
               if (e.target === tabbableElements.last && !e.shiftKey) {
                 e.preventDefault();
