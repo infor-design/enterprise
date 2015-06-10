@@ -41,7 +41,7 @@ $listview-selected-text-color: $inverse-color;
 
   li {
     border: 1px solid transparent;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid $graphite03;
     color: $font-color;
     padding: 15px 20px;
     @include transition(background-color .15s ease 0s);
@@ -52,7 +52,7 @@ $listview-selected-text-color: $inverse-color;
       outline: none;
 
       &:focus {
-        border: 1px solid $primary-color;
+        @include css3(box-shadow, 0 0 1px 1px $primary-color inset);
       }
     }
 
@@ -124,6 +124,7 @@ $listview-selected-text-color: $inverse-color;
     display: table-cell;
     width: auto;
   }
+
 
   p {
     color: $font-color-highcontrast;

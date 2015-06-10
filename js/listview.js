@@ -54,15 +54,16 @@
       setup: function() {
         var self = this,
           card = this.element.closest('.card'),
-          thisSelectable = this.element.attr('data-selectable'),
-          thisselectOnFocus = this.element.attr('data-select-onfocus');
+          selectable = this.element.attr('data-selectable'),
+          selectOnFocus = this.element.attr('data-select-onfocus');
 
-        if (thisSelectable && thisSelectable.length) {
-          this.settings.selectable = thisSelectable;
+        if (selectable && selectable.length) {
+          this.settings.selectable = selectable;
         }
 
-        if (thisselectOnFocus && thisselectOnFocus.length) {
-          this.settings.selectOnFocus = JSON.parse(thisselectOnFocus);
+        if (selectOnFocus && selectOnFocus.length) {
+          this.settings.selectOnFocus = JSON.parse(selectOnFocus);
+
         }
 
         self.actionButton = card.find('.btn-actions');
@@ -161,7 +162,7 @@
       // Handle Keyboard / Navigation Ect
       handleEvents: function () {
         var self = this,
-          isSelect = false;
+          isSelect = false, isFocused = false;
 
         this.element.on('focus.listview', 'li, tr', function () {
           var item = $(this);
@@ -183,6 +184,7 @@
 
             self.select(item);
             isSelect = true;
+            isFocused = true;
           }
         });
 
@@ -224,7 +226,6 @@
           if (key === 32) { // Space to toggle selection
             self.select(item);
           }
-
         });
 
         // Selection View Click/Touch
@@ -234,11 +235,12 @@
           this.element.on('click.listview touchend.listview', 'li, tr', function () {
             var item = $(this);
 
-            if (!item.hasClass('is-disabled')) {
+            if (!isFocused && !item.hasClass('is-disabled')) {
               isSelect = true;
               self.select(item);
               item.focus();
             }
+            isFocused = false;
           });
         }
 
@@ -337,7 +339,7 @@
 
       destroy: function() {
         this.element.removeData(pluginName);
-        this.element.off('click.listview focus.listview').empty();
+        this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview').empty();
       }
     };
 

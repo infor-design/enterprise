@@ -471,8 +471,7 @@
     var self = this;
     this.rules = {
       required: {
-        check: function (value) {
-          this.message = Locale.translate('Required');
+        isNotEmpty: function(value) {
           if (typeof value === 'string') {
             // strip out any HTML tags and focus only on text content.
             value = $.trim(value.replace(/<\/?[^>]*>/g, ''));
@@ -481,7 +480,28 @@
             }
             return true;
           }
+
           return (value ? true : false);
+        },
+        check: function (value, field) {
+          var self = this;
+
+          //Check all required fields filled on modal
+          var allFilled = true;
+          field.closest('.modal').find('input.required, textarea.required, select.required').each(function () {
+            if (!self.isNotEmpty($(this).val())) {
+              allFilled = false;
+            }
+          });
+
+          if (allFilled) {
+            field.closest('.modal').find('.btn-modal-primary').removeAttr('disabled');
+          } else {
+            field.closest('.modal').find('.btn-modal-primary').attr('disabled', 'disabled');
+          }
+
+          this.message = Locale.translate('Required');
+          return this.isNotEmpty(value);
         },
         inline: true,
         message: 'Required'
@@ -547,29 +567,31 @@
           ** one uppercase letter,
           ** one numeric digit
           ** and one special character */
-          var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/;
-          return (value.length) ? value.match(re) : true;
+          var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/;
+          return (value.length) ? value.match(regex) : true;
         },
         message: 'PasswordValidation'
       },
+
       passwordConfirm: {
         check: function (value, field) {
           this.message = Locale.translate('PasswordConfirmValidation');
-          var $btnSubmit = $('form button[type="submit"]', field.closest('.signin')),
-            v = $('input[type="password"]:not('+ field.attr('id') +')', field.closest('.signin')).eq(0).val(),
-            re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/,
-            isV = (v.length) ? (v.match(re) !== -1) : false,
-            ck = (value === v) ? isV : false;
+          var btnSubmit = $('form button[type="submit"]', field.closest('.signin')),
+            val = $('input[type="password"]:not('+ field.attr('id') +')', field.closest('.signin')).eq(0).val(),
+            regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/,
+            isValid = (val.length) ? (val.match(regex) !== -1) : false,
+            check = (value === val) ? isValid : false;
 
-          if (ck) {
-            $btnSubmit.removeAttr('disabled');
+          if (check) {
+            btnSubmit.removeAttr('disabled');
           } else {
-            $btnSubmit.attr('disabled','true');
+            btnSubmit.attr('disabled','true');
           }
-          return (value.length) ? ck : true;
+          return (value.length) ? check : true;
         },
         message: 'PasswordConfirmValidation'
       },
+
       time: {
         check: function(value, field) {
           value = value.replace(/ /g, '');

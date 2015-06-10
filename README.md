@@ -51,7 +51,6 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
 * Install gruntjs: http://gruntjs.com/ by running (`npm install -g grunt-cli`)
 * Install sass: http://sass-lang.com/
-* Install postgresql (for sample data): http://www.postgresql.org/download/
 
 ## Get The Code
 
@@ -63,7 +62,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 
 
 ## Running The App
-* `cd` into project folder and run `node server` to talk a walk in Grammercy Park
+* `cd` into project folder and run `node server` to start the web server
 * Run `grunt` to compile initial assests
 * Make a new terminal window and cd into project folder and run `grunt watch`
 * Go to `http://localhost:4000/`
