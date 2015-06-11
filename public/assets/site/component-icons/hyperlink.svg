@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>hyperlink</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="hyperlink" sketch:type="MSArtboardGroup" fill="#69B5DD">
+            <g id="Imported-Layers" sketch:type="MSLayerGroup" transform="translate(7.000000, -2.000000)">
+                <text id="a" sketch:type="MSTextLayer" font-family="Helvetica" font-size="18" font-weight="bold">
+                    <tspan x="1.375" y="18.9996">a</tspan>
+                </text>
+                <path d="M12.001,23 L0.999,23 C0.447,23 0,22.553 0,22.001 C0,21.449 0.447,21.001 0.999,21.001 L12.001,21.001 C12.553,21.001 13,21.449 13,22.001 C13,22.553 12.553,23 12.001,23" id="Fill-1" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>switch</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="switch" sketch:type="MSArtboardGroup">
+            <g id="Imported-Layers" sketch:type="MSLayerGroup" transform="translate(0.000000, 6.000000)">
+                <path d="M25,10 L2,10 C0.9,10 0,9.1 0,8 C0,6.9 0.9,6 2,6 L25,6 C26.1,6 27,6.9 27,8 C27,9.1 26.1,10 25,10" id="Fill-1" fill="#C8CBD4" sketch:type="MSShapeGroup"></path>
+                <path d="M28,8.187 C28,12.502 24.502,16 20.187,16 C15.873,16 12.375,12.502 12.375,8.187 C12.375,3.873 15.873,0.375 20.187,0.375 C24.502,0.375 28,3.873 28,8.187" id="Fill-2" fill="#9DCD7F" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>
