@@ -22,7 +22,8 @@
     // Settings and Options
     var pluginName = 'pager',
         defaults = {
-          pagesize: 5 //can be calculate or a specific number
+          pagesize: 5, //can be calculate or a specific number
+          autoMove: false //true|false - Change pager to next/prev with arrow keys
         },
         settings = $.extend({}, defaults, options);
 
@@ -36,9 +37,9 @@
     Plugin.prototype = {
 
       init: function() {
-        this.pagerBar = this.element.find('ul:first');
+        this.pagerBar = $('.pager-toolbar', this.element);
         this.activePage = 1;
-        this.pages = this.element.find('.pager-content');
+        this.pages = $('.pager-content', this.element);
         this.renderBar();
         this.renderPages();
         this.handleEvents();
@@ -59,12 +60,12 @@
           e.preventDefault();
 
           if (li.is('.pager-prev')) {
-            self.currentPage(self.activePage-1);
+            self.currentPage(self.activePage - 1);
             return false;
           }
 
           if (li.is('.pager-next')) {
-            self.currentPage(self.activePage+1);
+            self.currentPage(self.activePage + 1);
             return false;
           }
 
@@ -74,26 +75,20 @@
         });
 
         //Toolbar functionality
-        this.pagerBar.find('a:not(:first)').attr('tabindex', -1);
         this.pagerBar.find('a').on('keydown.pager', function (e) {
-          var btn;
+          e = (e) ? e : window.event;
+          var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
+            btn = (charCode === 37) ? $('a', $(this).parent().prev()) : (charCode === 39) ? $('a', $(this).parent().next()) : false;
 
-          if (e.keyCode === 39 || e.keyCode === 37) {
-            btn = $(this).attr('tabindex', -1);
-            self.pagerBar.find('a').attr('tabindex', -1);
-          }
-
-          //move next
-          if (e.keyCode === 39) {
-            btn.parent().next().find('a').attr('tabindex', 0).focus();
-            return;
-          }
-          //move prev
-          if (e.keyCode === 37) {
-            btn.parent().prev().find('a').attr('tabindex', 0).focus();
+          if (!!btn) {
+            if(!btn.attr('disabled')) {
+              btn.focus();
+            }
+            if (settings.autoMove) {
+              btn.trigger('click.pager');
+            }              
           }
         });
-
       },
 
       //Set or Get Current Page
@@ -110,9 +105,15 @@
 
         this.activePage = pageNum;
 
-        //set selected Page
-        lis.filter('.selected').removeClass('selected').removeAttr('aria-selected');
-        lis.eq(pageNum-1).addClass('selected').attr('aria-selected', true);
+        //Remove selected
+        lis.filter('.selected').removeClass('selected').removeAttr('aria-selected')
+          .find('a').removeAttr('aria-disabled')
+            .find('.audible').html(Locale.translate('Page'));
+
+        //Set selected Page
+        lis.eq(pageNum-1).addClass('selected').attr('aria-selected', true)
+          .find('a').attr('aria-disabled', true)
+            .find('.audible').html(Locale.translate('CurrentlyPageOn'));
 
         this.renderBar();
         this.renderPages();
@@ -124,8 +125,21 @@
         if (pages) {
           //Add in fake pages
           this.pagerBar.find('li:not(.pager-prev):not(.pager-next)').remove();
-          for (var i = pages; i > 0; i--) {
-            $('<li '+ (1 === i ? 'class="selected"' : '') +'><a href="#"><span class="audible">Page </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
+          var i, thisClass, thisText, isAriaSelected, isAriaDisabled;
+
+          for (i = pages; i > 0; i--) {
+            if(i === 1) {
+              thisClass = 'class="selected"';
+              thisText = Locale.translate('CurrentlyPageOn');
+              isAriaSelected = 'aria-selected="true"';
+              isAriaDisabled = 'aria-disabled="true"';
+            } else {
+              thisClass = '';
+              thisText = Locale.translate('Page');
+              isAriaSelected = '';
+              isAriaDisabled = '';
+            }
+            $('<li '+ thisClass + isAriaSelected +'><a href="#page'+ i +'" '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
           }
         }
         return this.pagerBar.find('li:not(.pager-prev):not(.pager-next)').length;
@@ -136,12 +150,16 @@
         //How many can fit?
         var pb = this.pagerBar,
           elems, pc,
+          attrAutoMove = this.element.attr('data-automove'),
           width = (this.element.parent().width() / pb.find('li:first').width()),
           howMany = Math.floor(width-3);   //Take out the ones that should be visible (buttons and selected)
 
         //Check Data Attr
         if (this.element.attr('data-pagesize')) {
           settings.pagesize = this.element.attr('data-pagesize');
+        }
+        if (attrAutoMove && attrAutoMove.length) {
+          settings.autoMove = JSON.parse(attrAutoMove);
         }
 
         //Adjust Page count numbers
@@ -157,9 +175,11 @@
 
         if (this.activePage === 1) {
           prev.attr('disabled','disabled');
+          $('a:eq(1)', pb).focus();
         }
         if (this.activePage === this.pageCount()) {
           next.attr('disabled','disabled');
+          $('a:eq('+ this.pageCount() +')', pb).focus();
         }
 
         //Remove from the front until selected is visible and we have at least howMany showing

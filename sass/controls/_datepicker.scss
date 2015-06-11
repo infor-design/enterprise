@@ -31,6 +31,10 @@
   }
 }
 
+.ie9 .datepicker + .icon {
+  background: url(about:blank) no-repeat 0 0 transparent;
+}
+
 .calendar {
   background-color: $popupmenu-bg-color;
   display: inline-block;

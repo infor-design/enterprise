@@ -99,16 +99,16 @@
           inlineBtns = body.find('.modal-buttonset button');
 
         if (fields.length > 0) {
-          var allEmpty = true;
+          var allValid = true;
           fields.each(function () {
 
             var field = $(this);
-            if (field.val() !== '') {
-              allEmpty = false;
+            if (!field.is(':empty')) {
+              allValid = false;
             }
           });
 
-          if (allEmpty) {
+          if (allValid) {
             inlineBtns.filter('.btn-modal-primary').attr('disabled', 'true');
           }
         }

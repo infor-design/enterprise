@@ -327,13 +327,15 @@ body {
   text-decoration: none;
 
   img {
-    height: 32px;
-    margin: 20px 0 20px 20px;
-    width: 32px;
+    background-color: $slate07;
+    border-radius: 50%;
+    height: 50px;
+    margin: 12px 10px 10px 15px;
+    width: 50px;
   }
 
   .title {
-    color: $graphite06;
+    color: $graphite07;
     display: inline-block;
     @include font-size(18);
     height: inherit;
@@ -343,7 +345,7 @@ body {
     text-overflow: ellipsis;
     vertical-align: middle;
     white-space: nowrap;
-    width: 219px;
+    width: 200px;
   }
 
   &:focus {
