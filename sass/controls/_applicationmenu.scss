@@ -99,6 +99,10 @@ $application-menu-width: 300px;
 
 }
 
+.ie9 .application-menu + .page-container {
+  box-sizing: content-box;
+}
+
 // On large + extra-large breakpoints, the .page-content element will shift to the left while the menu is open
 @media (min-width: $breakpoint-phone-to-tablet) {
   .application-menu {

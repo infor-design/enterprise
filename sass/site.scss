@@ -31,7 +31,6 @@ body {
   background-color: transparent;
   height: 350px;
   overflow: hidden;
-  padding-top: 25px;
   position: relative;
 
   .hero-img {
@@ -55,7 +54,7 @@ body {
 
   &.home {
     .hero-img {
-      background-image: url('/assets/site/0.0_Soho_xi_home_2260_blue_02.jpg');
+      background-image: url('/assets/site/sohoXILego.jpg');
     }
 
   }
@@ -117,7 +116,6 @@ body {
   }
 
   .breadcrumb {
-    margin: 50px 0 40px 10px;
 
     li:after {
       color: $graphite08;
@@ -493,6 +491,10 @@ body {
 .articles {
   .editorial {
     background-color: $body-bg-color;
+
+    .hero {
+      height: auto !important;
+    }
   }
 
   .main {
@@ -560,7 +562,7 @@ body {
 
   .hero {
     background-color: #ffffff !important;
-    height: auto !important;
+    height: 350px !important;
 
     .image {
       background-image: url('/assets/site/article-example-large.jpg');
@@ -842,18 +844,18 @@ div.light-bgrnd {
 
   &.site-hero {
     background-color: $inverse-color;
-    height: 210px;
+    height: 210px !important;
 
     h1,
     h2 {
-      color: $graphite06;
+      color: $graphite06 !important;
     }
 
     .timestamp {
       color: $graphite04;
-      position: unset;
       margin-left: 10px;
       margin-top: 5px;
+      position: static !important;
     }
   }
 
@@ -899,6 +901,10 @@ div.light-bgrnd {
 
 }
 
+.ie9 .site-hero.component {
+  height: auto !important;
+  padding-top: 30px;
+}
 
 // Link Style in Case Forgotten
 .editorial.component > .main > .content {
@@ -977,7 +983,12 @@ div.light-bgrnd {
 
     .tag-list,
     .link-list {
+      padding-bottom: 10px;
       margin-left: 8px;
+
+      .timestamp {
+        position: static;
+      }
     }
 
     a:not(.tag) {

@@ -82,6 +82,10 @@ $accordion-focused-text-color: #ffffff;
       padding-left: 30px;
     }
 
+    .icon.plus-minus {
+      pointer-events: none;
+    }
+
     &:hover {
       .icon.plus-minus::after,
       .icon.plus-minus::before {
