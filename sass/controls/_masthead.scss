@@ -6,6 +6,19 @@
   height: 34px;
   width: 100%;
   z-index: 9000;
+
+  .icon {
+    fill: #b5b5b5;
+    height: 21px;
+    margin-right: 7px;
+    position: relative;
+    top: 6px;
+    width: 22px;
+
+    &:last-child {
+      margin-right: 10px;
+    }
+  }
 }
 
 .twelve {
@@ -37,16 +50,4 @@
   width: 12px;
 }
 
-.icon.icon-mingle {
-  fill: #b5b5b5;
-  height: 21px;
-  margin-right: 7px;
-  position: relative;
-  top: 6px;
-  width: 22px;
-
-  &:last-child {
-    margin-right: 10px;
-  }
-}
 

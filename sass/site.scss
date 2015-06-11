@@ -119,10 +119,6 @@ body {
 
     li:after {
       color: $graphite08;
-      font-size: 1.2rem !important;
-      padding: 0 10px 0 7px;
-      position: relative;
-      top: 1px;
     }
 
     a {
@@ -518,19 +514,10 @@ body {
 }
 
 .articles-columns {
-/*
-  -moz-column-gap: 30px;
-  -webkit-column-gap: 30px;
-  column-gap: 30px;
 
-  -moz-columns: 3 auto;
-  -webkit-columns: 3 auto;
-  columns: 3 auto;
-*/
-
-  -moz-column-gap: 30px;
-  -webkit-column-gap: 30px;
-  column-gap: 30px;
+  -moz-column-gap: 20px;
+  -webkit-column-gap: 20px;
+  column-gap: 20px;
 
   -moz-column-width: 305px;
   -webkit-column-width: 305px;
@@ -691,7 +678,7 @@ body {
     h2 {
       @include font-size(20);
       color: $graphite07;
-      padding: 20px 20px 10px;
+      padding: 20px 20px 0px;
 
       a {
         color: inherit;

@@ -23,13 +23,14 @@
     // Settings and Options
     var pluginName = 'colorpicker',
         defaults = {
-          colors: [{label: 'Azure', value: '41A5E7'},
-                   {label: 'Amber', value: 'FF971A'},
-                   {label: 'Amethyst', value: '806594'},
-                   {label: 'Turquoise', value: '3F9078'},
-                   {label: 'Ruby', value: 'D33333'},
-                   {label: 'Emerald', value: '60A633'},
-                   {label: 'Graphite', value: '454545'}]
+          colors: [{label: 'Azure', value: '368AC0'},
+                   {label: 'Amber', value: 'EFA836'},
+                   {label: 'Amethyst', value: '9279A6'},
+                   {label: 'Turquoise', value: '579E95'},
+                   {label: 'Ruby', value: 'B94E4E'},
+                   {label: 'Emerald', value: '76B051'},
+                   {label: 'Graphite', value: '5C5C5C'},
+                   {label: 'Slate', value: '50535A'}]
         },
         settings = $.extend({}, defaults, options);
 
