@@ -24,6 +24,8 @@
         defaults = {
           buttons: null, // List of buttons that will sit in the toolbar's Buttonset area
           title: 'Contextual Action Panel', // string that fits into the toolbar's Title field
+          content: null, //Pass content through to modal
+          trigger: 'click'
         },
         settings = $.extend({}, defaults, options);
 
@@ -47,7 +49,6 @@
       setup: function() {
         this.panel = this.element.next('.contextual-action-panel');
         this.panel.css('display', 'none');
-
         this.id = (parseInt($('.modal').length, 10)+1);
 
         return this;
@@ -59,9 +60,8 @@
           toolbar;
 
         // Build the Content
-        if (!this.panel.length) {
-          this.panel = $('<div class="contextual-action-panel"></div>');
-          $('<div class="modal-content"></div>').appendTo(this.modal);
+        if (this.panel.length === 0) {
+          this.panel = $('<div class="contextual-action-panel">'+ this.settings.content +'</div>').appendTo('body');
         }
         this.panel.addClass('modal').attr('id', 'contextual-action-modal-' + this.id);
 
@@ -88,7 +88,8 @@
 
         this.element.attr('data-modal', 'contextual-action-modal-' + this.id);
         this.panel.modal({
-          buttons: self.settings.buttons
+          buttons: self.settings.buttons,
+          trigger: (self.settings.trigger ? self.settings.trigger : 'click')
         });
         this.buttons = this.panel.find('.buttonset').children('button');
         this.closeButton = this.buttons.filter('.btn-close, [name="close"]');
@@ -157,7 +158,12 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
+
         instance.settings = $.extend({}, instance.settings, options);
+        if (settings.trigger === 'immediate') {
+          instance = $.data(this, pluginName, new ContextualActionPanel(this, settings));
+        }
+
       } else {
         instance = $.data(this, pluginName, new ContextualActionPanel(this, settings));
       }

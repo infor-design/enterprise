@@ -233,6 +233,40 @@ $(function($) {
       ]
     });
 
+    $('#manual-contextual-panel').on('click', function() {
+
+      $('body').contextualactionpanel({
+        title: 'Expenses: $50,000.00',
+        content: '<div class="datagrid" id="new-grid"></div>',
+        trigger: 'immediate',
+        buttons: [
+          {
+            text: 'Ok',
+            cssClass: 'btn-tertiary',
+            click: function() {
+
+            }
+          },
+          {
+            text: 'Close',
+            cssClass: 'btn-icon has-text',
+            icon: '#icon-sr-close',
+            click: function() {
+              $(this).modal('close');
+            }
+          }
+        ]
+      }).on('close', function () {
+        $('#new-grid').closest('.contextual-action-panel').remove();
+      });
+
+      $('#new-grid').datagrid({
+        columns: columns,
+        dataset: data
+      });
+
+    });
+
     //----------------------------------------------------------
     //  Tests: Validation
     //----------------------------------------------------------

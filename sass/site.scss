@@ -325,27 +325,44 @@ body {
   padding: 0;
   text-align: left;
   text-decoration: none;
+  width: 300px;
 
-  img {
+  .title-wrapper {
+    display: inline-block;
+    height: 75px;
+    position: relative;
+    width: 150px;
+  }
+
+  .img-wrapper {
     background-color: $slate07;
     border-radius: 50%;
+    display: inline-block;
     height: 50px;
-    margin: 12px 10px 10px 15px;
+    margin: 12px 15px;
+    vertical-align: top;
     width: 50px;
+  }
+
+  img {
+    height: 25px;
+    margin: 13px 12px;
+    width: 25px;
   }
 
   .title {
     color: $graphite07;
-    display: inline-block;
     @include font-size(18);
-    height: inherit;
-    margin-left: 10px;
-    overflow: hidden;
-    text-decoration: none;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    white-space: nowrap;
+    display: table;
+    height: 75px;
+    position: absolute;
     width: 200px;
+
+    span {
+      display: table-cell;
+      line-height: 20px;
+      vertical-align: middle;
+    }
   }
 
   &:focus {
