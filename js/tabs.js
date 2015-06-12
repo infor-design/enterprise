@@ -244,6 +244,8 @@
             self.positionFocusState();
           }
           self.checkFocusedElements();
+        }).on('updated.tabs', function() {
+          self.updated();
         });
 
         // Check to see if we need to add/remove the more button on resize
@@ -578,6 +580,10 @@
 
         if (this.settings.tabCounts) {
           anchorMarkup.prepend('<span class="count">0 </span>');
+        }
+
+        if (options.dropdown) {
+          // TODO: Need to implement the passing of Dropdown Tab menus into this method.
         }
 
         // Insert markup at the very end, or at the specified index.
@@ -1049,6 +1055,11 @@
         }
       },
 
+      updated: function() {
+        this.destroy();
+        this.init();
+      },
+
       disable: function() {
         this.element.prop('disabled', true).addClass('is-disabled');
         this.updateAria($());
@@ -1112,7 +1123,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend(instance.settings, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Tabs(this, settings));
       }
