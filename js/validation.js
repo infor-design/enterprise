@@ -109,7 +109,7 @@
       this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
         var field = $(this),
         attribs = field.attr('data-validation-events'),
-        events = (attribs ? attribs : 'blur.validate change.validate keypress.validate');
+        events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
 
         events = self.extractEvents(events);
 
