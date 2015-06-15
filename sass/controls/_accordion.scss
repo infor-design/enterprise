@@ -18,7 +18,7 @@ $accordion-focused-text-color: #ffffff;
 
 .accordion {
   @include font-size(18);
-
+  
   a {
     border: 1px solid transparent;
     display: block;
@@ -403,4 +403,11 @@ $accordion-focused-text-color: #ffffff;
 
   }
 
+}
+
+/* FOR MOZILLA */
+@-moz-document url-prefix() { 
+  .accordion button.plus-minus {
+    top: 4px;
+  }
 }

@@ -46,6 +46,12 @@ $listview-selected-text-color: $inverse-color;
     padding: 15px 20px;
     @include transition(background-color .15s ease 0s);
 
+    &:after {
+      content: '';
+      clear: both;
+      display: inline-block;
+    }
+
     &:hover,
     &:focus {
       background-color: $menu-hover-color;
