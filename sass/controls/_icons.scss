@@ -20,14 +20,19 @@ svg.icon {
 
   // Specific Buttons
   &.icon-error,
-  &.icon-validated {
+  &.icon-confirm,
+  &.icon-info {
     fill: $alert-red;
     height: 18px;
     width: 18px;
   }
 
-  &.icon-validated {
-    fill: $validated-icon-fill;
+  &.icon-confirm {
+    fill: $confirm-icon-fill;
+  }
+
+  &.icon-info {
+    fill: $info-icon-fill;
   }
 
   &.icon-dirty {
@@ -57,7 +62,7 @@ svg.icon {
     height: 22px;
     left: -15px;
     top: 5px;
-    width: 110px;
+    width: 115px;
   }
 
 }
@@ -73,7 +78,7 @@ svg.icon-tree {
 
 
 .field .icon-error,
-.field .icon-validated {
+.field .icon-confirm {
   display: inline-block !important;
   left: 300px;
   margin-left: -29px;
@@ -83,12 +88,12 @@ svg.icon-tree {
 }
 
 .timepicker + .icon + .icon-error,
-.timepicker + .icon + .icon-validated {
+.timepicker + .icon + .icon-confirm {
   left: 130px !important;
 }
 
 .datepicker + .icon + .icon-error,
-.datepicker + .icon + .icon-validated {
+.datepicker + .icon + .icon-confirm {
   left: 130px !important;
 }
 

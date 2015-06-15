@@ -19,7 +19,7 @@ body {
 // Header Adjustments
 .header {
   h1 {
-    line-height: 20px;
+    line-height: 40px;
   }
 }
 
@@ -34,7 +34,7 @@ body {
   position: relative;
 
   .hero-img {
-    background-position: 55% 60%;
+    background-position: 25% 60%;
     background-size: cover;
     bottom: 0;
     left: 0;
@@ -83,11 +83,12 @@ body {
   h1,
   h2 {
     color: $inverse-color;
-    display: block;
+    display: inline-block;
     @include font-size(48);
+    line-height: normal;
     margin: 0 10px;
     padding-left: 0;
-    padding-top: 15px;
+    vertical-align: middle;
   }
 
   span {
@@ -152,7 +153,8 @@ body {
 }
 
 .site-hero.home .row {
-  padding-top: 85px;
+  height: 310px;
+  line-height: 310px;
 }
 
 .site-hero.component .row {
@@ -840,11 +842,11 @@ div.light-bgrnd {
     h1,
     h2 {
       color: $graphite06 !important;
+      margin: 55px 0 0;
     }
 
     .timestamp {
       color: $graphite04;
-      margin-left: 10px;
       margin-top: 5px;
       position: static !important;
     }

@@ -895,8 +895,8 @@ window.Chart = function(container) {
         var rect = d3.select(this)[0][0].getBoundingClientRect(),
           content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> '+ Locale.translate('Peak') +': ': '') + '<b>' + d  + '</b></p>',
           size = charts.getTooltipSize(content),
-          x = rect.x - (size.width /2) + 6 + $(window).scrollTop(),
-          y = rect.y - size.height - 18;
+          x = rect.x - (size.width /2) + 6,
+          y = rect.y - size.height - 18  + $(window).scrollTop();
 
         charts.showTooltip(x, y, content, 'top');
       }).on('mouseleave', function() {
@@ -1132,8 +1132,8 @@ window.Chart = function(container) {
           var rect = d3.select(this)[0][0].getBoundingClientRect() ,
             content = '<p><b>' + d.name + ' </b> ' + d.value + '</p>',
             size = charts.getTooltipSize(content),
-            x = rect.x - (size.width /2) + 6 + $(window).scrollTop(),
-            y = rect.y - size.height - 18;
+            x = rect.x - (size.width /2) + 6,
+            y = rect.y - size.height - 18 + $(window).scrollTop();
 
           charts.showTooltip(x, y, content, 'top');
 

@@ -230,6 +230,11 @@ a.btn-primary {
     .icon {
       fill: $tertiary-btn-hover-color;
     }
+
+    span {
+      color: transparent;
+    }
+
   }
 
   &:focus {

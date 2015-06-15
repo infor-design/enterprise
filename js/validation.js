@@ -327,7 +327,7 @@
           field.parent('.field').append(svg);
         }
 
-        $('.icon-validated', loc.parent('.field')).remove();
+        $('.icon-confirm', loc.parent('.field')).remove();
       }
 
       //Add error classes to pseudo-markup for certain controls
@@ -374,9 +374,9 @@
     },
 
     addPositive: function(field) {
-      var svg = $('<svg class="icon icon-validated" focusable="false" aria-hidden="true"><use xlink:href="#icon-validated"></use></svg>');
+      var svg = $('<svg class="icon icon-confirm" focusable="false" aria-hidden="true"><use xlink:href="#icon-confirm"></use></svg>');
 
-      if(!$('.icon-validated', field.parent('.field')).length) {
+      if(!$('.icon-confirm', field.parent('.field')).length) {
         field.parent('.field').append(svg);
       }
     },
@@ -417,7 +417,7 @@
     },
 
     removePositive: function(field) {
-      $('.icon-validated', field.parent('.field')).remove();
+      $('.icon-confirm', field.parent('.field')).remove();
     }
   };
 
@@ -635,7 +635,7 @@
     formFields.removeClass('error');
     $(this).find('.error').removeClass('error');
     $(this).find('.icon-error').remove();
-    $(this).find('.icon-validated').remove();
+    $(this).find('.icon-confirm').remove();
 
     setTimeout(function () {
       $('#validation-errors').addClass('is-hidden');

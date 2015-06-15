@@ -110,7 +110,7 @@
 .toolbar {
   .title {
     + .buttonset {
-      margin: 0 5px 0 calc(50% - 5px);
+      margin: 0 0 0 50%;
       max-width: 50%;
       text-align: right;
     }

@@ -52,8 +52,13 @@ $listview-selected-text-color: $inverse-color;
       outline: none;
 
       &:focus {
-        @include css3(box-shadow, 0 0 1px 1px $primary-color inset);
+        border: 1px solid $primary-color;
+        //@include css3(box-shadow, 0 0 1px 1px $primary-color inset);
+        &.is-selected {
+          border: 1px solid transparent;
+        }
       }
+
     }
 
     &.error {
