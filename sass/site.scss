@@ -61,7 +61,7 @@ body {
 
   &.components {
     .hero-img {
-      background-image: url('/assets/site/0.0_Soho_xi_home_2260_green_02.jpg');
+      background-image: url('/assets/site/ComponentLegoAmethyst.jpg');
     }
 
   }
@@ -75,9 +75,8 @@ body {
   }
 
   .row {
+    padding-top: 20px;
     position: relative;
-    top: calc(50% - 18px);
-    transform: translateY(-50%);
     vertical-align: top;
   }
 
@@ -87,14 +86,15 @@ body {
     display: block;
     @include font-size(48);
     margin: 0 10px;
-    padding-top: 15px;
     padding-left: 0;
+    padding-top: 15px;
   }
 
   span {
     color: $inverse-color;
     display: block;
     @include font-size(16);
+    line-height: 25px;
     margin: 0 10px;
     margin-top: 25px;
     padding-left: 0;
@@ -149,6 +149,10 @@ body {
   .tags {
     margin: 10px 10px 0 5px;
   }
+}
+
+.site-hero.home .row {
+  padding-top: 85px;
 }
 
 .site-hero.component .row {
@@ -632,7 +636,7 @@ body {
   p {
     color: $graphite06;
     @include font-size(16);
-    line-height: 24px;
+    line-height: 20px;
     margin: 15px 0;
   }
 

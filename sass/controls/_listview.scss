@@ -41,7 +41,7 @@ $listview-selected-text-color: $inverse-color;
 
   li {
     border: 1px solid transparent;
-    border-bottom: 1px solid $graphite03;
+    border-bottom: 1px solid $graphite02;
     color: $font-color;
     padding: 15px 20px;
     @include transition(background-color .15s ease 0s);
@@ -102,10 +102,9 @@ $listview-selected-text-color: $inverse-color;
   }
 
   .checkbox-label {
-    color: $font-color-highcontrast;
-    left: 10px;
+    left: 20px;
     position: relative;
-    top: 10px;
+    top: 15px;
   }
 
   .listview-thumbnail {
@@ -168,10 +167,6 @@ $listview-selected-text-color: $inverse-color;
     p {
       color: $input-disabled-color;
       -webkit-text-fill-color: $input-disabled-color;
-    }
-
-    &:before {
-      border-color: $input-disabled-color !important;
     }
 
     &:hover {

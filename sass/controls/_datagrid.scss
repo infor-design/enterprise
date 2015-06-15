@@ -18,6 +18,7 @@ $datagrid-header-height: 40px;
     cursor: col-resize;
     height: $datagrid-header-height;
     left: -999px;
+    top: auto;
     width: 11px;
     z-index: 1;
   }
@@ -99,6 +100,18 @@ $datagrid-header-height: 40px;
       background-color: $datagrid-row-selected-color !important;
     }
 
+    &.alt-shading {
+      td {
+        background-color: #f5f5f5;
+      }
+    }
+
+    &:hover.alt-shading {
+      td {
+        background-color: #e8e8e8;
+      }
+    }
+
     .hyperlink {
       color: $primary-color;
       display: inline-block;
@@ -153,11 +166,11 @@ $datagrid-header-height: 40px;
     }
 
     &.short-rowheight td {
-      height: 26px;
-      line-height: 26px;
+      height: 32px;
+      line-height: 32px;
 
       span {
-        line-height: 26px;
+        line-height: 32px;
       }
 
       .badge {
@@ -169,8 +182,9 @@ $datagrid-header-height: 40px;
       }
 
       .tag {
-        height: 23px;
-        margin-top: 0;
+        height: 24px;
+        line-height: 27px;
+        margin-top: 2px;
       }
     }
 
@@ -324,7 +338,8 @@ $datagrid-header-height: 40px;
   margin: 0 auto;
 
   svg {
-    width: 24px;
+    fill: $graphite06;
+    width: 18px;
   }
 }
 
@@ -368,17 +383,15 @@ td .btn-actions {
 
 .datagrid-checkbox-wrapper {
   position: relative;
+  top: 50%;
 }
 
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  margin-left: -12px;
-
-  svg {
-    height: 24px;
-    width: 24px;
-  }
+  margin-left: -13px;
+  margin-right: -3px;
+  top: -4px;
 
   .icon.plus-minus {
     left: -1.4em;

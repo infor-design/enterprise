@@ -51,7 +51,9 @@
       },
 
       setup: function() {
-        var allowOnePane = this.element.attr('data-allow-one-pane');
+        var allowOnePane = this.element.attr('data-allow-one-pane'),
+          self = this;
+
         this.settings.allowOnePane = allowOnePane !== undefined ? allowOnePane === 'true' : this.settings.allowOnePane;
 
         this.anchors = this.element.find('.accordion-header > a');
@@ -59,11 +61,23 @@
           return $(this).children('.accordion-pane').length > 0;
         });
 
-        var active = this.anchors.parent().filter('.is-selected').children('a');
-        if (!active.length) {
+        var active = self.headers.find('.is-selected').children('a');
+        if (active.length === 0) {
           active = this.anchors.filter(':not(:disabled):not(:hidden)').first();
         }
+
         this.setActiveAnchor(active);
+
+        if (active.length > 0) {
+          setTimeout(function () {
+            var pane = active.closest('.accordion-pane');
+            pane.css({'height': 'auto', 'display': 'block'});
+            pane.prev().find('.plus-minus').addClass('active');
+
+            var header = active.parent();
+            header.attr('aria-expanded', 'true').addClass('is-expanded');
+          }, 1);
+        }
 
         return this;
       },
@@ -292,6 +306,7 @@
       },
 
       setActiveAnchor: function(anchor) {
+
         this.headers.removeClass('child-selected');
 
         this.anchors.attr({

@@ -39,6 +39,7 @@ button {
 .btn-menu {
   .icon {
     height: 32px;
+    margin-left: -13px;
   }
 }
 
@@ -198,13 +199,17 @@ a.btn-primary {
 // Icon Buttons
 // Also see ./_icons.scss
 .btn-icon {
+  border-radius: 50%;
+  height: 36px;
   margin-top: 0;
-  min-width: 32px;
+  min-height: 36px;
+  min-width: 36px;
   padding: 0;
+  width: 36px;
 
   svg {
     left: 0;
-    top: -2px;
+    top: 0;
   }
 
   > * {
@@ -216,6 +221,7 @@ a.btn-primary {
   }
 
   > span {
+    color: transparent;
     position: absolute;
     width: 0;
   }

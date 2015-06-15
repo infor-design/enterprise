@@ -26,8 +26,8 @@ label.fileupload {
     }
 
     svg {
-      height: 17px;
-      width: 17px;
+      height: 14px;
+      width: 14px;
     }
   }
 
@@ -49,12 +49,5 @@ label.fileupload {
         }
       }
     }
-  }
-
-}
-
-.field-fileupload input {
-  @include respond-to(phone) {
-    width: 180px;
   }
 }

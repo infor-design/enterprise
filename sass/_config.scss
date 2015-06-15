@@ -61,7 +61,7 @@ $input-border-color: $graphite03;
 $input-color: $graphite08;
 $input-disabled-bg-color: transparent;
 $input-disabled-border-color: $graphite02;
-$input-disabled-color: #cccccc;
+$input-disabled-color: $disabled-color;
 $input-focus-border-color: $primary-color;
 $input-placeholder-color: $graphite04;
 $input-readonly-border-color: #dadada;
@@ -162,6 +162,7 @@ $datepicker-hover-bg-color: #ededed;
 //Pager
 $pager-selected-color: $primary-color;
 $pager-focus-border-color: $input-focus-border-color;
+$pager-disabled-color: $graphite02;
 
 // Toolbar
 $toolbar-height: 44px;

@@ -14,6 +14,10 @@ $gutter-neg-size: -20px;
   margin: 0 auto;
   max-width: $breakpoint-tablet-to-desktop;
   width: 100%;
+
+  &:last-child {
+    margin-bottom: 20px;
+  }
 }
 
 .row::after {

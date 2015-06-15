@@ -16,7 +16,8 @@
     width: auto;
 
     a {
-      border-radius: 2px;
+      border: 1px solid transparent;
+      border-radius: 3px;
       color: $label-color;
       cursor: pointer;
       display: inline-block;
@@ -24,24 +25,32 @@
       line-height: 30px;
       margin: 2px 10px 2px 2px;
       padding: 0 5px;
+      position: relative;
       text-align: center;
       text-decoration: none;
       transition: all .2s ease;
       width: 30px;
-      position: relative;
-      border: 1px solid transparent;
 
       &:focus {
         @include css3(box-shadow, 0 0 1px 1px $pager-focus-border-color inset);
+      }
+
+      // Disabled
+      &[disabled] {
+        cursor: default;
+
+        svg {
+          fill: $pager-disabled-color;
+        }
       }
     }
 
     &.selected a {
       background-color: $pager-selected-color;
-      color: #ffffff;
-      
+      color: $inverse-color;
+
       &:focus {
-        @include css3(box-shadow, 0 0 1px 1px #fff inset);
+        @include css3(box-shadow, 0 0 1px 1px #ffffff inset);
       }
     }
   }
@@ -58,14 +67,6 @@
     color: $label-color;
   }
 
-  // Disabled
-  li a[disabled] {
-    cursor: default;
-  }
-
-  li a[disabled] svg {
-    fill: #999;
-  }
 }
 
 // Buttons
@@ -75,10 +76,6 @@
   left: 1px;
   top: 4px;
   width: 18px;
-}
-
-.pager-toolbar li a[disabled] svg {
-  fill: #999999;
 }
 
 .pager-content li {

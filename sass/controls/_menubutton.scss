@@ -29,21 +29,6 @@
   }
 }
 
-.btn-split {
-  border-radius: 2px 0 0 2px;
-
-  + .btn-menu {
-    border-radius: 0 2px 2px 0;
-    margin-left: -21px;
-    min-width: 0;
-    padding: 0;
-  }
-
-  &:focus + .btn-menu {
-    border-left: 1px solid $menubutton-focus-border-color;
-  }
-}
-
 .btn-actions {
   background-color: transparent;
   border-radius: 18px;
@@ -69,7 +54,7 @@
   }
 
   &:focus {
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+    box-shadow: 0 0 0 1px $primary-btn-bg-color;
 
     > .icon {
       fill: $tertiary-btn-hover-color;
@@ -77,7 +62,7 @@
   }
 
   &[aria-expanded="true"] {
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+    box-shadow: 0 0 0 1px $primary-btn-bg-color;
 
     > .icon {
       fill: $tertiary-btn-hover-color;

@@ -12,7 +12,7 @@
     width: auto;
 
     &.toolbar .title {
-      margin: 5px 1em 4px -8px;
+      margin: 5px 1em 4px;
       padding: 2px 0;
 
       > * {
@@ -33,6 +33,12 @@
     .icon {
       fill: $sr-masthead-text-color;
     }
+
+    .btn-icon .icon {
+      height: 19px;
+      top: 0;
+    }
+
   }
 
   input.search {

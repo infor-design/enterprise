@@ -111,7 +111,7 @@
 
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
           var icon = popupLi.find('.icon').filter(function(){
-            return item.find('use').attr('xlink:href') !== '#icon-arrow-down';
+            return item.find('use').attr('xlink:href') !== '#icon-dropdown';
           });
           if (icon.length) {
             this.moreMenu.addClass('has-icons');

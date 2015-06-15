@@ -32,7 +32,7 @@
 
         //Define Columns for the Grid.
 
-        columns.push({ id: 'selection', name: 'selection', resizable: false, width: 40, formatter: Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'selectionCheckbox', name: 'Selection', resizable: false, width: 40, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});

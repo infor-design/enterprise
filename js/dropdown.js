@@ -73,7 +73,7 @@
                         .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
                         .attr({'aria-describedby' : id + '-instructions', 'id': id});
 
-        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"/></svg>');
+        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.wrapper.append(this.input, this.trigger);
@@ -137,7 +137,7 @@
         //Keep a list generated and append as needed
         self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
         self.listUl = $('<ul tabindex="-1" role="listbox"></ul>').appendTo(self.list);
-        self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-arrow-down"></svg>');
+        self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
 
         function setOptions(option, listOption) {
           //Add a data-val attribute that matches the original option value
@@ -437,7 +437,7 @@
       resetList: function() {
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', 'icon') // needs to be 'attr' here because .addClass() doesn't work with SVG
-          .children('use').attr('xlink:href', '#icon-arrow-down');
+          .children('use').attr('xlink:href', '#icon-dropdown');
 
         function stripHtml(obj) {
           return obj[0].textContent || obj[0].innerText;

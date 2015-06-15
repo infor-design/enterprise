@@ -50,12 +50,13 @@
   }
 
   .about-logo {
+    height: 72px;
     margin-bottom: 1em;
     width: 72px;
-    height: 72px;
   }
 
   p {
+    margin-top: 0;
     padding: 10px;
 
     &:focus {

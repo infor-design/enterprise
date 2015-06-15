@@ -3,9 +3,10 @@
 
 fieldset {
   > legend {
+    color: $graphite09;
     @include font-size(16);
     @include antialiased();
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     padding-top: 10px;
   }
 }

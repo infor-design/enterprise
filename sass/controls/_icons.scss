@@ -6,11 +6,17 @@
   height: 22px; //Older ones at 32 but now based on 40
   position: relative;
   width: 32px;
+
+  &.icon-filter {
+    height: 14px;
+    width: 14px;
+  }
 }
 
 // Svg Styles
 svg.icon {
   fill: #999999;
+
 
   // Specific Buttons
   &.icon-error,
@@ -64,6 +70,7 @@ svg.icon-logo {
 svg.icon-tree {
   stroke: #999999;
 }
+
 
 .field .icon-error,
 .field .icon-validated {
@@ -290,4 +297,10 @@ svg.icon-tree {
 .icon-capslock .inner::after {
   background: $caps-color-background none repeat scroll 0 0;
   margin: -12px 0 0;
+}
+
+.no-animate {
+  -moz-transition: none 0s ease 0s !important;
+  -webkit-transition: none 0s ease 0s !important;
+  transition: none 0s ease 0s !important;
 }

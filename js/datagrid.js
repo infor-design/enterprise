@@ -191,12 +191,13 @@ $.fn.datagrid = function(options) {
   // Settings and Options
   var pluginName = 'datagrid',
       defaults = {
-        dataset: [],
+        alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
-        rowHeight: 'medium', //(short, medium or tall)
-        menuId: null,  //Id to the right click context menu
-        selectable: false, //false, 'single' or 'multiple'
+        dataset: [],
         editable: false,
+        menuId: null,  //Id to the right click context menu
+        rowHeight: 'medium', //(short, medium or tall)
+        selectable: false, //false, 'single' or 'multiple'
         toolbar: false // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
       },
       settings = $.extend({}, defaults, options);
@@ -267,7 +268,7 @@ $.fn.datagrid = function(options) {
          headerRow += '<div class="datagrid-column-wrapper '+ (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
         if (isSortable) {
-          headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-down"></svg></div>';
+          headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-arrow-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-dropdown"></svg></div>';
         }
 
         headerRow += '</div></th>';
@@ -306,9 +307,12 @@ $.fn.datagrid = function(options) {
       self.tableBody.empty();
 
       for (var i = 0; i < settings.dataset.length; i++) {
-        rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" '+
-                  (settings.rowHeight !== 'medium' ? 'class="' + settings.rowHeight +
-                   '-rowheight"' : '') +'>';
+        var isEven = (i % 2 === 0);
+
+        rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row'+
+                  (settings.rowHeight !== 'medium' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
+                  (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
+                  '">';
 
         for (var j = 0; j < settings.columns.length; j++) {
           var col = settings.columns[j],
@@ -319,6 +323,9 @@ $.fn.datagrid = function(options) {
           if (col.hidden) {
             continue;
           }
+
+          //alternateRowShading
+          //f5f5f5
 
           formatted = formatter(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i]).toString();
           if (formatted.indexOf('<span class="is-readonly">') === 0) {
@@ -442,8 +449,12 @@ $.fn.datagrid = function(options) {
 
     //Show Summary and any other count info
     displayCounts: function() {
-      var count = this.tableBody.find('tr:visible').length;  ///this.settings.dataset.length
-      this.element.prev('.toolbar').find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
+      var self = this;
+
+      setTimeout(function () {
+        var count = self.tableBody.find('tr:visible').length;  ///this.settings.dataset.length
+        self.element.prev('.toolbar').find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
+      }, 1);
     },
 
     //Trigger event on parent and compose the args
@@ -492,7 +503,7 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.dataset[row];
 
-        if (col.click) {
+        if (col.click && e.button ===0) {
           col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
         }
 
@@ -575,12 +586,17 @@ $.fn.datagrid = function(options) {
     },
 
     appendToolbar: function () {
+      var toolbar, title = '', more, self = this;
+
       if (!settings.toolbar) {
         return;
       }
 
-      var toolbar = $('<div class="toolbar" role="toolbar"></div>'),
-        title = '', more, self = this;
+      //Allow menu to be added manully
+      if (this.element.prev().is('.toolbar')) {
+        toolbar = this.element.prev();
+      } else {
+        toolbar = $('<div class="toolbar" role="toolbar"></div>');
 
         if (settings.toolbar.title) {
           title = $('<div class="title">' + settings.toolbar.title + '  </div>');
@@ -637,22 +653,24 @@ $.fn.datagrid = function(options) {
         }
 
         this.element.before(toolbar);
-        toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {
-          var action = args.attr('href').substr(1);
-          if (action === 'row-short' || action === 'row-medium' || action === 'row-tall') {
-            self.rowHeight(action.substr(4));
-          }
+      }
 
-          args.closest('ul').find('.is-checked').removeClass('is-checked');
-          args.parent().addClass('is-checked');
-        });
+      toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {
+        var action = args.attr('href').substr(1);
+        if (action === 'row-short' || action === 'row-medium' || action === 'row-tall') {
+          self.rowHeight(action.substr(4));
+        }
 
-        toolbar.toolbar();
-        toolbar.find('.searchfield').searchfield().on('keypress.datagrid', function (e) {
-          if (e.keyCode === 13) {
-            self.keywordSearch($(this).val());
-          }
-        });
+        args.closest('ul').find('.is-checked').removeClass('is-checked');
+        args.parent().addClass('is-checked');
+      });
+
+      toolbar.toolbar();
+      toolbar.find('.searchfield').searchfield().on('keypress.datagrid', function (e) {
+        if (e.keyCode === 13) {
+          self.keywordSearch($(this).val());
+        }
+      });
     },
 
     //Get or Set the Row Height
@@ -721,7 +739,7 @@ $.fn.datagrid = function(options) {
     _selectedRows: [],
 
     selectedRows: function (row) {
-      var idx = null,
+      var idx = null, checkbox,
           isSingle = this.settings.selectable === 'single',
           isMultiple = this.settings.selectable === 'multiple';
 
@@ -740,6 +758,11 @@ $.fn.datagrid = function(options) {
           row.removeClass('is-selected').removeAttr('aria-selected');
           row.find('td').removeAttr('aria-selected');
           this.element.trigger('selected', [this._selectedRows]);
+
+          if (!isSingle) {
+            checkbox = this.cellNode(row.index(), this.columnIdx('selectionCheckbox'));
+            checkbox.find('.datagrid-checkbox').removeClass('is-checked').attr('aria-checked', 'false');
+          }
           return;
         }
 
@@ -756,10 +779,33 @@ $.fn.datagrid = function(options) {
         this._selectedRows.push({idx: idx, data: settings.dataset[idx], elem: row});
         row.addClass('is-selected').attr('aria-selected', 'true');
         row.find('td').attr('aria-selected', 'true');
+
+        if (!isSingle) {
+          checkbox = this.cellNode(row.index(), this.columnIdx('selectionCheckbox'));
+          checkbox.find('.datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
+        }
       }
 
       this.element.trigger('selected', [this._selectedRows]);
       return this._selectedRows;
+    },
+
+    //Get the column object by id
+    columnById: function(id) {
+      return $.grep(this.settings.columns, function(e) { return e.id === id; });
+    },
+
+    //Get the column index
+    columnIdx: function(id) {
+      var cols = this.settings.columns,
+        idx = -1;
+
+      for (var i = 0; i < cols.length; i++) {
+       if (cols[i].id === id) {
+        idx = i;
+       }
+      }
+      return idx;
     },
 
     // Current Active Cell

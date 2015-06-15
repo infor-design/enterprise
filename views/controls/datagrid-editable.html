@@ -8,41 +8,6 @@
 
 <div class="row">
   <div class="twelve columns">
-    <div class="toolbar" role="toolbar">
-      <div class="title">
-        Data Grid Header Title
-        <span class="datagrid-result-count"></span>
-      </div>
-      <div class="buttonset">
-
-        <button class="btn-icon has-text" type="button" title="Search">
-          <svg class="icon">
-            <use xlink:href="#icon-datagrid-search"></use>
-          </svg>
-          <span>Keyword</span>
-        </button>
-
-        <div class="overflow-break"></div>
-
-        <button class="btn-menu" type="button">
-          <span>Grid Features</span>
-        </button>
-        <ul class="popupmenu is-padded">
-          <li><a href="#" onclick="alert()">Personalize Columns</a></li>
-          <li><a href="#">Create Advanced Filter</a></li>
-          <li><a href="#">Save Current View</a></li>
-          <li class="separator"></li>
-          <li class="heading">Saved Views</li>
-          <li><a href="#">View One</a></li>
-          <li class="separator"></li>
-          <li class="heading">Row Height</li>
-          <li class="is-checked"><a href="#">Short</a></li>
-          <li><a href="#">Medium</a></li>
-          <li><a href="#">Large</a></li>
-        </ul>
-
-      </div>
-    </div>
     <div id="datagrid">
     </div>
   </div>
@@ -79,7 +44,8 @@
           columns: columns,
           dataset: data,
           editable: true,
-          selectable: 'single'
+          selectable: 'single',
+          toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
         }).data('datagrid');
 
         //grid.setActiveCell(0, 0);

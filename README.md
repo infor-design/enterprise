@@ -60,7 +60,6 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 * For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
 
 
-
 ## Running The App
 * `cd` into project folder and run `node server` to start the web server
 * Run `grunt` to compile initial assests

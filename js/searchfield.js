@@ -50,7 +50,7 @@
 
         // Add Icon
         if (this.wrapper.find('.icon').length === 0) {
-          $('<svg class="icon"><use xlink:href="#icon-search-field"/></svg>').insertAfter(this.element);
+          $('<svg class="icon"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
         }
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
