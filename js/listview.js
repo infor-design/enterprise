@@ -53,7 +53,7 @@
 
       setup: function() {
         var self = this,
-          card = this.element.closest('.card'),
+          card = this.element.closest('.card, .widget'),
           selectable = this.element.attr('data-selectable'),
           selectOnFocus = this.element.attr('data-select-onfocus');
 
@@ -83,11 +83,11 @@
         }
 
         this.element.attr({'tabindex': '-1'});
-        this.element.parent('.card-content').css('overflow', 'hidden');
+        this.element.parent('.card-content, .widget-content').css('overflow', 'hidden');
 
          // Add Aria Roles
         this.element.attr({'role' : 'listbox',
-          'aria-label' : (this.settings.description ? this.settings.description : this.element.closest('.card').find('.card-title').text()),
+          'aria-label' : (this.settings.description ? this.settings.description : this.element.closest('.card, .widget').find('.card-title, .widget-title').text()),
           'aria-activedescendant': self.id + '-item-0'});
 
       },
@@ -308,7 +308,7 @@
         li.attr('aria-selected', !isChecked);
         this.element.trigger('selected', [this.selectedItems]);
 
-        var toolbar = this.element.closest('.card').find('.listview-toolbar');
+        var toolbar = this.element.closest('.card, .widget').find('.listview-toolbar');
         //top = self.element.scrollTop();
 
         if (self.selectedItems.length > 0) {
