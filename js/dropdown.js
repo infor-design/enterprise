@@ -28,6 +28,7 @@
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
           moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
+          noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
           source: undefined,  //A function that can do an ajax call.
           empty: false //Initialize Empty Value
         },
@@ -104,6 +105,9 @@
         }
         if (this.element.attr('data-close-on-select') && !this.settings.closeOnSelect) {
           this.settings.closeOnSelect = this.element.attr('data-close-on-select') === 'true';
+        }
+        if (this.element.attr('data-no-search') && !this.settings.noSearch) {
+          this.settings.noSearch = this.element.attr('data-no-search') === 'true';
         }
 
         this.updateList();
@@ -350,6 +354,10 @@
       handleSearchEvents: function () {
         var self = this, timer;
 
+        if (this.settings.noSearch) {
+          this.searchInput.prop('readonly', true);
+        }
+
         // Used to determine how spacebar should function.  False means space will select/deselect.  True means
         // Space will add a space inside the search input.
         this.searchKeyMode = false;
@@ -365,15 +373,16 @@
             return;
           }
 
-          clearTimeout(timer);
-          timer = setTimeout(function () {
-            if (searchInput.val() === '') {
-              self.resetList();
-            } else {
-              self.filterList(searchInput.val().toLowerCase());
-            }
-          }, 100);
-
+          if (self.settings.noSearch === false) {
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              if (searchInput.val() === '') {
+                self.resetList();
+              } else {
+                self.filterList(searchInput.val().toLowerCase());
+              }
+            }, 100);
+          }
         });
 
       },
@@ -390,6 +399,7 @@
         self.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
           .children('use').attr('xlink:href', '#icon-search');
         self.listUl.find('li').hide();
+        self.searchInput.removeAttr('aria-activedescendant');
 
         $.each(self.element[0].options, function () {
           //Filter List
@@ -421,9 +431,9 @@
 
         // Set ARIA-activedescendant to the first search term
         var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
-        self.highlightOption(topItem);
-        //self.input.attr('aria-activedescendant', topItem.attr('id'));
-        //self.searchInput.attr('aria-activedescendant', topItem.children('a').attr('id'));
+        if (topItem.length) {
+          self.highlightOption(topItem);
+        }
 
         term = '';
 
@@ -685,7 +695,6 @@
         this.searchInput.val(!this.settings.multiple ? current.text() : this.input.val());
         this.activate(true); // Focus the Search Input
         this.handleSearchEvents();
-
         this.element.trigger('dropdownopen'); // TODO: Change event name?
 
         self.list.on('touchmove.list', function() {
@@ -702,7 +711,6 @@
         }).on('click.list', 'li', function () {
           var val = $(this).attr('data-val'),
             cur = self.element.find('option[value="'+ val +'"]');
-
           //Try matching the option's text if 'cur' comes back empty.
           //Supports options that don't have a 'value' attribute.
           if (cur.length === 0) {

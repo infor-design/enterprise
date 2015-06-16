@@ -125,7 +125,7 @@ $header-height: 60px;
 
   .breadcrumb {
     display: block;
-    padding: 0 20px;
+    padding: 1px 20px 0;
 
     ol {
       padding: 3px 0;
@@ -149,8 +149,12 @@ $header-height: 60px;
     }
 
     &.alternate {
-      border-bottom: 1px solid #d8d8d8;
       background-color: $inverse-color;
+      border-bottom: 1px solid #d8d8d8;
+
+      &:hidden {
+        border-bottom: 0;
+      }
 
       ol {
         padding: 15px 0;
@@ -177,7 +181,119 @@ $header-height: 60px;
   }
 
   .toolbar.has-title-button + .breadcrumb {
-    padding: 0 20px 0 65px;
+    padding-left: 65px;
+  }
+
+  // Tabs
+  .tab {
+    font-weight: bold;
+    padding: 6px 6px 7px;
+
+    &:before {
+      background-color: rgba($inverse-color, 0);
+    }
+
+    &:not(.is-disabled):hover {
+      color: $inverse-color;
+
+      &:before {
+        background-color: rgba($inverse-color, 1);
+      }
+
+      a {
+        color: $inverse-color;
+      }
+    }
+
+    &.is-selected {
+      &:before {
+        background-color: rgba($inverse-color, 1);
+      }
+
+      &:not(.is-disabled):hover {
+        &:before {
+          background-color: rgba($inverse-color, 1);
+        }
+      }
+
+      a:hover {
+        color: $inverse-color;
+      }
+    }
+
+    a {
+      color: $inverse-color;
+    }
+  }
+
+  .tab-container {
+    padding: 1px 20px 0;
+
+    &.alternate {
+      background-color: $inverse-color;
+      border-bottom: 1px solid #d8d8d8;
+      padding: 0 20px;
+
+      .animated-bar {
+        background-color: rgba($font-color-highcontrast, 1);
+        margin-top: 1px;
+      }
+
+      .tab-focus-indicator.is-visible {
+        border-color: $font-color-highcontrast;
+      }
+
+      .tab {
+        &:before {
+          background-color: rgba($font-color-highcontrast, 0);
+        }
+
+        &:not(.is-disabled):hover {
+          color: $font-color-highcontrast;
+
+          &:before {
+            background-color: rgba($font-color-highcontrast, 1);
+          }
+
+          a {
+            color: $font-color-highcontrast;
+          }
+        }
+
+        &.is-selected {
+          &:before {
+            background-color: rgba($font-color-highcontrast, 1);
+          }
+
+          &:not(.is-disabled):hover {
+            &:before {
+              background-color: rgba($font-color-highcontrast, 1);
+            }
+          }
+
+          a:hover {
+            color: $font-color-highcontrast;
+          }
+        }
+
+        a {
+          color: $font-color-highcontrast;
+        }
+      }
+    }
+
+    .animated-bar {
+      background-color: $inverse-color;
+      margin-top: 2px;
+    }
+
+    .tab-focus-indicator.is-visible {
+      border-color: $inverse-color;
+    }
+
+    .tab-list {
+      border-bottom: 0;
+    }
   }
 
   // Sticky Header

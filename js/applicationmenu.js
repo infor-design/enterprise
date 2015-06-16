@@ -176,9 +176,7 @@
 
       adjustHeight: function() {
         var isSticky = this.scrollTarget.is('.is-sticky'),
-          breadcrumb = this.scrollTarget.is('.has-breadcrumb'),
-          bc = breadcrumb ? 42 : 0,
-          totalHeight = this.scrollTarget.height() + bc,
+          totalHeight = this.scrollTarget.height(),
           offset = totalHeight - (!isSticky ? $(window).scrollTop() : 0);
 
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
@@ -209,6 +207,7 @@
           transitionEnd = $.fn.transitonEndName;
 
         this.isAnimating = true;
+        this.adjustHeight();
 
         function isOpen() {
           if (self.timeout !== null) {

@@ -267,13 +267,14 @@ body.no-scroll {
     margin-top: 60px;
   }
 
-  &.has-breadcrumb {
-    height: 117px;
+  &.has-breadcrumb,
+  &.has-tabs {
+    height: 108px;
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 117px);
-      margin-top: 117px;
+      height: calc(100% - 108px);
+      margin-top: 108px;
     }
   }
 }
@@ -293,11 +294,12 @@ body.no-scroll {
       height: calc(100% - 95px);
     }
 
-    &.has-breadcrumb {
+    &.has-breadcrumb ,
+    &.has-tabs {
       + .page-container,
       + .application-menu + .page-container {
-        height: calc(100% - 144px);
-        margin-top: 144px;
+        height: calc(100% - 134px);
+        margin-top: 134px;
       }
     }
 
