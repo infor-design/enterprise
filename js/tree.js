@@ -54,8 +54,21 @@
 
           //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
           a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
+
+          // Add Aria disabled
+          if (a.hasClass('is-disabled')) {
+            a.attr('aria-disabled','true');
+            var childSection = a.next();
+
+            if(childSection.is('ul.is-open')) {
+              $('a', childSection).addClass('is-disabled').attr('aria-disabled','true');
+              $('ul', a.parent()).addClass('is-disabled');
+            }
+          }
+
           if (i === 0) {
-            self.setSelectedNode(a, false);
+            // self.setSelectedNode(a, false);
+            a.attr('tabindex', '0');
           }
 
           //parentCount 'aria-level' to the node's level depth
@@ -134,9 +147,9 @@
 
       },
 
-      setupEvents: function  () {
+      setupEvents: function () {
         var self = this;
-        self.element.on('updated', function () {
+        self.element.on('updated.tree', function () {
           self.setupTree();
         });
       },
@@ -146,16 +159,32 @@
         //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
         var self = this;
         //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
-        this.element.on('click', 'a', function (e) {
+        this.element.on('click.tree', 'a', function (e) {
           var target = $(this);
-          self.setSelectedNode(target, true);
-          self.toggleNode(target);
-          e.stopPropagation();
+          if(!target.hasClass('is-disabled')) {
+            self.setSelectedNode(target, true);
+            self.toggleNode(target);
+            e.stopPropagation();
+          }
           return false; //Prevent Click from Going to Top
         });
 
+        //on focus for first element is disabled
+        this.element.on('focus.tree', 'a', function() {
+          var target = $(this);
+          // First element if disabled
+          if ((parseInt(target.attr('aria-level')) === 1) && 
+              (parseInt(target.attr('aria-posinset')) === 1) &&
+              (target.hasClass('is-disabled'))) {
+
+            var e = $.Event('keydown.tree');
+              e.keyCode= 40; // move down
+            target.trigger(e);
+          }
+        });
+
         //Handle Up/Down Arrow Keys and Space
-        this.element.on('keydown', 'a', function (e) {
+        this.element.on('keydown.tree', 'a', function (e) {
           var charCode = e.charCode || e.keyCode,
               target = $(this),
               next, prev;
@@ -163,10 +192,17 @@
           //down arrow
           if (charCode === 40) {
             next = target.parent().next().find('a:first');
+
             //Move Into Children
             if (target.next().is('ul') && target.next().hasClass('is-open')) {
               next = target.next().find('a:first');
             }
+
+            //skip disabled
+            if(next.hasClass('is-disabled')) {
+              next = next.parent().next().find('a:first');
+            }
+
             //bottom of a group..
             if (next.length === 0) {
               next = target.closest('.folder').next().find('a:first');
@@ -177,10 +213,19 @@
           //up arrow,
           if (charCode === 38) {
             prev = target.parent().prev().find('a:first');
+
             //move into children at bottom
-            if (prev.parent().is('.folder') && prev.parent().find('ul.is-open').length === 1) {
+            if (prev.parent().is('.folder') && 
+                prev.parent().find('ul.is-open').length === 1 &&
+                !prev.parent().find('ul.is-disabled').length) {
               prev = prev.parent().find('ul.is-open a:last');
             }
+
+            //skip disabled
+            if(prev.hasClass('is-disabled')) {
+              prev = prev.parent().prev().find('a:first');
+            }
+
             //top of a group
             if (prev.length === 0) {
               prev = target.closest('ul').prev('a');
@@ -190,7 +235,7 @@
 
           //space
           if (e.keyCode === 32) {
-            target.trigger('click');
+            target.trigger('click.tree');
           }
 
           //right arrow
@@ -232,7 +277,7 @@
         });
 
         //Handle Left/Right Arrow Keys
-        this.element.on('keypress', 'a', function (e) {
+        this.element.on('keypress.tree', 'a', function (e) {
           var charCode = e.charCode || e.keyCode,
             target = $(this);
 
@@ -257,7 +302,12 @@
 
         });
 
-      }
+      },
+
+      destroy: function() {
+        this.element.removeData(pluginName);
+        this.element.off('updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
+      }      
     };
 
     // Keep the Chaining and Init the Controls or Settings

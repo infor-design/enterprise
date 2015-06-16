@@ -43,13 +43,29 @@
       color: $tree-selected-color;
     }
 
-    &[disabled] {
+    &.is-disabled {
+      @include unselectable;
+      cursor: default;
       opacity: $tree-disabled-opacity;
+            
+      &:hover {
+        text-decoration: none;
+        
+        svg {
+          stroke: $tree-icon-color;
+        }
+      }
+
+      &:focus {
+        border: none;
+        color: $tree-link-color;
+
+        svg {
+          stroke: $tree-icon-color;
+        }
+      }
     }
 
-    &[disabled]:hover {
-      text-decoration: none;
-    }
   }
 
   // List Elements
@@ -116,8 +132,12 @@
       content: '';
       height: calc(100% - 17px);
       position: absolute;
-      width: 1px;
+      width: 1px;      
     }
+
+    &.is-disabled:before {
+      opacity: .5;
+    }    
 
     ul:before {
       background-color: $tree-line-color;
