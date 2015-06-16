@@ -43,12 +43,18 @@
           .build()
           .setupEvents();
 
-        this.activate(this.tablist.children('li:first-child').children('a').attr('href'));
+        var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
+          selected = this.tablist.children('li.is-selected' + excludes);
+        if (!selected.length) {
+          selected = this.tablist.children('li' + excludes).first();
+        }
+
+        this.activate(selected.children('a').attr('href'));
         this.setOverflow();
 
         // Focus the bar on the first element, but don't animate it on page load.
         this.animatedBar.addClass('no-transition');
-        this.positionFocusState(self.anchors.get(0));
+        this.positionFocusState(selected);
         this.focusBar(undefined, function() {
           setTimeout(function() {
             self.animatedBar.removeClass('no-transition');
