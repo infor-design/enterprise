@@ -36,6 +36,29 @@
         };
     };
 
+     var slider = function () {
+        return {
+          replace: true,
+          scope: false,
+          link: function(scope, elem, attrs) {
+            var api,
+              model = attrs.ngModel,
+              modelVal = scope[model];
+
+            // Set Initial Value
+            elem.attr('value', modelVal).slider();
+
+            // Watch for Changes
+            api = elem.data('slider');
+            scope.$watch(model, function(newValue, oldValue) {
+              if (newValue !== oldValue) {
+                //api.value(modelVal, 100);
+              }
+            });
+          }
+        };
+    };
+
     var other = function () {
         return {
           replace: true,
@@ -46,6 +69,7 @@
     angular.module('sohoxi-angular')
         .directive('dropdown', dropdown)
         .directive('chart', chart)
+        .directive('slider', slider)
         .directive('other', other);
 
 }());

@@ -107,7 +107,12 @@ module.exports = function(grunt) {
         }
       }
     },
-
+    removelogging: {
+      dist: {
+        src: 'dist/js/sohoxi.js',
+        dest: 'dist/js/sohoxi.js'
+      }
+    },
     uglify: {
       dist: {
         options: {
@@ -221,6 +226,7 @@ module.exports = function(grunt) {
     'strip_code',
     'concat',
     'clean',
+    //When we remove the console.logs 'removelogging',
     'uglify',
     'copy:main',
     'cssmin',
@@ -229,6 +235,6 @@ module.exports = function(grunt) {
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
-    'revision', 'sass', 'copy:amd', 'strip_code', 'concat', 'clean', 'copy:main', 'usebanner'
+    'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
   ]);
 };

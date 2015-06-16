@@ -2,10 +2,10 @@
   <div class="twelve columns">
 
     <h1>Popup Menu</h1>
-    <span class="label">Right Click)</span>
+    <span class="label">Right Click</span>
     <hr>
 
-    <div class="field" style="position: fixed; top: 140px; left: 50%;">
+    <div class="field" style="position: fixed; top: 269px">
       <label for="fixed-menus">Menu Is Fixed</label>
       <button class="btn" type="button" id="fixed-menus" data-popupmenu="action-big-popupmenu">Show Fixed Menu</button>
     </div>
@@ -16,8 +16,8 @@
     </div>
 
     <div class="field">
-      <label for="input-menu">Regular Popup Menu from an Input field</label>
-      <input type="text" data-popupmenu="action-popupmenu" class="is-focused" value="Right Click Me" id="input-menu">
+      <label for="input-menu">Pop Menu With Images</label>
+      <input type="text" data-popupmenu="image-popupmenu" class="is-focused" value="Right Click Me" id="input-menu">
     </div>
 
     <div class="field">
@@ -32,19 +32,47 @@
       <button class="btn" type="button" id="pushed-down-menu" data-popupmenu="action-big-popupmenu">Show Scrolled-Off-Screen Menu</button>
     </div>
 
-    <ul id="action-popupmenu" class="popupmenu">
-      <li><a href="#">Change Available Number</a></li>
-      <li>
-        <a href="#">Sub Menu</a>
-        <ul class="popupmenu">
-          <li><a href="#">Sub Menu 1</a></li>
-          <li><a href="#">Sub Menu 2</a></li>
-          <li><a href="#">Sub Menu 3 (Long text)</a></li>
-        </ul>
+    <ul id="image-popupmenu" class="popupmenu is-padded">
+      <li class="is-checked">
+        <a href="#">
+          <svg aria-hidden="true" focusable="false" class="icon icon-filter">
+             <use xlink:href="#icon-filter-contains"/>
+          </svg>
+          Contains
+        </a>
       </li>
-      <li><a href="#">Cancel Line</a></li>
-      <li><a href="#">Cancel Requisition</a></li>
-      <li><a href="#">Close Requisition Short</a></li>
+      <li>
+        <a href="#">
+          <svg aria-hidden="true" focusable="false" class="icon icon-filter">
+             <use xlink:href="#icon-filter-equals"/>
+          </svg>
+          Equals
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <svg aria-hidden="true" focusable="false" class="icon icon-filter">
+             <use xlink:href="#icon-filter-doesnt-equal"/>
+          </svg>
+          Does Not Equal
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <svg aria-hidden="true" focusable="false" class="icon icon-filter">
+             <use xlink:href="#icon-filter-is-empty"/>
+          </svg>
+          Is Empty
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <svg aria-hidden="true" focusable="false" class="icon icon-filter">
+             <use xlink:href="#icon-filter-contains"/>
+          </svg>
+          Contains
+        </a>
+      </li>
     </ul>
 
     <ul id="action-big-popupmenu" class="popupmenu">

@@ -30,8 +30,24 @@ $label-color: $slate03;
 $disabled-color: $graphite04;
 
 // Rules
-$hr-top-color: $slate10;
-$hr-bottom-color: $slate08;
+$hr-top-color: $slate09;
+$hr-bottom-color: transparent;
+
+// Popovers
+$popover-bg-color: $slate08;
+$popover-border-color: $slate03;
+$popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+$popover-color: $font-color;
+$popover-separator-color: $slate05;
+
+// Popup Menu
+$popupmenu-color: $white;
+$popupmenu-color-filtered-text: $font-color-lowcontrast;
+$popupmenu-bg-color: $slate08;
+$popupmenu-border-color: $slate03;
+$popupmenu-checked-color: $white;
+$popupmenu-hover-color: $slate06;
+$popupmenu-border-color: $slate04;
 
 //================================================== //
 // Core Controls

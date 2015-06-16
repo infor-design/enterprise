@@ -23,7 +23,7 @@
       text-decoration: underline;
 
       svg {
-        stroke: $tree-folder-link-color;
+        fill: $tree-folder-link-color;
       }
     }
 
@@ -34,7 +34,6 @@
 
       svg {
         fill: $tree-selected-color;
-        stroke: $tree-selected-color;
       }
     }
 
@@ -73,7 +72,7 @@
         text-decoration: none;
 
         svg {
-          stroke: $tree-selected-color;
+          fill: $tree-selected-color;
         }
       }
     }
@@ -143,7 +142,6 @@
   svg {
     height: 20px;
     margin: 0 7px 0 0;
-    stroke: $tree-icon-color;
     top: 4px;
     width: 20px;
   }

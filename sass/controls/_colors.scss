@@ -53,7 +53,7 @@
 
   td:first-child {
     border-right: 7px solid #e6e6e6;
-    color: #666666;
+    color: $font-color;
     font-size: 1.8rem;
     padding-right: 10px;
   }
@@ -68,7 +68,7 @@
   }
 
   th {
-    color: #666666;
+    color: $font-color;
     font-size: 1.8rem;
     padding-bottom: 20px;
     text-align: left;

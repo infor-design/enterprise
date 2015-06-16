@@ -79,7 +79,7 @@ input.dropdown {
 // The List
 .dropdown-list {
   background-color: $inverse-color;
-  border: 1px solid $menu-border-color;
+  border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
   box-shadow: 0 0 5px rgba(8, 150, 233, .2);
   max-height: 300px;
@@ -96,7 +96,7 @@ input.dropdown {
   }
 
   ul {
-    color: $menu-color;
+    color: $popupmenu-color;
     font-family: $font-regular;
     @include font-size(14);
     height: auto;
@@ -119,7 +119,7 @@ input.dropdown {
 
     &:hover,
     &.hover {
-      background-color: $menu-hover-color;
+      background-color: $popupmenu-hover-color;
       cursor: pointer;
       outline: none;
     }
@@ -137,7 +137,7 @@ input.dropdown {
     }
 
     &:focus {
-      background-color: $menu-hover-color;
+      background-color: $popupmenu-hover-color;
       cursor: pointer;
       outline: none;
     }
@@ -158,7 +158,7 @@ input.dropdown {
   }
 
   a {
-    color: $menu-color;
+    color: $popupmenu-color;
     text-decoration: none;
   }
 
@@ -206,13 +206,13 @@ input.dropdown {
 
     li.is-focused:not(.group-label):before {
       @include checkbox-unchecked-before-style;
-      background-color: $menu-hover-color;
+      background-color: $popupmenu-hover-color;
     }
 
     li.is-focused,
     li.is-selected.is-focused,
     li:hover:not(.group-label) {
-      background-color: $menu-hover-color;
+      background-color: $popupmenu-hover-color;
 
       > a {
         color: $font-color-highcontrast;

@@ -1025,15 +1025,17 @@ window.Chart = function(container) {
   };
 
 
-  this.Line = function(chartData) {
+  this.Line = function(chartData, options) {
     $(container).addClass('line-chart');
 
     //Append the SVG in the parent area.
     var dataset = chartData,
+      hideDots = (options.hideDots),
       parent = $(container).parent(),
       margin = {top: 30, right: 55, bottom: 35, left: 65},
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
+
 
     var svg = d3.select(container).append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -1117,35 +1119,38 @@ window.Chart = function(container) {
           .ease('cubic')
           .attr('stroke-dashoffset', 0);
 
-      lineGroups.selectAll('circle')
-        .data(d.data)
-        .enter()
-        .append('circle')
-        .attr('class', 'dot')
-        .attr('cx', function (d, i) { return xScale(i); })
-        .attr('cy', function (d) { return yScale(d.value); })
-        .attr('r', 5)
-        .style('stroke', '#ffffff')
-        .style('stroke-width', 2)
-        .style('fill', charts.colors(i))
-        .on('mouseenter.chart', function(d) {
-          var rect = d3.select(this)[0][0].getBoundingClientRect() ,
-            content = '<p><b>' + d.name + ' </b> ' + d.value + '</p>',
-            size = charts.getTooltipSize(content),
-            x = rect.x - (size.width /2) + 6,
-            y = rect.y - size.height - 18 + $(window).scrollTop();
+      if (!hideDots) {
+          lineGroups.selectAll('circle')
+          .data(d.data)
+          .enter()
+          .append('circle')
+          .attr('class', 'dot')
+          .attr('cx', function (d, i) { return xScale(i); })
+          .attr('cy', function (d) { return yScale(d.value); })
+          .attr('r', 5)
+          .style('stroke', '#ffffff')
+          .style('stroke-width', 2)
+          .style('fill', charts.colors(i))
+          .on('mouseenter.chart', function(d) {
+            var rect = d3.select(this)[0][0].getBoundingClientRect() ,
+              content = '<p><b>' + d.name + ' </b> ' + d.value + '</p>',
+              size = charts.getTooltipSize(content),
+              x = rect.x - (size.width /2) + 6,
+              y = rect.y - size.height - 18 + $(window).scrollTop();
 
-          charts.showTooltip(x, y, content, 'top');
+            charts.showTooltip(x, y, content, 'top');
 
-          //Circle associated with hovered point
-          d3.select(this).attr('r', 7);
-        }).on('mouseleave.chart', function() {
-          charts.hideTooltip();
+            //Circle associated with hovered point
+            d3.select(this).attr('r', 7);
+          }).on('mouseleave.chart', function() {
+            charts.hideTooltip();
 
-          d3.select(this).attr('r', 5);
-        }).on('click.chart', function(d) {
-          charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
-        });
+            d3.select(this).attr('r', 5);
+          }).on('click.chart', function(d) {
+            charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
+          });
+        }
+
     });
 
     var series = dataset.map(function (d) {
@@ -1200,7 +1205,7 @@ window.Chart = function(container) {
       this.Sparkline(options.dataset);
     }
     if (options.type === 'line') {
-      this.Line(options.dataset);
+      this.Line(options.dataset, options);
     }
   };
 

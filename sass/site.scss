@@ -335,11 +335,10 @@ body {
   }
 
   .img-wrapper {
-    background-color: $slate07;
     border-radius: 50%;
     display: inline-block;
     height: 50px;
-    margin: 12px 15px;
+    margin: 12px 5px 12px 15px;
     vertical-align: top;
     width: 50px;
   }
@@ -638,7 +637,7 @@ body {
   p {
     color: $graphite06;
     @include font-size(16);
-    line-height: 20px;
+    line-height: 26px;
     margin: 15px 0;
   }
 

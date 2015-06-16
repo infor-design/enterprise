@@ -61,7 +61,7 @@
 
 .popupmenu {
   background-color: $popupmenu-bg-color;
-  border: 1px solid #e5e5e5;
+  border: 1px solid $popupmenu-border-color;
   border-radius: 3px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   color: $popupmenu-color;
@@ -76,6 +76,12 @@
   &.is-padded a,
    .heading {
     padding: 0 30px;
+  }
+
+
+  &.is-padded .icon:not(.arrow) {
+    margin-left: 13px;
+    margin-right: -6px;
   }
 
   &.is-open {
@@ -97,11 +103,11 @@
 
     &:focus,
     &.is-submenu-open {
-      background-color: $menu-hover-color;
+      background-color: $popupmenu-hover-color;
     }
 
     &:not(.is-selected) > a:focus {
-      background-color: $menu-hover-color;
+      background-color: $popupmenu-hover-color;
     }
 
     &.disabled > a:focus {
@@ -111,7 +117,7 @@
     // Selected
     &.is-checked > a:before,
     &.is-checked.is-selected > a:before {
-      border-color: $azure07;
+      border-color: $popupmenu-checked-color;
       border-style: solid;
       border-width: 0 3px 3px 0;
       content: '';
@@ -127,7 +133,7 @@
   a {
     @include antialiased();
     border: 1px solid transparent;
-    color: $font-color;
+    color: $popupmenu-color;
     display: block;
     @include font-size(14);
     padding: 0 30px 0 20px;
@@ -166,6 +172,18 @@
     position: absolute;
   }
 
+  .icon:not(.arrow) {
+    left: -13px;
+    margin-left: 5px;
+    margin-right: -4px;
+    position: relative;
+    top: 3px;
+  }
+
+  .icon.arrow {
+    margin-right: 0;
+  }
+
   b {
     text-overflow: ellipsis;
   }
@@ -192,9 +210,9 @@
     }
 
     .icon.arrow {
-      fill: #666666;
+      fill: $popupmenu-color;
       height: 32px;
-      width: 32px;
+      width: 40px;
     }
 
     .popupmenu.is-open {
@@ -219,7 +237,7 @@
 
   // Seperator
   .separator {
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid $popupmenu-border-color;
     margin: 10px 0;
   }
 }

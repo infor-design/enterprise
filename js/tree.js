@@ -86,7 +86,7 @@
 
           if (subNode.is('ul')) {
             subNode.attr('role', 'group').parent().addClass('folder');
-            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-folder-collapse' : '#icon-folder-expand');
+            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-tree-collapse' : '#icon-tree-expand');
           }
 
           if (li.is('[class^="icon"]')) {
@@ -127,9 +127,9 @@
         }
 
         if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){
-          node.find('use').attr('xlink:href', '#icon-folder-expand' );
+          node.find('use').attr('xlink:href', '#icon-tree-expand' );
         } else if(node.closest('li').hasClass('folder')) {
-          node.find('use').attr('xlink:href', '#icon-folder-collapse' );
+          node.find('use').attr('xlink:href', '#icon-tree-collapse' );
         }
 
       },
