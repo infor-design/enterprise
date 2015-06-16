@@ -292,6 +292,133 @@ $(function($) {
       async: false
     };
 
+    //----------------------------------------------------------
+    //  Nav Patterns: Test Page
+    //----------------------------------------------------------
+    var mainHeader = $('body > header').first(),
+      mainHeaderData = mainHeader.data('header');
+
+    function navPatternButtonClick() {
+      var btn = $(this),
+        btns = $('[id^="navpattern-"]'),
+        newOpts = $.extend({}, btn.data('demoOptions')),
+        type;
+
+      newOpts.useAlternate = $('#navpattern-alt-breadcrumb').prop('checked');
+      mainHeader.header(newOpts);
+      mainHeaderData = mainHeader.data('header');
+
+      type = btn.data('navType');
+      if (!type) {
+        btns.enable();
+      } else {
+        switch(type) {
+          case 'drilldown':
+          btns.not('#navpattern-reset').not('[id*="#navpattern-drilldown-"]').disable();
+          break;
+          case 'breadcrumb':
+          btns.not('#navpattern-reset').not('[id*="#navpattern-breadcrumb-"]').disable();
+          break;
+          case 'tabs':
+          btns.not('#navpattern-reset').disable();
+          break;
+        }
+      }
+
+      var callback = $(this).data('demoCallback');
+      if (callback && typeof callback === 'function') {
+        callback.apply(this);
+      }
+    }
+
+    function navPatternDrillUpLoop() {
+      while (mainHeaderData.levelsDeep.length > 2 ) {
+        mainHeader.trigger('drillup');
+      }
+    }
+
+    mainHeader.on('drillTop.demo', function() {
+      $('[id^="navpattern-"]').enable();
+    });
+
+    $('#navpattern-reset')
+      .data('demoOptions', {
+        tabs: null,
+        useBackbutton: true,
+        useBreadcrumb: false
+      }).click(navPatternButtonClick);
+
+    var drilldownOpts = {
+      tabs: null,
+      useBackbutton: true,
+      useBreadcrumb: false
+    };
+
+    $('#navpattern-drilldown-1')
+      .data('demoOptions', drilldownOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Drilldown Level One']);
+      })
+      .data('navType', 'drilldown')
+      .click(navPatternButtonClick);
+
+    $('#navpattern-drilldown-2')
+      .data('demoOptions', drilldownOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Drilldown Level One']);
+        mainHeader.trigger('drilldown', ['Drilldown Level Two']);
+      })
+      .data('navType', 'drilldown')
+      .click(navPatternButtonClick);
+
+    var breadcrumbOpts = {
+      tabs: null,
+      useBackbutton: true,
+      useBreadcrumb: true
+    };
+
+    $('#navpattern-breadcrumb-1').data('demoOptions', breadcrumbOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Breadcrumb Level One']);
+      })
+      .data('navType', 'breadcrumb')
+      .click(navPatternButtonClick);
+
+    $('#navpattern-breadcrumb-2')
+      .data('demoOptions', breadcrumbOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Breadcrumb Level One']);
+        mainHeader.trigger('drilldown', ['Breadcrumb Level Two']);
+      })
+      .data('navType', 'breadcrumb')
+      .click(navPatternButtonClick);
+
+    $('#navpattern-breadcrumb-3')
+      .data('demoOptions', breadcrumbOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Breadcrumb Level One']);
+        mainHeader.trigger('drilldown', ['Breadcrumb Level Two']);
+        mainHeader.trigger('drilldown', ['Breadcrumb Level Three']);
+      })
+      .data('navType', 'breadcrumb')
+      .click(navPatternButtonClick);
+
+    var createTabsOpts = {
+      useBreadcrumb: false,
+      useBackbutton: false,
+      tabs: [1,2] // NOTE: these settings aren't final.
+    };
+
+    $('#navpattern-create-tabs')
+      .data('demoOptions', createTabsOpts)
+      .data('navType', 'tabs')
+      .click(navPatternButtonClick);
+
   });
 
 });

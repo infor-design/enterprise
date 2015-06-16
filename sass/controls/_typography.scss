@@ -69,6 +69,13 @@ h4 {
 p {
   @include font-size(14);
   line-height: 1.5em;
+
+  + h1,
+  + h2,
+  + h3,
+  + h4 {
+    @include rem(margin-top, 2rem);
+  }
 }
 
 // Add Some Seperation in Kitchen Sink Page

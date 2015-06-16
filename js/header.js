@@ -28,7 +28,8 @@
           demoOptions: true, // Used to enable/disable default SoHo Xi options for demo purposes
           useBackButton: true, // If true, displays a back button next to the title in the header toolbar
           useBreadcrumb: true, // If true, displays a breadcrumb on drilldown
-          alternateBreadcrumb: true // If true, uses alternate breadcrumb color
+          tabs: null, // If defined as an array of Tab objects, displays a series of tabs that represent application sections
+          useAlternate: true // If true, use alternate background/text color for sub-navigation areas
         },
         settings = $.extend({}, defaults, options);
 
@@ -58,7 +59,9 @@
         this.settings.demoOptions = this.element.attr('data-demo-options') ? this.element.attr('data-demo-options') === 'true' : this.settings.demoOptions;
         this.settings.useBackButton = this.element.attr('data-use-backbutton') ? this.element.attr('data-use-backbutton') === 'true' : this.settings.useBackButton;
         this.settings.useBreadcrumb = this.element.attr('data-use-breadcrumb') ? this.element.attr('data-use-breadcrumb') === 'true' : this.settings.useBreadcrumb;
-        this.settings.alternateBreadcrumb = this.element.attr('data-alternate-breadcrumb') ? this.element.attr('data-alternate-breadcrumb') === 'true' : this.settings.alternateBreadcrumb;
+        this.settings.useAlternate = this.element.attr('data-use-alternate') ? this.element.attr('data-use-alternate') === 'true' : this.settings.useAlternate;
+
+        this.settings.tabs = !Array.isArray(this.settings.tabs) ? undefined : this.settings.tabs;
 
         this.titleText = this.element.find('.title > h1');
 
@@ -86,14 +89,15 @@
           this.toolbarElem.addClass('has-title-button');
         }
 
-        // Track breadcrumb
-        this.breadcrumb = $();
+        // Application Tabs would be available from the Application Start, so activate them during build if they exist
+        if (this.settings.tabs && this.settings.tabs.length) {
+          this.buildTabs();
+        }
 
         return this;
       },
 
       buildTitleButton: function() {
-        var self = this;
         if (this.levelsDeep.length > 1 && !this.hasTitleButton && !this.titleButton.length) {
           this.titleButton = $('<button class="btn-icon back-button" type="button"></button>');
           this.titleButton.html('<span class="audible">'+ Locale.translate('Drillup') +'</span>' +
@@ -109,30 +113,22 @@
         }
 
         this.titleButton.find('.icon.app-header').addClass('go-back');
-
-        // Events for the title button.  e.preventDefault(); stops Application Menu functionality while drilled
-        if (this.levelsDeep.length < 3) {
-          this.titleButton.bindFirst('click.header', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            self.drillup();
-          });
-        }
       },
 
       // Used for adding a Breadcrumb Element to the Header
       buildBreadcrumb: function() {
+        var self = this;
         this.element.addClass('has-breadcrumb');
 
         this.breadcrumb = this.element.find('.breadcrumb');
         if (!this.breadcrumb.length) {
           this.breadcrumb = $('<nav class="breadcrumb" role="navigation" style="display: none;"></nav>').appendTo(this.element);
+          this.breadcrumb.on('click', 'a', function(e) {
+            self.handleBreadcrumbClick(e);
+          });
         }
 
-        if (this.settings.alternateBreadcrumb) {
-          this.breadcrumb.addClass('alternate');
-        }
-
+        this.breadcrumb[this.settings.useAlternate ? 'addClass' : 'removeClass']('alternate');
         this.adjustBreadcrumb();
       },
 
@@ -152,17 +148,79 @@
         });
       },
 
+      buildTabs: function() {
+        this.tabsContainer = this.element.find('.tab-container');
+        if (!this.tabsContainer.length) {
+          this.tabsContainer = $('<div class="tab-container"></div>').appendTo(this.element);
+
+          // TODO: Flesh this out so that the header control can build tabs based on options
+          var tablist = $('<ul class="tab-list" role="tablist"></ul>').appendTo(this.tabsContainer);
+          $('<li class="tab"><a href="#header-tabs-home" role="tab">SoHo Xi Controls | Patterns</a></li>').appendTo(tablist);
+          $('<li class="tab"><a href="#header-tabs-level-1" role="tab">Level 1 Detail</a></li>').appendTo(tablist);
+          $('<li class="tab"><a href="#header-tabs-level-2" role="tab">Level 2 Detail</a></li>').appendTo(tablist);
+        }
+
+        this.element.addClass('has-tabs');
+        this.tabsContainer[this.settings.useAlternate ? 'addClass' : 'removeClass']('alternate');
+
+        // NOTE: For demo purposes the markup for tab panels is already inside the Nav Patterns Test page.
+        $('#header-tabs-level-1').removeAttr('style');
+        $('#header-tabs-level-2').removeAttr('style');
+
+        // Invoke Tabs Control
+        this.tabsContainer.tabs();
+      },
+
       handleEvents: function() {
         var self = this;
 
-        this.element.on('drilldown.header', function(e, viewTitle) {
-          self.drilldown(viewTitle);
-        });
-        this.element.on('drillup.header', function(e, viewTitle) {
-          self.drillup(viewTitle);
+        this.element
+          .on('updated.header', function() {
+            self.updated();
+          })
+          .on('reset.header', function() {
+            self.reset();
+          })
+          .on('drilldown.header', function(e, viewTitle) {
+            self.drilldown(viewTitle);
+          })
+          .on('drillup.header', function(e, viewTitle) {
+            self.drillup(viewTitle);
+          });
+
+        // Events for the title button.  e.preventDefault(); stops Application Menu functionality while drilled
+        this.titleButton.bindFirst('click.header', function(e) {
+          if (self.levelsDeep.length > 1) {
+            e.stopImmediatePropagation();
+            self.drillup();
+            e.returnValue = false;
+          }
         });
 
         return this;
+      },
+
+      handleBreadcrumbClick: function(e) {
+        var selected = $(e.target).parent(),
+          breadcrumbs = this.breadcrumb.find('li'),
+          selectedIndex = breadcrumbs.index(selected),
+          delta;
+
+        if (selected.hasClass('current')) {
+          return;
+        }
+
+        if (selectedIndex === 0) {
+          return this.reset();
+        }
+
+        if (selectedIndex < breadcrumbs.length - 1) {
+          delta = (breadcrumbs.length - 1) - selectedIndex;
+          while (delta > 0) {
+            this.drillup();
+            delta = delta - 1;
+          }
+        }
       },
 
       initPageChanger: function () {
@@ -214,9 +272,13 @@
           this.buildTitleButton();
         }
 
-        if (this.settings.useBreadcrumb && !this.breadcrumb.length) {
-          this.buildBreadcrumb();
-          this.breadcrumb.css('display', 'block').animateOpen();
+        if (this.settings.useBreadcrumb) {
+          if (!this.breadcrumb || !this.breadcrumb.length) {
+            this.buildBreadcrumb();
+            this.breadcrumb.css({'display': 'block', 'height': 'auto'});
+          } else {
+            this.adjustBreadcrumb();
+          }
         }
       },
 
@@ -233,33 +295,49 @@
           title = viewTitle;
         }
 
-        if (this.levelsDeep.length < 2) {
-          title = this.levelsDeep[0];
-
-          if (this.settings.useBackButton) {
-            this.removeButton();
-          }
-
-          if (this.settings.useBreadcrumb) {
-            this.removeBreadcrumb();
-          }
-        } else {
+        if (this.levelsDeep.length > 1) {
           if (this.settings.useBreadcrumb) {
             this.adjustBreadcrumb();
           }
+          this.titleText.text(title);
+          return;
+        }
+
+        // Completely reset all the way back to normal
+        title = this.levelsDeep[0];
+
+        if (this.settings.useBackButton) {
+          this.removeButton();
+        }
+        if (this.settings.useBreadcrumb) {
+          this.removeBreadcrumb();
         }
 
         this.titleText.text(title);
+        this.element.trigger('drillTop');
+      },
+
+      reset: function() {
+        while (this.levelsDeep.length > 1) {
+          this.levelsDeep.pop();
+        }
+        this.titleText.text(this.levelsDeep[0]);
+
+        this.removeBreadcrumb();
+        this.removeTabs();
+        this.removeButton();
+
+        this.element.trigger('afterReset');
+        return this;
       },
 
       removeButton: function() {
-        this.titleButton.off('click.header');
-
         if (this.hasTitleButton) {
           this.titleButton.find('.icon.app-header').removeClass('go-back');
+          return;
         }
 
-        if (!this.hasTitleButton && this.titleButton && this.titleButton.length) {
+        if (this.titleButton && this.titleButton.length) {
           this.titleButton.remove();
           this.titleButton = $();
 
@@ -269,25 +347,80 @@
       },
 
       removeBreadcrumb: function() {
-        var self = this;
-        function destroyBreadcrumb() {
-          self.breadcrumb.remove();
-          self.breadcrumb = $();
-
-          self.element.removeClass('has-breadcrumb');
+        if (!this.breadcrumb || !this.breadcrumb.length) {
+          return;
         }
 
+        var self = this,
+          transitionEnd = $.fn.transitionEndName(),
+          timeout;
+
+        function destroyBreadcrumb() {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
+
+          self.element.off(transitionEnd + '.header');
+          self.breadcrumb.off().remove();
+          self.breadcrumb = $();
+        }
+
+        self.element.removeClass('has-breadcrumb');
         if (this.breadcrumb.is(':not(:hidden)')) {
-          this.breadcrumb.on('animateClosedComplete.header', destroyBreadcrumb).animateClosed();
+          this.element.one(transitionEnd + '.header', destroyBreadcrumb);
+          timeout = setTimeout(destroyBreadcrumb, 300);
         } else {
           destroyBreadcrumb();
         }
       },
 
+      removeTabs: function() {
+        if (!this.tabsContainer || !this.tabsContainer.length) {
+          return;
+        }
+
+        var self = this,
+          transitionEnd = $.fn.transitionEndName(),
+          timeout;
+
+        function destroyTabs() {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
+
+          self.element.off(transitionEnd + '.header');
+          self.tabsContainer.data('tabs').destroy();
+          self.tabsContainer.remove();
+          self.tabsContainer = null;
+
+          // NOTE: For demo purposes the markup for tab panels is already inside the Nav Patterns Test page.
+          $('#header-tabs-level-1').css('display', 'none');
+          $('#header-tabs-level-2').css('display', 'none');
+        }
+
+        this.element.removeClass('has-tabs');
+        if (this.tabsContainer.is(':not(:hidden)')) {
+          this.element.one(transitionEnd + '.header', destroyTabs);
+          timeout = setTimeout(destroyTabs, 300);
+        } else {
+          destroyTabs();
+        }
+      },
+
       // teardown events
       unbind: function() {
+        this.titleButton.off('click.header');
         this.element.off('drilldown.header drillup.header');
         return this;
+      },
+
+      updated: function() {
+        this
+          .reset()
+          .unbind()
+          .init();
       },
 
       destroy: function() {
@@ -298,7 +431,6 @@
 
         $.removeData(this[0], pluginName);
       }
-
     };
 
     // Keep the Chaining while Initializing the Control (Only Once)
@@ -306,6 +438,7 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Header(this, settings));
       }

@@ -74,25 +74,24 @@
           self.container.addClass('has-counts');
         }
 
-        //For each tab panel set the aria roles and hide it
-        self.panels = self.container.children('div')
-            .attr({'class': 'tab-panel', 'role': 'tabpanel'}).hide();
-
-        self.panels.find('h3:first').attr('tabindex', '0');
-
         //Attach Tablist role and class to the tab headers container
         self.header = self.container.find('ul:first')
                         .attr({'class': 'tab-list', 'role': 'tablist',
                                'aria-multiselectable': 'false'});
         self.tablist = self.element.find('.tab-list');
 
-        self.moreButton = self.tablist.next('.tab-more');
+        self.focusState = self.container.find('.tab-focus-indicator');
+        if (!self.focusState.length) {
+          self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
+        }
 
-        self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
-
-        self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+        self.animatedBar = self.container.find('.animated-bar');
+        if (!self.animatedBar.length) {
+          self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+        }
 
         // Add the markup for the "More" button if it doesn't exist.
+        self.moreButton = self.tablist.next('.tab-more');
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span>').text(Locale.translate('More')));
@@ -130,6 +129,29 @@
             $(this).prepend('<span class="count">0 </span>');
           }
         });
+
+        // Build/manage tab panels
+        function associateAnchorWithPanel() {
+          var a = $(this),
+            popup = a.parent().data('popupmenu');
+
+          // Associated the current one
+          self.panels = self.panels.add( $(a.attr('href')) );
+
+          // If dropdown tab, add the contents of the dropdown
+          // NOTE: dropdown tabs shouldn't have children, so they aren't accounted for here
+          if (popup) {
+            popup.menu.children('li').each(function() {
+              self.panels = self.panels.add( $($(this).children('a').attr('href')) );
+            });
+          }
+        }
+
+        self.panels = $();
+        self.anchors.each(associateAnchorWithPanel);
+        self.panels
+          .attr({'class': 'tab-panel', 'role': 'tabpanel'}).hide()
+          .find('h3:first').attr('tabindex', '0');
 
         return this;
       },
