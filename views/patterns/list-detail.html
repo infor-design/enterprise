@@ -1,0 +1,35 @@
+{{> layouts/header-scroll}}
+
+<div id="maincontent" class="two-column page-container fixed scrollable">
+
+  <section class="sidebar scrollable" role="complementary">
+    {{={{{ }}}=}}
+
+      <script id="task-tmpl" type="text/html">
+        <ul>
+          {{#dataset}}
+            {{#disabled}}
+              <li class="is-disabled">
+            {{/disabled}}
+            {{^disabled}}
+              <li>
+            {{/disabled}}
+              <p class="listview-heading">Task #{{task}}</p>
+              <p class="listview-subheading">{{desc}}</p>
+              <p class="listview-micro">Due: {{date}}</p>
+            </li>
+          {{/dataset}}
+        </ul>
+      </script>
+
+      <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+
+  </section>
+
+  <section class="main scrollable" role="main">
+    <div class="content">
+
+    </div>
+  </section>
+
+</div>

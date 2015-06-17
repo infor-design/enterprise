@@ -55,12 +55,12 @@ body.no-scroll {
     display: inline-block;
 
     &.scrollable {
-      height: calc(100% - 3px);
+      height: 100%;
       width: 100%;
     }
 
     &.scrollable-y {
-      height: calc(100% - 3px);
+      height: 100%;
     }
   }
 
@@ -77,6 +77,10 @@ body.no-scroll {
     + .main {
       border-left: 1px solid $graphite02;
       border-right: 0;
+    }
+
+    .listview {
+      background-color: $body-bg-color;
     }
   }
 

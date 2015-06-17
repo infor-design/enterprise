@@ -361,6 +361,7 @@ body {
     span {
       display: table-cell;
       line-height: 20px;
+      padding-right: 20px;
       vertical-align: middle;
     }
   }
@@ -806,6 +807,10 @@ body {
 
 }
 
+.no-margin {
+  margin-top: 0 !important;
+}
+
 code.snippet {
   background-color: #ebebeb;
   color: $graphite07;
@@ -814,7 +819,6 @@ code.snippet {
   margin-top: 10px;
   padding: 4px 1px;
 }
-
 
 // Media Queries For Vision Page and Shared
 //==================================================//
