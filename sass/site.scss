@@ -433,15 +433,19 @@ body {
   text-align: center;
   z-index: 1;
 
+  .row {
+    margin-bottom: 0;
+  }
+
   nav {
 
     ul {
-      margin: 0 auto;
+      text-align: left;
     }
 
     li {
       display: inline-block;
-      margin: 25px 20px 20px;
+      margin: 35px 30px 20px;
     }
   }
 

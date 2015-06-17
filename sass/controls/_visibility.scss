@@ -28,13 +28,9 @@
 }
 
 // Disable transitions
-.no-transition {
-  @include css3(transition, none !important);
-}
-
-// Disable animations
+.no-transition,
 .no-animation {
-  @include css3(animation, none !important);
+  @include css3(transition, none !important);
 }
 
 // visibility classes for different form factors

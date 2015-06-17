@@ -61,22 +61,29 @@
           return $(this).children('.accordion-pane').length > 0;
         });
 
-        var active = self.headers.find('.is-selected').children('a');
+        var active = self.element.find('.is-selected');
         if (active.length === 0) {
           active = this.anchors.filter(':not(:disabled):not(:hidden)').first();
-        }
+          this.setActiveAnchor(active);
+        } else {
 
-        this.setActiveAnchor(active);
+            var pane = active,
+            icon = pane.find('.icon.plus-minus');
 
-        if (active.length > 0) {
-          setTimeout(function () {
-            var pane = active.closest('.accordion-pane');
             pane.css({'height': 'auto', 'display': 'block'});
-            pane.prev().find('.plus-minus').addClass('active');
+            icon.addClass('active');
 
-            var header = active.parent();
-            header.attr('aria-expanded', 'true').addClass('is-expanded');
-          }, 1);
+            var header = pane.parent();
+
+            setTimeout(function () {
+              header.attr('aria-expanded', 'true').addClass('is-expanded')
+                .css({'height': 'auto', 'display': 'block'});
+
+              var parent = header.parent().parent();
+              parent.find('.icon.plus-minus').first().addClass('active');
+              parent.attr('aria-expanded', 'true').addClass('is-expanded');
+
+            }, 0);
         }
 
         return this;
