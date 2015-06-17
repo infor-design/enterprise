@@ -808,18 +808,19 @@ window.Chart = function(container) {
     function resizePie() {
       clearTimeout(timeout);
       timeout = setTimeout(function () {
-        var container = $(container);
+        var cont = $(container);
 
-        if (!container.is(':visible')) {
-          return;
+        if (!cont.is(':visible')) {
+          return true;
         }
-
-        $(container).empty();
+        cont.empty();
+        alert();
         charts.Pie(initialData, isDonut);
       }, 100);
     }
 
     $(window).off('resize.pie').on('resize.pie', resizePie);
+    $(container).off('resize').on('resize', resizePie);
 
     return $(container);
   };
@@ -832,19 +833,19 @@ window.Chart = function(container) {
     function resizeCharts() {
       clearTimeout(timeout);
       timeout = setTimeout(function () {
-        var container = $(container),
-          api = container.data('chart');
+        var api = $(container).data('chart'),
+            cont = $(container);
 
-        if (!container.is(':visible')) {
-          return;
+        if (!cont.is(':visible')) {
+          return true;
         }
-
-        container.empty();
+        cont.empty();
         api.initChartType(api.settings);
       }, 100);
     }
 
     $(window).off('resize.charts').on('resize.charts', resizeCharts);
+    $(container).off('resize').on('resize', resizeCharts);
 
   };
 

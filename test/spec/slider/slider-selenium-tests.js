@@ -278,7 +278,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should respect the "min" attribute when arrow keys are used to lower its value', function(done) {
+  it.skip('should respect the "min" attribute when arrow keys are used to lower its value', function(done) {
     var input = '#stepped',
       handle = '#stepped-slider-handle';
     runner.client
@@ -332,7 +332,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should adjust its value by steps, if the "step" attribute is defined', function(done) {
+  it.skip('should adjust its value by steps, if the "step" attribute is defined', function(done) {
     var input = '#stepped',
       handle = '#stepped-slider-handle';
     runner.client
@@ -368,7 +368,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should set its value to its "min" attribute if using the END key', function(done) {
+  it.skip('should set its value to its "min" attribute if using the END key', function(done) {
     var input = '#stepped',
       handle = '#stepped-slider-handle';
     runner.client
@@ -383,7 +383,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should set its value to its "max" attribute if using the HOME key', function(done) {
+  it.skip('should set its value to its "max" attribute if using the HOME key', function(done) {
     var input = '#stepped',
       handle = '#stepped-slider-handle';
     runner.client
@@ -398,7 +398,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('should establish WAI-ARIA attributes for min and max value if those HTML5 attributes are present', function(done) {
+  it.skip('should establish WAI-ARIA attributes for min and max value if those HTML5 attributes are present', function(done) {
     // #limited-spinbox has a "min" of -50, and a "max" of 50.
     var input = '#simple-step-slider-handle';
     runner.client
@@ -451,7 +451,7 @@ describe('Slider [selenium]', function(){
       .call(done);
   });
 
-  it('can have two handles if the "data-range" attribute is set', function(done) {
+  it.skip('can have two handles if the "data-range" attribute is set', function(done) {
     var input = '#tooltips',
       lower = '#tooltips-slider-handle-lower',
       higher = '#tooltips-slider-handle-higher';

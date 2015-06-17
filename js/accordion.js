@@ -68,7 +68,7 @@
         } else {
 
             var pane = active,
-            icon = pane.find('.icon.plus-minus');
+            icon = pane.children('.icon.plus-minus');
 
             pane.css({'height': 'auto', 'display': 'block'});
             icon.addClass('active');
