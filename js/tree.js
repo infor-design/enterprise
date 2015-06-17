@@ -43,8 +43,7 @@
         this.setupEvents();
       },
       setupTree: function() {
-        var links = this.element.find('a'),
-            self = this;
+        var links = this.element.find('a');
 
         links.each(function(i) {
           var a = $(this),
@@ -173,7 +172,7 @@
         this.element.on('focus.tree', 'a', function() {
           var target = $(this);
           // First element if disabled
-          if ((parseInt(target.attr('aria-level')) === 1) && 
+          if ((parseInt(target.attr('aria-level')) === 1) &&
               (parseInt(target.attr('aria-posinset')) === 1) &&
               (target.hasClass('is-disabled'))) {
 
@@ -215,7 +214,7 @@
             prev = target.parent().prev().find('a:first');
 
             //move into children at bottom
-            if (prev.parent().is('.folder') && 
+            if (prev.parent().is('.folder') &&
                 prev.parent().find('ul.is-open').length === 1 &&
                 !prev.parent().find('ul.is-disabled').length) {
               prev = prev.parent().find('ul.is-open a:last');
@@ -307,7 +306,7 @@
       destroy: function() {
         this.element.removeData(pluginName);
         this.element.off('updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
-      }      
+      }
     };
 
     // Keep the Chaining and Init the Controls or Settings
