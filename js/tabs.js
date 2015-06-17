@@ -74,25 +74,24 @@
           self.container.addClass('has-counts');
         }
 
-        //For each tab panel set the aria roles and hide it
-        self.panels = self.container.children('div')
-            .attr({'class': 'tab-panel', 'role': 'tabpanel'}).hide();
-
-        self.panels.find('h3:first').attr('tabindex', '0');
-
         //Attach Tablist role and class to the tab headers container
         self.header = self.container.find('ul:first')
                         .attr({'class': 'tab-list', 'role': 'tablist',
                                'aria-multiselectable': 'false'});
         self.tablist = self.element.find('.tab-list');
 
-        self.moreButton = self.tablist.next('.tab-more');
+        self.focusState = self.container.find('.tab-focus-indicator');
+        if (!self.focusState.length) {
+          self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
+        }
 
-        self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
-
-        self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+        self.animatedBar = self.container.find('.animated-bar');
+        if (!self.animatedBar.length) {
+          self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+        }
 
         // Add the markup for the "More" button if it doesn't exist.
+        self.moreButton = self.tablist.next('.tab-more');
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span>').text(Locale.translate('More')));
@@ -130,6 +129,29 @@
             $(this).prepend('<span class="count">0 </span>');
           }
         });
+
+        // Build/manage tab panels
+        function associateAnchorWithPanel() {
+          var a = $(this),
+            popup = a.parent().data('popupmenu');
+
+          // Associated the current one
+          self.panels = self.panels.add( $(a.attr('href')) );
+
+          // If dropdown tab, add the contents of the dropdown
+          // NOTE: dropdown tabs shouldn't have children, so they aren't accounted for here
+          if (popup) {
+            popup.menu.children('li').each(function() {
+              self.panels = self.panels.add( $($(this).children('a').attr('href')) );
+            });
+          }
+        }
+
+        self.panels = $();
+        self.anchors.each(associateAnchorWithPanel);
+        self.panels
+          .attr({'class': 'tab-panel', 'role': 'tabpanel'}).hide()
+          .find('h3:first').attr('tabindex', '0');
 
         return this;
       },
@@ -176,10 +198,16 @@
 
         // Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
         // a change in focus, or a click.  Keystroke focus changes cause different visual situations
-        function addClickFocusData() {
+        function addClickFocusData(e) {
+          var tab = $(this);
+          if (tab.is('.is-disabled')) {
+            e.preventDefault();
+            return false;
+          }
+
           self.focusState.removeClass('is-visible');
-          if (!$(this).is(':focus')) {
-            $(this).children('a').data('focused-by-click', true);
+          if (!tab.is(':focus')) {
+            tab.children('a').data('focused-by-click', true);
           }
         }
         self.tablist.on('mousedown.tabs', '> li', addClickFocusData);
@@ -238,6 +266,8 @@
             self.positionFocusState();
           }
           self.checkFocusedElements();
+        }).on('updated.tabs', function() {
+          self.updated();
         });
 
         // Check to see if we need to add/remove the more button on resize
@@ -251,9 +281,10 @@
       },
 
       handleTabClick: function(e, li) {
-        if (this.element.is('.is-disabled')) {
+        if (this.element.is('.is-disabled') || (li && li.is('.is-disabled'))) {
+          e.stopPropagation();
           e.preventDefault();
-          return;
+          return false;
         }
 
         var nonVisibleExcludes = ':not(.separator):not(:hidden)',
@@ -280,8 +311,10 @@
       },
 
       handleMoreButtonClick: function(e) {
-        if (this.element.is('.is-disabled')) {
-          return;
+        if (this.element.is('.is-disabled') || this.moreButton.is('.is-disabled')) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
         }
 
         if (!(this.container.hasClass('has-more-button'))) {
@@ -299,7 +332,7 @@
       handleTabFocus: function(e, a) {
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
-          return;
+          return false;
         }
 
         var li = a.parent(),
@@ -571,6 +604,10 @@
           anchorMarkup.prepend('<span class="count">0 </span>');
         }
 
+        if (options.dropdown) {
+          // TODO: Need to implement the passing of Dropdown Tab menus into this method.
+        }
+
         // Insert markup at the very end, or at the specified index.
         if (atIndex === undefined || isNaN(atIndex)) {
           this.tablist.append(tabHeaderMarkup);
@@ -662,6 +699,7 @@
       // Hides a tab
       hide: function(tabId) {
         var tab = this.getTabFromId(tabId);
+        this.findPreviousAvailableTab(tabId);
         return tabId ? tab.addClass('hidden') : null;
       },
 
@@ -674,6 +712,7 @@
       // Disables an individual tab
       disableTab: function(tabId) {
         var tab = this.getTabFromId(tabId);
+        this.findPreviousAvailableTab(tabId);
         return tabId ? tab.addClass('is-disabled') : null;
       },
 
@@ -681,6 +720,27 @@
       enableTab: function(tabId) {
         var tab = this.getTabFromId(tabId);
         return tabId ? tab.removeClass('is-disabled') : null;
+      },
+
+      // Takes a tab ID and returns a jquery object containing the previous available tab
+      findPreviousAvailableTab: function(tabId) {
+        var tab = this.getTabFromId(tabId),
+          filter = 'li:not(.separator):not(.hidden):not(.is-disabled)',
+          tabs = this.tablist.find(filter),
+          target = tabs.eq(tabs.index(tab) - 1);
+
+        while(target.length && !target.is(filter)) {
+          target = tabs.eq(tabs.index(target) - 1);
+        }
+
+        if (tab.is('.is-selected') && target.length) {
+          this.activate(target.children('a').attr('href'));
+          target.children('a').focus();
+          this.focusBar(target);
+          this.positionFocusState();
+        }
+
+        return target;
       },
 
       setOverflow: function () {
@@ -842,7 +902,7 @@
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
-              $(self.anchors.filter('[href="' + first.attr('data-tab-href') + '"]')).parent().prev().children('a').focus();
+              self.findLastVisibleTab();
             }
           }
 
@@ -854,7 +914,7 @@
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
-              self.anchors.first().focus();
+              self.findFirstVisibleTab();
             }
           }
 
@@ -910,6 +970,11 @@
           targetFocus = tabs.eq(tabs.index(targetFocus) + 1);
         }
         tabs.eq(tabs.index(targetFocus) - 1).find('a').focus();
+      },
+
+      findFirstVisibleTab: function() {
+        var tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)');
+        tabs.eq(0).find('a').focus();
       },
 
       focusBar: function(li, callback) {
@@ -1012,6 +1077,11 @@
         }
       },
 
+      updated: function() {
+        this.destroy();
+        this.init();
+      },
+
       disable: function() {
         this.element.prop('disabled', true).addClass('is-disabled');
         this.updateAria($());
@@ -1075,7 +1145,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend(instance.settings, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Tabs(this, settings));
       }

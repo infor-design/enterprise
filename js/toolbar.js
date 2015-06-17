@@ -109,18 +109,32 @@
             popupLi.addClass('is-disabled');
           }
 
+          // Order of operations for populating the List Item text:
+          // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
+          var span = item.find('.audible'),
+            title = item.attr('title'),
+            tooltip = item.data('tooltip'),
+            tooltipText = tooltip ? tooltip.content : undefined;
+
+          var popupLiText = span.length ? span.text() :
+            title !== '' && title !== undefined ? item.attr('title') :
+            tooltipText ? tooltipText : item.text();
+
+          a.text(popupLiText);
+
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
-          var icon = popupLi.find('.icon').filter(function(){
+          var icon = item.find('.icon').filter(function(){
             return item.find('use').attr('xlink:href') !== '#icon-dropdown';
           });
           if (icon.length) {
-            this.moreMenu.addClass('has-icons');
-            icon.detach().prependTo(popupLi);
+            self.moreMenu.addClass('has-icons');
+            a.html('<span>' + a.text() + '</span>');
+            icon.clone().detach().prependTo(a);
           }
 
           var linkspan = popupLi.find('b');
           if (linkspan.length) {
-            this.moreMenu.addClass('has-icons');
+            self.moreMenu.addClass('has-icons');
             linkspan.detach().prependTo(popupLi);
           }
 
@@ -131,20 +145,6 @@
             submenu.removeAttr('id').attr('data-original-menu', id).wrap($('<div class="wrapper"></div>'));
             popupLi.addClass('submenu').append(submenu);
           }
-
-          // Order of operations for populating the List Item text:
-          // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
-          var text = popupLi.find('.audible'),
-            title = item.attr('title'),
-            tooltip = item.data('tooltip'),
-            tooltipText = tooltip ? tooltip.content : undefined;
-
-          var popupLiText = text.length ? text.removeClass('audible').text() :
-            title !== '' && title !== undefined ? item.attr('title') :
-            tooltipText ? tooltipText : item.text();
-
-          popupLi.find('.audible').remove();
-          a.text(popupLiText);
 
           // Setup data links between the buttons and their corresponding list items
           item.data('action-button-link', a);
