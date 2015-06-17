@@ -24,6 +24,7 @@
     var pluginName = 'autocomplete',
       defaults = {
         source: [], //Defines the data to use, must be specified.
+        tags: false, //Allows tags to be shown/generated.
         template: undefined // If defined, use this to draw the contents of each search result instead of the default draw routine.
       },
       settings = $.extend({}, defaults, options);
@@ -33,6 +34,7 @@
       this.settings = settings;
       this.element = $(element);
       this.init();
+      console.log(this.settings);
     }
 
     // Check if an object is an array
