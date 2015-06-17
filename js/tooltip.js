@@ -67,11 +67,10 @@
       },
 
       addAria: function() {
-        //var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
-        this.content =  this.element.attr('title') || settings.content;
+        this.content = this.element.attr('title') || settings.content;
+        this.description.text(this.content);
         this.content = this.addClassToLinks(this.content, 'links-clickable');
 
-        this.description.text(this.content);
         if (!this.isPopover) {
           this.element.removeAttr('title').attr('aria-describedby', this.description.attr('id'));
         }
