@@ -55,18 +55,25 @@
         // this.activeElement is the element that the tooltip displays and positions against
         this.activeElement = this.element;
 
+        this.descriptionId = $('.tooltip-description').length + 1;
+        this.description = this.element.next('.tooltip-description');
+        if (!this.description.length) {
+          this.description = $('<span id="tooltip-description-'+ this.descriptionId +'" class="tooltip-description audible"></span>').insertAfter(this.element);
+        }
+
         if (this.element.is('.dropdown, .multiselect')) {
           this.activeElement = $('#' + this.element.attr('id') + '-shdo');
         }
       },
 
       addAria: function() {
-        var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
+        //var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
         this.content =  this.element.attr('title') || settings.content;
         this.content = this.addClassToLinks(this.content, 'links-clickable');
 
+        this.description.text(this.content);
         if (!this.isPopover) {
-          this.element.removeAttr('title').attr('aria-describedby', name);
+          this.element.removeAttr('title').attr('aria-describedby', this.description.attr('id'));
         }
 
         if (this.isPopover && settings.trigger === 'click') {
@@ -80,12 +87,13 @@
         return d.html();
       },
 
-      appendTooltip: function() {      
+      appendTooltip: function() {
         this.tooltip = settings.tooltipElement ? $(settings.tooltipElement) : $('#tooltip');
-        if (this.tooltip.length === 0) {
+        if (!this.tooltip.length) {
           var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
-          this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"><p>(Content)</p></div></div>').appendTo('body');
+          this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"><p>(Content)</p></div></div>');
         }
+        this.place();
       },
 
       handleEvents: function() {
@@ -142,7 +150,6 @@
       },
 
       setContent: function(content) {
-
         if (this.isPopover) {
           this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
           settings.content.removeClass('hidden');
@@ -194,6 +201,7 @@
           this.tooltip.addClass('is-error');
         }
 
+        this.place();
         this.tooltip.removeClass('is-hidden');
         this.position();
         this.element.trigger('show', [this.tooltip]);
@@ -234,47 +242,76 @@
 
       },
 
+      // Places the tooltip element itself in the correct DOM element.
+      // If the current element is inside a scrollable container, the tooltip element goes as high as possible in the DOM structure.
+      place: function() {
+        var targetContainer = $('body');
+
+        // adjust the tooltip if the element is being scrolled inside a scrollable DIV
+        this.scrollparent = this.element.parents('.page-container[class*="scrollable"]').first();
+        if (this.scrollparent.length) {
+          targetContainer = this.scrollparent;
+        }
+
+        this.tooltip.detach().appendTo(targetContainer);
+      },
+
       position: function () {
         var self = this,
           winH = window.innerHeight + $(document).scrollTop(),
           // subtract 2 from the window width to account for the tooltips
           // resizing themselves to fit within the CSS overflow boundary.
-          winW = (window.innerWidth - 2) + $(document).scrollLeft();
+          winW = (window.innerWidth - 2) + $(document).scrollLeft(),
+          scrollable = {
+            deltaHeight: 0,
+            deltaWidth: 0,
+            offsetLeft: 0,
+            offsetTop: 0
+          };
+
+        if (this.scrollparent.length) {
+          scrollable.offsetTop = this.scrollparent.scrollTop();
+          scrollable.offsetLeft = this.scrollparent.scrollLeft();
+          scrollable.deltaHeight = this.scrollparent.offset().top;
+          scrollable.deltaWidth = this.scrollparent.offset().left;
+          winH = this.scrollparent.offset().top + scrollable.offsetTop;
+          winW = this.scrollparent.offset().left + scrollable.offsetLeft;
+        }
 
         switch(settings.placement) {
           case 'offset':
             // Used for error messages (validation)
             self.tooltip.addClass('bottom');
-            self.placeBelowOffset();
+            self.placeBelowOffset(scrollable);
             break;
           case 'bottom':
-            self.placeBelow();
-            var bottomOffset = self.tooltip.offset().top + self.tooltip.outerHeight();
+            self.placeBelow(scrollable);
+            var bottomOffset = self.tooltip.offset().top + scrollable.offsetTop + self.tooltip.outerHeight();
             if (bottomOffset >= winH) {
               self.tooltip.removeClass('bottom').addClass('top');
-              self.placeAbove();
+              self.placeAbove(scrollable);
             }
             break;
           case 'top':
-            self.placeAbove();
-            if (this.tooltip.offset().top <= 0) {
+            self.placeAbove(scrollable);
+            if (this.tooltip.offset().top + scrollable.offsetTop <= 0) {
               self.tooltip.removeClass('top').addClass('bottom');
-              self.placeBelow();
+              self.placeBelow(scrollable);
             }
             break;
           case 'right':
-            self.placeToRight();
-            var rightOffset = self.tooltip.offset().left + self.tooltip.outerWidth();
+            self.placeToRight(scrollable);
+            var rightOffset = self.tooltip.offset().left + scrollable.offsetLeft + self.tooltip.outerWidth();
             if (rightOffset >= winW) {
               self.tooltip.removeClass('right').addClass('left');
-              self.placeToLeft();
+              self.placeToLeft(scrollable);
             }
             break;
           default: //left
-            self.placeToLeft();
-            if (this.tooltip.offset().left <= 0) {
+            self.placeToLeft(scrollable);
+            if (this.tooltip.offset().left + scrollable.offsetLeft <= 0) {
               self.tooltip.removeClass('left').addClass('right');
-              self.placeToRight();
+              self.placeToRight(scrollable);
             }
             break;
         }
@@ -284,42 +321,48 @@
         if (settings.placement === 'bottom' ||
             settings.placement === 'top' ) {
 
-          if ( self.tooltip.offset().left <= 0 ) {
+          if ( self.tooltip.offset().left + scrollable.offsetLeft <= 0 ) {
             self.tooltip.removeClass('top bottom').addClass('right');
-            self.placeToRight();
+            self.placeToRight(scrollable);
           }
 
-          if ( (self.tooltip.offset().left + self.tooltip.outerWidth()) >= winW ) {
+          if ( (self.tooltip.offset().left + scrollable.offsetLeft + self.tooltip.outerWidth()) >= winW ) {
             self.tooltip.removeClass('top bottom').addClass('left');
-            self.placeToLeft();
+            self.placeToLeft(scrollable);
           }
 
         }
 
       },
-      placeBelowOffset: function() {
-        var extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 9);
 
-        this.tooltip.css({'top' : this.activeElement.offset().top + this.activeElement.outerHeight() + settings.offset.top,
-                          'left' : this.activeElement.offset().left + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset });
+      placeBelowOffset: function(scrollable) {
+        var o = this.activeElement.offset(),
+          extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 9);
+
+        this.tooltip.css({'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
+                          'left' : o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth });
       },
-      placeBelow: function () {
-        this.tooltip.css({'top': this.activeElement.offset().top + this.activeElement.outerHeight() + settings.offset.top,
-                          'left': this.activeElement.offset().left + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+      placeBelow: function (scrollable) {
+        var o = this.activeElement.offset();
+        this.tooltip.css({'top': o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
+                          'left': o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2) - scrollable.deltaWidth});
       },
-      placeAbove: function () {
-        this.tooltip.css({'top': this.activeElement.offset().top - settings.offset.top - this.tooltip.outerHeight(),
-                          'left': this.activeElement.offset().left + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2)});
+      placeAbove: function (scrollable) {
+        var o = this.activeElement.offset();
+        this.tooltip.css({'top': o.top + scrollable.offsetTop - settings.offset.top - this.tooltip.outerHeight() - scrollable.deltaHeight,
+                          'left': o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2) - scrollable.deltaWidth});
       },
-      placeToRight: function () {
+      placeToRight: function (scrollable) {
+        var o = this.activeElement.offset();
         this.tooltip.removeAttr('style');
-        this.tooltip.css({'top': this.activeElement.offset().top - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2),
-                          'left': this.activeElement.offset().left + settings.offset.left + this.activeElement.outerWidth() + settings.offset.top});
+        this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
+                          'left': o.left + scrollable.offsetLeft + settings.offset.left + this.activeElement.outerWidth() + settings.offset.top - scrollable.deltaWidth});
       },
-      placeToLeft: function () {
+      placeToLeft: function (scrollable) {
+        var o = this.activeElement.offset();
         this.tooltip.removeAttr('style');
-        this.tooltip.css({'top': this.activeElement.offset().top - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2),
-                          'left': this.activeElement.offset().left + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) });
+        this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
+                          'left': o.left + scrollable.offsetLeft + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) - scrollable.deltaWidth});
       },
 
       hide: function() {
@@ -346,6 +389,9 @@
       },
 
       destroy: function() {
+        this.description.remove();
+        this.descriptionId = undefined;
+        this.element.removeAttr('aria-describedby').removeAttr('aria-haspopup');
         if (!this.tooltip.hasClass('is-hidden')) {
           this.hide();
         }
