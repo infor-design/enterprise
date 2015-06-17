@@ -127,6 +127,8 @@
           this.menu.addClass('no-transition');
           $('.page-container').addClass('no-transition');
           this.testWidth();
+          this.menu.removeClass('no-transition');
+          $('.page-container').removeClass('no-transition');
         }
 
         return this;

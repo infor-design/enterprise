@@ -1171,7 +1171,7 @@ div.light-bgrnd {
 .example-section {
   background-color: #ffffff;
   border-bottom: 1px solid #d2d2d2;
-  padding: 10px 0 50px;
+  padding: 10px 0 0px;
 
   .row {
     max-width: $site-maxwidth;
@@ -1230,6 +1230,20 @@ div.light-bgrnd {
     max-width: $site-maxwidth !important;
   }
 
+}
+
+// Layouts Page
+//==================================================//
+
+.layouts-example {
+  p {
+    margin: 0 0 10px 20px !important;
+  }
+
+  .one-half.column {
+    margin-left: 0;
+    margin-right: 20px;
+  }
 }
 
 // 404 Page
