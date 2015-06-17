@@ -70,6 +70,10 @@
             var pane = active,
             icon = pane.children('.icon.plus-minus');
 
+            if (!icon || icon.length ===0) {
+              return self;
+            }
+
             pane.css({'height': 'auto', 'display': 'block'});
             icon.addClass('active');
 
