@@ -808,6 +808,12 @@ window.Chart = function(container) {
     function resizePie() {
       clearTimeout(timeout);
       timeout = setTimeout(function () {
+        var container = $(container);
+
+        if (!container.is(':visible')) {
+          return;
+        }
+
         $(container).empty();
         charts.Pie(initialData, isDonut);
       }, 100);
@@ -826,9 +832,14 @@ window.Chart = function(container) {
     function resizeCharts() {
       clearTimeout(timeout);
       timeout = setTimeout(function () {
-        var api = $(container).data('chart');
+        var container = $(container),
+          api = container.data('chart');
 
-        $(container).empty();
+        if (!container.is(':visible')) {
+          return;
+        }
+
+        container.empty();
         api.initChartType(api.settings);
       }, 100);
     }
