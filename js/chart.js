@@ -814,7 +814,6 @@ window.Chart = function(container) {
           return true;
         }
         cont.empty();
-        alert();
         charts.Pie(initialData, isDonut);
       }, 100);
     }
