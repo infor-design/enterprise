@@ -224,7 +224,10 @@
           }
 
           if (key === 32) { // Space to toggle selection
-            self.select(item);
+            if ($(e.target).is('li')) {
+              self.select(item);
+              e.preventDefault();
+            }
           }
         });
 

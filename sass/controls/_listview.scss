@@ -43,13 +43,13 @@ $listview-selected-text-color: $inverse-color;
     border: 1px solid transparent;
     border-bottom: 1px solid $graphite02;
     color: $font-color;
-    padding: 20px 20px 5px;
+    padding: 20px 20px 15px;
     @include transition(background-color .15s ease 0s);
 
     &:after {
       content: '';
       clear: both;
-      display: inline-block;
+      display: inline;
     }
 
     &:hover,
@@ -70,6 +70,10 @@ $listview-selected-text-color: $inverse-color;
     &.error {
       border-left: 3px solid $error-color !important;
       padding: 15px 20px 15px 17px;
+    }
+
+    .icon-close {
+      top: 5px;
     }
   }
 
