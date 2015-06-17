@@ -749,6 +749,7 @@
             'aria-valuetext': valueText
           });
         });
+        self.updateRange();
         self.element.trigger('change');
         return self._value;
       },
