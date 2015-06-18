@@ -1029,7 +1029,7 @@
           }
           el = '<' + el + '>';
         }
-        alert();
+
         return document.execCommand('formatBlock', false, el);
       },
 
