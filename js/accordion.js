@@ -372,10 +372,11 @@
             } else {
               plusminus.removeClass('active');
             }
-
           });
 
           header.children('.accordion-pane').css('display','block').one('animateOpenComplete', function() {
+            // Note: Moved this here from animation classes
+            this.style.height = 'auto';
             header.trigger('expanded');
           }).animateOpen();
         }

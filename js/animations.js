@@ -48,7 +48,6 @@
         }
         $self.off(eventName + '.animateOpen');
         self.style.transition = '';
-        self.style[dim] = distance;
         $self.trigger('animateOpenComplete');
       }
 
