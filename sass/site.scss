@@ -32,6 +32,12 @@ body {
   height: 350px;
   overflow: hidden;
   position: relative;
+  
+  .hero-content {
+    max-width: 450px;
+    padding-left: 20px;
+    width: 50%;
+  }
 
   .hero-img {
     background-position: 25% 60%;
@@ -394,7 +400,8 @@ body {
 }
 
 @include respond-to(tablet) {
-  .site-component.card {
+
+.site-component.card {
     width: 300px;
   }
 
@@ -409,7 +416,11 @@ body {
 }
 
 @include respond-to(tabletdown) {
-  .site-hero.components {
+  .site-hero .hero-content {
+    max-width: 425px;
+    width: 100%;
+  }
+.site-hero.components {
     h2 {
       margin-bottom: -10px;
       @include font-size(42);
