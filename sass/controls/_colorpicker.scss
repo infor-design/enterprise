@@ -80,10 +80,11 @@
     border: 1px solid $input-focus-border-color;
     border-radius: 0 0 3px 3px;
     max-height: 160px;
+    min-width: 69px;
     width: auto;
 
     li a {
-      padding: 0 5px 2px 1px;
+      padding: 1px;
     }
 
     li a:focus {
@@ -95,13 +96,13 @@
       background-color: #333333;
       display: block;
       height: 33px;
-      width: 56px;
+      width: 48px;
     }
 
     &.is-open {
       border: 1px solid $input-focus-border-color !important;
       margin-top: -10px;
-      padding: 7px 0 0 3px;
+      padding: 0;
     }
   }
 }
