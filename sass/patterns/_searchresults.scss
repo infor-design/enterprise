@@ -28,6 +28,9 @@
     .masthead-appname {
       color: $sr-masthead-text-color;
       line-height: 34px;
+      @include font-size(14);
+      line-height: 34px;
+      margin-left: -28px;
     }
 
     .icon {
@@ -46,7 +49,46 @@
     color: $primary-color;
     @include font-size(72);
     font-weight: 100;
+    padding: 9px 20px 8px;
     width: 100%;
+
+    &::-webkit-input-placeholder {
+      @include font-size(60);
+      color: $graphite03;
+      font-weight: lighter;
+      line-height: 72px;
+      @include antialiased();
+    }
+
+    &:-moz-placeholder {
+      @include font-size(60);
+      color: $graphite03;
+      font-weight: lighter;
+      line-height: 72px;
+      @include antialiased();
+    }
+
+    &:focus {
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    &::-moz-placeholder {
+      @include font-size(60);
+      color: $graphite03;
+      font-weight: lighter;
+      line-height: 72px;
+      @include antialiased();
+    }
+
+    &:-ms-input-placeholder {
+      @include font-size(60);
+      color: $graphite03;
+      font-weight: lighter;
+      line-height: 72px;
+      @include antialiased();
+    }
+
   }
 
   .search-result {

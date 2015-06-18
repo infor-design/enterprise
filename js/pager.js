@@ -86,7 +86,7 @@
             }
             if (settings.autoMove) {
               btn.trigger('click.pager');
-            }              
+            }
           }
         });
       },
@@ -175,11 +175,9 @@
 
         if (this.activePage === 1) {
           prev.attr('disabled','disabled');
-          $('a:eq(1)', pb).focus();
         }
         if (this.activePage === this.pageCount()) {
           next.attr('disabled','disabled');
-          $('a:eq('+ this.pageCount() +')', pb).focus();
         }
 
         //Remove from the front until selected is visible and we have at least howMany showing

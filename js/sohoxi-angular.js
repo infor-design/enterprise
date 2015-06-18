@@ -52,7 +52,7 @@
             api = elem.data('slider');
             scope.$watch(model, function(newValue, oldValue) {
               if (newValue !== oldValue) {
-                //api.value(modelVal, 100);
+                //api.value(newValue, 100);
               }
             });
           }

@@ -44,6 +44,11 @@ $accordion-focused-text-color: #ffffff;
       }
     }
 
+    > svg.icon {
+      height: 18px;
+      top: -3px;
+    }
+
     > .title,
       .panel {
       margin-left: .4em;
@@ -71,7 +76,7 @@ $accordion-focused-text-color: #ffffff;
   button.plus-minus {
     display: inline-block;
     height: 32px;
-    left: 21px;
+    left: 22px;
     margin: 0;
     padding: 0;
     position: absolute;
@@ -83,16 +88,15 @@ $accordion-focused-text-color: #ffffff;
     }
 
     .icon.plus-minus {
-      pointer-events: none;
       height: 16px;
+      pointer-events: none;
     }
 
     &:hover {
       .icon.plus-minus::after,
       .icon.plus-minus::before {
-          background-color: #ffffff;
-
-       }
+        background-color: #ffffff;
+      }
     }
   }
 

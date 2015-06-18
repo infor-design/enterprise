@@ -85,7 +85,7 @@ window.Formatters = {
     return '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="popupmenu-1">' +
           '<span class="audible">'+ col.title +'</span>' +
           '<svg class="icon" aria-hidden="false" focusable="false">' +
-          '<use xlink:href="#action-button"></svg></button>';
+          '<use xlink:href="#icon-more"></svg></button>';
   },
 
   // Multi Line TextArea
@@ -619,7 +619,7 @@ $.fn.datagrid = function(options) {
 
         if (settings.toolbar.actions) {
           more = $('<div class="more"></div>').appendTo(buttonSet);
-          more.append('<button class="btn-actions"><svg class="icon" focusable="false"><use xlink:href="#action-button"></use></svg><span class="audible">Grid Features</span></button>');
+          more.append('<button class="btn-actions"><svg class="icon" focusable="false"><use xlink:href="#icon-more"></use></svg><span class="audible">Grid Features</span></button>');
           toolbar.addClass('has-more-button');
         }
 

@@ -178,6 +178,7 @@
   }
 
   a {
+    @include antialiased();
     color: $font-color;
     display: inline-block;
     @include font-size(14);
@@ -267,7 +268,7 @@
   display: inline-block;
   @include font-size(14);
   max-width: 102px;
-  padding: 5px 0 5px 14px;
+  padding: 9px 0 5px 14px;
   position: absolute;
   right: 0;
   top: 0;
@@ -283,8 +284,9 @@
   }
 
   .icon {
-    margin: 0 0 0 8px;
-    width: 12px;
+    height: 40px;
+    margin: 0 0 0 -5px;
+    width: 34px;
   }
 
   &.popup-is-open,

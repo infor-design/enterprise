@@ -148,8 +148,7 @@ a.btn-primary {
     color: $tertiary-btn-active-color;
   }
 
-  &:focus {
-    //box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $tertiary-btn-hover-color;
+  &:focus:not(.hide-focus) {
     box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-hover-color;
     color: $tertiary-btn-color;
 
@@ -199,13 +198,12 @@ a.btn-primary {
 // Icon Buttons
 // Also see ./_icons.scss
 .btn-icon {
-  border-radius: 50%;
+  border-radius: 18px;
   height: 36px;
   margin-top: 0;
   min-height: 36px;
   min-width: 36px;
   padding: 0;
-  width: 36px;
 
   svg {
     left: 0;
@@ -227,6 +225,10 @@ a.btn-primary {
     width: 0;
   }
 
+  &.has-text > span {
+    color: $graphite06;
+  }
+
   &:hover {
     .icon {
       fill: $tertiary-btn-hover-color;
@@ -235,7 +237,10 @@ a.btn-primary {
     span {
       color: transparent;
     }
+  }
 
+  &.has-text:hover > span {
+    color: $tertiary-btn-hover-color;
   }
 
   &:focus {
@@ -267,6 +272,7 @@ a.btn-primary {
     padding: 0 10px 0 2px;
 
     > span {
+      padding-top: 3px;
       position: static;
       width: auto;
     }

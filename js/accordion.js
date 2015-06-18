@@ -224,7 +224,7 @@
             if (panel.length && panel.parent().hasClass('is-expanded')) {
               e.preventDefault();
               firstItem = panel.find(':focusable').first();
-              if (firstItem[0].tagName === 'A') {
+              if (firstItem[0].tagName && firstItem[0].tagName === 'A') {
                 this.setActiveAnchor(firstItem);
               } else {
                 firstItem.focus();

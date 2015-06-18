@@ -213,27 +213,34 @@ body {
     text-align: center;
 
     .site-intro-user .icon {
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAABkCAAAAAB20ptdAAADnklEQVR4Ae3ahXLzSBAE4Hv/d2rJHGZTmNH+HVZk0pysqV+9FbbiOVQXhPMl3tVOG/6QvyU5m7M5m7M5m7M5O5MM1721wV/ODpYAzA/+YnYwD9C1Z6mqG2Zj79trK9/PaqMrccJErSNOLczC7mPa1CMJa4hzJpce3anYK0yfg0T1LkVE3WBqdhGAX/x+CgCKqaouKsG0rAfUxvL9ROsAqIp06E7BAliRabKjakfEdcuP9qyqdH0ApUdT9rGEOOfipkd3avbX4trTN1X3mqFby8RW+Ad/qb6+ZoYLAAqZ2Cq+du+LALxNvNq7g0XEOcnE3voAivdfqn5H9ujyeD6STKz0Cup+ofZE5BB6zTjqmWRg+WtLI/kgvVQVaSBdknCOaiZWthAn+EhNFqHHE0JdPZ6pTs+2EWf9U/XeUZOPORQysFQ3xiIvj5ME4qbjqFcTtXKQuBWq2did3+ouNDuuOpFKD5w51UDOPSTxruQHbAHAZqyKD43/Wn2kWgv1PR7PWdm1pDbEWYWGR/W1o57xbAwrVDOzo/Mb0XfODiY5G0ocTvInqtragqp7C8983rr94ZQdNahQNWAvHPXotdoRA5Zr+UJ1aaCjiKoB6+wgOUzUYar6XTFiTx1177XaEwuWa0l1deiOIiPWVXcSdZSqxVuxYXUtF1RtU71N1HuxYd215JjgKDJiHTVqUmU5tWBVXVG1TrU7UfFLLFiuJdV65Az4RyPWUcebr1QTluq6qhuI04jSWmHGRg2upaptp1ZsGLHuDhqtvlJr4Y4Nq2rdUXfEHQo2rN6q9Yjqnri1YkasB1Seh2kGjjpcoqqjKP7GcAnA84/ZFbxN21EPOBTSlKMfsz3vrcqHFHFElTmVH7Ny4b+vzlM9BNzsywxY6Z+0m0m2oGtJ9ZTH83xT0zp8lhmwjLuDQt5nZa1gZsRS3Ve1RpW1woTd5lry3iOHghEblSZUV+IEVFkrjNhu+pheUElV1gorNgbU5b0MDgUzdlwE/AQsUWWtsGI7ADaDCpL4nVdDwYytA7jRLax9n7XCkB0XgMKYF6xTKyzZGwB158Et1gpTdhNAxzmMT1grDNmRDxTHQpdDwZK9AtAU0QRFqrbsBoCu/q/n676qB2LNDmOpGIn0z1Y9QHMk5uwFgFZ4upKa1d0HsWfXAJTxO3N7NC3ZgYc08/uPwpiyF4BmkT3JmGUdXToKxIk921/yVo5f8hdA5GzO5mzO5ux/gv0T2cVhrHzF7uUAAAAASUVORK5CYII=');
+      background-image: url('../assets/site/UserCentered.svg');
+      background-repeat: no-repeat;
+      background-size: 100% auto;
       height: 100px;
-      width: 118px;
+      width: 100px;
     }
 
     .site-intro-mobile .icon {
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAABmCAAAAAAivRa1AAABS0lEQVRo3u3aP2+DMBQE8Hz/73RxsZ/EwBbaTlUZ2ChpO4AaCVF3RP2j8Bz5hUi9my30k4ynu13cPDsSSCCBBBJIICEfoatLUaZ86A0IvXgHdZyX19yEoyQAAMCpDCkEcUARtBcRCsBJXkLngdCclKc/P5oA+JeshNqhaFJ+nec7uPushBIIYwphDECZlSCATDF2h0qTNsZJALEgHNxek8qQUO1VD1JsCUVYiTcn+PfhfOQKhPMnJxJIIIEEEkgggQQSSCCBBBJIIIEEEkgggQQSSLiU8LgSe4JbjTlh60qk9ao8GRLiW69JtCSo838I7bdmcgvCGJZm8leVex3CEJZnGIZNCLMs5aTM5oQ/a/N5KSd/Cgxq8+TxQFPA1VkJaROKeGoC4LushBsYklwypzlmJqSPilTLJsNpVd3pvsmNGwkkkEACCTdM+AKF2gNtnobX7wAAAABJRU5ErkJggg==');
-      height: 102px;
-      width: 130px;
+      background-image: url('../assets/site/MobileInMind.svg');
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      height: 100px;
+      width: 100px;
     }
 
     .site-intro-accessible .icon {
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAABkCAAAAAB20ptdAAAEFElEQVRo3u2ZaVfiSBSG+///pycBHDYRBFREaJcjuIK40doSkrc/VAUS9DiaMMycObmfqqhLnlRRd+WH/hX5kWEzbIbNsBk2w2bY/yx22q86uNX+dJNY74BQOt7GsC8lllJ+3RB2ViQqJW8z2D0A3N1OwwXgYCPYRwD2Z5LezBs8bwJ7CLBvJ22Ao38EG4y7tWKpfmyNpQS4M7v22wHK1qiO66VirTsO1oKdVMLL03qV5APsLlZ3ACeQ9NoK1SqTNWBPI5c2P5G8+C1qA3jSJB/RO02NPYsZi/so3wHqi/VtwJEe3ZjeWUrsg2O2Wds2g+JcZcAJfcQvgKrmxpSd7ZrZtPOQDlsDyF8Gkte3++gBNHxJkl8H+GnPpO9JwWUeoJYK+wSQs3Y5BCiaDVJ/lvRUA3BeVAQYGrXnHMBTGuxp7ILsAEx1ZJ1i3TrJnqYAOx9/KQl2H+AlnA0AruVvx65Pzdc1wGARKaL+JBG2CbCYjQAupNlOhFr3pAuA0UIPoJkGuwfwO5xdAFxJCk5yFpo7DSRd2fexngtgLw32Z+z0msu7Mhu2y8Vye+gtb14z9lscp8HeAxSskd4CFD7yuEEB4NZMXgsA92mwQQWgOJEUDFxjo+HS2+tbEDsVdxhImhQBKuncxch69/3WFgAFE3ruj6oO4FR7xh3NCgBstfZt3Bil9MlHMWNxRpJ0W4l8VL2VpJET0ztKGwqCTpR6LemtSVxaM0nXUW4nSB34dFlYbOxR0vQvVqU4lfRYDaeFy7VkF/NhcwundDCWpF/2JXLN3kmvac238CJJ44OSw1ZzOF9/LjU3KXLpykagKzMvz7/3mC9gZ4NmdZH7H5ob4y9W/S4Ah2G90Kk2B7P0WK/nAnQigXAluhwTCXQdALfnpcSOjbmyHYlIq+62FYk4NjhtjVNhz0OzMC7Wc4Hc24rSbxdwvcjWwTlPgR2ElnNuDPHmY1dwuPTIwXloR4PE2InZ696i2OgDvM+C7wD64ezZVCjOJCHWpIO5iHttA7y3FQ+gHXHkOZtkJsKe2Mx4KXUg/4GmG0udw6z5JBHWL4TJxN9i8ytYk24U/CTYG1Yf9nWs6pG4/z1s533c/Dp2FPEx38NWANdPiPXdT1OMT7Du+5ri61jtAG4S7IpVfBPbjmXY38R2EmM7GTbDZtgMm2EzbIbNsCviRNuXRnYB530ROXNiffxlMz9p5kijY6V7F7Ztyt14FTnulsKK7K4bqjdImjmerjRGbqSH5TBeAAAPMo3WL/1l8Al2Xo4/pCnpYDmMHrz902Klc/RJQ+Oz0uslzu1L8lvEispFv6zlh3XokvqSsL6dn1WWTa6WuUrXDTcc2iqzRa5xEw4XjbPK2XyNDaI1SYbNsBk2w2bYDJth/7fYPwD3U96tsrZBAAAAAElFTkSuQmCC');
+      background-image: url('../assets/site/Accessible.svg');
+      background-repeat: no-repeat;
+      background-size: 100% auto;
       height: 100px;
-      width: 118px;
+      width: 100px;
     }
 
     h2 {
       border-top: 1px solid #d8d8d8;
       color: $graphite08;
       @include font-size(18);
+      margin-top: 10px;
       font-weight: bold;
       line-height: 45px;
       padding-top: 20px;
@@ -374,7 +381,7 @@ body {
 
 .kitchen-sink {
   p {
-    margin-left: -40px !important;
+    margin-left: 0px !important;
     text-align: center !important;
   }
 
@@ -402,6 +409,13 @@ body {
 }
 
 @include respond-to(tabletdown) {
+  .site-hero.components {
+    h2 {
+      margin-bottom: -10px;
+      @include font-size(42);
+      padding-top: 25px;
+    }
+  }
 
   .site-intro {
 
@@ -433,6 +447,11 @@ body {
 }
 
 @include respond-to(phablet) {
+  .site-hero.components {
+    h2 {
+      padding-top: 0;
+    }
+  }
 
   .home.menubar {
     height: 270px;
@@ -449,6 +468,9 @@ body {
     }
   }
 
+  .site-hero h1 {
+    @include font-size(44);
+  }
   .site-component.card {
     width: calc(100% - 40px);
   }
@@ -474,6 +496,11 @@ body {
   text-align: center;
   z-index: 1;
 
+  .full.column {
+    margin-left: -20px;
+    text-align: left;
+  }
+
   .row {
     margin-bottom: 0;
   }
@@ -481,12 +508,14 @@ body {
   nav {
 
     ul {
+      margin: 0;
+      padding: 0;
       text-align: left;
     }
 
     li {
       display: inline-block;
-      margin: 35px 30px 20px;
+      margin: 30px 30px 25px;
     }
   }
 
@@ -501,10 +530,6 @@ body {
 // Media Queries - For Main Page
 //==================================================//
 
-@include respond-to(phone) {
-
-}
-
 @include respond-to(phablet) {
 
   .components .blockgrid {
@@ -517,15 +542,23 @@ body {
     margin: 0 30px;
   }
 
+
+  .site-footer nav li {
+    display: block;
+    margin: 30px 10px 25px;
+  }
+
+  .site-footer ul {
+    text-align: center;
+  }
+
+
 }
 
 @include respond-to(tablet) {
-
-  .site-footer nav {
-    margin: 0 40px;
-    max-width: 100%;
+  .site-footer .full.column {
+    margin-left: 0;
   }
-
 }
 
 // articles Page
@@ -549,7 +582,7 @@ body {
     width: 100%;
 
     h1 {
-      @include font-size(36);
+      @include font-size(30);
       color: $graphite06;
       margin-bottom: 30px;
       padding-top: 45px;
@@ -615,7 +648,7 @@ body {
 
     .copy {
       margin: 40px auto 0;
-      max-width: 968px;
+      max-width: 820px;
       padding: 0 40px;
 
       h1 {
@@ -698,6 +731,7 @@ body {
   ol {
     color: $graphite06;
     @include font-size(16);
+    margin-bottom: 25px;
     margin-left: 20px;
     @include antialiased();
     line-height: 28px;
@@ -731,8 +765,15 @@ body {
       padding: 20px 20px 0px;
 
       a {
-        color: inherit;
+        border-bottom: 1px solid transparent;
+        color: $hyperlink-color;
         text-decoration: none;
+        line-height: 25px;
+        padding-bottom: 1px;
+
+        &:hover {
+          border-bottom: 1px solid $hyperlink-color;
+        }
       }
     }
 
@@ -755,6 +796,10 @@ body {
 
       .tag {
         background-color: $graphite01;
+      }
+
+      a.tag:hover {
+        background-color: $graphite02;
       }
     }
 
@@ -837,6 +882,15 @@ code.snippet {
     h3 {
       padding: 50px 0 !important;
       text-align: center !important;
+    }
+  }
+
+  .kitchen-sink {
+    a {
+      display: block !important;
+      left: 0 !important;
+      margin: 0 auto !important;
+      width: 100px !important;
     }
   }
 
@@ -1032,6 +1086,10 @@ div.light-bgrnd {
       }
     }
 
+    a.tag:hover {
+      background-color: $graphite03;
+    }
+
     a:not(.tag) {
       display: inline-block;
       @include font-size(14);
@@ -1183,6 +1241,10 @@ div.light-bgrnd {
   }
 }
 
+.row.layouts-example {
+  margin: 50px 0;
+}
+
 .asset-item {
   cursor: pointer;
   height: 100px;
@@ -1214,6 +1276,7 @@ div.light-bgrnd {
 
 .site-categories {
   padding-bottom: 80px;
+
   .row {
     padding-right: 0;
   }
@@ -1231,6 +1294,19 @@ div.light-bgrnd {
   }
 
 }
+
+// Search Results
+//==================================================//
+.search-results {
+  &.container.masthead {
+    margin-bottom: 2.5em;
+  }
+
+  .toolbar {
+    height: 60px;
+  }
+}
+
 
 // Layouts Page
 //==================================================//

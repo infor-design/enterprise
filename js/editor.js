@@ -301,9 +301,9 @@
               self.triggerClick(e, 'anchor');
               break;
             case keys.i:
-              if(e.shiftKey) {                
+              if(e.shiftKey) {
                 self.triggerClick(e, 'image');
-              } else {                
+              } else {
                 self.triggerClick(e, 'italic');
               }
               break;
@@ -311,9 +311,9 @@
               self.triggerClick(e, 'justifyLeft');
               break;
             case keys.o:
-              if(e.shiftKey) {                
+              if(e.shiftKey) {
                 self.triggerClick(e, 'insertunorderedlist');
-              } else {                
+              } else {
                 self.triggerClick(e, 'insertorderedlist');
               }
               break;
@@ -1029,6 +1029,7 @@
           }
           el = '<' + el + '>';
         }
+        alert();
         return document.execCommand('formatBlock', false, el);
       },
 

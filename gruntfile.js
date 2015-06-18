@@ -141,6 +141,10 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/vendor/jquery-2*.map'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.min.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.map'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/jquery-2*.js'], dest: 'dist/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/jquery-2*.map'], dest: 'dist/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/d3.min.js'], dest: 'dist/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/d3.map'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'}
         ]

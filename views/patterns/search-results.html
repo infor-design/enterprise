@@ -6,27 +6,29 @@
 
       <div class="masthead toolbar">
         <div class="title">
-          <button class="masthead-square"><span class="audible">Logo</span></button>
-          <h1 class="masthead-appname">Active Product Name Text</h1>
+         <svg aria-hidden="true" focusable="false" class="icon icon-sohoxi">
+            <use xlink:href="#icon-sohoxi"/>
+          </svg>
+          <h1 class="masthead-appname">Search</h1>
         </div>
         <div class="buttonset">
           <button class="btn-icon">
-            <svg class="icon">
-              <use xlink:href="#icon-arrow-back"></use>
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use xlink:href="#icon-left-arrow"></use>
             </svg>
             <span>Previous</span>
           </button>
 
           <button class="btn-icon">
-            <svg class="icon">
-              <use xlink:href="#icon-arrow-forward"></use>
+            <svg class="icon"  focusable="false">
+              <use xlink:href="#icon-right-arrow"></use>
             </svg>
             <span>Next</span>
           </button>
 
           <button class="btn-icon">
-            <svg class="icon">
-              <use xlink:href="#icon-sr-history"></use>
+            <svg class="icon" focusable="false">
+              <use xlink:href="#icon-history"></use>
             </svg>
             <span>History</span>
           </button>
@@ -34,8 +36,8 @@
           <div class="separator"></div>
 
           <button class="btn-icon">
-            <svg class="icon">
-              <use xlink:href="#icon-sr-close"></use>
+            <svg class="icon" focusable="false">
+              <use xlink:href="#icon-close"></use>
             </svg>
             <span>Close</span>
           </button>
@@ -50,7 +52,7 @@
 
       <div class="field">
         <label class="audible" for="big-search-field">Search</label>
-        <input id="big-search-field" aria-label="Search" class="search" />
+        <input id="big-search-field" placeholder="Type To Search" aria-label="Search" class="search" />
       </div>
 
     </div>
@@ -78,7 +80,7 @@
               <button id="search-results-type" class="btn-menu hidden-sm" type="button">
                 <span>Any Type</span>
               </button>
-              <ul class="popupmenu">
+              <ul class="popupmenu is-padded">
                 <li class="is-checked"><a href="#">Any Type</a></li>
                 <li><a href="#">One Type</a></li>
                 <li><a href="#">Two Types</a></li>
@@ -86,7 +88,7 @@
               <button id="search-results-time" class="btn-menu hidden-sm" type="button">
                 <span>Any Time</span>
               </button>
-              <ul class="popupmenu">
+              <ul class="popupmenu is-padded">
                 <li class="is-checked"><a href="#">Any Time</a></li>
                 <li><a href="#">Only AM</a></li>
                 <li><a href="#">Only PM</a></li>

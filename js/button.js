@@ -50,7 +50,11 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
 
+
         this.element.on('touchstart.button mousedown.button', function (e) {
+          var element = $(this);
+          element.addClass('hide-focus');
+
           if (!self.isTouch && e.which !== 1) {
             return false;
           }
@@ -62,8 +66,6 @@
           if (self.element.attr('disabled')) {
             return false;
           }
-
-          var element = $(this);
 
           // If the ripple wrapper does not exists, create it
           if (!element.find('.ripple-wrapper').length) {
@@ -124,14 +126,21 @@
           }, 400);
 
           // On mouseup or on mouseleave, set the mousedown flag to 'off' and try to destroy the ripple
-          element.on('mouseup.button mouseleave.button', function() {
+          element.on('mouseup.button mouseleave.button touchend.button', function() {
             ripple.data('mousedown', 'off');
             // If the transition 'on' is finished then we can destroy the ripple with transition 'out'
             if (ripple.data('animating') === 'off') {
               self.rippleOut(ripple);
             }
           });
+        }).on('focusout.button', function () {
+          var self = $(this);
+
+          setTimeout(function() {
+            self.removeClass('hide-focus');
+          }, 1);
         });
+
       },
 
       // Fade out the ripple and then destroy it
@@ -150,6 +159,8 @@
 
       destroy: function() {
         this.element.off('touchstart.button mousedown.button mouseup.button mouseleave.button');
+        this.element.off('focusout.button');
+
         var wrapper = this.element.find('.ripple-wrapper'),
           ripples = wrapper.find('.ripple');
         if (ripples.length) {

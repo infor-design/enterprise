@@ -71,7 +71,7 @@
             moreContainer = $('<div class="more"></div>').appendTo(this.element);
           }
           this.more = $('<button class="btn-actions"></button>')
-            .html('<svg class="icon" focusable="false"><use xlink:href="#action-button"></svg>' +
+            .html('<svg class="icon" focusable="false"><use xlink:href="#icon-more"></svg>' +
               '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
             .appendTo(moreContainer);
         }
@@ -245,7 +245,7 @@
       },
 
       handleClick: function(e) {
-        this.setActiveButton($(e.currentTarget));
+        this.setActiveButton($(e.currentTarget), true);
         return false;
       },
 
@@ -334,7 +334,7 @@
         return target;
       },
 
-      setActiveButton: function(activeButton) {
+      setActiveButton: function(activeButton, noFocus) {
         this.items.attr('tabindex', '-1').removeClass('is-selected');
         this.more.attr('tabindex', '-1').removeClass('is-selected');
 
@@ -357,7 +357,10 @@
             tooltip.hide();
           }
         }
-        this.activeButton.focus();
+
+        if (!noFocus) {
+          this.activeButton.focus();
+        }
       },
 
       // NOTE: Tabs has similar code... not very DRY
@@ -413,7 +416,7 @@
         // Set up an aria-label as per AOL guidelines
         // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
         if (!this.element.attr('aria-label')) {
-          var isHeader = $.contains($('header.header')[0], this.element[0]),
+          var isHeader = (this.element.closest('header.header').length ===1),
             id = this.element.attr('id') || '',
             title = this.element.find('.title'),
             prevLabel = this.element.prev('label'),

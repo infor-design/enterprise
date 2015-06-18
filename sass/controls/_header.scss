@@ -64,8 +64,7 @@ $header-height: 60px;
       }
     }
 
-    &:focus,
-    &[aria-expanded="true"] {
+    &:focus:not(.hide-focus) {
       border: 1px solid $inverse-color;
       box-shadow: none;
     }
@@ -109,7 +108,7 @@ $header-height: 60px;
   }
 
   .title .app-header {
-    height: 28px;
+    height: 32px;
     width: 32px;
 
     &.icon > span {

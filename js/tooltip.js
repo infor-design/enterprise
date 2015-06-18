@@ -274,7 +274,10 @@
           scrollable.deltaHeight = this.scrollparent.offset().top;
           scrollable.deltaWidth = this.scrollparent.offset().left;
           winH = this.scrollparent.offset().top + scrollable.offsetTop;
-          winW = this.scrollparent.offset().left + scrollable.offsetLeft;
+          // This logic must be wrong - especially if no scrolling
+          if (scrollable.offsetLeft > 0) {
+            winW = this.scrollparent.offset().left + scrollable.offsetLeft;
+          }
         }
 
         switch(settings.placement) {

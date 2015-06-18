@@ -101,7 +101,7 @@
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span>').text(Locale.translate('More')));
-          button.append('<svg class="icon icon-more" aria-hidden="true"><use xlink:href="#text-arrow"></svg>');
+          button.append('<svg class="icon icon-more" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
           self.tablist.after(button);
           self.moreButton = button;
         }
@@ -128,7 +128,7 @@
             });
 
             a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
-            $('<svg class="icon icon-more"><use xlink:href="#text-arrow"></svg>').insertAfter(a);
+            $('<svg class="icon icon-more" focusable="false"><use xlink:href="#icon-dropdown"></svg>').insertAfter(a);
           }
 
           if (self.settings.tabCounts && $(this).find('.count').length === 0) {
@@ -1051,7 +1051,7 @@
           width = width + 32;
         }
         if (target.is('.tab-more')) {
-          height = height - 14;
+          height = height - 6;
           width = width + 11;
           pos.top = pos.top + 6;
         }

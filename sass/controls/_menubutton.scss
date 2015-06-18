@@ -53,7 +53,7 @@
     }
   }
 
-  &:focus {
+  &:focus:not(.hide-focus) {
     box-shadow: 0 0 0 1px $primary-btn-bg-color;
 
     > .icon {
@@ -62,8 +62,6 @@
   }
 
   &[aria-expanded="true"] {
-    box-shadow: 0 0 0 1px $primary-btn-bg-color;
-
     > .icon {
       fill: $tertiary-btn-hover-color;
     }
