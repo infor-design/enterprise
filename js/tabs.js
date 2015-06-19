@@ -113,13 +113,13 @@
           a.attr({'role': 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', 'tabindex': '-1'})
            .parent().attr('role', 'presentation').addClass('tab');
 
-          if (a.parent().hasClass('dismissible')) {
+          if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
             $('<svg class="icon"><use xlink:href="#icon-close"></svg>').insertAfter(a);
           }
 
           // Find and configure dropdown tabs
-          var dd = a.next();
-          if (dd.length > 0 && dd.is('ul')) {
+          var dd = a.nextAll('ul').first();
+          if (dd.length > 0) {
             var li = a.parent();
 
             li.addClass('has-popupmenu').popupmenu({
@@ -128,7 +128,10 @@
             });
 
             a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
-            $('<svg class="icon icon-more" focusable="false"><use xlink:href="#icon-dropdown"></svg>').insertAfter(a);
+
+            if (!a.parent().children('.icon.icon-more').length) {
+              $('<svg class="icon icon-more" focusable="false"><use xlink:href="#icon-dropdown"></svg>').insertAfter(a);
+            }
           }
 
           if (self.settings.tabCounts && $(this).find('.count').length === 0) {
@@ -1084,8 +1087,7 @@
       },
 
       updated: function() {
-        this.destroy();
-        this.init();
+        this.teardown().init();
       },
 
       disable: function() {
@@ -1098,7 +1100,8 @@
         this.updateAria(this.tablist.find('.is-selected > a'));
       },
 
-      destroy: function(){
+
+      teardown: function() {
         this.panels.removeAttr('style');
 
         this.header
@@ -1109,15 +1112,15 @@
         tabs
           .off()
           .removeAttr('role')
-          .removeClass('tab is-selected');
+          .removeClass('is-selected');
 
-        var dds = tabs.filter('.has-popupmenu').data('popupmenu');
-        if (dds) {
-          dds.each(function() {
-            $(this).menu.off();
-            $(this).destroy();
-          });
-        }
+        var dds = tabs.filter('.has-popupmenu');
+        dds.each(function() {
+          var popup = $(this).data('popupmenu');
+          if (popup) {
+            popup.destroy();
+          }
+        });
 
         this.tablist
           .off();
@@ -1143,6 +1146,11 @@
         this.animatedBar.remove();
         this.animatedBar = undefined;
 
+        return this;
+      },
+
+      destroy: function(){
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };

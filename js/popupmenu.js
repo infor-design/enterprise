@@ -577,7 +577,7 @@
         }
       },
 
-      destroy: function() {
+      teardown: function() {
         this.menu.parent().off('contextmenu.popupmenu');
         if (this.element.hasClass('btn-actions')) {
           this.menu.parent().removeClass('bottom').find('.arrow').remove();
@@ -590,15 +590,36 @@
           $(item).find('span, svg').remove();
           $(item).text(text);
         });
-        this.menu.unwrap().find('.popupmenu').unwrap();
-        $.removeData(this.element[0], pluginName);
+
+        function unwrapPopup(menu) {
+          if (menu.parent().is('.popupmenu-wrapper')) {
+            menu.unwrap();
+          }
+        }
+
+        unwrapPopup(this.menu);
+        this.menu.find('.popupmenu').each(function() {
+          unwrapPopup($(this));
+        });
+
         this.detach();
         this.element
           .removeAttr('aria-owns')
           .removeAttr('aria-expanded')
           .removeAttr('aria-haspopup')
           .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
+
+        return this;
+      },
+
+      updated: function() {
+        this.teardown().init();
+      },
+
+      destroy: function() {
+        this.teardown();
         this.menu.trigger('destroy');
+        $.removeData(this.element[0], pluginName);
       }
     };
 
@@ -610,6 +631,7 @@
           instance[options]();
         }
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new PopupMenu(this, settings));
       }
