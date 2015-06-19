@@ -153,7 +153,7 @@
 
         // This function is called when the transition "out" ends
         ripple.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
-          ripple.remove();
+          //ripple.remove();
         });
       },
 
@@ -164,9 +164,9 @@
         var wrapper = this.element.find('.ripple-wrapper'),
           ripples = wrapper.find('.ripple');
         if (ripples.length) {
-          ripples.remove();
+          //ripples.remove();
         }
-        wrapper.remove();
+        //wrapper.remove();
 
         if (this.element.hasClass('btn-actions')) {
           this.element.data('tooltip').destroy();

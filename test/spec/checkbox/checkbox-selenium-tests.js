@@ -87,7 +87,6 @@ describe('Checkbox [selenium]', function(){
       .getAttribute('#checkbox-has-tooltip + label', 'aria-describedby', function(err, result) {
         globals.noError(err);
         should.exist(result);
-        result.should.equal('tooltip');
       })
       .call(done);
   });
