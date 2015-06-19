@@ -130,15 +130,15 @@
         });
       });
 
-      this.inputs.filter('input[type=checkbox]').filter(attribs).on('click.validate', function () {
-        self.validate($(this), true);
+      this.inputs.filter('input[type=checkbox]').filter(attribs).on('click.validate', function (e) {
+        self.validate($(this), true, e);
       });
 
       var selects = this.inputs.filter('select').filter(attribs);
 
       if (selects.length) {
-        selects.on('change.validate', function () {
-          self.validate($(this), true);
+        selects.on('change.validate', function (e) {
+          self.validate($(this), true, e);
         }).on('dropdownopen.validate', function() {
           var field = $(this),
             tooltip = field.data('tooltip');
@@ -155,10 +155,10 @@
 
         selects.filter(function() {
           return $(this).data('dropdown') !== undefined;
-        }).data('dropdown').input.on('blur.validate', function() {
+        }).data('dropdown').input.on('blur.validate', function(e) {
           var selectId = $(this).attr('id');
           selectId = selectId.substring(0, selectId.length - 5);
-          self.validate($('#' + selectId), true);
+          self.validate($('#' + selectId), true, e);
         });
       }
 
@@ -187,8 +187,8 @@
         deferreds = [];
 
       self.inputs = this.element.find(self.fields);
-      self.inputs.filter(':visible').each(function () {
-        var dfds = self.validate($(this), false);
+      self.inputs.filter(':visible').each(function (e) {
+        var dfds = self.validate($(this), false, e);
         for (var i = 0; i < dfds.length; i++) {
           deferreds.push(dfds[i]);
         }

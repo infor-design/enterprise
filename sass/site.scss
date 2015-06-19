@@ -466,6 +466,16 @@ body {
     }
 
   }
+
+  .layouts-example .one-half.column {
+    display:block;
+    width: 100%;
+  }
+
+  .application-menu.is-open + .page-container .main {
+    margin-left: 12px;
+    width: calc(100% - 90px);
+  }
 }
 
 @include respond-to(phablet) {
@@ -504,6 +514,7 @@ body {
   .articles-columns {
     max-width: 400px !important;
   }
+
 }
 
 // Footer
@@ -1411,6 +1422,7 @@ pre[class*="language-"] {
   @include font-size(16);
   font-family: 'Source Code Pro', monospace;
   line-height: normal;
+  padding: 40px 20px 40px 20px;
   text-align: left;
   white-space: pre;
   word-break: normal;

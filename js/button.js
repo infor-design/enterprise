@@ -149,7 +149,7 @@
         ripple.off();
 
         // Start the out animation
-        ripple.addClass('ripple-out');
+        //ripple.addClass('ripple-out');
 
         // This function is called when the transition "out" ends
         ripple.on('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){

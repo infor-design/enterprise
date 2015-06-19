@@ -4,7 +4,8 @@
 .datepicker {
   width: 150px;
 
-  + .icon {
+  + .icon,
+  + .tooltip-description + .icon {
     cursor: pointer;
     fill: $graphite04;
     height: 17px;

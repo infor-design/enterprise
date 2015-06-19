@@ -4,7 +4,8 @@
 .timepicker {
   width: 150px;
 
-  + .icon {
+  + .icon,
+  + .tooltip-description + .icon {
     cursor: pointer;
     fill: $graphite05;
     height: 17px;

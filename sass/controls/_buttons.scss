@@ -294,7 +294,7 @@ a.btn-primary {
 
 .ripple {
   background-color: #5cc3fe;
-  border-radius: 100px;
+  border-radius: 50%;
   height: 20px;
   margin-left: -10px;
   margin-top: -10px;
@@ -310,7 +310,9 @@ a.btn-primary {
   width: 20px;
 
   &.ripple-on {
+    border-radius: 50%;
     opacity: .15;
+    position: static;
     -ms-transition: opacity .15s ease-in 0s, -ms-transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
     -webkit-transition: opacity .15s ease-in 0s, -webkit-transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
     transition: opacity .15s ease-in 0s, transform .6s cubic-bezier(.4, 0, .2, 1) .075s;

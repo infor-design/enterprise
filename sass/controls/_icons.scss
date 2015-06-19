@@ -75,20 +75,23 @@ svg.icon-logo {
 .field .icon-error,
 .field .icon-confirm {
   display: inline-block !important;
-  left: 300px;
-  margin-left: -29px;
+  margin-left: -27px;
   position: absolute;
   top: 25px;
   vertical-align: top;
 }
 
 .timepicker + .icon + .icon-error,
-.timepicker + .icon + .icon-confirm {
+.timepicker + .icon + .icon-confirm,
+.timepicker + .tooltip-description + .icon + .icon-error,
+.timepicker + .tooltip-description + .icon + .icon-confirm {
   left: 130px !important;
 }
 
 .datepicker + .icon + .icon-error,
-.datepicker + .icon + .icon-confirm {
+.datepicker + .icon + .icon-confirm,
+.datepicker + .tooltip-description + .icon + .icon-error,
+.datepicker + .tooltip-description + .icon + .icon-confirm {
   left: 130px !important;
 }
 
