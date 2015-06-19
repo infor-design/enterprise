@@ -136,14 +136,62 @@
       },
 
       handleEvents: function() {
-        var self = this;
+        var self = this,
+          thresholdReached = false,
+          touchTimeout;
 
-
-        this.element.onTouchClick('accordion', '.plus-minus').on('click.accordion', '.plus-minus', function(e) {
+        /*this.element.onTouchClick('accordion', '.plus-minus').on('click.accordion', '.plus-minus', function(e) {
           self.handleClick(e);
-        });
+        });*/
 
-        this.anchors.onTouchClick('accordion').on('click.accordion', function(e) {
+        // Touch Interaction will activate the accordion header only if touch scrolling doesn't take place
+        // beyond certain distance and time thresholds.  The touchstart event is cancelled
+        this.anchors.add(this.anchors.prev('.plus-minus')).on('touchstart.accordion', function(e) {
+          var pos = {
+            x: e.originalEvent.touches[0].pageX,
+            y: e.originalEvent.touches[0].pageY
+          },
+            threshold = 10, // in px
+            touchstartE = e;
+
+          if (touchTimeout) {
+            clearTimeout(touchTimeout);
+          }
+
+          $(this).on('touchmove.accordion', function(e) {
+            var newPos = {
+              x: e.originalEvent.touches[0].pageX,
+              y: e.originalEvent.touches[0].pageY
+            };
+
+            if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
+                (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
+              thresholdReached = true;
+            }
+
+            $(this).on('touchend.accordion touchcancel.accordion', function(e) {
+              clearTimeout(touchTimeout);
+              e.preventDefault();
+              e.stopPropagation();
+              $(this).off('touchmove.accordion touchend.accordion touchcancel.accordion');
+              if (!thresholdReached) {
+                touchstartE.preventDefault();
+                touchstartE.returnValue = false;
+                $(e.target).click();
+                return false;
+              }
+            });
+          });
+
+          touchTimeout = setTimeout(function() {
+            if (!thresholdReached) {
+              e.preventDefault();
+              e.returnValue = false;
+              $(this).off('touchmove.accordion');
+            }
+          }, 50);
+
+        }).on('click.accordion', function(e) {
           self.handleClick(e);
         }).on('keydown.accordion', function(e) {
           self.handleKeydown(e);
@@ -169,10 +217,12 @@
           return false;
         }
 
+        /*
         if (link.prev().is('.plus-minus')) {
           this.setActiveAnchor(link);
           return false;
         }
+        */
 
         if (link.is('button.plus-minus')) {
           link = link.next('a');
@@ -306,6 +356,7 @@
 
         if (isEvent && (href === '' || href === '#')) {
           e.preventDefault();
+          e.stopImmediatePropagation();
         }
 
         if ((target).hasClass('is-disabled')) {

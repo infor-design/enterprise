@@ -25,6 +25,8 @@ $accordion-focused-text-color: #ffffff;
     padding: 14px 20px 12px;
     text-decoration: none;
     text-transform: capitalize;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
 
     &:focus {
       outline: 0;
