@@ -229,6 +229,8 @@
         // Rebind everything to the new element
         this.setupTextareaEvents().initToolbar().bindButtons().bindModals().bindAnchorPreview();
         this.bindSelect().bindPaste();
+        this.toolbar.find('button').button();
+
       },
 
       initTextarea: function() {
@@ -476,29 +478,34 @@
           };
        return buttonTemplates[btnType] || false;
       },
+
+      getIcon: function(textName, iconName, className) {
+        return '<span class="audible">'+ Locale.translate(textName) +'</span><svg focusable="false" aria-hidden="true" class="icon' + (className ? ' '+ className : '') + '"><use xlink:href="#icon-' +iconName +'"></use></svg>';
+      },
+
       getButtonLabels: function (buttonLabelType) {
         var customButtonLabels,
           attrname,
           buttonLabels = {
-            'bold': '<span aria-hidden="true"><b>B</b></span>',
-            'italic': '<span aria-hidden="true"><b><i>I</i></b></span>',
-            'underline': '<span aria-hidden="true"><b><u>U</u></b></span>',
+            'bold': this.getIcon('Bold', 'bold'),
+            'italic': this.getIcon('Italic', 'italic'),
+            'underline': this.getIcon('Underline', 'underline'),
             'superscript': '<span aria-hidden="true"><b>x<sup>1</sup></b></span>',
             'subscript': '<span aria-hidden="true"><b>x<sub>1</sub></b></span>',
-            'anchor': '<span class="audible">'+ Locale.translate('InsertAnchor') +'</span><svg focusable="false" aria-hidden="true" class="icon icon-link"><use xlink:href="#icon-link"></use></svg>',
-            'image': '<span class="audible">'+ Locale.translate('InsertImage') +'</span><svg focusable="false" aria-hidden="true"class="icon icon-image"><use xlink:href="#icon-image"></use></svg>',
-            'header1': '<span aria-hidden="true"><b>H3</b></span>',
-            'header2': '<span aria-hidden="true"><b>H4</b></span>',
-            'quote': '<span class="audible">'+ Locale.translate('Blockquote') +'</span><svg focusable="false" aria-hidden="true" class="icon icon-blockquote"><use xlink:href="#icon-blockquote"></use></svg>',
-            'orderedlist': '<span class="audible">'+ Locale.translate('OrderedList') +'</span><svg focusable="false" aria-hidden="true" class="icon icon-orderedlist"><use xlink:href="#icon-orderedlist"></use></svg>',
-            'unorderedlist': '<span class="audible">'+ Locale.translate('UnorderedList') +'</span><svg focusable="false" aria-hidden="true" class="icon icon-unorderedlist"><use xlink:href="#icon-unorderedlist"></use></svg>',
+            'anchor': this.getIcon('InsertAnchor', 'link'),
+            'image': this.getIcon('InsertImage', 'insert-image'),
+            'header1': this.getIcon('ToggleH3', 'h3'),
+            'header2': this.getIcon('ToggleH4', 'h3'),
+            'quote': this.getIcon('Blockquote', 'quote'),
+            'orderedlist': this.getIcon('OrderedList', 'orderedlist'),
+            'unorderedlist': this.getIcon('UnorderedList', 'unorderedlist'),
             'pre': '<span aria-hidden="true"><b>0101</b></span>',
             'indent': '<span aria-hidden="true"><b>&rarr;</b></span>',
             'outdent': '<span aria-hidden="true"><b>&larr;</b></span>',
-            'justifyLeft': '<span class="audible">'+ Locale.translate('JustifyLeft') +'</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-left"><use xlink:href="#icon-justify-left"></use></svg>',
-            'justifyCenter': '<span class="audible">'+ Locale.translate('JustifyCenter') +'</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-center"><use xlink:href="#icon-justify-center"></use></svg>',
-            'justifyRight': '<span class="audible">'+ Locale.translate('JustifyRight') +'</span><svg focusable="false" aria-hidden="true" class="icon icon-justify-right"><use xlink:href="#icon-justify-right"></use></svg>',
-            'source': '<span aria-hidden="true"><b>&nbsp;HTML&nbsp;</b></span>',
+            'justifyLeft': this.getIcon('JustifyLeft', 'justify-left'),
+            'justifyCenter': this.getIcon('JustifyCenter', 'justify-center'),
+            'justifyRight': this.getIcon('JustifyRight', 'justify-right'),
+            'source': this.getIcon('ViewSource', 'html', 'html-icon'),
             'visual': '<span aria-hidden="true"><b>&nbsp;VISUAL&nbsp;</b></span>'
           };
 

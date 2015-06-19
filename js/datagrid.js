@@ -128,7 +128,13 @@ window.Formatters = {
     return '<span class="tag ' + ranges.classes +'">'+ value + '</span>';
   },
 
+  Alert: function (row, cell, value, col) {
+    var ranges = Formatters.ClassRange(row, cell, value, col);
+    return '<svg aria-hidden="true" focusable="false" class="icon datagrid-alert-icon icon-' + ranges.classes +'"><use xlink:href="#icon-' + ranges.classes +'"/></svg><span class="datagrid-alert-text">' + (ranges.text === 'value' ? value : ranges.text) + '</span>';
+  },
+
   // TODOs
+  // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // Select (Drop Down)
   // Multi Select
   // Re Order - Drag Indicator
@@ -139,7 +145,6 @@ window.Formatters = {
   // Process Indicator
   // Currency
   // Percent
-  // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // File Upload (Simple)
   // Text Button (1 or 2)
   // Menu Button

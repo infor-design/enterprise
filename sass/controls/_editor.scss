@@ -111,11 +111,23 @@
 
   button {
     background-color: $editor-toolbar-bg-color;
-
+    height: 36px;
+    margin: 3px 5px;
+    min-width: 36px;
+    padding: 0;
 
     > .icon {
-      height: (($button-font-size * 2) + 2) + px;
-      top: 3px;
+      height: 21px;
+      left: -3px;
+      top: 5px;
+    }
+
+    .html-icon {
+      height: 20px;
+      margin-left: -23px;
+      margin-right: 5px;
+      top: 6px;
+      width: 89px;
     }
 
     &.btn-actions > .icon {
@@ -137,10 +149,6 @@
         fill: $primary-color;
       }
     }
-  }
-
-  .editor-btn.underline {
-    text-decoration: underline;
   }
 
   .icon {
@@ -237,8 +245,8 @@
   font-weight: 100;
   @include font-size(14);
   left: 10px;
-  position: absolute;
   margin-top: -14px;
+  position: absolute;
   white-space: pre;
 }
 

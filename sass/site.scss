@@ -92,7 +92,6 @@ body {
     display: inline-block;
     @include font-size(48);
     line-height: normal;
-    margin: 0 10px;
     padding-left: 0;
     vertical-align: middle;
   }
@@ -325,13 +324,11 @@ body {
   ul,
   h2 {
     padding: 0;
-    margin-left: 20px;
     text-align: left;
   }
 
   h2 {
     padding: 40px 0 0;
-    margin-left: 20px;
   }
 }
 
@@ -339,12 +336,12 @@ body {
   background-color: #ffffff;
   display: block;
   height: 75px;
-  margin: 20px 0 0;
+  margin-left: 20px;
   min-height: 0;
   padding: 0;
   text-align: left;
   text-decoration: none;
-  width: 300px;
+  width: 280px;
 
   .title-wrapper {
     display: inline-block;
@@ -406,10 +403,6 @@ body {
 
 @include respond-to(tablet) {
 
-.site-component.card {
-    width: 300px;
-  }
-
   .card-list .one-third {
     margin-left: 40px;
     width: calc(50% - 40px) !important;
@@ -425,7 +418,8 @@ body {
     max-width: 425px;
     width: 100%;
   }
-.site-hero.components {
+
+  .site-hero.components {
     h2 {
       margin-bottom: -10px;
       @include font-size(42);
@@ -502,13 +496,9 @@ body {
   .site-hero h1 {
     @include font-size(44);
   }
-  .site-component.card {
-    width: calc(100% - 40px);
-  }
 
-  .card-list .one-third {
-    margin-left: 20px;
-    width: 100%;
+  .site-component.card {
+    width: calc(100% - 80px);
   }
 
   .articles-columns {
@@ -1017,13 +1007,20 @@ div.light-bgrnd {
     color: $graphite07;
     @include font-size(24);
     @include antialiased();
-    margin-left: 40px;
     margin-top: 20px;
     text-align: left;
   }
 
   .card-list {
-    margin-bottom: 60px;
+    -moz-column-gap: 20px;
+    -webkit-column-gap: 20px;
+    column-gap: 20px;
+
+    -moz-column-width: 280px;
+    -webkit-column-width: 280px;
+    column-width: 280px;
+
+    margin: 10px auto 20px;
   }
 
 }
