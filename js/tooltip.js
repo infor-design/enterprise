@@ -273,11 +273,8 @@
           scrollable.offsetLeft = this.scrollparent.scrollLeft();
           scrollable.deltaHeight = this.scrollparent.offset().top;
           scrollable.deltaWidth = this.scrollparent.offset().left;
-          winH = this.scrollparent.offset().top + scrollable.offsetTop;
-          // This logic must be wrong - especially if no scrolling
-          if (scrollable.offsetLeft > 0) {
-            winW = this.scrollparent.offset().left + scrollable.offsetLeft;
-          }
+          winH = winH - (this.scrollparent.offset().top + scrollable.offsetTop);
+          winW = winW - (this.scrollparent.offset().left + scrollable.offsetLeft);
         }
 
         switch(settings.placement) {
@@ -288,7 +285,7 @@
             break;
           case 'bottom':
             self.placeBelow(scrollable);
-            var bottomOffset = self.tooltip.offset().top + scrollable.offsetTop + self.tooltip.outerHeight();
+            var bottomOffset = self.tooltip.offset().top - scrollable.deltaHeight + self.tooltip.outerHeight();
             if (bottomOffset >= winH) {
               self.tooltip.removeClass('bottom').addClass('top');
               self.placeAbove(scrollable);
@@ -296,14 +293,14 @@
             break;
           case 'top':
             self.placeAbove(scrollable);
-            if (this.tooltip.offset().top + scrollable.offsetTop <= 0) {
+            if (this.tooltip.offset().top - scrollable.deltaHeight <= 0) {
               self.tooltip.removeClass('top').addClass('bottom');
               self.placeBelow(scrollable);
             }
             break;
           case 'right':
             self.placeToRight(scrollable);
-            var rightOffset = self.tooltip.offset().left + scrollable.offsetLeft + self.tooltip.outerWidth();
+            var rightOffset = self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth();
             if (rightOffset >= winW) {
               self.tooltip.removeClass('right').addClass('left');
               self.placeToLeft(scrollable);
@@ -311,7 +308,7 @@
             break;
           default: //left
             self.placeToLeft(scrollable);
-            if (this.tooltip.offset().left + scrollable.offsetLeft <= 0) {
+            if (this.tooltip.offset().left - scrollable.deltaWidth <= 0) {
               self.tooltip.removeClass('left').addClass('right');
               self.placeToRight(scrollable);
             }
@@ -323,12 +320,12 @@
         if (settings.placement === 'bottom' ||
             settings.placement === 'top' ) {
 
-          if ( self.tooltip.offset().left + scrollable.offsetLeft <= 0 ) {
+          if ( self.tooltip.offset().left - scrollable.deltaWidth <= 0 ) {
             self.tooltip.removeClass('top bottom').addClass('right');
             self.placeToRight(scrollable);
           }
 
-          if ( (self.tooltip.offset().left + scrollable.offsetLeft + self.tooltip.outerWidth()) >= winW ) {
+          if ( (self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth()) >= winW ) {
             self.tooltip.removeClass('top bottom').addClass('left');
             self.placeToLeft(scrollable);
           }

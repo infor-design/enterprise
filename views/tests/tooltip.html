@@ -6,8 +6,40 @@
     <h1>Tooltip</h1>
     <hr>
 
-     <div class="field">
-      <a class="hyperlink" href="#" title="http://_search?program=CRS610%26query%3DSTAT%3A10%26view%3DSTD01-01%26sortingOrder%3D1%26filterfields%3DCUNO%2CCUTP%2CCUNM%2CPHNO%2CSTAT%2CCUA1%2CPONO%2CRESP%2CSMCD%2CCRL3%2CADID%26startpanelfields%3DWOPAVR%2CSTD01-01%2CWWQTTP%2C1%2CWFSLCT%2C+%2CWTSLCT%2C+%2CWWNFTR%2C0%2CSTD01-01-Henrik%2520">Tool tip</a>
+    <div class="field">
+      <a class="hyperlink" href="#" title="http://_search?program=CRS610%26query%3DSTAT%3A10%26view%3DSTD01-01%26sortingOrder%3D1%26filterfields%3DCUNO%2CCUTP%2CCUNM%2CPHNO%2CSTAT%2CCUA1%2CPONO%2CRESP%2CSMCD%2CCRL3%2CADID%26startpanelfields%3DWOPAVR%2CSTD01-01%2CWWQTTP%2C1%2CWFSLCT%2C+%2CWTSLCT%2C+%2CWWNFTR%2C0%2CSTD01-01-Henrik%2520">Tooltip with Hyperlink</a>
+    </div>
+
+    <h2 style="margin-top: 2em;">Absolutely-positioned Tooltips</h2>
+    <p style="margin-top: 0;">
+      To properly test these, pull your browser window's borders close to the edge of the white box
+    </p>
+    <div style="height: 600px; width: 100%; background-color: #fff; position: relative;">
+
+      <!-- Top-Left -->
+      <div style="position: absolute;">
+        <a class="hyperlink" href="#" title="Opens below" data-options="{placement: top}">Tooltip (Configured to open on Top)</a><br>
+        <a class="hyperlink" href="#" title="Opens on right" data-options="{placement: left}">Tooltip (Configured to open on Left)</a>
+      </div>
+
+      <!-- Top Right -->
+      <div style="position: absolute; right: 0; text-align: right;">
+        <a class="hyperlink" href="#" title="Opens below" data-options="{placement: top}">Tooltip (Configured to open on Top)</a><br>
+        <a class="hyperlink" href="#" title="Opens on left" data-options="{placement: right}">Tooltip (Configured to open on Right)</a>
+      </div>
+
+      <!-- Bottom Left -->
+      <div style="position: absolute; bottom: 0;">
+        <a class="hyperlink" href="#" title="Opens above" data-options="{placement: bottom}">Tooltip (Configured to open on Bottom)</a><br>
+        <a class="hyperlink" href="#" title="Opens on left" data-options="{placement: right}">Tooltip (Configured to open on Right)</a>
+      </div>
+
+      <!-- Bottom Right -->
+      <div style="position: absolute; bottom: 0; right: 0; text-align: right;">
+        <a class="hyperlink" href="#" title="Opens above" data-options="{placement: bottom}">Tooltip (Configured to open on Bottom)</a><br>
+        <a class="hyperlink" href="#" title="Opens on right" data-options="{placement: left}">Tooltip (Configured to open on Left)</a>
+      </div>
+
     </div>
 
   </div>
