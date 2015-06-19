@@ -89,11 +89,7 @@
 
       handleEvents: function() {
         var self = this;
-        this.header.children('a').on('touchend.expandablearea touchcancel.expandablearea', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          $(e.target).click();
-        }).on('click.expandablearea', function() {
+        this.header.children('a').onTouchClick('expandablearea').on('click.expandablearea', function() {
           if (!self.isDisabled()) {
             self.toggleExpanded();
           }
@@ -156,10 +152,6 @@
         this.content.css('display','block').one('animateOpenComplete', function() {
           self.element.trigger('open-expandablearea');
         }).animateOpen();
-
-        if (this.content.hasClass('no-transition')) {
-          this.element.trigger('open-expandablearea');
-        }
       },
 
       close: function() {
@@ -171,10 +163,6 @@
           $(this).css('display', 'none');
           self.element.trigger('close-expandablearea');
         }).animateClosed();
-
-        if (this.content.hasClass('no-transition')) {
-          self.element.trigger('close-expandablearea');
-        }
       },
 
       disable: function() {
@@ -187,7 +175,7 @@
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.header.children('a').off();
+        this.header.children('a').offTouchClick('expandablearea').off();
         this.header.off();
         this.header
           .removeAttr('aria-controls')

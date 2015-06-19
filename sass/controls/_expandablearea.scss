@@ -39,6 +39,7 @@
     &[aria-expanded="true"] {
       + .expandable-pane {
         display: block;
+        height: auto;
       }
     }
 
@@ -69,6 +70,7 @@
   .expandable-pane {
     @include font-size(14);
     font-weight: 100;
+    height: 0;
     overflow: hidden;
 
     @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
