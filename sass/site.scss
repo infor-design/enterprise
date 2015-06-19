@@ -32,7 +32,7 @@ body {
   height: 350px;
   overflow: hidden;
   position: relative;
-  
+
   .hero-content {
     max-width: 450px;
     padding-left: 20px;
@@ -130,8 +130,8 @@ body {
 
     a {
       border-bottom: 1px solid transparent;
-      font-size: 1.2rem !important;
       color: $graphite08 !important;
+      @include font-size(12);
       line-height: 17px !important;
 
       &:after {
@@ -195,6 +195,11 @@ body {
       padding-bottom: 10px;
       padding-top: 37px;
     }
+  }
+
+  .btn-primary {
+    margin-bottom: 25px;
+    width: 200px;
   }
 
 }
@@ -437,6 +442,7 @@ body {
     h2 {
       border-top: 1px solid transparent !important;
       padding-top: 10px;
+      line-height: 24px !important;
     }
 
     p,
@@ -454,6 +460,11 @@ body {
       border-bottom: 1px solid #d8d8d8;
       padding-bottom: 50px;
     }
+
+    .icon {
+      margin-right: 20px;
+    }
+
   }
 }
 
@@ -465,12 +476,11 @@ body {
   }
 
   .home.menubar {
-    height: 270px;
+    height: 300px;
 
     .left,
     .right {
       display: block;
-      height: 135px;
       width: 100%;
     }
 
