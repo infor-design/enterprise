@@ -99,13 +99,14 @@
 .formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
   border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid $editor-border-color;
   border-radius: 2px 2px 0 0;
   left: 1px;
   margin-bottom: 0;
   overflow: hidden;
   padding: 0 10px;
   position: absolute;
-  top: 19px;
+  top: 17px;
   width: calc(100% - 2px);
   z-index: 20;
 
