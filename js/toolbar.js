@@ -81,6 +81,7 @@
 
         // Reference all interactive items in the toolbar
         this.items = this.buttonset.children('button, input')
+          .add(this.buttonset.find('.searchfield-wrapper').children('input')) // Searchfield Wrappers
           .add(this.element.find('.title').children('button'))
           .add(this.more);
 

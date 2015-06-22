@@ -314,6 +314,59 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="card">
+      <div class="card-header has-toolbar">
+        <div id="cardstack-toolbar" class="toolbar" role="toolbar">
+          <div class="buttonset">
+            <label class="audible" for="gridfilter">Search</label>
+            <input class="searchfield" placeholder="Keyword" name="searchfield" id="gridfilter">
+
+            <button class="btn-icon has-text" type="button">
+              <svg class="icon">
+                <use xlink:href="#icon-filter"></use>
+              </svg>
+              <span>Category</span>
+            </button>
+
+            <button class="btn-icon has-text" type="button">
+              <svg class="icon">
+                <use xlink:href="#icon-calendar"></use>
+              </svg>
+              <span>Date</span>
+            </button>
+
+            <button class="btn-icon has-text" type="button">
+              <svg class="icon">
+                <use xlink:href="#icon-search"></use>
+              </svg>
+              <span>Keyword</span>
+            </button>
+          </div>
+
+          <div class="more">
+            <button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="popupmenu-2" aria-describedby="tooltip" tabindex="-1">
+              <svg class="icon" focusable="false">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-more"></use>
+              </svg>
+              <span class="audible">Grid Features</span>
+            </button>
+            <ul class="popupmenu">
+              <li><a href="#">Option 1</a></li>
+              <li><a href="#">Option 2</a></li>
+              <li><a href="#">Option 3</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script>
   $('#emp-listview').on('click', 'button', function () {
     console.log('Drill Down on: '+ $(this).attr('data-id'));

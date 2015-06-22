@@ -20,6 +20,19 @@
     padding: 13px 20px;
     position: relative;
 
+    &.has-toolbar {
+      padding: 0;
+
+      .toolbar {
+        line-height: normal;
+        margin-top: 2px;
+      }
+
+      .searchfield-wrapper {
+        margin: auto;
+      }
+    }
+
     > h2,
     > h1,
     > button {
@@ -27,14 +40,17 @@
       float: left;
     }
 
-    > .btn-actions {
+    .btn-actions {
       background-color: $actionbutton-bg-color;
+    }
+
+    &:not(.has-toolbar) > .btn-actions {
+      line-height: normal;
+      margin: 0;
+      padding: 0;
       position: absolute;
       right: 10px;
       top: 8px;
-      padding: 0;
-      line-height: normal;
-      margin: 0;
     }
   }
 
