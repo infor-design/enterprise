@@ -165,7 +165,10 @@
         var self = this;
 
         if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
-          this.element.onTouchClick('popupmenu').on('click.popupmenu', function (e) {
+          this.element.on('touchend touchcancel', function (e) {
+            e.preventDefault();
+            return false;
+          }).on('click.popupmenu', function (e) {
             $(this).focus();
             if (self.menu.hasClass('is-open')){
               self.close();
@@ -362,6 +365,7 @@
           wrapper.css({'left': 20});
           //move the arrow - might need better logic here.
           wrapper.find('.arrow').css({'left': '20px', 'right': 'unset'});
+          this.menu.css('overflow', 'hidden');
         }
 
         if (this.element.hasClass('btn-menu')) {
@@ -473,6 +477,7 @@
           wrapper = ul.parent();
         }
 
+
         var menu = wrapper.children('.popupmenu'),
           mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
         li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
@@ -491,8 +496,7 @@
           //Did it fit?
           if (wrapper.offset().left < 0) {
             //No. Push the menu's left offset onto the screen.
-
-            wrapper.css('left', li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 5);
+            wrapper.css('left', li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40);
             menuWidth = menu.outerWidth();
           }
           // Do one more check to see if the right edge bleeds off the screen.

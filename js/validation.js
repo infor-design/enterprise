@@ -60,6 +60,7 @@
 
     filterValidations: function (events, type) {
       var validations = [];
+
       if (!events) {
         return [];
       }
@@ -75,7 +76,6 @@
           }
         }
       }
-
       return validations;
     },
 
@@ -232,6 +232,13 @@
       if (filters.length > 0) {
         validations = validations.filter(function(n) {
           return filters.indexOf(n) !== -1;
+        });
+      }
+
+      //Filter out specific events that should not use keyup
+      if (e.type === 'keyup') {
+        validations = validations.filter(function(n) {
+          return n !== 'date' && n !== 'time';
         });
       }
 

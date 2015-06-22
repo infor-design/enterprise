@@ -8,7 +8,6 @@
   position: relative;
 }
 
-.btn-split,
 .btn-menu,
 .btn-actions {
   height: $menubutton-height;
@@ -67,8 +66,4 @@
     }
   }
 
-
-  .ripple-wrapper {
-    border-radius: 18px;
-  }
 }

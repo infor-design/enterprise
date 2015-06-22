@@ -7,12 +7,12 @@
   + .icon,
   + .tooltip-description + .icon {
     cursor: pointer;
-    fill: $graphite04;
-    height: 17px;
-    margin-left: -25px;
-    margin-top: 9px;
+    fill: $trigger-icon-fill-color;
+    height: 16px;
+    margin-left: -24px;
+    margin-top: 8px;
     position: absolute;
-    width: 17px;
+    width: 16px;
     z-index: 1;
 
     &:hover {
@@ -32,12 +32,13 @@
   }
 }
 
+// IE Hack
 .ie9 .datepicker + .icon {
-  background: url(about:blank) no-repeat 0 0 transparent;
+  background: url('about:blank') no-repeat 0 0 transparent;
 }
 
 .calendar {
-  background-color: $popupmenu-bg-color;
+  background-color: $popover-bg-color;
   display: inline-block;
   min-height: 300px;
   min-width: 300px;
@@ -137,14 +138,14 @@
 
 // Header Area of Calendar
 .calendar-header {
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid $popover-separator-color;
   height: 70px;
   line-height: 77px;
   position: relative;
   text-align: center;
 
   button {
-    background-color: $popupmenu-bg-color;
+    background-color: $popover-bg-color;
     border: 1px solid transparent;
     border-radius: 2px;
     color: transparent;
@@ -192,7 +193,7 @@
 
 //Footer Buttons
 .calendar-footer {
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid $popover-separator-color;
   height: 40px;
   padding-top: 14px;
 

@@ -22,7 +22,6 @@
     // Settings and Options
     var pluginName = 'progress',
         defaults = {
-          pagesize: 5 //can be calculate or a specific number
         },
         settings = $.extend({}, defaults, options);
 

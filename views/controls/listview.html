@@ -124,56 +124,6 @@
 <div class="row">
   <div class="twelve columns">
     <h1>List View</h1>
-    <span class="label">Multi Row Select &amp; Contextual Toolbar</span>
-    <hr>
-  </div>
-</div>
-
-<div class="row">
-  <div class="one-third column">
-   <script id="multiselect-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          {{#disabled}}
-            <li class="is-disabled">
-          {{/disabled}}
-          {{^disabled}}
-            <li>
-          {{/disabled}}
-            <p>{{desc}}</p>
-          </li>
-        {{/dataset}}
-      </ul>
-   </script>
-
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">My Tasks</h2>
-        <button class="btn-actions">
-          <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
-            <use xlink:href="#icon-more"></use>
-          </svg>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Action One</a></li>
-          <li><a href="#">Action Two</a></li>
-        </ul>
-      </div>
-      <div class="card-content">
-        <div class="listview-toolbar">
-          <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
-          <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
-        </div>
-        <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="twelve columns">
-    <h1>List View</h1>
     <span class="label">Editable (Limited)</span>
     <hr>
   </div>

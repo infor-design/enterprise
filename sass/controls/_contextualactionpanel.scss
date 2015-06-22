@@ -25,6 +25,11 @@
     .title {
       @include font-size(18);
     }
+
+    .icon-close {
+      height: 16px !important;
+      top: 1px;
+    }
   }
 
   .modal-body {

@@ -3,10 +3,10 @@
 
 // Uses Many Popup Menu Styles and Text Input
 .popupmenu.autocomplete {
-  border: 1px solid $dropdown-focus-border-color;
+  border: 1px solid $input-focus-border-color;
   border-radius: 0 0 3px 3px;
-  border-top: 1px solid #d2d2d2;
-  box-shadow: 0 1px 0px 1px rgba(8, 150, 233, .2);
+  border-top: 1px solid $dropdown-menu-seperator-color;
+  box-shadow: 0 1px 0 1px rgba(8, 150, 233, .2);
   margin-top: -11px;
 
   li {
@@ -38,8 +38,8 @@
 }
 
 input.autocomplete.is-open {
-  background-color: $inverse-color;
-  border: 1px solid $dropdown-focus-border-color;
-  border-bottom: 1px solid #d2d2d2;
+  background-color: $popupmenu-bg-color;
+  border: 1px solid $dropdown-menu-border-color;
+  border-bottom: 1px solid $dropdown-menu-seperator-color;
   border-radius: 3px 3px 0 0;
 }

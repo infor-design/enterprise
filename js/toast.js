@@ -28,7 +28,7 @@
           position: 'top right',  //top left, bottom left, bottom right (center??)
           audibleOnly: false,
           progressBar: true,
-          timeout: 6000
+          timeout: 60000
         },
         settings = $.extend({}, defaults, options);
 
@@ -50,7 +50,9 @@
       show: function() {
         var self = this,
           container = $('#toast-container'),
-          closeBtn = $('<button type="button" class="btn-close" title="'+ Locale.translate('Close') +'" aria-hidden="true"></button>'),
+          closeBtn = $('<button type="button" class="btn-close" title="'+ Locale.translate('Close') +
+            '" aria-hidden="true"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-close"></use></svg><span class="audible"> ' +
+            Locale.translate('Close') +'</span></button>'),
           toast = $('<div class="toast"></div>'),
           progress = $('<div class="toast-progress"></div>');
 

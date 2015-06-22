@@ -29,16 +29,29 @@ $font-color-lowcontrast: $slate06;
 $label-color: $slate08;
 $disabled-color: rgba(86, 86, 86, .6);
 
+// Alert Colors
+$alert-info: $azure07;
+$alert-green: $emerald07;
+$alert-yellow: $amber07;
+$alert-red: #ee0000;
+
 // Rules
 $hr-top-color: $slate03;
 $hr-bottom-color: transparent;
 
 // Popovers
 $popover-bg-color: $white;
-$popover-border-color: $slate03;
+$popover-border-color: $slate01;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
-$popover-separator-color: $slate03;
+$popover-separator-color: $slate01;
+
+// Tooltips
+$tooltip-bg-color: $slate05;
+$tooltip-border-color: transparent;
+$tooltip-color: $font-color-highcontrast;
+$tooltip-error-bg-color: $alert-red;
+$tooltip-error-color: $white;
 
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
@@ -47,6 +60,67 @@ $popupmenu-bg-color: $white;
 $popupmenu-border-color: #e5e5e5;
 $popupmenu-checked-color: $font-color;
 $popupmenu-border-color: $slate03;
+
+// Form Buttons
+$primary-btn-bg-color: $primary-color;
+$primary-btn-hover-bg-color: $azure08;
+$primary-btn-focus-bg-color: $primary-color;
+$primary-btn-active-bg-color: $azure08;
+
+// Secondary/Normal Buttons
+$btn-color: $inverse-color;
+$btn-bg-color: $slate06;
+$btn-hover-bg-color: $slate05;
+$btn-focus-bg-color: $primary-color;
+$btn-focus-border-color: $primary-color;
+$btn-active-bg-color: $slate05;
+$btn-disabled-color: $inverse-color;
+$btn-disabled-bg-color: $slate04;
+
+// Tertiary Buttons
+$tertiary-btn-color: $slate07;
+$tertiary-btn-hover-color: $primary-color;
+$tertiary-btn-active-color: $primary-color;
+$tertiary-btn-disabled-color: $slate04;
+
+// Input Fields
+$input-border-color: $graphite03;
+$input-color: $graphite10;
+$input-bg-color: $inverse-color;
+$input-disabled-bg-color: transparent;
+$input-disabled-border-color: $slate03;
+$input-disabled-color: $slate04;
+$input-focus-border-color: $primary-color;
+$input-placeholder-color: $slate03;
+$input-readonly-border-color: $slate03;
+$input-readonly-bg-color: $slate03;
+$input-readonly-color: $slate07;
+
+//States
+$error-color: $alert-red;
+$error-icon-fill: $alert-red;
+$dirty-icon-fill: $amber10;
+$confirm-icon-fill: $alert-green;
+$info-icon-fill: $alert-info;
+
+// Autocomplete
+$autocomplete-light-text: $slate05;
+$trigger-icon-fill-color: $slate05;
+
+// Drop down
+$dropdown-filter-color: $font-color-extrahighcontrast;
+$dropdown-color: $input-color;
+$dropdown-search-color: $autocomplete-light-text;
+$dropdown-menu-border-color: $primary-color;
+$dropdown-menu-seperator-color: $slate02;
+$dropdown-group-label-color: $slate03;
+
+// Date Picker
+$datepicker-alt-month-color: $slate04;
+$datepicker-selected-bg-color: $primary-color;
+$datepicker-selected-color: $inverse-color;
+$datepicker-today-color: $slate10;
+$datepicker-hover-bg-color: $slate02;
 
 //================================================== //
 // Core Controls

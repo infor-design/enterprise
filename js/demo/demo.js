@@ -225,7 +225,7 @@ $(function($) {
         {
           text: 'Close',
           cssClass: 'btn-icon has-text',
-          icon: '#icon-sr-close',
+          icon: '#icon-close',
           click: function() {
             $(this).modal('close');
           }
@@ -250,7 +250,7 @@ $(function($) {
           {
             text: 'Close',
             cssClass: 'btn-icon has-text',
-            icon: '#icon-sr-close',
+            icon: '#icon-close',
             click: function() {
               $(this).modal('close');
             }

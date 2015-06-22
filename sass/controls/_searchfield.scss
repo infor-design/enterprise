@@ -7,10 +7,11 @@
   position: relative;
 
   > .icon {
+    fill: $trigger-icon-fill-color;
+    height: 17px;
     position: absolute;
     right: 0;
     top: 9px;
-    height:17px;
   }
 }
 
@@ -66,7 +67,7 @@
     }
 
     + svg {
-      fill: $graphite06;
+      fill: $trigger-icon-fill-color;
       left: 2px;
       pointer-events: none;
     }

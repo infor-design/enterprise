@@ -67,14 +67,14 @@
           }
 
           //Handle Half Star
-          input.next('label').find('use').attr('xlink:href', '#icon-star');
+          input.next('label').find('use').attr('xlink:href', '#icon-star-filled');
 
           if (i+1 === chkIdx) {
             input.prop('checked', true);
           }
 
           if (chkIdx !== self.currentValue && i+1 === chkIdx) {
-           input.addClass('is-half').next('label').find('use').attr('xlink:href', '#icon-halfstar');
+           input.addClass('is-half').next('label').find('use').attr('xlink:href', '#icon-star-half');
           }
         }
         if (chkIdx <= 0) {

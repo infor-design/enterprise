@@ -10,8 +10,8 @@
 .signin {
   display: table-cell;
   margin-top: -100px;
-  vertical-align: middle;
   text-align: center;
+  vertical-align: middle;
   width: 300px;
 
   label {
@@ -26,6 +26,7 @@
     padding: 0;
     text-align: center;
   }
+
   &.sent h1,
   &.sent p {
     margin: 0;
@@ -55,6 +56,7 @@
   strong {
     font-weight: bold;
   }
+
   li {
     list-style: inside;
   }

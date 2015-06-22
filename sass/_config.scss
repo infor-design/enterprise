@@ -31,10 +31,17 @@ $hr-bottom-color: $white;
 
 // Popovers
 $popover-bg-color: $white;
-$popover-border-color: $graphite02;
+$popover-border-color: transparent;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
 $popover-separator-color: #eeeeee;
+
+// Tooltips
+$tooltip-bg-color: $graphite06;
+$tooltip-border-color: transparent;
+$tooltip-color: $white;
+$tooltip-error-bg-color: $alert-red;
+$tooltip-error-color: $white;
 
 // Popup Menu
 $popupmenu-color: $font-color;
@@ -53,27 +60,32 @@ $primary-btn-active-bg-color: $azure08;
 // Secondary/Normal Buttons
 $btn-color: $inverse-color;
 $btn-bg-color: $slate04;
-$btn-hover-bg-color: #9a9ca4;
-$btn-focus-bg-color: #acaeb7;
+$btn-hover-bg-color: $slate05;
+$btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
-$btn-active-bg-color: #9a9ca4;
-$btn-disabled-color: #f0f1f2;
-$btn-disabled-bg-color: #cecfd4;
+$btn-active-bg-color: $slate06;
+$btn-disabled-color: $inverse-color;
+$btn-disabled-bg-color: $slate02;
 
 // Tertiary Buttons
-$tertiary-btn-color: $slate06;
+$tertiary-btn-color: $graphite06;
 $tertiary-btn-hover-color: $primary-color;
 $tertiary-btn-active-color: $primary-color;
-$tertiary-btn-disabled-color: #b6b6b6;
+$tertiary-btn-disabled-color: $slate03;
 
-// Icons
-$icon-color: $font-color-lowcontrast;
-$caps-color-arrow: #ffffff;
-$caps-color-background: #bdbdbd;
+// Buttons
+$button-font-size: 12;
+
+// Menu Button
+$menubutton-height: 34px;
+
+// Action Button
+$actionbutton-bg-color: $inverse-color;
 
 // Input Fields
 $input-border-color: $graphite03;
 $input-color: $graphite08;
+$input-bg-color: transparent;
 $input-disabled-bg-color: transparent;
 $input-disabled-border-color: $graphite02;
 $input-disabled-color: $disabled-color;
@@ -83,19 +95,37 @@ $input-readonly-border-color: #dadada;
 $input-readonly-bg-color: #e9e9e9;
 $input-readonly-color: $graphite04;
 
-// Autocomplete
-$autocomplete-light-text: #777777;
+//States
+$error-color: $alert-red;
+$error-icon-fill: $alert-red;
+$dirty-icon-fill: $amber05;
+$confirm-icon-fill: $alert-green;
+$info-icon-fill: $alert-info;
 
-// Expandable Area
-$expandable-area-border-color: $graphite03;
+// Autocomplete
+$autocomplete-light-text: $graphite05;
+$trigger-icon-fill-color: $graphite04;
 
 // Drop down
-$dropdown-bg-color: transparent;
-$dropdown-focus-border-color: $input-focus-border-color;
 $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
 $dropdown-search-color: $autocomplete-light-text;
 $dropdown-menu-border-color: $primary-color;
+$dropdown-menu-seperator-color: $graphite02;
+$dropdown-group-label-color: $graphite04;
+
+// Date Picker
+$datepicker-alt-month-color: $graphite04;
+$datepicker-selected-bg-color: $azure06;
+$datepicker-selected-color: $inverse-color;
+$datepicker-today-color: $graphite10;
+$datepicker-hover-bg-color: $graphite01;
+
+// Icons
+$icon-color: $font-color-lowcontrast;
+
+// Expandable Area
+$expandable-area-border-color: $graphite03;
 
 // Editor
 $editor-border-color: #9e9e9e;
@@ -109,21 +139,6 @@ $multiselect-focus-border-color: $input-focus-border-color;
 $multiselect-tag-color: #999999;
 $multiselect-tag-hover-color: #0896e9;
 $multiselect-height: 34px;
-
-// Buttons
-$button-font-size: 12;
-
-// Menu Button
-$menubutton-border-color: #999999;
-$menubutton-bg-color: transparent;
-$menubutton-height: 34px;
-$menubutton-focus-border-color: $input-focus-border-color;
-$menubutton-disabled-bg-color: $input-disabled-bg-color;
-$menubutton-disabled-border-color: $input-disabled-border-color;
-$menubutton-disabled-color: $input-disabled-color;
-
-// Action Button
-$actionbutton-bg-color: $inverse-color;
 
 // Cardlist
 $cardlist-bg-color: $inverse-color;
@@ -157,13 +172,6 @@ $radio-disabled-select-bg-color: #c2c2c2;
 $radio-disabled-dot-color: #f4f4f4;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
-// Date Picker
-$datepicker-alt-month-color: #999999; //Was 999999 in design but 767676 passes
-$datepicker-selected-bg-color: $azure06;
-$datepicker-selected-color: $inverse-color;
-$datepicker-today-color: #1a1a1a;
-$datepicker-hover-bg-color: #ededed;
-
 //Pager
 $pager-selected-color: $primary-color;
 $pager-focus-border-color: $input-focus-border-color;
@@ -171,9 +179,6 @@ $pager-disabled-color: $graphite02;
 
 // Toolbar
 $toolbar-height: 44px;
-
-// Tooltips
-$tooltip-bg-color: #5e5e5e;
 
 //Slider
 $slider-bg-color: #b6b6b6;
@@ -190,13 +195,6 @@ $modal-btn-disabled-color: #b6b6b6;
 //BreadCrumb
 $breadcrumb-disabled-color: $graphite02;
 $breadcrumb-color: #666666;
-
-//States
-$error-color: $alert-red;
-$error-icon-fill: $alert-red;
-$dirty-icon-fill: $alert-yellow;
-$confirm-icon-fill: $alert-green;
-$info-icon-fill: $alert-info;
 
 // Color Picker
 $colorpicker-initial-bg-color: #999999;
@@ -226,8 +224,8 @@ $contextual-panel-bg: #d8d8d8;
 $switch-disabled-label-color: #707070;
 
 // Rating (Stars)
-$rating-bg-color: #ffd042;
-$rating-border-color: #a4a4a4;
+$rating-bg-color: $amber04;
+$rating-border-color: $graphite04;
 $rating-hover-color: $primary-color;
 
 //Charts

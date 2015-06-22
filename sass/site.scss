@@ -422,8 +422,9 @@ body {
   .site-hero.components {
     h2 {
       margin-bottom: -10px;
-      @include font-size(42);
+      @include font-size(35);
       padding-top: 25px;
+      margin-left: 10px;
     }
   }
 

@@ -27,27 +27,76 @@ $font-color-highcontrast: $slate01;
 $font-color: $slate02;
 $font-color-lowcontrast: $slate03;
 $label-color: $slate03;
-$disabled-color: $graphite04;
+$disabled-color: $slate05;
 
 // Rules
 $hr-top-color: $slate09;
 $hr-bottom-color: transparent;
 
 // Popovers
-$popover-bg-color: $slate08;
-$popover-border-color: $slate03;
+$popover-bg-color: $slate07;
+$popover-border-color: $slate09;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
-$popover-separator-color: $slate05;
+$popover-separator-color: $slate09;
+
+// Tooltips
+$tooltip-bg-color: $slate06;
+$tooltip-border-color: transparent;
+$tooltip-color: $white;
+$tooltip-error-bg-color: $alert-red;
+$tooltip-error-color: $white;
 
 // Popup Menu
 $popupmenu-color: $white;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
-$popupmenu-bg-color: $slate08;
-$popupmenu-border-color: $slate03;
+$popupmenu-bg-color: $slate07;
+$popupmenu-border-color: $slate09;
 $popupmenu-checked-color: $white;
 $popupmenu-hover-color: $slate06;
-$popupmenu-border-color: $slate04;
+
+// Form Buttons - Same
+// Secondary/Normal Buttons - Same Except Disabled
+$btn-disabled-color: $slate04;
+$btn-disabled-bg-color: $slate06;
+
+// Tertiary Buttons
+$tertiary-btn-color: $slate03;
+$tertiary-btn-hover-color: $primary-color;
+$tertiary-btn-active-color: $primary-color;
+$tertiary-btn-disabled-color: $slate06;
+
+// Input Fields
+$input-border-color: $slate04;
+$input-color: $white;
+$input-bg-color: transparent;
+$input-disabled-bg-color: transparent;
+$input-disabled-border-color: $slate06;
+$input-disabled-color: $disabled-color;
+$input-focus-border-color: $primary-color;
+$input-placeholder-color: $slate05;
+$input-readonly-border-color: $slate05;
+$input-readonly-bg-color: $slate06;
+$input-readonly-color: $slate03;
+
+// Autocomplete
+$autocomplete-light-text: $slate04;
+$trigger-icon-fill-color: $slate04;
+
+// Drop down
+$dropdown-filter-color: $font-color-extrahighcontrast;
+$dropdown-color: $input-color;
+$dropdown-search-color: $autocomplete-light-text;
+$dropdown-menu-border-color: $primary-color;
+$dropdown-menu-seperator-color: $slate05;
+$dropdown-group-label-color: $slate03;
+
+// Date Picker
+$datepicker-alt-month-color: $slate05;
+$datepicker-selected-bg-color: $primary-color;
+$datepicker-selected-color: $inverse-color;
+$datepicker-today-color: $inverse-color;
+$datepicker-hover-bg-color: $slate06;
 
 //================================================== //
 // Core Controls

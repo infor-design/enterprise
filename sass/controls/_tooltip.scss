@@ -4,8 +4,9 @@
 .tooltip {
   background-clip: padding-box;
   background-color: $tooltip-bg-color;
+  border: 1px solid $tooltip-border-color;
   border-radius: 2px;
-  color: #ffffff;
+  color: $tooltip-color;
   font-family: $font-regular;
   @include font-size(15);
   left: -9999px;
@@ -51,36 +52,40 @@
   }
 
   &.is-error {
-    background-color: $error-color;
+    background-color: $tooltip-error-bg-color;
     pointer-events: auto;
+
+    p {
+      color: $tooltip-error-color;
+    }
 
     &.top {
       .arrow {
-        border-top-color: $error-color;
+        border-top-color: $tooltip-error-bg-color;
       }
     }
 
     &.bottom {
       .arrow {
-        border-bottom-color: $error-color;
+        border-bottom-color:$tooltip-error-bg-color;
       }
     }
 
     &.left {
       .arrow {
-        border-left-color: $error-color;
+        border-left-color: $tooltip-error-bg-color;
       }
     }
 
     &.right {
       .arrow {
-        border-right-color: $error-color;
+        border-right-color: $tooltip-error-bg-color;
       }
     }
   }
 
   p {
-    color: #ffffff;
+    color: $tooltip-error-color;
     text-align: center;
   }
 
@@ -88,7 +93,7 @@
 
 .popover {
   background-color: $popover-bg-color;
-  border: 0;
+  border: 1px solid $popover-border-color;
   box-shadow: $popover-box-shadow;
   color: $popover-color;
   pointer-events: auto;
@@ -137,7 +142,7 @@
   }
 
   p {
-    color: #1a1a1a;
+    color: $tooltip-color;
     max-width: none;
   }
 
@@ -165,7 +170,7 @@
 
 .tooltip-title {
   border-bottom: 1px solid $graphite02;
-  color: #1a1a1a;
+  color: $font-color-highcontrast;
   font-family: $font-regular;
   @include font-size(16);
   font-weight: normal;

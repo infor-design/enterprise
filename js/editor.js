@@ -495,7 +495,7 @@
             'anchor': this.getIcon('InsertAnchor', 'link'),
             'image': this.getIcon('InsertImage', 'insert-image'),
             'header1': this.getIcon('ToggleH3', 'h3'),
-            'header2': this.getIcon('ToggleH4', 'h3'),
+            'header2': this.getIcon('ToggleH4', 'h4'),
             'quote': this.getIcon('Blockquote', 'quote'),
             'orderedlist': this.getIcon('OrderedList', 'orderedlist'),
             'unorderedlist': this.getIcon('UnorderedList', 'unorderedlist'),

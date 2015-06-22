@@ -44,7 +44,7 @@
       handleKeys: function() {
         var form = this.element.find('form'),
           self = this,
-          cssIcon = $('<span class="icon-capslock"><span class="inner">' + Locale.translate('CapsLockOn') + '</span></span>');
+          cssIcon = $('<svg aria-hidden="true" focusable="false" class="icon icon-capslock"><use xlink:href="#icon-capslock"/></svg>');
 
           // Disable default [caps lock on] popup in IE
           document.msCapsLockWarningOff = true;
@@ -66,9 +66,6 @@
             if (field.hasClass('error')) {
               fieldParent.find('.icon-capslock').remove();
             }
-          })
-          .on('blur.signin', '[type="password"]', function () {
-             //$('.icon-capslock', $(this).parent('.field')).remove();
           });
 
           form.on('submit.signin', function () {

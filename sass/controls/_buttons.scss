@@ -32,6 +32,7 @@ button {
   @include font-size($button-font-size);
   padding: 0 30px;
   position: relative;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
   text-transform: uppercase;
   width: auto;
 }
@@ -46,13 +47,16 @@ button {
 // standard, primary, destructive
 .btn-primary {
   background-color: $primary-btn-bg-color;
+  border: 1px solid $primary-btn-bg-color;
 
   &:hover {
     background-color: $primary-btn-hover-bg-color;
+    border: 1px solid $primary-btn-hover-bg-color;
   }
 
   &:active {
     background-color: $primary-btn-active-bg-color;
+    border: 1px solid $primary-btn-active-bg-color;
   }
 
   &:focus {
@@ -73,7 +77,7 @@ button {
     cursor: default;
   }
 
-  .ripple {
+  .ripple-effect {
     background-color: #ffffff;
   }
 }
@@ -87,14 +91,17 @@ a.btn-primary {
 .btn,
 .btn-secondary {
   background-color: $btn-bg-color;
+  border: 1px solid $btn-bg-color;
   color: $btn-color;
 
   &:hover {
     background-color: $btn-hover-bg-color;
+    border: 1px solid $btn-hover-bg-color;
   }
 
   &:active {
     background-color: $btn-active-bg-color;
+    border: 1px solid $btn-active-bg-color;
     color: $btn-color;
   }
 
@@ -112,12 +119,13 @@ a.btn-primary {
   &[disabled],
   &[disabled]:hover {
     background-color: $btn-disabled-bg-color;
+    border: 1px solid $btn-disabled-bg-color;
     box-shadow: none;
     color: $btn-disabled-color;
     cursor: default;
   }
 
-  .ripple {
+  .ripple-effect {
     background: #efefef;
   }
 }
@@ -131,6 +139,7 @@ a.btn-primary {
   border-radius: 18px;
   box-shadow: none;
   color: $tertiary-btn-color;
+  overflow: hidden;
 
   &:hover {
     color: $tertiary-btn-hover-color;
@@ -181,13 +190,10 @@ a.btn-primary {
     fill: $tertiary-btn-color;
   }
 
-  .ripple {
+  .ripple-effect {
     background-color: #8dd2fb;
   }
 
-  .ripple-wrapper {
-    border-radius: 18px;
-  }
 }
 
 .btn-destructive,
@@ -280,48 +286,42 @@ a.btn-primary {
 }
 
 // Ripple Effect
-.ripple-wrapper {
-  border-radius: 2px;
-  height: 100%;
-  left: 0;
-  overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
-
-.ripple {
-  background-color: #5cc3fe;
+.ripple-effect {
+  -webkit-animation: ripple-animation 1s;
+  animation: ripple-animation 1s;
   border-radius: 50%;
-  height: 20px;
-  margin-left: -10px;
-  margin-top: -10px;
-  opacity: 0;
-  pointer-events: none;
+  height: 2px;
   position: absolute;
-  -ms-transform: scale(1);
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  -ms-transform-origin: 50%;
-  -webkit-transform-origin: 50%;
-  transform-origin: 50%;
-  width: 20px;
+  width: 2px;
+}
 
-  &.ripple-on {
-    border-radius: 50%;
-    opacity: .15;
-    position: static;
-    -ms-transition: opacity .15s ease-in 0s, -ms-transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
-    -webkit-transition: opacity .15s ease-in 0s, -webkit-transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
-    transition: opacity .15s ease-in 0s, transform .6s cubic-bezier(.4, 0, .2, 1) .075s;
+.ripple-effect circle {
+  fill: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes ripple-animation {
+  from {
+    opacity: .4;
+    transform: scale(1);
   }
 
-  &.ripple-out {
+  to {
     opacity: 0;
-    -ms-transition: opacity .2s linear 0s !important;
-    -webkit-transition: opacity .2s linear 0s !important;
-    transition: opacity .2s linear 0s !important;
+    transform: scale(100);
   }
 }
+
+@-webkit-keyframes ripple-animation {
+  from {
+    opacity: .4;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: scale(100);
+    transform: scale(100);
+  }
+}
+
