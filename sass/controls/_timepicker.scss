@@ -7,7 +7,7 @@
   + .icon,
   + .tooltip-description + .icon {
     cursor: pointer;
-    fill: $graphite05;
+    fill: $trigger-icon-fill-color;
     height: 17px;
     margin-left: -32px;
     margin-top: 9px;
@@ -22,7 +22,7 @@
   &:disabled {
     + .icon {
       cursor: default;
-      fill: #c3c3c3;
+      fill: $input-disabled-border-color;
     }
   }
 }
@@ -34,7 +34,7 @@
   }
 
   .time-parts {
-    padding: 13px;
+    padding: 15px;
     text-align: center;
 
     > label {

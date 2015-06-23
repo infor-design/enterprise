@@ -334,7 +334,7 @@ body {
 
 .site-component.card {
   background-color: #ffffff;
-  display: block;
+  display: inline-block;
   height: 75px;
   margin-left: 20px;
   min-height: 0;
@@ -351,12 +351,13 @@ body {
   }
 
   .img-wrapper {
-    border-radius: 50%;
-    display: inline-block;
+    display: inline;
     height: 50px;
     margin: 12px 5px 12px 15px;
-    vertical-align: top;
     width: 50px;
+    position: relative;
+    left: -1px;
+    top: -13px;
   }
 
   img {
@@ -602,7 +603,8 @@ body {
   .main {
     background-color: $body-bg-color !important;
     padding-bottom: 30px;
-    width: 100%;
+    margin-left: 0 !important;
+    width: 100% !important;
 
     h1 {
       @include font-size(30);

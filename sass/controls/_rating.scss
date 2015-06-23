@@ -4,10 +4,6 @@
 .rating {
   display: inline-block;
 
-  input:focus + label > svg.icon {
-    stroke: $rating-hover-color;
-  }
-
   input {
     cursor: pointer;
     height: 14px;
@@ -41,6 +37,11 @@
     stroke-width: 1px;
     width: 22px;
   }
+
+  input:focus + label > svg.icon {
+    stroke: $rating-hover-color !important;
+  }
+
 }
 
 .rating-text {

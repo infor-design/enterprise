@@ -34,7 +34,7 @@ $hr-top-color: $slate09;
 $hr-bottom-color: transparent;
 
 // Popovers
-$popover-bg-color: $slate07;
+$popover-bg-color: $slate06;
 $popover-border-color: $slate09;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
@@ -50,10 +50,10 @@ $tooltip-error-color: $white;
 // Popup Menu
 $popupmenu-color: $white;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
-$popupmenu-bg-color: $slate07;
+$popupmenu-bg-color: $slate06;
 $popupmenu-border-color: $slate09;
 $popupmenu-checked-color: $white;
-$popupmenu-hover-color: $slate06;
+$popupmenu-hover-color: $slate05;
 
 // Form Buttons - Same
 // Secondary/Normal Buttons - Same Except Disabled
@@ -82,6 +82,8 @@ $input-readonly-color: $slate03;
 // Autocomplete
 $autocomplete-light-text: $slate04;
 $trigger-icon-fill-color: $slate04;
+$trigger-hover-color: $slate02;
+$trigger-active-color: $primary-color;
 
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
@@ -92,11 +94,16 @@ $dropdown-menu-seperator-color: $slate05;
 $dropdown-group-label-color: $slate03;
 
 // Date Picker
-$datepicker-alt-month-color: $slate05;
+$datepicker-alt-month-color: $slate04;
 $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $inverse-color;
-$datepicker-hover-bg-color: $slate06;
+$datepicker-hover-bg-color: $slate05;
+
+//Multi Select
+.dropdown-list.multiple li:hover:not(.group-label)::before {
+  border: 1px solid $slate04;
+}
 
 //================================================== //
 // Core Controls
