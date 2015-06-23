@@ -34,7 +34,6 @@
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
-      console.log(this.settings);
     }
 
     // Check if an object is an array

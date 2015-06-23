@@ -30,6 +30,7 @@ input.dropdown {
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   text-overflow: ellipsis;
+  @include transition(background-color .2s ease);
   vertical-align: middle;
 
   &[disabled] {
@@ -45,9 +46,19 @@ input.dropdown {
     }
   }
 
-  &:hover {
+  &:active {
+    border-color: $trigger-active-color;
+
     + .icon {
-      fill: $primary-color;
+      fill: $trigger-active-color;
+    }
+  }
+
+  &:hover:not([disabled]) {
+    border-color: $trigger-hover-color;
+
+    + .icon {
+      fill: $trigger-hover-color;
     }
   }
 
@@ -272,7 +283,7 @@ input.dropdown {
   }
 
   .icon {
-    fill: $graphite05;
+    fill: $trigger-icon-fill-color;
     height: 32px;
     margin-left: -30px;
     position: absolute;

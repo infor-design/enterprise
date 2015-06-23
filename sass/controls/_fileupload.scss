@@ -4,6 +4,7 @@
 label.fileupload {
   display: inline-block;
   position: absolute;
+  left: 300px;
   top: 12px;
 
   // Label
@@ -13,7 +14,7 @@ label.fileupload {
     height: 32px;
     left: -35px;
     outline: 0;
-    padding-top: 8px;
+    padding-top: 10px;
     position: relative;
     text-align: center;
     top: 5px;
@@ -26,8 +27,8 @@ label.fileupload {
     }
 
     svg {
-      height: 17px;
-      width: 17px;
+      height: 16px;
+      width: 16px;
     }
   }
 

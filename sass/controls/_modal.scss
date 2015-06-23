@@ -125,13 +125,13 @@
 
 //Toolbar Buttons
 .modal-buttonset {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid $popover-separator-color;
   height: 50px;
   margin: 25px -28px 0;
 
   button {
     border: 1px solid transparent;
-    border-left: 1px solid #e5e5e5;
+    border-left: 1px solid $popover-separator-color;
     color: $modal-btn-color;
     cursor: pointer;
     float: left;

@@ -68,8 +68,9 @@ svg.icon-logo {
   width: 0;
 
   &.checked {
-    margin-left: -14px;
-    margin-top: -20px;
+    margin-left: -3px;
+    margin-top: -5px;
+    z-index: 1;
   }
 }
 

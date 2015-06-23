@@ -105,7 +105,10 @@ $info-icon-fill: $alert-info;
 // Autocomplete
 $autocomplete-light-text: $graphite05;
 $trigger-icon-fill-color: $graphite04;
+$trigger-hover-color: $graphite05;
+$trigger-active-color: $primary-color;
 
+//
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
@@ -114,7 +117,7 @@ $dropdown-menu-border-color: $primary-color;
 $dropdown-menu-seperator-color: $graphite02;
 $dropdown-group-label-color: $graphite04;
 
-// Date Picker
+//Date Picker
 $datepicker-alt-month-color: $graphite04;
 $datepicker-selected-bg-color: $azure06;
 $datepicker-selected-color: $inverse-color;
@@ -133,12 +136,6 @@ $editor-focus-border-color: $input-focus-border-color;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: #ededed;
 $editor-btn-color: #767676;  //Was #999999  in design
-
-// Multiselect
-$multiselect-focus-border-color: $input-focus-border-color;
-$multiselect-tag-color: #999999;
-$multiselect-tag-hover-color: #0896e9;
-$multiselect-height: 34px;
 
 // Cardlist
 $cardlist-bg-color: $inverse-color;
