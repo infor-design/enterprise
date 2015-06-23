@@ -31,7 +31,7 @@
 
     // Plugin Constructor
     function Autocomplete(element) {
-      this.settings = settings;
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -53,8 +53,9 @@
 
       init: function() {
         // data-autocomplete can be a url, 'source' or an array
-        if (this.element.attr('data-autocomplete') !== 'source') {
-          this.settings.source = this.element.attr('data-autocomplete');
+        var data = this.element.attr('data-autocomplete');
+        if (data && data !== 'source') {
+          this.settings.source = data;
         }
 
         this.addMarkup();
@@ -200,9 +201,13 @@
 
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
-        var buffer = '', timer, self = this;
+        var buffer = '',
+          timer,
+          self = this;
 
-        this.element.on('keydown.autocomplete', function(e) {
+        this.element.on('updated.autocomplete', function() {
+          self.updated();
+        }).on('keydown.autocomplete', function(e) {
           if (e.keyCode === 8) {
             self.element.trigger('keypress');
           }
@@ -212,7 +217,7 @@
           clearTimeout(timer);
 
           if (e.altKey && e.keyCode === 40) {  //open list
-            self.openList(field.val(), settings.source);
+            self.openList(field.val(), self.settings.source);
             return;
           }
 
@@ -232,7 +237,7 @@
               return;
             }
 
-            var sourceType = typeof settings.source,
+            var sourceType = typeof self.settings.source,
               done = function(searchTerm, response) {
                 self.element.removeClass('is-busy');  //TODO: Need style for this
                 self.element.trigger('requestend', [searchTerm, response]);
@@ -244,17 +249,17 @@
 
             if (sourceType === 'function') {
               // Call the 'source' setting as a function with the done callback.
-              settings.source(buffer, done);
+              self.settings.source(buffer, done);
             } else if (sourceType === 'object') {
               // Use the 'source' setting as pre-existing data.
               // Sanitize accordingly.
-              var sourceData = isArray(settings.source) ? settings.source : [settings.source];
+              var sourceData = isArray(self.settings.source) ? self.settings.source : [self.settings.source];
               done(buffer, sourceData);
-            } else if (!settings.source) {
+            } else if (!self.settings.source) {
               return;
             } else {
               // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
-              var sourceURL = settings.source.toString(),
+              var sourceURL = self.settings.source.toString(),
                 request = $.getJSON(sourceURL + buffer);
 
               request.done(function(data) {
@@ -282,6 +287,11 @@
         });
       },
 
+      updated: function() {
+        this.teardown().init();
+        return this;
+      },
+
       enable: function() {
         this.element.prop('disabled', false);
       },
@@ -290,13 +300,18 @@
         this.element.prop('disabled', true);
       },
 
-      destroy: function() {
+      teardown: function(){
         var popup = this.element.data('popupmenu');
         if (popup) {
           popup.destroy();
         }
 
-        this.element.off('keypress.autocomplete focus.autocomplete requestend.autocomplete');
+        this.element.off('keypress.autocomplete focus.autocomplete requestend.autocomplete updated.autocomplete');
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -308,6 +323,7 @@
         instance = $.data(this, pluginName, new Autocomplete(this, settings));
       } else {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       }
     });
   };
