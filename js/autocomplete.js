@@ -31,7 +31,7 @@
 
     // Plugin Constructor
     function Autocomplete(element) {
-      this.settings = settings;
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
       console.log(this.settings);
@@ -54,8 +54,9 @@
 
       init: function() {
         // data-autocomplete can be a url, 'source' or an array
-        if (this.element.attr('data-autocomplete') !== 'source') {
-          this.settings.source = this.element.attr('data-autocomplete');
+        var data = this.element.attr('data-autocomplete');
+        if (data && data !== 'source') {
+          this.settings.source = data;
         }
 
         this.addMarkup();
@@ -201,9 +202,13 @@
 
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
-        var buffer = '', timer, self = this;
+        var buffer = '',
+          timer,
+          self = this;
 
-        this.element.on('keydown.autocomplete', function(e) {
+        this.element.on('updated.autocomplete', function() {
+          self.updated();
+        }).on('keydown.autocomplete', function(e) {
           if (e.keyCode === 8) {
             self.element.trigger('keypress');
           }
@@ -283,6 +288,11 @@
         });
       },
 
+      updated: function() {
+        this.teardown().init();
+        return this;
+      },
+
       enable: function() {
         this.element.prop('disabled', false);
       },
@@ -291,13 +301,18 @@
         this.element.prop('disabled', true);
       },
 
-      destroy: function() {
+      teardown: function(){
         var popup = this.element.data('popupmenu');
         if (popup) {
           popup.destroy();
         }
 
-        this.element.off('keypress.autocomplete focus.autocomplete requestend.autocomplete');
+        this.element.off('keypress.autocomplete focus.autocomplete requestend.autocomplete updated.autocomplete');
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -309,6 +324,7 @@
         instance = $.data(this, pluginName, new Autocomplete(this, settings));
       } else {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       }
     });
   };
