@@ -65,7 +65,7 @@
 
         // Add and invoke More Button, if it doesn't exist
         this.more = this.element.find('.btn-actions');
-        if (!this.more.length) {
+        if (this.more.length === 0) {
           var moreContainer = this.element.find('.more');
           if (!moreContainer.length) {
             moreContainer = $('<div class="more"></div>').appendTo(this.element);

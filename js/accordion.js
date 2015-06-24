@@ -42,6 +42,7 @@
         this
           .setup()
           .build()
+          .initSelected()
           .handleEvents();
       },
 
@@ -62,34 +63,35 @@
         });
 
         var active = self.element.find('.is-selected');
+
         if (active.length === 0) {
           active = this.anchors.filter(':not(:disabled):not(:hidden)').first();
           this.setActiveAnchor(active);
-        } else {
-
-            var pane = active,
-            icon = pane.children('.icon.plus-minus');
-
-            if (!icon || icon.length ===0) {
-              return self;
-            }
-
-            pane.css({'height': 'auto', 'display': 'block'});
-            icon.addClass('active');
-
-            var header = pane.parent();
-
-            setTimeout(function () {
-              header.attr('aria-expanded', 'true').addClass('is-expanded')
-                .css({'height': 'auto', 'display': 'block'});
-
-              var parent = header.parent().parent();
-              parent.find('.icon.plus-minus').first().addClass('active');
-              parent.attr('aria-expanded', 'true').addClass('is-expanded');
-
-            }, 0);
         }
 
+        return this;
+      },
+
+      initSelected: function () {
+        var active = this.element.find('.is-selected'),
+          icons = active.parents('.accordion-header').children('a, button').find('.icon.plus-minus');
+
+        icons.addClass('active no-transition no-animate');
+
+        active.addClass('is-expanded').children('.accordion-pane').css({'height': 'auto', 'display': 'block'});
+        active.find('a').first().attr('aria-selected', true);
+        var buttonPluses = active.children('button.plus-minus').find('.icon.plus-minus').addClass('active no-transition no-animate');
+
+        active.parents('.accordion-header').addClass('is-expanded ')
+          .css({'height': 'auto', 'display': 'block'})
+          .attr('aria-expanded', 'true');
+
+        active.parents('.accordion-pane').css({'height': 'auto', 'display': 'block'});
+
+        setTimeout(function () {
+          icons.removeClass('no-transition no-animate');
+          buttonPluses.removeClass('no-transition no-animate');
+        } ,1);
         return this;
       },
 
@@ -125,12 +127,28 @@
             });
             self.openHeader(header);
           } else {
-            pane.one('animateClosedComplete', function() {
-              $(this).removeClass('no-transition');
-            });
-            self.closeHeader(header);
+            if (!self.selectedSet) {
+              pane.one('animateClosedComplete', function() {
+                $(this).removeClass('no-transition');
+              });
+              self.closeHeader(header);
+            }
           }
+
+          //Add Plus Minus Icons
+          header.find('.accordion-pane').not(':first').prev('a').each(function () {
+            var subhead = $(this),
+              plusminus = subhead.find('.icon.plus-minus');
+
+            if (plusminus.length === 0) {
+              subhead.prepend('<span class="icon plus-minus" aria-hidden="true" focusable="false"></span>');
+            } else {
+              plusminus.removeClass('active');
+            }
+          });
+
         });
+
 
         return this;
       },
@@ -216,13 +234,6 @@
           e.stopPropagation();
           return false;
         }
-
-        /*
-        if (link.prev().is('.plus-minus')) {
-          this.setActiveAnchor(link);
-          return false;
-        }
-        */
 
         if (link.is('button.plus-minus')) {
           link = link.next('a');
@@ -416,7 +427,7 @@
 
           header.find('.accordion-pane').not(':first').prev('a').each(function () {
             var subhead = $(this),
-              plusminus = subhead.find('.icon.plus-minus');
+              plusminus = subhead.find('.icon.plus-minus').removeClass('no-transition no-animate');
 
             if (plusminus.length === 0) {
               subhead.prepend('<span class="icon plus-minus" aria-hidden="true" focusable="false"></span>');

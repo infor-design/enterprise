@@ -28,7 +28,7 @@
           position: 'top right',  //top left, bottom left, bottom right (center??)
           audibleOnly: false,
           progressBar: true,
-          timeout: 60000
+          timeout: 6000
         },
         settings = $.extend({}, defaults, options);
 

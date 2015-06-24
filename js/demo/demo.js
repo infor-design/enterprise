@@ -233,7 +233,7 @@ $(function($) {
       ]
     });
 
-    $('#manual-contextual-panel').on('click', function() {
+    $('#manual-contextual-panel').off('click').on('click', function() {
 
       $('body').contextualactionpanel({
         title: 'Expenses: $50,000.00',

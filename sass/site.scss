@@ -81,7 +81,7 @@ body {
   }
 
   .row {
-    padding-top: 20px;
+    padding-top: 50px;
     position: relative;
     vertical-align: top;
   }
@@ -649,6 +649,7 @@ body {
   }
 }
 
+
 .editorial {
 
   .main {
@@ -877,6 +878,10 @@ body {
 
 }
 
+.articles.main {
+  max-width: 1080px !important;
+}
+
 .no-margin {
   margin-top: 0 !important;
 }
@@ -952,6 +957,12 @@ code.snippet {
 
 .alt-bgrnd {
   background-color: $body-bg-color !important;
+}
+
+.fix-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 section.light-bgrnd,
