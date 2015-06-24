@@ -253,7 +253,7 @@ $listview-selected-text-color: $inverse-color;
   }
 
   &.is-visible {
-    height: 52px;
+    height: 52px !important;
 
     + .listview {
       height: calc(100% - 50px);
