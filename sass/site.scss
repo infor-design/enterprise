@@ -160,7 +160,14 @@ body {
 .site-hero.home .row {
   height: 310px;
   line-height: 310px;
+
+  h1 {
+    left: 50px;
+    position: relative;
+    top: -20px;
+  }
 }
+
 
 .site-hero.component .row {
   max-width: $site-maxwidth !important;
@@ -346,6 +353,7 @@ body {
   .title-wrapper {
     display: inline-block;
     height: 75px;
+    pointer-events: none;
     position: relative;
     width: 150px;
   }
@@ -355,6 +363,7 @@ body {
     height: 50px;
     margin: 12px 5px 12px 15px;
     width: 50px;
+    pointer-events: none;
     position: relative;
     left: -1px;
     top: -13px;
@@ -400,18 +409,16 @@ body {
     position: relative;
     top: 10px;
   }
+
 }
 
 @include respond-to(tablet) {
 
-  .card-list .one-third {
-    margin-left: 40px;
-    width: calc(50% - 40px) !important;
-  }
-
   .articles-columns {
     max-width: 670px !important;
   }
+
+
 }
 
 @include respond-to(tabletdown) {
@@ -500,7 +507,15 @@ body {
   }
 
   .site-component.card {
-    width: calc(100% - 80px);
+    width: calc(100% - 40px);
+
+    .title-wrapper {
+      width: 320px;
+
+      .title {
+        width: 320px;
+      }
+    }
   }
 
   .articles-columns {
@@ -603,7 +618,6 @@ body {
   .main {
     background-color: $body-bg-color !important;
     padding-bottom: 30px;
-    margin-left: 0 !important;
     width: 100% !important;
 
     h1 {
@@ -878,10 +892,6 @@ body {
 
 }
 
-.articles.main {
-  max-width: 1080px !important;
-}
-
 .no-margin {
   margin-top: 0 !important;
 }
@@ -916,6 +926,8 @@ code.snippet {
   }
 
   .kitchen-sink {
+    padding: 20px 0 0 0 !important;
+
     a {
       display: block !important;
       left: 0 !important;
@@ -1026,15 +1038,9 @@ div.light-bgrnd {
   }
 
   .card-list {
-    -moz-column-gap: 20px;
-    -webkit-column-gap: 20px;
-    column-gap: 20px;
-
-    -moz-column-width: 280px;
-    -webkit-column-width: 280px;
-    column-width: 280px;
-
+    display: inline-block;
     margin: 10px auto 20px;
+    text-align: left;
   }
 
 }
@@ -1421,6 +1427,9 @@ div.light-bgrnd {
     max-width: 100% !important;
   }
 
+  .card-list {
+    max-width: 645px !important
+  }
 }
 
 // Syntax High Lighting
