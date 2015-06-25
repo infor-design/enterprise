@@ -158,10 +158,6 @@
           thresholdReached = false,
           touchTimeout;
 
-        /*this.element.onTouchClick('accordion', '.plus-minus').on('click.accordion', '.plus-minus', function(e) {
-          self.handleClick(e);
-        });*/
-
         // Touch Interaction will activate the accordion header only if touch scrolling doesn't take place
         // beyond certain distance and time thresholds.  The touchstart event is cancelled
         this.anchors.add(this.anchors.prev('.plus-minus')).on('touchstart.accordion', function(e) {
@@ -363,19 +359,35 @@
 
         var isEvent = e !== undefined && e.type !== undefined,
           target = isEvent ? $(e.target) : e,
-          href = target.attr('href');
-
-        if (isEvent && (href === '' || href === '#')) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-        }
+          href = target.attr('href'),
+          isAnchor = target.is('a'),
+          isRealAnchor = href && (href !== '' && href !== '#'),
+          isExpander = target.is('.plus-minus'),
+          hasExpander = target.parent().find('.plus-minus');
 
         if ((target).hasClass('is-disabled')) {
+          e.preventDefault();
           return false;
         }
 
-        this.element.trigger('selected', [target]);
-        this.toggleHeader(target.parent());
+        if (isAnchor && !isRealAnchor) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          if (hasExpander) {
+            this.toggleHeader(target.parent());
+          }
+          return false;
+        }
+
+        if (isExpander) {
+          this.toggleHeader(target.parent());
+        }
+
+        if (isRealAnchor) {
+          this.element.trigger('selected', [target]);
+        }
+
+        return true;
       },
 
       setActiveAnchor: function(anchor) {

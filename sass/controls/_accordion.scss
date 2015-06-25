@@ -83,6 +83,8 @@ $accordion-focused-text-color: #ffffff;
     padding: 0;
     position: absolute;
     top: 2px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
     width: 32px;
 
     + a .title {
