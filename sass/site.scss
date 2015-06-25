@@ -427,6 +427,12 @@ body {
     width: 100%;
   }
 
+  .site-hero.home {
+    h1 {
+      @include font-size(40);
+    }
+  }
+
   .site-hero.components {
     h2 {
       margin-bottom: -10px;
@@ -488,22 +494,13 @@ body {
     }
   }
 
-  .home.menubar {
-    height: 300px;
-
-    .left,
-    .right {
-      display: block;
-      width: 100%;
-    }
-
-    .left {
-      border-bottom: 1px solid #d8d8d8;
-    }
+  .component.site-hero h1 {
+    margin: 10px 0 0;
   }
 
-  .site-hero h1 {
-    @include font-size(44);
+  .site-hero.component h1 {
+    margin: 10px 0px 0 !important;
+    @include font-size(40);
   }
 
   .site-component.card {
@@ -925,6 +922,20 @@ code.snippet {
     }
   }
 
+  .home.menubar {
+    height: 300px;
+
+    .left,
+    .right {
+      display: block;
+      width: 100%;
+    }
+
+    .left {
+      border-bottom: 1px solid #d8d8d8;
+    }
+  }
+
   .kitchen-sink {
     padding: 20px 0 0 0 !important;
 
@@ -954,6 +965,7 @@ code.snippet {
     display: block;
     width: 100% !important;
   }
+
 }
 
 .sidebar-nav a {

@@ -13,6 +13,7 @@
 
     &.toolbar .title {
       margin: 5px 1em 4px;
+      max-width: 100%;
       padding: 2px 0;
 
       > * {
@@ -166,3 +167,12 @@
     @include font-size(16);
   }
 }
+
+
+@include respond-to(large) {
+  .slider-wrapper {
+    margin: 25px 3% 50px;
+    width: 94%;
+  }
+}
+

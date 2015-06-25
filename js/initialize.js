@@ -232,6 +232,7 @@
 
         elem.find('.modal-search .close').on('click', function () {
           $('.modal-search.modal').removeClass('is-visible');
+          $('.modal-search.modal').hide();
           $('.overlay.modal-search').remove();
         });
 

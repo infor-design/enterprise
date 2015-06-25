@@ -220,7 +220,7 @@ $listview-selected-text-color: $inverse-color;
 
   &.is-muliselect li {
     position: relative;
-    text-indent: 30px;
+    text-indent: 25px;
 
     &.is-selected:before {
       @include checkbox-checked-before-style;
