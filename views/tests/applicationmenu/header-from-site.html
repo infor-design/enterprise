@@ -1,0 +1,36 @@
+<header class="header is-personalizable" role="banner">
+  <a href="#maincontent" class="skip-link">skip to main content</a>
+
+  <div class="toolbar">
+    <div class="title">
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Show navigation</span>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+
+      {{> tests/applicationmenu/applicationmenu-from-site}}
+
+      <h1>{{title}}
+      {{#subtitle}}
+      <span class="seperator">|</span>
+      {{/subtitle}}
+      {{subtitle}}</h1>
+    </div>
+
+    <div class="buttonset">
+      <button class="btn-icon header-search" type="button">
+        <span class="audible">Search</span>
+        <svg class="icon" focusable="false" aria-hidden="true">
+          <use xlink:href="#icon-search"></use>
+        </svg>
+      </button>
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+
+</header>

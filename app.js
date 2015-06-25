@@ -76,6 +76,16 @@ app.configure(function() {
     res.render('tests/' + end, amdOptions);
   });
 
+  app.get('/tests/applicationmenu/*', function(req, res) {
+    var appMenuOpts = {
+      title: 'SoHo XI',
+      subtitle: 'Tests',
+      layout: 'tests/applicationmenu/layout'
+    };
+    var end = req.url.replace('/tests/applicationmenu/','');
+    res.render('tests/applicationmenu/' + end, appMenuOpts);
+  });
+
   //Tests Index Page and controls sub pages
   app.get('/tests/*', function(req, res) {
     var testOptions = {
