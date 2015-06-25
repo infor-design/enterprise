@@ -168,6 +168,26 @@
   }
 }
 
+@include respond-to(phone) {
+  input.search {
+    &::-webkit-input-placeholder {
+      font-size: 3.8rem !important;
+      line-height: 72px;
+    }
+
+    &:-moz-placeholder {
+      font-size: 3.8rem !important;
+    }
+
+    &::-moz-placeholder {
+      font-size: 3.8rem !important;
+    }
+
+    &:-ms-input-placeholder {
+      font-size: 3.8rem !important;
+    }
+  }
+}
 
 @include respond-to(large) {
   .slider-wrapper {
