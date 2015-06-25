@@ -14,6 +14,10 @@ window.Formatters = {
   Date: function(row, cell, value, col) {
     var formatted = ((value === null || value === undefined) ? '' : value);
 
+    if (!value) {
+       return '';
+    }
+
     if (typeof Locale !== undefined && true) {
        formatted = Locale.formatDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
     }

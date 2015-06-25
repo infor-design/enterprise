@@ -107,6 +107,15 @@
         attribs = {date: 'short'};  //can be date, time, datetime or pattern
       }
 
+      if (!value) {
+        return undefined;
+      }
+
+      //Convert if a string..
+      if (!(value instanceof Date)) {
+        value = new Date(value);
+      }
+
       var data = this.currentLocale.data,
         pattern, ret = '', cal = (data.calendars ? data.calendars[0] : null);
 

@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Stacked Bar - Vertical</h1>
+    <span class="label">Charts</span>
+    <hr>
+  </div>
+</div>
+
+<style>
+  .chart-bar-stacked {
+    background-color: blue;
+    padding: 20px;
+    height: 80px;
+    width: 100%;
+  }
+</style>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Single Stacked Bar Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-stacked-example" class="chart-container">
+            <div class="chart-bar-stacked">
+              <div class="bar-1">
+              </div>
+              <div class="bar-2">
+              </div>
+              <div class="bar-3">
+              </div>
+              <div class="bar-4">
+              </div>
+              <div class="bar-5">
+              </div>
+              <div class="bar-6">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  var dataset = [{
+      data: [{
+          name: '2008',
+          value: 123
+      }, {
+          name: '2009',
+          value: 234
+      }, {
+          name: '2010',
+          value: 345
+      }],
+      name: 'Spending To Date'
+  }];
+
+  $('#bar-stacked-example').chart({type: 'bar-stacked', dataset: dataset});
+</script>
