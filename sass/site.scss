@@ -21,10 +21,29 @@ body {
   h1 {
     line-height: 40px;
   }
-}
 
-.header.is-sticky + .scrollable-container {
-  padding-top: 0 !important;
+  &.is-sticky + .scrollable-container {
+    padding-top: 0 !important;
+  }
+
+  .search-detail {
+    background-color: $white;
+    border-bottom: 1px solid $graphite02;
+    padding: 0 20px;
+
+    h2 {
+      display: inline-block;
+      margin: 14px 0 13px;
+
+      + .tag {
+        margin-left: 10px;
+      }
+    }
+
+    .tag + .tag {
+      margin-left: 10px;
+    }
+  }
 }
 
 .site-hero {

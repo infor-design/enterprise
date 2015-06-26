@@ -75,7 +75,7 @@
             self.close();
           });
         }).on('updated.busyindicator', function() {
-          self.setup();
+          self.updated();
         });
 
         return this;
@@ -278,6 +278,10 @@
         setInterval(animate, 5);
       },
 
+      updated: function() {
+        return this.setup();
+      },
+
       // Teardown
       destroy: function() {
         this.element.off('start.busyindicator complete.busyindicator afterStart.busyindicator afterComplete.busyindicator updated.busyindicator');
@@ -290,6 +294,7 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new BusyIndicator(this, settings));
       }
