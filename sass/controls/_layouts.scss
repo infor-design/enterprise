@@ -281,6 +281,16 @@ body.no-scroll {
       margin-top: 108px;
     }
   }
+
+  &.has-search-results {
+    height: 120px;
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 120px);
+      margin-top: 120px;
+    }
+  }
 }
 
 .masthead {
