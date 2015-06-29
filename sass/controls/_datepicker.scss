@@ -90,7 +90,8 @@
     }
 
     //Today
-    &.is-today {
+    &.is-today,
+    &.is-today:focus {
       border-color: $datepicker-today-color;
       color: $datepicker-today-color;
       font-family: $font-regular;
@@ -98,11 +99,24 @@
       span {
         color: $datepicker-today-color;
       }
+      
+      &.is-selected,
+      &.is-selected span {
+        color: $datepicker-selected-color;
+      }
     }
 
     //Selected
     &:hover {
       background-color: $datepicker-hover-bg-color;
+    }
+
+    &.is-disabled,
+    &.is-disabled:active {
+      @include unselectable;
+      background-color: $datepicker-hover-bg-color;
+      // color: $datepicker-alt-month-color;
+      cursor: default;
     }
 
     &.is-selected,
@@ -194,22 +208,34 @@
 //Footer Buttons
 .calendar-footer {
   border-top: 1px solid $popover-separator-color;
-  height: 40px;
-  padding-top: 14px;
+  height: 50px;
+  margin-top: 25px;
 
-  .cancel {
-    color: $font-color;
+  a {
+    text-decoration: none;
+    color: $modal-btn-color;
+    @include css3(transition, color .3s ease 0s);
+    @include font-size(12);
+    border: 1px solid transparent;
+    border-left: 1px solid $popover-separator-color;
+    border-radius: 0;
+
     float: left;
-    line-height: inherit;
-    margin-left: 20px;
+    font-weight: bold;
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    text-align: center;
     text-transform: uppercase;
-  }
+    width: 50%;
+    
+    &:hover {
+      color: $modal-btn-hover-color;
+    }
 
-  .is-today {
-    float: right;
-    line-height: inherit;
-    margin-right: 20px;
-    text-transform: uppercase;
+    &:nth-child(1) {
+      border-left: 1px solid transparent;
+    }
   }
 }
 
