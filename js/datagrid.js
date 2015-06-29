@@ -102,6 +102,7 @@ window.Formatters = {
   Expander: function (row, cell, value) {
     var button = '<button class="btn-icon datagrid-expand-btn" tabindex="-1">'+
       '<span class="icon plus-minus"></span>' +
+      '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
       '</button>' + '<span> ' + value + '</span>';
 
     return button;

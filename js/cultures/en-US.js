@@ -84,6 +84,7 @@
       'Error': {id: 'Error', value: 'Error', comment: 'Title, Spoken Text describing fact an error has occured'},
       'EmailValidation': {id: 'EmailValidation', value: 'Email address not valid', comment: 'This the rule for email validation'},
       'Emerald': {id: 'Emerald', value: 'Emerald', comment: 'Color in our color pallette'},
+      'ExpandCollapse': {id: 'ExpandCollapse', value: 'Expand / Collapse', comment: 'Text to toggle a button in a container.'},
       'FileUpload': {id: 'FileUpload', value: 'File Upload Press Enter to Browse for a file', comment: 'Screen Reader instructions'},
       'Graphite': {id: 'Graphite', value: 'Graphite', comment: 'Color in our color pallette'},
       'Hours': {id: 'Hours', value: 'Hours', comment: 'the hour portion of a time'},
