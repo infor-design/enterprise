@@ -516,7 +516,7 @@
 
       //date: Validate date, datetime (24hr or 12hr am/pm)
       date: {
-        check: function(value) {
+        check: function (value) {
           this.message = Locale.translate('InvalidDate');
           var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime : Locale.calendar().dateFormat.short,
             parsedDate = Locale.parseDate(value, dateFormat);
@@ -524,6 +524,55 @@
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },
         message: 'Invalid Date'
+      },
+
+      //datepicker: Validate date, disable dates
+      datepicker: {
+        check: function (value, field) {
+          this.message = Locale.translate('UnavailableDate');
+          var check = true;
+
+          if(value !== '' && self.rules.date.check(value)) { //if valid date
+            var d, i, l, min, max,
+              d2 = new Date(value),
+              options = field.attr('data-option');
+
+            if (options && options.indexOf('{') > -1) {
+              options = JSON.parse(options.replace(/'/g, '"'));
+
+              min = (new Date(options.disable.minDate)).setHours(0,0,0,0);
+              max = (new Date(options.disable.maxDate)).setHours(0,0,0,0);
+
+              //dayOfWeek
+              if(options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
+                check = false;
+              }
+
+              d2 = d2.setHours(0,0,0,0);
+
+              //min and max
+              if((d2 <= min) || (d2 >= max)) {
+                check = false;
+              }
+
+              //dates
+              if (options.disable.dates.length && typeof options.disable.dates === 'string') {
+                options.disable.dates = [options.disable.dates];
+              }
+              for (i=0, l=options.disable.dates.length; i<l; i++) {
+                d = new Date(options.disable.dates[i]);
+                if(d2 === d.setHours(0,0,0,0)) {
+                  check = false;
+                  break;
+                }
+              }
+            }
+            check = ((check && !options.disable.isEnable) || (!check && options.disable.isEnable)) ? true : false;
+          }
+
+          return check;
+        },
+        message: 'Unavailable Date'
       },
 
       email: {

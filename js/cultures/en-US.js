@@ -139,6 +139,7 @@
       'Toolbar': {id: 'Toolbar', value: 'Toolbar', comment: 'describing the toolbar component'},
       'Total': {id: 'Total', value: 'Total', comment: 'mathematic total of a calculation'},
       'Turquoise': {id: 'Turquoise', value: 'Turquoise', comment: 'Color in our color pallette'},
+      'UnavailableDate': {id: 'UnavailableDate', value: 'Unavailable Date', comment: 'Unavailable Date Text'},
       'Underline': {id: 'Underline', value: 'Underline', comment: 'Make text Underlined'},
       'UnorderedList': {id: 'UnorderedList', value: 'Unordered List', comment: 'Insert an Unordered list in the editor'},
       'Unsupported': {id: 'Unsupported', value: 'This content is not available because it uses features not supported in your current browser version.', comment: 'Suggesting browser upgrade for missing features.'},
