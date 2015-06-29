@@ -51,4 +51,13 @@ label.fileupload {
       }
     }
   }
+
+
+}
+
+.field-fileupload {
+  input[type="text"] {
+    padding-right: 40px;
+    text-overflow: ellipsis;
+  }
 }
