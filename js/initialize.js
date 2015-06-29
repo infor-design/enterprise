@@ -62,21 +62,14 @@
           if ($.fn[plugin]) {
             elem.find(selector).each(function () {
               var thisElem = $(this),
-                opts = thisElem.attr('data-options');
+                options = thisElem.attr('data-options');
 
-              if (opts) {
-                var properties = opts.split(', '),
-                obj = {};
-
-                properties.forEach(function(property) {
-                  var tup = property.split(':');
-                  obj[tup[0].replace('{','').replace('}','')] = tup[1].trim().replace('{','').replace('}','');
-                });
-                thisElem[plugin](obj);
-              } else {
-                thisElem[plugin](opts);
-              }
-
+              if (options && options.length) {
+                if (options.indexOf('{') > -1) {
+                  options = JSON.parse(options.replace(/'/g, '"'));
+                }
+              }            
+              thisElem[plugin](options);
             });
           }
         }
