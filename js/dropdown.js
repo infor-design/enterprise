@@ -536,6 +536,9 @@
             return false;
           }
           case 38: {  //up
+            if (e.shiftKey) {
+              return;
+            }
             this.searchKeyMode = false;
 
             if (selectedIndex > 0) {
@@ -550,6 +553,9 @@
             return false;
           }
           case 40: {  //down
+            if (e.shiftKey) {
+              return;
+            }
             this.searchKeyMode = false;
 
             if (selectedIndex < options.length - 1) {

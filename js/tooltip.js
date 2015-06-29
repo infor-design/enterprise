@@ -57,7 +57,7 @@
 
         this.descriptionId = $('.tooltip-description').length + 1;
         this.description = this.element.next('.tooltip-description');
-        if (!this.description.length) {
+        if (!this.description.length && settings.isError) {
           this.description = $('<span id="tooltip-description-'+ this.descriptionId +'" class="tooltip-description audible"></span>').insertAfter(this.element);
         }
 

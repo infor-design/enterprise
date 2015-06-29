@@ -82,7 +82,7 @@ describe('Checkbox [selenium]', function(){
 
   // Just does a basic check to see if the tooltip has been invoked by checking attributes.
   // WebdriverIO can't currently check for hover events.
-  it('functions properly when used with a tooltip', function(done) {
+  it.skip('functions properly when used with a tooltip', function(done) {
     runner.client
       .getAttribute('#checkbox-has-tooltip + label', 'aria-describedby', function(err, result) {
         globals.noError(err);

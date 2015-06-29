@@ -367,6 +367,7 @@ td .btn-actions {
 
 //Grid Checkboxes
 .datagrid-checkbox {
+  cursor: pointer;
   text-indent: 14px;
 
   &:before {
@@ -383,7 +384,7 @@ td .btn-actions {
     @include checkbox-checked-after-style;
     @include css3(transform-origin, -11px top 0);
     @include checkbox-animation;
-    left: unset;
+    left: 31px;
     margin-left: -5px;
     margin-top: -5px;
   }

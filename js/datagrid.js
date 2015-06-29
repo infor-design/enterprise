@@ -102,6 +102,7 @@ window.Formatters = {
   Expander: function (row, cell, value) {
     var button = '<button class="btn-icon datagrid-expand-btn" tabindex="-1">'+
       '<span class="icon plus-minus"></span>' +
+      '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
       '</button>' + '<span> ' + value + '</span>';
 
     return button;
@@ -652,9 +653,9 @@ $.fn.datagrid = function(options) {
         if (settings.toolbar.rowHeight) {
           menu.append('<li class="separator"></li>' +
             '<li class="heading">' + Locale.translate('RowHeight') + '</li>' +
-            '<li><a href="#row-short">' + Locale.translate('Short') + '</a></li>' +
-            '<li class="is-checked"><a href="#row-medium">' + Locale.translate('Medium') + '</a></li>' +
-            '<li><a href="#row-tall">' + Locale.translate('Tall') + '</a></li>');
+            '<li><a data-option="row-short">' + Locale.translate('Short') + '</a></li>' +
+            '<li class="is-checked"><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
+            '<li><a data-option="row-tall">' + Locale.translate('Tall') + '</a></li>');
         }
 
         if (settings.toolbar.actions) {
@@ -665,7 +666,7 @@ $.fn.datagrid = function(options) {
       }
 
       toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {
-        var action = args.attr('href').substr(1);
+        var action = args.attr('data-option');
         if (action === 'row-short' || action === 'row-medium' || action === 'row-tall') {
           self.rowHeight(action.substr(4));
         }

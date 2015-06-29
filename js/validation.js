@@ -502,9 +502,9 @@
           });
 
           if (allFilled) {
-            field.closest('.modal').find('.btn-modal-primary').removeAttr('disabled');
+            field.closest('.modal').find('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
           } else {
-            field.closest('.modal').find('.btn-modal-primary').attr('disabled', 'disabled');
+            field.closest('.modal').find('.btn-modal-primary').not('.no-validation').attr('disabled', 'disabled');
           }
 
           this.message = Locale.translate('Required');

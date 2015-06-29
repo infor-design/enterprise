@@ -319,7 +319,7 @@
         this.footer = $('<div class="calendar-footer"> <a href="#" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</a> <a href="#" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</a> </div>');
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
-        this.trigger.popover({content: this.calendar, trigger: 'immediate',
+        this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
             placement: 'offset', offset: {top: 20, left: 147}, width: '200',
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
