@@ -526,8 +526,8 @@
         message: 'Invalid Date'
       },
 
-      //datepicker: Validate date, disable dates
-      datepicker: {
+      //Validate date, disable dates
+      availableDate: {
         check: function (value, field) {
           this.message = Locale.translate('UnavailableDate');
           var check = true;
@@ -535,10 +535,9 @@
           if(value !== '' && self.rules.date.check(value)) { //if valid date
             var d, i, l, min, max,
               d2 = new Date(value),
-              options = field.attr('data-option');
+              options = field.data('datepicker').settings;
 
-            if (options && options.indexOf('{') > -1) {
-              options = JSON.parse(options.replace(/'/g, '"'));
+            if (options) {
 
               min = (new Date(options.disable.minDate)).setHours(0,0,0,0);
               max = (new Date(options.disable.maxDate)).setHours(0,0,0,0);

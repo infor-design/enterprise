@@ -25,9 +25,9 @@
         defaults = {
           dateFormat: 'M/d/yyyy',
 
-          /*  disable: 
-          **    dates: 'M/d/yyyy' or 
-          **      ['M/d/yyyy'] or 
+          /*  disable:
+          **    dates: 'M/d/yyyy' or
+          **      ['M/d/yyyy'] or
           **      ['M/d/yyyy', new Date('M/d/yyyy')] or
           **      ['M/d/yyyy', new Date('M/d/yyyy'), new Date(yyyy,(M-0),d)]
           **    minDate: 'M/d/yyyy'
@@ -48,6 +48,7 @@
     // Plugin Constructor
     function Plugin(element) {
       this.element = $(element);
+      this.settings = settings;
       this.initOptions();
       this.init();
     }
@@ -68,7 +69,7 @@
           if (options.indexOf('{') > -1) {
             options = JSON.parse(options.replace(/'/g, '"'));
           }
-          $.extend(true, settings, options);
+          $.extend(true, this.settings, options);
         }
       },
 
@@ -128,7 +129,7 @@
               if(month === 0) {
                 month = 11;
                 year--;
-              } 
+              }
               else {
                 month--;
               }
@@ -137,7 +138,7 @@
               if(month === 11) {
                 month = 0;
                 year++;
-              } 
+              }
               else {
                 month++;
               }
@@ -266,9 +267,9 @@
         var dateFormat = Locale.calendar().dateFormat,
             sep = dateFormat.seperator;
 
-        settings.dateFormat = (typeof Locale === 'object' ?
+        this.settings.dateFormat = (typeof Locale === 'object' ?
                               dateFormat.short :
-                              settings.dateFormat);
+                              this.settings.dateFormat);
 
         if (this.element.data('mask')) {
           this.element.data('mask').destroy();
@@ -279,13 +280,13 @@
         this.element
           .attr({
             'data-mask': mask,
-            'data-validate': 'date datepicker',
-            'data-validation-events': '{"date": "blur change", "datepicker": "blur change keypress"}',
+            'data-validate': 'date availableDate',
+            'data-validation-events': '{"date": "blur change", "availableDate": "blur change"}',
             'data-mask-mode': 'date'
           }).mask().validate();
 
         if (this.element.attr('placeholder') !== undefined) {
-          this.element.attr('placeholder', settings.dateFormat);
+          this.element.attr('placeholder', this.settings.dateFormat);
         }
       },
 
@@ -366,7 +367,7 @@
               if(month === 0) {
                 month = 11;
                 year--;
-              } 
+              }
               else {
                 month--;
               }
@@ -375,7 +376,7 @@
               if(month === 11) {
                 month = 0;
                 year++;
-              } 
+              }
               else {
                 month++;
               }
@@ -426,12 +427,13 @@
       // Check date in obj, return: true|false
       checkDates: function (year, month, date) {
         var d, i, l,
+          self = this,
           d2 = new Date(year, month, date),
-          min = (new Date(settings.disable.minDate)).setHours(0,0,0,0),
-          max = (new Date(settings.disable.maxDate)).setHours(0,0,0,0);
+          min = (new Date(this.settings.disable.minDate)).setHours(0,0,0,0),
+          max = (new Date(this.settings.disable.maxDate)).setHours(0,0,0,0);
 
         //dayOfWeek
-        if(settings.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
+        if(this.settings.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
           return true;
         }
 
@@ -443,15 +445,17 @@
         }
 
         //dates
-        if (settings.disable.dates.length && typeof settings.disable.dates === 'string') {
-          settings.disable.dates = [settings.disable.dates];
+        if (this.settings.disable.dates.length && typeof this.settings.disable.dates === 'string') {
+          this.settings.disable.dates = [this.settings.disable.dates];
         }
-        for (i=0, l=settings.disable.dates.length; i<l; i++) {
-          d = new Date(settings.disable.dates[i]);
+
+        for (i=0, l=this.settings.disable.dates.length; i<l; i++) {
+          d = new Date(self.settings.disable.dates[i]);
           if(d2 === d.setHours(0,0,0,0)) {
             return true;
           }
         }
+
         return false;
       },
 
@@ -460,10 +464,10 @@
         var checkDates = this.checkDates(year, month, date);
         eliment.removeClass('is-disabled').removeAttr('aria-disabled');
 
-        if ((checkDates && !settings.disable.isEnable) || (!checkDates && settings.disable.isEnable)) {
+        if ((checkDates && !this.settings.disable.isEnable) || (!checkDates && this.settings.disable.isEnable)) {
           eliment
             .addClass('is-disabled').attr('aria-disabled','true')
-            .removeClass('is-selected').removeAttr('aria-selected');          
+            .removeClass('is-selected').removeAttr('aria-selected');
         }
       },
 
