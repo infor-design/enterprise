@@ -243,6 +243,8 @@ $(function($) {
           {
             type: 'input',
             text: 'Keyword',
+            id: 'filter',
+            name: 'filter',
             cssClass: 'searchfield'
           }, {
             text: 'Cancel',

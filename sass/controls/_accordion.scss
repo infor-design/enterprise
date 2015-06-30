@@ -265,7 +265,7 @@ $accordion-focused-text-color: #ffffff;
     .badge,
     .tag {
       background-color: $amber08;
-      color: #ffffff;
+      color: $font-color-extrahighcontrast;
     }
 
     > .accordion-header {

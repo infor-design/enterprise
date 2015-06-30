@@ -50,8 +50,7 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
 
-        this.element.on('touchstart.button mousedown.button', function (e) {
-
+        this.element.on('touchstart.button click.button', function (e) {
           var element = $(this);
           element.addClass('hide-focus');
 
@@ -85,7 +84,6 @@
           setTimeout(function(){
             ripple.remove();
           }, 1000);
-
         }).on('focusout.button', function () {
           var self = $(this);
 
