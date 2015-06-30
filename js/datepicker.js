@@ -49,7 +49,6 @@
     function Plugin(element) {
       this.element = $(element);
       this.settings = settings;
-      this.initOptions();
       this.init();
     }
 
@@ -59,18 +58,6 @@
       init: function() {
         this.build();
         this.handleEvents();
-      },
-
-      // Update options from markup use [data-option="{}"]
-      initOptions: function() {
-        var options = this.element.attr('data-option');
-
-        if (options && options.length) {
-          if (options.indexOf('{') > -1) {
-            options = JSON.parse(options.replace(/'/g, '"'));
-          }
-          $.extend(true, this.settings, options);
-        }
       },
 
       //Add any markup
