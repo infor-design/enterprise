@@ -139,7 +139,7 @@
               isAriaSelected = '';
               isAriaDisabled = '';
             }
-            $('<li '+ thisClass + isAriaSelected +'><a href="#page'+ i +'" '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
+            $('<li '+ thisClass + isAriaSelected +'><a '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
           }
         }
         return this.pagerBar.find('li:not(.pager-prev):not(.pager-next)').length;

@@ -43,18 +43,49 @@
           link: function(scope, elem, attrs) {
             var api,
               model = attrs.ngModel,
-              modelVal = scope[model];
+              modelMin = attrs.ngModelMin,
+              modelMax = attrs.ngModelMax,
+              modelVal = scope[model],
+              min = scope[modelMin],
+              max = scope[modelMax];
 
             // Set Initial Value
-            elem.attr('value', modelVal).slider();
+            elem.attr('value', modelVal);
+
+            if (max && modelMax) {
+              elem.attr('max', max);
+            }
+
+            if (min && modelMin) {
+              elem.attr('min', min);
+            }
+
+            elem.slider();
 
             // Watch for Changes
             api = elem.data('slider');
+
+            scope.$watch(modelMax, function(newValue, oldValue) {
+              if (newValue !== oldValue) {
+                elem.attr('max', newValue).trigger('updated');
+                api.value(modelVal);
+              }
+            });
+
+            scope.$watch(modelMin, function(newValue, oldValue) {
+              if (newValue !== oldValue) {
+                elem.attr('min', newValue).trigger('updated');
+                api.value(modelVal);
+              }
+            });
+
             scope.$watch(model, function(newValue, oldValue) {
               if (newValue !== oldValue) {
                 api.value(newValue);
+                modelVal = newValue;
               }
             });
+
           }
         };
     };

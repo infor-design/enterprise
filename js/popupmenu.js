@@ -167,6 +167,7 @@
         if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
           this.element.on('touchend touchcancel', function (e) {
             e.preventDefault();
+            $(this).trigger('click');
             return false;
           }).on('click.popupmenu', function (e) {
             $(this).focus();

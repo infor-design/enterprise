@@ -90,6 +90,7 @@
       //Attach Events used by the Control
       handleEvents: function () {
         var self = this;
+
         this.trigger.on('click.datepicker', function () {
           if (self.isOpen()) {
             self.closeCalendar();
@@ -422,6 +423,7 @@
       closeCalendar: function () {
         this.popup.hide();
         this.element.removeClass('is-active');
+        this.popup.remove();
       },
 
       // Check date in obj, return: true|false

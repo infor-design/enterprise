@@ -47,7 +47,7 @@
 
       // Example Method
       someMethod: function() {
-
+        //do something with this.settings not settings.
       },
 
       // Teardown - Remove added markup and events
