@@ -482,3 +482,22 @@ body.no-scroll {
   min-height: calc(100% - 60px);
   min-width: 100%;
 }
+
+// Two-row
+//==============================================================
+.two-row {
+
+  .main {
+    background-color: $white;
+    padding: 40px 0 1px;
+  }
+
+  .complementary {
+    border-top: 1px solid $graphite02;
+
+    h1 {
+      font-size: 2em;
+    }
+  }
+  
+}
