@@ -236,7 +236,7 @@ input.dropdown {
 
     li.is-selected:not(.group-label):after {
       @include checkbox-checked-after-style;
-      left: 18px;
+      left: 21px;
       margin-top: 8px;
     }
 
@@ -246,7 +246,7 @@ input.dropdown {
 
     li.is-disabled.is-selected:not(.group-label):after {
       @include checkbox-checked-disabled-after-style;
-      left: 25px;
+      left: 21px;
       margin-top: 8px;
     }
 
