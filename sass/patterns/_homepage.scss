@@ -25,11 +25,25 @@
 
       .toolbar {
         line-height: normal;
-        margin-top: 2px;
+        margin: 0 20px;
+      }
+
+      .title {
+        color: $font-color-highcontrast;
+        @include font-size(18);
+        -webkit-font-smoothing: antialiased;
+        font-weight: 100;
+        margin: 4px 1em 4px 0;
+        text-rendering: optimizeLegibility !important;
       }
 
       .searchfield-wrapper {
-        margin: auto;
+        margin: 8px 0 5px;
+      }
+
+      .btn-actions {
+        margin-right: 1px;
+        margin-top: 8px;
       }
     }
 

@@ -162,9 +162,11 @@
         </ul>
       </div>
       <div class="card-content">
-        <div class="listview-toolbar">
-          <button class="btn-toolbar" title="Assign Selected Items" type="button">Assign</button>
-          <button class="btn-toolbar" title="Remove Selected Items"type="button">Remove</button>
+        <div class="toolbar listview-toolbar is-hidden">
+          <div class="buttonset">
+            <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
+            <button class="btn-tertiary" title="Remove Selected Items"type="button">Remove</button>
+          </div>
         </div>
         <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
       </div>
@@ -319,31 +321,13 @@
 
     <div class="card">
       <div class="card-header has-toolbar">
-        <div id="cardstack-toolbar" class="toolbar" role="toolbar">
+        <div class="toolbar" role="toolbar">
+          <div class="title">
+            My Alerts
+          </div>
           <div class="buttonset">
             <label class="audible" for="gridfilter">Search</label>
             <input class="searchfield" placeholder="Keyword" name="searchfield" id="gridfilter">
-
-            <button class="btn-icon has-text" type="button">
-              <svg class="icon">
-                <use xlink:href="#icon-filter"></use>
-              </svg>
-              <span>Category</span>
-            </button>
-
-            <button class="btn-icon has-text" type="button">
-              <svg class="icon">
-                <use xlink:href="#icon-calendar"></use>
-              </svg>
-              <span>Date</span>
-            </button>
-
-            <button class="btn-icon has-text" type="button">
-              <svg class="icon">
-                <use xlink:href="#icon-search"></use>
-              </svg>
-              <span>Keyword</span>
-            </button>
           </div>
 
           <div class="more">
@@ -361,6 +345,15 @@
           </div>
         </div>
 
+      </div>
+      <div class="card-content">
+        <div class="toolbar is-hidden listview-toolbar">
+          <div class="buttonset">
+            <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
+            <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
+          </div>
+        </div>
+        <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
       </div>
     </div>
 

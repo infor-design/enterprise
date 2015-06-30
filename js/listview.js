@@ -107,7 +107,7 @@
         var first = this.element.find('li, tr').first(),
           addId = (first.attr('id') === undefined),
           items = this.element.find('li, tr'),
-          addCheckboxes = (this.settings.selectable === 'multiple');
+          isMultiselect = (this.settings.selectable === 'multiple');
 
         //Set Initial Tab Index
         first.attr('tabindex', 0);
@@ -121,9 +121,15 @@
             row.attr('id', self.id + '-item-' + i);
           }
 
-          // Add Selection Checkboxes
-          if (addCheckboxes) {
+          if (isMultiselect) {
+            // Add Selection Checkboxes
             self.element.addClass('is-muliselect');
+
+            // Create a Toolbar for the "Selected Items" area
+            var selectedToolbar = self.element.prevAll('.toolbar');
+            if (selectedToolbar.length && selectedToolbar.data('toolbar')) {
+              selectedToolbar.data('toolbar').toggleMoreMenu();
+            }
           }
 
           // Add Aria
@@ -311,14 +317,20 @@
         li.attr('aria-selected', !isChecked);
         this.element.trigger('selected', [this.selectedItems]);
 
-        var toolbar = this.element.closest('.card, .widget').find('.listview-toolbar');
-        //top = self.element.scrollTop();
+        var toolbar = this.element.closest('.card, .widget').find('.listview-toolbar'),
+          toolbarControl = toolbar.data('toolbar');
 
         if (self.selectedItems.length > 0) {
-          toolbar.css('display','block').one('animateOpenComplete', function() {
-            self.element.addClass('.is-toolbar-open');
-            toolbar.addClass('is-visible');
-          }).animateOpen();
+          if (toolbarControl) {
+            toolbarControl.toggleMoreMenu();
+          }
+          // Order of operations: set up event, change display prop, animate, toggle menu.
+          // Menu toggle takes place after the animation starts
+          toolbar.one('animateOpenComplete', function() {
+            self.element.addClass('is-toolbar-open');
+            toolbar.removeClass('is-hidden');
+          }).css('display', 'block');
+          toolbar.animateOpen();
 
           var count = toolbar.find('.listview-selection-count'),
             countSpan;
@@ -330,9 +342,8 @@
           }
 
           countSpan.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
-
         } else {
-          toolbar.removeClass('is-visible').one('animateClosedComplete', function(e) {
+          toolbar.addClass('is-hidden').one('animateClosedComplete', function(e) {
             e.stopPropagation();
             $(this).css('display', 'none');
           }).animateClosed();
