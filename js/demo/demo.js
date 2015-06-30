@@ -237,23 +237,18 @@ $(function($) {
 
       $('body').contextualactionpanel({
         title: 'Expenses: $50,000.00',
-        content: '<div class="datagrid" id="new-grid"></div>',
+        content: '<div class="two-column"><div class="sidebar" style="height: 300px; width: 200px;"></div><div class="main" style="height: 300px; width: 400px;"></div></div>',
         trigger: 'immediate',
         buttons: [
           {
-            text: 'Ok',
-            cssClass: 'btn-tertiary',
-            click: function() {
-
-            }
-          },
-          {
-            text: 'Close',
-            cssClass: 'btn-icon has-text',
-            icon: '#icon-close',
-            click: function() {
-              $(this).modal('close');
-            }
+            type: 'input',
+            text: 'Keyword',
+            id: 'filter',
+            name: 'filter',
+            cssClass: 'searchfield'
+          }, {
+            text: 'Cancel',
+            cssClass: 'btn-tertiary'
           }
         ]
       }).on('close', function () {

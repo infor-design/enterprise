@@ -173,6 +173,16 @@
             }
           }
 
+          if (props.type === 'input') {
+            var label = $('<label class="audible" for="filter">' + props.text + '</label>'),
+              input = $('<input class="searchfield">').attr({'id': props.id, 'placeholder': props.text, 'name': props.name  });
+
+
+            buttonset.append(label, input);
+            input.searchfield();
+            return;
+          }
+
           if (props.icon && props.icon.charAt(0) === '#') {
             btn.html('<span>' + btn.text() + '</span>');
             $('<svg class="icon '+ (props.icon === '#icon-close' ? 'icon-close' : '') +' "><use xlink:href="' + props.icon + '"></use></svg>').prependTo(btn);
@@ -237,7 +247,7 @@
         });
 
         setTimeout(function () {
-          self.element.find(':focusable:first').focus();
+          self.element.find(':focusable:not(.searchfield):first').focus();
           self.keepFocus();
           self.element.triggerHandler('open');
         }, 300);

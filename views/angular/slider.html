@@ -7,7 +7,7 @@
 
       <div class="field">
         <label for="slider-regular">Angular Slider Value: {{sliderValue}}</label>
-        <input id="slider-regular" name="slider-regular" class="slider" type="range" data-ng-model="sliderValue" value="20" data-slider data-tooltip-content='[""]'/>
+        <input id="slider-regular" name="slider-regular" class="slider" type="range" data-ng-model="sliderValue" value="20" min="10" data-ng-model-max="sliderMax" data-tooltip-content='[""]' data-slider/>
       </div>
 
       <button class="btn" data-ng-click="change()">Change</button>
@@ -21,9 +21,11 @@
 
     app.controller('demo', function($scope) {
       $scope.sliderValue = 20;
+      $scope.sliderMax = 30;
 
       $scope.change = function () {
-        $scope.sliderValue = 80;
+        //$scope.sliderValue = 10;
+        $scope.sliderMax = 40;
       };
     });
 

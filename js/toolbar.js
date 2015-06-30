@@ -65,7 +65,7 @@
 
         // Add and invoke More Button, if it doesn't exist
         this.more = this.element.find('.btn-actions');
-        if (this.more.length === 0) {
+        if (this.more.length === 0 && !this.element.hasClass('no-actions-button')) {
           var moreContainer = this.element.find('.more');
           if (!moreContainer.length) {
             moreContainer = $('<div class="more"></div>').appendTo(this.element);
@@ -407,6 +407,10 @@
       },
 
       toggleMoreMenu: function() {
+        if (this.element.hasClass('no-actions-button')) {
+          return;
+        }
+
         if (this.buttonset[0].scrollHeight > this.element.outerHeight() + 1 || this.defaultMenuItems) {
           this.element.addClass('has-more-button');
         } else {

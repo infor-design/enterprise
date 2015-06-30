@@ -30,6 +30,10 @@
       height: 16px !important;
       top: 1px;
     }
+
+    .searchfield:focus {
+      width: 175px;
+    }
   }
 
   .modal-body {
