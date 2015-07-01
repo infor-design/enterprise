@@ -103,13 +103,13 @@
           fields.each(function () {
 
             var field = $(this);
-            if (!field.is(':empty')) {
+            if (field.is(':empty')) {
               allValid = false;
             }
           });
 
           if (allValid && !inlineBtns.filter('.btn-modal-primary').is(':disabled')) {
-            inlineBtns.filter('.btn-modal-primary').attr('disabled', 'true');
+            inlineBtns.filter('.btn-modal-primary').not('.no-validation').attr('disabled', 'true');
           }
         }
 
