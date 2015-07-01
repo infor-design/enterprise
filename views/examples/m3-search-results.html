@@ -1,0 +1,276 @@
+<style>
+
+</style>
+
+<body class="no-scroll product">
+  {{> controls/svg}}
+  {{> includes/product-summary}}
+  <header class="header is-sticky">
+    <div class="toolbar">
+      <div class="title">
+        <button class="btn-icon application-menu-trigger" type="button">
+          <span class="audible">Application Menu</span>
+          <span class="icon app-header go-back">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+        </button>
+
+        <h1>Search Results &quot;gravel&quot;</h1>
+      </div>
+
+      <div class="buttonset">
+        <button class="btn-icon header-search" type="button">
+          <span class="audible">Search</span>
+          <svg class="icon" focusable="false" aria-hidden="true">
+            <use xlink:href="#icon-search"></use>
+          </svg>
+        </button>
+        <button class="btn-icon product-nav-btn has-text" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>New Order</span>
+        </button>
+      </div>
+
+      {{> includes/header-actionbutton}}
+    </div>
+  </header>
+
+
+
+
+
+  <div class="page-container scrollable">
+
+    <section id="maincontent" class="main list" role="main">
+      <div class="row">
+
+        <div class="one columns empty">&nbsp;</div>
+        <div class="ten columns">
+
+          <div id="tabs-results" class="tab-container">
+            <ul class="tab-list">
+              <li class="tab"><a href="#tabs-results-all">All Results</a></li>
+              <li class="tab is-selected"><a href="#tabs-results-products">Products</a></li>
+              <li class="tab"><a href="#tabs-results-companies">Companies</a></li>
+              <li class="tab"><a href="#tabs-results-orders">Orders</a></li>
+            </ul>
+          </div>
+
+          <div id="tabs-results-all" class="tab-panel">
+          </div>
+
+          <div id="tabs-results-products" class="tab-panel">
+            <div class="toolbar" role="toolbar">
+              <div class="title">13 Results</div>
+
+              <div class="buttonset">
+                <button class="btn-menu" type="button">
+                  <span>Brand</span>
+                  <svg class="icon">
+                    <use xlink:href="#icon-dropdown"></use>
+                  </svg>
+                </button>
+                <ul class="popupmenu toolbar-options">
+                  <li class="is-checked"><a href="#">Gravel</a></li>
+                  <li><a href="#">Natural</a></li>
+                </ul>
+
+                <button class="btn-menu" type="button">
+                  <span>Model</span>
+                  <svg class="icon">
+                    <use xlink:href="#icon-dropdown"></use>
+                  </svg>
+                </button>
+                <ul class="popupmenu toolbar-options">
+                  <li><a href="#">Colored</a></li>
+                  <li class="is-checked"><a href="#">Simple</a></li>
+                </ul>
+
+                <button class="btn-menu" type="button">
+                  <span>Price</span>
+                  <svg class="icon">
+                    <use xlink:href="#icon-dropdown"></use>
+                  </svg>
+                </button>
+                <ul class="popupmenu toolbar-options">
+                  <li class="is-checked"><a href="#">Price low to high</a></li>
+                  <li><a href="#">Price high to low</a></li>
+                  <li><a href="#">Items with sale prices</a></li>
+                </ul>
+
+              </div>
+
+            </div>
+            <!-- ############################################################### -->
+
+            <!--This is only needed because it renders first on the server on the first one-->
+            {{={{{ }}}=}}
+
+            <!-- <script id="m3-search-results-tmpl" type="text/html">
+              <ul>
+                {{#dataset}}
+                  <li>
+                    <div class="row">
+
+                      <div class="one columns">
+                          <img alt="Placeholder Image" src="{{thumb}}" />
+                      </div>
+
+                      <div class="three columns">
+                        <p><a href="#" class="hyperlink">{{productName}}</a></p>
+                        <ul class="info">
+                          <li>Product ID: <strong>{{productId}}</strong></li>
+                          <li>In Stock: <strong>{{inStock}}</strong></li>
+                        </ul>
+                      </div>
+
+                      <div class="two columns empty">&nbsp;</div>
+
+                      <div class="one columns">
+                        <p>{{unitPrice}}</p>
+                      </div>
+
+                      <div class="two columns">                        
+                        <div class="field">
+                          <label class="audible" for="select-{{id}}">Units</label>
+                          <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 50px">
+                            <option>lb.</option>
+                            <option>ton</option>
+                            <option>palette</option>
+                            <option>case</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="one columns">
+                        <div class="field">
+                          <input type="text" id="quantity-{{id}}" class="input-xs" name="quantity-{{id}}" value="0" />
+                          <label class="audible" for="quantity-{{id}}">Quantity</label>
+                        </div>
+                      </div>
+
+                      <div class="two columns">
+                        <button class="btn-primary" type="button">Add Item</button>
+                      </div>
+                    </div>
+                  </li>
+                {{/dataset}}
+              </ul>
+            </script> -->
+
+            <script id="m3-search-results-tmpl" type="text/html">
+              <table role="grid" class="tableview listview-table">
+                <thead>
+                  <tr>
+                    <th scope="col" role="columnheader" class="audible">Thumbnail</th>
+                    <th scope="col" role="columnheader" class="audible">Description</th>
+                    <th scope="col" role="columnheader" class="audible">Unit Price</th>
+                    <th scope="col" role="columnheader" class="audible">Units</th>
+                    <th scope="col" role="columnheader" class="audible">Quantity</th>
+                    <th scope="col" role="columnheader" class="audible">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {{#dataset}}
+                  <tr>
+                    <td><img alt="Placeholder Image" src="{{thumb}}" /></td>
+                    <td>
+                      <p><a href="#" class="hyperlink">{{productName}}</a></p>
+                      <ul class="info">
+                        <li>Product ID: <strong>{{productId}}</strong></li>
+                        <li>In Stock: <strong>{{inStock}}</strong></li>
+                      </ul>
+                    </td>
+                    <td>{{unitPrice}}</td>
+                    <td>
+                      <div class="field">
+                        <label class="audible" for="select-{{id}}">Units</label>
+                        <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 50px">
+                          <option>lb.</option>
+                          <option>ton</option>
+                          <option>palette</option>
+                          <option>case</option>
+                        </select>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="field">
+                        <input type="text" id="quantity-{{id}}" class="input-xs" name="quantity-{{id}}" value="0" />
+                        <label class="audible" for="quantity-{{id}}">Quantity</label>
+                      </div>
+                    </td>
+                    <td><button class="btn-primary" type="button">Add Item</button></td>
+                  </tr>
+
+
+                  <!--<tr>
+                    <div class="row">
+
+                      <div class="one columns">
+                          <img alt="Placeholder Image" src="{{thumb}}" />
+                      </div>
+
+                      <div class="three columns">
+                        <p><a href="#" class="hyperlink">{{productName}}</a></p>
+                        <ul class="info">
+                          <li>Product ID: <strong>{{productId}}</strong></li>
+                          <li>In Stock: <strong>{{inStock}}</strong></li>
+                        </ul>
+                      </div>
+
+                      <div class="two columns empty">&nbsp;</div>
+
+                      <div class="one columns">
+                        <p>{{unitPrice}}</p>
+                      </div>
+
+                      <div class="two columns">                        
+                        <div class="field">
+                          <label class="audible" for="select-{{id}}">Units</label>
+                          <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 50px">
+                            <option>lb.</option>
+                            <option>ton</option>
+                            <option>palette</option>
+                            <option>case</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="one columns">
+                        <div class="field">
+                          <input type="text" id="quantity-{{id}}" class="input-xs" name="quantity-{{id}}" value="0" />
+                          <label class="audible" for="quantity-{{id}}">Quantity</label>
+                        </div>
+                      </div>
+
+                      <div class="two columns">
+                        <button class="btn-primary" type="button">Add Item</button>
+                      </div>
+                    </div>
+                  </li>-->
+                {{/dataset}}
+                </tbody>
+              </table>
+            </script>
+
+            <div class="listview" id="m3-search-results-products" data-tmpl="m3-search-results-tmpl" data-dataset="/api/product"></div>
+
+            <!-- ############################################################### -->
+          </div>
+
+          <div id="tabs-results-companies" class="tab-panel">
+          </div>
+
+          <div id="tabs-results-orders" class="tab-panel">
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+
+  </div>

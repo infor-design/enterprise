@@ -72,6 +72,18 @@
               thisElem[plugin](options);
             });
           }
+
+          // Radio switch
+          $('.radioswitch input:radio.handle').change(function() {
+            if (this.checked) {
+              var option = $(this).closest('.option'),
+              siblings = option.siblings(),
+              fields = 'button, select, input[type="text"]';
+
+              $(fields, option).removeAttr('disabled');
+              $(fields, siblings).attr('disabled','disabled');
+            }
+          }); 
         }
 
         if ($.fn.applicationmenu) {

@@ -250,6 +250,26 @@ app.configure(function() {
     res.end(JSON.stringify(people));
   });
 
+// Sample Product
+  app.get('/api/product', function(req, res) {
+    var product = [
+    { id: 1, productId: 200123, productName: 'Miscellaneous Gravel, Colored Ston...', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 2, productId: 200123, productName: 'Gravel, Natural Stone', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 3, productId: 200123, productName: 'Gravel, Natural Stone', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 4, productId: 200123, productName: 'Miscellaneous Gravel, Colored Ston...', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 5, productId: 200123, productName: 'Miscellaneous Gravel, Colored Ston...', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 6, productId: 200123, productName: 'Gravel, Natural Stone', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 7, productId: 200123, productName: 'Miscellaneous Gravel, Colored Ston...', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 8, productId: 200123, productName: 'Gravel, Natural Stone', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 9, productId: 200123, productName: 'Gravel, Natural Stone', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 10, productId: 200123, productName: 'Miscellaneous Gravel, Colored Ston...', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 11, productId: 200123, productName: 'Miscellaneous Gravel, Colored Ston...', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' },
+    { id: 12, productId: 200123, productName: 'Gravel, Natural Stone', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/C0EDE3/1D5F8A' }];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(product));
+  });
+
   // Sample Towns
   app.get('/api/towns', function(req, res) {
     var towns = [

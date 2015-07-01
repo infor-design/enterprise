@@ -329,5 +329,48 @@ $listview-selected-text-color: $inverse-color;
     display: none;
   }
 
+  &.tableview {
+    background-color: $popupmenu-hover-color;
+    border-top: 1px solid $graphite03;
+
+    .btn-primary {
+      background-color: $azure06;
+      float: right;
+      margin: 0;
+      
+      &:active:not([disabled]),
+      &:hover:not([disabled]) {
+        background-color: $azure08;
+      }
+    }
+
+    .dropdown-wrapper {
+      margin-bottom: 0;
+    }
+
+    .info > li {
+      border: 0 none;
+      padding: 0 !important;
+    }
+
+    td {
+      padding: 10px 0;
+      
+      .row:last-child {
+        margin-bottom: 0;
+      }
+      
+      a {
+        font-size: 1.2em;
+      }
+      
+      input[type="text"]:not([class="dropdown"]) {
+        margin-bottom: 0;
+        text-align: center;
+      }
+    }
+  }
+
 }
+
 

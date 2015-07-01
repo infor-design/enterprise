@@ -1,0 +1,53 @@
+//  Tiles
+//================================================== //
+.info-with-image {
+  margin: 0;
+  width: 100%;
+
+  .image,
+  .info {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .image {
+    margin: 10px 0 0;    
+    width: 17.5%;
+  }
+
+  .info {
+    margin: 10px 0 0 20px;    
+    width: 80%;
+    
+    .asset {
+      margin: 20px 0;
+    }
+
+    .subhead {
+      margin-top: 0;
+    }
+  }
+}
+
+// Media queries
+//==================================================//
+@include respond-to(tabletdown) {
+  .info-with-image {
+
+    .info {
+      width: 65%;
+    }
+  }
+}
+
+@include respond-to(phone) {
+  .info-with-image {
+
+    .image,
+    .info {
+      display: block;
+      width: 95%;
+    }
+  }
+}
+
