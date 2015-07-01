@@ -817,6 +817,7 @@
         self.tablist.children('li:not(.separator)').removeClass('is-focused');
 
         // Invoke the popup menu on the button.
+        alert();
         self.moreButton.popupmenu({
           autoFocus: false,
           menu: 'tab-container-popupmenu',

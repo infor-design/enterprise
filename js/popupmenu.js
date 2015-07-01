@@ -250,7 +250,7 @@
           });
         }
 
-        $(document).on('keydown.popupmenu.' + this.id, function (e) {
+        $(document).off('keydown.popupmenu.' + this.id).on('keydown.popupmenu.' + this.id, function (e) {
           var key = e.which,
             focus;
 
