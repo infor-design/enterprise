@@ -23,7 +23,7 @@
     // Settings and Options
     var pluginName = 'lookup',
         defaults = {
-          propertyName: 'defaultValue'
+          click: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -38,17 +38,83 @@
 
       init: function() {
         this.settings = settings;
-        //Do other init
+        this.build();
+        this.handleEvents();
       },
 
       // Example Method
-      someMethod: function() {
+      build: function() {
+         var lookup = this.element;
 
+        //Add Button
+        this.icon = $('<span class="trigger" tabindex="-1"><svg aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-search-list"/></svg></span>');
+        this.container = $('<div class="lookup-wrapper"></div>');
+        lookup.wrap(this.container);
+        lookup.after(this.icon);
+
+        //Add Masking to show the #
+        if (lookup.attr('data-mask')) {
+          lookup.mask();
+        }
+
+        if (this.element.is(':disabled')) {
+          this.disable();
+        }
+
+        this.addAria();
+      },
+
+      // Add/Update Aria
+      addAria: function () {
+        this.element.attr('aria-haspopup', true);
+
+        $('label[for="'+ this.element.attr('id') + '"]')
+          .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
+      },
+
+      handleEvents: function () {
+        var self = this;
+
+        if (this.settings.click) {
+          this.element.on('click.lookup', function () {
+            self.openDialog();
+          });
+        }
+
+        this.element.on('keypress.lookup', function (e) {
+          if (e.which === 13 || e.which === 32) {
+            self.openDialog();
+          }
+        });
+
+      },
+
+      closeDialog: function () {
+        this.element.trigger('close');
+      },
+
+      openDialog: function () {
+        this.element.trigger('open');
+      },
+
+      enable: function() {
+        this.element.prop('disabled', false);
+        this.element.parent().removeClass('is-disabled');
+      },
+
+      disable: function() {
+        this.element.prop('disabled', true);
+        this.element.parent().addClass('is-disabled');
+      },
+
+      isDisabled: function() {
+        return this.element.prop('disabled');
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
+        this.element.off('click.dropdown keypress.dropdown');
       }
     };
 

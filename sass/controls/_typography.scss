@@ -93,6 +93,11 @@ label,
   margin-bottom: 4px;
 }
 
+.data-description {
+  @include font-size(14);
+  margin-left: 10px;
+}
+
 label.side,
 .label.side {
   color: $label-color;

@@ -24,7 +24,7 @@
     var pluginName = 'searchfield',
         defaults = {
           allResultsCallback: undefined,
-          source: [],
+          source: undefined,
           template: undefined // Template that can be passed
         },
         settings = $.extend({}, defaults, options);
@@ -55,7 +55,9 @@
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
         // Autocomplete settings are fed the same settings as Searchfield
-        this.element.autocomplete(this.settings);
+        if (this.settings.source || this.element.attr('data-autocomplete')) {
+          this.element.autocomplete(this.settings);
+        }
         this.autocomplete = this.element.data('autocomplete');
 
         //Prevent browser typahead
