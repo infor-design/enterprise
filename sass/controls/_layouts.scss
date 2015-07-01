@@ -493,7 +493,6 @@ body.no-scroll {
 // Two-row
 //==============================================================
 .two-row {
-
   .main {
     background-color: $white;
     padding: 40px 0 1px;
@@ -505,6 +504,14 @@ body.no-scroll {
     h1 {
       font-size: 2em;
     }
-  }
-  
+  }  
 }
+
+@include respond-to(phone) {
+  .two-row {
+    .main {
+      padding: 0 0 1px;
+    }
+  }
+}
+

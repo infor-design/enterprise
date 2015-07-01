@@ -74,7 +74,7 @@
           }
 
           // Radio switch
-          $('.radioswitch input:radio.handle').change(function() {
+          $('.radiosection input:radio.handle').change(function() {
             if (this.checked) {
               var option = $(this).closest('.option'),
               siblings = option.siblings(),

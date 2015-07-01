@@ -137,12 +137,14 @@
   }
 }
 
-// Radio Switch
+// Radio Section
 //================================================== //
-.radioswitch {
+.radiosection {
   margin-top: 40px; 
 
   .option {
+    margin-left: 15px;
+    padding-left: 0;
 
     .btn-primary {
       margin-top: inherit;
@@ -175,14 +177,12 @@
     }
 
     &:first-child {
-      margin: auto 20px auto auto;
       position: relative;
       
       &:after {
         border-right: 1px solid $graphite03;
         bottom: 15px;
         content: ' ';
-        margin-right: -15px;
         position: absolute;
         right: 0;
         top: 15px;
@@ -191,13 +191,51 @@
   }
 }
 
-@include respond-to(tabletdown) {
-  .radioswitch .option:first-child {
-    margin-right: inherit;
-    position: static;
+.info {
+  .radiosection .option {
+    margin-left: inherit;
+    
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
 
-    &:after {
-      display: none;
+  .row:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@include respond-to(tabletdown) {
+  .radiosection .option {
+    text-align: left;
+    width: 95%;
+
+    .row:last-child {
+      margin-bottom: 0;
+    }
+
+    &:first-child {
+      margin-right: inherit;
+      position: static;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    &:not(:first-child) {
+      border-top: 1px solid $graphite03;
+      padding-top: 15px;
+    }
+
+  }
+}
+
+@include respond-to(phone) {
+  .radiosection .option {
+    &:not(:first-child) {
+      margin-top: 15px;
+      padding-top: 15px;
     }
   }
 }
