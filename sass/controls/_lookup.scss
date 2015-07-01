@@ -1,0 +1,33 @@
+// Lookup
+//================================================== //
+
+.lookup-wrapper {
+  display: inline-block;
+  margin-bottom: 20px;
+  max-width: 100%;
+  position: relative;
+}
+
+.lookup {
+
+  + .trigger {
+    cursor: pointer;
+    display: inline-block;
+    height: 34px;
+    margin-left: -33px;
+    outline: none;
+    position: absolute;
+    width: 34px;
+
+    .icon {
+      background-color: inherit;
+      fill: $trigger-icon-fill-color;
+      height: 20px;
+      pointer-events: none;
+      right: 2px;
+      top: 8px;
+      width: 32px;
+    }
+  }
+
+}
