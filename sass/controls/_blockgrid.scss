@@ -1,15 +1,27 @@
 //  Block Grid
 //================================================== //
-
-
 .blockgrid {
-  margin: 20px auto;
+  margin: 0;
   max-width: 100%;
-  text-align: center;
-
-  > * {
+  text-align: left;
+  
+  .block {
     display: inline-block;
     margin: 10px 0 0 10px;
+    text-align: left;
+    vertical-align: top;
+    width: 200px;
   }
 
+  &.blockgrid-center {
+    text-align: center;
+  }
+
+  &.blockgrid-150px .block {    
+    width: 150px;
+  }
+
+  &.blockgrid-100px .block {    
+    width: 100px;
+  }
 }

@@ -11,13 +11,13 @@
   }
 
   .image {
-    margin: 10px 0 0;    
-    width: 17.5%;
+    margin: 10px 20px 0 0;
+    width: 200px;
   }
 
   .info {
-    margin: 10px 0 0 20px;    
-    width: 80%;
+    margin: 10px 0 0;
+    width: 78%;
     
     .asset {
       margin: 20px 0;
@@ -46,7 +46,11 @@
     .image,
     .info {
       display: block;
-      width: 95%;
+      width: 100%;
+      
+      &.image {
+        text-align: center;        
+      }
     }
   }
 }
