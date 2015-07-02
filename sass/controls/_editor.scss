@@ -100,12 +100,12 @@
   background-color: $editor-toolbar-bg-color;
   border-bottom: 1px solid $input-border-color;
   border-radius: 2px 2px 0 0;
+  border-top: 1px solid $input-border-color;
   left: 1px;
   margin-bottom: 0;
-  overflow: hidden;
   padding: 0 10px;
   position: absolute;
-  top: 19px;
+  top: 16.5px;
   width: calc(100% - 2px);
   z-index: 20;
 

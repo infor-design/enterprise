@@ -4,8 +4,6 @@
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
-  height: $toolbar-height;
-  margin-bottom: 5px;
   overflow: hidden;
   position: relative;
 
@@ -20,14 +18,9 @@
   }
 
   .title {
-    color: $font-color;
     display: inline-block;
-    @include font-size(16);
     left: 0;
-    margin: 5px 1em 5px 0;
-    max-width: 40%;
     overflow: hidden;
-    padding: 10px 0;
     position: absolute;
     text-overflow: ellipsis;
     top: 0;
@@ -39,7 +32,6 @@
   }
 
   .buttonset {
-    height: $toolbar-height - 10;
     margin: 0 5px 0 1px;
     padding: 0;
 
@@ -53,11 +45,6 @@
       > * {
         margin-right: 0;
       }
-    }
-
-    button {
-      margin-bottom: 5px;
-      margin-top: 5px;
     }
 
   }
@@ -87,17 +74,15 @@
     position: absolute;
     right: 0;
     top: 0;
-
-    .btn-actions {
-      margin: 5px 5px 0 0;
-    }
   }
 
   .separator {
     background-color: #b6b6b6;
     display: inline-block;
     height: 20px;
-    margin: 9px 15px;
+    margin: 9px;
+    position: relative;
+    top: -3px;
     width: 1px;
   }
 
@@ -107,18 +92,51 @@
 }
 
 // Styles for regular toolbar only
-.toolbar {
+.toolbar:not(.formatter-toolbar):not(.listview-toolbar):not(.cardstack-toolbar) {
+  height: $toolbar-height;
+  margin-bottom: 5px;
+
+  .buttonset {
+    height: $toolbar-height - 10;
+
+    button {
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+  }
+
   .title {
+    color: $font-color;
+    @include font-size(16);
+    margin: 5px 1em 5px 0;
+    max-width: 40%;
+    padding: 10px 0;
+
     + .buttonset {
       margin: 0 0 0 50%;
       max-width: 50%;
       text-align: right;
     }
   }
+
+  .more {
+    .btn-actions {
+      margin: 5px 5px 0 0;
+    }
+  }
+}
+
+// Formatter Toolbar (Editors/Grid/etc)
+.formatter-toolbar {
+  height: 44px;
+
+  .buttonset {
+    height: 40px;
+  }
+
 }
 
 // Used in Editor, some card menus, etc.
-
 .popupmenu.toolbar-options {
   li {
     > a {
