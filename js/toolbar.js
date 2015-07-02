@@ -411,7 +411,9 @@
           return;
         }
 
-        if (this.buttonset[0].scrollHeight > this.element.outerHeight() + 1 || this.defaultMenuItems) {
+        if (this.element.outerHeight() > 1 && // Makes sure we're not animating Open or remaining Closed
+          (this.buttonset[0].scrollHeight > this.element.outerHeight() + 1 || // Inner scrolling area doesn't exceed control height
+          this.defaultMenuItems)) { // No default menu items defined in the More Menu (will always show if there are)
           this.element.addClass('has-more-button');
         } else {
           this.element.removeClass('has-more-button');

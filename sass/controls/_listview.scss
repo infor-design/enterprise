@@ -237,30 +237,55 @@ $listview-selected-text-color: $inverse-color;
   }
 }
 
-
 .listview-toolbar {
   background-color: $primary-color;
   border-radius: 2px 2px 0 0;
-  display: none;
-  height: 0;
   margin: 0;
   overflow: hidden;
   text-align: right;
   z-index: 20;
 
   + .listview {
+    height: calc(100% - 50px);
     @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
-  &.is-visible {
-    height: 52px !important;
+  // Override Toolbar styles
+  &.toolbar {
+    margin-bottom: 0;
 
-    + .listview {
-      height: calc(100% - 50px);
+    .buttonset {
+      height: 44px;
+      margin: 5px 13px 5px 1px;
+    }
+
+    .more {
+      top: 5px;
     }
   }
 
-  button {
+  &.is-hidden {
+    height: 0;
+
+    + .listview {
+      height: 100%;
+    }
+  }
+
+  .btn-actions {
+    > .icon {
+      fill: $listview-selected-text-color;
+    }
+
+    &:hover,
+    &:focus:not(.hide-focus) {
+      > .icon {
+        fill: $listview-selected-text-color;
+      }
+    }
+  }
+
+  *[class^="btn-"] {
     color: $listview-selected-text-color;
     @include font-size(12);
     font-weight: bold;
@@ -273,7 +298,7 @@ $listview-selected-text-color: $inverse-color;
     }
 
     &:hover,
-    &:focus {
+    &:focus:not(.hide-focus) {
       color: $listview-selected-text-color;
 
       > span {
