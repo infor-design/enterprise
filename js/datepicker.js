@@ -593,7 +593,7 @@
         if (dateTd.hasClass('is-disabled')) {
           dateTd.attr({'tabindex': 0}).focus();
         } else {
-          input.val(Locale.formatDate(date)).trigger('updated').trigger('change');
+          input.val(Locale.formatDate(date)).trigger('change');
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
           dateTd.addClass('is-selected').attr({'aria-selected': true, 'tabindex': 0}).focus();
         }

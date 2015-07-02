@@ -247,8 +247,12 @@ $(function($) {
             name: 'filter',
             cssClass: 'searchfield'
           }, {
-            text: 'Cancel',
-            cssClass: 'btn-tertiary'
+            text: 'Close',
+            cssClass: 'btn-icon has-text',
+            icon: '#icon-close',
+            click: function() {
+              $(this).modal('close');
+            }
           }
         ]
       }).on('close', function () {

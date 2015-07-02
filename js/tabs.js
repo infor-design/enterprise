@@ -15,7 +15,7 @@
 /* end-amd-strip-block */
 
   /**
-  * Tab Control (TODO: bitly link to docs)
+  * Tab Control
   */
   $.fn.tabs = function(options) {
 

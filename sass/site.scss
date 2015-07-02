@@ -29,7 +29,12 @@ body {
   .search-detail {
     background-color: $white;
     border-bottom: 1px solid $graphite02;
-    padding: 0 20px;
+    height: 56px;
+    padding: 2px 0 0 300px;
+
+    .row {
+      max-width: $site-maxwidth !important;
+    }
 
     h2 {
       display: inline-block;
