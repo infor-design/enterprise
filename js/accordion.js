@@ -174,8 +174,8 @@
 
           $(this).on('touchmove.accordion', function(e) {
             var newPos = {
-              x: e.originalEvent.touches[0].pageX,
-              y: e.originalEvent.touches[0].pageY
+              x: e.originalEvent.changedTouches[0].pageX,
+              y: e.originalEvent.changedTouches[0].pageY
             };
 
             if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
@@ -204,8 +204,8 @@
               $(this).off('touchmove.accordion');
             }
           }, 50);
-
         }).on('click.accordion', function(e) {
+          e.preventDefault();
           self.handleClick(e);
         }).on('keydown.accordion', function(e) {
           self.handleKeydown(e);
@@ -223,10 +223,13 @@
       },
 
       handleClick: function(e) {
+        // To prevent the weird Safari Bug, prevent default here
+        e.preventDefault();
+
         var link = $(e.target);
 
         if (this.element.hasClass('is-disabled') || link.hasClass('is-disabled')) {
-          e.preventDefault();
+
           e.stopPropagation();
           return false;
         }
@@ -354,6 +357,7 @@
       // NOTE: "e" is either an event or a jQuery object
       handleSelected: function(e) {
         if (this.element.hasClass('is-disabled')) {
+          e.returnValue = false;
           return false;
         }
 
@@ -366,7 +370,7 @@
           hasExpander = target.parent().find('.plus-minus');
 
         if ((target).hasClass('is-disabled')) {
-          e.preventDefault();
+          e.returnValue = false;
           return false;
         }
 
@@ -385,13 +389,13 @@
 
         if (isRealAnchor) {
           this.element.trigger('selected', [target]);
+          window.location.href = href;
         }
 
         return true;
       },
 
       setActiveAnchor: function(anchor) {
-
         this.headers.removeClass('child-selected');
 
         this.anchors.attr({
