@@ -77,7 +77,7 @@
         this.icon = $('<svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
-          this.wrapper.append(this.input, this.trigger);
+          this.wrapper.append(this.input, this.trigger, this.icon);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
           this.element.after(this.label);
