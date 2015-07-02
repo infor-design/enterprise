@@ -17,7 +17,6 @@
 svg.icon {
   fill: #999999;
 
-
   // Specific Buttons
   &.icon-error,
   &.icon-confirm,
@@ -80,6 +79,14 @@ svg.icon-logo {
   position: absolute;
   margin-left: -27px;
   margin-top: 8px;
+}
+
+.signin {
+  .icon-error,
+  .icon-confirm {
+    left: 100%;
+    top: 18px;
+  }
 }
 
 .timepicker + .icon + .icon-error,
