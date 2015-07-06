@@ -165,12 +165,14 @@
         var self = this;
 
         if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
-          this.element.on('touchend touchcancel', function (e) {
-            e.preventDefault();
-            $(this).trigger('click');
-            return false;
-          }).on('click.popupmenu', function (e) {
-            $(this).focus();
+         this.element.onTouchClick('popupmenu')
+          .offTouchClick('popupmenu')
+          .off('click.popupmenu')
+          .on('click.popupmenu', function (e) {
+            if (self.element.is(':disabled')) {
+              return;
+            }
+
             if (self.menu.hasClass('is-open')){
               self.close();
             } else {
@@ -214,7 +216,9 @@
         //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
         //Handle Events in Anchors
-        this.menu.on('click.popmenu touchend.popupmenu touchcancel.popupmenu', 'a', function (e) {
+        this.menu.onTouchClick('popupmenu', 'a')
+          .on('click.popupmenu', 'a', function (e) {
+
           var anchor = $(this),
             href = anchor.attr('href');
 
@@ -390,7 +394,7 @@
 
         //Close on Document Click ect..
         setTimeout(function () {
-          $(document).on('click.popupmenu.' + this.id, function (e) {
+          $(document).on('touchend.popupmenu.' + this.id +' click.popupmenu.' + this.id, function (e) {
             if (e.button === 2) {
               return;
             }
@@ -545,7 +549,7 @@
       },
 
       detach: function () {
-        $(document).off('click.popupmenu keydown.popupmenu');
+        $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
         $(window).off('scroll.popupmenu resize.popupmenu');
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
 

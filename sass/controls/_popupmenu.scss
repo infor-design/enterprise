@@ -72,6 +72,7 @@
   overflow-x: auto;
   overflow-y: auto;
   padding: 10px 0;
+  -webkit-overflow-scrolling: touch;
 
   &.is-padded a,
    .heading {

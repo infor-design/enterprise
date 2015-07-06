@@ -95,6 +95,8 @@
           }).on('click.applicationmenu', function() {
             if (!self.menu.hasClass('is-open') && self.isAnimating === false) {
               self.openMenu();
+            } else if (self.menu.hasClass('is-open')) {
+              self.closeMenu();
             }
           });
         }
@@ -181,6 +183,10 @@
         var isSticky = this.scrollTarget.is('.is-sticky'),
           totalHeight = this.scrollTarget.height(),
           offset = totalHeight - (!isSticky ? $(window).scrollTop() : 0);
+
+        if (this.scrollTarget.prev().is('.masthead')) {
+          offset += this.scrollTarget.prev().height();
+        }
 
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
       },

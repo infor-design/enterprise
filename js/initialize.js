@@ -68,7 +68,7 @@
                 if (options.indexOf('{') > -1) {
                   options = JSON.parse(options.replace(/'/g, '"'));
                 }
-              }            
+              }
               thisElem[plugin](options);
             });
           }
@@ -83,7 +83,7 @@
               $(fields, option).removeAttr('disabled');
               $(fields, siblings).attr('disabled','disabled');
             }
-          }); 
+          });
         }
 
         if ($.fn.applicationmenu) {
@@ -109,6 +109,9 @@
           //Editors
           ['editor'],
 
+          //Button with Effects
+          ['button', '.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
+
           //Menu/Split/Action Buttons
           ['popupmenu', '.btn-menu'],
           ['popupmenu', '.btn-actions:not([data-init])'],
@@ -133,9 +136,6 @@
 
           //Multiselect
           ['multiselect', 'select[multiple]:not(.dropdown), .multiselect:not([data-init])'],
-
-          //Button with Effects
-          ['button', '.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
 
           //Pager
           ['pager'],

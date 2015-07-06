@@ -316,6 +316,13 @@ body.no-scroll {
     }
 
   }
+
+  + .header + .page-container,
+  + .header + .application-menu + .page-container {
+    height: calc(100% - 93px);
+    margin-top: 60px;
+  }
+
 }
 
 // Editorial Pattern

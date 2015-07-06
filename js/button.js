@@ -54,7 +54,7 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
 
-        this.element.on('touchstart.button click.button', function (e) {
+        this.element.on('touchstartxxx.button clickxx.button', function (e) {
           var element = $(this);
           element.addClass('hide-focus');
 
@@ -74,7 +74,7 @@
             // Make sure the user is using only one finger and then get the touch position relative to the ripple wrapper
             e = e.originalEvent;
 
-            if (e.touches.length === 1) {
+            if (e && e.touches && e.touches.length === 1) {
               xPos = e.touches[0].pageX - btnOffset.left;
               yPos = e.touches[0].pageY - btnOffset.top;
             }

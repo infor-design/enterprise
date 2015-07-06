@@ -195,12 +195,12 @@
         var self = this;
 
         this.items
-          .onTouchClick()
+          .onTouchClick('toolbar')
           .on('keydown.toolbar', function(e) {
-          self.handleKeys(e);
-        }).on('click.toolbar', function(e) {
-          self.handleClick(e);
-        });
+            self.handleKeys(e);
+          }).on('click.toolbar', function(e) {
+            self.handleClick(e);
+          });
 
         this.more.on('keydown.toolbar', function(e) {
           self.handleKeys(e);

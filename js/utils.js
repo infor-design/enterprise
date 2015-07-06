@@ -125,11 +125,44 @@
 
     return this.each(function() {
       var self = $(this),
-        listener = one ? 'one' : 'on';
+        listener = one ? 'one' : 'on',
+        threshold = 10,
+        thresholdReached = false,
+        pos;
 
-      self[listener]('touchend' + eventNamespace + ' touchcancel' + eventNamespace, function touchEventConversionListener(e) {
-        e.preventDefault();
-        $(this).click();
+     self[listener]('touchstart' + eventNamespace, filter, function handleMove(e) {
+        pos = {
+          x: e.originalEvent.touches[0].pageX,
+          y: e.originalEvent.touches[0].pageY
+        };
+      });
+
+      self[listener]('touchmove' + eventNamespace, filter, function handleMove(e) {
+        var newPos;
+        newPos = {
+          x: e.originalEvent.touches[0].pageX,
+          y: e.originalEvent.touches[0].pageY
+        };
+
+        if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
+            (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
+          thresholdReached = true;
+        }
+      });
+
+      self[listener]('touchend' + eventNamespace + ' touchcancel' + eventNamespace, filter, function handleTouches(e) {
+        var elem = $(this);
+        if (thresholdReached) {
+          thresholdReached = false;
+          return;
+        }
+
+        setTimeout(function(){
+          thresholdReached = false;
+          e.preventDefault();
+          elem.trigger('click');
+        }, 0);
+
         return false;
       });
 
@@ -143,7 +176,7 @@
     filter = (filter !== null || filter !== undefined ? filter : '');
 
     return this.each(function() {
-      return $(this).off('touchend' + eventNamespace + ' touchcancel' + eventNamespace, filter);
+      return $(this).off('touchend' + eventNamespace + ' touchcancel' + eventNamespace + ' touchstart' + eventNamespace + ' touchmove' + eventNamespace, filter);
     });
   };
 
