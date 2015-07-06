@@ -108,7 +108,7 @@
             }
           });
 
-          if (allValid && !inlineBtns.filter('.btn-modal-primary').is(':disabled')) {
+          if (!allValid && !inlineBtns.filter('.btn-modal-primary').is(':disabled')) {
             inlineBtns.filter('.btn-modal-primary').not('.no-validation').attr('disabled', 'true');
           }
         }

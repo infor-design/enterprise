@@ -403,6 +403,7 @@
           $(window).on('scroll.popupmenu resize.popupmenu', function () {
             self.close();
           });
+
           self.element.trigger('open', [self.menu]);
         }, 400);
 

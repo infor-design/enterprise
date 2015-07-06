@@ -289,15 +289,6 @@ body.no-scroll {
     }
   }
 
-  &.has-search-results {
-    height: 120px;
-
-    + .page-container,
-    + .application-menu + .page-container {
-      height: calc(100% - 120px);
-      margin-top: 120px;
-    }
-  }
 }
 
 .masthead {
@@ -504,7 +495,7 @@ body.no-scroll {
     h1 {
       font-size: 2em;
     }
-  }  
+  }
 }
 
 @include respond-to(phone) {

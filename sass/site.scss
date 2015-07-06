@@ -26,28 +26,29 @@ body {
     padding-top: 0 !important;
   }
 
-  .search-detail {
-    background-color: $white;
-    border-bottom: 1px solid $graphite02;
-    height: 56px;
-    padding: 2px 0 0 300px;
+}
 
-    .row {
-      max-width: $site-maxwidth !important;
-    }
+.search-detail {
+  background-color: $white;
+  border-bottom: 1px solid $graphite02;
+  height: 56px;
+  padding: 15px 0 0 20px;
 
-    h2 {
-      display: inline-block;
-      margin: 14px 0 13px;
+  .row {
+    max-width: $site-maxwidth !important;
+  }
 
-      + .tag {
-        margin-left: 10px;
-      }
-    }
+  h2 {
+    display: inline-block;
+    margin: 14px 0 13px;
 
-    .tag + .tag {
+    + .tag {
       margin-left: 10px;
     }
+  }
+
+  .tag + .tag {
+    margin-left: 10px;
   }
 }
 
@@ -686,6 +687,7 @@ body {
 
 
 .editorial {
+  min-height: calc(100% - 78px);
 
   .main {
     max-width: $site-maxwidth !important;
