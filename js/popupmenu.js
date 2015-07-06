@@ -117,7 +117,12 @@
 
         // If action button menu, append arrow markup
         var containerClass = this.element.parent().attr('class');
-        if (containerClass !==undefined && (this.element.hasClass('btn-actions') || containerClass.indexOf('more') >= 0 || containerClass.indexOf('btn-group') >= 0)) {
+        if (containerClass !==undefined && 
+           (this.element.hasClass('btn-actions') || 
+            this.element.closest('.toolbar') || 
+            containerClass.indexOf('more') >= 0 || 
+            containerClass.indexOf('btn-group') >= 0)) {
+
           var arrow = $('<div class="arrow"></div>');
           this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
         }
@@ -373,7 +378,7 @@
           this.menu.css('overflow', 'hidden');
         }
 
-        if (this.element.hasClass('btn-menu')) {
+        if (this.element.hasClass('btn-menu') && !this.element.closest('.toolbar')) {
           //move the arrow - might need better logic here.
           wrapper.find('.arrow').css('left', '25%');
         }

@@ -52,6 +52,19 @@
       returnObj = self.filter(':not(svg):not(use):not(.no-init)').each(function() {
         var elem = $(this);
 
+        function setOptions(elment) {
+          var options = $(elment).attr('data-options');
+
+          if (options && options.length) {
+            if (options.indexOf('{') > -1) {
+              options = JSON.parse(options.replace(/'/g, '"'));
+            }
+          }
+          return options;
+          // thisElem[plugin](options);
+          // console.log('opt: ' + options);
+        }
+
         function simpleInit(plugin, selector) {
           //Allow only the plugin name to be specified if the default selector is a class with the same name
           //Like $.fn.header applying to elements that match .header
@@ -61,15 +74,19 @@
 
           if ($.fn[plugin]) {
             elem.find(selector).each(function () {
-              var thisElem = $(this),
-                options = thisElem.attr('data-options');
+              var options = setOptions(this);
 
-              if (options && options.length) {
-                if (options.indexOf('{') > -1) {
-                  options = JSON.parse(options.replace(/'/g, '"'));
-                }
-              }
-              thisElem[plugin](options);
+              // var thisElem = $(this),
+              //   options = thisElem.attr('data-options');
+
+              //   console.log('opt: ' + options);
+
+              // if (options && options.length) {
+              //   if (options.indexOf('{') > -1) {
+              //     options = JSON.parse(options.replace(/'/g, '"'));
+              //   }
+              // }
+              $(this)[plugin](options);
             });
           }
 
@@ -109,9 +126,6 @@
           //Editors
           ['editor'],
 
-          //Button with Effects
-          ['button', '.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
-
           //Menu/Split/Action Buttons
           ['popupmenu', '.btn-menu'],
           ['popupmenu', '.btn-actions:not([data-init])'],
@@ -136,6 +150,9 @@
 
           //Multiselect
           ['multiselect', 'select[multiple]:not(.dropdown), .multiselect:not([data-init])'],
+
+          //Button with Effects
+          ['button', '.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
 
           //Pager
           ['pager'],
@@ -223,15 +240,21 @@
         if ($.fn.listview) {
           elem.find('.listview').each(function () {
             var cs = $(this),
-              attr = cs.attr('data-dataset');
+              attr = cs.attr('data-dataset'),
+              tmpl = cs.attr('data-tmpl'),
+              options = setOptions(this) || {};
 
-            if (window[attr]) {
-              attr = window[attr];
+            options.dataset = options.dataset || attr;
+            options.template = options.template || tmpl;
+
+            if (window[options.dataset]) {
+              options.dataset = window[options.dataset];
             }
-            $(this).listview({
-              template: $('#' + cs.attr('data-tmpl') + '').html(),
-              dataset: attr
-            });
+            if (options.template && options.template.length) {
+              options.template = $('#' + options.template).html();
+            }
+
+            cs.listview(options);
           });
         }
 
