@@ -104,7 +104,7 @@
         }
 
         // Add an Id or Checkboxes
-        var first = this.element.find('li, tr').first(),
+        var first = this.element.find('li, tbody > tr').first(),
           addId = (first.attr('id') === undefined),
           items = this.element.find('li, tr'),
           isMultiselect = (this.settings.selectable === 'multiple');
@@ -170,7 +170,7 @@
         var self = this,
           isSelect = false, isFocused = false;
 
-        this.element.on('focus.listview', 'li, tr', function () {
+        this.element.on('focus.listview', 'li, tbody tr', function () {
           var item = $(this);
 
           // First element if disabled
@@ -207,11 +207,15 @@
 
           if ((key === 40 || key === 38) && !metaKey) {// move down or up
             var newItem = list.children().eq(item.index() + (e.keyCode === 40 ? 1 : -1));
-            if (newItem.hasClass('is-disabled')) {
-              self.focus((e.keyCode === 40 ? newItem.next() : newItem.prev()));
-            } else {
-              self.focus(newItem);
+
+            if ($(e.target).is(item) || e.shiftKey) {
+              if (newItem.hasClass('is-disabled')) {
+                self.focus((e.keyCode === 40 ? newItem.next() : newItem.prev()));
+              } else {
+                self.focus(newItem);
+              }
             }
+            
             e.preventDefault();
           }
 
@@ -230,7 +234,7 @@
           }
 
           if (key === 32) { // Space to toggle selection
-            if ($(e.target).is('li')) {
+            if ($(e.target).is(item)) {
               self.select(item);
               e.preventDefault();
             }
@@ -302,7 +306,9 @@
           self.selectedItems = [];
           li.removeClass('is-selected');
         } else {
-          li.addClass('is-selected');
+          if (this.settings.selectable) {
+            li.addClass('is-selected');
+          }
         }
 
         if (this.settings.selectable === 'multiple') {
