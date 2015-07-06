@@ -49,6 +49,7 @@
       init: function() {
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
+        this.element.parent('.field').addClass('editor-container');
         return this.setup();
       },
 
@@ -193,7 +194,6 @@
         this.toolbar = this.createToolbar();
         this.toolbarActions = this.toolbar;
         this.toolbar.toolbar();
-
         return this;
       },
 
@@ -787,13 +787,13 @@
             parentNode = this.getSelectedParentElement();
 
         while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
-            this.activateButton(parentNode.tagName.toLowerCase());
+          this.activateButton(parentNode.tagName.toLowerCase());
 
-            // we can abort the search upwards if we leave the contentEditable element
-            if (self.element.is(parentNode)) {
-                break;
-            }
-            parentNode = parentNode.parentNode;
+          // we can abort the search upwards if we leave the contentEditable element
+          if (self.element.is(parentNode)) {
+            break;
+          }
+          parentNode = parentNode.parentNode;
         }
       },
 
@@ -890,6 +890,7 @@
             currentElement = self.getCurrentElement();
 
         //Attach Label
+
         var label = this.element.prevAll('.label');
         label.css('cursor', 'default').on('click.editor', function () {
           currentElement.focus();

@@ -2,21 +2,50 @@
 //================================================== //
 
 .masthead {
-  background-color: $header-bg-color;
-  height: 34px;
+  background-color: $masthead-bg-color;
+  border-bottom: 1px solid $masthead-border-color;
+  height: 33px;
   width: 100%;
   z-index: 9000;
 
   .icon {
-    fill: #b5b5b5;
-    height: 21px;
-    margin-right: 7px;
+    fill: $slate03;
+    height: 18px;
     position: relative;
-    top: 6px;
-    width: 22px;
+    top: 7px;
+    width: 17px;
+  }
+
+  button {
+    margin-right: 0;
 
     &:last-child {
       margin-right: 10px;
+    }
+  }
+
+  //Logo
+  > .icon {
+    height: 24px;
+    left: 13px;
+    margin-right: 20px;
+    top: 5px;
+  }
+
+  .l-pull-right {
+    height: 33px;
+  }
+
+  .btn-icon {
+    border-radius: 0;
+    top: -8px;
+
+    &:hover,
+    &:active {
+
+      svg {
+        fill: $white;
+      }
     }
   }
 }
@@ -28,7 +57,7 @@
 }
 
 .masthead-appname {
-  color: #cccccc;
+  color: $slate03;
   display: inline-block;
   font-family: $font-regular;
   font-weight: bold;
@@ -36,18 +65,3 @@
   line-height: 34px;
   vertical-align: top;
 }
-
-.masthead-square {
-  background-color: #b5b5b5;
-  display: inline-block;
-  height: 12px;
-  margin-bottom: 0;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 0;
-  position: relative;
-  top: 9px;
-  width: 12px;
-}
-
-

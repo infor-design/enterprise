@@ -130,12 +130,17 @@ $icon-color: $font-color-lowcontrast;
 // Expandable Area
 $expandable-area-border-color: $graphite03;
 
+//Mast Head
+$masthead-bg-color: $slate07;
+$masthead-border-color: #313135;
+
 // Editor
-$editor-border-color: #9e9e9e;
+$editor-border-color: $input-border-color;
 $editor-focus-border-color: $input-focus-border-color;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: #ededed;
 $editor-btn-color: #767676;  //Was #999999  in design
+$editor-middle-border-color: $graphite02;
 
 // Cardlist
 $cardlist-bg-color: $inverse-color;

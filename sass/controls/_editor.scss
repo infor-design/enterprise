@@ -1,21 +1,26 @@
 // Editor (Rich Text)
 //================================================== //
 
+.editor-container {
+  overflow: hidden;
+}
+
 .editor {
   background-color: transparent;
   border: 1px solid $editor-border-color;
   border-radius: 0 0 2px 2px;
+  border-top: 1px solid transparent;
   color: $editor-color;
   display: block;
   float: left;
   font-family: $font-regular;
   @include font-size(16);
   height: 320px;
+  margin-bottom: 20px;
   min-height: 128px;
   outline: none;
   overflow: auto;
-  padding: 55px 10px 10px;
-  position: relative;
+  padding: 15px 10px 10px;
   width: 100%;
 
   //States
@@ -98,15 +103,12 @@
 // Toolbar
 .formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
-  border-bottom: 1px solid $input-border-color;
+  border: 1px solid $editor-border-color;
+  border-bottom: 1px solid $editor-middle-border-color;
   border-radius: 2px 2px 0 0;
-  border-top: 1px solid $input-border-color;
-  left: 1px;
   margin-bottom: 0;
   padding: 0 10px;
-  position: absolute;
-  top: 16.5px;
-  width: calc(100% - 2px);
+  width: 100;
   z-index: 20;
 
   button {
@@ -183,7 +185,7 @@
   width: 100%;
 
   textarea {
-    background-color: $inverse-color;
+    background-color: transparent;
     border: 0;
     color: $font-color;
     font-family: $font-regular;
@@ -193,7 +195,7 @@
     line-height: 2.4rem;
     outline: none;
     overflow: hidden;
-    padding: 54px 10px 10px;
+    padding: 14px 10px 10px;
     width: 100%;
 
     &:focus,
@@ -218,10 +220,10 @@
   }
 
   > .line-numbers {
-    background-color: $inverse-color;
+    background-color: transparent;
     display: inline-block;
     min-height: 100%;
-    padding: 55px 10px 10px;
+    padding: 15px 10px 10px;
 
     > li {
       @include font-size(12);

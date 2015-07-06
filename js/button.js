@@ -37,6 +37,10 @@
 
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+        if (this.element.hasClass('no-ripple')) {
+          return;
+        }
+
         if (this.element.hasClass('btn-menu')) {
           var ddIcon = this.element.children('.icon').filter(function() {
             return $(this).find('use').attr('xlink:href','#icon-dropdown');
