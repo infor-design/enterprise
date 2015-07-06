@@ -126,7 +126,7 @@
         var self = this,
           currentElement = self.getCurrentElement();
 
-        currentElement.on('keyup', function (e) {
+        currentElement.on('keyup.editor', function (e) {
           var node = self.getSelectionStart(),
               tagName;
 
@@ -276,6 +276,7 @@
 
       setupKeyboardEvents: function() {
         var self = this,
+          currentElement = this.getCurrentElement(),
           keys = {
             b: 66, // bold
             e: 69, // justifyCenter
@@ -283,12 +284,12 @@
             i: 73, // italic [shift: image]
             l: 76, // justifyLeft
             o: 79, // orderedlist [shift: unorderedlist]
-            q: 81, // append-blockquote
+            q: 81, // append-blockquotez
             r: 82, // justifyRight
             u: 85  // underline
           };
 
-        this.element.parent('.field').on('keydown.editor', function(e) {
+        currentElement.on('keydown.editor', function(e) {
           e = (e) ? e : window.event;
           keys.charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false);
 
@@ -691,8 +692,8 @@
 
         var currentElement = self.getCurrentElement();
 
-        currentElement.on('mouseup.editor', this.selectionHandler);
-        currentElement.on('keyup.editor', this.selectionHandler);
+        currentElement.off('mouseup.editor keyup.editor')
+          .on('mouseup.editor keyup.editor', this.selectionHandler);
 
         return this;
       },
@@ -1079,6 +1080,7 @@
       },
 
       destroyToolbar: function() {
+        var element = this.getCurrentElement();
         // Unbind all events attached to the old element that involve triggering the toolbar hide/show
         this.toolbar.find('button').data('tooltip').destroy();
         this.toolbar.off('click.editor mousedown.editor');
@@ -1086,7 +1088,7 @@
         this.toolbar = undefined;
         this.element.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
         this.textarea.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
-        this.element.parent('.field').off('keydown.editor');
+        element.off('keydown.editor');
         this.element.prev('.label').off('click.editor');
         $(window).off('resize.editor');
         $.each(this.modals, function(i, modal) {

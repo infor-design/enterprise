@@ -101,9 +101,9 @@ $header-height: 60px;
 
     .title {
       line-height: 38px;
-      margin: 0;
+      margin: 0 !important;
       overflow: visible;
-      padding: 0;
+      padding: 0 !important;
     }
 
     .buttonset {
