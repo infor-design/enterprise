@@ -404,7 +404,7 @@
             self.close();
           });
 
-          self.element.trigger('open', [self.menu]);
+          self.element.triggerHandler('open', [self.menu]);
         }, 400);
 
         //Hide on iFrame Clicks - only works if on same domain

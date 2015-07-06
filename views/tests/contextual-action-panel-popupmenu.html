@@ -117,12 +117,12 @@
 
 <script>
 $(document).ready(function() {
-  $('#popup-order').popupmenu().on('open', function (e) {
-    e.stopPropagation();
+  $('#popup-order').popupmenu().on('open', function (e, args) {
+   console.log('Popupmenu opened!', args);
   });
 
   $('.contextual-action-panel').on('open', function () {
-    alert('Modal opened!');
+    console.log('Modal opened!');
   });
 });
 </script>
