@@ -1,6 +1,5 @@
-<body class="no-scroll">
+{{> includes/masthead}}
 
-  {{> includes/masthead}}
   <header class="header is-sticky">
     <div class="toolbar">
       <div class="title">
@@ -60,35 +59,46 @@
               <div class="title">13 Results</div>
 
               <div class="buttonset">
-                <button class="btn-menu" type="button">
+                <button type="button" class="btn-menu">
                   <span>Brand</span>
-                  <svg class="icon">
+                  <svg class="icon" focusable="false" aria-hidden="true">
                     <use xlink:href="#icon-dropdown"></use>
                   </svg>
                 </button>
-                <ul class="popupmenu toolbar-options">
-                  <li class="is-checked"><a href="#">Gravel</a></li>
-                  <li><a href="#">Natural</a></li>
+                <ul class="popupmenu is-padded">
+                  <li><a href="#">Action One</a></li>
+                  <li class="submenu">
+                    <a href="#">Action Two</a>
+                     <ul class="popupmenu is-padded">
+                      <li><a href="#">Sub Action One</a></li>
+                      <li><a href="#">Sub Action Two</a></li>
+                      <li class="is-checked"><a href="#">Sub Option One</a></li>
+                      <li><a href="#">Sub Option Two</a></li>
+                      <li><a href="#">Sub Option Three</a></li>
+                    </ul>
+                  </li> 
+                  <li class="is-checked"><a href="#">Action Three</a></li>
                 </ul>
 
-                <button class="btn-menu" type="button">
+
+                <button type="button" class="btn-menu">
                   <span>Model</span>
-                  <svg class="icon">
+                  <svg class="icon" focusable="false" aria-hidden="true">
                     <use xlink:href="#icon-dropdown"></use>
                   </svg>
                 </button>
-                <ul class="popupmenu toolbar-options">
+                <ul class="popupmenu is-padded">
                   <li><a href="#">Colored</a></li>
                   <li class="is-checked"><a href="#">Simple</a></li>
                 </ul>
 
-                <button class="btn-menu" type="button">
+                <button type="button" class="btn-menu">
                   <span>Price</span>
-                  <svg class="icon">
+                  <svg class="icon" focusable="false" aria-hidden="true">
                     <use xlink:href="#icon-dropdown"></use>
                   </svg>
                 </button>
-                <ul class="popupmenu toolbar-options">
+                <ul class="popupmenu is-padded">
                   <li class="is-checked"><a href="#">Price low to high</a></li>
                   <li><a href="#">Price high to low</a></li>
                   <li><a href="#">Items with sale prices</a></li>
@@ -97,65 +107,13 @@
               </div>
 
             </div>
-            <!-- ############################################################### -->
 
             <!--This is only needed because it renders first on the server on the first one-->
             {{={{{ }}}=}}
 
-            <!-- <script id="m3-search-results-tmpl" type="text/html">
-              <ul>
-                {{#dataset}}
-                  <li>
-                    <div class="row">
-
-                      <div class="one columns">
-                          <img alt="Placeholder Image" src="{{thumb}}" />
-                      </div>
-
-                      <div class="three columns">
-                        <p><a href="#" class="hyperlink">{{productName}}</a></p>
-                        <ul class="info">
-                          <li>Product ID: <strong>{{productId}}</strong></li>
-                          <li>In Stock: <strong>{{inStock}}</strong></li>
-                        </ul>
-                      </div>
-
-                      <div class="two columns empty">&nbsp;</div>
-
-                      <div class="one columns">
-                        <p>{{unitPrice}}</p>
-                      </div>
-
-                      <div class="two columns">
-                        <div class="field">
-                          <label class="audible" for="select-{{id}}">Units</label>
-                          <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 50px">
-                            <option>lb.</option>
-                            <option>ton</option>
-                            <option>palette</option>
-                            <option>case</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="one columns">
-                        <div class="field">
-                          <input type="text" id="quantity-{{id}}" class="input-xs" name="quantity-{{id}}" value="0" />
-                          <label class="audible" for="quantity-{{id}}">Quantity</label>
-                        </div>
-                      </div>
-
-                      <div class="two columns">
-                        <button class="btn-primary" type="button">Add Item</button>
-                      </div>
-                    </div>
-                  </li>
-                {{/dataset}}
-              </ul>
-            </script> -->
 
             <script id="m3-search-results-tmpl" type="text/html">
-              <table role="grid" class="tableview listview-table">
+              <table role="grid" class="listview-table">
                 <thead>
                   <tr>
                     <th scope="col" role="columnheader" class="audible">Thumbnail</th>
@@ -181,7 +139,7 @@
                     <td>
                       <div class="field">
                         <label class="audible" for="select-{{id}}">Units</label>
-                        <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 50px">
+                        <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 75px">
                           <option>lb.</option>
                           <option>ton</option>
                           <option>palette</option>
@@ -195,63 +153,15 @@
                         <label class="audible" for="quantity-{{id}}">Quantity</label>
                       </div>
                     </td>
-                    <td><button class="btn-primary" type="button">Add Item</button></td>
+                    <td class="l-right-text"><button class="btn-{{action}}" type="button">Add Item</button></td>
                   </tr>
-
-
-                  <!--<tr>
-                    <div class="row">
-
-                      <div class="one columns">
-                          <img alt="Placeholder Image" src="{{thumb}}" />
-                      </div>
-
-                      <div class="three columns">
-                        <p><a href="#" class="hyperlink">{{productName}}</a></p>
-                        <ul class="info">
-                          <li>Product ID: <strong>{{productId}}</strong></li>
-                          <li>In Stock: <strong>{{inStock}}</strong></li>
-                        </ul>
-                      </div>
-
-                      <div class="two columns empty">&nbsp;</div>
-
-                      <div class="one columns">
-                        <p>{{unitPrice}}</p>
-                      </div>
-
-                      <div class="two columns">
-                        <div class="field">
-                          <label class="audible" for="select-{{id}}">Units</label>
-                          <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 50px">
-                            <option>lb.</option>
-                            <option>ton</option>
-                            <option>palette</option>
-                            <option>case</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="one columns">
-                        <div class="field">
-                          <input type="text" id="quantity-{{id}}" class="input-xs" name="quantity-{{id}}" value="0" />
-                          <label class="audible" for="quantity-{{id}}">Quantity</label>
-                        </div>
-                      </div>
-
-                      <div class="two columns">
-                        <button class="btn-primary" type="button">Add Item</button>
-                      </div>
-                    </div>
-                  </li>-->
                 {{/dataset}}
                 </tbody>
               </table>
             </script>
 
-            <div class="listview" id="m3-search-results-products" data-tmpl="m3-search-results-tmpl" data-dataset="/api/product"></div>
+            <div class="listview tableview" id="m3-search-results-products" data-tmpl="m3-search-results-tmpl" data-dataset="/api/product" data-options="{'selectable': false}"></div>
 
-            <!-- ############################################################### -->
           </div>
 
           <div id="tabs-results-companies" class="tab-panel">

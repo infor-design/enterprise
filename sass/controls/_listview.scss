@@ -12,10 +12,10 @@ $listview-selected-text-color: $inverse-color;
   width: 100%;
 
   .listview-heading {
-    color: $font-color-extrahighcontrast;
-    @include font-size(16);
-    font-weight: lighter;
     @include ellipsis();
+    @include font-size(16);
+    color: $font-color-extrahighcontrast;
+    font-weight: lighter;
   }
 
   .listview-subheading {
@@ -24,8 +24,8 @@ $listview-selected-text-color: $inverse-color;
   }
 
   .listview-micro {
-    color: $font-color;
     @include font-size(12);
+    color: $font-color;
     line-height: 18px;
   }
 
@@ -40,15 +40,15 @@ $listview-selected-text-color: $inverse-color;
   }
 
   li {
+    @include transition(background-color .15s ease 0s);
     border: 1px solid transparent;
     border-bottom: 1px solid $graphite02;
     color: $font-color;
     padding: 20px 20px 15px;
-    @include transition(background-color .15s ease 0s);
 
     &:after {
-      content: '';
       clear: both;
+      content: '';
       display: inline;
     }
 
@@ -58,11 +58,8 @@ $listview-selected-text-color: $inverse-color;
       outline: none;
 
       &:focus {
-        border: 1px solid $primary-color;
         //@include css3(box-shadow, 0 0 1px 1px $primary-color inset);
-        &.is-selected {
-          border: 1px solid transparent;
-        }
+        border: 1px solid $primary-color;
       }
 
     }
@@ -72,7 +69,7 @@ $listview-selected-text-color: $inverse-color;
       padding: 15px 20px 15px 17px;
     }
 
-    .icon-close {
+    .btn-icon {
       top: 5px;
     }
   }
@@ -141,8 +138,8 @@ $listview-selected-text-color: $inverse-color;
 
 
   p {
-    color: $font-color-highcontrast;
     @include font-size(14);
+    color: $font-color-highcontrast;
     line-height: 23px;
   }
 
@@ -152,19 +149,22 @@ $listview-selected-text-color: $inverse-color;
   }
 
   button {
-    background-color: transparent;
-    border-radius: 0;
-    margin: 0 15px;
-
+    margin: 0 25px;
+    
+    &:not(.tableview button) {
+      background-color: transparent;
+      border-radius: 0;
+    }
+    
     svg {
       height: 23px;
-      margin-top: -5px;
+      // margin-top: -5px;
       width: 30px;
     }
   }
 
   // Selection Styling
-  &.is-selectable li,
+  &.is-selectable li ,
   &.is-selectable tr {
     cursor: pointer;
 
@@ -235,7 +235,41 @@ $listview-selected-text-color: $inverse-color;
       top: 22px;
     }
   }
-}
+
+  &.tableview {
+    background-color: transparent;
+
+    .dropdown-wrapper {
+      margin-bottom: 0;
+    }
+
+    .info > li,
+    .info > li:hover {
+      background-color: transparent;
+      border: 0 none;
+      padding: 0 !important;
+    }
+
+    td {
+
+      .row:last-child {
+        margin-bottom: 0;
+      }
+      
+      a {
+        font-size: 1.2em;
+      }
+
+      button {
+        margin: 0;
+      }
+      
+      input[type='text']:not([class='dropdown']) { //text field center-text
+        margin-bottom: 0;
+        text-align: center;
+      }
+    }
+  }}
 
 .listview-toolbar {
   background-color: $primary-color;
@@ -246,8 +280,8 @@ $listview-selected-text-color: $inverse-color;
   z-index: 20;
 
   + .listview {
-    height: calc(100% - 50px);
     @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
+    height: calc(100% - 50px);
   }
 
   // Override Toolbar styles
@@ -286,8 +320,8 @@ $listview-selected-text-color: $inverse-color;
   }
 
   *[class^="btn-"] {
-    color: $listview-selected-text-color;
     @include font-size(12);
+    color: $listview-selected-text-color;
     font-weight: bold;
     min-width: 50px;
     text-transform: uppercase;
@@ -311,8 +345,8 @@ $listview-selected-text-color: $inverse-color;
   }
 
   .listview-selection-count {
-    color: $listview-selected-text-color;
     @include font-size(16);
+    color: $listview-selected-text-color;
     float: left;
     line-height: 54px;
     margin-left: 20px;
@@ -321,78 +355,29 @@ $listview-selected-text-color: $inverse-color;
 
 .listview-table {
   border-collapse: collapse;
-  width: 100%;
+  margin: 2px;
+  width: calc(100% - 4px);
 
   tr,
   td {
     @include font-size(14);
+    @include transition(background-color .15s ease 0s);
     color: $font-color-extrahighcontrast;
     font-weight: lighter;
     padding: 13px 15px;
-    @include transition(background-color .15s ease 0s);
   }
 
   tr {
     border-bottom: 1px solid $graphite02;
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-  }
-
-  tr:hover:not(.is-selected) {
-    background-color: $popupmenu-hover-color;
-    outline: none;
   }
 
   tr:focus {
-    border-left: 1px solid $input-focus-border-color;
-    border-right: 1px solid $input-focus-border-color;
+    // @include css3(box-shadow, 0 0 1px 1px $primary-color inset);
     outline: 1px solid $input-focus-border-color;
   }
 
   th {
     display: none;
-  }
-
-  &.tableview {
-    background-color: $popupmenu-hover-color;
-    border-top: 1px solid $graphite03;
-
-    .btn-primary {
-      background-color: $azure06;
-      float: right;
-      margin: 0;
-      
-      &:active:not([disabled]),
-      &:hover:not([disabled]) {
-        background-color: $azure08;
-      }
-    }
-
-    .dropdown-wrapper {
-      margin-bottom: 0;
-    }
-
-    .info > li {
-      border: 0 none;
-      padding: 0 !important;
-    }
-
-    td {
-      padding: 10px 0;
-      
-      .row:last-child {
-        margin-bottom: 0;
-      }
-      
-      a {
-        font-size: 1.2em;
-      }
-      
-      input[type="text"]:not([class="dropdown"]) {
-        margin-bottom: 0;
-        text-align: center;
-      }
-    }
   }
 
 }
