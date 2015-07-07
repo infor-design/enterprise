@@ -11,7 +11,7 @@
   "jquery": true,
 
   // Define globals exposed by Node.js.
-  "node": true,
+  "node": false,
 
   /*
    * ENFORCING OPTIONS
@@ -64,7 +64,7 @@
   "eqnull": true,
 
   // Allow Some Globals used in tests and packages
-  "predef": ["Tmpl", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Locale", "chai", "assert", "expect", "should", "Editors", "Formatters", "Chart", "angular"],
+  "predef": ["Tmpl", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Locale", "chai", "assert", "expect", "should", "Editors", "Formatters", "Chart", "angular", "jquery", "module", "__dirname", "Buffer", "require"],
 
   "globals": {
     "globals": true,

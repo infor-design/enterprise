@@ -101,7 +101,6 @@
           term = this.searchInput.val();
 
         if (!sourceURL || sourceURL === undefined) {
-          console.warn('No source available for modal search...'); // TODO: Localize;
           return false;
         }
 
@@ -121,7 +120,6 @@
         request.done(function(data) {
           done(term, data);
         }).fail(function() {
-          console.warn('Request to ' + sourceURL + term + ' could not be processed...');
           done(term, []);
         });
       },

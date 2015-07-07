@@ -117,10 +117,10 @@
 
         // If action button menu, append arrow markup
         var containerClass = this.element.parent().attr('class');
-        if (containerClass !==undefined && 
-           (this.element.hasClass('btn-actions') || 
-            this.element.closest('.toolbar') || 
-            containerClass.indexOf('more') >= 0 || 
+        if (containerClass !== undefined &&
+           (this.element.hasClass('btn-actions') ||
+            this.element.closest('.toolbar').length >0 ||
+            containerClass.indexOf('more') >= 0 ||
             containerClass.indexOf('btn-group') >= 0)) {
 
           var arrow = $('<div class="arrow"></div>');

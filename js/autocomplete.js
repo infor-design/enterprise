@@ -265,7 +265,6 @@
               request.done(function(data) {
                 done(buffer, data);
               }).fail(function() {
-                console.warn('Request to ' + sourceURL + buffer + ' could not be processed...');
                 done(buffer, []);
               });
             }

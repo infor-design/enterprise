@@ -536,7 +536,6 @@
           request.done(function(data) {
             done(data);
           }).fail(function() {
-            console.warn('Request to ' + str + ' could not be processed...');
             done('');
           });
         }

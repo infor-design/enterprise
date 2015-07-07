@@ -97,7 +97,6 @@
           try {
             self.settings.ticks = JSON.parse(self.element.attr('data-ticks'));
           } catch (e) {
-            console.warn('"data-ticks" attribute for element #' + self.element.attr('id') + ' did not contain properly formed JSON, and cannot be used');
           }
         }
 
@@ -109,7 +108,6 @@
           try {
             self.settings.tooltip = JSON.parse(self.element.attr('data-tooltip-content'));
           } catch (e) {
-            console.warn('"data-tooltip-content" attribute for element #' + self.element.attr('id') + ' did not contain properly formed JSON, and cannot be used');
           }
         }
         if (typeof this.settings.tooltip === 'string') {
