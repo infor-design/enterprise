@@ -136,7 +136,9 @@
 
         // Show Menu
         self.swatch.popupmenu({trigger: 'immediate', ariaListbox: true, menuId: 'colorpicker-menu'})
-        .on('open.colorpicker', function () {
+        .on('beforeopen.colorpicker', function () {
+          $('#colorpicker-menu').next('.arrow').remove();
+        }).on('open.colorpicker', function () {
           self.element.parent().addClass('is-open');
         })
         .on('close.colorpicker', function () {

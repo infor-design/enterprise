@@ -14,11 +14,16 @@
 
       {{> includes/applicationmenu}}
 
-      <h1>{{title}}
+      <h1>
       {{#subtitle}}
-      <span class="seperator">|</span>
+        <span class="page-title">{{title}}</span>
+        <span class="section-title">{{subtitle}}</span>
       {{/subtitle}}
-      {{subtitle}}</h1>
+
+      {{^subtitle}}
+        {{title}}
+      {{/subtitle}}
+      </h1>
     </div>
 
     <div class="buttonset">

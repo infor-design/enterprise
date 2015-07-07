@@ -151,7 +151,6 @@
       settings;
 
     if (!prop) {
-      console.warn('$.fn.cssVendorProp was not invoked on element ' + this + ' because no property name was given.');
       return;
     }
 

@@ -1129,7 +1129,6 @@
             request.done(function(data) {
               response(data);
             }).fail(function() {
-              console.warn('Request to ' + sourceURL + ' could not be processed...');
               response([]);
             });
           }

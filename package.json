@@ -40,7 +40,6 @@
     "spec-xunit-file": "0.0.1-1",
     "webdriverio": "^2.4.0",
     "webdriverjs-selenium-bundle": "0.0.2",
-    "zombie": "*",
-    "grunt-remove-logging": "^0.2.0"
+    "zombie": "*"
   }
 }
