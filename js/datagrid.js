@@ -1078,7 +1078,14 @@ $.fn.datagrid = function(options) {
       if (!primer) {
         primer = function(a) {
           a = (a === undefined || a === null ? '' : a);
-          return (typeof a === 'string' ? a.toUpperCase() : a);
+          if (typeof a === 'string') {
+            a = a.toUpperCase();
+
+            if (!isNaN(parseFloat(a))) {
+              a = parseFloat(a);
+            }
+          }
+          return a;
         };
       }
 

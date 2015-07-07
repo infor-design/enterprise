@@ -94,6 +94,12 @@
   }
 }
 
+.ie11 {
+  .slider-wrapper > .tick::after {
+    margin-left: -1px;
+  }
+}
+
 .slider-handle {
   background-color: $slider-active-bg-color;
   border: 6px solid $slider-active-bg-color;
