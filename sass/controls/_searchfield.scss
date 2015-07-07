@@ -38,9 +38,8 @@
   }
 
   .searchfield {
-
-    border: 0;
     @include searchfield-text-style();
+    border: 1px solid transparent;
     cursor: pointer;
     padding-left: 35px;
     transition: width .3s ease-out .1s;
