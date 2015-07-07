@@ -203,44 +203,54 @@ $header-height: 60px;
   }
 
   // Tabs
+  $header-tab-normal-color: $graphite03;
+  $header-tab-hover-color: $inverse-color;
+  $header-tab-alt-bg-color: $inverse-color;
+  $header-tab-alt-normal-color: $graphite06;
+  $header-tab-alt-hover-color: $font-color-highcontrast;
+
   .tab {
     font-weight: bold;
     padding: 6px 6px 7px;
 
     &:before {
-      background-color: rgba($inverse-color, 0);
+      background-color: rgba($header-tab-normal-color, 0);
     }
 
     &:not(.is-disabled):hover {
-      color: $inverse-color;
+      color: $header-tab-hover-color;
 
       &:before {
-        background-color: rgba($inverse-color, 1);
+        background-color: rgba($header-tab-hover-color, 1);
       }
 
       a {
-        color: $inverse-color;
+        color: $header-tab-hover-color;
       }
     }
 
     &.is-selected {
       &:before {
-        background-color: rgba($inverse-color, 1);
+        background-color: rgba($header-tab-hover-color, 1);
       }
 
       &:not(.is-disabled):hover {
         &:before {
-          background-color: rgba($inverse-color, 1);
+          background-color: rgba($header-tab-hover-color, 1);
         }
       }
 
       a:hover {
-        color: $inverse-color;
+        color: $header-tab-hover-color;
+      }
+
+      a {
+        color: $header-tab-hover-color;
       }
     }
 
     a {
-      color: $inverse-color;
+      color: $header-tab-normal-color;
     }
   }
 
@@ -248,69 +258,109 @@ $header-height: 60px;
     padding: 1px 20px 0;
 
     &.alternate {
-      background-color: $inverse-color;
+      background-color: $header-tab-alt-bg-color;
       border-bottom: 1px solid #d8d8d8;
-      padding: 0 20px;
 
       .animated-bar {
-        background-color: rgba($font-color-highcontrast, 1);
-        margin-top: 1px;
+        background-color: rgba($header-tab-alt-hover-color, 1);
+        //margin-top: 1px;
       }
 
       .tab-focus-indicator.is-visible {
-        border-color: $font-color-highcontrast;
+        border-color: $header-tab-alt-hover-color;
       }
 
       .tab {
         &:before {
-          background-color: rgba($font-color-highcontrast, 0);
+          background-color: rgba($header-tab-alt-normal-color, 0);
         }
 
         &:not(.is-disabled):hover {
-          color: $font-color-highcontrast;
+          color: $header-tab-alt-hover-color;
 
           &:before {
-            background-color: rgba($font-color-highcontrast, 1);
+            background-color: rgba($header-tab-alt-hover-color, 1);
           }
 
           a {
-            color: $font-color-highcontrast;
+            color: $header-tab-alt-hover-color;
           }
         }
 
         &.is-selected {
           &:before {
-            background-color: rgba($font-color-highcontrast, 1);
+            background-color: rgba($header-tab-alt-hover-color, 1);
           }
 
           &:not(.is-disabled):hover {
             &:before {
-              background-color: rgba($font-color-highcontrast, 1);
+              background-color: rgba($header-tab-alt-hover-color, 1);
             }
           }
 
           a:hover {
-            color: $font-color-highcontrast;
+            color: $header-tab-alt-hover-color;
           }
         }
 
         a {
-          color: $font-color-highcontrast;
+          color: $header-tab-alt-normal-color;
+        }
+      }
+
+      .tab-more {
+        color: $header-tab-alt-normal-color;
+
+        .icon {
+          fill: $header-tab-alt-normal-color;
+        }
+
+        &.popup-is-open,
+        &.is-selected,
+        &:hover {
+          span {
+            color: $header-tab-alt-hover-color;
+          }
+
+          svg {
+            fill: $header-tab-alt-hover-color;
+          }
         }
       }
     }
 
     .animated-bar {
-      background-color: $inverse-color;
+      background-color: $header-tab-hover-color;
       margin-top: 2px;
     }
 
     .tab-focus-indicator.is-visible {
-      border-color: $inverse-color;
+      border-color: $header-tab-hover-color;
     }
 
     .tab-list {
       border-bottom: 0;
+    }
+  }
+
+  .tab-more {
+    color: $header-tab-normal-color;
+    right: 20px;
+
+    .icon {
+      fill: $header-tab-normal-color;
+    }
+
+    &.popup-is-open,
+    &.is-selected,
+    &:hover {
+      span {
+        color: $header-tab-hover-color;
+      }
+
+      svg {
+        fill: $header-tab-hover-color;
+      }
     }
   }
 

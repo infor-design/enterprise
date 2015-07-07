@@ -113,7 +113,6 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
 
     &.current {
       background-color: $wizard-gray-active-color;
-      border: none;
       color: $wizard-gray-active-color;
 
       .label {
