@@ -571,13 +571,13 @@
 
             if ($(this).attr('id') === 'editor-modal-url') {
               if (!self.selectionRange) {
-                return false;
+                return undefined;
               }
 
               //Toggle linked State
               if (self.isLinkSelected()) {
                 document.execCommand('unlink', false, null);
-                return false;
+                return undefined;
               }
             }
           })
@@ -664,8 +664,14 @@
 
         if (this.sourceViewActive()) {
           this.insertTextAreaContent(input.val(), 'anchor');
-        } else {
-          document.execCommand('createLink', false, input.val());
+        } 
+        else {
+          if (!this.selection.isCollapsed) {
+            document.execCommand('createLink', false, input.val());
+          }
+          else {
+            this.element.prepend('<a href="'+ input.val() +'">'+ input.val() +'</a>');
+          }
           this.bindAnchorPreview();
         }
       },
