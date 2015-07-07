@@ -204,7 +204,9 @@
 
           ['homepage'],
 
-          ['lookup']
+          ['lookup'],
+
+          ['wizard']
         ];
 
         //Do initialization for all the simple controls

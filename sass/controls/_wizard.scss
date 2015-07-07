@@ -1,0 +1,218 @@
+// Wizard Control
+//================================================== //
+
+// NOTE: See also "_header.scss" for Wizard styles that are specific to the header control.
+
+$wizard-white-active-color: $azure06;
+$wizard-white-bg: $white;
+$wizard-gray-active-color: $azure06;
+$wizard-gray-bg: $graphite01;
+$wizard-gray-bar-bg: $graphite02;
+$wizard-blue-bg: $azure06;
+$wizard-blue-bar-bg: #005689;
+$wizard-blue-inactive-color: #bde7ff;
+$wizard-blue-active-color: $white;
+
+$wizard-height: 164px;
+$wizard-tick-border-width: 4px;
+$wizard-tick-size: 18px;
+$wizard-focus-state-size: ($wizard-tick-size * 1.5);
+
+.wizard-header {
+  background-color: $wizard-gray-bg;
+  padding: (($wizard-height/2) - $wizard-tick-border-width) ($wizard-height/4);
+  position: relative;
+
+  .bar {
+    background-color: $wizard-gray-bar-bg;
+    height: 4px;
+    position: relative;
+  }
+
+  .completed-range {
+    background-color: $wizard-gray-active-color;
+    height: 4px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    @include transition(width 200ms cubic-bezier(.17, .04, .03, .94));
+    width: 0%;
+  }
+
+  .tick {
+    background-color: $wizard-gray-bg;
+    border-radius: ($wizard-tick-size/2);
+    display: inline-block;
+    height: $wizard-tick-size;
+    margin-left: -($wizard-tick-size/2) + ($wizard-tick-border-width/2);
+    margin-top: -($wizard-tick-size/2) + ($wizard-tick-border-width/2);
+    position: absolute;
+    width: $wizard-tick-size;
+
+    // Border for incomplete or non-current ticks
+    &::after {
+      border: $wizard-tick-border-width solid $wizard-gray-bar-bg;
+      border-radius: ($wizard-tick-size/2);
+      content: '';
+      height: $wizard-tick-size - $wizard-tick-border-width*2;
+      left: 0;
+      position: absolute;
+      top: 0;
+      @include transition(border 200ms cubic-bezier(.17, .04, .03, .94),
+        left 200ms cubic-bezier(.17, .04, .03, .94),
+        top 200ms cubic-bezier(.17, .04, .03, .94));
+      width: $wizard-tick-size - ($wizard-tick-border-width * 2);
+    }
+
+    // Default Placement for Focus State
+    &::before {
+      border: 1px solid rgba($wizard-white-active-color, 0);
+      border-radius: 0;
+      content: '';
+      height: 0;
+      left: $wizard-tick-size/2;
+      position: absolute;
+      top: $wizard-tick-size/2;
+      @include transition(border 200ms cubic-bezier(.17, .04, .03, .94),
+        border-radius 200ms cubic-bezier(.17, .04, .03, .94),
+        height 200ms cubic-bezier(.17, .04, .03, .94),
+        left 200ms cubic-bezier(.17, .04, .03, .94),
+        top 200ms cubic-bezier(.17, .04, .03, .94),
+        width 200ms cubic-bezier(.17, .04, .03, .94));
+      width: 0;
+    }
+
+    &:focus::before {
+      border: 1px solid rgba($wizard-white-active-color, 1);
+      border-radius: ($wizard-focus-state-size/2) + $wizard-tick-border-width;
+      height: $wizard-focus-state-size;
+      left: -(round(($wizard-focus-state-size - $wizard-tick-size)/2));
+      top: -(round(($wizard-focus-state-size - $wizard-tick-size)/2));
+      width: $wizard-focus-state-size;
+    }
+
+    .label {
+      color: $font-color-lowcontrast;
+      position: absolute;
+      top: -($wizard-tick-size * 2);
+      white-space: nowrap;
+    }
+
+    &.current,
+    &.complete {
+      &::after {
+        border: 0;
+        left: $wizard-tick-border-width;
+        top: $wizard-tick-border-width;
+      }
+
+      .label {
+        top: -($wizard-tick-size * 2);
+      }
+    }
+
+    &.current {
+      background-color: $wizard-gray-active-color;
+      border: none;
+      color: $wizard-gray-active-color;
+
+      .label {
+        color: $wizard-gray-active-color;
+      }
+    }
+
+    &.complete {
+      background-color: $wizard-gray-active-color;
+      color: $font-color-extrahighcontrast;
+
+      .label {
+        color: $font-color-extrahighcontrast;
+      }
+    }
+  }
+
+  //----------------
+  // White Color Scheme
+  //----------------
+  &.white {
+    background-color: $wizard-white-bg;
+
+    .tick:not(.current):not(.complete) {
+      background-color: $wizard-white-bg;
+    }
+
+    // Note: Gray and White Designs from the original comp use the same element colors
+    // If that changes, modify them here
+  }
+
+  //----------------
+  // Blue BG Color Scheme
+  //----------------
+  &.blue {
+    background-color: $wizard-blue-bg;
+
+    .bar {
+      background-color: $wizard-blue-bar-bg;
+    }
+
+    .completed-range {
+      background-color: $wizard-blue-active-color;
+    }
+
+    .tick {
+      background-color: $wizard-blue-bg;
+
+      &::after {
+        border: $wizard-tick-border-width solid $wizard-blue-bar-bg;
+      }
+
+      &::before {
+        border: 1px solid rgba($wizard-blue-active-color, 0);
+      }
+
+      &:focus::before {
+        border: 1px solid rgba($wizard-blue-active-color, 1);
+      }
+
+      .label {
+        color: $wizard-blue-inactive-color;
+      }
+
+      &.current,
+      &.complete {
+        &::after {
+          border: 0;
+        }
+      }
+
+      &.current {
+        background-color: $wizard-blue-active-color;
+        color: $wizard-blue-active-color;
+
+        .label {
+          color: $wizard-blue-active-color;
+        }
+      }
+
+      &.complete {
+        background-color: $wizard-blue-active-color;
+        color: $wizard-blue-active-color;
+
+        .label {
+          color: $wizard-blue-active-color;
+        }
+      }
+    }
+  }
+}
+
+// Hide the text from the non-current ticks in small form factors
+@include respond-to(phone) {
+  .wizard-header {
+    .tick:not(.current) {
+      .label {
+        visibility: hidden;
+      }
+    }
+  }
+}
