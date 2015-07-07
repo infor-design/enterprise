@@ -581,9 +581,11 @@
               }
             }
           })
+          .off('open')
           .on('open', function () {
             $(this).find('input:first').focus().select();
           })
+          .off('close')
           .on('close', function (e, isCancelled) {
             self.restoreSelection(self.savedSelection);
 
