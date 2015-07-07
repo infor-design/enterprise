@@ -107,12 +107,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    removelogging: {
-      dist: {
-        src: 'dist/js/sohoxi.js',
-        dest: 'dist/js/sohoxi.js'
-      }
-    },
     uglify: {
       dist: {
         options: {
@@ -230,7 +224,6 @@ module.exports = function(grunt) {
     'strip_code',
     'concat',
     'clean',
-    //When we remove the console.logs 'removelogging',
     'uglify',
     'copy:main',
     'cssmin',
