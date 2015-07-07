@@ -205,6 +205,79 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
   }
 }
 
+// Styles used by the Header Wizard Control
+$header-wizard-bar: $slate08;
+$header-wizard-inactive-color: $slate03;
+$header-wizard-active-color: $white;
+
+.header {
+  .wizard {
+    margin: 0 20px;
+  }
+
+  .wizard-header {
+    background-color: transparent;
+    padding: (($wizard-height/8) - $wizard-tick-border-width) ($wizard-height/4) (($wizard-height/4) - $wizard-tick-border-width);
+
+    .bar {
+      background-color: $header-wizard-bar;
+    }
+
+    .completed-range {
+      background-color: $header-wizard-active-color;
+    }
+
+    .tick {
+      background-color: $header-bg-color;
+
+      &::after {
+        border: $wizard-tick-border-width solid $header-wizard-bar;
+      }
+
+      &::before {
+        border: 1px solid rgba($header-wizard-active-color, 0);
+      }
+
+      &:focus {
+        &::before {
+          border: 1px solid rgba($header-wizard-active-color, 1);
+        }
+      }
+
+      .label {
+        color: $header-wizard-inactive-color;
+        top: $wizard-tick-size * 2;
+      }
+
+      &.current,
+      &.complete {
+        &::after {
+          border: 0;
+        }
+      }
+
+      &.current {
+        background-color: $header-wizard-active-color;
+        color: $header-wizard-active-color;
+
+        .label {
+          color: $header-wizard-active-color;
+        }
+      }
+
+      &.complete {
+        background-color: $header-wizard-active-color;
+        color: $header-wizard-active-color;
+
+        .label {
+          color: $header-wizard-active-color;
+        }
+      }
+    }
+  }
+
+}
+
 // Hide the text from the non-current ticks in small form factors
 @include respond-to(phone) {
   .wizard-header {

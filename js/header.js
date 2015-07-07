@@ -29,6 +29,7 @@
           useBackButton: true, // If true, displays a back button next to the title in the header toolbar
           useBreadcrumb: true, // If true, displays a breadcrumb on drilldown
           tabs: null, // If defined as an array of Tab objects, displays a series of tabs that represent application sections
+          wizardTicks: null, // If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
           useAlternate: true // If true, use alternate background/text color for sub-navigation areas
         },
         settings = $.extend({}, defaults, options);
@@ -61,7 +62,8 @@
         this.settings.useBreadcrumb = this.element.attr('data-use-breadcrumb') ? this.element.attr('data-use-breadcrumb') === 'true' : this.settings.useBreadcrumb;
         this.settings.useAlternate = this.element.attr('data-use-alternate') ? this.element.attr('data-use-alternate') === 'true' : this.settings.useAlternate;
 
-        this.settings.tabs = !Array.isArray(this.settings.tabs) ? undefined : this.settings.tabs;
+        this.settings.tabs = !Array.isArray(this.settings.tabs) ? null : this.settings.tabs;
+        this.settings.wizardTicks = !Array.isArray(this.settings.wizardTicks) ? null : this.settings.wizardTicks;
 
         this.titleText = this.element.find('.title > h1');
 
@@ -92,6 +94,10 @@
         // Application Tabs would be available from the Application Start, so activate them during build if they exist
         if (this.settings.tabs && this.settings.tabs.length) {
           this.buildTabs();
+        }
+
+        if (this.settings.wizardTicks && this.settings.wizardTicks.length) {
+          this.buildWizard();
         }
 
         return this;
@@ -169,6 +175,33 @@
 
         // Invoke Tabs Control
         this.tabsContainer.tabs();
+      },
+
+      buildWizard: function() {
+        this.element.addClass('has-wizard');
+
+        this.wizard = this.element.find('.wizard');
+        if (!this.wizard.length) {
+          this.wizard = $('<div class="wizard"></div>').appendTo(this.element);
+          var header = $('<div class="wizard-header"></div>').appendTo(this.wizard),
+            bar = $('<div class="bar"></div>').appendTo(header);
+          $('<div class="completed-range"></div>').appendTo(bar);
+
+          // TODO: Flesh this out so the header control can build the Wizard Ticks based on options
+          $('<a href="#" class="tick complete"><span class="label">Context Apps</span></a>').appendTo(bar);
+          $('<a href="#" class="tick complete"><span class="label">Utility Apps</span></a>').appendTo(bar);
+          $('<a href="#" class="tick current"><span class="label">Inbound Configuration</span></a>').appendTo(bar);
+          $('<a href="#" class="tick"><span class="label">OID Mapping</span></a>').appendTo(bar);
+        }
+
+        this.wizard[this.settings.useAlternate ? 'addClass' : 'removeClass']('alternate');
+
+        // NOTE: For Demo Purposes, the shifting forms associated with the Wizard are coded
+        // inside the Nav Patterns Test page.
+        // TODO: Build shifting forms
+
+        // Invoke the Wizard Control
+        this.wizard.wizard();
       },
 
       handleEvents: function() {
@@ -325,6 +358,7 @@
 
         this.removeBreadcrumb();
         this.removeTabs();
+        this.removeWizard();
         this.removeButton();
 
         this.element.trigger('afterReset');
@@ -361,14 +395,14 @@
             timeout = null;
           }
 
-          self.element.off(transitionEnd + '.header');
+          self.element.off(transitionEnd + '.breadcrumb-header');
           self.breadcrumb.off().remove();
           self.breadcrumb = $();
         }
 
         self.element.removeClass('has-breadcrumb');
         if (this.breadcrumb.is(':not(:hidden)')) {
-          this.element.one(transitionEnd + '.header', destroyBreadcrumb);
+          this.element.one(transitionEnd + '.breadcrumb-header', destroyBreadcrumb);
           timeout = setTimeout(destroyBreadcrumb, 300);
         } else {
           destroyBreadcrumb();
@@ -390,7 +424,7 @@
             timeout = null;
           }
 
-          self.element.off(transitionEnd + '.header');
+          self.element.off(transitionEnd + '.tabs-header');
           self.tabsContainer.data('tabs').destroy();
           self.tabsContainer.remove();
           self.tabsContainer = null;
@@ -402,10 +436,41 @@
 
         this.element.removeClass('has-tabs');
         if (this.tabsContainer.is(':not(:hidden)')) {
-          this.element.one(transitionEnd + '.header', destroyTabs);
+          this.element.one(transitionEnd + '.tabs-header', destroyTabs);
           timeout = setTimeout(destroyTabs, 300);
         } else {
           destroyTabs();
+        }
+      },
+
+      removeWizard: function() {
+        if (!this.wizard || !this.wizard.length) {
+          return;
+        }
+
+        var self = this,
+          transitionEnd = $.fn.transitionEndName(),
+          timeout;
+
+        function destroyWizard() {
+          if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+          }
+
+          self.element.off(transitionEnd + '.wizard-header');
+          self.wizard.data('wizard').destroy();
+          self.wizard.remove();
+          self.wizard = null;
+
+        }
+
+        this.element.removeClass('has-wizard');
+        if (this.wizard.is(':not(:hidden)')) {
+          this.element.one(transitionEnd + '.wizard-header', destroyWizard);
+          timeout = setTimeout(destroyWizard, 300);
+        } else {
+          destroyWizard();
         }
       },
 

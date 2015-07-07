@@ -289,6 +289,16 @@ body.no-scroll {
     }
   }
 
+  &.has-wizard {
+    height: 144px;
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 144px);
+      margin-top: 144px;
+    }
+  }
+
 }
 
 .masthead {
@@ -312,6 +322,16 @@ body.no-scroll {
       + .application-menu + .page-container {
         height: calc(100% - 130px);
         margin-top: 130px;
+      }
+    }
+
+    &.has-wizard {
+      height: 179px;
+
+      + .page-container,
+      + .application-menu + .page-container {
+        height: calc(100% - 179px);
+        margin-top: 179px;
       }
     }
 

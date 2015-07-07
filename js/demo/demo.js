@@ -321,6 +321,8 @@ $(function($) {
           case 'tabs':
           btns.not('#navpattern-reset').disable();
           break;
+          case 'wizard':
+          btns.not('#navpattern-reset').disable();
         }
       }
 
@@ -344,13 +346,15 @@ $(function($) {
       .data('demoOptions', {
         tabs: null,
         useBackbutton: true,
-        useBreadcrumb: false
+        useBreadcrumb: false,
+        wizardTicks: null
       }).click(navPatternButtonClick);
 
     var drilldownOpts = {
       tabs: null,
       useBackbutton: true,
-      useBreadcrumb: false
+      useBreadcrumb: false,
+      wizardTicks: null
     };
 
     $('#navpattern-drilldown-1')
@@ -375,7 +379,8 @@ $(function($) {
     var breadcrumbOpts = {
       tabs: null,
       useBackbutton: true,
-      useBreadcrumb: true
+      useBreadcrumb: true,
+      wizardTicks: null
     };
 
     $('#navpattern-breadcrumb-1').data('demoOptions', breadcrumbOpts)
@@ -410,12 +415,25 @@ $(function($) {
     var createTabsOpts = {
       useBreadcrumb: false,
       useBackbutton: false,
-      tabs: [1,2] // NOTE: these settings aren't final.
+      tabs: [1,2], // NOTE: these settings aren't final.
+      wizardTicks: null
     };
 
     $('#navpattern-create-tabs')
       .data('demoOptions', createTabsOpts)
       .data('navType', 'tabs')
+      .click(navPatternButtonClick);
+
+    var createWizardOpts = {
+      useBreadcrumb: false,
+      useBackbutton: false,
+      tabs: null,
+      wizardTicks: [1,2] // NOTE: these settings aren't final.
+    };
+
+    $('#navpattern-create-wizard')
+      .data('demoOptions', createWizardOpts)
+      .data('navType', 'wizard')
       .click(navPatternButtonClick);
 
   });
