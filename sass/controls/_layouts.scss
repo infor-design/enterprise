@@ -280,12 +280,22 @@ body.no-scroll {
 
   &.has-breadcrumb,
   &.has-tabs {
-    height: 108px;
+    height: 104px;
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 108px);
-      margin-top: 108px;
+      height: calc(100% - 104px);
+      margin-top: 104px;
+    }
+  }
+
+  &.has-wizard {
+    height: 144px;
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 144px);
+      margin-top: 144px;
     }
   }
 
@@ -310,8 +320,18 @@ body.no-scroll {
     &.has-tabs {
       + .page-container,
       + .application-menu + .page-container {
-        height: calc(100% - 134px);
-        margin-top: 134px;
+        height: calc(100% - 130px);
+        margin-top: 130px;
+      }
+    }
+
+    &.has-wizard {
+      height: 179px;
+
+      + .page-container,
+      + .application-menu + .page-container {
+        height: calc(100% - 179px);
+        margin-top: 179px;
       }
     }
 
