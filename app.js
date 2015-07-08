@@ -50,6 +50,8 @@ app.configure(function() {
 
   app.get('/controls/*', function(req, res) {
     var end = req.url.replace('/controls/','');
+    controlOptions.subtitle = end.charAt(0).toUpperCase() + end.slice(1);
+
     res.render('controls/' + end, controlOptions);
   });
 

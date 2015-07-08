@@ -36,14 +36,14 @@ $header-height: 60px;
 
   .page-title {
     @include font-size(15);
-    color: $slate02;
-    position: absolute;
+    color: $header-icon-color;
     left: 5px;
+    position: absolute;
     top: -11px;
 
     + .section-title {
-      position: absolute;
       left: 5px;
+      position: absolute;
       top: 7px;
     }
   }
@@ -84,12 +84,30 @@ $header-height: 60px;
       box-shadow: none;
     }
 
-    .ripple {
-      background-color: #ffffff;
+    .ripple-effect {
+      background-color: $header-icon-color;
     }
 
     span {
       color: #ffffff;
+    }
+  }
+
+  .btn,
+  .btn-tertiary {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    color: $header-icon-color;
+
+    &:focus,
+    &:hover,
+    &:active {
+      color: $white;
+    }
+
+    .ripple-effect {
+      background-color: $header-icon-color;
     }
   }
 
@@ -329,7 +347,6 @@ $header-height: 60px;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
 }
 
 // Print Style Sheet

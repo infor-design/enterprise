@@ -40,7 +40,7 @@
   }
 
   .data {
-    color: $font-color-extrahighcontrast;
+    color: $font-color-highcontrast;
     display: table-cell;
     line-height: 1.3em;
     margin-bottom: 20px;
@@ -48,9 +48,8 @@
   }
 
   i {
-    color: $font-color-lowcontrast;
+    color: $font-color;
     font-style: normal;
-    margin-left: 5px;
   }
 }
 

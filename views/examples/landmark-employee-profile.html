@@ -1,5 +1,45 @@
 {{> includes/masthead}}
-{{> includes/header}}
+<header class="header is-personalizable" role="banner">
+  <a href="#maincontent" class="skip-link">skip to main content</a>
+
+  <div class="toolbar">
+    <div class="title">
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Show navigation</span>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+
+      {{> includes/applicationmenu}}
+
+      <h1>
+      {{#subtitle}}
+        <span class="page-title">Employees</span>
+        <span class="section-title">Jason Ayers</span>
+      {{/subtitle}}
+
+      {{^subtitle}}
+        {{title}}
+      {{/subtitle}}
+      </h1>
+    </div>
+
+    <div class="buttonset">
+     <button class="btn-tertiary" type="button">
+        Add Address
+      </button>
+      <button class="btn" type="button">
+        Save
+      </button>
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+
+</header>
 
 <div id="maincontent" class="two-column page-container fixed scrollable">
 
