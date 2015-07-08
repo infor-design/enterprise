@@ -102,7 +102,8 @@ module.exports = function(grunt) {
             'temp/amd/toolbar.js',
             'temp/amd/tooltip.js',
             'temp/amd/tree.js',
-            'temp/amd/validation.js'
+            'temp/amd/validation.js',
+            'temp/amd/wizard.js'
           ]
         }
       }

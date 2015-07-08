@@ -91,6 +91,7 @@
   padding: 5px 6px 7px;
   position: relative;
   @include css3(transition, background-color .25s ease);
+  text-overflow: ellipsis;
 
   > * {
     vertical-align: middle;
@@ -269,10 +270,10 @@
   display: inline-block;
   @include font-size(14);
   max-width: 102px;
-  padding: 9px 0 5px 14px;
+  padding: 3px 0 0 14px;
   position: absolute;
   right: 0;
-  top: 0;
+  top: -4px;
   @include css3(transition, background-color .25s ease);
   visibility: hidden;
 
@@ -339,7 +340,8 @@
     }
 
     .tab-more {
-      padding: 16px 0 16px 14px;
+      padding: 6px 0 6px 14px;
+      top: 8px;
     }
 
     .tab {
@@ -440,7 +442,7 @@
 #tab-container-popupmenu li.is-selected {
   background-color: $tab-selected-color;
 
-  a {
+  > a {
     color: $inverse-color;
 
     &:before {  //Removes default check icon

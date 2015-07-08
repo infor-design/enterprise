@@ -131,7 +131,7 @@
         this.element.attr('aria-haspopup', true)
           .attr('aria-expanded', 'false');
 
-        this.element.attr('aria-owns', id);
+        this.element.attr('aria-controls', id);
 
         this.menu.find('li').attr('role', 'presentation');
         this.menu.find('.popupmenu').parent().parent().addClass('submenu');
@@ -619,7 +619,7 @@
 
         this.detach();
         this.element
-          .removeAttr('aria-owns')
+          .removeAttr('aria-controls')
           .removeAttr('aria-expanded')
           .removeAttr('aria-haspopup')
           .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');

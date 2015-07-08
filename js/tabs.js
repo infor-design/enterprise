@@ -811,6 +811,11 @@
                 // on the "select" event in context of the original button
               popupLi.children('a').removeAttr('onclick');
             }
+            if ($(item).is('.has-popupmenu')) {
+              $('#' + $(item).attr('aria-controls')).clone()
+                .removeClass('has-popupmenu')
+                .insertAfter(popupLi.children('a'));
+            }
           }
         });
 
@@ -836,13 +841,14 @@
 
         function selectMenuOption(e, anchor) {
           var href = anchor.attr('href'),
-            tab = self.getTabFromId(href.substr(1, href.length)),
-            a = tab.children('a');
+            id = href.substr(1, href.length),
+            tab = self.getTabFromId(id) || $(),
+            a = tab ? tab.children('a') : $();
 
-          self.activate(anchor.attr('href'));
+          self.activate(href);
 
           // Fire an onclick event associated with the original tab from the spillover menu
-          if (tab && typeof a[0].onclick === 'function') {
+          if (tab.length && a.length && typeof a[0].onclick === 'function') {
             a[0].onclick.apply(a[0]);
           }
         }
@@ -919,7 +925,7 @@
             // If the last item in the popup menu is already focused, close the menu and focus
             // on the first visible item in the tabs list.
             var last = menu.find('li.is-selected:last-child');
-            if (last.length > 0) {
+            if (last.length > 0 && last.is(':not(.submenu)')) {
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
@@ -940,16 +946,12 @@
               self.tablist.children('.is-selected').children('a').focus();
               break;
             case 37: // left
-              e.stopPropagation();
-              e.preventDefault();
               $(document).trigger({type: 'keydown.popupmenu', which: 38});
               break;
             case 38: // up
               prevMenuItem();
               break;
             case 39: // right
-              e.stopPropagation();
-              e.preventDefault();
               $(document).trigger({type: 'keydown.popupmenu', which: 40});
               break;
             case 40: // down
@@ -1054,9 +1056,15 @@
           width = width + 32;
         }
         if (target.is('.tab-more')) {
-          height = height - 6;
-          width = width + 11;
-          pos.top = pos.top + 6;
+          if (this.settings.tabCounts) {
+            height = height - 4;
+            width = width + 11;
+            pos.top = pos.top + 2;
+          } else {
+            height = height - 10;
+            width = width + 11;
+            pos.top = pos.top + 5;
+          }
         }
 
         this.focusState.css({

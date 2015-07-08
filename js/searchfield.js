@@ -31,7 +31,7 @@
 
     // Plugin Constructor
     function SearchField(element) {
-      this.settings = settings;
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -69,7 +69,7 @@
         var self = this;
 
         this.element.on('updated.searchfield', function() {
-          self.update();
+          self.updated();
         });
 
         // Insert the "view more results" link on the Autocomplete control's "populated" event
@@ -152,7 +152,7 @@
       },
 
       // Triggered by the "updated.searchfield" event
-      update: function() {
+      updated: function() {
         this.autocomplete.destroy();
         this.build();
       },
@@ -183,7 +183,7 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
-        instance.update();
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new SearchField(this, settings));
       }
