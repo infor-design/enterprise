@@ -172,13 +172,13 @@
         // Lets external code know that we've successully kicked off.
         this.element.trigger('afterStart');
 
-        /*
+        
         // Start the JS Animation Loop if IE9
         if (!$.fn.cssPropSupport('animation')) {
           self.isAnimating = true;
           self.animateWithJS();
         }
-        */
+        
 
         // Triggers complete if the "timeToComplete" option is set.
         if (this.completionTime > 0) {
@@ -270,12 +270,12 @@
             bar5.removeClass('half');
           }
 
-          if (t === 200) {
+          if (t === 103) {
             t = 0;
           }
         }
 
-        setInterval(animate, 5);
+        setInterval(animate, 10);
       },
 
       updated: function() {
