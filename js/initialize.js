@@ -144,6 +144,7 @@
           ['editor'],
 
           //Menu/Split/Action Buttons
+          ['popupmenu', '.btn-filtering'],
           ['popupmenu', '.btn-menu'],
           ['popupmenu', '.btn-actions:not([data-init])'],
 
