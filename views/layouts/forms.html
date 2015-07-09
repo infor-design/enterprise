@@ -4,9 +4,7 @@
 
   <div class="row">
     <div class="twelve columns">
-      <h1>Responsive Form</h1>
-      <span class="label">Normal Stacked Form</span>
-      <hr>
+      <h1 class="fieldset-title">Normal Stacked Form</h1>
     </div>
   </div>
 
@@ -93,9 +91,8 @@
 
   <div class="row">
     <div class="twelve columns">
-      <h1>Responsive Form</h1>
-      <span class="label">Compound Fields</span>
-      <hr>
+      <hr class="fieldset-hr">
+      <h1 class="fieldset-title">Compound Fields</span></h1>
     </div>
   </div>
 
@@ -140,9 +137,8 @@
 
   <div class="row">
     <div class="twelve columns">
-      <h1>Form Sections</h1>
-      <span class="label">Summary Fields</span>
-      <hr>
+      <hr class="fieldset-hr">
+      <h1 class="fieldset-title">Summary Fields</span></h1>
     </div>
   </div>
 
@@ -176,74 +172,72 @@
 
   <div class="row">
     <div class="twelve columns">
-
-      <h1>Form Sections</h1>
-      <span class="label">Radio Sections</span>
-
-      <hr>
+      <hr class="fieldset-hr">
+      <h1 class="fieldset-title">Radio Section</span></h1>
     </div>
   </div>
 
-  <div class="row radiosection">
-    <form id="example-radiosection">
+  <div class="row radio-section">
+    <div class="twelve columns">
 
-      <div class="six columns option">
-        <input type="radio" class="radio handle" name="radio-option" id="price" value="price" checked="checked" />
-        <label for="price" class="radio-label">
-          <span class="in-label">
-            Price: <strong class="large-txt">$12.00</strong> |
-            List Price: <strong class="line-through">$13.47</strong>
-            <span>20,000 lb. in stock</span>
-          </span>
-        </label>
+      <form id="example-radiosection">
+        <div class="six columns option">
+          <input type="radio" class="radio handle" name="radio-option" id="price" value="price" checked="checked" />
+          <label for="price" class="radio-label">
+            <span class="in-label">
+              Price: <strong class="large-txt">$12.00</strong> |
+              List Price: <strong class="line-through">$13.47</strong>
+              <span>20,000 lb. in stock</span>
+            </span>
+          </label>
 
-        <div class="row">
-          <div class="four columns">
-            <div class="field">
-              <label for="values" class="audible">values</label>
-              <input type="text" id="values" name="values" value="1,000" />
-           </div>
-          </div>
-          <div class="four columns">
-            <div class="field">
-              <label for="options" class="audible">options</label>
-              <select id="options" name="options" class="dropdown">
-                <option value="units">units</option>
-                <option value="pieces">pieces</option>
-              </select>
+          <div class="row">
+            <div class="four columns">
+              <div class="field">
+                <label for="values" class="audible">values</label>
+                <input type="text" id="values" name="values" value="1,000" />
+             </div>
+            </div>
+            <div class="four columns">
+              <div class="field">
+                <label for="options" class="audible">options</label>
+                <select id="options" name="options" class="dropdown">
+                  <option value="units">units</option>
+                  <option value="pieces">pieces</option>
+                </select>
+              </div>
+            </div>
+            <div class="four columns">
+              <button class="btn-primary" type="button">Add Item</button>
             </div>
           </div>
-          <div class="four columns">
-            <button class="btn-primary" type="button">Add Item</button>
-          </div>
+
         </div>
+        <div class="six columns option">
+          <input type="radio" class="radio handle" name="radio-option" id="palette" value="palette" />
+          <label for="palette" class="radio-label">
+            <span class="in-label">
+              <strong>1 palette (25 count)</strong>
+              <span>Save 15% when you purchase a palette</span>
+            </span>
+          </label>
 
-      </div>
-
-      <div class="six columns option">
-        <input type="radio" class="radio handle" name="radio-option" id="palette" value="palette" />
-        <label for="palette" class="radio-label">
-          <span class="in-label">
-            <strong>1 palette (25 count)</strong>
-            <span>Save 15% when you purchase a palette</span>
-          </span>
-        </label>
-
-        <div class="row">
-          <div class="four columns">
-            <div class="field">
-              <label for="palette-value" class="audible">palette</label>
-              <input type="text" id="palette-value" name="palette-value" value="0" disabled="disabled" />
+          <div class="row">
+            <div class="four columns">
+              <div class="field">
+                <label for="palette-value" class="audible">palette</label>
+                <input type="text" id="palette-value" name="palette-value" value="0" disabled="disabled" />
+              </div>
+            </div>
+            <div class="four columns">
+              <button class="btn-primary" type="button" disabled="disabled">Add Item</button>
             </div>
           </div>
-          <div class="four columns">
-            <button class="btn-primary" type="button" disabled="disabled">Add Item</button>
-          </div>
+
         </div>
+      </form>
+    </div>
 
-      </div>
-
-    </form>
   </div>
 
 </div>

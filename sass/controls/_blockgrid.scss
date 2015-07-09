@@ -4,24 +4,33 @@
   margin: 0;
   max-width: 100%;
   text-align: left;
-  
+
   .block {
     display: inline-block;
-    margin: 10px 0 0 10px;
+    margin: 20px 0 0 20px;
     text-align: left;
     vertical-align: top;
     width: 200px;
+
+    img {
+      margin-bottom: 10px;
+    }
+
+    a {
+      display: block;
+      margin-bottom: 10px;
+    }
   }
 
-  &.blockgrid-center {
+  &.l-center {
     text-align: center;
   }
 
-  &.blockgrid-150px .block {    
+  &.blockgrid-150px .block {
     width: 150px;
   }
 
-  &.blockgrid-100px .block {    
+  &.blockgrid-100px .block {
     width: 100px;
   }
 }

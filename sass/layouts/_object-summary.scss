@@ -1,6 +1,6 @@
-//  Tiles
+//  Object Summary Pattern
 //================================================== //
-.info-with-image {
+.object-summary {
   margin: 0;
   width: 100%;
 
@@ -18,7 +18,7 @@
   .info {
     margin: 10px 0 0;
     width: 78%;
-    
+
     .asset {
       margin: 20px 0;
     }
@@ -32,7 +32,7 @@
 // Media queries
 //==================================================//
 @include respond-to(tabletdown) {
-  .info-with-image {
+  .object-summary {
 
     .info {
       width: 65%;
@@ -41,15 +41,15 @@
 }
 
 @include respond-to(phone) {
-  .info-with-image {
+  .object-summary {
 
     .image,
     .info {
       display: block;
       width: 100%;
-      
+
       &.image {
-        text-align: center;        
+        margin-bottom: 10px;
       }
     }
   }

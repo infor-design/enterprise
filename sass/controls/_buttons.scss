@@ -52,7 +52,7 @@ button {
   min-height: 36px;
   min-width: 36px;
   padding: 0 5px;
-  
+
   .icon {
     height: 34px;
     vertical-align: middle;
@@ -98,6 +98,7 @@ button {
 
   &[disabled],
   &[disabled]:hover {
+    border-color: $btn-disabled-bg-color;
     background-color: $btn-disabled-bg-color;
     box-shadow: none;
     color: $btn-disabled-color;

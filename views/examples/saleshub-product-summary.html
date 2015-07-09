@@ -1,42 +1,43 @@
 
-  <header class="header is-sticky">
-    <div class="toolbar">
-      <div class="title">
-        <button class="btn-icon application-menu-trigger" type="button">
-          <span class="audible">Application Menu</span>
-          <span class="icon app-header go-back">
-            <span class="one"></span>
-            <span class="two"></span>
-            <span class="three"></span>
-          </span>
-        </button>
+<header class="header is-sticky">
+  <div class="toolbar">
+    <div class="title">
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Application Menu</span>
+        <span class="icon app-header go-back">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
 
-        <h1>Search Results &quot;gravel&quot;</h1>
-      </div>
-
-      <div class="buttonset">
-        <div class="field">
-          <label for="searchfield-header" class="audible">Header Search Field</label>
-          <input placeholder="Type to Search" type="text" class="searchfield" data-options="{clearable: true}">
-        </div>
-        <button class="btn-icon product-nav-btn has-text" type="button">
-          <svg class="icon" focusable="false" aria-hidden="true">
-            <use xlink:href="#icon-add"></use>
-          </svg>
-          <span>New Order</span>
-        </button>
-      </div>
-
-      {{> includes/header-actionbutton}}
+      <h1>Search Results &quot;gravel&quot;</h1>
     </div>
-  </header>
 
-  <div class="page-container two-row scrollable">
+    <div class="buttonset">
+      <div class="field">
+        <label for="searchfield-header" class="audible">Header Search Field</label>
+        <input placeholder="Type to Search" type="text" class="searchfield" data-options="{clearable: true}">
+      </div>
+      <button class="btn-icon product-nav-btn has-text" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true">
+          <use xlink:href="#icon-add"></use>
+        </svg>
+        <span>New Order</span>
+      </button>
+    </div>
 
-    <section id="maincontent" class="main" role="main">
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<div class="page-container scrollable">
+
+  <div class="banner-detail" id="maincontent" role="main">
+    <div class="banner">
       <div class="row">
         <div class="one columns empty">&nbsp;</div>
-        <div class="ten columns info-with-image">
+        <div class="ten columns object-summary">
           <div class="image">
             <img alt="Placeholder Image" src="http://placehold.it/200x200/999999/FFFFFF">
           </div>
@@ -51,7 +52,7 @@
               <p>Shipping Details: <strong>5.1 pounds, Dallas Warehouse</strong> (<a href="#" class="hyperlink">View other locations</a>)</p>
               <p>ASIN: <strong>B006MKZHFU</strong></p>
             </div>
-            <div class="row radiosection">
+            <div class="row radio-section">
 
               <div class="six columns option">
                 <input type="radio" class="radio handle" name="radio-option" id="price" value="price" checked="checked" />
@@ -114,9 +115,8 @@
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="complementary" role="complementary">
+    </div>
+    <div class="detail">
       <div class="row">
         <div class="one columns empty">&nbsp;</div>
         <div class="ten columns blockgrid blockgrid-150px">
@@ -145,7 +145,8 @@
 
         </div>
       </div>
-    </section>
-
+    </div>
   </div>
+
+</div>
 

@@ -139,24 +139,23 @@
 
 // Radio Section
 //================================================== //
-.radiosection {
-  margin-top: 40px; 
+.radio-section {
+  margin-top: 30px;
 
   .option {
-    margin-left: 15px;
     padding-left: 0;
 
     .btn-primary {
       margin-top: inherit;
       padding: inherit;
-      
+
       &[disabled] {
         border: 0;
       }
     }
-      
+
     .large-txt {
-      font-size: 1.15em;
+      @include font-size(14);
     }
 
     .line-through {
@@ -165,10 +164,11 @@
 
     .radio-label {
       margin-bottom: 1.3em;
-      
+
       .in-label {
-        font-size: 1.3em;
+        line-height: 25px;
         margin-top: -5px;
+        @include font-size(14);
       }
 
       span {
@@ -178,7 +178,9 @@
 
     &:first-child {
       position: relative;
-      
+      margin-left: 0;
+      margin-bottom: 30px;
+
       &:after {
         border-right: 1px solid $graphite03;
         bottom: 15px;
@@ -194,7 +196,7 @@
 .info {
   .radiosection .option {
     margin-left: inherit;
-    
+
     &:first-child {
       margin-right: 10px;
     }
@@ -206,7 +208,8 @@
 }
 
 @include respond-to(tabletdown) {
-  .radiosection .option {
+  .radio-section .option {
+    margin-left: 0;
     text-align: left;
     width: 95%;
 
@@ -228,15 +231,6 @@
       padding-top: 15px;
     }
 
-  }
-}
-
-@include respond-to(phone) {
-  .radiosection .option {
-    &:not(:first-child) {
-      margin-top: 15px;
-      padding-top: 15px;
-    }
   }
 }
 

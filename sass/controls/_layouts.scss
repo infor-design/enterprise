@@ -261,10 +261,6 @@ body.no-scroll {
   margin: 0 auto;
   position: absolute;
   width: 100%;
-
-  > .row:first-child {
-    padding-top: 40px;
-  }
 }
 
 .header {
@@ -493,7 +489,8 @@ body.no-scroll {
   .banner {
     background-color: $panel-bg-color;
     border-bottom: 1px solid $panel-border-color;
-    height: 320px;
+    min-height: 320px;
+    padding: 40px 0;
   }
 
   .detail {
@@ -511,29 +508,3 @@ body.no-scroll {
   min-height: calc(100% - 60px);
   min-width: 100%;
 }
-
-// Two-row
-//==============================================================
-.two-row {
-  .main {
-    background-color: $white;
-    padding: 40px 0 1px;
-  }
-
-  .complementary {
-    border-top: 1px solid $graphite02;
-
-    h1 {
-      font-size: 2em;
-    }
-  }
-}
-
-@include respond-to(phone) {
-  .two-row {
-    .main {
-      padding: 0 0 1px;
-    }
-  }
-}
-
