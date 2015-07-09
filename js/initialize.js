@@ -136,7 +136,10 @@
         //Array of plugin names and selectors (optional) for no-configuration initializations
         var simplePluginMappings = [
           //Tabs
-          ['tabs', '.tab-container'],
+          ['tabs', '.tab-container:not(.vertical)'],
+
+          //Vertical Tabs
+          ['verticaltabs', '.tab-container.vertical'],
 
           //Select / DropDowns
           ['dropdown', 'select.dropdown:not(.multiselect)'],

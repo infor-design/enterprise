@@ -1,0 +1,114 @@
+// Vertical Tabs
+//===================================================
+//
+
+.tab-container.vertical {
+  position: relative;
+
+  .tab-list {
+    border-right: 1px solid $tab-border-color;
+    display: inline-block;
+    vertical-align: top;
+    width: 250px;
+  }
+
+  .tab {
+    width: 100%;
+
+    a {
+      @include antialiased();
+      color: $font-color;
+      @include font-size(16);
+      padding: 1em;
+    }
+
+    &:not(.is-disabled):not(.is-selected):hover {
+      color: $tab-hover-color;
+
+      a {
+        color: $tab-hover-color;
+      }
+
+      .icon {
+        fill: $tab-hover-color;
+      }
+    }
+
+    &.is-focused {
+      background-color: $graphite02;
+
+      a {
+        color: $font-color-highcontrast;
+      }
+    }
+
+    &.is-selected {
+      background-color: transparent;
+
+      a {
+        color: $azure06;
+      }
+    }
+
+    &.is-focused.is-selected {
+      background-color: $azure06;
+
+      a {
+        color: $inverse-color;
+      }
+    }
+  }
+
+  // NOTE: It's possible for these tab panels not to be included within the .tab-container class.
+  // If the panels are present inside the .tab-container, these styles will be necessary.
+  .tab-panel {
+    display: inline-block;
+    margin: 0 20px;
+    vertical-align: top;
+    width: calc(100% - 318px);
+  }
+
+  &::after {
+    clear: both;
+    content: '';
+    display: table-cell;
+  }
+
+  .info {
+    display: none;
+    @include font-size(16);
+    margin: 1em;
+    position: relative;
+    text-align: center;
+    line-height: 32px;
+
+    .current-tab {
+
+    }
+
+    .btn-actions {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+
+}
+
+// Tabs collapse into a dropdown on small form-factors
+@include respond-to(phone) {
+  .tab-container.vertical {
+    .tab-panel {
+      display: block;
+      width: auto;
+    }
+
+    .tab-list {
+      display: none;
+    }
+
+    .info {
+      display: block;
+    }
+  }
+}
