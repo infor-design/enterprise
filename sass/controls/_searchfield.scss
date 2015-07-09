@@ -13,6 +13,17 @@
     right: 0;
     top: 9px;
   }
+
+  .icon.close {
+    cursor: pointer;
+    pointer-events: normal;
+    height: 16px;
+    top: 8px;
+
+    &:hover {
+      fill: $white;
+    }
+  }
 }
 
 @mixin searchfield-text-style() {
@@ -89,20 +100,27 @@
 // This variation has different style
 .header {
   .searchfield-wrapper {
-    margin-top: 13px;
+    margin-top: 4px;
   }
 
   .searchfield {
     background-color: $slate08;
-    border-color: transparent transparent $slate09 transparent;
+    border-color: transparent transparent $slate09;
     color: $white;
+    font-weight: normal;
     padding-left: 32px;
     text-transform: none;
 
     + svg.icon {
       fill: $header-icon-color;
       left: 0;
+    }
 
+    &:focus {
+      background-color: $slate08;
+      border-color: transparent transparent $slate09;
+      box-shadow: none;
+      color: $white;
     }
   }
 

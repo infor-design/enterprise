@@ -25,7 +25,8 @@
         defaults = {
           allResultsCallback: undefined,
           source: undefined,
-          template: undefined // Template that can be passed
+          template: undefined, // Template that can be passed
+          clearable: false //Has an X to clear
         },
         settings = $.extend({}, defaults, options);
 
@@ -44,6 +45,8 @@
       },
 
       build: function() {
+        var self = this;
+
         if (!this.element.parent().hasClass('searchfield-wrapper')) {
           this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
         }
@@ -62,6 +65,14 @@
 
         //Prevent browser typahead
         this.element.attr('autocomplete','off');
+
+        if (this.settings.clearable) {
+          var xButton = $('<svg class="icon close"><use xlink:href="#icon-close"/></svg>');
+          this.element.parent('').append(xButton);
+          xButton.on('click.searchfield', function() {
+            self.element.val('').trigger('change');
+          });
+        }
         return this;
       },
 

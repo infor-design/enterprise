@@ -49,6 +49,7 @@
         this.setup();
         this.refresh();
         this.selectedItems = [];
+        console.log(this.settings)
       },
 
       setup: function() {
@@ -215,7 +216,7 @@
                 self.focus(newItem);
               }
             }
-            
+
             e.preventDefault();
           }
 

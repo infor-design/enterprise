@@ -1,10 +1,3 @@
-<div class="row">
-  <div class="twelve columns">
-    <h1>Drop Down List</h1>
-    <span class="label">Select</span>
-    <hr>
-  </div>
-</div>
 
 <div class="row">
   <div class="twelve columns">
@@ -102,13 +95,16 @@
     </div>
 
     <div class="field">
-      <label class="required" for="last-name">Last Name</label>
-      <input type="text" id="last-name" aria-required="true" name="last-name" data-validate="required">
+      <label for="states-disabled" class="label">States (Disabled)</label>
+      <select id="states-disabled" disabled name="states-disabled" class="dropdown">
+        <option value="AL">Alabama</option>
+        <option value="AK" selected>Alaska</option>
+      </select>
     </div>
 
     <div class="field">
-      <label for="states-disabled" class="label">States (Disabled)</label>
-      <select id="states-disabled" disabled name="states-disabled" class="dropdown">
+      <label for="states-readonly" class="label">States (Readonly)</label>
+      <select id="states-readonly" readonly name="states-readonly" class="dropdown">
         <option value="AL">Alabama</option>
         <option value="AK" selected>Alaska</option>
       </select>

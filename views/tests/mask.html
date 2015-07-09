@@ -1,14 +1,10 @@
 <div id="format-container" class="row">
-    <h1>Form</h1>
-    <span class="label">Mask Tests</span>
-    <hr>
 
     <div class="twelve columns">
 
       <form id="format-form" action="#" method="POST">
 
-        <br><br><span class="label">Standard Pattern-Matching Mask</span>
-        <hr>
+        <h1 class="fieldset-title">Standard Pattern-Matching Mask</h1>
         <div class="field">
           <label for="input-masked-phone">Phone Number</label>
           <input type="tel" data-mask="(###) ###-####" id="input-masked-phone" />
@@ -24,8 +20,7 @@
           <input type="text" data-mask="xxxxxxxxxx" id="input-alpha-only" />
         </div>
 
-        <br><br><span class="label">Number Masks</span>
-        <hr>
+        <h1 class="fieldset-title">Number Masks</h1>
         <div class="field">
           <label for="input-masked-number">Number</label>
           <input type="text" inputmode="numeric" data-mask="#,###.00" data-mask-mode="number" id="input-masked-number" placeholder="#,###.00"/>
@@ -53,8 +48,8 @@
         });
       </script>
 
-      <br><br><span class="label">Misc. Used for Functional Tests</span>
-      <hr>
+      <h1 class="fieldset-title">Misc. Used for Functional Tests</h1>
+
       <div class="field">
         <label for="contains-multiple-types">Contains Multiple Editable Types</label>
         <input id="contains-multiple-types" type="text" data-mask="~xxxx : #### +=? **** - x#x#x#" placeholder="~xxxx : #### +=? **** - x#x#x#" />

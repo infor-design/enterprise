@@ -123,8 +123,10 @@
             containerClass.indexOf('more') >= 0 ||
             containerClass.indexOf('btn-group') >= 0)) {
 
-          var arrow = $('<div class="arrow"></div>');
-          this.menu.parent('.popupmenu-wrapper').addClass('bottom').append(arrow);
+          var arrow = $('<div class="arrow"></div>'),
+            wrapper = this.menu.parent('.popupmenu-wrapper');
+
+          wrapper.addClass('bottom').append(arrow);
         }
 
         //TODO: Follow up 'button expanded' in JAWS
@@ -199,8 +201,8 @@
           }).on('mousedown.popupmenu', function (e) {
             if (e.button === 2) {
               self.open(e);
+              e.stopPropagation();
             }
-            e.stopPropagation();
           });
         }
 
@@ -378,10 +380,15 @@
           this.menu.css('overflow', 'hidden');
         }
 
-        if (this.element.hasClass('btn-menu') && !this.element.closest('.toolbar')) {
+        if (this.element.hasClass('btn-menu') && this.element.closest('.toolbar').length === 0) {
           //move the arrow - might need better logic here.
-          wrapper.find('.arrow').css('left', '25%');
+          wrapper.find('div.arrow').css('left', '25%');
         }
+
+        if (this.element.hasClass('btn-menu') && this.element.closest('.toolbar').length > 0) {
+          wrapper.find('div.arrow').css({'left': '35px', 'top': '-8px'});
+        }
+
       },
 
       open: function(e) {

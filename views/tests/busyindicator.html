@@ -1,13 +1,12 @@
+
 <div class="row">
   <div class="twelve columns">
-    <h1>Busy Indicator</h1>
-    <span class="label">Click on the buttons to bring up the busy indicator</span>
-    <hr>
 
     <div class="row">
       <div class="one-half column">
 
-        <span class="label">Regular Example (UI Blocking)</span>
+        <h2 class="fieldset-title">Regular Example (UI Blocking)</h2>
+
         <form id="busy-form" class="busy" action="#" method="POST" data-delay="2000" data-completion-time="2000" data-close-time="3000">
           <div class="field">
             <label for="busy-field-name">Name</label>
@@ -31,7 +30,7 @@
 
       <div class="one-half column">
 
-        <span class="label">Standalone Example (Non-UI-Blocking), Controlled with Events</span>
+        <h2 class="fieldset-title">Standalone Example (Non-UI-Blocking), Controlled with Events</h2>
         <div class="row">
           <div class="one-half column">
             <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button><br />
@@ -51,13 +50,11 @@
 
 <div class="row">
   <div class="twelve columns">
-    <hr>
 
     <div class="row">
       <div class="one-half column">
+        <h2 class="fieldset-title">Delay Example</h2>
 
-        <span class="label">Delayed Reaction Indicator <span id="busy-time-length">(Waits 2000ms)</span><br />
-        Also Tests the 'Updated' Event</span>
         <form id="busy-delayed-form" class="busy" action="#" method="POST" data-delay="2000" data-completion-time="2000" data-close-time="3000">
           <div class="field">
             <label for="busy-reaction-time">Reaction Time</label>
@@ -78,9 +75,8 @@
 
 <div class="row">
   <div class="twelve columns">
-    <hr>
 
-    <span class="label">Nested Busy Indicators</span>
+    <h2 class="fieldset-title">Nested Busy Indicators</h2>
     <span class="label">The "card" Busy Indicator is nested inside the "Form" busy indicator.  They should both still operate independently of one another.</span>
     <form id="nested-busy-form" class="busy" action="#" method="POST" data-completion-time="2000" data-close-time="3000">
       <div class="field">

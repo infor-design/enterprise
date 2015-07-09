@@ -19,6 +19,7 @@
 .palette-color {
   color: #ffffff;
   @include font-size(14);
+  @include antialiased();
   font-weight: bold;
   height: 43px;
   margin: 0 20px 0 0;
@@ -54,7 +55,8 @@
   td:first-child {
     border-right: 7px solid #e6e6e6;
     color: $font-color;
-    font-size: 1.8rem;
+    @include antialiased();
+    font-size: 1.6rem;
     padding-right: 10px;
   }
 
@@ -69,6 +71,7 @@
 
   th {
     color: $font-color;
+    @include antialiased();
     font-size: 1.8rem;
     padding-bottom: 20px;
     text-align: left;

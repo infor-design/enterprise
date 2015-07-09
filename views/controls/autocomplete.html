@@ -1,10 +1,3 @@
-<div class="row">
-  <div class="twelve columns">
-    <h1>Autocomplete</h1>
-    <span class="label">for search and textbox</span>
-    <hr>
-  </div>
-</div>
 
 <div class="row">
   <div class="twelve columns">
@@ -15,12 +8,12 @@
     </div>
 
   </div>
+
+  <script type="text/javascript">
+    $('#autocomplete-default').on('selected', function (e, args) {
+      console.log(args.parent().attr('data-value'));
+    });
+  </script>
+
 </div>
 
-<script type="text/javascript">
-
-  $('#autocomplete-default').on('selected', function (e, args) {
-    console.log(args.parent().attr('data-value'));
-  });
-
-</script>

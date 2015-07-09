@@ -1,8 +1,6 @@
 <div class="row">
   <div class="twelve columns">
-    <h1>Checkbox Tests</h1>
-    <span class="label">CSS-Only</span>
-    <hr>
+    <h2 class="fieldset-title">Checkbox Tests</h2>
 
     <div id="cssOnly" class="field">
       <input type="checkbox" class="checkbox" id="starts-unchecked">
@@ -27,8 +25,8 @@
     <!-- used in form serialization tests -->
     <br>
     <br>
-    <span class="label">Form Serialization</span>
-    <hr>
+    <hr class="fieldset-hr">
+    <h2 class="fieldset-title">Form Serialization</h2>
     <div id="partOfForm" class="field">
       <form id="checkbox-serialization-test" action="#" method="POST">
         <input type="checkbox" class="checkbox" id="checkbox-serialized" name="checkbox-serialized" checked>
@@ -44,8 +42,10 @@
     <!-- Used in tooltip tests -->
     <br>
     <br>
-    <span class="label">Has a tooltip</span>
-    <hr>
+
+    <hr class="fieldset-hr">
+    <h2 class="fieldset-title">Has a tooltip</h2>
+
     <div class="field">
       <input type="checkbox" class="checkbox" id="checkbox-has-tooltip">
       <label for="checkbox-has-tooltip" class="checkbox-label">Hover this...</label>
@@ -54,8 +54,9 @@
     <!-- Used in ASP-style Checkbox tests -->
     <br>
     <br>
-    <span class="label">ASP-Style Checkbox Support</span>
-    <hr>
+    <hr class="fieldset-hr">
+    <h2 class="fieldset-title">ASP-Style Checkbox Support</h2>
+
     <div class="field">
       <input name="checkbox-enable-ssl" class="checkbox" id="checkbox-enable-ssl" type="checkbox" value="true" data-val="true" checked>
       <input name="checkbox-enable-ssl" type="hidden" value="false">

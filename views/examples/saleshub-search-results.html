@@ -1,8 +1,4 @@
-<<<<<<< HEAD
   {{> includes/masthead}}
-=======
-{{> includes/masthead}}
->>>>>>> 8a9f95930699b014b807aa1c9d82c96b50df3e77
 
   <header class="header is-sticky">
     <div class="toolbar">
@@ -20,13 +16,11 @@
       </div>
 
       <div class="buttonset">
-        <button class="btn-icon header-search" type="button">
-          <span class="audible">Search</span>
-          <svg class="icon" focusable="false" aria-hidden="true">
-            <use xlink:href="#icon-search"></use>
-          </svg>
-        </button>
-        <button class="btn-icon product-nav-btn has-text" type="button">
+        <div class="field">
+          <label for="searchfield-header" class="audible">Header Search Field</label>
+          <input placeholder="Type to Search" type="text" class="searchfield" data-options="{clearable: true}">
+        </div>
+        <button class="btn-icon has-text" type="button">
           <svg class="icon" focusable="false" aria-hidden="true">
             <use xlink:href="#icon-add"></use>
           </svg>
@@ -80,7 +74,7 @@
                       <li><a href="#">Sub Option Two</a></li>
                       <li><a href="#">Sub Option Three</a></li>
                     </ul>
-                  </li> 
+                  </li>
                   <li class="is-checked"><a href="#">Action Three</a></li>
                 </ul>
 
@@ -164,7 +158,7 @@
               </table>
             </script>
 
-            <div class="listview tableview" id="m3-search-results-products" data-tmpl="m3-search-results-tmpl" data-dataset="/api/product" data-options="{'selectable': false}"></div>
+            <div class="listview tableview" id="m3-search-results-products" data-tmpl="m3-search-results-tmpl" data-dataset="/api/product" data-options="{selectable: false}"></div>
 
           </div>
 

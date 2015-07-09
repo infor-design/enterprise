@@ -57,12 +57,29 @@
 
           if (options && options.length) {
             if (options.indexOf('{') > -1) {
-              options = JSON.parse(options.replace(/'/g, '"'));
+              var pairs = options.split(',');
+              options = {};
+              for (var i = 0; i < pairs.length; i++) {
+                var setting = pairs[i].split(':'),
+                  opt = setting[0].replace(' ', '').replace('{', ''),
+                  val = setting[1].replace(' ', '').replace('}', '');
+
+                val = val.replace(/'/g, '');
+                opt = opt.replace(/'/g, '');
+
+                if (val === 'false') {
+                  val = false;
+                }
+
+                if (val === 'true') {
+                  val = true;
+                }
+
+                options[opt] = val;
+              }
             }
           }
           return options;
-          // thisElem[plugin](options);
-          // console.log('opt: ' + options);
         }
 
         function simpleInit(plugin, selector) {

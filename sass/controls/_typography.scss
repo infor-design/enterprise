@@ -175,13 +175,3 @@ small,
   }
 }
 
-// Horizontal Rule
-hr {
-  border-bottom: 1px solid $hr-bottom-color;
-  border-left: 0;
-  border-right: 0;
-  border-top: 1px solid $hr-top-color;
-  height: 2px;
-  @include rem(margin-top, 1.25rem);
-  @include rem(margin-bottom, 2.25rem);
-}

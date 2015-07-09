@@ -602,7 +602,7 @@
         });
 
         // Set the text colors to the background color of the tick
-        if (lowerTicks.length > 0) {
+        if (lowerTicks.length > 0 && !this.element.is(':disabled')) {
           lowerTicks[0].label.css('color', lowerTicks[0].element.css('background-color'));
         }
         if (higherTicks.length > 0) {

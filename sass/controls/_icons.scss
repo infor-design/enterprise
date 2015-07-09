@@ -23,7 +23,7 @@ svg.icon {
   &.icon-info {
     fill: $alert-red;
     height: 18px;
-    width: 18px;
+    width: 20px;
   }
 
   &.icon-confirm {
@@ -76,9 +76,9 @@ svg.icon-logo {
 .field .icon-error,
 .field .icon-confirm {
   display: inline-block !important;
-  position: absolute;
-  margin-left: -27px;
+  margin-left: -29px;
   margin-top: 8px;
+  position: absolute;
 }
 
 .signin {

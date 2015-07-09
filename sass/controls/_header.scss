@@ -42,7 +42,10 @@ $header-height: 60px;
     top: -11px;
 
     + .section-title {
+      color: $white;
+      @include font-size(20);
       left: 5px;
+      padding: 0;
       position: absolute;
       top: 7px;
     }
@@ -89,8 +92,12 @@ $header-height: 60px;
     }
 
     span {
-      color: #ffffff;
+      color: $header-icon-color;
     }
+  }
+
+  .btn-icon.has-text {
+    margin-top: 2px !important;
   }
 
   .btn,
@@ -155,7 +162,7 @@ $header-height: 60px;
 
   .btn-icon:hover {
     span:not(.icon) {
-      background-color: $inverse-color;
+      color: $inverse-color;
     }
   }
 

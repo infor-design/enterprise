@@ -261,6 +261,10 @@ body.no-scroll {
   margin: 0 auto;
   position: absolute;
   width: 100%;
+
+  > .row:first-child {
+    padding-top: 40px;
+  }
 }
 
 .header {
