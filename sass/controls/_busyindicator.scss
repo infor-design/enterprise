@@ -125,15 +125,15 @@ input + .busy-indicator-container,
 .ie9 {
   .busy-indicator {
     .bar {
-      -ms-transform: scaleY(.4em);
+      -ms-transform: scaleY(.4);
       -ms-transform-origin: 50% 50%;
 
       &.half {
-        -ms-transform: scaleY(.7em);
+        -ms-transform: scaleY(.7);
       }
 
       &.full {
-        -ms-transform: scaleY(1em);
+        -ms-transform: scaleY(1);
       }
     }
   }
