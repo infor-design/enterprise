@@ -56,39 +56,35 @@
           var options = $(elment).attr('data-options');
 
           if (options && options.length) {
+            var obj = {}, properties;
+
             if (options.indexOf('{') > -1) {
+              try {
+                obj = JSON.parse(options.replace(/'/g, '"'));
+              } catch(err) {
+                // Attempt a manual parse
+                properties = options.split(',');
+                properties.forEach(function(property) {
+                  var tup = property.split(':');
+                  tup[0] = tup[0].replace('{', '').replace(/'/g, '').replace(' ', '');
+                  if (tup[1]) {
+                    tup[1] = tup[1].replace('}', '').replace(/'/g, '').replace(' ', '');
+                  }
 
-              var pairs = options.split(',');
+                  if (tup[1] === 'true') {
+                    tup[1] = true;
+                  }
 
-              options = {};
-              for (var i = 0; i < pairs.length; i++) {
-                var setting, opt, val;
+                  if (tup[1] === 'false') {
+                    tup[1] = false;
+                  }
 
-                if (pairs[i].indexOf('{') > -1) {
-                  setting = pairs[i].split(':{');
-                  opt = setting[0].opt.replace(' ', '').replace('{', '').replace(/'/g, '');
-                  val = setting[1];
-                  //debugger;
-                  //has a sub-object
-                } else {
-                  setting = pairs[i].split(':');
-                  opt = setting[0];
-                  val = setting[1];
-                  opt = opt.replace(' ', '').replace('{', '').replace(/'/g, '');
-                  val = val.replace(/'/g, '').replace(' ', '').replace('}', '');
-                }
-
-                if (val === 'false') {
-                  val = false;
-                }
-
-                if (val === 'true') {
-                  val = true;
-                }
-
-                options[opt] = val;
+                  obj[tup[0]] = tup[1];
+                });
               }
+              return obj;
             }
+
           }
           return options;
         }
