@@ -116,7 +116,6 @@ input.dropdown {
 
   ul {
     color: $popupmenu-color;
-    font-family: $font-regular;
     @include font-size(14);
     height: auto;
     line-height: 32px;

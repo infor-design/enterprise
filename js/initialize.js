@@ -57,15 +57,26 @@
 
           if (options && options.length) {
             if (options.indexOf('{') > -1) {
+
               var pairs = options.split(',');
+
               options = {};
               for (var i = 0; i < pairs.length; i++) {
-                var setting = pairs[i].split(':'),
-                  opt = setting[0].replace(' ', '').replace('{', ''),
-                  val = setting[1].replace(' ', '').replace('}', '');
+                var setting, opt, val;
 
-                val = val.replace(/'/g, '');
-                opt = opt.replace(/'/g, '');
+                if (pairs[i].indexOf('{') > -1) {
+                  setting = pairs[i].split(':{');
+                  opt = setting[0].opt.replace(' ', '').replace('{', '').replace(/'/g, '');
+                  val = setting[1];
+                  //debugger;
+                  //has a sub-object
+                } else {
+                  setting = pairs[i].split(':');
+                  opt = setting[0];
+                  val = setting[1];
+                  opt = opt.replace(' ', '').replace('{', '').replace(/'/g, '');
+                  val = val.replace(/'/g, '').replace(' ', '').replace('}', '');
+                }
 
                 if (val === 'false') {
                   val = false;

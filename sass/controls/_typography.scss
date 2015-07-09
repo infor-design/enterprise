@@ -18,6 +18,13 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+// Special Fonts for Certain Languages
+html[lang='ja-JP'] {
+  body {
+    font-family: 'MS PGothic', 'ＭＳ Ｐゴシック';
+  }
+}
+
 // Text Elements
 h1,
 h2,
