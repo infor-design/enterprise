@@ -45,6 +45,7 @@
         this.setup();
         this.addMarkup();
         this.handleEvents();
+        this.iconFilteringSetup();
       },
 
       setup: function() {
@@ -65,7 +66,7 @@
 
       //Add markip including Aria
       addMarkup: function () {
-        var id;
+        var id;         
 
         switch(typeof this.settings.menu) {
           case 'string': // ID Selector
@@ -140,7 +141,7 @@
 
           if (item.find('span').length === 0) {
             var text = $(item).text();
-            item.html('<span>' + text + '<span>');
+            item.html('<span>' + text + '</span>');
           }
           if (item.find('svg.arrow').length === 0) {
             item.append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
@@ -149,12 +150,20 @@
 
         });
 
-        var anchor = this.menu.find('a');
+        var anchor = this.menu.find('a'),
+          isTranslate = this.menu.hasClass('is-translate');
+
         anchor.attr('tabindex', '-1').attr('role', (this.settings.ariaListbox ? 'option' : 'menuitem'));
 
         //Add Checked indication
         anchor.each(function () {
           var a = $(this);
+
+          if (isTranslate) {//is-translate
+            var span = $('span', a);
+            span.text(Locale.translate(span.text()) || span.text());
+          }
+
           if (a.parent().hasClass('is-checked')) {
             a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
           }
@@ -211,6 +220,13 @@
         this.element.on('keydown.popupmenu', function (e) {
           if (e.shiftKey && e.which === 121) {  //Shift F10
             self.open(e, true);
+          }
+        });
+
+        self.element.on('selected', function (e, link) {
+          if(self.element.hasClass('btn-filtering')) {
+            self.iconFilteringUpdate(link);
+            e.preventDefault();
           }
         });
 
@@ -324,6 +340,29 @@
             focus.parent().nextAll(excludes).first().find('a').focus();
           }
         });
+      },
+
+      // Filtering icon initial setup
+      iconFilteringSetup: function(alink) { 
+        if (this.element.hasClass('btn-filtering')) {
+          var icon = $('use', this.element),
+            link = alink || $('li:first a', this.menu);
+
+          if(!icon.length) {
+            this.element.append($('<svg class="icon icon-filter" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></use></svg>'));
+            icon = $('use', this.element);
+          }
+          $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
+        }
+      },
+
+      // Filtering icon update
+      iconFilteringUpdate: function(alink) { 
+        if (this.element.hasClass('btn-filtering')) {
+          var link = alink || $('li:first a', this.menu);
+
+          $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
+        }
       },
 
       position: function(e) {
