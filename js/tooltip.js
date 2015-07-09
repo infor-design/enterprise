@@ -149,6 +149,8 @@
       },
 
       setContent: function(content) {
+        content = Locale.translate(content) || content;
+
         if (this.isPopover) {
           this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
           settings.content.removeClass('hidden');

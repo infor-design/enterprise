@@ -15,6 +15,7 @@ button {
 .btn-secondary,
 .btn-primary,
 .btn-tertiary,
+.btn-filtering,
 .btn-icon,
 .btn-menu {
   background-color: transparent;
@@ -41,6 +42,32 @@ button {
   .icon {
     height: 32px;
     margin-left: -13px;
+  }
+}
+
+.btn-filtering {
+  border-radius: 18px;
+  height: 36px;
+  margin-top: 0;
+  min-height: 36px;
+  min-width: 36px;
+  padding: 0 5px;
+  
+  .icon {
+    height: 34px;
+    vertical-align: middle;
+  }
+
+  span {
+    display: none;
+  }
+
+  &.has-text span {
+    display: inline-block;
+    height: 34px;
+    line-height: 34px;
+    margin-right: 5px;
+    vertical-align: middle;
   }
 }
 
@@ -133,6 +160,7 @@ a.btn-primary {
 // Destructive Actions / Third Level Button
 .btn-destructive,
 .btn-tertiary,
+.btn-filtering,
 .btn-menu,
 .btn-icon,
 .btn-actions {
