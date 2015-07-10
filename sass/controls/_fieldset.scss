@@ -3,7 +3,7 @@
 
 fieldset {
   > legend {
-    color: $graphite09;
+    color: $font-color;
     @include font-size(16);
     font-weight: normal;
     @include antialiased();
@@ -14,7 +14,7 @@ fieldset {
 
 .fieldset-title,
 .section-title {
-  color: $graphite09;
+  color: $font-color;
   @include font-size(16);
   font-weight: normal;
   @include antialiased();
