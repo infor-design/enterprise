@@ -20,6 +20,8 @@
       color: $font-color;
       @include font-size(16);
       padding: 1em;
+      @include css3(user-select, none);
+      @include css3(touch-callout, none);
     }
 
     &:not(.is-disabled):not(.is-selected):hover {

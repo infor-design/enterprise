@@ -235,21 +235,23 @@
           $(this).parent().addClass('is-focused');
         }).on('blur.verticaltabs', 'a', function anchorBlurHandler() {
           $(this).parent().removeClass('is-focused');
-        }).on('click.verticaltabs', 'a', function anchorClickHandler(e) {
+        }).onTouchClick('verticaltabs', 'a').on('click.verticaltabs', 'a', function anchorClickHandler(e) {
           return self.handleClick(e);
         }).on('keydown.verticaltabs', 'a', function anchorKeydownHandler(e) {
           return self.handleKeydown(e);
-        }).on('click.verticaltabs', 'li', function liClickHandler() {
-          $(this).children('a').triggerHandler('click');
+        }).onTouchClick('verticaltabs', 'li').on('click.verticaltabs', 'li', function liClickHandler() {
+          $(this).children('a').trigger('click');
         });
 
         this.more.on('selected.verticaltabs', function popupmenuSelectedHandler(e, anchor) {
           self.activate(anchor.attr('data-href'));
         });
 
+        /*
         $(window).on('resize.verticaltabs', function windowResizeHandler() {
-          self.moreMenuCheck();
+          //self.moreMenuCheck();
         });
+        */
 
         return this;
       },
@@ -495,7 +497,9 @@
 
       unbind: function() {
         this.tablist.off('focus.verticaltabs blur.verticaltabs click.verticaltabs keydown.verticaltabs', 'a')
-          .off('click.verticaltabs', 'a');
+          .offTouchClick('verticaltabs', 'a')
+          .off('click.verticaltabs', 'li')
+          .offTouchClick('verticaltabs', 'li');
         this.more.off('selected.verticaltabs');
 
         $(window).off('resize.verticaltabs');
