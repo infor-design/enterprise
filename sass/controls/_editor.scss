@@ -13,7 +13,6 @@
   color: $editor-color;
   display: block;
   float: left;
-  font-family: $font-regular;
   @include font-size(16);
   height: 320px;
   margin-bottom: 20px;
@@ -188,7 +187,6 @@
     background-color: transparent;
     border: 0;
     color: $font-color;
-    font-family: $font-regular;
     @include font-size(16);
     font-weight: 100;
     height: 100%;

@@ -4,24 +4,34 @@
 // Font Variables
 $font-regular: Helvetica, Arial;
 
+// Special Fonts for Certain Languages
+$cultures-font-family: (
+  'ar-EG': ('Tahoma', 'DejaVu'),
+  'ar-SA': ('Tahoma', 'DejaVu'),
+  'ja-JP': ('MS PGothic', 'ＭＳ Ｐゴシック', 'MS Gothic', 'MS Mincho', 'メイリオ'),
+  'ko-KR': ('Batang', 'Gulim'),
+  'zh-CN': ('SimSun', 'NSimSun', 'SimHei'),
+  'zh-tw': ('MingLiU')
+);
+
+
 // Body Sizes and Color
 html {
   font-size: 62.5%;
-}
 
-body {
-  background-color: $body-bg-color;
-  color: $font-color;
-  font-family: $font-regular;
-  font-size: 1rem;
-  height: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-
-// Special Fonts for Certain Languages
-html[lang='ja-JP'] {
   body {
-    font-family: 'MS PGothic', 'ＭＳ Ｐゴシック';
+    background-color: $body-bg-color;
+    color: $font-color;
+    font-family: $font-regular;
+    font-size: 1rem;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @each $key, $value in $cultures-font-family {
+    &[lang='#{$key}'] body {
+      font-family: $value, $font-regular;
+    }
   }
 }
 
@@ -96,7 +106,6 @@ label,
   color: $label-color;
   display: block;
   @include font-size(12);
-  font-family: $font-regular;
   margin-bottom: 4px;
 }
 

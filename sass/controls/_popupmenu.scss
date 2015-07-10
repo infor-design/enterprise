@@ -66,7 +66,6 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   color: $popupmenu-color;
   display: none;
-  font-family: $font-regular;
   list-style: none;
   margin: 0;
   overflow-x: auto;
@@ -154,7 +153,6 @@
 
     > span {
       color: inherit;
-      font-family: inherit;
       font-weight: inherit;
     }
 
@@ -172,7 +170,6 @@
   //Text Underline on Terms
   i {
     color: $font-color-extrahighcontrast;
-    font-family: $font-regular;
     font-style: normal;
   }
 

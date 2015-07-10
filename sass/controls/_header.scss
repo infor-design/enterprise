@@ -26,7 +26,6 @@ $header-height: 60px;
   h1 {
     color: $inverse-color;
     display: inline;
-    font-family: $font-regular;
     font-weight: normal;
     @include font-size(20);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));

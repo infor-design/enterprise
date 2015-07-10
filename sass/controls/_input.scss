@@ -68,7 +68,6 @@
     color: $input-placeholder-color;
     content: attr(data-currency-symbol);
     display: inline-block;
-    font-family: $font-regular;
     @include font-size(14);
     left: 10px;
     position: absolute;
@@ -87,7 +86,6 @@ textarea {
   border-radius: 2px;
   color: $input-color;
   display: inline-block;
-  font-family: $font-regular;
   @include font-size(14);
   max-width: 100%;
   padding: 9px 10px 8px;
@@ -186,7 +184,6 @@ label.required:after,
   color: $error-color;
   content: '*';
   display: inline-block;
-  font-family: $font-regular;
   @include font-size(18);
   left: 3px;
   line-height: 10px;
