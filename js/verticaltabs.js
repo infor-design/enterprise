@@ -27,6 +27,7 @@
     // Settings and Options
     var pluginName = 'verticaltabs',
         defaults = {
+          containerElement: null // If defined, uses a different container for tab panels instead of $(this.element)
         },
         settings = $.extend({}, defaults, options);
 
@@ -48,6 +49,12 @@
 
       build: function() {
         var self = this;
+
+        this.container = this.element;
+        var container = $(this.settings.containerElement);
+        if (container.length) {
+          this.container = container;
+        }
 
         this.tablist = self.element.find('.tab-list');
         this.tablist.attr({
@@ -131,12 +138,22 @@
         return this;
       },
 
-      getAnchorByHref: function(href) {
+      getAnchor: function(href) {
+        if (href.indexOf('#') === -1) {
+          href = '#' + href;
+        }
         return this.anchors.filter('[href="' + href + '"]');
       },
 
-      getPanelByHref: function(href) {
+      getPanel: function(href) {
         return this.panels.filter('[id="' + href.replace(/#/g, '') + '"]');
+      },
+
+      getMenuItem: function(href) {
+        if (href.indexOf('#') === -1) {
+          href = '#' + href;
+        }
+        return this.moreMenu.children().children().filter('[data-href="'+ href +'"]').parent();
       },
 
       highlight: function(href) {
@@ -144,7 +161,7 @@
           return;
         }
 
-        var a = this.getAnchorByHref(href);
+        var a = this.getAnchor(href);
         if (!a.length || a.is('.is-disabled')) {
           return;
         }
@@ -165,10 +182,10 @@
 
       activate: function(href) {
         var self = this,
-          a = self.getAnchorByHref(href),
+          a = self.getAnchor(href),
           newTab = a.parent(),
           oldTab = self.anchors.parents().filter('.is-selected'),
-          newPanel = self.getPanelByHref(href),
+          newPanel = self.getPanel(href),
           oldPanel = self.panels.filter(':visible');
 
         // Cancel Activation if an event's triggered
@@ -177,10 +194,10 @@
           return;
         }
 
-        oldPanel.hide();
+        oldPanel.removeAttr('style').hide();
 
         // Animate the new panel
-        newPanel.stop().fadeIn(250, function fadeInCallback() {
+        newPanel.show(0, function fadeInCallback() {
           $(this).removeAttr('style');
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
@@ -200,22 +217,29 @@
 
         // Update Title
         this.info.children('.current-tab').text(a.text().trim());
+
+        // Focus
+        a.focus();
       },
 
       handleEvents: function() {
         var self = this;
 
-        this.anchors.on('focus.verticaltabs', function anchorFocusHandler() {
-          $(this).addClass('is-focused');
-        }).on('blur.verticaltabs', function anchorBlurHandler() {
-          $(this).removeClass('is-focused');
-        }).on('click.verticaltabs', function anchorClickHandler() {
-          self.activate($(this).attr('href'));
-        }).on('keydown.verticaltabs', function anchorKeydownHandler(e) {
-          self.handleKeydown(e);
-        });
+        this.tablist.on('focus.verticaltabs', 'a', function anchorFocusHandler(e) {
+          if ($(this).parent().is('.is-disabled')) {
+            e.preventDefault();
+            return false;
+          }
 
-        this.anchors.parent().on('click.verticaltabs', function liClickHandler() {
+          self.anchors.parent().removeClass('is-focused');
+          $(this).parent().addClass('is-focused');
+        }).on('blur.verticaltabs', 'a', function anchorBlurHandler() {
+          $(this).parent().removeClass('is-focused');
+        }).on('click.verticaltabs', 'a', function anchorClickHandler(e) {
+          return self.handleClick(e);
+        }).on('keydown.verticaltabs', 'a', function anchorKeydownHandler(e) {
+          return self.handleKeydown(e);
+        }).on('click.verticaltabs', 'li', function liClickHandler() {
           $(this).children('a').triggerHandler('click');
         });
 
@@ -230,38 +254,222 @@
         return this;
       },
 
+      handleClick: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var a = $(e.target);
+        if (a.parent().is('.is-disabled')) {
+          return false;
+        }
+
+        this.activate(a.attr('href'));
+        return true;
+      },
+
       handleKeydown: function(e) {
         var key = e.which;
 
+        // Pass through meta keys
+        if (e.shiftKey || e.ctrlKey || e.metaKey || (e.altKey && key !== 8) || key === 9) {
+          return true;
+        }
+
         if (key === 37 || key === 38) { // left/up
           this.navigate(-1);
+          return true;
         }
 
         if (key === 39 || key === 40) { // right/down
           this.navigate(1);
+          return true;
         }
+
+        if (key === 13 || key === 32) { // enter/spacebar
+          this.activate(this.anchors.parent().filter('.is-focused').children('a').attr('href'));
+          return true;
+        }
+
+        return false;
       },
 
       navigate: function(direction) {
-        var anchors = this.anchors.parent().filter(':not(.is-disabled):not(.is-hidden)').children('a'),
-          current = anchors.index(anchors.filter('.is-selected')),
+        var lis = this.anchors.parent().filter(':not(.is-disabled):not(.hidden)'),
+          current = lis.index(lis.filter('.is-focused')),
           next = current + direction,
           target;
 
-        if (next >= 0 && next < anchors.length) {
-          target = anchors.eq(next);
+        if (next >= 0 && next < lis.length) {
+          target = lis.eq(next);
         }
 
-        if (next >= anchors.length) {
-          target = anchors.first();
+        if (next >= lis.length) {
+          target = lis.first();
         }
 
         if (next === -1) {
-          target = anchors.last();
+          target = lis.last();
         }
 
-        this.activate(target.attr('href'));
+        this.highlight(target.children('a').attr('href'));
         return false;
+      },
+
+      // Adds a new tab into the list and properly binds events
+      add: function(tabId, options, atIndex) {
+        if (!tabId) {
+          return this;
+        }
+
+        if (!options) {
+          options = {};
+        }
+
+        // Sanitize
+        tabId = '' + tabId.replace(/#/g, '');
+        options.name = options.name ? options.name.toString() : '';
+
+        function getObjectFromSelector(sourceString) {
+          var contentType = typeof sourceString;
+          switch(contentType) {
+            case 'string':
+              var hasId = sourceString.match(/#/g);
+              // Text Content or a Selector.
+              if (hasId !== null) {
+                var obj = $(sourceString);
+                sourceString = obj.length ? $(sourceString).clone() : sourceString;
+              }
+              // do nothing if it's just a string of text.
+              break;
+            case 'object':
+              // jQuery object or HTML Element
+              sourceString = $(sourceString).clone();
+              break;
+          }
+        }
+        if (options.content) {
+          getObjectFromSelector(options.content);
+        }
+
+        // Build
+        var tabHeaderMarkup = $('<li role="presentation" class="tab"></li>'),
+          anchorMarkup = $('<a href="#'+ tabId +'" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">'+ options.name +'</a>'),
+          tabContentMarkup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>'),
+          moreMenuMarkup = $('<li role="presentation"><a href="#" data-href="#'+ tabId +'" tabindex="-1" role="menuitem">'+ options.name +'</a></li>');
+
+        tabHeaderMarkup.html(anchorMarkup);
+        tabContentMarkup.html(options.content);
+
+        // Insert markup at the very end, or at the specified index.
+        if (atIndex === undefined || isNaN(atIndex)) {
+          this.tablist.append(tabHeaderMarkup);
+          this.container.append(tabContentMarkup);
+          this.moreMenu.append(moreMenuMarkup);
+        } else {
+          var tabs = this.tablist.children('li'),
+            insertBefore = tabs.eq(atIndex).length > 0,
+            targetIndex = insertBefore ? atIndex : tabs.length - 1;
+
+          if (!insertBefore) {
+            tabHeaderMarkup.insertAfter(tabs.eq(targetIndex));
+            tabContentMarkup.insertAfter(this.container.children().filter('.tab-panel').eq(targetIndex));
+            moreMenuMarkup.insertAfter(this.moreMenu.children().eq(targetIndex + 2));
+          } else {
+            tabHeaderMarkup.insertBefore(tabs.eq(targetIndex));
+            tabContentMarkup.insertBefore(this.container.children().filter('.tab-panel').eq(targetIndex));
+            moreMenuMarkup.insertBefore(this.moreMenu.children().eq(targetIndex));
+          }
+        }
+
+        // Add each new part to their respective collections.
+        this.panels = this.panels.add(tabContentMarkup);
+        this.anchors = this.anchors.add(anchorMarkup);
+
+        return this;
+      },
+
+      remove: function(tabId) {
+        if (!tabId) {
+          return this;
+        }
+        tabId = tabId.replace(/#/g, '');
+
+        var targetAnchor = this.getAnchor(tabId),
+          targetLi = targetAnchor.parent(),
+          targetPanel = this.getPanel(tabId),
+          targetMenuOpt = this.getMenuItem(tabId),
+          targetLiIndex = this.tablist.children('li').index(targetLi),
+          prevLi = targetLi.prev();
+
+        // Remove these from the collections
+        this.panels = this.panels.not(targetPanel);
+        this.anchors = this.anchors.not(targetAnchor);
+
+        // Remove Markup
+        targetLi.remove();
+        targetPanel.remove();
+        targetMenuOpt.remove();
+
+        // If any tabs are left in the list, set the previous tab as the currently active one.
+        var count = targetLiIndex - 1;
+        while (count > -1) {
+          count = -1;
+          if (prevLi.is('.separator') || prevLi.is(':hidden') || prevLi.is('.is-disabled')) {
+            prevLi = prevLi.prev();
+            count = count - 1;
+          }
+        }
+        if (prevLi.length === 0) {
+          return this;
+        }
+
+        var a = prevLi.children('a');
+        this.activate(a.attr('href'));
+        return this;
+      },
+
+      // Hides a tab
+      hide: function(tabId) {
+        var a = this.getAnchor(tabId);
+        this.activatePrevious(tabId);
+        return a.length ? a.parent().addClass('hidden') : null;
+      },
+
+      // Shows a tab
+      show: function(tabId) {
+        var a = this.getAnchor(tabId);
+        return a.length ? a.parent().removeClass('hidden') : null;
+      },
+
+      // Disables an individual tab
+      disableTab: function(tabId) {
+        var a = this.getAnchor(tabId);
+        this.activatePrevious(tabId);
+        return a.length ? a.parent().addClass('is-disabled') : null;
+      },
+
+      // Enables an individual tab
+      enableTab: function(tabId) {
+        var a = this.getAnchor(tabId);
+        return a.length ? a.parent().removeClass('is-disabled') : null;
+      },
+
+      // Takes a tab ID and returns a jquery object containing the previous available tab
+      activatePrevious: function(tabId) {
+        var tab = this.getAnchor(tabId).parent(),
+          filter = 'li:not(.separator):not(.hidden):not(.is-disabled)',
+          tabs = this.tablist.find(filter),
+          target = tabs.eq(tabs.index(tab) - 1);
+
+        while(target.length && !target.is(filter)) {
+          target = tabs.eq(tabs.index(target) - 1);
+        }
+
+        if (tab.is('.is-selected') && target.length) {
+          this.activate(target.children('a').attr('href'));
+        }
+
+        return target;
       },
 
       moreMenuCheck: function() {
@@ -286,8 +494,8 @@
       },
 
       unbind: function() {
-        this.anchors.off('focus.verticaltabs blur.verticaltabs click.verticaltabs');
-        this.anchors.parent().off('click.verticaltabs');
+        this.tablist.off('focus.verticaltabs blur.verticaltabs click.verticaltabs keydown.verticaltabs', 'a')
+          .off('click.verticaltabs', 'a');
         this.more.off('selected.verticaltabs');
 
         $(window).off('resize.verticaltabs');

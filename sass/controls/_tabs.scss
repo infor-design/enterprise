@@ -59,6 +59,10 @@
   > a {
     display: inline-block;
     text-decoration: none;
+
+    * {
+      pointer-events: none;
+    }
   }
 }
 

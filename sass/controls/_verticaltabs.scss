@@ -57,6 +57,26 @@
         color: $inverse-color;
       }
     }
+
+    &.is-disabled {
+      color: $disabled-color;
+
+      > a,
+      &:hover > a,
+      &.is-selected > a,
+      .count {
+        color: $disabled-color !important;
+        cursor: default;
+      }
+
+      &:hover {
+        cursor: default;
+
+        &::before {
+          content: none !important;
+        }
+      }
+    }
   }
 
   // NOTE: It's possible for these tab panels not to be included within the .tab-container class.

@@ -132,6 +132,8 @@
           //Done in Accordion
           //this.menu.removeClass('no-transition');
           //$('.page-container').removeClass('no-transition');
+        } else {
+          this.menu.css('display', 'none');
         }
 
         return this;
