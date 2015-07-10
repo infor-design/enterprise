@@ -7,7 +7,6 @@
   border: 1px solid $tooltip-border-color;
   border-radius: 2px;
   color: $tooltip-color;
-  font-family: $font-regular;
   @include font-size(15);
   left: -9999px;
   max-width: 315px;
@@ -171,7 +170,6 @@
 .tooltip-title {
   border-bottom: 1px solid $graphite02;
   color: $font-color-highcontrast;
-  font-family: $font-regular;
   @include font-size(16);
   font-weight: normal;
   line-height: 18px;
