@@ -113,6 +113,7 @@
 
   .title {
     color: $font-color;
+    @include antialiased();
     @include font-size(16);
     margin: 5px 1em 5px 0;
     max-width: 40%;

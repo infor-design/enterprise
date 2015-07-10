@@ -236,8 +236,9 @@
         left: auto;
         pointer-events: none;
         position: absolute;
-        right: -4px;
+        right: -1px;
         top: -1px;
+        width: 32px;
         @include css3(transform, rotate(-90deg));
       }
     }
