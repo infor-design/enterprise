@@ -54,7 +54,6 @@
   thead {
     th {
       color: $font-color-highcontrast;
-      font-family: $font-regular;
       @include rem(font-size, 1.2rem);
       margin: 20px;
       text-transform: uppercase;
@@ -68,7 +67,6 @@
     border-radius: 35px;
     color: $font-color-highcontrast;
     cursor: pointer;
-    font-family: $font-regular;
     @include rem(font-size, 1.2rem);
     height: 35px;
     padding: 10px;
@@ -94,7 +92,6 @@
     &.is-today:focus {
       border-color: $datepicker-today-color;
       color: $datepicker-today-color;
-      font-family: $font-regular;
 
       span {
         color: $datepicker-today-color;
@@ -123,7 +120,6 @@
     &.is-selected:hover {
       background-color: $datepicker-selected-bg-color;
       color: $datepicker-selected-color;
-      font-family: $font-regular;
 
       span {
         color: $datepicker-selected-color;

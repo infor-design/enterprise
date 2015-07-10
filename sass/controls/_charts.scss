@@ -33,7 +33,6 @@
   // Text Color
   text {
     fill: $chart-font-color;
-    font-family: $font-regular;
     @include font-size(12);
     @include antialiased();
   }
