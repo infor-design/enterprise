@@ -628,10 +628,10 @@
 
           if (!insertBefore) {
             tabHeaderMarkup.insertAfter(tabs.eq(targetIndex));
-            tabContentMarkup.insertAfter(this.container.children().eq(targetIndex + 2));
+            tabContentMarkup.insertAfter(this.container.children().filter('.tab-panel').eq(targetIndex));
           } else {
             tabHeaderMarkup.insertBefore(tabs.eq(targetIndex));
-            tabContentMarkup.insertBefore(this.container.children().eq(targetIndex + 2));
+            tabContentMarkup.insertBefore(this.container.children().filter('.tab-panel').eq(targetIndex));
           }
         }
 

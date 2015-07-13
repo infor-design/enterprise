@@ -40,192 +40,28 @@
   width: calc(100% - 34px);
 }
 
-// Tab Headers aka Notches
-// Ref: http://bradsknutson.com/blog/css-sliding-underline/
 .tab-list {
-  border-bottom: 1px solid $tab-border-color;
-  height: 43px;
   list-style: none outside none;
-  overflow: hidden;
-  padding: 0;
-  width: 100%;
-
-  .separator {
-    cursor: default;
-    display: inline-block;
-    margin: 0 12px;
-    padding: 11px 0;
-    position: relative;
-    @include css3(user-select, none);
-
-    &:before {
-      border-left: 1px solid $tab-border-color;
-      content: '';
-      display: block;
-      height: 100%;
-      position: absolute;
-      top: calc(50% - 6px);
-      @include css3(transition, none);
-      width: 1px;
-    }
-
-    &:after {
-      display: none;
-      @include css3(transition, none);
-    }
-
-    &:hover {
-      background-color: transparent;
-    }
-
-    &:hover:before {
-      background-color: transparent;
-    }
-  }
 }
 
+// Styles specific to any tabs used in SoHo Xi
+// (padding/color rules are different for all tabs so they aren't in the generic class)
 .tab {
-  border-radius: 2px 2px 0 0;
   cursor: pointer;
   display: inline-block;
-  padding: 5px 6px 7px;
   position: relative;
-  @include css3(transition, background-color .25s ease);
   text-overflow: ellipsis;
 
   > * {
     vertical-align: middle;
   }
 
-  &:first-child {
-    padding-left: 0;
-
-    a {
-      padding-left: 0;
-    }
-  }
-
-  &:before {
-    @include tab-after-off;
-  }
-
-  &:not(.is-disabled):not(.is-selected):hover {
-    color: $tab-hover-color;
-
-    a {
-      color: $tab-hover-color;
-    }
-
-    .icon {
-      fill: $tab-hover-color;
-    }
-  }
-
-  &:not(.separator):hover {
-    &::before {
-      @include tab-after-hover;
-    }
-
-    &:first-child::before {
-      left: 0;
-      width: calc(100% - 17px);
-    }
-  }
-
-  &.is-focused {
-    &:after {
-      @include tab-outline-focus;
-    }
-  }
-
-  &.is-disabled {
-    color: $disabled-color;
-
-    > a,
-    &:hover > a,
-    &.is-selected > a,
-    .count {
-      color: $disabled-color !important;
-      cursor: default;
-    }
-
-    &:hover {
-      cursor: default;
-
-      &::before {
-        content: none !important;
-      }
-    }
-  }
-
-  &.dismissible {
-    padding-right: 21px;
-
-    .icon {
-      height: 10px !important;
-      margin-left: -5px;
-      margin-top: -1px;
-      padding-right: 1px;
-      position: relative;
-      width: 14px;
-    }
-  }
-
-  &.has-popupmenu {
-    .icon {
-      margin: 0 0 0 -10px;
-      height: 30px;
-      width: 32px;
-    }
-  }
-
-  a {
-    @include antialiased();
-    color: $font-color;
+  > a {
     display: inline-block;
-    @include font-size(14);
-    font-weight: normal;
-    line-height: 16px;
-    padding: 7px 11px;
     text-decoration: none;
 
-    > * {
-      line-height: 1.14;
-    }
-  }
-
-  .count {
-    display: block;
-    font-size: 180%;
-  }
-
-  &.is-selected {
-    a {
-      color: $tab-selected-color;
-
-      > .count {
-        color: $tab-selected-color;
-      }
-
-      &:hover {
-        color: $tab-selected-color;
-
-        > .count {
-          color: $tab-selected-color;
-        }
-      }
-    }
-
-    .icon {
-      fill: $tab-selected-color;
-    }
-
-    &:hover {
-      background: rgba($tab-hover-color, 0);
-    }
-
-    &:hover:not(.is-disabled):before {
-      background: $primary-color;
+    * {
+      pointer-events: none;
     }
   }
 }
@@ -317,9 +153,189 @@
 
 // Tab Container
 // Can change the way the contents are styled based on classes
-.tab-container {
+.tab-container:not(.vertical) {
   margin-bottom: 20px;
   position: relative;
+
+  .tab {
+    border-radius: 2px 2px 0 0;
+    padding: 5px 6px 7px;
+    @include css3(transition, background-color .25s ease);
+
+    &:first-child {
+      padding-left: 0;
+
+      a {
+        padding-left: 0;
+      }
+    }
+
+    &:before {
+      @include tab-after-off;
+    }
+
+    &:not(.is-disabled):not(.is-selected):hover {
+      color: $tab-hover-color;
+
+      a {
+        color: $tab-hover-color;
+      }
+
+      .icon {
+        fill: $tab-hover-color;
+      }
+    }
+
+    &:not(.separator):hover {
+      &::before {
+        @include tab-after-hover;
+      }
+
+      &:first-child::before {
+        left: 0;
+        width: calc(100% - 17px);
+      }
+    }
+
+    &.is-focused {
+      &:after {
+        @include tab-outline-focus;
+      }
+    }
+
+    &.is-disabled {
+      color: $disabled-color;
+
+      > a,
+      &:hover > a,
+      &.is-selected > a,
+      .count {
+        color: $disabled-color !important;
+        cursor: default;
+      }
+
+      &:hover {
+        cursor: default;
+
+        &::before {
+          content: none !important;
+        }
+      }
+    }
+
+    &.dismissible {
+      padding-right: 21px;
+
+      .icon {
+        height: 10px !important;
+        margin-left: -5px;
+        margin-top: -1px;
+        padding-right: 1px;
+        position: relative;
+        width: 14px;
+      }
+    }
+
+    &.has-popupmenu {
+      .icon {
+        height: 30px;
+        margin: 0 0 0 -10px;
+        width: 32px;
+      }
+    }
+
+    a {
+      @include antialiased();
+      color: $font-color;
+      @include font-size(14);
+      font-weight: normal;
+      line-height: 16px;
+      padding: 7px 11px;
+      text-decoration: none;
+
+      > * {
+        line-height: 1.14;
+      }
+    }
+
+    .count {
+      display: block;
+      font-size: 180%;
+    }
+
+    &.is-selected {
+      a {
+        color: $tab-selected-color;
+
+        > .count {
+          color: $tab-selected-color;
+        }
+
+        &:hover {
+          color: $tab-selected-color;
+
+          > .count {
+            color: $tab-selected-color;
+          }
+        }
+      }
+
+      .icon {
+        fill: $tab-selected-color;
+      }
+
+      &:hover {
+        background: rgba($tab-hover-color, 0);
+      }
+
+      &:hover:not(.is-disabled):before {
+        background: $primary-color;
+      }
+    }
+  }
+
+  // Tab Headers aka Notches
+  // Ref: http://bradsknutson.com/blog/css-sliding-underline/
+  .tab-list {
+    border-bottom: 1px solid $tab-border-color;
+    height: 43px;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+
+    .separator {
+      cursor: default;
+      display: inline-block;
+      margin: 0 12px;
+      padding: 11px 0;
+      position: relative;
+      @include css3(user-select, none);
+
+      &:before {
+        border-left: 1px solid $tab-border-color;
+        content: '';
+        display: block;
+        height: 100%;
+        position: absolute;
+        top: calc(50% - 6px);
+        @include css3(transition, none);
+        width: 1px;
+      }
+
+      &:after {
+        display: none;
+        @include css3(transition, none);
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      &:hover:before {
+        background-color: transparent;
+      }
+    }
+  }
 
   &.has-more-button > .tab-list {
     padding-right: 102px;
