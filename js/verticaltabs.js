@@ -117,13 +117,14 @@
 
         // Build/manage tab panels
         var selected = $();
-        function associateAnchorWithPanel() {
-          var a = $(this);
+        function associateAnchorWithPanel(i, item) {
+          var a = $(item);
           self.panels = self.panels.add( $(a.attr('href')) );
           if (a.parent().is('.is-selected')) {
             selected = a;
           }
         }
+
         self.panels = $();
         self.anchors.each(associateAnchorWithPanel);
         self.panels
