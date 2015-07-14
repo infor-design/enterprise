@@ -236,10 +236,12 @@
             return;
           }
 
-          // Check the types
+          // Check the Toolbar Button for the existence of certain event types.
+          // Checks the button, and checks the toolbar container element for delegated events.
           var evtTypes = ['click', 'touchend', 'touchcancel'];
           for (var i = 0; i < evtTypes.length; i++) {
             var type = evtTypes[i];
+
             // Check toolbar element for delegated-down events first
             if (toolbarEvts && toolbarEvts[type] && toolbarEvts[type].delegateCount > 0) {
               var el = this.element,
