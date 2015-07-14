@@ -17,6 +17,15 @@ $listview-selected-text-color: $inverse-color;
     font-weight: lighter;
   }
 
+  .listview-image-round {
+    border-radius: 50%;
+    display: inline-block;
+    float: left;
+    height: 70px;
+    margin-right: 20px;
+    width: 70px;
+  }
+
   .listview-subheading {
     @include font-size(14);
     color: $font-color;
@@ -149,12 +158,12 @@ $listview-selected-text-color: $inverse-color;
 
   button {
     margin: 0 25px;
-    
+
     &:not(.tableview button) {
       background-color: transparent;
       border-radius: 0;
     }
-    
+
     svg {
       height: 23px;
       // margin-top: -5px;
@@ -254,7 +263,7 @@ $listview-selected-text-color: $inverse-color;
       .row:last-child {
         margin-bottom: 0;
       }
-      
+
       a {
         font-size: 1.2em;
       }
@@ -262,7 +271,7 @@ $listview-selected-text-color: $inverse-color;
       button {
         margin: 0;
       }
-      
+
       input[type='text']:not([class='dropdown']) { //text field center-text
         margin-bottom: 0;
         text-align: center;

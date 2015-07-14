@@ -43,6 +43,12 @@
   }
 }
 
+.hyperlink + .tag {
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-top: -2px;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   .tag {
     line-height: 27px;

@@ -41,10 +41,12 @@ app.configure(function() {
     };
 
   app.get('/controls/', function(req, res) {
+    controlOptions.subtitle = 'Full Index';
     res.render('controls/index', controlOptions);
   });
 
   app.get('/controls', function(req, res) {
+    controlOptions.subtitle = 'Full Index';
     res.render('controls/index', controlOptions);
   });
 

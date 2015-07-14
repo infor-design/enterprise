@@ -1,12 +1,12 @@
 //  Object Summary Pattern
 //================================================== //
 .object-summary {
-  margin: 0;
-  width: 100%;
+  margin: 0 auto;
+  max-width: 80%;
 
   .image,
-  .info {
-    display: inline-block;
+  .summary {
+    display: table-cell;
     vertical-align: top;
   }
 
@@ -15,17 +15,28 @@
     width: 200px;
   }
 
-  .info {
-    margin: 10px 0 0;
-    width: 78%;
+  .summary {
+    padding-left: 30px;
+    width: auto;
 
-    .asset {
+    .details {
       margin: 20px 0;
+
+      strong {
+        margin-left: 10px;
+      }
     }
 
-    .subhead {
+    .subtitle {
+      @include font-size(16);
       margin-top: 0;
+      margin-bottom: 10px;
     }
+
+    p {
+      margin-bottom: 5px;
+    }
+
   }
 }
 
@@ -34,7 +45,7 @@
 @include respond-to(tabletdown) {
   .object-summary {
 
-    .info {
+    .summary {
       width: 65%;
     }
   }
@@ -44,8 +55,9 @@
   .object-summary {
 
     .image,
-    .info {
+    .summary {
       display: block;
+      padding: 0;
       width: 100%;
 
       &.image {
