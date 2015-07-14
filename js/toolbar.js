@@ -223,10 +223,12 @@
 
       handleSelected: function(e, anchor) {
         var itemLink = anchor.parent().data('original-button'),
-          evts;
+          itemEvts,
+          toolbarEvts;
 
         if (itemLink && itemLink.length > 0) {
-          evts = itemLink.listEvents();
+          itemEvts = itemLink.listEvents();
+          toolbarEvts = this.element.listEvents();
 
           // Fire Angular Events
           if (itemLink.attr('ng-click') || itemLink.attr('data-ng-click')) {
@@ -234,15 +236,27 @@
             return;
           }
 
-          if (evts.click || itemLink[0].onclick) {
-            itemLink.trigger('click');
-            return;
+          // Check the types
+          var evtTypes = ['click', 'touchend', 'touchcancel'];
+          for (var i = 0; i < evtTypes.length; i++) {
+            var type = evtTypes[i];
+            // Check toolbar element for delegated-down events first
+            if (toolbarEvts && toolbarEvts[type] && toolbarEvts[type].delegateCount > 0) {
+              var el = this.element,
+                evt = $.Event(type);
+
+              evt.target = el.find(itemLink)[0];
+              el.trigger(evt);
+              return;
+            }
+
+            // Check for events directly on the element
+            if (itemEvts[type] || itemLink[0]['on' + type]) {
+              itemLink.trigger(type);
+              return;
+            }
           }
 
-          if (evts.touchend || evts.touchcancel || itemLink[0].ontouchend || itemLink[0].ontouchcancel) {
-            itemLink.trigger('touchcancel');
-            return;
-          }
         }
       },
 
@@ -382,9 +396,8 @@
         var self = this,
           visibleLis = [];
 
-        function menuItemFilter() {
-          /*jshint validthis:true */
-          return $(this).data('action-button-link');
+        function menuItemFilter(i, item) {
+          return $(item).data('action-button-link');
         }
 
         this.items.filter(menuItemFilter).each(function() {
@@ -472,15 +485,12 @@
       },
 
       teardown: function() {
-        function menuItemFilter() {
-          /*jshint validthis:true */
-          return $(this).data('action-button-link');
+        function menuItemFilter(i, item) {
+          return $(item).data('action-button-link');
         }
 
-        function deconstructMenuItem() {
-          /*jshint validthis:true */
-          var item = $(this),
-            a = item.data('action-button-link'),
+        function deconstructMenuItem(i, item) {
+          var a = $(item).data('action-button-link'),
             li = a.parent();
 
           a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar')
