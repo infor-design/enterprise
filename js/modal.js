@@ -415,7 +415,7 @@
         if (this.oldActive && $(this.oldActive).is('button:visible')) {
           this.oldActive.focus();
           this.oldActive = null;
-        } else {
+        } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
           this.trigger.focus();
         }
 
