@@ -233,48 +233,52 @@ $header-height: 60px;
   $header-tab-alt-normal-color: $graphite06;
   $header-tab-alt-hover-color: $font-color-highcontrast;
 
-  .tab {
-    font-weight: bold;
-    padding: 6px 6px 7px;
+  .tab-container:not(.vertical) {
+    padding: 1px 20px 0;
 
-    &:before {
-      background-color: rgba($header-tab-normal-color, 0);
-    }
-
-    &:not(.is-disabled):hover {
-      color: $header-tab-hover-color;
+    .tab {
+      font-weight: bold;
+      padding: 6px 6px 7px;
 
       &:before {
-        background-color: rgba($header-tab-hover-color, 1);
-      }
-
-      a {
-        color: $header-tab-hover-color;
-      }
-    }
-
-    &.is-selected {
-      &:before {
-        background-color: rgba($header-tab-hover-color, 1);
+        background-color: rgba($header-tab-normal-color, 0);
       }
 
       &:not(.is-disabled):hover {
+        color: $header-tab-hover-color;
+
         &:before {
           background-color: rgba($header-tab-hover-color, 1);
         }
+
+        a {
+          color: $header-tab-hover-color;
+        }
       }
 
-      a:hover {
-        color: $header-tab-hover-color;
+      &.is-selected {
+        &:before {
+          background-color: rgba($header-tab-hover-color, 1);
+        }
+
+        &:not(.is-disabled):hover {
+          &:before {
+            background-color: rgba($header-tab-hover-color, 1);
+          }
+        }
+
+        a:hover {
+          color: $header-tab-hover-color;
+        }
+
+        a {
+          color: $header-tab-hover-color;
+        }
       }
 
       a {
-        color: $header-tab-hover-color;
+        color: $header-tab-normal-color;
       }
-    }
-
-    a {
-      color: $header-tab-normal-color !important;
     }
   }
 

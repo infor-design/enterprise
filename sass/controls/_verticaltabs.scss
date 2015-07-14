@@ -3,10 +3,13 @@
 //
 
 .tab-container.vertical {
+  background-color: $panel-bg-color;
+  margin-top: 0;
   position: relative;
 
   .tab-list {
-    border-right: 1px solid $tab-border-color;
+    background-color: $body-bg-color;
+    border-right: 1px solid $graphite02;
     display: inline-block;
     vertical-align: top;
     width: 250px;
@@ -18,7 +21,7 @@
     a {
       @include antialiased();
       color: $font-color;
-      @include font-size(16);
+      @include font-size(14);
       padding: 1em;
       @include css3(user-select, none);
       @include css3(touch-callout, none);
@@ -36,14 +39,6 @@
       }
     }
 
-    &.is-focused {
-      background-color: $graphite02;
-
-      a {
-        color: $font-color-highcontrast;
-      }
-    }
-
     &.is-selected {
       background-color: transparent;
 
@@ -52,11 +47,19 @@
       }
     }
 
-    &.is-focused.is-selected {
-      background-color: $azure06;
+    &.is-focused {
+      background-color: $graphite02;
 
       a {
-        color: $inverse-color;
+        color: $font-color-highcontrast;
+      }
+
+      &.is-selected {
+        background-color: $azure06;
+
+        a {
+          color: $inverse-color;
+        }
       }
     }
 
@@ -85,7 +88,7 @@
   // If the panels are present inside the .tab-container, these styles will be necessary.
   .tab-panel {
     display: inline-block;
-    margin: 0 20px;
+    margin: 20px;
     vertical-align: top;
     width: calc(100% - 318px);
   }
@@ -99,27 +102,32 @@
   .info {
     display: none;
     @include font-size(16);
-    margin: 1em;
-    position: relative;
-    text-align: center;
     line-height: 32px;
-
-    .current-tab {
-
-    }
+    padding: 1em;
+    position: relative;
 
     .btn-actions {
       position: absolute;
-      right: 0;
-      top: 0;
+      right: 1.2em;
+      top: 1.2em;
     }
   }
 
 }
 
+// Set padding/height etc. when using Vertical Tabs directly inside a page container
+.page-container > .tab-container.vertical {
+  height: 100%;
+
+  .tab-list {
+    height: 100%;
+  }
+}
+
 // Tabs collapse into a dropdown on small form-factors
 @include respond-to(phone) {
   .tab-container.vertical {
+
     .tab-panel {
       display: block;
       width: auto;
@@ -131,6 +139,11 @@
 
     .info {
       display: block;
+
+      .btn-ations {
+        right: 1.4em;
+        top: 1.4em;
+      }
     }
   }
 }
