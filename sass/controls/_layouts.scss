@@ -47,6 +47,16 @@ body.no-scroll {
 }
 
 // Two Column Layout
+@include respond-to(phone) {
+
+  .list-detail.show-detail {
+    .listview {
+      display: none;
+    }
+  }
+
+}
+
 .two-column {
 
   .main,
@@ -243,16 +253,19 @@ body.no-scroll {
 // Use this in conjunction with a "no-scroll" class on the body tag
 .scrollable {
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .scrollable-x {
   overflow-x: auto;
   overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .scrollable-y {
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .page-container {

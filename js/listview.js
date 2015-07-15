@@ -244,8 +244,15 @@
         // Selection View Click/Touch
         if (this.settings.selectable) {
           this.element.addClass('is-selectable');
+          var trigger = $('.application-menu-trigger').find('.app-header');
+          trigger.parent().onTouchClick('listview').on('click.listview', function (e) {
+            alert();
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+          });
 
-          this.element.on('click.listview touchend.listview', 'li, tr', function () {
+          this.element.onTouchClick('listview', 'li, tr').on('click.listview', 'li, tr', function () {
             var item = $(this);
 
             if (!isFocused && !item.hasClass('is-disabled')) {
@@ -253,6 +260,14 @@
               self.select(item);
               item.focus();
             }
+
+            var pattern = item.closest('.list-detail');
+
+            if (pattern.length > 0) {
+              pattern.toggleClass('show-detail');
+              trigger.toggleClass('go-back');
+            }
+
             isFocused = false;
           });
         }

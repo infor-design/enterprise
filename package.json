@@ -30,7 +30,7 @@
     "grunt-shell": "^1.0.0",
     "grunt-strip-code": "^0.1.2",
     "jquery": "^3.0.0-alpha1",
-    "jsdom": "*",
+    "jsdom": "3.1.2",
     "jshint": "^2.5.5",
     "load-grunt-tasks": "^0.6.0",
     "mmm": "^0.2.2",
@@ -40,6 +40,10 @@
     "spec-xunit-file": "0.0.1-1",
     "webdriverio": "^2.4.0",
     "webdriverjs-selenium-bundle": "0.0.2",
-    "zombie": "*"
+    "intern": "^2.2.2",
+    "grunt-run": "^0.3.0",
+    "selenium-standalone": "^4.5.3",
+    "dojo": "^1.10.4",
+    "grunt-selenium-server": "^0.1.6"
   }
 }

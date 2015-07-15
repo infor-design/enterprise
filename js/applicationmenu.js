@@ -93,6 +93,10 @@
             e.preventDefault();
             $(e.target).click();
           }).on('click.applicationmenu', function() {
+            if (self.triggers.find('.icon.app-header').hasClass('go-back')) {
+              return false;
+            }
+
             if (!self.menu.hasClass('is-open') && self.isAnimating === false) {
               self.openMenu();
             } else if (self.menu.hasClass('is-open')) {
