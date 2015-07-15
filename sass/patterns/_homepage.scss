@@ -3,7 +3,7 @@
 .card,
 .widget {
   background-color: $cardlist-bg-color;
-  border: 1px solid #d8d8d8;
+  border: 1px solid $graphite02;
   border-radius: 2px;
   height: 370px;
   margin-bottom: 20px;
@@ -14,7 +14,7 @@
   .card-header,
   .widget-header {
     background-color: $cardlist-bg-color;
-    border-bottom: 1px solid #d8d8d8;
+    border-bottom: 1px solid $graphite02;
     height: 50px;
     line-height: 50px;
     padding: 13px 20px;
@@ -29,8 +29,8 @@
       }
 
       .title {
-        color: $font-color-highcontrast;
         @include font-size(18);
+        color: $font-color-highcontrast;
         -webkit-font-smoothing: antialiased;
         font-weight: 100;
         margin: 4px 1em 4px 0;
@@ -131,30 +131,36 @@
   }
 }
 
+.card.double-width.to-single,
+.widget.double-width.to-single,
+.card.triple-width.to-single,
+.widget.triple-width.to-single,
+.card.quad-width.to-single,
+.widget.quad-width.to-single {
+  width: 360px; // 320 (single)
+}
+
 .card.double-width,
-.widget.double-width {
-  width: 740px; // 660
+.widget.double-width,
+.card.triple-width.to-double,
+.widget.triple-width.to-double,
+.card.quad-width.to-double,
+.widget.quad-width.to-double {
+  width: 740px; // 660 (double: 380 + single)
 }
 
 .card.triple-width,
-.widget.triple-width {
-  width: 1120px; //1000
+.widget.triple-width,
+.card.quad-width.to-triple,
+.widget.quad-width.to-triple {
+  width: 1120px; //1000 (triple: 380 + double)
 }
 
-.card.triple-width.to-double,
-.widget.triple-width.to-double {
-  width: 740px; // 660
+.card.quad-width,
+.widget.quad-width {
+  width: 1500px; //1340 (quad: 380 + triple)
 }
 
-.card.triple-width.to-single,
-.widget.triple-width.to-single {
-  width: 360px; // 660
-}
-
-.card.double-width.to-single,
-.widget.double-width.to-single {
-  width: 360px; //320
-}
 
 // Centering
 .widget-content.l-center,

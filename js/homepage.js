@@ -180,10 +180,23 @@
         self.element.find('.card, .widget').each(function () {
           var card = $(this),
             h = card.hasClass('double-height') ? 2 : 1,
-            w = card.hasClass('triple-width') ? 3 : card.hasClass('double-width') ? 2 : 1;
+            w = card.hasClass('quad-width') ? 4 : card.hasClass('triple-width') ? 3 : card.hasClass('double-width') ? 2 : 1;
 
           self.blocks.push({w: w, h: h, elem: card, text: card.text()});
         });
+
+        // Max sized columns brings to top
+        for (var i=0, j=0, l=self.blocks.length; i<l; i++) {
+          if (self.blocks[i].w >= self.settings.columns) {            
+            self.arrayIndexMove(self.blocks, i, j);
+            j++;
+          }
+        }
+      },
+
+      //Move an array element position
+      arrayIndexMove: function(arr, from, to) {
+        arr.splice(to, 0, arr.splice(from, 1)[0]);
       },
 
       attachEvents: function () {
@@ -201,7 +214,6 @@
         $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
           self.resize(self, self.settings.animate);
         });
-
       },
 
       // Resize Method
@@ -225,7 +237,7 @@
           phone   = (elemWidth <= bpTablet);
 
         var maxAttr = this.element.attr('data-columns');
-        this.settings.columns = parseInt((maxAttr ? maxAttr : this.settings.columns));
+        this.settings.columns = parseInt((maxAttr || this.settings.columns));
 
         // Assign columns as breakpoint sizes
         if (xl && self.settings.columns === 4) {
@@ -258,15 +270,20 @@
             block = self.blocks[i];
 
           // Remove extra classes if assigned earlier
-          block.elem.removeClass('to-double').removeClass('to-single');
+          block.elem.removeClass('to-single to-double to-triple');
 
-          // If block more wider than available size, make as  available size
+          // If block more wider than available size, make as available size
           if (block.w > self.settings.columns) {
             block.w = self.settings.columns;
+
             if (self.settings.columns === 1) {
               block.elem.addClass('to-single');
-            } else if (self.settings.columns === 2) {
-              block.elem.addClass('to-double').removeClass('to-single');
+            } 
+            else if (self.settings.columns === 2) {
+              block.elem.addClass('to-double');
+            }
+            else if (self.settings.columns === 3) {
+              block.elem.addClass('to-triple');
             }
           }
 
