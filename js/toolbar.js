@@ -200,6 +200,10 @@
             self.handleKeys(e);
           }).on('click.toolbar', function(e) {
             self.handleClick(e);
+          }).on('focus.toolbar', function(e) {
+            self.handleFocus(e);
+          }).on('blur.toolbar', function(e) {
+            self.handleBlur(e);
           });
 
         this.more.on('keydown.toolbar', function(e) {
@@ -267,28 +271,51 @@
         return false;
       },
 
+      handleFocus: function(e) {
+        var item = $(e.target);
+
+        if (item.is('.searchfield')) {
+          this.element.addClass('searchfield-active');
+        }
+
+        return;
+      },
+
+      handleBlur: function(e) {
+        var item = $(e.target);
+
+        if (item.is('.searchfield')) {
+          this.element.removeClass('searchfield-active');
+        }
+
+        return;
+      },
+
       handleKeys: function(e) {
         var self = this,
-          key = e.which;
+          key = e.which,
+          target = $(e.target);
 
-        if ($(e.target).is('.btn-actions')) {
-          if (key === 37) { // Left
+        if (target.is('.btn-actions')) {
+          if (key === 37 || key === 38) { // Left/Up
             e.preventDefault();
             self.setActiveButton(self.getLastVisibleButton());
           }
 
-          if (key === 39) { // Right
+          if (key === 39 || (key === 40 && target.attr('aria-expanded') === 'false')) { // Right (or Down if the menu's closed)
             e.preventDefault();
             self.setActiveButton(self.getFirstVisibleButton());
           }
           return;
         }
 
-        if (key === 37 || key === 38) {
+        if ((key === 37 && target.is(':not(input)')) || key === 38) {
+          e.preventDefault();
           self.navigate(-1);
         }
 
-        if (key === 39 || key === 40) {
+        if ((key === 39 && target.is(':not(input)')) || key === 40) {
+          e.preventDefault();
           self.navigate(1);
         }
 
@@ -480,7 +507,7 @@
       unbind: function() {
         this.items
           .offTouchClick()
-          .off('keydown.toolbar click.toolbar');
+          .off('keydown.toolbar click.toolbar focus.toolbar blur.toolbar');
         this.more.off('beforeOpen.toolbar selected.toolbar');
         $(window).off('resize.toolbar-' + this.id);
         return this;
