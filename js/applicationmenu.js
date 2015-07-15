@@ -91,6 +91,7 @@
         if (this.triggers.length) {
           this.triggers.on('touchend.applicationmenu touchcancel.applicationmenu', function(e) {
             e.preventDefault();
+            e.stopImmediatePropagation();
             $(e.target).click();
           }).on('click.applicationmenu', function() {
             if (self.triggers.find('.icon.app-header').hasClass('go-back')) {

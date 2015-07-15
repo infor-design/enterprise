@@ -359,7 +359,7 @@ $header-height: 60px;
 
     .animated-bar {
       background-color: $header-tab-hover-color;
-      margin-top: 2px;
+      margin-top: -2px;
     }
 
     .tab-focus-indicator.is-visible {

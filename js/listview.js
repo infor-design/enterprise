@@ -244,10 +244,16 @@
         // Selection View Click/Touch
         if (this.settings.selectable) {
           this.element.addClass('is-selectable');
-          var trigger = $('.application-menu-trigger').find('.app-header');
+          var trigger = $('.application-menu-trigger').find('.app-header'),
+            pattern = $(this.element).closest('.list-detail');
+
           trigger.parent().onTouchClick('listview').on('click.listview', function (e) {
-            alert();
+            if (trigger.hasClass('go-back')) {
+              trigger.removeClass('go-back');
+              pattern.removeClass('show-detail');
+            }
             e.stopPropagation();
+            e.stopImmediatePropagation();
             e.preventDefault();
             return false;
           });
@@ -261,9 +267,8 @@
               item.focus();
             }
 
-            var pattern = item.closest('.list-detail');
 
-            if (pattern.length > 0) {
+            if (pattern.length > 0 && $(window).outerWidth() < 767) {
               pattern.toggleClass('show-detail');
               trigger.toggleClass('go-back');
             }

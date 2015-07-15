@@ -593,7 +593,7 @@ window.Chart = function(container) {
       width: parseInt($(container).parent().width())
     };
 
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 20 : 50));
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 60 : 50));
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
     dims.labelRadius = dims.outerRadius + 11;
 
