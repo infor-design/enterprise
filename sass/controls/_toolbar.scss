@@ -24,6 +24,7 @@
     position: absolute;
     text-overflow: ellipsis;
     top: 0;
+    @include css3(transition, left 300ms cubic-bezier(.17, .04, .03, .94));
     white-space: nowrap;
 
     > * {
@@ -80,6 +81,7 @@
     position: absolute;
     right: 0;
     top: 0;
+    @include css3(transition, right 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
   .separator {
@@ -98,7 +100,7 @@
 }
 
 // Styles for regular toolbar only
-.toolbar:not(.formatter-toolbar):not(.listview-toolbar):not(.cardstack-toolbar) {
+.toolbar/*:not(.formatter-toolbar):not(.listview-toolbar):not(.cardstack-toolbar)*/ {
   height: $toolbar-height;
   margin-bottom: 5px;
 
@@ -123,6 +125,8 @@
       margin: 0 0 0 50%;
       max-width: 50%;
       text-align: right;
+      @include css3(transition, width 300ms cubic-bezier(.17, .04, .03, .94),
+        margin 300ms cubic-bezier(.17, .04, .03, .94));
     }
   }
 
@@ -170,6 +174,46 @@
     li {
       > a {
         padding: 0 30px 0 45px;
+      }
+    }
+  }
+}
+
+@include respond-to(phablet) {
+  .toolbar {
+    .searchfield-wrapper {
+      @include css3(transition, width 300ms cubic-bezier(.17, .04, .03, .94));
+    }
+
+    .searchfield {
+      padding-left: 24px;
+      @include css3(transition, padding 300ms cubic-bezier(.17, .04, .03, .94));
+      width: 24px;
+    }
+
+    &.searchfield-active {
+      .title {
+        left: -100%;
+
+        + .buttonset {
+          margin: 0;
+          max-width: none;
+          padding-right: 0;
+          width: 100%;
+        }
+      }
+
+      .more {
+        right: -100%;
+      }
+
+      .searchfield-wrapper {
+        width: 100%;
+      }
+
+      .searchfield {
+        padding-left: 35px;
+        width: 100%;
       }
     }
   }

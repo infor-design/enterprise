@@ -39,6 +39,7 @@
 
     // Plugin Constructor
     function Editor(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -536,6 +537,11 @@
           var btn = $(this),
             action = btn.attr('data-action');
 
+          // Don't do anything if it's the More Button
+          if (btn.is('.btn-actions')) {
+            return;
+          }
+
           e.preventDefault();
           self.getCurrentElement().focus();
 
@@ -666,7 +672,7 @@
 
         if (this.sourceViewActive()) {
           this.insertTextAreaContent(input.val(), 'anchor');
-        } 
+        }
         else {
           if (!this.selection.isCollapsed) {
             document.execCommand('createLink', false, input.val());
@@ -1108,6 +1114,11 @@
         this.element.trigger('destroy.toolbar.editor');
       },
 
+      updated: function() {
+        // TODO: Updated Method
+        return this;
+      },
+
       disable: function () {
         this.element.addClass('is-disabled');
         this.element.parent('.field').addClass('is-disabled');
@@ -1134,7 +1145,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Editor(this, settings));
       }

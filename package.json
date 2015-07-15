@@ -6,7 +6,7 @@
   "author": "Hook and Loop",
   "private": true,
   "dependencies": {
-    "express": "~3.4.8",
+    "express": "^3.4.8",
     "glob": "^5.0.3"
   },
   "devDependencies": {
@@ -21,7 +21,7 @@
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-cssmin": "^0.11.0",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-uglify": "^0.8.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-git-revision": "0.0.1",
     "grunt-mocha-cli": "^1.9.0",
@@ -29,7 +29,7 @@
     "grunt-sass": "*",
     "grunt-shell": "^1.0.0",
     "grunt-strip-code": "^0.1.2",
-    "jquery": "^2.1.1",
+    "jquery": "^3.0.0-alpha1",
     "jsdom": "*",
     "jshint": "^2.5.5",
     "load-grunt-tasks": "^0.6.0",

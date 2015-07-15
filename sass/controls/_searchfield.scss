@@ -36,7 +36,7 @@
 // This variation Slides out on focus
 .toolbar {
   .searchfield-wrapper {
-    margin: 4px 0px 6px;
+    margin: 4px 0 6px;
 
     + span {
       color: $graphite06;
@@ -53,7 +53,7 @@
     border: 1px solid transparent;
     cursor: pointer;
     padding-left: 35px;
-    transition: width .3s ease-out .1s;
+    transition: width .3s cubic-bezier(.17, .04, .03, .94);
     width: 110px;
 
     &:focus {
@@ -94,6 +94,22 @@
       @include searchfield-text-style();
     }
 
+  }
+}
+
+@include respond-to(phablet) {
+  .searchfield:focus {
+    &::-webkit-input-placeholder {
+      color: transparent;
+    }
+
+    &::-moz-placeholder {
+      color: transparent;
+    }
+
+    &:-ms-input-placeholder {
+      color: transparent;
+    }
   }
 }
 
