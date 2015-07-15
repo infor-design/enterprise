@@ -3,7 +3,6 @@ module.exports = function(grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  // Load the Intern task
   grunt.loadNpmTasks('intern');
 
   grunt.initConfig({
@@ -218,14 +217,42 @@ module.exports = function(grunt) {
       amd: ['temp']
     },
 
+    run: {
+      'selenium-start': {
+        options: {
+          ready: new RegExp('Selenium started'),
+          wait: false
+        },
+        cmd: 'selenium-standalone',
+        args: ['start'],
+      },
+
+      'selenium-stop': {
+        cmd: 'selenium-standalone',
+        args: ['stop']
+      },
+
+      'intern-functional-local': {
+        options: {
+          ready: new RegExp('Passed: '),
+          wait: false
+        },
+        cmd: './node_modules/.bin/intern-runner',
+        args: ['config=test2/intern.local']
+      }
+    },
+
     //Testing Stuff
     intern: {
       options: {
+        config: 'test2/intern.local', // your intern.js file
         runType: 'runner', // defaults to 'client'
-        config: 'test2/intern.local' // your intern.js file
       },
       functional: {
-        // my functional task, default options
+        options: {
+          reporters: ['pretty'],
+          functionalSuites: [ 'test2/functional/_all' ]
+        }
       }
     },
 
@@ -259,6 +286,7 @@ module.exports = function(grunt) {
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
+
   grunt.registerTask('default', [
     'revision',
     'jshint',
@@ -278,6 +306,18 @@ module.exports = function(grunt) {
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
   ]);
 
-  grunt.registerTask('test', ['start-selenium-server','intern:functional','stop-selenium-server']);
+  grunt.registerTask('test', [
+    'run:selenium-start',
+    'run:intern-functional-local'/*,
+    'run:selenium-stop'*/
+  ]);
+
+  /*
+  grunt.registerTask('test', [
+    'start-selenium-server',
+    'intern:functional',
+    'stop-selenium-server'
+  ]);
+  */
 
 };
