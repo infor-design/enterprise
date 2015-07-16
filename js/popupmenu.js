@@ -66,7 +66,7 @@
 
       //Add markip including Aria
       addMarkup: function () {
-        var id;         
+        var id;
 
         switch(typeof this.settings.menu) {
           case 'string': // ID Selector
@@ -262,7 +262,12 @@
           }
 
           if (href && href.charAt(0) !== '#') {
-             return true;
+            if (anchor.attr('target') === '_blank') {
+              window.open(href, '_blank');
+            } else {
+              window.location.href = href;
+            }
+            return true;
           }
 
           e.preventDefault();
@@ -345,7 +350,7 @@
       },
 
       // Filtering icon initial setup
-      iconFilteringSetup: function(alink) { 
+      iconFilteringSetup: function(alink) {
         if (this.element.hasClass('btn-filtering')) {
           var icon = $('use', this.element),
             link = alink || $('li:first a', this.menu);
@@ -359,7 +364,7 @@
       },
 
       // Filtering icon update
-      iconFilteringUpdate: function(alink) { 
+      iconFilteringUpdate: function(alink) {
         if (this.element.hasClass('btn-filtering')) {
           var link = alink || $('li:first a', this.menu);
 
