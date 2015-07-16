@@ -60,7 +60,11 @@ define({
     ]
   },
 
-  reporters: ['pretty', 'Lcov'],
+  reporters: [
+    'pretty',
+    'junit',
+    'test2/reporters/end'
+  ],
 
   // Non-functional test suite(s) to run in each browser
   suites: [],

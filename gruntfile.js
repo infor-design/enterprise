@@ -3,8 +3,6 @@ module.exports = function(grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  grunt.loadNpmTasks('intern');
-
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
@@ -227,60 +225,15 @@ module.exports = function(grunt) {
         args: ['start'],
       },
 
-      'selenium-stop': {
-        cmd: 'selenium-standalone',
-        args: ['stop']
-      },
-
       'intern-functional-local': {
         options: {
-          ready: new RegExp('Passed: '),
+          ready: new RegExp('SoHo Xi Tests Completed!'),
           wait: false
         },
         cmd: './node_modules/.bin/intern-runner',
         args: ['config=test2/intern.local']
       }
     },
-
-    //Testing Stuff
-    intern: {
-      options: {
-        config: 'test2/intern.local', // your intern.js file
-        runType: 'runner', // defaults to 'client'
-      },
-      functional: {
-        options: {
-          reporters: ['pretty'],
-          functionalSuites: [ 'test2/functional/_all' ]
-        }
-      }
-    },
-
-   'start-selenium-server': {
-      dev: {
-        options: {
-          autostop: true,
-          downloadUrl: 'https://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar'
-        }
-      }
-    },
-
-    'stop-selenium-server': {
-      dev: {}
-    },
-
-    run: {
-      options: {
-        // Task-specific options go here.
-      },
-
-      'selenium-start': {
-        cmd: 'selenium-standalone',
-        args: [
-          'start'
-        ]
-      }
-    }
 
   });
 
@@ -308,16 +261,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'run:selenium-start',
-    'run:intern-functional-local'/*,
-    'run:selenium-stop'*/
+    'run:intern-functional-local'
   ]);
-
-  /*
-  grunt.registerTask('test', [
-    'start-selenium-server',
-    'intern:functional',
-    'stop-selenium-server'
-  ]);
-  */
 
 };
