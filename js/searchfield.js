@@ -164,7 +164,9 @@
 
       // Triggered by the "updated.searchfield" event
       updated: function() {
-        this.autocomplete.destroy();
+        if (this.autocomplete) {
+          this.autocomplete.destroy();
+        }
         this.build();
       },
 

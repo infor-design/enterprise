@@ -208,6 +208,15 @@ body.no-scroll {
     }
   }
 
+  .list-detail {
+    .main {
+      display: none !important;
+    }
+
+    &.show-detail .main {
+      display: block !important;
+    }
+  }
 }
 
 @media (max-width: $breakpoint-phone-to-tablet - 1) {

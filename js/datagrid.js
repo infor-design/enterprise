@@ -208,7 +208,8 @@ $.fn.datagrid = function(options) {
         menuId: null,  //Id to the right click context menu
         rowHeight: 'medium', //(short, medium or tall)
         selectable: false, //false, 'single' or 'multiple'
-        toolbar: false // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
+        toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
+        paging: false
       },
       settings = $.extend({}, defaults, options);
 
@@ -229,6 +230,7 @@ $.fn.datagrid = function(options) {
      this.createResizeHandle();
      this.handleEvents();
      this.handleKeys();
+     this.handlePaging();
     },
 
     initSettings: function () {
@@ -1103,6 +1105,21 @@ $.fn.datagrid = function(options) {
     //Default formatter just plain text style
     defaultFormatter: function(row, cell, value) {
       return ((value === null || value === undefined) ? '' : value);
+    },
+
+    //Handle Adding Paging
+    handlePaging: function () {
+      var elem = this.element;
+
+      if (!this.settings.paging) {
+        return;
+      }
+
+      this.pagerBar = elem.next();
+      if (this.pagerBar.length ===0) {
+        elem.after('<div class="datagrid-pager">Test</div>');
+      }
+
     }
   };
 
