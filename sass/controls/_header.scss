@@ -409,7 +409,14 @@ $header-height: 60px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    span {
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
+
 }
 
 // Print Style Sheet

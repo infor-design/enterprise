@@ -47,16 +47,6 @@ body.no-scroll {
 }
 
 // Two Column Layout
-@include respond-to(phone) {
-
-  .list-detail.show-detail {
-    .listview {
-      display: none;
-    }
-  }
-
-}
-
 .two-column {
 
   .main,
@@ -100,6 +90,7 @@ body.no-scroll {
     }
 
     .main {
+      vertical-align: top;
       width: calc(100% - 254px);
     }
   }
@@ -337,8 +328,8 @@ body.no-scroll {
     &.has-tabs {
       + .page-container,
       + .application-menu + .page-container {
-        height: calc(100% - 130px);
-        margin-top: 130px;
+        height: calc(100% - 137px);
+        margin-top: 137px;
       }
     }
 
@@ -513,6 +504,27 @@ body.no-scroll {
   .detail {
     background-color: $body-bg-color;
     height: calc(100% - 320px);
+  }
+}
+
+// List Detail
+.list-detail {
+  height: 100%;
+
+  .main {
+    background-color: $body-bg-color;
+  }
+
+  .listview ul {
+    margin-top: 1px;
+  }
+}
+
+@include respond-to(phone) {
+  .list-detail.show-detail {
+    .listview {
+      display: none;
+    }
   }
 }
 

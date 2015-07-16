@@ -7,9 +7,11 @@
 
       <button class="btn-icon application-menu-trigger" type="button">
         <span class="audible">Show navigation</span>
-        <svg class="icon" focusable="false" aria-hidden="true">
-          <use xlink:href="#icon-menu"></use>
-        </svg>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
       </button>
       {{> includes/applicationmenu}}
 
@@ -40,18 +42,71 @@
     </div>
   </header>
 
-  <div id="maincontent" class="page-container scrollable" role="main">
+  <div id="maincontent" class="page-container " role="main">
     <div id="header-tabs-staff" class="tab-panel">
 
-      <div class="row">
-        <div class="twelve columns">
-          <p>Viral viral whiteboard transparent utilize deliverables, vertical cutting-edge channels, "markets, integrate clicks-and-mortar." B2B exploit niches partnerships morph B2B embrace ecologies synergies ubiquitous, customized 24/7.</p>
-          <p>Action-items user-centred incentivize, 24/365 experiences collaborative innovate matrix seize holistic markets rich--weblogs; orchestrate remix wireless, "incentivize communities Cluetrain." Extend mindshare value-added design reinvent reinvent engage aggregate integrate cutting-edge envisioneer."</p>
+      <div id="maincontent" class="two-column fixed list-detail">
+
+        <div class="sidebar scrollable" role="complementary">
+          {{={{{ }}}=}}
+
+            <script id="task-tmpl" type="text/html">
+              <ul>
+                {{#dataset}}
+                  {{#disabled}}
+                    <li class="is-disabled">
+                  {{/disabled}}
+                  {{^disabled}}
+                    <li>
+                  {{/disabled}}
+                    <p class="listview-heading">Task #{{task}}</p>
+                    <p class="listview-subheading">{{desc}}</p>
+                    <p class="listview-micro">Due: {{date}}</p>
+                  </li>
+                {{/dataset}}
+              </ul>
+            </script>
+
+            <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+
         </div>
+
+        <div class="main scrollable" role="main">
+
+          <div class="row">
+            <div class="full column card">
+
+            </div>
+            <div class="full column card">
+
+            </div>
+            <div class="full column card">
+
+            </div>
+            <div class="full column card">
+
+            </div>
+            <div class="full column card">
+
+            </div>
+            <div class="full column card">
+
+            </div>
+            <div class="full column card">
+
+            </div>
+            <div class="full column card">
+
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
 
     </div>
-    <div id="org" class="tab-panel">
+    <div id="header-tabs-org" class="tab-panel">
 
       <div class="row">
         <div class="six columns">

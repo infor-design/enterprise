@@ -219,7 +219,12 @@
           if (key === 84) {
             handled = true;
             self.currentDate = new Date();
-            self.insertDate(self.currentDate);
+
+            if (self.isOpen()) {
+              self.insertDate(self.currentDate, true);
+            } else {
+              self.element.val(Locale.formatDate(self.currentDate)).trigger('change');
+            }
           }
 
           // Space or Enter closes Date Picker, selecting the Date

@@ -240,6 +240,19 @@ module.exports = function(grunt) {
 
     'stop-selenium-server': {
       dev: {}
+    },
+
+    run: {
+      options: {
+        // Task-specific options go here.
+      },
+
+      'selenium-start': {
+        cmd: 'selenium-standalone',
+        args: [
+          'start'
+        ]
+      }
     }
 
   });

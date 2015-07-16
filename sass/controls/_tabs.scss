@@ -99,6 +99,20 @@
   margin-top: 20px;
 }
 
+// Set padding/height etc. when using Vertical Tabs directly inside a page container
+.page-container > .tab-container {
+  height: 100%;
+
+  .tab-list {
+    height: 100%;
+  }
+}
+
+.page-container  > .tab-panel {
+  height: 100%;
+  margin-top: 0px;
+}
+
 // More Button
 .tab-more {
   background-color: transparent;

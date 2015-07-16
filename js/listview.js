@@ -267,8 +267,7 @@
               item.focus();
             }
 
-
-            if (pattern.length > 0 && $(window).outerWidth() < 767) {
+            if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled')) {
               pattern.toggleClass('show-detail');
               trigger.toggleClass('go-back');
             }
