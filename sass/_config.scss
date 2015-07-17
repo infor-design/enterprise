@@ -138,6 +138,9 @@ $fieldset-border-bottom-color: $inverse-color;
 // Expandable Area
 $expandable-area-border-color: $graphite03;
 
+// Cardlist
+$cardlist-bg-color: $inverse-color;
+
 // Editor
 $editor-border-color: $input-border-color;
 $editor-focus-border-color: $input-focus-border-color;
@@ -145,9 +148,6 @@ $editor-color: $input-color;
 $editor-toolbar-bg-color: #ededed;
 $editor-btn-color: #767676;  //Was #999999  in design
 $editor-middle-border-color: $graphite02;
-
-// Cardlist
-$cardlist-bg-color: $inverse-color;
 
 // Checkboxes
 $checkbox-color: $primary-color;

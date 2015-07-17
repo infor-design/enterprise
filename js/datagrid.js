@@ -1115,11 +1115,12 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      this.pagerBar = elem.next();
-      if (this.pagerBar.length ===0) {
+      this.pagerBar = elem.next('.datagrid-pager');
+      if (this.pagerBar.length === 0) {
         elem.after('<div class="datagrid-pager">Test</div>');
       }
 
+      this.pagerBar.pager();
     }
   };
 

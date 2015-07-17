@@ -8,7 +8,6 @@ fieldset {
     font-weight: normal;
     @include antialiased();
     padding-bottom: 30px;
-    padding-top: 20px;
   }
 }
 
@@ -21,12 +20,6 @@ fieldset {
   margin-bottom: 0;
   padding-bottom: 30px;
   padding-top: 20px;
-}
-
-
-.row fieldset:first-child,
-.row .fieldset:first-child {
-  margin-top: 20px;
 }
 
 .row fieldset:nth-child(n + 2),

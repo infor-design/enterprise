@@ -104,6 +104,13 @@ $datepicker-hover-bg-color: $slate05;
 $masthead-bg-color: $header-bg-color;
 $masthead-border-color: $slate08;
 
+// Icons
+$icon-color: $slate03;
+
+//Field Set
+$fieldset-border-top-color: $slate07;
+$fieldset-border-bottom-color: transparent;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

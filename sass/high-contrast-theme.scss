@@ -126,6 +126,14 @@ $datepicker-hover-bg-color: $slate02;
 $masthead-bg-color: $slate09;
 $masthead-border-color: $slate06;
 
+// Icons
+$icon-color: $font-color;
+
+//Field Set
+$fieldset-border-top-color: $slate03;
+$fieldset-border-bottom-color: transparent;
+
+
 //================================================== //
 // Core Controls
 @import 'controls';
