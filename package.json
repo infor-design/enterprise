@@ -13,6 +13,7 @@
     "chai": "^1.9.1",
     "chai-jquery": "^1.2.3",
     "colors": "^0.6.2",
+    "dojo": "^1.10.4",
     "grunt": "~0.4.2",
     "grunt-banner": "^0.3.1",
     "grunt-concurrent": "^0.5.0",
@@ -26,9 +27,12 @@
     "grunt-git-revision": "0.0.1",
     "grunt-mocha-cli": "^1.9.0",
     "grunt-nodemon": "^0.4.0",
-    "grunt-sass": "*",
+    "grunt-run": "^0.3.0",
+    "grunt-sass": "^1.0.0",
+    "grunt-selenium-server": "^0.1.6",
     "grunt-shell": "^1.0.0",
     "grunt-strip-code": "^0.1.2",
+    "intern": "^2.2.2",
     "jquery": "^3.0.0-alpha1",
     "jsdom": "3.1.2",
     "jshint": "^2.5.5",
@@ -37,13 +41,9 @@
     "mocha": "^1.18.2",
     "phantomjs": "^1.9.7-15",
     "selenium-chromedriver": "0.0.2",
+    "selenium-standalone": "^4.5.3",
     "spec-xunit-file": "0.0.1-1",
     "webdriverio": "^2.4.0",
-    "webdriverjs-selenium-bundle": "0.0.2",
-    "intern": "^2.2.2",
-    "grunt-run": "^0.3.0",
-    "selenium-standalone": "^4.5.3",
-    "dojo": "^1.10.4",
-    "grunt-selenium-server": "^0.1.6"
+    "webdriverjs-selenium-bundle": "0.0.2"
   }
 }

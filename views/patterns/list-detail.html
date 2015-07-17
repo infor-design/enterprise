@@ -1,6 +1,6 @@
-{{> layouts/header-scroll}}
+{{> layouts/header-sticky}}
 
-<div id="maincontent" class="two-column page-container fixed scrollable list-detail">
+<div id="maincontent" class="two-column page-container fixed list-detail">
 
   <div class="sidebar scrollable" role="complementary">
     {{={{{ }}}=}}
@@ -23,11 +23,10 @@
       </script>
 
       <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
-
   </div>
 
   <div class="main scrollable" role="main">
-    <div class="content">
+    <div class="content" style="padding: 1em; background-color: #ffffff; height: 100%;">
       <h2>Test Content</h2>
     </div>
   </div>

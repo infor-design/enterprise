@@ -8,5 +8,6 @@ temp/
 .DS_Store
 phantomjsdriver.log
 xunit.xml
+report.xml
 .idea/
 .idea

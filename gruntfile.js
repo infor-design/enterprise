@@ -3,9 +3,6 @@ module.exports = function(grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  // Load the Intern task
-  grunt.loadNpmTasks('intern');
-
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
@@ -218,47 +215,31 @@ module.exports = function(grunt) {
       amd: ['temp']
     },
 
-    //Testing Stuff
-    intern: {
-      options: {
-        runType: 'runner', // defaults to 'client'
-        config: 'test2/intern.local' // your intern.js file
-      },
-      functional: {
-        // my functional task, default options
-      }
-    },
-
-   'start-selenium-server': {
-      dev: {
-        options: {
-          autostop: true,
-          downloadUrl: 'https://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar'
-        }
-      }
-    },
-
-    'stop-selenium-server': {
-      dev: {}
-    },
-
     run: {
-      options: {
-        // Task-specific options go here.
+      'selenium-start': {
+        options: {
+          ready: new RegExp('Selenium started'),
+          wait: false
+        },
+        cmd: 'selenium-standalone',
+        args: ['start'],
       },
 
-      'selenium-start': {
-        cmd: 'selenium-standalone',
-        args: [
-          'start'
-        ]
+      'intern-functional-local': {
+        options: {
+          ready: new RegExp('SoHo Xi Tests Completed!'),
+          wait: false
+        },
+        cmd: './node_modules/.bin/intern-runner',
+        args: ['config=test2/intern.local']
       }
-    }
+    },
 
   });
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
+
   grunt.registerTask('default', [
     'revision',
     'jshint',
@@ -278,6 +259,9 @@ module.exports = function(grunt) {
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
   ]);
 
-  grunt.registerTask('test', ['start-selenium-server','intern:functional','stop-selenium-server']);
+  grunt.registerTask('test', [
+    'run:selenium-start',
+    'run:intern-functional-local'
+  ]);
 
 };

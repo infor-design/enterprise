@@ -183,8 +183,7 @@ body.no-scroll {
 }
 
 @include respond-to(phone) {
-  .two-column,
-  .two-column.fixed {
+  .two-column {
     .main,
     .sidebar {
       display: block;
@@ -206,17 +205,29 @@ body.no-scroll {
       border-bottom: 0;
       border-top: 1px solid $graphite02;
     }
-  }
 
-  .list-detail {
-    .main {
-      display: none !important;
+    // Undo fixed-widths
+    &.fixed {
+      .main,
+      .sidebar {
+        display: block;
+        width: 100%;
+      }
     }
 
-    &.show-detail .main {
-      display: block !important;
+    // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
+    &.list-detail {
+      .main,
+      .sidebar {
+        &.scrollable,
+        &.scrollable-y {
+          height: 100%;
+          overflow: auto;
+        }
+      }
     }
   }
+
 }
 
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
@@ -530,9 +541,30 @@ body.no-scroll {
 }
 
 @include respond-to(phone) {
-  .list-detail.show-detail {
-    .listview {
-      display: none;
+
+  .list-detail {
+    .main,
+    .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      position: absolute;
+    }
+
+    .main {
+      @include css3(transform, translateX(100%));
+    }
+
+    .sidebar {
+      @include css3(transform, translateX(0));
+    }
+
+    &.show-detail {
+      .main {
+        @include css3(transform, translateX(0));
+      }
+
+      .sidebar {
+        @include css3(transform, translateX(-100%));
+      }
     }
   }
 }
