@@ -270,6 +270,10 @@ $datagrid-header-height: 40px;
 
     span {
       line-height: 48px;
+      
+      &.exclamation {
+        line-height: 44px;
+      }
     }
   }
 
@@ -368,12 +372,14 @@ td .btn-actions {
 //Grid Checkboxes
 .datagrid-checkbox {
   cursor: pointer;
-  text-indent: 14px;
+  display: inline-block;
+  left: -16px;
+  position: relative;
+  top: -16px;
 
   &:before {
     @include checkbox-unchecked-before-style;
-    margin-left: -11px;
-    margin-top: -8px;
+    margin-left: 0;
   }
 
   &.is-checked:before {
@@ -384,15 +390,14 @@ td .btn-actions {
     @include checkbox-checked-after-style;
     @include css3(transform-origin, -11px top 0);
     @include checkbox-animation;
-    left: 31px;
-    margin-left: -5px;
-    margin-top: -5px;
+    left: 6px;
+    margin-top: 0;
+    top: 2px;
   }
 }
 
 .datagrid-checkbox-wrapper {
   position: relative;
-  top: 50%;
 }
 
 //Grid Expand Button
