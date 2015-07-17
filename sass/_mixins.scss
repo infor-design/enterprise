@@ -61,6 +61,14 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   }
 }
 
+// Use "transition: transform ... ..." with all vendor prefixes
+// TODO: Find a way to mix this with the regular transition mixin
+@mixin transform-transition-list($transition-rule) {
+  @each $prefix in $prefixes {
+    #{$prefix}transition: #{$prefix}transform $transition-rule;
+  }
+}
+
 // 'transform'-specific vendor prefixing mixins
 // This is because we can't include the word 'transform' inside the normal vendor prefixer,
 // since it would not be prefixed properly.
