@@ -231,11 +231,19 @@ $.fn.datagrid = function(options) {
      this.handleEvents();
      this.handleKeys();
      this.handlePaging();
+     this.initTableWidth();
     },
 
     initSettings: function () {
       this.sortColumn = {columnId: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
+    },
+
+    initTableWidth: function () {
+      var th = $('th:first', this.header);
+      if (th && th.length) {        
+        this.setColumnWidth(th.attr('data-column-id'), th.width());
+      }
     },
 
     //Render the Header and Rows
@@ -418,17 +426,28 @@ $.fn.datagrid = function(options) {
       this.table.css('width', total);
     },
 
-    //Explicitly Set the Width of a column.
-    setColumnWidth: function(id, width) {
+    // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
+    setColumnWidth: function(id, width, reset) {
       var self = this,
-        total = 0;
+        total = 0,
+        percent = parseFloat(width);
+
+      if (!percent) {
+        return;
+      }
+      if (reset) {
+        self.table.css('width', self.element.width());
+      }
+      if (typeof width !=='number') { //calculate percentage
+        width = percent / 100 * self.element.width();
+      }
 
       self.headerRow.find('th').each(function () {
         var col = $(this);
 
         if (col.attr('data-column-id') === id) {
           col.css('width', width);
-          total += width;  //TODO as percentage??
+          total += width;
         } else {
           total += col.outerWidth();
         }
@@ -487,8 +506,8 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell) {
-      var rowNode = this.tableBody.find('tr:visible').eq(row);
-      return rowNode.find('td:visible').eq(cell);
+      var rowNode = this.tableBody.find('tr[role="row"]').eq(row);
+      return rowNode.find('td[role="gridcell"]').eq(cell);
     },
 
     // Attach All relevant events
@@ -827,7 +846,7 @@ $.fn.datagrid = function(options) {
     handleKeys: function () {
       var self = this;
 
-      self.table.on('keyup.datagrid', 'td', function (e) {
+      self.table.on('keydown.datagrid', 'td', function (e) {
         var key = e.which, row,
           handled = false;
 
@@ -901,6 +920,13 @@ $.fn.datagrid = function(options) {
         if (key === 32) {
           row = self.activeCell.node.closest('tr');
           self.selectedRows(row);
+
+          // Toggle datagrid-expand with Space press
+          var btn = $('.datagrid-expand-btn', row);
+          if (btn && btn.length) {
+            btn.trigger('mouseup.datagrid');
+            e.preventDefault();
+          }
         }
 
         //TODO: If multiSelect is enabled, press Control+A to select all rows on the current page.
@@ -1000,7 +1026,7 @@ $.fn.datagrid = function(options) {
       //Support passing the td in
       if (row instanceof jQuery) {
         cell = row.index();
-        row = row.parent().index();
+        row = row.parent().attr('aria-rowindex') -1;
       }
 
       if (row < 0 || cell < 0) {
