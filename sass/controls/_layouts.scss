@@ -183,8 +183,7 @@ body.no-scroll {
 }
 
 @include respond-to(phone) {
-  .two-column,
-  .two-column.fixed {
+  .two-column {
     .main,
     .sidebar {
       display: block;
@@ -205,6 +204,15 @@ body.no-scroll {
     .sidebar + .main {
       border-bottom: 0;
       border-top: 1px solid $graphite02;
+    }
+
+    // Undo fixed-widths
+    &.fixed {
+      .main,
+      .sidebar {
+        display: block;
+        width: 100%;
+      }
     }
 
     // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
