@@ -108,8 +108,18 @@ $masthead-border-color: $slate08;
 $icon-color: $slate03;
 
 //Field Set
-$fieldset-border-top-color: $slate07;
+$fieldset-border-top-color: $slate06;
 $fieldset-border-bottom-color: transparent;
+
+// Expandable Area
+$expandable-area-border-color: $slate06;
+
+// Cardlist
+$cardlist-bg-color: $slate07;
+$cardlist-border-color: $slate09;
+$cardlist-header-bg-color: $slate07;
+$cardlist-header-color: $white;
+$cardlist-actions-color: $white;
 
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {

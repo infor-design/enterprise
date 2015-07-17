@@ -3,7 +3,7 @@
 .card,
 .widget {
   background-color: $cardlist-bg-color;
-  border: 1px solid $graphite02;
+  border: 1px solid $cardlist-border-color;
   border-radius: 2px;
   height: 370px;
   margin-bottom: 20px;
@@ -13,8 +13,8 @@
 
   .card-header,
   .widget-header {
-    background-color: $cardlist-bg-color;
-    border-bottom: 1px solid $graphite02;
+    background-color: $cardlist-header-bg-color;
+    border-bottom: 1px solid $cardlist-border-color;
     height: 50px;
     line-height: 50px;
     padding: 13px 20px;
@@ -30,7 +30,7 @@
 
       .title {
         @include font-size(18);
-        color: $font-color-highcontrast;
+        color: $cardlist-header-color;
         -webkit-font-smoothing: antialiased;
         font-weight: 100;
         margin: 4px 1em 4px 0;
@@ -55,7 +55,11 @@
     }
 
     .btn-actions {
-      background-color: $actionbutton-bg-color;
+      background-color: $cardlist-header-bg-color;
+
+      svg {
+        fill: $cardlist-actions-color;
+      }
     }
 
     &:not(.has-toolbar) > .btn-actions {

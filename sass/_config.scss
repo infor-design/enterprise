@@ -79,9 +79,6 @@ $button-font-size: 12;
 // Menu Button
 $menubutton-height: 34px;
 
-// Action Button
-$actionbutton-bg-color: $inverse-color;
-
 // Input Fields
 $input-border-color: $graphite03;
 $input-color: $graphite08;
@@ -108,7 +105,6 @@ $trigger-icon-fill-color: $graphite04;
 $trigger-hover-color: $graphite05;
 $trigger-active-color: $primary-color;
 
-//
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
@@ -136,10 +132,15 @@ $fieldset-border-top-color: $graphite02;
 $fieldset-border-bottom-color: $inverse-color;
 
 // Expandable Area
-$expandable-area-border-color: $graphite03;
+$expandable-area-border-color: $graphite02;
 
 // Cardlist
 $cardlist-bg-color: $inverse-color;
+$cardlist-border-color: $graphite02;
+$cardlist-header-bg-color: $inverse-color;
+$cardlist-header-color: $font-color-highcontrast;
+$cardlist-actions-color: $graphite06;
+
 
 // Editor
 $editor-border-color: $input-border-color;
