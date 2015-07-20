@@ -33,7 +33,8 @@
         diffTop: -10,
         firstHeader: 'h3',
         secondHeader: 'h4',
-        placeholder: null
+        placeholder: null,        
+        anchor: {url: 'http://www.example.com', class: 'hyperlink', target: ''},
       },
       settings = $.extend({}, defaults, options);
 
@@ -51,6 +52,10 @@
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
         this.element.parent('.field').addClass('editor-container');
+        settings.anchor.defaultUrl = settings.anchor.url;
+        settings.anchor.defaultClass = settings.anchor.class;
+        settings.anchor.defaultTarget = settings.anchor.target;
+
         return this.setup();
       },
 
@@ -415,8 +420,18 @@
         }
 
         if (action === 'anchor') {
-          finalText = '<a href="'+ insertedText +'">' + selectedText + '</a>';
-        } else {
+          var alink = $('<a href="'+ insertedText +'">' + selectedText + '</a>');
+
+          if(settings.anchor.class && $.trim(settings.anchor.class).length) {
+            alink.addClass(settings.anchor.class);
+          }
+          if(settings.anchor.target && $.trim(settings.anchor.target).length) {
+            alink.attr('target', settings.anchor.target);
+          }
+
+          finalText = alink[0].outerHTML;
+        } 
+        else {
           finalText = tags[0] + insertedText + selectedText + tags[1];
         }
         return finalText;
@@ -571,24 +586,26 @@
           image: self.createImageModal()
         };
 
+        $('[name="em-target"]').dropdown();
+
         $('#editor-modal-url, #editor-modal-image').modal()
           .on('beforeOpen', function () {
-            self.savedSelection = self.saveSelection();
+            self.savedSelection = self.saveSelection();         
 
             if ($(this).attr('id') === 'editor-modal-url') {
-              if (!self.selectionRange) {
-                return undefined;
-              }
 
-              //Toggle linked State
-              if (self.isLinkSelected()) {
-                document.execCommand('unlink', false, null);
+              if (!self.selectionRange) {
                 return undefined;
               }
             }
           })
           .off('open')
           .on('open', function () {
+            $('[name="em-url"]').val(settings.anchor.url);
+            $('[name="em-class"]').val(settings.anchor.class);
+            $('[name="em-target"]').val(settings.anchor.target);
+            $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
+
             $(this).find('input:first').focus().select();
           })
           .off('close')
@@ -601,7 +618,7 @@
 
             //insert image or link
             if ($(this).attr('id') === 'editor-modal-url') {
-              self.createLink($(this).find('input:first'));
+              self.createLink($('[name="em-url"]', this));
             } else {
               self.insertImage($('#image').val());
             }
@@ -622,8 +639,22 @@
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
-                '<label for="url">URL</label>' +
-                '<input id="url" name="url" type="text" value="http://www.example.com">' +
+                '<label for="em-url">URL</label>' +
+                '<input id="em-url" name="em-url" type="text" value="'+ settings.anchor.url +'">' +
+              '</div>' +
+              '<div class="field">' +
+                '<label for="em-class">Css Class</label>' +
+                '<input id="em-class" name="em-class" type="text" value="'+ settings.anchor.class +'">' +
+              '</div>' +
+              '<div class="field">' +
+                '<label for="em-target" class="label">Target</label>' +
+                '<select id="em-target" name="em-target" class="dropdown">' +
+                  '<option value="">None</option>' +
+                  '<option value="_blank">_blank</option>' +
+                  '<option value="_self">_self</option>' +
+                  '<option value="_parent">_parent</option>' +
+                  '<option value="_top">_top</option>' +
+                '</select>' +
               '</div>' +
               '<div class="modal-buttonset">' +
                 '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
@@ -664,21 +695,72 @@
       },
 
       createLink: function (input) {
+        var alink;
+
         //Restore Selection in the Editor and Variables
         this.restoreSelection(this.savedSelection);
 
         //Fix and Format the Link
         input.val(this.fixLinkFormat(input.val()));
 
+        // Set selection ur/class/target for Link
+        settings.anchor.url = input.val();
+        settings.anchor.class = $('[name="em-class"]').val();
+        settings.anchor.target = $('[name="em-target"]').val();
+
+        alink = $('<a href="'+ input.val() +'">' + input.val() + '</a>');
+
+        if(settings.anchor.class && $.trim(settings.anchor.class).length) {
+          alink.addClass(settings.anchor.class);
+        }
+        if(settings.anchor.target && $.trim(settings.anchor.target).length) {
+          alink.attr('target', settings.anchor.target);
+        }
+
         if (this.sourceViewActive()) {
           this.insertTextAreaContent(input.val(), 'anchor');
         }
         else {
+          var sel, range;            
+
           if (!this.selection.isCollapsed) {
-            document.execCommand('createLink', false, input.val());
+            //document.execCommand('createLink', false, input.val());
+
+            //get example from: http://jsfiddle.net/jwvha/1/
+            //and info: http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
+            if (window.getSelection) {
+              // IE9 and non-IE
+              sel = window.getSelection();
+              if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                alink.html(range + '');
+                range.deleteContents();
+
+                // Range.createContextualFragment() would be useful here but is
+                // only relatively recently standardized and is not supported in
+                // some browsers (IE9, for one)
+                var el = document.createElement('div');
+                el.innerHTML = alink[0].outerHTML;
+                var frag = document.createDocumentFragment(), node, lastNode;
+
+                while ((node = el.firstChild)) {
+                  lastNode = frag.appendChild(node);
+                }
+                range.insertNode(frag);
+
+                // Preserve the selection
+                if (lastNode) {
+                  range = range.cloneRange();
+                  range.setStartAfter(lastNode);
+                  range.collapse(true);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                }
+              }
+            }
           }
           else {
-            this.element.prepend('<a href="'+ input.val() +'">'+ input.val() +'</a>');
+            this.element.prepend(alink[0].outerHTML);
           }
           this.bindAnchorPreview();
         }
@@ -956,16 +1038,37 @@
       },
 
       isLinkSelected: function() {
-        var node = window.getSelection(),
+        var rtn = false,
+          node = window.getSelection(),
           selectedParentElement = this.getSelectedParentElement();
 
         if (node && node.anchorNode && $(node.anchorNode.nextSibling).is('a')) {
-          return true;
-        } else {
-          return (selectedParentElement.tagName && selectedParentElement.tagName.toLowerCase() === 'a');
+          rtn = $(node.anchorNode.nextSibling);
+        }
+        else if (selectedParentElement.tagName && selectedParentElement.tagName.toLowerCase() === 'a') {
+          rtn = $(selectedParentElement);
         }
 
-        return false;
+        return rtn;
+      },
+
+      // Restore if Selection is a Link
+      restoreLinkSelection: function () {
+        var currentLink = this.isLinkSelected();
+
+        settings.anchor.url = settings.anchor.defaultUrl;
+        settings.anchor.class = settings.anchor.defaultClass;
+        settings.anchor.target = settings.anchor.defaultTarget;
+
+        if (!!currentLink) {
+          settings.anchor.url = currentLink.attr('href');
+          settings.anchor.class = currentLink.attr('class');
+          settings.anchor.target = currentLink.attr('target');
+
+          currentLink.removeAttr('class target');
+          document.execCommand('unlink', false, null);
+        }
+
       },
 
       //Run the CE action.
@@ -978,6 +1081,7 @@
             this.execFormatBlock(action.replace('append-', ''));
             this.setToolbarButtonStates();
           } else if (action === 'anchor') {
+            this.restoreLinkSelection();
             this.modals.url.data('modal').open();
           } else if (action === 'image') {
             this.modals.image.data('modal').open();
