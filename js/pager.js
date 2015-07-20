@@ -22,13 +22,15 @@
     // Settings and Options
     var pluginName = 'pager',
         defaults = {
-          pagesize: 5, //can be calculate or a specific number
-          autoMove: false //true|false - Change pager to next/prev with arrow keys
+          position: 'bottom',  //Can be on top as well.
+          activePage: 1, //Start on this page
+          pagesize: 5 //Can be calculate or a specific number
         },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
+      this.settings = settings;
       this.element = $(element);
       this.init();
     }
@@ -37,12 +39,21 @@
     Plugin.prototype = {
 
       init: function() {
-        this.pagerBar = $('.pager-toolbar', this.element);
-        this.activePage = 1;
-        this.pages = $('.pager-content', this.element);
+        this.activePage = this.settings.activePage;
+        this.createPagerBar();
+        this.elements = this.element.children();
         this.renderBar();
         this.renderPages();
         this.handleEvents();
+      },
+
+      createPagerBar: function () {
+        this.pagerBar = this.element.prev('.pager-toolbar');
+
+        if (this.pagerBar.length === 0) {
+          this.pagerBar = $('<ul class="pager-toolbar"> <li class="pager-prev"> <a href="#" rel="prev"> <svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-previous-page"></use></svg> <span class="audible">Previous</span> </a> </li> <li class="pager-next"> <a href="#" rel="next"> <span class="audible">Next</span> <svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-next-page"></use></svg> </a> </li> </ul>');
+          this.element.after(this.pagerBar);
+        }
       },
 
       // Attach All relevant events
@@ -55,7 +66,7 @@
         });
 
         //Attach button click and touch
-        this.element.on('click.pager touchend.pager', '.pager-toolbar a', function (e) {
+        this.pagerBar.onTouchClick('pager', 'a').on('click.pager', 'a', function (e) {
           var li = $(this).parent();
           e.preventDefault();
 
@@ -83,9 +94,6 @@
           if (!!btn) {
             if(!btn.attr('disabled')) {
               btn.focus();
-            }
-            if (settings.autoMove) {
-              btn.trigger('click.pager');
             }
           }
         });
@@ -150,7 +158,6 @@
         //How many can fit?
         var pb = this.pagerBar,
           elems, pc,
-          attrAutoMove = this.element.attr('data-automove'),
           width = (this.element.parent().width() / pb.find('li:first').width()),
           howMany = Math.floor(width-3);   //Take out the ones that should be visible (buttons and selected)
 
@@ -158,12 +165,9 @@
         if (this.element.attr('data-pagesize')) {
           settings.pagesize = this.element.attr('data-pagesize');
         }
-        if (attrAutoMove && attrAutoMove.length) {
-          settings.autoMove = JSON.parse(attrAutoMove);
-        }
 
         //Adjust Page count numbers
-        pc = Math.ceil(this.pages.children().length/settings.pagesize);
+        pc = Math.ceil(this.elements.length/settings.pagesize);
         if (this.pageCount() !== pc) {
           this.pageCount(pc);
         }
@@ -206,7 +210,6 @@
         }});
 
         //Render page objects
-        this.elements = this.pages.children();
         this.elements.hide();
         expr = (this.currentPage() === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((this.currentPage()) * settings.pagesize) +'):gt('+ (((this.currentPage()-1) *settings.pagesize) -1) +')');
         this.elements.filter(expr).show();

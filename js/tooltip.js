@@ -337,10 +337,24 @@
       },
 
       placeBelowOffset: function(scrollable) {
-        var o = this.activeElement.offset(),
-          extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 9);
+       var o = this.activeElement.offset(),
+          extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 10),
+          extraWidth = 15;
 
-        this.tooltip.css({'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
+        if (this.activeElement.is('input.dropdown')) {
+          extraWidth = -20;
+          extraOffset = 16;
+        }
+
+        this.tooltip.find('.arrow').css('right', '');
+        if (this.activeElement.is('.input-sm')) {
+          extraWidth = -54;
+          extraOffset = 100;
+          this.tooltip.find('.arrow').css('right', '50px');
+        }
+
+        this.tooltip.css({'width': this.tooltip.width() + extraWidth,
+                          'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
                           'left' : o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth });
       },
       placeBelow: function (scrollable) {
@@ -384,8 +398,6 @@
           $(window).off('resize.tooltip');
         }
 
-        // TODO document breaking change
-        // this.element.trigger('close', [this.tooltip]);
         this.element.trigger('hide', [this.tooltip]);
       },
 

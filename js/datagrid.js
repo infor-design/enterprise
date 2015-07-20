@@ -232,6 +232,7 @@ $.fn.datagrid = function(options) {
      this.handleKeys();
      this.handlePaging();
      this.initTableWidth();
+     this.element.trigger('rendered', [this.element, this.headerRow, this.pagerBar]);
     },
 
     initSettings: function () {
@@ -241,7 +242,7 @@ $.fn.datagrid = function(options) {
 
     initTableWidth: function () {
       var th = $('th:first', this.header);
-      if (th && th.length) {        
+      if (th && th.length) {
         this.setColumnWidth(th.attr('data-column-id'), th.width());
       }
     },
@@ -1143,10 +1144,12 @@ $.fn.datagrid = function(options) {
 
       this.pagerBar = elem.next('.datagrid-pager');
       if (this.pagerBar.length === 0) {
-        elem.after('<div class="datagrid-pager">Test</div>');
+        this.pagerBar = $('<div class="datagrid-pager"></div>');
+        elem.after(this.pagerBar);
+
       }
 
-      this.pagerBar.pager();
+      this.tableBody.pager();
     }
   };
 

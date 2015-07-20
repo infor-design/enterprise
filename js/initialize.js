@@ -99,17 +99,6 @@
           if ($.fn[plugin]) {
             elem.find(selector).each(function () {
               var options = setOptions(this);
-
-              // var thisElem = $(this),
-              //   options = thisElem.attr('data-options');
-
-              //   console.log('opt: ' + options);
-
-              // if (options && options.length) {
-              //   if (options.indexOf('{') > -1) {
-              //     options = JSON.parse(options.replace(/'/g, '"'));
-              //   }
-              // }
               $(this)[plugin](options);
             });
           }
@@ -183,7 +172,7 @@
           ['button', '.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
 
           //Pager
-          ['pager'],
+          ['pager', '.paginated'],
 
           //Track Dirty
           ['trackdirty', '[data-trackdirty="true"]'],

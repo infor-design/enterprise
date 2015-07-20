@@ -33,7 +33,7 @@
         diffTop: -10,
         firstHeader: 'h3',
         secondHeader: 'h4',
-        placeholder: null,        
+        placeholder: null,
         anchor: {url: 'http://www.example.com', class: 'hyperlink', target: ''},
       },
       settings = $.extend({}, defaults, options);
@@ -430,7 +430,7 @@
           }
 
           finalText = alink[0].outerHTML;
-        } 
+        }
         else {
           finalText = tags[0] + insertedText + selectedText + tags[1];
         }
@@ -590,7 +590,7 @@
 
         $('#editor-modal-url, #editor-modal-image').modal()
           .on('beforeOpen', function () {
-            self.savedSelection = self.saveSelection();         
+            self.savedSelection = self.saveSelection();
 
             if ($(this).attr('id') === 'editor-modal-url') {
 
@@ -721,7 +721,7 @@
           this.insertTextAreaContent(input.val(), 'anchor');
         }
         else {
-          var sel, range;            
+          var sel, range;
 
           if (!this.selection.isCollapsed) {
             //document.execCommand('createLink', false, input.val());

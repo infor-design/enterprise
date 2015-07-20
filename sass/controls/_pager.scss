@@ -6,6 +6,7 @@
   margin-bottom: 20px;
   max-height: 38px;
   overflow: hidden;
+  text-align: center;
 
   li {
     border: 1px solid transparent;
@@ -77,6 +78,6 @@
   width: 18px;
 }
 
-.pager-content li {
+.paginated li {
   @include font-size(14);
 }
