@@ -110,6 +110,11 @@ textarea[readonly] {
   -webkit-text-fill-color: $input-readonly-color;
 }
 
+input.is-placeholder,
+textarea.is-placeholder {
+  color: $input-disabled-color;
+}
+
 input:focus,
 textarea:focus {
   @include focus-state();

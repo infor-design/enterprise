@@ -216,6 +216,54 @@
     };
   };
 
+
+  // Implements consistent support for the placeholder attribute in browsers that do not handle it
+  // ** Supports any kind of input (no issues with password) and textarea
+  // ** does nothing if native support exists
+  $.fn.placeholderPolyfill = function(options) {
+    if (!('placeholder' in document.createElement('input'))) {
+      var settings = $.extend({className: 'is-placeholder'}, options),
+        setInputType = function (input, type, opt) {
+          if(opt) {
+            input.attr('type', type);
+          }
+        };
+      $('[placeholder]').each(function() {
+        var input = $(this),
+        isPassword = input.is('input[type="password"]');
+        input.on('focus.placeholderPolyfill, click.placeholderPolyfill', function() {
+          if (input.val() === input.attr('placeholder') && input.data('placeholder')) {
+            input.get(0).setSelectionRange(0, 0);
+          }
+        }).on('keydown.placeholderPolyfill', function() {
+          setInputType(input, 'password', isPassword);
+          if (input.val() === input.attr('placeholder') && input.data('placeholder')) {
+            input.val('');
+            input.removeClass(settings.className);
+          }
+        }).on('blur.placeholderPolyfill', function() {
+          if (input.val() === '') {
+            setInputType(input, 'text', isPassword);
+            input.addClass(settings.className);
+            input.val(input.attr('placeholder'));
+            input.data('placeholder', true);
+          } else {
+            input.data('placeholder', false);
+          }
+        }).trigger('blur.placeholderPolyfill').parents('form').on('submit', function() {
+          $('[placeholder]', this).each(function () {
+            var field = $(this);
+            if (field.val() === field.attr('placeholder') && field.data('placeholder')) {
+              field.val('');
+            }
+          });
+        });
+      });
+    }    
+   return this;
+  };
+
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */

@@ -294,6 +294,10 @@
       });
 
       self.trigger('initialized');
+
+      //Placeholder attribute in browsers that do not handle it
+      $.fn.placeholderPolyfill();
+
       return returnObj;
     });
   };
