@@ -27,6 +27,7 @@
 
     init: function() {
       this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
+      this.isPlaceholderSupport = !!('placeholder' in document.createElement('input'));//placeholder native support is-exists
 
       //If we initialize with a form find all inputs
       this.inputs = this.element.find(this.fields);
@@ -254,18 +255,23 @@
         errors = [],
         i,
         value = self.value(field),
+        placeholder = field.attr('placeholder'),
         manageResult = function (result, showTooltip) {
           if (!result) {
+            if (!self.isPlaceholderSupport && (value === placeholder) && 
+               (rule.message !== Locale.translate('Required'))) { 
+              return;
+            }
             self.addError(field, rule.message, rule.inline, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
-            if(rule.positive){
+            if(rule.positive) {
               self.removePositive(field);
             }
           } else if (errors.length === 0) {
             self.removeError(field);
             dfd.resolve();
-            if(rule.positive){
+            if(rule.positive) {
               self.addPositive(field);
             }
           }
@@ -311,7 +317,8 @@
     },
 
     addError: function(field, message, inline, showTooltip) {
-      var loc = this.getField(field).addClass('error'),
+      var self = this,
+        loc = this.getField(field).addClass('error'),
          appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
       loc.data('data-errormessage', appendedMsg);
@@ -347,6 +354,11 @@
       if (inline) {
         field.attr('data-placeholder', field.attr('placeholder'));
         field.attr('placeholder', appendedMsg);
+
+        if (!self.isPlaceholderSupport) {
+          field.val('').placeholderPolyfill();
+        }
+
         return;
       }
 
@@ -389,7 +401,8 @@
     },
 
     removeError: function(field) {
-      var loc = this.getField(field);
+      var self = this,
+        loc = this.getField(field);
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass('error');
@@ -415,6 +428,10 @@
       if (loc.attr('data-placeholder')) {
         loc.attr('placeholder',loc.attr('data-placeholder'));
         loc.removeAttr('data-placeholder');
+
+        if (!self.isPlaceholderSupport) {
+          loc.placeholderPolyfill();
+        }
       }
 
       //Remove error classes from pseudo-markup for certain controls
@@ -478,7 +495,12 @@
     var self = this;
     this.rules = {
       required: {
-        isNotEmpty: function(value) {
+        isNotEmpty: function(value, field) {
+          if (!self.isPlaceholderSupport &&
+              (!!field && 
+                (value === field.attr('placeholder') || value === Locale.translate('Required')))) {
+            return false;
+          }
           if (typeof value === 'string') {
             // strip out any HTML tags and focus only on text content.
             value = $.trim(value.replace(/<\/?[^>]*>/g, ''));
@@ -508,7 +530,7 @@
           }
 
           this.message = Locale.translate('Required');
-          return this.isNotEmpty(value);
+          return this.isNotEmpty(value, field);
         },
         inline: true,
         message: 'Required'
