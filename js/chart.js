@@ -100,163 +100,6 @@ window.Chart = function(container) {
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
   };
 
-  this.Bar = function(dataset) {
-    var margins = {
-      top: 30,
-      left: 30,
-      right: 30,
-      bottom: 30
-    };
-
-    var isSingular = (dataset.length === 1);
-
-    var w = $(container).parent().width() - margins.left - margins.right,
-      h = $(container).parent().height() - margins.top - (isSingular ? 0 : 20),
-      barWidth = 30,
-      spaceWidth = 30,
-      y,
-      stack,
-      x = d3.scale.ordinal().rangeRoundBands([0, w - margins.left - margins.right]);
-
-    $(container).addClass('chart-bar');
-
-    var svg = d3.select(container).append('svg')
-      .attr('width', w)
-      .attr('height', h)
-      .append('g')
-      .attr('transform', 'translate(' + (margins.left) + ',' + (h - margins.top + 8) + ')');
-
-    //Map the Series Tags for the Legend
-    var series = dataset.map(function (d) {
-      return {name: d.name};
-    });
-
-    //Map the Data Sets and Stack them.
-    dataset = dataset.map(function (d) {
-      return d.data.map(function (o) {
-           return {
-              x: o.name,
-              y: o.value
-          };
-      });
-    });
-    stack = d3.layout.stack();
-    stack(dataset);
-
-    // Compute the x-domain (by date) and y-domain (by top).
-    x.domain(dataset[0].map(function(d) { return d.x; }));
-    y = d3.scale.linear()
-      .domain([0, d3.max(dataset[dataset.length - 1], function(d) { return d.y0 + d.y; })])
-      .nice()
-      .range([0, h - margins.top - margins.bottom]);
-
-    // Add y-axis rules.
-    var rule = svg.selectAll('g.rule')
-      .data(y.ticks(5))
-    .enter().insert('g')
-      .attr('class', 'rule')
-      .attr('transform', function(d) { return 'translate(0,' + -y(d) + ')'; });
-
-    rule.append('line')
-      .attr('x2', w - margins.right - margins.left + spaceWidth)
-      .style('stroke', function(d) { return d ? '#b3b3b3' : '#c0c0c0'; });
-
-    rule.append('text')
-      .attr('x', -20)
-      .attr('dy', '.35em')
-      .text(d3.format(',d'));
-
-    // Add a label per date.
-    svg.append('g').attr('class', 'y-axis')
-      .selectAll('text.label')
-      .data(x.domain())
-    .enter().append('text')
-      .attr('x', function(d) { return x(d) + barWidth / 2 + spaceWidth; })
-      .attr('y', 10)
-      .attr('text-anchor', 'middle')
-      .attr('dy', '.75em')
-       .attr('class', 'label')
-      .text(function (d) {return d;});
-
-    // Add a group for each
-    stack = svg.selectAll('g.bar-group')
-      .data(dataset)
-    .enter().append('g')
-      .attr('class', 'bar-group')
-      .style('fill', function(d, i) { return (isSingular ? '#368AC0' : charts.colors(i)); })
-      .style('stroke', function(d, i) { return (isSingular ? '#368AC0' : charts.colors(i)); });
-
-    // Add a rect for each
-    stack.selectAll('rect')
-      .data(Object)
-    .enter().append('rect')
-      .attr('class', 'bar')
-      .attr('x', function(d) { return x(d.x) + spaceWidth; })
-      .attr('width', barWidth)
-      .attr('y', function(d) { return y(d.y0);})//(true ? 100 : y(d.y)); })
-      .attr('height', function(d) {
-        var h = -y(d.y0) - y(d.y);
-        if (h < 0) {
-          h = 0;
-        }
-        return h;
-      })
-      .transition().duration(1000)
-        .attr('y', function(d) { return -y(d.y0) - y(d.y); })
-        .attr('height', function(d) { return y(d.y); });
-
-    //Attach Interactivity
-    stack.selectAll('rect')
-      .on('mouseenter', function (d, i) {
-
-        var shape = $(this),
-            content = '',
-            xPos,
-            yPos = d3.event.pageY-charts.tooltip.outerHeight() - 35;
-
-        if (dataset.length === 1) {
-          content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
-        } else {
-         content = '<div class="chart-swatch">';
-         for (var j = 0; j < dataset.length; j++) {
-          content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + series[j].name + '</span><b> ' + dataset[j][i].y + ' </b></br>';
-         }
-         content += '</div>';
-        }
-
-        var size = charts.getTooltipSize(content);
-        xPos = shape.offset().left - (size.width /2) + (barWidth/2);
-
-        charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'})
-            .find('.tooltip-content')
-              .html(content);
-
-        charts.tooltip.addClass('top').removeClass('right').removeClass('is-hidden');
-      })
-      .on('mouseleave', function () {
-        charts.tooltip.addClass('is-hidden')
-          .css({'left': '-999px' + 'px', 'top': '-999px' + 'px'});
-      })
-      .on('click', function (d, i) {
-        var bar = d3.select(this);
-
-        //Hide bold on label
-        svg.selectAll('.label').style('font-weight', 'normal');
-        svg.selectAll('.bar-group rect').style('opacity', 1);
-        svg.selectAll('.is-selected').classed('is-selected', false);
-        if (this.classList && !this.classList.contains('is-selected')) {
-          bar.classed('is-selected', true);
-          svg.selectAll('.label:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
-          svg.selectAll('.bar:not(.is-selected)').style('opacity', 0.5);
-        }
-        $(container).trigger('selected', [bar, d]);
-      });
-
-    //Add Legends
-    charts.addLegend(series);
-    charts.appendTooltip();
-  };
-
   this.VerticalBar = function(dataset, isNormalized) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
     var maxTextWidth, width, height, series, rects, svg, stack,
@@ -1011,6 +854,28 @@ window.Chart = function(container) {
         })
         .style('fill', function(d, i) {
           return (isSingular ? '#368AC0' : charts.colors(i));
+        }).on('mouseenter', function(d) {
+          var shape = $(this),
+            content = '',
+            x = 0,
+            y = d3.event.pageY-charts.tooltip.outerHeight() - 35;
+
+          if (dataset.length === 1) {
+            content = '<p><b>' + d.value + ' </b>' + d.name + '</p>';
+          } else {
+           content = '<div class="chart-swatch">';
+           for (var j = 0; j < dataset.length; j++) {
+            content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + xAxisValues[j].name + '</span><b> ' + dataset[j].name + ' </b></br>';
+           }
+           content += '</div>';
+          }
+
+          var size = charts.getTooltipSize(content);
+          x = shape.offset().left - (size.width /2) + (shape.attr('width')/2);
+
+          charts.showTooltip(x, y, content, 'top');
+        }).on('mouseleave', function() {
+          charts.hideTooltip();
         });
 
     var legend = svg.selectAll('.legend')
@@ -1032,6 +897,7 @@ window.Chart = function(container) {
         .style('text-anchor', 'end')
         .text(function(d) { return d; });
 
+    charts.appendTooltip();
     return $(container);
   };
 
@@ -1204,7 +1070,7 @@ window.Chart = function(container) {
       this.VerticalBar(options.dataset, false, true);
     }
     if (options.type === 'column') {
-      this.Bar(options.dataset, false, true);
+      this.Column(options.dataset);
     }
     if (options.type === 'column-grouped') {
       this.Column(options.dataset);

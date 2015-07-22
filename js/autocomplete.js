@@ -74,8 +74,6 @@
         var self = this,
           matchingOptions = [];
 
-        var termCased = term;
-        console.log(termCased);
         term = term.toLowerCase();
 
         //append the list
