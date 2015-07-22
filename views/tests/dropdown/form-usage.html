@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="row" style="margin-top: 6em;">
+      <div class="six columns">
+
+        <p>
+          The dropdown control on this page is placed inside of a form tag.  Any tests that hit this page
+          will deal with form-related functions surrounding the dropdown control.
+        </p>
+
+      </div>
+      <div class="six columns">
+
+        <form id="form" action="#" method="POST">
+          <div class="field">
+            <label for="in-form" class="label">This Dropdown's inside a Form Tag</label>
+            <select id="in-form" name="in-form" class="dropdown">
+              <option id="blank" value="">&nbsp;</option>
+              <option id="option1" value="option1">Option 1</option>
+              <option id="option2" value="option2" selected>Option 2</option>
+            </select>
+          </div>
+          <div class="field">
+            <button id="reset-button" class="btn-tertiary" type="reset">Reset</button>
+            <button id="disable-button" class="btn" type="button">Disable</button>
+            <button id="submit-button" class="btn-primary" type="submit">Submit</button>
+          </div>
+          <div class="field">
+            <button id="alert-button" class="btn" type="button">Alert with Serialization Data</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      // Test enable/disable without executing methods directly in tests
+      $('#disable-button').on('click.test', function() {
+        var btn = $(this),
+          field = $('#in-form');
+        if (field.is(':disabled')) {
+          field.enable();
+          btn.text('Disable');
+        } else {
+          field.disable();
+          btn.text('Enable');
+        }
+      });
+
+      // Test is listening for Submit event
+      $('#form').on('submit.test', function(e) {
+        e.preventDefault();
+        return $(this).serialize();
+      });
+
+      $('#alert-button').on('click.test', function(e) {
+        e.preventDefault();
+        alert($('#form').serialize());
+      });
+    </script>
+
+  </div>
+</div>

@@ -9,7 +9,7 @@ define([
   // * Test non-AMD code
   // * Basic unit tests for the environment we're running in
 
-  registerSuite({
+  return registerSuite({
     name: 'Everything',
 
     'Basic Tests': function() {

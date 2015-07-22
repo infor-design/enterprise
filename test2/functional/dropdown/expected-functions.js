@@ -45,7 +45,7 @@ define([
 
         'should automatically have an item selected if it was pre-defined in HTML markup': function() {
           var self = this,
-            optionVal = 'a',
+            optionVal = 'raspberry',
             selectedVal;
 
           var result = self.remote
@@ -78,22 +78,103 @@ define([
         },
 
         'should support being initialized without any <option> tags present': function() {
-          this.skip();
+          return this.remote
+            .findById('no-opts')
+              .getProperty('selectedIndex')
+              .then(function(index) {
+                expect(index).to.equal(-1);
+              })
+              .end()
+            .findById('no-opts-shdo')
+              .click()
+              .end()
+            .setTimeout(10)
+            .findById('dropdown-list')
+              .findByCssSelector('li')
+                .then(function(result) {
+                  expect(result.length).to.equal(0);
+                }, function(error) {
+                  expect(error).to.exist;
+                })
+                .end()
+              .end();
         },
 
-        'should properly reset if it exists inside a form, and the "reset" button is clicked': function() {
-          this.skip();
-        }
+        'Form Usage': {
+
+          beforeEach: function() {
+            return this.remote
+              .get(require.toUrl('http://localhost:4000/tests/dropdown/form-usage'));
+          },
+
+          'should properly reset if it exists inside a form, and the "reset" button is clicked': function() {
+            return this.remote
+              // Check the original value of the <select> tag
+              .findById('in-form')
+                .getProperty('value')
+                .then(function(val) {
+                  expect(val).to.equal('option2');
+                })
+                .end()
+              // Change the dropdown option to Option 1
+              .findById('in-form-shdo')
+                .click()
+                .end()
+              .findById('list-option1') // Option 1
+                .click()
+                .end()
+              // Check the value of the <select>.  It should've changed to "option1"
+              .findById('in-form')
+                .getProperty('value')
+                .then(function(val) {
+                  expect(val).to.equal('option1');
+                })
+                .end()
+              // Click the reset button
+              .findById('reset-button')
+                .click()
+                .end()
+              // Check the value of the <select> a second time.  It should be reset to "option2"
+              .findById('in-form')
+                .getProperty('value')
+                .then(function(val) {
+                  expect(val).to.equal('option2');
+                })
+                .end();
+          }
+
+        },
 
       },
 
-      'Special handling': {
+      'Special Conditions': {
+        beforeEach: function() {
+          return this.remote
+            .get(require.toUrl('http://localhost:4000/tests/dropdown/special-chars'));
+        },
 
         'should ignore script tags that are inset as options': function() {
           // Prevents script injection attacks.
           // By virtue of this dropdown box initializing and opening when clicked without an error,
           // this test should pass.
-          this.skip();
+          return this.remote
+            .findById('special-shdo')
+              .click()
+              .end()
+            // Click the option with <script> tags that trigger an alert();
+            .findById('list-option6')
+              .click()
+              .end()
+            .setTimeout(10)
+            // setup an acceptAlert().  If it accepts an alert there's an issue with the code that handles
+            // script injection.
+            .acceptAlert()
+              .then(function() {
+                throw 'Alert Box should not have shown up!';
+              }, function(error) {
+                expect(error).to.exist;
+              })
+              .end();
         },
 
         'should properly handle <select> lists that have duplicate <option>\'s': function() {

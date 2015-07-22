@@ -231,8 +231,18 @@ module.exports = function(grunt) {
           wait: false
         },
         cmd: './node_modules/.bin/intern-runner',
-        args: ['config=test2/intern.local']
+        args: ['config=test2/intern.local.functional']
+      },
+
+      'intern-unit-only': {
+        options: {
+          ready: new RegExp('SoHo Xi Tests Completed!'),
+          wait: false
+        },
+        cmd: './node_modules/.bin/intern-client',
+        args: ['config=test2/intern.local.unit']
       }
+
     },
 
   });
@@ -259,9 +269,29 @@ module.exports = function(grunt) {
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
   ]);
 
-  grunt.registerTask('test', [
-    'run:selenium-start',
-    'run:intern-functional-local'
-  ]);
+  grunt.registerTask('test', 'Runs unit or functional test suites using Intern.', function(n) {
+    var options = {
+      type: grunt.option('type') || 'all'
+    };
+
+    var internConfigs = {
+      'all': 'intern-functional-local',
+      'unit': 'intern-unit-only',
+      'functional': 'intern-functional-local' // TODO: switch this out for the browserstack callout
+    };
+
+    if (internConfigs[options.type] === undefined) {
+      options.type = 'all';
+    }
+
+    // Build task queue
+    var tasks = [];
+    if (options.type !== 'unit') {
+      tasks.push('run:selenium-start');
+    }
+    tasks.push('run:' + internConfigs[options.type]);
+
+    grunt.task.run(tasks);
+  });
 
 };

@@ -8,6 +8,24 @@
     <div class="row demo-tests-grid">
       <div class="six columns">
         <p>
+          Un-invoked Drop Down Control
+        </p>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="new">New Dropdown</label>
+          <select id="new" name="new" class="dropdown no-init">
+            <option value="1" selected>One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row demo-tests-grid">
+      <div class="six columns">
+        <p>
           The most basic form of the dropdown control built with no extra settings.
         </p>
       </div>
@@ -174,6 +192,36 @@
           <select id="readonly" readonly name="readonly" class="dropdown">
             <option value="AL">Alabama</option>
             <option value="AK" selected>Alaska</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row demo-tests-grid">
+      <div class="six columns">
+        <p>Shows a dropdown control initialized with no options available</p>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="no-opts" class="label">States</label>
+          <select id="no-opts" name="no-opts" class="dropdown">
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row demo-tests-grid">
+      <div class="six columns">
+        <p>Contains a dropdown that should initialize invisible because it contains a <code>"display: none;"</code> style attribute.</p>
+      </div>
+      <div class="six columns">
+        <div class="field">
+          <label for="invisible" class="label" style="display: none;">Should be Invisible</label>
+          <select id="invisible" name="invisible" class="dropdown" style="display: none;">
+            <option value="hidden">Hidden</option>
+            <option value="missing">Missing</option>
+            <option value="cloaked">Cloaked</option>
+            <option value="stealth">Stealth</option>
           </select>
         </div>
       </div>
