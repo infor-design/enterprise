@@ -143,6 +143,26 @@ $cardlist-header-bg-color: $slate06;
 $cardlist-header-color: $white;
 $cardlist-actions-color: $white;
 
+// Checkboxes
+$checkbox-color: $primary-color;
+$checkbox-arrow-color: #ffffff;
+$checkbox-border-color: $graphite03;
+$checkbox-bg-color: #ffffff;
+$checkbox-disabled-font-color: $disabled-color;
+$checkbox-disabled-border-color: $input-disabled-border-color;
+$checkbox-disabled-bg-color: $input-readonly-bg-color;
+$checkbox-disabled-select-bg-color: $input-readonly-bg-color;
+$checkbox-disabled-arrow-color: #f4f4f4;
+$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+
+// Switch
+$switch-checked-color: $primary-color;
+$switch-checked-bg-color: $azure06;
+$switch-unchecked-color: $graphite08;
+$switch-unchecked-bar-color: $graphite08;
+$switch-disabled-color: $input-disabled-border-color;
+$switch-disabled-label-color: $disabled-color;
+
 //================================================== //
 // Core Controls
 @import 'controls';

@@ -141,21 +141,12 @@ $cardlist-header-bg-color: $inverse-color;
 $cardlist-header-color: $font-color-highcontrast;
 $cardlist-actions-color: $graphite06;
 
-
-// Editor
-$editor-border-color: $input-border-color;
-$editor-focus-border-color: $input-focus-border-color;
-$editor-color: $input-color;
-$editor-toolbar-bg-color: #ededed;
-$editor-btn-color: #767676;  //Was #999999  in design
-$editor-middle-border-color: $graphite02;
-
 // Checkboxes
 $checkbox-color: $primary-color;
 $checkbox-arrow-color: #ffffff;
 $checkbox-border-color: #666666;
+$checkbox-bg-color: transparent;
 $checkbox-disabled-font-color: #c2c2c2;
-$checkbox-disabled-opacity: .65;
 $checkbox-disabled-border-color: #c2c2c2;
 $checkbox-disabled-bg-color: #ececec;
 $checkbox-disabled-select-bg-color: #c2c2c2;
@@ -165,9 +156,18 @@ $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 // Switch
 $switch-checked-color: $primary-color;
 $switch-checked-bg-color: $azure01;
+$switch-unchecked-bar-color: $input-disabled-border-color;
 $switch-unchecked-color: $font-color;
 $switch-disabled-color: $input-disabled-border-color;
 $switch-disabled-label-color: #aaaaaa;
+
+// Editor
+$editor-border-color: $input-border-color;
+$editor-focus-border-color: $input-focus-border-color;
+$editor-color: $input-color;
+$editor-toolbar-bg-color: #ededed;
+$editor-btn-color: #767676;  //Was #999999  in design
+$editor-middle-border-color: $graphite02;
 
 // Radio Buttons
 $radio-border-color: #666666;

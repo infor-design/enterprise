@@ -40,6 +40,16 @@ $gutter-neg-size: -20px;
   float: left;
   padding: 0 20px;
   width: 100%;
+
+  &.l-center {
+    .field {
+      text-align: center;
+
+      label {
+        text-align: left;
+      }
+    }
+  }
 }
 
 // For tabledevices larger than 550px

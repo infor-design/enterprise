@@ -74,6 +74,8 @@
         var self = this,
           matchingOptions = [];
 
+        var termCased = term;
+        console.log(termCased);
         term = term.toLowerCase();
 
         //append the list
@@ -106,7 +108,7 @@
               label: option
             },
             dataset = isString ? baseData : $.extend(baseData, items[i]),
-            parts = option.toLowerCase().split(' '),
+            parts = option.split(' '),
             containsTerm = false;
 
           for (var a = 0; a < parts.length; a++) {
@@ -124,10 +126,8 @@
             matchingOptions.push(option);
 
             // Build the dataset that will be submitted to the template
-            var regex = new RegExp('(' + term + ')', 'i');
-
             dataset.listItemId = 'ac-list-option' + i;
-            dataset.label = option.replace(regex, '<i>$1</i>');
+            dataset.label = option.toLowerCase().indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
             dataset.hasValue = !isString && items[i].value !== undefined;
 
             if (dataset.hasValue) {
@@ -230,7 +230,7 @@
               }
               return;
             }
-            buffer = buffer.toLowerCase();
+            buffer = buffer;
 
             //This checks all printable characters - except backspace
             if (e.which === 0 || (e.charCode === 0 && e.which !== 8) || e.ctrlKey || e.metaKey || e.altKey) {

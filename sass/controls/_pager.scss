@@ -2,8 +2,8 @@
 //================================================== //
 
 .pager-toolbar {
-  @include font-size(15);
-  margin-bottom: 20px;
+  @include font-size(14);
+  margin: 20px 0;
   max-height: 38px;
   overflow: hidden;
   text-align: center;
@@ -71,6 +71,8 @@
 
 // Buttons
 .pager-prev svg,
+.pager-first svg,
+.pager-last svg,
 .pager-next svg {
   height: 17px;
   left: 1px;

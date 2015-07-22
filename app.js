@@ -200,8 +200,8 @@ app.configure(function() {
   //Example Call: http://localhost:4000/api/states?term=al
   app.get('/api/states', function(req, res) {
     var states = [],
-      allStates = [{value: 'AL', label:'Alabama'}, {value: 'AK', label: 'Alaska'}, {value:'AS', label:'American Samoa'},
-      {value:'AZ', label:'Arizona'}, {value:'AR', label:'Arkansas'}, {value:'CA', label:'California'},
+      allStates = [{value: 'AL', label:'Al\\abama'}, {value: 'AK', label: 'Alaska'}, {value:'AS', label:'American Samoa'},
+      {value:'AZ', label:'A\\rizona'}, {value:'AR', label:'Arkansas'}, {value:'CA', label:'California'},
       {value:'CO', label:'Colorado'}, {value:'CT', label:'Connecticut'}, {value:'DE', label:'Delaware'},
       {value:'DC', label:'District Of Columbia'}, {value:'FM', label:'Federated States Of Micronesia'},
       {value:'FL', label:'Florida'}, {value:'GA', label:'Georgia'}, {value:'GU', label:'Guam'}, {value:'HI', label:'Hawaii'},
@@ -253,7 +253,7 @@ app.configure(function() {
     res.end(JSON.stringify(people));
   });
 
-// Sample Product
+  // Sample Product
   app.get('/api/product', function(req, res) {
     var product = [
     { id: 1, productId: 200123, productName: 'Miscellaneous Gravel, Colored Ston...', inStock:  '22,000 lbs.',  unitPrice:  '$10.00 /', thumb: 'http://placehold.it/100x100/999999/FFFFFF', 'action': 'secondary' },
@@ -393,6 +393,21 @@ app.configure(function() {
     });
 
     creq.end();
+  });
+
+  //Data Grid Paging Example
+  // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productName&pageSize=100
+  app.get('/api/compressors', function(req, res) {
+    var products = [],
+      start = (req.query.pageNum -1) * req.query.pageSize,
+      end = req.query.pageNum * req.query.pageSize;
+
+    for (var i = start; i < end; i++) {
+      products.push({ id: i, productId: 214220+i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+    }
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(products));
   });
 
 });

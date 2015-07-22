@@ -513,6 +513,12 @@ body.no-scroll {
 }
 
 // Banner Detail Pattern
+.page-container {
+  .banner-detail {
+    margin-top: -40px;
+  }
+}
+
 .banner-detail {
   .banner {
     background-color: $panel-bg-color;

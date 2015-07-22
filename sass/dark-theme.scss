@@ -121,6 +121,26 @@ $cardlist-header-bg-color: $slate07;
 $cardlist-header-color: $white;
 $cardlist-actions-color: $white;
 
+// Checkboxes
+$checkbox-color: $primary-color;
+$checkbox-arrow-color: #ffffff;
+$checkbox-border-color: $slate04;
+$checkbox-bg-color: transparent;
+$checkbox-disabled-font-color: $slate05;
+$checkbox-disabled-border-color: $slate06;
+$checkbox-disabled-bg-color:$slate06;
+$checkbox-disabled-select-bg-color: $slate06;
+$checkbox-disabled-arrow-color: #f4f4f4;
+$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+
+// Switch
+$switch-checked-color: $primary-color;
+$switch-checked-bg-color: $azure04;
+$switch-unchecked-color: $slate03;
+$switch-unchecked-bar-color: $slate03;
+$switch-disabled-color: $input-disabled-border-color;
+$switch-disabled-label-color: $disabled-color;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

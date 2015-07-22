@@ -1,27 +1,8 @@
 
 <div class="row">
   <div class="six columns">
-   <!-- <div class="pager" data-pagesize="5" role="navigation" aria-labelledby="pager-label">
 
-      <span id="pager-label" class="audible">Pager</span>
-      <ul class="pager-toolbar">
-        <li class="pager-prev">
-            <a href="#" rel="prev">
-              <svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-previous-page"></use></svg>
-              <span class="audible">Previous</span>
-            </a>
-        </li>
-        <li class="pager-next">
-          <a href="#" rel="next">
-            <span class="audible">Next</span>
-            <svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-next-page"></use></svg>
-          </a>
-        </li>
-      </ul>
-
-    </div>-->
-
-    <ul class="paginated listview">
+    <ul class="paginated listview" data-pagesize="10">
       <li>Item One</li>
       <li>Item Two</li>
       <li>Item Three</li>
@@ -50,25 +31,10 @@
   </div>
 
   <div class="six columns">
-    <div class="pager" data-pagesize="5" role="navigation" aria-labelledby="pager-label">
+   <!-- <div class="pager" data-pagesize="5" role="navigation" aria-labelledby="pager-label">
+-->
 
-      <span id="pager-label" class="audible">Pager</span>
-      <ul class="pager-toolbar">
-        <li class="pager-prev">
-            <a href="#" rel="prev">
-              <svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-previous-page"></use></svg>
-              <span class="audible">Previous</span>
-            </a>
-        </li>
-        <li class="pager-next">
-          <a href="#" rel="next">
-            <span class="audible">Next</span>
-            <svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-next-page"></use></svg>
-          </a>
-        </li>
-      </ul>
-
-      <table class="datagrid">
+    <table class="datagrid" >
         <thead>
           <tr>
             <th><span class="datagrid-column-wrapper">Number</span></th>
@@ -77,7 +43,7 @@
             <th><span class="datagrid-column-wrapper">Points</span></th>
           </tr>
         </thead>
-        <tbody class="pager-content">
+        <tbody class="paginated" data-pagesize="4">
           <tr>
             <td>1</td>
             <td>Eve</td>
@@ -102,10 +68,32 @@
             <td>Smith</td>
             <td>50</td>
           </tr>
+          <tr>
+            <td>5</td>
+            <td>Eve</td>
+            <td>Jackson</td>
+            <td>94</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>John</td>
+            <td>Doe</td>
+            <td>80</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Adam</td>
+            <td>Johnson</td>
+            <td>67</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Jill</td>
+            <td>Smith</td>
+            <td>50</td>
+          </tr>
         </tbody>
     </table>
-
-    </div>
 
   </div>
 </div>

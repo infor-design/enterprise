@@ -25,7 +25,7 @@
     }
 
     ~ label:before {
-      background-color: $switch-disabled-color;
+      background-color: $switch-unchecked-bar-color;
       border-radius: 2px;
       height: 5px;
       left: 0;

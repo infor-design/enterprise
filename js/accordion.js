@@ -375,11 +375,16 @@
         }
 
         if (isAnchor && !isRealAnchor) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
+
+          if (e.preventDefault) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+
           if (hasExpander) {
             this.toggleHeader(target.parent());
           }
+
           return false;
         }
 

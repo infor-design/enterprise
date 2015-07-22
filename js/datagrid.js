@@ -1146,10 +1146,9 @@ $.fn.datagrid = function(options) {
       if (this.pagerBar.length === 0) {
         this.pagerBar = $('<div class="datagrid-pager"></div>');
         elem.after(this.pagerBar);
-
       }
 
-      this.tableBody.pager();
+      this.tableBody.addClass('paginated').pager();
     }
   };
 

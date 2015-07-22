@@ -329,6 +329,12 @@ $accordion-focused-text-color: #ffffff;
 
         .title {
           @include font-size(14);
+          height: 14px;
+          max-width: 230px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+          white-space: nowrap;
         }
       }
     }

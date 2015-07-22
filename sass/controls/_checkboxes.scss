@@ -10,6 +10,7 @@
 }
 
 @mixin checkbox-unchecked-before-style {
+  background-color: $checkbox-bg-color;
   border: 1px solid $checkbox-border-color;
   border-radius: 2px;
   content: '';
