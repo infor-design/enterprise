@@ -16,3 +16,17 @@
     padding-top: 11px;
   }
 }
+
+.row.demo-tests-grid {
+
+  .column,
+  .columns {
+    min-height: 60px;
+
+    > * {
+      vertical-align: middle;
+    }
+
+  }
+
+}

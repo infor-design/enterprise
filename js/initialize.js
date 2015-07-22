@@ -98,6 +98,10 @@
 
           if ($.fn[plugin]) {
             elem.find(selector).each(function () {
+              if ($(this).is('.no-init') || $(this).attr('data-init')) {
+                return;
+              }
+
               var options = setOptions(this);
               $(this)[plugin](options);
             });
@@ -233,7 +237,7 @@
 
         //Context Menu
         if ($.fn.popupmenu) {
-          elem.find('[data-popupmenu]').each(function () {
+          elem.find('[data-popupmenu]:not(.no-init):not([data-init])').each(function () {
             var obj = $(this);
             obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
           });
@@ -241,7 +245,7 @@
 
         //Popovers
         if ($.fn.popover) {
-          elem.find('[data-popover]').each(function () {
+          elem.find('[data-popover]:not(.no-init):not([data-init])').each(function () {
             var obj = $(this),
               trigger = obj.attr('data-trigger'),
               title = obj.attr('data-title');
@@ -257,7 +261,7 @@
 
         //Cardstack
         if ($.fn.listview) {
-          elem.find('.listview').each(function () {
+          elem.find('.listview:not(.no-init):not([data-init])').each(function () {
             var cs = $(this),
               attr = cs.attr('data-dataset'),
               tmpl = cs.attr('data-tmpl'),
