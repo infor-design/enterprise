@@ -751,7 +751,9 @@
           }
         });
 
-        $(document).on('scroll.dropdown', function(e) {
+        var parentScroll = self.element.closest('.scrollable').length > 0 ? self.element.closest('.scrollable') : $(document);
+
+        parentScroll.on('scroll.dropdown', function(e) {
           var target = $(e.target);
           if (target.is('.multiselect-textbox') || target.is('.option-text') ||
               target.is('.dropdown-option') || target.is('.dropdown') ||
