@@ -113,6 +113,10 @@ textarea[readonly] {
 input.is-placeholder,
 textarea.is-placeholder {
   color: $input-placeholder-color;
+
+  &.error {
+    color: $error-color;
+  }
 }
 
 input:focus,

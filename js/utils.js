@@ -231,7 +231,7 @@
       $('[placeholder]').each(function() {
         var input = $(this),
         isPassword = input.is('input[type="password"]');
-        input.on('focus.placeholderPolyfill, click.placeholderPolyfill', function() {
+        input.removeClass(settings.className).on('focus.placeholderPolyfill, click.placeholderPolyfill', function() {
           if (input.val() === input.attr('placeholder') && input.data('placeholder')) {
             input.get(0).setSelectionRange(0, 0);
           }
