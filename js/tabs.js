@@ -22,6 +22,7 @@
     // Tab Settings and Options
     var pluginName = 'tabs',
         defaults = {
+          containerElement: null,
           tabCounts: false,
         },
         settings = $.extend({}, defaults, options);
@@ -75,9 +76,10 @@
       build: function() {
         var self = this;
 
-        self.container = $(this.element);
-        if (self.settings.tabCounts) {
-          self.container.addClass('has-counts');
+        this.container = this.element;
+        var container = $(this.settings.containerElement);
+        if (container.length) {
+          this.container = container;
         }
 
         //Attach Tablist role and class to the tab headers container
