@@ -54,48 +54,66 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
 
-        this.element.on('touchstart.button click.button', function (e) {
-          var element = $(this);
-          element.addClass('hide-focus');
-
-          if (self.element.attr('disabled')) {
+        this.element
+        .on('touchstart.button click.button', function (e) {
+          if ((self.element.attr('disabled')) || (!self.isTouch && e.which !== 1)) {
             return false;
           }
-
-          if (!self.isTouch && e.which !== 1) {
-            return false;
-          }
-
-          var btnOffset = element.offset(),
+          var element = $(this),
+            btnOffset = element.offset(),
             xPos = e.pageX - btnOffset.left,
-            yPos = e.pageY - btnOffset.top;
+            yPos = e.pageY - btnOffset.top,
+            ripple = $('<svg class="ripple-effect"><circle r="0" class="ripple-circle"></circle></svg>');
+
+          element.addClass('hide-focus');
 
           if (self.isTouch) {
             // Make sure the user is using only one finger and then get the touch position relative to the ripple wrapper
             e = e.originalEvent;
-
             if (e && e.touches && e.touches.length === 1) {
               xPos = e.touches[0].pageX - btnOffset.left;
               yPos = e.touches[0].pageY - btnOffset.top;
             }
           }
 
-          element.find('svg.ripple-effect').remove();
-          var ripple = $('<svg class="ripple-effect"><circle r="'+0+'"></circle></svg>');
-          ripple.css('left', xPos).css('top', yPos);
+          $('svg.ripple-effect', element).remove();
+          ripple.css({'left':xPos, 'top':yPos});
           element.prepend(ripple);
 
-          setTimeout(function(){
+          // Start the JS Animation Loop if IE9
+          if (!$.fn.cssPropSupport('animation')) {
+            self.animateWithJS(ripple);
+          }
+
+          setTimeout(function() {
             ripple.remove();
           }, 1000);
-        }).on('focusout.button', function () {
+
+        })
+        .on('focusout.button', function () {
           var self = $(this);
 
           setTimeout(function() {
             self.removeClass('hide-focus');
           }, 1);
-        });
 
+        });
+      },
+
+      // Browsers that don't support CSS-based animation can still show the animation
+      animateWithJS: function(el) {
+        var scale = 200,
+        xPos = (parseFloat(el.css('left')) - (scale / 2)) + 'px',
+        yPos = (parseFloat(el.css('top'))  - (scale / 2)) + 'px';
+
+        el.css({ opacity: 0.4 })
+        .animate({
+          opacity: 0,
+          left: xPos,
+          top: yPos,
+          width: scale,
+          height: scale
+        }, 1000);
       },
 
       destroy: function() {

@@ -54,6 +54,14 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   }
 }
 
+// basic vendor prefixing with optional prefixes only
+@mixin css3-extended($property, $value, $this-prefixes:false) {
+  $this-prefixes: if($this-prefixes, $this-prefixes, $prefixes);
+  @each $prefix in $this-prefixes {
+    #{$prefix}#{$property}: $value;
+  }
+}
+
 // vendor prefixed transitions for regular properties (non-vendor prefixed)
 @mixin transition($transitions-list...) {
   @each $prefix in $prefixes {
