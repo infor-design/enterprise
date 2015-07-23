@@ -6,6 +6,8 @@
 // sass/controls/_menubutton.scss
 
 button {
+  @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
+  @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   background-color: transparent;
 }
 
@@ -17,6 +19,10 @@ button {
 .btn-filtering,
 .btn-icon,
 .btn-menu {
+  @include font-size($button-font-size);
+  @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
+  @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
+  @include css3-extended(color, transparent, (-webkit-tap-highlight-));
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: 2px;
@@ -28,10 +34,8 @@ button {
   margin-top: 5px;
   min-width: 100px;
   overflow: hidden;
-  @include font-size($button-font-size);
   padding: 0 30px;
   position: relative;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
   text-transform: uppercase;
   width: auto;
 }
@@ -96,15 +100,15 @@ button {
 
   &[disabled],
   &[disabled]:hover {
-    border-color: $btn-disabled-bg-color;
     background-color: $btn-disabled-bg-color;
+    border-color: $btn-disabled-bg-color;
     box-shadow: none;
     color: $btn-disabled-color;
     cursor: default;
   }
 
   .ripple-effect {
-    background-color: #ffffff;
+    background-color: $white;
   }
 }
 
@@ -133,7 +137,6 @@ a.btn-primary {
 
   &:focus {
     border: 1px solid $btn-focus-bg-color;
-    //box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
     box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
 
     &:active {
@@ -208,8 +211,8 @@ a.btn-primary {
   }
 
   span {
-    color: $tertiary-btn-color;
     @include font-size(12);
+    color: $tertiary-btn-color;
     font-weight: 700;
   }
 
@@ -314,41 +317,25 @@ a.btn-primary {
 
 // Ripple Effect
 .ripple-effect {
-  -webkit-animation: ripple-animation 1s;
-  animation: ripple-animation 1s;
+  @include css3(animation, ripple-animation 1s);
   border-radius: 50%;
   height: 2px;
+  opacity: 0;
   position: absolute;
   width: 2px;
+  
+  .ripple-circle {
+    fill: rgba($white, 0);
+  }
 }
 
-.ripple-effect circle {
-  fill: rgba(255, 255, 255, 0.1);
-}
-
-@keyframes ripple-animation {
-  from {
+@include keyframes(ripple-animation) {
+  0% {
     opacity: .4;
-    transform: scale(1);
   }
 
-  to {
+  100% {
+    @include css3(transform, scale(100));
     opacity: 0;
-    transform: scale(100);
   }
 }
-
-@-webkit-keyframes ripple-animation {
-  from {
-    opacity: .4;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-
-  to {
-    opacity: 0;
-    -webkit-transform: scale(100);
-    transform: scale(100);
-  }
-}
-
