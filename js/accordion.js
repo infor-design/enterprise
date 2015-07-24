@@ -146,9 +146,7 @@
               plusminus.removeClass('active');
             }
           });
-
         });
-
 
         return this;
       },
@@ -206,7 +204,7 @@
           }, 50);
         }).on('click.accordion', function(e) {
           e.preventDefault();
-          self.handleClick(e);
+          return self.handleClick(e);
         }).on('keydown.accordion', function(e) {
           self.handleKeydown(e);
         }).on('focus.accordion', function(e) {
@@ -226,20 +224,22 @@
         // To prevent the weird Safari Bug, prevent default here
         e.preventDefault();
 
+        // Set and handle the Link.  Make sure we target the correct element (the <a> tag)
         var link = $(e.target);
-
-        if (this.element.hasClass('is-disabled') || link.hasClass('is-disabled')) {
-
-          e.stopPropagation();
-          return false;
+        if (link.is('span, svg, use')) {
+          link = link.closest('a');
         }
-
         if (link.is('button.plus-minus')) {
           link = link.next('a');
         }
 
+        if (this.element.hasClass('is-disabled') || link.parent().hasClass('is-disabled')) {
+          e.stopPropagation();
+          return false;
+        }
+
         this.setActiveAnchor(link);
-        this.handleSelected(e);
+        return this.handleSelected(link);
       },
 
       handleFocus: function(e, anchor) {
@@ -354,13 +354,8 @@
         }
       },
 
-      // NOTE: "e" is either an event or a jQuery object
+      // NOTE: "e" is either an event or a jQuery object containing a reference to an <a>
       handleSelected: function(e) {
-        if (this.element.hasClass('is-disabled')) {
-          e.returnValue = false;
-          return false;
-        }
-
         var isEvent = e !== undefined && e.type !== undefined,
           target = isEvent ? $(e.target) : e,
           href = target.attr('href'),
@@ -369,13 +364,14 @@
           isExpander = target.is('.plus-minus'),
           hasExpander = target.parent().find('.plus-minus');
 
-        if ((target).hasClass('is-disabled')) {
-          e.returnValue = false;
+        if (this.element.hasClass('is-disabled') || (target).hasClass('is-disabled')) {
+          if (isEvent) {
+            e.returnValue = false;
+          }
           return false;
         }
 
         if (isAnchor && !isRealAnchor) {
-
           if (e.preventDefault) {
             e.preventDefault();
             e.stopImmediatePropagation();
