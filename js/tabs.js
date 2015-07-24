@@ -66,10 +66,6 @@
       setup: function() {
         // Used by the window.resize event to correctly identify the tabs
         this.tabsIndex = $('.tab-container').index(this.element);
-
-        if (!this.settings.tabCounts && this.element.attr('data-tab-counts')) {
-          this.settings.tabCounts = this.element.attr('data-tab-counts') === 'true';
-        }
         return this;
       },
 
@@ -88,6 +84,11 @@
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
+        }
+
+        // Build Tab Counts
+        if (self.settings.tabCounts) {
+          self.container.addClass('has-counts');
         }
 
         //Attach Tablist role and class to the tab headers container
