@@ -18,29 +18,44 @@
   /* end-amd-strip-block */
 
   $.fn.initialize = function(locale) {
-    var self = this;
+    var self = this,
+      ua = navigator.userAgent || navigator.vendor || window.opera,
+      html = $('html'); // User-agent string
 
     if (!locale) {
       locale = 'en-US';
     }
 
     //Class-based detection for IE
-    if (navigator.userAgent.match(/Trident/)) {
-      $('html').addClass('ie');
+    if (ua.match(/Trident/)) {
+      html.addClass('ie');
     }
     if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
-      navigator.userAgent.indexOf('MSIE 8.0') > -1 ||
+      ua.indexOf('MSIE 8.0') > -1 ||
       document.documentMode === 8) {
-      $('html').addClass('ie8');
+      html.addClass('ie8');
     }
     if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
-      $('html').addClass('ie9');
+      html.addClass('ie9');
     }
     if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
-      $('html').addClass('ie10');
+      html.addClass('ie10');
     } else {
-      if (navigator.userAgent.match(/Trident\/7\./)) {
-        $('html').addClass('ie11');
+      if (ua.match(/Trident\/7\./)) {
+        html.addClass('ie11');
+      }
+    }
+
+    // Class-based detection for iOS
+    // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
+    if ((/iPhone|iPod|iPad/).test(ua)) {
+      html.addClass('ios');
+
+      var iDevices = ['iPod', 'iPad', 'iPhone'];
+      for (var i = 0; i < iDevices.length; i++) {
+        if (new RegExp(iDevices[i]).test(ua)) {
+          html.addClass(iDevices[i].toLowerCase());
+        }
       }
     }
 
