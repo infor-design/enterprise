@@ -269,7 +269,7 @@ module.exports = function(grunt) {
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
   ]);
 
-  grunt.registerTask('test', 'Runs unit or functional test suites using Intern.', function(n) {
+  grunt.registerTask('test', 'Runs unit or functional test suites using Intern.', function() {
     var options = {
       type: grunt.option('type') || 'all'
     };
