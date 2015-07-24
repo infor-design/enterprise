@@ -174,7 +174,9 @@
         $('#header-tabs-level-2').removeAttr('style');
 
         // Invoke Tabs Control
-        this.tabsContainer.tabs();
+        this.tabsContainer.tabs({
+          containerElement: '#maincontent'
+        });
       },
 
       buildWizard: function() {
