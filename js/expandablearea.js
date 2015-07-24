@@ -72,6 +72,15 @@
           this.expandedIcon = $('<span class="icon plus-minus"></span>').prependTo(this.header.children('a'));
         }
 
+        //Initialized in expanded mode.
+        if (expanded) {
+          this.content.addClass('no-transition');
+          this.element.one('open-expandablearea', function() {
+            self.content.removeClass('no-transition');
+          });
+          this.open();
+        }
+
         if (!expanded) {
           this.content.addClass('no-transition');
           this.element.one('close-expandablearea', function() {
