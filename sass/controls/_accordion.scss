@@ -383,10 +383,6 @@ $accordion-focused-text-color: #ffffff;
   &.light,
   &.dark {
 
-    .accordion-header.child-selected {
-
-    }
-
     .accordion-header.is-selected {
       background-color: $accordion-focused-bg-color;
       border-top-color: $accordion-focused-bg-color;

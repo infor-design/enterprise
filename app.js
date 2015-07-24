@@ -80,10 +80,17 @@ app.configure(function() {
   });
 
   app.get('/tests/applicationmenu/*', function(req, res) {
+    function path() {
+      if (req.url.toString().match(/\/site/)) {
+        return 'tests/applicationmenu/site/layout';
+      }
+      return 'tests/applicationmenu/six-levels/layout';
+    }
+
     var appMenuOpts = {
       title: 'SoHo XI',
       subtitle: 'Tests',
-      layout: 'tests/applicationmenu/layout'
+      layout: path()
     };
     var end = req.url.replace('/tests/applicationmenu/','');
     res.render('tests/applicationmenu/' + end, appMenuOpts);
