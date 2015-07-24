@@ -17,7 +17,7 @@ window.Chart = function(container) {
 
   //IE8 and Below Message
   if (typeof d3 === 'undefined') {
-     $(container).append('<p class="chart-message">'+Locale.translate('Unsupported')+'</p>');
+    $(container).append('<p class="chart-message"></p>');
     return null;
   }
 
@@ -765,7 +765,7 @@ window.Chart = function(container) {
 
    var dataset = chartData,
       parent = $(container).parent(),
-      margin = {top: 20, right: 20, bottom: 30, left: 40},
+      margin = {top: 30, right: 30, bottom: 50, left: 40},
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom,
       isSingular = (dataset.length === 1);
@@ -779,6 +779,9 @@ window.Chart = function(container) {
 
     var y = d3.scale.linear()
         .range([height, 0]);
+
+    //List the values along the x axis
+    var xAxisValues = dataset[0].data.map(function (d) {return d.name;});
 
     var xAxis = d3.svg.axis()
         .scale(x0)
@@ -807,11 +810,19 @@ window.Chart = function(container) {
       return d3.max(d.data, function(d){ return d.value;});
     });
 
-    //List the values along the x axis
-    var xAxisValues = dataset[0].data.map(function (d) {return d.name;});
-    x0.domain(names);
+    if (isSingular) {
+      names = dataset[0].data.map(function (d) {
+        return d.name;
+      });
+    }
 
-    x1.domain(xAxisValues).rangeRoundBands([0, x0.rangeBand()]);
+    x0.domain(names);
+    if (isSingular) {
+      x1.domain(xAxisValues).rangeRoundBands([0, width]);
+    } else {
+      x1.domain(xAxisValues).rangeRoundBands([0, x0.rangeBand()]);
+    }
+
     y.domain([0, d3.max(maxes)]);
 
     svg.append('g')
@@ -826,8 +837,15 @@ window.Chart = function(container) {
     //Make an Array of objects with name + array of all values
     var dataArray = [];
     chartData.forEach(function(d) {
-      dataArray.push({name: d.name, values: d.data});
+      dataArray.push({name: d.name, shortName: d.shortName, abbrName: d.abbrName, values: d.data});
     });
+
+    if (isSingular) {
+      dataArray = [];
+      names = dataset[0].data.forEach(function (d) {
+        dataArray.push({name: d.name, shortName: d.shortName, abbrName: d.abbrName, value: d.value});
+      });
+    }
 
     var xValues = svg.selectAll('.x-value')
         .data(dataArray)
@@ -837,46 +855,66 @@ window.Chart = function(container) {
           return 'translate(' + x0(d.name) + ',0)';
         });
 
-    var barMaxWidth = 25;
+    var barMaxWidth = 25, bars;
 
-    xValues.selectAll('rect')
-        .data(function(d) { return d.values; })
-      .enter().append('rect')
-        .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
-        .attr('x', function(d) {
-          return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
-        })
-        .attr('y', function(d) {
-          return y(d.value);
-        })
-        .attr('height', function(d) {
-          return height - y(d.value);
-        })
-        .style('fill', function(d, i) {
-          return (isSingular ? '#368AC0' : charts.colors(i));
-        }).on('mouseenter', function(d) {
-          var shape = $(this),
-            content = '',
-            x = 0,
-            y = d3.event.pageY-charts.tooltip.outerHeight() - 35;
+      if (isSingular) {
+        bars = svg.selectAll('rect')
+          .data(dataArray)
+        .enter().append('rect')
+          .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
+          .attr('x', function(d) {
+            return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
+          })
+          .attr('y', function(d) {
+            return y(d.value);
+          })
+          .attr('height', function(d) {
+            return height - y(d.value);
+          });
 
-          if (dataset.length === 1) {
-            content = '<p><b>' + d.value + ' </b>' + d.name + '</p>';
-          } else {
-           content = '<div class="chart-swatch">';
-           for (var j = 0; j < dataset.length; j++) {
-            content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + xAxisValues[j].name + '</span><b> ' + dataset[j].name + ' </b></br>';
-           }
-           content += '</div>';
-          }
+      } else {
+        bars = xValues.selectAll('rect')
+          .data(function(d) {
+            return d.values;
+          })
+        .enter().append('rect')
+          .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
+          .attr('x', function(d) {
+            return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
+          })
+          .attr('y', function(d) {
+            return y(d.value);
+          })
+          .attr('height', function(d) {
+            return height - y(d.value);
+          });
+      }
 
-          var size = charts.getTooltipSize(content);
-          x = shape.offset().left - (size.width /2) + (shape.attr('width')/2);
+      bars.style('fill', function(d, i) {
+        return (isSingular ? '#2578a9' : charts.colors(i));
+      }).on('mouseenter', function(d) {
+        var shape = $(this),
+          content = '',
+          x = 0,
+          y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
 
-          charts.showTooltip(x, y, content, 'top');
-        }).on('mouseleave', function() {
-          charts.hideTooltip();
-        });
+        if (dataset.length === 1) {
+          content = '<p><b>' + d.value + ' </b>' + d.name + '</p>';
+        } else {
+         content = '<div class="chart-swatch">';
+         for (var j = 0; j < dataset.length; j++) {
+          content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + xAxisValues[j].name + '</span><b> ' + dataset[j].name + ' </b></br>';
+         }
+         content += '</div>';
+        }
+
+        var size = charts.getTooltipSize(content);
+        x = shape.offset().left - (size.width /2) + (shape.attr('width')/2);
+
+        charts.showTooltip(x, y, content, 'top');
+      }).on('mouseleave', function() {
+        charts.hideTooltip();
+      });
 
     var legend = svg.selectAll('.legend')
         .data(xAxisValues.slice().reverse())

@@ -53,10 +53,11 @@
 
 # Teams Using SoHo XI
 
-| Home Pages | | Fredrik Erikkson |
+| Home Pages | Angular | Fredrik Erikkson |
 | Pathway | | Jesser Susi |
 | Mongoose | | Bryan Petit |
 | Requisitions | | Todd Dooner and Brent Dahlen |
+| PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna Peddibhotla |
 | Rhythm Widgets | | Eric Martensson |
 | SmartStream | ASP | Wim Denayer |
 | SXE | | Peter Cullen |

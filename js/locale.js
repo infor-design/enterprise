@@ -299,8 +299,8 @@
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
       }
 
-      if(Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date
-        if(isNaN( dateObj.return.getTime())) { //date is not valid
+      if (Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date
+        if (isNaN(dateObj.return.getTime())) { //date is not valid
           dateObj.return = undefined;
         }
       } else { //not a date
@@ -368,9 +368,6 @@
         return this.cultures['en-US'].messages[key].value;
       }
 
-      if (this.currentLocale.data.messages[key] === undefined) {
-        return undefined;
-      }
       return this.currentLocale.data.messages[key].value;
     },
 

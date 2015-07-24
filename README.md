@@ -67,6 +67,16 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 * Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
 
+## Running The Unit Tests
+
+* Run the command: `./node_modules/.bin/intern-client config=test2/intern.local.unit`
+
+## Running The Functional Tests
+* Make sure selenium-standalone is installed by running `selenium-standalone start` once
+* Make sure selenium-standalone is started by running `selenium-standalone start`
+* Run the command: `./node_modules/.bin/intern-runner config=test2/intern.local.functional`
+* Note grunt tasks in the works....
+
 # Contributing to Soho XI
 
 So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.
