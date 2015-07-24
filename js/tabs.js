@@ -77,6 +77,14 @@
         var self = this;
 
         this.container = this.element;
+        // Special case for Header Tabs, find the page container use that as the container
+        if ($.contains($('body > header')[0], this.element[0])) {
+          this.container = $('body > .page-container');
+          if (!this.container.length) {
+            this.container = this.element;
+          }
+        }
+        // Setting containerElement overrides any changes to the tab panel container.
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
