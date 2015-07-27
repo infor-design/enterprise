@@ -1,7 +1,8 @@
 // Select (DropDown)
 //================================================== //
 
-select.dropdown {
+select.dropdown,
+select.multiselect {
   font-size: 50px;
   left: -9999px;
   position: absolute;
@@ -21,7 +22,8 @@ select.dropdown {
   }
 }
 
-input.dropdown {
+input.dropdown,
+input.multiselect {
   background-color: $input-bg-color;
   border-color: $input-border-color;
   color: $dropdown-color;
@@ -29,6 +31,8 @@ input.dropdown {
   display: block;
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
+  @include css3(touch-callout, none);
+  @include css3(user-select, none);
   text-overflow: ellipsis;
   @include transition(background-color .2s ease);
   vertical-align: middle;
@@ -178,6 +182,8 @@ input.dropdown {
   a {
     color: $popupmenu-color;
     text-decoration: none;
+    @include css3(touch-callout, none);
+    @include css3(user-select, none);
   }
 
   // Added to the dropdown list when doing a search
