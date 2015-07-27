@@ -34,26 +34,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Test the current browser for a mobile UA string.
-    function isSmallFormFactor() {
-      // Adapted from http://www.detectmobilebrowsers.com
-      var ua = navigator.userAgent || navigator.vendor || window.opera;
-
-      // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
-      // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
-      return (/iPhone|iPod/).test(ua);
-    }
-
     // Plugin Constructor
     function Dropdown(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
-    }
-
-    // Check if an object is an array
-    function isArray(obj) {
-      return Object.prototype.toString.call(obj) === '[object Array]';
     }
 
     // Actual DropDown Code
@@ -295,18 +280,9 @@
             return;
           }
           self.toggleList();
-        }).on('touchstart.dropdown', function() {
-          // Set the self.touchmove flag when a touch is detected.  This flag prevents scrolling/resizing from closing
-          // the dropdown list while the screen is being interacted with via touch.
-          self.touchmove = true;
         }).on('touchend.dropdown touchcancel.dropdown', function(e) {
-          e.preventDefault();
           e.stopPropagation();
-          if (isSmallFormFactor()) {
-            self.openNativePicker();
-            return false;
-          }
-          self.input.trigger('mouseup');
+          self.toggleList();
         });
 
         self.element.on('activate', function () {
@@ -703,103 +679,123 @@
         this.handleSearchEvents();
         this.element.trigger('dropdownopen'); // TODO: Change event name?
 
-        self.list.on('touchmove.list', function() {
-          self.touchmove = true;
-        }).on('touchend.list touchcancel.list', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (!self.touchmove) {
-            $(e.target).click();
-          }
-          setTimeout(function() {
-            self.touchmove = false;
-          }, 10);
-        }).on('click.list', 'li', function () {
-          var val = $(this).attr('data-val'),
-            cur = self.element.find('option[value="'+ val +'"]');
-          //Try matching the option's text if 'cur' comes back empty.
-          //Supports options that don't have a 'value' attribute.
-          if (cur.length === 0) {
-            cur = self.element.find('option').filter(function() {
-              return $(this).text() === val;
-            });
-          }
+        // iOS-specific keypress event that listens for when you click the "done" button
+        if ($('html').is('.ios, .android')) {
+          self.searchInput.on('keypress.dropdown', function(e) {
+            if (e.which === 13) {
+              self.closeList();
+            }
+          });
+        }
 
-          //Select the clicked item
-          if (cur.is(':disabled')) {
-            return;
-          }
-          self.selectOption(cur);
-          if (self.settings.closeOnSelect) {
-            self.closeList();
-            self.activate();
-          } else {
-            self.activate(true);
-          }
-        })
-        .on('click.list', 'li > a', function(e) {
-          // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
-          e.preventDefault();
-          e.stopPropagation();
-          $(e.target).parent().trigger('click');
-          return false;
-        });
+        self.list
+          .onTouchClick('list', 'li')
+          .on('click.list', 'li', function () {
+            var val = $(this).attr('data-val'),
+              cur = self.element.find('option[value="'+ val +'"]');
+            //Try matching the option's text if 'cur' comes back empty.
+            //Supports options that don't have a 'value' attribute.
+            if (cur.length === 0) {
+              cur = self.element.find('option').filter(function() {
+                return $(this).text() === val;
+              });
+            }
+
+            //Select the clicked item
+            if (cur.is(':disabled')) {
+              return;
+            }
+            self.selectOption(cur);
+            if (self.settings.closeOnSelect) {
+              self.closeList();
+              self.activate();
+            } else {
+              self.activate(true);
+            }
+          })
+          .onTouchClick('list', 'li > a')
+          .on('click.list', 'li > a', function(e) {
+            // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
+            e.preventDefault();
+            e.stopPropagation();
+            $(e.target).parent().trigger('click');
+            return false;
+          });
 
         $(window).on('resize.dropdown', function() {
-          if (!self.touchmove) {
+          if (document.activeElement !== self.searchInput[0]) {
             self.closeList();
           }
         });
 
-        var parentScroll = self.element.closest('.scrollable').length > 0 ? self.element.closest('.scrollable') : $(document);
+        // Is the jQuery Element a component of the current Dropdown list?
+        function isDropdownElement(target) {
+          return target.is('.option-text') || target.is('.dropdown-option') || target.is('.dropdown') ||
+              target.is('.multiselect') || target.is('.group-label') || target.is('.dropdown-search') || self.touchmove === true;
+        }
 
-        parentScroll.on('scroll.dropdown', function(e) {
-          var target = $(e.target);
-          if (target.is('.multiselect-textbox') || target.is('.option-text') ||
-              target.is('.dropdown-option') || target.is('.dropdown') ||
-              target.is('.group-label') || self.touchmove === true) {
+        // Triggered when the user scrolls the page.
+        // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
+        function scrollDocument(e) {
+          if (touchPrevented || isDropdownElement($(e.target))) {
             return;
           }
           self.closeList();
-        }).on('touchend.dropdown touchcancel.dropdown', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          $(e.target).click();
-        }).on('click.dropdown', function(e) {
-          var target = $(e.target);
-          if (target.is('.multiselect-textbox') || target.is('.option-text') ||
-              target.is('.dropdown-option') || target.is('.dropdown') ||
-              target.is('.group-label') || self.touchmove === true) {
+        }
+
+        // Triggered when the user clicks anywhere in the document
+        // Will not close the list if the clicked target is anywhere inside the dropdown list.
+        var touchPrevented = false,
+          threshold = 10,
+          pos;
+
+        function clickDocument(e) {
+          if (touchPrevented || isDropdownElement($(e.target))) {
+            touchPrevented = false;
             return;
           }
           self.closeList();
-        });
-      },
+        }
 
-      // On mobile devices, don't use the HTML5 dropdown and trigger
-      // the native one instead.  Set up events for listening for changes
-      openNativePicker: function() {
-        var self = this;
+        function touchStartCallback(e) {
+          pos = {
+            x: e.originalEvent.touches[0].pageX,
+            y: e.originalEvent.touches[0].pageY
+          };
 
-        this.element.css({
-          'position':'absolute',
-          'visibility': ''
-        }).show().focus().trigger('click');
+          $(document).on('touchmove.dropdown', function touchMoveCallback(e) {
+            var newPos = {
+              x: e.originalEvent.touches[0].pageX,
+              y: e.originalEvent.touches[0].pageY
+            };
 
-        this.element.trigger('dropdownopen'); // TODO: Change event name?
-
-        this.element.off('change.dropdown').on('change.dropdown', function() {
-          var idx = self.element.find('option:selected').index(),
-            cur = $(self.element[0].options[idx]);
-
-          //Select the clicked item
-          self.selectOption(cur);
-          self.input.val(cur.text());
-          self.element.hide().css({'position': '', 'left': ''});
-          setTimeout(function() {
-            self.input.focus();
+            if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
+                (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
+              touchPrevented = true;
+            }
           });
-        });
+        }
+
+        function touchEndCallback() {
+          $(document).off('touchmove.dropdown');
+          if (touchPrevented) {
+            return false;
+          }
+          $(document).triggerHandler('click.dropdown');
+        }
+
+        // Need to detect whether or not scrolling is happening on a touch-capable device
+        // The dropdown list should not close on mobile if scrolling is occuring, but should close
+        // if the user is simply tapping outside the list.
+        $(document)
+          .on('touchstart.dropdown', touchStartCallback)
+          .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
+          .on('click.dropdown', clickDocument);
+
+        setTimeout(function() {
+          var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+          parentScroll.on('scroll.dropdown', scrollDocument);
+        }, 100);
       },
 
       // Set size and positioning of the list
@@ -875,14 +871,16 @@
           this.touchmove = false;
         }
 
-        this.searchInput.off('keydown.dropdown');
+        this.searchInput.off('keydown.dropdown keypress.dropdown');
 
         this.list.hide().remove();
-        this.list.off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list');
+        this.list.offTouchClick('list')
+          .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list');
         this.listUl.find('li').show();
         this.input.removeClass('is-open').attr('aria-expanded', 'false');
         this.searchInput.removeAttr('aria-activedescendant');
-        $(document).off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
+        $(document).offTouchClick('dropdown')
+          .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
         $(window).off('resize.dropdown');
 
         this.element.trigger('dropdownclose'); // TODO: Change event name?
@@ -1121,7 +1119,7 @@
           } else if (sourceType === 'object') {
             // Use the 'source' setting as pre-existing data.
             // Sanitize accordingly.
-            var sourceData = isArray(this.settings.source) ? this.settings.source : [this.settings.source];
+            var sourceData = Array.isArray(this.settings.source) ? this.settings.source : [this.settings.source];
             response(sourceData);
           } else {
             // Attempt to resolve source as a URL string.  Do an AJAX get with the URL

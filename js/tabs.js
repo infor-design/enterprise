@@ -66,10 +66,6 @@
       setup: function() {
         // Used by the window.resize event to correctly identify the tabs
         this.tabsIndex = $('.tab-container').index(this.element);
-
-        if (!this.settings.tabCounts && this.element.attr('data-tab-counts')) {
-          this.settings.tabCounts = this.element.attr('data-tab-counts') === 'true';
-        }
         return this;
       },
 
@@ -77,9 +73,22 @@
         var self = this;
 
         this.container = this.element;
+        // Special case for Header Tabs, find the page container use that as the container
+        if ($.contains($('body > header')[0], this.element[0])) {
+          this.container = $('body > .page-container');
+          if (!this.container.length) {
+            this.container = this.element;
+          }
+        }
+        // Setting containerElement overrides any changes to the tab panel container.
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
+        }
+
+        // Build Tab Counts
+        if (self.settings.tabCounts) {
+          self.container.addClass('has-counts');
         }
 
         //Attach Tablist role and class to the tab headers container
