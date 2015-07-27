@@ -92,10 +92,12 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.header = self.container.find('ul:first')
-                        .attr({'class': 'tab-list', 'role': 'tablist',
-                               'aria-multiselectable': 'false'});
-        self.tablist = self.element.find('.tab-list');
+        self.tablist = self.element.find('.tab-list')
+          .attr({
+            'class': 'tab-list',
+            'role': 'tablist',
+            'aria-multiselectable': 'false'
+          });
 
         self.focusState = self.container.find('.tab-focus-indicator');
         if (!self.focusState.length) {
@@ -156,12 +158,10 @@
             popup = a.parent().data('popupmenu');
 
           // Associated the current one
-          var anchor = a.attr('href');
-          if (!anchor || anchor === '#') {
-            return;
+          var href = a.attr('href');
+          if (href !== undefined && href !== '#') {
+            self.panels = self.panels.add($(href));
           }
-
-          self.panels = self.panels.add(anchor);
 
           // If dropdown tab, add the contents of the dropdown
           // NOTE: dropdown tabs shouldn't have children, so they aren't accounted for here
@@ -779,7 +779,7 @@
 
       setMoreActive: function () {
         var self = this,
-          selectedTab = self.header.find('.is-selected');
+          selectedTab = self.tablist.find('.is-selected');
 
         if (self.isTabOverflowed(selectedTab)) {
           self.moreButton.addClass('is-selected');
@@ -1128,7 +1128,8 @@
       teardown: function() {
         this.panels.removeAttr('style');
 
-        this.header
+        this.tablist
+          .off()
           .removeAttr('role')
           .removeAttr('aria-multiselectable');
 
@@ -1145,9 +1146,6 @@
             popup.destroy();
           }
         });
-
-        this.tablist
-          .off();
 
         this.anchors
           .off()
