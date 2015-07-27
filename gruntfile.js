@@ -159,7 +159,7 @@ module.exports = function(grunt) {
     cssmin: {
       dist: {
         files: {
-          'dist/css/508-theme.min.css': ['dist/css/508-theme.css'],
+          'dist/css/high-contrast-theme.min.css': ['dist/css/high-contrast-theme.css'],
           'dist/css/dark-theme.min.css': ['dist/css/dark-theme.css'],
           'dist/css/grey-theme.min.css': ['dist/css/grey-theme.css'],
           'dist/css/css-only.min.css': ['dist/css/css-only.css'],
