@@ -538,6 +538,11 @@
             labels.autoWidth();
           }
         });
+
+        setTimeout(function () {
+          $('#validation-tooltip').hide();
+          $('#tooltip').hide();
+        }, 100);
       },
 
       updateAria: function(a) {

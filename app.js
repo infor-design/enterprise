@@ -5,9 +5,6 @@ var express = require('express'),
   mmm = require('mmm'),
   http = require('http'),
   colors = require('colors'); // jshint ignore:line
-  //uploadRouter = require('./src/routers/upload-router')(app); // jshint ignore:line
-
-app.configure(function() {
 
   app.set('view engine', 'html');
   app.set('views', path.join(__dirname, 'views'));
@@ -16,8 +13,6 @@ app.configure(function() {
 
   // instruct express to server up static assets
   app.use(express.static('public'));
-  // leverage body parsing middleware (to be deprecated in subsequent versions)
-  app.use(express.bodyParser());
 
   var templateOpts = {
     title: 'SoHo XI',
@@ -417,7 +412,7 @@ app.configure(function() {
     res.end(JSON.stringify(products));
   });
 
-});
+
 
 module.exports = app;
 

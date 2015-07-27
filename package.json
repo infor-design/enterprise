@@ -13,6 +13,7 @@
     "chai": "^1.9.1",
     "chai-jquery": "^1.2.3",
     "colors": "^0.6.2",
+    "connect-multiparty": "^2.0.0",
     "grunt": "~0.4.2",
     "grunt-banner": "^0.3.1",
     "grunt-contrib-clean": "^0.6.0",
