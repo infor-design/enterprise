@@ -175,7 +175,8 @@
         self.panels = $();
         self.anchors.each(associateAnchorWithPanel);
         self.panels
-          .attr({'class': 'tab-panel', 'role': 'tabpanel'}).hide()
+          .addClass('tab-panel')
+          .attr({'role': 'tabpanel'}).hide()
           .find('h3:first').attr('tabindex', '0');
 
         return this;

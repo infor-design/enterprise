@@ -237,6 +237,16 @@ $header-height: 60px;
   .tab-container:not(.vertical) {
     padding: 1px 20px 0;
 
+    &.alternate {
+      .tab {
+        &.is-selected {
+          a {
+            color: $graphite06;
+          }
+        }
+      }
+    }
+
     .tab {
       font-weight: bold;
       padding: 6px 6px 7px;
