@@ -246,6 +246,54 @@
       return validations;
     },
 
+    // Set Error icon on parent tabs/expandable
+    setErrorOnParent: function (field) {
+      var parent = field.closest('.tab-panel, .expandable-pane'),
+        parentContainer = field.closest('.tab-container, .expandable-area'),
+        iconTarget = parent.attr('id'),
+        iconContainer;
+
+      //Tabs
+      if (parentContainer.is('.tab-container')) {
+        //Default Tabs
+        iconContainer = $('.tab-list a[href="#'+ iconTarget +'"]', parentContainer).closest('.tab');
+
+        //Tabs with Counts
+        if (iconContainer.length) {
+          if ($('.count', iconContainer).length) {
+            iconContainer = $('.count', iconContainer);
+          }
+        }
+        //Dropdown Tabs(with popupmenu)
+        else {
+          iconTarget = $('a[href="#'+ iconTarget +'"]', '.popupmenu').closest('.popupmenu').attr('id');
+          iconContainer = $('.tab-list .tab[aria-controls="'+ iconTarget +'"]', parentContainer);
+        }
+      }
+
+      //Expandable
+      else if (parentContainer.is('.expandable-area')) {
+        iconContainer = $('.expandable-header[aria-controls="'+ iconTarget +'"] .title', parentContainer);
+      }
+
+      //No action
+      else {
+        return;
+      }
+
+      //Add Error icon
+      if($('.error', parent).length) {
+        if (!($('.icon-error', iconContainer).length)) {          
+          iconContainer.addClass('is-error').append('<svg aria-hidden="true" focusable="false" class="icon icon-error"><use xlink:href="#icon-error"/></svg>');
+        }
+      }
+      //Remove Error icon
+      else {
+        iconContainer.removeClass('is-error');
+        $('.icon-error', iconContainer).remove();
+      }
+    },
+
     validate: function (field, showTooltip, e) {
       //call the validation function inline on the element
       var self = this,
@@ -275,6 +323,7 @@
               self.addPositive(field);
             }
           }
+          self.setErrorOnParent(field);
         };
 
       self.removeError(field);

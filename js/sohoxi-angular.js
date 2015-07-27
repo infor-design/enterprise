@@ -23,6 +23,28 @@
       };
   };
 
+  var multiselect = function () {
+      return {
+        replace: true,
+        scope: false,
+        link: function(scope, elem, attrs) {
+          elem.multiselect();
+          var api = elem.data('dropdown'),
+            model = attrs.ngModel;
+
+          // Watch for Changes
+          scope.$watch(model, function() {
+           api.setValue();
+          });
+
+          // Set Initial Value
+          setTimeout(function () {
+            api.setValue();
+          },0);
+        }
+      };
+  };
+
   var chart = function () {
       return {
         replace: true,
@@ -98,6 +120,7 @@
 
   angular.module('sohoxi-angular')
       .directive('dropdown', dropdown)
+      .directive('multiselect', multiselect)
       .directive('chart', chart)
       .directive('slider', slider)
       .directive('other', other);

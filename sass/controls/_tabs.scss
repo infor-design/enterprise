@@ -148,7 +148,7 @@
       text-decoration: none;
     }
 
-    svg {
+    svg:not('.is-error') {
       fill: $tab-selected-color;
     }
   }
@@ -195,7 +195,7 @@
         color: $tab-hover-color;
       }
 
-      .icon {
+      .icon:not('.is-error') {
         fill: $tab-hover-color;
       }
     }
@@ -241,12 +241,17 @@
       padding-right: 21px;
 
       .icon {
-        height: 10px !important;
+        height: 10px;
         margin-left: -5px;
         margin-top: -1px;
         padding-right: 1px;
         position: relative;
         width: 14px;
+        
+        &.icon-error {
+          height: 14px;
+          margin-left: inherit;
+        }
       }
     }
 
@@ -255,6 +260,11 @@
         height: 30px;
         margin: 0 0 0 -10px;
         width: 32px;
+      }
+
+      .icon-error {
+        height: 14px;
+        width: 14px;
       }
     }
 
@@ -277,6 +287,12 @@
       font-size: 180%;
     }
 
+    .icon-error {
+      height: 14px;
+      margin-left: -5px;
+      width: 14px;
+    }    
+
     &.is-selected {
       a {
         color: $tab-selected-color;
@@ -294,7 +310,7 @@
         }
       }
 
-      .icon {
+      .icon:not('.is-error') {
         fill: $tab-selected-color;
       }
 
