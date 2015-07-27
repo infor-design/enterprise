@@ -156,12 +156,10 @@
             popup = a.parent().data('popupmenu');
 
           // Associated the current one
-          var anchor = a.attr('href');
-          if (!anchor || anchor === '#') {
-            return;
+          var href = a.attr('href');
+          if (href !== undefined && href !== '#') {
+            self.panels = self.panels.add($(href));
           }
-
-          self.panels = self.panels.add(anchor);
 
           // If dropdown tab, add the contents of the dropdown
           // NOTE: dropdown tabs shouldn't have children, so they aren't accounted for here
