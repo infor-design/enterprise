@@ -92,10 +92,12 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.header = self.container.find('ul:first')
-                        .attr({'class': 'tab-list', 'role': 'tablist',
-                               'aria-multiselectable': 'false'});
-        self.tablist = self.element.find('.tab-list');
+        self.tablist = self.element.find('.tab-list')
+          .attr({
+            'class': 'tab-list',
+            'role': 'tablist',
+            'aria-multiselectable': 'false'
+          });
 
         self.focusState = self.container.find('.tab-focus-indicator');
         if (!self.focusState.length) {
@@ -777,7 +779,7 @@
 
       setMoreActive: function () {
         var self = this,
-          selectedTab = self.header.find('.is-selected');
+          selectedTab = self.tablist.find('.is-selected');
 
         if (self.isTabOverflowed(selectedTab)) {
           self.moreButton.addClass('is-selected');
@@ -1126,7 +1128,8 @@
       teardown: function() {
         this.panels.removeAttr('style');
 
-        this.header
+        this.tablist
+          .off()
           .removeAttr('role')
           .removeAttr('aria-multiselectable');
 
@@ -1143,9 +1146,6 @@
             popup.destroy();
           }
         });
-
-        this.tablist
-          .off();
 
         this.anchors
           .off()
