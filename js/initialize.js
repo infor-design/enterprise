@@ -26,6 +26,12 @@
       locale = 'en-US';
     }
 
+    if (navigator.userAgent.indexOf('Safari')  !== -1 &&
+        navigator.userAgent.indexOf('Chrome')  === -1 &&
+        navigator.userAgent.indexOf('Android') === -1) {
+      html.addClass('is-safari');
+    }
+
     //Class-based detection for IE
     if (ua.match(/Trident/)) {
       html.addClass('ie');
