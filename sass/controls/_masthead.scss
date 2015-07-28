@@ -12,7 +12,7 @@
     fill: $slate03;
     height: 18px;
     position: relative;
-    top: 7px;
+    top: -5px;
     width: 17px;
   }
 
@@ -38,7 +38,9 @@
 
   .btn-icon {
     border-radius: 0;
-    top: -8px;
+    height: 26px;
+    min-height: 26px;
+    top: 3px;
 
     &:hover,
     &:active {
