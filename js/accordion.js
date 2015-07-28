@@ -204,7 +204,7 @@
           }, 50);
         }).on('click.accordion', function(e) {
           e.preventDefault();
-          return self.handleClick(e);
+          self.handleClick(e);
         }).on('keydown.accordion', function(e) {
           self.handleKeydown(e);
         }).on('focus.accordion', function(e) {
@@ -239,7 +239,7 @@
         }
 
         this.setActiveAnchor(link);
-        return this.handleSelected(link);
+        this.handleSelected(e);
       },
 
       handleFocus: function(e, anchor) {
@@ -358,11 +358,21 @@
       handleSelected: function(e) {
         var isEvent = e !== undefined && e.type !== undefined,
           target = isEvent ? $(e.target) : e,
-          href = target.attr('href'),
-          isAnchor = target.is('a'),
-          isRealAnchor = href && (href !== '' && href !== '#'),
-          isExpander = target.is('.plus-minus'),
+          href, isAnchor, isRealAnchor, isExpander, hasExpander;
+
+        function checkAnchor() {
+          href = target.attr('href');
+          isAnchor = target.is('a');
+          isRealAnchor = href && (href !== '' && href !== '#');
+          isExpander = target.is('.plus-minus');
           hasExpander = target.parent().find('.plus-minus');
+        }
+        checkAnchor();
+
+        if (target.is('span, svg, use') && !isExpander) {
+          target = target.closest('a');
+          checkAnchor();
+        }
 
         if (this.element.hasClass('is-disabled') || (target).hasClass('is-disabled')) {
           if (isEvent) {
