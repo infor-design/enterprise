@@ -270,7 +270,7 @@ $datagrid-header-height: 40px;
 
     span {
       line-height: 48px;
-      
+
       &.exclamation {
         line-height: 44px;
       }
@@ -445,7 +445,6 @@ td .btn-actions {
     height: 0;
     margin: -1px -20px 0;
     padding: 0 20px;
-    transition: height 300ms cubic-bezier(.17, .04, .03, .94) 0s;
   }
 
   .datagrid-row-detail-padding {

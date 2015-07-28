@@ -79,8 +79,6 @@
     height: 0;
     overflow: hidden;
 
-    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94) 0s);
-
     > .content {
       padding: 0 50px 15px;
     }
