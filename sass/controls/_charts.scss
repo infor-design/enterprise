@@ -72,12 +72,22 @@
       stroke: transparent;
     }
 
-    .tick line {
-      stroke: #e0e0e0;
+    .tick {
+      line {
+        stroke: #e0e0e0;
+      }
+
+      &.is-selected {
+        font-weight: bold;
+      }
     }
 
     rect {
       cursor: pointer;
+
+      &.is-not-selected {
+        opacity: .35;
+      }
     }
   }
 
@@ -114,23 +124,37 @@
 }
 
 // Tooltip Swatch
-.chart-swatch > div {
-  display: table-cell;
-  height: 14px;
-  width: 14px;
-}
+.chart-swatch {
+  display: table;  
+  
+  .swatch-row {
+    display: table-row;
 
-.chart-swatch > span,
-.chart-swatch > b {
-  color: $inverse-color;
-  display: table-cell;
-  line-height: 12px;
-  padding-left: 10px;
-}
+    div {
+      border-bottom: 10px solid $tooltip-bg-color;
+      display: table-cell;
+      height: 14px;
+      width: 14px;
+    }
 
-.chart-swatch > br {
-  display: block;
-  margin: 5px 0;
+    span,
+    b {
+      color: $inverse-color;
+      display: table-cell;
+      line-height: 12px;
+      padding: 0 10px 0 15px;
+    }
+
+    b {
+      padding: 0;
+    }
+
+    br {
+      display: block;
+      margin: 5px 0;
+    }
+  }
+
 }
 
 .chart-tooltip-total {

@@ -6,7 +6,7 @@
 }
 
 .editor {
-  background-color: transparent;
+  background-color: $editor-bg-color;
   border: 1px solid $editor-border-color;
   border-radius: 0 0 2px 2px;
   border-top: 1px solid transparent;
@@ -184,9 +184,9 @@
   width: 100%;
 
   textarea {
-    background-color: transparent;
+    background-color: $editor-bg-color;
     border: 0;
-    color: $font-color;
+    color: $editor-color;
     @include font-size(16);
     font-weight: 100;
     height: 100%;
@@ -218,7 +218,7 @@
   }
 
   > .line-numbers {
-    background-color: transparent;
+    background-color: $editor-bg-color;
     display: inline-block;
     min-height: 100%;
     padding: 15px 10px 10px;

@@ -163,6 +163,15 @@ $switch-unchecked-bar-color: $graphite08;
 $switch-disabled-color: $input-disabled-border-color;
 $switch-disabled-label-color: $disabled-color;
 
+// Editor
+$editor-bg-color: $input-bg-color;
+$editor-border-color: $input-border-color;
+$editor-focus-border-color: $input-focus-border-color;
+$editor-color: $input-color;
+$editor-toolbar-bg-color: $white;
+$editor-btn-color: $slate04;  //Was #999999  in design
+$editor-middle-border-color: $slate03;
+
 //================================================== //
 // Core Controls
 @import 'controls';

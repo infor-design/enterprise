@@ -4,6 +4,10 @@
 [data-mask-mode="number"] {
   text-align: right;
 
+  &.error {
+  	padding-right: 32px;
+  }
+  
   &.spinbox {
     text-align: center;
   }

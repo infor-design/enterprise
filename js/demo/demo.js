@@ -280,7 +280,9 @@ $(function($) {
 
     // This test adds an additional validation rule.
     $.fn.validation.rules['also-required'] = {
-      check: requiredCheck,
+      check: function(value) {
+        return false;
+      },
       message: 'This is a custom validation rule that duplicates the functionality of the "required" rule built into the validator, but has this really long message instead.  This is testing the size of error message tooltips, as well as testing that custom rules work properly.', //TODO - Localize
       async: false
     };

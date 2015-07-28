@@ -777,7 +777,7 @@ window.Chart = function(container) {
 
     var x1 = d3.scale.ordinal();
 
-    var y = d3.scale.linear()
+    var y = d3.scale.linear().nice()
         .range([height, 0]);
 
     //List the values along the x axis
@@ -847,14 +847,6 @@ window.Chart = function(container) {
       });
     }
 
-    var xValues = svg.selectAll('.x-value')
-        .data(dataArray)
-      .enter().append('g')
-        .attr('class', 'g')
-        .attr('transform', function(d) {
-          return 'translate(' + x0(d.name) + ',0)';
-        });
-
     var barMaxWidth = 25, bars;
 
       if (isSingular) {
@@ -873,6 +865,15 @@ window.Chart = function(container) {
           });
 
       } else {
+
+      var xValues = svg.selectAll('.x-value')
+          .data(dataArray)
+        .enter().append('g')
+          .attr('class', 'g')
+          .attr('transform', function(d) {
+            return 'translate(' + x0(d.name) + ',0)';
+          });
+
         bars = xValues.selectAll('rect')
           .data(function(d) {
             return d.values;
@@ -892,7 +893,7 @@ window.Chart = function(container) {
 
       bars.style('fill', function(d, i) {
         return (isSingular ? '#2578a9' : charts.colors(i));
-      }).on('mouseenter', function(d) {
+      }).on('mouseenter', function(d, i) {
         var shape = $(this),
           content = '',
           x = 0,
@@ -902,18 +903,28 @@ window.Chart = function(container) {
           content = '<p><b>' + d.value + ' </b>' + d.name + '</p>';
         } else {
          content = '<div class="chart-swatch">';
-         for (var j = 0; j < dataset.length; j++) {
-          content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + xAxisValues[j].name + '</span><b> ' + dataset[j].name + ' </b></br>';
+         var data = d3.select(this.parentNode).datum().values;
+
+         for (var j = 0; j < data.length; j++) {
+          content += '<div class="swatch-row"><div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + data[j].name + '</span><b> ' + data[j].value + ' </b></div>';
          }
          content += '</div>';
         }
 
         var size = charts.getTooltipSize(content);
-        x = shape.offset().left - (size.width /2) + (shape.attr('width')/2);
+        x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
 
         charts.showTooltip(x, y, content, 'top');
       }).on('mouseleave', function() {
         charts.hideTooltip();
+      }) .on('click', function (d, i) {
+        var bar = d3.select(this);
+
+        charts.selectElement(bar, svg.selectAll('rect'), d);
+        charts.selectElement(svg.selectAll('.x .tick:nth-child(' + (i+1) +')'), svg.selectAll('.x .tick'), d);
+      
+        return;
+
       });
 
     var legend = svg.selectAll('.legend')
