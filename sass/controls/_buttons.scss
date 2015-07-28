@@ -6,8 +6,6 @@
 // sass/controls/_menubutton.scss
 
 button {
-  @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
-  @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   background-color: transparent;
 }
 
@@ -317,12 +315,15 @@ a.btn-primary {
 
 // Ripple Effect
 .ripple-effect {
-  @include css3(animation, ripple-animation 1s);
   border-radius: 50%;
   height: 2px;
   opacity: 0;
   position: absolute;
   width: 2px;
+  
+  &.is-animation {
+    @include css3(animation, ripple-animation 1s);    
+  }
 
   .ripple-circle {
     fill: rgba($white, 0);
