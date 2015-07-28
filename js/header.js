@@ -190,9 +190,9 @@
           $('<div class="completed-range"></div>').appendTo(bar);
 
           // TODO: Flesh this out so the header control can build the Wizard Ticks based on options
-          $('<a href="#" class="tick complete"><span class="label">Context Apps</span></a>').appendTo(bar);
-          $('<a href="#" class="tick complete"><span class="label">Utility Apps</span></a>').appendTo(bar);
-          $('<a href="#" class="tick current"><span class="label">Inbound Configuration</span></a>').appendTo(bar);
+          $('<a href="#" class="tick current"><span class="label">Context Apps</span></a>').appendTo(bar);
+          $('<a href="#" class="tick"><span class="label">Utility Apps</span></a>').appendTo(bar);
+          $('<a href="#" class="tick"><span class="label">Inbound Configuration</span></a>').appendTo(bar);
           $('<a href="#" class="tick"><span class="label">OID Mapping</span></a>').appendTo(bar);
         }
 

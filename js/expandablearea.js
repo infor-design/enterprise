@@ -165,11 +165,10 @@
 
       close: function() {
         var self = this;
-        this.element.removeClass('is-expanded');
-        this.header.attr('aria-expanded', 'false');
         this.expandedIcon.removeClass('active');
         this.content.one('animateClosedComplete', function() {
-          $(this).css('display', 'none');
+          self.element.removeClass('is-expanded');
+          self.header.attr('aria-expanded', 'false');
           self.element.trigger('close-expandablearea');
         }).animateClosed();
       },

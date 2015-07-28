@@ -48,6 +48,7 @@
         }
         $self.off(eventName + '.animateOpen');
         self.style.transition = '';
+        self.style[dim] = distance;
         $self.trigger('animateOpenComplete');
       }
 
@@ -108,6 +109,7 @@
         }
         $self.off(eventName + '.animatedClosed');
         self.style.transition = '';
+        self.style[dim] = '0px';
         $self.trigger('animateClosedComplete');
       }
 

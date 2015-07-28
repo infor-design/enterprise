@@ -1,0 +1,11 @@
+// Wizard CSS for Demo Purposes
+//=========================================
+//
+
+.wizard-panel {
+  @include css3(transition, opacity 300ms cubic-bezier(.17, .04, .03, .94));
+}
+
+.demo-title-pad {
+  margin-top: 2em;
+}

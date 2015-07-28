@@ -305,6 +305,8 @@ $(function($) {
         newOpts = $.extend({}, btn.data('demoOptions')),
         type;
 
+      $('body > .page-container').find('.wizard-panel:not(.tab-panel)').removeAttr('id');
+
       newOpts.useAlternate = $('#navpattern-alt-breadcrumb').prop('checked');
       mainHeader.header(newOpts);
       mainHeaderData = mainHeader.data('header');
@@ -433,8 +435,38 @@ $(function($) {
       wizardTicks: [1,2] // NOTE: these settings aren't final.
     };
 
+    function wizardCallback() {
+      var wizard = mainHeader.data('header').wizard,
+        wizardPanels = $('body > .page-container').find('.wizard-panel');
+
+      wizard.data('wizard').ticks.each(function(i, item) {
+        var id = $(item).text().trim().replace(/ /g, '-').toLowerCase();
+
+        if (wizardPanels[i] !== wizardPanels[0]) {
+          $(item).attr('data-wizard-panel', '' + id);
+          $(wizardPanels[i]).attr('id', id);
+        }
+        else {
+          // Use the default ID for the first panel
+          $(item).attr('data-wizard-panel', $(wizardPanels[i]).attr('id'));
+          //$(wizardPanels[i]).attr('id', $(item).attr('id'));
+        }
+      });
+
+      wizard.off('stepchange.demo').on('stepchange.demo', function stepChangeListener(e, tick) {
+        var thisPanel = wizardPanels.filter('#'+ tick.attr('data-wizard-panel')),
+          otherPanels = wizardPanels.not('#'+ tick.attr('data-wizard-panel'));
+
+        otherPanels.css({'display': 'none', 'opacity': '0'});
+        thisPanel.css('display', 'block');
+        thisPanel[0].offsetHeight;
+        thisPanel.css('opacity', '1');
+      });
+    }
+
     $('#navpattern-create-wizard')
       .data('demoOptions', createWizardOpts)
+      .data('demoCallback', wizardCallback)
       .data('navType', 'wizard')
       .click(navPatternButtonClick);
 
