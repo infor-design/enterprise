@@ -765,10 +765,11 @@ window.Chart = function(container) {
 
    var dataset = chartData,
       parent = $(container).parent(),
-      margin = {top: 30, right: 30, bottom: 50, left: 40},
-      width = parent.width() - margin.left - margin.right,
-      height = parent.height() - margin.top - margin.bottom,
-      isSingular = (dataset.length === 1);
+      isSingular = (dataset.length === 1),
+      margin = {top: 40, right: 40, bottom: (isSingular ? 50 : 35), left: 40},
+      legendHeight = 40,
+      width = parent.width() - margin.left - margin.right - 10,
+      height = parent.height() - margin.top - margin.bottom - (isSingular ? 0 : legendHeight);
 
     $(container).addClass('column-chart');
 
@@ -848,23 +849,23 @@ window.Chart = function(container) {
     }
 
     var barMaxWidth = 25, bars;
+    // Add the bars - done different depending on if grouped or singlular
+    if (isSingular) {
+      bars = svg.selectAll('rect')
+        .data(dataArray)
+      .enter().append('rect')
+        .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
+        .attr('x', function(d) {
+          return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
+        })
+        .attr('y', function(d) {
+          return y(d.value);
+        })
+        .attr('height', function(d) {
+          return height - y(d.value);
+        });
 
-      if (isSingular) {
-        bars = svg.selectAll('rect')
-          .data(dataArray)
-        .enter().append('rect')
-          .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
-          .attr('x', function(d) {
-            return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
-          })
-          .attr('y', function(d) {
-            return y(d.value);
-          })
-          .attr('height', function(d) {
-            return height - y(d.value);
-          });
-
-      } else {
+    } else {
 
       var xValues = svg.selectAll('.x-value')
           .data(dataArray)
@@ -891,9 +892,10 @@ window.Chart = function(container) {
           });
       }
 
+      //Style the bars and add interactivity
       bars.style('fill', function(d, i) {
         return (isSingular ? '#2578a9' : charts.colors(i));
-      }).on('mouseenter', function(d, i) {
+      }).on('mouseenter', function(d) {
         var shape = $(this),
           content = '',
           x = 0,
@@ -913,6 +915,11 @@ window.Chart = function(container) {
 
         var size = charts.getTooltipSize(content);
         x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
+        if (dataset.length > 1) {
+          var parentNode = this.parentNode;
+          x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
+          y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
+        }
 
         charts.showTooltip(x, y, content, 'top');
       }).on('mouseleave', function() {
@@ -924,29 +931,24 @@ window.Chart = function(container) {
         charts.selectElement(svg.selectAll('.x .tick:nth-child(' + (i+1) +')'), svg.selectAll('.x .tick'), d);
       
         return;
-
       });
 
-    var legend = svg.selectAll('.legend')
-        .data(xAxisValues.slice().reverse())
-      .enter().append('g')
-        .attr('class', 'legend')
-        .attr('transform', function(d, i) { return 'translate(0,' + i * 20 + ')'; });
+    //Add Legend
+    var series = xAxisValues.map(function (d) {
+      return {name: d};
+    });
+    if (!isSingular) {
+      charts.addLegend(series);
+    }
 
-    legend.append('rect')
-        .attr('x', width - 18)
-        .attr('width', 18)
-        .attr('height', 18)
-        .style('fill', function(d, i) { return (isSingular ? '#368AC0' : charts.colors(i)); });
-
-    legend.append('text')
-        .attr('x', width - 24)
-        .attr('y', 9)
-        .attr('dy', '.35em')
-        .style('text-anchor', 'end')
-        .text(function(d) { return d; });
-
+    //Add Tooltips
     charts.appendTooltip();
+
+    //See if any labels overlap
+    var ticks = svg.selectAll('.x text');
+    ticks.forEach(function(d, i) {
+      console.log(d,i);//, d.text());
+    });
     return $(container);
   };
 

@@ -27,6 +27,10 @@
   }
 }
 
+.ie9 .timepicker + .icon {
+  background: url('about:blank') no-repeat 0 0 transparent;
+}
+
 .timepicker-popup {
 
   > .tooltip-content {
