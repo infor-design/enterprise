@@ -248,10 +248,14 @@
 
     // Set Error icon on parent tabs/expandable
     setErrorOnParent: function (field) {
-      var parent = field.closest('.tab-panel, .expandable-pane'),
+      var errorIcon = '<svg aria-hidden="true" focusable="false" class="icon icon-error"><use xlink:href="#icon-error"/></svg>',
+        parent = field.closest('.tab-panel, .expandable-pane'),
         parentContainer = field.closest('.tab-container, .expandable-area'),
         iconTarget = parent.attr('id'),
-        iconContainer;
+        iconContainer,
+        dropdown,
+        dropdownParent,
+        menuitem;
 
       //Tabs
       if (parentContainer.is('.tab-container')) {
@@ -268,6 +272,7 @@
         else {
           iconTarget = $('a[href="#'+ iconTarget +'"]', '.popupmenu').closest('.popupmenu').attr('id');
           iconContainer = $('.tab-list .tab[aria-controls="'+ iconTarget +'"]', parentContainer);
+          dropdown = iconTarget;
         }
       }
 
@@ -281,14 +286,40 @@
         return;
       }
 
+      //if Dropdown Tabs set each menu item to check
+      if (dropdown && dropdown.length) {
+        dropdownParent = parent.add($($(dropdown).attr('href')));
+        $('a[role="menuitem"]', '#'+ dropdown).each (function () {
+          dropdownParent = dropdownParent.add($($(this).attr('href')));
+        });
+      }
+      menuitem = $('a[href="#'+ parent.attr('id') +'"]', '#'+ iconTarget);
+
       //Add Error icon
-      if($('.error', parent).length) {
+      if($('.error', parent).length || $('.error', dropdownParent).length) {
+
+        //if Dropdown Tabs and current menu item has no error remove icon
+        if(!$('.error', parent).length) {
+          menuitem.removeClass('is-error');
+          $('.icon-error', menuitem).remove();
+        }
+
+        //if Dropdown Tabs and current menu item has error add icon
+        if ($('.error', parent).length && 
+            $('.error', dropdownParent).length && 
+            !$('.icon-error', menuitem).length) {
+            menuitem.addClass('is-error').append(errorIcon);
+        }
+
+        //Add icon to main tab area
         if (!($('.icon-error', iconContainer).length)) {          
-          iconContainer.addClass('is-error').append('<svg aria-hidden="true" focusable="false" class="icon icon-error"><use xlink:href="#icon-error"/></svg>');
+          iconContainer.addClass('is-error').append(errorIcon);
         }
       }
+
       //Remove Error icon
       else {
+        iconContainer = iconContainer.add(menuitem);
         iconContainer.removeClass('is-error');
         $('.icon-error', iconContainer).remove();
       }
