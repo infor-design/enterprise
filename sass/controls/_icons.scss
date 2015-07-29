@@ -78,16 +78,16 @@ svg.icon-logo {
   display: inline-block !important;
   margin-left: -29px;
   margin-top: 8px;
-  position: absolute;
+  // position: absolute;
 }
 
-.signin {
-  .icon-error,
-  .icon-confirm {
-    left: 100%;
-    top: 18px;
-  }
-}
+// .signin {
+//   .icon-error,
+//   .icon-confirm {
+//     left: 100%;
+//     top: 18px;
+//   }
+// }
 
 .timepicker + .icon + .icon-error,
 .timepicker + .icon + .icon-confirm,
