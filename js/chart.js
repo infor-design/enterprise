@@ -916,7 +916,6 @@ window.Chart = function(container) {
         var size = charts.getTooltipSize(content);
         x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
         if (dataset.length > 1) {
-          var parentNode = this.parentNode;
           x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
           y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
         }
@@ -929,7 +928,7 @@ window.Chart = function(container) {
 
         charts.selectElement(bar, svg.selectAll('rect'), d);
         charts.selectElement(svg.selectAll('.x .tick:nth-child(' + (i+1) +')'), svg.selectAll('.x .tick'), d);
-      
+
         return;
       });
 
@@ -945,10 +944,10 @@ window.Chart = function(container) {
     charts.appendTooltip();
 
     //See if any labels overlap
-    var ticks = svg.selectAll('.x text');
-    ticks.forEach(function(d, i) {
-      console.log(d,i);//, d.text());
-    });
+    //var ticks = svg.selectAll('.x text');
+    //ticks.forEach(function(d, i) {
+      //console.log(d,i);//, d.text());
+    //});
     return $(container);
   };
 
