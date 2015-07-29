@@ -35,6 +35,7 @@
         secondHeader: 'h4',
         placeholder: null,
         anchor: {url: 'http://www.example.com', class: 'hyperlink', target: ''},
+        image: {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}
       },
       settings = $.extend({}, defaults, options);
 
@@ -677,7 +678,7 @@
             '<div class="modal-body">' +
               '<div class="field">' +
                 '<label for="image">URL</label>' +
-                '<input id="image" name="image" type="text" value="http://images2.fanpop.com/image/photos/12900000/Cute-kittens-12929201-1600-1200.jpg">' +
+                '<input id="image" name="image" type="text" value="'+ settings.image.url +'">' +
               '</div>' +
               '<div class="modal-buttonset">' +
                 '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
