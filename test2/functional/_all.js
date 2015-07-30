@@ -1,6 +1,8 @@
 define([
-  'test2/functional/dropdown/common',
-  'test2/functional/dropdown/expected-functions'
+  //'test2/functional/dropdown/common',
+  //'test2/functional/dropdown/expected-functions',
+  'test2/functional/tabs/common',
+  'test2/functional/tabs/expected-functions'
 ], function() {
 
   // Simple Loader for all Functional Tests

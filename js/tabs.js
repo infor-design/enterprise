@@ -45,12 +45,17 @@
           .setupEvents();
 
         var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
+          tabs = this.tablist.children('li' + excludes),
           selected = this.tablist.children('li.is-selected' + excludes);
-        if (!selected.length) {
-          selected = this.tablist.children('li' + excludes).first();
+
+        // If there are tabs present, activate the first one
+        if (tabs.length) {
+          if (!selected.length) {
+            selected = tabs.first();
+          }
+          this.activate(selected.children('a').attr('href'));
         }
 
-        this.activate(selected.children('a').attr('href'));
         this.setOverflow();
 
         // Focus the bar on the first element, but don't animate it on page load.
@@ -587,6 +592,8 @@
           options = {};
         }
 
+        var startFromZero = this.anchors.length === 0;
+
         // Sanitize
         tabId = '' + tabId.replace(/#/g, '');
         options.name = options.name ? options.name.toString() : '';
@@ -663,6 +670,14 @@
 
         // Adjust tablist height
         this.setOverflow();
+
+        // If started from zero, position the focus state/bar and activate the tab
+        if (startFromZero) {
+          this.positionFocusState();
+          this.focusBar(anchorMarkup.parent());
+          this.activate(anchorMarkup.attr('href'));
+          anchorMarkup.focus();
+        }
 
         return this;
       },
@@ -1015,8 +1030,15 @@
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
             self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected') : undefined,
-          paddingLeft = parseInt(target.css('padding-left'), 10) || 0,
-          width = target.innerWidth();
+          paddingLeft, width;
+
+        if (!target || target === undefined || !target.length || !self.anchors.length) {
+          self.animatedBar.removeClass('visible');
+          return;
+        }
+
+        paddingLeft = parseInt(target.css('padding-left'), 10) || 0;
+        width = target.innerWidth();
 
         if (target.is('.tab')) {
           paddingLeft = paddingLeft + parseInt(target.children('a').css('padding-left'), 10) || 0;
@@ -1029,9 +1051,6 @@
           width = width - 14;
         }
 
-        if (target === undefined) {
-          return;
-        }
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
         this.animationTimeout = setTimeout(function() {
@@ -1063,6 +1082,11 @@
         target = target !== undefined ? $(target) :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
             self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected').children('a') : undefined;
+
+        if (!target || target === undefined || !target.length) {
+          this.focusState.removeClass('is-visible');
+          return;
+        }
 
         var pos = target.offset(),
           offset = this.tablist.offset(),

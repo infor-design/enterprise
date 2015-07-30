@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2 class="fieldset-title">Empty Tabset Example</h2>
+
+    <div id="empty" class="tab-container">
+      <ul class="tab-list"></ul>
+    </div>
+
+    <div class="field">
+      <button id="addNewTabs" class="btn-primary" type="button">
+        <span>Add Tabs</span>
+      </button>
+    </div>
+
+    <script type="text/javascript">
+      var demoTabsCounts = 0;
+      $('#addNewTabs').on('click.demo', function() {
+        $('#empty').data('tabs').add('new-tab-' + demoTabsCounts, {
+          name: 'New Tab ' + demoTabsCounts,
+          content: 'You created a new tab with an ID of ' + demoTabsCounts + '!',
+          isDismissible: true
+        });
+        demoTabsCounts++;
+      });
+    </script>
+
+  </div>
+</div>

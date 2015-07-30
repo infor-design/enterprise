@@ -241,7 +241,16 @@ module.exports = function(grunt) {
         },
         cmd: './node_modules/.bin/intern-client',
         args: ['config=test2/intern.local.unit']
-      }
+      },
+
+      'intern-saucelabs': {
+        options: {
+          ready: new RegExp('SoHo Xi Tests Completed!'),
+          wait: false
+        },
+        cmd: './node_modules/.bin/intern-runner',
+        args: ['config=test2/intern.saucelabs']
+      },
 
     },
 
@@ -277,7 +286,8 @@ module.exports = function(grunt) {
     var internConfigs = {
       'all': 'intern-functional-local',
       'unit': 'intern-unit-only',
-      'functional': 'intern-functional-local' // TODO: switch this out for the browserstack callout
+      'functional': 'intern-functional-local',
+      'build': 'intern-saucelabs'
     };
 
     if (internConfigs[options.type] === undefined) {
