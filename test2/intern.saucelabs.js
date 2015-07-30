@@ -41,9 +41,7 @@ define({
   useSauceConnect: true,
   tunnel: 'SauceLabsTunnel',
   tunnelOptions: {
-    verbose: true,
-    username: 'EdCoyleInfor',
-    accessKey: 'adf0cf0c-c65a-4500-8886-c2b16a23ea1b'
+    verbose: true
   },
 
   // Configuration options for the module loader; any AMD configuration options supported by the specified AMD loader
