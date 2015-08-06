@@ -15,7 +15,7 @@ define({
   // Note that the `build` capability will be filled in with the current commit ID from the Travis CI environment
   // automatically
   capabilities: {
-    'selenium-version': '2.44.0'
+    'selenium-version': '2.46.0'
   },
 
   // Browsers to run integration testing against. Note that version numbers must be strings if used with Sauce
@@ -62,7 +62,7 @@ define({
   },
 
   reporters: [
-    { 'id': 'JUnit', 'filename': 'report.xml' },
+    { 'id': 'JUnit', 'filename': 'intern-test-results.xml' },
     { 'id': 'Pretty' },
     'test2/reporters/end'
   ],
