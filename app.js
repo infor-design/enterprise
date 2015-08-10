@@ -168,6 +168,28 @@ var express = require('express'),
     res.render('examples/index', exampleOpts);
   });
 
+  app.get('/examples/common-nav/*', function(req, res) {
+    var commonNavOpts = {
+      title: 'SoHo XI',
+      subtitle: 'Common Nav',
+      layout: 'examples/common-nav/layout',
+      enableLiveReload: true
+    },
+      end = req.url.replace('/examples/common-nav/', '');
+
+    if (end.match('a1')) {
+      commonNavOpts.layout += '-a1';
+    } else if (end.match('a2')) {
+      commonNavOpts.layout += '-a2';
+    } else if (end.match('b1')) {
+      commonNavOpts.layout += '-b1';
+    } else if (end.match('b2')) {
+      commonNavOpts.layout += '-b2';
+    };
+
+    res.render('examples/common-nav/' + end, commonNavOpts);
+  });
+
   app.get('/examples', function(req, res) {
     res.render('examples/index', exampleOpts);
   });

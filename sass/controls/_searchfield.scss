@@ -46,6 +46,10 @@
       pointer-events: none;
       text-transform: uppercase;
     }
+
+    &:last-child {
+      margin-right: 10px;
+    }
   }
 
   .searchfield {

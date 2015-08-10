@@ -200,7 +200,7 @@
             self.handleKeys(e);
           }).on('click.toolbar', function(e) {
             self.handleClick(e);
-          }).on('focus.toolbar', function(e) {
+          }).on('focusin.toolbar', function(e) {
             self.handleFocus(e);
           }).on('blur.toolbar', function(e) {
             self.handleBlur(e);

@@ -1,0 +1,113 @@
+// Builder Pattern
+//==================================================//
+// NOTE:  Duplicates some CSS from the List/Detail pattern in 'controls/_layouts.scss', could be more DRY
+
+// has similar properties to a "scrollable" .page-container
+.page-container.builder {
+
+  // Both main areas are scrollable-y
+  .main,
+  .sidebar {
+    display: inline-block;
+    height: 100%;
+  }
+
+  .sidebar {
+    width: 250px;
+
+    // remove the Listview's default BG color when used inside a builder sidebar
+    .listview {
+      background-color: transparent;
+    }
+  }
+
+  .main {
+    width: calc(100% - 253px);
+  }
+
+}
+
+.builder-pane {
+  height: 100%;
+}
+
+.builder-header {
+  min-height: 80px;
+  padding: 1em;
+
+  .panel-title {
+    @include font-size(20);
+    line-height: 1.7;
+  }
+
+  .panel-details {
+    @include font-size(15);
+    line-height: 1.7;
+  }
+}
+
+.builder-content {
+  height: calc(100% - 80px);
+}
+
+.builder-actions,
+.builder-sidebar {
+  display: inline-block;
+  height: 100%;
+}
+
+.builder-actions {
+  background-color: $white;
+  width: calc(100% - 253px);
+}
+
+.builder-sidebar {
+  width: 250px;
+}
+
+@include respond-to(phone) {
+  // Animate the same way list/detail pattern works
+  .page-container.builder {
+
+    .main,
+    .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      display: block;
+      position: absolute;
+      width: 100%;
+    }
+
+    .main {
+      @include css3(transform, translateX(100%));
+    }
+
+    .sidebar {
+      @include css3(transform, translateX(0));
+    }
+
+    &.show-detail {
+      .main {
+        @include css3(transform, translateX(0));
+      }
+
+      .sidebar {
+        @include css3(transform, translateX(-100%));
+      }
+    }
+
+  }
+}
+
+// Inside the builder pane, the cart will show up as a popupmenu when on Tablet view-size and lower, so hide the cart
+@include respond-to(tabletdown) {
+
+  .builder-actions {
+    display: block;
+    width: auto;
+  }
+
+  .builder-sidebar {
+    display: none;
+  }
+
+}

@@ -120,7 +120,8 @@
         var containerClass = this.element.parent().attr('class');
         if (containerClass !== undefined &&
            (this.element.hasClass('btn-actions') ||
-            this.element.closest('.toolbar').length >0 ||
+            this.element.closest('.toolbar').length > 0 ||
+            this.element.closest('.masthead').length > 0 ||
             containerClass.indexOf('more') >= 0 ||
             containerClass.indexOf('btn-group') >= 0)) {
 
@@ -128,6 +129,13 @@
             wrapper = this.menu.parent('.popupmenu-wrapper');
 
           wrapper.addClass('bottom').append(arrow);
+        }
+
+        // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
+        if (containerClass !== undefined &&
+          (this.element.closest('.masthead').length > 0 ||
+           this.element.closest('header').length > 0)) {
+          this.menu.parent('.popupmenu-wrapper').addClass('alternate');
         }
 
         //TODO: Follow up 'button expanded' in JAWS
@@ -431,6 +439,11 @@
 
         if (this.element.hasClass('btn-menu') && this.element.closest('.toolbar').length > 0) {
           wrapper.find('div.arrow').css({'left': '35px', 'top': '-8px'});
+
+          var buttonset = this.element.closest('.buttonset');
+          if (buttonset.length > 0 && buttonset.prev('.title').length) {
+            wrapper.find('div.arrow').css({'left': 'auto', 'right': '10px'});
+          }
         }
 
       },
