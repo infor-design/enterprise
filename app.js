@@ -224,8 +224,8 @@ var express = require('express'),
   //Example Call: http://localhost:4000/api/states?term=al
   app.get('/api/states', function(req, res) {
     var states = [],
-      allStates = [{value: 'AL', label:'Al\\abama'}, {value: 'AK', label: 'Alaska'}, {value:'AS', label:'American Samoa'},
-      {value:'AZ', label:'A\\rizona'}, {value:'AR', label:'Arkansas'}, {value:'CA', label:'California'},
+      allStates = [{value: 'AL', label:'Alabama'}, {value: 'AK', label: 'Alaska'}, {value:'AS', label:'American Samoa'},
+      {value:'AZ', label:'Arizona'}, {value:'AR', label:'Arkansas'}, {value:'CA', label:'California'},
       {value:'CO', label:'Colorado'}, {value:'CT', label:'Connecticut'}, {value:'DE', label:'Delaware'},
       {value:'DC', label:'District Of Columbia'}, {value:'FM', label:'Federated States Of Micronesia'},
       {value:'FL', label:'Florida'}, {value:'GA', label:'Georgia'}, {value:'GU', label:'Guam'}, {value:'HI', label:'Hawaii'},
@@ -243,7 +243,7 @@ var express = require('express'),
       {value:'WV', label:'West Virginia'}, {value:'WI', label:'Wisconsin'}, {value:'WY', label:'Wyoming'}];
 
     for (var i in allStates) {
-      if (allStates[i].label.toLowerCase().indexOf(req.query.term) > -1) {
+      if (allStates[i].label.toLowerCase().indexOf(req.query.term.toLowerCase()) > -1) {
         states.push(allStates[i]);
       }
     }
@@ -251,7 +251,6 @@ var express = require('express'),
     if (req.query.term === undefined) {
       states = allStates;
     }
-
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(states));

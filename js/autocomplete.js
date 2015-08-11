@@ -110,7 +110,7 @@
             containsTerm = false;
 
           for (var a = 0; a < parts.length; a++) {
-            if (parts[a].indexOf(term) === 0) {
+            if (parts[a].toLowerCase().indexOf(term) === 0) {
               containsTerm = true;
             }
           }
@@ -126,6 +126,10 @@
             // Build the dataset that will be submitted to the template
             dataset.listItemId = 'ac-list-option' + i;
             dataset.label = option.toLowerCase().indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
+            var pos = option.toLowerCase().indexOf(term);
+            if (pos > 0) {
+              dataset.label = option.substr(0, pos) + '<i>' + option.substr(pos, term.length) + '</i>' + option.substr(term.length + pos);
+            }
             dataset.hasValue = !isString && items[i].value !== undefined;
 
             if (dataset.hasValue) {
