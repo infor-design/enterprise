@@ -28,7 +28,6 @@
 
     .icon-close {
       height: 16px !important;
-      top: 1px;
     }
 
     .searchfield:focus {
@@ -50,6 +49,12 @@
     &:before,
     &:after {
       content: none;
+    }
+  }
+
+  @include respond-to(phone) {
+    .btn-close .icon {
+      width: 32px;
     }
   }
 
