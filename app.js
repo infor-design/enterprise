@@ -185,7 +185,7 @@ var express = require('express'),
       commonNavOpts.layout += '-b1';
     } else if (end.match('b2')) {
       commonNavOpts.layout += '-b2';
-    };
+    }
 
     res.render('examples/common-nav/' + end, commonNavOpts);
   });
