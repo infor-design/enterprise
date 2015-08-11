@@ -73,43 +73,6 @@
       returnObj = self.filter(':not(svg):not(use):not(.no-init)').each(function() {
         var elem = $(this);
 
-        function setOptions(elment) {
-          var options = $(elment).attr('data-options');
-
-          if (options && options.length) {
-            var obj = {}, properties;
-
-            if (options.indexOf('{') > -1) {
-              try {
-                obj = JSON.parse(options.replace(/'/g, '"'));
-              } catch(err) {
-                // Attempt a manual parse
-                properties = options.split(',');
-                properties.forEach(function(property) {
-                  var tup = property.split(':');
-                  tup[0] = tup[0].replace('{', '').replace(/'/g, '').replace(' ', '');
-                  if (tup[1]) {
-                    tup[1] = tup[1].replace('}', '').replace(/'/g, '').replace(' ', '');
-                  }
-
-                  if (tup[1] === 'true') {
-                    tup[1] = true;
-                  }
-
-                  if (tup[1] === 'false') {
-                    tup[1] = false;
-                  }
-
-                  obj[tup[0]] = tup[1];
-                });
-              }
-              return obj;
-            }
-
-          }
-          return options;
-        }
-
         function simpleInit(plugin, selector) {
           //Allow only the plugin name to be specified if the default selector is a class with the same name
           //Like $.fn.header applying to elements that match .header
@@ -123,7 +86,7 @@
                 return;
               }
 
-              var options = setOptions(this);
+              var options = $.fn.setAttrOptions(this);
               $(this)[plugin](options);
             });
           }
@@ -286,7 +249,7 @@
             var cs = $(this),
               attr = cs.attr('data-dataset'),
               tmpl = cs.attr('data-tmpl'),
-              options = setOptions(this) || {};
+              options = $.fn.setAttrOptions(this) || {};
 
             options.dataset = options.dataset || attr;
             options.template = options.template || tmpl;

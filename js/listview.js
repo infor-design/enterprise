@@ -49,6 +49,7 @@
         this.setup();
         this.refresh();
         this.selectedItems = [];
+        $.fn.sortInit('listview', 'click.listview', 'data-sortlist');
       },
 
       setup: function() {
@@ -140,7 +141,6 @@
             row.attr('aria-disabled','true');
           }
 
-
         });
 
        this.element.initialize();
@@ -149,20 +149,33 @@
 
       // Get the Data Source. Can be an array, Object or Url
       refresh: function () {
-        var ds = this.settings.dataset,
-          self = this;
+        this.loadApi();
+        this.render(this.list.data);
+      },
+
+      // Load api data
+      loadApi: function (ds) {
+        var self = this;
+        ds = ds || this.settings.dataset;
 
         if (!ds) {
           return;
         }
 
+        self.list = self.list || {};
+
         if (ds.indexOf('http') === 0 || ds.indexOf('/') === 0) {
-          $.getJSON(ds, function(data) {
-            self.render(data);
+          $.ajax({
+            url: ds,
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+              self.list.data = data;
+            }
           });
           return;
         }
-        this.render(ds);
+        self.list.data = ds;
       },
 
       // Handle Keyboard / Navigation Ect
@@ -296,7 +309,7 @@
       // Remove Either the list element or index
       remove: function (li) {
         if (typeof li === 'number') {
-           li = $(this.element.children()[0]).children().eq(li);
+          li = $(this.element.children()[0]).children().eq(li);
         }
         li.remove();
       },
@@ -305,6 +318,41 @@
       clear: function () {
         var root = $(this.element.children()[0]);
         root.empty();
+      },
+
+      // Sort data set
+      setSortlist: function(options) {
+        var sort,
+        field = options.orderBy || this.list.sort.field,
+        reverse = options.order;
+
+        if (!this.list.data && !field) {
+          return;
+        }
+        
+        reverse = reverse ? 
+          (reverse === 'desc') : 
+          (this.list.sort && this.list.sort[field] && this.list.sort[field].reverse) ? false : true;
+
+        //reload data
+        if (options.reloadApi || options.reloadApiNoSort) {
+          this.loadApi();
+        }
+
+        //reload data but no sort change
+        if (options.reloadApiNoSort) {
+          field = this.list.sort.field;
+          reverse = this.list.sort[field].reverse;
+        }
+
+        sort = $.fn.sortFunction(field, reverse);
+        this.list.data.sort(sort);
+        this.render(this.list.data);
+
+        this.list.sort = {field: field};
+        this.list.sort[field] = {reverse: reverse};
+        
+        this.element.trigger('sorted', [this.element, this.list.sort]);
       },
 
       // Handle Selecting the List Element

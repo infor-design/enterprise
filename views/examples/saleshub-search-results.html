@@ -102,6 +102,22 @@
                   <li><a href="#">Items with sale prices</a></li>
                 </ul>
 
+                <button type="button" class="btn-menu">
+                  <span>Sort By</span>
+                  <svg class="icon" focusable="false" aria-hidden="true">
+                    <use xlink:href="#icon-dropdown"></use>
+                  </svg>
+                </button>
+                <ul class="popupmenu is-padded">
+                  <li><a href="#" data-sortlist="{list:#m3-search-results-products, orderBy:productId}">ProductId Id</a></li>
+                  <li><a href="#" data-sortlist="{list:#m3-search-results-products, orderBy:productName, order:asc}">Name (asc)</a></li>
+                  <li><a href="#" data-sortlist="{list:#m3-search-results-products, orderBy:productName, order:desc}">Name (desc)</a></li>
+                  <li><a href="#" data-sortlist="{list:#m3-search-results-products, orderBy:inStock}">In Stock</a></li>
+                  <li><a href="#" data-sortlist="{list:#m3-search-results-products, orderBy:unitPrice}">Unit Price</a></li>
+                  <li><a href="#" data-sortlist="{list:#m3-search-results-products, orderBy:id, reloadApi: true}">Id (Reload API)</a></li>
+                  <li><a href="#" data-sortlist="{list:#m3-search-results-products, reloadApiNoSort: true}">Reload API &amp; Keep current Sort (NoSort)</a></li>
+                </ul>
+
               </div>
 
             </div>
@@ -130,10 +146,10 @@
                       <p><a href="#" class="hyperlink">{{productName}}</a></p>
                       <ul class="info">
                         <li>Product ID: <strong>{{productId}}</strong></li>
-                        <li>In Stock: <strong>{{inStock}}</strong></li>
+                        <li>In Stock: <strong>{{inStock}} lbs.</strong></li>
                       </ul>
                     </td>
-                    <td>{{unitPrice}}</td>
+                    <td>${{unitPrice}} /</td>
                     <td>
                       <div class="field">
                         <label class="audible" for="select-{{id}}">Units</label>

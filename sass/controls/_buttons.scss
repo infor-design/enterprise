@@ -340,3 +340,10 @@ a.btn-primary {
     opacity: 0;
   }
 }
+
+@include respond-to(phone) {
+  .btn-destructive,
+  .btn-tertiary {
+    padding: 0 5px;
+  }
+}
