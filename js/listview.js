@@ -245,7 +245,7 @@
         if (this.settings.selectable) {
           this.element.addClass('is-selectable');
           var trigger = $('.application-menu-trigger').find('.app-header'),
-            pattern = $(this.element).closest('.list-detail');
+            pattern = $(this.element).closest('.list-detail, .builder');
 
           trigger.parent().onTouchClick('listview').on('click.listview', function (e) {
             if (trigger.hasClass('go-back')) {

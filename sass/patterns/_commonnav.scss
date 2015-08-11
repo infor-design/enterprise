@@ -1,0 +1,16 @@
+.common-nav-application-list {
+  width: 300px;
+
+  li {
+    display: inline-block;
+    height: 97px;
+    text-align: center;
+    width: 97px;
+
+    a {
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

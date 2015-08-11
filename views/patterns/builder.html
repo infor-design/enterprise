@@ -1,0 +1,67 @@
+<body class="no-scroll">
+  {{> controls/svg}}
+  {{> includes/header}}
+
+  <!-- BEGIN Actual Layout Markup -->
+  <div class="page-container builder">
+
+    <div class="sidebar scrollable" role="complementary">
+      <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+    </div>
+
+    <div id="maincontent" class="main scrollable builder-pane" role="main">
+
+      <div class="builder-header azure06">
+        <div class="toolbar">
+          <div class="title">
+            <span class="panel-title" style="color: #fff;">Builder Panel Title</span><br>
+            <span class="panel-details" style="color: #fff;">Builder Panel Details</span>
+          </div>
+          <div class="buttonset">
+            <button class="btn-menu hidden-lg hidden-xl">
+              <span>Sidebar Popup</span>
+            </button>
+            <ul class="popupmenu">
+              <li>Sidebar Content</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- .builder-header -->
+
+      <div class="builder-content no-scroll">
+        <div class="builder-actions scrollable">
+          Actions
+        </div>
+        <div class="builder-sidebar my-cart scrollable">
+          Cart
+        </div>
+      </div>
+      <!-- .builder-content -->
+
+    </div>
+    <!-- #maincontent.main.scrollable.builder-pane -->
+
+  </div>
+  <!-- END Actual Layout Markup -->
+
+  <!-- Layout Template for Listview -->
+  {{={{{ }}}=}}
+  <script id="task-tmpl" type="text/html">
+    <ul>
+      {{#dataset}}
+        {{#disabled}}
+          <li class="is-disabled">
+        {{/disabled}}
+        {{^disabled}}
+          <li>
+        {{/disabled}}
+          <p class="listview-heading">Task #{{task}}</p>
+          <p class="listview-subheading">{{desc}}</p>
+          <p class="listview-micro">Due: {{date}}</p>
+        </li>
+      {{/dataset}}
+    </ul>
+  </script>
+
+</div>

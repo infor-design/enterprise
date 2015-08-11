@@ -216,7 +216,8 @@ body.no-scroll {
     }
 
     // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
-    &.list-detail {
+    &.list-detail,
+    &.builder {
       .main,
       .sidebar {
         &.scrollable,
@@ -533,7 +534,7 @@ body.no-scroll {
   }
 }
 
-// List Detail
+// Common design between List/Detail and Builder Patterns
 .list-detail {
   height: 100%;
 
@@ -548,7 +549,8 @@ body.no-scroll {
 
 @include respond-to(phone) {
 
-  .list-detail {
+  .list-detail,
+  .builder {
     .main,
     .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));

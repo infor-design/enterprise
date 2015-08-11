@@ -69,15 +69,15 @@
         this.modifyTriggers(this.settings.triggers, false, true);
 
         this.scrollTarget = this.menu.parents('.header');
-        if (this.menu.parents('.masthead').length > 0) {
-          this.scrollTarget = this.menu.parents('.masthead');
+        if (this.menu.prevAll('.masthead').length > 0) {
+          this.scrollTarget = this.menu.prevAll('.masthead');
           this.menu.addClass('short');
         }
 
         this.accordion = this.menu.find('.accordion');
 
         this.originalParent = this.menu.parent();
-        this.menu.detach().insertAfter($('body').find('header').first());
+        this.menu.detach().insertAfter($('body').find('.header').first());
         this.adjustHeight();
 
         return this;
@@ -239,7 +239,7 @@
 
         this.triggers.each(function() {
           var trig = $(this);
-          if (trig.parents('.header').length > 0) {
+          if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
             trig.find('.icon.app-header').removeClass('go-back').addClass('close');
             trig.trigger('icon-change');
           }
@@ -304,7 +304,7 @@
 
         this.triggers.each(function() {
           var trig = $(this);
-          if (trig.parents('.header').length > 0) {
+          if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
             trig.find('.icon.app-header').removeClass('close');
             trig.trigger('icon-change');
           }

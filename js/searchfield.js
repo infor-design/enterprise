@@ -47,7 +47,8 @@
       build: function() {
         var self = this;
 
-        if (!this.element.parent().hasClass('searchfield-wrapper')) {
+        this.wrapper = this.element.parent('.searchfield-wrapper');
+        if (!this.wrapper || !this.wrapper.length) {
           this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
         }
 

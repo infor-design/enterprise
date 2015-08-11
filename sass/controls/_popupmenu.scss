@@ -57,6 +57,70 @@
       border-left-color: $popover-bg-color;
     }
   }
+
+  // Alternate Popup-menu Colors (used for UI toolbars, etc)
+  &.alternate {
+    .popupmenu {
+      background-color: $popupmenu-alternate-bg-color;
+      border: 1px solid $popupmenu-alternate-border-color;
+      color: $popupmenu-alternate-color;
+
+      a {
+        color: $popupmenu-alternate-color;
+      }
+
+      li {
+        &:not(.is-selected) > a:focus {
+          background-color: $popupmenu-alternate-hover-color;
+        }
+      }
+    }
+
+    &.top {
+      .arrow {
+        border-top-color: $popupmenu-alternate-border-color;
+      }
+
+      .arrow:after {
+        border-top-color: $popupmenu-alternate-bg-color;
+      }
+    }
+
+    &.bottom {
+      .arrow {
+        border-bottom-color: $popupmenu-alternate-border-color;
+        left: auto;
+        right: 10px;
+        top: -7px;
+      }
+
+      .arrow:after {
+        border-bottom-color: $popupmenu-alternate-bg-color;
+        left: -8px;
+        top: 1px;
+      }
+    }
+
+    &.right {
+      .arrow {
+        border-right-color: $popupmenu-alternate-border-color;
+      }
+
+      .arrow:after {
+        border-right-color: $popupmenu-alternate-bg-color;
+      }
+    }
+
+    &.left {
+      .arrow {
+        border-left-color: $popupmenu-alternate-border-color;
+      }
+
+      .arrow:after {
+        border-left-color: $popupmenu-alternate-bg-color;
+      }
+    }
+  }
 }
 
 .popupmenu {

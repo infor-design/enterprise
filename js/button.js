@@ -42,7 +42,7 @@
           return;
         }
 
-        if (this.element.hasClass('btn-menu')) {
+        if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon')) {
           var ddIcon = this.element.children('.icon').filter(function() {
             return $(this).find('use').attr('xlink:href','#icon-dropdown');
           });
