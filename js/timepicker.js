@@ -217,7 +217,7 @@
           .attr('data-validate', 'time')
           .mask()
           .validate()
-          .trigger('updated');
+          .triggerHandler('updated');
       },
 
       buildStandardPopup: function() {
@@ -437,7 +437,9 @@
 
         this.element.val(timeString)
           .trigger('change')
-          .trigger('updated')
+          .triggerHandler('updated');
+
+        this.element
           .focus()
           .validate();
       },

@@ -241,7 +241,16 @@ module.exports = function(grunt) {
         },
         cmd: './node_modules/.bin/intern-client',
         args: ['config=test2/intern.local.unit']
-      }
+      },
+
+      'intern-saucelabs': {
+        options: {
+          ready: new RegExp('SoHo Xi Tests Completed!'),
+          wait: false
+        },
+        cmd: './node_modules/.bin/intern-runner',
+        args: ['config=test2/intern.saucelabs']
+      },
 
     },
 
@@ -271,17 +280,31 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', 'Runs unit or functional test suites using Intern.', function() {
     var options = {
-      type: grunt.option('type') || 'all'
+      type: grunt.option('type') || 'all',
+      user: grunt.option('user') || undefined,
+      key: grunt.option('accessKey') || undefined,
     };
 
     var internConfigs = {
       'all': 'intern-functional-local',
       'unit': 'intern-unit-only',
-      'functional': 'intern-functional-local' // TODO: switch this out for the browserstack callout
+      'functional': 'intern-functional-local',
+      'build': 'intern-saucelabs'
     };
 
     if (internConfigs[options.type] === undefined) {
       options.type = 'all';
+    }
+
+    if (options.type === 'build') {
+      // Check to make sure user and access key were provided
+      if (!options.user || !options.user.toString().length) {
+        grunt.fail.warn('No user ID provided for "build" test type.  Cannot call out to SauceLabs without a valid user ID.');
+      }
+
+      if (!options.key || !options.key.toString().length) {
+        grunt.fail.warn('No access key provided for user "'+ options.user +'" and "build" test type.  Cannot call out to SauceLabs without a valid access key.');
+      }
     }
 
     // Build task queue
