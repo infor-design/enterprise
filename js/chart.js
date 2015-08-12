@@ -766,7 +766,7 @@ window.Chart = function(container) {
    var dataset = chartData,
       parent = $(container).parent(),
       isSingular = (dataset.length === 1),
-      margin = {top: 40, right: 40, bottom: (isSingular ? 50 : 35), left: 40},
+      margin = {top: 40, right: 40, bottom: (isSingular ? 50 : 35), left: 45},
       legendHeight = 40,
       width = parent.width() - margin.left - margin.right - 10,
       height = parent.height() - margin.top - margin.bottom - (isSingular ? 0 : legendHeight);
@@ -787,12 +787,13 @@ window.Chart = function(container) {
     var xAxis = d3.svg.axis()
         .scale(x0)
         .tickSize(0)
-        .tickPadding(10)
+        .tickPadding(12)
         .orient('bottom');
 
     var yAxis = d3.svg.axis()
         .scale(y)
         .tickSize(-width)
+        .tickPadding(12)
         .orient('left');
 
     var svg = d3.select(container).append('svg')
@@ -859,11 +860,15 @@ window.Chart = function(container) {
           return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
         })
         .attr('y', function(d) {
-          return y(d.value);
+          return height;
         })
         .attr('height', function(d) {
-          return height - y(d.value);
+          return 0;
         });
+
+        bars.transition().duration(1000)
+          .attr('y', function(d) { return y(d.value); })
+          .attr('height', function(d) { return height - y(d.value); });
 
     } else {
 
@@ -885,11 +890,15 @@ window.Chart = function(container) {
             return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
           })
           .attr('y', function(d) {
-            return y(d.value);
+            return height;
           })
           .attr('height', function(d) {
-            return height - y(d.value);
+            return 0;
           });
+
+          bars.transition().duration(1000)
+            .attr('y', function(d) { return y(d.value); })
+            .attr('height', function(d) { return height - y(d.value); });
       }
 
       //Style the bars and add interactivity
@@ -942,21 +951,53 @@ window.Chart = function(container) {
 
     //Add Tooltips
     charts.appendTooltip();
+    charts.handleResize();
 
-    //See if any labels overlap - TODO
-    /*var ticks = svg.selectAll('.x text');
-    ticks.forEach(function(d, i) {
-      var currObj = d[i].getBoundingClientRect()
-            overlap = !(rect1.right < rect2.left ||
+    //See if any labels overlap and use shorter */
+    if (charts.labelsColide(svg)) {
+      charts.applyAltLabels(svg, dataArray, 'shortName');
+    }
+    if (charts.labelsColide(svg)) {
+      charts.applyAltLabels(svg, dataArray, 'abbrName');
+    }
+    return $(container);
+  };
+
+  this.labelsColide = function(svg) {
+    var ticks = svg.selectAll('.x text'),
+      collides = false;
+
+    ticks.each(function(d, i) {
+      var rect1 = this.getBoundingClientRect(), rect2;
+
+      ticks.each(function(d, j) {
+        if (i !== j) {
+          rect2 = this.getBoundingClientRect();
+
+          var overlap = !(rect1.right < rect2.left ||
             rect1.left > rect2.right ||
             rect1.bottom < rect2.top ||
             rect1.top > rect2.bottom);
 
-      console.log(ticks, d,i, d.getBoundingClientRect());//, d.text());
-    });*/
-    return $(container);
-  };
+          if (overlap) {
+            collides = true;
+          }
+        }
 
+      });
+    });
+
+    return collides;
+  }
+
+  this.applyAltLabels = function(svg, dataArray, elem) {
+    var ticks = svg.selectAll('.x text'),
+      collides = false;
+
+    ticks.each(function(d, i) {
+      d3.select(this).text(dataArray[i][elem]);
+    });
+  };
 
   this.Line = function(chartData, options) {
     $(container).addClass('line-chart');
