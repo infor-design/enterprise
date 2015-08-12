@@ -64,14 +64,18 @@
   }
 
   &.is-disabled {
-    background-color: #d2d2d2 !important;
+    background-color: $pager-disabled-color !important;
 
     > .tick {
-      background-color: #d2d2d2 !important;
+      background-color: $pager-disabled-color !important;
       cursor: default;
 
       > .label {
-        color: #d2d2d2;
+        color: $pager-disabled-color;
+      }
+
+      &:after {
+        background-color: $pager-disabled-color;
       }
     }
 

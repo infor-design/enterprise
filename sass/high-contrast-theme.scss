@@ -122,6 +122,13 @@ $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $slate10;
 $datepicker-hover-bg-color: $slate02;
 
+// Color Picker
+$colorpicker-initial-bg-color: $slate06;
+
+//Spinbox
+$spinbox-bg-color: $graphite03;
+$spinbox-button-color: #ffffff;
+
 //Mast Head
 $masthead-bg-color: $slate09;
 $masthead-border-color: $slate06;
@@ -171,6 +178,46 @@ $editor-color: $input-color;
 $editor-toolbar-bg-color: $white;
 $editor-btn-color: $slate04;  //Was #999999  in design
 $editor-middle-border-color: $slate03;
+
+// Radio Buttons
+$radio-border-color: $graphite06;
+$radio-selected-color: $primary-color;
+$radio-disabled-opacity: .65;
+$radio-disabled-border-color: $input-disabled-border-color;
+$radio-disabled-bg-color: $input-readonly-bg-color;
+$radio-disabled-select-bg-color: $input-readonly-bg-color;
+$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+
+// Pager
+$pager-selected-color: $primary-color;
+$pager-focus-border-color: $input-focus-border-color;
+$pager-hover-bg-color: $slate03;
+$pager-disabled-color: $slate04;
+
+// Slider
+$slider-bg-color: $graphite04;
+$slider-active-bg-color: $primary-color;
+$slider-disabled-color: $graphite01;
+
+//Modal
+$modal-bg-color: $slate01;
+$modal-shadow: 0 0 5px rgba(255, 255, 255, .2);
+$modal-btn-color: $slate08;
+$modal-color: $slate08;
+$modal-btn-border-color: $slate05;
+$modal-btn-hover-color: $slate09;
+$modal-btn-primary-color: $primary-color;
+$modal-btn-primary-hover-color: $azure09;
+$modal-btn-disabled-color: $slate04;
+
+// Contextual Action Panel
+$contextual-panel-bg: $slate07;
+$contextual-panel-color: $white;
+
+//BreadCrumb
+$breadcrumb-color: $font-color-highcontrast;
+$breadcrumb-disabled-color: $disabled-color;
+
 
 //================================================== //
 // Core Controls

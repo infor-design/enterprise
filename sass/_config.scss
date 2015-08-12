@@ -125,6 +125,13 @@ $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $graphite10;
 $datepicker-hover-bg-color: $graphite01;
 
+// Color Picker
+$colorpicker-initial-bg-color: $graphite03;
+
+//Spinbox
+$spinbox-bg-color: $graphite02;
+$spinbox-button-color: transparent;
+
 //Mast Head
 $masthead-bg-color: $slate07;
 $masthead-border-color: #313135;
@@ -176,65 +183,48 @@ $editor-btn-color: $graphite05;  //Was #999999  in design
 $editor-middle-border-color: $graphite02;
 
 // Radio Buttons
-$radio-border-color: #666666;
+$radio-border-color: $graphite05;
 $radio-selected-color: $primary-color;
 $radio-disabled-opacity: .65;
 $radio-disabled-border-color: #c2c2c2;
 $radio-disabled-bg-color: #ececec;
 $radio-disabled-select-bg-color: #c2c2c2;
-$radio-disabled-dot-color: #f4f4f4;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 //Pager
 $pager-selected-color: $primary-color;
 $pager-focus-border-color: $input-focus-border-color;
+$pager-hover-bg-color: $graphite02;
 $pager-disabled-color: $graphite02;
 
-// Toolbar
-$toolbar-height: 44px;
-
 //Slider
-$slider-bg-color: #b6b6b6;
+$slider-bg-color: $graphite03;
 $slider-active-bg-color: $primary-color;
-$slider-disabled-color: #d2d2d2;
+$slider-disabled-color: $graphite01;
 
 //Modal
-$modal-btn-color: #666666;
-$modal-btn-hover-color: #333333;
+$modal-bg-color: #ffffff;
+$modal-btn-color: $graphite05;
+$modal-shadow: 0 0 5px rgba(0, 0, 0, .2);
+$modal-color: $graphite05;
+$modal-btn-border-color: $graphite02;
+$modal-btn-hover-color: $graphite08;
 $modal-btn-primary-color: $primary-color;
-$modal-btn-primary-hover-color: #005bb8;
-$modal-btn-disabled-color: #b6b6b6;
-
-//BreadCrumb
-$breadcrumb-disabled-color: $graphite02;
-$breadcrumb-color: #666666;
-
-// Color Picker
-$colorpicker-initial-bg-color: #999999;
-
-//Spinbox
-$spinbox-bg-shadow: inset 0 0 5px #aaaaaa;
-$spinbox-bg-color: #e5e5e5;
-
-// Tree
-$tree-border-color: $graphite02;
-$tree-selected-color: $primary-color;
-$tree-icon-color: $graphite04;
-$tree-line-color: $graphite03;
-$tree-link-color: $font-color-extrahighcontrast;
-$tree-folder-link-color: $font-color-extrahighcontrast;
-$tree-disabled-opacity: .6;
-
-// Tabs
-$tab-selected-color: $primary-color;  //TODO: $primary-color;
-$tab-border-color: #b6b6b6;
-$tab-hover-color: $font-color-extrahighcontrast;
+$modal-btn-primary-hover-color: $graphite07;
+$modal-btn-disabled-color: $graphite03;
 
 // Contextual Action Panel
 $contextual-panel-bg: #d8d8d8;
+$contextual-panel-color: $graphite06;
 
-// Switches
-$switch-disabled-label-color: #707070;
+//BreadCrumb
+$breadcrumb-color: $graphite05;
+$breadcrumb-disabled-color: $graphite02;
+
+// Tabs
+$tab-selected-color: $primary-color;
+$tab-border-color: #b6b6b6;
+$tab-hover-color: $font-color-extrahighcontrast;
 
 // Rating (Stars)
 $rating-bg-color: $amber04;
@@ -253,6 +243,15 @@ $datagrid-row-hover-color: #e4e4e4;
 $sr-masthead-text-color: $font-color;
 $sr-result-bottom-border-color: $hr-top-color;
 $sr-masthead-item-color: $font-color-lowcontrast;
+
+// Tree
+$tree-border-color: $graphite02;
+$tree-selected-color: $primary-color;
+$tree-icon-color: $graphite04;
+$tree-line-color: $graphite03;
+$tree-link-color: $font-color-extrahighcontrast;
+$tree-folder-link-color: $font-color-extrahighcontrast;
+$tree-disabled-opacity: .6;
 
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;

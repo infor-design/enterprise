@@ -64,8 +64,8 @@
 }
 
 .modal-content {
-  background: #ffffff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  background: $modal-bg-color;
+  box-shadow: $modal-shadow;
   color: #666666;
   margin: 5px;
   padding: 21px 28px 0;
@@ -80,7 +80,7 @@
 
   // Messages/Content
   h1 {
-    color: #666666;
+    color: $modal-color;
     @include font-size(18);
     font-weight: normal;
     margin-bottom: 20px;
@@ -125,13 +125,13 @@
 
 //Toolbar Buttons
 .modal-buttonset {
-  border-top: 1px solid $popover-separator-color;
+  border-top: 1px solid $modal-btn-border-color;
   height: 50px;
   margin: 25px -28px 0;
 
   button {
     border: 1px solid transparent;
-    border-left: 1px solid $popover-separator-color;
+    border-left: 1px solid $modal-btn-border-color;
     color: $modal-btn-color;
     cursor: pointer;
     float: left;

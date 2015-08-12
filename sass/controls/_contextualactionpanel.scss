@@ -52,6 +52,15 @@
     }
   }
 
+  .icon {
+    fill: $contextual-panel-color;
+  }
+
+  .btn-icon.has-text > span,
+  .title {
+    color: $contextual-panel-color;
+  }
+
   @include respond-to(phone) {
     .btn-close .icon {
       width: 32px;

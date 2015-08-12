@@ -77,30 +77,22 @@ svg.icon-logo {
 .field .icon-confirm {
   display: inline-block !important;
   margin-left: -29px;
-  margin-top: 8px;
-  // position: absolute;
+  margin-top: 2px;
+  top: 5px;
 }
-
-// .signin {
-//   .icon-error,
-//   .icon-confirm {
-//     left: 100%;
-//     top: 18px;
-//   }
-// }
 
 .timepicker + .icon + .icon-error,
 .timepicker + .icon + .icon-confirm,
 .timepicker + .tooltip-description + .icon + .icon-error,
 .timepicker + .tooltip-description + .icon + .icon-confirm {
-  left: 130px !important;
+  left: -23px !important;
 }
 
 .datepicker + .icon + .icon-error,
 .datepicker + .icon + .icon-confirm,
 .datepicker + .tooltip-description + .icon + .icon-error,
 .datepicker + .tooltip-description + .icon + .icon-confirm {
-  left: 130px !important;
+  left: -23px !important;
 }
 
 .img-placeholder {

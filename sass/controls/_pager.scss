@@ -56,15 +56,11 @@
   }
 
   li:not(.selected) a:hover:not([disabled]) {
-    background-color: $popupmenu-hover-color;
-    border-color: $popupmenu-hover-color;
-    color: $label-color;
+    background-color: $pager-hover-bg-color;
   }
 
   li:not(.selected) a:active:not([disabled]) {
-    background-color: $popupmenu-hover-color;
-    border-color: $popupmenu-hover-color;
-    color: $label-color;
+    background-color: $pager-hover-bg-color;
   }
 
 }

@@ -296,23 +296,23 @@
       menuitem = $('a[href="#'+ parent.attr('id') +'"]', '#'+ iconTarget);
 
       //Add Error icon
-      if($('.error', parent).length || $('.error', dropdownParent).length) {
+      if ($('.error', parent).length || $('.error', dropdownParent).length) {
 
         //if Dropdown Tabs and current menu item has no error remove icon
-        if(!$('.error', parent).length) {
+        if (!$('.error', parent).length) {
           menuitem.removeClass('is-error');
           $('.icon-error', menuitem).remove();
         }
 
         //if Dropdown Tabs and current menu item has error add icon
-        if ($('.error', parent).length && 
-            $('.error', dropdownParent).length && 
+        if ($('.error', parent).length &&
+            $('.error', dropdownParent).length &&
             !$('.icon-error', menuitem).length) {
             menuitem.addClass('is-error').append(errorIcon);
         }
 
         //Add icon to main tab area
-        if (!($('.icon-error', iconContainer).length)) {          
+        if (!($('.icon-error', iconContainer).length)) {
           iconContainer.addClass('is-error').append(errorIcon);
         }
       }
@@ -337,8 +337,8 @@
         placeholder = field.attr('placeholder'),
         manageResult = function (result, showTooltip) {
           if (!result) {
-            if (!self.isPlaceholderSupport && (value === placeholder) && 
-               (rule.message !== Locale.translate('Required'))) { 
+            if (!self.isPlaceholderSupport && (value === placeholder) &&
+               (rule.message !== Locale.translate('Required'))) {
               return;
             }
             self.addError(field, rule.message, rule.inline, showTooltip);
@@ -577,7 +577,7 @@
       required: {
         isNotEmpty: function(value, field) {
           if (!self.isPlaceholderSupport &&
-              (!!field && 
+              (!!field &&
                 (value === field.attr('placeholder') || value === Locale.translate('Required')))) {
             return false;
           }

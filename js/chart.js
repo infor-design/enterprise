@@ -943,11 +943,17 @@ window.Chart = function(container) {
     //Add Tooltips
     charts.appendTooltip();
 
-    //See if any labels overlap
-    //var ticks = svg.selectAll('.x text');
-    //ticks.forEach(function(d, i) {
-      //console.log(d,i);//, d.text());
-    //});
+    //See if any labels overlap - TODO
+    /*var ticks = svg.selectAll('.x text');
+    ticks.forEach(function(d, i) {
+      var currObj = d[i].getBoundingClientRect()
+            overlap = !(rect1.right < rect2.left ||
+            rect1.left > rect2.right ||
+            rect1.bottom < rect2.top ||
+            rect1.top > rect2.bottom);
+
+      console.log(ticks, d,i, d.getBoundingClientRect());//, d.text());
+    });*/
     return $(container);
   };
 

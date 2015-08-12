@@ -306,7 +306,7 @@ a.btn-primary {
     padding: 0 10px 0 2px;
 
     > span {
-      padding-top: 3px;
+      padding-top: 0px;
       position: static;
       width: auto;
     }
@@ -320,9 +320,9 @@ a.btn-primary {
   opacity: 0;
   position: absolute;
   width: 2px;
-  
+
   &.is-animation {
-    @include css3(animation, ripple-animation 1s);    
+    @include css3(animation, ripple-animation 1s);
   }
 
   .ripple-circle {
