@@ -296,7 +296,8 @@
       menuitem = $('a[href="#'+ parent.attr('id') +'"]', '#'+ iconTarget);
 
       //Add Error icon
-      if ($('.error', parent).length || $('.error', dropdownParent).length) {
+      if ((!!parent && $('.error', parent).length) || 
+          (!!dropdownParent && $('.error', dropdownParent).length)) {
 
         //if Dropdown Tabs and current menu item has no error remove icon
         if (!$('.error', parent).length) {
