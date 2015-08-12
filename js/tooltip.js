@@ -341,7 +341,6 @@
           extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 10),
           extraWidth = 9;
 
-        console.log(extraOffset, extraWidth)
         if (this.activeElement.is('input.dropdown')) {
           extraWidth = -20;
           extraOffset = 16;
