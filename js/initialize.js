@@ -86,7 +86,7 @@
                 return;
               }
 
-              var options = $.fn.setAttrOptions(this);
+              var options = $.fn.parseOptions(this);
               $(this)[plugin](options);
             });
           }
@@ -249,7 +249,7 @@
             var cs = $(this),
               attr = cs.attr('data-dataset'),
               tmpl = cs.attr('data-tmpl'),
-              options = $.fn.setAttrOptions(this) || {};
+              options = $.fn.parseOptions(this) || {};
 
             options.dataset = options.dataset || attr;
             options.template = options.template || tmpl;
