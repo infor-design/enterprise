@@ -49,7 +49,7 @@
         this.setup();
         this.refresh();
         this.selectedItems = [];
-        $.fn.sortInit('listview', 'click.listview', 'data-sortlist');
+        this.sortInit('listview', 'click.listview', 'data-sortlist');
       },
 
       setup: function() {
@@ -320,8 +320,24 @@
         root.empty();
       },
 
+      // Initialize sortlist
+      sortInit: function(control, onEvent, attr){
+        if(!attr || $.trim(attr) === '') {
+          return;
+        }
+        $('['+ attr +']').each(function() {
+          var elment = $(this),
+            options = $.fn.parseOptions(elment, attr);
+
+          elment.on(onEvent, function(e) {
+            $(options.list).data(control).setSortColumn(options);
+            e.preventDefault();
+          });
+        });
+      },
+
       // Sort data set
-      setSortlist: function(options) {
+      setSortColumn: function(options) {
         var sort,
         field = options.orderBy || this.list.sort.field,
         reverse = options.order;
@@ -345,7 +361,7 @@
           reverse = this.list.sort[field].reverse;
         }
 
-        sort = $.fn.sortFunction(field, reverse);
+        sort = this.sortFunction(field, reverse);
         this.list.data.sort(sort);
         this.render(this.list.data);
 
@@ -353,6 +369,29 @@
         this.list.sort[field] = {reverse: reverse};
         
         this.element.trigger('sorted', [this.element, this.list.sort]);
+      },
+
+      //Overridable function to conduct sorting
+      sortFunction: function(field, reverse, primer) {
+        var key;
+        if (!primer) {
+          primer = function(a) {
+            a = (a === undefined || a === null ? '' : a);
+            if (typeof a === 'string') {
+              a = a.toUpperCase();
+
+              if (!isNaN(parseFloat(a))) {
+                a = parseFloat(a);
+              }
+            }
+            return a;
+          };
+        }
+        key = primer ? function(x) { return primer(x[field]); } : function(x) { return x[field]; };
+        reverse = !reverse ? 1 : -1;
+        return function (a, b) {
+           return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+        };
       },
 
       // Handle Selecting the List Element

@@ -1086,7 +1086,7 @@ $.fn.datagrid = function(options) {
       this.sortColumn.sortField = field;
 
       //Do Sort on Data Set
-      sort = $.fn.sortFunction(this.sortColumn.sortField, !this.sortColumn.sortAsc);
+      sort = this.sortFunction(this.sortColumn.sortField, !this.sortColumn.sortAsc);
       settings.dataset.sort(sort);
 
       //Set Visual Indicator
@@ -1099,6 +1099,29 @@ $.fn.datagrid = function(options) {
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
+    },
+
+    //Overridable function to conduct sorting
+    sortFunction: function(field, reverse, primer) {
+      var key;
+      if (!primer) {
+        primer = function(a) {
+          a = (a === undefined || a === null ? '' : a);
+          if (typeof a === 'string') {
+            a = a.toUpperCase();
+
+            if (!isNaN(parseFloat(a))) {
+              a = parseFloat(a);
+            }
+          }
+          return a;
+        };
+      }
+      key = primer ? function(x) { return primer(x[field]); } : function(x) { return x[field]; };
+      reverse = !reverse ? 1 : -1;
+      return function (a, b) {
+         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+      };
     },
 
     //Default formatter just plain text style
