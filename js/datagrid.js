@@ -1079,14 +1079,14 @@ $.fn.datagrid = function(options) {
     },
 
     //Api Event to set the sort Column
-    setSortColumn: function(field) {
+    setSortColumn: function(field, ascending) {
       var sort;
       //Set Internal Variables
-      this.sortColumn.sortAsc = (this.sortColumn.sortField === field ? !this.sortColumn.sortAsc : true);
+      this.sortColumn.sortAsc = (this.sortColumn.sortField === field ? !this.sortColumn.sortAsc : ascending ? true : false);
       this.sortColumn.sortField = field;
 
       //Do Sort on Data Set
-      sort = $.fn.sortFunction(this.sortColumn.sortField, this.sortColumn.sortAsc);
+      sort = $.fn.sortFunction(this.sortColumn.sortField, !this.sortColumn.sortAsc);
       settings.dataset.sort(sort);
 
       //Set Visual Indicator
