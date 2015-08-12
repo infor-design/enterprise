@@ -43,11 +43,11 @@
   }
 
   .label-line {
-    stroke: $graphite06;
+    stroke: $chart-line-color;
   }
 
   .label-circle {
-    fill: $graphite06;
+    fill: $chart-line-color;
   }
 
   // Bar Chart Style
@@ -74,7 +74,7 @@
 
     .tick {
       line {
-        stroke: #e0e0e0;
+        stroke: $chart-line-color;
       }
 
       &.is-selected {
@@ -125,8 +125,8 @@
 
 // Tooltip Swatch
 .chart-swatch {
-  display: table;  
-  
+  display: table;
+
   .swatch-row {
     display: table-row;
 

@@ -221,21 +221,30 @@ $contextual-panel-color: $graphite06;
 $breadcrumb-color: $graphite05;
 $breadcrumb-disabled-color: $graphite02;
 
+// Rating (Stars)
+$rating-bg-color: $amber06;
+$rating-border-color: $slate04;
+$rating-hover-color: $primary-color;
+
 // Tabs
 $tab-selected-color: $primary-color;
-$tab-border-color: #b6b6b6;
+$tab-border-color: $graphite03;
 $tab-hover-color: $font-color-extrahighcontrast;
-
-// Rating (Stars)
-$rating-bg-color: $amber04;
-$rating-border-color: $graphite04;
-$rating-hover-color: $primary-color;
 
 //Charts
 $chart-line-color: $graphite03;
-$chart-font-color: $graphite06;
+$chart-font-color: $graphite04;
 
 // DataGrid
+$datagrid-border-color: $graphite01;
+$datagrid-header-bg-color: $graphite06;
+$datagrid-header-border-color: $graphite02;
+$datagrid-header-hover-color: $graphite07;
+$datagrid-cell-bg-color: #ffffff;
+$datagrid-cell-readonly-bg-color: $graphite01;
+$datagrid-cell-readonly-color: $graphite05;
+$datagrid-cell-border-color: $graphite02;
+$datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #eaf8fe;
 $datagrid-row-hover-color: #e4e4e4;
 

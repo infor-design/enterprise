@@ -5,7 +5,7 @@ $datagrid-header-height: 40px;
 
 // Grid Container Div
 .datagrid-container {
-  border: 1px solid #ebebeb;
+  border: 1px solid $datagrid-border-color;
   border-radius: 2px;
   clear: both;
   height: auto;
@@ -37,8 +37,8 @@ $datagrid-header-height: 40px;
 
   // Table Headers
   th {
-    background-color: #616161;
-    border-left: 1px solid #d8d8d8;
+    background-color: $datagrid-header-bg-color;
+    border-left: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
     min-width: 25px;
     overflow: hidden;
@@ -74,7 +74,7 @@ $datagrid-header-height: 40px;
   }
 
   .is-sortable:hover {
-    background-color: #454545;
+    background-color:$datagrid-header-hover-color;
     cursor: pointer;
 
     .icon {
@@ -113,7 +113,7 @@ $datagrid-header-height: 40px;
     }
 
     .hyperlink {
-      color: $primary-color;
+      color: $hyperlink-color;
       display: inline-block;
       height: 35px;
       line-height: inherit;
@@ -207,10 +207,10 @@ $datagrid-header-height: 40px;
   }
 
   td {
-    background-color: #ffffff;
-    border-bottom: 1px solid #d8d8d8;
-    border-left: 1px solid #d8d8d8;
-    color: $font-color-extrahighcontrast;
+    background-color: $datagrid-cell-bg-color;
+    border-bottom: 1px solid $datagrid-cell-border-color;
+    border-left: 1px solid $datagrid-cell-border-color;
+    color: $datagrid-data-color;
     height: 48px;
     line-height: 48px;
     max-width: 100px;
@@ -218,10 +218,6 @@ $datagrid-header-height: 40px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    &:last-child {
-      border-right: 1px solid #d8d8d8;
-    }
 
     //Editing and Focus State
     &:focus .datagrid-cell-wrapper {
@@ -269,6 +265,7 @@ $datagrid-header-height: 40px;
     }
 
     span {
+      color: $datagrid-data-color;
       line-height: 48px;
 
       &.exclamation {
@@ -279,7 +276,10 @@ $datagrid-header-height: 40px;
 
   // States
   .is-readonly {
-    background-color: #f2f2f2;
+    background-color: $datagrid-cell-readonly-bg-color;
+    span {
+      color: $datagrid-cell-readonly-color;
+    }
   }
 }
 

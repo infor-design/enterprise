@@ -53,6 +53,7 @@
   }
 
   .searchfield {
+    background-color: transparent;
     @include searchfield-text-style();
     border: 1px solid transparent;
     cursor: pointer;

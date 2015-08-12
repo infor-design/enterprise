@@ -196,6 +196,33 @@ $contextual-panel-color: $slate02;
 $breadcrumb-color: $slate02;
 $breadcrumb-disabled-color: $slate06;
 
+// Rating (Stars)
+$rating-bg-color: $amber04;
+$rating-border-color: $graphite04;
+$rating-hover-color: $primary-color;
+
+// Tabs
+$tab-selected-color: $primary-color;
+$tab-border-color: $slate07;
+$tab-hover-color: $font-color-extrahighcontrast;
+
+//Charts
+$chart-line-color: $slate03;
+$chart-font-color: $slate01;
+
+// DataGrid
+$datagrid-border-color: $slate06;
+$datagrid-header-bg-color: $slate05;
+$datagrid-header-border-color: $slate06;
+$datagrid-header-hover-color: $slate04;
+$datagrid-cell-bg-color: $slate07;
+$datagrid-cell-readonly-bg-color: $slate08;
+$datagrid-cell-readonly-color: $slate02;
+$datagrid-cell-border-color: $slate06;
+$datagrid-data-color: $font-color-extrahighcontrast;
+$datagrid-row-selected-color: #eaf8fe;
+$datagrid-row-hover-color: $slate09;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

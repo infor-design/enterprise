@@ -218,6 +218,32 @@ $contextual-panel-color: $white;
 $breadcrumb-color: $font-color-highcontrast;
 $breadcrumb-disabled-color: $disabled-color;
 
+// Rating (Stars)
+$rating-bg-color: $amber06;
+$rating-border-color: $slate06;
+$rating-hover-color: $primary-color;
+
+// Tabs
+$tab-selected-color: $primary-color;
+$tab-border-color: $slate04;
+$tab-hover-color: $font-color-extrahighcontrast;
+
+//Charts
+$chart-line-color: $slate03;
+$chart-font-color: $font-color-extrahighcontrast;
+
+// DataGrid
+$datagrid-border-color: $slate04;
+$datagrid-header-bg-color: $slate05;
+$datagrid-header-border-color: $slate04;
+$datagrid-header-hover-color: $slate08;
+$datagrid-cell-bg-color: #ffffff;
+$datagrid-cell-readonly-bg-color: $slate03;
+$datagrid-cell-readonly-color: $slate08;
+$datagrid-cell-border-color: $slate04;
+$datagrid-data-color: $font-color-extrahighcontrast;
+$datagrid-row-selected-color: #eaf8fe;
+$datagrid-row-hover-color: $slate01;
 
 //================================================== //
 // Core Controls
