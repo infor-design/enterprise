@@ -95,7 +95,7 @@
 
         // Override the 'click' listener created by Autocomplete (which overrides the default Popupmenu method)
         // to act differntly when the More Results link is activated.
-        this.element.on('autocomplete-list-open.searchfield', function(e, items) {
+        this.element.on('listopen.searchfield', function(e, items) {
           var list = $('#autocomplete-list');
 
           list.off('click').on('click.autocomplete', 'a', function (e) {
