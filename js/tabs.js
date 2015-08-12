@@ -79,7 +79,7 @@
 
         this.container = this.element;
         // Special case for Header Tabs, find the page container use that as the container
-        if ($.contains($('body > header')[0], this.element[0])) {
+        if (this.element.closest('.header').length > 0) {
           this.container = $('body > .page-container');
           if (!this.container.length) {
             this.container = this.element;
