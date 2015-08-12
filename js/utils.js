@@ -263,12 +263,12 @@
    return this;
   };
 
-  // Set attr options will return obj
-  $.fn.setAttrOptions = function(elment, attr) {
+  // Parse options from attribute and return obj
+  $.fn.parseOptions = function(element, attr) {
     var options;
 
     attr = attr || 'data-options'; //default
-    options = $(elment).attr(attr);
+    options = $(element).attr(attr);
 
     if (options && options.length) {
       if (options.indexOf('{') > -1) {
@@ -285,45 +285,6 @@
       }
     }
     return options;
-  };
-
-  //Overridable function to conduct sorting
-  $.fn.sortFunction = function(field, reverse, primer) {
-    var key;
-    if (!primer) {
-      primer = function(a) {
-        a = (a === undefined || a === null ? '' : a);
-        if (typeof a === 'string') {
-          a = a.toUpperCase();
-
-          if (!isNaN(parseFloat(a))) {
-            a = parseFloat(a);
-          }
-        }
-        return a;
-      };
-    }
-    key = primer ? function(x) { return primer(x[field]); } : function(x) { return x[field]; };
-    reverse = !reverse ? 1 : -1;
-    return function (a, b) {
-       return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-    };
-  };
-
-  // Initialize sortlist
-  $.fn.sortInit = function(control, onEvent, attr){
-    if(!attr || $.trim(attr) === '') {
-      return;
-    }
-    $('['+ attr +']').each(function() {
-      var elment = $(this),
-        options = $.fn.setAttrOptions(elment, attr);
-
-      elment.on(onEvent, function(e) {
-        $(options.list).data(control).setSortlist(options);
-        e.preventDefault();
-      });
-    });
   };
 
 
