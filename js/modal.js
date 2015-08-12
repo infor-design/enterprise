@@ -103,8 +103,12 @@
           fields.each(function () {
 
             var field = $(this);
-            if (field.is(':empty')) {
+            if (!field.val()) {
               allValid = false;
+            }
+
+            if (allValid) {
+              inlineBtns.filter('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
             }
           });
 
@@ -254,8 +258,6 @@
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
 
-        self.disableSubmit();
-
         // Ensure aria-labelled by points to the id
         if (settings.isAlert) {
           this.element.attr('aria-labeledby', 'message-title');
@@ -324,7 +326,9 @@
 
         setTimeout(function () {
           self.element.find('.btn-modal-primary').focus();
-        }, 0);
+          self.disableSubmit();
+        }, 10);
+
       },
 
       resize: function() {
