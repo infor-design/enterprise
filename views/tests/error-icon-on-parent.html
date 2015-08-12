@@ -1,0 +1,75 @@
+        <form>
+            <div class="row">
+                <div class="twelve columns">
+                    <div class="one-half column">
+                        <div class="fieldset">
+                            <h2 class="fieldset-title">Contact Details</h2>
+
+                            <div class="content">
+                                <div class="field">
+                                    <label class="required" for="email-address-ok">Email Address - Checker</label>
+                                    <input type="text" id="email-address-ok" name="email-address-ok" data-validate="emailPositive">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="twelve columns">
+                    <div class="expandable-area" id="schedule-expand">
+                        <div class="expandable-header">
+                            <a class="title">
+                                <span>Schedule</span>
+                            </a>
+                        </div>
+                        <div class="expandable-pane">
+                            <div class="content">
+                                <div class="content" id="schedule-available">
+                                    <fieldset>
+                                        <legend id="submission-legend">End of Calendar Day Schedule Options</legend>
+                                        <div class="content">
+                                            <div class="one-half column">
+                                                <div class="field">
+                                                    <label for="date-field" class="label required">From Date</label>
+                                                    <input id="date-field" class="datepicker" placeholder="M / D / YYYY" name="date-field" type="text">
+                                                </div>
+
+                                                <div class="field">
+                                                    <label for="to-date-field" class="label required">To Date</label>
+                                                    <input id="to-date-field" class="datepicker" placeholder="M / D / YYYY" name="date-field" type="text">
+                                                </div>
+
+                                                <div class="field" id="monthly-schedule-datetorun" hidden>
+                                                    <label for="monthly-datetorun" class="required">Date to Run</label>
+                                                    <input id="monthly-datetorun" class="input-xs" name="monthly-datetorun" type="text" inputmode="numeric" data-mask="##" data-mask-mode="number" data-validate="checkDateToRun" data-validation-events="{'checkDateToRun': 'keydown change blur'}" />
+                                                </div>
+
+                                                <div class="field" id="weekly-schedule-weeks" hidden>
+                                                    <label for="weeks-reschedule">Weeks before re-scheduling</label>
+                                                    <input id="weeks-reschedule" class="input-xs" name="weeks-reschedule" type="text" inputmode="numeric" data-mask="###" data-mask-mode="number" value="1" data-validate="checkWeeksReschedule" data-validation-events="{'checkWeeksReschedule': 'keydown change blur'}" />
+                                                </div>
+
+                                                <div class="field" id="weekly-schedule-runday" hidden>
+                                                    <label for="run-day" class="label">Run Day</label>
+                                                    <select id="run-day" name="run-day" class="dropdown">
+                                                        <option selected value="M">Monday</option>
+                                                        <option value="T">Tuesday</option>
+                                                        <option value="W">Wednesday</option>
+                                                        <option value="H">Thursday</option>
+                                                        <option value="F">Friday</option>
+                                                        <option value="S">Saturday</option>
+                                                        <option value="U">Sunday</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
