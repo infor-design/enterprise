@@ -1,14 +1,18 @@
 {{> includes/head}}
-<body>
+<body class="no-scroll">
   {{> controls/svg}}
+  {{> examples/common-nav/_icons}}
 
-  <!-- Header -->
-  {{> examples/common-nav/header-b}}
+  <a href="#maincontent" class="skip-link">skip to main content</a>
+
+  <!-- Masthead -->
+  {{> examples/common-nav/masthead-b}}
 
   <!-- Application Menu -->
   {{> examples/common-nav/appmenu-b1}}
 
   <section id="maincontent" class="page-container" role="main">
+    {{> examples/common-nav/header-b}}
     {{> content}}
   </section>
 

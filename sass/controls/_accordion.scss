@@ -375,8 +375,10 @@ $accordion-focused-text-color: #ffffff;
           background-color: $input-disabled-color;
         }
       }
+    }
 
-
+    .searchfield {
+      color: $white;
     }
   }
 
@@ -421,10 +423,21 @@ $accordion-focused-text-color: #ffffff;
 
 }
 
+.accordion-pane {
+  .searchfield-wrapper {
+    margin: 1em 1em 1em 2em;
+    width: calc(300px - 3em - 2px); // (app-menu) - (margin) - (searchfield borders);
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
 /* FOR MOZILLA */
 @-moz-document url-prefix() {
   .accordion button.plus-minus {
     margin-left: 1px;
-    top: 0px;
+    top: 0;
   }
 }

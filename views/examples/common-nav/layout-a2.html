@@ -1,14 +1,16 @@
 {{> includes/head}}
-<body>
+<body class="no-scroll">
   {{> controls/svg}}
-  {{> examples/common-nav/masthead-a2}}
+  {{> examples/common-nav/_icons}}
 
-  <header class="header" style="display: none;"></header>
+  <!-- Masthead -->
+  {{> examples/common-nav/masthead-a}}
 
   <!-- Application Menu -->
   {{> examples/common-nav/appmenu-a2}}
 
   <section id="maincontent" class="page-container" role="main">
+    {{> examples/common-nav/header-a}}
     {{> content}}
   </section>
 

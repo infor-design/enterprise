@@ -5,110 +5,14 @@
 
       <div class="accordion-header">
         <a href="#">
-          <span class="title">Menu A</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">A 1</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">A 2</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">A 3</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-header">
-        <a href="#">
-          <span class="title">Menu B</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">B 1</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">B 2</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">B 3</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-header">
-        <a href="#">
-          <span class="title">Menu C</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">C 1</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">C 2</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">C 3</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-header">
-        <a href="#">
-          <span class="title">Menu D</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">D 1</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">D 2</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">D 3</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="accordion-header hidden-xl hidden-lg">
-        <a href="#">
+          <svg class="icon">
+            <use xlink:href="#icon-grid"></use>
+          </svg>
           <span class="title">Applications</span>
         </a>
         <div class="accordion-pane">
           <ul class="common-nav-application-list">
-            <li><a href="#">App One</a></li>
-            <li><a href="#">App Two</a></li>
-            <li><a href="#">App Three</a></li>
-            <li><a href="#">App Four</a></li>
-            <li><a href="#">App Five</a></li>
-            <li><a href="#">App Six</a></li>
-            <li><a href="#">App Seven</a></li>
-            <li><a href="#">App Eight</a></li>
+            {{> examples/common-nav/_mingle-apps-list}}
           </ul>
         </div>
       </div>
