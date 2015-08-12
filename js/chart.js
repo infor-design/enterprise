@@ -859,10 +859,10 @@ window.Chart = function(container) {
         .attr('x', function(d) {
           return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
         })
-        .attr('y', function(d) {
+        .attr('y', function() {
           return height;
         })
-        .attr('height', function(d) {
+        .attr('height', function() {
           return 0;
         });
 
@@ -889,10 +889,10 @@ window.Chart = function(container) {
           .attr('x', function(d) {
             return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
           })
-          .attr('y', function(d) {
+          .attr('y', function() {
             return height;
           })
-          .attr('height', function(d) {
+          .attr('height', function() {
             return 0;
           });
 
@@ -988,11 +988,10 @@ window.Chart = function(container) {
     });
 
     return collides;
-  }
+  };
 
   this.applyAltLabels = function(svg, dataArray, elem) {
-    var ticks = svg.selectAll('.x text'),
-      collides = false;
+    var ticks = svg.selectAll('.x text');
 
     ticks.each(function(d, i) {
       d3.select(this).text(dataArray[i][elem]);
