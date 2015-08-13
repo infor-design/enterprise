@@ -16,5 +16,15 @@
 
   {{> includes/footer}}
 
+  <script type="text/javascript">
+    $('#mingle-app-switcher').on('click.mingledemo', function() {
+      $('#application-menu').trigger('close-applicationmenu', [true]);
+    });
+
+    $('#application-menu').on('applicationmenuopen', function() {
+      $('#mingle-app-switcher').data('popupmenu').close();
+    })
+  </script>
+
 </body>
 </html>
