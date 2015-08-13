@@ -419,6 +419,7 @@
         //Handle Case where menu is off the right
         if ((wrapper.offset().left + menuWidth) > $(window).width()) {
           wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
+          wrapper.find('div.arrow').css({'left': 'auto', 'right': '10px'});
         }
 
         wrapper.find('.arrow').removeAttr('style');
@@ -431,17 +432,17 @@
           this.menu.css('overflow', 'hidden');
         }
 
-        if (this.element.hasClass('btn-menu') && this.element.closest('.toolbar').length === 0) {
-          //move the arrow - might need better logic here.
-          wrapper.find('div.arrow').css('left', '25%');
-        }
+        if (this.element.hasClass('btn-menu')) {
+          if (this.element.closest('.toolbar').length === 0) { // button is standalone
+            //move the arrow - might need better logic here.
+            wrapper.find('div.arrow').css('left', '25%');
+          } else { // button exists inside toolbar
+            wrapper.find('div.arrow').css({'left': '18px'});
 
-        if (this.element.hasClass('btn-menu') && this.element.closest('.toolbar').length > 0) {
-          wrapper.find('div.arrow').css({'left': '35px', 'top': '-8px'});
-
-          var buttonset = this.element.closest('.buttonset');
-          if (buttonset.length > 0 && buttonset.prev('.title').length) {
-            wrapper.find('div.arrow').css({'left': 'auto', 'right': '10px'});
+            if (this.element.closest('.buttonset').length > 0 ) {
+              wrapper.css({'left': (target.offset().left + target.outerWidth() + 5) - menuWidth});
+              wrapper.find('div.arrow').css({'left': 'auto', 'right': '10px'});
+            }
           }
         }
 

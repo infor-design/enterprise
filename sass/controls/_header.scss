@@ -141,15 +141,8 @@ $header-height: 60px;
 
     .title {
       margin: 0 !important;
-      padding: 0 !important;
       overflow: visible;
-    }
-
-    &.has-subhead {
-      .title {
-        line-height: 38px;
-        top: 11px;
-      }
+      padding: 0 !important;
     }
 
     .buttonset {

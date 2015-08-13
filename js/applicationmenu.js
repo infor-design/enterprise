@@ -279,7 +279,7 @@
             e.preventDefault();
             $(e.target).click();
           }).on('click.applicationmenu', function(e) {
-            if ($(e.target).parents('.application-menu').length < 1) {
+            if ($(e.target).parents('.application-menu').length < 1 && !self.isLargerThanBreakpoint()) {
               self.closeMenu($(e.target).hasClass('application-menu-trigger'));
             }
           }).on('keydown.applicationmenu', function(e) {
