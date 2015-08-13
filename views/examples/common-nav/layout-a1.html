@@ -1,18 +1,28 @@
 {{> includes/head}}
-<body>
+<body class="no-scroll">
   {{> controls/svg}}
-  {{> examples/common-nav/masthead-a1}}
-
-  <header class="header" style="display: none;"></header>
+  {{> examples/common-nav/_icons}}
+  {{> examples/common-nav/masthead-a}}
 
   <!-- Application Menu -->
   {{> examples/common-nav/appmenu-a1}}
 
   <section id="maincontent" class="page-container" role="main">
+    {{> examples/common-nav/header-a}}
     {{> content}}
   </section>
 
   {{> includes/footer}}
+
+  <script type="text/javascript">
+    $('#mingle-app-switcher').on('click.mingledemo', function() {
+      $('#application-menu').trigger('close-applicationmenu', [true]);
+    });
+
+    $('#application-menu').on('applicationmenuopen', function() {
+      $('#mingle-app-switcher').data('popupmenu').close();
+    })
+  </script>
 
 </body>
 </html>

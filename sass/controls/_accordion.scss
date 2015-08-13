@@ -22,7 +22,7 @@ $accordion-focused-text-color: #ffffff;
   a {
     border: 1px solid transparent;
     display: block;
-    padding: 14px 20px 12px;
+    padding: 12px 20px;
     text-decoration: none;
     text-transform: capitalize;
     -webkit-touch-callout: none !important;
@@ -33,31 +33,23 @@ $accordion-focused-text-color: #ffffff;
     }
 
     > * {
-      display: inline-block;
+      //display: inline-block;
       pointer-events: none;
-      vertical-align: bottom;
+      vertical-align: middle;
     }
 
     > .icon {
-      top: -1px;
+      height: 16px;
+      top: 0;
 
-      + .title {
-        margin-left: 0;
+      &.plus-minus {
+        top: -1px;
       }
-    }
-
-    > svg.icon {
-      height: 18px;
-      top: -3px;
-    }
-
-    > .title,
-      .panel {
-      margin-left: .4em;
     }
 
     > .panel {
       display: block;
+      margin-left: .4em;
 
       &:after {
         clear: both;
@@ -78,17 +70,16 @@ $accordion-focused-text-color: #ffffff;
   button.plus-minus {
     display: inline-block;
     height: 32px;
-    left: 22px;
     margin: 0;
     padding: 0;
     position: absolute;
-    top: 2px;
+    top: 4px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     width: 32px;
 
     + a .title {
-      padding-left: 30px;
+      margin-left: 40px;
     }
 
     .audible {
@@ -111,9 +102,62 @@ $accordion-focused-text-color: #ffffff;
   .accordion-header {
     position: relative;
 
+    &[aria-expanded] {
+      button.plus-minus {
+        left: 23px;
+        top: 2px;
+      }
+    }
+
     &[aria-expanded="true"] {
       > .accordion-pane {
         display: block;
+      }
+    }
+
+    // Cascading padding of accordion headers
+    .accordion-header {
+      .icon {
+        width: 36px;
+      }
+
+      &[aria-expanded] {
+        .icon.plus-minus {
+          top: -15px;
+
+          &::before,
+          &::after {
+            width: 10px;
+          }
+        }
+      }
+
+      .accordion-header {
+        // No expand/collapse icon
+        a {
+          padding-left: 61px;
+        }
+
+        // Has expand/collapse icon
+        &[aria-expanded] {
+          a {
+            padding-left: 50px;
+          }
+        }
+
+        .accordion-header {
+          // No expand/collapse icon
+          a {
+            padding-left: 91px;
+          }
+
+          // Has expand/collapse icon
+          &[aria-expanded] {
+            a {
+              padding-left: 80px;
+            }
+          }
+        }
       }
     }
   }
@@ -145,34 +189,8 @@ $accordion-focused-text-color: #ffffff;
     overflow-x: auto;
     overflow-y: hidden;
 
-    .accordion-pane a {
-      padding: 11px 0 9px 50px !important;
-    }
-
     &.indented a {
       padding-left: 40px !important;
-    }
-
-    a > .title,
-    a > .panel {
-      margin-left: 20px;
-    }
-
-    .accordion-header[aria-expanded] {
-
-      .plus-minus {
-        left: 22px;
-        top: -10px;
-
-        &::before,
-        &::after {
-          width: 10px;
-        }
-      }
-
-      a {
-        padding: 6px 0 11px;
-      }
     }
 
     .badge,
@@ -325,13 +343,13 @@ $accordion-focused-text-color: #ffffff;
 
       a {
         color: $dark-accordion-header-text-color;
-        padding: 9px 13px 8px;
+        //padding: 9px 13px 8px;
 
         .title {
           @include font-size(14);
           height: 14px;
           max-width: 230px;
-          overflow: hidden;
+          //overflow: hidden;
           text-overflow: ellipsis;
           vertical-align: middle;
           white-space: nowrap;
@@ -375,8 +393,10 @@ $accordion-focused-text-color: #ffffff;
           background-color: $input-disabled-color;
         }
       }
+    }
 
-
+    .searchfield {
+      color: $white;
     }
   }
 
@@ -421,10 +441,21 @@ $accordion-focused-text-color: #ffffff;
 
 }
 
+.accordion-pane {
+  .searchfield-wrapper {
+    margin: 1em 1em 1em 2em;
+    width: calc(300px - 3em - 2px); // (app-menu) - (margin) - (searchfield borders);
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
 /* FOR MOZILLA */
 @-moz-document url-prefix() {
   .accordion button.plus-minus {
     margin-left: 1px;
-    top: 0px;
+    top: 0;
   }
 }

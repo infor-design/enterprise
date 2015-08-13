@@ -259,10 +259,6 @@ a.btn-primary {
     width: 0;
   }
 
-  &.has-text > span {
-    color: $graphite06;
-  }
-
   &:hover {
     .icon {
       fill: $tertiary-btn-hover-color;
@@ -273,8 +269,20 @@ a.btn-primary {
     }
   }
 
-  &.has-text:hover > span {
-    color: $tertiary-btn-hover-color;
+  &.has-text {
+    > .icon {
+      left: 0;
+    }
+
+    > span {
+      color: $graphite06;
+    }
+
+    &:hover {
+      > span {
+        color: $tertiary-btn-hover-color;
+      }
+    }
   }
 
   &:focus {
@@ -303,7 +311,11 @@ a.btn-primary {
   // Text will still become invisible on small breakpoint (but still visible to screen readers).
   // See respond-to(tabletdown) below.
   .btn-icon.has-text {
-    padding: 0 10px 0 2px;
+    padding: 0 5px;
+
+    > .icon {
+      left: 5px;
+    }
 
     > span {
       padding-top: 0px;
