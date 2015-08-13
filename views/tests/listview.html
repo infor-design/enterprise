@@ -252,69 +252,6 @@
 </div>
 
 <div class="row">
-  <div class="two-thirds column">
-   <script id="share-rbhp-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          <li>
-            {{#accepted}}
-              <span class="alert pending badge"></span>
-            {{/accepted}}
-            {{^accepted}}
-              <span class="alert good badge"></span>
-            {{/accepted}}
-
-            <p class="listview-heading">{{firstName}} {{lastName}}</p>
-
-            <div class="l-pull-right">
-              <div class="field">
-                <label class="audible" for="select-{{id}}">Permissions</label>
-                <select class="dropdown" id="select-{{id}}" style="width: 75px">
-                  <option>Can View</option>
-                  <option>Can Edit</option>
-                  <option>Admin</option>
-                </select>
-              </div>
-              <div class="field">
-                <input id="default-{{id}}" class="checkbox" type="checkbox">
-                <label class="checkbox-label" for="default-{{id}}">Default</label>
-              </div>
-              <button class="btn-icon" title="Delete">
-                <svg class="icon" aria-hidden="true" focusable="false">
-                  <use xlink:href="#icon-delete">
-                </svg>
-                <span>Delete</span>
-              </button>
-            </div>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
-
-    <div class="card" >
-      <div class="card-header">
-        <h2 class="card-title">Users With Access</h2>
-        <button class="btn-actions" type="button">
-          <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
-            <use xlink:href="#icon-more"></use>
-          </svg>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Action One</a></li>
-          <li><a href="#">Action Two</a></li>
-        </ul>
-      </div>
-
-      <div class="card-content">
-        <div class="listview" id="share-rbhp" data-tmpl="share-rbhp-tmpl" data-dataset="/api/people"></div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="row">
   <div class="twelve columns">
 
     <div class="card">

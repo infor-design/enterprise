@@ -186,6 +186,7 @@
       'OrderedList': {id: 'OrderedList', value: 'Ordered List', comment: 'Insert an Ordered list in the editor'},
       'Output': {id: 'Output', value: 'Output', comment: 'Output tooltip'},
       'Page': {id: 'Page', value: 'page ', comment: 'Text on the pager links'},
+      'PageOf': {id: 'PageOf', value: 'Page {0} of {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'You are currently on page ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Paste', comment: 'Paste tooltip'},
       'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Password must:</strong><ul><li>Be at least 10 characters long</li><li>Have at least one upper case character</li><li>Have at least one lower case character</li><li><strong>Contain one special character</strong></li><li>Not contain your username</li><li>Can not be a Prviously used password</li></ul></div>', comment: 'Password validation requirements'},

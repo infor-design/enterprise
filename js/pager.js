@@ -181,7 +181,24 @@
               isAriaSelected = '';
               isAriaDisabled = '';
             }
-            $('<li '+ thisClass + isAriaSelected +'><a '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
+
+            if (!this.isTable) {
+              $('<li '+ thisClass + isAriaSelected +'><a '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
+            }
+          }
+
+          if (this.isTable && this.pagerBar.find('.pager-count').length === 0) {
+            var text =  Locale.translate('PageOf');
+            text = text =text.replace('{0}', '<input data-mask="###" value="13">');
+            text = text.replace('{1}', pages);
+
+            $('<label class="pager-count">'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
+            this.pagerBar.find('.pager-count input').mask();
+          }
+
+          if (this.isTable && this.pagerBar.find('.btn-group').length === 0) {
+            var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>Records Per Page</span> <svg class="icon" focusable="false" aria-hidden="true"> <use xlink:href="#icon-arrow-down"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#">25</a></li> <li><a href="#">50</a></li> <li><a href="#">100</a></li> <li><a href="#">250</a></li> </ul> </div></li>';
+            $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
           }
         }
 

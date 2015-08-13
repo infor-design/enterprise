@@ -462,21 +462,27 @@ window.Chart = function(container) {
         .attr('class', 'arc')
         .attr('d', pieArcs)
         .on('click', function (d, i) {
+          var isSelected = d3.select(this).classed('is-selected'),
+            color = charts.pieColors(i);
 
-          var color = charts.pieColors(i);
           d3.select('.chart-container .is-selected')
             .classed('is-selected', false)
             .style('stroke', '#fff')
             .style('stroke-width', '1px')
             .attr('transform', '');
 
-          var path = d3.select(this)
-              .classed('is-selected', true)
+          var path = d3.select(this);
+
+          if (!isSelected) {
+            path.classed('is-selected', true)
               .style('stroke', color)
               .style('stroke-width', 0)
               .attr('transform', 'scale(1.025, 1.025)');
+            $(container).trigger('selected', [path[0], d]);
+            return;
+          }
 
-          $(container).trigger('selected', [path[0], d]);
+          $(container).trigger('selected', [undefined, d]);
         });
 
     g.append('path')

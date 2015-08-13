@@ -79,3 +79,34 @@
 .paginated li {
   @include font-size(14);
 }
+
+// Pager for Tables
+.pager-count {
+  @include font-size(14);
+  display: inline-block;
+  margin: 5px 10px;
+  vertical-align: top;
+
+  input {
+    @include font-size(14);
+    height: 23px;
+    padding: 4px 0 2px;
+    text-align: center;
+    width: 30px;
+  }
+}
+
+//Special Styles for Datagrid
+.datagrid + .pager-toolbar {
+  li a {
+    margin: 0;
+    padding: 0;
+    width: 28px;
+  }
+
+  .pager-prev {
+    margin-right: 5px;
+  }
+
+}
+

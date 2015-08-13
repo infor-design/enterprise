@@ -188,7 +188,7 @@
         deferreds = [];
 
       self.inputs = this.element.find(self.fields);
-      self.inputs.filter(':visible').each(function (e) {
+      self.inputs.filter(':visible[data-validate]').each(function (e) {
         var dfds = self.validate($(this), false, e);
         for (var i = 0; i < dfds.length; i++) {
           deferreds.push(dfds[i]);
@@ -296,7 +296,7 @@
       menuitem = $('a[href="#'+ parent.attr('id') +'"]', '#'+ iconTarget);
 
       //Add Error icon
-      if ((!!parent && $('.error', parent).length) || 
+      if ((!!parent && $('.error', parent).length) ||
           (!!dropdownParent && $('.error', dropdownParent).length)) {
 
         //if Dropdown Tabs and current menu item has no error remove icon
@@ -577,11 +577,13 @@
     this.rules = {
       required: {
         isNotEmpty: function(value, field) {
-          if (!self.isPlaceholderSupport &&
-              (!!field &&
-                (value === field.attr('placeholder') || value === Locale.translate('Required')))) {
+          var supportsPlaceholder = !!('placeholder' in document.createElement('input'));
+
+          if (!supportsPlaceholder && field
+              && (value === field.attr('placeholder') || value === Locale.translate('Required'))) {
             return false;
           }
+
           if (typeof value === 'string') {
             // strip out any HTML tags and focus only on text content.
             value = $.trim(value.replace(/<\/?[^>]*>/g, ''));

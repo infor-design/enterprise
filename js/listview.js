@@ -150,7 +150,10 @@
       // Get the Data Source. Can be an array, Object or Url
       refresh: function () {
         this.loadApi();
-        this.render(this.list.data);
+
+        if (this.list) {
+          this.render(this.list.data);
+        }
       },
 
       // Load api data
@@ -345,9 +348,9 @@
         if (!this.list.data && !field) {
           return;
         }
-        
-        reverse = reverse ? 
-          (reverse === 'desc') : 
+
+        reverse = reverse ?
+          (reverse === 'desc') :
           (this.list.sort && this.list.sort[field] && this.list.sort[field].reverse) ? false : true;
 
         //reload data
@@ -367,7 +370,7 @@
 
         this.list.sort = {field: field};
         this.list.sort[field] = {reverse: reverse};
-        
+
         this.element.trigger('sorted', [this.element, this.list.sort]);
       },
 

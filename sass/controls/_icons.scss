@@ -76,9 +76,9 @@ svg.icon-logo {
 .field .icon-error,
 .field .icon-confirm {
   display: inline-block !important;
-  margin-left: -29px;
-  margin-top: 2px;
-  top: 5px;
+  position: relative;
+  right: 28px;
+  top: 4px;
 }
 
 .timepicker + .icon + .icon-error,
