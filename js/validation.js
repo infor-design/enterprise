@@ -188,11 +188,15 @@
         deferreds = [];
 
       self.inputs = this.element.find(self.fields);
-      self.inputs.filter(':visible[data-validate]').each(function (e) {
-        var dfds = self.validate($(this), false, e);
-        for (var i = 0; i < dfds.length; i++) {
-          deferreds.push(dfds[i]);
+      self.inputs.each(function (e) {
+        var field = $(this);
+        if (field.attr('data-validate')) {
+          var dfds = self.validate($(this), false, e);
+          for (var i = 0; i < dfds.length; i++) {
+            deferreds.push(dfds[i]);
+          }
         }
+
       });
 
       $.when.apply($, deferreds).then(function () {
@@ -433,6 +437,13 @@
 
       //setup tooltip with appendedMsg
       if (inline) {
+
+        if (field.is('select')) {
+          field = field.parent().find('input');
+          if (field.val().length, field.val() === '\xa0') {
+            field.text('');
+          }
+        }
         field.attr('data-placeholder', field.attr('placeholder'));
         field.attr('placeholder', appendedMsg);
 

@@ -81,10 +81,6 @@
         elem.attr('data-editor', true);
         this.bindParagraphCreation(i).bindTab(i);
 
-        if (!elem.attr('data-placeholder')) {
-          elem.attr('data-placeholder', (settings.placeholder === null ? Locale.translate('EnterComments') : settings.placeholder));
-        }
-
         this.initToolbar()
           .bindButtons()
           .bindModals()
