@@ -590,8 +590,8 @@
         isNotEmpty: function(value, field) {
           var supportsPlaceholder = !!('placeholder' in document.createElement('input'));
 
-          if (!supportsPlaceholder && field
-              && (value === field.attr('placeholder') || value === Locale.translate('Required'))) {
+          if (!supportsPlaceholder && field &&
+              (value === field.attr('placeholder') || value === Locale.translate('Required'))) {
             return false;
           }
 
