@@ -55,7 +55,8 @@
         this.resize(this, false);
       },
 
-      initColumns: function(row) {        
+      initColumns: function(row) {
+        row = row || 0;
         this.rowsAndCols[row] = [];
 
         for (var i = 0, l = this.settings.columns; i < l; i++) {
@@ -65,7 +66,7 @@
 
       initRowsAndCols: function() {
         this.rowsAndCols = [];// Keeping all blocks as rows and columns
-        this.initColumns(0);
+        this.initColumns();
       },
 
       // Return [x and y] where we can fit this block
@@ -186,10 +187,16 @@
         });
 
         // Max sized columns brings to top
-        for (var i=0, j=0, l=self.blocks.length; i<l; i++) {
-          if (self.blocks[i].w >= self.settings.columns) {            
-            self.arrayIndexMove(self.blocks, i, j);
-            j++;
+        for (var i=0, j=0, w=0, l=self.blocks.length; i<l; i++) {
+          if (self.settings.columns > 1) {
+            if (self.blocks[i].w >= self.settings.columns && i) {            
+              self.arrayIndexMove(self.blocks, i, j);
+            }
+            w += self.blocks[i].w;
+            if(w >= self.settings.columns) {
+              w = 0; //reset
+              j = i; //record to move
+            }
           }
         }
       },
