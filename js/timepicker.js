@@ -438,12 +438,10 @@
           timeString = '' + hours + ':' + minutes + ' ' + period;
 
         this.element.val(timeString)
-          .trigger('change')
-          .triggerHandler('updated');
+          .trigger('change');
 
         this.element
-          .focus()
-          .validate();
+          .focus();
       },
 
       // Return whether or not the calendar div is open.
