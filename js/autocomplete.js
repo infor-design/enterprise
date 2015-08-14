@@ -120,6 +120,11 @@
             containsTerm = true;
           }
 
+          if (term.indexOf(' ') > 0 && option.toLowerCase().indexOf(term) > 0) {
+            //Partial dual word match
+            containsTerm = true;
+          }
+
           if (containsTerm) {
             matchingOptions.push(option);
 
