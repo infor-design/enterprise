@@ -1,8 +1,14 @@
 <section class="masthead">
   <div class="toolbar no-actions-button">
     <div class="title">
+      <button id="logo-homepage">
+        <svg class="icon icon-logo" viewbox="0 0 34 34">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+      </button>
+
       <button id="masthead-trigger" class="btn-icon application-menu-trigger" type="button">
-        <span class="audible">Show navigation</span>
+        <span class="audible">Show Navigation</span>
         <span class="icon app-header">
           <span class="one"></span>
           <span class="two"></span>
@@ -10,25 +16,13 @@
         </span>
       </button>
 
-      <button class="btn-menu btn-icon hidden-md hidden-sm" type="button">
-        <svg class="icon" viewBox="0 0 32 32">
-          <use xlink:href="#icon-grid"></use>
-        </svg>
-        <span class="audible">Application Switcher</span>
-      </button>
-      <ul class="popupmenu common-nav-application-list" data-options="{placement: 'bottom'}">
-        <li><a href="#">App One</a></li>
-        <li><a href="#">App Two</a></li>
-        <li><a href="#">App Three</a></li>
-        <li><a href="#">App Four</a></li>
-        <li><a href="#">App Five</a></li>
-        <li><a href="#">App Six</a></li>
-        <li><a href="#">App Seven</a></li>
-        <li><a href="#">App Eight</a></li>
-      </ul>
+      <span class="masthead-appname">
+        CloudSuite
+      </span>
     </div>
 
     <div class="buttonset">
+      <!--
       <button class="btn-menu btn-icon has-text">
         <svg class="icon" viewBox="0 0 32 32">
           <use xlink:href="#icon-user"></use>
@@ -69,7 +63,7 @@
 
       <label class="audible" for="enterprise-search">Search</label>
       <input class="searchfield" name="searchfield" id="enterprise-search" />
-
+      -->
     </div>
   </div>
 </section>
