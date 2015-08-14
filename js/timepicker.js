@@ -106,7 +106,7 @@
       //Attach Events used by the Control
       handleEvents: function () {
         var self = this;
-        this.trigger.on('click.timepicker', function () {
+        this.trigger.onTouchClick('timepicker').on('click.timepicker', function () {
           self.toggleTimePopup();
         });
 
@@ -290,7 +290,7 @@
           content: popupContent,
           trigger: 'immediate',
           placement: 'bottom',
-          offset: {top: 27, left: 0},
+          offset: {top: 27, left: -8},
           width: '200',
           tooltipElement: '#timepicker-popup'})
         .on('show.timepicker', function(e, ui) {
@@ -315,6 +315,12 @@
           tooltip.find('#timepicker-hours-shdo').focus();
         });
 
+        popupContent.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
+          e.preventDefault();
+          self.setTimeOnField();
+          self.closeTimePopup();
+        });
+
         // Make adjustments to the popup HTML specific to the timepicker
         var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
         tooltip.addClass('timepicker-popup');
@@ -326,10 +332,6 @@
         self.popup.on('touchend.timepicker touchcancel.timepicker', '.set-time', function(e) {
           e.preventDefault();
           e.target.click();
-        }).one('click.timepicker', '.set-time', function(e) {
-          e.preventDefault();
-          self.setTimeOnField();
-          self.closeTimePopup();
         }).on('keydown.timepicker', 'input.dropdown', function(e) {
           var handled = false;
 
