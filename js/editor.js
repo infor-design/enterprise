@@ -494,7 +494,7 @@
       },
 
       getIcon: function(textName, iconName, className) {
-        return '<span class="audible">'+ Locale.translate(textName) +'</span><svg focusable="false" aria-hidden="true" class="icon' + (className ? ' '+ className : '') + '"><use xlink:href="#icon-' +iconName +'"></use></svg>';
+        return '<span class="audible">'+ Locale.translate(textName) +'</span><svg class="icon' + (className ? ' '+ className : '') + '" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-' +iconName +'"></use></svg>';
       },
 
       getButtonLabels: function (buttonLabelType) {

@@ -47,7 +47,7 @@
          var lookup = this.element;
 
         //Add Button
-        this.icon = $('<span class="trigger" tabindex="-1"><svg aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-search-list"/></svg></span>');
+        this.icon = $('<span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search-list"/></svg></span>');
         this.container = $('<div class="lookup-wrapper"></div>');
         lookup.wrap(this.container);
         lookup.after(this.icon);

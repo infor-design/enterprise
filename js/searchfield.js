@@ -54,7 +54,7 @@
 
         // Add Icon
         if (this.wrapper.find('.icon').length === 0) {
-          $('<svg class="icon"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
+          $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
         }
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
@@ -68,7 +68,7 @@
         this.element.attr('autocomplete','off');
 
         if (this.settings.clearable) {
-          var xButton = $('<svg class="icon close"><use xlink:href="#icon-close"/></svg>');
+          var xButton = $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"/></svg>');
           this.element.parent('').append(xButton);
           xButton.on('click.searchfield', function() {
             self.element.val('').trigger('change');

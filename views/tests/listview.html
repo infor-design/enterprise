@@ -25,7 +25,7 @@
         <h2 class="card-title">Employee Information</h2>
         <button class="btn-actions" type="button">
           <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
@@ -66,7 +66,7 @@
         <h2 class="card-title">Tasks</h2>
         <button class="btn-actions" type="button">
           <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
@@ -98,8 +98,11 @@
         {{#dataset}}
           <tr>
             <td>
-              <button data-id="{{id}}" class="btn-icon small"><svg class="icon" focusable="false" aria-hidden="true">
-                   <use xlink:href="#icon-drilldown"></use></svg><span>Drilldown</span>
+              <button data-id="{{id}}" class="btn-icon small">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                   <use xlink:href="#icon-drilldown"></use>
+                </svg>
+                <span>Drilldown</span>
               </button>
             </td>
             <td>{{firstName}} {{lastName}}</td>
@@ -115,7 +118,7 @@
         <h2 class="card-title">Employee Information</h2>
         <button class="btn-actions" type="button">
           <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
@@ -150,7 +153,7 @@
         <h2 class="card-title">My Tasks</h2>
         <button class="btn-actions" type="button">
           <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
@@ -195,7 +198,7 @@
         <h2 class="card-title">My Alerts</h2>
         <button class="btn-actions" type="button">
           <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
@@ -234,7 +237,7 @@
         <h2 class="card-title">My Team</h2>
         <button class="btn-actions" type="button">
           <span class="audible">Actions</span>
-          <svg class="icon" focusable="false">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
@@ -267,7 +270,7 @@
 
           <div class="more">
             <button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="popupmenu-2" aria-describedby="tooltip" tabindex="-1">
-              <svg class="icon" focusable="false">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-more"></use>
               </svg>
               <span class="audible">Grid Features</span>

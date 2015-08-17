@@ -51,7 +51,7 @@
         var self = this,
           container = $('#toast-container'),
           closeBtn = $('<button type="button" class="btn-close" title="'+ Locale.translate('Close') +
-            '" aria-hidden="true"><svg class="icon" focusable="false" aria-hidden="true"><use xlink:href="#icon-close"></use></svg><span class="audible"> ' +
+            '" aria-hidden="true"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span class="audible"> ' +
             Locale.translate('Close') +'</span></button>'),
           toast = $('<div class="toast"></div>'),
           progress = $('<div class="toast-progress"></div>');

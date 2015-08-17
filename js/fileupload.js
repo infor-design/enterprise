@@ -49,7 +49,7 @@
           instructions = Locale.translate('FileUpload'),
           label = $('<label for="' + id+'-filename' + '">' +  elem.text() + ' <span class="audible">' + instructions + '</span></label>'),
           shadowField = $('<input id="' + id+'-filename' + '" type="text">'),
-          svg = '<span class="trigger" tabindex="-1"><svg aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-folder"/></svg></span>';
+          svg = '<span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-folder"/></svg></span>';
 
         elem.before(label, shadowField);
         fileInput.after(svg);

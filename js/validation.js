@@ -252,7 +252,7 @@
 
     // Set Error icon on parent tabs/expandable
     setErrorOnParent: function (field) {
-      var errorIcon = '<svg aria-hidden="true" focusable="false" class="icon icon-error"><use xlink:href="#icon-error"/></svg>',
+      var errorIcon = '<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"/></svg>',
         parent = field.closest('.tab-panel, .expandable-pane'),
         parentContainer = field.closest('.tab-container, .expandable-area'),
         iconTarget = parent.attr('id'),
@@ -414,7 +414,7 @@
       }
 
       //Append Error
-      var svg = $('<svg class="icon icon-error" focusable="false" aria-hidden="true"><use xlink:href="#icon-error"></use></svg>');
+      var svg = $('<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"></use></svg>');
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
 
@@ -485,7 +485,7 @@
     },
 
     addPositive: function(field) {
-      var svg = $('<svg class="icon icon-confirm" focusable="false" aria-hidden="true"><use xlink:href="#icon-confirm"></use></svg>');
+      var svg = $('<svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-confirm"></use></svg>');
 
       if(!$('.icon-confirm', field.parent('.field')).length) {
         field.parent('.field').append(svg);

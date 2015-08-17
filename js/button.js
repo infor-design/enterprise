@@ -47,7 +47,7 @@
             return $(this).find('use').attr('xlink:href','#icon-dropdown');
           });
           if (!ddIcon.length) {
-            this.element.append($('<svg class="icon" focusable="false" aria-hidden="true" viewBox="0 0 32 32"><use xlink:href="#icon-dropdown"></use></svg>'));
+            this.element.append($('<svg class="icon" focusable="false" aria-hidden="true" role="presentation" viewBox="0 0 32 32"><use xlink:href="#icon-dropdown"></use></svg>'));
           }
         }
 
@@ -65,7 +65,7 @@
             btnOffset = element.offset(),
             xPos = e.pageX - btnOffset.left,
             yPos = e.pageY - btnOffset.top,
-            ripple = $('<svg class="ripple-effect"><circle r="0" class="ripple-circle"></circle></svg>');
+            ripple = $('<svg class="ripple-effect" focusable="false" aria-hidden="true" role="presentation"><circle r="0" class="ripple-circle"></circle></svg>');
 
           element.addClass('hide-focus');
 
