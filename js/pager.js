@@ -56,7 +56,7 @@
         this.pagerBar = this.element.prev('.pager-toolbar');
 
         if (this.pagerBar.length === 0) {
-          this.pagerBar = $('<ul class="pager-toolbar"> <li class="pager-prev"> <a href="#" rel="prev"> <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-previous-page"></use></svg> <span class="audible">Previous</span> </a> </li> <li class="pager-next"> <a href="#" rel="next"> <span class="audible">Next</span> <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-next-page"></use></svg> </a> </li> </ul>');
+          this.pagerBar = $('<ul class="pager-toolbar"> <li class="pager-prev"> <a href="#" rel="prev"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-previous-page"></use></svg> <span class="audible">Previous</span> </a> </li> <li class="pager-next"> <a href="#" rel="next"> <span class="audible">Next</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-next-page"></use></svg> </a> </li> </ul>');
 
           if (this.isTable && this.settings.type === 'list') {
             this.settings.type = 'table';
@@ -64,8 +64,8 @@
 
           if (this.settings.type === 'table') {
             //Add More Buttons
-            this.pagerBar.prepend('<li class="pager-first"> <a href="#" rel="prev"> <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-first-page"></use></svg> <span class="audible">First</span> </a> </li>');
-            this.pagerBar.append('<li class="pager-last"> <a href="#" rel="prev"> <svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-last-page"></use></svg> <span class="audible">Last</span> </a> </li>');
+            this.pagerBar.prepend('<li class="pager-first"> <a href="#" rel="prev"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-first-page"></use></svg> <span class="audible">First</span> </a> </li>');
+            this.pagerBar.append('<li class="pager-last"> <a href="#" rel="prev"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-last-page"></use></svg> <span class="audible">Last</span> </a> </li>');
           }
 
           if (this.isTable) {
@@ -200,14 +200,8 @@
             isAriaDisabled = '';
           }
 
-<<<<<<< Updated upstream
           if (!this.isTable) {
             $('<li '+ thisClass + isAriaSelected +'><a '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
-=======
-          if (this.isTable && this.pagerBar.find('.btn-group').length === 0) {
-            var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>Records Per Page</span> <svg class="icon" focusable="false" aria-hidden="true" role="presentation"> <use xlink:href="#icon-arrow-down"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#">25</a></li> <li><a href="#">50</a></li> <li><a href="#">100</a></li> <li><a href="#">250</a></li> </ul> </div></li>';
-            $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
->>>>>>> Stashed changes
           }
         }
 
@@ -221,11 +215,11 @@
         }
 
         if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
-          var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#25">25</a></li> <li><a href="#50">50</a></li> <li><a href="#100">100</a></li> <li><a href="#250">250</a></li> </ul> </div></li>';
+          var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#25">25</a></li> <li><a href="#50">50</a></li> <li><a href="#100">100</a></li> <li><a href="#250">250</a></li> </ul> </div></li>';
           $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
           this.pagerBar.find('.btn-menu').popupmenu();
 
-          $('[href="#25"]').parent().addClass('is-checked');
+          $('[href="#25"]').addClass('is-checked');
         }
 
         return this._pageCount;
