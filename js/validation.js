@@ -357,6 +357,8 @@
             dfd.resolve();
             if(rule.positive) {
               self.addPositive(field);
+            } else {
+              self.removePositive(field);
             }
           }
           self.setErrorOnParent(field);
@@ -716,10 +718,15 @@
 
       emailPositive: {
         check: function (value, field) {
-          this.message = Locale.translate('EmailValidation');
-          return (value.length > 0) ? self.rules.email.check(value, field) : false;
+          if($.trim(value).length) {
+            self.rules.emailPositive.positive = true;
+            this.message = Locale.translate('EmailValidation');
+            return self.rules.email.check(value, field);
+          } else {
+            self.rules.emailPositive.positive = false;
+            return true;
+          }
         },
-        positive: true,
         message: 'EmailValidation'
       },
       passwordReq: {
