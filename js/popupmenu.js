@@ -100,11 +100,11 @@
         }
 
         this.menu.addClass('popupmenu')
-          .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu')).attr('aria-hidden', 'true')
+          .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'))
           .wrap('<div class="popupmenu-wrapper"></div>');
 
         //Enforce Correct Modality
-        this.menu.parent('.popupmenu-wrapper').attr('role', 'application');
+        this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
         this.menu.find('.popupmenu').each(function(i, elem) {

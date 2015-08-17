@@ -116,7 +116,7 @@ window.Formatters = {
     for (var i = 0; i < ranges.length; i++) {
       if (value >= ranges[i].min && value <= ranges[i].max) {
         classes = ranges[i].classes;
-        text = (ranges[i].text ? ranges[i].text : classes.split(' ')[0])
+        text = (ranges[i].text ? ranges[i].text : classes.split(' ')[0]);
       }
     }
 
@@ -265,6 +265,12 @@ $.fn.datagrid = function(options) {
       self.renderHeader();
       self.renderRows();
       self.element.addClass('datagrid-container').append(self.table);
+    },
+
+    //Method to Reload the data set
+    loadData: function (dataset) {
+      this.settings.dataset = dataset;
+      this.renderRows();
     },
 
     uniqueID: function (gridCount, suffix) {

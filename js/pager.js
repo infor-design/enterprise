@@ -147,6 +147,10 @@
           return this.activePage;
         }
 
+        if (pageNum === this.activePage) {
+          return this.activePage;
+        }
+
         this.activePage = pageNum;
 
         //Remove selected
@@ -202,20 +206,21 @@
         }
 
         if (this.isTable && this.pagerBar.find('.pager-count').length === 0) {
-          var text =  Locale.translate('PageOf');
-          text = text =text.replace('{0}', '<input data-mask="###" value="' + this.activePage + '">');
-          text = text.replace('{1}', (pages ? pages : '-'));
+          var text =  '<span>' + Locale.translate('PageOf') + '</span>';
+          text = text = text.replace('{0}', '<input data-mask="###" value="' + this.activePage + '">');
+          text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : '-') + '</span>');
 
           $('<label class="pager-count">'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
           this.pagerBar.find('.pager-count input').mask();
         }
 
         if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
-          var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#">25</a></li> <li><a href="#">50</a></li> <li><a href="#">100</a></li> <li><a href="#">250</a></li> </ul> </div></li>';
+          var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#25">25</a></li> <li><a href="#50">50</a></li> <li><a href="#100">100</a></li> <li><a href="#250">250</a></li> </ul> </div></li>';
           $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
           this.pagerBar.find('.btn-menu').popupmenu();
-        }
 
+          $('[href="#25"]').parent().addClass('is-checked');
+        }
 
         return this._pageCount;
       },
@@ -277,20 +282,25 @@
       renderPages: function() {
         var expr,
           self = this,
-          pageInfo = {current: this.currentPage(), pagesize: this.settings.pagesize, total: -1}
+          pageInfo = {current: this.currentPage(), pagesize: this.settings.pagesize, total: -1};
 
         //Make an ajax call and wait
         setTimeout(function () {
-          var doPaging = self.element.closest('.datagrid-container').triggerHandler('beforePaging', pageInfo);
+          var table = self.element.closest('.datagrid-container'),
+            doPaging = table.triggerHandler('beforePaging', pageInfo);
+
           if (doPaging === false) {
             return;
           }
 
           if (self.settings.source) {
-            var response = function (data) {
-              //TODOL: Render
-              console.log(data);
-              alert();
+            var response = function (data, pagingInfo) {
+              //Render Data
+              var api = table.data('datagrid');
+              api.loadData(data);
+
+              //Update Paging Info
+              self.updatePagingInfo(pagingInfo);
               return;
             };
 
@@ -306,6 +316,20 @@
           self.elements.filter(expr).show();
           self.element.trigger('afterpaging', pageInfo);
         }, 0);
+      },
+
+      updatePagingInfo: function(pagingInfo) {
+        this.settings.pagesize = pagingInfo.pagesize;
+        this.pagerBar.find('.btn-menu span').text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
+
+        //this._pageCount = pagingInfo.total/this.settings.pagesize);
+        this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
+        this.activePage = pagingInfo.current;
+        this.currentPage(this.activePage);
+
+        //Update the UI
+        this.pagerBar.find('.pager-count input').val(this.activePage);
+        this.pagerBar.find('.pager-total-pages').text(this._pageCount);
       },
 
       //Teardown

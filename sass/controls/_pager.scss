@@ -91,9 +91,14 @@
   input {
     @include font-size(14);
     height: 23px;
-    padding: 4px 0 2px;
+    line-height: 23px;
+    padding: 3px 0 1px;
     text-align: center;
     width: 30px;
+  }
+
+  .pager-total-pages {
+    line-height: 23px;
   }
 }
 
@@ -116,7 +121,7 @@
 
   .btn-menu {
     height: 30px;
-    margin: 1px -1px 0 0;
+    margin: 1px 0 0;
 
     &:focus {
       border-color: $primary-color;

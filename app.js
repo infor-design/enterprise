@@ -430,19 +430,16 @@ var express = require('express'),
     }
 
     var sortBy = function(field, reverse, primer) {
-      var key = primer ?
-       function(x) {return primer(x[field])} :
-       function(x) {return x[field]};
+      var key = primer ? function(x) {return primer(x[field]);} : function(x) {return x[field];};
+      reverse = !reverse ? 1 : -1;
 
-       reverse = !reverse ? 1 : -1;
-
-       return function (a, b) {
-         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-       }
-    }
+      return function (a, b) {
+        return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+      };
+    };
 
     if (req.query.sort) {
-      products.sort(sortBy(req.query.sort, false, function(a){return a.toString().toUpperCase()}));
+      products.sort(sortBy(req.query.sort, false, function(a){return a.toString().toUpperCase();}));
     }
 
     res.setHeader('Content-Type', 'application/json');
