@@ -25,7 +25,8 @@
           type: 'list', //Differet types of pagers: list, table and more
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
-          pagesize: 5 //Can be calculate or a specific number
+          pagesize: 5, //Can be calculate or a specific number
+          source: null  //Call Back Function for Pager Data Source
         },
         settings = $.extend({}, defaults, options);
 
@@ -48,6 +49,7 @@
         this.renderBar();
         this.renderPages();
         this.handleEvents();
+        this.currentPage(this.settings.activePage); //Get First Page
       },
 
       createPagerBar: function () {
@@ -75,7 +77,6 @@
               this.element.before(this.pagerBar);
             }
           }
-
         }
       },
 
@@ -135,6 +136,7 @@
 
       //Set or Get Current Page
       currentPage: function(pageNum) {
+
         var lis = this.pagerBar.find(this.buttonExpr);
 
         if (pageNum === 0 || pageNum > this.pageCount()) {
@@ -162,47 +164,60 @@
         return pageNum;
       },
 
+      _pageCount: 0,
+
       //Get/Set Total Number of pages
       pageCount: function(pages) {
+        if (!pages && !this.settings.source) {
+          return this._pageCount;
+        }
+
         if (pages) {
-          //Add in fake pages
+          this._pageCount = pages;
+        }
+
+        //Add in fake pages
+        if (!this.isTable) {
           this.pagerBar.find(this.buttonExpr).remove();
-          var i, thisClass, thisText, isAriaSelected, isAriaDisabled;
+        }
 
-          for (i = pages; i > 0; i--) {
-            if(i === 1) {
-              thisClass = 'class="selected"';
-              thisText = Locale.translate('PageOn');
-              isAriaSelected = 'aria-selected="true"';
-              isAriaDisabled = 'aria-disabled="true"';
-            } else {
-              thisClass = '';
-              thisText = Locale.translate('Page');
-              isAriaSelected = '';
-              isAriaDisabled = '';
-            }
+        var i, thisClass, thisText, isAriaSelected, isAriaDisabled;
 
-            if (!this.isTable) {
-              $('<li '+ thisClass + isAriaSelected +'><a '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
-            }
+        for (i = pages; i > 0; i--) {
+          if (i === 1) {
+            thisClass = 'class="selected"';
+            thisText = Locale.translate('PageOn');
+            isAriaSelected = 'aria-selected="true"';
+            isAriaDisabled = 'aria-disabled="true"';
+          } else {
+            thisClass = '';
+            thisText = Locale.translate('Page');
+            isAriaSelected = '';
+            isAriaDisabled = '';
           }
 
-          if (this.isTable && this.pagerBar.find('.pager-count').length === 0) {
-            var text =  Locale.translate('PageOf');
-            text = text =text.replace('{0}', '<input data-mask="###" value="13">');
-            text = text.replace('{1}', pages);
-
-            $('<label class="pager-count">'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
-            this.pagerBar.find('.pager-count input').mask();
-          }
-
-          if (this.isTable && this.pagerBar.find('.btn-group').length === 0) {
-            var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>Records Per Page</span> <svg class="icon" focusable="false" aria-hidden="true"> <use xlink:href="#icon-arrow-down"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#">25</a></li> <li><a href="#">50</a></li> <li><a href="#">100</a></li> <li><a href="#">250</a></li> </ul> </div></li>';
-            $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
+          if (!this.isTable) {
+            $('<li '+ thisClass + isAriaSelected +'><a '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
           }
         }
 
-        return this.pagerBar.find(this.buttonExpr).length;
+        if (this.isTable && this.pagerBar.find('.pager-count').length === 0) {
+          var text =  Locale.translate('PageOf');
+          text = text =text.replace('{0}', '<input data-mask="###" value="' + this.activePage + '">');
+          text = text.replace('{1}', (pages ? pages : '-'));
+
+          $('<label class="pager-count">'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
+          this.pagerBar.find('.pager-count input').mask();
+        }
+
+        if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
+          var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#">25</a></li> <li><a href="#">50</a></li> <li><a href="#">100</a></li> <li><a href="#">250</a></li> </ul> </div></li>';
+          $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
+          this.pagerBar.find('.btn-menu').popupmenu();
+        }
+
+
+        return this._pageCount;
       },
 
       // Render Pages
@@ -260,17 +275,37 @@
 
       // Render Paged Items
       renderPages: function() {
-        var expr;
+        var expr,
+          self = this,
+          pageInfo = {current: this.currentPage(), pagesize: this.settings.pagesize, total: -1}
 
         //Make an ajax call and wait
-        this.element.trigger('paging', {currentPage: this.currentPage(), callback: function () {
-          //TODO - Not sure what
-        }});
+        setTimeout(function () {
+          var doPaging = self.element.closest('.datagrid-container').triggerHandler('beforePaging', pageInfo);
+          if (doPaging === false) {
+            return;
+          }
 
-        //Render page objects
-        this.elements.hide();
-        expr = (this.currentPage() === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((this.currentPage()) * settings.pagesize) +'):gt('+ (((this.currentPage()-1) *settings.pagesize) -1) +')');
-        this.elements.filter(expr).show();
+          if (self.settings.source) {
+            var response = function (data) {
+              //TODOL: Render
+              console.log(data);
+              alert();
+              return;
+            };
+
+            self.settings.source(pageInfo, response);
+          }
+
+          //Make an ajax call and wait
+          self.element.trigger('paging', pageInfo);
+
+          //Render page objects
+          self.elements.hide();
+          expr = (self.currentPage() === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((self.currentPage()) * settings.pagesize) +'):gt('+ (((self.currentPage()-1) *settings.pagesize) -1) +')');
+          self.elements.filter(expr).show();
+          self.element.trigger('afterpaging', pageInfo);
+        }, 0);
       },
 
       //Teardown

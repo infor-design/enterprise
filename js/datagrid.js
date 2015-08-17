@@ -114,8 +114,10 @@ window.Formatters = {
       classes = '', text='';
 
     for (var i = 0; i < ranges.length; i++) {
-      classes = (value >= ranges[i].min && value <= ranges[i].max ? ranges[i].classes : classes);
-      text = (ranges[i].text ? ranges[i].text :classes.split(' ')[0]);
+      if (value >= ranges[i].min && value <= ranges[i].max) {
+        classes = ranges[i].classes;
+        text = (ranges[i].text ? ranges[i].text : classes.split(' ')[0])
+      }
     }
 
     return {'classes': classes, 'text': text};
@@ -124,7 +126,8 @@ window.Formatters = {
   // Badge (Visual Indictors)
   Badge: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
-    return '<span class="' + ranges.classes +'"><span class="audible">'+ ranges.text + '</span></span>';
+
+    return '<span class="' + ranges.classes +'">' + value +' <span class="audible">'+ ranges.text+ '</span></span>';
   },
 
   // Tags (low priority)
@@ -209,20 +212,23 @@ $.fn.datagrid = function(options) {
         rowHeight: 'medium', //(short, medium or tall)
         selectable: false, //false, 'single' or 'multiple'
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
-        paging: false
+        paging: false,
+        source: null //callback for paging
       },
       settings = $.extend({}, defaults, options);
 
   // Plugin Constructor
-  function Plugin(element) {
+  function Datagrid(element) {
     this.element = $(element);
     this.init();
   }
 
   // Actual Plugin Code
-  Plugin.prototype = {
+  Datagrid.prototype = {
 
     init: function(){
+     var self = this;
+
      this.settings = settings;
      this.initSettings();
      this.appendToolbar();
@@ -232,7 +238,10 @@ $.fn.datagrid = function(options) {
      this.handleKeys();
      this.handlePaging();
      this.initTableWidth();
-     this.element.trigger('rendered', [this.element, this.headerRow, this.pagerBar]);
+
+     setTimeout(function () {
+      self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
+     }, 0);
     },
 
     initSettings: function () {
@@ -998,7 +1007,6 @@ $.fn.datagrid = function(options) {
 
       //Save the Cell Edit back to the data set
       this.updateCellValue(cellNode.parent().index(), cellNode.index(), newValue);
-
     },
 
     //Returns Column Settings from a cell
@@ -1017,6 +1025,8 @@ $.fn.datagrid = function(options) {
 
       var formatted = formatter(row-1, cell, value, col, settings.dataset[row]).toString();
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
+
+      this.element.trigger('cellchange', [row, cell, cellNode, value]);
     },
 
     // Update a specific Cell
@@ -1050,8 +1060,10 @@ $.fn.datagrid = function(options) {
       }
 
       self.activeCell.node.focus();
-      this.activeCell.isFocused = true;
+      self.headerRow.find('th').removeClass('is-active');
+      self.headerRow.find('th').eq(cell).addClass('is-active');
 
+      this.activeCell.isFocused = true;
     },
 
     expandRow: function(row) {
@@ -1143,7 +1155,7 @@ $.fn.datagrid = function(options) {
         elem.after(this.pagerBar);
       }
 
-      this.tableBody.addClass('paginated').pager();
+      this.tableBody.addClass('paginated').pager({source: this.settings.source, pagesize: this.settings.pagesize});
     }
   };
 
@@ -1153,7 +1165,7 @@ $.fn.datagrid = function(options) {
     if (instance) {
       instance.settings = $.extend({}, defaults, options);
     } else {
-      instance = $.data(this, pluginName, new Plugin(this, settings));
+      instance = $.data(this, pluginName, new Datagrid(this, settings));
     }
   });
 

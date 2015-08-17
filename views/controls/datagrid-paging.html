@@ -32,12 +32,26 @@
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
-        dataset: data,
+        //dataset: data,
         selectable: 'single',
         paging: true,
+        pagesize: 25,
+        source: function(req, response) {
+
+          $.getJSON('/api/compressors?pageNum='+ req.current +'&pageSize='+ req.pagesize, function(data) {
+            req.total = 1000;
+            response(data, req);
+          });
+
+          //Get Page Based on info in Req, return results into response;
+        },
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+      }).on('paging', function () {
+        console.log('paging event fired');
       });
 
   });
+
+
 </script>
 

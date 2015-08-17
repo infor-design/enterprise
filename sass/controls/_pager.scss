@@ -3,7 +3,7 @@
 
 .pager-toolbar {
   @include font-size(14);
-  margin: 20px 0;
+  margin: 10px 0;
   max-height: 38px;
   overflow: hidden;
   text-align: center;
@@ -84,6 +84,7 @@
 .pager-count {
   @include font-size(14);
   display: inline-block;
+  line-height: 23px;
   margin: 5px 10px;
   vertical-align: top;
 
@@ -108,5 +109,31 @@
     margin-right: 5px;
   }
 
+}
+
+.pager-pagesize {
+  float: right;
+
+  .btn-menu {
+    height: 30px;
+    margin: 1px -1px 0 0;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: none;
+    }
+
+    span {
+      @include font-size(14);
+      font-weight: normal;
+      line-height: 30px;
+      text-transform: none;
+    }
+
+    .icon {
+      height: 29px;
+      margin-left: -16px;
+    }
+  }
 }
 

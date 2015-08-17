@@ -231,15 +231,15 @@ var express = require('express'),
       {value:'FL', label:'Florida'}, {value:'GA', label:'Georgia'}, {value:'GU', label:'Guam'}, {value:'HI', label:'Hawaii'},
       {value:'ID', label:'Idaho'}, {value:'IL', label:'Illinois'}, {value:'IN', label:'Indiana'}, {value:'IA', label:'Iowa'},
       {value:'KS', label:'Kansas'}, {value:'KY', label:'Kentucky'}, {value:'LA', label:'Louisiana'}, {value:'ME', label:'Maine'},
-      {value:'MH', label:'Marshall Islands'}, {value:'MD', label:'Maryland'}, {value:'MA', label:'Massachusetts'}, {value:'MI',
+      {value:'MH', label:'Marshall Island Teritory'}, {value:'MD', label:'Maryland'}, {value:'MA', label:'Massachusetts'}, {value:'MI',
       label:'Michigan'}, {value:'MN', label:'Minnesota'}, {value:'MS', label:'Mississippi'}, {value:'MO', label:'Missouri'},
       {value:'MT', label:'Montana'}, {value:'NE', label:'Nebraska'}, {value:'NV', label:'Nevada'}, {value:'NH', label:'New Hampshire'},
       {value:'NJ', label:'New Jersey'}, {value:'NM', label:'New Mexico'}, {value:'NY', label:'New York'}, {value:'NC', label:'North Carolina'},
-      {value:'ND', label:'North Dakota'}, {value:'MP', label:'Northern Mariana Islands'}, {value:'OH', label:'Ohio'},
+      {value:'ND', label:'North Dakota'}, {value:'MP', label:'Northern Mariana Island Teritory'}, {value:'OH', label:'Ohio'},
       {value:'OK', label:'Oklahoma'}, {value:'OR', label:'Oregon'}, {value:'PW', label:'Palau'}, {value:'PA', label:'Pennsylvania'},
-      {value:'PR', label:'Puerto Rico'}, {value:'RI', label:'Rhode Island'}, {value:'SC', label:'South Carolina'},
+      {value:'PR', label:'Puerto Rico'}, {value:'RI', label:'Rhode Island Teritory'}, {value:'SC', label:'South Carolina'},
       {value:'SD', label:'South Dakota'}, {value:'TN', label:'Tennessee'}, {value:'TX', label:'Texas'}, {value:'UT', label:'Utah'},
-      {value:'VT', label:'Vermont'}, {value:'VI', label:'Virgin Islands'}, {value:'VA', label:'Virginia'}, {value:'WA', label:'Washington'},
+      {value:'VT', label:'Vermont'}, {value:'VI', label:'Virgin Island Teritory'}, {value:'VA', label:'Virginia'}, {value:'WA', label:'Washington'},
       {value:'WV', label:'West Virginia'}, {value:'WI', label:'Wisconsin'}, {value:'WY', label:'Wyoming'}];
 
     for (var i in allStates) {
@@ -419,14 +419,30 @@ var express = require('express'),
   });
 
   //Data Grid Paging Example
-  // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productName&pageSize=100
+  // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productId&pageSize=100
   app.get('/api/compressors', function(req, res) {
     var products = [],
       start = (req.query.pageNum -1) * req.query.pageSize,
       end = req.query.pageNum * req.query.pageSize;
 
     for (var i = start; i < end; i++) {
-      products.push({ id: i, productId: 214220+i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      products.push({ id: i, productId: 214220+i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(i/2), price: 210.99-i, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+    }
+
+    var sortBy = function(field, reverse, primer) {
+      var key = primer ?
+       function(x) {return primer(x[field])} :
+       function(x) {return x[field]};
+
+       reverse = !reverse ? 1 : -1;
+
+       return function (a, b) {
+         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+       }
+    }
+
+    if (req.query.sort) {
+      products.sort(sortBy(req.query.sort, false, function(a){return a.toString().toUpperCase()}));
     }
 
     res.setHeader('Content-Type', 'application/json');

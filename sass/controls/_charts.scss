@@ -117,10 +117,6 @@
     stroke-width: 1px;
   }
 
-  &.chart-vertical-bar {
-    margin: 0 auto;
-    max-width: 540px;
-  }
 }
 
 // Tooltip Swatch
@@ -129,9 +125,10 @@
 
   .swatch-row {
     display: table-row;
+    height: 25px;
 
     div {
-      border-bottom: 10px solid $tooltip-bg-color;
+      border-bottom: 9px solid $tooltip-bg-color;
       display: table-cell;
       height: 14px;
       width: 14px;
@@ -142,7 +139,7 @@
       color: $inverse-color;
       display: table-cell;
       line-height: 12px;
-      padding: 0 10px 0 15px;
+      padding: 0 10px 0 10px;
     }
 
     b {
@@ -160,16 +157,18 @@
 .chart-tooltip-total {
   color: $inverse-color;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
 // Legend Styling
 .chart-legend {
-  margin-left: 40px;
+  margin-left: 55px;
+  margin-top: -7px;
 
   .chart-legend-item {
     border: 1px solid transparent;
+    float: left;
     margin-right: 10px;
     outline: none;
     padding: 7px 6px 4px;

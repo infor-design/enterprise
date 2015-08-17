@@ -106,9 +106,9 @@ window.Chart = function(container) {
         xMax, xScale, yScale, yAxis, yMap, xAxis, groups;
 
     var margins = {
-      top: 30,
-      left: 48,
-      right: 24,
+      top: 40,
+      left: 50,
+      right: 60,
       bottom: 30 // 30px plus size of the bottom axis (20)
     };
 
@@ -116,8 +116,8 @@ window.Chart = function(container) {
     $(container).closest('.widget-content').addClass('l-center');
     $(container).closest('.card-content').addClass('l-center');
 
-    width = 376 + margins.left + margins.right ;
-    height = 250 - margins.top - margins.bottom;  //influences the bar width
+    width =  parseInt($(container).parent().width()) - margins.left - margins.right;
+    height =  parseInt($(container).parent().height()) - margins.top - margins.bottom - 40;  //influences the bar width
 
     //Get the Legend Series'
     series = dataset.map(function (d) {
@@ -160,9 +160,8 @@ window.Chart = function(container) {
 
     svg = d3.select(container)
       .append('svg')
-      .attr('width', w) //100%
+      .attr('width', w)
       .attr('height', h)
-      .attr('viewBox', '0 0 '+ w + ' ' + h)
       .attr('preserveAspectRatio','xMinYMin meet')
       .append('g')
       .attr('class', 'group')
@@ -212,6 +211,10 @@ window.Chart = function(container) {
       .scale(xScale)
       .tickSize(-height)
       .tickPadding(10)
+      .tickFormat(function (d, i) {
+        //reduce ticks to half to avoid overlap
+        return (i % 2 && h < 400 ? '' : d);
+      })
       .orient('bottom');
 
     if (isNormalized) {
@@ -221,7 +224,7 @@ window.Chart = function(container) {
     yAxis = d3.svg.axis()
       .scale(yScale)
       .tickSize(0)
-      .tickPadding(10)
+      .tickPadding(15)
       .orient('left');
 
     svg.append('g')
@@ -242,7 +245,7 @@ window.Chart = function(container) {
         return charts.colors(i);
       });
 
-    var maxBarHeight = 40;
+    var maxBarHeight = 45;
 
     rects = groups.selectAll('rect')
       .data(function (d) {
@@ -281,7 +284,7 @@ window.Chart = function(container) {
             totals[k] = dataset[k][i].x;
           }
 
-          content += '<div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></br>';
+          content += '<div class="swatch-row"><div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></div>';
          }
          content += '</div>';
         }
@@ -317,7 +320,7 @@ window.Chart = function(container) {
         svg.selectAll('.is-selected').classed('is-selected', false);
         bar.classed('is-selected', true);
         svg.selectAll('.axis.y .tick:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
-        svg.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.5);
+        svg.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.6);
       }
       $(container).trigger('selected', [bar, d]);
     });
@@ -329,88 +332,11 @@ window.Chart = function(container) {
         return xScale(d.x);
       });
 
-    function resizeVertBar() {
-      var svgWidth = $(container).find('svg').width(),
-          chartW = $(container).width(),
-          currTicks, xScale, newTicks;
-
-      if (chartW <= svgWidth) {
-
-        var chartSvgDiff = svgWidth - chartW,
-            squeezePercent = ( ( svgWidth - chartSvgDiff ) * 100 ) / svgWidth,
-            scaleW = 0.01 * squeezePercent;
-
-        currTicks = d3.svg.axis()
-            .scale(xScale)
-            .ticks();
-
-        newTicks = Math.floor(currTicks / 2);
-
-        // Redefine the X Scale
-        xScale = d3.scale.linear()
-          .domain([0, xMax])
-          .nice()
-          .range([0, (width * scaleW) - 50]);
-
-        // Redefine the X Axis
-        xAxis = d3.svg.axis()
-          .scale(xScale)
-          .ticks(newTicks)
-          .tickSize(-height)
-          .tickPadding(0);
-
-        // Redraw the X Axis
-        d3.select('.x')
-          .call(xAxis);
-
-        // Redraw the bars
-        svg.selectAll('.bar')
-          .transition()
-          .duration(500)
-          .attr('width', function (d) {
-            return xScale(d.x);
-          })
-          .attr('x', function (d) {
-            return xScale(d.x0);
-          });
-
-      } else{
-
-        // Redefine the X Scale
-        xScale = d3.scale.linear()
-          .domain([0, xMax])
-          .nice()
-          .range([0, width]);
-
-        // Redefine the X Axis
-        xAxis = d3.svg.axis()
-          .scale(xScale)
-          .ticks(currTicks)
-          .tickSize(-height);
-
-        // Redraw the X Axis
-        d3.select('.x')
-          .call(xAxis);
-
-        // Redraw the bars
-        svg.selectAll('.bar')
-          .transition()
-          .duration(500)
-          .attr('width', function (d) {
-            return xScale(d.x);
-          })
-          .attr('x', function (d) {
-            return xScale(d.x0);
-          });
-      }
-    }
-
-    $(window).off('resize.charts load.charts')
-        .on('resize.charts load.charts', resizeVertBar);
-
     //Add Legends
     charts.addLegend(series);
     charts.appendTooltip();
+    charts.handleResize();
+
     return $(container);
   };
 
@@ -1210,7 +1136,10 @@ $.fn.chart = function(options) {
     if ($.isEmptyObject(chartInst)) {
      return;
     }
-    chartInst.initChartType(options);
+
+    setTimeout(function () {
+      chartInst.initChartType(options);
+    }, 300);
 
   });
 };

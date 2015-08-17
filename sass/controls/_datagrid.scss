@@ -54,6 +54,10 @@ $datagrid-header-height: 40px;
       vertical-align: middle;
       white-space: nowrap;
     }
+
+    &.is-active {
+      background-color: $datagrid-header-active-color;
+    }
   }
 
   //Column Resize
@@ -74,7 +78,7 @@ $datagrid-header-height: 40px;
   }
 
   .is-sortable:hover {
-    background-color:$datagrid-header-hover-color;
+    background-color: $datagrid-header-hover-color;
     cursor: pointer;
 
     .icon {
@@ -134,7 +138,10 @@ $datagrid-header-height: 40px;
     }
 
     .badge {
-      top: 10px;
+      color: $inverse-color;
+      line-height: 23px;
+      margin-top: 0;
+      top: 0;
 
       &:before {
         margin-top: -10px;
@@ -277,6 +284,7 @@ $datagrid-header-height: 40px;
   // States
   .is-readonly {
     background-color: $datagrid-cell-readonly-bg-color;
+
     span {
       color: $datagrid-cell-readonly-color;
     }
