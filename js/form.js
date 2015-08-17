@@ -41,6 +41,19 @@
   };
 
   /**
+  * Make something readonly
+  */
+  $.fn.readonly = function() {
+    $.each(this.data(), function(index, value) {
+      if (value.readonly) {
+        value.readonly();
+      }
+    });
+    this.prop('readonly', true);
+    return this;
+  };
+
+  /**
   * Track Input is changed from last submit
   */
   $.fn.trackdirty = function() {

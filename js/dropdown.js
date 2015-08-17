@@ -1165,8 +1165,14 @@
 
       enable: function() {
         this.element.prop('disabled', false);
-        this.input.prop('disabled', false);
+        this.input.prop('disabled', false).removeClass('is-readonly');
       },
+
+      readonly: function() {
+        this.input.addClass('is-readonly');
+        this.closeList();
+      },
+
 
       // Triggered whenever the plugin's settings are changed
       update: function() {

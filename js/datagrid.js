@@ -299,7 +299,8 @@ $.fn.datagrid = function(options) {
         }
 
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
-         ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"'+
+         ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"' +
+         (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
          headerRow += '<div class="datagrid-column-wrapper '+ (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
@@ -313,6 +314,7 @@ $.fn.datagrid = function(options) {
 
       self.headerRow = $(headerRow);
       self.table.append(self.headerRow);
+      self.table.find('th[title]').tooltip();
 
       this.setInitialColumnWidths();
     },
@@ -360,9 +362,6 @@ $.fn.datagrid = function(options) {
             continue;
           }
 
-          //alternateRowShading
-          //f5f5f5
-
           formatted = formatter(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i]).toString();
           if (formatted.indexOf('<span class="is-readonly">') === 0) {
             col.readonly = true;
@@ -384,6 +383,7 @@ $.fn.datagrid = function(options) {
           rowHtml += '<td role="gridcell" aria-colindex="' + (j+1) + '" '+
               ' aria-describedby="' + self.uniqueID(self.gridCount, '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
+             (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
               '><div class="datagrid-cell-wrapper">';
           rowHtml += formatted + '</div></td>';
         }
@@ -411,10 +411,11 @@ $.fn.datagrid = function(options) {
       self.tableBody.append(tableHtml);
       self.displayCounts();
 
+      self.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
+
       //Set Tab Index and active Cell
       setTimeout(function () {
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
-
       }, 100);
     },
 

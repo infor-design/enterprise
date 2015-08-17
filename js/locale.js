@@ -289,8 +289,8 @@
         return undefined;
       }
 
-      if(isDateTime) {
-        if(dateObj.a) {
+      if (isDateTime) {
+        if (dateObj.a) {
           dateObj.return = new Date(dateObj.year +'/'+ (dateObj.month + 1) +'/'+ dateObj.day +' '+ dateObj.h +':'+ dateObj.mm +' '+ dateObj.a);
         } else {
           dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
@@ -357,9 +357,10 @@
     //Take a Formatted Number and return a real number
     parseNumber: function(input, options) {
       var numSettings = this.currentLocale.data.numbers,
-        num = 0, numString;
+        numString;
 
       numString = input;
+
       if (!numString) {
         return undefined;
       }
