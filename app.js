@@ -170,12 +170,17 @@ var express = require('express'),
 
   app.get('/examples/common-nav/*', function(req, res) {
     var commonNavOpts = {
-      title: 'SoHo XI',
-      subtitle: 'Common Nav',
+      title: 'Application Title',
       layout: 'examples/common-nav/layout',
       enableLiveReload: true
     },
       end = req.url.replace('/examples/common-nav/', '');
+
+    if (end.match(/\?/)) {
+      var param = end.substr(end.indexOf('?'), end.length - 1);
+      commonNavOpts.title = decodeURIComponent(param.substr(param.indexOf('=') + 1, param.length - 1)); // 6 = "?title="
+      end = end.replace(param, '');
+    }
 
     if (end.match('a1')) {
       commonNavOpts.layout += '-a1';
