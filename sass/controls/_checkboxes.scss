@@ -70,8 +70,11 @@
 
 input.checkbox,
 span.checkbox > input {
-  left: -9999px;
+  left: 0;
+  opacity: 0;
   position: absolute;
+  top: -3px;
+  width: 18px;
 }
 
 input.checkbox + label,

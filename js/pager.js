@@ -219,7 +219,7 @@
           $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
           this.pagerBar.find('.btn-menu').popupmenu();
 
-          $('[href="#25"]').addClass('is-checked');
+          $('[href="#25"]').parent().addClass('is-checked');
         }
 
         return this._pageCount;

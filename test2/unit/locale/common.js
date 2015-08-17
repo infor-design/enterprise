@@ -136,6 +136,7 @@ define([
 
       Locale.set('de-DE');    //year, month, day
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
+
     },
 
     'should cleanly handle non dates': function() {
@@ -228,6 +229,15 @@ define([
 
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.123, {style: 'currency'})).to.equal('12.345,12 €');
+    },
+
+    'should parse numbers back': function() {
+      Locale.set('en-US');
+      expect(Locale.parseNumber('$12,345.13')).to.equal(12345.13);
+
+      Locale.set('de-DE');
+      expect(Locale.parseNumber('12.345,12 €')).to.equal(12345.12);
+      expect(Locale.parseNumber(undefined)).to.equal(undefined);
     }
 
   });

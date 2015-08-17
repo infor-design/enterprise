@@ -185,7 +185,7 @@
         dateObj = {},
         isDateTime = (dateFormat !== this.calendar().dateFormat.short);
 
-      if(isDateTime) {
+      if (isDateTime) {
         //replace [space & colon] with "/"
         dateFormat = dateFormat.replace(/[\s:]/g,'/');
         dateString = dateString.replace(/[\s:]/g,'/');
@@ -299,13 +299,13 @@
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
       }
 
-      if (Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date
+     /* if (Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date
         if (isNaN(dateObj.return.getTime())) { //date is not valid
           dateObj.return = undefined;
         }
       } else { //not a date
         dateObj.return = undefined;
-      }
+      }*/
       return dateObj.return;
 
     },
@@ -352,6 +352,25 @@
       }
 
       return formattedNum;
+    },
+
+    //Take a Formatted Number and return a real number
+    parseNumber: function(input, options) {
+      var numSettings = this.currentLocale.data.numbers,
+        num = 0, numString;
+
+      numString = input;
+      if (!numString) {
+        return undefined;
+      }
+
+      numString = numString.replace(numSettings.group, '');
+      numString = numString.replace(numSettings.decimal, '.');
+      numString = numString.replace(numSettings.percentSign, '');
+      numString = numString.replace(this.currentLocale.data.currencySign, '');
+      numString = numString.replace(' ', '');
+
+      return parseFloat(numString);
     },
 
     // Overridable culture messages
