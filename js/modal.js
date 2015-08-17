@@ -189,7 +189,7 @@
 
           if (props.icon && props.icon.charAt(0) === '#') {
             btn.html('<span>' + btn.text() + '</span>');
-            $('<svg class="icon '+ (props.icon === '#icon-close' ? 'icon-close' : '') +' "><use xlink:href="' + props.icon + '"></use></svg>').prependTo(btn);
+            $('<svg class="icon '+ (props.icon === '#icon-close' ? 'icon-close' : '') +' " focusable="false" aria-hidden="true" role="presentation"><use xlink:href="' + props.icon + '"></use></svg>').prependTo(btn);
           }
 
           if (props.id) {

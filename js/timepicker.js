@@ -79,7 +79,7 @@
         //Append a Button
         this.trigger = this.element.next('svg.icon');
         if (this.trigger.length === 0) {
-          this.trigger = $('<svg class="icon" focusable="false" aria-hidden="true">' +
+          this.trigger = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
                            '<use xlink:href="#icon-clock"/>' +
                            '</svg>').insertAfter(this.element);
         }

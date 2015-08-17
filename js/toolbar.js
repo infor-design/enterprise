@@ -71,7 +71,7 @@
             moreContainer = $('<div class="more"></div>').appendTo(this.element);
           }
           this.more = $('<button class="btn-actions"></button>')
-            .html('<svg class="icon" focusable="false"><use xlink:href="#icon-more"></svg>' +
+            .html('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></svg>' +
               '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
             .appendTo(moreContainer);
         }
