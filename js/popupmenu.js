@@ -153,7 +153,7 @@
             item.html('<span>' + text + '</span>');
           }
           if (item.find('svg.arrow').length === 0) {
-            item.append('<svg class="icon arrow" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></svg>');
+            item.append('<svg class="icon arrow" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
           }
           item.attr('aria-haspopup', 'true');
 
@@ -363,7 +363,7 @@
             link = alink || $('li:first a', this.menu);
 
           if(!icon.length) {
-            this.element.append($('<svg class="icon icon-filter" focusable="false" aria-hidden="true"><use xlink:href="#icon-dropdown"></use></svg>'));
+            this.element.append($('<svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>'));
             icon = $('use', this.element);
           }
           $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));

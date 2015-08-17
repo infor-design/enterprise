@@ -171,6 +171,9 @@
           //Spinbox
           ['spinbox'],
 
+          //Sortable drag and drop
+          ['sortable'],
+
           //Color Picker
           ['colorpicker'],
 

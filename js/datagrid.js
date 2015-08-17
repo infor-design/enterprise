@@ -66,7 +66,7 @@ window.Formatters = {
     }
 
     return '<button class="btn-icon small datagrid-drilldown">' +
-         '<svg aria-hidden="true" focusable="false" class="icon">'+
+         '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+
          '<use xlink:href="#icon-drilldown"/></svg><span>'+ text +'</span>'+
          '</button>';
   },
@@ -88,7 +88,7 @@ window.Formatters = {
     //Render an Action Formatter
     return '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="popupmenu-1">' +
           '<span class="audible">'+ col.title +'</span>' +
-          '<svg class="icon" aria-hidden="false" focusable="false">' +
+          '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
           '<use xlink:href="#icon-more"></svg></button>';
   },
 
@@ -138,7 +138,7 @@ window.Formatters = {
 
   Alert: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
-    return '<svg aria-hidden="true" focusable="false" class="icon datagrid-alert-icon icon-' + ranges.classes +'"><use xlink:href="#icon-' + ranges.classes +'"/></svg><span class="datagrid-alert-text">' + (ranges.text === 'value' ? value : ranges.text) + '</span>';
+    return '<svg class="icon datagrid-alert-icon icon-' + ranges.classes +'" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-' + ranges.classes +'"/></svg><span class="datagrid-alert-text">' + (ranges.text === 'value' ? value : ranges.text) + '</span>';
   },
 
   // TODOs
@@ -304,7 +304,7 @@ $.fn.datagrid = function(options) {
          headerRow += '<div class="datagrid-column-wrapper '+ (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + settings.columns[j].name + '</span>';
 
         if (isSortable) {
-          headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-dropdown-up"></svg></span><span class="sort-desc"><svg class="icon" aria-hidden="true" focusable="false"><use xlink:href="#icon-dropdown"></svg></div>';
+          headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown-up"></svg></span><span class="sort-desc"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></div>';
         }
 
         headerRow += '</div></th>';
@@ -657,7 +657,7 @@ $.fn.datagrid = function(options) {
 
         var buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
         if (settings.toolbar.dateFilter) {
-          buttonSet.append('<button class="btn-icon has-text" type="button"><svg class="icon"><use xlink:href="#icon-calendar-date"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
+          buttonSet.append('<button class="btn-icon has-text" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar-date"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
         }
 
         if (settings.toolbar.keywordFilter) {
@@ -666,7 +666,7 @@ $.fn.datagrid = function(options) {
 
         if (settings.toolbar.actions) {
           more = $('<div class="more"></div>').appendTo(buttonSet);
-          more.append('<button class="btn-actions"><svg class="icon" focusable="false"><use xlink:href="#icon-more"></use></svg><span class="audible">Grid Features</span></button>');
+          more.append('<button class="btn-actions"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></use></svg><span class="audible">Grid Features</span></button>');
           toolbar.addClass('has-more-button');
         }
 

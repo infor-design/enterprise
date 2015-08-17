@@ -1,0 +1,29 @@
+<script type="text/javascript">
+
+  // Gets a parameter from the current URL string
+  function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+  }
+
+  // Sets up click events that either close the Application Menu or the Mingle App Switcher in the A1 and A2 examples
+  $('#mingle-app-switcher').on('click.mingledemo', function() {
+    $('#application-menu').trigger('close-applicationmenu', [true]);
+  });
+  $('#application-menu').on('applicationmenuopen', function() {
+    $('#mingle-app-switcher').data('popupmenu').close();
+  });
+
+  // Set up the Title Bar of the page in A1 and B1 examples (switching the Application),
+  // or A2 and B2 (Switching the Role).
+  // If there's no URL Parameter, leave it as the default.
+  $('body').on('initialized', function() {
+    var title = getURLParameter('title');
+    if (title && title.length > 0) {
+      $('#titlebar').html(title.toString());
+      return;
+    }
+
+    // TODO: Setup either Application Title or Role Name in the header, based on the example.
+  });
+
+</script>

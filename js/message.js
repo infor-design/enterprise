@@ -81,7 +81,7 @@
         });
 
         if (settings.isError) {
-          this.title.addClass('is-error').prepend('<svg class="icon icon-error" focusable="false" aria-hidden="true"><use xlink:href="#icon-error"></svg>');
+          this.title.addClass('is-error').prepend('<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"></svg>');
         } else {
           this.title.removeClass('is-error').find('svg').remove();
         }
