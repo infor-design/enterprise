@@ -399,6 +399,12 @@
           if (this.element.is(':not(.autocomplete)')) {
             wrapper.css({'top': ($(window).height() + $(document).scrollTop()) - menuHeight});
 
+            if (this.element.is('.btn-menu')) {
+              //move on top and change arrow
+              wrapper.css({'top': target.offset().top - menuHeight});
+              wrapper.removeClass('bottom').addClass('top');
+            }
+
             //Did it fit?
             if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
               wrapper.css('top', 0);

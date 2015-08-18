@@ -35,7 +35,7 @@
         //dataset: data,
         selectable: 'single',
         paging: true,
-        pagesize: 25,
+        pagesize: 15,
         source: function(req, response) {
 
           $.getJSON('/api/compressors?pageNum='+ req.current +'&pageSize='+ req.pagesize, function(data) {
@@ -46,8 +46,6 @@
           //Get Page Based on info in Req, return results into response;
         },
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
-      }).on('paging', function () {
-        console.log('paging event fired');
       });
 
    });

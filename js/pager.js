@@ -26,7 +26,8 @@
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
           pagesize: 5, //Can be calculate or a specific number
-          source: null  //Call Back Function for Pager Data Source
+          source: null,  //Call Back Function for Pager Data Source
+          pagesizes: [15, 25, 50, 75]
         },
         settings = $.extend({}, defaults, options);
 
@@ -49,7 +50,7 @@
         this.renderBar();
         this.renderPages();
         this.handleEvents();
-        this.currentPage(this.settings.activePage); //Get First Page
+        this.setActivePage(this.settings.activePage); //Get First Page
       },
 
       createPagerBar: function () {
@@ -95,27 +96,27 @@
           e.preventDefault();
 
           if (li.is('.pager-prev')) {
-            self.currentPage(self.activePage - 1);
+            self.setActivePage(self.activePage - 1);
             return false;
           }
 
           if (li.is('.pager-next')) {
-            self.currentPage(self.activePage + 1);
+            self.setActivePage(self.activePage + 1);
             return false;
           }
 
           if (li.is('.pager-first')) {
-            self.currentPage(self.activePage = 1);
+            self.setActivePage(1);
             return false;
           }
 
          if (li.is('.pager-last')) {
-            self.currentPage(self.pageCount());  //TODO Calculate Last Page?
+            self.setActivePage(self.pageCount());  //TODO Calculate Last Page?
             return false;
           }
 
           //Go to the page via the index of the button
-          self.currentPage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0));
+          self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0));
 
           return false;
         });
@@ -135,10 +136,9 @@
       },
 
       //Set or Get Current Page
-      currentPage: function(pageNum) {
+      setActivePage: function(pageNum) {
 
         var lis = this.pagerBar.find(this.buttonExpr);
-
         if (pageNum === 0 || pageNum > this.pageCount()) {
           return;
         }
@@ -154,14 +154,16 @@
         this.activePage = pageNum;
 
         //Remove selected
-        lis.filter('.selected').removeClass('selected').removeAttr('aria-selected')
-          .find('a').removeAttr('aria-disabled')
-            .find('.audible').html(Locale.translate('Page'));
+        if (!this.settings.source) {
+          lis.filter('.selected').removeClass('selected').removeAttr('aria-selected')
+            .find('a').removeAttr('aria-disabled')
+              .find('.audible').html(Locale.translate('Page'));
 
-        //Set selected Page
-        lis.eq(pageNum-1).addClass('selected').attr('aria-selected', true)
-          .find('a').attr('aria-disabled', true)
-            .find('.audible').html(Locale.translate('PageOn'));
+          //Set selected Page
+          lis.eq(pageNum-1).addClass('selected').attr('aria-selected', true)
+            .find('a').attr('aria-disabled', true)
+              .find('.audible').html(Locale.translate('PageOn'));
+        }
 
         this.renderBar();
         this.renderPages();
@@ -172,6 +174,8 @@
 
       //Get/Set Total Number of pages
       pageCount: function(pages) {
+        var self = this;
+
         if (!pages && !this.settings.source) {
           return this._pageCount;
         }
@@ -211,13 +215,44 @@
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : '-') + '</span>');
 
           $('<label class="pager-count">'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
-          this.pagerBar.find('.pager-count input').mask();
+
+          //Setup interactivty with the numeric page input
+          var lastValue = null;
+
+          this.pagerBar.find('.pager-count input').mask()
+          .on('focus', function () {
+            lastValue = $(this).val();
+          }).on('blur', function () {
+            if (lastValue !== $(this).val()) {
+              self.setActivePage(parseInt($(this).val()));
+            }
+          }).on('keypress', function (e) {
+            if (e.which === 13) {
+              self.setActivePage(parseInt($(this).val()));
+            }
+          });
         }
 
+        //Add functionality to change page size.
         if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
-          var pageSize = '<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button> <ul class="popupmenu is-padded"> <li><a href="#25">25</a></li> <li><a href="#50">50</a></li> <li><a href="#100">100</a></li> <li><a href="#250">250</a></li> </ul> </div></li>';
+          var pageSize = $('<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button>  </div></li>');
           $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
-          this.pagerBar.find('.btn-menu').popupmenu();
+          var menu = $('<ul class="popupmenu is-padded"></ul>');
+
+          for (var i = 0; i < self.settings.pagesizes.length; i++) {
+            var size = self.settings.pagesizes[i];
+            menu.append('<li '+ (size === self.settings.pagesize ? ' class="is-checked"' : '') +'><a href="#">' + size + '</a></li>');
+          }
+
+          pageSize.find('button').after(menu);
+
+          this.pagerBar.find('.btn-menu').popupmenu().on('selected.pager', function (e, args) {
+            var tag = args;
+            tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
+            tag.parent('li').addClass('is-checked');
+            self.settings.pagesize = parseInt(tag.text());
+            self.renderPages();
+          });
 
           $('[href="#25"]').parent().addClass('is-checked');
         }
@@ -239,9 +274,11 @@
         }
 
         //Adjust Page count numbers
-        pc = Math.ceil(this.elements.length/settings.pagesize);
-        if (this.pageCount() !== pc) {
-          this.pageCount(pc);
+        if (!this.settings.source) {
+          pc = Math.ceil(this.elements.length/settings.pagesize);
+          if (this.pageCount() !== pc) {
+            this.pageCount(pc);
+          }
         }
 
         //Refresh Disabled
@@ -263,26 +300,27 @@
         }
 
         //Remove from the front until selected is visible and we have at least howMany showing
-        elems = pb.find(this.buttonExpr);
-        elems.show();
-        if (elems.length < howMany) {
-          return;
-        }
-
-        elems.each(function () {
-          var li = $(this);
-          if (pb.find('.pager-next').offset().top - pb.offset().top > 1 && !li.is('.selected')) {
-            $(this).hide();
+        if (!this.settings.source) {
+          elems = pb.find(this.buttonExpr);
+          elems.show();
+          if (elems.length < howMany) {
+            return;
           }
-        });
 
+          elems.each(function () {
+            var li = $(this);
+            if (pb.find('.pager-next').offset().top - pb.offset().top > 1 && !li.is('.selected')) {
+              $(this).hide();
+            }
+          });
+        }
       },
 
       // Render Paged Items
       renderPages: function() {
         var expr,
           self = this,
-          pageInfo = {current: this.currentPage(), pagesize: this.settings.pagesize, total: -1};
+          pageInfo = {current: this.activePage, pagesize: this.settings.pagesize, total: -1};
 
         //Make an ajax call and wait
         setTimeout(function () {
@@ -312,7 +350,7 @@
 
           //Render page objects
           self.elements.hide();
-          expr = (self.currentPage() === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((self.currentPage()) * settings.pagesize) +'):gt('+ (((self.currentPage()-1) *settings.pagesize) -1) +')');
+          expr = (self.activePage === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
           self.elements.filter(expr).show();
           self.element.trigger('afterpaging', pageInfo);
         }, 0);
@@ -325,7 +363,7 @@
         //this._pageCount = pagingInfo.total/this.settings.pagesize);
         this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
         this.activePage = pagingInfo.current;
-        this.currentPage(this.activePage);
+        this.setActivePage(this.activePage);
 
         //Update the UI
         this.pagerBar.find('.pager-count input').val(this.activePage);
@@ -341,9 +379,7 @@
     // Initialize the plugin (Once)
     return this.each(function() {
       var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, defaults, options);
-      } else {
+      if (!instance) {
         instance = $.data(this, pluginName, new Plugin(this, settings));
       }
     });

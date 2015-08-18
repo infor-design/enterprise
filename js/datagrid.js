@@ -1156,12 +1156,6 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      this.pagerBar = elem.next('.datagrid-pager');
-      if (this.pagerBar.length === 0) {
-        this.pagerBar = $('<div class="datagrid-pager"></div>');
-        elem.after(this.pagerBar);
-      }
-
       this.tableBody.addClass('paginated').pager({source: this.settings.source, pagesize: this.settings.pagesize});
     }
   };

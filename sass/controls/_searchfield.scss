@@ -27,7 +27,7 @@
 }
 
 @mixin searchfield-text-style() {
-  color: $graphite06;
+  color: $font-color;
   font-weight: bold;
   @include font-size(12);
   text-transform: uppercase;
@@ -39,7 +39,7 @@
     margin: 4px 0 6px;
 
     + span {
-      color: $graphite06;
+      color: $font-color;
       font-weight: bold;
       @include font-size(12);
       margin-left: -85px;
@@ -82,7 +82,7 @@
     }
 
     + svg {
-      fill: $graphite06;
+      fill: $font-color;
       left: 2px;
       pointer-events: none;
     }

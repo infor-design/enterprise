@@ -36,6 +36,7 @@ $hr-bottom-color: transparent;
 // Popovers
 $popover-bg-color: $slate06;
 $popover-border-color: $slate09;
+$popover-shadow-color: #2b2c30;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
 $popover-separator-color: $slate09;
@@ -221,7 +222,7 @@ $datagrid-cell-readonly-bg-color: $slate08;
 $datagrid-cell-readonly-color: $slate02;
 $datagrid-cell-border-color: $slate06;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: #eaf8fe;
+$datagrid-row-selected-color: #5a5d64; //Or 8dc9e6
 $datagrid-row-hover-color: $slate09;
 
 //Multi Select
