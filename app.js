@@ -431,7 +431,7 @@ var express = require('express'),
       end = req.query.pageNum * req.query.pageSize,
       total = 1000;
 
-    for (var i = start; i < end && i < 1000; i++) {
+    for (var i = start; i < end && i < total; i++) {
       products.push({ id: i, productId: 214220+i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(i/2), price: 210.99-i, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
     }
 

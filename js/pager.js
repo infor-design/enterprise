@@ -25,7 +25,7 @@
           type: 'list', //Differet types of pagers: list, table and more
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
-          pagesize: 5, //Can be calculate or a specific number
+          pagesize: 15, //Can be calculate or a specific number
           source: null,  //Call Back Function for Pager Data Source
           pagesizes: [15, 25, 50, 75]
         },
@@ -239,8 +239,8 @@
           $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
           var menu = $('<ul class="popupmenu is-padded"></ul>');
 
-          for (var i = 0; i < self.settings.pagesizes.length; i++) {
-            var size = self.settings.pagesizes[i];
+          for (var k = 0; k < self.settings.pagesizes.length; k++) {
+            var size = self.settings.pagesizes[k];
             menu.append('<li '+ (size === self.settings.pagesize ? ' class="is-checked"' : '') +'><a href="#">' + size + '</a></li>');
           }
 
