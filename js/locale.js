@@ -355,7 +355,7 @@
     },
 
     //Take a Formatted Number and return a real number
-    parseNumber: function(input, options) {
+    parseNumber: function(input) {
       var numSettings = this.currentLocale.data.numbers,
         numString;
 
