@@ -447,26 +447,30 @@ var express = require('express'),
   //Data Grid Paging Example
   // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productId&pageSize=100
   app.get('/api/compressors', function(req, res) {
-    var products = [],
+    var products = [], productsAll = [],
       start = (req.query.pageNum -1) * req.query.pageSize,
       end = req.query.pageNum * req.query.pageSize,
-      total = 1000;
+      total = 1000, i = 0, j = 0;
 
-    for (var i = start; i < end && i < total; i++) {
-      products.push({ id: i, productId: 214220+i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(i/2), price: 210.99-i, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+    for (j = 0; j < total; i++) {
+      productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
     }
 
-    var sortBy = function(field, reverse, primer) {
-      var key = primer ? function(x) {return primer(x[field]);} : function(x) {return x[field];};
-      reverse = !reverse ? 1 : -1;
+    var sortBy = function(field, reverse, primer){
+       var key = function (x) {return primer ? primer(x[field]) : x[field];};
 
-      return function (a, b) {
-        return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-      };
+       return function (a,b) {
+        var A = key(a), B = key(b);
+        return ( (A < B) ? -1 : ((A > B) ? 1 : 0) ) * [-1,1][+!!reverse];
+       };
     };
 
-    if (req.query.sort) {
-      products.sort(sortBy(req.query.sort, false, function(a){return a.toString().toUpperCase();}));
+    if (req.query.sortField) {
+      productsAll.sort(sortBy(req.query.sortField, (req.query.sortAsc ==='true' ? true : false), function(a){return a.toString().toUpperCase();}));
+    }
+
+    for (i = start; i < end && i < total; i++) {
+      products.push(productsAll[i]);
     }
 
     res.setHeader('Content-Type', 'application/json');

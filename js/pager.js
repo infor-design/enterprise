@@ -320,7 +320,7 @@
       renderPages: function() {
         var expr,
           self = this,
-          pageInfo = {current: this.activePage, pagesize: this.settings.pagesize, total: -1};
+          pageInfo = {activePage: this.activePage, pagesize: this.settings.pagesize, total: -1};
 
         //Make an ajax call and wait
         setTimeout(function () {
@@ -332,15 +332,21 @@
           }
 
           if (self.settings.source) {
+            var api = table.data('datagrid');
+
             var response = function (data, pagingInfo) {
               //Render Data
-              var api = table.data('datagrid');
               api.loadData(data);
 
               //Update Paging Info
               self.updatePagingInfo(pagingInfo);
               return;
             };
+
+            if (api.sortColumn.sortField) {
+              pageInfo.sortAsc = api.sortColumn.sortAsc;
+              pageInfo.sortField = api.sortColumn.sortField;
+            }
 
             self.settings.source(pageInfo, response);
           }
@@ -362,7 +368,7 @@
 
         //this._pageCount = pagingInfo.total/this.settings.pagesize);
         this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
-        this.activePage = pagingInfo.current;
+        this.activePage = pagingInfo.activePage;
         this.setActivePage(this.activePage);
 
         //Update the UI

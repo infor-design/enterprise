@@ -121,4 +121,58 @@ $(function () {
     }
   };
 
+  ko.bindingHandlers.editor = {
+    init: function(element, valueAccessor) {
+      var opts = ko.utils.unwrapObservable(valueAccessor()),
+        elem = $(element);
+
+      //Setup events
+      ko.utils.registerEventHandler(element, 'blur', function() {
+        var value = valueAccessor().value,
+          valueToSet = $(this).html();
+
+        if (valueToSet === '<br>') {
+          valueToSet = '';
+          $(this).html('');
+        }
+
+        value(valueToSet);
+      });
+
+      //init the control
+      if (!elem.data('editor')) {
+        elem.editor();
+      }
+
+      //set the value
+      if (opts.value) {
+        elem.html(ko.utils.unwrapObservable(opts.value));
+      }
+    },
+    update: function(element, valueAccessor) {
+      var opts = ko.utils.unwrapObservable(valueAccessor()),
+        elem = $(element);
+
+      elem.html(ko.utils.unwrapObservable(opts.value));
+
+      if (opts.visible && !opts.visible()) {
+        $(element).closest('.field').hide();
+      }
+
+      if (opts.visible && opts.visible()) {
+        $(element).closest('.field').show();
+      }
+
+      $(element).enable();
+
+      if (opts.readonly && opts.readonly()) {
+        $(element).readonly();
+      }
+
+      if (opts.enable && !opts.enable()) {
+        $(element).disable();
+      }
+    }
+  };
+
 });

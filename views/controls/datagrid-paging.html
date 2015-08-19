@@ -37,8 +37,13 @@
         paging: true,
         pagesize: 15,
         source: function(req, response) {
+          var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
-          $.getJSON('/api/compressors?pageNum='+ req.current +'&pageSize='+ req.pagesize, function(data) {
+          if (req.sortField) {
+            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+          }
+
+          $.getJSON(url, function(data) {
             req.total = 1000;
             response(data, req);
           });

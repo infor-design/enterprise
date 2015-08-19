@@ -3,11 +3,12 @@
     <div class="twelve columns">
 
       <div class="field">
-        <label for="dropdown-id">Drop Down</label>
-        <select id="dropdown-id" data-bind="dropdown: {data: types, value:selectedType, visible: isVisible, readonly: isReadonly, enable: isEnabled}"></select>
+        <span class="label">Comments</span>
+        <div class="editor" role="textbox" aria-multiline="true" aria-label="Comments" data-bind="editor: {value:comments, visible: isVisible, readonly: isReadonly, enable: isEnabled}">
+        </div>
       </div>
 
-      <button class="btn" id="showValue">Show</button>
+      <button class="btn" id="showValue">Show Values</button>
       <button class="btn" id="changeValue">Change</button>
       <button class="btn" id="toggleVisibility">Visible</button>
       <button class="btn" id="toggleReadonly">Readonly</button>
@@ -18,7 +19,7 @@
    <script>
     $(function () {
       var viewModel = {
-        selectedType: ko.observable('F'), //The Selected Value in the Drop Down
+        comments: ko.observable('<p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>'), //The Selected Value in the Drop Down
         types: ko.observableArray([     //The Array to use.
           {key: 'F', name: 'Formula'},
           {key: 'D', name: 'Data'},
@@ -33,12 +34,12 @@
 
       //show the value...
       $('#showValue').click(function() {
-        console.log(ko.toJSON(viewModel), $('#someDropDown').val());
+        console.log(ko.toJSON(viewModel), $('.editor').html());
       });
 
       //change the value in the viewModel
       $('#changeValue').click(function() {
-        viewModel.selectedType('D');
+        viewModel.comments('<p><b>e-commerce action-items</b>, <a class="hyperlink" href="#">reintermediate</a>, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>');
       });
 
       //toggleVisibility

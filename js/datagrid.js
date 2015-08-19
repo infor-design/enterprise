@@ -246,7 +246,7 @@ $.fn.datagrid = function(options) {
     },
 
     initSettings: function () {
-      this.sortColumn = {columnId: null, sortAsc: true};
+      this.sortColumn = {sortField: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
     },
 
@@ -316,9 +316,11 @@ $.fn.datagrid = function(options) {
       self.headerRow = $(headerRow);
       self.table.append(self.headerRow);
       self.table.find('th[title]').tooltip();
-      self.table.find('th').drag({clone: true, containment: 'parent'}).on('dragstart', function (e, pos, clone) {
+
+      //TODO: Drag Drop Columns Option
+      /*self.table.find('th').drag({clone: true, containment: 'parent'}).on('dragstart', function (e, pos, clone) {
         clone.css({'position': 'absolute', top: '30px', 'background-color': '#5c5c5c', 'height': '48px'});
-      });
+      });*/
 
       this.setInitialColumnWidths();
     },
@@ -1122,6 +1124,8 @@ $.fn.datagrid = function(options) {
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
+
+      this.element.trigger('sorted', [this.sortColumn]);
     },
 
     //Overridable function to conduct sorting
@@ -1154,11 +1158,20 @@ $.fn.datagrid = function(options) {
 
     //Handle Adding Paging
     handlePaging: function () {
-       if (!this.settings.paging) {
+      var self = this;
+
+      if (!this.settings.paging) {
         return;
       }
 
       this.tableBody.addClass('paginated').pager({source: this.settings.source, pagesize: this.settings.pagesize, pagesizes: this.settings.pagesizes});
+      this.pager = this.tableBody.addClass('paginated').data('pager');
+
+      //Get First page on Sort Action
+      this.element.on('sorted', function () {
+        self.pager.activePage = 1;
+        self.pager.renderPages();
+      });
     }
   };
 
