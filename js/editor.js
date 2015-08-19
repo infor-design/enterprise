@@ -937,6 +937,7 @@
         }
 
         this.pasteWrapper = function (e) {
+
           var paste = e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData ?
             e.originalEvent.clipboardData.getData('text/plain') : // Standard
             window.clipboardData && window.clipboardData.getData ?
@@ -962,14 +963,54 @@
                 }
               }
             }
-            // TODO: This doesn't work in Internet Explorer 11 and down... need an alternate solution.
-            document.execCommand('insertHTML', false, html);
+
+            if (document.queryCommandSupported('insertText')) {
+                document.execCommand('insertHTML', false, html);
+                return false;
+            } else { // IE > 7
+              self.pasteHtmlAtCaret(html);
+            }
           }
         };
 
         var currentElement = self.getCurrentElement();
         currentElement.on(self.pasteEvent, self.pasteWrapper);
         return this;
+      },
+
+      pasteHtmlAtCaret: function(html) {
+          var sel, range;
+          if (window.getSelection) {
+            // IE9 and non-IE
+            sel = window.getSelection();
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+
+                // Range.createContextualFragment() would be useful here but is
+                // only relatively recently standardized and is not supported in
+                // some browsers (IE9, for one)
+                var el = document.createElement('div');
+                el.innerHTML = html;
+                var frag = document.createDocumentFragment(), node, lastNode;
+                while ( (node = el.firstChild) ) {
+                    lastNode = frag.appendChild(node);
+                }
+                range.insertNode(frag);
+
+                // Preserve the selection
+                if (lastNode) {
+                  range = range.cloneRange();
+                  range.setStartAfter(lastNode);
+                  range.collapse(true);
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                }
+            }
+          } else if (document.selection && document.selection.type !== 'Control') {
+            // IE < 9
+            document.selection.createRange().pasteHTML(html);
+          }
       },
 
       htmlEntities: function (str) {
@@ -1221,13 +1262,18 @@
       },
 
       disable: function () {
-        this.element.addClass('is-disabled');
+        this.element.addClass('is-disabled').attr('contenteditable', 'false');
         this.element.parent('.field').addClass('is-disabled');
       },
 
       enable: function () {
-        this.element.removeClass('is-disabled');
-        this.element.parent('.field').addClass('is-disabled');
+        this.element.removeClass('is-disabled is-readonly').attr('contenteditable', 'true');
+        this.element.parent('.field').removeClass('is-disabled is-readonly');
+      },
+
+      readonly: function () {
+        this.element.removeClass('is-readonly').attr('contenteditable', 'false');
+        this.element.parent('.field').addClass('is-readonly');
       },
 
       destroy: function () {

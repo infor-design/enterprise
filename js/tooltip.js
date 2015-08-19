@@ -338,7 +338,7 @@
 
       placeBelowOffset: function(scrollable) {
        var o = this.activeElement.offset(),
-          extraOffset = (this.element.parent().find('.icon').length > 1 ? -10 : 10),
+          extraOffset = (this.element.parent().find('.icon').length > 1 ? -12 : 10),
           extraWidth = 9;
 
         if (this.activeElement.is('input.dropdown')) {

@@ -3,6 +3,29 @@
 
 .editor-container {
   overflow: hidden;
+
+  &.is-readonly,
+  &.is-disabled {
+    .editor {
+      border-top: 1px solid $editor-border-color;
+    }
+
+    .editor-toolbar {
+      display: none;
+    }
+  }
+
+  &.is-disabled .editor {
+    cursor: default;
+  }
+
+  &.is-readonly .editor {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    -webkit-text-fill-color: $input-readonly-color;
+    color: $input-readonly-color;
+    cursor: text;
+  }
 }
 
 .editor {
@@ -10,6 +33,7 @@
   border: 1px solid $editor-border-color;
   border-radius: 0 0 2px 2px;
   border-top: 1px solid transparent;
+  -webkit-text-fill-color: $editor-color;
   color: $editor-color;
   display: block;
   float: left;
@@ -29,8 +53,8 @@
   }
 
   &.is-disabled {
-    background-color: #ececec;
-    border: 1px solid #d2d2d2;
+    background-color: $input-disabled-bg-color;
+    border: 1px solid $input-disabled-border-color;
     padding: 10px;
 
     > * {
@@ -41,12 +65,14 @@
   // Element Style
   p {
     @include font-size(14);
+    -webkit-text-fill-color: $editor-color;
     color: $editor-color;
     @include rem(line-height, 2.2rem);
     margin-bottom: 15px;
   }
 
   h3 {
+    -webkit-text-fill-color: $editor-color;
     color: $editor-color;
     @include font-size(24);
     @include rem(line-height, 2.4rem);
@@ -54,7 +80,8 @@
   }
 
   h4 {
-    color: $input-color;
+    -webkit-text-fill-color: $editor-color;
+    color: $editor-color;
     @include font-size(18);
     @include rem(line-height, 1.8rem);
     @include rem(margin-bottom, 1.5rem);
@@ -62,6 +89,7 @@
 
   ul,
   ol {
+    -webkit-text-fill-color: $input-color;
     color: $input-color;
     @include rem(line-height, 2.2rem);
     @include rem(margin-left, 2rem);

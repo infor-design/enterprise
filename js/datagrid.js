@@ -213,6 +213,7 @@ $.fn.datagrid = function(options) {
         selectable: false, //false, 'single' or 'multiple'
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
         paging: false,
+        pagesizes: [15, 25, 50, 75],
         source: null //callback for paging
       },
       settings = $.extend({}, defaults, options);
@@ -1150,19 +1151,11 @@ $.fn.datagrid = function(options) {
 
     //Handle Adding Paging
     handlePaging: function () {
-      var elem = this.element;
-
-      if (!this.settings.paging) {
+       if (!this.settings.paging) {
         return;
       }
 
-      this.pagerBar = elem.next('.datagrid-pager');
-      if (this.pagerBar.length === 0) {
-        this.pagerBar = $('<div class="datagrid-pager"></div>');
-        elem.after(this.pagerBar);
-      }
-
-      this.tableBody.addClass('paginated').pager({source: this.settings.source, pagesize: this.settings.pagesize});
+      this.tableBody.addClass('paginated').pager({source: this.settings.source, pagesize: this.settings.pagesize, pagesizes: this.settings.pagesizes});
     }
   };
 

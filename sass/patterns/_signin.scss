@@ -49,6 +49,13 @@
     margin: 0 auto 40px;
     width: 90px;
   }
+
+  svg.icon-error,
+  svg.icon-confirm {
+    left: 270px;
+    position: absolute;
+    top: 25px;
+  }
 }
 
 .password-hint {
