@@ -270,7 +270,13 @@
             id = this.element.attr('id') + '-title';
             h1.attr('id', id);
           }
+
+          var body = this.element.find('.modal-body'),
+            descById = (this.element.attr('id') ? this.element.attr('id') : 'message') + '-text';
+
+          body.attr('id', descById);
           this.element.attr('aria-labeledby', id);
+          this.element.attr('aria-describedby', descById);
         }
 
         this.mainContent = $('body').children('.scrollable-container');
@@ -358,7 +364,7 @@
         var allTabbableElements = $(this.element).find('a[href], area[href], input:not([disabled]),' +
           'select:not([disabled]), textarea:not([disabled]),' +
           'button:not([disabled]), iframe, object, embed, *[tabindex],' +
-          '*[contenteditable]');
+          '*[contenteditable]').filter(':visible');
         return {
           first: allTabbableElements[0],
           last: allTabbableElements[allTabbableElements.length - 1]
@@ -367,7 +373,6 @@
 
       keepFocus: function() {
         var self = this, tabbableElements;
-          //tabbableElements = self.getTabbableElements();
 
           $(self.element).on('keypress.modal keydown.modal', function (e) {
             var keyCode = e.which || e.keyCode;

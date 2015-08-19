@@ -139,7 +139,12 @@
           });
 
           //Trigger dragging
-          self.element.trigger('dragstart', pos);
+          //Clone
+          if (!self.clone && settings.clone) {
+            self.clone = self.element.clone(true);
+            self.clone.appendTo('body');
+          }
+          self.element.trigger('dragstart', [pos, self.clone]);
         });
 
       },
@@ -161,7 +166,7 @@
           if (settings.axis === 'y') {
             delete pos.left;
           }
-          this.element.css(pos);
+          //this.element.css(pos);
           this.clone.remove();
           this.clone = null;
         }
@@ -177,12 +182,6 @@
       move: function(left, top) {
         var upperXLimit, upperYLimit,
           self = this;
-
-        //Clone
-        if (!this.clone && settings.clone) {
-          this.clone = this.element.clone(true);
-          this.clone.appendTo('body');
-        }
 
         var css = {
           left: left,

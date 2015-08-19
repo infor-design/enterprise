@@ -36,7 +36,7 @@
         this.handleEvents();
       },
 
-      // Handle Events 
+      // Handle Events
       // example from: https://github.com/farhadi/html5sortable/blob/master/jquery.sortable.js
       handleEvents: function() {
         var self = this,
@@ -61,16 +61,17 @@
         }
 
         // Draggable Items
-        items
-        .attr('draggable', 'true')
+        //items.addClass('draggdrag({containment: 'document', clone: 'true'});
+
+        items.attr('draggable', 'true')
         .add([this, placeholder])
 
         // No selection
         .not('a[href], img').on('selectstart.sortable', function() {
-          if(this.dragDrop) { 
+          if(this.dragDrop) {
             this.dragDrop();//ie9
           }
-          return false; 
+          return false;
         }).end()
 
         // Drag start
@@ -128,8 +129,8 @@
 
       // Teardown
       destroy: function() {
-        var items = (this.connectWith) ? 
-          this.element.children().add($(this.connectWith).children()) : 
+        var items = (this.connectWith) ?
+          this.element.children().add($(this.connectWith).children()) :
           this.element.children();
 
         items.off('selectstart.sortable dragstart.sortable touchstart.sortable gesturestart.sortable dragend.sortable touchend.sortable gestureend.sortable touchcancel.sortable dragover.sortable dragenter.sortable drop.sortable touchmove.sortable gesturechange.sortable');

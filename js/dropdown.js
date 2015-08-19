@@ -212,7 +212,7 @@
         });
 
         //Add Input Element and
-        this.searchInput = $('<input type="text" class="dropdown-search" id="dropdown-search" aria-autocomplete="list">');
+        this.searchInput = $('<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">');
         this.list.prepend(this.searchInput);
         this.searchInput.before('<label for="dropdown-search" class="audible">Search</label>');
       },
@@ -1006,7 +1006,7 @@
             val = $.grep(val, function(optionValue) {
               return optionValue !== code;
             });
-            li.removeClass('is-selected').attr({'aria-selected': 'false'});
+            li.removeClass('is-selected');
             this.previousActiveDescendant = undefined;
             isAdded = false;
           } else {
@@ -1016,7 +1016,7 @@
 
             val = typeof val === 'string' ? [val] : val;
             val.push(code);
-            li.addClass('is-selected').attr({'aria-selected': 'true'});
+            li.addClass('is-selected');
             this.previousActiveDescendant = option.val();
           }
 
@@ -1027,8 +1027,8 @@
         } else {
           // Working with a single select
           val = code;
-          this.listUl.find('li.is-selected').removeClass('is-selected').attr('aria-selected', 'false');
-          li.addClass('is-selected').attr({'aria-selected': 'true'});
+          this.listUl.find('li.is-selected').removeClass('is-selected');
+          li.addClass('is-selected');
           this.previousActiveDescendant = option.val();
           text = option.text();
         }

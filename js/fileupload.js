@@ -39,8 +39,8 @@
 
       // Example Method
       build: function() {
-        var elem = this.element,
-          fileInput = elem.find('input');
+        var elem = this.element;
+        this.fileInput = elem.find('input');
 
         elem.parent('.field').addClass('field-fileupload');
 
@@ -52,20 +52,26 @@
           svg = '<span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-folder"/></svg></span>';
 
         elem.before(label, shadowField);
-        fileInput.after(svg);
+        this.fileInput.after(svg);
 
-        var input = elem.parent().find('[type="text"]');
-        input.on('keypress.fileupload', function (e) {
+        this.textInput = elem.parent().find('[type="text"]');
+        this.textInput.on('keypress.fileupload', function (e) {
           if (e.which === 13) {
             elem.find('input').trigger('click');
           }
         });
 
-        if (fileInput.is(':disabled')) {
-          input.attr('disabled', 'disabled');
+        if (this.fileInput.is(':disabled')) {
+          this.textInput.prop('disabled', true);
         }
 
-        fileInput.attr('tabindex', '-1').on('change.fileupload', function () {
+        if (this.fileInput.attr('readonly')) {
+          this.textInput.prop('disabled', false);
+          this.textInput.attr('readonly', 'readonly');
+          this.fileInput.attr('disabled', 'disabled');
+        }
+
+        this.fileInput.attr('tabindex', '-1').on('change.fileupload', function () {
           var fileInput = $(this);
           elem.prev('input').val(fileInput.val());
         });
@@ -74,7 +80,23 @@
       // Teardown - Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
+      },
+
+      disable: function() {
+        this.textInput.prop('disabled', true);
+        this.fileInput.prop('disabled', true);
+      },
+
+      enable: function() {
+        this.textInput.prop('disabled', false).prop('readonly', false);
+        this.fileInput.removeAttr('disabled');
+      },
+
+      readonly: function() {
+        this.textInput.prop('readonly', true);
+        this.fileInput.prop('disabled', true);
       }
+
     };
 
     // Initialize the plugin (Once)

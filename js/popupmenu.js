@@ -138,9 +138,7 @@
         }
 
         //TODO: Follow up 'button expanded' in JAWS
-        this.element.attr('aria-haspopup', true)
-          .attr('aria-expanded', 'false');
-
+        this.element.attr('aria-haspopup', true);
         this.element.attr('aria-controls', id);
 
         this.menu.find('li').attr('role', 'presentation');
@@ -474,6 +472,11 @@
               return;
             }
 
+            //Click functionality will toggle the menu - otherwise it closes and opens
+            if ($(e.target).is(self.element)) {
+              return;
+            }
+
             if ($(e.target).closest('.popupmenu').length === 0) {
               self.close();
             }
@@ -503,7 +506,6 @@
         });
 
         this.handleKeys();
-        this.element.attr('aria-expanded', 'true');
 
         //hide and decorate submenus - we use a variation on
         var tracker = 0, startY, menuToClose, timeout;
@@ -654,7 +656,6 @@
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
         this.element.trigger('close');
-        this.element.focus().attr('aria-expanded', 'false');
         this.detach();
 
         if (this.settings.trigger === 'immediate') {
@@ -690,7 +691,6 @@
         this.detach();
         this.element
           .removeAttr('aria-controls')
-          .removeAttr('aria-expanded')
           .removeAttr('aria-haspopup')
           .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
 

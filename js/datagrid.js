@@ -316,6 +316,9 @@ $.fn.datagrid = function(options) {
       self.headerRow = $(headerRow);
       self.table.append(self.headerRow);
       self.table.find('th[title]').tooltip();
+      self.table.find('th').drag({clone: true, containment: 'parent'}).on('dragstart', function (e, pos, clone) {
+        clone.css({'position': 'absolute', top: '30px', 'background-color': '#5c5c5c', 'height': '48px'});
+      });
 
       this.setInitialColumnWidths();
     },

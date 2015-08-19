@@ -60,10 +60,17 @@
 
 <script>
 
-  $('.draggable.x-only.collision').drag({axis: 'x', containment: 'parent', obstacle: '.collision'});
-  $('.draggable.x-only').drag({axis: 'x', containment: 'parent'});
-  $('.draggable.clone').drag({containment: 'document', clone: 'true'});
-  $('.draggable').drag({containment: 'document'});
-  $('.resizable').resize();
+  //$('.draggable.x-only.collision').drag({axis: 'x', containment: 'parent', obstacle: '.collision'});
+  //$('.draggable.x-only').drag({axis: 'x', containment: 'parent'});
+  //$('.draggable.clone').drag({containment: 'document', clone: 'true'});
+  $('.draggable').drag({containment: 'document'}).on('dragstart', function () {
+    console.log('dragstart')
+  }).on('drag', function () {
+    console.log('drag')
+  }).on('dragend', function () {
+    console.log('dragend')
+  });
+
+  //$('.resizable').resize();
 
 </script>

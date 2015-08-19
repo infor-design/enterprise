@@ -2,17 +2,14 @@
   <div class="row">
     <div class="twelve columns">
 
-      <div class="field">
-        <label class="fileupload" data-bind="fileupload: {value: filename, visible: isVisible, readonly: isReadonly, enable: isEnabled}">
-            <span class="audible">Upload a File</span>
-            <input type="file" name="file-input" />
-        </label>
+      <div class="field" data-bind="visible: isVisible">
+        <input type="checkbox" class="checkbox" id="checkbox1"  data-bind="checked: billable, enable: isEnabled">
+        <label for="checkbox1" class="checkbox-label">Billable</label>
       </div>
 
       <button class="btn" id="showValue">Show</button>
       <button class="btn" id="changeValue">Change</button>
       <button class="btn" id="toggleVisibility">Visible</button>
-      <button class="btn" id="toggleReadonly">Readonly</button>
       <button class="btn" id="toggleDisabled">Disabled</button>
     </div>
   </div>
@@ -20,22 +17,21 @@
    <script>
     $(function () {
       var viewModel = {
-        filename: ko.observable('c:\\test.png'),
+        billable: ko.observable(true),
         isVisible: ko.observable(true),
-        isEnabled: ko.observable(true),
-        isReadonly: ko.observable(false)
+        isEnabled: ko.observable(true)
       };
 
       ko.applyBindings(viewModel);
 
       //show the value...
       $('#showValue').click(function() {
-        console.log(ko.toJSON(viewModel), $('#fileupload-1').val());
+        console.log(ko.toJSON(viewModel), $('#checkbox1').prop('checked'));
       });
 
       //change the value in the viewModel
       $('#changeValue').click(function() {
-        viewModel.filename('c:\\test2.png');
+        viewModel.billable(!viewModel.billable());
       });
 
       //toggleVisibility
@@ -43,12 +39,8 @@
         viewModel.isVisible(!viewModel.isVisible());
       });
 
-      $('#toggleReadonly').click(function(){
-        viewModel.isReadonly(!viewModel.isReadonly());
-      });
-
       $('#toggleDisabled').click(function(){
-        viewModel.isEnable(!viewModel.isEnable());
+        viewModel.isEnabled(!viewModel.isEnabled());
       });
 
     });

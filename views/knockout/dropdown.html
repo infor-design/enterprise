@@ -4,11 +4,14 @@
 
       <div class="field">
         <label for="dropdown-id">Drop Down</label>
-        <select id="dropdown-id" data-bind="dropdown: {data: types, value:selectedType, visible: isVisible, readOnly: isReadOnly, enable: isEnabled}"></select>
+        <select id="dropdown-id" data-bind="dropdown: {data: types, value:selectedType, visible: isVisible, readonly: isReadonly, enable: isEnabled}"></select>
       </div>
 
       <button class="btn" id="showValue">Show</button>
       <button class="btn" id="changeValue">Change</button>
+      <button class="btn" id="toggleVisibility">Visible</button>
+      <button class="btn" id="toggleReadonly">Readonly</button>
+      <button class="btn" id="toggleDisabled">Disabled</button>
     </div>
   </div>
 
@@ -23,7 +26,7 @@
         ]),
         isVisible: ko.observable(true),
         isEnabled: ko.observable(true),
-        isReadOnly: ko.observable(false)
+        isReadonly: ko.observable(false)
       };
 
       ko.applyBindings(viewModel);
@@ -38,7 +41,18 @@
         viewModel.selectedType('D');
       });
 
+      //toggleVisibility
+      $('#toggleVisibility').click(function(){
+        viewModel.isVisible(!viewModel.isVisible());
+      });
 
+      $('#toggleReadonly').click(function(){
+        viewModel.isReadonly(!viewModel.isReadonly());
+      });
+
+      $('#toggleDisabled').click(function(){
+        viewModel.isEnable(!viewModel.isEnable());
+      });
     });
   </script>
 

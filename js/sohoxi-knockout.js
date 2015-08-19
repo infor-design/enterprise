@@ -34,6 +34,25 @@ $(function () {
       if (opts.data) {
         ko.bindingHandlers.dropdown.setData(elem, opts);
       }
+
+      if (opts.visible && !opts.visible()) {
+        $(element).parent().find('.dropdown-wrapper').hide();
+      }
+
+      if (opts.visible && opts.visible()) {
+        $(element).parent().find('.dropdown-wrapper').show();
+      }
+
+      $(element).enable();
+
+      if (opts.readonly && opts.readonly()) {
+        $(element).readonly();
+      }
+
+      if (opts.enable && !opts.enable()) {
+        $(element).disable();
+      }
+
       $(element).val(ko.utils.unwrapObservable(opts.value)).trigger('updated');
     },
 
@@ -81,6 +100,24 @@ $(function () {
         elem = $(element);
 
       elem.parent().find('input[type="text"]').val(ko.utils.unwrapObservable(opts.value));
+
+      if (opts.visible && !opts.visible()) {
+        $(element).closest('.field').hide();
+      }
+
+      if (opts.visible && opts.visible()) {
+        $(element).closest('.field').show();
+      }
+
+      $(element).enable();
+
+      if (opts.readonly && opts.readonly()) {
+        $(element).readonly();
+      }
+
+      if (opts.enable && !opts.enable()) {
+        $(element).disable();
+      }
     }
   };
 
