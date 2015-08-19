@@ -1,0 +1,37 @@
+
+  <div class="row">
+    <div class="twelve columns">
+
+      <div class="field">
+        <label class="fileupload" data-bind="fileupload: {value: filename}">
+            <span class="audible">Upload a File</span>
+            <input type="file" name="file-input" />
+        </label>
+      </div>
+
+      <button class="btn" id="showValue">Show</button>
+      <button class="btn" id="changeValue">Change</button>
+    </div>
+  </div>
+
+   <script>
+    $(function () {
+      var viewModel = {
+        filename: ko.observable('c:\\test.png')
+      };
+
+      ko.applyBindings(viewModel);
+
+      //show the value...
+      $('#showValue').click(function() {
+        console.log(ko.toJSON(viewModel), $('#fileupload-1').val());
+      });
+
+      //change the value in the viewModel
+      $('#changeValue').click(function() {
+        viewModel.filename('c:\\test2.png');
+      });
+
+    });
+  </script>
+

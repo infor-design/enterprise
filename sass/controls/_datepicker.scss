@@ -96,7 +96,7 @@
       span {
         color: $datepicker-today-color;
       }
-      
+
       &.is-selected,
       &.is-selected span {
         color: $datepicker-selected-color;
@@ -112,7 +112,6 @@
     &.is-disabled:active {
       @include unselectable;
       background-color: $datepicker-hover-bg-color;
-      // color: $datepicker-alt-month-color;
       cursor: default;
     }
 
@@ -224,7 +223,7 @@
     text-align: center;
     text-transform: uppercase;
     width: 50%;
-    
+
     &:hover {
       color: $modal-btn-hover-color;
     }

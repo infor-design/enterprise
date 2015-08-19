@@ -17,5 +17,10 @@
       <input id="date-field-disabled" class="datepicker" disabled name="date-field-disabled" type="text">
     </div>
 
+    <script>
+      $('body').on('initialized', function () {
+        $('#date-field').data('datepicker').setValue(new Date());
+      });
+    </script>
   </div>
 </div>

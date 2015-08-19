@@ -225,6 +225,27 @@ var express = require('express'),
     res.render('angular/' + end, angularOpts);
   });
 
+  // Knockout Support
+  var knockoutOpts = {
+    title: 'SoHo XI',
+    subtitle: 'Knockout',
+    layout: 'knockout/layout',
+    enableLiveReload: true
+  };
+
+  app.get('/knockout/', function(req, res) {
+    res.render('knockout/index', knockoutOpts);
+  });
+
+  app.get('/knockout', function(req, res) {
+    res.render('knockout/index', knockoutOpts);
+  });
+
+  app.get('/knockout*', function(req, res) {
+    var end = req.url.replace('/knockout/','');
+    res.render('knockout/' + end, knockoutOpts);
+  });
+
   //Sample Json call that returns States
   //Example Call: http://localhost:4000/api/states?term=al
   app.get('/api/states', function(req, res) {

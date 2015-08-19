@@ -555,7 +555,6 @@
             }
 
             th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {date: 'full'}));
-            //th.append('<span class="audible">' + Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {date: 'full'}) + '</span>');
 
             self.setDisable(th, year, month, dayCnt);
 
@@ -602,6 +601,12 @@
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
           dateTd.addClass('is-selected').attr({'aria-selected': true, 'tabindex': 0}).focus();
         }
+      },
+
+      //Helper Function
+      setValue: function(date) {
+        this.currentDate = date;
+        this.element.val(Locale.formatDate(date));
       }
     };
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>{{title}}</title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" id="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+
+  <script src="/js/jquery-3.0.0-alpha1.js"></script>
+  <script src="/js/d3.min.js"></script>
+  <script src="/js/sohoxi.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-debug.js"></script>
+  <script src="/js/sohoxi-knockout.js"></script>
+
+</head>
+<body>
+  {{> controls/svg}}
+  {{> includes/header}}
+  <div id="maincontent" class="page-container top-padding" role="main">"
+    {{> content}}
+  </div>
+</body>
+</html>

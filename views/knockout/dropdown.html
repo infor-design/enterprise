@@ -1,0 +1,44 @@
+
+  <div class="row">
+    <div class="twelve columns">
+
+      <div class="field">
+        <label for="dropdown-id">Drop Down</label>
+        <select id="dropdown-id" data-bind="dropdown: {data: types, value:selectedType, visible: isVisible, readOnly: isReadOnly, enable: isEnabled}"></select>
+      </div>
+
+      <button class="btn" id="showValue">Show</button>
+      <button class="btn" id="changeValue">Change</button>
+    </div>
+  </div>
+
+   <script>
+    $(function () {
+      var viewModel = {
+        selectedType: ko.observable('F'), //The Selected Value in the Drop Down
+        types: ko.observableArray([     //The Array to use.
+          {key: 'F', name: 'Formula'},
+          {key: 'D', name: 'Data'},
+          {key: 'T', name: 'Text'}
+        ]),
+        isVisible: ko.observable(true),
+        isEnabled: ko.observable(true),
+        isReadOnly: ko.observable(false)
+      };
+
+      ko.applyBindings(viewModel);
+
+      //show the value...
+      $('#showValue').click(function() {
+        console.log(ko.toJSON(viewModel), $('#someDropDown').val());
+      });
+
+      //change the value in the viewModel
+      $('#changeValue').click(function() {
+        viewModel.selectedType('D');
+      });
+
+
+    });
+  </script>
+
