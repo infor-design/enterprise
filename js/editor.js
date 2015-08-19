@@ -1262,13 +1262,18 @@
       },
 
       disable: function () {
-        this.element.addClass('is-disabled');
+        this.element.addClass('is-disabled').attr('contenteditable', 'false');
         this.element.parent('.field').addClass('is-disabled');
       },
 
       enable: function () {
-        this.element.removeClass('is-disabled');
-        this.element.parent('.field').addClass('is-disabled');
+        this.element.removeClass('is-disabled is-readonly').attr('contenteditable', 'true');
+        this.element.parent('.field').removeClass('is-disabled is-readonly');
+      },
+
+      readonly: function () {
+        this.element.removeClass('is-readonly').attr('contenteditable', 'false');
+        this.element.parent('.field').addClass('is-readonly');
       },
 
       destroy: function () {
