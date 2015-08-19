@@ -195,6 +195,7 @@
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Personalize Columns', comment: 'Customize Columns in a Grid'},
       'Period': {id: 'Period', value: 'Period', comment: 'the am/pm portion of a time'},
       'PressDown': {id: 'PressDown', value: 'Press Down to select a date', comment: 'the audible label for Tooltip about how to operate the date picker'},
+      'PressShiftF10': {id: 'PressShiftF10', value: 'Press Shift+F10 to open the context menu.', comment: 'the audible infor for screen readers on how to use a field with a popup menu'},
       'Prev': {id: 'Prev', value: 'Prev', comment: 'Prev tooltip'},
       'Previous': {id: 'Previous', value: 'Previous', comment: 'Previous tooltip'},
       'PreviousMonth': {id: 'PreviousMonth', value: 'Previous Month', comment: 'the label for the button that moves calendar to next/prev'},

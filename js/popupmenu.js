@@ -218,6 +218,14 @@
               e.stopPropagation();
             }
           });
+
+          //Add an Audible Label
+          var id = 'popupmenu-f10-label';
+          if ($('#'+id).length === 0) {
+            this.element.after('<span style="display:none;" id="' + id + '">' + Locale.translate('PressShiftF10') + '</span>')
+          }
+          //PressShiftF10
+          this.element.attr('aria-describedby', id);
         }
 
         if (this.settings.trigger === 'immediate') {
