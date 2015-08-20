@@ -39,7 +39,6 @@
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
-      console.log(this.settings);
     }
 
     // Actual DropDown Code

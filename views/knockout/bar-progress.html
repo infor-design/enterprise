@@ -2,13 +2,15 @@
   <div class="row">
     <div class="twelve columns">
 
-      <span class="label" id="prbc-label1">Available Credit <span class="l-pull-right">$95,000</span></span>
-      <div class="chart-progressbar" aria-labelledby="prbc-label1">
-        <div class="target" style="width: 66%">
-          <span aria-hidden="true">$10,000 <br> Pending</span>
-        </div>
-        <div class="completed" style="width: 50%">
-          <span aria-hidden="true">$50,000 <br> Spent</span>
+      <div class="field" style = "width: 50%" data-bind="visible: isVisible">
+        <span class="label" id="prbc-label1">Available Credit <span class="l-pull-right">$95,000</span></span>
+        <div class="chart-progressbar" aria-labelledby="prbc-label1">
+          <div class="target" style="width: 66%">
+            <span aria-hidden="true">$10,000 <br> Pending</span>
+          </div>
+          <div class="completed" style="width: 50%">
+            <span aria-hidden="true">$50,000 <br> Spent</span>
+          </div>
         </div>
       </div>
 
