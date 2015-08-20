@@ -139,7 +139,7 @@
 
   &.is-padded a,
    .heading {
-    padding: 0 30px;
+    padding: 0 35px;
   }
 
   &.is-padded .icon:not(.arrow) {
@@ -193,14 +193,14 @@
     &.is-checked.is-selected > a:before {
       border-color: $popupmenu-checked-color;
       border-style: solid;
-      border-width: 0 3px 3px 0;
+      border-width: 0 2px 2px 0;
       content: '';
-      height: 10px;
-      left: 12px;
-      margin-top: 6px;
+      height: 14px;
+      left: 13px;
+      margin-top: 4px;
       position: absolute;
       @include css3(transform, rotate(45deg));
-      width: 4px;
+      width: 7px;
     }
   }
 

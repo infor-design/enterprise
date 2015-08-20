@@ -516,9 +516,9 @@
             'pre': '<span aria-hidden="true"><b>0101</b></span>',
             'indent': '<span aria-hidden="true"><b>&rarr;</b></span>',
             'outdent': '<span aria-hidden="true"><b>&larr;</b></span>',
-            'justifyLeft': this.getIcon('JustifyLeft', 'justify-left'),
-            'justifyCenter': this.getIcon('JustifyCenter', 'justify-center'),
-            'justifyRight': this.getIcon('JustifyRight', 'justify-right'),
+            'justifyLeft': this.getIcon('JustifyLeft', 'left-text-align'),
+            'justifyCenter': this.getIcon('JustifyCenter', 'center-text'),
+            'justifyRight': this.getIcon('JustifyRight', 'right-text-align'),
             'source': this.getIcon('ViewSource', 'html', 'html-icon'),
             'visual': '<span aria-hidden="true"><b>&nbsp;VISUAL&nbsp;</b></span>'
           };

@@ -40,7 +40,7 @@ describe('Accessibility [selenium]', function(){
     // Look for directional words (imagine.. You are blind so now left right top ect)
   });
 
-  it.skip('All Svg Elements Should have focusable false and aria-hidden', function(done) {
+  it.skip('All Svg Elements Should have focusable false and aria-hidden and role=presentation', function(done) {
     // Look for keywords like 'click' in links
     // Look for directional words (imagine.. You are blind so now left right top ect)
   });

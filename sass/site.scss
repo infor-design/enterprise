@@ -1333,23 +1333,37 @@ div.light-bgrnd {
 }
 
 .asset-item {
+  border: 1px solid transparent;
+  border-radius: 3px;
   cursor: pointer;
-  height: 100px;
+  height: 85px;
   text-decoration: none;
-  width: 125px;
+  margin: 20px 60px 60px 0 !important;
+  width: 85px !important;
 
   img {
     height: 22px;
-    margin: 0;
+    margin-left: 30px;
+    margin-top: 20px;
+    text-align: center;
   }
 
   span {
-    color: #333;
+    color: $graphite07;
     display: block;
     font-size: 16px;
     overflow: hidden;
-    padding: 0 20px;
     vertical-align: top;
+    text-align: center;
+  }
+
+  &:focus {
+    border: solid 1px $input-focus-border-color;
+    box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+  }
+
+  &:hover {
+    background-color: $graphite02;
   }
 }
 
@@ -1469,6 +1483,7 @@ div.light-bgrnd {
     max-width: 645px !important
   }
 }
+
 
 // Syntax High Lighting
 //==================================================//

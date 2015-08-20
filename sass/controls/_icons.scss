@@ -20,6 +20,7 @@ svg.icon {
   // Specific Buttons
   &.icon-error,
   &.icon-confirm,
+  &.icon-alert,
   &.icon-info {
     fill: $alert-red;
     height: 18px;
@@ -28,6 +29,10 @@ svg.icon {
 
   &.icon-confirm {
     fill: $confirm-icon-fill;
+  }
+
+  &.icon-alert {
+    fill: $alert-yellow;
   }
 
   &.icon-info {

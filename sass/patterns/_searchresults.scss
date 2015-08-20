@@ -20,6 +20,21 @@
       > * {
         vertical-align: top;
       }
+
+    }
+
+    [class^="btn-"]:hover,
+    [class^="btn-"]:focus {
+      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $font-color-highcontrast;
+      color: $font-color-highcontrast;
+
+      svg {
+        fill: $font-color-highcontrast;
+      }
+    }
+
+    .icon-sohoxi {
+      margin-right: 12px;
     }
 
     .masthead-square {
@@ -41,9 +56,8 @@
 
     .btn-icon .icon {
       height: 19px;
-      top: 0;
+      top: -3px;
     }
-
   }
 
   input.search {
