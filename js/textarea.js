@@ -111,6 +111,18 @@
           }
       },
 
+      enable: function () {
+        this.element.prop('disable', false).prop('readonly', false);
+      },
+
+      disable: function () {
+        this.element.prop('disable', true);
+      },
+
+      readonly: function () {
+        this.element.prop('readonly', true);
+      },
+
       // Teardown
       destroy: function() {
         $.removeData(this.element[0], pluginName);

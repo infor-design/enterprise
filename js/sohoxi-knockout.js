@@ -175,4 +175,70 @@ $(function () {
     }
   };
 
+  ko.bindingHandlers.slider = {
+    init: function(element, valueAccessor) {
+      var opts = ko.utils.unwrapObservable(valueAccessor()),
+        elem = $(element);
+
+      //set the data
+      var dataTicks = ko.utils.unwrapObservable(opts.ticks);
+
+      //init the control
+      if (!elem.data('slider')) {
+        elem.slider({ticks: dataTicks});
+      }
+
+      //set the value
+      if (opts.value) {
+        var api = elem.data('slider');
+        api.value(valueAccessor().value());
+      }
+
+      //Setup events
+      ko.utils.registerEventHandler(element, 'change', function() {
+        var value = valueAccessor().value;
+        value($(this).val());
+      });
+    },
+
+    update: function(element, valueAccessor) {
+      var opts = ko.utils.unwrapObservable(valueAccessor()),
+        elem = $(element);
+
+      if (opts.visible && !opts.visible()) {
+        $(element).closest('.field').hide();
+      }
+
+      if (opts.visible && opts.visible()) {
+        $(element).closest('.field').show();
+      }
+
+      $(element).enable();
+
+      if (opts.readonly && opts.readonly()) {
+        $(element).readonly();
+      }
+
+      if (opts.enable && !opts.enable()) {
+        $(element).disable();
+      }
+
+      var api = elem.data('slider');
+       api.value(ko.utils.unwrapObservable(opts.value));
+    }
+  };
+
+  ko.bindingHandlers.readonly = {
+    update: function (element, valueAccessor) {
+      var value = ko.utils.unwrapObservable(valueAccessor());
+
+      if (!value && element.readOnly) {
+        element.readOnly = false;
+      }
+      else if (value && !element.readOnly) {
+        element.readOnly = true;
+      }
+    }
+  };
+
 });
