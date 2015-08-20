@@ -40,8 +40,7 @@
     MultiSelect.prototype = {
 
       init: function() {
-        this
-          .build();
+        this.build();
       },
 
       build: function() {
@@ -55,9 +54,11 @@
         if (this.settings.source) {
           ddOpts.source = this.settings.source;
         }
+
         if (this.settings.maxSelected) {
           ddOpts.maxSelected = this.settings.maxSelected;
         }
+
         this.element.dropdown(ddOpts);
         this.dropdown = this.element.data('dropdown');
 
