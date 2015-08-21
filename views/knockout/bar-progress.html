@@ -3,13 +3,13 @@
     <div class="twelve columns">
 
       <div class="field" style = "width: 50%" data-bind="visible: isVisible">
-        <span class="label" id="prbc-label1">Available Credit <span class="l-pull-right">$95,000</span></span>
+        <span class="label" id="prbc-label1">Available Credit <span class="l-pull-right">$40,000</span></span>
         <div class="chart-progressbar" aria-labelledby="prbc-label1">
           <div class="target" style="width: 66%">
             <span aria-hidden="true">$10,000 <br> Pending</span>
           </div>
-          <div class="completed" style="width: 50%">
-            <span aria-hidden="true">$50,000 <br> Spent</span>
+          <div class="completed" data-bind="style: {width: spentAmt}">
+            <span aria-hidden="true" data-bind="html: spent"></span>
           </div>
         </div>
       </div>
@@ -17,15 +17,14 @@
       <button class="btn" id="showValue">Show</button>
       <button class="btn" id="changeValue">Change</button>
       <button class="btn" id="toggleVisibility">Visible</button>
-      <button class="btn" id="toggleReadonly">Readonly</button>
-      <button class="btn" id="toggleDisabled">Disabled</button>
     </div>
   </div>
 
   <script>
     $(function () {
       var viewModel = {
-        dateVal: ko.observable(new Date()),
+        spentAmt: ko.observable('50%'),
+        spent: ko.observable('$20,000 <br> Spent'),
         isVisible: ko.observable(true),
         isEnabled: ko.observable(true),
         isReadonly: ko.observable(false)
@@ -40,9 +39,8 @@
 
       //change the value in the viewModel
       $('#changeValue').click(function() {
-        var yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        viewModel.dateVal(yesterday);
+        viewModel.spentAmt('100%');
+        viewModel.spent('$40,000 <br> Spent');
       });
 
       //toggleVisibility
@@ -50,12 +48,5 @@
         viewModel.isVisible(!viewModel.isVisible());
       });
 
-      $('#toggleReadonly').click(function(){
-        viewModel.isReadonly(!viewModel.isReadonly());
-      });
-
-      $('#toggleDisabled').click(function(){
-        viewModel.isEnabled(!viewModel.isEnabled());
-      });
     });
   </script>
