@@ -162,8 +162,6 @@
 
       insertRows: function () {
         var self = this;
-
-        alert('Ready to Insert Rows');
         self.element.focus();
       },
 
