@@ -55,8 +55,8 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
         this.element
-        .on('touchstart.button click.button', function (e) {
-          if ((self.element.attr('disabled')) || (!self.isTouch && e.which !== 1) || 
+        .on('touchstart.button mousedown.button', function (e) {
+          if ((self.element.attr('disabled')) || (!self.isTouch && e.which !== 1) ||
               ($('.ripple-effect', this).length) || (self.isTouch && e.type !== 'touchstart')) {
             return false;
           }
