@@ -119,7 +119,7 @@
       createModal: function () {
         var self = this,
           labelText = $('label[for="'+self.element.attr('id')+'"]').contents().filter(function(){
-            return this.nodeType == 3;
+            return this.nodeType === 3;
           })[0].nodeValue+ ' Lookup';
 
         if (this.settings.title) {
