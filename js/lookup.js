@@ -23,7 +23,10 @@
     // Settings and Options
     var pluginName = 'lookup',
         defaults = {
-          click: null
+          click: null,
+          title: null, //Dialog title or takes the label + Lookup
+          buttons: null, //Pass dialog buttons or Cancel / Apply
+          options: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -92,8 +95,12 @@
       },
 
       openDialog: function () {
-        var self = this;
-        self.element.trigger('open');
+        var self = this,
+          canOpen = self.element.triggerHandler('beforeOpen');
+
+        if (canOpen === false) {
+          return;
+        }
 
         if (self.isDisabled() || self.isReadonly()) {
           return;
@@ -103,6 +110,61 @@
           self.settings.click(null, this);
           return;
         }
+
+        self.createModal();
+        self.element.trigger('open', [self.modal, self.grid]);
+
+      },
+
+      createModal: function () {
+        var self = this,
+          labelText = $('label[for="'+self.element.attr('id')+'"]').contents().filter(function(){
+            return this.nodeType == 3;
+          })[0].nodeValue+ ' Lookup';
+
+        if (this.settings.title) {
+          labelText = this.settings.title;
+        }
+
+        $('body').modal({
+          title: labelText,
+          content: '<hr><div id="lookup-datagrid"></div>',
+          buttons: [{
+            text: 'Cancel',
+            click: function(e, modal) {
+              self.element.focus();
+              modal.close();
+            }
+          }, {
+            text: 'Apply',
+            click: function(e, modal) {
+              modal.close();
+              self.insertRows();
+            },
+            isDefault: true
+          }]
+        }).on('open', function () {
+          if (self.settings.options) {
+            $('#lookup-datagrid').datagrid(self.settings.options);
+          }
+          self.element.trigger('afterOpen', [self.modal, self.grid]);
+        });
+
+      },
+
+      createGrid: function () {
+
+      },
+
+      openModal: function () {
+
+      },
+
+      insertRows: function () {
+        var self = this;
+
+        alert('Ready to Insert Rows');
+        self.element.focus();
       },
 
       enable: function() {

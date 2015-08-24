@@ -212,7 +212,7 @@
 
           ['homepage'],
 
-          ['lookup'],
+          ['lookup', '.lookup:not([data-init])'],
 
           ['wizard']
         ];

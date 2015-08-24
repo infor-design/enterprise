@@ -66,10 +66,13 @@
         if (this.element.parent('.spinbox-wrapper').length === 0) {
           this.element.wrap('<div class="spinbox-wrapper"></div>');
         }
+
+        this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         if (!this.buttons) {
           this.buttons = {
-            'down' : $('<span aria-hidden="true" class="spinbox-control down">-</span>').insertBefore(this.element),
-            'up' : $('<span aria-hidden="true" class="spinbox-control up">+</span>').insertAfter(this.element)
+            'down' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control down">-</span>').insertBefore(this.element),
+            'up' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control up">+</span>').insertAfter(this.element)
           };
         }
 
@@ -188,18 +191,31 @@
 
         // Up and Down Buttons
         var buttons = this.buttons.up.add(this.buttons.down[0]);
-        buttons.on('mousedown.spinbox', function(e) {
+        buttons.on('touchstart.spinbox mousedown.spinbox', function(e) {
           if (e.which === 1) {
+
             if (!preventClick) {
               self.handleClick(e);
             }
+
+            if (self.isTouch) {
+              return;
+            }
+
             preventClick = true;
             self.enableLongPress(e, self);
+
             $(document).one('mouseup', function() {
               self.disableLongPress(e, self);
               preventClick = false;
               self.element.focus();
             });
+
+            //Stop MouseDown From Running
+            if (this.isTouch) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
           }
         });
 
@@ -232,7 +248,12 @@
         } else {
           this.decreaseValue();
         }
-        this.element.focus();
+
+        if (!this.isTouch) {
+          this.element.focus();
+        } else {
+          target.focus();
+        }
       },
 
       handleKeys: function(e, self) {
