@@ -283,7 +283,7 @@
 
     .icon.arrow {
       fill: $popupmenu-color;
-      height: 32px;
+      height: 24px;
       width: 40px;
     }
 
@@ -301,7 +301,8 @@
         pointer-events: none;
         position: absolute;
         right: -1px;
-        top: -1px;
+        top: 2px;
+        height: 24px;
         width: 32px;
         @include css3(transform, rotate(-90deg));
       }

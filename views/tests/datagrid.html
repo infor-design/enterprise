@@ -47,7 +47,6 @@
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 125, formatter: Formatters.Template, template: cellTemplate});
       columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly });
       columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
-
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
       columns.push({ id: 'price1', name: 'Price', field: 'price', width: 10, formatter: Formatters.Decimal});
@@ -64,7 +63,6 @@
       grid = $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data,
-        rowHeight: 'tall',
         menuId: 'grid-actions-menu'
       }).on('click', function (e, args) {
         console.log('Row Was Clicked', args);

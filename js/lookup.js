@@ -75,11 +75,9 @@
       handleEvents: function () {
         var self = this;
 
-        if (this.settings.click) {
-          this.element.on('click.lookup', function () {
-            self.openDialog();
-          });
-        }
+        this.icon.on('click.lookup', function () {
+          self.openDialog();
+        });
 
         this.element.on('keypress.lookup', function (e) {
           if (e.which === 13 || e.which === 32) {
@@ -94,11 +92,21 @@
       },
 
       openDialog: function () {
-        this.element.trigger('open');
+        var self = this;
+        self.element.trigger('open');
+
+        if (self.isDisabled() || self.isReadonly()) {
+          return;
+        }
+
+        if (self.settings.click) {
+          self.settings.click(null, this);
+          return;
+        }
       },
 
       enable: function() {
-        this.element.prop('disabled', false);
+        this.element.prop('disabled', false).prop('readonly', false);
         this.element.parent().removeClass('is-disabled');
       },
 
@@ -107,8 +115,16 @@
         this.element.parent().addClass('is-disabled');
       },
 
+      readonly: function() {
+        this.element.prop('readonly', true);
+      },
+
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      isReadonly: function() {
+        return this.element.prop('readonly');
       },
 
       // Teardown - Remove added markup and events

@@ -93,7 +93,7 @@ module.exports = function(grunt) {
             'temp/amd/shell.js',
             'temp/amd/signin.js',
             'temp/amd/slider.js',
-            'temp/amd/sortable.js',
+            'temp/amd/sort.js',
             'temp/amd/spinbox.js',
             'temp/amd/toast.js',
             'temp/amd/tabs.js',
