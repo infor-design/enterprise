@@ -444,13 +444,11 @@
         }
       },
 
-      destroy: function(){
+      destroy: function() {
         this.close();
 
         if (this.modalButtons) {
-          this.modalButtons.each(function() {
-            $(this).off('click.modal');
-          });
+          this.element.find('button').off('click.modal');
         }
 
         if (this.element.find('.detailed-message').length === 1) {
