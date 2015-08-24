@@ -44,6 +44,43 @@
     @include font-size(15);
     line-height: 1.7;
   }
+
+  [class^="btn-"] {
+    color: $white;
+
+    > span:not(.audible) {
+      color: $white;
+    }
+
+    > .icon {
+      fill: $white;
+    }
+  }
+
+  .btn-menu,
+  .btn-tertiary,
+  .btn-icon,
+  .btn-actions {
+    &:focus:not(.hide-focus) {
+      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $white;
+
+      &:hover {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $white;
+
+        > .icon {
+          fill: $white;
+        }
+      }
+    }
+
+    &:hover {
+      color: $white;
+
+      > .icon {
+        fill: $white;
+      }
+    }
+  }
 }
 
 .builder-content {
