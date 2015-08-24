@@ -200,18 +200,18 @@
 
 // Spark Line Charts
 .sparkline {
-  height: 70px;
-  margin: 50px auto;
-  position: relative;
-  width: 200px;
+  // height: 70px;
+  // margin: 50px auto;
+  // position: relative;
+  // width: 200px;
 
   path {
     fill: none;
-    stroke-width: 3px;
+    stroke-width: 2px;
   }
 
   svg {
-    position: absolute;
+    // position: absolute;
   }
 
   .bar-rect {
@@ -220,7 +220,7 @@
   }
 
   .point {
-    stroke-width: 4.5;
+    stroke-width: 2;
   }
 }
 

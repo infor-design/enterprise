@@ -27,6 +27,7 @@ window.Chart = function(container) {
 
   this.pieColors = d3.scale.ordinal().range(colorRange);
   this.greyColors = d3.scale.ordinal().range(['#737373', '#999999', '#bdbdbd', '#d8d8d8']);
+  this.sparklineColors = d3.scale.ordinal().range(['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8']);
   this.colors = d3.scale.ordinal().range(colorRange);
 
   // Function to Add a Legend
@@ -628,9 +629,33 @@ window.Chart = function(container) {
     return charts.Pie(chartData, true);
   };
 
-  this.Sparkline = function(chartData) {
-     // calculate max and min values in the NLWest data
-    var max=0, min=0, len=0, i;
+  /**
+  * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
+  * to fit into a certain area.
+  *
+  * @param d {Object} Dimensions
+  * @d {srcWidth: Number} Source width
+  * @d {srcHeight: Number} Source height
+  * @d {maxWidth: Number} Fittable area maximum available width
+  * @d {maxHeight: Number} Fittable area maximum available height
+  * @return {Object} { width, heigth }
+  */
+  this.calculateAspectRatioFit = function (d) {
+    var ratio = Math.min(d.maxWidth / d.srcWidth, d.maxHeight / d.srcHeight);
+    return { width: d.srcWidth*ratio, height: d.srcHeight*ratio };
+  };
+
+  // Sparkline Chart
+  this.Sparkline = function(chartData, options) {
+    // calculate max and min values in the NLWest data
+    var max=0, min=0, len=0, i,
+      dimensions = this.calculateAspectRatioFit({
+        srcWidth: 385, 
+        srcHeight: 65, 
+        maxWidth: $(container).width(),
+        maxHeight: 600 //container min-height
+      }),
+      dotsize = dimensions.width > 300 ? 4 : 3;
 
     for (i = 0; i < chartData.length; i++) {
       min = d3.min([d3.min(chartData[i].data), min]);
@@ -638,9 +663,9 @@ window.Chart = function(container) {
       len = d3.max([chartData[i].data.length, len]);
     }
 
-    var h = 60,
-      w = 250,
-      p = 10,
+    var p = 10,
+      w = dimensions.width,
+      h = dimensions.height,
       x = d3.scale.linear().domain([0, len]).range([p, w - p]),
       y = d3.scale.linear().domain([min, max]).range([h - p, p]),
       line = d3.svg.line()
@@ -653,41 +678,100 @@ window.Chart = function(container) {
       .attr('height', h)
       .attr('width', w);
 
+    //Add Median Range
+    //https://www.purplemath.com/modules/meanmode.htm
+    if(options.isMedianRange) {
+      max = d3.max(chartData[0].data);
+      min = d3.min(chartData[0].data);
+
+      var minWidth = 10,
+        maxWidth = w-45,        
+        median = d3.median(chartData[0].data),
+        range = max-min,
+        scaleMedianRange = d3.scale.linear().domain([min, max]).range([0, h]),
+        top = h-scaleMedianRange(median>range ? median : range),
+        bot = h-scaleMedianRange(median<range ? median : range);
+
+      svg.append('g')
+        .attr('class', 'medianrange')
+        .attr('transform', function() {return 'translate('+ minWidth +','+ top +')';})
+        .append('rect')
+        .attr('width', maxWidth)
+        .attr('height', bot)
+        .style('fill', '#d8d8d8')
+        .on('mouseenter', function() {
+          var rect = d3.select(this)[0][0].getBoundingClientRect(),
+          content = '<p>' + (chartData[0].name ? chartData[0].name +'<br> ' : '') +
+            Locale.translate('Median') + ': <b>'+ median +'</b><br>'+
+            Locale.translate('Range') +': <b>'+ range +'</b>'+
+            (options.isPeakDot ? '<br>'+Locale.translate('Peak') +': <b>'+ max +'</b>' : '') +'</p>',
+          size = charts.getTooltipSize(content),
+          x = (w-size.width)/2,
+          y = rect.y - size.height + $(window).scrollTop();
+          charts.showTooltip(x, y, content, 'top');
+        })
+        .on('mouseleave', function() {
+          charts.hideTooltip();
+        });
+    }
+
     for (i = 0; i < chartData.length; i++) {
       var set = chartData[i],
         g = svg.append('g');
         g.append('path')
          .attr('d', line(set.data))
-         .attr('stroke', charts.greyColors(i))
+         .attr('stroke', options.isMinMax ? '#999999' : charts.sparklineColors(i))
          .attr('class', 'team');
     }
 
-    //Add Peak Dot
-    svg.selectAll('.point')
-      .data(chartData[0].data)
-    .enter()
-      .append('circle')
-      .style('cursor', 'pointer')
-      .attr('class', 'point')
-      .attr('cx', function(d, i) { return x(i); })
-      .attr('cy', function(d) { return y(d); })
-      .style('fill', '#786186')
-      .style('stroke', '#f86f11')
-      .attr('r', function(d) {
-        // Could do: First and Last (i === (data.length - 1) || i === 0)
-        // But instead we show max
-        return (max === d) ? 4 : 0;
-      }).on('mouseenter', function(d) {
-        var rect = d3.select(this)[0][0].getBoundingClientRect(),
-          content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> '+ Locale.translate('Peak') +': ': '') + '<b>' + d  + '</b></p>',
-          size = charts.getTooltipSize(content),
-          x = rect.x - (size.width /2) + 6,
-          y = rect.y - size.height - 18  + $(window).scrollTop();
 
-        charts.showTooltip(x, y, content, 'top');
-      }).on('mouseleave', function() {
-        charts.hideTooltip();
-      });
+    //Add Dots (Dots/Peak/MinMAx)
+    min = d3.min(chartData[0].data);
+      svg.selectAll('.point')
+        .data(chartData[0].data)
+        .enter()
+        .append('circle')
+        .attr('r', function(d) {
+          return (options.isMinMax && max === d || options.isMinMax && min === d) ? (dotsize+1) : 
+            (options.isDots || (options.isPeakDot && max === d)) ? dotsize : 0;
+        })
+        .attr('class', function(d) {
+          return (options.isPeakDot && max === d && !options.isMinMax) ? 'point peak' : 
+            (options.isMinMax && max === d) ? 'point max' : 
+            (options.isMinMax && min === d) ? 'point min' : 'point';
+        })
+        .style('fill', function(d) {
+          return (options.isPeakDot && max === d && !options.isMinMax) ? '#ffffff' : 
+            (options.isMinMax && max === d) ? '#56932E' : 
+            (options.isMinMax && min === d) ? '#941E1E' : charts.sparklineColors(0);
+        })
+        .style('stroke', function(d) {
+          return (options.isPeakDot && max === d && !options.isMinMax) ? charts.sparklineColors(0) : 
+            (options.isMinMax && max === d) ? 'none' : 
+            (options.isMinMax && min === d) ? 'none' : '#ffffff';
+        })
+        .style('cursor', 'pointer')
+        .attr('cx', function(d, i) { return x(i); })
+        .attr('cy', function(d) { return y(d); })
+        .on('mouseenter', function(d) {
+          var rect = d3.select(this)[0][0].getBoundingClientRect(),
+            content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> ' + 
+              ((options.isMinMax && max === d) ? Locale.translate('Highest') + ': ' : 
+               (options.isMinMax && min === d) ? Locale.translate('Lowest') + ': ' : 
+               (options.isPeakDot && max === d) ? Locale.translate('Peak') + ': ' : '') : '') + '<b>' + d  + '</b></p>',
+            size = charts.getTooltipSize(content),
+            x = rect.x - (size.width /2) + 6,
+            y = rect.y - size.height - 18  + $(window).scrollTop();
+
+          charts.showTooltip(x, y, content, 'top');
+          d3.select(this).attr('r', (options.isMinMax && max === d || 
+            options.isMinMax && min === d) ? (dotsize+2) : (dotsize+1));
+        })
+        .on('mouseleave', function(d) {
+          charts.hideTooltip();
+          d3.select(this).attr('r', (options.isMinMax && max === d || 
+            options.isMinMax && min === d) ? (dotsize+1) : dotsize);
+        });
 
     return $(container);
   };
@@ -1107,7 +1191,25 @@ window.Chart = function(container) {
       this.Pie(options.dataset, true);
     }
     if (options.type === 'sparkline') {
-      this.Sparkline(options.dataset);
+      this.Sparkline(options.dataset, options);
+    }
+    if (options.type === 'sparkline-dots') {
+      this.Sparkline(options.dataset, {isDots: true});
+    }
+    if (options.type === 'sparkline-peak') {
+      this.Sparkline(options.dataset, {isPeakDot: true});
+    }
+    if (options.type === 'sparkline-dots-n-peak') {
+      this.Sparkline(options.dataset, {isDots: true, isPeakDot: true});
+    }
+    if (options.type === 'sparkline-minmax') {
+      this.Sparkline(options.dataset, {isMinMax: true});
+    }
+    if (options.type === 'sparkline-medianrange') {
+      this.Sparkline(options.dataset, {isMedianRange: true});
+    }
+    if (options.type === 'sparkline-medianrange-n-peak') {
+      this.Sparkline(options.dataset, {isMedianRange: true, isPeakDot: true});
     }
     if (options.type === 'line') {
       this.Line(options.dataset, options);
