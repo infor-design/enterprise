@@ -270,6 +270,10 @@
             offsetTop: 0
           };
 
+        // Reset adjustments to panel and arrow
+        this.tooltip.removeAttr('style');
+        this.tooltip.find('.arrow').removeAttr('style');
+
         if (this.scrollparent.length) {
           scrollable.offsetTop = this.scrollparent.scrollTop();
           scrollable.offsetLeft = this.scrollparent.scrollLeft();
@@ -319,17 +323,55 @@
 
         // secondary check on bottom/top placements to see if the tooltip width is long enough
         // to bleed off the edge of the page.
+        var o = self.tooltip.offset(),
+          arrow = self.tooltip.find('.arrow'),
+          arrowPosLeft = 0,
+          delta = 0;
+
+        function offLeftEdgeCondition() {
+          return o.left - scrollable.deltaWidth <= 0;
+        }
+
+        function offRightEdgeCondition() {
+          return o.left - scrollable.deltaWidth + self.tooltip.outerWidth() >= winW;
+        }
+
         if (settings.placement === 'bottom' ||
             settings.placement === 'top' ) {
 
-          if ( self.tooltip.offset().left - scrollable.deltaWidth <= 0 ) {
-            self.tooltip.removeClass('top bottom').addClass('right');
-            self.placeToRight(scrollable);
+          // Check for bleeding off the left edge
+          if (offLeftEdgeCondition()) {
+            delta = (0 - (o.left - scrollable.deltaWidth) + 1) * -1;
+            self.tooltip.css('left', o.left + delta);
+            arrowPosLeft = parseInt(arrow.css('left'), 10);
+            arrow.css('left', arrowPosLeft - delta);
+
+            // Check again.  If it's still bleeding off the left edge, swap it to a right-placed Tooltip.
+            if (offLeftEdgeCondition()) {
+              self.tooltip.removeClass('top bottom').addClass('right');
+              self.placeToRight(scrollable);
+            }
           }
 
-          if ( (self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth()) >= winW ) {
-            self.tooltip.removeClass('top bottom').addClass('left');
-            self.placeToLeft(scrollable);
+          // Check for bleeding off the right edge.
+          if (offRightEdgeCondition()) {
+            // need to explicitly set a width on the popover for this to work, otherwise popover contents will wrap
+            // and cause it to grow wider:
+            var tooltipWidth = self.tooltip.outerWidth();
+            self.tooltip.css('width', tooltipWidth);
+
+            delta = (winW - (o.left - scrollable.deltaWidth + tooltipWidth) - 1) * -1;
+            self.tooltip.css('left', o.left - delta);
+            arrowPosLeft = parseInt(arrow.css('left'), 10);
+            arrow.css('left', arrowPosLeft + delta);
+
+            // Check again.  If it's still bleeding off the edge, swap it to a left-placed Tooltip.
+            o = self.tooltip.offset();
+            if (offRightEdgeCondition()) {
+              arrow.removeAttr('style');
+              self.tooltip.removeClass('top bottom').addClass('left');
+              self.placeToLeft(scrollable);
+            }
           }
 
         }
