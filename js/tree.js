@@ -41,6 +41,7 @@
         this.setupTree();
         this.handleKeys();
         this.setupEvents();
+        this.setupHeight();
       },
       setupTree: function() {
         var links = this.element.find('a');
@@ -129,20 +130,21 @@
         var next = node.next();
 
         if (next.is('ul[role="group"]')) {
-          next.slideToggle(function () {
-            next.toggleClass('is-open');
-          });
-
-          node.closest('.folder').toggleClass('is-open');
-          node.attr('aria-expanded', (node.attr('aria-expanded') === 'true' ? 'false' : 'true'));
+          if(next.hasClass('is-open')) {
+            next.one('animateClosedComplete', function() {
+              next.removeClass('is-open');
+              node.closest('.folder').removeClass('is-open').end()
+                  .find('use').attr('xlink:href', '#icon-tree-expand');
+            }).animateClosed();
+          } 
+          else {
+            next.addClass('is-open').one('animateOpenComplete', function() {
+              node.closest('.folder').addClass('is-open').end()
+                  .find('use').attr('xlink:href', '#icon-tree-collapse');
+            }).animateOpen();
+          }
+          node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
         }
-
-        if(next.hasClass('is-open') && node.closest('li').hasClass('folder')){
-          node.find('use').attr('xlink:href', '#icon-tree-expand' );
-        } else if(node.closest('li').hasClass('folder')) {
-          node.find('use').attr('xlink:href', '#icon-tree-collapse' );
-        }
-
       },
 
       setupEvents: function () {
@@ -152,6 +154,19 @@
         });
       },
 
+      setupHeight: function() {
+        $('ul[role="group"]', this.element).each(function() {
+          var g = $(this);
+
+          if(g.hasClass('is-open')) {
+            g.css('height', 'auto');
+          }
+          else {
+            g.css('height', 0);
+          }
+        });
+      },
+      
       handleKeys: function () {
 
         //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
@@ -213,8 +228,8 @@
             prev = target.parent().prev().find('a:first');
 
             //move into children at bottom
-            if (prev.parent().is('.folder') &&
-                prev.parent().find('ul.is-open').length === 1 &&
+            if (prev.parent().is('.folder.is-open') &&
+                prev.parent().find('ul.is-open').length &&
                 !prev.parent().find('ul.is-disabled').length) {
               prev = prev.parent().find('ul.is-open a:last');
             }
