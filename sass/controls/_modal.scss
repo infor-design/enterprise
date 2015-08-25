@@ -176,6 +176,10 @@
     &[disabled]:focus {
       text-decoration: underline;
     }
+
+    .ripple-effect {
+      background-color: $primary-btn-bg-color;
+    }
   }
 
   .btn-modal-primary {
