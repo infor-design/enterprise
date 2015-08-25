@@ -151,7 +151,7 @@
             item.html('<span>' + text + '</span>');
           }
           if (item.find('svg.arrow').length === 0) {
-            item.append('<svg class="icon arrow" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
+            item.append('<svg class="icon arrow icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
           }
           item.attr('aria-haspopup', 'true');
 

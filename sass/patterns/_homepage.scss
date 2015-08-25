@@ -21,11 +21,10 @@
     position: relative;
 
     &.has-toolbar {
-      padding: 0;
+      padding: 0 20px;
 
       .toolbar {
         line-height: normal;
-        margin: 0 20px;
       }
 
       .title {
@@ -33,17 +32,12 @@
         color: $cardlist-header-color;
         -webkit-font-smoothing: antialiased;
         font-weight: 100;
-        margin: 4px 1em 4px 0;
+        margin: 0;
         text-rendering: optimizeLegibility !important;
       }
 
       .searchfield-wrapper {
         margin: 8px 0 5px;
-      }
-
-      .btn-actions {
-        margin-right: 1px;
-        margin-top: 8px;
       }
     }
 

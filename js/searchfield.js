@@ -74,6 +74,10 @@
             self.element.val('').trigger('change');
           });
         }
+
+        // Add empty class if the field is initialized empty
+        this.checkContents();
+
         return this;
       },
 
@@ -82,6 +86,10 @@
 
         this.element.on('updated.searchfield', function() {
           self.updated();
+        }).on('focus.searchfield', function(e) {
+          self.handleFocus(e);
+        }).on('blur.searchfield', function(e) {
+          self.handleBlur(e);
         });
 
         // Insert the "view more results" link on the Autocomplete control's "populated" event
@@ -145,6 +153,41 @@
         });
 
         return this;
+      },
+
+      handleFocus: function() {
+        var toolbar = this.element.closest('.toolbar');
+        if (toolbar.length) {
+          // Setup a timed event that will send a signal to a parent toolbar, telling it to recalculate which buttons are visible.
+          // Needs to be done after a CSS animation on the searchfield finishes.
+          // TODO: Bolster this to work with CSS TransitonEnd
+          setTimeout(function() {
+            toolbar.triggerHandler('recalculateButtons');
+          }, 300);
+        }
+      },
+
+      handleBlur: function() {
+        var toolbar = this.element.closest('.toolbar');
+        if (toolbar.length) {
+          // Setup a timed event that will send a signal to a parent toolbar, telling it to recalculate which buttons are visible.
+          // Needs to be done after a CSS animation on the searchfield finishes.
+          // TODO: Bolster this to work with CSS TransitonEnd
+          setTimeout(function() {
+            toolbar.triggerHandler('recalculateButtons');
+          }, 300);
+        }
+
+        this.checkContents();
+      },
+
+      checkContents: function() {
+        var text = this.element.val();
+        if (!text || !text.length) {
+          this.element.addClass('empty');
+        } else {
+          this.element.removeClass('empty');
+        }
       },
 
       addMoreLink: function() {

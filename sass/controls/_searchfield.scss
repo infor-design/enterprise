@@ -11,14 +11,13 @@
     height: 17px;
     position: absolute;
     right: 0;
-    top: 9px;
+    top: 8px;
   }
 
   .icon.close {
     cursor: pointer;
-    pointer-events: normal;
     height: 16px;
-    top: 8px;
+    pointer-events: normal;
 
     &:hover {
       fill: $white;
@@ -57,9 +56,29 @@
     @include searchfield-text-style();
     border: 1px solid transparent;
     cursor: pointer;
-    padding-left: 35px;
+    padding-left: 36px;
+    text-overflow: ellipsis;
     transition: width .3s cubic-bezier(.17, .04, .03, .94);
-    width: 110px;
+    width: 115px;
+
+    &.empty {
+      padding-left: 0;
+      width: 32px;
+
+      &:focus {
+        padding-left: 36px;
+        width: 225px;
+      }
+
+      &[placeholder] {
+        padding-left: 36px;
+        width: 115px;
+
+        &:focus {
+          width: 225px;
+        }
+      }
+    }
 
     &:focus {
       background-color: #ffffff;
