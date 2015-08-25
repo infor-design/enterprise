@@ -46,6 +46,10 @@
 
     //Init and get the api for the grid
     grid = $('#product-lookup').lookup({
+        field: 'productId',
+        //field: function (row, field, grid) {
+        //  return row.productId + '|' + row.productName;
+        //},
         options: {
           columns: columns,
           dataset: data,

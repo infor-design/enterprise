@@ -24,9 +24,11 @@
     var pluginName = 'lookup',
         defaults = {
           click: null,
+          field: 'id',  //Field to return from the array or can be a function
           title: null, //Dialog title or takes the label + Lookup
           buttons: null, //Pass dialog buttons or Cancel / Apply
-          options: null
+          options: null,
+          source: null //To Do
         },
         settings = $.extend({}, defaults, options);
 
@@ -43,9 +45,11 @@
         this.settings = settings;
         this.build();
         this.handleEvents();
+        this.grid = null;
+        this.selectedRows = null;
       },
 
-      // Example Method
+      // Build the Ui lookup
       build: function() {
          var lookup = this.element;
 
@@ -75,6 +79,7 @@
           .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
       },
 
+      //Handle events on the field
       handleEvents: function () {
         var self = this;
 
@@ -82,6 +87,7 @@
           self.openDialog();
         });
 
+        //Space or Enter opens the dialog in this field
         this.element.on('keypress.lookup', function (e) {
           if (e.which === 13 || e.which === 32) {
             self.openDialog();
@@ -90,10 +96,7 @@
 
       },
 
-      closeDialog: function () {
-        this.element.trigger('close');
-      },
-
+      //Create and Open the Dialog
       openDialog: function () {
         var self = this,
           canOpen = self.element.triggerHandler('beforeOpen');
@@ -113,14 +116,14 @@
 
         self.createModal();
         self.element.trigger('open', [self.modal, self.grid]);
-
       },
 
+      //Overidable function to create the modal dialog
       createModal: function () {
         var self = this,
           labelText = $('label[for="'+self.element.attr('id')+'"]').contents().filter(function(){
             return this.nodeType === 3;
-          })[0].nodeValue+ ' Lookup';
+          })[0].nodeValue + ' ' + Locale.translate('Lookup');
 
         if (this.settings.title) {
           labelText = this.settings.title;
@@ -138,63 +141,135 @@
           }, {
             text: 'Apply',
             click: function(e, modal) {
+              var selectedRows = self.grid.selectedRows();
               modal.close();
-              self.insertRows();
+              self.insertRows(selectedRows);
             },
             isDefault: true
           }]
-        }).on('open', function () {
-          if (self.settings.options) {
-            $('#lookup-datagrid').datagrid(self.settings.options);
-          }
+        }).off('open').on('open', function () {
+          self.createGrid();
           self.element.trigger('afterOpen', [self.modal, self.grid]);
         });
 
       },
 
+      //Overridable Function in which we create the grid on the current ui dialog.
       createGrid: function () {
+        var self = this,
+          lookup = $('#lookup-datagrid');
+
+        if (self.settings.options) {
+          lookup.datagrid(self.settings.options);
+        }
+        self.grid = lookup.data('datagrid');
+
+        //Mark selected rows
+        var val = self.element.val();
+        if (val) {
+          self.selectGridRows(val);
+        }
 
       },
 
-      openModal: function () {
+      //Given a field value, select the row
+      selectGridRows: function (val) {
+        var self = this,
+          selectedId = val;
 
+        if (!val) {
+          return;
+        }
+
+        //Multi Select
+        if (selectedId.indexOf(',') > 1) {
+          selectedId = selectedId.split[','];
+
+          //for (var i = 0; i < selected.length; i++) {
+          //  console.log(selected[i])
+          //}
+          return;
+        }
+
+        //Single Select
+        //if (typeof self.settings.field === 'function') {
+        //  self.selectRowByValue(self.settings.field(this.settings.options.dataset[0], self.element, self.grid), selectedId);
+        //} else {
+       self.selectRowByValue(self.settings.field, selectedId);
+        //}
       },
 
+      //Find the row and select it based on select value / function / field value
+      selectRowByValue: function(field, value) {
+        var data = this.settings.options.dataset,
+          selectedRows = [];
+
+        for (var i = 0; i < data.length; i++) {
+          if (data[i][field] == value) {  // jshint ignore:line
+            selectedRows.push(i);
+          }
+        }
+        this.grid.selectedRows(selectedRows);
+      },
+
+      //Get the selected rows and return them to the UI
       insertRows: function () {
-        var self = this;
+        var self = this,
+          value = '';
+
+        self.selectedRows = self.grid.selectedRows();
+
+        for (var i = 0; i < self.selectedRows.length; i++) {
+          var currValue = '';
+
+          if (typeof self.settings.field === 'function') {
+            currValue = self.settings.field(self.selectedRows[i].data, self.element, self.grid);
+          } else {
+            currValue = self.selectedRows[i].data[self.settings.field];
+          }
+
+          value += (i !== 0 ? ',' : '') + currValue;
+        }
+
+        self.element.val(value);
         self.element.focus();
       },
 
+      //Enable the field
       enable: function() {
         this.element.prop('disabled', false).prop('readonly', false);
         this.element.parent().removeClass('is-disabled');
       },
 
+      //Disable the field
       disable: function() {
         this.element.prop('disabled', true);
         this.element.parent().addClass('is-disabled');
       },
 
+      //Make the field readonly
       readonly: function() {
         this.element.prop('readonly', true);
       },
 
+      //Check if the field is disabled
       isDisabled: function() {
         return this.element.prop('disabled');
       },
 
+      //Check if the field is readonly
       isReadonly: function() {
         return this.element.prop('readonly');
       },
 
-      // Teardown - Remove added markup and events
+      // Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.element.off('click.dropdown keypress.dropdown');
       }
     };
 
-    // Initialize the plugin (Once)
+    // Initialize the plugin once
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
