@@ -530,6 +530,16 @@ $.fn.datagrid = function(options) {
       self.table.css('width', total);
     },
 
+    // Get child offset
+    getChildOffset: function(obj) {
+      var childPos = obj.offset(),
+        parentPos = obj.parent().offset();
+      return {
+        top: childPos.top - parentPos.top,
+        left: childPos.left - parentPos.left
+      };
+    },
+
     //Generate Resize Handles
     createResizeHandle: function() {
       var self = this;
@@ -542,15 +552,18 @@ $.fn.datagrid = function(options) {
       this.table.before(this.resizeHandle);
 
       this.resizeHandle.drag({axis: 'x', containment: 'parent'}).on('drag.datagrid', function (e, ui) {
-        var id = self.currentHeader.attr('data-column-id');
-
         if (!self.currentHeader) {
           return;
         }
+        var id = self.currentHeader.attr('data-column-id'),
+          offset = (self.element.parent().css('position')!=='static') ? 
+            self.getChildOffset(self.currentHeader) : 
+            self.currentHeader.offset();
 
         self.dragging = true;
-        self.setColumnWidth(id, ui.left - self.currentHeader.offset().left + 6);
-      }).on('dragend.datagrid', function () {
+        self.setColumnWidth(id, ui.left - offset.left + 6);
+      })
+      .on('dragend.datagrid', function () {
         self.dragging = false;
       });
     },
