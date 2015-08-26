@@ -73,13 +73,13 @@ input.multiselect {
     cursor: pointer;
     display: inline-block;
     fill: $trigger-icon-fill-color;
-    height: 31px;
+    height: 38px;
     margin-left: -33px;
     pointer-events: none;
     position: absolute;
-    right: 3px;
-    top: 1px;
-    width: 22px;
+    right: 13px;
+    top: -1px;
+    width: 11px;
   }
 
   &.is-readonly {
@@ -291,18 +291,20 @@ input.multiselect {
     }
   }
 
-  .icon {
+  > .icon {
     fill: $trigger-icon-fill-color;
     height: 32px;
-    margin-left: -25px;
+    margin-left: -23px;
     position: absolute;
     @include css3(transform, rotate(180deg));
-    width: 22px;
+    width: 11px;
 
     &.search {
       height: 18px;
+      margin-left: -26px;
       margin-top: 7px;
       @include css3(transform, rotate(0deg));
+      width: 16px;
     }
   }
 }

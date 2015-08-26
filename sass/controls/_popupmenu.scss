@@ -297,13 +297,13 @@
 
       > .icon.icon-dropdown {
         border-width: 0;
-        height: 11px;
+        height: 24px;
         left: auto;
         pointer-events: none;
         position: absolute;
-        right: -1px;
-        top: 8px;
-        width: 32px;
+        right: 11px;
+        top: 2px;
+        width: 11px;
         @include css3(transform, rotate(-90deg));
       }
     }

@@ -18,7 +18,8 @@ button {
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
-  font-weight: bold;
+  @include font-size($button-font-size);
+  font-weight: 700;
   height: 34px;
   min-width: 100px;
   overflow: hidden;
@@ -41,8 +42,8 @@ button {
   }
 
   span {
-    @include font-size($button-font-size);
-    font-weight: 700;
+    font-size: inherit;
+    font-weight: inherit;
 
     + .icon {
       padding-left: 5px;
@@ -68,34 +69,6 @@ button {
   border-radius: 2px;
   padding: 0 15px;
 }
-
-/*
-.btn-filtering {
-  border-radius: 18px;
-  height: 36px;
-  margin-top: 0;
-  min-height: 36px;
-  min-width: 36px;
-  padding: 0 5px;
-
-  .icon {
-    height: 34px;
-    vertical-align: middle;
-  }
-
-  span {
-    display: none;
-  }
-
-  &.has-text span {
-    display: inline-block;
-    height: 34px;
-    line-height: 34px;
-    margin-right: 5px;
-    vertical-align: middle;
-  }
-}
-*/
 
 // standard, primary, destructive
 .btn-primary {
@@ -239,9 +212,7 @@ a.btn-primary {
   }
 
   span {
-    @include font-size(12);
     color: $tertiary-btn-color;
-    font-weight: 700;
   }
 
   .icon {

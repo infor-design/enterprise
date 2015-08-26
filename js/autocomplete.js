@@ -25,7 +25,8 @@
       defaults = {
         source: [], //Defines the data to use, must be specified.
         tags: false, //Allows tags to be shown/generated.
-        template: undefined // If defined, use this to draw the contents of each search result instead of the default draw routine.
+        template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
+        filterMode: 'startsWith'  // startsWith and contains Supported
       },
       settings = $.extend({}, defaults, options);
 
@@ -109,20 +110,29 @@
             parts = option.split(' '),
             containsTerm = false;
 
-          for (var a = 0; a < parts.length; a++) {
-            if (parts[a].toLowerCase().indexOf(term) === 0) {
+          if (this.settings.filterMode === 'startsWith') {
+              for (var a = 0; a < parts.length; a++) {
+                if (parts[a].toLowerCase().indexOf(term) === 0) {
+                  containsTerm = true;
+                }
+              }
+
+              //Direct Match
+              if (option.toLowerCase().indexOf(term) === 0) {
+                containsTerm = true;
+              }
+
+              if (term.indexOf(' ') > 0 && option.toLowerCase().indexOf(term) > 0) {
+                //Partial dual word match
+                containsTerm = true;
+              }
+
+          }
+
+          if (this.settings.filterMode === 'contains') {
+            if (option.toLowerCase().indexOf(term) > 0) {
               containsTerm = true;
             }
-          }
-
-          //Direct Match
-          if (option.toLowerCase().indexOf(term) === 0) {
-            containsTerm = true;
-          }
-
-          if (term.indexOf(' ') > 0 && option.toLowerCase().indexOf(term) > 0) {
-            //Partial dual word match
-            containsTerm = true;
           }
 
           if (containsTerm) {

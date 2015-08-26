@@ -56,7 +56,11 @@ svg.icon {
   &.icon-dropdown {
     height: 10px;
   }
+}
 
+//Prevent freezing on IE11 - Win 7 - http://bit.ly/1EW17mx
+svg use {
+  pointer-events: none;
 }
 
 svg.icon-logo {
