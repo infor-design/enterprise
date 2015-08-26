@@ -419,7 +419,8 @@
       adjustButtonVisibility: function() {
         var self = this,
           transitionEnd = $.fn.transitionEndName();
-        this.items.each(function() {
+
+        this.items.filter(':not(.btn-actions)').each(function() {
           var item = $(this);
 
           // Don't do this for searchfields
@@ -489,7 +490,7 @@
         }
 
         if (this.element.outerWidth() > 1 && this.buttonset.length > 0 && // Makes sure we're not animating Open or remaining Closed
-          (this.buttonset[0].scrollWidth > this.buttonset.outerWidth() || // Inner scrolling area doesn't exceed control height
+          (this.buttonset[0].scrollWidth > this.buttonset.outerWidth() + 1 || // Inner scrolling area doesn't exceed control width
           this.defaultMenuItems)) { // No default menu items defined in the More Menu (will always show if there are)
           this.element.addClass('has-more-button');
         } else {

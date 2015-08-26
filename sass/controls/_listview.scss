@@ -284,7 +284,6 @@ $listview-selected-text-color: $inverse-color;
   border-radius: 2px 2px 0 0;
   margin: 0;
   overflow: hidden;
-  text-align: right;
   z-index: 20;
 
   + .listview {
@@ -295,14 +294,40 @@ $listview-selected-text-color: $inverse-color;
   // Override Toolbar styles
   &.toolbar {
     margin-bottom: 0;
+    padding-left: 20px;
+    padding-right: 13px;
 
-    .buttonset {
-      height: 44px;
-      margin: 5px 13px 5px 1px;
+    .title {
+      @include font-size(16);
+      color: $listview-selected-text-color;
     }
 
-    .more {
-      top: 5px;
+    [class^="btn-"] {
+      color: $listview-selected-text-color;
+      min-width: 0;
+
+      > span {
+        color: $listview-selected-text-color;
+      }
+
+      > .icon {
+        fill: $listview-selected-text-color;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-selected-text-color;
+      }
+
+      &:hover,
+      &:focus:not(.hide-focus) {
+        > .icon {
+          fill: $listview-selected-text-color;
+        }
+      }
+
+      .ripple {
+        background-color: $listview-selected-text-color;
+      }
     }
   }
 
@@ -314,51 +339,6 @@ $listview-selected-text-color: $inverse-color;
     }
   }
 
-  .btn-actions {
-    > .icon {
-      fill: $listview-selected-text-color;
-    }
-
-    &:hover,
-    &:focus:not(.hide-focus) {
-      > .icon {
-        fill: $listview-selected-text-color;
-      }
-    }
-  }
-
-  *[class^="btn-"] {
-    @include font-size(12);
-    color: $listview-selected-text-color;
-    font-weight: bold;
-    min-width: 50px;
-    text-transform: uppercase;
-
-    &:focus {
-      box-shadow: 0 0 0 2px $primary-color, 0 0 0 3px $listview-selected-text-color;
-    }
-
-    &:hover,
-    &:focus:not(.hide-focus) {
-      color: $listview-selected-text-color;
-
-      > span {
-        color: $listview-selected-text-color;
-      }
-    }
-
-    .ripple {
-      background-color: $listview-selected-text-color;
-    }
-  }
-
-  .listview-selection-count {
-    @include font-size(16);
-    color: $listview-selected-text-color;
-    float: left;
-    line-height: 54px;
-    margin-left: 20px;
-  }
 }
 
 .listview-table {

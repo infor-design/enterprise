@@ -447,16 +447,13 @@
           }).css('display', 'block');
           toolbar.animateOpen();
 
-          var count = toolbar.find('.listview-selection-count'),
-            countSpan;
-          if (count.length === 0) {
-            countSpan = $('<span class="listview-selection-count"></span>');
-            toolbar.prepend(countSpan);
-          } else {
-            countSpan = toolbar.find('.listview-selection-count');
+          var title = toolbar.find('.title, .listview-selection-count');
+          if (!title || !title.length) {
+            title = $('<div class="title listview-selection-count"></div>');
+            toolbar.prepend(title);
           }
+          title.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
 
-          countSpan.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
         } else {
           toolbar.addClass('is-hidden').one('animateClosedComplete', function(e) {
             e.stopPropagation();

@@ -65,6 +65,7 @@
       padding-left: 0;
       width: 32px;
 
+      &:active,
       &:focus {
         padding-left: 36px;
         width: 225px;
@@ -74,12 +75,14 @@
         padding-left: 36px;
         width: 115px;
 
+        &:active,
         &:focus {
           width: 225px;
         }
       }
     }
 
+    &:active,
     &:focus {
       background-color: #ffffff;
       border: 1px solid $graphite03;
@@ -122,17 +125,20 @@
 }
 
 @include respond-to(phablet) {
-  .searchfield:focus {
-    &::-webkit-input-placeholder {
-      color: transparent;
-    }
+  .searchfield {
+    &:active,
+    &:focus {
+      &::-webkit-input-placeholder {
+        color: transparent;
+      }
 
-    &::-moz-placeholder {
-      color: transparent;
-    }
+      &::-moz-placeholder {
+        color: transparent;
+      }
 
-    &:-ms-input-placeholder {
-      color: transparent;
+      &:-ms-input-placeholder {
+        color: transparent;
+      }
     }
   }
 }
@@ -156,7 +162,7 @@
       left: 0;
     }
 
-    &:focus {
+    &:active {
       background-color: $slate08;
       border-color: transparent transparent $slate09;
       box-shadow: none;

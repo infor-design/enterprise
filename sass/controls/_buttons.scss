@@ -252,7 +252,7 @@ a.btn-primary {
   }
 
   > span {
-    color: transparent;
+    color: transparent !important;
     display: inline-block;
     pointer-events: none;
     position: absolute;
@@ -308,4 +308,12 @@ a.btn-primary {
   .btn-tertiary {
     padding: 0 5px;
   }
+
+  // Reset the above rule when these types of buttons appear in toolbars
+  .toolbar {
+    .btn-destructive,
+    .btn-teritary {
+    	padding: 0 10px;
+    }
+ 	}
 }
