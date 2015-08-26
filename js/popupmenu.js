@@ -88,6 +88,11 @@
             break;
         }
 
+        //Reuse Same menu
+        if (this.menu.parent().is('.popupmenu-wrapper')) {
+          return;
+        }
+
         if (this.menu.length === 0) {
           return false;
         }
