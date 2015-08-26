@@ -306,11 +306,11 @@
 
           //Close on escape
           if (key === 27) {
-            self.close();
+            self.close(true);
           }
 
           if (key === 9) {
-            self.close();
+            self.close(true);
           }
 
           //Select Checkboxes
@@ -653,7 +653,11 @@
         });
       },
 
-      close: function () {
+      close: function (isCancelled) {
+        if (!isCancelled || isCancelled === undefined) {
+          isCancelled = false;
+        }
+
         this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
         this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
@@ -668,7 +672,7 @@
         $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
-        this.element.trigger('close');
+        this.element.trigger('close', [isCancelled]);
         this.detach();
 
         if (this.settings.trigger === 'immediate') {

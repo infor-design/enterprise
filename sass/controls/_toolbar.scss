@@ -40,6 +40,10 @@ $toolbar-height: 44px;
       &:first-child {
         margin-left: 1px;
       }
+
+      &:last-child {
+        margin-right: 1px;
+      }
     }
 
     > .is-overflowed {

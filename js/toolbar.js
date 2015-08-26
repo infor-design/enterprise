@@ -206,6 +206,11 @@
             self.handleBlur(e);
           });
 
+        this.items.filter('.btn-menu')
+          .on('close.toolbar', function onClosePopup() {
+            $(this).focus();
+          });
+
         this.more.on('keydown.toolbar', function(e) {
           self.handleKeys(e);
         }).on('beforeOpen.toolbar', function() {

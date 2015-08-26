@@ -19,6 +19,7 @@ button {
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
   @include font-size($button-font-size);
+  color: inherit;
   font-weight: 700;
   height: 34px;
   min-width: 100px;
@@ -36,12 +37,14 @@ button {
   }
 
   > .icon {
+    fill: inherit;
     padding-right: 5px;
     position: static;
     width: 26px;
   }
 
   span {
+    color: inherit;
     font-size: inherit;
     font-weight: inherit;
 
