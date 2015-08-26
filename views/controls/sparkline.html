@@ -1,44 +1,90 @@
+<style>
+  .sparkline {
+    width: 285px;
+  }
+  .test-sparkline-wrap hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
+    width: 255px;
+  }
+</style>
 
-<div class="row">
-  <div class="one-thirds column">
-     <div id="sparkline-chart-example" class="sparkline">
+<div class="test-sparkline-wrap">
+
+  <div class="row">
+    <div class="four columns">
+      <hr>
+      <div id="sparkline-chart-example-1" class="sparkline"></div>
+    </div>
   </div>
+
+  <div class="row">
+    <div class="four columns">
+      <hr>
+      <div id="sparkline-chart-example-2" class="sparkline"></div>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="four columns">
+      <hr>
+      <div id="sparkline-chart-example-3" class="sparkline"></div>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="four columns">
+      <hr>
+      <div id="sparkline-chart-example-4" class="sparkline"></div>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="four columns">
+      <hr>
+      <div id="sparkline-chart-example-5" class="sparkline"></div>
+      <hr>
+    </div>
+  </div>
+
 </div>
 
-<script>
 
-    var sparkData = [{
-        data: [12, 12, 30, 20, 30, 67, 56, 22, 33, 83],
+
+<script>
+    var sparkData1 = [{
+        data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
         name: 'Inventory'
-    }, {
-        data: [21, 25, 18, 10, 38, 19, 13, 15, 41, 56],
-        name: 'Demand'
-    }, {
-        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        name: 'Demand2'
     }];
 
-  /* var sparkData = [{
-      data: [{
-          name: 'Data Point A',
-          value: 7.6
-      }, {
-          name: 'Data Point B',
-          value: 6.25
-      }, {
-          name: 'Data Point C',
-          value: 4.35
-      }, {
-          name: 'Data Point D',
-          value: 5.6
-      }, {
-          name: 'Data Point E',
-          value: 11.6
-      }, {
-          name: 'Data Point F',
-          value: 12.6
-      }]
-    }];*/
+    var sparkData2 = [{
+        data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
+        name: 'Inventory'
+    }, {
+        data: [40, 30, 40, 16, 50, 17, 15, 39, 15, 18],
+        name: 'Demand'
+    }];
 
-  $('#sparkline-chart-example').chart({type: 'sparkline', dataset: sparkData});
+    var sparkData3 = [{
+        data: [25, 20, 61, 28, 10, 30, 50, 35, 13, 27],
+        name: 'Inventory'
+    }];
+
+    var sparkData4 = [{
+        data: [25, 20, 55, 28, 41, 30, 50, 22, 16, 27],
+        name: 'Inventory'
+    }];
+
+  $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: sparkData1});
+  $('#sparkline-chart-example-2').chart({type: 'sparkline-peak', dataset: sparkData2});
+  $('#sparkline-chart-example-3').chart({type: 'sparkline-medianrange-n-peak', dataset: sparkData3});
+  $('#sparkline-chart-example-4').chart({type: 'sparkline-minmax', dataset: sparkData4});
+  $('#sparkline-chart-example-5').chart({type: 'sparkline', dataset: sparkData1});
 </script>

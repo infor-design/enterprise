@@ -30,4 +30,9 @@
     }
   }
 
+  &[readonly] + .trigger,
+  &[disabled] + .trigger {
+    cursor: default;
+  }
+
 }

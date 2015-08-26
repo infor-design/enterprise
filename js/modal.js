@@ -206,6 +206,7 @@
           if (!isPanel) {
             btn.css('width', btnWidth + '%');
           }
+
           btn.button();
           buttonset.append(btn);
         });
@@ -251,7 +252,7 @@
         });
 
         setTimeout(function () {
-          self.element.find(':focusable:not(.searchfield):first').focus();
+          self.element.find(':focusable:not(.searchfield):first:not(button)').focus();
           self.keepFocus();
           self.element.triggerHandler('open');
         }, 300);
@@ -444,13 +445,11 @@
         }
       },
 
-      destroy: function(){
+      destroy: function() {
         this.close();
 
         if (this.modalButtons) {
-          this.modalButtons.each(function() {
-            $(this).off('click.modal');
-          });
+          this.element.find('button').off('click.modal');
         }
 
         if (this.element.find('.detailed-message').length === 1) {

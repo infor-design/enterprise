@@ -171,8 +171,8 @@
           //Spinbox
           ['spinbox'],
 
-          //Sortable drag and drop
-          ['sortable'],
+          //sort drag and drop
+          ['sort'],
 
           //Color Picker
           ['colorpicker'],
@@ -212,7 +212,7 @@
 
           ['homepage'],
 
-          ['lookup'],
+          ['lookup', '.lookup:not([data-init])'],
 
           ['wizard']
         ];

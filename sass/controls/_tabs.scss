@@ -123,7 +123,7 @@
   padding: 3px 0 0 14px;
   position: absolute;
   right: 0;
-  top: -4px;
+  top: 6px;
   @include css3(transition, background-color .25s ease);
   visibility: hidden;
 
@@ -136,9 +136,10 @@
   }
 
   .icon {
-    height: 40px;
-    margin: 0 0 0 -5px;
-    width: 34px;
+    height: 22px;
+    margin: 0;
+    vertical-align: middle;
+    width: 22px;
   }
 
   &.popup-is-open,
@@ -247,7 +248,7 @@
         padding-right: 1px;
         position: relative;
         width: 14px;
-        
+
         &.icon-error {
           height: 14px;
           margin-left: inherit;
@@ -291,7 +292,7 @@
       height: 14px;
       margin-left: -5px;
       width: 14px;
-    }    
+    }
 
     &.is-selected {
       a {

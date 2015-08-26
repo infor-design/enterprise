@@ -60,6 +60,17 @@ $datagrid-header-height: 40px;
     }
   }
 
+  //Grouped Headers
+  thead tr + tr {
+    border-top: 1px solid $datagrid-header-border-color;
+  }
+
+  .datagrid-header-groups {
+    th {
+      background-color: $datagrid-header-active-color;
+    }
+  }
+
   //Column Resize
   .datagrid-column-wrapper {
     display: table;
@@ -73,7 +84,6 @@ $datagrid-header-height: 40px;
 
     .sort-indicator {
       float: right;
-      margin: -3px 6px 0 0;
     }
   }
 
@@ -294,16 +304,15 @@ $datagrid-header-height: 40px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: -3px 0 0 -2px;
+  margin: 2px 0 0 5px;
   vertical-align: top;
-  width: 25px;
 
   .icon {
-    fill: #999999;
-    height: 34px;
+    fill: $graphite04;
+    height: 24px;
     opacity: 0;
     @include transition(all 250ms ease);
-    width: 34px;
+    width: 24px;
   }
 
   span {

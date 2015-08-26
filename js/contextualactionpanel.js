@@ -61,9 +61,16 @@
 
         // Build the Content
         if (this.panel.length === 0) {
-          this.panel = $('<div class="contextual-action-panel">'+ this.settings.content +'</div>').appendTo('body');
+          if (this.settings.content  instanceof jQuery) {
+            this.settings.content.wrap('<div class="contextual-action-panel"></div>');
+            this.panel = this.settings.content.parent();
+            this.panel.addClass('modal').appendTo('body');
+            this.settings.content.show();
+          } else {
+            this.panel = $('<div class="contextual-action-panel">'+ this.settings.content +'</div>').appendTo('body');
+            this.panel.addClass('modal').attr('id', 'contextual-action-modal-' + this.id);
+          }
         }
-        this.panel.addClass('modal').attr('id', 'contextual-action-modal-' + this.id);
 
         if (this.panel.find('.modal-content').length === 0) {
           children = this.panel.children();

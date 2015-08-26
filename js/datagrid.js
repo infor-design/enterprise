@@ -278,12 +278,46 @@ $.fn.datagrid = function(options) {
       return 'datagrid-' + gridCount + suffix;
     },
 
+    visibleColumns: function () {
+      var visible = [];
+      for (var j = 0; j < this.settings.columns.length; j++) {
+        var column = settings.columns[j];
+
+        if (column.hidden) {
+          continue;
+        }
+
+        visible.push(column);
+      }
+      return visible;
+    },
+
     //Render the Header
     renderHeader: function() {
       var self = this,
-        headerRow = '<thead><tr>';
+        headerRow = '<thead>';
 
-      for (var j = 0; j < settings.columns.length; j++) {
+      var colGroups = this.settings.columnGroups;
+
+      if (colGroups) {
+
+        var total = 0;
+        headerRow += '<tr class="datagrid-header-groups">';
+
+        for (var k = 0; k < colGroups.length; k++) {
+          total += parseInt(colGroups[k].colspan);
+          headerRow += '<th colspan="' + colGroups[k].colspan + '"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">'+ colGroups[k].name +'</span></div></th>';
+        }
+
+        if (total < this.visibleColumns().length) {
+          headerRow += '<th colspan="' + (this.visibleColumns().length - total) + '"></th>';
+        }
+        headerRow += '</tr><tr>';
+      } else {
+        headerRow += '<tr>';
+      }
+
+      for (var j = 0; j < this.settings.columns.length; j++) {
         var column = settings.columns[j],
           uniqueId = self.uniqueID(self.gridCount, '-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
@@ -318,7 +352,7 @@ $.fn.datagrid = function(options) {
       self.table.find('th[title]').tooltip();
 
       //TODO: Drag Drop Columns Option
-      /*self.table.find('th').drag({clone: true, containment: 'parent'}).on('dragstart', function (e, pos, clone) {
+      /*self.headerNodes().drag({clone: true, containment: 'parent'}).on('dragstart', function (e, pos, clone) {
         clone.css({'position': 'absolute', top: '30px', 'background-color': '#5c5c5c', 'height': '48px'});
       });*/
 
@@ -426,7 +460,7 @@ $.fn.datagrid = function(options) {
     },
 
     setInitialColumnWidths: function () {
-      var total = 0;
+      var total = 0, self = this;
 
       for (var i = 0; i < settings.columns.length; i++) {
         var column = settings.columns[i],
@@ -439,14 +473,18 @@ $.fn.datagrid = function(options) {
         if (column.width) {
           newWidth = column.width;
         } else {
-          newWidth = this.headerRow.find('th').eq(i).outerWidth();
+          newWidth = self.headerNodes().eq(i).outerWidth();
         }
 
         total+= newWidth;
-        //column.css('width', newWidth);
       }
 
       this.table.css('width', total);
+    },
+
+    //Returns all header nodes (not the groups)
+    headerNodes: function () {
+      return this.headerRow.find('tr:not(.datagrid-header-groups) th');
     },
 
     // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
@@ -465,7 +503,7 @@ $.fn.datagrid = function(options) {
         width = percent / 100 * self.element.width();
       }
 
-      self.headerRow.find('th').each(function () {
+      self.headerNodes().each(function () {
         var col = $(this);
 
         if (col.attr('data-column-id') === id) {
@@ -485,6 +523,10 @@ $.fn.datagrid = function(options) {
       var self = this;
 
       this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
+      if (this.settings.columnGroups) {
+        this.resizeHandle.css('height', '80px');
+      }
+
       this.table.before(this.resizeHandle);
 
       this.resizeHandle.drag({axis: 'x', containment: 'parent'}).on('drag.datagrid', function (e, ui) {
@@ -1073,8 +1115,8 @@ $.fn.datagrid = function(options) {
       }
 
       self.activeCell.node.focus();
-      self.headerRow.find('th').removeClass('is-active');
-      self.headerRow.find('th').eq(cell).addClass('is-active');
+      self.headerNodes().removeClass('is-active');
+      self.headerNodes().eq(cell).addClass('is-active');
 
       this.activeCell.isFocused = true;
     },

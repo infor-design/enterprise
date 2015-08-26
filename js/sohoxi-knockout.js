@@ -204,6 +204,53 @@ $(function () {
     }
   };
 
+  ko.bindingHandlers.lookup = {
+    init: function(element, valueAccessor) {
+      var opts = ko.utils.unwrapObservable(valueAccessor()),
+        elem = $(element);
+
+      //Setup events
+      ko.utils.registerEventHandler(element, 'change', function() {
+        var value = valueAccessor().value;
+        value($(this).val());
+      });
+
+      //init the control
+      if (!elem.data('lookup')) {
+        elem.lookup();
+      }
+
+      //set the value
+      if (opts.value) {
+        elem.val(ko.utils.unwrapObservable(opts.value));
+      }
+    },
+    update: function(element, valueAccessor) {
+      var opts = ko.utils.unwrapObservable(valueAccessor()),
+        elem = $(element);
+
+      if (opts.visible && !opts.visible()) {
+        $(element).closest('.field').hide();
+      }
+
+      if (opts.visible && opts.visible()) {
+        $(element).closest('.field').show();
+      }
+
+      $(element).enable();
+
+      if (opts.readonly && opts.readonly()) {
+        $(element).readonly();
+      }
+
+      if (opts.enable && !opts.enable()) {
+        $(element).disable();
+      }
+
+      elem.val(ko.utils.unwrapObservable(opts.value));
+    }
+  };
+
   ko.bindingHandlers.multiselect = {
     init: function(element, valueAccessor) {
       var opts = ko.utils.unwrapObservable(valueAccessor()),

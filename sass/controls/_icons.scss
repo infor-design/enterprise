@@ -86,8 +86,22 @@ svg.icon-logo {
 .field .icon-confirm {
   display: inline-block !important;
   position: absolute;
-  right: 8px;
+  left: 272px;
   top: 25px;
+}
+
+.input-sm + .icon-error,
+.input-sm + .icon-confirm,
+.input-sm + .tooltip-description + .icon-error,
+.input-sm + .tooltip-description + .icon-confirm {
+  left: 123px;
+}
+
+.input-xs + .icon-error,
+.input-xs + .icon-confirm,
+.input-xs + .tooltip-description + .icon-error,
+.input-xs + .tooltip-description + .icon-confirm {
+  left: 48px;
 }
 
 .timepicker + .icon + .icon-error,

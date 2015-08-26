@@ -26,7 +26,7 @@
   text-align: center;
   width: 80px;
 }
-[data-sortable-exclude="true"] {
+[data-sort-exclude="true"] {
   opacity: 0.5;
 }
 .handle {
@@ -50,10 +50,10 @@
 <div class="row">
   <div class="twelve columns">
     <h1>Drag and drop</h1>
-    
+
     <br><br>
     <h2>Sortable List</h2>
-    <ul class="sortable list example">
+    <ul class="sort list example">
       <li>Item 1</li>
       <li>Item 2</li>
       <li>Item 3</li>
@@ -64,7 +64,7 @@
 
     <br><br>
     <h2>Sortable Grid</h2>
-    <div class="sortable grid example">
+    <div class="sort grid example">
       <div>Item 1</div>
       <div>Item 2</div>
       <div>Item 3</div>
@@ -75,18 +75,18 @@
 
     <br><br>
     <h2>Exclude Items</h2>
-    <ul class="sortable list example">
+    <ul class="sort list example">
       <li>Item 1</li>
       <li>Item 2</li>
       <li>Item 3</li>
-      <li data-sortable-exclude="true">Item 4</li>
-      <li data-sortable-exclude="true">Item 5</li>
-      <li data-sortable-exclude="true">Item 6</li>
+      <li data-sort-exclude="true">Item 4</li>
+      <li data-sort-exclude="true">Item 5</li>
+      <li data-sort-exclude="true">Item 6</li>
     </ul>
 
     <br><br>
     <h2>Sortable List With Handles</h2>
-    <ul class="sortable list example" data-sortable-handle=".handle">
+    <ul class="sort list example" data-sort-handle=".handle">
       <li><span class="handle">::</span> Item 1</li>
       <li><span class="handle">::</span> Item 2</li>
       <li><span class="handle">::</span> Item 3</li>
@@ -98,7 +98,7 @@
     <br><br>
     <h2>Connected Sortable Lists</h2>
     <div class="connected-wrap">
-      <ul class="sortable list example connected" data-sortable-connectWith=".connected">
+      <ul class="sort list example connected" data-sort-connectWith=".connected">
         <li>Item 1</li>
         <li>Item 2</li>
         <li>Item 3</li>

@@ -117,8 +117,8 @@
   + svg.icon.icon-error {
     left: auto;
     position: absolute;
-    right: 5px;
-    top: 65px;
+    right: 8px;
+    top: 70px;
   }
 
   img {
@@ -268,12 +268,16 @@
   color: $input-placeholder-color;
 }
 
+.editor-placeholder.error {
+  color: $error-color;
+}
+
 .editor-placeholder:after {
   content: attr(data-placeholder) !important;
   font-weight: 100;
   @include font-size(14);
   left: 10px;
-  margin-top: -14px;
+  margin-top: -38px;
   position: absolute;
   white-space: pre;
 }
