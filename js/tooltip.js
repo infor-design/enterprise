@@ -388,7 +388,12 @@
           extraOffset = 16;
         }
 
+        if (this.activeElement.is('.lookup')) {
+          extraOffset = -17;
+        }
+
         this.tooltip.find('.arrow').css('right', '');
+
         if (this.activeElement.is('.input-sm')) {
           extraWidth = -64;
           extraOffset = 164;

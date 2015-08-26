@@ -6,11 +6,18 @@
   margin-bottom: 20px;
   max-width: 100%;
   position: relative;
-}
 
-.lookup {
+  .lookup {
+    padding-right: 35px;
+    text-overflow: ellipsis;
 
-  + .trigger {
+    &[readonly] + .trigger,
+    &[disabled] + .trigger {
+      cursor: default;
+    }
+  }
+
+  .trigger {
     cursor: pointer;
     display: inline-block;
     height: 34px;
@@ -28,11 +35,6 @@
       top: 8px;
       width: 32px;
     }
-  }
-
-  &[readonly] + .trigger,
-  &[disabled] + .trigger {
-    cursor: default;
   }
 
 }

@@ -82,7 +82,7 @@
 
           if ($.fn[plugin]) {
             elem.find(selector).each(function () {
-              if ($(this).is('.no-init') || $(this).attr('data-init')) {
+              if (($(this).is('.no-init') || $(this).attr('data-init')) && selector !=='[data-trackdirty="true"]') {
                 return;
               }
 

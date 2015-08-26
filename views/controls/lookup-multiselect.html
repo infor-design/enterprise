@@ -8,17 +8,6 @@
       <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text">
     </div>
 
-    <div class="field">
-      <label for="lookup-field-small" class="label">Lookup Field (Xtra - Small)</label>
-      <input id="lookup-field-small" class="input-xs lookup" name="lookup-field-small" type="text" value="DA">
-      <span class="data-description">Danonics 123 Group</span>
-    </div>
-
-    <div class="field">
-      <label for="lookup-field-disabled" class="label">Lookup Field (Disabled)</label>
-      <input id="lookup-field-disabled" class="lookup" disabled name="lookup-field-disabled" type="text">
-    </div>
-
   </div>
 </div>
 
@@ -37,7 +26,8 @@
     data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink});
     columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
@@ -46,18 +36,12 @@
 
     //Init and get the api for the grid
     grid = $('#product-lookup').lookup({
-        //field: 'productId',
-        field: function (row, field, grid) {
-          return row.productId + '|' + row.productName;
-        },
-        match: function (value, row, field, grid) {
-          return ((row.productId + '|' + row.productName) === value);
-        },
+        field: 'productId',
         options: {
           columns: columns,
           dataset: data,
-          selectable: 'single', //multiselect or single
-          toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: true, actions: true, views: true , rowHeight: true}
+          selectable: 'multiple', //multiple or single
+          toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true , rowHeight: true}
         }
     });
 

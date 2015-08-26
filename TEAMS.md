@@ -67,3 +67,9 @@
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> |
 | Infor BI Business Modeling | Was ExtJS/YUI | Guido Buecker <Guido.Buecker@infor.com> |
 | M3 - Sales Hub | | Jorgen Nilsson |
+| Landmark | | Andrew Lipensky |
+| CLM | | Eric Noble |
+| Optiva | Whole Food Release | Ramesh Mallikarjun |
+| WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando |
+
+

@@ -206,7 +206,7 @@ span.checkbox > input:hover + label:before {
   @include checkbox-transform-rules;
 }
 
-.checkbox:not(.isPartial):checked + label:after {
+.checkbox:not(.is-partial):checked + label:after {
   @include checkbox-animation;
 }
 
