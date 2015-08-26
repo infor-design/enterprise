@@ -82,12 +82,10 @@
           selectable: 'single',
           toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
         }).on('selected', function (e, args) {
-          if (args.length > 0) {
-            console.log(args[0].data);
-          }
+          console.log(args);
         }).data('datagrid');
 
-        grid.selectedRows([1]);
+        grid.selectedRows([0]);
     });
   });
 

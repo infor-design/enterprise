@@ -46,13 +46,25 @@ $datagrid-header-height: 40px;
     @include transition(background-color 250ms ease);
 
     .datagrid-header-text {
-      color: #ffffff;
+      color: $datagrid-header-color;
       display: table-cell;
       @include font-size(12);
       font-weight: bold;
       text-align: left;
       vertical-align: middle;
       white-space: nowrap;
+    }
+
+    //Checkboxes
+    .datagrid-checkbox {
+
+      &:before {
+        border: 1px solid $datagrid-header-color;
+      }
+
+      &.is-checked:before {
+        border: 1px solid $checkbox-color;
+      }
     }
 
     &.is-active {
@@ -390,9 +402,9 @@ td .btn-actions {
 .datagrid-checkbox {
   cursor: pointer;
   display: inline-block;
-  left: -16px;
+  left: -10px;
   position: relative;
-  top: -16px;
+  top: -14px;
 
   &:before {
     @include checkbox-unchecked-before-style;
@@ -411,6 +423,18 @@ td .btn-actions {
     margin-top: 0;
     top: 2px;
   }
+
+  &.is-partial {
+    animation: none !important;
+  }
+
+  &.is-partial:after {
+    animation: none !important;
+    @include  checkbox-partial-after-style;
+    margin-left: -3px;
+    margin-top: -4px;
+  }
+
 }
 
 .datagrid-checkbox-wrapper {
@@ -439,6 +463,11 @@ td .btn-actions {
   }
 
   &:hover {
+    .icon.plus-minus:before,
+    .icon.plus-minus:after {
+      background-color: $tertiary-btn-hover-color;
+    }
+
     span {
       color: transparent;
     }

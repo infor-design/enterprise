@@ -26,9 +26,10 @@
           click: null,
           field: 'id',  //Field to return from the array or can be a function
           title: null, //Dialog title or takes the label + Lookup
-          buttons: null, //Pass dialog buttons or Cancel / Apply
-          options: null,
-          source: null //To Do
+          buttons: null, //TODO Pass dialog buttons or Cancel / Apply
+          options: null,  //Options to pass to the data grid
+          beforeShow: null, //Call back before the lookup is opened.
+          source: null //TODO
         },
         settings = $.extend({}, defaults, options);
 
@@ -114,6 +115,17 @@
           return;
         }
 
+        if (this.settings.beforeShow) {
+         var response = function () {
+            self.createModal();
+            self.element.trigger('open', [self.modal, self.grid]);
+            return;
+          };
+
+          this.settings.beforeShow(this, response);
+          return;
+        }
+
         self.createModal();
         self.element.trigger('open', [self.modal, self.grid]);
       },
@@ -152,6 +164,7 @@
           self.element.trigger('afterOpen', [self.modal, self.grid]);
         });
 
+        self.modal = $('body').data('modal');
       },
 
       //Overridable Function in which we create the grid on the current ui dialog.
@@ -183,28 +196,32 @@
 
         //Multi Select
         if (selectedId.indexOf(',') > 1) {
-          selectedId = selectedId.split[','];
+          var selectedIds = selectedId.split(',');
 
-          //for (var i = 0; i < selected.length; i++) {
-          //  console.log(selected[i])
-          //}
+          for (var i = 0; i < selectedIds.length; i++) {
+            self.selectRowByValue(self.settings.field, selectedIds[i]);
+          }
           return;
         }
 
-        //Single Select
-        //if (typeof self.settings.field === 'function') {
-        //  self.selectRowByValue(self.settings.field(this.settings.options.dataset[0], self.element, self.grid), selectedId);
-        //} else {
-       self.selectRowByValue(self.settings.field, selectedId);
-        //}
+        self.selectRowByValue(self.settings.field, selectedId);
       },
 
       //Find the row and select it based on select value / function / field value
       selectRowByValue: function(field, value) {
-        var data = this.settings.options.dataset,
+        var self = this,
+          data = this.settings.options.dataset,
           selectedRows = [];
 
         for (var i = 0; i < data.length; i++) {
+          if (typeof self.settings.match === 'function') {
+            if (self.settings.match(value, data[i], self.element, self.grid)) {
+              selectedRows.push(i);
+            }
+
+            continue;
+          }
+
           if (data[i][field] == value) {  // jshint ignore:line
             selectedRows.push(i);
           }
@@ -231,7 +248,7 @@
           value += (i !== 0 ? ',' : '') + currValue;
         }
 
-        self.element.val(value);
+        self.element.val(value).trigger('change');
         self.element.focus();
       },
 

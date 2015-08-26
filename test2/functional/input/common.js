@@ -23,13 +23,13 @@ define([
         .findById('test-basic-input')
           .click()
           .pressKeys([
-            'f', 'u', 'c', 'k', k.NULL
+            'h', 'i', k.NULL
           ])
           .end()
         .findById('test-basic-input')
           .getProperty('value')
           .then(function(value) {
-            expect(value).to.equal('fuck');
+            expect(value).to.equal('hi');
           })
         .end();
     },

@@ -424,6 +424,8 @@
           field.after(svg);
         } else if (field.is('.dropdown, .multiselect')) {
           field.parent().find('.dropdown-wrapper').append(svg);
+        } else if (field.is('.lookup')) {
+          field.parent().append(svg);
         } else {
           field.parent('.field').append(svg);
         }
