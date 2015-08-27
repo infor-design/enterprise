@@ -130,7 +130,7 @@
           }
 
           if (this.settings.filterMode === 'contains') {
-            if (option.toLowerCase().indexOf(term) > 0) {
+            if (option.toLowerCase().indexOf(term) >= 0) {
               containsTerm = true;
             }
           }
