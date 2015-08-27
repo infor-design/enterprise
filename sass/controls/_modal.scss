@@ -147,6 +147,7 @@
     font-weight: bold;
     @include font-size(12);
     height: 50px;
+    overflow: hidden;
     position: relative;
     text-align: center;
     text-transform: uppercase;

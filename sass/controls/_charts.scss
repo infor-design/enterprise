@@ -101,6 +101,15 @@
       cursor: pointer;
     }
 
+    .line-group .line {
+      cursor: pointer;
+    }
+
+    .area {
+      opacity: .2;
+      pointer-events: none;
+    }
+
     .is-not-selected {
       opacity: .35;
     }

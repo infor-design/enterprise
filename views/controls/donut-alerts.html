@@ -16,16 +16,24 @@
 
 <script>
 
+  // error, alert, alertYellow, good, neutral or hex can be used
   var donutData = [{
     data: [{
-        name: 'Component A',
-        value: 30
+        name: 'Positive',
+        value: 20,
+        color: 'good'
     }, {
-        name: 'Component B',
-        value: 40
+        name: 'Negative',
+        value: 25,
+        color: 'error'
+    }, {
+        name: 'Neutral',
+        value: 10,
+        color: 'neutral'
     }],
     centerLabel: 'Donut Chart'
   }];
 
   $('#pie-donut-example').chart({type: 'donut', dataset: donutData});
 </script>
+

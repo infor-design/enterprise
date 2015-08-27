@@ -29,7 +29,8 @@
           buttons: null, //TODO Pass dialog buttons or Cancel / Apply
           options: null,  //Options to pass to the data grid
           beforeShow: null, //Call back before the lookup is opened.
-          source: null //TODO
+          source: null, //TODO
+          modalContent: null //custom modal markup
         },
         settings = $.extend({}, defaults, options);
 
@@ -133,6 +134,7 @@
       //Overidable function to create the modal dialog
       createModal: function () {
         var self = this,
+          content = '<hr><div id="lookup-datagrid"></div>',
           labelText = $('label[for="'+self.element.attr('id')+'"]').contents().filter(function(){
             return this.nodeType === 3;
           })[0].nodeValue + ' ' + Locale.translate('Lookup');
@@ -141,9 +143,19 @@
           labelText = this.settings.title;
         }
 
+        var settingContent = this.settings.modalContent;
+        if (settingContent && settingContent instanceof jQuery) {
+          content = settingContent;
+          settingContent.show();
+        }
+
+        if (settingContent && !(settingContent instanceof jQuery)) {
+          content = settingContent;
+        }
+
         $('body').modal({
           title: labelText,
-          content: '<hr><div id="lookup-datagrid"></div>',
+          content: content,
           buttons: [{
             text: 'Cancel',
             click: function(e, modal) {

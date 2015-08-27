@@ -54,22 +54,24 @@
 # Teams Using SoHo XI
 
 | Home Pages | Angular | Fredrik Erikkson |
-| Pathway | | Jesser Susi |
-| Mongoose | | Bryan Petit |
-| Requisitions | | Todd Dooner and Brent Dahlen |
+| Pathway | Australian / NZ Giv Self Service App| Jesser Susi |
+| Mongoose | Small set of newer controls | Bryan Petit |
+| Requisitions | | Todd Dooner and Brent Dahlen |
 | PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna Peddibhotla |
-| Rhythm Widgets | | Eric Martensson |
+| Rhythm Widgets | Small set of widgets | Eric Martensson |
 | SmartStream | ASP | Wim Denayer |
-| SXE | | Peter Cullen |
-| S3 | | Rajan Shanmugavelu |
+| SXE | Angular | Peter Cullen |
+| S3 | Starting Next Year | Rajan Shanmugavelu |
 | Infor Mobility Framework | HTML5 and Cordova (Mobile Framework) | Daniel Thil |
-| Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> |
+| Product Certification Manger |  Upgrade  | Kishor Dhumal <Kishor.Dhumal@infor.com> |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> |
 | Infor BI Business Modeling | Was ExtJS/YUI | Guido Buecker <Guido.Buecker@infor.com> |
-| M3 - Sales Hub | | Jorgen Nilsson |
-| Landmark | | Andrew Lipensky |
-| CLM | | Eric Noble |
+| M3 - Sales Hub | Angular | Jorgen Nilsson |
+| Landmark | Starting after Gap List | Andrew Lipensky |
+| CLM | Angular  | Eric Noble |
 | Optiva | Whole Food Release | Ramesh Mallikarjun |
 | WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando |
+| NGCC - Content Creator HCM - LMS |   | Shakeeb Murtaza |
+| Ion Desk  | Silverlight Conversion / Bybrid  | Massimo Capoccia|
 
 
