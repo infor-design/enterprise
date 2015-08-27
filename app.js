@@ -469,11 +469,9 @@ var express = require('express'),
     if (req.query.sortField) {
       productsAll.sort(sortBy(req.query.sortField, (req.query.sortAsc ==='true' ? true : false), function(a){return a.toString().toUpperCase();}));
     }
-    console.log(productsAll);
 
     for (i = start; i < end && i < total; i++) {
       products.push(productsAll[i]);
-      console.log(i, start, end, total);
     }
 
     res.setHeader('Content-Type', 'application/json');
