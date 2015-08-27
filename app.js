@@ -447,12 +447,13 @@ var express = require('express'),
   //Data Grid Paging Example
   // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productId&pageSize=100
   app.get('/api/compressors', function(req, res) {
+
     var products = [], productsAll = [],
       start = (req.query.pageNum -1) * req.query.pageSize,
       end = req.query.pageNum * req.query.pageSize,
       total = 1000, i = 0, j = 0;
 
-    for (j = 0; j < total; i++) {
+    for (j = 0; j < total; j++) {
       productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
     }
 
@@ -468,9 +469,11 @@ var express = require('express'),
     if (req.query.sortField) {
       productsAll.sort(sortBy(req.query.sortField, (req.query.sortAsc ==='true' ? true : false), function(a){return a.toString().toUpperCase();}));
     }
+    console.log(productsAll);
 
     for (i = start; i < end && i < total; i++) {
       products.push(productsAll[i]);
+      console.log(i, start, end, total);
     }
 
     res.setHeader('Content-Type', 'application/json');

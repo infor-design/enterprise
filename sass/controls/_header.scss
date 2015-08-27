@@ -38,7 +38,7 @@ $header-height: 60px;
     color: $header-icon-color;
     left: 5px;
     position: absolute;
-    top: -11px;
+    top: -9px;
 
     + .section-title {
       color: $white;
@@ -48,6 +48,13 @@ $header-height: 60px;
       position: absolute;
       text-transform: capitalize;
       top: 7px;
+    }
+
+    .alert svg {
+      line-height: inherit;
+      margin-left: 7px;
+      position: absolute;
+      top: -3px;
     }
   }
 
