@@ -3,6 +3,10 @@
 
 $datagrid-header-height: 40px;
 
+.datagrid-wrapper {
+  position: relative;
+}
+
 // Grid Container Div
 .datagrid-container {
   border: 1px solid $datagrid-border-color;
