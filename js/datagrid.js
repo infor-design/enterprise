@@ -246,6 +246,9 @@ $.fn.datagrid = function(options) {
     },
 
     initSettings: function () {
+      if(this.element.parent().css('position')!=='relative') {
+        this.element.wrap( '<div class="datagrid-wrapper" />');
+      }
       this.sortColumn = {sortField: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
     },
@@ -257,6 +260,16 @@ $.fn.datagrid = function(options) {
       if (th && th.length) {
         width = (this.settings.columns[0].width ? this.settings.columns[0].width : th.width());
         this.setColumnWidth(th.attr('data-column-id'), width);
+      }
+      if(this.element.parents().hasClass('modal')) {
+        var el = $('.modal-content'),
+          w = this.table.width() +
+            parseInt(el.css('padding-left'), 10) +
+            parseInt(el.css('padding-right'), 10) +
+            parseInt(el.css('margin-left'), 10) +
+            parseInt(el.css('margin-right'), 10);
+
+        this.element.css('max-width', w);
       }
     },
 
