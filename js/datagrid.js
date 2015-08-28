@@ -262,7 +262,7 @@ $.fn.datagrid = function(options) {
         this.setColumnWidth(th.attr('data-column-id'), width);
       }
       if(this.element.parents().hasClass('modal')) {
-        var el = $('.modal-content'),
+        var el = $('.modal .modal-content'),
           w = this.table.width() +
             parseInt(el.css('padding-left'), 10) +
             parseInt(el.css('padding-right'), 10) +
@@ -270,6 +270,7 @@ $.fn.datagrid = function(options) {
             parseInt(el.css('margin-right'), 10);
 
         this.element.css('max-width', w);
+        $('.modal').css('overflow','hidden').find('.modal-body').css('overflow-x','hidden');
       }
     },
 
