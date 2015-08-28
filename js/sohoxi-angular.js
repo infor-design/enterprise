@@ -1,6 +1,54 @@
 // SoHo XI Angular Directives
 (function () {
 
+  var chart = function () {
+      return {
+        replace: true,
+        scope: {
+          dataset: '='
+        },
+        link: function(scope, elem, attrs) {
+          elem.chart({type: attrs.chartType, dataset: scope.dataset});
+        }
+      };
+  };
+
+  var datepicker = function () {
+      return {
+        replace: true,
+        scope: false,
+        link: function(scope, elem, attrs) {
+          //Initialize
+          elem.datepicker();
+          var api = elem.data('datepicker'),
+            model = attrs.ngModel,
+            modelVal = scope[model],
+            modelLocale = attrs.ngModelLocale;
+
+          // Watch for Changes
+          scope.$watch(model, function(newValue, oldValue) {
+            if (newValue !== oldValue) {
+              api.setValue(newValue);
+              modelVal = newValue;
+            }
+          });
+
+          scope.$watch(modelLocale, function(newValue, oldValue) {
+            if (newValue !== oldValue) {
+              Locale.set(newValue).done(function () {
+                api.setValue(modelVal);
+              });
+            }
+          });
+
+          // Set Initial Value
+          setTimeout(function () {
+            api.setValue(modelVal);
+          },0);
+        }
+      };
+  };
+
   var dropdown = function () {
       return {
         replace: true,
@@ -41,18 +89,6 @@
           setTimeout(function () {
             api.setValue();
           },0);
-        }
-      };
-  };
-
-  var chart = function () {
-      return {
-        replace: true,
-        scope: {
-          dataset: '='
-        },
-        link: function(scope, elem, attrs) {
-          elem.chart({type: attrs.chartType, dataset: scope.dataset});
         }
       };
   };
@@ -111,18 +147,11 @@
       };
   };
 
-  var other = function () {
-      return {
-        replace: true,
-        template: '<div class="field"></div>',
-      };
-  };
-
   angular.module('sohoxi-angular')
+      .directive('chart', chart)
+      .directive('datepicker', datepicker)
       .directive('dropdown', dropdown)
       .directive('multiselect', multiselect)
-      .directive('chart', chart)
-      .directive('slider', slider)
-      .directive('other', other);
+      .directive('slider', slider);
 
 }());

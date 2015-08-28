@@ -56,18 +56,17 @@
 }
 
 .badge {
-  border-radius: 16px;
+  background-color: #e0e5ee;
+  border-radius: 50%;
   color: #ffffff;
-  display: inline-block;
   @include font-size(13);
   @include antialiased();
-  font-weight: normla;
-  height: 22px;
-  line-height: 24px;
-  margin: 0 10px 5px 0;
-  position: relative;
-  text-align: center;
-  width: 22px;
+  font-weight: normal;
+  letter-spacing: 0.0325em;
+  margin-left: 5px;
+  padding: 0.4rem;
+  vertical-align: middle;
+  white-space: nowrap;
 
   &.error {
     background-color: $alert-red;
@@ -153,14 +152,18 @@
   }
 
   &.large {
-    height: 32px;
+    letter-spacing: .035em;
+    padding: .6rem;
     @include font-size(20);
-    line-height: 32px;
-    padding-top: 1px;
-    width: 32px;
+  }
+}
 
-    [class*='ie'] & {
-      padding: 0 1px;
+.alert {
+  &.slate03 {
+    background-color: transparent;
+
+    svg {
+      fill: $slate03;
     }
   }
 }

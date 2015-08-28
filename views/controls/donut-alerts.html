@@ -1,0 +1,39 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Hows it going</h2>
+        </div>
+        <div class="widget-content">
+          <div id="donut-alert" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+<script>
+
+  // error, alert, alertYellow, good, neutral or hex can be used
+  var donutData = [{
+    data: [{
+        name: 'Positive',
+        value: 20,
+        color: 'good'
+    }, {
+        name: 'Negative',
+        value: 25,
+        color: 'error'
+    }, {
+        name: 'Neutral',
+        value: 10,
+        color: 'neutral'
+    }],
+    centerLabel: 'Donut Chart'
+  }];
+
+  $('#donut-alert').chart({type: 'donut', dataset: donutData});
+</script>
+

@@ -15,7 +15,8 @@ $datagrid-header-height: 40px;
   height: auto;
   margin-bottom: 20px;
   overflow-x: auto;
-  width: auto;
+  width: auto; //fallback support for calc()
+  width: calc(100% + 20px); //20px extra for scrolbar
 
   .resize-handle {
     border: 0;
@@ -30,6 +31,7 @@ $datagrid-header-height: 40px;
 
 // Grid Styling
 .datagrid {
+  @include font-size(14);
   border: 0;
   border-collapse: collapse;
   height: 100%;
@@ -37,22 +39,21 @@ $datagrid-header-height: 40px;
   overflow: hidden;
   //Doesnt work on expandable grid table-layout: fixed;
   width: auto;
-  @include font-size(14);
 
   // Table Headers
   th {
+    @include transition(background-color 250ms ease);
     background-color: $datagrid-header-bg-color;
     border-left: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
     min-width: 25px;
     overflow: hidden;
     text-align: left;
-    @include transition(background-color 250ms ease);
 
     .datagrid-header-text {
+      @include font-size(12);
       color: $datagrid-header-color;
       display: table-cell;
-      @include font-size(12);
       font-weight: bold;
       text-align: left;
       vertical-align: middle;

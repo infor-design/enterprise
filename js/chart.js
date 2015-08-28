@@ -30,7 +30,49 @@ window.Chart = function(container) {
   this.sparklineColors = d3.scale.ordinal().range(['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8']);
   this.colors = d3.scale.ordinal().range(colorRange);
 
-  // Function to Add a Legend
+  this.chartColor = function(i, chartType, data) {
+    var specColor = data.data.color;
+
+    //error, alert, alertYellow, good, neutral or hex
+    if (specColor && specColor ==='error' ) {
+      return '#e84f4f';
+    }
+
+    if (specColor && specColor ==='alert' ) {
+      return '#ff9426';
+    }
+
+    if (specColor && specColor ==='alertYellow' ) {
+      return '#ffd726';
+    }
+
+    if (specColor && specColor ==='good' ) {
+      return '#80ce4d';
+    }
+
+    if (specColor && specColor ==='neutral' ) {
+      return '#BDBDBD';
+    }
+
+    if (specColor && specColor.indexOf('#') === 0) {
+      return data.data.color;
+    }
+
+    if (chartType === 'pie') {
+      return this.pieColors(i);
+    }
+  };
+
+  // Help Function to Select from legend click
+  this.selectElem = function (line, series) {
+    var idx = $(line).index(),
+      elem = series[idx];
+
+    if (elem.selectionObj) {
+      charts.selectElement(d3.select(elem.selectionObj[0][idx]), elem.selectionInverse, elem.data);
+    }
+  };
+
   this.addLegend = function(series) {
     var legend = $('<div class="chart-legend"></div>');
     if (series.length === 0) {
@@ -55,7 +97,15 @@ window.Chart = function(container) {
       legend.append(seriesLine);
     }
 
-    legend.on('click.chart focus.chart', '.chart-legend-item', function () {
+    legend.on('click.chart', '.chart-legend-item', function () {
+        charts.selectElem(this, series);
+      }).on('keypress.chart', '.chart-legend-item', function (e) {
+        if (e.which === 13 || e.which === 32) {
+          charts.selectElem(this, series);
+        }
+      });
+/*
+    .on('click.chart focus.chart', '.chart-legend-item', function () {
       // For Bar and series charts
       var triggerIdx = $(this).index(),
           bars = $(container).find('.bar'),
@@ -69,7 +119,8 @@ window.Chart = function(container) {
           'opacity': 0.5
         });
 
-    });
+       charts.selectElem(this, series);
+    });*/
 
     $(container).append(legend);
   };
@@ -390,7 +441,7 @@ window.Chart = function(container) {
         .attr('d', pieArcs)
         .on('click', function (d, i) {
           var isSelected = d3.select(this).classed('is-selected'),
-            color = charts.pieColors(i);
+            color = charts.chartColor(i, 'pie', d);
 
           d3.select('.chart-container .is-selected')
             .classed('is-selected', false)
@@ -413,7 +464,7 @@ window.Chart = function(container) {
         });
 
     g.append('path')
-      .style('fill', function(d, i) { return charts.pieColors(i); })
+      .style('fill', function(d, i) { return charts.chartColor(i, 'pie', d); })
       .transition().duration(750)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
@@ -496,13 +547,13 @@ window.Chart = function(container) {
     textLabels.append('tspan').text(function(d) {
       return d3.round(100*(d.value/total)) + '%';
     })
-    .attr('dx', '-50')
-    .attr('dy', '-20px')
+    .attr('dx', '5')  //-50
+    //.attr('dy', '-20px')
     .style('font-weight', 'bold')
-    .style('font-size', '22px')
-    .style('fill', function (d, i) {
-      return charts.pieColors(i);
-    });
+    .style('font-size', '14px');
+    //.style('fill', function (d, i) {
+    //  return charts.chartColor(i, 'pie', d);
+    //});
 
     if (isDonut) {
       arcs.append('text')
@@ -650,8 +701,8 @@ window.Chart = function(container) {
     // calculate max and min values in the NLWest data
     var max=0, min=0, len=0, i,
       dimensions = this.calculateAspectRatioFit({
-        srcWidth: 385, 
-        srcHeight: 65, 
+        srcWidth: 385,
+        srcHeight: 65,
         maxWidth: $(container).width(),
         maxHeight: 600 //container min-height
       }),
@@ -685,7 +736,7 @@ window.Chart = function(container) {
       min = d3.min(chartData[0].data);
 
       var minWidth = 10,
-        maxWidth = w-45,        
+        maxWidth = w-45,
         median = d3.median(chartData[0].data),
         range = max-min,
         scaleMedianRange = d3.scale.linear().domain([min, max]).range([0, h]),
@@ -732,22 +783,22 @@ window.Chart = function(container) {
         .enter()
         .append('circle')
         .attr('r', function(d) {
-          return (options.isMinMax && max === d || options.isMinMax && min === d) ? (dotsize+1) : 
+          return (options.isMinMax && max === d || options.isMinMax && min === d) ? (dotsize+1) :
             (options.isDots || (options.isPeakDot && max === d)) ? dotsize : 0;
         })
         .attr('class', function(d) {
-          return (options.isPeakDot && max === d && !options.isMinMax) ? 'point peak' : 
-            (options.isMinMax && max === d) ? 'point max' : 
+          return (options.isPeakDot && max === d && !options.isMinMax) ? 'point peak' :
+            (options.isMinMax && max === d) ? 'point max' :
             (options.isMinMax && min === d) ? 'point min' : 'point';
         })
         .style('fill', function(d) {
-          return (options.isPeakDot && max === d && !options.isMinMax) ? '#ffffff' : 
-            (options.isMinMax && max === d) ? '#56932E' : 
+          return (options.isPeakDot && max === d && !options.isMinMax) ? '#ffffff' :
+            (options.isMinMax && max === d) ? '#56932E' :
             (options.isMinMax && min === d) ? '#941E1E' : charts.sparklineColors(0);
         })
         .style('stroke', function(d) {
-          return (options.isPeakDot && max === d && !options.isMinMax) ? charts.sparklineColors(0) : 
-            (options.isMinMax && max === d) ? 'none' : 
+          return (options.isPeakDot && max === d && !options.isMinMax) ? charts.sparklineColors(0) :
+            (options.isMinMax && max === d) ? 'none' :
             (options.isMinMax && min === d) ? 'none' : '#ffffff';
         })
         .style('cursor', 'pointer')
@@ -755,21 +806,21 @@ window.Chart = function(container) {
         .attr('cy', function(d) { return y(d); })
         .on('mouseenter', function(d) {
           var rect = d3.select(this)[0][0].getBoundingClientRect(),
-            content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> ' + 
-              ((options.isMinMax && max === d) ? Locale.translate('Highest') + ': ' : 
-               (options.isMinMax && min === d) ? Locale.translate('Lowest') + ': ' : 
+            content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> ' +
+              ((options.isMinMax && max === d) ? Locale.translate('Highest') + ': ' :
+               (options.isMinMax && min === d) ? Locale.translate('Lowest') + ': ' :
                (options.isPeakDot && max === d) ? Locale.translate('Peak') + ': ' : '') : '') + '<b>' + d  + '</b></p>',
             size = charts.getTooltipSize(content),
             x = rect.x - (size.width /2) + 6,
             y = rect.y - size.height - 18  + $(window).scrollTop();
 
           charts.showTooltip(x, y, content, 'top');
-          d3.select(this).attr('r', (options.isMinMax && max === d || 
+          d3.select(this).attr('r', (options.isMinMax && max === d ||
             options.isMinMax && min === d) ? (dotsize+2) : (dotsize+1));
         })
         .on('mouseleave', function(d) {
           charts.hideTooltip();
-          d3.select(this).attr('r', (options.isMinMax && max === d || 
+          d3.select(this).attr('r', (options.isMinMax && max === d ||
             options.isMinMax && min === d) ? (dotsize+1) : dotsize);
         });
 
@@ -919,7 +970,7 @@ window.Chart = function(container) {
 
       //Style the bars and add interactivity
       bars.style('fill', function(d, i) {
-        return (isSingular ? '#2578a9' : charts.colors(i));
+        return (isSingular ? '#368AC0' : charts.colors(i));
       }).on('mouseenter', function(d) {
         var shape = $(this),
           content = '',
@@ -1014,7 +1065,7 @@ window.Chart = function(container) {
     });
   };
 
-  this.Line = function(chartData, options) {
+  this.Line = function(chartData, options, isArea) {
     $(container).addClass('line-chart');
 
     //Append the SVG in the parent area.
@@ -1092,11 +1143,33 @@ window.Chart = function(container) {
       var lineGroups = svg.append('g')
         .attr('class', 'line-group');
 
+      if (isArea) {
+        var area = d3.svg.area()
+          .x(function(d, i) {
+            return xScale(i);
+          })
+          .y0(height)
+          .y1(function(d) {
+            return yScale(d.value);
+          });
+
+        lineGroups.append('path')
+          .datum(d.data)
+          .attr('fill', charts.colors(i))
+          .style('opacity', '.2')
+          .attr('class', 'area')
+          .attr('d', area);
+      }
+
       var path = lineGroups.append('path')
         .attr('d', line(d.data))
         .attr('stroke', charts.colors(i))
         .attr('stroke-width', 2)
-        .attr('fill', 'none');
+        .attr('fill', 'none')
+        .attr('class', 'line')
+        .on('click.chart', function(d) {
+          charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
+        });
 
       // Add animation
       var totalLength = path.node().getTotalLength();
@@ -1133,17 +1206,16 @@ window.Chart = function(container) {
             d3.select(this).attr('r', 7);
           }).on('mouseleave.chart', function() {
             charts.hideTooltip();
-
             d3.select(this).attr('r', 5);
           }).on('click.chart', function(d) {
             charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
           });
-        }
+      }
 
     });
 
     var series = dataset.map(function (d) {
-      return {name: d.name};
+      return {name: d.name, selectionObj: svg.selectAll('.line-group'), selectionInverse: svg.selectAll('.line-group'), data: d};
     });
 
     charts.addLegend(series);
@@ -1213,6 +1285,9 @@ window.Chart = function(container) {
     }
     if (options.type === 'line') {
       this.Line(options.dataset, options);
+    }
+    if (options.type === 'area') {
+      this.Line(options.dataset, options, true);
     }
   };
 

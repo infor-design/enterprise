@@ -63,6 +63,7 @@ $masthead-button-text-focus-color: $white;
     padding-top: 0;
     vertical-align: middle;
 
+
     > .icon:not(.icon-logo) {
       height: 20px;
       margin-left: 0;
@@ -82,8 +83,18 @@ $masthead-button-text-focus-color: $white;
   }
 
   .btn-icon {
-    min-height: 28px;
-    min-width: 28px;
+    min-height: 24px;
+    min-width: 24px;
+  }
+
+  .l-pull-right {
+    .btn-icon {
+      margin-right : 5px;
+    }
+
+    .btn-icon:last-child {
+      margin-right: 20px;
+    }
   }
 
   //Logo
@@ -92,6 +103,13 @@ $masthead-button-text-focus-color: $white;
     left: 13px;
     margin-right: 20px;
     top: 5px;
+  }
+
+  > .icon-logo {
+    height: 32px;
+    left: 20px;
+    margin-right: 20px;
+    top: 3px;
   }
 
   .l-pull-right {

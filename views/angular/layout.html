@@ -21,7 +21,9 @@
 </head>
 <body data-ng-app="sohoxi-angular">
   {{> includes/header}}
-  {{> content}}
+  <div id="maincontent" class="page-container top-padding" role="main">
+    {{> content}}
+  </div>
   <script src="/js/sohoxi-angular.js"></script>
   {{> controls/svg}}
 </body>

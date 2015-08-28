@@ -36,6 +36,7 @@
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
+      this.reStructure();
     }
 
     // Actual Plugin Code
@@ -84,13 +85,33 @@
       },
 
       appendContent: function () {
-        this.element = $('<div class="modal"></div>');
-        var content = $('<div class="modal-content"></div>').appendTo(this.element);
-        content.append('<div class="modal-header"><h1 class="modal-title">'+ settings.title +'</h1></div>');
-        var body = $('<div class="modal-body"></div>').append(settings.content);
-        body.appendTo(content);
+        this.element = $(
+          '<div class="modal">' +
+            '<div class="modal-content">'+
+              '<div class="modal-header"><h1 class="modal-title">'+ settings.title +'</h1></div>' +
+              '<div class="modal-body-wrapper">'+
+                '<div class="modal-body">'+ settings.content +'</div>'+
+              '</div>'+
+            '</div>'+
+          '</div>');
         this.element.appendTo('body');
         this.addButtons(settings.buttons);
+      },
+
+      reStructure: function() {
+        var body = $('.modal-body', this.element),
+          hr = $('hr:first-child', body),
+          buttonset = $('.modal-buttonset', this.element);
+
+        if (body && body.length && !body.parent().hasClass('modal-body-wrapper')) {
+          body.wrap( '<div class="modal-body-wrapper" />');
+        }
+        if (hr && hr.length && !hr.parent().hasClass('modal-content')) {
+          hr.insertAfter('.modal-header');
+        }
+        if (buttonset && buttonset.length && !buttonset.parent().hasClass('modal-content')) {
+          buttonset.insertAfter('.modal-body-wrapper');
+        }
       },
 
       disableSubmit: function () {
@@ -120,9 +141,12 @@
       },
 
       addButtons: function(buttons) {
-        var body = this.element.find('.modal-body'),
-            self = this, btnWidth = 100,
-            buttonset, isPanel = false;
+        var self = this,
+          body = this.element.find('.modal-body'),
+          bodywrapper = body.parent(),
+          btnWidth = 100,
+          isPanel = false,
+          buttonset;
 
         this.modalButtons = buttons;
 
@@ -131,13 +155,12 @@
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
           inlineBtns.css('width', btnWidth + '%').button();
-          inlineBtns.on('click.modal', function (e) {
+          inlineBtns.not('[ng-click], [onclick], :submit').on('click.modal', function (e) {
             if ($(e.target).is('.btn-cancel')) {
               self.isCancelled = true;
             }
             self.close();
           });
-
           return;
         }
 
@@ -155,13 +178,11 @@
         } else {
           buttonset = this.element.find('.modal-buttonset');
           if (!buttonset.length) {
-            buttonset = $('<div class="modal-buttonset"></div>').insertAfter(body);
+            buttonset = $('<div class="modal-buttonset"></div>').insertAfter(bodywrapper);
           }
         }
 
         btnWidth = 100/buttons.length;
-        body.find('button').remove();
-        body.find('.btn-primary .btn-close .btn').remove();
 
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button"></button>');
@@ -180,7 +201,6 @@
           if (props.type === 'input') {
             var label = $('<label class="audible" for="filter">' + props.text + '</label>'),
               input = $('<input class="searchfield">').attr({'id': props.id, 'placeholder': props.text, 'name': props.name  });
-
 
             buttonset.append(label, input);
             input.searchfield();
@@ -339,6 +359,10 @@
       },
 
       resize: function() {
+        var bodyHeight = $('.modal-body', this.element).height(),
+          calcHeight = ($(window).height()* 0.9)-180; //90% -(160 :extra elements-height)
+
+        $('.modal-body-wrapper', this.element).css('max-height', bodyHeight > calcHeight ? calcHeight : '');
         this.element.css({
           margin : '-' + (this.element.outerHeight() / 2) + 'px 0 0 -' + (this.element.outerWidth() / 2) + 'px'
         });
