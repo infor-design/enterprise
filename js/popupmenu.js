@@ -443,7 +443,8 @@
 
         //Handle Case where menu is off the left
         if (wrapper.offset().left < 0) {
-          wrapper.css({'left': 20});
+          wrapper.css({'left': this.element.offset().left});
+
           //move the arrow - might need better logic here.
           wrapper.find('.arrow').css({'left': '20px', 'right': 'unset'});
           this.menu.css('overflow', 'hidden');

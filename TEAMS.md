@@ -73,5 +73,6 @@
 | WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando |
 | NGCC - Content Creator HCM - LMS |   | Shakeeb Murtaza |
 | Ion Desk  | Silverlight Conversion / Bybrid  | Massimo Capoccia|
+| Mingle  | Angular Datepicker | Ravi Narayan |
 
 

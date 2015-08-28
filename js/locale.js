@@ -22,6 +22,7 @@
   //If there already exists a Locale object with a culturesPath use that path
   //This allows manually setting the directory for the culture files to be retrieved from
   var existingCulturePath = '';
+
   if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
     existingCulturePath = window.Locale.culturesPath;
   }
@@ -116,7 +117,8 @@
         value = new Date(value);
       }
 
-      var data = this.currentLocale.data,
+      // TODO: Can we handle this if (this.dff.state()==='pending')
+       var data = this.currentLocale.data,
         pattern, ret = '', cal = (data.calendars ? data.calendars[0] : null);
 
       if (attribs.pattern) {
