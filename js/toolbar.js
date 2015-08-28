@@ -200,13 +200,9 @@
             self.handleKeys(e);
           }).on('click.toolbar', function(e) {
             self.handleClick(e);
-          }).on('focusin.toolbar', function(e) {
-            self.handleFocus(e);
-          }).on('blur.toolbar', function(e) {
-            self.handleBlur(e);
           });
 
-        this.items.filter('.btn-menu')
+        this.items.filter('.btn-menu, .btn-actions')
           .on('close.toolbar', function onClosePopup() {
             $(this).focus();
           });
@@ -277,26 +273,6 @@
       handleClick: function(e) {
         this.setActiveButton($(e.currentTarget));
         return false;
-      },
-
-      handleFocus: function(e) {
-        var item = $(e.target);
-
-        if (item.is('.searchfield')) {
-          this.element.addClass('searchfield-active');
-        }
-
-        return;
-      },
-
-      handleBlur: function(e) {
-        var item = $(e.target);
-
-        if (item.is('.searchfield')) {
-          this.element.removeClass('searchfield-active');
-        }
-
-        return;
       },
 
       handleKeys: function(e) {
@@ -402,8 +378,13 @@
         // the more button tabbable instead.
         var tooltip = this.more.data('tooltip');
         if (activeButton[0] !== this.more[0] && this.isItemOverflowed(activeButton)) {
-          this.activeButton = this.more.attr('tabindex', '0');
-          activeButton.addClass('is-selected');
+          // Don't activate the more button if we have a selected and active searchfield
+          if (!activeButton.is('.searchfield')) {
+            this.activeButton = this.more;
+          } else {
+            this.activeButton = activeButton;
+          }
+          activeButton.attr('tabindex', '0').addClass('is-selected');
         } else {
           this.activeButton = activeButton.addClass('is-selected').attr('tabindex', '0');
           if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
@@ -433,7 +414,7 @@
               item.css('visibility', 'hidden');
             }).addClass('is-overflowed');
 
-            if (document.activeElement === item[0] && item.is(':not(.btn-actions)')) {
+            if (document.activeElement === item[0] && item.is(':not(.btn-actions):not(.searchfield)')) {
               // set focus to last visible item
               self.getLastVisibleButton().focus();
             }

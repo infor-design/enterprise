@@ -9,6 +9,8 @@ $toolbar-height: 44px;
   overflow-x: hidden;
   overflow-y: visible;
   position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 
   // Acts as a spacer that causes the toolbar items to vertically align.
   &::before {
@@ -30,7 +32,7 @@ $toolbar-height: 44px;
     overflow-x: hidden;
     overflow-y: visible;
     white-space: nowrap;
-    width: 100%;
+    //width: 100%;
 
     > * {
       @include transition(opacity 300ms cubic-bezier(.17, .04, .03, .94));
@@ -188,48 +190,75 @@ $toolbar-height: 44px;
   }
 }
 
+// Special Rules for iOS, for unknown reasons this design just doesn't play nice with iOS
+// TODO: Figure out why
+.ios .toolbar {
+  &.searchfield-active {
+    .title,
+    .more {
+      display: none !important;
+      width: 0 !important;
+
+      > * {
+        display: none !important;
+      }
+    }
+
+    &.has-more-button {
+      .buttonset {
+        width: calc(100% - 2px);
+      }
+    }
+  }
+}
+
 @include respond-to(phablet) {
   .toolbar {
-    .title,
-    .buttonset,
-    .more {
-      position: relative;
+    .buttonset {
+      z-index: 10;
     }
 
     .searchfield-wrapper {
-      @include css3(transition, width 300ms cubic-bezier(.17, .04, .03, .94));
+      z-index: 10;
+
+      // Standalone Searchfields in a buttonset need to be positioned differently to account for
+      // vertical alignmnent of the buttonset (buttonset height will be zero in this case, so starting position of the
+      // searchfield wrapper would be halfway down the toolbar without this)/
+      &:only-child {
+        top: -10%;
+      }
     }
 
     .searchfield {
-      padding-left: 24px;
-      @include css3(transition, padding 300ms cubic-bezier(.17, .04, .03, .94));
-      width: 24px;
+      text-overflow: none;
+      width: 32px;
+
+      &.empty {
+        padding-left: 0;
+        width: 32px;
+
+        &[placeholder] {
+          padding-left: 0;
+          width: 32px;
+        }
+      }
     }
 
     &.searchfield-active {
-      .title {
-        left: -100%;
-
-        + .buttonset {
-          margin: 0;
-          max-width: none;
-          padding-right: 0;
-          width: 100%;
-        }
-      }
-
-      .more {
-        right: -100%;
-      }
-
       .searchfield-wrapper {
+        left: 0;
         position: absolute;
-        width: 100%;
+        width: calc(100% - 2px); // 2px accounts for borders
       }
 
       .searchfield {
-        padding-left: 35px;
-        width: 100%;
+        &.active,
+        &:active,
+        &.empty.active,
+        &.empty:active {
+          padding-left: 32px;
+          width: 100%;
+        }
       }
     }
   }

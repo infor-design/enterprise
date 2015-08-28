@@ -65,8 +65,8 @@
       padding-left: 0;
       width: 32px;
 
-      &:active,
-      &:focus {
+      &.active,
+      &:active {
         padding-left: 36px;
         width: 225px;
       }
@@ -75,15 +75,14 @@
         padding-left: 36px;
         width: 115px;
 
-        &:active,
-        &:focus {
+        &.active,
+        &:active {
           width: 225px;
         }
       }
     }
 
-    &:active,
-    &:focus {
+    &.active {
       background-color: #ffffff;
       border: 1px solid $graphite03;
       color: initial;
@@ -126,19 +125,18 @@
 
 @include respond-to(phablet) {
   .searchfield {
-    &:active,
-    &:focus {
-      &::-webkit-input-placeholder {
-        color: transparent;
-      }
+    text-overflow: clip;
 
-      &::-moz-placeholder {
-        color: transparent;
-      }
+    &::-webkit-input-placeholder {
+      color: transparent !important;
+    }
 
-      &:-ms-input-placeholder {
-        color: transparent;
-      }
+    &::-moz-placeholder {
+      color: transparent !important;
+    }
+
+    &:-ms-input-placeholder {
+      color: transparent !important;
     }
   }
 }
@@ -162,6 +160,7 @@
       left: 0;
     }
 
+    &.active,
     &:active {
       background-color: $slate08;
       border-color: transparent transparent $slate09;

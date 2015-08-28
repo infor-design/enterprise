@@ -47,9 +47,15 @@
       build: function() {
         var self = this;
 
+        this.label = this.element.prev('label, .label');
+
         this.wrapper = this.element.parent('.searchfield-wrapper');
         if (!this.wrapper || !this.wrapper.length) {
           this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
+          // Label for toolbar-inlined searchfields needs to be inside the wrapper to help with positioning.
+          if (this.element.closest('.toolbar').length) {
+            this.label.prependTo(this.wrapper);
+          }
         }
 
         // Add Icon
@@ -90,6 +96,9 @@
           self.handleFocus(e);
         }).on('blur.searchfield', function(e) {
           self.handleBlur(e);
+        }).onTouchClick('searchfield')
+        .on('click.searchfield', function(e) {
+          self.handleClick(e);
         });
 
         // Insert the "view more results" link on the Autocomplete control's "populated" event
@@ -134,9 +143,7 @@
             }
 
             self.element.trigger('selected', [a, ret]);
-
             self.element.data('popupmenu').close();
-
             e.preventDefault();
             return false;
           });
@@ -155,7 +162,7 @@
         return this;
       },
 
-      handleFocus: function() {
+      recalculateParent: function() {
         var toolbar = this.element.closest('.toolbar');
         if (toolbar.length) {
           // Setup a timed event that will send a signal to a parent toolbar, telling it to recalculate which buttons are visible.
@@ -167,18 +174,54 @@
         }
       },
 
-      handleBlur: function() {
-        var toolbar = this.element.closest('.toolbar');
-        if (toolbar.length) {
-          // Setup a timed event that will send a signal to a parent toolbar, telling it to recalculate which buttons are visible.
-          // Needs to be done after a CSS animation on the searchfield finishes.
-          // TODO: Bolster this to work with CSS TransitonEnd
-          setTimeout(function() {
-            toolbar.triggerHandler('recalculateButtons');
-          }, 300);
+      // Activates a toolbar-based searchfield and keeps it "open".  Instead of closing it on blur, sets up
+      // an explicit, out-of-bounds click/tap that will serve to close it when the user acts.
+      setAsActive: function() {
+        if (this.element.hasClass('active')) {
+          return;
         }
 
+        var self = this;
+
+        // Activate
+        this.element.addClass('active');
+        var toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
+        if (toolbar.length) {
+          toolbar.addClass('searchfield-active');
+        }
+
+        setTimeout(function() {
+          function deactivate() {
+            self.element.removeClass('active').blur();
+            toolbar.removeClass('searchfield-active');
+            $(document).offTouchClick('searchfield').off('click.searchfield');
+          }
+
+          $(document).onTouchClick('searchfield').on('click.searchfield', function(e) {
+            var target = $(e.target);
+            if (target[0] !== self.element[0] && target[0] !== self.element.parent('.searchfield-wrapper')[0]) {
+              deactivate();
+            }
+          });
+
+          self.element.one('blur.searchfield', function() {
+            deactivate();
+          });
+        }, 100);
+        this.recalculateParent();
+      },
+
+      handleFocus: function() {
+        this.setAsActive();
+      },
+
+      handleBlur: function() {
+        this.recalculateParent();
         this.checkContents();
+      },
+
+      handleClick: function(e) {
+        this.setAsActive();
       },
 
       checkContents: function() {
