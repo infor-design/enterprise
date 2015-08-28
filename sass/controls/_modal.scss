@@ -7,7 +7,7 @@
   -webkit-font-smoothing: antialiased;
   height: auto;
   left: 50%;
-  max-height: 100%;
+  max-height: 90%;
   max-width: 90%;
   min-width: 200px;
   opacity: 0;
@@ -114,6 +114,17 @@
     }
   }
 
+  .modal-body-wrapper {
+    overflow: auto;
+  }
+
+  // Modal Buttons
+  .modal-body > button {
+    display: block;
+    font-size: 1.5rem;
+    margin: 25px auto 5px;
+  }
+
   .message {
     color: #666666;
     font-size: 1.5rem;
@@ -136,7 +147,7 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin: 25px -28px 0;
+  margin: 5px -28px 0;
 
   button {
     border: 1px solid transparent;
@@ -190,11 +201,4 @@
       color: $modal-btn-primary-hover-color;
     }
   }
-}
-
-// Modal Buttons
-.modal-body > button {
-  display: block;
-  font-size: 1.5rem;
-  margin: 25px auto 5px;
 }
