@@ -212,6 +212,16 @@ $toolbar-height: 44px;
   }
 }
 
+// Fix an issue where on slightly smaller viewports, sometimes toolbar widths are off
+@media (max-width: $breakpoint-wide-tablet) {
+  .toolbar {
+    // Slightly modify the width of these elements on smaller breakpoints (they don't line up in some browsers)
+    .title {
+      width: 44% !important;
+    }
+  }
+}
+
 @include respond-to(phablet) {
   .toolbar {
     .buttonset {

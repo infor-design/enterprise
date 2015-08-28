@@ -10,6 +10,10 @@ $listview-selected-text-color: $inverse-color;
   position: relative;
   width: 100%;
 
+  p[class^="listview-"] {
+    margin-top: 0;
+  }
+
   .listview-heading {
     @include ellipsis();
     @include font-size(16);

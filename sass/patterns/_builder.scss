@@ -33,16 +33,20 @@
 
 .builder-header {
   min-height: 80px;
-  padding: 1em;
+
+  .toolbar {
+    margin: 0 20px;
+    padding-top: 10px;
+  }
 
   .panel-title {
     @include font-size(20);
-    line-height: 1.7;
+    line-height: 1.2;
   }
 
-  .panel-details {
+  .panel-subhead {
     @include font-size(15);
-    line-height: 1.7;
+    line-height: 1;
   }
 
   [class^="btn-"] {
@@ -84,12 +88,12 @@
 }
 
 .builder-content {
-  height: calc(100% - 80px);
-}
+  height: calc(100% - 80px);}
 
 .builder-actions,
 .builder-sidebar {
   display: inline-block;
+  padding: 10px 20px;
   height: 100%;
 }
 
