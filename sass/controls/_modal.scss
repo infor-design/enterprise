@@ -32,7 +32,8 @@
   }
 
   textarea {
-    width: 300px;
+    margin-bottom: 10px;
+    width: 100%;
 
     + .icon-error {
       left: calc(100% - 27px) !important;

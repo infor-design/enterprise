@@ -104,7 +104,7 @@
           trigger: (self.settings.trigger ? self.settings.trigger : 'click')
         });
         this.buttons = this.panel.find('.buttonset').children('button');
-        this.closeButton = this.buttons.filter('.btn-close, [name="close"]');
+        this.closeButton = this.buttons.filter('.btn-close, [name="close"], .icon-close');
 
         if (toolbar.length) {
           toolbar.toolbar();
