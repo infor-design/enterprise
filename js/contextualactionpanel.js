@@ -75,6 +75,7 @@
         if (this.panel.find('.modal-content').length === 0) {
           children = this.panel.children();
           children.wrapAll('<div class="modal-content"></div>').wrapAll('<div class="modal-body"></div>');
+          this.panel.addClass('modal');
         }
 
         if (this.panel.find('.modal-header').length === 0) {
@@ -94,6 +95,10 @@
         this.panel.detach().appendTo('body');
 
         this.element.attr('data-modal', 'contextual-action-modal-' + this.id);
+        if (!this.panel.attr('id')) {
+          this.panel.attr('id', 'contextual-action-modal-' + this.id);
+        }
+
         this.panel.modal({
           buttons: self.settings.buttons,
           trigger: (self.settings.trigger ? self.settings.trigger : 'click')

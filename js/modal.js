@@ -131,7 +131,7 @@
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
           inlineBtns.css('width', btnWidth + '%').button();
-          inlineBtns.not('[ng-click]').on('click.modal', function (e) {
+          inlineBtns.not('[ng-click], [onclick], :submit').on('click.modal', function (e) {
             if ($(e.target).is('.btn-cancel')) {
               self.isCancelled = true;
             }
@@ -160,9 +160,9 @@
         }
 
         btnWidth = 100/buttons.length;
-        buttonset = this.element.find('.modal-buttonset');
-        buttonset.find('button').remove();
-        buttonset.find('.btn-primary .btn-close .btn').remove();
+        //buttonset = this.element.find('.modal-buttonset');
+        //buttonset.find('button').remove();
+        //buttonset.find('.btn-primary .btn-close .btn').remove();
 
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button"></button>');
