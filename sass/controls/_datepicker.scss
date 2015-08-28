@@ -33,7 +33,8 @@
 }
 
 // IE Hack
-.ie9 .datepicker + .icon {
+.ie9 .datepicker + .icon,
+.ie10 .datepicker + .icon {
   background: url('about:blank') no-repeat 0 0 transparent;
 }
 
@@ -206,7 +207,7 @@
   height: 50px;
   margin-top: 25px;
 
-  a {
+  button {
     text-decoration: none;
     color: $modal-btn-color;
     @include css3(transition, color .3s ease 0s);

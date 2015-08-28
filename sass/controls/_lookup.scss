@@ -38,3 +38,9 @@
   }
 
 }
+
+.ie9 .lookup-wrapper .trigger,
+.ie10 .lookup-wrapper .trigger {
+  background: url('about:blank') no-repeat 0 0 transparent;
+}
+
