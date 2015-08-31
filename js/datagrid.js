@@ -308,7 +308,7 @@ $.fn.datagrid = function(options) {
     htmlToDataset: function () {
       var rows = $(this.element).find('tbody tr'),
         self = this,
-        specifiedCols = (self.settings.columns.length > 0);
+        specifiedCols = (self.settings.columns.length > 0),
         dataset = [];
 
       //Geneate the columns if not supplier
@@ -350,7 +350,6 @@ $.fn.datagrid = function(options) {
           }
 
         });
-        console.log(self.settings.columns, specifiedCols);
 
         dataset.push(newRow);
       });
