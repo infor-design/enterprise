@@ -224,7 +224,7 @@ $(function($) {
         },
         {
           text: 'Close',
-          cssClass: 'btn-icon has-text',
+          cssClass: 'btn-tertiary',
           icon: '#icon-close',
           click: function() {
             $(this).modal('close');
@@ -248,7 +248,7 @@ $(function($) {
             cssClass: 'searchfield'
           }, {
             text: 'Close',
-            cssClass: 'btn-icon has-text',
+            cssClass: 'btn-tertiary',
             icon: '#icon-close',
             click: function() {
               $(this).modal('close');
