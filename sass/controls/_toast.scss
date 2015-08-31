@@ -53,27 +53,27 @@
   &.audible {
     opacity: 0;
   }
-}
 
-// Close Button
-.btn-close {
-  cursor: pointer;
-  height: 20px;
-  position: absolute;
-  right: 6px;
-  top: 11px;
-  width: 20px;
+  // Close Buttons on Toast Message are positioned and sized differently
+  .btn-close {
+    cursor: pointer;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 3px;
+    width: 20px;
 
-  &:hover,
-  &:active {
-    svg.icon {
-      fill: $primary-color;
+    &:hover,
+    &:active {
+      svg.icon {
+        fill: $primary-color;
+      }
     }
-  }
 
-  svg.icon {
-    height: 14px;
-    width: 14px;
+    svg.icon {
+      height: 14px;
+      width: 14px;
+    }
   }
 }
 

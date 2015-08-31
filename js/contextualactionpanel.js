@@ -87,8 +87,16 @@
             toolbar = $('<div class="toolbar"></div>');
           }
           toolbar.appendTo(this.header);
-          toolbar.append($('<div class="title">' + this.settings.title + '</div>'));
-          toolbar.append($('<div class="buttonset"></div>'));
+
+          var toolbarTitle = toolbar.find('.title');
+          if (!toolbarTitle.length) {
+            toolbar.append($('<div class="title">' + this.settings.title + '</div>'));
+          }
+
+          var toolbarButtonset = toolbar.find('.buttonset');
+          if (!toolbarButtonset.length) {
+            toolbar.append($('<div class="buttonset"></div>'));
+          }
         }
 
         // Move to the body element to break stacking context issues.
