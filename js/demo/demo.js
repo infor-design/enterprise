@@ -77,7 +77,7 @@ $(function($) {
     $('body').modal({
       title: 'Add a Comment',
       content: '<small class="alert-text">Escalated (2X)</small><br><h3 style="padding: 0px 15px; margin-top: 8px;">Follow up action with HMM Global </h3><p style="padding: 0px 15px">Contact sales representative with the updated purchase <br> '+
-          'order before submission.</p><br><label for="dialog-comment" class="audible">Comment</label><textarea name="dialog-comment" id="dialog-comment"></textarea>',
+          'order before submission.</p><br><label for="dialog-comment" class="audible">Comment</label><textarea name="dialog-comment" style="width: 100%" id="dialog-comment"></textarea>',
       buttons: [{
         text: 'Cancel',
         click: function(e, modal) {

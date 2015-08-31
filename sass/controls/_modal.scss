@@ -33,7 +33,7 @@
 
   textarea {
     margin-bottom: 10px;
-    width: 100%;
+    width: 300px;
 
     + .icon-error {
       left: calc(100% - 27px) !important;
@@ -41,6 +41,12 @@
       position: absolute;
       top: 0 !important;
     }
+  }
+
+  .textarea-wordcount {
+    margin-bottom: 0;
+    margin-top: -5px;
+    width: auto;
   }
 
   hr {
@@ -77,7 +83,7 @@
   box-shadow: $modal-shadow;
   color: #666666;
   margin: 5px;
-  padding: 21px 8px 0 28px;
+  padding: 20px 0 0 20px;
   position: relative;
 
 //
@@ -117,6 +123,7 @@
   .modal-body-wrapper {
     overflow: auto;
     padding-right: 20px;
+    padding-bottom: 10px;
   }
 
   // Modal Buttons
@@ -148,7 +155,7 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin: 5px -28px 0;
+  margin: 5px 0px 5px -20px;
 
   button {
     border: 1px solid transparent;
@@ -159,6 +166,7 @@
     font-weight: bold;
     @include font-size(12);
     height: 50px;
+    margin-right: 0;
     overflow: hidden;
     position: relative;
     text-align: center;

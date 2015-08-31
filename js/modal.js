@@ -56,13 +56,13 @@
         this.trigger = $('button[data-modal="' + this.element.attr('id') + '"]');  //Find the button with same dialog ID
         this.overlay = $('<div class="overlay"></div>');
 
-        if (settings.trigger === 'click') {
+        if (this.settings.trigger === 'click') {
           this.trigger.on('click.modal', function() {
             self.open();
           });
         }
 
-        if (settings.trigger === 'immediate') {
+        if (this.settings.trigger === 'immediate') {
           setTimeout(function() {
             self.open();
           }, 1);
@@ -71,8 +71,8 @@
         self.isCancelled = false;
 
         //ensure is appended to body for new dom tree
-        if (settings.content) {
-          settings.trigger = 'immediate';
+        if (this.settings.content) {
+          this.settings.trigger = 'immediate';
           this.appendContent();
           setTimeout(function () {
             self.open();
@@ -80,7 +80,7 @@
           return;
         }
 
-        self.addButtons(settings.buttons);
+        self.addButtons(this.settings.buttons);
         this.element.css({'display':'none'}).appendTo('body');
       },
 
@@ -88,16 +88,16 @@
         this.element = $(
           '<div class="modal">' +
             '<div class="modal-content">'+
-              '<div class="modal-header"><h1 class="modal-title">'+ settings.title +'</h1></div>' +
+              '<div class="modal-header"><h1 class="modal-title">'+ this.settings.title +'</h1></div>' +
               '<div class="modal-body-wrapper">'+
                 '<div class="modal-body"></div>'+
               '</div>'+
             '</div>'+
           '</div>');
 
-        this.element.find('.modal-body').append(settings.content);
+        this.element.find('.modal-body').append(this.settings.content);
         this.element.appendTo('body');
-        this.addButtons(settings.buttons);
+        this.addButtons(this.settings.buttons);
       },
 
       reStructure: function() {
@@ -106,14 +106,15 @@
           buttonset = $('.modal-buttonset', this.element);
 
         if (body && body.length && !body.parent().hasClass('modal-body-wrapper')) {
-          body.wrap( '<div class="modal-body-wrapper" />');
+          body.wrap('<div class="modal-body-wrapper"></div>');
         }
         if (hr && hr.length && !hr.parent().hasClass('modal-content')) {
-          hr.insertAfter('.modal-header');
+          hr.insertAfter(this.element.find('.modal-header'));
         }
         if (buttonset && buttonset.length && !buttonset.parent().hasClass('modal-content')) {
-          buttonset.insertAfter('.modal-body-wrapper');
+          buttonset.insertAfter(this.element.find('.modal-body-wrapper'));
         }
+
       },
 
       disableSubmit: function () {
@@ -217,6 +218,7 @@
           if (props.id) {
             btn.attr('id', props.id);
           }
+
           btn.on('click.modal', function(e) {
             if (props.click) {
               props.click.apply(self.element[0], [e, self]);
@@ -231,6 +233,7 @@
 
           btn.button();
           buttonset.append(btn);
+
         });
 
       },
@@ -282,7 +285,7 @@
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
 
         // Ensure aria-labelled by points to the id
-        if (settings.isAlert) {
+        if (this.settings.isAlert) {
           this.element.attr('aria-labeledby', 'message-title');
           this.element.attr('aria-describedby', 'message-text');
         } else {
@@ -320,7 +323,7 @@
             self.resize();
           }
           self.resize();
-          self.element.addClass('is-visible').attr('role', (settings.isAlert ? 'alertdialog' : 'dialog'));
+          self.element.addClass('is-visible').attr('role', (self.settings.isAlert ? 'alertdialog' : 'dialog'));
           self.element.attr('aria-hidden', 'false');
           self.overlay.attr('aria-hidden', 'false');
           self.element.attr('aria-modal', 'true'); //This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
@@ -431,7 +434,9 @@
           return false;
         }
 
-        this.mainContent.removeClass('no-scroll');
+        if (this.mainContent) {
+          this.mainContent.removeClass('no-scroll');
+        }
         $(window).off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');
@@ -466,7 +471,7 @@
           self.element.css({'display':'none'}).trigger('afterClose');
         }, 300); // should match the length of time needed for the overlay to fade out
 
-        if (settings.content) {
+        if (self.settings.content) {
           self.element.remove();
         }
       },
@@ -482,7 +487,7 @@
           $(window).off('resize.modal-' + this.id);
         }
 
-        if (settings.trigger === 'click') {
+        if (this.settings.trigger === 'click') {
           this.trigger.off('click.modal');
         }
 
