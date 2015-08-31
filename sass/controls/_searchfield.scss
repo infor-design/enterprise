@@ -11,14 +11,13 @@
     height: 17px;
     position: absolute;
     right: 0;
-    top: 9px;
+    top: 8px;
   }
 
   .icon.close {
     cursor: pointer;
-    pointer-events: normal;
     height: 16px;
-    top: 8px;
+    pointer-events: normal;
 
     &:hover {
       fill: $white;
@@ -57,11 +56,33 @@
     @include searchfield-text-style();
     border: 1px solid transparent;
     cursor: pointer;
-    padding-left: 35px;
+    padding-left: 36px;
+    text-overflow: ellipsis;
     transition: width .3s cubic-bezier(.17, .04, .03, .94);
-    width: 110px;
+    width: 115px;
 
-    &:focus {
+    &.empty {
+      padding-left: 0;
+      width: 32px;
+
+      &.active,
+      &:active {
+        padding-left: 36px;
+        width: 225px;
+      }
+
+      &[placeholder] {
+        padding-left: 36px;
+        width: 115px;
+
+        &.active,
+        &:active {
+          width: 225px;
+        }
+      }
+    }
+
+    &.active {
       background-color: #ffffff;
       border: 1px solid $graphite03;
       color: initial;
@@ -103,17 +124,19 @@
 }
 
 @include respond-to(phablet) {
-  .searchfield:focus {
+  .searchfield {
+    text-overflow: clip;
+
     &::-webkit-input-placeholder {
-      color: transparent;
+      color: transparent !important;
     }
 
     &::-moz-placeholder {
-      color: transparent;
+      color: transparent !important;
     }
 
     &:-ms-input-placeholder {
-      color: transparent;
+      color: transparent !important;
     }
   }
 }
@@ -137,7 +160,8 @@
       left: 0;
     }
 
-    &:focus {
+    &.active,
+    &:active {
       background-color: $slate08;
       border-color: transparent transparent $slate09;
       box-shadow: none;

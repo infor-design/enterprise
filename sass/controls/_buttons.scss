@@ -3,78 +3,81 @@
 
 // Also see:
 // sass/controls/_icons.scss
-// sass/controls/_menubutton.scss
 
 button {
   background-color: transparent;
+  margin-right: 5px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
-// Buttons - button = secondary button
-.btn,
-.btn-secondary,
-.btn-primary,
-.btn-tertiary,
-.btn-filtering,
-.btn-icon,
-.btn-menu {
-  @include font-size($button-font-size);
+// How all button types will deal with iconography
+[class^="btn-"] {
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  color: $btn-color;
-  font-weight: bold;
+  @include font-size($button-font-size);
+  color: inherit;
+  font-weight: 700;
   height: 34px;
-  line-height: 34px;
-  margin-right: 5px;
-  margin-top: 5px;
   min-width: 100px;
   overflow: hidden;
-  padding: 0 30px;
   position: relative;
   text-transform: uppercase;
   width: auto;
-}
 
-.btn-menu {
-  .icon {
-    height: 32px;
-    margin-left: -13px;
-  }
-}
-
-.btn-filtering {
-  border-radius: 18px;
-  height: 36px;
-  margin-top: 0;
-  min-height: 36px;
-  min-width: 36px;
-  padding: 0 5px;
-
-  .icon {
-    height: 34px;
+  > * {
     vertical-align: middle;
+  }
+
+  > svg {
+    pointer-events: none;
+  }
+
+  > .icon {
+    fill: inherit;
+    padding-right: 5px;
+    position: static;
+    width: 26px;
   }
 
   span {
-    display: none;
-  }
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
 
-  &.has-text span {
-    display: inline-block;
-    height: 34px;
-    line-height: 34px;
-    margin-right: 5px;
-    vertical-align: middle;
+    + .icon {
+      padding-left: 5px;
+      padding-right: 0;
+    }
+
+    + * + .icon {
+      padding-left: 5px;
+      padding-right: 0;
+    }
+
+    &.audible {
+      + .icon {
+        padding-left: 0;
+      }
+    }
   }
+}
+
+.btn,
+.btn-primary,
+.btn-secondary {
+  border-radius: 2px;
+  padding: 0 15px;
 }
 
 // standard, primary, destructive
 .btn-primary {
   background-color: $primary-btn-bg-color;
   border: 1px solid $primary-btn-bg-color;
+  color: $btn-color;
 
   &:hover {
     background-color: $primary-btn-hover-bg-color;
@@ -84,6 +87,7 @@ button {
   &:active {
     background-color: $primary-btn-active-bg-color;
     border: 1px solid $primary-btn-active-bg-color;
+    color: $btn-color;
   }
 
   &:focus {
@@ -164,12 +168,14 @@ a.btn-primary {
 .btn-menu,
 .btn-icon,
 .btn-actions {
+  border: 1px solid transparent;
   border-radius: 18px;
   box-shadow: none;
   color: $tertiary-btn-color;
   overflow: hidden;
 
-  &:hover {
+  &:hover,
+  &.is-selected {
     color: $tertiary-btn-hover-color;
 
     span {
@@ -209,9 +215,7 @@ a.btn-primary {
   }
 
   span {
-    @include font-size(12);
     color: $tertiary-btn-color;
-    font-weight: 700;
   }
 
   .icon {
@@ -225,103 +229,49 @@ a.btn-primary {
 }
 
 .btn-destructive,
-.btn-tertiary {
+.btn-tertiary,
+.btn-menu {
   padding: 0 10px;
 }
 
 // Icon Buttons
 // Also see ./_icons.scss
-.btn-icon {
+.btn-icon,
+.btn-actions {
   border-radius: 18px;
   height: 36px;
   margin-top: 0;
   min-height: 36px;
   min-width: 36px;
   padding: 0;
+  width: 36px;
 
-  svg {
-    left: 0;
-    pointer-events: none;
-    top: 0;
-  }
-
-  > * {
-    vertical-align: middle;
-  }
-
+  // Icon Buttons only have one icon (never two) and no text visible, so disable padding
   > .icon {
-    fill: $tertiary-btn-color;
+    padding-right: 0;
   }
 
   > span {
-    color: transparent;
+    color: transparent !important;
+    display: inline-block;
+    pointer-events: none;
     position: absolute;
     width: 0;
   }
 
   &:hover {
-    .icon {
-      fill: $tertiary-btn-hover-color;
-    }
-
-    span {
-      color: transparent;
-    }
-  }
-
-  &.has-text {
-    > .icon {
-      left: 0;
-    }
-
     > span {
-      color: $graphite06;
-    }
-
-    &:hover {
-      > span {
-        color: $tertiary-btn-hover-color;
-      }
-    }
-  }
-
-  &:focus {
-    outline: 0;
-
-    .icon {
-      fill: $tertiary-btn-color;
-    }
-
-    &:hover {
-      .icon {
-        fill: $tertiary-btn-hover-color;
-      }
-    }
-  }
-
-  &:active {
-    .icon {
-      fill: $tertiary-btn-hover-color;
+      color: transparent;
     }
   }
 }
 
-@media (min-width: $breakpoint-phone-to-tablet) {
-  // Show text with icon buttons by using this class.
-  // Text will still become invisible on small breakpoint (but still visible to screen readers).
-  // See respond-to(tabletdown) below.
-  .btn-icon.has-text {
-    padding: 0 5px;
-
-    > .icon {
-      left: 5px;
-    }
-
-    > span {
-      padding-top: 0px;
-      position: static;
-      width: auto;
-    }
+// Specific Icon Button styles
+.btn-icon {
+  .icon.app-header {
+    left: 0;
+    position: relative;
+    top: 2px;
   }
 }
 
@@ -358,4 +308,12 @@ a.btn-primary {
   .btn-tertiary {
     padding: 0 5px;
   }
+
+  // Reset the above rule when these types of buttons appear in toolbars
+  .toolbar {
+    .btn-destructive,
+    .btn-teritary {
+    	padding: 0 10px;
+    }
+ 	}
 }

@@ -244,7 +244,7 @@
     position: absolute;
   }
 
-  .icon:not(.arrow) {
+  .icon:not(.icon-dropdown) {
     left: -13px;
     margin-left: 5px;
     margin-right: -4px;
@@ -252,7 +252,7 @@
     top: 3px;
   }
 
-  .icon.arrow {
+  .icon.icon-dropdown {
     margin-right: 0;
   }
 
@@ -281,7 +281,7 @@
       z-index: 4000;
     }
 
-    .icon.arrow {
+    .icon.icon-dropdown {
       fill: $popupmenu-color;
       height: 24px;
       width: 40px;
@@ -295,15 +295,15 @@
     > a {
       padding-right: 48px;
 
-      > .icon.arrow {
+      > .icon.icon-dropdown {
         border-width: 0;
+        height: 24px;
         left: auto;
         pointer-events: none;
         position: absolute;
-        right: -1px;
+        right: 11px;
         top: 2px;
-        height: 24px;
-        width: 32px;
+        width: 11px;
         @include css3(transform, rotate(-90deg));
       }
     }

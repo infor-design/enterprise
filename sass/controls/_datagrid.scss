@@ -329,13 +329,17 @@ $datagrid-header-height: 40px;
     height: 24px;
     opacity: 0;
     @include transition(all 250ms ease);
-    width: 24px;
+    width: 11px;
+  }
+
+  .sort-asc > .icon {
+    @include css3(transform, rotate(180deg));
   }
 
   span {
     display: block;
     height: 10px;
-    margin-left: -2px;
+    margin-left: 5px;
   }
 }
 

@@ -53,7 +53,9 @@ svg.icon {
     width: 115px;
   }
 
-
+  &.icon-dropdown {
+    height: 10px;
+  }
 }
 
 //Prevent freezing on IE11 - Win 7 - http://bit.ly/1EW17mx

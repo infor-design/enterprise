@@ -144,16 +144,22 @@ $header-height: 60px;
   }
 
   .toolbar {
-    margin: 10px 20px;
+    height: 60px; // Needs to not be 100% because it's possible for headers to have other controls beneath the toolbar
 
     .title {
-      margin: 0 !important;
-      overflow: visible;
-      padding: 0 !important;
+      > *:first-child {
+        margin-left: 1.5rem;
+      }
+
+      + .buttonset {
+        width: calc(55% - 20px);
+      }
     }
 
-    .buttonset {
-      height: ($header-height / 2) + 2;
+    &.has-more-button {
+      .title + .buttonset {
+        width: calc(55% - 70px);
+      }
     }
   }
 

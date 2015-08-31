@@ -133,13 +133,17 @@
 
   &:hover {
     color: $tab-hover-color;
+
+    .icon:not(.is-error) {
+      fill: $tab-hover-color;
+    }
   }
 
   .icon {
-    height: 22px;
+    height: 11px;
     margin: 0;
     vertical-align: middle;
-    width: 22px;
+    width: 32px;
   }
 
   &.popup-is-open,
@@ -149,7 +153,7 @@
       text-decoration: none;
     }
 
-    svg:not('.is-error') {
+    .icon:not(.is-error) {
       fill: $tab-selected-color;
     }
   }
@@ -196,7 +200,7 @@
         color: $tab-hover-color;
       }
 
-      .icon:not('.is-error') {
+      .icon:not(.is-error) {
         fill: $tab-hover-color;
       }
     }
@@ -258,7 +262,7 @@
 
     &.has-popupmenu {
       .icon {
-        height: 24px;
+        height: 11px;
         margin: 0 0 0 -10px;
         width: 32px;
       }
@@ -295,6 +299,11 @@
     }
 
     &.is-selected {
+
+      .icon:not(.is-error) {
+        fill: $tab-selected-color;
+      }
+
       a {
         color: $tab-selected-color;
 
@@ -309,10 +318,6 @@
             color: $tab-selected-color;
           }
         }
-      }
-
-      .icon:not('.is-error') {
-        fill: $tab-selected-color;
       }
 
       &:hover {

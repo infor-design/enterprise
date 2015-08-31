@@ -6,82 +6,77 @@ $toolbar-height: 44px;
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 
-  &.has-more-button {
-    .buttonset {
-      padding-right: 44px;
+  // Acts as a spacer that causes the toolbar items to vertically align.
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    vertical-align: middle;
+    visibility: hidden;
+    width: 1px;
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .buttonset {
+    overflow-x: hidden;
+    overflow-y: visible;
+    white-space: nowrap;
+    //width: 100%;
+
+    > * {
+      @include transition(opacity 300ms cubic-bezier(.17, .04, .03, .94));
+      margin-bottom: 5px;
+      margin-top: 5px;
+
+      &:first-child {
+        margin-left: 1px;
+      }
+
+      &:last-child {
+        margin-right: 1px;
+      }
     }
 
-    .more {
-      display: inline-block;
+    > .is-overflowed {
+      opacity: 0;
+    }
+
+    button {
+      margin-right: 0;
     }
   }
 
   .title {
-    display: inline-block;
-    left: 0;
     overflow: hidden;
-    position: absolute;
     text-overflow: ellipsis;
-    top: 0;
     @include css3(transition, left 300ms cubic-bezier(.17, .04, .03, .94));
     white-space: nowrap;
-
-    > * {
-      vertical-align: middle;
-    }
-  }
-
-  .field {
-    display: inline-block;
-    margin-right: 10px;
-    width: auto;
-  }
-
-  .buttonset {
-    margin: 0 5px 0 1px;
-    padding: 0;
+    width: 45%;
 
     > * {
       vertical-align: middle;
     }
 
-    > .btn-group {
-      display: inline-block;
-
-      > * {
-        margin-right: 0;
-      }
-    }
-
-  }
-
-  button {
-    min-width: 32px;
-
-    > .icon {
-      height: 20px;
-      position: relative;
-    }
-
-    &.btn-actions > .icon {
-      height: 20px;
-    }
-
-    &.btn-menu > .icon:last-of-type {
-      height: (($button-font-size * 2) + 2) + px;
-      top: 2px;
+    + .buttonset {
+      width: 54%;
     }
   }
 
   // Container for More Button
   .more {
     display: none;
-    position: absolute;
-    right: 0;
-    top: 0;
+    width: 60px;
     @include css3(transition, right 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
@@ -89,63 +84,49 @@ $toolbar-height: 44px;
     background-color: #b6b6b6;
     display: inline-block;
     height: 20px;
-    margin: 9px;
+    margin: 3px 16px 0;
     position: relative;
-    top: -3px;
+    top: 6px;
     width: 1px;
   }
 
-  .overflow-break {
-    height: 100%;
+  &.has-more-button {
+    .buttonset {
+      width: calc(100% - 48px);
+    }
+
+    .title {
+      width: 45%;
+
+      + .buttonset {
+        width: calc(55% - 50px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
+      }
+    }
+
+    .more {
+      display: inline-block !important;
+      text-align: right;
+      width: 38px;
+    }
   }
+
 }
 
 // Styles for regular toolbar only
-.toolbar/*:not(.formatter-toolbar):not(.listview-toolbar):not(.cardstack-toolbar)*/ {
-  height: $toolbar-height;
+.toolbar {
   margin-bottom: 5px;
-
-  .buttonset {
-    height: $toolbar-height - 10;
-
-    button {
-      margin-bottom: 5px;
-      margin-top: 5px;
-    }
-  }
 
   .title {
     color: $font-color;
     @include antialiased();
     @include font-size(16);
-    margin: 5px 1em 5px 0;
-    max-width: 40%;
-    padding: 10px 0;
 
     + .buttonset {
-      margin: 0 0 0 50%;
-      max-width: 50%;
       text-align: right;
       @include css3(transition, width 300ms cubic-bezier(.17, .04, .03, .94),
         margin 300ms cubic-bezier(.17, .04, .03, .94));
     }
   }
-
-  .more {
-    .btn-actions {
-      margin: 5px 5px 0 0;
-    }
-  }
-}
-
-// Formatter Toolbar (Editors/Grid/etc)
-.formatter-toolbar {
-  height: 44px;
-
-  .buttonset {
-    height: 40px;
-  }
-
 }
 
 // Used in Editor, some card menus, etc.
@@ -180,41 +161,114 @@ $toolbar-height: 44px;
   }
 }
 
+@media (max-width: $breakpoint-phone-to-tablet - 1) {
+  .toolbar {
+    // Show text with icon buttons by using this class.
+    // Text will still become invisible on small breakpoint (but still visible to screen readers).
+    // See respond-to(tabletdown) below.
+    .btn-tertiary,
+    .btn-destructive {
+      min-width: 0;
+      width: auto;
+
+      span:not(.audible) {
+        display: inline-block;
+        padding: 0 10px;
+      }
+
+      .icon {
+        padding-right: 0;
+        width: 32px;
+
+        + span {
+          color: transparent !important;
+          padding: 0;
+          width: 0;
+        }
+      }
+    }
+  }
+}
+
+// Special Rules for iOS, for unknown reasons this design just doesn't play nice with iOS
+// TODO: Figure out why
+.ios .toolbar {
+  &.searchfield-active {
+    .title,
+    .more {
+      display: none !important;
+      width: 0 !important;
+
+      > * {
+        display: none !important;
+      }
+    }
+
+    &.has-more-button {
+      .buttonset {
+        width: calc(100% - 2px);
+      }
+    }
+  }
+}
+
+// Fix an issue where on slightly smaller viewports, sometimes toolbar widths are off
+@media (max-width: $breakpoint-wide-tablet) {
+  .toolbar {
+    // Slightly modify the width of these elements on smaller breakpoints (they don't line up in some browsers)
+    .title {
+      width: 44% !important;
+    }
+  }
+}
+
 @include respond-to(phablet) {
   .toolbar {
+    .buttonset {
+      z-index: 10;
+    }
+
     .searchfield-wrapper {
-      @include css3(transition, width 300ms cubic-bezier(.17, .04, .03, .94));
+      z-index: 10;
+
+      // Standalone Searchfields in a buttonset need to be positioned differently to account for
+      // vertical alignmnent of the buttonset (buttonset height will be zero in this case, so starting position of the
+      // searchfield wrapper would be halfway down the toolbar without this)/
+      &:only-child {
+        top: -10%;
+      }
     }
 
     .searchfield {
-      padding-left: 24px;
-      @include css3(transition, padding 300ms cubic-bezier(.17, .04, .03, .94));
-      width: 24px;
+      text-overflow: none;
+      width: 32px;
+
+      &.empty {
+        padding-left: 0;
+        width: 32px;
+
+        &[placeholder] {
+          padding-left: 0;
+          width: 32px;
+        }
+      }
     }
 
     &.searchfield-active {
-      .title {
-        left: -100%;
-
-        + .buttonset {
-          margin: 0;
-          max-width: none;
-          padding-right: 0;
-          width: 100%;
-        }
-      }
-
-      .more {
-        right: -100%;
-      }
-
       .searchfield-wrapper {
-        width: 100%;
+        left: 0;
+        position: absolute;
+        width: calc(100% - 2px); // 2px accounts for borders
       }
 
       .searchfield {
-        padding-left: 35px;
-        width: 100%;
+        &.active,
+        &:active,
+        &.empty.active,
+        &.empty:active {
+          padding-left: 32px;
+          width: 100%;
+        }
       }
     }
   }

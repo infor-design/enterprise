@@ -44,10 +44,14 @@
 
         if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon')) {
           var ddIcon = this.element.children('.icon').filter(function() {
-            return $(this).find('use').attr('xlink:href','#icon-dropdown');
+            return $(this).find('use').attr('xlink:href') === '#icon-dropdown';
           });
           if (!ddIcon.length) {
-            this.element.append($('<svg class="icon" focusable="false" aria-hidden="true" role="presentation" viewBox="0 0 32 32"><use xlink:href="#icon-dropdown"></use></svg>'));
+            ddIcon = $('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>');
+            this.element.append(ddIcon);
+          }
+          if (!ddIcon.hasClass('icon-dropdown')) {
+            ddIcon.addClass('icon-dropdown');
           }
         }
 
@@ -56,8 +60,7 @@
         }
 
         this.element
-        .on('touchstart.button mousedown.button', function (e) {
-
+        .on('touchstart.button click.button', function (e) {
           if ((self.element.attr('disabled')) || (!self.isTouch && e.which !== 1) ||
               ($('.ripple-effect', this).length) || (self.isTouch && e.type !== 'touchstart')) {
             return false;

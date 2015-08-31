@@ -93,7 +93,7 @@
         this.defaultMenuItems = this.moreMenu.find('li:not(.separator)').length > 0;
 
         function menuItemFilter() {
-          /*jshint validthis:true */
+          //jshint validthis:true
           return $(this).parent('.buttonset').length;
         }
 
@@ -200,10 +200,11 @@
             self.handleKeys(e);
           }).on('click.toolbar', function(e) {
             self.handleClick(e);
-          }).on('focusin.toolbar', function(e) {
-            self.handleFocus(e);
-          }).on('blur.toolbar', function(e) {
-            self.handleBlur(e);
+          });
+
+        this.items.filter('.btn-menu, .btn-actions')
+          .on('close.toolbar', function onClosePopup() {
+            $(this).focus();
           });
 
         this.more.on('keydown.toolbar', function(e) {
@@ -216,9 +217,12 @@
 
         this.element.on('updated.toolbar', function() {
           self.updated();
+        }).on('recalculateButtons.toolbar', function() {
+          self.adjustButtonVisibility();
         });
 
         $(window).on('resize.toolbar-' + this.id, function() {
+          self.adjustButtonVisibility();
           self.toggleMoreMenu();
         });
 
@@ -267,28 +271,8 @@
       },
 
       handleClick: function(e) {
-        this.setActiveButton($(e.currentTarget), true);
+        this.setActiveButton($(e.currentTarget));
         return false;
-      },
-
-      handleFocus: function(e) {
-        var item = $(e.target);
-
-        if (item.is('.searchfield')) {
-          this.element.addClass('searchfield-active');
-        }
-
-        return;
-      },
-
-      handleBlur: function(e) {
-        var item = $(e.target);
-
-        if (item.is('.searchfield')) {
-          this.element.removeClass('searchfield-active');
-        }
-
-        return;
       },
 
       handleKeys: function(e) {
@@ -302,7 +286,7 @@
             self.setActiveButton(self.getLastVisibleButton());
           }
 
-          if (key === 39 || (key === 40 && target.attr('aria-expanded') === 'false')) { // Right (or Down if the menu's closed)
+          if (key === 39 || (key === 40 && target.attr('aria-expanded') !== 'true')) { // Right (or Down if the menu's closed)
             e.preventDefault();
             self.setActiveButton(self.getFirstVisibleButton());
           }
@@ -394,8 +378,13 @@
         // the more button tabbable instead.
         var tooltip = this.more.data('tooltip');
         if (activeButton[0] !== this.more[0] && this.isItemOverflowed(activeButton)) {
-          this.activeButton = this.more.attr('tabindex', '0');
-          activeButton.addClass('is-selected');
+          // Don't activate the more button if we have a selected and active searchfield
+          if (!activeButton.is('.searchfield')) {
+            this.activeButton = this.more;
+          } else {
+            this.activeButton = activeButton;
+          }
+          activeButton.attr('tabindex', '0').addClass('is-selected');
         } else {
           this.activeButton = activeButton.addClass('is-selected').attr('tabindex', '0');
           if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
@@ -408,17 +397,45 @@
         }
       },
 
-      // NOTE: Tabs has similar code... not very DRY
+      adjustButtonVisibility: function() {
+        var self = this,
+          transitionEnd = $.fn.transitionEndName();
+
+        this.items.filter(':not(.btn-actions)').each(function() {
+          var item = $(this);
+
+          // Don't do this for searchfields
+          if (item.is('.searchfield')) {
+            return;
+          }
+
+          if (self.isItemOverflowed(item)) {
+            item.one(transitionEnd, function() {
+              item.css('visibility', 'hidden');
+            }).addClass('is-overflowed');
+
+            if (document.activeElement === item[0] && item.is(':not(.btn-actions):not(.searchfield)')) {
+              // set focus to last visible item
+              self.getLastVisibleButton().focus();
+            }
+          } else {
+            item.off(transitionEnd);
+            item.css('visibility', '').removeClass('is-overflowed');
+          }
+        });
+      },
+
+      // Item is considered overflow if it's right-most edge sits past the right-most edge of the border.
       isItemOverflowed: function(item) {
         if (!item || item.length === 0) {
           return true;
         }
 
-        if (this.buttonset.scrollTop() > 0) {
-          this.buttonset.scrollTop(0);
+        if (this.buttonset.scrollLeft() > 0) {
+          this.buttonset.scrollLeft(0);
         }
-        var offset = $(item).offset().top - this.buttonset.offset().top;
-        return offset >= this.buttonset.height();
+        var offset = ($(item).offset().left + $(item).outerWidth()) - this.buttonset.offset().left;
+        return offset >= this.buttonset.width() + 1;
       },
 
       checkOverflowItems: function() {
@@ -453,8 +470,8 @@
           return;
         }
 
-        if (this.element.outerHeight() > 1 && this.buttonset.length > 0 && // Makes sure we're not animating Open or remaining Closed
-          (this.buttonset[0].scrollHeight > this.element.outerHeight() + 1 || // Inner scrolling area doesn't exceed control height
+        if (this.element.outerWidth() > 1 && this.buttonset.length > 0 && // Makes sure we're not animating Open or remaining Closed
+          (this.buttonset[0].scrollWidth > this.buttonset.outerWidth() + 1 || // Inner scrolling area doesn't exceed control width
           this.defaultMenuItems)) { // No default menu items defined in the More Menu (will always show if there are)
           this.element.addClass('has-more-button');
         } else {

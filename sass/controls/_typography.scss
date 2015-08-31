@@ -92,6 +92,10 @@ p {
   + h4 {
     @include rem(margin-top, 2rem);
   }
+
+  + p {
+    @include rem(margin-top, 1.5rem);
+  }
 }
 
 // Add Some Seperation in Kitchen Sink Page
