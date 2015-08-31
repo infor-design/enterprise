@@ -43,8 +43,8 @@ window.Formatters = {
     return formatted;
   },
 
-  Hyperlink: function(row, cell, value) {
-    return '<a href="#" tabindex="-1" class="hyperlink">' + value + '</a>';
+  Hyperlink: function(row, cell, value, col) {
+    return '<a href="' + (col.href ? col.href : '#') +'" tabindex="-1" class="hyperlink">' + value + '</a>';
   },
 
   Template: function(row, cell, value, col, item) {
@@ -251,6 +251,14 @@ $.fn.datagrid = function(options) {
       }
       this.sortColumn = {sortField: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
+
+    },
+
+    //Initialize as a Table
+    initFromTable: function () {
+      if (this.settings.dataset === 'table') {
+        this.element.remove();
+      }
     },
 
     initTableWidth: function () {
@@ -278,11 +286,75 @@ $.fn.datagrid = function(options) {
     render: function () {
       var self = this;
 
-      self.table = $('<table role="grid"></table>').addClass('datagrid');
+      //Init from Table
+      if (this.settings.dataset === 'table') {
+        self.table = $(this.element).addClass('datagrid');
+
+        if (!this.element.parent().is('.datagrid-wrapper')) {
+          this.element.wrap('<div class="datagrid-wrapper"></div>');
+        }
+        self.settings.dataset = self.htmlToDataset();
+      } else {
+        self.table = $('<table role="grid"></table>').addClass('datagrid');
+
+      }
+
       self.table.empty();
       self.renderHeader();
       self.renderRows();
       self.element.addClass('datagrid-container').append(self.table);
+    },
+
+    htmlToDataset: function () {
+      var rows = $(this.element).find('tbody tr'),
+        self = this,
+        specifiedCols = (self.settings.columns.length > 0);
+        dataset = [];
+
+      //Geneate the columns if not supplier
+      if (!specifiedCols) {
+        var headers = $(this.element).find('thead th'),
+          firstRow = self.element.find('tbody tr:first()');
+
+        headers.each(function (i, col) {
+          var colSpecs = {},
+            column = $(col),
+            colName = 'column'+i;
+
+          colSpecs.id  = column.text().toLowerCase();
+          colSpecs.name = column.text();
+          colSpecs.field = colName;
+
+          var link = firstRow.find('td').eq(i).find('a');
+          if (link.length > 0) {
+            colSpecs.formatter = Formatters.Hyperlink;
+            colSpecs.href = link.attr('href');
+          }
+
+          self.settings.columns.push(colSpecs);
+        });
+      }
+
+      rows.each(function () {
+        var cols = $(this).find('td'),
+          newRow = {};
+
+        cols.each(function (i, col) {
+          var column = $(col),
+            colName = 'column'+i;
+
+          newRow[colName] = column.text();
+
+          if (specifiedCols) {
+            self.settings.columns[i].field = colName;
+          }
+
+        });
+        console.log(self.settings.columns, specifiedCols);
+
+        dataset.push(newRow);
+      });
+      return dataset;
     },
 
     //Method to Reload the data set
@@ -570,8 +642,8 @@ $.fn.datagrid = function(options) {
           return;
         }
         var id = self.currentHeader.attr('data-column-id'),
-          offset = (self.element.parent().css('position')!=='static') ? 
-            self.getChildOffset(self.currentHeader) : 
+          offset = (self.element.parent().css('position')!=='static') ?
+            self.getChildOffset(self.currentHeader) :
             self.currentHeader.offset();
 
         self.dragging = true;
