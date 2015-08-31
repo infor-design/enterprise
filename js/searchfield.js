@@ -220,7 +220,7 @@
         this.checkContents();
       },
 
-      handleClick: function(e) {
+      handleClick: function() {
         this.setAsActive();
       },
 

@@ -790,12 +790,15 @@
       },
 
       setOverflow: function () {
-        if (this.tablist[0].scrollHeight > this.tablist.outerHeight() + 1) {
-          this.element.addClass('has-more-button');
+        var self = this;
+
+        if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
+          self.element.addClass('has-more-button');
         } else {
-          this.element.removeClass('has-more-button');
+          self.element.removeClass('has-more-button');
         }
-        this.setMoreActive();
+        self.setMoreActive();
+
       },
 
       setMoreActive: function () {

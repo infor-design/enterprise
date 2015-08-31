@@ -90,10 +90,12 @@
             '<div class="modal-content">'+
               '<div class="modal-header"><h1 class="modal-title">'+ settings.title +'</h1></div>' +
               '<div class="modal-body-wrapper">'+
-                '<div class="modal-body">'+ settings.content +'</div>'+
+                '<div class="modal-body"></div>'+
               '</div>'+
             '</div>'+
           '</div>');
+
+        this.element.find('.modal-body').append(settings.content);
         this.element.appendTo('body');
         this.addButtons(settings.buttons);
       },
