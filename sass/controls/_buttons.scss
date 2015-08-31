@@ -14,7 +14,7 @@ button {
 }
 
 // How all button types will deal with iconography
-[class^="btn-"] {
+[class^="btn"] {
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
