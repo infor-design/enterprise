@@ -586,10 +586,8 @@
         }
 
         // Change the text color of ticks if either handle value matches their value
-        var lowerTicks = this.ticks.filter(function(obj) {
-          return obj.value === newVal[0];
-        }) || [],
-          higherTicks = [];
+        var higherTicks = [];
+
         if (this.handles[1]) {
           higherTicks = this.ticks.filter(function(obj) {
             return obj.value === newVal[1];
