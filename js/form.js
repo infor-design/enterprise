@@ -81,8 +81,8 @@
 
           //Add Class and Icon
           input.addClass('dirty');
-          if (input.attr('type') === 'checkbox' || input.attr('type') === 'radio') {
-            cssClass += ' checked';
+          if ((input.attr('type')==='checkbox' || input.attr('type')==='radio') && input.is(':checked')) {
+            cssClass += ' is-checked';
           }
           if (!input.prev().is('.icon-dirty')) {
             input.before('<span class="icon-dirty' + cssClass + '"></span>');
