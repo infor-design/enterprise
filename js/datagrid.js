@@ -246,7 +246,7 @@ $.fn.datagrid = function(options) {
     },
 
     initSettings: function () {
-      if(this.element.parent().css('position')!=='relative') {
+      if (this.settings.dataset !== 'table' && this.element.parent().css('position') !== 'relative') {
         this.element.wrap( '<div class="datagrid-wrapper" />');
       }
       this.sortColumn = {sortField: null, sortAsc: true};
@@ -290,19 +290,19 @@ $.fn.datagrid = function(options) {
       if (this.settings.dataset === 'table') {
         self.table = $(this.element).addClass('datagrid');
 
-        if (!this.element.parent().is('.datagrid-wrapper')) {
-          this.element.wrap('<div class="datagrid-wrapper"></div>');
+        if (this.element.closest('.datagrid-wrapper').length === 0) {
+          this.element.wrap('<div class="datagrid-wrapper"><div class="datagrid-container"></div></div>');
         }
         self.settings.dataset = self.htmlToDataset();
       } else {
         self.table = $('<table role="grid"></table>').addClass('datagrid');
-
+        self.element.addClass('datagrid-container');
       }
 
       self.table.empty();
       self.renderHeader();
       self.renderRows();
-      self.element.addClass('datagrid-container').append(self.table);
+      self.element.append(self.table);
     },
 
     htmlToDataset: function () {
@@ -343,7 +343,11 @@ $.fn.datagrid = function(options) {
           var column = $(col),
             colName = 'column'+i;
 
-          newRow[colName] = column.text();
+          if (self.settings.columns[i].formatter) {
+            newRow[colName] = column.text();
+          } else {
+            newRow[colName] = column.html();
+          }
 
           if (specifiedCols) {
             self.settings.columns[i].field = colName;
@@ -843,7 +847,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (settings.toolbar.actions) {
-          more = $('<div class="more"></div>').appendTo(buttonSet);
+          more = $('<div class="more"></div>').insertAfter(buttonSet);
           more.append('<button class="btn-actions"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></use></svg><span class="audible">Grid Features</span></button>');
           toolbar.addClass('has-more-button');
         }
