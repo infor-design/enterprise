@@ -170,7 +170,7 @@
 
   li {
     cursor: pointer;
-    line-height: 30px;
+    line-height: 0;
     padding: 0;
     position: static;
     white-space: nowrap;
@@ -206,10 +206,12 @@
 
   a {
     @include antialiased();
+    @include font-size(14);
     border: 1px solid transparent;
     color: $popupmenu-color;
     display: block;
-    @include font-size(14);
+    height: 30px;
+    line-height: 30px;
     padding: 0 30px 0 20px;
     position: relative;
     text-decoration: none;
