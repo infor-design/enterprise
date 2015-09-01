@@ -61,7 +61,10 @@
     }
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     color: $white;
   }
 
@@ -92,22 +95,69 @@
 }
 
 .builder-content {
-  height: calc(100% - 80px);}
+  height: calc(100% - 80px);
+}
 
 .builder-actions,
 .builder-sidebar {
   display: inline-block;
   height: 100%;
-  padding: 10px 20px;
+  padding-top: 10px;
+  vertical-align: top;
 }
 
 .builder-actions {
   background-color: $white;
   width: calc(100% - 323px);
+
+  > .listview {
+    overflow: visible;
+  }
+}
+
+.builder-actions-header,
+.builder-sidebar-header {
+  height: 50px;
+  margin: 0 20px;
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  // vertical alignment fix
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    width: 1px;
+  }
+}
+
+.builder-actions-content {
+  margin: 10px 20px;
 }
 
 .builder-sidebar {
   width: 320px;
+
+  > .modal-buttonset {
+    margin: 0 -20px;
+  }
+}
+
+.builder-sidebar-content {
+  height: calc(100% - 150px);
+
+  > .listview {
+    height: 100%;
+  }
+}
+
+.builder-sidebar-footer {
+  height: 80px;
+  margin-top: 10px;
 }
 
 @include respond-to(phone) {

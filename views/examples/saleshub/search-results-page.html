@@ -1,6 +1,6 @@
   {{> includes/masthead}}
 
-  <header class="header is-sticky">
+  <header class="header">
     <div class="toolbar">
       <div class="title">
         <button class="btn-icon application-menu-trigger" type="button">
@@ -16,11 +16,10 @@
       </div>
 
       <div class="buttonset">
-        <div class="field">
-          <label for="searchfield-header" class="audible">Header Search Field</label>
-          <input placeholder="Type to Search" type="text" class="searchfield" data-options="{clearable: true}">
-        </div>
-        <button class="btn-icon has-text" type="button">
+        <label for="searchfield-header" class="audible">Header Search Field</label>
+        <input placeholder="Type to Search" type="text" class="searchfield" data-options="{clearable: true}">
+
+        <button class="btn-tertiary" type="button">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-add"></use>
           </svg>
@@ -122,59 +121,7 @@
 
             </div>
 
-            <!--This is only needed because it renders first on the server on the first one-->
-            {{={{{ }}}=}}
-
-
-            <script id="m3-search-results-tmpl" type="text/html">
-              <table role="grid" class="listview-table">
-                <thead>
-                  <tr>
-                    <th scope="col" role="columnheader" class="audible">Thumbnail</th>
-                    <th scope="col" role="columnheader" class="audible">Description</th>
-                    <th scope="col" role="columnheader" class="audible">Unit Price</th>
-                    <th scope="col" role="columnheader" class="audible">Units</th>
-                    <th scope="col" role="columnheader" class="audible">Quantity</th>
-                    <th scope="col" role="columnheader" class="audible">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {{#dataset}}
-                  <tr>
-                    <td><img alt="Placeholder Image" src="{{thumb}}" /></td>
-                    <td>
-                      <p><a href="#" class="hyperlink">{{productName}}</a></p>
-                      <ul class="info">
-                        <li>Product ID: <strong>{{productId}}</strong></li>
-                        <li>In Stock: <strong>{{inStock}} lbs.</strong></li>
-                      </ul>
-                    </td>
-                    <td>${{unitPrice}} /</td>
-                    <td>
-                      <div class="field">
-                        <label class="audible" for="select-{{id}}">Units</label>
-                        <select class="dropdown" id="select-{{id}}" name="select-{{id}}" style="width: 75px">
-                          <option>lb.</option>
-                          <option>ton</option>
-                          <option>palette</option>
-                          <option>case</option>
-                        </select>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="field">
-                        <input type="text" id="quantity-{{id}}" class="input-xs" name="quantity-{{id}}" value="0" />
-                        <label class="audible" for="quantity-{{id}}">Quantity</label>
-                      </div>
-                    </td>
-                    <td class="l-right-text"><button class="btn-{{action}}" type="button">Add Item</button></td>
-                  </tr>
-                {{/dataset}}
-                </tbody>
-              </table>
-            </script>
-
-            <div class="listview tableview" id="m3-search-results-products" data-tmpl="m3-search-results-tmpl" data-dataset="/api/product" data-options="{selectable: false}"></div>
+            {{> examples/saleshub/_search-results-list}}
 
           </div>
 

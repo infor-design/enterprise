@@ -70,54 +70,37 @@ $header-height: 60px;
     top: 1px;
   }
 
-  .btn-actions,
-  .btn-icon,
-  .btn-menu {
+  // Buttons in the header will all appear as Tertiary/Destructive-style
+  [class^="btn"] {
     background-color: transparent;
     border: 1px solid transparent;
+    border-radius: 18px;
+    color: $header-icon-color;
 
-    .icon {
+    > .icon {
       fill: $header-icon-color;
+    }
+
+    > span {
+      color: $header-icon-color;
     }
 
     &:focus,
     &:hover,
     &:active,
     &[aria-expanded="true"] {
-      .icon {
+      > .icon {
         fill: $inverse-color !important;
+      }
+
+      > span {
+        color: $inverse-color !important;
       }
     }
 
     &:focus:not(.hide-focus) {
       border: 1px solid $inverse-color;
       box-shadow: none;
-    }
-
-    .ripple-effect {
-      background-color: $header-icon-color;
-    }
-
-    span {
-      color: $header-icon-color;
-    }
-  }
-
-  .btn-icon.has-text {
-    margin-top: 3px !important;
-  }
-
-  .btn,
-  .btn-tertiary {
-    background-color: transparent;
-    border: 1px solid transparent;
-    border-radius: 18px;
-    color: $header-icon-color;
-
-    &:focus,
-    &:hover,
-    &:active {
-      color: $white;
     }
 
     .ripple-effect {

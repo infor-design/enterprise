@@ -17,6 +17,17 @@ demoTasks.push({task:'063010', date: '10/11/2015' , desc: 'Special fields test -
 demoTasks.push({task:'063011', date: '10/11/2015' , desc: 'Call TMZ Inc at 5 PM'});
 demoTasks.push({task:'063012', date: '07/08/2015' , desc: 'Part #6212132 has low inventory level'});
 
+var demoBuilderItems = [];
+demoBuilderItems.push({ id: 1, orderId: '4231212-3', items: 0, companyName: 'John Smith Construction', total: '$0.00' });
+demoBuilderItems.push({ id: 2, orderId: '1092212-3', items: 4, companyName: 'Top Grade Construction', total: '$10,000.00' });
+demoBuilderItems.push({ id: 3, orderId: '6721212-3', items: 0, companyName: 'Riverhead Building Supply', total: '$0.00' });
+demoBuilderItems.push({ id: 4, orderId: '6731212-3', items: 37, companyName: 'United Starwars Construction', total: '$22,509.99' });
+demoBuilderItems.push({ id: 5, orderId: '5343890-3', items: 8, companyName: 'United Construction', total: '$1,550.00' });
+demoBuilderItems.push({ id: 6, orderId: '4989943-3', items: 156, companyName: 'Top Grade-A Construction', total: '$800.00' });
+demoBuilderItems.push({ id: 7, orderId: '8972384-3', items: 10, companyName: 'Top Grade Construction', total: '$1,300.00' });
+demoBuilderItems.push({ id: 8, orderId: '2903866-3', items: 96, companyName: 'Top Grade-A Construction', total: '$1,900.00' });
+demoBuilderItems = demoBuilderItems.concat(demoBuilderItems); // Duplicate it
+
 // Execute Page Code for Demo Page
 $(function($) {
 
