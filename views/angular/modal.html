@@ -1,0 +1,63 @@
+<!--This is only needed because the examples render through a server side template -->
+{{={{{ }}}=}}
+
+<div class="row" data-ng-controller="demo">
+  <div class="twelve columns">
+
+    <button class="btn" type="button" data-modal="modal-1">Show Modal</button><br>
+
+    <div class="modal" id="modal-1">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title">{{dialogTitle}}</h1>
+        </div>
+
+        <div class="modal-body" data-ng-controller="demo">
+
+          <div class="field">
+           <label for="context-desc">{{pageTitleLabel}}</label>
+           <input id="context-desc" name="context-desc" ng-model="pageTitle">
+          </div>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" ng-click="cancel()">{{cancelLabel}}</button>
+            <button type="button" id="submit" class="btn-modal-primary" ng-click="submit()">{{submitLabel}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+  var controller = $('.modal').find('[data-ng-controller]');
+  if (controller.length > 0) {
+    $('.modal').attr('data-ng-controller', controller.attr('data-ng-controller'));
+    controller.removeAttr('data-ng-controller');
+  }
+
+  // Example App and Controller
+  var app = angular.module('sohoxi-angular', []);
+
+  app.controller('demo', function($scope) {
+    $scope.dialogTitle = 'Add Description';
+    $scope.pageTitleLabel = 'Page Title';
+    $scope.pageTitle = 'My Page';
+    $scope.cancelLabel = 'Cancel';
+    $scope.submitLabel = 'Submit';
+
+    $scope.log = function () {
+      alert('Cancel Clicked');
+    };
+
+    $scope.submit = function () {
+      alert('Submit Clicked');
+    };
+  });
+
+  $('body').initialize();
+</script>
