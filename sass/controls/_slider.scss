@@ -54,6 +54,7 @@
     }
 
     > .label {
+      color: $font-color-highcontrast;
       left: 3px;
       position: absolute;
       text-overflow: ellipsis;
@@ -71,7 +72,7 @@
       cursor: default;
 
       > .label {
-        color: $pager-disabled-color;
+        opacity: .4;
       }
 
       &:after {
