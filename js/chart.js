@@ -85,7 +85,7 @@ window.Chart = function(container) {
       }
 
       var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
-        color = $('<div class="chart-legend-color"></div>').css('background-color', charts.colors(i)),
+        color = $('<span class="chart-legend-color"></span>').css('background-color', charts.colors(i)),
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
       if (series[i].percent) {

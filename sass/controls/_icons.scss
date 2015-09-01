@@ -111,14 +111,16 @@ svg.icon-logo {
 .timepicker + .icon + .icon-confirm,
 .timepicker + .tooltip-description + .icon + .icon-error,
 .timepicker + .tooltip-description + .icon + .icon-confirm {
-  left: -50px !important;
+  left: 103px !important;
+  margin-top: 1px;
 }
 
 .datepicker + .icon + .icon-error,
 .datepicker + .icon + .icon-confirm,
 .datepicker + .tooltip-description + .icon + .icon-error,
 .datepicker + .tooltip-description + .icon + .icon-confirm {
-  left: -50px !important;
+  left: 103px !important;
+  margin-top: 1px;
 }
 
 .lookup-wrapper .icon-error,

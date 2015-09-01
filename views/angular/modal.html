@@ -6,6 +6,10 @@
 
     <button class="btn" type="button" data-modal="modal-1">Show Modal</button><br>
 
+    <!-- Always Works
+    <div class="modal" id="modal-1" data-ng-controller="demo">
+    -->
+
     <div class="modal" id="modal-1">
       <div class="modal-content">
 
@@ -13,6 +17,7 @@
           <h1 class="modal-title">{{dialogTitle}}</h1>
         </div>
 
+        <!-- Doesnt Work unless we change controller higher -->
         <div class="modal-body" data-ng-controller="demo">
 
           <div class="field">
