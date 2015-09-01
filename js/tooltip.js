@@ -155,7 +155,6 @@
         /*
         if (typeof this.settings.content === 'function') {
           content = this.content = this.settings.content.call(this.element);
-        }
         */
 
         if (typeof content === 'function') {
@@ -169,7 +168,7 @@
         if (contentArea.prev('.arrow').length === 0) {
           contentArea.before('<div class="arrow"></div>');
         }
-        contentArea.removeClass('hidden');
+        contentArea.removeClass('hidden').initialize();
 
         // Popover or Tooltip?
         this.tooltip.removeClass('popover').removeClass('tooltip');
@@ -189,6 +188,7 @@
 
         // Add the content
         contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
+
       },
 
       show: function(newSettings) {

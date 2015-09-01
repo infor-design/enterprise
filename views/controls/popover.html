@@ -6,10 +6,30 @@
     <div class="hidden" id="popover-contents">
       <p style="width: 300px">Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
     </div>
+    <br>
+
+    {{={{{ }}}=}}
+
+    <script id="task-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          {{#disabled}}
+            <li class="is-disabled">
+          {{/disabled}}
+          {{^disabled}}
+            <li>
+          {{/disabled}}
+            <p class="listview-heading">Task #{{task}}</p>
+            <p class="listview-subheading">{{desc}}</p>
+            <p class="listview-micro">Due: {{date}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
 
     <button class="btn" data-popover="popover-contents" data-title="Test Title" data-trigger="click" type="button">Click Activated - Link Support</button><br>
-    <div class="hidden" id="popover-contents">
-      <p style="width: 300px">Sed posuere consectetur est at lobortis. Aenean eu leo quam. click here: <a href='http://www.infor.com' class='hyperlink'>infor</a></p>
+    <div id="popover-contents" style="max-height: 300px;">
+      <div class="listview" id="task-listview" data-options="{'dataset': 'demoTasks', 'template': 'task-tmpl'}"></div>
     </div>
 
   </div>

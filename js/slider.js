@@ -586,10 +586,8 @@
         }
 
         // Change the text color of ticks if either handle value matches their value
-        var lowerTicks = this.ticks.filter(function(obj) {
-          return obj.value === newVal[0];
-        }) || [],
-          higherTicks = [];
+        var higherTicks = [];
+
         if (this.handles[1]) {
           higherTicks = this.ticks.filter(function(obj) {
             return obj.value === newVal[1];
@@ -601,13 +599,13 @@
           self.ticks[i].label.css('color', '');
         });
 
-        // Set the text colors to the background color of the tick
+        /* Set the text colors to the background color of the tick
         if (lowerTicks.length > 0 && !this.element.is(':disabled')) {
           lowerTicks[0].label.css('color', lowerTicks[0].element.css('background-color'));
         }
         if (higherTicks.length > 0) {
           higherTicks[0].label.css('color', higherTicks[0].element.css('background-color'));
-        }
+        }*/
 
         // Convert the stored values from ranged to percentage
         percentages[0] = this.convertValueToPercentage(newVal[0]);

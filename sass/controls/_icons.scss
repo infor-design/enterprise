@@ -68,19 +68,19 @@ svg.icon-logo {
 }
 
 .icon-dirty {
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid $dirty-icon-fill;
+  @include css3(border-radius, 2px 0 0);
+  border-color: $dirty-icon-fill transparent transparent $dirty-icon-fill;
+  border-style: solid;
+  border-width: 6px;
   height: 0;
-  margin-left: -3px;
-  margin-top: 0;
+  left: 1px;
   position: absolute;
-  @include css3(transform, rotate(135deg));
+  top: -3px;
   width: 0;
-
-  &.checked {
-    margin-left: -4px;
-    margin-top: -7px;
+  
+  &.is-checked {
+    left: 0;
+    top: -5px;
     z-index: 1;
   }
 }
@@ -111,14 +111,16 @@ svg.icon-logo {
 .timepicker + .icon + .icon-confirm,
 .timepicker + .tooltip-description + .icon + .icon-error,
 .timepicker + .tooltip-description + .icon + .icon-confirm {
-  left: -50px !important;
+  left: 103px !important;
+  margin-top: 1px;
 }
 
 .datepicker + .icon + .icon-error,
 .datepicker + .icon + .icon-confirm,
 .datepicker + .tooltip-description + .icon + .icon-error,
 .datepicker + .tooltip-description + .icon + .icon-confirm {
-  left: -50px !important;
+  left: 103px !important;
+  margin-top: 1px;
 }
 
 .lookup-wrapper .icon-error,

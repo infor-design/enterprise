@@ -15,8 +15,8 @@ $datagrid-header-height: 40px;
   height: auto;
   margin-bottom: 20px;
   overflow-x: auto;
-  width: auto; //fallback support for calc()
-  width: calc(100% + 20px); //20px extra for scrolbar
+  //width: auto; //fallback support for calc()
+  //width: calc(100% + 20px); //20px extra for scrolbar
 
   .resize-handle {
     border: 0;
