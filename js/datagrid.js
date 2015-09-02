@@ -839,7 +839,7 @@ $.fn.datagrid = function(options) {
 
         var buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
         if (settings.toolbar.dateFilter) {
-          buttonSet.append('<button class="btn-icon has-text" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar-date"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
+          buttonSet.append('<button class="btn-tertiary" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
         }
 
         if (settings.toolbar.keywordFilter) {
