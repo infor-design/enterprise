@@ -55,6 +55,19 @@
           }
         }
 
+        if (this.element.hasClass('icon-favorite')) {
+          this.element.on('click.button', function() {
+            var use = $(this).find('use');;
+
+            if (use.attr('xlink:href') === '#icon-star-outlined') {
+              use.attr('xlink:href', '#icon-star-filled');
+            } else {
+              use.attr('xlink:href', '#icon-star-outlined')
+            }
+
+          });
+        }
+
         if (this.element.hasClass('btn-actions') && !this.element.data('tooltip')) {
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }

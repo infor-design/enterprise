@@ -30,7 +30,7 @@
           options: null,  //Options to pass to the data grid
           beforeShow: null, //Call back before the lookup is opened.
           source: null, //TODO
-          modalContent: null //custom modal markup
+          modalContent: null //Custom modal markup
         },
         settings = $.extend({}, defaults, options);
 
