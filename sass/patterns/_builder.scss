@@ -116,9 +116,15 @@
 }
 
 .builder-actions-header,
+.builder-sidebar-header,
+.builder-actions-footer,
+.builder-sidebar-footer {
+  margin: 0 20px;
+}
+
+.builder-actions-header,
 .builder-sidebar-header {
   height: 50px;
-  margin: 0 20px;
 
   > * {
     display: inline-block;

@@ -168,7 +168,6 @@
         if (contentArea.prev('.arrow').length === 0) {
           contentArea.before('<div class="arrow"></div>');
         }
-        contentArea.removeClass('hidden').initialize();
 
         // Popover or Tooltip?
         this.tooltip.removeClass('popover').removeClass('tooltip');
@@ -186,9 +185,9 @@
           }
         }
 
-        // Add the content
+        // Add the content, init and show
         contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
-
+        contentArea.initialize().removeClass('hidden');
       },
 
       show: function(newSettings) {
