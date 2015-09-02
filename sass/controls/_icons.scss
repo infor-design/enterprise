@@ -56,7 +56,10 @@ svg.icon {
     height: 10px;
   }
 
-  &.amber {
+}
+
+&.icon-favorite {
+  svg {
     fill: $rating-bg-color;
   }
 }
