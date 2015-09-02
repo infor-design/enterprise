@@ -152,7 +152,7 @@
         content = Locale.translate(content) || content;
 
         if (this.isPopover) {
-          var contentArea = this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
+          var popoverContent = this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
           settings.content.removeClass('hidden');
           this.tooltip.removeClass('tooltip').addClass('popover');
 
@@ -166,7 +166,7 @@
             this.tooltip.find('.tooltip-title').hide();
           }
 
-          contentArea.initialize();
+          popoverContent.initialize();
           return;
         } else {
           this.tooltip.find('.tooltip-title').hide();

@@ -57,12 +57,12 @@
 
         if (this.element.hasClass('icon-favorite')) {
           this.element.on('click.button', function() {
-            var use = $(this).find('use');;
+            var use = $(this).find('use');
 
             if (use.attr('xlink:href') === '#icon-star-outlined') {
               use.attr('xlink:href', '#icon-star-filled');
             } else {
-              use.attr('xlink:href', '#icon-star-outlined')
+              use.attr('xlink:href', '#icon-star-outlined');
             }
 
           });
