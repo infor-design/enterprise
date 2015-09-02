@@ -291,6 +291,8 @@
 
       return returnObj;
     });
+
+    return this;
   };
 
   /* start-amd-strip-block */
