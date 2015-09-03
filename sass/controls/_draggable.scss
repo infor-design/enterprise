@@ -30,10 +30,10 @@
   width: 2px;
 }
 
-.sortable {
-  @include no-select;
+[data-sort-exclude="true"] {
+  opacity: .5;
+}
 
-  .sortable-placeholder {
-    border: 1px dashed $input-border-color;
-  }
+.sort-placeholder {
+  border: 1px dashed $input-border-color !important;
 }

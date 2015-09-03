@@ -19,7 +19,8 @@
     // Settings and Options
     var pluginName = 'sort',
         defaults = {
-          connectWith: false
+          connectWith: false,
+          placeholderCssClass: 'sort-placeholder'
         },
         settings = $.extend({}, defaults, options);
 
@@ -33,6 +34,7 @@
     Plugin.prototype = {
 
       init: function() {
+        this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         this.handleEvents();
       },
 
@@ -42,16 +44,20 @@
         var self = this,
           index, isHandle,
           items = self.element.children().not('[data-sort-exclude="true"]'),
-          placeholder = $('<' + (/^(ul|ol)$/i.test(self.element[0].tagName) ? 'li' : 'div') + ' class="sort-placeholder">');
+          placeholder = $('<' + (/^(ul|ol)$/i.test(self.element[0].tagName) ? 'li' : 'div') +'>');
 
-        self.placeholders = placeholder;
+        self.dragStart = 'dragstart.sort touchstart.sort gesturestart.sort';
+        self.dragEnd = 'dragend.sort touchend.sort touchcancel.sort gestureend.sort';
+        self.dragWhileDragging = 'dragover.sort dragenter.sort drop.sort touchmove.sort gesturechange.sort';
+
         self.handle = self.element.attr('data-sort-handle');
         self.connectWith = self.element.attr('data-sort-connectWith');
+        self.placeholders = placeholder.addClass(settings.placeholderCssClass +' draggable');
 
         // Use Handle if available
-        $(self.handle, items)
-          .on('mousedown.sort', function() { isHandle = true; })
-          .on('mouseup.sort', function() { isHandle = false; });
+        $(self.handle, items).addClass('draggable')
+          .on('mousedown.sort touchstart.sort', function() { isHandle = true; })
+          .on('mouseup.sort touchend.sort', function() { isHandle = false; });
 
         // Add connect with
         if (self.connectWith) {
@@ -61,12 +67,9 @@
         }
 
         // Draggable Items
-        //items.addClass('draggdrag({containment: 'document', clone: 'true'});
-
-        items.attr('draggable', 'true')
+        items
+        .attr('draggable', true).addClass(self.handle ? '' : 'draggable')
         .add([this, placeholder])
-
-        // No selection
         .not('a[href], img').on('selectstart.sort', function() {
           if(this.dragDrop) {
             this.dragDrop();//ie9
@@ -74,68 +77,93 @@
           return false;
         }).end()
 
-        // Drag start
-        .on('dragstart.sort touchstart.sort gesturestart.sort', function(e) {
-          if (self.handle && !isHandle) {
-            return false;
-          }
-          isHandle = false;
+        .each(function() {
+          $(this)
+          // Drag start --------------------------------------------------------------------------
+          .on(self.dragStart, function(e) {          
+            if (self.handle && !isHandle) {
+              return false;
+            }
+            isHandle = false;
 
-          var dt = e.originalEvent.dataTransfer;
-          dt.effectAllowed = 'move';
-          dt.setData('Text', 'dummy');
-          index = (self.dragging = $(this)).addClass('sort-dragging').index();
-        })
+            index = (self.dragging = $(this)).addClass('sort-dragging').index();
+            var dt = e.originalEvent.dataTransfer;
+            dt.effectAllowed = 'move';
+            dt.setData('Text', 'dummy');
+          })
 
-        // Drag end
-        .on('dragend.sort touchend.sort gestureend.sort touchcancel.sort', function() {
-          if (!self.dragging) {
-            return;
-          }
-          self.placeholders.filter(':visible').after(self.dragging);
-          self.dragging.removeClass('sort-dragging').show();
-          self.placeholders.detach();
-
-          if (index !== self.dragging.index()) {
-            self.dragging.parent().trigger('sortupdate', {item: self.dragging});
-          }
-          self.dragging = null;
-        })
-
-        // While dragging
-        .on('dragover.sort dragenter.sort drop.sort touchmove.sort gesturechange.sort', function(e) {
-          e.preventDefault();
-          e.originalEvent.dataTransfer.dropEffect = 'move';
-
-          if (e.type === 'drop') {
-            e.stopPropagation();
-            self.dragging.trigger('dragend.sort');
-            return false;
-          }
-
-          if (items.is(this)) {
-            self.dragging.hide();
-
-            $(this)[placeholder.index() < $(this).index() ? 'after' : 'before'](placeholder);
-            self.placeholders.not(placeholder).detach();
-          }
-          else if (!self.placeholders.is(this)) {
+          // Drag end ----------------------------------------------------------------------------
+          .on(self.dragEnd, function() {
+            if (!self.dragging) {
+              return;
+            }
+            self.placeholders.filter(':visible').after(self.dragging);
+            self.dragging.removeClass('sort-dragging').show();
             self.placeholders.detach();
-            this.element.append(placeholder);
+
+            if (index !== self.dragging.index()) {
+              self.dragging.parent().trigger('sortupdate', {item: self.dragging});
+            }
+            self.dragging = null;
+          })
+
+          // While dragging -----------------------------------------------------------------------
+          .on(self.dragWhileDragging, function(e) {
+            var overItem = this;
+
+            e.preventDefault();
+            
+            if(e.type==='drop') {
+              e.stopPropagation();
+              self.dragging.trigger('dragend.sort');
+              return false;
+            }
+
+            if(self.isTouch) {
+              var touch = e.originalEvent.touches[0];
+              overItem = self.getElementByTouchInList(items, touch.pageX, touch.pageY) || overItem;
+            }
+            overItem = $(overItem);
+
+            if(!self.isTouch) {
+              e.originalEvent.dataTransfer.dropEffect = 'move';
+            }
+
+            if (items.is(overItem)) {
+              self.dragging.hide();
+
+              overItem[placeholder.index() < overItem.index() ? 'after' : 'before'](placeholder);
+              self.placeholders.not(placeholder).detach();
+            }
+            else if (!self.placeholders.is(this)) {
+              self.placeholders.detach();
+              this.element.append(placeholder);
+            }
+            return false;
+          });//-------------------------------------------------------------------------------------
+        });//end each items
+      },
+
+      // Get Element By Touch In List
+      getElementByTouchInList: function(list, x, y) {
+        var returns = false;
+        $(list).each(function() {
+          var item = $(this), offset = item.offset();
+          if (!(x <= offset.left || x >= offset.left + item.outerWidth() ||
+                y <= offset.top  || y >= offset.top + item.outerHeight())) {
+            returns = item;
           }
-          return false;
         });
+        return returns;
       },
 
       // Teardown
       destroy: function() {
         var items = (this.connectWith) ?
-          this.element.children().add($(this.connectWith).children()) :
-          this.element.children();
+          this.element.children().add($(this.connectWith).children()) : this.element.children();
 
-        items.off('selectstart.sort dragstart.sort touchstart.sort gesturestart.sort dragend.sort touchend.sort gestureend.sort touchcancel.sort dragover.sort dragenter.sort drop.sort touchmove.sort gesturechange.sort');
-        $(this.handle, items).off('mousedown.sort mouseup.sort');
-
+        items.off('selectstart.sort '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
+        $(this.handle, items).off('mousedown.sort mouseup.sort touchstart.sort touchend.sort');
         $.removeData(this.element[0], pluginName);
       }
     };
