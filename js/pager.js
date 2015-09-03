@@ -355,6 +355,7 @@
           self.element.trigger('paging', pageInfo);
 
           //Render page objects
+          self.elements = self.element.children();
           self.elements.hide();
           expr = (self.activePage === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
           self.elements.filter(expr).show();

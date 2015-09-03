@@ -664,6 +664,7 @@ $.fn.datagrid = function(options) {
       setTimeout(function () {
         var count = self.tableBody.find('tr:visible').length;
 
+        //Consitutues Client Side Paging
         if (self.settings.paging && self.settings.source === null) {
           count = self.settings.dataset.length;
         }
