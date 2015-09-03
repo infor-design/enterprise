@@ -157,7 +157,7 @@
         this.items.filter(menuItemFilter).each(buildMenuItem);
         menuItems.reverse();
         $.each(menuItems, function(i, item) {
-          if (item.text() !== "") {
+          if (item.text() !== '') {
             item.prependTo(self.moreMenu);
           }
         });
