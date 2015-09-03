@@ -166,12 +166,16 @@ $datagrid-header-height: 40px;
 
     .badge {
       color: $inverse-color;
-      line-height: 23px;
+      line-height: 15px;
       margin-top: 0;
       top: 0;
 
       &:before {
         margin-top: -10px;
+      }
+
+      &.info .audible {
+        background-color: $inverse-color;
       }
     }
 
@@ -453,9 +457,10 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  margin-left: -13px;
-  margin-right: -3px;
+  left: -9px;
+  margin-right: -25px;
   top: -4px;
+  width: 48px;
 
   .icon.plus-minus {
     left: -1.4em;

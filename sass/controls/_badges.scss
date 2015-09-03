@@ -59,12 +59,15 @@
   background-color: #e0e5ee;
   border-radius: 50%;
   color: #ffffff;
+  display: inline-block;
   @include font-size(13);
   @include antialiased();
   font-weight: normal;
-  letter-spacing: 0.0325em;
+  letter-spacing: .0325em;
   margin-left: 5px;
-  padding: 0.4rem;
+  min-width: 22px;
+  padding: .4rem;
+  text-align: center;
   vertical-align: middle;
   white-space: nowrap;
 
