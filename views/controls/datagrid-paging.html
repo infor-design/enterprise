@@ -7,7 +7,8 @@
 </div>
 
 <script>
-  Locale.set('en-US').done(function () {
+  $('body').one('initialized', function () {
+
       var grid,
         columns = [],
         data = [];
@@ -53,7 +54,6 @@
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
       });
 
-   });
-
+  });
 </script>
 

@@ -662,7 +662,12 @@ $.fn.datagrid = function(options) {
       var self = this;
 
       setTimeout(function () {
-        var count = self.tableBody.find('tr:visible').length;  ///this.settings.dataset.length
+        var count = self.tableBody.find('tr:visible').length;
+
+        if (self.settings.paging && self.settings.source === null) {
+          count = self.settings.dataset.length;
+        }
+
         self.element.prev('.toolbar').find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
       }, 1);
     },
