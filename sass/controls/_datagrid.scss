@@ -157,11 +157,17 @@ $datagrid-header-height: 40px;
     }
 
     .datagrid-alert-text {
-      padding: 10px;
+      display: inline-block;
+      line-height: 25px;
+      padding-left: 10px;
+      text-align: left;
+      width: inherit;
     }
 
     .datagrid-alert-icon {
-      top: 5px;
+      display: inline-block;
+      height: 20px;
+      top: 4px;
     }
 
     .badge {
