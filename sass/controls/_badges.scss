@@ -88,6 +88,8 @@
   }
 
   &.pending {
+    min-height: 22px;
+    position: relative;
 
     // Clock circle
     &:before {
