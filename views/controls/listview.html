@@ -136,10 +136,14 @@
         {{#dataset}}
           <li>
             {{#accepted}}
-              <span class="alert pending badge"></span>
+              <svg class="icon icon-pending" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-pending"></use>
+              </svg>
             {{/accepted}}
             {{^accepted}}
-              <span class="alert good badge"></span>
+              <svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-confirm"></use>
+              </svg>
             {{/accepted}}
 
             <p class="listview-heading">{{firstName}} {{lastName}}</p>

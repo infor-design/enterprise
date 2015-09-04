@@ -2,7 +2,7 @@
 //================================================== //
 
 .listview {
-  background-color: $listview-bg-color;
+  background-color: inherit;
   height: inherit;
   overflow: auto;
   position: relative;
@@ -17,6 +17,10 @@
     @include font-size(16);
     color: $font-color-extrahighcontrast;
     font-weight: lighter;
+
+    &.hyperlink {
+      color: $hyperlink-color;
+    }
   }
 
   .listview-image-round {
@@ -26,6 +30,10 @@
     height: 70px;
     margin-right: 20px;
     width: 70px;
+  }
+
+  .listview-image-column {
+    width: 100px;
   }
 
   .listview-subheading {
@@ -43,10 +51,19 @@
     float: left;
     margin-right: 15px;
     margin-top: -1px;
+    min-height: 19px;
+    min-width: 19px;
+    position: relative;
 
     &.pending::before {
       left: .35em !important;
     }
+  }
+
+  .icon-pending,
+  .icon-confirm {
+    float: left;
+    margin: 3px 15px 0 0;
   }
 
   li {
@@ -349,8 +366,7 @@
 
 .listview-table {
   border-collapse: collapse;
-  margin: 2px;
-  width: calc(100% - 4px);
+  width: 100%;
 
   tr,
   td {
@@ -362,7 +378,7 @@
   }
 
   tr {
-    border-bottom: 1px solid $graphite02;
+    border-bottom: 1px solid $listview-border-color;
   }
 
   tr:focus {
@@ -376,4 +392,45 @@
 
 }
 
+// White Header for top of flat lists
+.listview-header {
+  background-color: $panel-bg-color;
+  border: 1px solid $panel-border-color;
+  padding: 20px;
 
+  .listview-heading {
+    @include font-size(18);
+  }
+
+  .listview-subheading {
+    @include font-size(14);
+    color: $font-color-lowcontrast;
+    font-weight: bold;
+    padding-top: 3px;
+  }
+
+  + .listview {
+    border-left: 1px solid $panel-border-color;
+    border-right: 1px solid $panel-border-color;
+  }
+}
+
+.listview-footer {
+  border-bottom: 1px solid $panel-border-color;
+
+  td:first-child {
+    padding: 20px;
+  }
+
+  p {
+    color: $font-color-highcontrast;
+    @include font-size(16);
+  }
+
+  strong {
+    color: $font-color-highcontrast;
+    @include font-size(16);
+    font-weight: bold;
+    margin-top: 10px;
+  }
+}

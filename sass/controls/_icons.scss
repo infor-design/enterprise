@@ -21,7 +21,8 @@ svg.icon {
   &.icon-error,
   &.icon-confirm,
   &.icon-alert,
-  &.icon-info {
+  &.icon-info,
+  &.icon-pending {
     fill: $alert-red;
     height: 18px;
     width: 20px;
@@ -32,6 +33,10 @@ svg.icon {
   }
 
   &.icon-alert {
+    fill: $alert-yellow;
+  }
+
+  &.icon-pending {
     fill: $alert-yellow;
   }
 

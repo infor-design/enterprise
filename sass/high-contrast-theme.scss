@@ -13,6 +13,8 @@
 $body-bg-color:  $slate02;
 $header-bg-color: $slate09;
 $header-icon-color: #eff0f4;
+$panel-bg-color: $slate01;
+$panel-border-color: $slate03;
 
 // Base Colors
 $primary-color: $azure07;
@@ -110,7 +112,7 @@ $trigger-icon-fill-color: $slate05;
 
 //List View
 $listview-bg-color: $inverse-color;
-$listview-border-color: $graphite02;
+$listview-border-color: $slate03;
 $listview-color: $font-color-extrahighcontrast;
 $listview-disabled-color: $disabled-color;
 $listview-selected-text-color: $font-color-extrahighcontrast;

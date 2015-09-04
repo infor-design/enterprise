@@ -168,8 +168,7 @@
                 '<a role="option" href="#" id="list-option'+ i +'" >' +
                 option.html() +
                 '</a>' +
-                '</li>')
-                .attr({'aria-selected': 'true'});
+                '</li>');
 
             setOptions(option, listOption);
             self.listUl.append(listOption);
@@ -203,9 +202,8 @@
             '</li>');
 
           self.listUl.append(listOption);
-          listOption.attr({'aria-selected':'false'});
           if (option.is(':selected')) {
-            listOption.addClass('is-selected').attr({'aria-selected':'true', 'tabindex': '0'});
+            listOption.addClass('is-selected').attr({'tabindex': '0'});
           }
 
           setOptions(option, listOption);
