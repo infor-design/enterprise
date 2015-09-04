@@ -20,22 +20,35 @@
             </h2>
           </div>
           <div class="buttonset">
-            <button id="sidebar-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" data-popover="sidebar-popover-contents">
+            <button id="sidebar-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" data-popdown="builder-popdown-content">
               <svg class="icon" focusable="false" aria-hidden="true">
                 <use xlink:href="#icon-settings"></use>
               </svg>
               <span>Sidebar Popup</span>
             </button>
+
           </div>
         </div>
-        <div id="sidebar-popover-contents" class="hidden">
-          <p>
-            Tag aggregate, feeds rich weblogs user-centric user-centred mashups frictionless, interactive blogospheres e-enable visionary, solutions enable vertical target seamless remix seize folksonomies--vortals efficient. Integrate, metrics. Peer-to-peer weblogs mesh methodologies platforms citizen-media revolutionary podcasts enable communities, "folksonomies best-of-breed reinvent; rss-capable mindshare."
-          </p>
-          <p>
-            Syndicate share, synergies capture, value-added integrate B2C, integrate synthesize envisioneer podcasts orchestrate incentivize cross-platform networkeffects. Robust redefine ecologies, eyeballs, "A-list semantic," revolutionary bricks-and-clicks Cluetrain target syndicate integrate viral e-enable mindshare reintermediate whiteboard.
-          </p>
+        <div id="builder-popdown-content" class="popdown hidden">
+          <div class="widget">
+            <div class="widget-header">
+              <h2 class="widget-title">My Cart <span class="extra">(8 Items)</span></h2>
+            </div>
+            <div class="widget-content">
+              <p style="margin: 0 20px 20px;">
+                Tag aggregate, feeds rich weblogs user-centric user-centred mashups frictionless, interactive blogospheres e-enable visionary, solutions enable vertical target seamless remix seize folksonomies--vortals efficient. Integrate, metrics. Peer-to-peer weblogs mesh methodologies platforms citizen-media revolutionary podcasts enable communities, "folksonomies best-of-breed reinvent; rss-capable mindshare."
+              </p>
+              <p style="margin: 0 20px 20px;">
+                Syndicate share, synergies capture, value-added integrate B2C, integrate synthesize envisioneer podcasts orchestrate incentivize cross-platform networkeffects. Robust redefine ecologies, eyeballs, "A-list semantic," revolutionary bricks-and-clicks Cluetrain target syndicate integrate viral e-enable mindshare reintermediate whiteboard.
+              </p>
+            </div>
+            <div class="widget-footer modal-buttonset">
+              <button class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
+              <button class="btn-modal-primary" style="width: 50%;">Checkout</button>
+            </div>
+          </div>
         </div>
+
       </div>
       <!-- .builder-header -->
 
@@ -93,16 +106,6 @@
         </li>
       {{/dataset}}
     </ul>
-  </script>
-
-  <!-- Reinvokes the buttons to make the Sidebar menu work properly. -->
-  <script type="text/javascript">
-    $('body').on('initialized', function() {
-      $('#sidebar-responsive-menu').popover({
-        placement: 'bottom',
-        title: 'Sidebar Contents'
-      });
-    });
   </script>
 
 </div>

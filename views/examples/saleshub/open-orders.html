@@ -59,7 +59,7 @@
               <span>View Profile</span>
             </button>
 
-            <button id="my-cart-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" type="button">
+            <button id="my-cart-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" type="button" data-popdown="builder-popdown-content">
               <svg class="icon" focusable="false" aria-hidden="true">
                 <use xlink:href="#icon-cart"></use>
               </svg>
@@ -90,12 +90,19 @@
     </div>
   </div>
 
-  <!-- Sidebar Popover -->
-  <div id="my-cart-popover-contents">
-    <div id="cart-popover-listview" class="listview tableview" data-tmpl="cart-items-tpl" data-dataset="/api/construction-cart-items"></div>
-    <div class="modal-buttonset">
-      <button class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
-      <button class="btn-modal-primary" style="width: 50%;">Checkout</button>
+  <!-- Popdown inside the builder header -->
+  <div id="builder-popdown-content" class="popdown hidden">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">My Cart <span class="extra">(8 Items)</span></h2>
+      </div>
+      <div class="widget-content">
+        <div id="cart-popover-listview" class="listview tableview" data-tmpl="cart-items-tpl" data-dataset="/api/construction-cart-items"></div>
+      </div>
+      <div class="widget-footer modal-buttonset">
+        <button class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
+        <button class="btn-modal-primary" style="width: 50%;">Checkout</button>
+      </div>
     </div>
   </div>
 
@@ -128,19 +135,6 @@
         </li>
       {{/dataset}}
     </ul>
-  </script>
-
-  <script type="text/javascript">
-    // Reinvokes the buttons to make the Sidebar menu work properly.
-    $('body').on('initialized', function() {
-
-      $('#my-cart-responsive-menu').popover({
-        content: $('#my-cart-popover-contents'),
-        placement: 'bottom',
-        title: 'My Cart',
-        trigger: 'click'
-      });
-    });
   </script>
 
 <!-- </body> -->

@@ -3,12 +3,11 @@
 
 .popdown {
   background-clip: padding-box;
-  background-color: $inverse-color;
-  border: 1px solid $tooltip-border-color;
+  background-color: $popupmenu-bg-color;
+  border: 1px solid $popupmenu-border-color;
   border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   left: -9999px;
-  max-width: 300px;
-  min-width: 60px;
   opacity: 0;
   position: absolute;
   top: 0;
@@ -20,6 +19,7 @@
     transform 400ms cubic-bezier(.17, .04, .03, .94));
   @include css3(transform, translate3d(0, -10%, 0));
   white-space: normal;
+  width: 300px;
   z-index: 5010;
 
   .arrow {
@@ -31,20 +31,20 @@
     @include css3(transform, translate3d(0, 10%, 0));
 
     .arrow {
-      border-top-color: $tooltip-border-color;
+      border-top-color: $popupmenu-border-color;
 
       &::after {
-        border-top-color: $inverse-color;
+        border-top-color: $popupmenu-bg-color;
       }
     }
   }
 
   &.bottom {
     .arrow {
-      border-bottom-color: $tooltip-border-color;
+      border-bottom-color: $popupmenu-border-color;
 
       &::after {
-        border-bottom-color: $inverse-color;
+        border-bottom-color: $popupmenu-bg-color;
       }
     }
   }

@@ -60,7 +60,13 @@
         function tryPopdownElement(elem) {
           if (!elem) { return false; }
 
-          elem = $(elem);
+          if (typeof elem === 'string') {
+            if (!elem.match('#') || elem.indexOf('#') !== 0) {
+              elem = '#' + elem;
+            }
+            elem = $(elem);
+          }
+
           if (elem.length) {
             self.popdown = elem;
             return true;
@@ -212,16 +218,76 @@
           winW = winW - (parent.offset.left + parent.scrollDistance.left);
         }
 
-        var t = this.trigger,
-          o = t.offset(),
-          arrowHeight = 11;
+        var adjustX = false,
+          adjustY = false,
+          t = this.trigger,
+          to = t.offset(), // Trigger offset
+          arrowHeight = 11,
+          XoffsetFromTrigger = 0,
+          YoffsetFromTrigger = 0,
+          po; // Popover offset
 
-        // Place below to start
-        this.popdown.addClass('bottom').css({ 'left': o.left,
-                           'top': o.top + t.outerHeight(true) + arrowHeight });
+        // Place the popdown below to start
+        this.popdown.addClass('bottom').css({ 'left': to.left,
+                           'top': to.top + t.outerHeight(true) + arrowHeight });
         this.arrow.css({ 'left': t.outerWidth(true)/2,
                          'top': 0 - arrowHeight });
 
+        // Get the newly-set values for the popdown's offset
+        po = this.popdown.offset();
+
+        // Get deltas for popdown position if the button is off either X edge
+        if (po.left < 0) { // Checking the left edge
+          adjustX = true;
+          XoffsetFromTrigger = 0 - po.left;
+        }
+        var rightEdgePos = po.left + this.popdown.outerWidth(true);
+        if (rightEdgePos > winW) { // Checking the right edge
+          adjustX = true;
+          XoffsetFromTrigger = rightEdgePos - winW;
+        }
+
+        if (adjustX) {
+          // Adjust the X position based on the deltas
+          this.popdown.css({ 'left': po.left + (XoffsetFromTrigger * -1) });
+          this.arrow.css({ 'left': parseInt(this.arrow.css('left')) - (XoffsetFromTrigger * -1) });
+
+          // Get the newly set values
+          po = this.popdown.offset();
+        }
+
+        // Get the deltas for popdown position if the button is off either Y edge
+        if (po.top < 0) { // Checking top edge
+          adjustY = true;
+          YoffsetFromTrigger = 0 - po.top;
+        }
+        var bottomEdgePos = po.top + this.popdown.outerHeight(true);
+        if (bottomEdgePos > winH) { // Checking the bottom edge
+          adjustY = true;
+          YoffsetFromTrigger = bottomEdgePos - winH;
+        }
+
+        // Remove the arrow if we need to adjust this, since it won't line up anymore
+        if (adjustY) {
+          this.arrow.css('display', 'none');
+
+          // Adjust the Y position based on the deltas
+          this.popdown.css({ 'top': po.top + (YoffsetFromTrigger * -1) });
+          this.arrow.css({ 'top': parseInt(this.arrow.css('top')) - (YoffsetFromTrigger * -1) });
+
+          // Get the values again
+          po = this.popdown.offset();
+        }
+
+        // One last check of the Y edges.  At this point, if either edge is out of bounds, we need to
+        // shrink the height of the popdown, as it's too tall for the viewport.
+        if (po.top < 0 || po.top + this.popdown.outerHeight(true) > winH) {
+          this.popdown.css({'top': 0 });
+          po = this.popdown.offset();
+
+          bottomEdgePos = po.top + this.popdown.outerHeight(true);
+          this.popdown.css({'height': parseInt(this.popdown.css('height')) - (bottomEdgePos - winH)});
+        }
       },
 
       updated: function() {
