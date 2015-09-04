@@ -1,0 +1,77 @@
+// Popdown Control
+//================================================== /
+
+.popdown {
+  background-clip: padding-box;
+  background-color: $inverse-color;
+  border: 1px solid $tooltip-border-color;
+  border-radius: 4px;
+  left: -9999px;
+  max-width: 300px;
+  min-width: 60px;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  @include transition(opacity 400ms cubic-bezier(.17, .04, .03, .94),
+    -moz-transform 400ms cubic-bezier(.17, .04, .03, .94),
+    -ms-transform 400ms cubic-bezier(.17, .04, .03, .94),
+    -o-transform 400ms cubic-bezier(.17, .04, .03, .94),
+    -webkit-transform 400ms cubic-bezier(.17, .04, .03, .94),
+    transform 400ms cubic-bezier(.17, .04, .03, .94));
+  @include css3(transform, translate3d(0, -10%, 0));
+  white-space: normal;
+  z-index: 5010;
+
+  .arrow {
+    position: absolute;
+    z-index: 10;
+  }
+
+  &.top {
+    @include css3(transform, translate3d(0, 10%, 0));
+
+    .arrow {
+      border-top-color: $tooltip-border-color;
+
+      &::after {
+        border-top-color: $inverse-color;
+      }
+    }
+  }
+
+  &.bottom {
+    .arrow {
+      border-bottom-color: $tooltip-border-color;
+
+      &::after {
+        border-bottom-color: $inverse-color;
+      }
+    }
+  }
+
+  &.visible {
+    opacity: 1;
+    @include css3(transform, translate3d(0, 0%, 0));
+
+    &.top {
+      @include css3(transform, translate3d(0, 0%, 0));
+    }
+  }
+
+  // Customized cards/widgets for use inside the popdown
+  .card,
+  .widget {
+    border: 0;
+    height: auto;
+    margin-bottom: 0;
+
+    .card-footer,
+    .widget-footer {
+      padding: 0;
+    }
+  }
+
+  .modal-buttonset {
+    margin: 0;
+  }
+}

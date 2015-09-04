@@ -12,13 +12,19 @@
   width: 100%;
 
   .card-header,
+  .card-footer,
+  .widget-header,
+  .widget-footer {
+    padding: 13px 20px;
+    position: relative;
+  }
+
+  .card-header,
   .widget-header {
     background-color: $cardlist-header-bg-color;
     border-bottom: 1px solid $cardlist-border-color;
     height: 50px;
     line-height: 50px;
-    padding: 13px 20px;
-    position: relative;
 
     &.has-toolbar {
       padding: 0 20px;
