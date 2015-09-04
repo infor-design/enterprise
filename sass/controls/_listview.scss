@@ -51,10 +51,19 @@
     float: left;
     margin-right: 15px;
     margin-top: -1px;
+    min-height: 19px;
+    min-width: 19px;
+    position: relative;
 
     &.pending::before {
       left: .35em !important;
     }
+  }
+
+  .icon-pending,
+  .icon-confirm {
+    float: left;
+    margin: 3px 15px 0 0;
   }
 
   li {
