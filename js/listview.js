@@ -93,13 +93,39 @@
 
       },
 
+      getTotals: function(dataset) {
+        var totals = {count: dataset.length},
+          property;
+
+        if (!dataset[0]) {
+          return;
+        }
+
+        for (property in dataset[0]) {
+          totals[property] = 0;
+        }
+
+        for (var i = 0; i < dataset.length; i++) {
+          for (property in dataset[i]) {
+            totals[property] += parseFloat(dataset[i][property]);
+          }
+        }
+        return totals;
+      },
+
       render: function(dataset) {
-        var self = this;
+        var self = this,
+          totals = {};
 
         // Render "mustache" Template
         if (Tmpl && dataset && this.settings.template) {
+
+          if (this.settings.template.indexOf('{{#totals}}') > -1) {
+            totals = this.getTotals(dataset);
+          }
+
           var compiledTmpl = Tmpl.compile(this.settings.template),
-            renderedTmpl = compiledTmpl.render({dataset: dataset});
+            renderedTmpl = compiledTmpl.render({dataset: dataset, totals: totals});
 
           this.element.html(renderedTmpl);
         }
