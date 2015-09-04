@@ -49,23 +49,38 @@
           // Disable default [caps lock on] popup in IE
           document.msCapsLockWarningOff = true;
 
-          this.element.on('keypress.signin', '[type="password"]', function (e) {
+          this.element
+          .on('keypress.signin', '[type="password"]', function (e) {
             var field = $(this),
-              fieldParent = field.parent('.field');
-              //TODO: Any way to prevent chrome and ie from showing???
-            if (self.isCapslock(e)) {
-              if(!$('.icon-capslock', fieldParent).length) {
+              fieldParent = field.parent('.field'),
+              iconCapslock = $('.icon-capslock', fieldParent);
+
+            if (self.isCapslock(e) && !field.hasClass('error')) {
+              if(!iconCapslock.length) {
                 fieldParent.append(cssIcon);
                 $('body').toast({audibleOnly: true, message: Locale.translate('CapsLockOn')});
               }
-            }
-            else {
-              fieldParent.find('.icon-capslock').remove();
+            } else {
+              iconCapslock.remove();
             }
 
-            if (field.hasClass('error')) {
-              fieldParent.find('.icon-capslock').remove();
-            }
+          })
+          .on('blur.signin change.signin', '[type="password"]', function () {
+            var field = $(this),
+              fieldParent = field.closest('.field'),
+              iconCapslock = $('.icon-capslock', fieldParent);
+
+            // Wait for error class to be added
+            setTimeout(function() {
+              if (iconCapslock && iconCapslock.length) {
+                if (field.hasClass('error')) {
+                  iconCapslock.remove();
+                } else {
+                  fieldParent.append(cssIcon);
+                }             
+              }
+            }, 150);
+
           });
 
           form.on('submit.signin', function () {
@@ -96,7 +111,7 @@
       // Teardown - Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
-        $('body').off('keypress.signin');
+        $('body').off('keypress.signin blur.signin change.signin');
       }
     };
 

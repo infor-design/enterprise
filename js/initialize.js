@@ -276,6 +276,12 @@
           $('.overlay.modal-search').remove();
         });
 
+
+        elem.find('[data-translate="text"]').each(function () {
+          var obj = $(this);
+          obj.text(Locale.translate(obj.text()));
+        });
+
         //Validation
         //Should be one of the last items to invoke
         if ($.fn.validate) {

@@ -86,6 +86,14 @@ $trigger-icon-fill-color: $slate04;
 $trigger-hover-color: $slate02;
 $trigger-active-color: $primary-color;
 
+//List View
+$listview-bg-color: $slate07;
+$listview-border-color: $slate06;
+$listview-color: $inverse-color;
+$listview-disabled-color: $slate03;
+$listview-selected-text-color: $slate06;
+$listview-selection-toolbar-color: $inverse-color;
+
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
@@ -225,6 +233,19 @@ $datagrid-cell-border-color: $slate06;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #5a5d64; //Or 8dc9e6
 $datagrid-row-hover-color: $slate09;
+
+// Search Results
+$sr-masthead-text-color: $font-color;
+$sr-result-bottom-border-color: $hr-top-color;
+$sr-masthead-item-color: $font-color-lowcontrast;
+
+// Tree
+$tree-selected-color: $primary-color;
+$tree-icon-color: $slate03;
+$tree-line-color: $slate05;
+$tree-link-color: $font-color-extrahighcontrast;
+$tree-folder-link-color: $font-color-extrahighcontrast;
+$tree-disabled-opacity: .6;
 
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {

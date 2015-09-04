@@ -237,6 +237,7 @@
       'SliderHandle': {id: 'SliderHandle', value: 'Handle for', comment: 'Description of the portion of a Slider control that is focusable and changes its value, followed in code by the name of the control'},
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Maximum range handle for', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Minimum range handle for', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
+      'SkipToMain': {id: 'SkipToMain', value: 'Skip to Main Content', comment: 'Skip link in header, jumps when clicked on to main area'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Strike Through', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Sort A to Z', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Sort Z to A', comment: 'Sort Z to A in icons for filtering'},

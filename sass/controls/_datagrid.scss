@@ -117,7 +117,7 @@ $datagrid-header-height: 40px;
   tr {
 
     // Hover States
-    &:hover td {
+    &:not(.datagrid-expandable-row):hover td {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -157,21 +157,31 @@ $datagrid-header-height: 40px;
     }
 
     .datagrid-alert-text {
-      padding: 10px;
+      display: inline-block;
+      line-height: 25px;
+      padding-left: 10px;
+      text-align: left;
+      width: inherit;
     }
 
     .datagrid-alert-icon {
-      top: 5px;
+      display: inline-block;
+      height: 20px;
+      top: 4px;
     }
 
     .badge {
       color: $inverse-color;
-      line-height: 23px;
+      line-height: 15px;
       margin-top: 0;
       top: 0;
 
       &:before {
         margin-top: -10px;
+      }
+
+      &.info .audible {
+        background-color: $inverse-color;
       }
     }
 
@@ -453,9 +463,10 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  margin-left: -13px;
-  margin-right: -3px;
+  left: -9px;
+  margin-right: -25px;
   top: -4px;
+  width: 48px;
 
   .icon.plus-minus {
     left: -1.4em;

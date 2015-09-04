@@ -8,7 +8,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    Locale.set('en-US').done(function () {
+
       var grid,
         columns = [],
         data = [];
@@ -23,33 +23,31 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'status', name: 'Tag', field: 'price', width: 125, align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'azure07'}]});
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
+      //Get some data via ajax
+      var url = '/api/compressors?pageNum=1&pageSize=1000';
 
-      //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
-        columns: columns,
-        dataset: data,
-        alternateRowShading: true
-      }).data('datagrid');
+      $.getJSON(url, function(data) {
 
-      //TODO Test: You can focus on hidden columns
-      //grid.setSortColumn('activity');
+        //Show the grid
 
-      grid.setSortColumn('productId');
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          selectable: 'single',
+          paging: true,
+          pagesize: 15,
+          toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+          });
 
-      /*grid.setColumnWidth('productId', '70%');
-      grid.setColumnWidth('productName', '15%');
-      grid.setColumnWidth('activity', '15%');*/
+      });
+
   });
-
- });
-
 </script>
 

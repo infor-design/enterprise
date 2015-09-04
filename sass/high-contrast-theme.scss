@@ -108,6 +108,14 @@ $info-icon-fill: $alert-info;
 $autocomplete-light-text: $slate05;
 $trigger-icon-fill-color: $slate05;
 
+//List View
+$listview-bg-color: $inverse-color;
+$listview-border-color: $graphite02;
+$listview-color: $font-color-extrahighcontrast;
+$listview-disabled-color: $disabled-color;
+$listview-selected-text-color: $font-color-extrahighcontrast;
+$listview-selection-toolbar-color: $inverse-color;
+
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
@@ -225,7 +233,7 @@ $rating-border-color: $slate06;
 $rating-hover-color: $primary-color;
 
 // Tabs
-$tab-selected-color: $primary-color;
+$tab-selected-color: $azure09;
 $tab-border-color: $slate04;
 $tab-hover-color: $font-color-extrahighcontrast;
 
@@ -247,6 +255,19 @@ $datagrid-cell-border-color: $slate04;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #eaf8fe;
 $datagrid-row-hover-color: $slate01;
+
+// Search Results
+$sr-masthead-text-color: $font-color;
+$sr-result-bottom-border-color: $hr-top-color;
+$sr-masthead-item-color: $font-color-lowcontrast;
+
+// Tree
+$tree-selected-color: $primary-color;
+$tree-icon-color: $slate06;
+$tree-line-color: $slate04;
+$tree-link-color: $font-color-extrahighcontrast;
+$tree-folder-link-color: $font-color-extrahighcontrast;
+$tree-disabled-opacity: .6;
 
 //================================================== //
 // Core Controls

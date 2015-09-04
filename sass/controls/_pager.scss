@@ -70,6 +70,7 @@
 .pager-first svg,
 .pager-last svg,
 .pager-next svg {
+  fill: $font-color;
   height: 17px;
   left: 1px;
   top: 4px;
@@ -136,8 +137,8 @@
     }
 
     .icon {
-      height: 29px;
-      margin-left: -16px;
+      height: 12px;
+      margin-left: -8px;
     }
   }
 }

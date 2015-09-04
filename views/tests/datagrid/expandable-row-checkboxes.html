@@ -1,0 +1,59 @@
+
+<div class="row">
+    <div class="twelve columns">
+        <div id="datagrid">
+        </div>
+    </div>
+</div>
+
+<script>
+    $('body').one('initialized', function () {
+
+        Locale.set('en-US').done(function () {
+            var grid,
+                    columns = [],
+                    data = [];
+
+            // Some Sample Data
+            data.push({ id: 1, productId: 2142201, sku: 'SKU #9000001-237', productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+            data.push({ id: 2, productId: 2241202, sku: 'SKU #9000001-236', productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+            data.push({ id: 3, productId: 2342203, sku: 'SKU #9000001-235', productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+            data.push({ id: 4, productId: 2445204, sku: 'SKU #9000001-234', productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+            data.push({ id: 5, productId: 2542205, sku: 'SKU #9000001-233', productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+            data.push({ id: 5, productId: 2642205, sku: 'SKU #9000001-232', productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+            data.push({ id: 6, productId: 2642206, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+            //Define Columns for the Grid.
+            columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Expander});
+            columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
+            columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
+            columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
+            columns.push({ id: 'price', name: 'Price', field: 'price', width: 10, formatter: Formatters.Decimal});
+            columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 10, dateFormat: 'M/d/yyyy'});
+            columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
+            columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
+
+            $('#datagrid').on('rendered', function () {
+                var rowContent = '<div>' +
+                    '<div class="field"><input id="my-box" type="checkbox" class="checkbox" /><label for="my-box" class="checkbox-label">My Box</label></div>' +
+                        '<div class="field"><label for="my-select" class="label">My Select</label><select id="my-box" class="dropdown"><option value="1">&nbsp;</option><option value="2">Second</option></select></div>' +
+                                '<fieldset class="radio-group"> <legend>Select delivery method</legend> <input type="radio" class="radio" name="delivery" id="delivery1" value="in" /> <label for="delivery1" class="radio-label">Dine in</label> <br> <input type="radio" checked class="radio" name="delivery" id="delivery2" value="out" /> <label for="delivery2" class="radio-label">Carry out</label> <br> <input type="radio" class="radio" name="delivery" id="delivery3" value="delivery" /> <label for="delivery3" class="radio-label">Delivery</label> </fieldset>' +
+                    '</div>';
+                $('.row-content').first().html(rowContent).initialize();
+            });
+
+            var rowTemplate = '<div class="row-content"></div>';
+
+            //Init and get the api for the grid
+            grid = $('#datagrid').datagrid({
+                columns: columns,
+                idProperty:'officeId',
+                dataset: data,
+                rowTemplate: rowTemplate
+            }).data('datagrid');
+        });
+
+    });
+
+</script>
+

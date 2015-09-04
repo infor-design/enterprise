@@ -1,10 +1,8 @@
 // Simple List
 //================================================== //
 
-$listview-selected-text-color: $inverse-color;
-
 .listview {
-  background-color: $inverse-color;
+  background-color: $listview-bg-color;
   height: inherit;
   overflow: auto;
   position: relative;
@@ -32,12 +30,12 @@ $listview-selected-text-color: $inverse-color;
 
   .listview-subheading {
     @include font-size(14);
-    color: $font-color;
+    color: $listview-color;
   }
 
   .listview-micro {
     @include font-size(12);
-    color: $font-color;
+    color: $listview-color;
     line-height: 18px;
   }
 
@@ -54,8 +52,8 @@ $listview-selected-text-color: $inverse-color;
   li {
     @include transition(background-color .15s ease 0s);
     border: 1px solid transparent;
-    border-bottom: 1px solid $graphite02;
-    color: $font-color;
+    border-bottom: 1px solid $listview-border-color;
+    color: $listview-color;
     padding: 20px 20px 15px;
 
     &:after {
@@ -151,7 +149,7 @@ $listview-selected-text-color: $inverse-color;
 
   p {
     @include font-size(14);
-    color: $font-color-highcontrast;
+    color: $listview-color;
     line-height: 23px;
   }
 
@@ -187,13 +185,13 @@ $listview-selected-text-color: $inverse-color;
 
   .is-disabled {
     @include unselectable;
-    color: $input-disabled-color;
+    color: $listview-disabled-color;
     cursor: default;
-    -webkit-text-fill-color: $input-disabled-color;
+    -webkit-text-fill-color: $listview-disabled-color;
 
     p {
-      color: $input-disabled-color;
-      -webkit-text-fill-color: $input-disabled-color;
+      color: $listview-disabled-color;
+      -webkit-text-fill-color: $listview-disabled-color;
     }
 
     &:hover {
@@ -207,6 +205,10 @@ $listview-selected-text-color: $inverse-color;
 
     &:hover {
       background-color: $azure01;
+    }
+
+    p {
+      color: $listview-selected-text-color;
     }
   }
 
@@ -303,34 +305,34 @@ $listview-selected-text-color: $inverse-color;
 
     .title {
       @include font-size(16);
-      color: $listview-selected-text-color;
+      color: $listview-selection-toolbar-color;
     }
 
     [class^="btn"] {
-      color: $listview-selected-text-color;
+      color: $listview-selection-toolbar-color;
       min-width: 0;
 
       > span {
-        color: $listview-selected-text-color;
+        color: $listview-selection-toolbar-color;
       }
 
       > .icon {
-        fill: $listview-selected-text-color;
+        fill: $listview-selection-toolbar-color;
       }
 
       &:focus {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-selected-text-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-selection-toolbar-color;
       }
 
       &:hover,
       &:focus:not(.hide-focus) {
         > .icon {
-          fill: $listview-selected-text-color;
+          fill: $listview-selection-toolbar-color;
         }
       }
 
       .ripple {
-        background-color: $listview-selected-text-color;
+        background-color: $listview-selection-toolbar-color;
       }
     }
   }

@@ -134,7 +134,7 @@
   &:hover {
     color: $tab-hover-color;
 
-    .icon:not(.is-error) {
+    .icon:not(.is-error):not(.icon-error) {
       fill: $tab-hover-color;
     }
   }
@@ -153,7 +153,7 @@
       text-decoration: none;
     }
 
-    .icon:not(.is-error) {
+    .icon:not(.is-error):not(.icon-error) {
       fill: $tab-selected-color;
     }
   }
@@ -200,7 +200,7 @@
         color: $tab-hover-color;
       }
 
-      .icon:not(.is-error) {
+      .icon:not(.is-error):not(.icon-error) {
         fill: $tab-hover-color;
       }
     }
@@ -300,7 +300,7 @@
 
     &.is-selected {
 
-      .icon:not(.is-error) {
+      .icon:not(.is-error):not(.icon-error) {
         fill: $tab-selected-color;
       }
 

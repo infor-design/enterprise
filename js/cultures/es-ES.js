@@ -61,6 +61,8 @@
     },
     //Resx
     messages: {
+     'MoreActions': {id: 'MoreActions', value: 'Mas acciones', comment: 'Skip link in header, jumps when clicked on to main area'},
+     'SkipToMain': {id: 'SkipToMain', value: 'Saltar al contenido principal', comment: 'Skip link in header, jumps when clicked on to main area'},
      'Required': {id: 'Required', value: 'necesario', comment: 'indicates a form field is manditory'},
      'SetTime': {id: 'SetTime', value: 'Establecer hora', comment: 'button text that inserts time when clicked'},
      'Today': {id: 'Today', value: 'hoy', comment: 'refering to today on a calendar'},
