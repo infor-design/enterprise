@@ -117,7 +117,7 @@ $datagrid-header-height: 40px;
   tr {
 
     // Hover States
-    &:hover td {
+    &:not(.datagrid-expandable-row):hover td {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {

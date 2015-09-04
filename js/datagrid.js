@@ -246,9 +246,11 @@ $.fn.datagrid = function(options) {
     },
 
     initSettings: function () {
+
       if (this.settings.dataset !== 'table' && this.element.parent().css('position') !== 'relative') {
         this.element.wrap( '<div class="datagrid-wrapper" />');
       }
+
       this.sortColumn = {sortField: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
 
@@ -256,9 +258,11 @@ $.fn.datagrid = function(options) {
 
     //Initialize as a Table
     initFromTable: function () {
+
       if (this.settings.dataset === 'table') {
         this.element.remove();
       }
+
     },
 
     initTableWidth: function () {
@@ -269,6 +273,7 @@ $.fn.datagrid = function(options) {
         width = (this.settings.columns[0].width ? this.settings.columns[0].width : th.width());
         this.setColumnWidth(th.attr('data-column-id'), width);
       }
+
       if(this.element.parents().hasClass('modal')) {
         var el = $('.modal .modal-content'),
           w = this.table.width() +
@@ -741,6 +746,10 @@ $.fn.datagrid = function(options) {
         $(this).trigger('click');
       }).on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
+
+        if (target.closest('.datagrid-row-detail')) {
+          return;
+        }
 
         self.triggerRowEvent('click', e, true);
         self.setActiveCell(target.closest('td'));
@@ -1293,11 +1302,17 @@ $.fn.datagrid = function(options) {
     },
 
     commitCellEdit: function(input) {
+      var newValue, cellNode;
+
+      if (!this._editor) {
+        return;
+      }
+
       //Editor.getValue
-      var newValue = this._editor.val();
+      newValue = this._editor.val();
 
       //Format Cell again
-      var cellNode = input.closest('td').removeClass('is-editing');
+      cellNode = input.closest('td').removeClass('is-editing');
 
       //Editor.destroy
       this._editor.destroy();
