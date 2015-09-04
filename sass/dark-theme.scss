@@ -234,6 +234,19 @@ $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #5a5d64; //Or 8dc9e6
 $datagrid-row-hover-color: $slate09;
 
+// Search Results
+$sr-masthead-text-color: $font-color;
+$sr-result-bottom-border-color: $hr-top-color;
+$sr-masthead-item-color: $font-color-lowcontrast;
+
+// Tree
+$tree-selected-color: $primary-color;
+$tree-icon-color: $slate03;
+$tree-line-color: $slate05;
+$tree-link-color: $font-color-extrahighcontrast;
+$tree-folder-link-color: $font-color-extrahighcontrast;
+$tree-disabled-opacity: .6;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

@@ -256,6 +256,19 @@ $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #eaf8fe;
 $datagrid-row-hover-color: $slate01;
 
+// Search Results
+$sr-masthead-text-color: $font-color;
+$sr-result-bottom-border-color: $hr-top-color;
+$sr-masthead-item-color: $font-color-lowcontrast;
+
+// Tree
+$tree-selected-color: $primary-color;
+$tree-icon-color: $slate06;
+$tree-line-color: $slate04;
+$tree-link-color: $font-color-extrahighcontrast;
+$tree-folder-link-color: $font-color-extrahighcontrast;
+$tree-disabled-opacity: .6;
+
 //================================================== //
 // Core Controls
 @import 'controls';
