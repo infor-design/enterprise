@@ -295,12 +295,16 @@
           return;
         }
 
-        if ((key === 37 && target.is(':not(input)')) || key === 38) {
+        if ((key === 37 && target.is(':not(input)')) ||
+          (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
+          key === 38) {
           e.preventDefault();
           self.navigate(-1);
         }
 
-        if ((key === 39 && target.is(':not(input)')) || key === 40) {
+        if ((key === 39 && target.is(':not(input)')) ||
+          (key === 39 && target.is('input') && e.shiftKey) || // Shift + Right Arrow should be able to navigate away from Searchfields
+          key === 40) {
           e.preventDefault();
           self.navigate(1);
         }
