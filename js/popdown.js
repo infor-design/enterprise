@@ -155,7 +155,7 @@
         // Setup events that happen on open
         // Needs to be on a timer to prevent automatic closing of popdown.
         setTimeout(function() {
-          self.popdown.one('focusin.popdown', function(e) {
+          self.popdown.one('focusin.popdown', function() {
             if (!setFocusinEvent) {
               setFocusinEvent = true;
               $(document).on('focusin.popdown', function(e) {

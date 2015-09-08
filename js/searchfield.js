@@ -45,8 +45,6 @@
       },
 
       build: function() {
-        var self = this;
-
         this.label = this.element.prev('label, .label');
 
         this.wrapper = this.element.parent('.searchfield-wrapper');

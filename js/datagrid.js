@@ -747,7 +747,7 @@ $.fn.datagrid = function(options) {
       }).on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
 
-        if (target.closest('.datagrid-row-detail')) {
+        if (target.closest('.datagrid-row-detail').length === 1) {
           return;
         }
 

@@ -75,10 +75,12 @@
 
       // Add/Update Aria
       addAria: function () {
-        this.element.attr('aria-haspopup', true);
+        var self = this;
 
-        $('label[for="'+ this.element.attr('id') + '"]')
-          .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
+        setTimeout(function () {
+          $('label[for="'+ self.element.attr('id') + '"]')
+          .append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
+        }, 500);
       },
 
       //Handle events on the field
@@ -91,7 +93,11 @@
 
         //Space or Enter opens the dialog in this field
         this.element.on('keypress.lookup', function (e) {
-          if (e.which === 13 || e.which === 32) {
+          if (e.which === 13) {
+            self.openDialog();
+          }
+        }).on('keyup.lookup', function (e) {
+          if (e.which === 40) {
             self.openDialog();
           }
         });
@@ -129,6 +135,13 @@
 
         self.createModal();
         self.element.trigger('open', [self.modal, self.grid]);
+
+        //set focus to first grid cell
+        setTimeout(function () {
+          self.grid.setActiveCell(0, 0);
+        }, 300);
+
+        self.modal.element.find('.btn-actions').removeClass('is-selected');
       },
 
       //Overidable function to create the modal dialog
@@ -174,6 +187,8 @@
         }).off('open').on('open', function () {
           self.createGrid();
           self.element.trigger('afterOpen', [self.modal, self.grid]);
+        }).off('close').on('close', function () {
+          self.element.focus();
         });
 
         self.modal = $('body').data('modal');
@@ -221,6 +236,10 @@
 
       //Find the row and select it based on select value / function / field value
       selectRowByValue: function(field, value) {
+        if (!this.settings.options) {
+          return;
+        }
+
         var self = this,
           data = this.settings.options.dataset,
           selectedRows = [];

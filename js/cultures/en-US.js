@@ -275,6 +275,7 @@
       'Unsupported': {id: 'Unsupported', value: 'This content is not available because it uses features not supported in your current browser version.', comment: 'Suggesting browser upgrade for missing features.'},
       'Url': {id: 'Url', value: 'Url', comment: 'Url tooltip'},
       'UseArrow': {id: 'UseArrow', value: '. Use arrow keys to select.', comment: 'Instructional comments for screen readers'},
+      'UseEnter': {id: 'UseEnter', value: '. Use enter or down arrow to lookup.', comment: 'Instructional comments for screen readers'},
       'User': {id: 'User', value: 'User', comment: 'User tooltip'},
       'UserProfile': {id: 'UserProfile', value: 'User Profile', comment: 'User Profile tooltip'},
       'VerticalMiddleAlign': {id: 'VerticalMiddleAlign', value: 'Vertical Align Middle', comment: 'Vertical Middle Align tooltip'},
