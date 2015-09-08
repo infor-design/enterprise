@@ -100,7 +100,7 @@
         this.element.appendTo('body');
 
         if (this.settings.cssClass) {
-          this.element.find('.modal').addClass(this.settings.cssClass);
+          this.element.addClass(this.settings.cssClass);
         }
 
         this.addButtons(this.settings.buttons);
