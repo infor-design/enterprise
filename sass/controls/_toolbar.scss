@@ -58,13 +58,16 @@ $toolbar-height: 44px;
 
   .title {
     overflow: hidden;
-    text-overflow: ellipsis;
     @include css3(transition, left 300ms cubic-bezier(.17, .04, .03, .94));
     white-space: nowrap;
     width: 45%;
 
     > * {
       vertical-align: middle;
+    }
+
+    > h1 {
+      text-overflow: ellipsis;
     }
 
     + .buttonset {
@@ -257,7 +260,7 @@ $toolbar-height: 44px;
       .searchfield-wrapper {
         left: 0;
         position: absolute;
-        width: calc(100% - 2px); // 2px accounts for borders
+        width: calc(100% - 2px) !important; // 2px accounts for borders
       }
 
       .searchfield {
@@ -266,7 +269,7 @@ $toolbar-height: 44px;
         &.empty.active,
         &.empty:active {
           padding-left: 32px;
-          width: 100%;
+          width: 100% !important;
         }
       }
     }

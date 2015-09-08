@@ -130,6 +130,8 @@ $header-height: 60px;
     height: 60px; // Needs to not be 100% because it's possible for headers to have other controls beneath the toolbar
 
     .title {
+      color: $inverse-color;
+
       > *:first-child {
         margin-left: 1.5rem;
       }
