@@ -85,11 +85,8 @@
         this.element.attr('autocomplete','off');
 
         if (this.settings.clearable) {
-          var xButton = $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"/></svg>');
-          this.element.parent('').append(xButton);
-          xButton.on('click.searchfield', function() {
-            self.element.val('').trigger('change');
-          });
+          this.xButton = $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"/></svg>');
+          this.element.parent('').append(this.xButton);
         }
 
         // Add empty class if the field is initialized empty
@@ -110,7 +107,16 @@
         }).onTouchClick('searchfield')
         .on('click.searchfield', function(e) {
           self.handleClick(e);
+        }).on('keyup.searchfield', function(e) {
+          self.handleKeyUp(e);
         });
+
+        if (this.settings.clearable) {
+          this.xButton.onTouchClick('searchfield').on('click.searchfield', function handleClear() {
+            self.element.val('').trigger('change');
+            self.checkContents();
+          });
+        }
 
         // Insert the "view more results" link on the Autocomplete control's "populated" event
         this.element.on('populated.searchfield', function(e, items) {
@@ -235,6 +241,10 @@
         this.setAsActive();
       },
 
+      handleKeyUp: function() {
+        this.checkContents();
+      },
+
       checkContents: function() {
         var text = this.element.val();
         if (!text || !text.length) {
@@ -262,10 +272,7 @@
 
       // Triggered by the "updated.searchfield" event
       updated: function() {
-        if (this.autocomplete) {
-          this.autocomplete.destroy();
-        }
-        this.build();
+        this.teardown().build();
       },
 
       enable: function() {
@@ -276,8 +283,7 @@
         this.element.prop('disabled', true);
       },
 
-      // Teardown - Remove added markup and events
-      destroy: function() {
+      teardown: function() {
         this.element.off('updated.searchfield populated.searchfield');
         this.autocomplete.destroy();
 
@@ -285,10 +291,21 @@
           this.element.addClass('alternate');
         }
 
+        if (this.settings.clearable || this.xButton) {
+          this.xButton.offTouchClick('searchfield').off().remove();
+        }
+
         this.element.next('.icon').remove();
         if (this.element.parent().hasClass('searchfield-wrapper')) {
           this.element.unwrap();
         }
+
+        return this;
+      },
+
+      // Teardown - Remove added markup and events
+      destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };

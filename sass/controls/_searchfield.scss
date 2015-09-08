@@ -12,15 +12,9 @@
     position: absolute;
     right: 0;
     top: 8px;
-  }
 
-  .icon.close {
-    cursor: pointer;
-    height: 16px;
-    pointer-events: normal;
-
-    &:hover {
-      fill: $white;
+    &:not(.close) {
+      pointer-events: none;
     }
   }
 }
@@ -121,12 +115,6 @@
       }
     }
 
-    + svg {
-      fill: $font-color;
-      left: 2px;
-      pointer-events: none;
-    }
-
     &::-webkit-input-placeholder {
       @include searchfield-text-style();
     }
@@ -139,6 +127,21 @@
       @include searchfield-text-style();
     }
 
+  }
+
+  .icon.close {
+    display: none;
+  }
+
+  .searchfield:not(.empty) + .icon + .icon.close {
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    pointer-events: normal;
+
+    &:hover {
+      fill: $white;
+    }
   }
 }
 
@@ -189,9 +192,31 @@
   }
 
   .toolbar {
+    // Searchfield in the Header Toolbar always sits at the same width/padding
     .searchfield {
       border-bottom: 1px solid $slate09;
-      width: 300px;
+      padding-left: 36px;
+      width: 225px;
+
+      &.empty {
+        width: 225px;
+
+        &.active,
+        &:active {
+          padding-left: 36px;
+          width: 225px;
+        }
+
+        &[placeholder] {
+          padding-left: 36px;
+          width: 225px;
+
+          &.active,
+          &:active {
+            width: 225px;
+          }
+        }
+      }
     }
   }
 }
