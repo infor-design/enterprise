@@ -53,12 +53,12 @@ h1,
 h2,
 h3,
 h4 {
-  color: $font-color-lowcontrast;
+  color: $font-color-highcontrast;
   font-weight: lighter;
   @include rem(margin-bottom, 1rem);
 
   .extra {
-    color: $graphite04;
+    color: $font-color-lowcontrast;
     font-weight: lighter;
   }
 }
