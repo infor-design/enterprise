@@ -1,6 +1,6 @@
 /**
 * Responsive Popup Menu Control (Context)
-* @name popupmenu
+* @name popupmen
 */
 
 /* start-amd-strip-block */

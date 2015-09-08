@@ -1,7 +1,17 @@
 
+{{#enableLiveReload}}
+<!-- Live Reload - "grunt watch" -->
+<script type="text/javascript">
+  if (window.location.hostname === 'localhost') {
+    var script = '\x3Cscript type="text/javascript" src="//' +
+                  window.location.hostname + ':35729/livereload.js">\x3C/script>';
+    document.write(script); // jshint ignore:line
+  }
+</script>
+{{/enableLiveReload}}
 
 <script>
-  // Initialize all SoHo Xi Controls
+  // Initialize all SoHo Xi Controls and set the local
   $(function() {
     $('body').initialize('en-US');
   });
