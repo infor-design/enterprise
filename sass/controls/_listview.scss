@@ -60,20 +60,10 @@
     }
   }
 
-  .icon-confirm {
-    float: left;
-    margin: 3px 15px 0 0;
-  }
-
+  .icon-confirm,
   .icon-pending {
-    background: $alert-yellow;
-    border: 2px solid $alert-yellow;
-    border-radius: 50%;
-    fill: $white !important;
     float: left;
-    height: 20px !important;
-    margin: 3px 16px 0 0;
-    padding-left: 1px;
+    margin: 1px 15px 0 0;
   }
 
   li {
@@ -107,7 +97,7 @@
     }
 
     .btn-icon {
-      top: 1px;
+      top: 0;
     }
   }
 

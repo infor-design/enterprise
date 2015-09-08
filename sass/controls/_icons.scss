@@ -37,8 +37,13 @@ svg.icon {
   }
 
   &.icon-pending {
-    fill: $alert-yellow;
+    background: $alert-yellow;
+    border: 2px solid $alert-yellow;
+    border-radius: 50%;
+    fill: $white;
+    height: 20px;
   }
+
 
   &.icon-info {
     fill: $info-icon-fill;
