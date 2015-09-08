@@ -56,11 +56,22 @@
           if (this.element.closest('.toolbar').length) {
             this.label.prependTo(this.wrapper);
           }
+
+          // bump the 'alternate' class up to the wrapper level
+          if (this.element.hasClass('alternate')) {
+            this.wrapper.addClass('alternate');
+            this.element.removeClass('alternate');
+          }
         }
 
         // Add Icon
-        if (this.wrapper.find('.icon').length === 0) {
-          $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
+        var icon = this.wrapper.find('.icon');
+        if (!icon || !icon.length) {
+          icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
+        }
+        // Swap icon position to in-front if we have an "alternate" class.
+        if (this.wrapper.hasClass('alternate')) {
+          icon.insertBefore(this.element);
         }
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
@@ -269,6 +280,10 @@
       destroy: function() {
         this.element.off('updated.searchfield populated.searchfield');
         this.autocomplete.destroy();
+
+        if (this.wrapper.hasClass('alternate')) {
+          this.element.addClass('alternate');
+        }
 
         this.element.next('.icon').remove();
         if (this.element.parent().hasClass('searchfield-wrapper')) {

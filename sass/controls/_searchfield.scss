@@ -32,6 +32,25 @@
   text-transform: uppercase;
 }
 
+// This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
+.searchfield-wrapper.alternate {
+  width: 100%;
+
+  > .searchfield {
+    background-color: $graphite01;
+    border: 0;
+    border-bottom: 1px solid $graphite02;
+    padding-left: 32px;
+    width: 100%;
+  }
+
+  > .icon {
+    fill: $graphite03;
+    left: 0;
+    right: auto;
+  }
+}
+
 // This variation Slides out on focus
 .toolbar {
   .searchfield-wrapper {

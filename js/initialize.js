@@ -214,7 +214,9 @@
 
           ['lookup', '.lookup:not([data-init])'],
 
-          ['wizard']
+          ['wizard'],
+
+          ['popdown', '[data-popdown]']
         ];
 
         //Do initialization for all the simple controls
@@ -297,6 +299,8 @@
 
       return returnObj;
     });
+
+    return this;
   };
 
   /* start-amd-strip-block */
