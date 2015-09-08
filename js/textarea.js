@@ -23,7 +23,9 @@
     var pluginName = 'textarea',
         defaults = {
           characterCounter: true, //But needs a maxlength
-          printable: true
+          printable: true,  //If the text area can be printed
+          charRemainingText: null,
+          charMaxText: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -90,12 +92,13 @@
         var length = self.element.val().length,
           max = self.element.attr('maxlength'),
           remaining = (parseInt(max)-length),
-          text = remaining.toString() + ' Characters Left';
+          text = remaining.toString() + ' ' + (settings.charRemainingText ? settings.charRemainingText : Locale.translate('CharactersLeft'));
 
           if (self.counter) {
             if (length === 0) {
-              text = 'Character count maximum of ' + max;
+              text = (settings.charMaxText ? settings.charMaxText : Locale.translate('CharactersMax')) + max;
               self.counter.text(text);
+              self.counter.removeClass('almost-empty');
             } else {
               self.counter.text(text);
               if (remaining < 10) {
