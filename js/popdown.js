@@ -74,12 +74,18 @@
 
           return false;
         }
-        function noElementError() {
-          throw 'No popdown element was defined';
+
+        var popdownElem = tryPopdownElement(this.trigger.attr('data-popdown'));
+        if (!popdownElem) {
+          tryPopdownElement(this.trigger.next('.popdown'));
         }
-        tryPopdownElement(this.element.attr('data-popdown')) ||
-        tryPopdownElement(this.element.next('.popdown')) ||
-        noElementError();
+
+        // Setup an ID for this popdown if it doesn't already have one
+        this.id = this.popdown.attr('id');
+        if (!this.id) {
+          this.id = 'popdown-' + $('body').find('.popdown').index(this.popdown);
+          this.popdown.attr('id', this.id);
+        }
 
         return this;
       },
@@ -100,13 +106,16 @@
         this.place();
 
         // Expand if necessary
-        var ariaExpanded = this.element.attr('aria-expanded');
+        var ariaExpanded = this.trigger.attr('aria-expanded');
         if (!ariaExpanded || ariaExpanded === undefined) {
-          this.element.attr('aria-expanded', '');
+          this.trigger.attr('aria-expanded', '');
         }
         if (ariaExpanded === 'true') {
           this.open();
         }
+
+        // aria-controls for the trigger element
+        this.trigger.attr('aria-controls', this.id);
 
         return this;
       },
@@ -114,7 +123,7 @@
       handleEvents: function() {
         var self = this;
 
-        this.element
+        this.trigger
           .onTouchClick('popdown')
           .on('click.popdown', function() {
             self.toggle();
@@ -126,21 +135,44 @@
         return this;
       },
 
-      open: function() {
-        var self = this;
+      isOpen: function() {
+        return this.trigger.attr('aria-expanded') === 'true';
+      },
 
-        this.element.attr('aria-expanded', 'true');
+      open: function() {
+        if (this.isAnimating) {
+          return;
+        }
+
+        var self = this,
+          setFocusinEvent = false;
+
+        this.isAnimating = true;
+        this.trigger.attr('aria-expanded', 'true');
         this.position();
         this.popdown.addClass('visible');
 
         // Setup events that happen on open
         // Needs to be on a timer to prevent automatic closing of popdown.
         setTimeout(function() {
-          $(window).on('resize.popdown', function(e) {
+          self.popdown.one('focusin.popdown', function(e) {
+            if (!setFocusinEvent) {
+              setFocusinEvent = true;
+              $(document).on('focusin.popdown', function(e) {
+                var target = e.target;
+                if (!$.contains(self.popdown[0], target)) {
+                  self.close();
+                }
+              });
+            }
+          });
+
+          $(window).on('resize.popdown', function() {
             if (!$(document.activeElement).closest('.popdown').length) {
               self.close();
             }
           });
+
           $(document).on('click.popdown', function(e) {
             var target = $(e.target);
 
@@ -148,26 +180,35 @@
               self.close();
             }
           });
-        }, 300);
+
+          self.isAnimating = false;
+        }, 400);
       },
 
       close: function() {
+        if (this.isAnimating) {
+          return;
+        }
+
         var self = this;
-        this.element.attr('aria-expanded', 'false');
+        this.isAnimating = true;
+        this.trigger.attr('aria-expanded', 'false');
         this.popdown.removeClass('visible');
 
         // Turn off events
+        this.popdown.off('focusin.popdown');
         $(window).off('resize.popdown');
-        $(document).off('click.popdown');
+        $(document).off('click.popdown focusin.popdown');
 
         // Sets the element to "display: none" to prevent interactions while hidden.
         setTimeout(function() {
           self.popdown.css('display', 'none');
-        }, 300);
+          self.isAnimating = false;
+        }, 400);
       },
 
       toggle: function() {
-        if (this.element.attr('aria-expanded') === 'true') {
+        if (this.isOpen()) {
           this.close();
           return;
         }
@@ -180,7 +221,7 @@
         var targetContainer = $('body');
 
         // adjust the tooltip if the element is being scrolled inside a scrollable DIV
-        this.scrollparent = this.element.closest('.page-container[class*="scrollable"]');
+        this.scrollparent = this.trigger.closest('.page-container[class*="scrollable"]');
         if (this.scrollparent.length) {
           targetContainer = this.scrollparent;
         }
@@ -295,7 +336,15 @@
       },
 
       teardown: function() {
-        this.element.offTouchClick('popdown').off('updated.popdown click.popdown');
+        if (this.isOpen()) {
+          this.close();
+        }
+
+        this.trigger
+          .offTouchClick('popdown')
+          .off('updated.popdown click.popdown')
+          .removeAttr('aria-controls')
+          .removeAttr('aria-expanded');
 
         if (this.originalParent && this.originalParent.length) {
           this.popdown.detach().appendTo(this.originalParent);
