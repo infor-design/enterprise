@@ -71,7 +71,7 @@
     border: 1px solid transparent;
     border-bottom: 1px solid $listview-border-color;
     color: $listview-color;
-    padding: 20px 20px 15px;
+    padding: 16px 20px 15px;
 
     &:after {
       clear: both;
@@ -97,7 +97,7 @@
     }
 
     .btn-icon {
-      top: 2px;
+      top: 1px;
     }
   }
 
@@ -142,8 +142,10 @@
 
   .checkbox-label {
     left: 20px;
+    line-height: 18px;
+    margin: 0;
     position: relative;
-    top: 15px;
+    top: 10px;
   }
 
   .listview-thumbnail {
