@@ -27,7 +27,8 @@
         trigger: 'click', //Supports click, immediate
         buttons: null,  //Pass in the Buttons
         isAlert: false, //Adds alertdialog role
-        content: null //Ability to pass in dialog html content
+        content: null, //Ability to pass in dialog html content
+        cssClass: null  //Append a css class to top level
       },
       settings = $.extend({}, defaults, options);
 
@@ -97,6 +98,11 @@
 
         this.element.find('.modal-body').append(this.settings.content);
         this.element.appendTo('body');
+
+        if (this.settings.cssClass) {
+          this.element.find('.modal').addClass(this.settings.cssClass);
+        }
+
         this.addButtons(this.settings.buttons);
       },
 
