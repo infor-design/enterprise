@@ -471,6 +471,7 @@
         this.element.trigger('beforeOpen', [this.menu]);
 
         $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
+        this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
         self.position(e);
@@ -553,6 +554,7 @@
             menuToClose.removeClass('is-open').removeAttr('style');
             menuToClose.parent('.wrapper').removeAttr('style');
             menuToClose.parent().parent().removeClass('is-submenu-open');
+            self.element.removeClass('is-open');
           }
           clearTimeout(timeout);
         });
@@ -673,7 +675,7 @@
         $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
-        this.element.trigger('close', [isCancelled]);
+        this.element.removeClass('is-open').trigger('close', [isCancelled]);
         this.detach();
 
         if (this.settings.trigger === 'immediate') {
