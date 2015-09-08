@@ -124,7 +124,7 @@
       },
 
       disableSubmit: function () {
-        var body = this.element.find('.modal-body'),
+        var body = this.element,
           fields = body.find('[data-validate]'),
           inlineBtns = body.find('.modal-buttonset button');
 
@@ -143,7 +143,7 @@
           });
 
           if (!allValid && !inlineBtns.filter('.btn-modal-primary').is(':disabled')) {
-            inlineBtns.filter('.btn-modal-primary').not('.no-validation').attr('disabled', 'true');
+             inlineBtns.filter('.btn-modal-primary').not('.no-validation').attr('disabled', 'true');
           }
         }
 
@@ -366,7 +366,6 @@
           self.element.find('.btn-modal-primary').focus();
           self.disableSubmit();
         }, 10);
-
       },
 
       resize: function() {
