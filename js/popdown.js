@@ -230,8 +230,7 @@
       },
 
       position: function() {
-        var self = this,
-          parent = {
+        var parent = {
             offset: {
               left: 0,
               top: 0
