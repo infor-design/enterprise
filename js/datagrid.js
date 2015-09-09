@@ -1162,7 +1162,7 @@ $.fn.datagrid = function(options) {
     handleKeys: function () {
       var self = this;
 
-      self.table.on('keydown.datagrid', 'td', function (e) {
+      self.table.on('keyup.datagrid', 'td', function (e) {
         var key = e.which, row,
           handled = false;
 

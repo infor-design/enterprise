@@ -130,20 +130,20 @@ define([
 
     'should be able to parse dates': function() {
       Locale.set('en-US');    //year, month, day
-
       expect(Locale.parseDate('11/8/2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
       expect(Locale.parseDate('10 / 15 / 2014').getTime()).to.equal(new Date(2014, 9, 15).getTime());
+      //expect(Locale.parseDate('11/8/2001 10:10 PM', Locale.calendar().dateFormat.datetime).getTime()).to.equal(new Date(2001, 10, 8, 10, 10).getTime());
+      //Ensure why this works in the browser and not in node
+      //expect(Locale.parseDate('11/8/2001 10:10 PM', Locale.calendar().dateFormat.datetime)).to.equal('');
 
       Locale.set('de-DE');    //year, month, day
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
-
+      //expect(Locale.parseDate('11.10.2001 10:10', Locale.calendar().dateFormat.datetime).getTime()).to.equal(new Date(2001, 10, 11, 10, 10).getTime());
     },
 
     'should cleanly handle non dates': function() {
       Locale.set('en-US');    //year, month, day
-
       expect(Locale.parseDate('111/81/20001')).to.be.undefined;
-
     },
 
     'be able to return time format': function(){
@@ -197,9 +197,12 @@ define([
       expect(Locale.formatNumber(12345.1234)).to.equal('12,345.123');
       expect(Locale.formatNumber(12345.123, {style: 'decimal', maximumFractionDigits:2})).to.equal('12,345.12');
       expect(Locale.formatNumber(12345.123456, {style: 'decimal', maximumFractionDigits:3})).to.equal('12,345.123');
+      expect(Locale.formatNumber(0.0000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0.0000004');
 
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.1)).to.equal('12.345,100');
+      expect(Locale.formatNumber(0.0000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0,0000004');
+      expect(Locale.formatNumber(0.000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0,0000040');
 
       Locale.set('ar-EG');
       expect(Locale.formatNumber(12345.1)).to.equal('12٬345٫100');

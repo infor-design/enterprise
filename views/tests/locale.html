@@ -12,22 +12,25 @@
         var append = function (value) {
           output.append('<span>' + value + '</span><br>');
         };
-        Locale.set('de-DE');
+       Locale.set('en-US');
 
-        setTimeout(function () {
-          debugger;
-          console.log(Locale.parseNumber('12.345,12 €'));
+       setTimeout(function () {
+          console.log(Locale.parseDate('11/8/2001 10:10 PM', Locale.calendar().dateFormat.datetime));
 
+         // console.log(Number(new Date(2001, 9, 11, 20, 10)));
         }, 1000)
 
-        //console.log(Locale.parseNumber('12.345,12 €'));
-        //console.log(Locale.parseNumber('$12345.123'));
 
-        Locale.set('de-DE').done(function () {
-          debugger;
-          console.log(Locale.parseNumber('12.345,12 €'));
 
-        });
+       setTimeout(function () {
+          Locale.set('de-DE');
+          setTimeout(function () {
+            console.log(Locale.parseDate('11/10/2001 20:10', Locale.calendar().dateFormat.datetime));
+          }, 1000);
+
+         // console.log(Number(new Date(2001, 9, 11, 20, 10)));
+        }, 2000)
+
       }
     </script>
 

@@ -189,7 +189,7 @@
 
       if (isDateTime) {
         //replace [space & colon] with "/"
-        dateFormat = dateFormat.replace(/[\s:]/g,'/');
+        dateFormat = dateFormat.replace(/[\s:]/g,'/').replace(/[\s.]/g,'/');
         dateString = dateString.replace(/[\s:]/g,'/');
       }
 
@@ -250,14 +250,22 @@
             dateObj.year = value;
             break;
           case 'h':
-            if(!/^(0?[1-9]|1[0-9]|2[01234])$/.test(value)) {
+             if (numberValue < 0 || numberValue > 12) {
               return;
             }
             dateObj.h = value;
             break;
-          case 'mm':
-            if(!/^([0-5]\d)$/.test(value)) {
+          case 'HH':
+            if (numberValue < 0 || numberValue > 24) {
               return;
+            }
+            dateObj.h = value;
+            break;
+
+          case 'mm':
+            if (numberValue < 0 || numberValue > 60) {
+              dateObj.mm = 0;
+              break;
             }
             dateObj.mm = value;
             break;
@@ -277,16 +285,19 @@
             break;
         }
       });
+
       dateObj.return = new Date('error');
       dateObj.leapYear = ((dateObj.year % 4 === 0) && (dateObj.year % 100 !== 0)) || (dateObj.year % 400 === 0);
 
-      if((isDateTime && !dateObj.h && !dateObj.mm)) {
+      if ((isDateTime && !dateObj.h && !dateObj.mm)) {
         return undefined;
       }
-      if((!dateObj.year ||(!dateObj.month && dateObj.month !==0) || !dateObj.day)) {
+
+      if ((!dateObj.year ||(!dateObj.month && dateObj.month !==0) || !dateObj.day)) {
         return undefined;
       }
-      if((dateObj.leapYear && (dateObj.month === 1 && dateObj.day > 29)) ||
+
+      if ((dateObj.leapYear && (dateObj.month === 1 && dateObj.day > 29)) ||
         (!dateObj.leapYear && (dateObj.month === 1 && dateObj.day > 28))) {
         return undefined;
       }
@@ -301,13 +312,6 @@
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
       }
 
-     /* if (Object.prototype.toString.call(dateObj.return) === '[object Date]') { //it is a date
-        if (isNaN(dateObj.return.getTime())) { //date is not valid
-          dateObj.return = undefined;
-        }
-      } else { //not a date
-        dateObj.return = undefined;
-      }*/
       return dateObj.return;
 
     },
