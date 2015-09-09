@@ -57,6 +57,7 @@
   position: relative;
 
   > .textarea-wordcount {
+    color: $label-color;
     margin-bottom: 14px;
   }
 
@@ -146,6 +147,7 @@ textarea {
 }
 
 .textarea-wordcount {
+
   display: block;
   @include font-size(10);
   @include rem(line-height, 2rem);
