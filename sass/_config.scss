@@ -203,7 +203,7 @@ $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 //Pager
 $pager-selected-color: $primary-color;
 $pager-focus-border-color: $input-focus-border-color;
-$pager-hover-bg-color: $graphite02;
+$pager-hover-color: $primary-color;
 $pager-disabled-color: $graphite02;
 
 //Slider
@@ -271,6 +271,13 @@ $tree-line-color: $graphite03;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
 $tree-disabled-opacity: .6;
+
+//Chart Progress Bar
+$chart-progressbar-bg-color: $graphite02;
+$chart-progressbar-completed-fill: $emerald07;
+$chart-progressbar-target-fill: $graphite04;
+$chart-progressbar-primary-fill: $primary-color;
+$chart-progressbar-dark-fill: $graphite06;
 
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;

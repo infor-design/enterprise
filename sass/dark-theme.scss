@@ -180,7 +180,7 @@ $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 //Pager
 $pager-selected-color: $primary-color;
 $pager-focus-border-color: $input-focus-border-color;
-$pager-hover-bg-color: $slate06;
+$pager-hover-color: $primary-color;
 $pager-disabled-color: $slate06;
 
 //Slider
@@ -248,6 +248,13 @@ $tree-line-color: $slate05;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
 $tree-disabled-opacity: .6;
+
+//Chart Progress Bar
+$chart-progressbar-bg-color: $slate04;
+$chart-progressbar-completed-fill: $emerald08;
+$chart-progressbar-target-fill: $slate06;
+$chart-progressbar-primary-fill: $primary-color;
+$chart-progressbar-dark-fill: $primary-color;
 
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {

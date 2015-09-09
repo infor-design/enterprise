@@ -242,7 +242,7 @@
 
 // Progess Bar Charts
 .chart-progressbar {
-  background-color: $graphite02;
+  background-color: $chart-progressbar-bg-color;
   height: 10px;
   margin-bottom: 70px;
   width: 100%;
@@ -256,7 +256,7 @@
   }
 
   .completed {
-    border-right: 1px solid $graphite02;
+    border-right: 1px solid $chart-progressbar-bg-color;
     height: 10px;
     margin-top: -10px;
     position: relative;
@@ -264,11 +264,19 @@
     width: 50%;
 
     &[class=completed] {
-      background-color: $emerald07;
+      background-color: $chart-progressbar-completed-fill;
+    }
+
+    &.primary {
+      background-color: $chart-progressbar-primary-fill;
+    }
+
+    &.dark {
+      background-color: $chart-progressbar-dark-fill;
     }
 
     &[class=completed] span {
-      color: $emerald07;
+      color: $chart-progressbar-completed-fill;
       font-weight: bold;
     }
 
@@ -283,14 +291,14 @@
   }
 
   .target {
-    background-color: $graphite04;
+    background-color: $chart-progressbar-target-fill;
     height: 10px;
     position: relative;
     transition: width .5s ease 0s;
     width: 60%;
 
     span:not(.audible) {
-      color: $graphite06;
+      color: $font-color;
       @include font-size(12);
       position: absolute;
       right: -2px;

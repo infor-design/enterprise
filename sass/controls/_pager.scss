@@ -55,12 +55,12 @@
     }
   }
 
-  li:not(.selected) a:hover:not([disabled]) {
-    background-color: $pager-hover-bg-color;
+  li:not(.selected) a:hover:not([disabled]) svg {
+    fill: $pager-hover-color;
   }
 
-  li:not(.selected) a:active:not([disabled]) {
-    background-color: $pager-hover-bg-color;
+  li:not(.selected) a:active:not([disabled]) svg {
+    fill: $pager-hover-color;
   }
 
 }

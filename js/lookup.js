@@ -92,11 +92,7 @@
         });
 
         //Space or Enter opens the dialog in this field
-        this.element.on('keypress.lookup', function (e) {
-          if (e.which === 13) {
-            self.openDialog();
-          }
-        }).on('keyup.lookup', function (e) {
+        this.element.on('keyup.lookup', function (e) {
           if (e.which === 40) {
             self.openDialog();
           }
@@ -142,6 +138,7 @@
         }, 300);
 
         self.modal.element.find('.btn-actions').removeClass('is-selected');
+        self.modal.element.find('.pager-pagesize').remove();
       },
 
       //Overidable function to create the modal dialog

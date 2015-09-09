@@ -3,7 +3,7 @@
     <h1 class="fieldset-title">Locale - Tests</h1>
 
     <div id="output" class="output" style="background-color: white; display: block; line-height: 15px;height: 80%; width: 100%">
-      <span>Test Conversions</span><br><br>
+      <br><br>
     </div>
 
     <script>
@@ -15,21 +15,11 @@
        Locale.set('en-US');
 
        setTimeout(function () {
-          console.log(Locale.parseDate('11/8/2001 10:10 PM', Locale.calendar().dateFormat.datetime));
+         Locale.currentLocale.data.messages['CustomValue'] = {id: 'CustomValue', value: 'Added Custom Value'};
 
-         // console.log(Number(new Date(2001, 9, 11, 20, 10)));
+         append(Locale.translate('CollapseAppTray'));
+         append(Locale.translate('CustomValue'));
         }, 1000)
-
-
-
-       setTimeout(function () {
-          Locale.set('de-DE');
-          setTimeout(function () {
-            console.log(Locale.parseDate('11/10/2001 20:10', Locale.calendar().dateFormat.datetime));
-          }, 1000);
-
-         // console.log(Number(new Date(2001, 9, 11, 20, 10)));
-        }, 2000)
 
       }
     </script>

@@ -35,6 +35,10 @@
       top: 8px;
       width: 32px;
     }
+
+    &:hover .icon {
+      fill: $trigger-hover-color;
+    }
   }
 
 }

@@ -185,6 +185,14 @@ define([
 
     },
 
+    'be possible to add translations': function() {
+      Locale.set('en-US');
+      Locale.currentLocale.data.messages['CustomValue'] = {id: 'CustomValue', value: 'Added Custom Value'};
+
+      expect(Locale.translate('CollapseAppTray')).to.equal('Collapse App Tray');
+      expect(Locale.translate('CustomValue')).to.equal('Added Custom Value');
+    },
+
     //We tried to translate a local that doesnt exist
     'no translate errors on non existant locale': function() {
       //Normal
