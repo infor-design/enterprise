@@ -31,7 +31,6 @@ $toolbar-height: 44px;
   .buttonset {
     overflow: hidden;
     white-space: nowrap;
-    //width: 100%;
 
     > * {
       @include transition(opacity 300ms cubic-bezier(.17, .04, .03, .94));
@@ -127,6 +126,28 @@ $toolbar-height: 44px;
       text-align: right;
       @include css3(transition, width 300ms cubic-bezier(.17, .04, .03, .94),
         margin 300ms cubic-bezier(.17, .04, .03, .94));
+    }
+  }
+
+  // Change the ".btn" class to be more like ".btn-tertiary/destructive" specifically on toolbars
+  .btn {
+    border: 1px solid transparent;
+    border-radius: 18px;
+    box-shadow: none;
+    color: $tertiary-btn-color;
+    overflow: hidden;
+  }
+
+  // Add special coloring to toolbar buttons for ".is-selected" state
+  [class^="btn"].is-selected:focus:not(.hide-focus) {
+    color: $tertiary-btn-hover-color;
+
+    span {
+      color: $tertiary-btn-hover-color;
+    }
+
+    .icon {
+      fill: $tertiary-btn-hover-color;
     }
   }
 }

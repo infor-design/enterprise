@@ -174,8 +174,7 @@ a.btn-primary {
   color: $tertiary-btn-color;
   overflow: hidden;
 
-  &:hover,
-  &.is-selected {
+  &:hover {
     color: $tertiary-btn-hover-color;
 
     span {
@@ -226,6 +225,22 @@ a.btn-primary {
     background-color: #8dd2fb;
   }
 
+}
+
+// Menu Buttons have a special state that shows up when their menus are visible.
+.btn-menu,
+.btn-actions {
+  &.is-open {
+    color: $tertiary-btn-hover-color;
+
+    span {
+      color: $tertiary-btn-hover-color;
+    }
+
+    .icon {
+      fill: $tertiary-btn-hover-color;
+    }
+  }
 }
 
 .btn-destructive,
