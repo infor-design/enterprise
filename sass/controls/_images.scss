@@ -1,0 +1,37 @@
+// Images
+//================================================== //
+
+$placeholder-icon-height: 22px;
+
+$images-size: (
+  'sm': (60px, 60px),
+  'md': (154px, 120px),
+  'lg': (300px, 350px)
+);
+
+
+// Image Placeholder
+@mixin image-placeholder($width, $height, $icon-height) {
+    background: $white;
+    border: 1px solid $graphite03;
+    height: $height;
+    max-height: $height;
+    max-width: $width;
+    text-align: center;
+    width: $width;
+    
+    .icon {
+      margin-top: ($height - $icon-height) / 2;
+    }
+}
+
+@each $key, $value in $images-size {
+  .image-#{$key} {
+    max-width: nth($value, 1);
+    max-height: nth($value, 2);
+
+    &.placeholder {
+      @include image-placeholder(nth($value, 1), nth($value, 2), $placeholder-icon-height)
+    }
+  }  
+}
