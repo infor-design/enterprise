@@ -16,7 +16,21 @@
     <tbody>
     {{#dataset}}
       <tr>
-        <td><img alt="Placeholder Image" src="{{thumb}}" /></td>
+        <td>
+          {{#thumb}}
+          <div class="image-sm">
+            <img src="http://placehold.it/60x60/999999/FFFFFF" alt="Placeholder Image"/>
+          </div>
+          {{/thumb}}
+          {{^thumb}}
+          <div class="image-sm placeholder">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-insert-image"></use>
+            </svg>
+            <span class="audible">Placeholder Image</span>
+          </div>
+          {{/thumb}}
+        </td>
         <td>
           <p><a href="#" class="hyperlink">{{productName}}</a></p>
           <ul class="info">
