@@ -104,6 +104,7 @@ body.no-scroll {
   .sidebar {
     background-color: $inverse-color;
     display: inline-block;
+    vertical-align: top;
 
     &.scrollable {
       height: calc(100% - 3px);
@@ -143,33 +144,40 @@ body.no-scroll {
   // Adding "fixed" class and a "left" and/or "right" class will make fixed-width columns
   // TODO: Determine actual widths
   &.fixed {
-    &.left.right,
-    &.both {
+    &.left,
+    &.right {
       .main {
-        width: calc(100% - 504px);
-      }
-      .sidebar {
-        width: 250px;
+        width: calc(80% - 254px);
       }
     }
 
     &.left {
-      .main {
-        width: calc(80% - 254px);
-      }
-
       .sidebar:first-child {
         width: 250px;
+      }
+
+      .sidebar:last-child {
+        width: 20%;
       }
     }
 
     &.right {
-      .main {
-        width: calc(80% - 254px);
+      .sidebar {
+        width: 20%;
+      }
 
-        + .sidebar {
-          width: 250px;
-        }
+      .main + .sidebar {
+        width: 250px;
+      }
+    }
+
+    &.both {
+      .main {
+        width: calc(100% - 504px);
+      }
+
+      .sidebar {
+        width: 250px;
       }
     }
   }
@@ -238,12 +246,27 @@ body.no-scroll {
     .main,
     .sidebar {
       display: block;
+      vertical-align: initial;
       width: 100%;
 
       &.scrollable,
       &.scrollable-y {
         height: auto;
         overflow: visible;
+      }
+    }
+
+    &.left,
+    &.right {
+      .main,
+      .sidebar {
+        display: block;
+        width: 100%;
+
+        &:first-child,
+        &:last-child {
+          width: 100%;
+        }
       }
     }
 
