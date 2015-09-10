@@ -93,6 +93,12 @@
         }
         this.adjustHeight();
 
+        // Check to make sure that the internal Accordion Control is invoked
+        var accordion = this.accordion.data('accordion');
+        if (!accordion) {
+          this.accordion.accordion();
+        }
+
         return this;
       },
 
@@ -147,9 +153,6 @@
           this.menu.addClass('no-transition');
           $('.page-container').addClass('no-transition');
           this.testWidth();
-          //Done in Accordion
-          //this.menu.removeClass('no-transition');
-          //$('.page-container').removeClass('no-transition');
         } else {
           this.menu.css('display', 'none');
         }
@@ -371,6 +374,7 @@
       // Teardown - Remove added markup and events
       destroy: function() {
         this.unbind();
+        this.accordion.data('accordion').destroy();
         this.menu
           .detach()
           .appendTo(this.originalParent)
