@@ -82,7 +82,7 @@
   box-shadow: $modal-shadow;
   color: #666666;
   margin: 5px;
-  padding: 20px 0 0 20px;
+  padding: 20px 0 0 17px;
   position: relative;
 
 //
@@ -125,6 +125,7 @@
     overflow: auto;
     padding-right: 20px;
     padding-bottom: 10px;
+    padding-left: 3px; // For checkbox, focus states on left side
   }
 
   // Modal Buttons
