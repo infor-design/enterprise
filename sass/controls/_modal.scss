@@ -94,10 +94,11 @@
 
   // Messages/Content
   h1 {
-    color: $modal-color;
     @include font-size(18);
+    color: $modal-color;
     font-weight: normal;
     margin-bottom: 20px;
+    padding-right: 20px;
     text-align: left;
 
     &:focus {
