@@ -27,8 +27,10 @@ $images-size: (
 
 @each $key, $value in $images-size {
   .image-#{$key} {
-    max-width: nth($value, 1);
-    max-height: nth($value, 2);
+    img {
+      max-width: nth($value, 1);
+      max-height: nth($value, 2);
+    }
 
     &.placeholder {
       @include image-placeholder(nth($value, 1), nth($value, 2), $placeholder-icon-height)
