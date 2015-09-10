@@ -99,7 +99,6 @@
         this.element.find('.modal-body').append(this.settings.content);
         this.element.appendTo('body');
 
-        alert(this.settings.cssClass);
         if (this.settings.cssClass) {
           this.element.addClass(this.settings.cssClass);
         }
