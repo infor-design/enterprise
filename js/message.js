@@ -23,10 +23,11 @@
     // Settings and Options
     var defaults = {
           title: 'Message Title', //Title text or content shown in the message
-          isError: false, //Show Title as an Error with an Icon
+          isError: true, //Show Title as an Error with an Icon
           message: 'Message Summary', //The message content or text
           width: 'auto',  //specify a given width or fit to content with auto
-          buttons: null //Passed through to modal
+          buttons: null, //Passed through to modal
+          cssClass: 'test-class'
         },
         settings = $.extend({}, defaults, options);
 
@@ -61,6 +62,10 @@
         //Adjust Width if Set as a Setting
         if (settings.width !== 'auto') {
           this.content.closest('.modal').css({'max-width': 'none', 'width': settings.width});
+        }
+
+        if (settings.cssClass) {
+          this.message.addClass(settings.cssClass);
         }
 
         //Setup the destroy event to fire on close.  Needs to fire after the "close" event on the modal.
