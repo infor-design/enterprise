@@ -655,7 +655,7 @@ $.fn.datagrid = function(options) {
             self.currentHeader.offset();
 
         self.dragging = true;
-        self.setColumnWidth(id, ui.left - offset.left + 6);
+        self.setColumnWidth(id, ui.left - offset.left + 6 + self.element.scrollLeft());
       })
       .on('dragend.datagrid', function () {
         self.dragging = false;
