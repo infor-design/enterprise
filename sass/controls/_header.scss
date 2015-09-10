@@ -86,8 +86,8 @@ $header-height: 60px;
     }
 
     &:focus,
-    &:hover,
-    &:active,
+    &:hover:not([disabled]),
+    &:active:not([disabled]),
     &[aria-expanded="true"] {
       > .icon {
         fill: $inverse-color !important;
@@ -101,6 +101,21 @@ $header-height: 60px;
     &:focus:not(.hide-focus) {
       border: 1px solid $inverse-color;
       box-shadow: none;
+    }
+
+    &[disabled] {
+      span {
+        color: $header-disabled-color;
+      }
+
+      svg {
+        fill: $header-disabled-color;
+      }
+
+      &:hover {
+        background-color: transparent;
+        border-color: transparent;
+      }
     }
 
     .ripple-effect {

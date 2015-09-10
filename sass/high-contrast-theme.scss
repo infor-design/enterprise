@@ -13,6 +13,7 @@
 $body-bg-color:  $slate02;
 $header-bg-color: $slate09;
 $header-icon-color: #eff0f4;
+$header-disabled-color: $slate05;
 $panel-bg-color: $slate01;
 $panel-border-color: $slate03;
 
@@ -34,7 +35,7 @@ $disabled-color: rgba(86, 86, 86, .6);
 // Alert Colors
 $alert-info: $azure07;
 $alert-green: $emerald09;
-$alert-yellow: $amber07;
+$alert-yellow: #c65211;
 $alert-red: #ee0000;
 
 // Rules
