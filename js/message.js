@@ -27,7 +27,8 @@
           message: 'Message Summary', //The message content or text
           width: 'auto',  //specify a given width or fit to content with auto
           buttons: null, //Passed through to modal
-          cssClass: 'test-class'
+          cssClass: 'test-class',
+          returnFocus: null //Element to focus on return
         },
         settings = $.extend({}, defaults, options);
 
@@ -82,6 +83,10 @@
         });
         this.message.data('modal').element.on('afterClose', function() {
           self.destroy();
+
+          if (settings.returnFocus) {
+            settings.returnFocus.focus();
+          }
         });
 
         if (settings.isError) {

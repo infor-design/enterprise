@@ -45,17 +45,11 @@
       init: function() {
         var self = this;
 
-        try {
-          this.oldActive = document.activeElement;  //Save and restore focus for A11Y
-        } catch( e ) {
-          this.oldActive = parent.document.activeElement; //iframe
-        }
-
         // Used for tracking events tied to the Window object
         this.id = (parseInt($('.modal').length, 10)+1);
-
         this.trigger = $('button[data-modal="' + this.element.attr('id') + '"]');  //Find the button with same dialog ID
         this.overlay = $('<div class="overlay"></div>');
+        this.oldActive = this.trigger;
 
         if (this.settings.trigger === 'click') {
           this.trigger.on('click.modal', function() {
@@ -254,7 +248,13 @@
 
       open: function () {
         var self = this, messageArea,
-          elemCanOpen = this.element.triggerHandler('beforeOpen');
+          elemCanOpen = true;
+
+        if (!this.trigger) {
+          this.oldActive = $(':focus');  //Save and restore focus for A11Y
+        }
+
+        this.element.triggerHandler('beforeOpen');
 
         self.isCancelled = false;
 

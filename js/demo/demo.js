@@ -36,6 +36,7 @@ $(function($) {
       $('body').message({
           title: 'Application Error',
           isError: true,
+          returnFocus: $(this),
           message: 'This application has experienced a system error due to the lack of internet access. Please restart the application in order to proceed.',
           buttons: [{
               text: 'Restart Now',
@@ -51,6 +52,7 @@ $(function($) {
       $('body').message({
           title: 'File Upload Complete',
           message: 'Your file "<b>photo.png</b>" was sucessfully uploaded to your personal folder and is now public for viewing.',
+          returnFocus: $(this),
           buttons: [{
               text: 'Done',
               click: function() {
@@ -66,6 +68,7 @@ $(function($) {
     $('body').message({
       title: 'Delete this Application?',
       message: 'You are about to delete this application permanently. Would you like to proceed?',
+      returnFocus: $(this),
       buttons: [{
         text: 'No',
         click: function(e, modal) {
