@@ -60,6 +60,10 @@
       svg {
         fill: $cardlist-actions-color;
       }
+
+      .audible {
+        color: $cardlist-actions-color;
+      }
     }
 
     &:not(.has-toolbar) > .btn-actions {

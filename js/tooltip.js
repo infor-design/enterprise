@@ -149,10 +149,12 @@
       },
 
       setContent: function(content) {
+        var contentArea;
+
         content = Locale.translate(content) || content;
 
         if (this.isPopover) {
-          var contentArea = this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
+          contentArea = this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
           settings.content.removeClass('hidden');
           this.tooltip.removeClass('tooltip').addClass('popover');
 
@@ -177,7 +179,7 @@
           content = this.content = settings.content.call(this.element);
         }
 
-        var contentArea = this.tooltip.find('.tooltip-content');
+        contentArea = this.tooltip.find('.tooltip-content');
 
         if (contentArea.prev('.arrow').length === 0) {
           contentArea.before('<div class="arrow"></div>');
