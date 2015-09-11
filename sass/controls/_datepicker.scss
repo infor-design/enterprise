@@ -157,7 +157,7 @@
   button {
     background-color: $popover-bg-color;
     border: 1px solid transparent;
-    border-radius: 2px;
+    border-radius: 50%;
     color: transparent;
     cursor: pointer;
     display: block;
@@ -208,20 +208,21 @@
   margin-top: 25px;
 
   button {
-    text-decoration: none;
-    color: $modal-btn-color;
     @include css3(transition, color .3s ease 0s);
     @include font-size(12);
     border: 1px solid transparent;
     border-left: 1px solid $popover-separator-color;
     border-radius: 0;
-
+    color: $modal-btn-color;
     float: left;
     font-weight: bold;
     height: 50px;
     line-height: 50px;
     margin: 0;
+    overflow: hidden;
+    position: relative;
     text-align: center;
+    text-decoration: none;
     text-transform: uppercase;
     width: 50%;
 

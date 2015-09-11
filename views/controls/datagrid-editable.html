@@ -26,11 +26,11 @@
         //Define Columns for the Grid.
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+        columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125, align: 'right', editor: Editors.Input, mask: '###'});
         columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, align: 'center', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, editor: Editors.Input, mask: '###.000'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', editor: Editors.Input});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({
@@ -39,7 +39,10 @@
           editable: true,
           selectable: 'single',
           toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+        }).on('cellchange', function (e, args) {
+          console.log(e, args);
         });
+
     });
   });
 

@@ -85,7 +85,7 @@
 
             setTimeout(function() {
               self.setFocusAfterOpen();
-            }, 500);
+            }, 200);
           }
         });
 
@@ -140,7 +140,7 @@
 
             setTimeout(function() {
               self.setFocusAfterOpen();
-            }, 500);
+            }, 200);
           }
 
           //Arrow Down: select same day of the week in the next week
@@ -308,7 +308,7 @@
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
         this.header = $('<div class="calendar-header"><button class="btn-icon prev" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg><span>'+ Locale.translate('PreviousMonth') +'</span></button><span class="month">november</span><span class="year"> 2015</span><button class="btn-icon next" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-right"></use></svg><span>'+ Locale.translate('NextMonth') +'</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
-        this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td class="is-selected" aria-selected="true">10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
+        this.days = $('<tbody> <tr> <td class="alt">26</td> <td class="alt">27</td> <td class="alt">28</td> <td class="alt">29</td> <td class="alt" >30</td> <td class="alt">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alt">1</td> </tr> <tr> <td class="alt">2</td> <td class="alt">3</td> <td class="alt">4</td> <td class="alt">5</td> <td class="alt">6</td> <td class="alt">7</td> <td class="alt">8</td> </tr> </tbody>').appendTo(this.table);
         this.footer = $('<div class="calendar-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
@@ -464,25 +464,9 @@
         }
       },
 
-      // Set focus after open calendar
+      // Set focus after opening the calendar
       setFocusAfterOpen: function () {
-        var selected, d = new Date(this.element.val());
-
-        d = d.getDate() ? d : new Date();
-        selected = Locale.formatDate(new Date(d), {date: 'full'});
-
-        $('td', '#calendar-popup').each(function () {
-          var td = $(this),
-            label = td.attr('aria-label');
-
-          if(label && label.length && label === selected) {
-            if (!td.hasClass('is-disabled')) {
-              td.addClass('is-selected').attr('aria-selected', 'true');
-            }
-            td.attr('tabindex', 0).focus();
-            return false;
-          }
-        });
+        this.calendar.find('.is-selected').attr('tabindex', 0).focus();
       },
 
       // Update the calendar to show the month (month is zero based)

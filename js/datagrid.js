@@ -1329,6 +1329,22 @@ $.fn.datagrid = function(options) {
       return column;
     },
 
+    //Attempt to serialize the value back
+    coerceValue: function (value, oldVal, col) {
+      var newVal;
+
+      if (col.serialize) {
+        newVal = col.serialize(value);
+        return newVal;
+      }
+
+      if (typeof oldVal === 'number') {
+        newVal = parseFloat(value);
+      }
+
+      return newVal;
+    },
+
     updateCellValue: function (row, cell, value) {
       var rowNode = this.tableBody.find('tr').eq(row),
         cellNode = rowNode.find('td').eq(cell),
@@ -1343,7 +1359,13 @@ $.fn.datagrid = function(options) {
       }
 
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
-      this.element.trigger('cellchange', [row, cell, cellNode, value]);
+      var oldVal = this.settings.dataset[row][col.field],
+        coercedVal = this.coerceValue(value, oldVal, col, row, cell);
+
+      if (coercedVal !== oldVal) {
+        this.settings.dataset[row][col.field] = coercedVal;
+        this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal});
+      }
     },
 
     // Update a specific Cell
