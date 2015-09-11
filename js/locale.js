@@ -206,13 +206,18 @@
 
       // Check the incoming date string's parts to make sure the values are valid against the localized
       // Date pattern.
+      var month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM'),
+        year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
+
       $.each(dateStringParts, function(i, value) {
         var pattern = formatParts[i],
           numberValue = parseInt(value);
 
         switch(pattern) {
           case 'd':
-            if (numberValue < 1 || numberValue > 31) {
+            var lastDay = new Date(year, month, 0).getDate();
+
+            if (numberValue < 1 || numberValue > 31 || numberValue > lastDay) {
               return;
             }
             dateObj.day = value;
@@ -314,6 +319,18 @@
 
       return dateObj.return;
 
+    },
+
+    getDatePart: function (formatParts, dateStringParts, filter1, filter2) {
+      var ret = 0;
+
+      $.each(dateStringParts, function(i) {
+        if (filter1 === formatParts[i] || filter2 === formatParts[i]) {
+          ret = dateStringParts[i];
+        }
+      });
+
+      return ret;
     },
 
     //format a decimal with thousands and padding in the current locale

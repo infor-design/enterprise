@@ -273,7 +273,7 @@
           .attr({
             'data-mask': mask,
             'data-validate': 'date availableDate',
-            'data-validation-events': '{"date": "blur change", "availableDate": "blur change"}',
+            'data-validation-events': '{"date": "blur ", "availableDate": "blur "}',
             'data-mask-mode': 'date'
           }).mask().validate();
 
