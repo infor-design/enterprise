@@ -190,7 +190,7 @@ $toolbar-height: 44px;
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
     .btn-tertiary,
-    .btn-destructive {
+    .btn {
       min-width: 0;
       width: auto;
 

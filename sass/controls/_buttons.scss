@@ -162,7 +162,6 @@ a.btn-primary {
 }
 
 // Destructive Actions / Third Level Button
-.btn-destructive,
 .btn-tertiary,
 .btn-filtering,
 .btn-menu,
@@ -243,7 +242,6 @@ a.btn-primary {
   }
 }
 
-.btn-destructive,
 .btn-tertiary,
 .btn-menu {
   padding: 0 10px;
@@ -320,16 +318,16 @@ a.btn-primary {
 }
 
 @include respond-to(phone) {
-  .btn-destructive,
+  .btn,
   .btn-tertiary {
     padding: 0 5px;
   }
 
   // Reset the above rule when these types of buttons appear in toolbars
   .toolbar {
-    .btn-destructive,
+    .btn,
     .btn-teritary {
-    	padding: 0 10px;
+      padding: 0 10px;
     }
  	}
 }

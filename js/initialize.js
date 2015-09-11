@@ -157,7 +157,7 @@
           ['multiselect', 'select[multiple]:not(.dropdown), .multiselect:not([data-init])'],
 
           //Button with Effects
-          ['button', '.btn, .btn-secondary, .btn-primary, .btn-destructive, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
+          ['button', '.btn, .btn-secondary, .btn-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
 
           //Pager
           ['pager', '.paginated'],
