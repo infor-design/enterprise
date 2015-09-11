@@ -169,30 +169,30 @@ window.Editors = {
     this.orginalValue = value;
 
     this.init = function () {
-      this.editor = $('<input type="text"/>').appendTo(container);
+      this.input = $('<input type="text"/>').appendTo(container);
 
       if (column.align) {
-        this.editor.addClass('l-'+ column.align +'-text');
+        this.input.addClass('l-'+ column.align +'-text');
       }
 
       if (column.mask) {
-        this.editor.mask({pattern: column.mask});
+        this.input.mask({pattern: column.mask});
       }
     };
 
     this.val = function (value) {
       if (value) {
-        this.editor.val(value);
+        this.input.val(value);
       }
-      return this.editor.val();
+      return this.input.val();
     };
 
     this.focus = function () {
-      this.editor.focus().select();
+      this.input.focus().select();
     };
 
     this.destroy = function () {
-      this.editor.remove();
+      this.input.remove();
     };
 
     this.init();
@@ -204,6 +204,7 @@ $.fn.datagrid = function(options) {
   // Settings and Options
   var pluginName = 'datagrid',
       defaults = {
+        cellNavigation: true,
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
@@ -491,6 +492,7 @@ $.fn.datagrid = function(options) {
         rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row'+
                   (settings.rowHeight !== 'medium' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
                   (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
+                  (!settings.cellNavigation ? ' is-clickable' : '' ) +
                   '">';
 
         for (var j = 0; j < settings.columns.length; j++) {
@@ -754,7 +756,7 @@ $.fn.datagrid = function(options) {
         self.triggerRowEvent('click', e, true);
         self.setActiveCell(target.closest('td'));
         self.toggleRowSelection(target.closest('tr'));
-        //self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
+        self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
       });
 
       body.on('dblclick.datagrid', 'tr', function (e) {
@@ -1167,28 +1169,31 @@ $.fn.datagrid = function(options) {
           handled = false;
 
         //Left and Right to navigate by cell.
-        if (key === 37 && !e.altKey) {
+        if (key === 37 && !e.altKey && !self.editor) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
         }
-        if (key === 39 && !e.altKey) {
+
+        if (key === 39 && !e.altKey && !self.editor) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
         }
 
         //Up and Down to navigate by row.
-        if (key === 38 && !e.altKey) {
+        if (key === 38 && !e.altKey && !self.editor) {
           self.setActiveCell(self.activeCell.row-1, self.activeCell.cell);
           handled = true;
         }
-        if (key === 40 && !e.altKey) {
+
+        if (key === 40 && !e.altKey && !self.editor) {
           self.setActiveCell(self.activeCell.row+1, self.activeCell.cell);
           handled = true;
         }
 
         //Press Control+Home or Control+End to move to the first row on the first page or the last row on the last page.
-        if (key === 38 && e.altKey) {
+        if (key === 38 && e.altKey && !self.editor) {
           self.setActiveCell(0, self.activeCell.cell);
         }
-        if (key === 40 && e.altKey) {
+
+        if (key === 40 && e.altKey && !self.editor) {
           row = self.activeCell.node.closest('tbody').find('tr:last').index();
           self.setActiveCell(row, self.activeCell.cell);
         }
@@ -1233,7 +1238,7 @@ $.fn.datagrid = function(options) {
 
         // For mode 'Selectable':
         // Press Space to toggle row selection, or click to activate using a mouse.
-        if (key === 32) {
+        if (key === 32 && !self.settings.editable) {
           row = self.activeCell.node.closest('tr');
           self.toggleRowSelection(row);
 
@@ -1248,8 +1253,19 @@ $.fn.datagrid = function(options) {
         //TODO: If multiSelect is enabled, press Control+A to select all rows on the current page.
 
         //For Editable mode - press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
-        if (self.settings.editable && (key === 32 || key ===13)) {
-          self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
+        if (self.settings.editable && key === 32) {
+          if (!self.editor) {
+            self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
+          }
+        }
+
+        if (self.settings.editable && key ===13) {
+          if (self.editor) {
+            self.commitCellEdit(self.editor.input);
+            self.setActiveCell(self.activeCell.row, self.activeCell.cell);
+          } else {
+            self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
+          }
         }
 
         if (handled) {
@@ -1262,7 +1278,7 @@ $.fn.datagrid = function(options) {
     },
 
     //Current Cell Editor thats in Use
-    _editor: null,
+    editor: null,
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell) {
@@ -1296,26 +1312,27 @@ $.fn.datagrid = function(options) {
       cellParent.addClass('is-editing');
       cellNode.empty();
 
-      this._editor = new col.editor(row, cell, cellValue, cellNode, col);
-      this._editor.val(cellValue);
-      this._editor.focus();
+      this.editor = new col.editor(row, cell, cellValue, cellNode, col);
+      this.editor.val(cellValue);
+      this.editor.focus();
     },
 
     commitCellEdit: function(input) {
       var newValue, cellNode;
 
-      if (!this._editor) {
+      if (!this.editor) {
         return;
       }
 
       //Editor.getValue
-      newValue = this._editor.val();
+      newValue = this.editor.val();
 
       //Format Cell again
       cellNode = input.closest('td').removeClass('is-editing');
 
       //Editor.destroy
-      this._editor.destroy();
+      this.editor.destroy();
+      this.editor = null;
 
       //Save the Cell Edit back to the data set
       this.updateCellValue(cellNode.parent().index(), cellNode.index(), newValue);
@@ -1372,6 +1389,10 @@ $.fn.datagrid = function(options) {
     setActiveCell: function (row, cell) {
       var self = this,
         prevCell = self.activeCell;
+
+      if (!this.settings.cellNavigation) {
+        return;
+      }
 
       //Support passing the td in
       if (row instanceof jQuery) {

@@ -26,11 +26,13 @@
           click: null,
           field: 'id',  //Field to return from the array or can be a function
           title: null, //Dialog title or takes the label + Lookup
-          buttons: null, //TODO Pass dialog buttons or Cancel / Apply
+          buttons: [], //Pass dialog buttons or Cancel / Apply
           options: null,  //Options to pass to the data grid
           beforeShow: null, //Call back before the lookup is opened.
           source: null, //TODO
-          modalContent: null //Custom modal markup
+          modalContent: null, //Custom modal markup
+          editable: true, //Can the user type random text in the field
+          typeahead: false // Future TODO
         },
         settings = $.extend({}, defaults, options);
 
@@ -70,6 +72,9 @@
           this.disable();
         }
 
+        if (!this.settings.editable) {
+          this.element.attr('readonly', 'true').addClass('is-not-editable');
+        }
         this.addAria();
       },
 
@@ -109,7 +114,7 @@
           return;
         }
 
-        if (self.isDisabled() || self.isReadonly()) {
+        if (self.isDisabled() || (self.isReadonly() && !self.element.hasClass('is-not-editable'))) {
           return;
         }
 
@@ -163,24 +168,39 @@
           content = settingContent;
         }
 
-        $('body').modal({
-          title: labelText,
-          content: content,
-          buttons: [{
-            text: 'Cancel',
+        var buttons = this.settings.buttons;
+        if (this.settings.options.selectable === 'multiple' && buttons.length === 0) {
+          buttons = [{
+            text: Locale.translate('Cancel'),
             click: function(e, modal) {
               self.element.focus();
               modal.close();
             }
           }, {
-            text: 'Apply',
+            text: Locale.translate('Apply'),
             click: function(e, modal) {
               var selectedRows = self.grid.selectedRows();
               modal.close();
               self.insertRows(selectedRows);
             },
             isDefault: true
-          }]
+          }];
+        }
+
+        if (this.settings.options.selectable === 'single' && buttons.length === 0) {
+          buttons = [{
+            text: Locale.translate('Cancel'),
+            click: function(e, modal) {
+              self.element.focus();
+              modal.close();
+            }
+          }];
+        }
+
+        $('body').modal({
+          title: labelText,
+          content: content,
+          buttons: buttons
         }).off('open').on('open', function () {
           self.createGrid();
           self.element.trigger('afterOpen', [self.modal, self.grid]);
@@ -194,12 +214,13 @@
       //Overridable Function in which we create the grid on the current ui dialog.
       createGrid: function () {
         var self = this,
-          lookup = $('#lookup-datagrid');
+          lookupGrid = $('#lookup-datagrid');
 
         if (self.settings.options) {
-          lookup.datagrid(self.settings.options);
+          self.settings.options.cellNavigation = false;
+          lookupGrid.datagrid(self.settings.options);
         }
-        self.grid = lookup.data('datagrid');
+        self.grid = lookupGrid.data('datagrid');
 
         //Mark selected rows
         var val = self.element.val();
@@ -207,6 +228,14 @@
           self.selectGridRows(val);
         }
 
+        if (this.settings.options.selectable === 'single') {
+          lookupGrid.on('click', function () {
+            setTimeout(function () {
+              self.insertRows();
+              self.modal.close();
+            }, 100);
+          });
+        }
       },
 
       //Given a field value, select the row

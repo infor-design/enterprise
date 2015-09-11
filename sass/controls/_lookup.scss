@@ -15,6 +15,20 @@
     &[disabled] + .trigger {
       cursor: default;
     }
+
+    &.is-not-editable {
+      background-color: $input-bg-color;
+      border: 1px solid $input-border-color;
+      color: $input-color;
+
+      &:not([disabled]) + .trigger {
+        cursor: pointer;
+      }
+
+      &:focus {
+        @include focus-state();
+      }
+    }
   }
 
   .trigger {

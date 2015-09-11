@@ -71,6 +71,7 @@
       'AlignCenterHorizontally': {id: 'AlignCenterHorizontally', value: 'Horizontal Align Center', comment: 'Align Center Horizontally tooltip'},
       'Amber': {id: 'Amber', value: 'Amber', comment: 'Color in our color pallette'},
       'Amethyst': {id: 'Amethyst', value: 'Amethyst', comment: 'Color in our color pallette'},
+      'Apply': {id: 'Apply', value: 'Apply', comment: 'Text in a button to apply an action'},
       'Attach': {id: 'Attach', value: 'Attach', comment: 'Attach'},
       'Azure': {id: 'Azure', value: 'Azure', comment: 'Color in our color pallette'},
       'Between': {id: 'Between', value: 'Between', comment: 'Between in icons for filtering'},

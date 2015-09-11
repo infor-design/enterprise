@@ -39,6 +39,7 @@
           columns: columns,
           dataset: data,
           selectable: 'single',
+          cellNavigation: false,
           toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
         }).on('selected', function (e, args) {
           console.log(args);
