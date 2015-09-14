@@ -311,7 +311,7 @@ input.multiselect {
 
 .dropdown-search {
   border: 0;
-  border-bottom: 1px solid $dropdown-menu-seperator-color;
+  border-bottom: 1px solid $dropdown-menu-separator-color;
   border-radius: 0;
   color: $dropdown-color;
   padding: 9px 32px 8px 10px;
@@ -324,7 +324,7 @@ input.multiselect {
 
   &:focus {
     border: 0;
-    border-bottom: 1px solid $dropdown-menu-seperator-color;
+    border-bottom: 1px solid $dropdown-menu-separator-color;
     box-shadow: none;
     outline: none;
   }
@@ -332,7 +332,7 @@ input.multiselect {
 
 .is-ontop .dropdown-search {
   border-bottom: 0;
-  border-top: 1px solid $dropdown-menu-seperator-color;
+  border-top: 1px solid $dropdown-menu-separator-color;
 }
 
 .dropdown.error {

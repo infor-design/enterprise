@@ -28,7 +28,7 @@
 
    <div class="buttonset">
 
-      <button id="parameter-maintenance-save" class="btn" type="submit" title="Save the current record." disabled onclick="alert()">
+      <button id="parameter-maintenance-save" class="btn" type="submit" title="Save the current record." disabled>
         <svg class="icon" focusable="false">
         <use xlink:href="#icon-save"></use>
         </svg>
@@ -46,3 +46,10 @@
   </div>
 
 </header>
+
+<script>
+
+$('#parameter-maintenance-save').on('click', function (){
+  alert('I am supposed to be disabled'); }
+);
+</script>

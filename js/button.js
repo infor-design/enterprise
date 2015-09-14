@@ -74,10 +74,12 @@
 
         this.element
         .on('touchstart.button click.button', function (e) {
+
           if ((self.element.attr('disabled')) || (!self.isTouch && e.which !== 1) ||
               ($('.ripple-effect', this).length) || (self.isTouch && e.type !== 'touchstart')) {
             return false;
           }
+
 
           var element = $(this),
             btnOffset = element.offset(),
@@ -113,6 +115,7 @@
           setTimeout(function() {
             ripple.remove();
           }, 1000);
+
         })
         .on('focusout.button', function () {
           var self = $(this);

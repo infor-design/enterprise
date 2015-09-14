@@ -231,14 +231,14 @@ $(function($) {
       buttons: [
         {
           text: 'Currency',
-          cssClass: 'btn-tertiary',
+          cssClass: 'btn',
           click: function() {
             alert('Currency!');
           }
         },
         {
           text: 'Close',
-          cssClass: 'btn-tertiary',
+          cssClass: 'btn',
           icon: '#icon-close',
           click: function() {
             $(this).modal('close');
@@ -262,7 +262,7 @@ $(function($) {
             cssClass: 'searchfield'
           }, {
             text: 'Close',
-            cssClass: 'btn-tertiary',
+            cssClass: 'btn',
             icon: '#icon-close',
             click: function() {
               $(this).modal('close');

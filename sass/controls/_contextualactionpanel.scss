@@ -29,6 +29,11 @@
     .searchfield:focus {
       width: 175px;
     }
+
+    .separator {
+      margin: 3px 5px 0;
+    }
+
   }
 
   .modal-body {
@@ -37,6 +42,19 @@
 
   .icon {
     fill: $contextual-panel-color;
+  }
+
+  button:hover .icon {
+    fill: $tertiary-btn-hover-color;
+  }
+
+  .btn {
+    background-color: transparent;
+    border: 1px solid transparent;
+
+    &:hover span {
+      color: $tertiary-btn-hover-color;
+    }
   }
 
   .btn-icon.has-text > span,

@@ -134,6 +134,10 @@
           return;
         }
 
+        if (!this.settings.options) {
+          return;
+        }
+
         self.createModal();
         self.element.trigger('open', [self.modal, self.grid]);
 
@@ -169,7 +173,7 @@
         }
 
         var buttons = this.settings.buttons;
-        if (this.settings.options.selectable === 'multiple' && buttons.length === 0) {
+        if (this.settings.options &&this.settings.options.selectable === 'multiple' && buttons.length === 0) {
           buttons = [{
             text: Locale.translate('Cancel'),
             click: function(e, modal) {

@@ -856,7 +856,7 @@ $.fn.datagrid = function(options) {
 
         var buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
         if (settings.toolbar.dateFilter) {
-          buttonSet.append('<button class="btn-tertiary" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
+          buttonSet.append('<button class="btn" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
         }
 
         if (settings.toolbar.keywordFilter) {
@@ -1420,8 +1420,9 @@ $.fn.datagrid = function(options) {
       }
 
       self.activeCell.node.focus();
-      self.headerNodes().removeClass('is-active');
-      self.headerNodes().eq(cell).addClass('is-active');
+      var headers = self.headerNodes();
+      headers.removeClass('is-active');
+      headers.eq(cell).addClass('is-active');
 
       this.activeCell.isFocused = true;
     },

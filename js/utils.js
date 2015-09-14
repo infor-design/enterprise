@@ -160,7 +160,10 @@
         setTimeout(function(){
           thresholdReached = false;
           e.preventDefault();
-          elem.trigger('click');
+
+          if (elem.is(':enabled')) {
+            elem.trigger('click');
+          }
         }, 0);
 
         return false;
@@ -259,7 +262,7 @@
           });
         });
       });
-    }    
+    }
    return this;
   };
 
@@ -279,7 +282,7 @@
           var regex = /({|,)(?:\s*)(?:')?([A-Za-z_$\.][A-Za-z0-9_ \-\.$]*)(?:')?(?:\s*):/g; //get keys
           options = options.replace(regex, '$1\"$2\":'); //add double quotes to keys
           regex = /:(?:\s*)(?!(true|false|null|undefined))([A-Za-z_$\.#][A-Za-z0-9_ \-\.$]*)/g; //get strings in values
-          options = options.replace(regex, ':\"$2\"'); //add double quotes to strings in values          
+          options = options.replace(regex, ':\"$2\"'); //add double quotes to strings in values
           options = JSON.parse(options.replace(/'/g, '"')); //replace single to double quotes
         }
       }
