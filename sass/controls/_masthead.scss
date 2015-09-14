@@ -23,8 +23,8 @@ $masthead-button-text-focus-color: $white;
   *[class^="btn"] {
     color: $masthead-button-text-color;
 
-    > span {
-      color: $masthead-button-text-color;
+    > span.audible {
+      color: $masthead-button-text-color !important;
     }
 
     &:hover,
@@ -63,6 +63,9 @@ $masthead-button-text-focus-color: $white;
     padding-top: 0;
     vertical-align: middle;
 
+    > span {
+      color: $masthead-button-text-color;
+    }
 
     > .icon:not(.icon-logo) {
       height: 20px;

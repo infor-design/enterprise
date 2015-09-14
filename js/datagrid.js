@@ -595,6 +595,20 @@ $.fn.datagrid = function(options) {
       return this.headerRow.find('tr:not(.datagrid-header-groups) th');
     },
 
+    //Refresh one row in the grid
+    updateRow: function (idx, data) {
+
+      for (var j = 0; j < settings.columns.length; j++) {
+        var col = settings.columns[j];
+
+        if (col.hidden) {
+          continue;
+        }
+        this.updateCellValue(idx, j, this.fieldValue(data, col.field));
+      }
+
+    },
+
     // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
     setColumnWidth: function(id, width, reset) {
       var self = this,

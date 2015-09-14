@@ -70,7 +70,7 @@
           if (!moreContainer.length) {
             moreContainer = $('<div class="more"></div>').appendTo(this.element);
           }
-          this.more = $('<button class="btn-actions"></button>')
+          this.more = $('<button class="btn-actions" type="button"></button>')
             .html('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></svg>' +
               '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
             .appendTo(moreContainer);

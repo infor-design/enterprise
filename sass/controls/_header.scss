@@ -85,6 +85,10 @@ $header-height: 60px;
       color: $header-icon-color;
     }
 
+    .audible {
+      color: $inverse-color !important;
+    }
+
     &:focus,
     &:hover:not([disabled]),
     &:active:not([disabled]),
@@ -205,7 +209,7 @@ $header-height: 60px;
 
     &.alternate {
       background-color: $inverse-color;
-      border-bottom: 1px solid #d8d8d8;
+      border-bottom: 1px solid $font-color-highcontrast;
 
       &:hidden {
         border-bottom: 0;
