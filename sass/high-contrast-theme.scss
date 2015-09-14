@@ -291,4 +291,10 @@ $chart-progressbar-dark-fill: $graphite08;
   &[disabled] {
     border-bottom: 1px solid transparent;
   }
+
+  &:focus {
+    outline: 1px dotted $hyperlink-color;
+    outline-offset: 1px;
+  }
 }
+

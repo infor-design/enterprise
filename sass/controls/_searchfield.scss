@@ -21,10 +21,24 @@
       right: 0;
     }
   }
+
+  &:hover input:not([disabled]):not(:focus) {
+    + svg {
+      fill: $primary-color;
+    }
+  }
+
 }
 
 @mixin searchfield-text-style() {
   color: $font-color;
+  font-weight: bold;
+  @include font-size(12);
+  text-transform: uppercase;
+}
+
+@mixin searchfield-text-style-hover() {
+  color: $primary-color;
   font-weight: bold;
   @include font-size(12);
   text-transform: uppercase;
@@ -136,6 +150,24 @@
 
       &:-ms-input-placeholder {
         color: transparent;
+      }
+    }
+
+    &:hover:not([disabled]):not(:focus) {
+      &::-webkit-input-placeholder {
+        @include searchfield-text-style-hover();
+      }
+
+      &::-moz-placeholder {
+        @include searchfield-text-style-hover();
+      }
+
+      &:-ms-input-placeholder {
+        @include searchfield-text-style-hover();
+      }
+
+      svg {
+        fill: $primary-color;
       }
     }
 

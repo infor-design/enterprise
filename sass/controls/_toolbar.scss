@@ -131,11 +131,59 @@ $toolbar-height: 44px;
 
   // Change the ".btn" class to be more like ".btn-tertiary/destructive" specifically on toolbars
   .btn {
+    background-color: transparent;
     border: 1px solid transparent;
     border-radius: 18px;
     box-shadow: none;
     color: $tertiary-btn-color;
     overflow: hidden;
+
+    svg {
+      fill: $tertiary-btn-color;
+    }
+
+    &:hover:not([disabled]) {
+      span {
+        color: $tertiary-btn-hover-color;
+      }
+
+      svg {
+        fill: $tertiary-btn-hover-color;
+      }
+    }
+
+    &[disabled],
+    &[disabled]:hover {
+      background-color: transparent;
+      border-color: transparent;
+      color: $tertiary-btn-disabled-color;
+      cursor: default;
+
+      span {
+        color: $tertiary-btn-disabled-color;
+      }
+
+      svg {
+        fill: $tertiary-btn-disabled-color;
+      }
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-active-color;
+      color: $tertiary-btn-active-color;
+
+      &:active {
+        box-shadow: none;
+      }
+
+      svg {
+        fill: $tertiary-btn-active-color;
+      }
+    }
+
+    .ripple-effect {
+      background: #8dd2fb;
+    }
   }
 
   // Add special coloring to toolbar buttons for ".is-selected" state
