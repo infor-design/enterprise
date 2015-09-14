@@ -67,7 +67,8 @@
           .bindSelect()
           .bindPaste()
           .setPlaceholders()
-          .bindWindowActions();
+          .bindWindowActions()
+          .setupKeyboardEvents();
       },
 
       initElements: function () {
@@ -88,7 +89,6 @@
 
         //Build the textarea that will be used as source view and for content serialization
         this.initTextarea();
-
         return this;
       },
 
@@ -231,9 +231,8 @@
 
         // Rebind everything to the new element
         this.setupTextareaEvents().initToolbar().bindButtons().bindModals().bindAnchorPreview();
-        this.bindSelect().bindPaste();
+        this.bindSelect().bindPaste().setupKeyboardEvents();
         this.toolbar.find('button').button();
-
       },
 
       initTextarea: function() {
@@ -251,8 +250,6 @@
         });
 
         this.setupTextareaEvents();
-        this.setupKeyboardEvents();
-
         return this.textarea;
       },
 
@@ -273,7 +270,7 @@
       },
 
       triggerClick: function(e, btn) {
-        $('button[data-action="'+ btn +'"]').trigger('click');
+        $('button[data-action="'+ btn +'"]').trigger('click.editor');
         e.preventDefault();
       },
 
@@ -281,15 +278,18 @@
         var self = this,
           currentElement = this.getCurrentElement(),
           keys = {
-            b: 66, // bold
-            e: 69, // justifyCenter
-            h: 72, // anchor
-            i: 73, // italic [shift: image]
-            l: 76, // justifyLeft
-            o: 79, // orderedlist [shift: unorderedlist]
-            q: 81, // append-blockquotez
-            r: 82, // justifyRight
-            u: 85  // underline
+            b  : 66, // {Ctrl + B} bold
+            e  : 69, // {Ctrl + E} justifyCenter
+            h  : 72, // {Ctrl + H} anchor
+            i  : 73, // {Ctrl + I} italic --------with SHIFT: {Ctrl + Shift + I} image
+            l  : 76, // {Ctrl + L} justifyLeft
+            o  : 79, // {Ctrl + O} orderedlist ---with SHIFT: {Ctrl + Shift + O} unorderedlist
+            q  : 81, // {Ctrl + Q} append-blockquotez
+            r  : 82, // {Ctrl + R} justifyRight
+            u  : 85, // {Ctrl + U} underline
+            h3 : 51, // {Ctrl + 3} h3
+            h4 : 52, // {Ctrl + 4} h4
+            sv : 192 // {Ctrl + ~} source -or- visual
           };
 
         currentElement.on('keydown.editor', function(e) {
@@ -297,6 +297,12 @@
           keys.charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false);
 
           switch (e.ctrlKey && keys.charCode) {
+            case keys.h3:
+              self.triggerClick(e, 'append-' + settings.firstHeader);
+              break;
+            case keys.h4:
+              self.triggerClick(e, 'append-' + settings.secondHeader);
+              break;
             case keys.b:
               self.triggerClick(e, 'bold');
               break;
@@ -307,21 +313,13 @@
               self.triggerClick(e, 'anchor');
               break;
             case keys.i:
-              if(e.shiftKey) {
-                self.triggerClick(e, 'image');
-              } else {
-                self.triggerClick(e, 'italic');
-              }
+              self.triggerClick(e, e.shiftKey ? 'image' : 'italic');
               break;
             case keys.l:
               self.triggerClick(e, 'justifyLeft');
               break;
             case keys.o:
-              if(e.shiftKey) {
-                self.triggerClick(e, 'insertunorderedlist');
-              } else {
-                self.triggerClick(e, 'insertorderedlist');
-              }
+              self.triggerClick(e, e.shiftKey ? 'insertunorderedlist' : 'insertorderedlist');
               break;
             case keys.q:
               self.triggerClick(e, 'append-blockquote');
@@ -331,6 +329,9 @@
               break;
             case keys.u:
               self.triggerClick(e, 'underline');
+              break;
+            case keys.sv:
+              self.triggerClick(e, currentElement === self.element ? 'source' : 'visual');
               break;
           }
         });
@@ -1023,8 +1024,13 @@
         var self = this,
             currentElement = self.getCurrentElement();
 
-        //Attach Label
+        self.element.on('focus.editor', function () {
+          if (self.element === currentElement) {
+            self.setFocus();
+          }
+        });
 
+        //Attach Label
         var label = this.element.prevAll('.label');
         label.css('cursor', 'default').on('click.editor', function () {
           currentElement.focus();
@@ -1153,6 +1159,7 @@
           this.element.empty().html(this.textarea.val());
           this.element.removeClass('source-view-active hidden');
           this.sourceView.addClass('hidden').removeClass('is-focused');
+          this.element.trigger('focus.editor');
         } else {
           // Format The Text being pulled from the WYSIWYG editor
           var val = this.element.html().toString().trim()
@@ -1274,6 +1281,31 @@
       readonly: function () {
         this.element.removeClass('is-readonly').attr('contenteditable', 'false');
         this.element.parent('.field').addClass('is-readonly');
+      },
+
+      // Fix to Firefox get focused by keyboard
+      setFocus: function() {
+        var self = this,
+          el = ($.trim(self.element.html()).slice(0, 1) === '<') ? 
+            $(':first-child', self.element)[0] : self.element[0];
+
+        window.setTimeout(function() {
+          var sel, range;
+          if (window.getSelection && document.createRange) {
+            range = document.createRange();
+            range.selectNodeContents(el);
+            range.collapse(true);
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+          } else if (document.body.createTextRange) {
+            range = document.body.createTextRange();
+            range.moveToElementText(el);
+            range.collapse(true);
+            range.select();
+          }
+        }, 1);
+
       },
 
       destroy: function () {
