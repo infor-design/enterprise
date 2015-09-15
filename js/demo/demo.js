@@ -251,7 +251,7 @@ $(function($) {
 
       $('body').contextualactionpanel({
         title: 'Expenses: $50,000.00',
-        content: '<div class="two-column"><div class="sidebar" style="height: 300px; width: 200px;"></div><div class="main" style="height: 300px; width: 400px;"></div></div>',
+        content: '<div class="two-column"><div style="height: 300px; width: 200px;"></div></div>',
         trigger: 'immediate',
         buttons: [
           {
