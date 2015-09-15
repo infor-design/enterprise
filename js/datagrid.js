@@ -611,14 +611,16 @@ $.fn.datagrid = function(options) {
 
     //Refresh one row in the grid
     updateRow: function (idx, data) {
+      var rowData = (data ? data : this.settings.dataset[idx]);
 
-      for (var j = 0; j < settings.columns.length; j++) {
-        var col = settings.columns[j];
+      for (var j = 0; j < this.settings.columns.length; j++) {
+        var col = this.settings.columns[j];
 
         if (col.hidden) {
           continue;
         }
-        this.updateCellValue(idx, j, this.fieldValue(data, col.field));
+
+        this.updateCellValue(idx, j, this.fieldValue(rowData, col.field));
       }
 
     },
