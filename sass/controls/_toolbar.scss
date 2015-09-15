@@ -59,7 +59,7 @@ $toolbar-height: 44px;
     overflow: hidden;
     @include css3(transition, left 300ms cubic-bezier(.17, .04, .03, .94));
     white-space: nowrap;
-    width: 45%;
+    width: 44%;
 
     > * {
       vertical-align: middle;
@@ -97,7 +97,7 @@ $toolbar-height: 44px;
     }
 
     .title {
-      width: 45%;
+      width: 44%;
 
       + .buttonset {
         width: calc(55% - 50px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)

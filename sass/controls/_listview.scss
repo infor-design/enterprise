@@ -308,7 +308,7 @@
   background-color: $primary-color;
   border-radius: 2px 2px 0 0;
   margin: 0;
-  overflow: hidden;
+  overflow: hidden !important;
   z-index: 20;
 
   + .listview {
@@ -347,6 +347,18 @@
       &:focus:not(.hide-focus) {
         > .icon {
           fill: $listview-selection-toolbar-color;
+        }
+      }
+
+      &.is-selected {
+        color: $listview-selection-toolbar-color;
+
+        &:focus:not(.hide-focus) {
+          color: $listview-selection-toolbar-color;
+
+          > .icon {
+            fill: $listview-selection-toolbar-color;
+          }
         }
       }
 
