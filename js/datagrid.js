@@ -368,8 +368,21 @@ $.fn.datagrid = function(options) {
 
     //Method to Reload the data set
     loadData: function (dataset) {
+      var selectedIds = this.selectedRows(),
+        rowIds = [];
+
       this.settings.dataset = dataset;
       this.renderRows();
+
+      //Update Paging
+      this.refreshPager();
+
+      //restore selected rows
+      for (var i = 0; i < selectedIds.length; i++) {
+        rowIds.push(selectedIds[i].idx);
+      }
+
+      this.selectedRows(rowIds);
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -493,7 +506,8 @@ $.fn.datagrid = function(options) {
                   (settings.rowHeight !== 'medium' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
                   (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                   (!settings.cellNavigation ? ' is-clickable' : '' ) +
-                  '">';
+                  '"' + (this.settings.paging ? ' style="display:none"' : '' ) +'>';
+                  //'">';
 
         for (var j = 0; j < settings.columns.length; j++) {
           var col = settings.columns[j],
@@ -1068,6 +1082,7 @@ $.fn.datagrid = function(options) {
 
       if (isSingle && this._selectedRows[0] && this._selectedRows[0].idx !== rowIndex) {
         this.unselectRow(this._selectedRows[0].idx);
+        this._selectedRows = [];
       }
 
       if (row.hasClass('is-selected')) {
@@ -1531,10 +1546,19 @@ $.fn.datagrid = function(options) {
 
       //Get First page on Sort Action
       this.element.on('sorted', function () {
-        self.pager.activePage = 1;
-        self.pager.renderPages();
+        self.refreshPager();
       });
+    },
+
+    refreshPager: function () {
+      if (this.pager) {
+        this.pager.activePage = 1;
+        this.pager.elements = this.pager.element.children();
+        this.pager.renderBar();
+        this.pager.renderPages();
+      }
     }
+
   };
 
   // Initialize the plugin (Once) or set settings

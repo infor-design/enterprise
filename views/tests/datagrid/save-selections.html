@@ -1,6 +1,17 @@
 
 <div class="row">
     <div class="twelve columns">
+        <div role="toolbar" class="toolbar has-more-button" aria-label="Data Grid Header Title">
+          <div class="title">Data Grid Header Title  <span class="datagrid-result-count">(7 Results)</span></div>
+          <div class="buttonset">
+            <button type="button" title="Reload Data" class="btn" id="add-btn">
+              <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                <use xlink:href="#icon-load"/>
+              </svg>
+              <span>Load</span>
+            </button>
+          </div>
+        </div>
         <div id="datagrid">
         </div>
     </div>
@@ -14,7 +25,7 @@
                     columns = [],
                     data = [];
 
-            // Some Sample Data
+            // Define Some Sample Data
             data.push({ id: 1, productId: 2142201, sku: 'SKU #9000001-237', productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
             data.push({ id: 2, productId: 2241202, sku: 'SKU #9000001-236', productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
             data.push({ id: 3, productId: 2342203, sku: 'SKU #9000001-235', productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
@@ -40,12 +51,27 @@
                 dataset: data,
                 selectable: 'single'
             }).on('selected', function (e, args) {
-
+              // Showing the new method to update a single rows data
               var api = $('#datagrid').data('datagrid');
-              args[0].data.activity = 'Updated';
-              api.updateRow(args[0].idx, args[0].data);
+              if (args[0]) {
+                args[0].data.activity = 'Updated';
+                api.updateRow(args[0].idx, args[0].data);
+              }
             });
 
+            // Showing the new method to keep selections on loadData
+            $('#add-btn').on('click', function () {
+              data[0].activity = 'Reloaded';
+              data[1].activity = 'Reloaded';
+              data[2].activity = 'Reloaded';
+              data[3].activity = 'Reloaded';
+              data[4].activity = 'Reloaded';
+              data[5].activity = 'Reloaded';
+              data[6].activity = 'Reloaded';
+
+              var api = $('#datagrid').data('datagrid');
+              api.loadData(data);
+            });
         });
 
     });

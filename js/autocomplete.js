@@ -177,7 +177,7 @@
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
 
-        self.list.off('click').on('click.autocomplete', 'a', function (e) {
+        self.list.off('click touchend').on('touchend.autocomplete click.autocomplete', 'a', function (e) {
           var a = $(e.currentTarget),
             ret = a.text().trim();
 
@@ -198,7 +198,7 @@
           return false;
         });
 
-        var all = self.list.find('a').on('focus', function () {
+        var all = self.list.find('a').on('focus.autocomplete touchend.autocomplete', function () {
           var anchor = $(this),
             text = anchor.text().trim();
 

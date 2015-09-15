@@ -7,7 +7,7 @@
 
       <div class="field">
         <label for="slider-regular">Angular Slider Value: {{sliderValue}}</label>
-        <input id="slider-regular" name="slider-regular" class="slider" type="range" data-ng-model="sliderValue" value="20" min="10" data-ng-model-max="sliderMax" data-tooltip-content='[""]' data-slider/>
+        <input id="slider-regular" name="slider-regular" class="slider" type="range" data-ng-model="sliderValue" data-ng-model-min="sliderMin" data-ng-model-max="sliderMax" data-tooltip-content='[""]' data-slider/>
       </div>
 
       <button class="btn" data-ng-click="change()">Change</button>
@@ -20,13 +20,16 @@
     var app = angular.module('sohoxi-angular', []);
 
     app.controller('demo', function($scope) {
+      $scope.sliderMin = 10;
+      $scope.sliderMax = 50;
       $scope.sliderValue = 20;
-      $scope.sliderMax = 30;
 
       $scope.change = function () {
-        //$scope.sliderValue = 10;
-        $scope.sliderMax = 40;
+        $scope.sliderMax = 100;
+        $scope.sliderMin = 0;
+        $scope.sliderValue = 50;
       };
+
     });
 
   </script>

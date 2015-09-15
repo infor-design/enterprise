@@ -138,6 +138,13 @@ svg.icon-logo {
   left: 103px !important;
 }
 
+textarea + .icon-error,
+textarea + .icon-confirm,
+textarea + .tooltip-description + .icon-error,
+textarea + .tooltip-description + .icon-confirm {
+  left: 335px !important;
+}
+
 .lookup-wrapper .icon-error,
 .lookup-wrapper .icon-confirm {
   left: 247px;
