@@ -100,14 +100,12 @@ svg.icon-logo {
   border-style: solid;
   border-width: 6px;
   height: 0;
-  left: 1px;
+  margin: 1px 0 0 1px;
   position: absolute;
-  top: -3px;
   width: 0;
 
   &.is-checked {
-    left: 0;
-    top: -5px;
+    margin: 0;
     z-index: 1;
   }
 }
