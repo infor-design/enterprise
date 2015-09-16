@@ -82,20 +82,20 @@
           this.header = $('<div class="modal-header"></div>');
           this.header.insertBefore(this.panel.find('.modal-body'));
 
-          toolbar = this.panel.find('.toolbar');
-          if (!toolbar.length) {
-            toolbar = $('<div class="toolbar"></div>');
+          this.toolbar = this.panel.find('.toolbar');
+          if (!this.toolbar.length) {
+            this.toolbar = $('<div class="toolbar"></div>');
           }
-          toolbar.appendTo(this.header);
+          this.toolbar.appendTo(this.header);
 
-          var toolbarTitle = toolbar.find('.title');
+          var toolbarTitle = this.toolbar.find('.title');
           if (!toolbarTitle.length) {
-            toolbar.append($('<div class="title">' + this.settings.title + '</div>'));
+            this.toolbar.append($('<div class="title">' + this.settings.title + '</div>'));
           }
 
-          var toolbarButtonset = toolbar.find('.buttonset');
+          var toolbarButtonset = this.toolbar.find('.buttonset');
           if (!toolbarButtonset.length) {
-            toolbar.append($('<div class="buttonset"></div>'));
+            this.toolbar.append($('<div class="buttonset"></div>'));
           }
         }
 
@@ -114,8 +114,8 @@
         this.buttons = this.panel.find('.buttonset').children('button');
         this.closeButton = this.buttons.filter('.btn-close, [name="close"], .icon-close');
 
-        if (toolbar.length) {
-          toolbar.toolbar();
+        if (this.toolbar.length) {
+          this.toolbar.toolbar();
         }
 
         return this;
@@ -132,6 +132,12 @@
             self.close();
           });
         }
+
+        this.panel.on('open', function() {
+          if (self.toolbar) {
+            self.toolbar.trigger('recalculateButtons');
+          }
+        });
 
         return this;
       },

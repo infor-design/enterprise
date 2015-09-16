@@ -282,7 +282,7 @@
               var css = $('#stylesheet, #sohoxi-stylesheet'),
                 path = css.attr('href');
                 css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + link.attr('data-theme') +'.css');
-              
+
               $(this).fadeIn('fast');
             });
             return;
