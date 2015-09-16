@@ -25,29 +25,24 @@ $header-height: 60px;
 
   h1 {
     color: $inverse-color;
-    display: inline;
+    display: inline-block;
     font-weight: normal;
     @include font-size(20);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
-    line-height: 44px;
-    position: relative;
+    margin-bottom: 0;
   }
 
   .page-title {
     @include font-size(15);
     color: $header-icon-color;
-    left: 5px;
-    position: absolute;
-    top: -9px;
+    display: block;
 
     + .section-title {
       color: $white;
+      display: block;
       @include font-size(20);
-      left: 5px;
       padding: 0;
-      position: absolute;
       text-transform: capitalize;
-      top: 7px;
     }
 
     .alert svg {
