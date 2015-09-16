@@ -31,6 +31,7 @@ $toolbar-height: 44px;
   .buttonset {
     overflow: hidden;
     white-space: nowrap;
+    width: 98%;
 
     > * {
       @include transition(opacity 300ms cubic-bezier(.17, .04, .03, .94));
@@ -233,7 +234,7 @@ $toolbar-height: 44px;
 }
 
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
-  .toolbar {
+  .toolbar:not(.formatter-toolbar) {
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
