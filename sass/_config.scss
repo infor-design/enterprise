@@ -280,6 +280,13 @@ $chart-progressbar-target-fill: $graphite04;
 $chart-progressbar-primary-fill: $primary-color;
 $chart-progressbar-dark-fill: $graphite06;
 
+//Timeline
+$timeline-indicator-color: $graphite03;
+$timeline-indicator-processing-color: $primary-color;
+$timeline-indicator-complete-color: $primary-color;
+$timeline-line-color: $graphite04;
+$timeline-header-color: $primary-color;
+
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
 $breakpoint-slim: 400px;

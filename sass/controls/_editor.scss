@@ -26,6 +26,12 @@
     color: $input-readonly-color;
     cursor: text;
   }
+
+  .icon-error {
+    position: absolute;
+    right: 15px;
+    top: 77px;
+  }
 }
 
 .editor {
@@ -114,13 +120,6 @@
     padding-left: 15px;
   }
 
-  + svg.icon.icon-error {
-    left: auto;
-    position: absolute;
-    right: 8px;
-    top: 70px;
-  }
-
   img {
     margin: 0 auto;
     max-width: 80%;
@@ -140,6 +139,8 @@
 
   button {
     background-color: $editor-toolbar-bg-color;
+    border: 1px solid transparent;
+    border-radius: 2px;
     height: 34px;
     margin: 3px 5px;
     min-width: 34px;
@@ -165,6 +166,7 @@
 
     span {
       @include font-size(16);
+      color: $editor-btn-color;
     }
 
     &.is-active {
@@ -178,6 +180,30 @@
         fill: $primary-color;
       }
     }
+
+    &:hover {
+      background-color: transparent;
+      border: 1px solid transparent;
+      color: $primary-color;
+
+      .icon {
+        fill: $primary-color;
+      }
+
+      span {
+        color: $primary-color;
+      }
+    }
+
+    &:focus {
+      border: 1px solid $primary-color;
+      box-shadow: none;
+    }
+  }
+
+  [data-element='h3'] .icon,
+  [data-element='h4'] .icon {
+    width: 35px;
   }
 
   .icon {

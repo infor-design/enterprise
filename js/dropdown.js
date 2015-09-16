@@ -434,6 +434,18 @@
         });
       },
 
+      selectBlank: function() {
+        var blank = this.element.find('option').filter(function() {
+          return !this.value || $.trim(this.value).length === 0;
+        });
+
+        if (blank.length > 0) {
+          blank[0].selected = true;
+          this.element.trigger('updated');
+        }
+
+      },
+
       handleKeyDown: function(input, e) {
         var selectedIndex = this.element[0].selectedIndex,
             options = this.element[0].options,
@@ -459,8 +471,17 @@
         }
 
         switch (key) {
+          case 37: //backspace
+          case 8: //del & backspace
           case 46: { //del
+
+            if (!self.isOpen()) {
+              self.selectBlank();
+            }
+
+            // Prevent Backspace from returning to the previous page.
             e.stopPropagation();
+            e.preventDefault();
             return false;
           }
           case 9: {  //tab - save the current selection

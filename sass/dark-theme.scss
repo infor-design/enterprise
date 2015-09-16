@@ -257,6 +257,13 @@ $chart-progressbar-target-fill: $slate06;
 $chart-progressbar-primary-fill: $primary-color;
 $chart-progressbar-dark-fill: $primary-color;
 
+//Timeline
+$timeline-indicator-color: $slate03;
+$timeline-indicator-processing-color: $primary-color;
+$timeline-indicator-complete-color: $primary-color;
+$timeline-line-color: $slate04;
+$timeline-header-color: $primary-color;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

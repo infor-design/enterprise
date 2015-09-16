@@ -246,7 +246,6 @@
           return n !== 'date' && n !== 'time';
         });
       }
-
       return validations;
     },
 
@@ -346,19 +345,20 @@
                (rule.message !== Locale.translate('Required'))) {
               return;
             }
+
             self.addError(field, rule.message, rule.inline, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
-            if(rule.positive) {
+
+            if (rule.positive) {
               self.removePositive(field);
             }
           } else if (errors.length === 0) {
             self.removeError(field);
             dfd.resolve();
-            if(rule.positive) {
+
+            if (rule.positive) {
               self.addPositive(field);
-            } else {
-              self.removePositive(field);
             }
           }
           self.setErrorOnParent(field);

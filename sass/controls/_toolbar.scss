@@ -138,7 +138,7 @@ $toolbar-height: 44px;
     color: $tertiary-btn-color;
     overflow: hidden;
 
-    svg {
+    .icon {
       fill: $tertiary-btn-color;
     }
 
@@ -147,7 +147,7 @@ $toolbar-height: 44px;
         color: $tertiary-btn-hover-color;
       }
 
-      svg {
+      .icon {
         fill: $tertiary-btn-hover-color;
       }
     }

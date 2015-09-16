@@ -43,6 +43,13 @@
     width: 99%;
   }
 
+  .icon-error,
+  .icon-confirm {
+    position: absolute;
+    right: 10px;
+    top: 25px;
+  }
+
   .icon-logo {
     display: block;
     height: 90px;
@@ -50,12 +57,11 @@
     width: 90px;
   }
 
-  svg.icon-error,
-  svg.icon-confirm {
-    left: 270px;
-    position: absolute;
-    top: 25px;
-  }
+}
+
+.ios .signin .icon-error,
+.ios .signin .icon-confirm {
+  top: 26.5px !important;
 }
 
 .password-hint {

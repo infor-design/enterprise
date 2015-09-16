@@ -124,11 +124,9 @@
     position: relative;
     top: -30px;
 
-    .icon.icon-error {
+    .icon-error {
       left: -10px;
-      position: relative;
-      top: -8px;
-      vertical-align: middle;
+      top: -1px;
     }
 
     &.listview-micro {
@@ -318,6 +316,7 @@
 
   // Override Toolbar styles
   &.toolbar {
+    height: 52px;
     margin-bottom: 0;
     padding-left: 20px;
     padding-right: 13px;

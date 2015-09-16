@@ -34,13 +34,11 @@
   textarea {
     margin-bottom: 10px;
     width: 300px;
+  }
 
-    + .icon-error {
-      left: 271px !important;
-      margin-top: 23px;
-      position: absolute;
-      top: 0 !important;
-    }
+  .icon-error {
+    margin-left: -22px;
+    right: 8px;
   }
 
   .textarea-wordcount {

@@ -14,12 +14,14 @@ select.multiselect {
   max-width: 100%;
   position: relative;
 
-  .icon + .icon-error { // display errors
-    left: auto;
+  .icon-error,
+  .icon-confirm,
+  .icon-alert,
+  .icon-info,
+  .icon-pending {
     position: absolute;
-    right: 29px;
-    top: 7px;
   }
+
 }
 
 input.dropdown,
@@ -294,10 +296,10 @@ input.multiselect {
   > .icon {
     fill: $trigger-icon-fill-color;
     height: 32px;
-    margin-left: -23px;
+    margin-left: -21px;
     position: absolute;
     @include css3(transform, rotate(180deg));
-    width: 11px;
+    width: 10px;
 
     &.search {
       height: 18px;

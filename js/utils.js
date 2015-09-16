@@ -161,9 +161,11 @@
           thresholdReached = false;
           e.preventDefault();
 
-          if (elem.is(':enabled')) {
-            elem.trigger('click');
+          if (elem.attr('disabled')) {
+            return;
           }
+
+          elem.trigger('click');
         }, 0);
 
         return false;

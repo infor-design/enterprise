@@ -4,9 +4,10 @@
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
-  margin-bottom: 11px;
+  display: block;
+  margin-bottom: 18px;
   margin-left: -5px;
-  margin-top: -6px;
+  margin-top: -10px;
 }
 
 .field > input,
@@ -310,6 +311,10 @@ textarea.error:focus {
 
 .input-xs {
   width: 75px;
+
+  &.error {
+    padding: 9px 38px 8px 10px;
+  }
 }
 
 .input-full {

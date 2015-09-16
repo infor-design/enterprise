@@ -3,21 +3,32 @@
 //
 // See also:  /sass/controls/_processindicator.scss
 
-$process-timeline-heading: $primary-color;
-
 .timeline {
   min-height: 44px;
   position: relative;
 
   // vertical line
   &:before {
-    border-left: 1px dashed #c5c5c5;
+    border-left: 1px dashed $timeline-line-color;
     bottom: 60px;
     content: '';
     left: 1.125em;
     position: absolute;
     top: 0;
     width: 3px;
+  }
+
+  .indicator {
+    border: 2px solid $timeline-indicator-color;
+
+    &.processing {
+      border: 2px solid $timeline-indicator-processing-color;
+    }
+
+    &.complete {
+      background-color: $timeline-indicator-complete-color;
+      border: 2px solid $timeline-indicator-complete-color;
+    }
   }
 
 }
@@ -45,7 +56,7 @@ $process-timeline-heading: $primary-color;
     }
 
     > span {
-      @include font-size(10);
+      @include font-size(11);
       line-height: 1.5rem;
     }
 
@@ -53,16 +64,6 @@ $process-timeline-heading: $primary-color;
       height: 15px;
       margin-right: 8px;
       width: 15px;
-    }
-
-    &.estimated {
-      > .icon {
-        fill: $indicator-warning;
-      }
-
-      > span {
-        color: $indicator-warning;
-      }
     }
   }
 
@@ -76,10 +77,10 @@ $process-timeline-heading: $primary-color;
       vertical-align: middle;
     }
 
-    // line behind the indicatro
+    // line behind the indicator
     &:after {
       background-color: transparent;
-      border-bottom: 1px dashed #c5c5c5;
+      border-bottom: 1px dashed $timeline-line-color;
       content: '';
       display: inline-block;
       height: 0;
@@ -93,7 +94,7 @@ $process-timeline-heading: $primary-color;
     margin-left: 6em;
 
     .heading {
-      color: $process-timeline-heading;
+      color: $timeline-header-color;
     }
   }
 

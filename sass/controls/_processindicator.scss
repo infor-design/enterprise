@@ -61,7 +61,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   .details {
     color: $font-color;
     @include font-size(10);
-    font-weight: lighter;
+    @include antialiased();
 
     > * {
       vertical-align: middle;
@@ -186,6 +186,8 @@ $indicator-current-size: ($indicator-size * 1.6);
       display: inline-block;
       font-size: 1.4em;
       font-weight: bold;
+      @include antialiased();
+
       height: 100%;
       position: relative;
       text-align: center;
@@ -244,13 +246,15 @@ $indicator-current-size: ($indicator-size * 1.6);
   .heading {
     @include font-size(12);
     font-weight: bold;
+    @include antialiased();
     line-height: 1.5;
   }
 
   .sub-heading {
     color: $font-color;
     @include font-size(12);
-    font-weight: lighter;
+    @include antialiased();
+
     line-height: 1.5;
     margin-bottom: 10px;
   }

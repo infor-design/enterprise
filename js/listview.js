@@ -471,7 +471,7 @@
             self.element.addClass('is-toolbar-open');
             toolbar.removeClass('is-hidden');
           }).css('display', 'block');
-          toolbar.animateOpen();
+          toolbar.animateOpen({distance: 52});
 
           var title = toolbar.find('.title, .listview-selection-count');
           if (!title || !title.length) {

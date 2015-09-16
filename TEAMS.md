@@ -75,5 +75,8 @@
 | Ion Desk  | Silverlight Conversion / Bybrid  | Massimo Capoccia|
 | Mingle  | Angular Datepicker | Ravi Narayan |
 | LMS  | Angular (2.0) |  |
+| Supplier Exchange  | Charts | Larry Wang |
+| Infor Hospitality in France  | POS  | Bruno Martinot |
+
 
 

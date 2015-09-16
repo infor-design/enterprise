@@ -14,58 +14,68 @@
 }
 
 // Svg Styles
-svg.icon {
+.icon {
   fill: #999999;
+}
 
-  // Specific Buttons
-  &.icon-error,
-  &.icon-confirm,
-  &.icon-alert,
-  &.icon-info,
-  &.icon-pending {
-    fill: $alert-red;
-    height: 18px;
-    width: 20px;
+// Specific Icon Types
+.icon-error,
+.icon-confirm,
+.icon-alert,
+.icon-info,
+.icon-pending {
+  fill: $alert-red;
+  height: 18px;
+  right: 30px;
+  top: 8px;
+  width: 18px;
+  position: relative;
+  vertical-align: top;
+}
+
+.icon-confirm {
+  fill: $confirm-icon-fill;
+}
+
+.icon-alert {
+  fill: $alert-yellow;
+}
+
+.icon-pending {
+  background: $alert-yellow;
+  border: 2px solid $alert-yellow;
+  border-radius: 50%;
+  fill: $white;
+  height: 20px;
+}
+
+.icon-info {
+  fill: $info-icon-fill;
+}
+
+.icon-close {
+  height: 14px;
+  position: relative;
+}
+
+.icon-sohoxi {
+  fill: $inverse-color;
+  height: 22px;
+  left: -15px;
+  top: 5px;
+  width: 115px;
+}
+
+.icon-dropdown {
+  height: 10px;
+}
+
+//Shitty Workaround...
+.ios {
+  .icon-error,
+  .icon-confirm {
+    top: 9.5px !important;
   }
-
-  &.icon-confirm {
-    fill: $confirm-icon-fill;
-  }
-
-  &.icon-alert {
-    fill: $alert-yellow;
-  }
-
-  &.icon-pending {
-    background: $alert-yellow;
-    border: 2px solid $alert-yellow;
-    border-radius: 50%;
-    fill: $white;
-    height: 20px;
-  }
-
-
-  &.icon-info {
-    fill: $info-icon-fill;
-  }
-
-  &.icon-close {
-    height: 14px;
-    position: relative;
-  }
-
-  &.icon-sohoxi {
-    fill: $inverse-color;
-    height: 22px;
-    left: -15px;
-    top: 5px;
-    width: 115px;
-  }
-
-  &.icon-dropdown {
-    height: 10px;
-  }
-
 }
 
 &.icon-favorite {
@@ -100,55 +110,6 @@ svg.icon-logo {
     top: -5px;
     z-index: 1;
   }
-}
-
-.field .icon-error,
-.field .icon-confirm {
-  display: inline-block !important;
-  left: 272px;
-  position: absolute;
-  top: 25px;
-}
-
-.input-sm + .icon-error,
-.input-sm + .icon-confirm,
-.input-sm + .tooltip-description + .icon-error,
-.input-sm + .tooltip-description + .icon-confirm {
-  left: 123px;
-}
-
-.input-xs + .icon-error,
-.input-xs + .icon-confirm,
-.input-xs + .tooltip-description + .icon-error,
-.input-xs + .tooltip-description + .icon-confirm {
-  left: 48px;
-}
-
-.timepicker + .icon + .icon-error,
-.timepicker + .icon + .icon-confirm,
-.timepicker + .tooltip-description + .icon + .icon-error,
-.timepicker + .tooltip-description + .icon + .icon-confirm {
-  left: 103px !important;
-}
-
-.datepicker + .icon + .icon-error,
-.datepicker + .icon + .icon-confirm,
-.datepicker + .tooltip-description + .icon + .icon-error,
-.datepicker + .tooltip-description + .icon + .icon-confirm {
-  left: 103px !important;
-}
-
-textarea + .icon-error,
-textarea + .icon-confirm,
-textarea + .tooltip-description + .icon-error,
-textarea + .tooltip-description + .icon-confirm {
-  left: 335px !important;
-}
-
-.lookup-wrapper .icon-error,
-.lookup-wrapper .icon-confirm {
-  left: 247px;
-  top: 8px;
 }
 
 .img-placeholder {

@@ -279,6 +279,13 @@ $chart-progressbar-target-fill: $graphite05;
 $chart-progressbar-primary-fill: $primary-color;
 $chart-progressbar-dark-fill: $graphite08;
 
+//Timeline
+$timeline-indicator-color: $slate05;
+$timeline-indicator-processing-color: $primary-color;
+$timeline-indicator-complete-color: $primary-color;
+$timeline-line-color: $slate05;
+$timeline-header-color: $azure09;
+
 //================================================== //
 // Core Controls
 @import 'controls';

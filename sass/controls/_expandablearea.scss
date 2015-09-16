@@ -35,12 +35,6 @@
         }
       }
 
-      > .icon-error {
-        height: 14px;
-        left: 1px;
-        width: 16px;
-      }
-
     }
 
     &[aria-expanded="true"] {
@@ -86,6 +80,16 @@
 
     .columns {
       margin-left: 0;
+    }
+  }
+
+  //Icon on the header
+  .title {
+    .icon {
+      height: 16px;
+      right: -3.5px;
+      top: 0;
+      width: 16px;
     }
   }
 
