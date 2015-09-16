@@ -26,7 +26,9 @@
 
     // Settings and Options
     var pluginName = 'wizard',
-        defaults = {},
+        defaults = {
+          ticks: null
+        },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -83,9 +85,17 @@
       },
 
       buildTicks: function() {
+        var settingTicks = this.settings.ticks,
+          self = this;
+
         this.ticks = this.bar.children('.tick');
-        if (!this.ticks.length) {
-          // TODO: Build Ticks
+        if (!this.ticks.length && settingTicks) {
+
+          for (var i = 0; i < settingTicks.length; i++) {
+            var link = $('<a ng-click="handleClick()" class="tick ' + (settingTicks[i].state ? settingTicks[i].state : '') + '" href="'+ (settingTicks[i].href ? settingTicks[i].href : '#') +'"><span class="label">' + settingTicks[i].label + '</span></a>');
+            self.bar.append(link);
+          }
+          this.ticks = this.bar.children('.tick');
         }
         this.positionTicks();
 
@@ -171,7 +181,7 @@
         this.ticks.offTouchClick('wizard').off('click.wizard');
         this.element.off('updated.wizard');
 
-        // TODO: unbuild ticks
+        this.ticks.remove();
         return this;
       },
 

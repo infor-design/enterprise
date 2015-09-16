@@ -1,0 +1,38 @@
+
+  <div class="row" data-ng-controller="demo">
+    <div class="twelve columns">
+
+      <div class="wizard" data-wizard data-ng-model-ticks="ticks" ng-click="$event.preventDefault();checkpage($event)">
+      </div>
+
+    </div>
+
+    <button class="btn" data-ng-click="change()">Change</button>
+
+  </div>
+
+  <script>
+
+    // Example App and Controller
+    var app = angular.module('sohoxi-angular', []);
+
+    app.controller('demo', function($scope) {
+      $scope.ticks = [{label: 'Edit Cart', state: 'complete', href:'#'},
+                      {label: 'Shipping', state: 'complete', href:'#'},
+                      {label: 'Payment', state: 'complete', href:'#'},
+                      {label: 'Confirmation', state: 'current', href:'/confirmation'}];
+
+      $scope.change = function () {
+        $scope.ticks = [{label: 'Edit Cart 2', state: 'complete', href:'#'},
+              {label: 'Shipping 2', state: 'complete', href:'#'},
+              {label: 'Payment 2', state: 'current', href:'#'},
+              {label: 'Confirmation 2', state: '', href:'www.google.com'}];
+      };
+
+      $scope.checkpage = function ($event) {
+        $event.stopPropagation();
+      };
+
+    });
+
+  </script>

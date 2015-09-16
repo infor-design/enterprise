@@ -1,13 +1,27 @@
 
-  <div class="row" style="margin-top: 100px" data-ng-controller="demo">
+  <div class="row" data-ng-controller="demo">
     <div class="twelve columns">
 
-      <div class="field">
-        <input type="checkbox" data-ng-ng-model="awesome" class="checkbox" id="checkbox1">
-        <label for="checkbox1" class="checkbox-label">Are you awesome?</label>
+       <div class="wizard">
+      <div class="wizard-header">
+        <div class="bar">
+          <div class="completed-range"></div>
+          <a href="#" class="tick complete">
+            <span class="label">Context Apps</span>
+          </a>
+          <a href="#" class="tick complete">
+            <span class="label">Utility Apps</span>
+          </a>
+          <a href="#" class="tick current">
+            <span class="label">Inbound Configuration</span>
+          </a>
+          <a href="#" class="tick">
+            <span class="label">OID Mapping</span>
+          </a>
+        </div>
       </div>
+    </div>
 
-      <button class="btn" data-ng-click="change()">Change</button>
     </div>
   </div>
 

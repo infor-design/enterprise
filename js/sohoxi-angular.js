@@ -147,11 +147,31 @@
       };
   };
 
+  var wizard = function () {
+      return {
+        replace: true,
+        scope: false,
+        link: function(scope, elem, attrs) {
+           var modelTicks = attrs.ngModelTicks,
+            ticks = scope[modelTicks];
+
+          elem.wizard({ticks: ticks});
+
+          scope.$watch(modelTicks, function(newValue, oldValue) {
+            if (newValue !== oldValue) {
+              alert();
+            }
+          });
+        }
+      };
+  };
+
   angular.module('sohoxi-angular')
       .directive('chart', chart)
       .directive('datepicker', datepicker)
       .directive('dropdown', dropdown)
       .directive('multiselect', multiselect)
-      .directive('slider', slider);
+      .directive('slider', slider)
+      .directive('wizard', wizard);
 
 }());

@@ -264,6 +264,12 @@ $timeline-indicator-complete-color: $primary-color;
 $timeline-line-color: $slate04;
 $timeline-header-color: $primary-color;
 
+//Themable Variables in config.scss
+$wizard-active-color: $primary-color;
+$wizard-default-bg: $body-bg-color;
+$wizard-bar-bg: $slate06;
+$wizard-active-color: $primary-color;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

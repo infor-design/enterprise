@@ -441,7 +441,7 @@
 
         if (blank.length > 0) {
           blank[0].selected = true;
-          this.element.trigger('updated');
+          this.element.trigger('updated').trigger('change');
         }
 
       },
