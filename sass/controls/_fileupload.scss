@@ -20,6 +20,10 @@ label.fileupload {
     top: 5px;
     width: 34px;
 
+    @media (max-width: 374px) {
+      left: -55px;
+    }
+
     &:hover {
       svg {
         fill: $primary-color;
