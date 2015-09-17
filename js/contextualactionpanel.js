@@ -56,8 +56,7 @@
 
       build: function() {
         var self = this,
-          children,
-          toolbar;
+          children;
 
         // Build the Content
         if (this.panel.length === 0) {
