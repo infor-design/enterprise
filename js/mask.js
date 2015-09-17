@@ -116,18 +116,15 @@
 
         // listen for an event called "updated" that can be triggered by other plugins, that forces the mask
         // to completely re-evaluate itself.
-        self.element.on('updated', function() {
-          var e = $.Event(),
-            currVal = self.element.val();
-
-          self.element.val('');
-          self.caret(0);
-          self.processStringAgainstMask(currVal, e);
+        self.element.on('updated', function(e) {
+          self.evaluateCurrentContents(undefined, e);
         });
 
         // remove the value when blurred
-        self.element.on('blur.mask', function() {
+        self.element.on('blur.mask', function(e) {
           self.initValue = null;
+          self.evaluateCurrentContents(undefined, e);
+
           if (self.mustComplete) {
             self.checkCompletion();
           }
@@ -249,6 +246,21 @@
         }
       },
 
+      // Evaluates the entire current contents of the input field against its mask.
+      // Used when the field is blurred, and after a Backspaced character is removed
+      evaluateCurrentContents: function(newValue, e) {
+        if (newValue === null || newValue === undefined) {
+          newValue = this.element.val();
+        }
+        if (!e) {
+          e = $.Event();
+        }
+
+        this.element.val('');
+        this.caret(0);
+        this.processStringAgainstMask(newValue, e);
+      },
+
       // Replacement for String.fromCharCode() that takes meta keys into account when determining which
       // character key was pressed.
       toChar: function(e) {
@@ -331,14 +343,13 @@
           //Commented out to solve  issue in grid editor
           } else if (key === 27) { // escape
             self.handleEscape(evt);
-          } else if (36 < key && key < 41) { // arrow keys (in Firefox)
-            return;
           // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
           } else if (evt.altKey) {
             self.killEvent(e);
-          } else if (evt.shiftKey && 36 < key && key < 41) { // arrow keys AND shift key (for moving the cursor)
-            return;
-          } else if (evt.metaKey || evt.ctrlKey) { // Allow keystrokes that include the meta key or control keys (copy/paste/etc)
+          } else if (evt.metaKey || evt.ctrlKey || // Allow keystrokes that include the meta key or control keys (copy/paste/etc)
+            key === 9 || // Allows tabbing
+            (36 < key && key < 41) || // Allows arrows alone (needed for Firefox)
+            (evt.shiftKey && 36 < key && key < 41)) { // Allows arrows accompanied by Shift
             return;
           }
 
@@ -390,7 +401,7 @@
             selectedText = val.slice(trueCaretPosBegin, pos.end);
 
           val = this.deleteAtIndex(val, selectedText, trueCaretPosBegin);
-          this.element.val(val);
+          this.evaluateCurrentContents(val, e);
           this.caret(trueCaretPosBegin);
         }
         return this.killEvent(e);
