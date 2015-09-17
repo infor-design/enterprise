@@ -25,29 +25,24 @@ $header-height: 60px;
 
   h1 {
     color: $inverse-color;
-    display: inline;
+    display: inline-block;
     font-weight: normal;
     @include font-size(20);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
-    line-height: 44px;
-    position: relative;
+    margin-bottom: 0;
   }
 
   .page-title {
     @include font-size(15);
     color: $header-icon-color;
-    left: 5px;
-    position: absolute;
-    top: -9px;
+    display: block;
 
     + .section-title {
       color: $white;
+      display: block;
       @include font-size(20);
-      left: 5px;
       padding: 0;
-      position: absolute;
       text-transform: capitalize;
-      top: 7px;
     }
 
     .alert svg {
@@ -444,6 +439,31 @@ $header-height: 60px;
     }
   }
 
+}
+
+// Overrides the default styling for Toolbar Buttonsets that would normally shrink the "buttonset" to a small size,
+// leaving room for the Title to be visible.  In this case, we just add some padding to the right side to correctly
+// line up the right edge of the buttons in the Page Header to the rest of the page.
+@include respond-to(phablet) {
+  .header > .toolbar {
+    .title {
+      width: calc(100% - 80px);
+
+      + .buttonset {
+        width: 60px;
+      }
+    }
+
+    &.has-more-button {
+      .title {
+        width: calc(100% - 140px);
+
+        + .buttonset {
+          width: 60px;
+        }
+      }
+    }
+  }
 }
 
 // Print Style Sheet

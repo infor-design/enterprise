@@ -133,18 +133,14 @@
   border-bottom: 1px solid $editor-middle-border-color;
   border-radius: 2px 2px 0 0;
   margin-bottom: 0;
-  padding: 0 10px;
-  width: 100;
   z-index: 20;
 
   button {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
     border-radius: 2px;
-    height: 34px;
-    margin: 3px 5px;
     min-width: 34px;
-    padding: 0;
+    padding: 0 !important; //overrides some media queries
 
     > .icon {
       height: 22px;

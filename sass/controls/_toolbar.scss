@@ -31,6 +31,7 @@ $toolbar-height: 44px;
   .buttonset {
     overflow: hidden;
     white-space: nowrap;
+    width: 98%;
 
     > * {
       @include transition(opacity 300ms cubic-bezier(.17, .04, .03, .94));
@@ -233,7 +234,7 @@ $toolbar-height: 44px;
 }
 
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
-  .toolbar {
+  .toolbar:not(.formatter-toolbar) {
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
@@ -288,15 +289,34 @@ $toolbar-height: 44px;
   .toolbar {
     // Slightly modify the width of these elements on smaller breakpoints (they don't line up in some browsers)
     .title {
-      width: 44% !important;
+      width: 44%;
     }
   }
 }
 
+// Overrides the styling for Buttonsets so that they shrink to a small size, leaving room for the Title to be visible.
 @include respond-to(phablet) {
   .toolbar {
+    .title {
+      width: calc(100% - 40px);
+
+      + .buttonset {
+        width: 40px;
+      }
+    }
+
     .buttonset {
       z-index: 10;
+    }
+
+    &.has-more-button {
+      .title {
+        width: calc(100% - 80px);
+
+        + .buttonset {
+          width: 40px;
+        }
+      }
     }
 
     .searchfield-wrapper {
