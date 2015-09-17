@@ -419,6 +419,8 @@
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
+        var self = this;
+
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', 'icon') // needs to be 'attr' here because .addClass() doesn't work with SVG
           .children('use').attr('xlink:href', '#icon-dropdown');
@@ -432,6 +434,11 @@
           var a = $(this).children('a');
           a.text(stripHtml(a));
         });
+
+        //Adjust height / top position
+        if (self.list.hasClass('is-ontop')) {
+          self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+        }
       },
 
       selectBlank: function() {
@@ -477,12 +484,12 @@
 
             if (!self.isOpen()) {
               self.selectBlank();
+              // Prevent Backspace from returning to the previous page.
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
             }
-
-            // Prevent Backspace from returning to the previous page.
-            e.stopPropagation();
-            e.preventDefault();
-            return false;
+            break;
           }
           case 9: {  //tab - save the current selection
             // If "search mode" is currently off, Tab should turn this mode on and place focus back
