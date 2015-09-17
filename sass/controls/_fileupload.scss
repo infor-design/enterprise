@@ -20,6 +20,10 @@ label.fileupload {
     top: 5px;
     width: 34px;
 
+    @media (max-width: 374px) {
+      left: -55px;
+    }
+
     &:hover {
       svg {
         fill: $primary-color;
@@ -60,4 +64,10 @@ label.fileupload {
     padding-right: 40px;
     text-overflow: ellipsis;
   }
+}
+
+// IE Hack
+.ie9 .fileupload .icon,
+.ie10 .fileupload .icon {
+  background: url('about:blank') no-repeat 0 0 transparent;
 }
