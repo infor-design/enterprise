@@ -65,3 +65,9 @@ label.fileupload {
     text-overflow: ellipsis;
   }
 }
+
+// IE Hack
+.ie9 .fileupload .icon,
+.ie10 .fileupload .icon {
+  background: url('about:blank') no-repeat 0 0 transparent;
+}
