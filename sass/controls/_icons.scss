@@ -26,11 +26,20 @@
 .icon-pending {
   fill: $alert-red;
   height: 18px;
-  right: 30px;
-  top: 8px;
-  width: 18px;
   position: relative;
+  top: 8px;
   vertical-align: top;
+  width: 18px;
+}
+
+.field {
+  .icon-error,
+  .icon-confirm,
+  .icon-alert,
+  .icon-info,
+  .icon-pending {
+    right: 30px;
+  }
 }
 
 .icon-confirm {

@@ -93,6 +93,11 @@
 
           for (var i = 0; i < settingTicks.length; i++) {
             var link = $('<a ng-click="handleClick()" class="tick ' + (settingTicks[i].state ? settingTicks[i].state : '') + '" href="'+ (settingTicks[i].href ? settingTicks[i].href : '#') +'"><span class="label">' + settingTicks[i].label + '</span></a>');
+
+            if (settingTicks[i].ngClick) {
+              link.attr('ng-click', settingTicks[i].ngClick);
+            }
+
             self.bar.append(link);
           }
           this.ticks = this.bar.children('.tick');

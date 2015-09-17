@@ -2,12 +2,12 @@
   <div class="row" data-ng-controller="demo">
     <div class="twelve columns">
 
-      <div class="wizard" data-wizard data-ng-model-ticks="ticks" ng-click="$event.preventDefault();checkpage($event)">
+      <div class="wizard" data-wizard data-ng-model-ticks="ticks">
       </div>
+      <button class="btn" data-ng-click="change()">Change</button>
 
     </div>
 
-    <button class="btn" data-ng-click="change()">Change</button>
 
   </div>
 
@@ -17,20 +17,25 @@
     var app = angular.module('sohoxi-angular', []);
 
     app.controller('demo', function($scope) {
-      $scope.ticks = [{label: 'Edit Cart', state: 'complete', href:'#'},
-                      {label: 'Shipping', state: 'complete', href:'#'},
-                      {label: 'Payment', state: 'complete', href:'#'},
-                      {label: 'Confirmation', state: 'current', href:'/confirmation'}];
+      $scope.ticks = [{label: 'Edit Cart', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
+                      {label: 'Shipping', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
+                      {label: 'Payment', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
+                      {label: 'Confirmation', state: 'current', href:'/confirmation', ngClick: 'checkpage($event)'}];
 
       $scope.change = function () {
-        $scope.ticks = [{label: 'Edit Cart 2', state: 'complete', href:'#'},
-              {label: 'Shipping 2', state: 'complete', href:'#'},
-              {label: 'Payment 2', state: 'current', href:'#'},
-              {label: 'Confirmation 2', state: '', href:'www.google.com'}];
+        $scope.ticks = [{label: 'Edit Cart 2', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
+              {label: 'Shipping 2', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
+              {label: 'Payment 2', state: 'current', href:'#', ngClick: 'checkpage($event)'},
+              {label: 'Confirmation 2', state: '', href:'www.google.com', ngClick: 'checkpage($event)'}];
       };
 
-      $scope.checkpage = function ($event) {
-        $event.stopPropagation();
+      $scope.checkpage = function (e) {
+       var canChangePage = false;
+       alert();
+
+        if (!canChangePage) {
+          e.stopImmediatePropagation();
+        }
       };
 
     });
