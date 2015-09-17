@@ -201,7 +201,7 @@
       },
 
       createToolbar: function () {
-        var toolbar = $('<div class="editor-toolbar formatter-toolbar"></div>').attr('id', 'editor-toolbar-' + this.id);
+        var toolbar = $('<div class="toolbar editor-toolbar formatter-toolbar"></div>').attr('id', 'editor-toolbar-' + this.id);
         this.toolbarButtons(toolbar);
         toolbar.insertBefore(this.sourceViewActive() ? this.element.prev() : this.element);
         toolbar.find('button').tooltip();
@@ -1286,7 +1286,7 @@
       // Fix to Firefox get focused by keyboard
       setFocus: function() {
         var self = this,
-          el = ($.trim(self.element.html()).slice(0, 1) === '<') ? 
+          el = ($.trim(self.element.html()).slice(0, 1) === '<') ?
             $(':first-child', self.element)[0] : self.element[0];
 
         window.setTimeout(function() {

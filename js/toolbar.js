@@ -221,6 +221,7 @@
           self.updated();
         }).on('recalculateButtons.toolbar', function() {
           self.adjustButtonVisibility();
+          self.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
         });
 
         $(window).on('resize.toolbar-' + this.id, function() {
