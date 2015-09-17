@@ -78,6 +78,12 @@ input::-webkit-inner-spin-button {
     vertical-align: middle;
   }
 
+  .icon-error {
+    margin-left: -18px;
+    right: 6px;
+    top: 0px;
+  }
+
   &.is-focused {
 
     > .spinbox-control {

@@ -424,6 +424,8 @@
           field.after(svg);
         } else if (field.is('.dropdown, .multiselect')) {
           field.parent().find('.dropdown-wrapper').append(svg);
+        } else if (field.is('.spinbox')) {
+          field.after(svg);
         } else if (field.is('.lookup')) {
           field.parent().append(svg);
         } else {
@@ -731,6 +733,7 @@
         },
         message: 'EmailValidation'
       },
+
       passwordReq: {
         check: function (value) {
           this.message = Locale.translate('PasswordValidation');
@@ -797,6 +800,16 @@
           return true;
         },
         message: 'Invalid Time'
+      },
+
+      //Test validation function, always returns false
+      test: {
+
+        check: function(value) {
+          return value === '1' ? true : false;
+        },
+
+        message: 'Value is not valid (test).'
       }
     };
   };
