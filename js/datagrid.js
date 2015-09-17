@@ -1407,10 +1407,10 @@ $.fn.datagrid = function(options) {
       }
 
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
-      var oldVal = this.settings.dataset[row][col.field],
+      var oldVal = (col.field ? this.settings.dataset[row][col.field] : ''),
         coercedVal = this.coerceValue(value, oldVal, col, row, cell);
 
-      if (coercedVal !== oldVal) {
+      if (col.field && coercedVal !== oldVal) {
         this.settings.dataset[row][col.field] = coercedVal;
         this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal});
       }
