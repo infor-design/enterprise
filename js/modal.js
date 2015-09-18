@@ -283,7 +283,7 @@
         });
 
         setTimeout(function () {
-          self.element.find(':focusable:not(.searchfield):first:not(button)').focus();
+          self.element.find(':focusable:not(.searchfield):first').focus();
           self.keepFocus();
           self.element.triggerHandler('open');
         }, 300);

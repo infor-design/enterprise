@@ -4,32 +4,35 @@
     <button class="btn" type="button" data-modal="modal-1">Show Modal</button><br />
     <button class="btn" type="button" data-modal="modal-2">Show Nested Modal</button>
 
-    <div class="modal" id="modal-1" style="width:40%">
+    <div class="modal" id="modal-1">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h1 class="modal-title" tabindex="0">Page Settings</h1>
+          <h1 class="modal-title" >Add Context</h1>
         </div>
 
         <div class="modal-body">
           <div class="field">
-            <label for="navTitle">Navigation Title</label>
-            <input id="navTitle" name="navTitle" type="text">
-          </div>
-          <div class="field">
-            <label for="navUrl">URL</label>
-            <input id="navUrl" name="navUrl" type="text">
-          </div>
-          <div class="field">
-            <label for="pageTitle">Page Title</label>
-            <input id="pageTitle" name="pageTitle" type="text">
-          </div>
-          <div class="field">
-            <label for="pageDesc">Page Description</label>
-            <input id="pageDesc" name="pageDesc" type="text">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type" name="type">
+              <option value="1">Context #1</option>
+              <option value="2">Context #2</option>
+              <option value="3">Context #3</option>
+              <option value="4">Context #4</option>
+              <option value="5">Context #5</option>
+            </select>
           </div>
 
-          <button type="button" class="btn-default btn-close">Close</button>
+
+          <div class="field">
+            <label for="context-name" class="required">Name</label>
+            <input id="context-name"  aria-required="true" data-validate="required" name="context-name" type="text">
+          </div>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" style="width:50%">Cancel</button>
+            <button type="button" id="submit" class="btn-modal-primary" style="width:50%">Submit</button>
+          </div>
         </div>
       </div>
     </div>
@@ -43,7 +46,9 @@
         <div class="modal-body">
           <p>This is the top modal in the nest!  Open another one?</p>
           <button class="btn" type="button" data-modal="modal-3">Show Another Modal</button>
-          <button type="button" class="btn-default btn-close">Close</button>
+          <div class="modal-buttonset">
+            <button type="button" class="btn-default btn-close">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -57,7 +62,9 @@
         <div class="modal-body">
           <p>This is the middle modal in the nest!  Open one more?</p>
           <button class="btn" type="button" data-modal="modal-4">Show One More Modal</button>
-          <button type="button" class="btn-default btn-close">Close</button>
+          <div class="modal-buttonset">
+            <button type="button" class="btn-default btn-close">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -70,7 +77,9 @@
 
         <div class="modal-body">
           <p>This is the lowest modal in the nest!  Now start closing them!</p>
-          <button type="button" class="btn-default btn-close">Close</button>
+          <div class="modal-buttonset">
+            <button type="button" class="btn-default btn-close">Close</button>
+          </div>
         </div>
       </div>
     </div>
