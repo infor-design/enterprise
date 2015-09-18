@@ -447,3 +447,18 @@
     margin-top: 10px;
   }
 }
+
+// Slightly adjust the "listview-toolbar" toolbar's buttonset width while on small breakpoints
+@include respond-to(phablet) {
+  .listview-toolbar.toolbar {
+    .title {
+      width: calc(100% - 50px);
+    }
+
+    &.has-more-button {
+      .title {
+        width: calc(100% - 90px);
+      }
+    }
+  }
+}

@@ -469,7 +469,7 @@
           // Menu toggle takes place after the animation starts
           toolbar.one('animateOpenComplete', function() {
             self.element.addClass('is-toolbar-open');
-            toolbar.removeClass('is-hidden');
+            toolbar.trigger('recalculateButtons').removeClass('is-hidden');
           }).css('display', 'block');
           toolbar.animateOpen({distance: 52});
 
