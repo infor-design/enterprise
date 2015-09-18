@@ -64,6 +64,7 @@
   .icon-pending {
     float: left;
     margin: 1px 15px 0 0;
+    top: 0;
   }
 
   li {
@@ -76,7 +77,8 @@
     &:after {
       clear: both;
       content: '';
-      display: inline;
+      display: inline-block;
+      position: absolute;
     }
 
     &:hover,
@@ -247,11 +249,12 @@
     @include checkbox-unchecked-before-style;
     left: 14px;
     margin-left: 0;
+    top: 18px;
   }
 
   &.is-muliselect li {
+    padding-left: 43px;
     position: relative;
-    text-indent: 25px;
 
     &.is-selected:before {
       @include checkbox-checked-before-style;
@@ -263,7 +266,7 @@
       @include checkbox-animation;
       left: 20px;
       margin-top: 0;
-      top: 19px;
+      top: 20px;
     }
   }
 
@@ -462,3 +465,56 @@
     }
   }
 }
+
+
+// Users With Access
+@include respond-to(phone) {
+  .listview[aria-label='Users With Access'] {
+
+    li {
+      padding: 9px 20px 15px;
+    }
+
+    .l-pull-right {
+      float: none;
+      margin-top: 10px;
+      top: auto;
+
+      button {
+        margin: 0 0 0 5px;
+      }
+
+      .checkbox-label {
+        left: 5px;
+      }
+    }
+  }
+}
+
+// Tasks
+@media (max-width: 768px) {
+  .listview[aria-label='Tasks'] {
+
+    .l-pull-right {
+      .days,
+      .hours {
+        font-size: 1.9rem;
+      }
+
+      .icon-error {
+        height: 15px;
+        left: 0;
+        width: 15px;
+      }
+    }
+  }
+}
+
+.ios {
+  .icon-error,
+  .icon-confirm,
+  .icon-pending {
+    top: 3px !important;
+  }
+}
+
