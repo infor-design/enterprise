@@ -114,10 +114,10 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
 
     &.complete {
       background-color: $wizard-active-color;
-      color: $font-color-extrahighcontrast;
+      color: $font-color;
 
       .label {
-        color: $font-color-extrahighcontrast;
+        color: $font-color;
       }
     }
   }
@@ -125,7 +125,6 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
 
 // Styles used by the Header Wizard Control
 $header-wizard-bar: $slate08;
-$header-wizard-inactive-color: $slate03;
 $header-wizard-active-color: $white;
 
 .header {
@@ -163,7 +162,7 @@ $header-wizard-active-color: $white;
       }
 
       .label {
-        color: $header-wizard-inactive-color;
+        color: $font-color-lowcontrast;
         top: $wizard-tick-size * 2;
       }
 
@@ -194,6 +193,83 @@ $header-wizard-active-color: $white;
     }
   }
 
+}
+
+// Toolbar with wizard for some patterns
+.wizard-toolbar {
+  background-color: $panel-bg-color;
+  border-bottom: 1px solid $panel-border-color;
+  display: inline-block;
+  height: 72px;
+  padding: 0 30px;
+  width: 100%;
+
+  .hyperlink {
+    display: inline-block;
+    margin-top: -22px;
+    position: relative;
+    top: 50%;
+  }
+
+  .wizard-header {
+    background-color: $panel-bg-color;
+    padding: 27px 0 0;
+  }
+
+  .wizard {
+    display: inline-block;
+    float: right;
+    padding-right: 30px;
+    width: 45%;
+
+    .label {
+      padding-left: 2.5px;
+      top: 27px !important;
+    }
+
+    .tick {
+      height: 12px;
+      margin-top: -5px;
+      width: 12px;
+
+      &:before {
+        transition: none;
+      }
+
+      &:focus::before {
+        height: 20px;
+        width: 20px;
+      }
+
+      &.current {
+        height: 24px;
+        margin-bottom: 5px;
+        margin-top: -10px;
+        width: 24px;
+
+        .label {
+          top: 32px !important;
+        }
+
+        &:focus::before {
+          height: 32px;
+          width: 32px;
+        }
+      }
+
+      &:not(.current):not(.complete) {
+        background-color: $panel-bg-color;
+        margin-top: -7px;
+        width: 18px;
+
+        &:focus::before {
+          height: 25px;
+          width: 25px;
+        }
+
+      }
+    }
+  }
 }
 
 // Hide the text from the non-current ticks in small form factors

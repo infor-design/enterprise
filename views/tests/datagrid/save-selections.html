@@ -54,8 +54,9 @@
               // Showing the new method to update a single rows data
               var api = $('#datagrid').data('datagrid');
               if (args[0]) {
-                args[0].data.activity = 'Updated';
-                api.updateRow(args[0].idx);
+                //args[0].data.activity = 'Updated';
+
+                api.updateRow(args[0].idx, { id: args[0].data.id, productId: 2642206, sku: 'Updated', productName: 'Updated', activity:  'Updated', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
               }
             });
 

@@ -155,17 +155,9 @@
            var modelTicks = attrs.ngModelTicks,
             ticks = scope[modelTicks];
 
-          elem.wizard({ticks: ticks});
-          if (elem.attr('ng-click')) {
-            elem.find('.tick').attr('ng-click', elem.attr('ng-click'));
-            elem.removeAttr('ng-click');
-          }
-
-          scope.$watch(modelTicks, function(newValue, oldValue) {
-            if (newValue !== oldValue) {
-
-            }
-          });
+          setTimeout(function () {
+            elem.wizard({ticks: ticks});
+          }, 1);
         }
       };
   };

@@ -1,13 +1,29 @@
+  {{={{{ }}}=}}
 
   <div class="row" data-ng-controller="demo">
     <div class="twelve columns">
 
-      <div class="wizard" data-wizard data-ng-model-ticks="ticks">
+      <div class="wizard" data-wizard>
+        <div class="wizard-header">
+          <div class="bar">
+            <div class="completed-range"></div>
+            <a href="{{link1.href}}" class="tick complete" >
+              <span class="label">{{link1.text}}</span>
+            </a>
+            <a ng-href="{{link2.href}}" class="tick complete" data-ng-click="checkpage($event)">
+              <span class="label">{{link2.text}}</span>
+            </a>
+            <a data-ng-href="{{link3.href}}" class="tick current" data-ng-click="checkpage($event)">
+              <span class="label">{{link3.text}}</span>
+            </a>
+            <a data-ng-href="{{link4.href}}" class="tick" data-ng-click="checkpage($event)">
+              <span class="label">{{link4.text}}</span>
+            </a>
+          </div>
+        </div>
       </div>
-      <button class="btn" data-ng-click="change()">Change</button>
 
     </div>
-
 
   </div>
 
@@ -17,24 +33,18 @@
     var app = angular.module('sohoxi-angular', []);
 
     app.controller('demo', function($scope) {
-      $scope.ticks = [{label: 'Edit Cart', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
-                      {label: 'Shipping', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
-                      {label: 'Payment', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
-                      {label: 'Confirmation', state: 'current', href:'/confirmation', ngClick: 'checkpage($event)'}];
-
-      $scope.change = function () {
-        $scope.ticks = [{label: 'Edit Cart 2', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
-              {label: 'Shipping 2', state: 'complete', href:'#', ngClick: 'checkpage($event)'},
-              {label: 'Payment 2', state: 'current', href:'#', ngClick: 'checkpage($event)'},
-              {label: 'Confirmation 2', state: '', href:'www.google.com', ngClick: 'checkpage($event)'}];
-      };
+      $scope.link1 = {text: 'Edit Cart', state: 'complete', href:'/cart'};
+      $scope.link2 = {text: 'Shipping', state: 'complete', href:'/shipping'};
+      $scope.link3 = {text: 'Payment', state: 'complete', href:'/payment'};
+      $scope.link4 = {text: 'Confirmation', state: 'complete', href:'/confirmation'};
 
       $scope.checkpage = function (e) {
-       var canChangePage = false;
-       alert();
+        var canChangePage = false;
 
         if (!canChangePage) {
           e.stopImmediatePropagation();
+          e.stopPropagation();
+          e.preventDefault();
         }
       };
 

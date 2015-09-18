@@ -325,7 +325,7 @@
         //Make an ajax call and wait
         setTimeout(function () {
           var table = self.element.closest('.datagrid-container'),
-            doPaging = table.triggerHandler('beforePaging', pageInfo);
+            doPaging = table.triggerHandler('beforepaging', pageInfo);
 
           if (doPaging === false) {
             return;

@@ -108,7 +108,7 @@
       //Create and Open the Dialog
       openDialog: function () {
         var self = this,
-          canOpen = self.element.triggerHandler('beforeOpen');
+          canOpen = self.element.triggerHandler('beforeopen');
 
         if (canOpen === false) {
           return;
@@ -148,6 +148,8 @@
 
         self.modal.element.find('.btn-actions').removeClass('is-selected');
         self.modal.element.find('.pager-pagesize').remove();
+
+        self.element.trigger('afteropen', [self.modal, self.grid]);
       },
 
       //Overidable function to create the modal dialog

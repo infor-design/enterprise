@@ -140,10 +140,15 @@
       },
 
       handleTickClick: function(e) {
-        e.preventDefault();
-
-        var active = $(e.target),
+        var self = this,
+          active = $(e.target),
           activeSet = false;
+
+        var canNav = this.element.triggerHandler('beforeactivate', [active]);
+
+        if (canNav === false) {
+          return;
+        }
 
         if (active.is('.label')) {
           active = active.parent();
@@ -163,7 +168,11 @@
           });
 
         this.updateRange();
-        this.element.triggerHandler('stepchange', [active]);
+        this.element.trigger('activate', [active]);
+
+        setTimeout(function () {
+          self.element.trigger('afteractivate', [active]);
+        }, 300);
       },
 
       updateRange: function() {
