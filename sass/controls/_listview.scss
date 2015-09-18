@@ -187,8 +187,12 @@
 
     svg {
       height: 23px;
-      // margin-top: -5px;
       width: 30px;
+
+      &.icon-close {
+        height: 15px;
+        width: 15px;
+      }
     }
   }
 
@@ -303,7 +307,8 @@
         text-align: center;
       }
     }
-  }}
+  }
+}
 
 .listview-toolbar {
   background-color: $primary-color;
@@ -482,6 +487,11 @@
 
       button {
         margin: 0 0 0 5px;
+      }
+
+      .checkbox {
+        left: 8px;
+        top: 10px;
       }
 
       .checkbox-label {
