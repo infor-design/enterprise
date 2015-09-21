@@ -27,7 +27,7 @@
           message: 'Message Summary', //The message content or text
           width: 'auto',  //specify a given width or fit to content with auto
           buttons: null, //Passed through to modal
-          cssClass: 'test-class',
+          cssClass: null,
           returnFocus: null //Element to focus on return
         },
         settings = $.extend({}, defaults, options);

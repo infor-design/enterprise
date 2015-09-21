@@ -283,10 +283,17 @@
         });
 
         setTimeout(function () {
-          self.element.find(':focusable:not(.searchfield):first').focus();
+          var focusElem = self.element.find(':focusable:not(.searchfield):first:not(button)');
           self.keepFocus();
           self.element.triggerHandler('open');
-        }, 300);
+
+          if (focusElem.length === 0) {
+            focusElem = self.element.find('.btn-modal-primary');
+            focusElem = self.element.find('#message-title').attr('tabindex', '-1');
+          }
+          focusElem.focus();
+
+        }, 10);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
 
@@ -351,7 +358,7 @@
           if (e.which === 13 && self.isOnTop()) {
             e.stopPropagation();
             e.preventDefault();
-            self.element.find('.btn-modal-primary').trigger('click.modal');
+           self.element.find('.btn-modal-primary').trigger('click');
           }
         });
 
@@ -363,7 +370,6 @@
         });
 
         setTimeout(function () {
-          self.element.find('.btn-modal-primary').focus();
           self.disableSubmit();
         }, 10);
       },
@@ -427,7 +433,10 @@
                 e.preventDefault();
                 tabbableElements.last.focus();
               }
+
+              self.element.find('#message-title').removeAttr('tabindex');
             }
+
           });
       },
 
