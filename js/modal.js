@@ -282,8 +282,15 @@
           }
         });
 
+        // hide modal until it loaded, resized and centered
+        self.element.css('opacity', 0);
+        setTimeout(function () {          
+          self.resize();
+          self.resize(); //TODO: need to find out why we have to call two times
+          self.element.css('opacity', 1);
+        }, 300);
+
         setTimeout(function () {
-          // var focusElem = self.element.find(':focusable:not(.searchfield):first:not(button)');
           var focusElem = self.element.find(':focusable:not(.searchfield):first');
           self.keepFocus();
           self.element.triggerHandler('open');
@@ -293,7 +300,6 @@
             focusElem = self.element.find('#message-title').attr('tabindex', '-1');
           }
           focusElem.focus();
-
         }, 10);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
