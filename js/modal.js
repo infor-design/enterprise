@@ -284,9 +284,9 @@
 
         // hide modal until it loaded, resized and centered
         self.element.css('opacity', 0);
-        setTimeout(function () {          
+        setTimeout(function () {
+          $(window).trigger('resize');
           self.resize();
-          self.resize(); //TODO: need to find out why we have to call two times
           self.element.css('opacity', 1);
         }, 300);
 
