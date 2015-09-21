@@ -283,7 +283,8 @@
         });
 
         setTimeout(function () {
-          var focusElem = self.element.find(':focusable:not(.searchfield):first:not(button)');
+          // var focusElem = self.element.find(':focusable:not(.searchfield):first:not(button)');
+          var focusElem = self.element.find(':focusable:not(.searchfield):first');
           self.keepFocus();
           self.element.triggerHandler('open');
 
@@ -415,11 +416,13 @@
       keepFocus: function() {
         var self = this, tabbableElements;
 
-          $(self.element).on('keypress.modal keydown.modal', function (e) {
+          $(self.element).on('keypress.modal keydown.modal', function (e) {            
             var keyCode = e.which || e.keyCode;
 
-            if (keyCode === 27) {
-              self.close();
+            if (keyCode === 27) {              
+              setTimeout(function () {
+                self.close();
+              }, 0);
             }
 
             if (keyCode === 9) {
