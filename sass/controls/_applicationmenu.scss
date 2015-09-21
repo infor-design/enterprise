@@ -1,6 +1,12 @@
 // Application Menu Control
 //================================================== //
 
+$app-accordion-header-text-color: $slate03;
+$app-accordion-header-bg-color: $slate08;
+$app-accordion-icon-color: $graphite05;
+$app-accordion-border-color: $slate09;
+$app-accordion-pane-bg-color: $slate09;
+
 $application-menu-width: 300px;
 
 .application-menu {
@@ -66,6 +72,9 @@ $application-menu-width: 300px;
   }
 
   .accordion {
+    background-color: $app-accordion-header-bg-color;
+    color: $app-accordion-header-text-color;
+
     margin-bottom: calc(-2rem - 38px);
     min-height: 100%;
 
@@ -76,6 +85,29 @@ $application-menu-width: 300px;
 
     .name {
       color: #ffffff;
+    }
+  }
+
+  .accordion-header {
+    border-bottom: 1px solid $app-accordion-border-color;
+    color: $app-accordion-header-text-color;
+
+    > a {
+      color: $app-accordion-header-text-color;
+    }
+  }
+
+  .accordion-pane {
+    background-color: $app-accordion-pane-bg-color;
+
+    .accordion-content {
+      border-bottom: $app-accordion-border-color;
+    }
+
+    .accordion-header {
+      &:last-child {
+        border-bottom: 1px solid $app-accordion-border-color;
+      }
     }
   }
 

@@ -2,6 +2,8 @@
 * Accordion Control (TODO: bitly link to soho xi docs)
 */
 
+// NOTE:  There are AMD Blocks available
+
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -17,14 +19,15 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  $.fn.accordion = function(options) {
+  //NOTE: Just this part will show up in SoHo Xi Builds.
 
+  $.fn.accordion = function(options) {
     'use strict';
 
     // Settings and Options
-    var pluginName = 'accordion',
+    var pluginName = 'pluginName',
         defaults = {
-          allowOnePane: false // If true, only allows one pane open at a time
+          allowOnePane: true
         },
         settings = $.extend({}, defaults, options);
 
@@ -37,520 +40,501 @@
 
     // Plugin Methods
     Accordion.prototype = {
-
       init: function() {
-        this
+        return this
           .setup()
           .build()
-          .initSelected()
           .handleEvents();
       },
 
-      updated: function() {
-        this.anchors.off();
-        return this.init();
-      },
-
       setup: function() {
-        var allowOnePane = this.element.attr('data-allow-one-pane'),
-          self = this;
-
-        this.settings.allowOnePane = allowOnePane !== undefined ? allowOnePane === 'true' : this.settings.allowOnePane;
-
-        this.anchors = this.element.find('.accordion-header > a');
-        this.headers = this.element.find('.accordion-header').filter(function() {
-          return $(this).children('.accordion-pane').length > 0;
-        });
-
-        var active = self.element.find('.is-selected');
-
-        if (active.length === 0) {
-          active = this.anchors.filter(':not(:disabled):not(:hidden)').first();
-          this.setActiveAnchor(active);
-        }
-
-        return this;
-      },
-
-      initSelected: function () {
-        var active = this.element.find('.is-selected'),
-          icons = active.parents('.accordion-header').children('a, button').find('.icon.plus-minus');
-
-        icons.addClass('active no-transition no-animate');
-
-        active.addClass('is-expanded').children('.accordion-pane').css({'height': 'auto', 'display': 'block'});
-        active.find('a').first().attr('aria-selected', true);
-        var buttonPluses = active.children('button.plus-minus').find('.icon.plus-minus').addClass('active no-transition no-animate');
-
-        active.parents('.accordion-header').addClass('is-expanded ')
-          .css({'height': 'auto', 'display': 'block'})
-          .attr('aria-expanded', 'true');
-
-        active.parents('.accordion-pane').css({'height': 'auto', 'display': 'block'});
-
-        setTimeout(function () {
-          icons.removeClass('no-transition no-animate');
-          buttonPluses.removeClass('no-transition no-animate');
-        } ,1);
         return this;
       },
 
       build: function() {
         var self = this;
-        this.element.attr({
-          'aria-multiselectable': 'true'
-        }).find('.accordion-pane').attr({
-          'aria-multiselectable': 'false'
-        });
 
-        if (this.settings.allowOnePane) {
-          this.element.attr({
-            'aria-multiselectable': 'false'
-          });
-        }
+        this.headers = this.element.find('.accordion-header');
+        this.anchors = this.headers.children('a');
+        this.panes = this.headers.next('.accordion-pane');
 
-        this.headers.attr({
-          'role' : 'presentation'
-        });
+        // Accordion Headers that have an expandable pane need to have an expando-button added inside of them
+        this.headers.each(function addExpander() {
+          var header = $(this);
 
-        this.element.find('a + .accordion-pane').parent().each(function() {
-          var header = $(this),
-            pane = header.children('.accordion-pane');
+          // Strip newlines
+          header.removeHtmlWhitespace()
+            .attr('role', 'presentation');
 
-          pane.addClass('no-transition');
-          if (header.hasClass('is-expanded')) {
-            header.attr('aria-expanded', 'true');
-
-            header.find('.icon.plus-minus').first().addClass('active');
-            pane.one('animateOpenComplete', function() {
-              $(this).removeClass('no-transition');
-            });
-            self.openHeader(header);
-          } else {
-            if (!self.selectedSet) {
-              pane.one('animateClosedComplete', function() {
-                $(this).removeClass('no-transition');
-              });
-              self.closeHeader(header);
-            }
+          if (!header.next('.accordion-pane').length) {
+            return;
           }
 
-          //Add Plus Minus Icons
-          header.find('.accordion-pane').not(':first').prev('a').each(function () {
-            var subhead = $(this),
-              plusminus = subhead.find('.icon.plus-minus');
+          var expander = header.children('.btn');
+          if (!expander.length) {
+            expander = $('<button class="btn"></button>').insertBefore(header.children('a'));
+            $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>').appendTo(expander);
+          }
 
-            if (plusminus.length === 0) {
-              subhead.prepend('<span class="icon plus-minus" aria-hidden="true" focusable="false"></span>');
-            } else {
-              plusminus.removeClass('active');
-            }
-          });
+          var description = expander.children('.audible');
+          if (!description.length) {
+            description = $('<span class="audible"></span>').appendTo(expander);
+          }
+          description.text(Locale.translate('Expand'));
+
+          // Don't allow an SVG and an Expando-Icon to co-exist.  Remove the Expando if there's an icon present.
+          if (expander.children('svg').length && expander.children('.plus-minus').length) {
+            expander.children('.plus-minus').remove();
+          }
+        });
+
+        // Setup correct ARIA for accordion panes, and auto-collapse them
+        this.panes.each(function addPaneARIA() {
+          var pane = $(this),
+            header = pane.prev('.accordion-header');
+
+          header.children('a').attr({'aria-haspopup': 'true', 'role': 'button'});
+
+          if (!self.isExpanded(header)) {
+            pane.data('ignore-animation-once', true);
+            self.collapse(header);
+          }
         });
 
         return this;
       },
 
       handleEvents: function() {
-        var self = this,
-          thresholdReached = false,
-          touchTimeout;
+        var self = this;
 
-        // Touch Interaction will activate the accordion header only if touch scrolling doesn't take place
-        // beyond certain distance and time thresholds.  The touchstart event is cancelled
-        this.anchors.add(this.anchors.prev('.plus-minus')).on('touchstart.accordion', function(e) {
-          var pos = {
-            x: e.originalEvent.touches[0].pageX,
-            y: e.originalEvent.touches[0].pageY
-          },
-            threshold = 10, // in px
-            touchstartE = e;
-
-          if (touchTimeout) {
-            clearTimeout(touchTimeout);
+        this.headers.onTouchClick('accordion').on('click.accordion', function(e) {
+          self.handleHeaderClick(e, $(this));
+        }).on('focusin.accordion', function(e) {
+          if (!self.originalSelection) {
+            self.originalSelection = $(e.target);
           }
 
-          $(this).on('touchmove.accordion', function(e) {
-            var newPos = {
-              x: e.originalEvent.changedTouches[0].pageX,
-              y: e.originalEvent.changedTouches[0].pageY
-            };
-
-            if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
-                (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
-              thresholdReached = true;
-            }
-
-            $(this).on('touchend.accordion touchcancel.accordion', function(e) {
-              clearTimeout(touchTimeout);
-              e.preventDefault();
-              e.stopPropagation();
-              $(this).off('touchmove.accordion touchend.accordion touchcancel.accordion');
-              if (!thresholdReached) {
-                touchstartE.preventDefault();
-                touchstartE.returnValue = false;
-                $(e.target).click();
-                return false;
-              }
-            });
-          });
-
-          touchTimeout = setTimeout(function() {
-            if (!thresholdReached) {
-              e.preventDefault();
-              e.returnValue = false;
-              $(this).off('touchmove.accordion');
-            }
-          }, 50);
-        }).on('click.accordion', function(e) {
-          e.preventDefault();
-          self.handleClick(e);
+          $(this).addClass('is-focused');
+        }).on('focusout.accordion', function() {
+          $(this).removeClass('is-focused');
         }).on('keydown.accordion', function(e) {
-          self.handleKeydown(e);
-        }).on('focus.accordion', function(e) {
-          self.handleFocus(e, $(this));
-        }).on('blur.accordion', function(e) {
-          self.handleBlur(e, $(this));
+          self.handleKeys(e);
         });
 
-        this.element.one('updated.accordion', function() {
-          self.updated();
+        this.anchors.on('click.accordion', function(e) {
+          return self.handleAnchorClick(e, $(this));
+        });
+
+        this.headers.children('[class^="btn"]').onTouchClick('accordion').on('click.accordion', function(e) {
+          self.handleExpanderClick(e, $(this));
+        }).on('keydown.accordion', function(e) {
+          self.handleKeys(e);
         });
 
         return this;
       },
 
-      handleClick: function(e) {
-        // To prevent the weird Safari Bug, prevent default here
-        e.preventDefault();
-
-        // Set and handle the Link.  Make sure we target the correct element (the <a> tag)
-        var link = $(e.target);
-        if (link.is('span, svg, use')) {
-          link = link.closest('a');
-        }
-        if (link.is('button.plus-minus')) {
-          link = link.next('a');
-        }
-
-        if (this.element.hasClass('is-disabled') || link.parent().hasClass('is-disabled')) {
-          e.stopPropagation();
-          return false;
-        }
-
-        this.setActiveAnchor(link);
-        this.handleSelected(e);
-      },
-
-      handleFocus: function(e, anchor) {
-        if (this.element.hasClass('is-disabled')) {
-          e.preventDefault();
-          return false;
-        }
-        anchor.parent().addClass('is-focused');
-      },
-
-      handleBlur: function(e, anchor) {
-        if (this.element.hasClass('is-disabled')) {
-          e.preventDefault();
-          return false;
-        }
-        anchor.parent().removeClass('is-focused');
-      },
-
-      handleKeydown: function(e) {
-        if (this.element.hasClass('is-disabled')) {
-          return false;
-        }
-
-        var self = this,
-          key = e.which,
-          anchors = this.anchors.filter(':not(:disabled):not(:hidden)'),
-          selected = this.element.find('.is-selected').children('a'),
-          next, prev;
-
-        if (!selected.length) {
-          selected = anchors.first();
-        }
-
-        // NOTE: Enter is handled by the anchor's default implementation
-        if (key === 9) { // Tab
-
-          if (!e.shiftKey) {
-            // Go Forward
-            var panel = selected.next('.accordion-pane'),
-              firstItem;
-
-            if (panel.length && panel.parent().hasClass('is-expanded')) {
-              e.preventDefault();
-              firstItem = panel.find(':focusable').first();
-              if (firstItem[0].tagName && firstItem[0].tagName === 'A') {
-                this.setActiveAnchor(firstItem);
-              } else {
-                firstItem.focus();
-              }
-              return false;
-            }
-
-            // Navigate to the next header
-            next = anchors.eq(anchors.index(selected) + 1);
-            if (next.length) {
-              e.preventDefault();
-              this.setActiveAnchor(next);
-              return false;
-            }
-
-          } else {
-            // Go Backward
-            var index = anchors.index(selected) - 1;
-            prev = anchors.eq(index);
-            if (prev.length && index > -1) {
-              e.preventDefault();
-              this.setActiveAnchor(prev);
-              return false;
-            }
-
-            var parent = selected.parentsUntil(this.element, '.accordion-header').eq(1);
-            if (parent.length) {
-              e.preventDefault();
-              this.setActiveAnchor(parent.children('a'));
-              return false;
-            }
-
-          }
-
-          // If e.preventDefault() doesn't fire, focus may be on an element outside of the accordion.
-          // If this happens, trigger a 'blur' event on the main accordion so we can communicate to other
-          // plugins that focus is no longer here.
-          setTimeout(function() {
-            if (!$.contains(self.element[0], document.activeElement)) {
-              self.element.trigger('blur');
-            }
-          }, 0);
-        }
-
-        if (key === 32) { // Spacebar
-          this.handleSelected(selected);
-          return false;
-        }
-
-        if (key === 37 || key === 38) { // Left/Up
-          e.preventDefault();
-          prev = anchors.eq(anchors.index(selected) - 1);
-          if (!prev.length) {
-            prev = anchors.last();
-          }
-          this.setActiveAnchor(prev);
-          return false;
-        }
-
-        if (key === 39 || key === 40) { // Right/Down
-          e.preventDefault();
-          next = anchors.eq(anchors.index(selected) + 1);
-          if (!next.length) {
-            next = anchors.first();
-          }
-          this.setActiveAnchor(next);
-        }
-      },
-
-      // NOTE: "e" is either an event or a jQuery object containing a reference to an <a>
-      handleSelected: function(e) {
-        var isEvent = e !== undefined && e.type !== undefined,
-          target = isEvent ? $(e.target) : e,
-          href, isAnchor, isRealAnchor, isExpander, hasExpander;
-
-        function checkAnchor() {
-          href = target.attr('href');
-          isAnchor = target.is('a');
-          isRealAnchor = href && (href !== '' && href !== '#');
-          isExpander = target.is('.plus-minus');
-          hasExpander = target.parent().find('.plus-minus');
-        }
-        checkAnchor();
-
-        if (target.is('span, svg, use') && !isExpander) {
-          target = target.closest('a');
-          checkAnchor();
-        }
-
-        if (this.element.hasClass('is-disabled') || (target).hasClass('is-disabled')) {
-          if (isEvent) {
-            e.returnValue = false;
-          }
-          return false;
-        }
-
-        if (isAnchor && !isRealAnchor) {
-          if (e.preventDefault) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-          }
-
-          if (hasExpander) {
-            this.toggleHeader(target.parent());
-          }
-
-          return false;
-        }
-
-        if (isExpander) {
-          this.toggleHeader(target.parent());
-        }
-
-        if (isRealAnchor) {
-          this.element.trigger('selected', [target]);
-          window.location.href = href;
-        }
-
-        return true;
-      },
-
-      setActiveAnchor: function(anchor) {
-        this.headers.removeClass('child-selected');
-
-        this.anchors.attr({
-          'aria-selected': 'false'
-        }).parent().removeClass('is-selected');
-
-        anchor.attr({
-          'aria-selected': 'true'
-        }).parent().addClass('is-selected')
-
-        .parentsUntil(this.element, '.accordion-header')
-          .addClass('child-selected');
-
-        anchor.focus();
-      },
-
-      toggleHeader: function(header, forceClosed) {
-        if (forceClosed || header.hasClass('is-expanded')) {
-          this.closeHeader(header);
-        } else {
-          this.openHeader(header);
-        }
-      },
-
-      openHeader: function(header) {
-        var self = this,
-          a = header.children('a'),
-          source = header.attr('data-source'),
-          childPane = header.children('.accordion-pane');
-
-        function open() {
-          if (self.settings.allowOnePane) {
-            self.headers.not(header).filter(function() {
-              return header.parentsUntil(this.element).filter($(this)).length === 0;
-            }).each(function() {
-              if ($(this).hasClass('is-expanded')) {
-                self.closeHeader($(this));
-              }
-            });
-          }
-
-          header.attr('aria-expanded', 'true').addClass('is-expanded');
-          var plusminus = header.find('.icon.plus-minus');
-          plusminus.addClass('active');
-
-          header.find('.accordion-pane').not(':first').prev('a').each(function () {
-            var subhead = $(this),
-              plusminus = subhead.find('.icon.plus-minus').removeClass('no-transition no-animate');
-
-            if (plusminus.length === 0) {
-              subhead.prepend('<span class="icon plus-minus" aria-hidden="true" focusable="false"></span>');
-            } else {
-              plusminus.removeClass('active');
-            }
-          });
-
-          header.children('.accordion-pane').css('display','block').one('animateOpenComplete', function() {
-            // Note: Moved this here from animation classes
-            this.style.height = 'auto';
-            header.trigger('expanded');
-          }).animateOpen();
-        }
-
-        if (source && source !== null && source !== undefined && !childPane.contents().length) {
-          this.loadExternalSource(a, source, open);
-        } else {
-          if (!childPane.length) {
-            return;
-          }
-          open();
-        }
-      },
-
-      closeHeader: function(header) {
-        if (!header.children('.accordion-pane').length) {
+      handleHeaderClick: function(e, header) {
+        if (!header || !header.length || header.hasClass('is-disabled') || header.data('is-animating')) {
           return;
         }
 
-        header.attr('aria-expanded', 'false').removeClass('is-expanded');
-        header.find('.icon.plus-minus').first().removeClass('active');
-        header.children('.accordion-pane').one('animateClosedComplete', function(e) {
-          e.stopPropagation();
-          $(this).add($(this).find('.accordion-pane')).css('display', 'none');
-          header.trigger('collapsed');
-        }).animateClosed();
+        // Check that we aren't clicking the expando button.  If we click that, this listener dies
+        if ($(e.target).is('[class^="btn"]')) {
+          return;
+        }
+
+        var anchor = header.children('a');
+        this.handleAnchorClick(e, anchor);
       },
 
-      loadExternalSource: function(target, source, callback) {
+      handleAnchorClick: function(e, anchor) {
         var self = this,
-          paneEl = target.next('.accordion-pane'),
-          sourceType = typeof source;
+          header = anchor.parent('.accordion-header'),
+          pane = header.next('.accordion-pane');
 
-        function done(markup) {
-          target
-            .removeClass('busy')
-            .trigger('requestend');
+        if (e) {
+          e.preventDefault();
+        }
 
-          paneEl.append(markup);
-          self.element.trigger('updated');
-          if (callback && typeof callback === 'function') {
-            callback();
+        if (!header.length || header.hasClass('is-disabled')) {
+          return false;
+        }
+
+        // Set the original element for DOM traversal by keyboard
+        this.originalSelection = anchor;
+
+        this.select(anchor);
+
+        function followLink() {
+          var href = anchor.attr('href');
+          if (href && href !== '' && href !== '#') {
+            self.element.trigger('selected', [header]);
+            window.location.href = href;
+            return true;
+          }
+          return false;
+        }
+
+        function toggleExpander() {
+          if (pane.length) {
+            self.toggle(header);
+          }
+          anchor.focus();
+        }
+
+        // If no jQuery event is passed in, simply toggle the header pane and be done.
+        if (!e) {
+          if (!followLink()) {
+            toggleExpander();
+          }
+          return true;
+        }
+
+        // Stop propagation here because we don't want to bubble up to the Header and potentially click the it twice
+        e.stopPropagation();
+
+        // If the anchor's a real link, follow the link and die here
+        if (followLink()) {
+          return true;
+        }
+
+        // If it's not a real link, try and toggle an expansion pane
+        toggleExpander();
+        return true;
+      },
+
+      handleExpanderClick: function(e, expander) {
+        var header = expander.parent('.accordion-header');
+        if (!header.length || header.hasClass('is-disabled') || header.data('is-animating')) {
+          return;
+        }
+
+        // Set the original element for DOM traversal by keyboard
+        this.originalSelection = expander;
+
+        // Don't propagate when clicking the expander.  Propagating can cause the link to be clicked in cases
+        // where it shouldn't be clicked.
+        e.stopPropagation();
+
+        var pane = header.next('.accordion-pane');
+        if (pane.length) {
+          this.toggle(header);
+          return;
+        }
+
+        // If there's no accordion pane, attempt to simply follow the link.
+        this.handleAnchorClick(null, header.children('a'));
+      },
+
+      handleKeys: function(e) {
+        var key = e.which,
+          target = $(e.target); // can be an anchor, or expando button
+
+        if (key === 9) { // Tab (also triggered by Shift + Tab)
+          if (target.is('a') && target.prev('.btn').length) {
+            this.originalSelection = target.prev('.btn');
+          } else {
+            this.originalSelection = target.next('a');
           }
         }
 
-        if (!paneEl.length) {
-          var parentEl = this.element[0].tagName.toLowerCase();
-          paneEl = $('<' + parentEl + ' class="accordion-pane"></' + parentEl + '>').appendTo(target.parent());
+        if (key === 37 || key === 38) { // Left Arrow/Up Arrow
+          e.preventDefault();
+          if (e.shiftKey) {
+            return this.ascend(target);
+          }
+          return this.prevHeader(target);
         }
 
-        target
-          .addClass('busy')
-          .trigger('requeststart');
-
-        if (sourceType === 'function') {
-          // Call the 'source' setting as a function with the done callback.
-          settings.source(done);
-        } else {
-          // Convert source to string, and check for existing DOM elements that match the selectors.
-          var str = source.toString(),
-            request,
-            jqRegex = /\$\(\'/,
-            idRegex = /#[A-Za-z0-9]+/;
-
-          if (jqRegex.test(str)) {
-            str = str.replace("$('", '').replace("')", ''); //jshint ignore:line
-            done($(str).html());
-            return;
+        if (key === 39 || key === 40) { // Right Arrow/Down Arrow
+          e.preventDefault();
+          if (e.shiftKey) {
+            return this.descend(target);
           }
+          return this.nextHeader(target);
+        }
+      },
 
-          if (idRegex.test(str)) {
-            done($(str).html());
-            return;
-          }
+      // Makes a header "selected" if its expander button or anchor tag is focused.
+      // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+      select: function(element) {
+        if (!element || !element.length) {
+          return;
+        }
 
-          // String is a URL.  Attempt an AJAX GET.
-          request = $.get(str);
+        // Make sure we select the anchor
+        var anchor = element,
+          header = anchor.parent();
+        if (anchor.is('[class^="btn"]')) {
+          anchor = element.next('a');
+        }
 
-          request.done(function(data) {
-            done(data);
-          }).fail(function() {
-            done('');
+        this.headers.removeClass('child-selected').removeClass('is-selected');
+
+        header.addClass('is-selected')
+        .parentsUntil(this.element, '.accordion-pane')
+          .prev('.accordion-header')
+          .addClass('child-selected');
+      },
+
+      // Checks if an Accordion Section is currently expanded
+      isExpanded: function(header) {
+        if (!header || !header.length) {
+          return;
+        }
+
+        return header.children('a').attr('aria-expanded') === 'true';
+      },
+
+      toggle: function(header) {
+        if (!header || !header.length) {
+          return;
+        }
+
+        if (this.isExpanded(header)) {
+          this.collapse(header);
+          return;
+        }
+        this.expand(header);
+      },
+
+      expand: function(header) {
+        if (!header || !header.length) {
+          return;
+        }
+
+        var self = this,
+          pane = header.next('.accordion-pane'),
+          a = header.children('a');
+
+        // Change the expander button into "collapse" mode
+        var expander = header.children('.btn');
+        if (expander.length) {
+          expander.children('.plus-minus').addClass('active');
+          expander.children('.audible').text(Locale.translate('Collapse'));
+        }
+
+        // If we have the correct settings defined, close other accordion headers that are not parents of this one.
+        if (this.settings.allowOnePane) {
+          var headerParents = header.parentsUntil(this.element).filter('.accordion-pane').prev('.accordion-header').add(header);
+          this.headers.not(headerParents).each(function() {
+            var h = $(this);
+            if (self.isExpanded(h)) {
+              self.collapse(h);
+            }
           });
         }
 
+        pane.one('animateOpenComplete', function(e) {
+          e.stopPropagation();
+          a.attr('aria-expanded', 'true');
+          a.trigger('expanded');
+        }).css('display', 'block').animateOpen();
+      },
+
+      collapse: function(header) {
+        if (!header || !header.length) {
+          return;
+        }
+
+        var self = this;
+
+        // Change the expander button into "expand" mode
+        var expander = header.children('.btn');
+        if (expander.length) {
+          expander.children('.plus-minus').removeClass('active');
+          expander.children('.audible').text(Locale.translate('Expand'));
+        }
+
+        var pane = header.next('.accordion-pane'),
+          a = header.children('a');
+        a.attr('aria-expanded', 'false');
+
+        pane.one('animateClosedComplete', function(e) {
+          e.stopPropagation();
+          pane.css('display', 'none');
+          self.collapse(pane.children('.accordion-header'));
+          a.trigger('collapsed');
+        }).animateClosed();
+      },
+
+      // Prepares a handful of references to a specific
+      getElements: function(eventTarget) {
+        var target = $(eventTarget),
+          header, anchor, expander, pane;
+
+        if (target.is('.btn')) {
+          expander = target;
+          anchor = expander.next('a');
+        }
+
+        if (target.is('a')) {
+          anchor = target;
+          expander = anchor.prev('.btn');
+        }
+
+        header = anchor.parent();
+        pane = header.next('.accordion-pane');
+
+        return {
+          header: header,
+          expander: expander,
+          anchor: anchor,
+          pane: pane
+        };
+      },
+
+      // Selects an adjacent Accordion Header that sits directly before the currently selected Accordion Header.
+      // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+      prevHeader: function(element) {
+        var elem = this.getElements(element),
+          adjacentHeaders = elem.header.parent().children(),
+          currentIndex = adjacentHeaders.index(elem.header),
+          target = $(adjacentHeaders.get(currentIndex - 1));
+
+        if (!adjacentHeaders.length || currentIndex === 0) {
+          if (elem.header.parent('.accordion-pane').length) {
+            return this.ascend(elem.header);
+          }
+          target = adjacentHeaders.last();
+        }
+
+        while (target.is('.accordion-content')) {
+          if (target.is(':only-child') || target.is(':first-child')) {
+            return this.ascend(elem.header);
+          }
+          target = target.prev();
+        }
+
+        if (target.is('.accordion-pane')) {
+          var prevHeader = target.prev('.accordion-header');
+          if (this.isExpanded(prevHeader)) {
+            var descendantChildren = prevHeader.next('.accordion-pane').children(':not(.accordion-content)');
+            if (descendantChildren.length) {
+              return this.descend(prevHeader, -1);
+            }
+          }
+          target = prevHeader;
+
+          // if no target's available here, we've hit the end and need to wrap around
+          if (!target.length) {
+            if (elem.header.parent('.accordion-pane').length) {
+              return this.ascend(elem.header);
+            }
+
+            target = adjacentHeaders.last();
+            while (target.is('.accordion-content')) {
+              target = target.prev();
+            }
+          }
+        }
+
+        this.focusOriginalType(target);
+      },
+
+      // Selects an adjacent Accordion Header that sits directly after the currently selected Accordion Header.
+      // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+      nextHeader: function(element) {
+        var elem = this.getElements(element),
+          adjacentHeaders = elem.header.parent().children(),
+          currentIndex = adjacentHeaders.index(elem.header),
+          target = $(adjacentHeaders.get(currentIndex + 1));
+
+        if (!adjacentHeaders.length || currentIndex === adjacentHeaders.length - 1) {
+          if (elem.header.parent('.accordion-pane').length) {
+            return this.ascend(elem.header, -1);
+          }
+          target = adjacentHeaders.first();
+        }
+
+        while (target.is('.accordion-content')) {
+          if (target.is(':only-child') || target.is(':last-child')) {
+            return this.ascend(elem.header);
+          }
+          target = target.next();
+        }
+
+        if (target.is('.accordion-pane')) {
+          var prevHeader = target.prev('.accordion-header');
+          if (this.isExpanded(prevHeader)) {
+            var descendantChildren = prevHeader.next('.accordion-pane').children(':not(.accordion-content)');
+            if (descendantChildren.length) {
+              return this.descend(prevHeader);
+            }
+          }
+          target = $(adjacentHeaders.get(currentIndex + 2));
+
+          // if no target's available here, we've hit the end and need to wrap around
+          if (!target.length) {
+            if (elem.header.parent('.accordion-pane').length) {
+              return this.ascend(elem.header, -1);
+            }
+
+            target = adjacentHeaders.first();
+            while (target.is('.accordion-content')) {
+              target = target.next();
+            }
+          }
+        }
+
+        this.focusOriginalType(target);
+      },
+
+      // Selects the first Accordion Header in the parent container of the current Accordion Pane.
+      // If we're at the top level, jump out of the accordion to the last focusable element.
+      // @param {Object} header - a jQuery Object containing an Accordion header.
+      // @param {integer} direction - if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+      ascend: function(header, direction) {
+        if (!direction) {
+          direction = 0;
+        }
+
+        var pane = header.parent('.accordion-pane'),
+          target = pane.prev();
+
+        if (direction === -1) {
+          target = pane.next('.accordion-header');
+          if (!target.length) {
+            return this.ascend(pane.prev(), -1);
+          }
+        }
+
+        this.focusOriginalType(target);
+      },
+
+      // Selects the first Accordion Header in the child container of the current Accordion Header.
+      // @param {Object} header - a jQuery Object containing an Accordion header.
+      // @param {integer} direction - if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+      descend: function(header, direction) {
+        if (!direction) {
+          direction = 0;
+        }
+
+        var pane = header.next('.accordion-pane'),
+          target = pane.children('.accordion-header').first();
+
+        if (direction === -1) {
+          target = pane.children('.accordion-header').last();
+          if (this.isExpanded(target)) {
+            return this.descend(target, -1);
+          }
+        }
+
+        this.focusOriginalType(target);
+      },
+
+      // Selects an Accordion Header, then focuses either an expander button or an anchor.
+      // Governed by the property "this.originalSelection".
+      // @param {Object} header - a jQuery Object containing an Accordion header.
+      focusOriginalType: function(header) {
+        this.select(header);
+
+        if (this.originalSelection.is('.btn') && header.children('.btn').length) {
+          header.children('.btn').focus();
+        } else {
+          header.children('a').focus();
+        }
       },
 
       disable: function() {
@@ -563,23 +547,17 @@
           .removeClass('is-disabled');
       },
 
+      updated: function() {
+        return this;
+      },
+
+      teardown: function() {
+        return this;
+      },
+
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.anchors.parent()
-          .removeClass('is-focused')
-          .removeClass('is-selected')
-          .removeClass('is-expanded')
-          .removeAttr('aria-expanded')
-          .removeAttr('role');
-        this.anchors
-          //.removeAttr('tabindex')
-          .removeAttr('aria-selected')
-          .offTouchClick('accordion')
-          .off('click.accordion keydown.accordion focus.accordion blur.accordion');
-        this.element
-          .off('updated')
-          .removeAttr('role')
-          .removeAttr('aria-multiselectable');
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -588,7 +566,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
+        instance.settings = $.extend({}, defaults, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Accordion(this, settings));
       }

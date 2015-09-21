@@ -76,8 +76,12 @@ var express = require('express'),
 
   app.get('/tests/applicationmenu/*', function(req, res) {
     function path() {
-      if (req.url.toString().match(/\/site/)) {
+      var url = req.url.toString();
+
+      if (url.match(/\/site/)) {
         return 'tests/applicationmenu/site/layout';
+      } else if (url.match(/\/different-header-types/)) {
+        return 'tests/applicationmenu/different-header-types/layout';
       }
       return 'tests/applicationmenu/six-levels/layout';
     }

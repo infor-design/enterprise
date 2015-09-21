@@ -1,299 +1,271 @@
+<!--
+  NOTE:
+  See js/demo.js for explanation as to how /change/path links are converted.
+-->
 
 <div class="row">
+  <div class="twelve columns">
 
-  <div class="six columns">
-    <ul id="light-accordion" class="accordion light">
-      <li class="accordion-header">
-        <a href="#">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-user"></use>
-          </svg>
-          <span class="title">My Account</span>
-        </a>
-        <ul class="accordion-pane">
-          <li class="accordion-header">
-            <a href="#">
-              <span class="title">Notifications</span>
-            </a>
-          </li>
-          <li class="accordion-header">
-            <a href="#">
-              <span class="title">Administrator</span>
-            </a>
-          </li>
-          <li class="accordion-header">
-            <a href="#">
-              <span class="title">User Settings</span>
-            </a>
-          </li>
-          <li class="accordion-header">
-            <a href="#">
-              <span class="title">Help</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="accordion-header">
-        <a href="#">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-bookmark-filled"></use>
-          </svg>
-          <span class="title">Bookmarks</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            Here is some information about Bookmarks.
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Bookmark #1</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Bookmark #2</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Bookmark #3</span>
-            </a>
-          </div>
-        </div>
-      </li>
-      <li class="accordion-header">
-        <a href="#">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-clock"></use>
-          </svg>
-          <span class="title">History</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">History Listing #1</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">History Listing #2</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">History Listing #3</span>
-            </a>
-          </div>
-        </div>
-      </li>
-      <li class="accordion-header">
-        <a href="#">
+    <div id="new-accordion" class="accordion" data-demo-set-links="true">
+      <div class="accordion-header">
+        <a href="#"><span>Header, No Expansion, No Icon, No Link</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <button class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-home"></use>
           </svg>
-          <span class="title">Homepages</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            Dynamic e-markets, next-generation weblogs front-end, impactful user-centred. Tagclouds, distributed integrated methodologies seize benchmark visualize engage, viral, cross-platform supply-chains authentic strategic.
-          </div>
-        </div>
-      </li>
-      <li class="accordion-header">
-        <a href="#">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-roles"></use>
-          </svg>
-          <span class="title">My Roles</span>
-        </a>
-        <ul class="accordion-pane">
-          <li class="accordion-header">
-            <a href="#">
-              <span class="title">Role One</span>
-            </a>
-            <ul class="accordion-pane">
-              <li class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #1</span>
-                </a>
-              </li>
-              <li class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #2</span>
-                </a>
-              </li>
-              <li class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #3</span>
-                </a>
-              </li>
-              <li class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #4</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="accordion-header">
-            <a href="#">
-              <span class="title">Role Two</span>
-            </a>
-          </li>
-          <li class="accordion-header">
-            <a href="#">
-              <span class="title">Role Three</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="accordion-header">
-        <a href="#">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-share"></use>
-          </svg>
-          <span class="title">Option #7</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            Dynamic e-markets, next-generation weblogs front-end, impactful user-centred. Tagclouds, distributed integrated methodologies seize benchmark visualize engage, viral, cross-platform supply-chains authentic strategic.
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
+          <span class="audible">Trigger</span>
+        </button>
+        <a href="#"><span>Header, No Expansion, Has Icon, No Link<span></a>
+      </div>
 
-  <div class="six columns" style="width: 300px">
-
-    <div id="dark-accordion" class="accordion dark" data-allow-one-pane="true">
+      <!-- Level 1 -->
       <div class="accordion-header">
-        <a href="#">
+        <a href="#"><span>Header, Has Expansion, No Icon, No Link</span></a>
+      </div>
+      <div class="accordion-pane">
+
+        <!-- Level 2 -->
+        <div class="accordion-header">
+          <a href="#"><span>Level 2</span></a>
+        </div>
+        <div class="accordion-pane">
+
+          <!-- Level 3 -->
+          <div class="accordion-header">
+            <a href="#"><span>Level 3</span></a>
+          </div>
+          <div class="accordion-pane">
+
+            <!-- Level 4 -->
+            <div class="accordion-header">
+              <a href="#"><span>Level 4</span></a>
+            </div>
+            <div class="accordion-pane">
+
+              <!-- Level 5 -->
+              <div class="accordion-header">
+                <a href="#"><span>Level 5</span></a>
+              </div>
+              <div class="accordion-pane">
+
+                <!-- Level 6 -->
+                <div class="accordion-header">
+                  <a href="#"><span>Level 6</span></a>
+                </div>
+                <div class="accordion-pane">
+                  <div class="accordion-content">
+                    <h3>You've reached the bottom</h3>
+                    <p>Nice work</p>
+                  </div>
+                </div>
+
+                <div class="accordion-header">
+                  <a href="#"><span>Level 6 Header Only</span></a>
+                </div>
+
+              </div>
+
+              <!-- Level 5 -->
+              <div class="accordion-header">
+                <a href="#"><span>Level 5 Content</span></a>
+              </div>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  <h3>Level 5 Content Pane</h3>
+                  <p>Nothing to see here</p>
+                </div>
+              </div>
+
+              <div class="accordion-header">
+                <a href="#"><span>Level 5 Header Only</span></a>
+              </div>
+
+            </div>
+
+            <!-- Level 4 -->
+            <div class="accordion-header">
+              <a href="#"><span>Level 4 Content</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="accordion-content">
+                <h3>Level 4 Content Pane</h3>
+                <p>Nothing to see here</p>
+              </div>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Level 4 Header Only</span></a>
+            </div>
+
+          </div>
+
+          <!-- Level 3 -->
+          <div class="accordion-header">
+            <a href="#"><span>Level 3 Content</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+              <h3>Level 3 Content Pane</h3>
+              <p>Nothing to see here</p>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <a href="#"><span>Level 3 Header Only</span></a>
+          </div>
+
+        </div>
+
+        <!-- Level 2 -->
+        <div class="accordion-header">
+          <a href="#"><span>Level 2 Content</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="accordion-content">
+            <h3>Level 2 Content Pane</h3>
+            <p>Nothing to see here</p>
+          </div>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Level 2 Header Only</span></a>
+        </div>
+
+      </div>
+
+      <div class="accordion-header">
+        <button class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-home"></use>
           </svg>
-          <span class="title">Home</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Bookmark #1</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Bookmark #2</span>
-            </a>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Bookmark #3</span>
-            </a>
-          </div>
+        </button>
+        <a href="#"><span>Header, Has Expansion, Has Icon, No Link</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Accordion Content</h3>
+          <p>Here's one paragraph</p>
+          <p>Here's another!</p>
         </div>
       </div>
+
       <div class="accordion-header">
-        <a href="#">
+        <a href="/change/path"><span>Header, No Expansion, No Icon, Has Link</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <button class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-clock"></use>
+            <use xlink:href="#icon-home"></use>
           </svg>
-          <span class="title">History</span>
-        </a>
+          <span class="audible">Expand/Collapse</span>
+        </button>
+        <a href="/change/path"><span>Header, No Expansion, Has Icon, Has Link</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <a href="/change/path"><span>Header, Has Expansion, No Icon, Has Link</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Level 2 Accordion Subheaders with Links</h3>
+          <p>All of the subheaders within this pane that are not expandable will have outbound links.</p>
+        </div>
+        <div class="accordion-header">
+          <a href="/change/path"><span>Level 2 Outbound Link #1</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="/change/path"><span>Level 2 Outbound Link #2</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Level 2 Header</span></a>
+        </div>
         <div class="accordion-pane">
           <div class="accordion-content">
-            This section contains a few selectable options related to your history.  Please use the arrow keys to navigate below.
+            <h3>Level 3 Accordion Subheaders with Links</h3>
+            <p>All of the subheaders within this pane that are not expandable will have outbound links.</p>
           </div>
           <div class="accordion-header">
-            <a href="#">
-              <span class="title">History #1</span>
-            </a>
+            <a href="/change/path"><span>Level 3 Outbound Link #1</span></a>
           </div>
           <div class="accordion-header">
-            <a href="#">
-              <span class="title">History #2</span>
-            </a>
+            <a href="/change/path"><span>Level 3 Outbound Link #2</span></a>
           </div>
           <div class="accordion-header">
-            <a href="#">
-              <span class="title">History #3</span>
-            </a>
+            <a href="#"><span>Level 3 Header</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+              <h3>Level 4 Accordion Subheaders with Links</h3>
+              <p>All of the subheaders within this pane that are not expandable will have outbound links.</p>
+            </div>
+            <div class="accordion-header">
+              <a href="/change/path"><span>Level 4 Outbound Link #1</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="/change/path"><span>Level 4 Outbound Link #2</span></a>
+            </div>
+            <div class="accordion-header">
+              <a href="#"><span>Level 4 Header</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="accordion-content">
+                <h3>Level 5 Accordion Subheaders with Links</h3>
+                <p>All of the subheaders within this pane that are not expandable will have outbound links.</p>
+              </div>
+              <div class="accordion-header">
+                <a href="/change/path"><span>Level 5 Outbound Link #1</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="/change/path"><span>Level 5 Outbound Link #2</span></a>
+              </div>
+              <div class="accordion-header">
+                <a href="#"><span>Level 5 Header</span></a>
+              </div>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  <h3>Level 6 Accordion Subheaders with Links</h3>
+                  <p>All of the subheaders within this pane will have outbound links.</p>
+                </div>
+                <div class="accordion-header">
+                  <a href="/change/path"><span>Level 6 Outbound Link #1</span></a>
+                </div>
+                <div class="accordion-header">
+                  <a href="/change/path"><span>Level 6 Outbound Link #2</span></a>
+                </div>
+                <div class="accordion-header">
+                  <a href="#"><span>Level 6 Header</span></a>
+                </div>
+                <div class="accordion-pane">
+                  <div class="accordion-content">
+                    <h3>You've reached the bottom!</h3>
+                    <p>Nice Work</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
       <div class="accordion-header">
-
-        <button tabindex="-1" class="plus-minus"><span focusable="false" aria-hidden="true" class="icon plus-minus"></span><span class="audible">Expand/Collapse</span></button>
-
-        <a href="#">
-          <span class="title">Roles</span>
-        </a>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Role #1</span>
-            </a>
-            <div class="accordion-pane">
-              <div class="accordion-header is-selected">
-                <a href="http://www.soho.infor.com">
-                  <span class="title">Task #1</span>
-                </a>
-              </div>
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #2</span>
-                </a>
-              </div>
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #3</span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Name and Address System Housekeeping</span>
-            </a>
-            <div class="accordion-pane">
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #1</span>
-                </a>
-              </div>
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #2</span>
-                </a>
-              </div>
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #3</span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="accordion-header">
-            <a href="#">
-              <span class="title">Role #3</span>
-            </a>
-            <div class="accordion-pane">
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #1</span>
-                </a>
-              </div>
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #2</span>
-                </a>
-              </div>
-              <div class="accordion-header">
-                <a href="#">
-                  <span class="title">Task #3</span>
-                </a>
-              </div>
-            </div>
-          </div>
+        <button class="btn">
+          <span focusable="false" class="icon plus-minus"></span>
+          <span class="audible">Expand/Collapse</span>
+        </button>
+        <a href="/change/path"><span>Expandable! ... with an Actual Link</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Accordion Content</h3>
+          <p>Here's one paragraph</p>
+          <p>Here's another!</p>
         </div>
       </div>
+
     </div>
 
   </div>

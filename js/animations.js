@@ -46,6 +46,15 @@
         if (timeout) {
           clearTimeout(timeout);
         }
+
+        if ($self.data('ignore-animation-once')) {
+          $.removeData($self[0], 'ignore-animation-once');
+        }
+
+        if ($self.data('is-animating')) {
+          $.removeData($self[0], 'is-animating');
+        }
+
         $self.off(eventName + '.animateOpen');
         self.style.transition = '';
         self.style[dim] = distance;
@@ -65,6 +74,7 @@
       }
 
       // Animate
+      $self.data('is-animating', true);
       var prevVal = this.style[dim];
       this.style[dim] = distance;
       var endVal = getComputedStyle(this)[dim];
@@ -77,7 +87,7 @@
       this.style[dim] = endVal;
 
       // Trigger immediately if this element is invisible or has the 'no-transition' class
-      if ($self.is(':hidden') || $self.is('.no-transition')) {
+      if ($self.is(':hidden') || $self.is('.no-transition') || $self.data('ignore-animation-once')) {
         transitionEndCallback();
       }
     });
@@ -107,6 +117,15 @@
         if (timeout) {
           clearTimeout(timeout);
         }
+
+        if ($self.data('ignore-animation-once')) {
+          $.removeData($self[0], 'ignore-animation-once');
+        }
+
+        if ($self.data('is-animating')) {
+          $.removeData($self[0], 'is-animating');
+        }
+
         $self.off(eventName + '.animatedClosed');
         self.style.transition = '';
         self.style[dim] = '0px';
@@ -126,6 +145,7 @@
       }
 
       // Animate
+      $self.data('is-animating', true);
       this.style[dim] = getComputedStyle(this)[dim];
       // next line forces a repaint
       this['offset' + cDim]; // jshint ignore:line
@@ -135,9 +155,16 @@
       this.style[dim] = '0px';
 
       // Trigger immediately if this element is invisible or has the 'no-transition' class
-      if ($self.is(':hidden') || $self.is('.no-transition')) {
+      if ($self.is(':hidden') || $self.is('.no-transition') || $self.data('ignore-animation-once')) {
         transitionEndCallback();
       }
+    });
+  };
+
+  // Chainable jQuery plugin that checks if an element is in the process of animating
+  $.fn.isAnimating = function() {
+    return this.each(function() {
+      return $(this).data('is-animating') === true;
     });
   };
 

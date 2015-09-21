@@ -232,3 +232,17 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
   user-select: none;
   outline-style:none;
 }
+
+// Vertical Alignment Spacer
+// When using "vertical-align: middle;" to align inline-block elements in a container,
+// attach this as a Psuedo-element (::before or ::after) to the container that will hold these elements.
+// This will perfectly align the elements vertically.
+@mixin vertical-alignment-spacer {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  overflow: hidden;
+  vertical-align: middle;
+  visibility: hidden;
+  width: 1px;
+}

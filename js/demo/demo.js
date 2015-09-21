@@ -191,6 +191,24 @@ $(function($) {
     });
 
     //----------------------------------------------------------
+    //  Examples: Accordion
+    //----------------------------------------------------------
+
+    // Find any accordion control that has a "data-demo-set-links" attribute set to true.
+    // If found, change any non-empty and non-hashed (static) links to a relative link that reroutes to the current page.
+    // Use this as a convenient alternative to having to change 1000 links every time a demo page gets moved.
+    // Example: change "/path/to" to "/controls/accordion", if the URL is "http://localhost:4000/controls/accordion".
+    $('.accordion').filter('[data-demo-set-links]').each(function() {
+      var relativePath = window.location.pathname,
+        links = $(this).find('a').filter(function() {
+        var href = $(this).attr('href');
+        return href !== '' && href !== '#';
+      });
+
+      links.attr('href', relativePath);
+    });
+
+    //----------------------------------------------------------
     //  Examples: Tabs
     //----------------------------------------------------------
 
