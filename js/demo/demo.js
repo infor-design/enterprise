@@ -70,12 +70,12 @@ $(function($) {
       message: 'You are about to delete this application permanently. Would you like to proceed?',
       returnFocus: $(this),
       buttons: [{
-        text: 'No',
+        text: 'Yes',
         click: function(e, modal) {
           modal.close();
         }
       }, {
-        text: 'Yes',
+        text: 'No',
         click: function(e, modal) {
           modal.close();
         },
