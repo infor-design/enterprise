@@ -96,6 +96,12 @@
 
 .builder-content {
   height: calc(100% - 80px);
+
+  &.no-sidebar {
+    .builder-actions {
+      width: 100%;
+    }
+  }
 }
 
 .builder-actions,
