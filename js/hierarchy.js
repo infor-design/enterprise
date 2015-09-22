@@ -833,12 +833,13 @@
       },
 
       //John Resig(http://ejohn.org/)MIT Licensed
+      /* jshint ignore:start */
       template: function(str, data) {
+
         var cache = {};
         var fn = !/\W/.test(str) ?
         cache[str] = cache[str] ||
         this.template(document.getElementById(str).innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>')) :
-
         new Function('obj', 'var p=[], print=function(){ p.push.apply(p, arguments);}; with(obj){p.push(\'' + str
             .replace(/[\r\t\n]/g, ' ')
             .split('<%').join('\t')
@@ -851,6 +852,7 @@
 
         return data ? fn(data) : fn;
       }
+      /* jshint ignore:end */
     };
 
     // Initialize the plugin (Once)
