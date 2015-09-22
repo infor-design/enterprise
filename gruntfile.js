@@ -74,6 +74,7 @@ module.exports = function(grunt) {
             'temp/amd/form.js',
             'temp/amd/fileupload.js',
             'temp/amd/header.js',
+            'temp/amd/hierarchy.js',
             'temp/amd/homepage.js',
             'temp/amd/initialize.js',
             'temp/amd/lookup.js',
@@ -115,7 +116,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '<%= banner %>'+'<%= amdHeader %>',
+          banner: '<%= banner %>',
           sourceMap: true,
           sourceMapName: 'dist/js/sohoxi.map',
           separator: ';'
@@ -130,6 +131,7 @@ module.exports = function(grunt) {
       main: {
         files: [
           {expand: true, flatten: true, src: ['dist/js/sohoxi.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['dist/js/sohoxi.min.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/sohoxi-angular.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/sohoxi-angular.js'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/sohoxi-knockout.js'], dest: 'public/js/', filter: 'isFile'},
