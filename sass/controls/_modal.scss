@@ -152,11 +152,12 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin: 5px 0px 5px -17px;
+  margin: 5px 0 5px -17px;
 
   button {
     border: 1px solid transparent;
     border-left: 1px solid $modal-btn-border-color;
+    border-radius: 0;
     color: $modal-btn-color;
     cursor: pointer;
     float: left;

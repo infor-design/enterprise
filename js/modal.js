@@ -282,8 +282,16 @@
           }
         });
 
+        // hide modal until it loaded, resized and centered
+        self.element.css('opacity', 0);
         setTimeout(function () {
-          var focusElem = self.element.find(':focusable:not(.searchfield):first:not(button)');
+          $(window).trigger('resize');
+          self.resize();
+          self.element.css('opacity', 1);
+        }, 300);
+
+        setTimeout(function () {
+          var focusElem = self.element.find(':focusable:not(.searchfield):first');
           self.keepFocus();
           self.element.triggerHandler('open');
 
@@ -292,7 +300,6 @@
             focusElem = self.element.find('#message-title').attr('tabindex', '-1');
           }
           focusElem.focus();
-
         }, 10);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
@@ -419,7 +426,9 @@
             var keyCode = e.which || e.keyCode;
 
             if (keyCode === 27) {
-              self.close();
+              setTimeout(function () {
+                self.close();
+              }, 0);
             }
 
             if (keyCode === 9) {
@@ -435,6 +444,15 @@
               }
 
               self.element.find('#message-title').removeAttr('tabindex');
+            }
+
+            // Don't allow the modal to close if we hit enter to select a tab
+            if (keyCode === 13) {
+              var tabContainerParents = $(e.target).parentsUntil(self.element).filter('.tab-container');
+              if (tabContainerParents.length) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
             }
 
           });
