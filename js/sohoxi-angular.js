@@ -151,13 +151,12 @@
       return {
         replace: true,
         scope: false,
-        link: function(scope, elem, attrs) {
-           var modelTicks = attrs.ngModelTicks,
-            ticks = scope[modelTicks];
+        link: function(scope, elem) {
 
           setTimeout(function () {
-            elem.wizard({ticks: ticks});
+            elem.wizard();
           }, 1);
+
         }
       };
   };

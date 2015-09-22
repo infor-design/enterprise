@@ -317,7 +317,7 @@
       },
 
       // Render Paged Items
-      renderPages: function() {
+      renderPages: function(uiOnly) {
         var expr,
           self = this,
           pageInfo = {activePage: this.activePage, pagesize: this.settings.pagesize, total: -1};
@@ -331,10 +331,12 @@
             return;
           }
 
-          if (self.settings.source) {
+          if (self.settings.source && !uiOnly) {
             var api = table.data('datagrid');
 
             var response = function (data, pagingInfo) {
+              self.currPage = self.activePage;
+
               //Render Data
               api.loadData(data);
 
@@ -354,11 +356,17 @@
           //Make an ajax call and wait
           self.element.trigger('paging', pageInfo);
 
-          //Render page objects
           self.elements = self.element.children();
-          self.elements.hide();
-          expr = (self.activePage === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
-          self.elements.filter(expr).show();
+
+          //Render page objects
+          if (!self.settings.source) {
+            self.elements.hide();
+            expr = (self.activePage === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
+            self.elements.filter(expr).show();
+          } else {
+            self.elements.show();
+          }
+
           self.element.trigger('afterpaging', pageInfo);
         }, 0);
       },

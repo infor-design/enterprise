@@ -241,7 +241,8 @@
 }
 
 // Progess Bar Charts
-.chart-progressbar {
+.chart-completion-target,
+.chart-completion {
   background-color: $chart-progressbar-bg-color;
   height: 10px;
   margin-bottom: 70px;
@@ -316,3 +317,33 @@
     }
   }
 }
+
+.chart-completion {
+  margin-bottom: 25px;
+
+  .completed {
+    margin-top: 15px;
+
+    &[class=completed] {
+      background-color: $turquoise06;
+    }
+
+    &.error {
+      background-color: $alert-red;
+    }
+  }
+
+  .completed:after {
+    width: 0;
+  }
+}
+
+.colored.label {
+  color: $turquoise06;
+
+  span {
+    color: $font-color;
+  }
+}
+
+

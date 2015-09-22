@@ -1557,7 +1557,7 @@ $.fn.datagrid = function(options) {
         this.pager.activePage = 1;
         this.pager.elements = this.pager.element.children();
         this.pager.renderBar();
-        this.pager.renderPages();
+        this.pager.renderPages(true);
       }
     }
 

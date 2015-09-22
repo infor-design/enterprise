@@ -3,7 +3,7 @@
   <div class="one-third column">
 
     <span class="label" id="prbc-label1">Available Credit <span class="l-pull-right">$95,000</span></span>
-    <div class="chart-progressbar" id="chart-progressbar1" aria-labelledby="prbc-label1">
+    <div class="chart-completion-target" id="chart-progressbar1" aria-labelledby="prbc-label1">
       <div class="target" style="width: 66%">
         <span aria-hidden="true">$10,000 <br> Pending</span>
       </div>
@@ -12,8 +12,16 @@
       </div>
     </div>
 
+    <br>
+    <button class="btn" id="upd-progressbar-chart">Update</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
     <span class="label" id="prbc-label2">Procurement <span class="l-pull-right">$49,000</span></span>
-    <div class="chart-progressbar" aria-labelledby="prbc-label2">
+    <div class="chart-completion-target" aria-labelledby="prbc-label2">
       <div class="target" style="width: 66%">
         <span aria-hidden="true">16% <span class="audible">left to target</span></span>
       </div>
@@ -23,7 +31,7 @@
     </div>
 
     <span class="label" id="prbc-label3">Construction $19,000</span>
-    <div class="chart-progressbar" aria-labelledby="prbc-label3">
+    <div class="chart-completion-target" aria-labelledby="prbc-label3">
       <div class="target" style="width: 100%">
         <span aria-hidden="true">50% <span class="audible">left to target</span></span>
       </div>
@@ -32,9 +40,38 @@
       </div>
     </div>
 
-    <br>
-    <button class="btn" id="upd-progressbar-chart">Update</button>
   </div>
+</div>
+
+<!--Alternate style-->
+
+<div class="row">
+
+  <div class="two columns">
+
+    <b class="label" id="prbc-label4">Russell Dunn</b>
+    <b class="label error" id="prbc-label4">-22h</b>
+    <div class="chart-completion" aria-labelledby="prbc-label4">
+      <div class="completed error" style="width: 50%">
+      </div>
+    </div>
+
+    <b class="label" id="prbc-label5">Ronald Reynolds</b>
+    <b class="label colored" id="prbc-label4">13h</b>
+    <div class="chart-completion" aria-labelledby="prbc-label5">
+      <div class="completed" style="width: 10%">
+      </div>
+    </div>
+
+    <b class="label" id="prbc-label6">Lei Ju</b>
+    <b class="label colored" id="prbc-label4">-22h <span>Approaching max.*</span></b>
+    <div class="chart-completion" aria-labelledby="prbc-label6">
+      <div class="completed" style="width: 90%">
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <script>

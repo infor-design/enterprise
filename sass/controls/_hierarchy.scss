@@ -1,0 +1,132 @@
+// Hierarchy
+//================================================== //
+
+$hierarchy-padding: 20px;
+$hierarchy-node-height: 75px;
+$hierarchy-node-width: 275px;
+
+.hierarchy {
+  padding-top: 30px;
+
+  legend {
+    background: red;
+    @include font-size(14);
+    left: 10px;
+    padding: 0;
+    position: absolute;
+    top: 10px;
+  }
+
+  // A node in the tree
+  .leaf {
+    background-color: $panel-bg-color;
+    border: 1px solid $panel-border-color;
+    border-radius: 2px;
+    cursor: pointer;
+    height: $hierarchy-node-height;
+    overflow: hidden;
+    width: $hierarchy-node-width;
+  }
+
+  // The Centering Container
+  .container {
+    display: table;
+    margin: 0 auto;
+  }
+
+  //The Top Level Node
+  .root {
+    margin: 0 auto ($hierarchy-padding*2);
+
+    //draw a line down
+    &:after {
+      background: $hierarchy-line-color none repeat scroll 0 0;
+      content: '';
+      height: 30px;
+      margin-left: ($hierarchy-padding*2);
+      margin-top: ($hierarchy-node-height)-2;
+      position: absolute;
+      width: 2px;
+      z-index: -1;
+    }
+  }
+
+  //The Second to Top Level - Flows left to right
+  .top-level {
+    text-align: center;
+
+    li {
+      display: inline-block;
+      padding: $hierarchy-padding;
+
+      //Draw Line Down
+      &::after {
+        border-left: 2px solid $hierarchy-line-color;
+        content: '';
+        display: inline-block;
+        height: 20px;
+        margin-left: -110px;
+        position: absolute;
+      }
+
+      //Draw Line Up and Left
+      &::before {
+        border-left: 2px solid $hierarchy-line-color;
+        border-top: 1px solid $hierarchy-line-color;
+        content: '';
+        display: inline-block;
+        height: 30px;
+        margin-left: -110px;
+        margin-top: -31px;
+        position: absolute;
+        width: 315px;
+        z-index: -1;
+      }
+
+      &:last-child::before {
+        border-top: none;
+      }
+
+    }
+
+  }
+
+  //The Bottom Levels - Flow Down and Up
+  .sub-level {
+    text-align: center;
+    white-space: nowrap;
+
+    // Top Level Nodes still follow left to right
+    > li {
+      display: inline-block;
+      padding: $hierarchy-padding;
+      margin-top: ($hierarchy-padding/2);
+      vertical-align: top;
+
+      //Draw Line Up and Left
+      &::before {
+        border-left: 2px solid $hierarchy-line-color;
+        border-top: 1px solid $hierarchy-line-color;
+        content: '';
+        display: inline-block;
+        height: 30px;
+        margin-left: -110px;
+        margin-top: -20px;
+        position: absolute;
+        width: 315px;
+        z-index: -1;
+      }
+
+      &:last-child::before {
+        width: 0;
+      }
+
+    }
+
+
+    .leaf {
+      margin-bottom: $hierarchy-padding;
+    }
+  }
+
+}

@@ -71,18 +71,18 @@
   // Element Style
   p {
     @include font-size(14);
-    -webkit-text-fill-color: $editor-color;
     color: $editor-color;
     @include rem(line-height, 2.2rem);
     margin-bottom: 15px;
+    -webkit-text-fill-color: $editor-color;
   }
 
   h3 {
-    -webkit-text-fill-color: $editor-color;
     color: $editor-color;
     @include font-size(24);
     @include rem(line-height, 2.4rem);
     @include rem(margin-bottom, 1.5rem);
+    -webkit-text-fill-color: $editor-color;
   }
 
   h4 {
@@ -162,7 +162,7 @@
 
     span {
       @include font-size(16);
-      color: $editor-btn-color;
+      color: $font-color;
     }
 
     &.is-active {
