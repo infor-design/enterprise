@@ -414,6 +414,7 @@
         var self = this,
           allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)',
           currentLi = $(e.currentTarget).parent(),
+          currentA = currentLi.children('a'),
           targetLi,
           tabs = self.tablist.children('li' + allExcludes);
 
@@ -443,16 +444,19 @@
           case 8:
             if (e.altKey && currentLi.is('.dismissible')) {
               e.preventDefault();
-              self.remove(currentLi.children('a').attr('href'));
+              self.remove(currentA.attr('href'));
             }
             return;
-          case 13:
-          case 32:
+          case 13: // Enter
+          case 32: // Spacebar
             if (currentLi.hasClass('has-popupmenu')) {
               currentLi.data('popupmenu').open();
               return;
             }
-            self.activate(currentLi.children('a').attr('href'));
+            self.activate(currentA.attr('href'));
+            if (e.which === 32 && (currentA.attr('ng-click') || currentA.attr('data-ng-click'))) { // Needed to fire the "Click" event in Angular situations
+              currentA.click();
+            }
             self.focusState.removeClass('is-visible');
             return;
           case 38:

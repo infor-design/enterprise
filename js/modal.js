@@ -422,10 +422,10 @@
       keepFocus: function() {
         var self = this, tabbableElements;
 
-          $(self.element).on('keypress.modal keydown.modal', function (e) {            
+          $(self.element).on('keypress.modal keydown.modal', function (e) {
             var keyCode = e.which || e.keyCode;
 
-            if (keyCode === 27) {              
+            if (keyCode === 27) {
               setTimeout(function () {
                 self.close();
               }, 0);
@@ -444,6 +444,15 @@
               }
 
               self.element.find('#message-title').removeAttr('tabindex');
+            }
+
+            // Don't allow the modal to close if we hit enter to select a tab
+            if (keyCode === 13) {
+              var tabContainerParents = $(e.target).parentsUntil(self.element).filter('.tab-container');
+              if (tabContainerParents.length) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
             }
 
           });
