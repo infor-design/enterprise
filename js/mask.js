@@ -121,9 +121,8 @@
         });
 
         // remove the value when blurred
-        self.element.on('blur.mask', function(e) {
+        self.element.on('blur.mask', function() {
           self.initValue = null;
-          self.evaluateCurrentContents(undefined, e);
 
           if (self.mustComplete) {
             self.checkCompletion();
@@ -257,7 +256,10 @@
         }
 
         this.element.val('');
-        this.caret(0);
+
+        if (document.activeElement === e.target) {
+          this.caret(0);
+        }
         this.processStringAgainstMask(newValue, e);
       },
 
@@ -346,8 +348,9 @@
           // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
           } else if (evt.altKey) {
             self.killEvent(e);
+          } else if (key === 9) { // Allows tabbing)
+            return self.handleTab(evt);
           } else if (evt.metaKey || evt.ctrlKey || // Allow keystrokes that include the meta key or control keys (copy/paste/etc)
-            key === 9 || // Allows tabbing
             (36 < key && key < 41) || // Allows arrows alone (needed for Firefox)
             (evt.shiftKey && 36 < key && key < 41)) { // Allows arrows accompanied by Shift
             return;
@@ -415,6 +418,12 @@
         self.caret(0, self.initValue.length);
         self.initValue = null;
         return self.killEvent(e);
+      },
+
+      // Pressing Tab changes field focus, but we run a check on the field beforehand to fix any mask errors.
+      // Similar to running on "blur" but prevents issues in IE where focus traps would happen.
+      handleTab: function(e) {
+        return this.evaluateCurrentContents(undefined, e);
       },
 
       // Intercepts the Paste event, modifies the contents of the clipboard to fit within the size
