@@ -283,7 +283,10 @@
 
       teardown: function() {
         this.element.off('updated.searchfield populated.searchfield');
-        this.autocomplete.destroy();
+
+        if (this.autocomplete) {
+          this.autocomplete.destroy();
+        }
 
         if (this.wrapper.hasClass('alternate')) {
           this.element.addClass('alternate');

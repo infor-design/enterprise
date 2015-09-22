@@ -717,6 +717,10 @@ $.fn.datagrid = function(options) {
           row = $(e.target).closest('tr').index(),
           item = self.settings.dataset[row];
 
+      if ($(e.target).is('a')) {
+        stopPropagation = false;
+      }
+
       if (stopPropagation) {
         e.stopPropagation();
         e.preventDefault();
