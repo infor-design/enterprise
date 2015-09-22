@@ -25,9 +25,10 @@
     'use strict';
 
     // Settings and Options
-    var pluginName = 'pluginName',
+    var pluginName = 'accordion',
         defaults = {
-          allowOnePane: true
+          allowOnePane: true,
+          source: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -74,6 +75,7 @@
           if (!expander.length) {
             expander = $('<button class="btn"></button>').insertBefore(header.children('a'));
             $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>').appendTo(expander);
+            header.data('addedExpander', expander);
           }
 
           var description = expander.children('.audible');
@@ -183,16 +185,10 @@
           anchor.focus();
         }
 
-        // If no jQuery event is passed in, simply toggle the header pane and be done.
-        if (!e) {
-          if (!followLink()) {
-            toggleExpander();
-          }
-          return true;
-        }
-
         // Stop propagation here because we don't want to bubble up to the Header and potentially click the it twice
-        e.stopPropagation();
+        if (e) {
+          e.stopPropagation();
+        }
 
         // If the anchor's a real link, follow the link and die here
         if (followLink()) {
@@ -308,6 +304,11 @@
           pane = header.next('.accordion-pane'),
           a = header.children('a');
 
+        var canExpand = this.element.triggerHandler('beforeexpand', [a]);
+        if (canExpand === false) {
+          return;
+        }
+
         // Change the expander button into "collapse" mode
         var expander = header.children('.btn');
         if (expander.length) {
@@ -326,10 +327,16 @@
           });
         }
 
+        // Call out to an external resource over AJAX, if applicable
+        // If we get a false return (no API), trigger the 'expand' event manually.
+        if (!this.callSource(a)) {
+          this.element.trigger('expand', [a]);
+        }
+
         pane.one('animateOpenComplete', function(e) {
           e.stopPropagation();
           a.attr('aria-expanded', 'true');
-          a.trigger('expanded');
+          self.element.trigger('afterexpand', [a]);
         }).css('display', 'block').animateOpen();
       },
 
@@ -338,7 +345,14 @@
           return;
         }
 
-        var self = this;
+        var self = this,
+          pane = header.next('.accordion-pane'),
+          a = header.children('a');
+
+        var canExpand = this.element.triggerHandler('beforecollapse', [a]);
+        if (canExpand === false) {
+          return;
+        }
 
         // Change the expander button into "expand" mode
         var expander = header.children('.btn');
@@ -347,16 +361,33 @@
           expander.children('.audible').text(Locale.translate('Expand'));
         }
 
-        var pane = header.next('.accordion-pane'),
-          a = header.children('a');
         a.attr('aria-expanded', 'false');
 
         pane.one('animateClosedComplete', function(e) {
           e.stopPropagation();
           pane.css('display', 'none');
           self.collapse(pane.children('.accordion-header'));
-          a.trigger('collapsed');
+          self.element.trigger('aftercollapse', [a]);
         }).animateClosed();
+      },
+
+      // Uses a function (this.settings.source()) to call out to an external API to fill the
+      // inside of an accordion pane.
+      callSource: function(anchor) {
+        if (!this.settings.source || typeof this.settings.source !== 'function') {
+          return false;
+        }
+
+        var self = this,
+          header = anchor.parent(),
+          pane = header.next('.accordion-pane');
+
+        function response() {
+          self.element.triggerHandler('expand', [anchor, header, pane]);
+        }
+
+        // Trigger the external method and wait for a response.
+        return this.settings.source(this, response);
       },
 
       // Prepares a handful of references to a specific
@@ -552,6 +583,24 @@
       },
 
       teardown: function() {
+        this.headers
+          .offTouchClick('accordion')
+          .off('click.accordion focusin.accordion focusout.accordion keydown.accordion')
+          .each(function() {
+            var expander = $(this).data('addedExpander');
+            if (expander) {
+              expander.remove();
+              $.removeData(this, 'addedExpander');
+            }
+          });
+
+        this.anchors.off('click.accordion');
+
+        this.headers.children('[class^="btn"]')
+          .offTouchClick('accordion')
+          .off('click.accordion keydown.accordion');
+
+
         return this;
       },
 
