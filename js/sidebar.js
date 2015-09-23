@@ -34,6 +34,7 @@
 
       init: function() {
         this.handleEvents();
+        this.isSafari = $('html').is('.is-safari');
       },
 
       handleEvents: function() {
@@ -50,7 +51,7 @@
 
         //Handle Scrolling events
         var scrollDiv = $(this.element).closest('.scrollable'),
-          container = (scrollDiv.length ===1 ? scrollDiv : $(window));
+          container = (scrollDiv.length === 1 ? scrollDiv : $(window));
 
         if (self.sectionList) {
           var efficientScroll = $.fn.debounce(function() {
@@ -74,12 +75,23 @@
             return;
           }
 
-          var offsetScrollTop = sidebar.offset().top - 30;
+          var offsetScrollTop = sidebar.offset().top - 30,
+            content = $('.content', sidebar);
 
           if (header.offset().top + header.outerHeight() > offsetScrollTop) {
             sidebar.addClass('is-sticky');
+
+            //Safari only
+            if (self.isSafari) {
+              content.css({position:'absolute', top:container.scrollTop()});
+            }
           } else {
             sidebar.removeClass('is-sticky');
+
+            //Safari only
+            if (self.isSafari) {
+              content.css({position:'', top:''});
+            }
           }
 
         });
