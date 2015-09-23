@@ -367,7 +367,7 @@ $.fn.datagrid = function(options) {
     },
 
     //Method to Reload the data set
-    loadData: function (dataset) {
+    loadData: function (dataset, noReset) {
       var selectedIds = this.selectedRows(),
         rowIds = [];
 
@@ -375,7 +375,7 @@ $.fn.datagrid = function(options) {
       this.renderRows();
 
       //Update Paging
-      this.refreshPager();
+      this.refreshPager(!noReset);
 
       //restore selected rows
       for (var i = 0; i < selectedIds.length; i++) {
@@ -1031,7 +1031,7 @@ $.fn.datagrid = function(options) {
 
     //Toggle selection on a single row
     selectRow: function (idx) {
-      var row = this.tableBody.find('tr').eq(idx),
+      var row = this.tableBody.find('tr[role="row"]').eq(idx),
         checkbox = null;
 
       if (this.settings.selectable === false) {
@@ -1043,7 +1043,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (!row.hasClass('is-selected')) {
-        checkbox = this.cellNode(row.index(), this.columnIdx('selectionCheckbox'));
+        checkbox = this.cellNode(row.index('tr[role="row"]'), this.columnIdx('selectionCheckbox'));
 
         //Select It
         this._selectedRows.push({idx: idx, data: this.settings.dataset[idx], elem: row});
@@ -1078,9 +1078,9 @@ $.fn.datagrid = function(options) {
     },
 
     toggleRowSelection: function (idx) {
-      var row = (typeof idx === 'number' ? this.tableBody.find('tr').eq(idx) : idx),
+      var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : idx.index());
+        rowIndex = (typeof idx === 'number' ? idx : idx.index('tr[role="row"]'));
 
       if (this.settings.selectable === false) {
         return;
@@ -1103,7 +1103,7 @@ $.fn.datagrid = function(options) {
     },
 
     unselectRow: function (idx) {
-      var row = this.tableBody.find('tr').eq(idx),
+      var row = this.tableBody.find('tr[role="row"]').eq(idx),
         checkbox = null, selIdx;
 
       if (!row || idx === undefined) {
@@ -1552,13 +1552,15 @@ $.fn.datagrid = function(options) {
 
       //Get First page on Sort Action
       this.element.on('sorted', function () {
-        self.refreshPager();
+        self.refreshPager(true);
       });
     },
 
-    refreshPager: function () {
+    refreshPager: function (reset) {
       if (this.pager) {
-        this.pager.activePage = 1;
+        if (reset) {
+          this.pager.activePage = 1;
+        }
         this.pager.elements = this.pager.element.children();
         this.pager.renderBar();
         this.pager.renderPages(true);

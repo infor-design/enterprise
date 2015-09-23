@@ -24,6 +24,7 @@
       data.push({ id: 6, productId: 2642206, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
       //Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Expander});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
@@ -43,7 +44,8 @@
         columns: columns,
         idProperty:'officeId',
         dataset: data,
-        rowTemplate: rowTemplate
+        rowTemplate: rowTemplate,
+        selectable: 'multiple'
       }).data('datagrid');
   });
 

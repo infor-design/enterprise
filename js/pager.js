@@ -290,6 +290,7 @@
         first.removeAttr('disabled');
         last.removeAttr('disabled');
 
+
         if (this.activePage === 1) {
           prev.attr('disabled','disabled');
           first.attr('disabled','disabled');
@@ -338,7 +339,7 @@
               self.currPage = self.activePage;
 
               //Render Data
-              api.loadData(data);
+              api.loadData(data, true);
 
               //Update Paging Info
               self.updatePagingInfo(pagingInfo);
@@ -355,7 +356,6 @@
 
           //Make an ajax call and wait
           self.element.trigger('paging', pageInfo);
-
           self.elements = self.element.children();
 
           //Render page objects
