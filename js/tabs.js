@@ -272,6 +272,18 @@
         var ddTabs = self.tablist.find('li').filter('.has-popupmenu');
         ddTabs.each(dropdownTabEvents);
 
+        function dismissibleTabEvents(i, tab) {
+          var li = $(tab),
+            a = li.children('a');
+
+          a.on('keydown.tabs', function(e) {
+            self.handleDismissibleTabKeydown(e);
+          });
+        }
+
+        var dismissible = self.tablist.find('li').filter('is-dismissible');
+        dismissible.each(dismissibleTabEvents);
+
         // Setup the "more" function
         self.moreButton
           .onTouchClick('tabs')
@@ -486,6 +498,20 @@
 
         var a = targetLi.children('a').focus();
         self.positionFocusState(a, true);
+      },
+
+      handleDismissibleTabKeydown: function(e) {
+        var key = e.which,
+          tab = $(e.target);
+
+        if (tab.is('a')) {
+          tab = tab.parent();
+        }
+
+        if (e.altKey && key === 46) { // Alt + Del
+          e.preventDefault();
+          this.remove(tab.children('a').attr('href'));
+        }
       },
 
       handleMoreButtonKeydown: function(e) {
@@ -731,6 +757,7 @@
         this.positionFocusState(a);
         this.activate(a.attr('href'));
         this.focusBar(prevLi);
+        a.focus();
         return this;
       },
 
