@@ -186,6 +186,7 @@
       'Minus': {id: 'Minus', value: 'Minus', comment: 'Minus tooltip'},
       'More': {id: 'More', value: 'More...', comment: 'Text Indicating More Buttons or form content'},
       'MoreActions': {id: 'MoreActions', value: 'More Actions', comment: 'Text on the More Actions button indictating hidden functions'},
+      'MsgDirty': {id: 'MsgDirty', value: ', Modified', comment: 'for modified form fields'},
       'MultiselectWith': {id: 'MultiselectWith', value: '. Multiselect with ', comment: 'the minutes portion of a time'},
       'NewDocument': {id: 'NewDocument', value: 'New Document', comment: 'New Document tooltip'},
       'Next': {id: 'Next', value: 'Next', comment: 'Next in icons tooltip'},
