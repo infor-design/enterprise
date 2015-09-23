@@ -135,14 +135,36 @@
   margin-bottom: 0;
   z-index: 20;
 
-  button {
+  .buttonset {
+    [class^="btn"] {
+      margin-right: 5px;
+
+      &:first-child {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .more {
+    width: 60px;
+  }
+
+  &.has-more-button {
+    .buttonset {
+      width: calc(100% - 60px);
+    }
+  }
+
+  [class^="btn"] {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
     border-radius: 2px;
+    color: $editor-btn-color;
     min-width: 34px;
     padding: 0 !important; //overrides some media queries
 
     > .icon {
+      fill: $editor-btn-color;
       height: 22px;
       left: 0;
       top: 5px;
@@ -150,9 +172,8 @@
 
     .html-icon {
       height: 20px;
-      margin-left: -23px;
+      margin-left: -30px;
       margin-right: 5px;
-      top: 6px;
       width: 89px;
     }
 
@@ -160,7 +181,7 @@
       top: 1px;
     }
 
-    span {
+    > span {
       @include font-size(16);
       color: $font-color;
     }
@@ -191,15 +212,12 @@
       }
     }
 
-    &:focus {
-      border: 1px solid $primary-color;
-      box-shadow: none;
-    }
   }
 
   [data-element='h3'] .icon,
   [data-element='h4'] .icon {
     width: 35px;
+    padding-right: 3px;
   }
 
   .icon {
@@ -211,6 +229,10 @@
     background-color: #b6b6b6;
     height: 20px;
     margin: 5px 15px 0;
+
+    + [class^="btn"] {
+      margin-left: 5px;
+    }
   }
 
 }
