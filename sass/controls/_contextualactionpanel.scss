@@ -36,6 +36,12 @@
 
   }
 
+  .buttonset {
+    [class^="btn"]:last-child {
+      margin-right: 1px;
+    }
+  }
+
   .modal-body {
     padding: 2em;
   }
@@ -48,7 +54,7 @@
     fill: $tertiary-btn-hover-color;
   }
 
-  .btn {
+  [class^="btn"] {
     background-color: transparent;
     border: 1px solid transparent;
 
@@ -57,7 +63,6 @@
     }
   }
 
-  .btn-icon.has-text > span,
   .title {
     color: $contextual-panel-color;
   }

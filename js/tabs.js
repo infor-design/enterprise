@@ -272,6 +272,18 @@
         var ddTabs = self.tablist.find('li').filter('.has-popupmenu');
         ddTabs.each(dropdownTabEvents);
 
+        function dismissibleTabEvents(i, tab) {
+          var li = $(tab),
+            a = li.children('a');
+
+          a.on('keydown.tabs', function(e) {
+            self.handleDismissibleTabKeydown(e);
+          });
+        }
+
+        var dismissible = self.tablist.find('li').filter('is-dismissible');
+        dismissible.each(dismissibleTabEvents);
+
         // Setup the "more" function
         self.moreButton
           .onTouchClick('tabs')
@@ -284,6 +296,10 @@
           .on('focus.tabs', function(e) {
             self.handleMoreButtonFocus(e);
           });
+
+        this.panels.on('keydown.tabs', function(e) {
+          self.handlePanelKeydown(e);
+        });
 
         // Check whether or not all of the tabs + more button are de-focused.
         // If true, the focus-state and animated bar need to revert positions
@@ -488,6 +504,20 @@
         self.positionFocusState(a, true);
       },
 
+      handleDismissibleTabKeydown: function(e) {
+        var key = e.which,
+          tab = $(e.target);
+
+        if (tab.is('a')) {
+          tab = tab.parent();
+        }
+
+        if (e.altKey && key === 46) { // Alt + Del
+          e.preventDefault();
+          this.remove(tab.children('a').attr('href'));
+        }
+      },
+
       handleMoreButtonKeydown: function(e) {
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
@@ -509,6 +539,26 @@
             this.buildPopupMenu(this.tablist.find('.is-selected').children('a').attr('href'));
             this.positionFocusState(this.moreButton, true);
             break;
+        }
+      },
+
+      handlePanelKeydown: function(e) {
+        var key = e.which,
+          panel = $(e.target),
+          tab = this.anchors.filter('#' + panel.attr('id')).parent();
+
+        if (tab.is('.dismissible')) {
+          // Close a Dismissible Tab
+          if (e.altKey && key === 46) { // Alt + Delete
+            e.preventDefault();
+            return this.remove(tab.children('a').attr('href'));
+          }
+        }
+
+        // Takes focus away from elements inside a Tab Panel and brings focus to its corresponding Tab
+        if ((e.ctrlKey && key === 38) && $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
+          e.preventDefault();
+          return this.activate(tab.children('a').attr('href'));
         }
       },
 
@@ -731,6 +781,7 @@
         this.positionFocusState(a);
         this.activate(a.attr('href'));
         this.focusBar(prevLi);
+        a.focus();
         return this;
       },
 
@@ -1183,6 +1234,9 @@
             popup.destroy();
           }
         });
+
+        this.panels
+          .off();
 
         this.anchors
           .off()
