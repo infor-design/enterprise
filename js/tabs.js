@@ -558,7 +558,7 @@
         // Takes focus away from elements inside a Tab Panel and brings focus to its corresponding Tab
         if ((e.ctrlKey && key === 38) && $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
           e.preventDefault();
-          return tab.children('a').focus();
+          return this.activate(tab.children('a').attr('href'));
         }
       },
 
