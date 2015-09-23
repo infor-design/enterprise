@@ -29,7 +29,7 @@ $toolbar-height: 44px;
   }
 
   .buttonset {
-    margin: 0 10px;
+    //margin: 0 10px;
     overflow: hidden;
     white-space: nowrap;
     width: 98%;
@@ -40,12 +40,20 @@ $toolbar-height: 44px;
       margin-top: 5px;
     }
 
+    &:first-child {
+      margin-left: 1px;
+    }
+
+    &:last-child {
+      margin-right: 1px;
+    }
+
     > .is-overflowed {
       opacity: 0;
     }
 
     button {
-      margin-right: 5px;
+      margin-right: 0;
     }
   }
 
