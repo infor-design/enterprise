@@ -17,14 +17,12 @@
 // Off Screen Text
 .sr-only,
 .audible {
-  border: 0 none;
-  clip: rect(0, 0, 0p, 0p);
-  height: 0;
-  margin: -1px;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
   overflow: hidden;
   padding: 0;
   position: absolute;
-  width: 0;
+  width: 1px;
 }
 
 // Disable transitions
