@@ -297,6 +297,10 @@
             self.handleMoreButtonFocus(e);
           });
 
+        this.panels.on('keydown.tabs', function(e) {
+          self.handlePanelKeydown(e);
+        });
+
         // Check whether or not all of the tabs + more button are de-focused.
         // If true, the focus-state and animated bar need to revert positions
         // back to the currently selected tab.
@@ -535,6 +539,26 @@
             this.buildPopupMenu(this.tablist.find('.is-selected').children('a').attr('href'));
             this.positionFocusState(this.moreButton, true);
             break;
+        }
+      },
+
+      handlePanelKeydown: function(e) {
+        var key = e.which,
+          panel = $(e.target),
+          tab = this.anchors.filter('#' + panel.attr('id')).parent();
+
+        if (tab.is('.dismissible')) {
+          // Close a Dismissible Tab
+          if (e.altKey && key === 46) { // Alt + Delete
+            e.preventDefault();
+            return this.remove(tab.children('a').attr('href'));
+          }
+        }
+
+        // Takes focus away from elements inside a Tab Panel and brings focus to its corresponding Tab
+        if ((e.ctrlKey && key === 38) && $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
+          e.preventDefault();
+          return tab.children('a').focus();
         }
       },
 
@@ -1210,6 +1234,9 @@
             popup.destroy();
           }
         });
+
+        this.panels
+          .off();
 
         this.anchors
           .off()
