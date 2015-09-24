@@ -266,19 +266,20 @@
         // greater than the maximum, or less than the minimum.  If it's fine, let it through.
         // Doing this check here prevents visual jitter.
         if ((key > 47 && key < 58) || (key > 95 && key < 106)) {
-          var num = Number(this.checkForNumeric(this.element.val()) +
-              String.fromCharCode(key > 95 && key < 106 ? key - 48 : key)), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
+          e.preventDefault();
+
+          var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
             min = self.element.attr('min'),
             max = self.element.attr('max');
 
           if (num < min) {
-            e.preventDefault();
-            self.updateVal(min);
+            return self.updateVal(min);
           }
           if (num > max) {
-            e.preventDefault();
-            self.updateVal(max);
+            return self.updateVal(max);
           }
+
+          return self.updateVal(num);
         }
 
         // If the keycode got this far, it's an arrow key, HOME, or END.

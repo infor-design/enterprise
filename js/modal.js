@@ -201,9 +201,23 @@
             }
           }
 
+          var attrs = {},
+            attrTypes = ['id', 'name', 'text'];
+
+          for (var i = 0; i < attrTypes.length; i++) {
+            if (props[attrTypes[i]]) {
+              if (attrTypes[i] === 'text') {
+                attrs.placeholder = props[attrTypes[i]];
+              }
+
+              attrs[attrTypes[i]] = props[attrTypes[i]];
+            }
+          }
+
+
           if (props.type === 'input') {
             var label = $('<label class="audible" for="filter">' + props.text + '</label>'),
-              input = $('<input class="searchfield">').attr({'id': props.id, 'placeholder': props.text, 'name': props.name  });
+              input = $('<input class="searchfield">').attr(attrs);
 
             buttonset.append(label, input);
             input.searchfield();
@@ -288,6 +302,7 @@
           $(window).trigger('resize');
           self.resize();
           self.element.css('opacity', 1);
+          self.element.triggerHandler('afterOpen');
         }, 300);
 
         setTimeout(function () {

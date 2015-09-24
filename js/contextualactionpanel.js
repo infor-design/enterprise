@@ -132,16 +132,31 @@
           });
         }
 
-        this.panel.on('open', function() {
+        this.panel.on('afterOpen', function() {
           if (self.toolbar) {
             self.toolbar.trigger('recalculateButtons');
           }
+
+          // Select the proper element on the toolbar
+          if (self.toolbar.length) {
+            var selected = self.toolbar.find('.buttonset > .is-selected');
+            if (!selected.length) {
+              selected = self.toolbar.find('.buttonset > *:first-child');
+              if (selected.is('.searchfield-wrapper')) {
+                selected = selected.children('.searchfield');
+              }
+            }
+            self.toolbar.data('toolbar').setActiveButton(selected, true);
+          }
+
+          // Focus the first focusable element inside the Contextual Panel's Body
+          self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
         });
 
         return this;
       },
 
-      deconstruct: function() {
+      teardown: function() {
         this.panel.detach().insertAfter(this.element);
         this.panel.find('.toolbar').data('toolbar').destroy();
         this.header.remove();
@@ -174,7 +189,7 @@
           this.closeButton.off('touchend.contextualactionpanel touchcancel.contextualactionpanel click.contextualactionpanel');
         }
 
-        this.deconstruct();
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };
