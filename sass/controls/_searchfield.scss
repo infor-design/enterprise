@@ -4,7 +4,7 @@
 .searchfield-wrapper {
   display: inline-block;
   margin-bottom: 20px;
-  position: relative;
+  position: relative !important;
 
   > .icon {
     fill: $trigger-icon-fill-color;
