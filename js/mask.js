@@ -313,7 +313,9 @@
         }
 
         // Convert Keycode to Character String
-        if (!e.shiftyKey && (key >= 65 && key <= 90)) {
+        if (key >= 96 && key <= 105) { // Using The Numpad
+          character = String.fromCharCode(key - 48);
+        } else if (!e.shiftyKey && (key >= 65 && key <= 90)) {
           character = String.fromCharCode(key + 32);
         } else if (e.shiftKey && shiftUps.hasOwnProperty(key)) { // User was pressing Shift + any key
           character = shiftUps[key];
