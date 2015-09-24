@@ -28,6 +28,7 @@
     var pluginName = 'accordion',
         defaults = {
           allowOnePane: true,
+          displayChevron: false, // Displays a non-focusable "Chevron" icon that sits off to the right-most side of a top-level accordion header.
           source: null
         },
         settings = $.extend({}, defaults, options);
@@ -78,16 +79,27 @@
             header.data('addedExpander', expander);
           }
 
+          // Setup the correct attributes on any icons present
+          var svg = expander.children('svg');
+          if (svg) {
+            svg.attr({'role': 'presentation', 'aria-hidden': 'true', 'focusable': 'false'});
+          }
+          var plusMinusIcon = expander.children('span.plus-minus');
+          if (plusMinusIcon) {
+            plusMinusIcon.attr({'role': 'presentation', 'aria-hidden': 'true'});
+          }
+
+          // Don't allow an SVG and an Expando-Icon to co-exist.  Remove the Expando if there's an icon present.
+          if (svg.length && expander.children('.plus-minus').length) {
+            expander.children('.plus-minus').remove();
+          }
+
+          // Add an Audible Description to the button
           var description = expander.children('.audible');
           if (!description.length) {
             description = $('<span class="audible"></span>').appendTo(expander);
           }
           description.text(Locale.translate('Expand'));
-
-          // Don't allow an SVG and an Expando-Icon to co-exist.  Remove the Expando if there's an icon present.
-          if (expander.children('svg').length && expander.children('.plus-minus').length) {
-            expander.children('.plus-minus').remove();
-          }
         });
 
         // Setup correct ARIA for accordion panes, and auto-collapse them
@@ -418,7 +430,8 @@
 
       // Selects an adjacent Accordion Header that sits directly before the currently selected Accordion Header.
       // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
-      prevHeader: function(element) {
+      // @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion, prevent against descending.
+      prevHeader: function(element, noDescend) {
         var elem = this.getElements(element),
           adjacentHeaders = elem.header.parent().children(),
           currentIndex = adjacentHeaders.index(elem.header),
@@ -442,7 +455,7 @@
           var prevHeader = target.prev('.accordion-header');
           if (this.isExpanded(prevHeader)) {
             var descendantChildren = prevHeader.next('.accordion-pane').children(':not(.accordion-content)');
-            if (descendantChildren.length) {
+            if (descendantChildren.length && !noDescend) {
               return this.descend(prevHeader, -1);
             }
           }
@@ -466,7 +479,8 @@
 
       // Selects an adjacent Accordion Header that sits directly after the currently selected Accordion Header.
       // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
-      nextHeader: function(element) {
+      // @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion, prevent against descending.
+      nextHeader: function(element, noDescend) {
         var elem = this.getElements(element),
           adjacentHeaders = elem.header.parent().children(),
           currentIndex = adjacentHeaders.index(elem.header),
@@ -490,7 +504,7 @@
           var prevHeader = target.prev('.accordion-header');
           if (this.isExpanded(prevHeader)) {
             var descendantChildren = prevHeader.next('.accordion-pane').children(':not(.accordion-content)');
-            if (descendantChildren.length) {
+            if (descendantChildren.length && !noDescend) {
               return this.descend(prevHeader);
             }
           }
@@ -527,6 +541,10 @@
         if (direction === -1) {
           target = pane.next('.accordion-header');
           if (!target.length) {
+            if (pane.parent('.accordion').length) {
+              return this.nextHeader(pane.prev().children('a'), true);
+            }
+
             return this.ascend(pane.prev(), -1);
           }
         }
@@ -579,7 +597,9 @@
       },
 
       updated: function() {
-        return this;
+        return this
+          .teardown()
+          .init();
       },
 
       teardown: function() {
@@ -599,7 +619,6 @@
         this.headers.children('[class^="btn"]')
           .offTouchClick('accordion')
           .off('click.accordion keydown.accordion');
-
 
         return this;
       },

@@ -1,11 +1,14 @@
 // Application Menu Control
 //================================================== //
 
-$app-accordion-header-text-color: $slate03;
+$app-accordion-header-text-color: $slate02;
+$app-accordion-header-text-hover-color: $slate01;
 $app-accordion-header-bg-color: $slate08;
 $app-accordion-icon-color: $graphite05;
 $app-accordion-border-color: $slate09;
 $app-accordion-pane-bg-color: $slate09;
+$app-accordion-pane-text-color: $slate01;
+$app-accordion-focused-pane-bg-color: $azure10;
 
 $application-menu-width: 300px;
 
@@ -42,33 +45,39 @@ $application-menu-width: 300px;
       width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
-  .panel.logout {
+  .panel {
+    padding-left: 49px;
 
-    .icon.avatar {
-      border-radius: 32px;
-      float: left;
-      height: 64px;
-      width: 64px;
+    > * {
+      vertical-align: middle;
     }
 
-    .content {
-      padding-left: 1em;
-
-      > * {
-        display: block;
-        line-height: 1.5em;
+    &.logout {
+      .icon.avatar {
+        border-radius: 32px;
+        height: 64px;
+        width: 64px;
       }
 
-      > .name {
-        @include font-size(20);
-        line-height: 2em;
+      .content {
+        @include font-size(14);
+        padding-left: 1em;
+
+        > * {
+          display: block;
+          line-height: 1.5em;
+        }
+
+        > .name {
+          @include font-size(20);
+          line-height: 2em;
+        }
+      }
+
+      span {
+        display: inline-block;
       }
     }
-
-    span {
-      display: inline-block;
-    }
-
   }
 
   .accordion {
@@ -95,6 +104,85 @@ $application-menu-width: 300px;
     > a {
       color: $app-accordion-header-text-color;
     }
+
+    &:not(.is-focused) {
+      > [class^="btn"] {
+        .icon {
+          fill: $app-accordion-header-text-color;
+        }
+
+        .plus-minus {
+          &::before,
+          &::after {
+            background-color: $app-accordion-header-text-color;
+          }
+        }
+      }
+
+      &:hover {
+        > a {
+          color: $app-accordion-header-text-hover-color;
+        }
+
+        > [class^="btn"] {
+          .icon {
+            fill: $app-accordion-header-text-hover-color;
+          }
+
+          .plus-minus {
+            &::before,
+            &::after {
+              background-color: $app-accordion-header-text-hover-color;
+            }
+          }
+        }
+      }
+
+      /*.accordion-header {
+        border-bottom-color: $accordion-selected-bg-color;
+      }*/
+    }
+
+    &.is-focused {
+      border-bottom-color: $accordion-selected-bg-color;
+
+      > a {
+        color: $accordion-selected-text-color;
+      }
+
+      > [class^="btn"],
+      > .icon {
+        fill: $accordion-selected-text-color;
+
+        .plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-selected-text-color;
+          }
+        }
+      }
+
+      + .accordion-pane {
+        background-color: $app-accordion-focused-pane-bg-color;
+
+        .accordion-content {
+          border-bottom-color: $app-accordion-focused-pane-bg-color;
+        }
+
+        .accordion-header {
+          border-bottom-color: $app-accordion-focused-pane-bg-color;
+
+          &:last-child {
+            border-bottom-color: $app-accordion-focused-pane-bg-color;
+          }
+        }
+
+        .accordion-pane {
+          background-color: $app-accordion-focused-pane-bg-color;
+        }
+      }
+    }
+
   }
 
   .accordion-pane {
@@ -105,9 +193,33 @@ $application-menu-width: 300px;
     }
 
     .accordion-header {
+      > a {
+        color: $app-accordion-pane-text-color;
+      }
+
+      > [class^="btn"],
+      > .icon {
+        fill: $app-accordion-pane-text-color;
+
+        .plus-minus {
+          &::before,
+          &::after {
+            background-color: $app-accordion-pane-text-color;
+          }
+        }
+      }
+
       &:last-child {
         border-bottom: 1px solid $app-accordion-border-color;
       }
+    }
+  }
+
+  .accordion-content {
+    color: $slate03;
+
+    h1, h2, h3, h4 {
+      color: $slate01;
     }
   }
 
@@ -123,6 +235,159 @@ $application-menu-width: 300px;
       height: 34px;
       margin-top: 1px;
       width: 34px;
+    }
+  }
+
+
+
+
+  // Level 1 Header
+  .accordion-header {
+    > a {
+      padding-left: 33px;
+    }
+
+    > [class^="btn"],
+    > .icon {
+      margin-left: 17px;
+
+      + a {
+        padding-left: 0;
+        width: calc(100% - 68px);
+      }
+    }
+  }
+
+  // Level 1 Pane
+  .accordion-pane {
+
+    .accordion-content {
+      padding-left: 33px;
+    }
+
+    // Level 2 Header
+    .accordion-header {
+      > a {
+        padding-left: 62px;
+      }
+
+      > [class^="btn"],
+      > .icon {
+        margin-left: 49px;
+
+        + a {
+          padding-left: 0;
+          width: calc(100% - 96px);
+        }
+      }
+    }
+
+    // Level 2 Pane
+    .accordion-pane {
+
+      .accordion-content {
+        padding-left: 63px;
+      }
+
+      // Level 3 Accordion Header
+      .accordion-header {
+        > a {
+          padding-left: 95px;
+        }
+
+        > [class^="btn"],
+        > .icon {
+          margin-left: 81px;
+
+          + a {
+            padding-left: 0;
+            width: calc(100% - 128px);
+          }
+        }
+
+      }
+
+      // Level 3 Accordion Pane
+      .accordion-pane {
+
+        .accordion-content {
+          padding-left: 96px;
+        }
+
+        // Level 4 Accordion Header
+        .accordion-header {
+          > a {
+            padding-left: 127px;
+          }
+
+          > [class^="btn"],
+          > .icon {
+            margin-left: 113px;
+
+            + a {
+              padding-left: 0;
+              width: calc(100% - 160px);
+            }
+          }
+        }
+
+        // Level 4 Accordion Pane
+        .accordion-pane {
+
+          .accordion-content {
+            padding-left: 128px;
+          }
+
+          // Level 5 Accordion Header
+          .accordion-header {
+            > a {
+              padding-left: 159px;
+            }
+
+            > [class^="btn"],
+            > .icon {
+              margin-left: 145px;
+
+              + a {
+                padding-left: 0;
+                width: calc(100% - 192px);
+              }
+            }
+          }
+
+          // Level 5 Accordion Pane
+          .accordion-pane {
+
+            .accordion-content {
+              padding-left: 159px;
+            }
+
+            // Level 6 Accordion Header
+            .accordion-header {
+              > a {
+                padding-left: 191px;
+              }
+
+              > [class^="btn"],
+              > .icon {
+                margin-left: 177px;
+
+                + a {
+                  padding-left: 0;
+                  width: calc(100% - 224px);
+                }
+              }
+            }
+
+            // Level 6 Accordion Pane
+            .accordion-pane {
+              .accordion-content {
+                padding-left: 192px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 

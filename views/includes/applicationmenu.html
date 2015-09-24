@@ -1,122 +1,232 @@
 <nav id="application-menu" class="application-menu" role="navigation">
-  <div class="accordion dark" data-allow-one-pane="true">
+
+  <div class="accordion" data-options="{'allowOnePane': true}" >
     <div class="accordion-header">
-      <a href="#">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-user"></use>
-        </svg>
-        <span class="title">My Account</span>
-        <!--<span class="tag">10</span>-->
-      </a>
-      <div class="accordion-pane">
-        <div class="accordion-header">
-          <a href="#">
-            <span class="panel logout">
-              <svg class="icon avatar" viewBox="0 0 48 48" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-user-avatar"></use>
-              </svg>
-              <span class="content">
-                <span class="name">Ming.le User</span>
-                <span>Sign Out</span>
-              </span>
-            </span>
-          </a>
-        </div>
-        <div class="separator"></div>
-        <div class="accordion-header">
-          <a href="#">
-            <span class="title">Notifications</span>
-            <span class="tag">10</span>
-          </a>
-        </div>
-        <div class="accordion-header">
-          <a href="#">
-            <span class="title">Administrator</span>
-          </a>
-        </div>
-        <div class="accordion-header">
-          <a href="#">
-            <span class="title">User Settings</span>
-          </a>
-        </div>
-        <div class="accordion-header">
-          <a href="#">
-            <span class="title">Help</span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="accordion-header">
-      <a href="#">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-bookmark-filled"></use>
-        </svg>
-        <span class="title">Bookmarks</span>
-      </a>
-    </div>
-    <div class="accordion-header">
-      <a href="#">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-clock"></use>
-        </svg>
-        <span class="title">History</span>
-      </a>
-    </div>
-    <div class="accordion-header">
-      <a href="#">
+      <button class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-home"></use>
         </svg>
-        <span class="title">Homepages</span>
-      </a>
+      </button>
+      <a href="#"><span>My Account</span></a>
     </div>
+    <div class="accordion-pane">
+      <div class="accordion-content panel logout">
+        <svg class="icon avatar" viewBox="0 0 48 48" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-user-avatar"></use>
+        </svg>
+        <span class="content">
+          <span class="name">Ming.le User</span>
+          <span><a href="#" class="hyperlink">Sign Out</a></span>
+        </span>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Notifications</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Administrator</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>User Settings</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Help</span></a>
+      </div>
+    </div>
+
     <div class="accordion-header">
-      <a href="#">
+      <button class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-bookmark-filled"></use>
+        </svg>
+      </button>
+      <a href="#"><span>Bookmarks</span></a>
+    </div>
+
+    <div class="accordion-header">
+      <button class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-clock"></use>
+        </svg>
+      </button>
+      <a href="#"><span>History</span></a>
+    </div>
+
+    <div class="accordion-header">
+      <button class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-home"></use>
+        </svg>
+      </button>
+      <a href="#"><span>Homepages</span></a>
+    </div>
+
+    <div class="accordion-header">
+      <button class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-roles"></use>
         </svg>
-        <span class="title">My Roles</span>
-      </a>
+      </button>
+      <a href="#"><span>My Roles</span></a>
+    </div>
+    <div class="accordion-pane">
+      <div class="accordion-header">
+        <a href="#"><span>Role #1</span></a>
+      </div>
       <div class="accordion-pane">
         <div class="accordion-header">
-          <a href="#">
-            <span class="title">Role One</span>
-          </a>
-          <div class="accordion-pane">
-            <div class="accordion-header">
-              <a href="#">
-                <span class="title">Task #1</span>
-              </a>
-            </div>
-            <div class="accordion-header">
-              <a href="#">
-                <span class="title">Task #2</span>
-              </a>
-            </div>
-            <div class="accordion-header">
-              <a href="#">
-                <span class="title">Task #3</span>
-              </a>
-            </div>
-            <div class="accordion-header">
-              <a href="#">
-                <span class="title">Task #4</span>
-              </a>
-            </div>
-          </div>
+          <a href="#"><span>Role #1 Task #1</span></a>
         </div>
+
         <div class="accordion-header">
-          <a href="#">
-            <span class="title">Role Two</span>
-          </a>
+          <a href="#"><span>Role #1 Task #2</span></a>
         </div>
+
         <div class="accordion-header">
-          <a href="#">
-            <span class="title">Role Three</span>
-          </a>
+          <a href="#"><span>Role #1 Task #3</span></a>
         </div>
       </div>
+
+      <div class="accordion-header">
+        <a href="#"><span>Role #2</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>Role #2 Task #1</span></a>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Role #2 Task #2</span></a>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Role #2 Task #3</span></a>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <a href="#"><span>Role #3</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <a href="#"><span>Role #4</span></a>
+      </div>
     </div>
+
+    <!-- Level 1 -->
+    <div class="accordion-header">
+      <a href="#"><span>Level 1</span></a>
+    </div>
+    <div class="accordion-pane">
+
+      <!-- Level 2 -->
+      <div class="accordion-header">
+        <a href="#"><span>Level 2</span></a>
+      </div>
+      <div class="accordion-pane">
+
+        <!-- Level 3 -->
+        <div class="accordion-header">
+          <a href="#"><span>Level 3</span></a>
+        </div>
+        <div class="accordion-pane">
+
+          <!-- Level 4 -->
+          <div class="accordion-header">
+            <a href="#"><span>Level 4</span></a>
+          </div>
+          <div class="accordion-pane">
+
+            <!-- Level 5 -->
+            <div class="accordion-header">
+              <a href="#"><span>Level 5</span></a>
+            </div>
+            <div class="accordion-pane">
+
+              <!-- Level 6 -->
+              <div class="accordion-header">
+                <a href="#"><span>Level 6</span></a>
+              </div>
+              <div class="accordion-pane">
+                <div class="accordion-content">
+                  <h3>You've reached the bottom</h3>
+                  <p>Nice work</p>
+                </div>
+              </div>
+
+              <div class="accordion-header">
+                <a href="#"><span>Level 6 Header Only</span></a>
+              </div>
+
+            </div>
+
+            <!-- Level 5 -->
+            <div class="accordion-header">
+              <a href="#"><span>Level 5 Content</span></a>
+            </div>
+            <div class="accordion-pane">
+              <div class="accordion-content">
+                <h3>Level 5 Content Pane</h3>
+                <p>Nothing to see here</p>
+              </div>
+            </div>
+
+            <div class="accordion-header">
+              <a href="#"><span>Level 5 Header Only</span></a>
+            </div>
+
+          </div>
+
+          <!-- Level 4 -->
+          <div class="accordion-header">
+            <a href="#"><span>Level 4 Content</span></a>
+          </div>
+          <div class="accordion-pane">
+            <div class="accordion-content">
+              <h3>Level 4 Content Pane</h3>
+              <p>Nothing to see here</p>
+            </div>
+          </div>
+
+          <div class="accordion-header">
+            <a href="#"><span>Level 4 Header Only</span></a>
+          </div>
+
+        </div>
+
+        <!-- Level 3 -->
+        <div class="accordion-header">
+          <a href="#"><span>Level 3 Content</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="accordion-content">
+            <h3>Level 3 Content Pane</h3>
+            <p>Nothing to see here</p>
+          </div>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Level 3 Header Only</span></a>
+        </div>
+
+      </div>
+
+      <!-- Level 2 -->
+      <div class="accordion-header">
+        <a href="#"><span>Level 2 Content</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Level 2 Content Pane</h3>
+          <p>Nothing to see here</p>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <a href="#"><span>Level 2 Header Only</span></a>
+      </div>
+
+    </div>
+
   </div>
 
   <div class="branding">

@@ -7,6 +7,7 @@ $accordion-icon-color: $graphite05;
 $accordion-pane-bg-color: $graphite01;
 
 $accordion-focused-text-color: $primary-color;
+$accordion-focused-pane-bg-color: $azure01;
 $accordion-selected-bg-color: $primary-color;
 $accordion-selected-text-color: $white;
 
@@ -31,6 +32,25 @@ $accordion-selected-text-color: $white;
   // Makes Vertical Alignment work well
   &::before {
     @include vertical-alignment-spacer;
+  }
+
+  &:not(.is-selected) {
+    > a {
+      color: $accordion-text-color;
+    }
+
+    > [class^="btn"] {
+      .icon {
+        fill: $accordion-icon-color;
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-icon-color;
+          }
+        }
+      }
+    }
   }
 
   > a {
@@ -73,7 +93,6 @@ $accordion-selected-text-color: $white;
       &.plus-minus {
         &::before,
         &::after {
-          background-color: $accordion-icon-color;
           left: .15em;
           top: .75em;
         }
@@ -104,18 +123,21 @@ $accordion-selected-text-color: $white;
   // Selected color scheme
   &.is-focused {
     background-color: $accordion-selected-bg-color;
+    border-bottom-color: $accordion-selected-bg-color;
 
     > a {
       color: $accordion-selected-text-color;
     }
 
-    .icon {
-      fill: $accordion-selected-text-color;
+    > [class^="btn"] {
+      .icon {
+        fill: $accordion-selected-text-color;
 
-      &.plus-minus {
-        &::before,
-        &::after {
-          background-color: $accordion-selected-text-color;
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-selected-text-color;
+          }
         }
       }
     }
@@ -123,6 +145,26 @@ $accordion-selected-text-color: $white;
     [class^="btn"]:focus {
       border: 1px solid $accordion-selected-text-color;
       box-shadow: none;
+    }
+
+    .accordion-header {
+      border-bottom-color: $accordion-selected-bg-color;
+    }
+
+    + .accordion-pane {
+      background-color: $accordion-focused-pane-bg-color;
+
+      .accordion-content {
+        border-bottom-color: $accordion-focused-pane-bg-color;
+      }
+
+      .accordion-header {
+        border-bottom-color: $accordion-focused-pane-bg-color;
+      }
+
+      .accordion-pane {
+        background-color: $accordion-focused-pane-bg-color;
+      }
     }
   }
 }
