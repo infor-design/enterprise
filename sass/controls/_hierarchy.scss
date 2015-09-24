@@ -4,28 +4,122 @@
 $hierarchy-padding: 20px;
 $hierarchy-node-height: 75px;
 $hierarchy-node-width: 275px;
+$hierarchy-line-width: 1px;
 
 .hierarchy {
-  padding-top: 30px;
+  padding-top: 20px;
 
   legend {
-    background: red;
     @include font-size(14);
-    left: 10px;
+    left: 30px;
     padding: 0;
     position: absolute;
-    top: 10px;
+    top: 30px;
+
+    li {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    .key {
+      border-radius: 50%;
+      display: inline-block;
+      float: left;
+      height: 15px;
+      margin: -2px 10px;
+      width: 15px;
+    }
   }
 
   // A node in the tree
   .leaf {
     background-color: $panel-bg-color;
     border: 1px solid $panel-border-color;
+    border-left: 5px solid $graphite06;
     border-radius: 2px;
     cursor: pointer;
     height: $hierarchy-node-height;
     overflow: hidden;
     width: $hierarchy-node-width;
+
+    &.azure08 {
+      border-left-color: $azure08;
+    }
+
+    &.turquoise02 {
+      border-left-color: $turquoise02;
+    }
+
+    &.amethyst06 {
+      border-left-color: $amethyst06;
+    }
+
+    &.slate06 {
+      border-left-color: $slate06;
+    }
+
+    &.amber06 {
+      border-left-color: $amber06;
+    }
+
+    &.emerald07 {
+      border-left-color: $emerald07;
+    }
+
+    &.ruby06 {
+      border-left-color: $ruby06;
+    }
+
+    //Styling for objects in the leafs
+    img,
+    .image-placeholder {
+      border-radius: 50%;
+      display: inline-block;
+      float: left;
+      height: 55px;
+      margin-left: 14px;
+      margin-top: 8px;
+      width: 55px;
+    }
+
+    .image-placeholder {
+      border: 2px solid $graphite04;
+    }
+
+    .detail {
+      display: inline-block;
+      float: left;
+      margin-left: 20px;
+      margin-right: 10px;
+      max-width: 165px;
+      overflow: hidden;
+      text-align: left;
+    }
+
+    .heading {
+      @include ellipsis();
+      @include font-size(16);
+      color: $font-color-extrahighcontrast;
+      font-weight: lighter;
+      line-height: 20px;
+      margin-top: 8px;
+    }
+
+    .subheading {
+      @include ellipsis();
+      @include font-size(14);
+      color: $listview-color;
+      line-height: 20px;
+      margin-top: 0;
+    }
+
+    .micro {
+      @include ellipsis();
+      @include font-size(12);
+      color: $listview-color;
+      line-height: 18px;
+      margin-top: 0;
+    }
   }
 
   // The Centering Container
@@ -36,17 +130,17 @@ $hierarchy-node-width: 275px;
 
   //The Top Level Node
   .root {
-    margin: 0 auto ($hierarchy-padding*2);
+    margin: 0 auto 20px;
 
     //draw a line down
     &:after {
       background: $hierarchy-line-color none repeat scroll 0 0;
       content: '';
-      height: 30px;
-      margin-left: ($hierarchy-padding*2);
-      margin-top: ($hierarchy-node-height)-2;
+      height: 142px;
+      margin-left: 131px;
+      margin-top: -26px;
       position: absolute;
-      width: 2px;
+      width: $hierarchy-line-width;
       z-index: -1;
     }
   }
@@ -59,27 +153,16 @@ $hierarchy-node-width: 275px;
       display: inline-block;
       padding: $hierarchy-padding;
 
-      //Draw Line Down
-      &::after {
-        border-left: 2px solid $hierarchy-line-color;
-        content: '';
-        display: inline-block;
-        height: 20px;
-        margin-left: -110px;
-        position: absolute;
-      }
-
       //Draw Line Up and Left
       &::before {
-        border-left: 2px solid $hierarchy-line-color;
-        border-top: 1px solid $hierarchy-line-color;
+        border-top: $hierarchy-line-width solid $hierarchy-line-color;
         content: '';
         display: inline-block;
-        height: 30px;
-        margin-left: -110px;
-        margin-top: -31px;
+        height: 2px;
+        margin-left: 135px;
+        margin-top: 35px;
         position: absolute;
-        width: 315px;
+        width: 50px;
         z-index: -1;
       }
 
@@ -99,33 +182,52 @@ $hierarchy-node-width: 275px;
     // Top Level Nodes still follow left to right
     > li {
       display: inline-block;
-      padding: $hierarchy-padding;
-      margin-top: ($hierarchy-padding/2);
+      margin-top: 10px;
+      padding: 20px;
       vertical-align: top;
 
       //Draw Line Up and Left
       &::before {
-        border-left: 2px solid $hierarchy-line-color;
-        border-top: 1px solid $hierarchy-line-color;
+        border-left: $hierarchy-line-width solid $hierarchy-line-color;
+        border-top: $hierarchy-line-width solid $hierarchy-line-color;
         content: '';
         display: inline-block;
-        height: 30px;
+        height: 25px;
         margin-left: -110px;
-        margin-top: -20px;
+        margin-top: -25px;
         position: absolute;
-        width: 315px;
+        width: 390px;
         z-index: -1;
       }
 
       &:last-child::before {
         width: 0;
       }
-
     }
 
+    // Child Nodes - 4th level down
+    li ul {
+      margin-left: 45px;
+      overflow: hidden;
+      padding-left: 30px;
 
-    .leaf {
-      margin-bottom: $hierarchy-padding;
+      li {
+        margin: 15px 0;
+        position: relative;
+      }
+
+      li .ln {
+        border-bottom: $hierarchy-line-width solid $hierarchy-line-color;
+        border-left: $hierarchy-line-width solid $hierarchy-line-color;
+        display: block;
+        height: 90px;
+        margin-left: -29px;
+        margin-top: -52px;
+        position: absolute;
+        width: 30px;
+        z-index: -1px;
+      }
+
     }
   }
 

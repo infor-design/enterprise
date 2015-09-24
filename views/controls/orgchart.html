@@ -1,5 +1,23 @@
+{{={{{ }}}=}}
+
 <script type="text/html" id="hierarchyChartTemplate">
-  <div class="leaf" id="<%=id%>">
+  <div class="leaf {{colorClass}}" id="{{id}}">
+
+      {{#Picture}}
+        <img src="{{Picture}}" class="image" />
+      {{/Picture}}
+      {{^Picture}}
+        <span class="image-placeholder"></span>
+      {{/Picture}}
+
+      <div class="detail">
+        <p class="heading">{{Name}}</p>
+        <p class="subheading">{{Position}}</p>
+        <p class="micro">{{EmploymentType}}</p>
+      </div>
+
+      <button class="btn-expand {{displayClass}}" type="button">Expand/Collapse</button>
+    </div>
 
   </div>
 </script>

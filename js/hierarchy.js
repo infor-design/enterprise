@@ -40,7 +40,7 @@
         settings = $.extend({}, defaults, options);
 
     var colorClass = [
-      'azure', 'amber', 'ruby', 'emerald', 'turquoise', 'amethyst', 'graphite'
+      'azure08', 'turquoise02', 'amethyst06', 'slate06', 'amber06', 'emerald07', 'ruby06'
     ];
 
     var constants = {
@@ -50,7 +50,7 @@
       sublevel        : 'sub-level',
       noSublevel      : 'no-sublevel',
       sublist         : 'sublist',
-      button          : 'button',
+      button          : 'btn-expand',
       leaf            : 'leaf',
       inner           : 'inner',
       multiRoot       : 'multi-root',
@@ -60,7 +60,6 @@
       branchExpanded  : 'branch-expanded',
       branchCollapsed : 'branch-collapsed',
       collapsedLeaf   : 'collapsed-leaf',
-      treeClosed      : 'tree-closed',
       expanded        : 'expanded',
       collapsed       : 'collapsed',
       close           : 'close',
@@ -69,7 +68,7 @@
       line            : 'line',
       selected        : 'selected',
       show            : 'show',
-      hide            : 'hide'
+      hide            : 'hidden'
     };
 
     // Plugin Constructor
@@ -118,15 +117,15 @@
         var self = this;
 
         // Expand or Collapse
-        self.element.on('click', '.' + constants.button, function(event) {
+        self.element.onTouchClick('click', '.' + constants.button).on('click', '.' + constants.button, function(event) {
 
           if (settings.newData.length > 0) {
             settings.newData = [];
           }
 
-          var nodeId     = $(this).closest('.' + constants.leaf).attr('id');
+          var nodeId = $(this).closest('.' + constants.leaf).attr('id');
           var dataObject = self.data(nodeId, settings.dataset, settings.newData);
-          var domObject  = {
+          var domObject = {
             branch: $(this).closest('li'),
             leaf: $(this).closest('.' + constants.leaf),
             button: $(this)
@@ -140,7 +139,8 @@
 
         });
 
-        self.element.on('click', '.' + constants.back, function() {
+        //TODO: Are we using this?
+        self.element.onTouchClick('click', '.' + constants.back).on('click', '.' + constants.back, function() {
           var nodeId     = $(this).parent().find('.' + constants.leaf).attr('id');
           var nodeData   = self.data(nodeId, settings.dataset, settings.newData);
           var domObject  = {
@@ -326,187 +326,33 @@
 
       // Expand the nodes until nodeId is displayed on the page.
       expand: function(event, nodeData, domObject) {
-        var self           = this;
-        var nodeParent     = domObject.branch;
-        var button         = domObject.button;
-        var animationParam = 'expand';
-        var dataWasLoaded  = false;
+        var self = this,
+          node = domObject.leaf,
+          nodeTopLevel  = node.next().not('.' + constants.line);
 
-        if (self.mobileView && !nodeData.isRootNode) {
-          var currentActiveBranch = $('.' + constants.activeBranch);
+        nodeTopLevel.animateOpen();
+        self.element.trigger(constants.expanded, [nodeData, settings.dataset]);
 
-          // remove current active branch state and back button
-          currentActiveBranch.removeClass(constants.activeBranch);
-          currentActiveBranch.find('.' + constants.back).remove();
-
-          // add back button, set branch to active, remove collapsed state
-          nodeParent.prepend('<span class=\'' + constants.back + '\'><span></span><span></span></span>');
-          nodeParent.addClass(constants.activeBranch);
-          nodeParent.removeClass(constants.branchCollapsed);
-          nodeParent.addClass(constants.branchExpanded);
-        }
-
-        nodeParent.removeClass(constants.treeClosed);
-        self.animateExpandCollapse(nodeParent, animationParam);
-
-        nodeParent.children('.' + constants.close).removeClass(constants.close);
-        nodeParent.children('.' + constants.shadow).remove();
-        button.removeClass(constants.collapsed).addClass(constants.expanded);
         nodeData.isExpanded = true;
+        self.setNodeData(nodeData);
 
-        if (nodeData.isRootNode) {
-          nodeParent.removeClass(constants.treeClosed);
-          nodeParent.children('.' + constants.close).removeClass(constants.close);
-        }
+        node.parent().removeClass(constants.branchCollapsed).addClass(constants.branchExpanded);
 
-        if (self.isLeaf(nodeData)) {
-          self.element.trigger(constants.expanded, [nodeData, settings.dataset]);
-          return;
-        }
-
-        function response(completeExpand) {
-          if (completeExpand) {
-            nodeParent.addClass(constants.branchExpanded);
-            nodeParent.removeClass(constants.branchCollapsed);
-            nodeParent.children('.' + constants.shadow).remove();
-            button.removeClass(constants.collapsed).addClass(constants.expanded);
-
-            nodeData.isLoaded = true;
-            dataWasLoaded = true;
-
-            setButtonState(nodeData);
-          }
-        }
-
-        function setButtonState(nodeData) {
-          if (dataWasLoaded) {
-            delete nodeData.isLeaf;
-
-            nodeData.isExpanded = true;
-            nodeData.displayClass = constants.show + ' ' + constants.expanded;
-            button.removeClass(constants.hide);
-            button.removeClass(constants.collapsed);
-            button.addClass(nodeData.displayClass);
-
-            self.element.trigger(constants.expanded, [nodeData, settings.dataset]);
-          } else {
-            nodeData.isExpanded = false;
-
-            nodeData.isLeaf = true;
-            nodeData.displayClass = constants.hide + ' ' + constants.collapsed;
-
-            button.removeClass(constants.show);
-            button.removeClass(constants.expanded);
-            button.addClass(nodeData.displayClass);
-
-            return nodeData;
-          }
-        }
-
-        if (settings.beforeExpand) {
-          settings.beforeExpand(nodeData.id, nodeData, response);
-
-          nodeData = setButtonState(nodeData);
-
-          self.element.trigger(constants.expanded, [nodeData, settings.dataset]);
-        } else {
-          response(true);
-        }
       },
 
       // Collapse the passed in nodeId.
       collapse: function(event, nodeData, domObject) {
-        var self           = this;
-        var node           = domObject.leaf;
-        var nodeParent     = domObject.branch;
-        var button         = domObject.button;
-        var nodeTopLevel   = node.next().not('.' + constants.line);
-        var nodeSubLevel   = node.next().next();
-        var animationParam = 'collapse';
+        var self = this,
+          node = domObject.leaf,
+          nodeTopLevel  = node.next().not('.' + constants.line);
 
-        if (event && this.mobileView && !nodeData.isRootNode) {
-          if (event.type === 'click') {
-            nodeParent.removeClass(constants.activeBranch);
-            nodeParent.find('.' + constants.back).remove();
+        nodeTopLevel.animateClosed().on('animateClosedComplete', function () {
+          self.element.trigger(constants.collapsed, [nodeData, settings.dataset]);
+        });
 
-            //var parentBranch = nodeParent.parent('ul').parent('li');
-            //parentBranch.addClass(constants.activeBranch);
-            //parentBranch.prepend('<span class=\'' + constants.back + '\'><span></span><span></span></span>');
-          }
-        }
-
-        if (nodeData.isRootNode) {
-          nodeParent.addClass(constants.treeClosed);
-          nodeSubLevel.addClass(constants.close).removeClass(constants.open);
-          nodeTopLevel.addClass(constants.close).removeClass(constants.open);
-        } else {
-          nodeParent.removeClass(constants.open);
-          nodeParent.removeClass(constants.branchExpanded);
-          nodeParent.addClass(constants.branchCollapsed);
-          nodeData.displayClass = constants.show + ' ' + constants.collapsed;
-          self.animateExpandCollapse(nodeParent, animationParam);
-        }
-
-        nodeParent.removeClass(constants.branchExpanded);
-
-        setTimeout(function() {
-          nodeParent.addClass(constants.branchCollapsed);
-
-          var isNotWrapped = node.closest('li').find('.leaf-container').length === 0;
-          var isRoot = node.hasClass(constants.root);
-
-          if (isNotWrapped) {
-            if (isRoot) {
-              node.wrap('<div class=\'leaf-container root\'>');
-              node.removeClass(constants.root);
-            }
-            else {
-              node.wrap('<div class=\'leaf-container\'>');
-            }
-
-            nodeParent.children('.leaf-container').append('<div class=\'' + constants.shadow + '\'></div>');
-          }
-
-        }, 400); //400 to give css animation time to finish
-
-        button.removeClass(constants.expanded).addClass(constants.collapsed);
         nodeData.isExpanded = false;
-
-        node.removeData();
         self.setNodeData(nodeData);
-
-        self.element.trigger(constants.collapsed, [nodeData, settings.dataset]);
-      },
-
-      //Animate and toggle the node branch
-      animateExpandCollapse: function(branch, param) {
-        var leafs = '';
-
-        if (param === 'expand') {
-          leafs = branch.children('ul').children('li');
-        }
-        if (param === 'collapse') {
-          leafs = branch.children('ul').find('li');
-        }
-
-        function animate(element, param) {
-          if (param === 'expand') {
-            element.removeClass(constants.collapsedLeaf);
-            if (element.hasClass(constants.branchExpanded)) {
-              element.children('.' + constants.sublist).children('li').removeClass(constants.collapsedLeaf);
-            }
-          }
-
-          if (param === 'collapse') {
-            element.addClass(constants.collapsedLeaf);
-          }
-        }
-
-        var i = leafs.length;
-        while(i--){
-          var element = leafs.eq(i);
-          animate(element, param);
-        }
+        node.parent().removeClass(constants.branchExpanded).addClass(constants.branchCollapsed);
 
       },
 
@@ -546,8 +392,10 @@
           $(rootNodeHTML[0]).addClass(constants.root).appendTo(chart);
 
         } else {
-          var leafTemplate = this.template(settings.templateId);
-          rootNodeHTML.push(leafTemplate(data));
+
+          var leafTemplate = Tmpl.compile('{{#dataset}}' + $('#' + settings.templateId).html() + '{{/dataset}}');
+          var leaf = leafTemplate.render({dataset: data});
+          rootNodeHTML.push(leaf);
 
           $(rootNodeHTML[0]).addClass(constants.root).appendTo(chart);
           this.setNodeData(data);
@@ -678,15 +526,13 @@
           self.setColor(nodeData);
           self.displayButton(nodeData);
 
-          var leafTemplate = self.template(settings.templateId);
-          var leaf         = leafTemplate(nodeData);
+          var leafTemplate = Tmpl.compile('{{#dataset}}' + $('#' + settings.templateId).html() + '{{/dataset}}');
+          var leaf = leafTemplate.render({dataset: nodeData});
           var animateParam = nodeData.isExpanded || nodeData.isExpanded === undefined ? 'expand' : 'collapse';
           var parent       = el.length === 1 ? el : container;
           var lineHtml     = '';
 
           parent.children('li').children('.ln').removeClass('last-line');
-
-          //TODO: We dont need?
 
           if (isLast) {
             lineHtml += '<span class=\'ln last-line\'></span>';
@@ -726,7 +572,7 @@
               self.setColor(nodeData.children[j]);
               self.displayButton(nodeData.children[j]);
 
-              var childleaf = leafTemplate(nodeData.children[j]);
+              var childleaf = leafTemplate.render({dataset: nodeData.children[j]});
               var c = $(childleaf);
 
               $(c).append('<span class=\'horizontal-line\'></span>');
@@ -830,29 +676,7 @@
             data.displayClass = constants.expanded;
           }
         }
-      },
-
-      //John Resig(http://ejohn.org/)MIT Licensed
-      /* jshint ignore:start */
-      template: function(str, data) {
-
-        var cache = {};
-        var fn = !/\W/.test(str) ?
-        cache[str] = cache[str] ||
-        this.template(document.getElementById(str).innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>')) :
-        new Function('obj', 'var p=[], print=function(){ p.push.apply(p, arguments);}; with(obj){p.push(\'' + str
-            .replace(/[\r\t\n]/g, ' ')
-            .split('<%').join('\t')
-            .replace(/((^|%>)[^\t]*)'/g, '$1\r')
-            .replace(/\t=(.*?)%>/g, '\',$1, \'')
-            .split('\t').join('\');')
-            .split('%>').join('p.push(\'')
-            .split('\r').join('\\\'') +
-            '\');}return p.join(\'\');');
-
-        return data ? fn(data) : fn;
       }
-      /* jshint ignore:end */
     };
 
     // Initialize the plugin (Once)
