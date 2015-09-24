@@ -306,7 +306,7 @@ var express = require('express'),
   app.get('/api/product', function(req, res) {
     var products = [
     { id: 1, productId: 200129, productName: 'A Miscellaneous Gravel, Colored Ston...', inStock:  '22,000',  units: '300 lb.', unitPrice:  '18.00', thumb: 'http://placehold.it/100x100/999999/FFFFFF', 'action': 'secondary' },
-    { id: 2, productId: 300123, productName: 'B Gravel, Natural Stone', inStock:  '20,000',  units: '300 lb.',  unitPrice:  '10.00', 'action': 'secondary' },
+    { id: 2, productId: 300123, productName: 'B Gravel, Natural Stone', inStock:  '20,000',  units: '300 lb.',  unitPrice:  '10.00', thumb: 'http://placehold.it/100x100/999999/FFFFFF', 'action': 'secondary' },
     { id: 3, productId: 200123, productName: 'C Gravel, Natural Stone', inStock:  '12,050',  units: '300 lb.',  unitPrice:  '12.50', thumb: 'http://placehold.it/100x100/999999/FFFFFF', 'action': 'primary' },
     { id: 4, productId: 200153, productName: 'D Miscellaneous Gravel, Colored Ston...', inStock:  '22,000',  units: '300 lb.',  unitPrice:  '10.22', thumb: 'http://placehold.it/100x100/999999/FFFFFF', 'action': 'secondary' },
     { id: 5, productId: 200123, productName: 'E Miscellaneous Gravel, Colored Ston...', inStock:  '22,000',  units: '300 lb.',  unitPrice:  '15.80', thumb: 'http://placehold.it/100x100/999999/FFFFFF', 'action': 'secondary' },
@@ -324,6 +324,23 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(products));
+  });
+
+  // Sample Supplies
+  app.get('/api/supplies', function(req, res) {
+    var supplies = [
+    { id: 1, count: 48, item: 'Acme Medical Supplies', owner:  'Elizebath L. Smith', role: 'Sales'},
+    { id: 2, count: 73, item: 'Office Supplies, North Tower, 4th Floor', owner:  'Jason S. Montoya', role: 'Director'},
+    { id: 3, count: 218, item: 'Service & Maintance', owner:  'Jennifer Lawson', role: 'Sales Associate'},
+    { id: 4, count: 48, item: 'Surgical Supplies', owner:  'Mallory Smith', role: 'Director'},
+    { id: 5, count: 39, item: 'Cleaning Supplies', owner:  'Tim Williams', role: 'Manager'},
+    { id: 6, count: 72, item: 'Machine Support & Tech', owner:  'Nick Bates', role: 'Manager'},
+    { id: 7, count: 9, item: 'IT Department', owner:  'Robert M. Mitchells', role: 'Sales'},
+    { id: 8, count: 13, item: 'Janitorial Supplies', owner:  'Meridith S. Connors', role: 'Manager' },
+    ];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(supplies));
   });
 
   // Sample Towns

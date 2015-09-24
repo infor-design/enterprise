@@ -411,6 +411,24 @@
     display: none;
   }
 
+  &.show-headers {
+    thead tr {
+      background-color: $listview-header-bg-color;
+    }
+
+    th {
+      color: $listview-header-color;
+      @include font-size(12);
+      display: table-cell;
+      font-weight: bold;
+      padding: 15px;
+    }
+
+    th:not(.l-right-text) {
+      text-align: left;
+    }
+  }
+
 }
 
 // White Header for top of flat lists
