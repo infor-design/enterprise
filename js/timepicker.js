@@ -249,7 +249,7 @@
         var minuteCounter = 0;
         minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
 
-        while(minuteCounter < 59) {
+        while(minuteCounter <= 59) {
           var textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
 
           selected = '';
