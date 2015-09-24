@@ -462,7 +462,7 @@
             }
 
             // Don't allow the modal to close if we hit enter to select a tab
-            if (keyCode === 13) {
+            if (keyCode === 13 && !(e.target).is('textarea')) {
               var tabContainerParents = $(e.target).parentsUntil(self.element).filter('.tab-container');
               if (tabContainerParents.length) {
                 e.preventDefault();

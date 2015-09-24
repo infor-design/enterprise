@@ -470,7 +470,7 @@
               return;
             }
             self.activate(currentA.attr('href'));
-            if (e.which === 32 && (currentA.attr('ng-click') || currentA.attr('data-ng-click'))) { // Needed to fire the "Click" event in Angular situations
+            if (currentA.attr('ng-click') || currentA.attr('data-ng-click')) { // Needed to fire the "Click" event in Angular situations
               currentA.click();
             }
             self.focusState.removeClass('is-visible');
