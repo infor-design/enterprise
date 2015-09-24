@@ -210,6 +210,12 @@ span.checkbox > input:hover + label:before {
   @include checkbox-animation;
 }
 
+.checkbox-group-label {
+  display: block;
+  @include font-size(12);
+  margin-bottom: 20px;
+}
+
 // Print Support
 @media print {
   .checkbox + label:before {
