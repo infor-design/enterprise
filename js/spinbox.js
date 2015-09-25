@@ -371,7 +371,15 @@
 
       // Updates the "aria-valuenow" property on the spinbox element if the value is currently set
       updateAria: function(val) {
+        var min = this.element.attr('min'),
+          max = this.element.attr('max');
+
+        val = this.checkForNumeric(val);
         this.element.attr('aria-valuenow', (val !== '' ? val : ''));
+
+        // Tougle min/max buttons
+        this.setIsDisabled(this.buttons.up, (val !== '' && max && val >= max) ? 'disable' : 'enable');
+        this.setIsDisabled(this.buttons.down, (val !== '' && min && val <= min) ? 'disable' : 'enable');
       },
 
       // adds a "pressed-in" styling for one of the spinner buttons
@@ -410,6 +418,13 @@
 
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      setIsDisabled: function(button, isDisabled) {
+        isDisabled = isDisabled === undefined ? true :
+          (!isDisabled || isDisabled === 'enable') ? false : true;
+
+        button[isDisabled ? 'addClass' : 'removeClass']('is-disabled');
       },
 
       // Teardown

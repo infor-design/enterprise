@@ -68,6 +68,14 @@ input::-webkit-inner-spin-button {
     background-color: $spinbox-bg-color;
     color: $font-color-highcontrast;
   }
+
+  &.is-disabled {
+    background-color: $input-disabled-bg-color;
+    border-color: $input-disabled-border-color;
+    color: $disabled-color;
+    cursor: default;
+    -webkit-text-fill-color: $disabled-color;
+  }
 }
 
 // Everything inside the spinbox wrapper is vertically-aligned middle.
@@ -81,7 +89,7 @@ input::-webkit-inner-spin-button {
   .icon-error {
     margin-left: -18px;
     right: 6px;
-    top: 0px;
+    top: 0;
   }
 
   &.is-focused {
@@ -91,6 +99,14 @@ input::-webkit-inner-spin-button {
 
       &.is-active {
         border-color: $input-focus-border-color;
+      }
+
+      &.is-disabled {
+        background-color: $input-disabled-bg-color;
+        border-color: $input-disabled-border-color;
+        color: $disabled-color;
+        cursor: default;
+        -webkit-text-fill-color: $disabled-color;
       }
     }
 
