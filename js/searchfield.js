@@ -102,7 +102,7 @@
           self.handleFocus(e);
         }).on('blur.searchfield', function(e) {
           self.handleBlur(e);
-        }).onTouchClick('searchfield')
+        }).onTouchClick('searchfield', '.searchfield')
         .on('click.searchfield', function(e) {
           self.handleClick(e);
         }).on('keyup.searchfield', function(e) {
@@ -110,7 +110,7 @@
         });
 
         if (this.settings.clearable) {
-          this.xButton.onTouchClick('searchfield').on('click.searchfield', function handleClear() {
+          this.xButton.onTouchClick('searchfield', '.searchfield').on('click.searchfield', function handleClear() {
             self.element.val('').trigger('change');
             self.checkContents();
           });
@@ -212,7 +212,7 @@
             $(document).offTouchClick('searchfield').off('click.searchfield');
           }
 
-          $(document).onTouchClick('searchfield').on('click.searchfield', function(e) {
+          $(document).onTouchClick('searchfield', '.searchfield').on('click.searchfield', function(e) {
             var target = $(e.target);
             if (target[0] !== self.element[0] && target[0] !== self.element.parent('.searchfield-wrapper')[0]) {
               deactivate();
