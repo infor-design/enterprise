@@ -120,6 +120,23 @@ $hierarchy-line-width: 1px;
       line-height: 18px;
       margin-top: 0;
     }
+
+    .btn-icon {
+      float: right;
+      left: 0;
+      position: relative;
+      top: -16px;
+    }
+  }
+
+  //Adjust size for buttons
+  ul > li > .leaf {
+    width: 315px;
+
+    .btn-expand {
+      left: -12px;
+      top: 17px;
+    }
   }
 
   // The Centering Container
@@ -137,8 +154,8 @@ $hierarchy-line-width: 1px;
       background: $hierarchy-line-color none repeat scroll 0 0;
       content: '';
       height: 142px;
-      margin-left: 131px;
-      margin-top: -26px;
+      margin-left: -65px;
+      margin-top: 73px;
       position: absolute;
       width: $hierarchy-line-width;
       z-index: -1;
@@ -147,6 +164,7 @@ $hierarchy-line-width: 1px;
 
   //The Second to Top Level - Flows left to right
   .top-level {
+    overflow: hidden;
     text-align: center;
 
     li {
@@ -159,7 +177,7 @@ $hierarchy-line-width: 1px;
         content: '';
         display: inline-block;
         height: 2px;
-        margin-left: 135px;
+        margin-left: 150px;
         margin-top: 35px;
         position: absolute;
         width: 50px;
@@ -176,6 +194,7 @@ $hierarchy-line-width: 1px;
 
   //The Bottom Levels - Flow Down and Up
   .sub-level {
+    overflow: hidden;
     text-align: center;
     white-space: nowrap;
 
@@ -196,7 +215,7 @@ $hierarchy-line-width: 1px;
         margin-left: -110px;
         margin-top: -25px;
         position: absolute;
-        width: 390px;
+        width: 428px;
         z-index: -1;
       }
 

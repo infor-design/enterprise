@@ -52,6 +52,8 @@
           //Get Page Based on info in Req, return results into response;
         },
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+      }).on('rendered', function (a, b, c, d) {
+        console.log(a, b, c, d);
       });
 
   });

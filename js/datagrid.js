@@ -1031,6 +1031,10 @@ $.fn.datagrid = function(options) {
 
     //Toggle selection on a single row
     selectRow: function (idx) {
+      if (idx === -1) {
+        return;
+      }
+
       var row = this.tableBody.find('tr[role="row"]').eq(idx),
         checkbox = null;
 
@@ -1083,6 +1087,10 @@ $.fn.datagrid = function(options) {
         rowIndex = (typeof idx === 'number' ? idx : idx.index('tr[role="row"]'));
 
       if (this.settings.selectable === false) {
+        return;
+      }
+
+      if (this.editor && row.hasClass('is-selected')) {
         return;
       }
 
@@ -1350,6 +1358,11 @@ $.fn.datagrid = function(options) {
       this.editor = new col.editor(row, cell, cellValue, cellNode, col);
       this.editor.val(cellValue);
       this.editor.focus();
+
+      var rowNode = cellParent.closest('tr');
+      if (!rowNode.hasClass('is-selected')) {
+        this.toggleRowSelection(rowNode.closest('tr'));
+      }
     },
 
     commitCellEdit: function(input) {

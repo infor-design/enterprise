@@ -208,21 +208,6 @@
           $(this).trigger('doubleClick', nodeData, element);
         });
 
-        // Remove Leaf
-        $('body').on('removeLeaf', function(event, data) {
-          var nodeData = data;
-          $('#' + nodeData.id).closest('li').remove();
-        });
-
-        // Insert Leaf
-        $('body').on('insertLeaf', function(event, parentId, data) {
-          var button = $('#' + parentId).find('.' + constants.button);
-          button.removeClass(constants.hide).addClass(constants.expanded);
-
-          self.data(parentId, settings.dataset, data, {insert:true});
-          self.setColor(data);
-          self.add(parentId, settings.dataset, data);
-        });
       },
 
       // Process data attached through jquery data
@@ -333,11 +318,16 @@
         nodeTopLevel.animateOpen();
         self.element.trigger(constants.expanded, [nodeData, settings.dataset]);
 
+        if (node.hasClass('root')) {
+          nodeTopLevel  = nodeTopLevel.next('ul');
+          nodeTopLevel.animateOpen();
+        }
+
         nodeData.isExpanded = true;
         self.setNodeData(nodeData);
 
         node.parent().removeClass(constants.branchCollapsed).addClass(constants.branchExpanded);
-
+        self.setButtonState(node, nodeData);
       },
 
       // Collapse the passed in nodeId.
@@ -350,10 +340,15 @@
           self.element.trigger(constants.collapsed, [nodeData, settings.dataset]);
         });
 
+        if (node.hasClass('root')) {
+          nodeTopLevel  = nodeTopLevel.next('ul');
+          nodeTopLevel.animateClosed();
+        }
+
         nodeData.isExpanded = false;
         self.setNodeData(nodeData);
         node.parent().removeClass(constants.branchExpanded).addClass(constants.branchCollapsed);
-
+        self.setButtonState(node, nodeData);
       },
 
       //Main render method
@@ -541,6 +536,7 @@
           }
 
           var lf = $(leaf);
+          self.setButtonState(lf, nodeData);
 
           if (elClassName !== constants.sublevel && elClassName !== constants.toplevel) {
             $(lf).append('<span class=\'horizontal-line\'></span>');
@@ -561,7 +557,6 @@
 
             if (nodeData.displayClass === constants.expanded || nodeData.isExpanded) {
               nodeData.isExpanded = true;
-
               $('#' + nodeData.id).data(nodeData);
             }
             else {
@@ -593,6 +588,7 @@
               self.setNodeData(nodeData.children[childLength]);
             }
 
+            //TODO: Test case with data loading collapsed nodes
             if (!nodeData.isExpanded && !nodeData.isLeaf) {
               self.animateExpandCollapse($('#' + nodeData.id).parent(), animateParam);
             }
@@ -657,8 +653,26 @@
         return true;
       },
 
+      //set the classes and svg on the button
+      setButtonState: function (leaf, data) {
+        var btn = leaf.find('.'+ constants.button);
+
+        if (data.isExpanded || data.isExpanded === undefined) {
+          btn.addClass(constants.expanded).removeClass(constants.collapsed);
+          btn.find('.icon use').attr('xlink:href', '#icon-caret-up');
+        } else {
+          btn.addClass(constants.collapsed).removeClass(constants.expanded);
+          btn.find('.icon use').attr('xlink:href', '#icon-caret-down');
+        }
+
+        if (data.isExpanded === undefined) {
+          btn.button();
+        }
+      },
+
       // Determine the state of the expand collapse button and show it
       displayButton: function(data) {
+
         if (data.isLeaf) {
           data.displayClass = constants.hide;
         } else {
@@ -676,6 +690,7 @@
             data.displayClass = constants.expanded;
           }
         }
+
       }
     };
 

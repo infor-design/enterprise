@@ -94,13 +94,20 @@ $datagrid-header-height: 40px;
     height: 40px;
     margin-left: 20px;
 
-    &.l-right-text .datagrid-header-text {
-      float: right;
-      line-height: 40px;
-    }
+    &.l-right-text {
+      margin: 0;
+      width: 100%;
 
-    .sort-indicator {
-      float: right;
+      .datagrid-header-text {
+        float: right;
+        line-height: 40px;
+        margin-right: 20px;
+      }
+
+      .sort-indicator {
+        float: right;
+        margin: 2px 10px 0 0;
+      }
     }
   }
 
@@ -125,10 +132,10 @@ $datagrid-header-height: 40px;
       }
     }
 
-    &.is-selected td,
-    &.is-selected .datagrid-cell-wrapper,
-    &.is-selected .is-readonly {
-      background-color: $datagrid-row-selected-color !important;
+    &.is-selected td:not(.is-editing),
+    &.is-selected td:not(.is-editing) .datagrid-cell-wrapper,
+    &.is-selected td:not(.is-editing) .is-readonly {
+      background-color: $datagrid-row-selected-color;
     }
 
     &.is-clickable {
@@ -279,6 +286,7 @@ $datagrid-header-height: 40px;
 
     //Inline Editting
     &.is-editing {
+      background-color: $panel-bg-color !important;
 
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
