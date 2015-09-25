@@ -191,8 +191,10 @@
             }
           }
 
-          self.element.trigger('selected', [a, ret]);
-          self.element.data('popupmenu').close();
+          self.element
+            .trigger('selected', [a, ret])
+            .focus()
+            .data('popupmenu').close();
 
           e.preventDefault();
           return false;
