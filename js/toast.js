@@ -89,7 +89,8 @@
         setTimeout(function () {
          self.remove(toast);
          clearInterval(interval);
-        }, (this.settings.audibleOnly ? 100 : settings.timeout));
+        }, (this.settings.audibleOnly ? 100 : this.settings.timeout));
+
       },
 
       // Remove the Message and Animate
