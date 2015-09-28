@@ -208,11 +208,11 @@
           e.preventDefault();
         }
 
-        self.element.trigger('selected', [header]);
-
         if (!header.length || header.hasClass('is-disabled')) {
           return false;
         }
+
+        self.element.trigger('selected', [header]);
 
         // Set the original element for DOM traversal by keyboard
         this.originalSelection = anchor;
