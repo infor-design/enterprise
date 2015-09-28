@@ -311,7 +311,7 @@
           value += (i !== 0 ? ',' : '') + currValue;
         }
 
-        self.element.val(value).trigger('change');
+        self.element.val(value).trigger('change', [self.selectedRows]);
         self.element.focus();
       },
 

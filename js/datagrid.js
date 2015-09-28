@@ -785,7 +785,9 @@ $.fn.datagrid = function(options) {
           count = self.settings.dataset.length;
         }
 
+       if (self.toolbar) {
         self.toolbar.find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
+       }
       }, 1);
     },
 
