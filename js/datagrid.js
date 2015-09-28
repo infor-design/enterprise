@@ -25,21 +25,24 @@ window.Formatters = {
   },
 
   Decimal:  function(row, cell, value, col) {
-    var formatted = ((value === null || value === undefined) ? '' : value);
+    var formatted;
 
     if (typeof Locale !== undefined && true) {
        formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
     }
 
+    formatted = ((value === null || value === undefined) ? '' : value);
     return formatted;
   },
 
   Integer:  function(row, cell, value, col) {
-    var formatted = ((value === null || value === undefined) ? '' : value);
+    var formatted;
 
     if (typeof Locale !== undefined && true) {
       formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'integer'}));
     }
+
+    formatted = ((value === null || value === undefined) ? '' : value);
     return formatted;
   },
 
@@ -192,6 +195,47 @@ window.Editors = {
     };
 
     this.destroy = function () {
+      this.input.remove();
+    };
+
+    this.init();
+  },
+
+  Checkbox: function(row, cell, value, container, column, event) {
+
+    this.name = 'Checkbox';
+    this.orginalValue = value;
+
+    this.init = function () {
+      this.input = $('<input type="checkbox" class="checkbox"/>').appendTo(container);
+      this.input.after('<label class="checkbox-label">&nbsp;</label>');
+
+      if (column.align) {
+        this.input.addClass('l-'+ column.align +'-text');
+      }
+    };
+
+    this.val = function (value) {
+      var isChecked = value;
+
+      if (value === undefined) {
+        return  this.input.prop('checked');
+      }
+
+      if (event.type === 'click') {
+        //just toggle it
+        isChecked = !value;
+      }
+
+      this.input.prop('checked', isChecked);
+    };
+
+    this.focus = function () {
+      this.input.focus();
+    };
+
+    this.destroy = function () {
+      this.input.next('.checkbox-label').remove();
       this.input.remove();
     };
 
@@ -366,6 +410,41 @@ $.fn.datagrid = function(options) {
       return dataset;
     },
 
+    //Delete a Specific Row
+    addRow: function (data, location) {
+      var self = this;
+      location = (!location ? 'top' : location);
+
+      if (location === 'top') {
+        //Add to array
+        this.settings.dataset.unshift(data);
+
+        //Add to ui
+        this.renderRows();
+
+        setTimeout(function () {
+          self.setActiveCell(0, 0);
+        }, 10);
+      }
+
+    },
+
+    //Delete a Specific Row
+    removeRow: function (row) {
+      this.settings.dataset.splice(row, 1);
+      this.renderRows();
+    },
+
+    //Remove all selected rows
+    removeSelected: function () {
+      var self = this,
+        selectedRows = this.selectedRows();
+
+      for (var i = 0; i < selectedRows.length; i++) {
+        self.removeRow(selectedRows[i].idx);
+      }
+    },
+
     //Method to Reload the data set
     loadData: function (dataset, noReset) {
       var selectedIds = this.selectedRows(),
@@ -483,7 +562,7 @@ $.fn.datagrid = function(options) {
       if (field.indexOf('.') > -1) {
         return field.split('.').reduce(function(o, x) { return (o ? o[x] : ''); }, obj);
       }
-      return obj[field];
+      return (obj[field] ? obj[field] : '');
     },
 
     //Render the Rows
@@ -706,7 +785,7 @@ $.fn.datagrid = function(options) {
           count = self.settings.dataset.length;
         }
 
-        self.element.prev('.toolbar').find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
+        self.toolbar.find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
       }, 1);
     },
 
@@ -790,7 +869,7 @@ $.fn.datagrid = function(options) {
         self.triggerRowEvent('click', e, true);
         self.setActiveCell(target.closest('td'));
         self.toggleRowSelection(target.closest('tr'));
-        self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
+        self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
       });
 
       body.on('dblclick.datagrid', 'tr', function (e) {
@@ -873,8 +952,8 @@ $.fn.datagrid = function(options) {
       }
 
       //Allow menu to be added manully
-      if (this.element.prev().is('.toolbar')) {
-        toolbar = this.element.prev();
+      if (this.element.parent().prev().is('.toolbar')) {
+        toolbar = this.element.parent().prev();
       } else {
         toolbar = $('<div class="toolbar" role="toolbar"></div>');
 
@@ -951,6 +1030,8 @@ $.fn.datagrid = function(options) {
           self.keywordSearch($(this).val());
         }
       });
+
+      this.toolbar = toolbar;
     },
 
     //Get or Set the Row Height
@@ -1094,7 +1175,7 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (isSingle && this._selectedRows[0] && this._selectedRows[0].idx !== rowIndex) {
+      if (isSingle && this._selectedRows[0]) {
         this.unselectRow(this._selectedRows[0].idx);
         this._selectedRows = [];
       }
@@ -1206,6 +1287,25 @@ $.fn.datagrid = function(options) {
     // Handle all keyboard behavior
     handleKeys: function () {
       var self = this;
+      self.table.on('keydown.datagrid', 'td, input', function (e) {
+        var handled = false,
+          key = e.which;
+
+        //In edit mode tab leaves edit mode
+        if (self.editor && key === 9) {
+          self.commitCellEdit(self.editor.input);
+          handled = true;
+          var active = self.activeCell;
+          self.setActiveCell(active.row, active.cell);
+        }
+
+        if (handled) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+      });
 
       self.table.on('keyup.datagrid', 'td', function (e) {
         var key = e.which, row,
@@ -1298,7 +1398,7 @@ $.fn.datagrid = function(options) {
         //For Editable mode - press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
         if (self.settings.editable && key === 32) {
           if (!self.editor) {
-            self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
+            self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
           }
         }
 
@@ -1307,7 +1407,7 @@ $.fn.datagrid = function(options) {
             self.commitCellEdit(self.editor.input);
             self.setActiveCell(self.activeCell.row, self.activeCell.cell);
           } else {
-            self.makeCellEditable(self.activeCell.row, self.activeCell.cell);
+            self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
           }
         }
 
@@ -1324,13 +1424,14 @@ $.fn.datagrid = function(options) {
     editor: null,
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
-    makeCellEditable: function(row, cell) {
+    makeCellEditable: function(row, cell, event) {
       if (!this.settings.editable) {
         return;
       }
 
       //Locate the Editor
       var col = this.columnSettings(cell);
+
       if (!col.editor) {
         return;
       }
@@ -1342,7 +1443,7 @@ $.fn.datagrid = function(options) {
 
       var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
-        cellValue = cellNode.text();
+        cellValue = (cellNode.text() ? cellNode.text() : this.fieldValue(this.settings.dataset[row], col.field));
 
       if (cellParent.hasClass('is-editing')) {
         //Already in edit mode
@@ -1355,7 +1456,7 @@ $.fn.datagrid = function(options) {
       cellParent.addClass('is-editing');
       cellNode.empty();
 
-      this.editor = new col.editor(row, cell, cellValue, cellNode, col);
+      this.editor = new col.editor(row, cell, cellValue, cellNode, col, event);
       this.editor.val(cellValue);
       this.editor.focus();
 
@@ -1426,6 +1527,10 @@ $.fn.datagrid = function(options) {
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
       var oldVal = (col.field ? this.settings.dataset[row][col.field] : ''),
         coercedVal = this.coerceValue(value, oldVal, col, row, cell);
+
+      if (!coercedVal) {
+        coercedVal = value;
+      }
 
       if (col.field && coercedVal !== oldVal) {
         this.settings.dataset[row][col.field] = coercedVal;

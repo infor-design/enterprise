@@ -77,6 +77,9 @@
 | LMS  | Angular (2.0) |  |
 | Supplier Exchange  | Charts | Larry Wang |
 | Infor Hospitality in France  | POS  | Bruno Martinot |
+| Infor Enroute 911  |   | James Coonce |
+| GT Nexus |   | Tom Sorgie |
+
 
 
 

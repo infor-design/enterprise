@@ -222,14 +222,18 @@ $datagrid-header-height: 40px;
         height: 60px;
         overflow: visible;
       }
+
+      .datagrid-alert-icon {
+        top: 39px;
+      }
     }
 
     &.short-rowheight td {
-      height: 32px;
-      line-height: 32px;
+      height: 38px;
+      line-height: 38px;
 
       span {
-        line-height: 32px;
+        line-height: 38px;
       }
 
       .badge {
@@ -238,6 +242,10 @@ $datagrid-header-height: 40px;
         &:before {
           margin-top: 0;
         }
+      }
+
+      .datagrid-alert-icon {
+        top: 7px;
       }
 
       .tag {
@@ -290,6 +298,14 @@ $datagrid-header-height: 40px;
 
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
+      }
+
+      .checkbox-label::before {
+        margin-left: -25px;
+      }
+
+      .checkbox-label::after {
+        left: 9px;
       }
 
       input {

@@ -23,7 +23,7 @@
     // Settings and Options
     var defaults = {
           title: 'Message Title', //Title text or content shown in the message
-          isError: true, //Show Title as an Error with an Icon
+          isError: false, //Show Title as an Error with an Icon
           message: 'Message Summary', //The message content or text
           width: 'auto',  //specify a given width or fit to content with auto
           buttons: null, //Passed through to modal

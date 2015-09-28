@@ -117,7 +117,7 @@
         var self = this;
 
         // Expand or Collapse
-        self.element.onTouchClick('click', '.' + constants.button).on('click', '.' + constants.button, function(event) {
+        self.element.onTouchClick('hierarchy', '.' + constants.button).on('click.hierarchy', '.' + constants.button, function(event) {
 
           if (settings.newData.length > 0) {
             settings.newData = [];
@@ -677,6 +677,10 @@
           data.displayClass = constants.hide;
         } else {
           data.displayClass = constants.show;
+        }
+
+        if (data.isRootNode) {
+          data.displayClass = constants.hide;
         }
 
         if (data.isExpanded) {

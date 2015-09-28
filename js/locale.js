@@ -346,7 +346,7 @@
         minimumFractionDigits = options && options.minimumFractionDigits ? options.minimumFractionDigits : 0,
         maximumFractionDigits = options && options.maximumFractionDigits ? options.maximumFractionDigits : 3;
 
-      if (number === undefined) {
+      if (number === undefined || number === null || number === '') {
         return undefined;
       }
 
