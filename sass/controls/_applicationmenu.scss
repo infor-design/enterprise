@@ -137,10 +137,6 @@ $application-menu-width: 300px;
           }
         }
       }
-
-      /*.accordion-header {
-        border-bottom-color: $accordion-selected-bg-color;
-      }*/
     }
 
     &.is-focused {
@@ -183,6 +179,12 @@ $application-menu-width: 300px;
       }
     }
 
+    &.has-chevron {
+      .icon + a {
+        width: calc(100% - 111px);
+      }
+    }
+
   }
 
   .accordion-pane {
@@ -218,7 +220,10 @@ $application-menu-width: 300px;
   .accordion-content {
     color: $slate03;
 
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
       color: $slate01;
     }
   }
@@ -244,12 +249,12 @@ $application-menu-width: 300px;
   // Level 1 Header
   .accordion-header {
     > a {
-      padding-left: 33px;
+      padding-left: 26px;
     }
 
-    > [class^="btn"],
+    > [class^="btn"]:not(:last-child),
     > .icon {
-      margin-left: 17px;
+      margin-left: 26px;
 
       + a {
         padding-left: 0;
@@ -262,7 +267,7 @@ $application-menu-width: 300px;
   .accordion-pane {
 
     .accordion-content {
-      padding-left: 33px;
+      padding-left: 26px;
     }
 
     // Level 2 Header
