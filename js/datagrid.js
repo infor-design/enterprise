@@ -1188,9 +1188,7 @@ $.fn.datagrid = function(options) {
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : idx.index('tr[role="row"]'));
-
-      // Should maybe be this.tableBody.find('tr[role="row"]').index(idx)
+        rowIndex = (typeof idx === 'number' ? idx : this.tableBody.find('tr[role="row"]').index(idx));
 
       if (this.settings.selectable === false) {
         return;
