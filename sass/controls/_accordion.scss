@@ -21,7 +21,6 @@ $accordion-selected-text-color: $white;
 .accordion {
   background-color: $accordion-bg-color;
   border-right: 1px solid $accordion-border-color;
-  overflow-x: scroll;
   overflow-y: visible;
 
   &.alternate {
@@ -29,6 +28,14 @@ $accordion-selected-text-color: $white;
 
     .accordion-pane {
       background-color: $accordion-pane-alternate-bg-color;
+
+      .accordion-header {
+        border-bottom: 1px solid $accordion-pane-alternate-bg-color;
+      }
+
+      .accordion-content {
+        border-bottom: 1px solid $accordion-pane-alternate-bg-color;
+      }
     }
   }
 }
@@ -74,18 +81,18 @@ $accordion-selected-text-color: $white;
     color: $accordion-text-color;
     display: inline-block;
     overflow: hidden;
-    padding: 14px 0 14px 16px;
+    padding: 14px 0 14px 20px;
     text-decoration: none;
     text-overflow: ellipsis;
-    width: calc(100% - 1px);
     white-space: nowrap;
+    width: calc(100% - 1px);
   }
 
   > [class^="btn"] {
     background-color: transparent;
     border-color: transparent;
     height: 40px;
-    margin: 3px 0 3px 3px;
+    margin: 3px 6px 3px 3px;
     min-width: 0;
     padding: 0 10px;
     width: 40px;
@@ -95,8 +102,7 @@ $accordion-selected-text-color: $white;
     }
 
     + a {
-      margin-left: 6px;
-      width: calc(100% - 54px);
+      width: calc(100% - 57px);
     }
 
     .icon {
@@ -207,12 +213,12 @@ $accordion-selected-text-color: $white;
     }
 
     > a {
-      width: calc(100% - 49px);
+      width: calc(100% - 55px);
     }
 
     > .icon {
       + a {
-        width: calc(100% - 103px);
+        width: calc(100% - 108px);
       }
     }
   }
@@ -245,13 +251,13 @@ $accordion-selected-text-color: $white;
 // Level 1 Accordion Pane
 .accordion-pane {
   background-color: $accordion-pane-bg-color;
-  overflow-x: visible;
-  overflow-y: hidden;
+  overflow: hidden;
 
   .accordion-content {
     border-bottom: 1px solid $accordion-border-color;
     color: $accordion-text-color;
-    padding-left: 16px;
+    overflow-x: visible;
+    padding-left: 20px;
   }
 
   // These rules allow the accordion to expand
@@ -269,16 +275,16 @@ $accordion-selected-text-color: $white;
     }
 
     > a {
-      padding: 10px 0 10px 16px;
+      padding: 10px 0 10px 20px;
     }
 
     > [class^="btn"],
     > .icon {
-      margin-left: 3px;
+      margin-left: 7px;
 
       + a {
-        padding: 10px 0;
-        width: calc(100% - 50px);
+        padding: 10px 0 10px 1px;
+        width: calc(100% - 55px);
       }
     }
 
@@ -301,13 +307,13 @@ $accordion-selected-text-color: $white;
   .accordion-pane {
 
     .accordion-content {
-      padding-left: 49px;
+      padding-left: 55px;
     }
 
     // Level 3 Accordion Header
     .accordion-header {
       > a {
-        padding-left: 49px;
+        padding-left: 54px;
       }
 
       > [class^="btn"],
@@ -385,7 +391,7 @@ $accordion-selected-text-color: $white;
 
             > [class^="btn"],
             > .icon {
-              margin-left: 128px;
+              margin-left: 130px;
 
               + a {
                 padding-left: 0;
@@ -397,7 +403,7 @@ $accordion-selected-text-color: $white;
           // Level 6 Accordion Pane
           .accordion-pane {
             .accordion-content {
-              padding-left: 176px;
+              padding-left: 178px;
             }
           }
         }

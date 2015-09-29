@@ -318,10 +318,12 @@
 
         this.headers.removeClass('child-selected').removeClass('is-selected');
 
-        header.addClass('is-selected')
-        .parentsUntil(this.element, '.accordion-pane')
-          .prev('.accordion-header')
-          .addClass('child-selected');
+        header.addClass('is-selected');
+
+        var items = header.parentsUntil(this.element, '.accordion-pane')
+          .prev('.accordion-header');
+
+        items.addClass('child-selected');
       },
 
       // Checks if an Accordion Section is currently expanded
@@ -616,7 +618,7 @@
       // Governed by the property "this.originalSelection".
       // @param {Object} header - a jQuery Object containing an Accordion header.
       focusOriginalType: function(header) {
-        this.select(header);
+        this.select(header.children('a'));
 
         if (this.originalSelection.is('.btn') && header.children('.btn').length) {
           header.children('.btn').focus();
