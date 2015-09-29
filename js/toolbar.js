@@ -197,7 +197,6 @@
         var self = this;
 
         this.items
-          .onTouchClick('toolbar')
           .on('keydown.toolbar', function(e) {
             self.handleKeys(e);
           }).on('click.toolbar', function(e) {

@@ -49,7 +49,7 @@
     // Actual Plugin Code
     Editor.prototype = {
 
-      init: function() {
+      init: function() {               
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
         this.element.parent('.field').addClass('editor-container');
@@ -546,7 +546,7 @@
       bindButtons: function () {
         var self = this;
 
-        this.toolbar.on('click.editor', 'button', function (e) {
+        this.toolbar.on('touchstart.editor click.editor', 'button', function (e) {
           var btn = $(this),
             action = btn.attr('data-action');
 
@@ -599,12 +599,24 @@
           })
           .off('open')
           .on('open', function () {
+            var isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+              id = $(this).attr('id'),
+              input = $('input:first', this),
+              button = $('.modal-buttonset .btn-modal-primary', this);
+
             $('[name="em-url"]').val(settings.anchor.url);
             $('[name="em-class"]').val(settings.anchor.class);
             $('[name="em-target"]').val(settings.anchor.target);
             $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
 
-            $(this).find('input:first').focus().select();
+            setTimeout(function () {              
+              if (isTouch && id === 'editor-modal-image') {
+                button.focus();
+              } else {
+                input.focus().select();
+              }              
+            }, 10);
+
           })
           .off('close')
           .on('close', function (e, isCancelled) {

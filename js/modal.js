@@ -296,12 +296,7 @@
           }
         });
 
-        // hide modal until it loaded, resized and centered
-        self.element.css('opacity', 0);
         setTimeout(function () {
-          $(window).trigger('resize');
-          self.resize();
-          self.element.css('opacity', 1);
           self.element.triggerHandler('afterOpen');
         }, 300);
 
@@ -397,12 +392,20 @@
       },
 
       resize: function() {
-        var bodyHeight = $('.modal-body', this.element).height(),
-          calcHeight = ($(window).height()* 0.9)-180; //90% -(160 :extra elements-height)
+        var top, left, 
+          bodyHeight = $('.modal-body', this.element).height(),
+          calcHeight = ($(window).height()* 0.9)-180; //90% -(180 :extra elements-height)
 
         $('.modal-body-wrapper', this.element).css('max-height', bodyHeight > calcHeight ? calcHeight : '');
+
+        this.extraPadding = this.isOpen() ? 0 : parseInt($('.modal-content', this.element).css('padding-left'), 10)- 2;
+        this.extraPadding = this.settings.isAlert ? this.extraPadding *1.6 : this.extraPadding;
+
+        left = (this.element.outerWidth() /2) + this.extraPadding;        
+        top = (this.element.outerHeight() /2) + this.extraPadding *1.4;
+
         this.element.css({
-          margin : '-' + (this.element.outerHeight() / 2) + 'px 0 0 -' + (this.element.outerWidth() / 2) + 'px'
+          margin : '-'+ top +'px 0 0 -'+ left +'px'
         });
       },
 
