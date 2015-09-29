@@ -546,7 +546,7 @@
       bindButtons: function () {
         var self = this;
 
-        this.toolbar.on('click.editor', 'button', function (e) {
+        this.toolbar.on('touchstart.editor click.editor', 'button', function (e) {
           var btn = $(this),
             action = btn.attr('data-action');
 
