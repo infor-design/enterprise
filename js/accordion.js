@@ -92,16 +92,19 @@
             header.data('addedExpander', expander);
           }
 
+          // For backwards compatibility:  If an icon is found inside an anchor, bring it up to the level of the header.
+          header.children('a').find('svg').detach().insertBefore(header.children('a'));
+
           // Setup the correct attributes on any icons present
           // Leave alone an SVG Icon that's been pre-defined, but adjust it if necessary.
           // Add a Chevron if the setting is present, along with a top-level header.
-          var svg = expander.children('svg');
-          if (svg.length) {
-            svg.attr({'role': 'presentation', 'aria-hidden': 'true', 'focusable': 'false'});
+          var expanderIcon = expander.children('svg');
+          if (expanderIcon.length) {
+            expanderIcon.attr({'role': 'presentation', 'aria-hidden': 'true', 'focusable': 'false'});
           } else {
             if (self.settings.displayChevron && header.parent().is('.accordion')) {
-              svg = $('<svg class="icon chevron" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg>');
-              svg.appendTo(expander);
+              expanderIcon = $('<svg class="icon chevron" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg>');
+              expanderIcon.appendTo(expander);
             }
           }
 
@@ -109,26 +112,27 @@
           var plusMinusIcon = expander.children('span.plus-minus');
           if (plusMinusIcon.length) {
             plusMinusIcon.attr({'role': 'presentation', 'aria-hidden': 'true'});
-          } else if (!plusMinusIcon.length && !svg.length) {
+          } else if (!plusMinusIcon.length && !expanderIcon.length) {
             if ((!self.settings.displayChevron && header.parent().is('.accordion')) || header.parent().is('.accordion-pane')) {
               plusMinusIcon = $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>');
               plusMinusIcon.appendTo(expander);
             }
           }
 
-          // Don't allow an SVG and an Expando-Icon to co-exist.  Remove the Expando if there's an icon present.
-          if (svg.length && expander.children('.plus-minus').length) {
-            expander.children('.plus-minus').remove();
-          }
+          if (expanderIcon.length) {
+            // Don't allow an SVG and an Expando-Icon to co-exist.  Remove the Expando if there's an icon present.
+            if (plusMinusIcon.length) {
+              expander.children('.plus-minus').remove();
+            }
 
-          // Swap the positions of this header's expander button if a Chevron is present, put the header back to normal if it's not.
-          if (expander.children('.chevron').length) {
-            header.addClass('has-chevron');
-            expander.insertAfter(header.children('a'));
-          }
-          if (expander.children('svg:not(.chevron)').length || expander.children('.plus-minus').length) {
-            header.removeClass('has-chevron');
-            expander.insertBefore(header.children('a'));
+            // Swap the positions of this header's expander button if a Chevron is present, put the header back to normal if it's not.
+            if (expanderIcon.is('.chevron')) {
+              header.addClass('has-chevron');
+              expander.insertAfter(header.children('a'));
+            } else {
+              header.removeClass('has-chevron');
+              expander.insertBefore(header.children('a'));
+            }
           }
 
           // Add an Audible Description to the button
