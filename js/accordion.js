@@ -606,9 +606,15 @@
 
         if (direction === -1) {
           target = pane.children('.accordion-header').last();
-          if (this.isExpanded(target)) {
-            return this.descend(target, -1);
-          }
+        }
+
+        // No headers may be present.  In which case, it may be necessary to simply focus the header for the current pane.
+        if (!target.length) {
+          return this.focusOriginalType(header);
+        }
+
+        if (this.isExpanded(target)) {
+          return this.descend(target, -1);
         }
 
         this.focusOriginalType(target);
