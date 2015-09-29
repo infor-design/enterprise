@@ -555,7 +555,7 @@ $.fn.datagrid = function(options) {
 
     //Return Value from the Object handling dotted notation
     fieldValue: function (obj, field) {
-      if (!field) {
+      if (!field || !obj) {
         return '';
       }
 
@@ -1189,6 +1189,8 @@ $.fn.datagrid = function(options) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
         isSingle = this.settings.selectable === 'single',
         rowIndex = (typeof idx === 'number' ? idx : idx.index('tr[role="row"]'));
+
+      // Should maybe be this.tableBody.find('tr[role="row"]').index(idx)
 
       if (this.settings.selectable === false) {
         return;

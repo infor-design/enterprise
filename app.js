@@ -472,11 +472,38 @@ var express = require('express'),
     var products = [], productsAll = [],
       start = (req.query.pageNum -1) * req.query.pageSize,
       end = req.query.pageNum * req.query.pageSize,
-      total = 1000, i = 0, j = 0;
+      total = 1000, i = 0, j = 0, filteredTotal = 0;
 
     //TODO: if (req.query.filter) {
     for (j = 0; j < total; j++) {
-      productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      var filteredOut = false;
+
+      //Just filter first two cols
+      if (req.query.filter) {
+        var term = req.query.filter.replace('\'','');
+        filteredOut = true;
+
+        if ((214220+j).toString().indexOf(term) > -1) {
+          filteredOut = false;
+        }
+
+        if ('Compressor'.toString().indexOf(term) > -1) {
+          filteredOut = false;
+         }
+
+        if ('Assemble Paint'.toString().indexOf(term) > -1) {
+          filteredOut = false;
+        }
+
+        if ((1+(j/2)).toString().indexOf(term) > -1) {
+          filteredOut = false;
+        }
+      }
+
+      if (!filteredOut) {
+        filteredTotal++;
+        productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      }
     }
 
     var sortBy = function(field, reverse, primer){
@@ -497,7 +524,7 @@ var express = require('express'),
     }
 
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(products));
+    res.end(JSON.stringify({total: filteredTotal, data: products}));
   });
 
   app.get('/api/lookupInfo', function(req, res) {

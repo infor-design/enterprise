@@ -48,9 +48,10 @@
             url += '&filter=' + req.filterExpr[0].value;
           }
 
-          $.getJSON(url, function(data) {
-            req.total = 1000;
-            response(data, req);
+          $.getJSON(url, function(res) {
+            console.log(req, res);
+            req.total = res.total;
+            response(res.data, req);
           });
 
           //Get Page Based on info in Req, return results into response;
