@@ -572,7 +572,7 @@
                 oldPanel: self.panels.filter(':visible')
               };
 
-        var isCancelled = self.element.trigger('beforeActivate', null, ui);
+        var isCancelled = self.element.trigger('beforeactivate', [ui]);
         if (!isCancelled) {
           return;
         }
@@ -580,10 +580,12 @@
         self.panels.hide();
         self.updateAria(a);
 
+        self.element.trigger('activate', [ui]);
+
         ui.panels.stop().fadeIn(250, function() {
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
-          self.element.trigger('activate', null, ui);
+          self.element.trigger('afteractivate', [ui]);
         });
 
         ui.oldTab.removeClass('is-selected');

@@ -560,7 +560,9 @@ $.fn.datagrid = function(options) {
       }
 
       if (field.indexOf('.') > -1) {
-        return field.split('.').reduce(function(o, x) { return (o ? o[x] : ''); }, obj);
+        return field.split('.').reduce(function(o, x) {
+          return (o ? o[x] : '');
+        }, obj);
       }
       return (obj[field] ? obj[field] : '');
     },
@@ -774,7 +776,7 @@ $.fn.datagrid = function(options) {
     },
 
     //Show Summary and any other count info
-    displayCounts: function() {
+    displayCounts: function(totals) {
       var self = this;
 
       setTimeout(function () {
@@ -785,9 +787,13 @@ $.fn.datagrid = function(options) {
           count = self.settings.dataset.length;
         }
 
-       if (self.toolbar) {
-        self.toolbar.find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
-       }
+        if (totals && totals !== -1) {
+          count = totals;
+        }
+
+        if (self.toolbar) {
+          self.toolbar.find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
+        }
       }, 1);
     },
 
@@ -1051,7 +1057,9 @@ $.fn.datagrid = function(options) {
 
     //Search a Term across all columns
     keywordSearch: function(term) {
-      this.tableBody.find('tr').show();
+      this.tableBody.find('tr').removeClass('is-filtered').show();
+      this.filterExpr = [];
+
       this.tableBody.find('.search-mode').each(function () {
         var cell = $(this),
           text = cell.text();
@@ -1060,11 +1068,26 @@ $.fn.datagrid = function(options) {
 
       if (!term || term.length === 0) {
         this.displayCounts();
+
+        if (this.pager) {
+          this.pager.setActivePage(1, true);
+        }
+
         return;
       }
 
       term = term.toLowerCase();
+      this.filterExpr.push({column: 'all', operator: 'contains', value: term, lowercase: 'no'});
 
+      this.highlightSearchRows(term);
+      this.displayCounts();
+
+      if (this.pager) {
+        this.pager.setActivePage(1, true);
+      }
+    },
+
+    highlightSearchRows: function (term) {
       // Move across all visible cells and rows, highlighting
       this.tableBody.find('tr:visible').each(function () {
         var found = false,
@@ -1091,11 +1114,9 @@ $.fn.datagrid = function(options) {
 
         // Hide non matching rows
         if (!found) {
-          row.hide();
+          row.addClass('is-filtered').hide();
         }
       });
-
-      this.displayCounts();
     },
 
     //Get or Set Selected Rows
@@ -1535,7 +1556,19 @@ $.fn.datagrid = function(options) {
       }
 
       if (col.field && coercedVal !== oldVal) {
-        this.settings.dataset[row][col.field] = coercedVal;
+        if (col.field.indexOf('.') > -1 ) {
+          var parts = col.field.split('.');
+          if (parts.length === 2) {
+            this.settings.dataset[row][parts[0]][parts[1]] = coercedVal;
+          }
+
+          if (parts.length === 3) {
+            this.settings.dataset[row][parts[0]][parts[1]][parts[2]] = coercedVal;
+          }
+
+        } else {
+          this.settings.dataset[row][col.field] = coercedVal;
+        }
         this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal});
       }
     },
@@ -1667,8 +1700,18 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      this.tableBody.addClass('paginated').pager({source: this.settings.source, pagesize: this.settings.pagesize, pagesizes: this.settings.pagesizes});
-      this.pager = this.tableBody.addClass('paginated').data('pager');
+      var pagerElem = this.tableBody.addClass('paginated');
+      pagerElem.pager({source: this.settings.source, pagesize: this.settings.pagesize, pagesizes: this.settings.pagesizes});
+      this.pager = pagerElem.data('pager');
+
+      pagerElem.on('afterpaging', function (e, args) {
+       self.displayCounts(args.total);
+
+       if (self.filterExpr) {
+        self.highlightSearchRows(self.filterExpr[0].value);
+       }
+
+      });
 
       //Get First page on Sort Action
       this.element.on('sorted', function () {

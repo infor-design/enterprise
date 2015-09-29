@@ -579,7 +579,8 @@ body.no-scroll {
   height: 100%;
 
   .main {
-    background-color: $body-bg-color;
+    background-color: $panel-bg-color;
+    padding: 30px;
   }
 
   .listview ul {

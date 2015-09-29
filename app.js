@@ -474,6 +474,7 @@ var express = require('express'),
       end = req.query.pageNum * req.query.pageSize,
       total = 1000, i = 0, j = 0;
 
+    //TODO: if (req.query.filter) {
     for (j = 0; j < total; j++) {
       productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
     }

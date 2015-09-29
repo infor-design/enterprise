@@ -136,9 +136,10 @@
       },
 
       //Set or Get Current Page
-      setActivePage: function(pageNum) {
+      setActivePage: function(pageNum, force) {
 
         var lis = this.pagerBar.find(this.buttonExpr);
+
         if (pageNum === 0 || pageNum > this.pageCount()) {
           return;
         }
@@ -147,7 +148,7 @@
           return this.activePage;
         }
 
-        if (pageNum === this.activePage) {
+        if (pageNum === this.activePage && !force) {
           return this.activePage;
         }
 
@@ -210,8 +211,8 @@
         }
 
         if (this.isTable && this.pagerBar.find('.pager-count').length === 0) {
-          var text =  '<span>' + Locale.translate('PageOf') + '</span>';
-          text = text = text.replace('{0}', '<input data-mask="###" value="' + this.activePage + '">');
+          var text =  Locale.translate('PageOf');
+          text = text = text.replace('{0}', '<input data-mask="###" name="pager-pageno" value="' + this.activePage + '">');
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : '-') + '</span>');
 
           $('<label class="pager-count">'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
@@ -226,7 +227,7 @@
             if (lastValue !== $(this).val()) {
               self.setActivePage(parseInt($(this).val()));
             }
-          }).on('keypress', function (e) {
+          }).on('keydown', function (e) {
             if (e.which === 13) {
               self.setActivePage(parseInt($(this).val()));
             }
@@ -251,8 +252,8 @@
             tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
             tag.parent('li').addClass('is-checked');
             self.settings.pagesize = parseInt(tag.text());
-            self.renderPages();
-          });
+            self.setActivePage(1, true);
+           });
 
           $('[href="#25"]').parent().addClass('is-checked');
         }
@@ -275,7 +276,7 @@
 
         //Adjust Page count numbers
         if (!this.settings.source) {
-          pc = Math.ceil(this.elements.length/settings.pagesize);
+          pc = Math.ceil(this.elements.not('.is-filtered').length/settings.pagesize);
           if (this.pageCount() !== pc) {
             this.pageCount(pc);
           }
@@ -290,11 +291,11 @@
         first.removeAttr('disabled');
         last.removeAttr('disabled');
 
-
         if (this.activePage === 1) {
           prev.attr('disabled','disabled');
           first.attr('disabled','disabled');
         }
+
         if (this.activePage === this.pageCount()) {
           next.attr('disabled','disabled');
           last.attr('disabled','disabled');
@@ -343,12 +344,20 @@
 
               //Update Paging Info
               self.updatePagingInfo(pagingInfo);
+
+              setTimeout(function () {
+                self.element.trigger('afterpaging', pageInfo);
+              },1);
               return;
             };
 
             if (api.sortColumn.sortField) {
               pageInfo.sortAsc = api.sortColumn.sortAsc;
               pageInfo.sortField = api.sortColumn.sortField;
+            }
+
+            if (api.filterExpr) {
+               pageInfo.filterExpr = api.filterExpr;
             }
 
             self.settings.source(pageInfo, response);
@@ -361,13 +370,18 @@
           //Render page objects
           if (!self.settings.source) {
             self.elements.hide();
-            expr = (self.activePage === 1 ? ':lt('+ settings.pagesize +')' : ':lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
+
+            expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ settings.pagesize +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
             self.elements.filter(expr).show();
           } else {
             self.elements.show();
           }
 
-          self.element.trigger('afterpaging', pageInfo);
+          if (!self.settings.source) {
+            self.element.trigger('afterpaging', pageInfo);
+            self.updatePagingInfo(pageInfo);
+          }
+
         }, 0);
       },
 
@@ -375,10 +389,11 @@
         this.settings.pagesize = pagingInfo.pagesize;
         this.pagerBar.find('.btn-menu span').text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
 
-        //this._pageCount = pagingInfo.total/this.settings.pagesize);
-        this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
-        this.activePage = pagingInfo.activePage;
-        this.setActivePage(this.activePage);
+        if (this.settings.source) {
+          this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
+          this.activePage = pagingInfo.activePage;
+          this.setActivePage(this.activePage);
+        }
 
         //Update the UI
         this.pagerBar.find('.pager-count input').val(this.activePage);

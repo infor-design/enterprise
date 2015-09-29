@@ -501,6 +501,10 @@
             self.close();
           });
 
+          $('.scrollable').on('scroll.popupmenu', function () {
+            self.close();
+          });
+
           self.element.triggerHandler('open', [self.menu]);
         }, 400);
 
@@ -644,6 +648,7 @@
       detach: function () {
         $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
         $(window).off('scroll.popupmenu resize.popupmenu');
+        $('.scrollable').off('scroll.popupmenu');
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
 
         $('iframe').each(function () {

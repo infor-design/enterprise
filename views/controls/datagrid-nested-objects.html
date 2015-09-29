@@ -16,21 +16,22 @@
         data = [];
 
       // Some Sample Data
-      data.push({ id: 1, productId: 2142201, fields: {'field1': {value: 'Compressor'},field2: {value: 'test'}}, properties: {value: 'test'}, activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
-      data.push({ id: 2, productId: 2241202, productName: {text: 'Different Compressor', id: 11}, properties: {value: 'test'}, activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
-
+      data.push({ id: 1, productId: 2142201, fields: {field1: {value: 'Compressor'}, field2: {value: 'test'}}, properties: {value: 'test'}, activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 2, productId: 2241202, fields: {field1: {value: 'Compressor'},field2: {value: 'test'}}, properties: {value: 'test'}, activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Nested Array', sortable: false, field: 'fields["field1"].value', width: 175, formatter: Formatters.Hyperlink});
-      columns.push({ id: 'productName', name: 'Nested Prop', sortable: false, field: 'properties.value', width: 175, formatter: Formatters.Hyperlink});
-
+      columns.push({ id: 'productName', name: 'Nested Array', sortable: false, field: 'fields.field1.value', width: 175, formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'productName', name: 'Nested Prop', sortable: false, field: 'properties.value', width: 175, formatter: Formatters.Hyperlink, editor: Editors.Input});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
-        dataset: data
-      }).data('datagrid');
+        dataset: data,
+        editable: true
+      }).on('cellchange', function () {
+        console.log(data[0]);
+      });
 
     });
  });

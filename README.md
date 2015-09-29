@@ -55,7 +55,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 ## Get The Code
 
 * First clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
-* Move into your new repo: `cd sohoxi`
+* Move into your new repo: `cd controls`
 * Then  `npm install` to install node package dependencies. On mac you may need `sudo npm install` as some packages require elevated permissions.
 * For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
 
