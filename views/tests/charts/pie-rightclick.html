@@ -1,0 +1,57 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+
+ <ul id="action-popupmenu" class="popupmenu">
+    <li><a href="#">Action One</a></li>
+    <li><a href="#">Action Two</a></li>
+    <li><a href="#">Action Three</a></li>
+  </ul>
+
+</div>
+
+<script>
+  var pieData = [{
+      data: [{
+          name: 'Component A',
+          value: 10.1
+      }, {
+          name: 'Component B',
+          value: 10.2
+      }, {
+          name: 'Component C',
+          value: 14.35
+      }, {
+          name: 'Component D',
+          value: 15.6
+      }, {
+          name: 'Component E',
+          value: 21.6
+      }, {
+          name: 'Component F',
+          value: 41.6
+      }]
+    }];
+
+  $('#pie-chart-example').chart({type: 'pie', dataset: pieData}).on('contextmenu', function(e, ui, d) {
+
+      console.log(d);
+
+      $(this).popupmenu({trigger: 'immediate', menu: 'action-popupmenu', eventObj: e})
+      .off('selected')
+      .on('selected', function (e, anchor) {
+         console.log('selected:', e, anchor);
+      });
+
+  });
+</script>

@@ -240,6 +240,12 @@
   width: inherit;
 }
 
+.chart-vertical-bar {
+  text {
+    text-align: left;
+  }
+}
+
 // Progess Bar Charts
 .chart-completion-target,
 .chart-completion {

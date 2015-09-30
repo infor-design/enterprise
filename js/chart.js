@@ -133,6 +133,18 @@ window.Chart = function(container) {
     }
   };
 
+  this.triggerContextMenu = function(elem, d) {
+    d3.event.preventDefault();
+    d3.event.stopPropagation();
+    d3.event.stopImmediatePropagation();
+
+    var e = $.Event('contextmenu');
+    e.target = elem;
+    e.pageX = d3.event.pageX;
+    e.pageY = d3.event.pageY;
+    $(container).trigger(e, [elem, d]);
+  };
+
   //Show Tooltip
   this.showTooltip = function(x, y, content, arrow) {
     this.tooltip.css({'left': x + 'px', 'top': y + 'px'})
@@ -152,24 +164,25 @@ window.Chart = function(container) {
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
   };
 
-  this.VerticalBar = function(dataset, isNormalized) {
+  this.HorizontalBar = function(dataset, isNormalized) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
     var maxTextWidth, width, height, series, rects, svg, stack,
         xMax, xScale, yScale, yAxis, yMap, xAxis, groups;
 
     var margins = {
-      top: 40,
-      left: 50,
-      right: 60,
+      top: 30,
+      left: 30,
+      right: 30,
       bottom: 30 // 30px plus size of the bottom axis (20)
-    };
+    },
+    legendHeight = 40;
 
     $(container).addClass('chart-vertical-bar');
     $(container).closest('.widget-content').addClass('l-center');
     $(container).closest('.card-content').addClass('l-center');
 
     width =  parseInt($(container).parent().width()) - margins.left - margins.right;
-    height =  parseInt($(container).parent().height()) - margins.top - margins.bottom - 40;  //influences the bar width
+    height =  parseInt($(container).parent().height()) - margins.top - margins.bottom - legendHeight;  //influences the bar width
 
     //Get the Legend Series'
     series = dataset.map(function (d) {
@@ -205,20 +218,19 @@ window.Chart = function(container) {
       });
     });
 
-    margins.left += maxTextWidth*4.5;
+    //margins.left += (maxTextWidth*5.1);
 
-    var h = height + margins.top + margins.bottom,
-      w = width + margins.left + margins.right;
+    var h = parseInt($(container).parent().height()) - margins.bottom,
+      w = parseInt($(container).parent().width()) - margins.left,
+      textWidth = margins.left + (maxTextWidth*6);
 
     svg = d3.select(container)
       .append('svg')
-      .attr('width', w)
+      .attr('width',  w)
       .attr('height', h)
-      .attr('preserveAspectRatio','xMinYMin meet')
       .append('g')
       .attr('class', 'group')
-      .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
-
+      .attr('transform', 'translate(' + (textWidth) + ',' + margins.top + ')');
 
     xMax = d3.max(dataset, function (group) {
       return d3.max(group, function (d) {
@@ -246,10 +258,13 @@ window.Chart = function(container) {
       xMax = 100;
     }
 
+    //Width of he bar minus the margin
+    var barWith = w - textWidth - margins.left;
+
     xScale = d3.scale.linear()
       .domain([0, xMax])
       .nice()
-      .range([0, width]);
+      .range([0, barWith]).nice();
 
     yMap = dataset[0].map(function (d) {
       return d.y;
@@ -257,17 +272,13 @@ window.Chart = function(container) {
 
     yScale = d3.scale.ordinal()
       .domain(yMap)
-      .rangeRoundBands([0, height], 0.3, 0.10);
+      .rangeRoundBands([0, height], 0.45, 0.45);
 
     xAxis = d3.svg.axis()
       .scale(xScale)
       .tickSize(-height)
       .tickPadding(10)
-      .tickFormat(function (d, i) {
-        //reduce ticks to half to avoid overlap
-        return (i % 2 && h < 400 ? '' : d);
-      })
-      .orient('bottom');
+      .orient('middle');
 
     if (isNormalized) {
       xAxis.tickFormat(function(d) { return d + '%'; });
@@ -276,7 +287,7 @@ window.Chart = function(container) {
     yAxis = d3.svg.axis()
       .scale(yScale)
       .tickSize(0)
-      .tickPadding(15)
+      .tickPadding(25)
       .orient('left');
 
     svg.append('g')
@@ -345,16 +356,14 @@ window.Chart = function(container) {
           content = '<span class="chart-tooltip-total"><b>' + total + '</b> '+Locale.translate('Total')+'</span>' +content;
         }
 
-        // Set the position
-        charts.tooltip.find('.tooltip-content').html(content);
+        var yPosS = shape[0][0].getBoundingClientRect().top + $(window).scrollTop(),
+            xPosS = shape[0][0].getBoundingClientRect().left + $(window).scrollLeft();
 
-        var yPosS = svg[0][0].getBoundingClientRect().top + $(window).scrollTop(),
-            xPos = d3.event.pageX + 25,
-            yPos = yPosS + parseFloat(shape.attr('y')) + 5 - (parseInt(charts.tooltip.outerHeight()) /2) + (parseFloat(shape.attr('height'))/2);
+        var size = charts.getTooltipSize(content),
+          x = xPosS + (parseFloat(shape.attr('width'))/2) - (size.width/2),
+          y = yPosS - size.height - 13;
 
-        charts.tooltip.css({'left': xPos + 'px', 'top': yPos+ 'px'});
-        charts.tooltip.removeClass('is-hidden', false);
-
+        charts.showTooltip(x, y, content, 'top');
     })
     .on('mouseleave', function () {
       charts.hideTooltip();
@@ -377,6 +386,9 @@ window.Chart = function(container) {
       $(container).trigger('selected', [bar, d]);
     });
 
+    //Adjust the labels
+    svg.selectAll('.axis.y text').attr({'x': -15, 'y': -6});
+
     //Animate the Bars In
     svg.selectAll('.bar')
       .transition().duration(1000)
@@ -397,6 +409,7 @@ window.Chart = function(container) {
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
       labels = svg.append('g').attr('class','labels'),
+      self = this,
       centerLabel = initialData[0].centerLabel;
 
     var chartData = initialData[0].data;
@@ -439,6 +452,9 @@ window.Chart = function(container) {
     var g = enteringArcs.append('g')
         .attr('class', 'arc')
         .attr('d', pieArcs)
+        .on('contextmenu',function (d) {
+          self.triggerContextMenu(d3.select(this).select('path')[0][0], d);
+        })
         .on('click', function (d, i) {
           var isSelected = d3.select(this).classed('is-selected'),
             color = charts.chartColor(i, 'pie', d);
@@ -831,6 +847,7 @@ window.Chart = function(container) {
   this.Column = function(chartData) {
 
    var dataset = chartData,
+      self = this,
       parent = $(container).parent(),
       isSingular = (dataset.length === 1),
       margin = {top: 40, right: 40, bottom: (isSingular ? 50 : 35), left: 45},
@@ -1006,6 +1023,8 @@ window.Chart = function(container) {
         charts.selectElement(svg.selectAll('.x .tick:nth-child(' + (i+1) +')'), svg.selectAll('.x .tick'), d);
 
         return;
+      }).on('contextmenu',function (d) {
+        self.triggerContextMenu(d3.select(this)[0][0], d);
       });
 
     //Add Legend
@@ -1245,13 +1264,13 @@ window.Chart = function(container) {
       this.Pie(options.dataset);
     }
     if (options.type === 'bar') {
-      this.VerticalBar(options.dataset);
+      this.HorizontalBar(options.dataset);
     }
     if (options.type === 'bar-normalized') {
-      this.VerticalBar(options.dataset, true);
+      this.HorizontalBar(options.dataset, true);
     }
     if (options.type === 'bar-grouped') {
-      this.VerticalBar(options.dataset, false, true);
+      this.HorizontalBar(options.dataset, false, true);
     }
     if (options.type === 'column') {
       this.Column(options.dataset);

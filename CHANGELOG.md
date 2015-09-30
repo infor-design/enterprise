@@ -9,7 +9,7 @@ Minor QA Release.
 * Lookup
 
 ## Breaking Changes
-*
+* bar-progress type chart was renamed to completion-chart
 *
 
 ## Ui Changes

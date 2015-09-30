@@ -53,6 +53,8 @@
 
 # Teams Using SoHo XI
 
+| Project            | Comments      |  Names |
+|--------------------|-------------|------|
 | Home Pages | Angular | Fredrik Erikkson |
 | Pathway | Australian / NZ Giv Self Service App| Jesser Susi |
 | Mongoose | Small set of newer controls | Bryan Petit |
@@ -79,6 +81,8 @@
 | Infor Hospitality in France  | POS  | Bruno Martinot |
 | Infor Enroute 911  |   | James Coonce |
 | GT Nexus |   | Tom Sorgie |
+| Lawson Portal |   | Jake Harington/Andy |
+
 
 
 

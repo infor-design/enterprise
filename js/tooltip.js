@@ -28,6 +28,7 @@
         placement: 'top',  //can be top/left/bottom/right/offset
         trigger: 'hover', //supports click and manual and hover (future focus)
         title: null, //Title for Infor Tips
+        beforeShow: null, //Call back for ajax tooltip
         popover: null , //force it to be a popover (no content)
         isError: false, //Add error classes
         tooltipElement: null, // ID selector for an alternate element to use to contain the tooltip classes
@@ -197,7 +198,7 @@
         }
 
         this.setContent(this.content);
-        this.element.trigger('beforeShow', [this.tooltip]);
+        this.element.trigger('beforeshow', [this.tooltip]);
 
         this.tooltip.removeAttr('style');
         this.tooltip.removeClass('bottom right left top offset is-error').addClass(settings.placement);
@@ -243,6 +244,8 @@
               self.hide();
             });
           }
+
+          self.element.trigger('aftershow', [self.tooltip]);
         }, 400);
 
       },

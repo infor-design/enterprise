@@ -334,8 +334,6 @@ $datagrid-header-height: 40px;
     }
 
     span {
-      color: $datagrid-data-color;
-      line-height: 48px;
 
       &.exclamation {
         line-height: 44px;
@@ -488,16 +486,9 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  left: -9px;
+  left: -10px;
   margin-right: -25px;
-  top: -4px;
-  width: 48px;
-
-  .icon.plus-minus {
-    left: -1.4em;
-    position: relative;
-    top: -.3em;
-  }
+  top: -2px;
 
   span:not(.icon) {
     color: transparent;
