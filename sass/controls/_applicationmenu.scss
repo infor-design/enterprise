@@ -85,6 +85,8 @@ $application-menu-width: 300px;
 
   .accordion {
     background-color: $app-accordion-header-bg-color;
+    border-bottom-color: $app-accordion-border-color;
+    border-right-color: $app-accordion-border-color;
     color: $app-accordion-header-text-color;
 
     margin-bottom: calc(-2rem - 38px);
@@ -201,6 +203,7 @@ $application-menu-width: 300px;
 
   .accordion-pane {
     background-color: $app-accordion-pane-bg-color;
+    border-bottom-color: $app-accordion-border-color;
 
     .accordion-content {
       border-bottom: $app-accordion-border-color;

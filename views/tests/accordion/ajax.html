@@ -13,9 +13,6 @@
         <a href="#"><span>Fruits</span></a>
       </div>
       <div class="accordion-pane"></div>
-      <div class="accordion-header">
-        <a href="#"><span>Nothing</span></a>
-      </div>
     </div>
 
   </div>
@@ -43,7 +40,7 @@
         request.done(function(data) {
           setContent(data);
         }).fail(function() {
-          setContent('<div class="accordion-content" style="color: red;">Couldn\'t find potato salad...</div>');
+          setContent('<div class="accordion-content" style="color: red;"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
         });
         return true;
       }

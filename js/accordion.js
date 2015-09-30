@@ -279,6 +279,7 @@
         var pane = header.next('.accordion-pane');
         if (pane.length) {
           this.toggle(header);
+          expander.focus();
           return;
         }
 

@@ -425,7 +425,7 @@ var express = require('express'),
   });
 
   app.get('/api/nav-items', function(req, res) {
-    res.render('tests/accordion-api-options.html');
+    res.render('tests/accordion/_ajax-results.html');
   });
 
   // TODO: Make this work with XSS to return a copy of the SoHo Site Search Results for testing the Modal Search plugin.

@@ -25,12 +25,17 @@ $accordion-selected-text-color: $white;
 
   &.alternate {
     background-color: $accordion-alternate-bg-color;
+    border-bottom-color: $accordion-border-color;
 
     .accordion-pane {
       background-color: $accordion-pane-alternate-bg-color;
 
       .accordion-header {
-        border-bottom: 1px solid $accordion-pane-alternate-bg-color;
+        border-bottom-color: $accordion-pane-alternate-bg-color;
+
+        &:last-child {
+          border-bottom: 0;
+        }
       }
 
       .accordion-content {
@@ -172,9 +177,11 @@ $accordion-selected-text-color: $white;
   }
 
   // Selected color scheme
+  &:active,
   &.is-focused {
     background-color: $accordion-selected-bg-color;
     border-bottom-color: $accordion-selected-bg-color;
+    color: $accordion-selected-text-color;
 
     > a {
       color: $accordion-selected-text-color;
@@ -223,7 +230,7 @@ $accordion-selected-text-color: $white;
     }
   }
 
-  &:not(.is-focused):hover,
+  &:not(.is-focused):not(:active):hover,
   &.child-selected:not(.is-focused) {
     > a {
       color: $accoridon-text-active-color;
@@ -251,6 +258,7 @@ $accordion-selected-text-color: $white;
 // Level 1 Accordion Pane
 .accordion-pane {
   background-color: $accordion-pane-bg-color;
+  border-bottom: 1px solid $accordion-border-color;
   overflow: hidden;
 
   .accordion-content {
@@ -258,6 +266,13 @@ $accordion-selected-text-color: $white;
     color: $accordion-text-color;
     overflow-x: visible;
     padding-left: 20px;
+  }
+
+  &:last-child {
+    .accordion-content:last-child,
+    .accordion-header:last-child {
+      border-bottom: 0;
+    }
   }
 
   // These rules allow the accordion to expand
@@ -293,6 +308,8 @@ $accordion-selected-text-color: $white;
       width: 40px;
 
       .icon.plus-minus {
+        top: -1px;
+
         &::before,
         &::after {
           left: .25em;
@@ -305,6 +322,7 @@ $accordion-selected-text-color: $white;
 
   // Level 2 Accordion Pane
   .accordion-pane {
+    border-bottom: 0;
 
     .accordion-content {
       padding-left: 55px;
