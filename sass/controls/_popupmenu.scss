@@ -191,7 +191,7 @@
     // Selected
     &.is-checked > a:before,
     &.is-checked.is-selected > a:before {
-      border-color: $popupmenu-checked-color;
+      border-color: $popupmenu-checked-color $popupmenu-checked-color $popupmenu-checked-color transparent;
       border-style: solid;
       border-width: 0 2px 2px 0;
       content: '';
