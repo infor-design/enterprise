@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Accordion Test: AJAX</h2>
+    <p>Expanding the header below causes an AJAX request to be made.  When the request successfully returns, the header opens with content that was retrieved from the response.</p>
+    <p></p>
+
+    <div id="ajax-accordion" class="accordion alternate no-init">
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-url"></use>
+        </svg>
+        <a href="#"><span>Fruits</span></a>
+      </div>
+      <div class="accordion-pane"></div>
+      <div class="accordion-header">
+        <a href="#"><span>Nothing</span></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  // Re-invoke this accordion with a source function to set external content on expand
+  $(document).ready(function() {
+    var request;
+
+    $('#ajax-accordion').accordion({
+      source: function(ui, callback) {
+        // Don't call out more than once
+        if (request !== null && request !== undefined) {
+          return false;
+        }
+
+        request = $.get('/api/nav-items');
+
+        function setContent(htmlString) {
+          ui.pane.append(htmlString);
+          callback();
+        }
+
+        request.done(function(data) {
+          setContent(data);
+        }).fail(function() {
+          setContent('<div class="accordion-content" style="color: red;">Couldn\'t find potato salad...</div>');
+        });
+        return true;
+      }
+    });
+  });
+</script>

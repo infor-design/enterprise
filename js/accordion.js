@@ -156,6 +156,11 @@
           }
         });
 
+        // Expand to the current accordion header if we find one that's selected
+        if (!this.element.data('updating')) {
+          this.expand(this.headers.filter('.is-selected'));
+        }
+
         return this;
       },
 
@@ -184,6 +189,10 @@
           self.handleExpanderClick(e, $(this));
         }).on('keydown.accordion', function(e) {
           self.handleKeys(e);
+        });
+
+        this.element.on('updated.accordion', function() {
+          self.updated();
         });
 
         return this;
@@ -365,35 +374,47 @@
           return;
         }
 
-        // Change the expander button into "collapse" mode
-        var expander = header.children('.btn');
-        if (expander.length) {
-          expander.children('.plus-minus, .chevron').addClass('active');
-          expander.children('.audible').text(Locale.translate('Collapse'));
-        }
+        function continueExpand() {
+          // Change the expander button into "collapse" mode
+          var expander = header.children('.btn');
+          if (expander.length) {
+            expander.children('.plus-minus, .chevron').addClass('active');
+            expander.children('.audible').text(Locale.translate('Collapse'));
+          }
 
-        // If we have the correct settings defined, close other accordion headers that are not parents of this one.
-        if (this.settings.allowOnePane) {
           var headerParents = header.parentsUntil(this.element).filter('.accordion-pane').prev('.accordion-header').add(header);
-          this.headers.not(headerParents).each(function() {
+
+          // If we have the correct settings defined, close other accordion headers that are not parents of this one.
+          if (this.settings.allowOnePane) {
+            this.headers.not(headerParents).each(function() {
+              var h = $(this);
+              if (self.isExpanded(h)) {
+                self.collapse(h);
+              }
+            });
+          }
+
+          // Expand all headers that are parents of this one, if applicable
+          headerParents.not(header).each(function() {
             var h = $(this);
-            if (self.isExpanded(h)) {
-              self.collapse(h);
+            if (!self.isExpanded(h)) {
+              self.expand(h);
             }
           });
-        }
 
-        // Call out to an external resource over AJAX, if applicable
-        // If we get a false return (no API), trigger the 'expand' event manually.
-        if (!this.callSource(a)) {
           this.element.trigger('expand', [a]);
+
+          pane.one('animateOpenComplete', function(e) {
+            e.stopPropagation();
+            header.children('a').attr('aria-expanded', 'true');
+            self.element.trigger('afterexpand', [a]);
+          }).css('display', 'block').animateOpen();
         }
 
-        pane.one('animateOpenComplete', function(e) {
-          e.stopPropagation();
-          a.attr('aria-expanded', 'true');
-          self.element.trigger('afterexpand', [a]);
-        }).css('display', 'block').animateOpen();
+        // Load from an external source, if applicable
+        if (!this.callSource(a, continueExpand)) {
+          continueExpand.apply(this);
+        }
       },
 
       collapse: function(header) {
@@ -429,21 +450,30 @@
 
       // Uses a function (this.settings.source()) to call out to an external API to fill the
       // inside of an accordion pane.
-      callSource: function(anchor) {
+      callSource: function(anchor, animationCallback) {
         if (!this.settings.source || typeof this.settings.source !== 'function') {
           return false;
         }
 
         var self = this,
           header = anchor.parent(),
-          pane = header.next('.accordion-pane');
+          pane = header.next('.accordion-pane'),
+          ui = {
+            anchor: anchor,
+            header: header,
+            pane: pane
+          };
 
         function response() {
-          self.element.triggerHandler('expand', [anchor, header, pane]);
+          self.updated();
+          setTimeout(function() {
+            animationCallback.apply(self);
+          }, 1);
+          return;
         }
 
         // Trigger the external method and wait for a response.
-        return this.settings.source(this, response);
+        return this.settings.source(ui, response);
       },
 
       // Prepares a handful of references to a specific
@@ -648,9 +678,23 @@
       },
 
       updated: function() {
-        return this
+        this.element.data('updating', true);
+
+        var currentFocus = $(document.activeElement);
+        if (!$.contains(this.element[0], currentFocus[0])) {
+          currentFocus = undefined;
+        }
+
+        this
           .teardown()
           .init();
+
+        if (currentFocus && currentFocus.length) {
+          currentFocus.focus();
+        }
+
+        $.removeData(this.element[0], 'updating');
+        return this;
       },
 
       teardown: function() {
@@ -671,6 +715,8 @@
           .offTouchClick('accordion')
           .off('click.accordion keydown.accordion');
 
+        this.element.off('updated.accordion');
+
         return this;
       },
 
@@ -685,7 +731,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
         instance = $.data(this, pluginName, new Accordion(this, settings));
