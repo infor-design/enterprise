@@ -446,6 +446,7 @@ $.fn.datagrid = function(options) {
     },
 
     //Method to Reload the data set
+    //TODO: Load specific page
     loadData: function (dataset, noReset) {
       var selectedIds = this.selectedRows(),
         rowIds = [];
@@ -454,7 +455,7 @@ $.fn.datagrid = function(options) {
       this.renderRows();
 
       //Update Paging
-      this.refreshPager(!noReset);
+      this.renderPager(!noReset);
 
       //restore selected rows
       for (var i = 0; i < selectedIds.length; i++) {
@@ -1159,7 +1160,7 @@ $.fn.datagrid = function(options) {
         row.addClass('is-selected').attr('aria-selected', 'true');
         row.find('td').attr('aria-selected', 'true');
 
-        checkbox.find('.datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
+        checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
       }
 
       this.syncHeaderCheckbox();
@@ -1190,7 +1191,7 @@ $.fn.datagrid = function(options) {
         isSingle = this.settings.selectable === 'single',
         rowIndex = (typeof idx === 'number' ? idx : this.tableBody.find('tr[role="row"]').index(idx));
 
-      if (this.settings.selectable === false) {
+     if (this.settings.selectable === false) {
         return;
       }
 
@@ -1286,12 +1287,12 @@ $.fn.datagrid = function(options) {
       return this._selectedRows;
     },
 
-    //Get the column object by id
+    //TODO Rename Get the column object by id
     columnById: function(id) {
       return $.grep(this.settings.columns, function(e) { return e.id === id; });
     },
 
-    //Get the column index
+    //TODO Rename Get the column index
     columnIdx: function(id) {
       var cols = this.settings.columns,
         idx = -1;
@@ -1635,6 +1636,10 @@ $.fn.datagrid = function(options) {
           .find('.plus-minus').addClass('active');
 
         expandRow.css('display', 'table-row');
+
+        //Optionally Contstrain the width
+        expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
+
         detail.animateOpen();
       }
     },
@@ -1667,6 +1672,7 @@ $.fn.datagrid = function(options) {
     //Overridable function to conduct sorting
     sortFunction: function(field, reverse, primer) {
       var key;
+
       if (!primer) {
         primer = function(a) {
           a = (a === undefined || a === null ? '' : a);
@@ -1680,8 +1686,10 @@ $.fn.datagrid = function(options) {
           return a;
         };
       }
+
       key = primer ? function(x) { return primer(x[field]); } : function(x) { return x[field]; };
       reverse = !reverse ? 1 : -1;
+
       return function (a, b) {
          return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
       };
@@ -1715,11 +1723,11 @@ $.fn.datagrid = function(options) {
 
       //Get First page on Sort Action
       this.element.on('sorted', function () {
-        self.refreshPager(true);
+        self.renderPager(true);
       });
     },
 
-    refreshPager: function (reset) {
+    renderPager: function (reset) {
       if (this.pager) {
         if (reset) {
           this.pager.activePage = 1;
