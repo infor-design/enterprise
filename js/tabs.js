@@ -858,6 +858,15 @@
 
       },
 
+      //Selects a Tab
+      select: function (href) {
+        var anchor = this.anchors.filter('[href="' + href + '"]');
+        this.positionFocusState();
+        this.focusBar(anchor.parent());
+        this.activate(anchor.attr('href'));
+        anchor.focus();
+      },
+
       setMoreActive: function () {
         var self = this,
           selectedTab = self.tablist.find('.is-selected');
