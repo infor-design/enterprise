@@ -199,12 +199,14 @@
       },
 
       handleHeaderClick: function(e, header) {
-        if (!header || !header.length || header.hasClass('is-disabled') || header.data('is-animating')) {
+        if (!header || !header.length || this.isDisabled(header) || header.data('is-animating')) {
+          e.preventDefault();
           return;
         }
 
         // Check that we aren't clicking the expando button.  If we click that, this listener dies
         if ($(e.target).is('[class^="btn"]')) {
+          e.preventDefault();
           return;
         }
 
@@ -221,7 +223,10 @@
           e.preventDefault();
         }
 
-        if (!header.length || header.hasClass('is-disabled')) {
+        if (!header.length || this.isDisabled(header)) {
+          if (e) {
+            e.preventDefault();
+          }
           return false;
         }
 
@@ -265,7 +270,7 @@
 
       handleExpanderClick: function(e, expander) {
         var header = expander.parent('.accordion-header');
-        if (!header.length || header.hasClass('is-disabled') || header.data('is-animating')) {
+        if (!header.length || this.isDisabled(header) || header.data('is-animating')) {
           return;
         }
 
@@ -330,6 +335,10 @@
           anchor = element.next('a');
         }
 
+        if (this.isDisabled(header)) {
+          return;
+        }
+
         this.headers.removeClass('child-selected').removeClass('is-selected');
 
         header.addClass('is-selected');
@@ -338,6 +347,19 @@
           .prev('.accordion-header');
 
         items.addClass('child-selected');
+      },
+
+      // Checks if a particular header is disabled, or if the entire accordion is disabled.
+      isDisabled: function(header) {
+        if (this.element.hasClass('is-disabled')) {
+          return true;
+        }
+
+        if (!header) {
+          return false;
+        }
+
+        return header.hasClass('is-disabled');
       },
 
       // Checks if an Accordion Section is currently expanded
@@ -350,7 +372,7 @@
       },
 
       toggle: function(header) {
-        if (!header || !header.length) {
+        if (!header || !header.length || this.isDisabled(header)) {
           return;
         }
 
@@ -520,7 +542,7 @@
           target = adjacentHeaders.last();
         }
 
-        while (target.is('.accordion-content')) {
+        while (target.is('.accordion-content') || this.isDisabled(target)) {
           if (target.is(':only-child') || target.is(':first-child')) {
             return this.ascend(elem.header);
           }
@@ -544,7 +566,7 @@
             }
 
             target = adjacentHeaders.last();
-            while (target.is('.accordion-content')) {
+            while (target.is('.accordion-content') || this.isDisabled(target)) {
               target = target.prev();
             }
           }
@@ -569,7 +591,7 @@
           target = adjacentHeaders.first();
         }
 
-        while (target.is('.accordion-content')) {
+        while (target.is('.accordion-content') || this.isDisabled(target)) {
           if (target.is(':only-child') || target.is(':last-child')) {
             return this.ascend(elem.header);
           }
@@ -593,7 +615,7 @@
             }
 
             target = adjacentHeaders.first();
-            while (target.is('.accordion-content')) {
+            while (target.is('.accordion-content') || this.isDisabled(target)) {
               target = target.next();
             }
           }
@@ -671,11 +693,15 @@
       disable: function() {
         this.element
           .addClass('is-disabled');
+
+        this.anchors.add(this.headers.children('[class^="btn"]')).attr('tabindex', '-1');
       },
 
       enable: function() {
         this.element
           .removeClass('is-disabled');
+
+        this.anchors.add(this.headers.children('[class^="btn"]')).removeAttr('tabindex');
       },
 
       updated: function() {

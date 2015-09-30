@@ -18,6 +18,12 @@ $accordion-focused-pane-bg-color: $azure01;
 $accordion-selected-bg-color: $primary-color;
 $accordion-selected-text-color: $white;
 
+$accordion-disabled-bg-color: $slate02;
+$accordion-disabled-border-color: $slate03;
+$accordion-disabled-text-color: $slate03;
+$accordion-disabled-pane-bg-color: $slate01;
+$accordion-disabled-pane-text-color: $slate04;
+
 .accordion {
   background-color: $accordion-bg-color;
   border-right: 1px solid $accordion-border-color;
@@ -40,6 +46,43 @@ $accordion-selected-text-color: $white;
 
       .accordion-content {
         border-bottom: 1px solid $accordion-pane-alternate-bg-color;
+      }
+    }
+  }
+
+  &.is-disabled {
+    background-color: $accordion-disabled-bg-color !important;
+    border-bottom-color: $accordion-disabled-border-color;
+    pointer-events: none;
+
+    .accordion-header {
+      background-color: $accordion-disabled-bg-color !important;
+      border-bottom-color: $accordion-disabled-border-color;
+      color: $accordion-disabled-text-color !important;
+
+      a {
+        color: $accordion-disabled-text-color !important;
+      }
+
+      .icon {
+        fill: $accordion-disabled-text-color !important;
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-disabled-text-color !important;
+          }
+        }
+      }
+    }
+
+    .accordion-pane {
+      background-color: $accordion-disabled-pane-bg-color !important;
+
+      .accordion-content,
+      .accordion-header {
+        background-color: $accordion-disabled-pane-bg-color !important;
+        border-bottom-color: $accordion-disabled-pane-bg-color !important;
       }
     }
   }
@@ -253,6 +296,53 @@ $accordion-selected-text-color: $white;
       fill: $accordion-icon-hover-color;
     }
   }
+
+  &.is-disabled {
+    background-color: $accordion-disabled-bg-color !important;
+    border-bottom-color: $accordion-disabled-border-color !important;
+    color: $accordion-disabled-text-color !important;
+    pointer-events: none;
+
+    a {
+      color: $accordion-disabled-text-color !important;
+    }
+
+    .icon {
+      fill: $accordion-disabled-text-color !important;
+
+      &.plus-minus {
+        &::before,
+        &::after {
+          background-color: $accordion-disabled-text-color !important;
+        }
+      }
+    }
+
+    + .accordion-pane {
+      background-color: $accordion-disabled-pane-bg-color !important;
+      border-bottom-color: $accordion-disabled-pane-bg-color !important;
+
+      .accordion-header {
+        background-color: $accordion-disabled-pane-bg-color !important;
+        border-bottom-color: $accordion-disabled-pane-bg-color !important;
+
+        a {
+          color: $accordion-disabled-text-color !important;
+        }
+
+        .icon {
+          fill: $accordion-disabled-text-color !important;
+
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $accordion-disabled-text-color !important;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // Level 1 Accordion Pane
@@ -317,6 +407,11 @@ $accordion-selected-text-color: $white;
           width: 12px;
         }
       }
+    }
+
+    &.is-disabled {
+      background-color: $accordion-disabled-pane-bg-color !important;
+      border-bottom-color: $accordion-disabled-pane-bg-color !important;
     }
   }
 
