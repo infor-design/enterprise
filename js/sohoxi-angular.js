@@ -93,6 +93,16 @@
       };
   };
 
+  var popdown = function () {
+      return {
+        replace: true,
+        scope: false,
+        link: function(scope, elem) {
+          elem.button().popdown();
+        }
+      };
+  };
+
   var slider = function () {
       return {
         replace: true,
@@ -166,6 +176,7 @@
       .directive('datepicker', datepicker)
       .directive('dropdown', dropdown)
       .directive('multiselect', multiselect)
+      .directive('popdown', popdown)
       .directive('slider', slider)
       .directive('wizard', wizard);
 
