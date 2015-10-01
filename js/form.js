@@ -73,6 +73,7 @@
         input.data('original', valMethod(input))
          .on('change.dirty', function () {
           var input = $(this),
+            el = input,
             field = input.closest('.field'),
             cssClass = '';
 
@@ -80,20 +81,26 @@
             return;
           }
 
-          //Add Class and Icon
+          //Set css class
           input.addClass('dirty');
           if ((input.attr('type')==='checkbox' || input.attr('type')==='radio') && input.is(':checked')) {
             cssClass += ' is-checked';
           }
-          if (!input.prev().is('.icon-dirty')) {
-            input.before('<span class="icon-dirty' + cssClass + '"></span>');            
-            $('label', field).append('<span class="audible msg-dirty">'+ Locale.translate('MsgDirty') +'</span>');
+          if (input.is('select')) {
+            cssClass += ' is-select';
+            el = $('.dropdown-wrapper input[type="text"]', field);
           }
 
-          //Trigger Event
+          //Add class and icon
+          if (!el.prev().is('.icon-dirty')) {            
+            el.before('<span class="icon-dirty' + cssClass + '"></span>');            
+            $('label:visible', field).append('<span class="audible msg-dirty">'+ Locale.translate('MsgDirty') +'</span>');
+          }
+
+          //Trigger event
           input.trigger('dirty');
 
-          //Handle Reseting value back
+          //Handle reseting value back
           if (valMethod(input) === input.data('original')) {
             input.removeClass('dirty');
             $('.icon-dirty, .msg-dirty', field).remove();
