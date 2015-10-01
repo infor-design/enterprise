@@ -410,7 +410,7 @@
           // If we have the correct settings defined, close other accordion headers that are not parents of this one.
           if (self.settings.allowOnePane) {
             self.headers.not(headerParents).each(function() {
-              var h = $(self);
+              var h = $(this);
               if (self.isExpanded(h)) {
                 self.collapse(h);
               }
@@ -419,7 +419,7 @@
 
           // Expand all headers that are parents of this one, if applicable
           headerParents.not(header).each(function() {
-            var h = $(self);
+            var h = $(this);
             if (!self.isExpanded(h)) {
               self.expand(h);
             }
