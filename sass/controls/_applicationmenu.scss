@@ -1,10 +1,22 @@
 // Application Menu Control
 //================================================== //
 
+$app-accordion-header-bg-color: $slate08;
+$app-accordion-border-color: $slate09;
+$app-accordion-pane-bg-color: $slate09;
+
+$app-accordion-header-text-color: $slate02;
+$app-accordion-header-text-active-color: $white;
+$app-accordion-pane-text-color: $slate03;
+
+$app-accordion-icon-color: $slate02;
+$app-accordion-icon-hover-color: $white;
+$app-accordion-chevron-color: $slate05;
+
 $application-menu-width: 300px;
 
 .application-menu {
-  background-color: #383838;
+  background-color: $slate08;
   @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, 0));
   bottom: 0;
   color: #acadae;
@@ -36,36 +48,47 @@ $application-menu-width: 300px;
       width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
-  .panel.logout {
+  .panel {
+    padding-left: 49px;
 
-    .icon.avatar {
-      border-radius: 32px;
-      float: left;
-      height: 64px;
-      width: 64px;
+    > * {
+      vertical-align: middle;
     }
 
-    .content {
-      padding-left: 1em;
-
-      > * {
-        display: block;
-        line-height: 1.5em;
+    &.logout {
+      .icon.avatar {
+        border-radius: 32px;
+        height: 64px;
+        width: 64px;
       }
 
-      > .name {
-        @include font-size(20);
-        line-height: 2em;
+      .content {
+        @include font-size(14);
+        padding-left: 1em;
+
+        > * {
+          display: block;
+          line-height: 1.5em;
+        }
+
+        > .name {
+          @include font-size(20);
+          line-height: 2em;
+        }
+      }
+
+      span {
+        display: inline-block;
       }
     }
-
-    span {
-      display: inline-block;
-    }
-
   }
 
   .accordion {
+    background-color: $app-accordion-header-bg-color;
+    border-bottom-color: $app-accordion-border-color;
+    border-right-color: $app-accordion-border-color;
+    color: $app-accordion-header-text-color;
+
     margin-bottom: calc(-2rem - 38px);
     min-height: 100%;
 
@@ -76,6 +99,130 @@ $application-menu-width: 300px;
 
     .name {
       color: #ffffff;
+    }
+  }
+
+  .accordion-header {
+    border-bottom: 1px solid $app-accordion-border-color;
+    color: $app-accordion-header-text-color;
+
+    > a {
+      color: $app-accordion-header-text-color;
+    }
+
+    &:not(.is-focused) {
+      > [class^="btn"] {
+        .icon:not(.chevron) {
+          fill: $app-accordion-header-text-color;
+        }
+
+        .plus-minus {
+          &::before,
+          &::after {
+            background-color: $app-accordion-header-text-color;
+          }
+        }
+      }
+
+      // Dark Accordion has a weird chevron color for some reason
+      .icon.chevron {
+        fill: $app-accordion-chevron-color;
+      }
+
+      &:hover {
+        > a {
+          color: $app-accordion-header-text-active-color;
+        }
+
+        > [class^="btn"] {
+          .icon:not(.chevron) {
+            fill: $app-accordion-header-text-active-color;
+          }
+
+          .plus-minus {
+            &::before,
+            &::after {
+              background-color: $app-accordion-header-text-active-color;
+            }
+          }
+        }
+      }
+    }
+
+    &.is-focused {
+      border-bottom-color: $accordion-selected-bg-color;
+
+      > a {
+        color: $accordion-selected-text-color;
+      }
+
+      > [class^="btn"],
+      > .icon {
+        fill: $accordion-selected-text-color;
+
+        .plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-selected-text-color;
+          }
+        }
+      }
+    }
+
+    &.has-chevron {
+      .icon + a {
+        width: calc(100% - 112px);
+      }
+    }
+
+    &:not(.is-focused):hover,
+    &.child-selected:not(.is-focused) {
+      > a {
+        color: $app-accordion-header-text-active-color;
+      }
+
+      > [class^="btn"] {
+        > .icon:not(.chevron) {
+          fill: $app-accordion-icon-hover-color;
+
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $app-accordion-icon-hover-color;
+            }
+          }
+        }
+      }
+
+      .icon:not(.chevron) {
+        fill: $app-accordion-icon-hover-color;
+      }
+    }
+
+  }
+
+  .accordion-pane {
+    background-color: $app-accordion-pane-bg-color;
+    border-bottom-color: $app-accordion-border-color;
+
+    .accordion-content {
+      border-bottom: $app-accordion-border-color;
+      color: $app-accordion-pane-text-color;
+    }
+
+    .accordion-header {
+      &:last-child {
+        border-bottom: 1px solid $app-accordion-border-color;
+      }
+    }
+  }
+
+  .accordion-content {
+    h1,
+    h2,
+    h3,
+    h4 {
+      color: $slate01;
     }
   }
 
@@ -91,6 +238,167 @@ $application-menu-width: 300px;
       height: 34px;
       margin-top: 1px;
       width: 34px;
+    }
+  }
+
+  // NOTE:
+  // These rules aren't merged in with the ones above for the sake of keeping the margin/padding/length information
+  // separate and legible, in the event we need to change it.  Similar code for accordion padding outside the app menu
+  // can be found in _accordion.scss
+
+  // Level 1 Header
+  .accordion-header {
+    > a {
+      padding-left: 26px;
+    }
+
+    > [class^="btn"]:not(:last-child) {
+      margin-left: 16px;
+    }
+
+    > .icon {
+      margin-left: 26px;
+    }
+
+    > [class^="btn"]:not(:last-child),
+    > .icon {
+      + a {
+        padding-left: 0;
+        width: calc(100% - 68px);
+      }
+    }
+  }
+
+  // Level 1 Pane
+  .accordion-pane {
+
+    .accordion-content {
+      padding-left: 26px;
+    }
+
+    // Level 2 Header
+    .accordion-header {
+      > a {
+        padding-left: 26px;
+      }
+
+      > [class^="btn"],
+      > .icon {
+        margin-left: 15px;
+
+        + a {
+          padding-left: 0;
+          width: calc(100% - 68px);
+        }
+      }
+    }
+
+    // Level 2 Pane
+    .accordion-pane {
+
+      .accordion-content {
+        padding-left: 63px;
+      }
+
+      // Level 3 Accordion Header
+      .accordion-header {
+        > a {
+          padding-left: 62px;
+        }
+
+        > [class^="btn"],
+        > .icon {
+          margin-left: 49px;
+
+          + a {
+            padding-left: 0;
+            width: calc(100% - 96px);
+          }
+        }
+
+      }
+
+      // Level 3 Accordion Pane
+      .accordion-pane {
+
+        .accordion-content {
+          padding-left: 96px;
+        }
+
+        // Level 4 Accordion Header
+        .accordion-header {
+          > a {
+            padding-left: 95px;
+          }
+
+          > [class^="btn"],
+          > .icon {
+            margin-left: 81px;
+
+            + a {
+              padding-left: 0;
+              width: calc(100% - 128px);
+            }
+          }
+        }
+
+        // Level 4 Accordion Pane
+        .accordion-pane {
+
+          .accordion-content {
+            padding-left: 128px;
+          }
+
+          // Level 5 Accordion Header
+          .accordion-header {
+            > a {
+              padding-left: 127px;
+            }
+
+            > [class^="btn"],
+            > .icon {
+              margin-left: 113px;
+
+              + a {
+                padding-left: 0;
+                width: calc(100% - 160px);
+              }
+            }
+          }
+
+          // Level 5 Accordion Pane
+          .accordion-pane {
+
+            .accordion-content {
+              padding-left: 159px;
+            }
+
+            // Level 6 Accordion Header
+            .accordion-header {
+              > a {
+                padding-left: 159px;
+              }
+
+              > [class^="btn"],
+              > .icon {
+                margin-left: 145px;
+
+                + a {
+                  padding-left: 0;
+                  width: calc(100% - 192px);
+                }
+              }
+            }
+
+            // Level 6 Accordion Pane
+            .accordion-pane {
+              .accordion-content {
+                padding-left: 192px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 

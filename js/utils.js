@@ -292,6 +292,21 @@
     return options;
   };
 
+  // Removes whitespace from HTML, preserving only required whitespace inside of HTML tags,
+  // but removing them elsewhere.
+  $.fn.removeHtmlWhitespace = function() {
+    return this.each(function() {
+      var elem = $(this);
+      elem.html(
+        elem.html()
+        .replace(/\n/g, '')
+        .replace(/[\t ]+</g, '<')
+        .replace(/\>[\t ]+</g, '><')
+        .replace(/\>[\t ]+$/g, '>')
+      );
+    });
+  };
+
 
 /* start-amd-strip-block */
 }));

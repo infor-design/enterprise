@@ -13,17 +13,7 @@
       </button>
 
       {{> includes/applicationmenu}}
-
-      <h1>
-      {{#subtitle}}
-        <span class="page-title">{{title}}</span>
-        <span class="section-title">{{subtitle}}</span>
-      {{/subtitle}}
-
-      {{^subtitle}}
-        {{title}}
-      {{/subtitle}}
-      </h1>
+      {{> includes/page-title}}
     </div>
 
     <div class="buttonset">

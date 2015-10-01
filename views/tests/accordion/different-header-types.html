@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>How This Test Works</h2>
+
+    <p>This test demonstrates how the various use cases for Accordion Headers works.  Accordion Headers can simply be either active or inactive links, contain icons that are static or act as trigger buttons, contain buttons that cause adjacent accordion panes to expand, etc.  Any combination of these items can be used in Accordion Headers.</p>
+
+    <p></p>
+
+    <div id="all-header-types" class="accordion alternate" data-demo-set-links="true">
+      <div class="accordion-header">
+        <a href="#"><span>Header Only, No Pane, No Icon</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-home"></use>
+        </svg>
+        <a href="#"><span>Header Only, No Pane, Has Icon<span></a>
+      </div>
+
+      <!-- Level 1 -->
+      <div class="accordion-header">
+        <a href="#"><span>Header Only, Has Pane, No Icon</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Accordion Content</h3>
+          <p>Here's one paragraph</p>
+          <p>Here's another!</p>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-home"></use>
+        </svg>
+        <a href="#"><span>Header Only, Has Pane, Has Icon</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Accordion Content</h3>
+          <p>Here's one paragraph</p>
+          <p>Here's another!</p>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <a href="/change/path"><span>Link, No Pane, No Icon</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-home"></use>
+        </svg>
+        <a href="/change/path"><span>Link, No Pane, Has Icon</span></a>
+      </div>
+
+      <div class="accordion-header">
+        <a href="/change/path"><span>Link, Has Pane, No Icon</span></a>
+        <button class="btn">
+          <span focusable="false" class="icon plus-minus"></span>
+          <span class="audible">Expand</span>
+        </button>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Accordion Content</h3>
+          <p>Here's one paragraph</p>
+          <p>Here's another!</p>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-home"></use>
+        </svg>
+        <a href="/change/path"><span>Link, Has Pane, Has Icon</span></a>
+        <button class="btn">
+          <span focusable="false" class="icon plus-minus"></span>
+          <span class="audible">Expand</span>
+        </button>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>Accordion Content</h3>
+          <p>Here's one paragraph</p>
+          <p>Here's another!</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

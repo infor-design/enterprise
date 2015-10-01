@@ -14,13 +14,7 @@ $toolbar-height: 44px;
 
   // Acts as a spacer that causes the toolbar items to vertically align.
   &::before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    overflow: hidden;
-    vertical-align: middle;
-    visibility: hidden;
-    width: 1px;
+    @include vertical-alignment-spacer;
   }
 
   > * {
