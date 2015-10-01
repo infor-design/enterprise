@@ -860,7 +860,7 @@
 
       //Selects a Tab
       select: function (href) {
-        var anchor = this.anchors.filter('[href="' + href + '"]');
+        var anchor = this.anchors.filter('[href="#' + href.replace(/#/g, '') + '"]');
         this.positionFocusState();
         this.focusBar(anchor.parent());
         this.activate(anchor.attr('href'));
