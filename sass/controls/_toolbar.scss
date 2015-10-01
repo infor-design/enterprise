@@ -276,6 +276,10 @@ $toolbar-height: 44px;
         width: calc(100% - 2px);
       }
     }
+
+    .searchfield-wrapper {
+      position: relative;
+    }
   }
 }
 
@@ -359,3 +363,4 @@ $toolbar-height: 44px;
     }
   }
 }
+
