@@ -27,7 +27,8 @@
           activePage: 1, //Start on this page
           pagesize: 15, //Can be calculate or a specific number
           source: null,  //Call Back Function for Pager Data Source
-          pagesizes: [15, 25, 50, 75]
+          pagesizes: [15, 25, 50, 75],
+          indeterminate: false // Will not show anything that lets you go to a specific page
         },
         settings = $.extend({}, defaults, options);
 
@@ -48,7 +49,7 @@
         this.createPagerBar();
         this.elements = this.element.children();
         this.renderBar();
-        this.renderPages();
+        this.renderPages(false, 'initial');
         this.handleEvents();
         this.setActivePage(this.settings.activePage); //Get First Page
       },
@@ -96,27 +97,27 @@
           e.preventDefault();
 
           if (li.is('.pager-prev')) {
-            self.setActivePage(self.activePage - 1);
+            self.setActivePage(self.activePage - 1, false, 'prev');
             return false;
           }
 
           if (li.is('.pager-next')) {
-            self.setActivePage(self.activePage + 1);
+            self.setActivePage(self.activePage + 1, false, 'next');
             return false;
           }
 
           if (li.is('.pager-first')) {
-            self.setActivePage(1);
+            self.setActivePage(1, false, 'first');
             return false;
           }
 
          if (li.is('.pager-last')) {
-            self.setActivePage(self.pageCount());  //TODO Calculate Last Page?
+            self.setActivePage(self.pageCount(), false, 'last');  //TODO Calculate Last Page?
             return false;
           }
 
           //Go to the page via the index of the button
-          self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0));
+          self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0), false, 'page');
 
           return false;
         });
@@ -136,7 +137,7 @@
       },
 
       //Set or Get Current Page
-      setActivePage: function(pageNum, force) {
+      setActivePage: function(pageNum, force, op) {
 
         var lis = this.pagerBar.find(this.buttonExpr);
 
@@ -167,7 +168,7 @@
         }
 
         this.renderBar();
-        this.renderPages();
+        this.renderPages(false, op);
         return pageNum;
       },
 
@@ -210,7 +211,7 @@
           }
         }
 
-        if (this.isTable && this.pagerBar.find('.pager-count').length === 0) {
+        if (this.isTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
           var text =  Locale.translate('PageOf');
           text = text = text.replace('{0}', '<input data-mask="###" name="pager-pageno" value="' + this.activePage + '">');
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : '-') + '</span>');
@@ -225,11 +226,11 @@
             lastValue = $(this).val();
           }).on('blur', function () {
             if (lastValue !== $(this).val()) {
-              self.setActivePage(parseInt($(this).val()));
+              self.setActivePage(parseInt($(this).val()), false, 'page');
             }
           }).on('keydown', function (e) {
             if (e.which === 13) {
-              self.setActivePage(parseInt($(this).val()));
+              self.setActivePage(parseInt($(this).val()), false, 'page');
             }
           });
         }
@@ -252,7 +253,7 @@
             tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
             tag.parent('li').addClass('is-checked');
             self.settings.pagesize = parseInt(tag.text());
-            self.setActivePage(1, true);
+            self.setActivePage(1, true, 'first');
            });
 
           $('[href="#25"]').parent().addClass('is-checked');
@@ -319,10 +320,10 @@
       },
 
       // Render Paged Items
-      renderPages: function(uiOnly) {
+      renderPages: function(uiOnly, op) {
         var expr,
           self = this,
-          pageInfo = {activePage: this.activePage, pagesize: this.settings.pagesize, total: -1};
+          pageInfo = {activePage: this.activePage, pagesize: this.settings.pagesize, type: op, total: -1};
 
         //Make an ajax call and wait
         setTimeout(function () {
@@ -340,7 +341,7 @@
               self.currPage = self.activePage;
 
               //Render Data
-              api.loadData(data, true);
+              api.loadData(data, pagingInfo, true);
 
               //Update Paging Info
               self.updatePagingInfo(pagingInfo);
@@ -392,12 +393,24 @@
         if (this.settings.source) {
           this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
           this.activePage = pagingInfo.activePage;
-          this.setActivePage(this.activePage);
+
+          //Set first and last page if passed
+          this.setActivePage(this.activePage, false, 'pageinfo');
         }
 
         //Update the UI
         this.pagerBar.find('.pager-count input').val(this.activePage);
         this.pagerBar.find('.pager-total-pages').text(this._pageCount);
+
+        if (pagingInfo.firstPage) {
+          this.pagerBar.find('.pager-first a').attr('disabled', 'disabled');
+          this.pagerBar.find('.pager-prev a').attr('disabled', 'disabled');
+        }
+
+        if (pagingInfo.lastPage) {
+          this.pagerBar.find('.pager-next a').attr('disabled', 'disabled');
+          this.pagerBar.find('.pager-last a').attr('disabled', 'disabled');
+        }
       },
 
       //Teardown

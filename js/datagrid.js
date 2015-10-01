@@ -257,8 +257,11 @@ $.fn.datagrid = function(options) {
         rowHeight: 'medium', //(short, medium or tall)
         selectable: false, //false, 'single' or 'multiple'
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
+        //Paging Options
         paging: false,
-        pagesizes: [15, 25, 50, 75],
+        pagesize: 25,
+        pagesizes: [10, 25, 50, 75],
+        indeterminate: false, //removed ability to go to a specific page.
         source: null //callback for paging
       },
       settings = $.extend({}, defaults, options);
@@ -447,7 +450,7 @@ $.fn.datagrid = function(options) {
 
     //Method to Reload the data set
     //TODO: Load specific page
-    loadData: function (dataset, noReset) {
+    loadData: function (dataset, pagerInfo) {
       var selectedIds = this.selectedRows(),
         rowIds = [];
 
@@ -455,7 +458,7 @@ $.fn.datagrid = function(options) {
       this.renderRows();
 
       //Update Paging
-      this.renderPager(!noReset);
+      this.renderPager(pagerInfo);
 
       //restore selected rows
       for (var i = 0; i < selectedIds.length; i++) {
@@ -821,6 +824,9 @@ $.fn.datagrid = function(options) {
     //Returns a cell node
     cellNode: function (row, cell) {
       var rowNode = this.tableBody.find('tr[role="row"]').eq(row);
+      if (row instanceof jQuery) {
+        rowNode = row;
+      }
       return rowNode.find('td[role="gridcell"]').eq(cell);
     },
 
@@ -1152,7 +1158,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (!row.hasClass('is-selected')) {
-        checkbox = this.cellNode(row.index('tr[role="row"]'), this.columnIdx('selectionCheckbox'));
+        checkbox = this.cellNode(row, this.columnIdx('selectionCheckbox'));
 
         //Select It
         this._selectedRows.push({idx: idx, data: this.settings.dataset[idx], elem: row});
@@ -1224,7 +1230,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (row.hasClass('is-selected')) {
-        checkbox = this.cellNode(row.index(), this.columnIdx('selectionCheckbox'));
+        checkbox = this.cellNode(row, this.columnIdx('selectionCheckbox'));
 
         selIdx = undefined;
         for (var i = 0; i < this._selectedRows.length; i++) {
@@ -1709,7 +1715,7 @@ $.fn.datagrid = function(options) {
       }
 
       var pagerElem = this.tableBody.addClass('paginated');
-      pagerElem.pager({source: this.settings.source, pagesize: this.settings.pagesize, pagesizes: this.settings.pagesizes});
+      pagerElem.pager({source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, pagesizes: this.settings.pagesizes});
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {
@@ -1727,14 +1733,18 @@ $.fn.datagrid = function(options) {
       });
     },
 
-    renderPager: function (reset) {
+    renderPager: function (pagerInfo) {
       if (this.pager) {
-        if (reset) {
-          this.pager.activePage = 1;
+        if (pagerInfo) {
+          this.pager.activePage = pagerInfo.activePage;
         }
         this.pager.elements = this.pager.element.children();
         this.pager.renderBar();
         this.pager.renderPages(true);
+
+        if (pagerInfo) {
+          this.pager.updatePagingInfo(pagerInfo);
+        }
       }
     }
 
