@@ -189,12 +189,27 @@
 
       },
 
-      show: function(newSettings) {
+      show: function(newSettings, ajaxReturn) {
         var self = this;
         this.isInPopup = false;
 
         if (newSettings) {
           settings = newSettings;
+        }
+
+        if (settings.beforeShow && !ajaxReturn) {
+          var response = function (content) {
+            self.content = content;
+            self.show(settings, true);
+          };
+
+          if (typeof settings.beforeShow === 'string') {
+            window[settings.beforeShow](response);
+            return;
+          }
+
+          settings.beforeShow(response);
+          return;
         }
 
         this.setContent(this.content);

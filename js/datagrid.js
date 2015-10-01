@@ -1029,8 +1029,8 @@ $.fn.datagrid = function(options) {
           self.rowHeight(action.substr(4));
         }
 
-        args.closest('ul').find('.is-checked').removeClass('is-checked');
-        args.parent().addClass('is-checked');
+        args.closest('ul').find('[data-option]').parent('.is-checked').removeClass('is-checked');
+        args.filter('[data-option]').parent().addClass('is-checked');
       });
 
       toolbar.toolbar();

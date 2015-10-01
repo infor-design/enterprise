@@ -448,6 +448,7 @@ window.Chart = function(container) {
 
     // Draw the arcs.
     var enteringArcs = arcs.selectAll('.arc').data(pieData).enter();
+    charts.appendTooltip();
 
     var g = enteringArcs.append('g')
         .attr('class', 'arc')
@@ -477,6 +478,21 @@ window.Chart = function(container) {
           }
 
           $(container).trigger('selected', [undefined, d]);
+        }).on('mouseenter', function () {
+          /*var shape = d3.select(this),
+            content = 'test';
+
+          var yPosS = shape[0][0].getBoundingClientRect().top + $(window).scrollTop(),
+              xPosS = shape[0][0].getBoundingClientRect().left + $(window).scrollLeft();
+
+          var size = charts.getTooltipSize(content),
+            x = xPosS + (parseFloat(shape.attr('width'))/2) - (size.width/2),
+            y = yPosS - size.height - 13;
+
+          charts.showTooltip(x, t, content, 'top');*/
+        })
+        .on('mouseleave', function () {
+          charts.hideTooltip();
         });
 
     g.append('path')

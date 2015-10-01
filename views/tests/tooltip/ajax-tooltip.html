@@ -2,11 +2,40 @@
 <div class="row">
   <div class="twelve columns">
 
-    <button class="btn" type="button" title="Tooltips Provide <br> Additional Information">
-    Example
+    <button class="btn" type="button" data-init="false" >
+    Example One
+    </button>
+
+     <button class="btn" type="button" data-options="{beforeShow: ajaxTooltip}">
+    Example Two
     </button>
 
   </div>
 </div>
+
+<script>
+  //This Example uses traditional js to setup the event
+  $('button').tooltip({beforeShow : function (response) {
+    //Ajax Call or async op
+    setTimeout(function () {
+      response('<strong>Tooltips Provide <br> Interesting Information</strong>');
+    }, 400);
+  }});
+
+  //This Example uses properties set setup the functionality
+ window.ajaxTooltip = function () {
+    //Ajax Call or async op
+    setTimeout(function () {
+      response('<strong>Tooltips Provide <br> Interesting Information</strong>');
+    }, 400);
+  };
+
+</script>
+
+
+<script>
+
+</script>
+
 
 

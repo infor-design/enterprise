@@ -405,12 +405,12 @@
             expander.children('.audible').text(Locale.translate('Collapse'));
           }
 
-          var headerParents = header.parentsUntil(this.element).filter('.accordion-pane').prev('.accordion-header').add(header);
+          var headerParents = header.parentsUntil(self.element).filter('.accordion-pane').prev('.accordion-header').add(header);
 
           // If we have the correct settings defined, close other accordion headers that are not parents of this one.
-          if (this.settings.allowOnePane) {
-            this.headers.not(headerParents).each(function() {
-              var h = $(this);
+          if (self.settings.allowOnePane) {
+            self.headers.not(headerParents).each(function() {
+              var h = $(self);
               if (self.isExpanded(h)) {
                 self.collapse(h);
               }
@@ -419,13 +419,13 @@
 
           // Expand all headers that are parents of this one, if applicable
           headerParents.not(header).each(function() {
-            var h = $(this);
+            var h = $(self);
             if (!self.isExpanded(h)) {
               self.expand(h);
             }
           });
 
-          this.element.trigger('expand', [a]);
+          self.element.trigger('expand', [a]);
 
           pane.one('animateOpenComplete', function(e) {
             e.stopPropagation();
