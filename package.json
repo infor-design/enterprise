@@ -1,8 +1,12 @@
 {
+  "scripts": {
+    "start": "node server.js",
+    "test": "./node_modules/.bin/intern-runner config=test2/intern.local.functional"
+  },
   "name": "sohoxi",
   "version": "4.0.0",
   "description": "Hook and Loop Controls Soho XI - Version 4.0",
-  "main": "index.js",
+  "main": "server.js",
   "author": "Hook and Loop",
   "private": true,
   "dependencies": {

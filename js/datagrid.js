@@ -840,7 +840,7 @@ $.fn.datagrid = function(options) {
         e.preventDefault();
         $(this).trigger('click');
       }).on('click.datagrid', 'th.is-sortable', function () {
-        self.setSortColumn($(this).attr('data-field'));
+        self.setSortColumn($(this).attr('data-column-id'));
       });
 
       //Handle Clicking Buttons and links in formatters
@@ -1653,17 +1653,25 @@ $.fn.datagrid = function(options) {
     //Api Event to set the sort Column
     setSortColumn: function(field, ascending) {
       var sort;
-      //Set Internal Variables
-      this.sortColumn.sortAsc = (this.sortColumn.sortField === field ? !this.sortColumn.sortAsc : ascending ? true : false);
+
+      //Set Direction based on if passed in or toggling existing field
+      if (ascending) {
+        this.sortColumn.sortAsc = ascending;
+      } else {
+        if (this.sortColumn.sortField === field) {
+          this.sortColumn.sortAsc = !this.sortColumn.sortAsc;
+        } else {
+           this.sortColumn.sortAsc = false;
+        }
+        ascending = this.sortColumn.sortAsc;
+      }
+
       this.sortColumn.sortField = field;
 
       //Do Sort on Data Set
-      sort = this.sortFunction(this.sortColumn.sortField, !this.sortColumn.sortAsc);
+      this.setSortIndicator(field, ascending);
+      sort = this.sortFunction(this.sortColumn.sortField, ascending);
       settings.dataset.sort(sort);
-
-      //Set Visual Indicator
-      this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc');
-      this.headerRow.find('[data-field="' +field + '"]').addClass((this.sortColumn.sortAsc ? 'is-sorted-asc' : 'is-sorted-desc'));
 
       var wasFocused = this.activeCell.isFocused;
       this.renderRows();
@@ -1675,12 +1683,16 @@ $.fn.datagrid = function(options) {
       this.element.trigger('sorted', [this.sortColumn]);
     },
 
-    //Overridable function to conduct sorting
-    sortFunction: function(field, reverse, primer) {
-      var key;
+    setSortIndicator: function(field, ascending) {
+      //Set Visual Indicator
+      this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc');
+      this.headerRow.find('[data-column-id="' +field + '"]').addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc');
+    },
 
-      if (!primer) {
-        primer = function(a) {
+    //Overridable function to conduct sorting
+    sortFunction: function(field, reverse) {
+      var key,
+      primer = function(a) {
           a = (a === undefined || a === null ? '' : a);
           if (typeof a === 'string') {
             a = a.toUpperCase();
@@ -1691,9 +1703,8 @@ $.fn.datagrid = function(options) {
           }
           return a;
         };
-      }
 
-      key = primer ? function(x) { return primer(x[field]); } : function(x) { return x[field]; };
+      key = function(x) { return primer(x[field]); };
       reverse = !reverse ? 1 : -1;
 
       return function (a, b) {
