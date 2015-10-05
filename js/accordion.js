@@ -165,7 +165,8 @@
       },
 
       handleEvents: function() {
-        var self = this;
+        var self = this,
+          headerWhereMouseDown = null;
 
         this.headers.onTouchClick('accordion').on('click.accordion', function(e) {
           self.handleHeaderClick(e, $(this));
@@ -173,12 +174,18 @@
           if (!self.originalSelection) {
             self.originalSelection = $(e.target);
           }
-
           $(this).addClass('is-focused');
-        }).on('focusout.accordion', function() {
-          $(this).removeClass('is-focused');
+        }).on('focusout.accordion', function(e) {
+          if (!$.contains(this, headerWhereMouseDown) || $(this.is($(headerWhereMouseDown)))) {
+            $(this).removeClass('is-focused');
+          }
         }).on('keydown.accordion', function(e) {
           self.handleKeys(e);
+        }).on('mousedown.accordion', function(e) {
+          $(this).addClass('is-focused');
+          headerWhereMouseDown = e.target;
+        }).on('mouseup.accordion', function(e) {
+          headerWhereMouseDown = null;
         });
 
         this.anchors.on('click.accordion', function(e) {
