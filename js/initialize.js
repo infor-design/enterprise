@@ -120,6 +120,9 @@
 
           //Select / DropDowns
           ['dropdown', 'select.dropdown:not(.multiselect)'],
+          ['dropdown', 'select.dropdown-xs:not(.multiselect)'],
+          ['dropdown', 'select.dropdown-sm:not(.multiselect)'],
+          ['dropdown', 'select.dropdown-lg:not(.multiselect)'],
 
           //Modals
           ['modal'],
@@ -173,6 +176,9 @@
 
           //sort drag and drop
           ['sort'],
+
+          //Swap List
+          ['swaplist'],
 
           //Color Picker
           ['colorpicker'],

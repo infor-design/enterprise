@@ -5,11 +5,30 @@
 // has similar properties to a "scrollable" .page-container
 .page-container.builder {
 
+  .back {
+    margin-left: 20px;
+
+    &:before {
+      content: '\003C'; //less-than sign
+      display: inline-block;
+      padding-right: 5px;
+    }
+  }
+
+  .compound-field > .field {
+    margin-right: 10px;
+  }
+
+  .attach-up {
+    margin-top: -10px;
+  }
+
   // Both main areas are scrollable-y
   .main,
   .sidebar {
     display: inline-block;
     height: 100%;
+    vertical-align: top;
   }
 
   .sidebar {
@@ -172,6 +191,59 @@
   margin-top: 10px;
 }
 
+.edit-profile {
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .builder-sidebar-content {
+    height: calc(100% - 260px);
+  }
+
+  .listview {
+    &.alternate-row {
+      ul {
+        padding: 0 20px;
+      }
+
+      li {
+        border: 0;
+        padding: 20px 10px;
+      }
+    }
+
+    .l-pull-right {
+      margin-top: -20px;
+      top: auto;
+    }
+  }
+
+  .builder-sidebar-footer {
+    margin-top: 0;
+  }
+
+  .cart-totals {
+    border-top: 1px solid $listview-border-color;
+    padding: 15px 10px;
+
+    p + p {
+      margin: 0;
+    }
+
+    .totals {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  }
+
+  &.popdown {
+    .cart-totals {
+      padding: 10px;
+    }
+  }
+}
+
 @include respond-to(phone) {
   // Animate the same way list/detail pattern works
   .page-container.builder {
@@ -216,5 +288,4 @@
   .builder-sidebar {
     display: none;
   }
-
 }
