@@ -1,0 +1,146 @@
+<!-- <body> -->
+  {{> includes/masthead}}
+
+  <section class="header">
+    <div class="toolbar">
+      <div class="title">
+        <button class="btn-icon application-menu-trigger" type="button">
+          <span class="icon app-header" focusable="false" aria-hidden="true">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+          <span class="audible">Back</span>
+        </button>
+        <h1>Open Orders</h1>
+      </div>
+
+      <div class="buttonset">
+        <button class="btn-tertiary" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>New Order</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action #1</a></li>
+          <li><a href="#">Action #2</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {{> includes/applicationmenu}}
+
+  <div class="page-container builder">
+    <div class="sidebar scrollable" role="complementary">
+      <div class="listview" id="task-listview" data-tmpl="open-orders-tpl" data-dataset="demoBuilderItems"></div>
+    </div>
+    <div id="maincontent" class="main scrollable builder-pane">
+      <div class="builder-header azure08">
+        <div class="toolbar no-actions-button">
+          <div class="title">
+            <h2>
+              <span class="panel-title">John Smith Construction</span><br>
+              <span class="panel-subhead">Order #423121-3 | $250,000 Credit Approved</span>
+            </h2>
+          </div>
+          <div class="buttonset">
+            <button class="btn-tertiary" type="button">
+              <span>Edit Profile</span>
+            </button>
+
+            <button id="my-cart-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" type="button" data-popdown="builder-popdown-content">
+              <svg class="icon" focusable="false" aria-hidden="true">
+                <use xlink:href="#icon-cart"></use>
+              </svg>
+              <span>My Cart</span>
+            </button>
+          </div>
+          <div class="more"></div>
+        </div>
+      </div>
+
+      <div class="builder-content no-scroll">
+        <div class="builder-actions scrollable-y">
+          <a class="hyperlink back" href="#">Back to Order</a>
+          <div class="builder-actions-header">
+            <h3>Edit Profile</h3>
+          </div>
+          <div class="builder-actions-content">          
+          {{> examples/saleshub/_edit-profile}}
+          </div>
+        </div>
+        <div class="builder-sidebar edit-profile">
+          {{> examples/saleshub/_edit-profile-cart-contents}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popdown inside the builder header -->
+  <div id="builder-popdown-content" class="popdown hidden edit-profile">
+    <div class="widget">
+      <div class="widget-header">
+        <h2 class="widget-title">My Cart <span class="extra">(8 Items)</span></h2>
+      </div>
+      <div class="widget-content">
+        <div id="cart-popover-listview" class="listview tableview" data-tmpl="cart-items-tpl" data-dataset="/api/construction-cart-items"></div>
+      </div>
+      <div class="widget-footer">
+        <div class="cart-totals">
+          <p>Subtotal <span class="listview-micro l-pull-right">$1,700.00</span></p>
+          <p>Sales Tax <span class="listview-micro l-pull-right">$20.00</span></p>
+          <p class="totals">Order Total <span class="l-pull-right bold">$1,720.00</span></p>
+        </div>
+        <div class="modal-buttonset">
+          <button class="btn-modal-primary" style="width: 50%;">Continue to checkout</button>
+          <button class="btn-modal-secondary" style="width: 50%;">Delete order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout Template for Open Orders' main sidebar -->
+  {{={{{ }}}=}}
+  <script id="open-orders-tpl" type="text/html">
+    <ul>
+      {{#dataset}}
+        <li>
+          <span class="listview-micro l-pull-right total">{{total}}</span>
+          <p class="listview-heading">{{companyName}}</p>
+          <p class="listview-subheading">Order #{{orderId}}</p>
+          <p class="listview-micro items">{{items}} items</p>
+        </li>
+      {{/dataset}}
+    </ul>
+  </script>
+
+   <!-- Layout Template for Cart Items -->
+  <script id="cart-items-tpl" type="text/html">
+    <ul>
+      {{#dataset}}
+        <li>
+          <p class="listview-heading">{{itemName}}</p>
+          <p class="listview-subheading">{{itemId}}</p>
+          <p class="listview-text">
+            Item Price: {{itemPrice}}/{{quantifier}}<br>
+            Quantity: {{quantity}}
+          </p>
+          <p class="listview-micro l-pull-right bold">{{totalPrice}}</p>
+        </li>
+      {{/dataset}}
+    </ul>
+  </script>
+
+<!-- </body> -->
+

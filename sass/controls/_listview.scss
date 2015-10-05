@@ -12,6 +12,10 @@
     margin-top: 0;
   }
 
+  .bold {
+    font-weight: bold;
+  }
+
   .listview-heading {
     @include ellipsis();
     @include font-size(16);
@@ -39,6 +43,26 @@
   .listview-subheading {
     @include font-size(14);
     color: $listview-color;
+  }
+
+  &.alternate-row {
+    .listview-subheading {
+      color: $listview-subhead-color;
+      margin-bottom: 5px;
+    }
+    .listview-text {
+      color: $listview-selected-text-color;
+    }
+
+    li {
+      &:nth-child(odd) {
+        background-color: $listview-bg-color;
+      }
+
+      &:nth-child(even) {
+        background-color: $listview-bg-color-alternate;
+      }
+    }
   }
 
   .listview-micro {

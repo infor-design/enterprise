@@ -45,7 +45,11 @@
     Dropdown.prototype = {
       init: function() {
         var orgId = this.element.attr('id'),
-          id = orgId + '-shdo'; //The Shadow Input Element. We use the dropdown to serialize.
+          id = orgId + '-shdo', //The Shadow Input Element. We use the dropdown to serialize.
+          cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' : 
+            this.element.is('.dropdown-sm') ? 'dropdown input-sm' : 
+            this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
+        
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
         this.orgLabel = orgId !== undefined ? $('label[for="' + this.element.attr('id') + '"]') :
@@ -54,7 +58,7 @@
         this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.element);
 
         this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
-        this.input = $('<input type="text" readonly class="dropdown" tabindex="0"/>').attr({'role': 'combobox'})
+        this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({'role': 'combobox'})
                         .attr({'aria-autocomplete': 'list', 'aria-controls': 'dropdown-list'})
                         .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
                         .attr({'aria-describedby' : id + '-instructions', 'id': id});
