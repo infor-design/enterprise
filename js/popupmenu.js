@@ -24,7 +24,7 @@
     var pluginName = 'popupmenu',
       defaults = {
         menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
-        trigger: 'click',  //click, rightClick, immediate
+        trigger: 'click',  //click, rightClick, immediate ect
         autoFocus: true,
         mouseFocus: true,
         ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
