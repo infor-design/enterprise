@@ -257,7 +257,7 @@ $hierarchy-line-width: 1px;
 }
 
 //Media Query for Mobile View
-@include respond-to(tabletdown) {
+@include respond-to(phablet) {
 
   .hierarchy {
     margin: 0 auto;

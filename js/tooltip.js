@@ -428,6 +428,10 @@
           this.tooltip.find('.arrow').css('right', '178px');
         }
 
+        if (this.activeElement.is('.timepicker') || this.activeElement.is('.datepicker')) {
+          extraOffset = -15;
+        }
+
         this.tooltip.css({'width': this.tooltip.width() + extraWidth,
                           'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
                           'left' : o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth });

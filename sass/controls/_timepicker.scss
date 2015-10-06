@@ -19,6 +19,14 @@
     }
   }
 
+  + .icon + .icon-error {
+    right: 50px;
+  }
+
+  + .audible + .icon + .icon-error {
+    right: 50px;
+  }
+
   &:disabled {
     + .icon {
       cursor: default;

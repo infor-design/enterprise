@@ -80,6 +80,7 @@
     // Plugin Methods
     Plugin.prototype = {
       init: function() {
+
         var isMobile = $(this.element).parent().width() < 610; //Phablet down
 
         if (isMobile) {
