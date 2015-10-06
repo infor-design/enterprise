@@ -1036,9 +1036,23 @@
         var self = this,
             currentElement = self.getCurrentElement();
 
-        self.element.on('focus.editor', function () {
+        self.element
+        .on('focus.editor', function () {
           if (self.element === currentElement) {
             self.setFocus();
+          }
+        })
+
+        // Work around for Chrome's bug wrapping contents in <span>
+        // http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
+        .on('DOMNodeInserted', function(e) {
+          if (e.target.tagName === 'SPAN') {
+            var target = $(e.target),
+              helper = $('<b>helper</b>');
+
+            target.before(helper);
+            helper.after(target.contents());
+            helper.add(target).remove();
           }
         });
 
