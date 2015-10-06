@@ -41,7 +41,7 @@
     Plugin.prototype = {
 
       init: function() {
-        this.settings = settings;
+        this.settings = $.extend({}, settings);
         //Do other init
       },
 
@@ -53,6 +53,11 @@
       // Teardown - Remove added markup and events
       destroy: function() {
         $.removeData(this.element[0], pluginName);
+      },
+
+      //Handle Updating Settings
+      updated: function() {
+        $.removeData(this.element[0], pluginName);
       }
     };
 
@@ -60,7 +65,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Plugin(this, settings));
       }

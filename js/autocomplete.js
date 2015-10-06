@@ -211,7 +211,7 @@
           all.parent('li').removeClass('is-selected');
           anchor.parent('li').addClass('is-selected');
 
-          self.element.val(text);
+          self.element.val(text).focus();
         });
 
         this.noSelect = true;
@@ -221,15 +221,45 @@
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
         var buffer = '',
-          timer,
+          timer, selected,
           self = this;
 
         this.element.on('updated.autocomplete', function() {
           self.updated();
         }).on('keydown.autocomplete', function(e) {
-          if (e.keyCode === 8) {
-            self.element.trigger('keypress');
+
+          var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+
+          //Down - select next
+          if (e.keyCode === 40 && self.list && self.list.is(':visible')) {
+            selected = self.list.find('.is-selected');
+            if (selected.length) {
+              self.noSelect = true;
+              selected.removeClass('is-selected');
+              selected.next(excludes).addClass('is-selected').find('a').focus();
+              e.preventDefault();
+              e.stopPropagation();
+            }
           }
+
+          //Up select prev
+          if (e.keyCode === 38 && self.list && self.list.is(':visible')) {
+            selected = self.list.find('.is-selected');
+            if (selected.length) {
+              self.noSelect = true;
+              selected.removeClass('is-selected');
+              selected.prev(excludes).addClass('is-selected').find('a').focus();
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }
+
+          if (e.keyCode === 13 && self.list && self.list.is(':visible')) {
+            if (self.element.data('popupmenu')) {
+              self.element.data('popupmenu').close();
+            }
+          }
+
         })
         .on('keypress.autocomplete', function (e) {
           var field = $(this);
