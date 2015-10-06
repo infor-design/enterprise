@@ -235,7 +235,7 @@
         }
 
         if (this.settings.options.selectable === 'single') {
-          lookupGrid.on('click', function () {
+          lookupGrid.on('selected.lookup', function () {
             setTimeout(function () {
               self.insertRows();
               self.modal.close();

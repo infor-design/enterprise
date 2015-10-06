@@ -938,7 +938,7 @@ $.fn.datagrid = function(options) {
       });
 
       // Handle Clicking Header Checkbox
-      this.headerRow.onTouchClick('popupmenu.datagrid', 'th .datagrid-checkbox')
+      this.headerRow.onTouchClick('datagrid', 'th .datagrid-checkbox')
             .on('click.datagrid', 'th .datagrid-checkbox', function () {
 
         var checkbox = $(this);
