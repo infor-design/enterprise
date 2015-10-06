@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Accordion Test: Left-aligned Expanders on Top-Level Headers</h2>
+    <p>When invoking the accordion, it's possible to change the "displayChevrons" setting to false, which will give
+    headers with expandable panes a left-aligned (+/-) button instead of a Chevron to indicate that it can be expanded.</p>
+    <p>This visual test makes sure that all possible header combinations work well with left-aligned expanders.</p>
+    <p></p>
+
+    <div id="left-aligned-accordion" class="accordion" data-options="{displayChevron: false}">
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-user"></use>
+        </svg>
+        <a href="#"><span>Users</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>List Users</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Manage Users</span></a>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <a href="#"><span>Roles</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>Administrator</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Manager</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Power User</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Editor</span></a>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <a href="#"><span>Content Underneath</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
+          <h3>This content is somewhat shifted over</h3>
+          <p>Icons at the top-level push this block of content over to the right</p>
+        </div>
+      </div>
+
+      <div class="accordion-header">
+        <a href="#"><span>Outbound Link</span></a>
+      </div>
+    </div>
+
+  </div>
+</div>
