@@ -14,6 +14,14 @@
     &[readonly] + .trigger,
     &[disabled] + .trigger {
       cursor: default;
+
+      .icon {
+        fill: $input-disabled-bg-color;
+      }
+    }
+
+    &[disabled] + .trigger > .icon {
+      fill: $input-disabled-color;
     }
 
     &.is-not-editable {

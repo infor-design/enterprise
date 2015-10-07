@@ -23,13 +23,12 @@
       //Get some data via ajax
       var url = '/api/compressors?pageNum=1&pageSize=1000';
 
-      $.getJSON(url, function(data) {
+      $.getJSON(url, function(res) {
 
         //Show the grid
-
         $('#datagrid').datagrid({
           columns: columns,
-          dataset: data,
+          dataset: res.data,
           selectable: 'single',
           paging: true,
           pagesize: 15,

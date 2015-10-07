@@ -319,16 +319,19 @@
         }
       },
 
+      pagerInfo: {},
+
       // Render Paged Items
       renderPages: function(uiOnly, op) {
         var expr,
-          self = this,
-          pageInfo = {activePage: this.activePage, pagesize: this.settings.pagesize, type: op, total: -1};
+          self = this;
+
+        this.pagingInfo = {activePage: this.activePage, pagesize: this.settings.pagesize, type: op, total: -1};
 
         //Make an ajax call and wait
         setTimeout(function () {
           var table = self.element.closest('.datagrid-container'),
-            doPaging = table.triggerHandler('beforepaging', pageInfo);
+            doPaging = table.triggerHandler('beforepaging', self.pagingInfo);
 
           if (doPaging === false) {
             return;
@@ -347,25 +350,25 @@
               self.updatePagingInfo(pagingInfo);
 
               setTimeout(function () {
-                self.element.trigger('afterpaging', pageInfo);
+                self.element.trigger('afterpaging', pagingInfo);
               },1);
               return;
             };
 
             if (api.sortColumn.sortField) {
-              pageInfo.sortAsc = api.sortColumn.sortAsc;
-              pageInfo.sortField = api.sortColumn.sortField;
+              self.pagerInfo.sortAsc = api.sortColumn.sortAsc;
+              self.pagerInfo.sortField = api.sortColumn.sortField;
             }
 
             if (api.filterExpr) {
-               pageInfo.filterExpr = api.filterExpr;
+               self.pagerInfo.filterExpr = api.filterExpr;
             }
 
-            self.settings.source(pageInfo, response);
+            self.settings.source(self.pagingInfo, response);
           }
 
           //Make an ajax call and wait
-          self.element.trigger('paging', pageInfo);
+          self.element.trigger('paging', self.pagingInfo);
           self.elements = self.element.children();
 
           //Render page objects
@@ -379,8 +382,8 @@
           }
 
           if (!self.settings.source) {
-            self.element.trigger('afterpaging', pageInfo);
-            self.updatePagingInfo(pageInfo);
+            self.element.trigger('afterpaging', self.pagingInfo);
+            self.updatePagingInfo(self.pagingInfo);
           }
 
         }, 0);

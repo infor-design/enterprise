@@ -294,6 +294,12 @@ $wizard-default-bg: $body-bg-color;
 $wizard-bar-bg: $slate05;
 $wizard-active-color: $primary-color;
 
+//Themable Variables in config.scss
+$hierarchy-line-color: $slate03;
+
+//Image Border Color
+$image-border-color: $slate03;
+
 //================================================== //
 // Core Controls
 @import 'controls';

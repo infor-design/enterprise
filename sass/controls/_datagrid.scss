@@ -487,8 +487,7 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  left: -10px;
-  margin-right: -10px;
+  margin-right: -10px !important;
   top: -2px;
 
   span:not(.icon) {
@@ -497,6 +496,7 @@ td .btn-actions {
 
   + span {
     color: #1a1a1a;
+    padding-left: 10px;
   }
 
   &:hover {

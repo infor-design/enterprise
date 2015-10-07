@@ -106,7 +106,7 @@ window.Formatters = {
     var button = '<button class="btn-icon datagrid-expand-btn" tabindex="-1">'+
       '<span class="icon plus-minus"></span>' +
       '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
-      '</button>' + '<span> ' + value + '</span>';
+      '</button>' + ( value ? '<span> ' + value + '</span>' : '');
 
     return button;
   },
@@ -429,7 +429,6 @@ $.fn.datagrid = function(options) {
           self.setActiveCell(0, 0);
         }, 10);
       }
-
     },
 
     //Delete a Specific Row
@@ -1651,14 +1650,14 @@ $.fn.datagrid = function(options) {
     },
 
     //Api Event to set the sort Column
-    setSortColumn: function(field, ascending) {
+    setSortColumn: function(id, ascending) {
       var sort;
 
       //Set Direction based on if passed in or toggling existing field
-      if (ascending) {
+      if (ascending !== undefined) {
         this.sortColumn.sortAsc = ascending;
       } else {
-        if (this.sortColumn.sortField === field) {
+        if (this.sortColumn.sortId === id) {
           this.sortColumn.sortAsc = !this.sortColumn.sortAsc;
         } else {
            this.sortColumn.sortAsc = false;
@@ -1666,11 +1665,12 @@ $.fn.datagrid = function(options) {
         ascending = this.sortColumn.sortAsc;
       }
 
-      this.sortColumn.sortField = field;
+      this.sortColumn.sortId = id;
+      this.sortColumn.sortField = (this.columnIdx(id)[0] ? this.columnIdx(id)[0].field : '');
 
       //Do Sort on Data Set
-      this.setSortIndicator(field, ascending);
-      sort = this.sortFunction(this.sortColumn.sortField, ascending);
+      this.setSortIndicator(id, ascending);
+      sort = this.sortFunction(this.sortColumn.sortId, ascending);
       settings.dataset.sort(sort);
 
       var wasFocused = this.activeCell.isFocused;
@@ -1683,14 +1683,14 @@ $.fn.datagrid = function(options) {
       this.element.trigger('sorted', [this.sortColumn]);
     },
 
-    setSortIndicator: function(field, ascending) {
+    setSortIndicator: function(id, ascending) {
       //Set Visual Indicator
       this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc');
-      this.headerRow.find('[data-column-id="' +field + '"]').addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc');
+      this.headerRow.find('[data-column-id="' +id + '"]').addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc');
     },
 
     //Overridable function to conduct sorting
-    sortFunction: function(field, reverse) {
+    sortFunction: function(id, descending) {
       var key,
       primer = function(a) {
           a = (a === undefined || a === null ? '' : a);
@@ -1704,11 +1704,11 @@ $.fn.datagrid = function(options) {
           return a;
         };
 
-      key = function(x) { return primer(x[field]); };
-      reverse = !reverse ? 1 : -1;
+      key = function(x) { return primer(x[id]); };
+      descending = !descending ? 1 : -1;
 
       return function (a, b) {
-         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+         return a = key(a), b = key(b), descending * ((a > b) - (b > a));
       };
     },
 
@@ -1740,21 +1740,27 @@ $.fn.datagrid = function(options) {
 
       //Get First page on Sort Action
       this.element.on('sorted', function () {
-        self.renderPager(true);
+        if (self.pager) {
+
+          self.pager.pagingInfo.type = 'initial';
+          self.pager.pagingInfo.activePage = 1;
+          self.renderPager(self.pager.pagingInfo, 'sorted');
+        }
       });
     },
 
-    renderPager: function (pagerInfo) {
+    renderPager: function (pagingInfo) {
       if (this.pager) {
-        if (pagerInfo) {
-          this.pager.activePage = pagerInfo.activePage;
+        if (pagingInfo) {
+          this.pager.activePage = pagingInfo.activePage;
         }
         this.pager.elements = this.pager.element.children();
         this.pager.renderBar();
-        this.pager.renderPages(true);
 
-        if (pagerInfo) {
-          this.pager.updatePagingInfo(pagerInfo);
+        this.pager.renderPages((pagingInfo.type === 'sorted' ? false : true), 'initial');
+
+        if (pagingInfo) {
+          this.pager.updatePagingInfo(pagingInfo);
         }
       }
     }

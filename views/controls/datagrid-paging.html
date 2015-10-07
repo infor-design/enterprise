@@ -48,8 +48,9 @@
             url += '&filter=' + req.filterExpr[0].value;
           }
 
+          console.log(req.sortField);
+
           $.getJSON(url, function(res) {
-            console.log(req, res);
             req.total = res.total;
             response(res.data, req);
           });

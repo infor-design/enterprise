@@ -506,6 +506,10 @@
           });
 
           self.element.triggerHandler('open', [self.menu]);
+          self.element.on('click.popupmenu touchend.popupmenu', function () {
+            self.close();
+          });
+
         }, 0);
 
         //Hide on iFrame Clicks - only works if on same domain

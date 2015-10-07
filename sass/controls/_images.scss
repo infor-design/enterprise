@@ -13,13 +13,13 @@ $images-size: (
 // Image Placeholder
 @mixin image-placeholder($width, $height, $icon-height) {
     background: $white;
-    border: 1px solid $graphite03;
+    border: 1px solid $image-border-color;
     height: $height;
     max-height: $height;
     max-width: $width;
     text-align: center;
     width: $width;
-    
+
     .icon {
       margin-top: ($height - $icon-height) / 2;
     }
@@ -35,5 +35,5 @@ $images-size: (
     &.placeholder {
       @include image-placeholder(nth($value, 1), nth($value, 2), $placeholder-icon-height)
     }
-  }  
+  }
 }

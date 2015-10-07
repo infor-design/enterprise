@@ -272,6 +272,12 @@ $wizard-default-bg: $body-bg-color;
 $wizard-bar-bg: $slate06;
 $wizard-active-color: $primary-color;
 
+//Themable Variables in config.scss
+$hierarchy-line-color: $slate04;
+
+//Image Border Color
+$image-border-color: $slate04;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;
