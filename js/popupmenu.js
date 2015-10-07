@@ -506,7 +506,7 @@
           });
 
           self.element.triggerHandler('open', [self.menu]);
-        }, 400);
+        }, 0);
 
         //Hide on iFrame Clicks - only works if on same domain
         $('iframe').each(function () {
