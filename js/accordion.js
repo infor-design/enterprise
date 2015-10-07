@@ -60,14 +60,27 @@
         this.anchors = this.headers.children('a');
         this.panes = this.headers.next('.accordion-pane');
 
+        var headersHaveIcons = false;
+
         // Accordion Headers that have an expandable pane need to have an expando-button added inside of them
         this.headers.each(function addExpander() {
-          var header = $(this);
+          var header = $(this),
+            isTopLevel = header.parent().is('.accordion');
 
-          // Strip newlines
+          // Strip newlines/whitespace
           header.removeHtmlWhitespace()
             .attr('role', 'presentation');
 
+          // For backwards compatibility:  If an icon is found inside an anchor, bring it up to the level of the header.
+          header.children('a').find('svg').detach().insertBefore(header.children('a'));
+
+          var outerIcon = header.children('.icon, svg');
+          outerIcon.addClass('icon').attr({'role': 'presentation', 'aria-hidden': 'true', 'focusable': 'false'});
+          if (outerIcon.length) {
+            headersHaveIcons = true;
+          }
+
+          // Don't continue if there's no pane
           if (!header.next('.accordion-pane').length) {
             return;
           }
@@ -77,62 +90,50 @@
             expander = $('<button class="btn"></button>');
 
             var method = 'insertBefore';
-            if (self.settings.displayChevron && header.parent().is('.accordion')) {
+            if (self.settings.displayChevron && isTopLevel) {
               header.addClass('has-chevron');
               method = 'insertAfter';
             }
             expander[method](header.children('a'));
-
-            var icon = $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>');
-            if (self.settings.displayChevron && header.parent().is('.accordion')) {
-              icon = $('<svg class="icon chevron" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg>');
-            }
-            icon.appendTo(expander);
-
             header.data('addedExpander', expander);
           }
 
-          // For backwards compatibility:  If an icon is found inside an anchor, bring it up to the level of the header.
-          header.children('a').find('svg').detach().insertBefore(header.children('a'));
+          // If Chevrons are turned off and an icon is present, it becomes the expander
+          if (outerIcon.length && !self.settings.displayChevron) {
+            outerIcon.appendTo(expander);
+          }
 
-          // Setup the correct attributes on any icons present
-          // Leave alone an SVG Icon that's been pre-defined, but adjust it if necessary.
-          // Add a Chevron if the setting is present, along with a top-level header.
-          var expanderIcon = expander.children('svg');
-          if (expanderIcon.length) {
-            expanderIcon.attr({'role': 'presentation', 'aria-hidden': 'true', 'focusable': 'false'});
-          } else {
-            if (self.settings.displayChevron && header.parent().is('.accordion')) {
+          var expanderIcon = expander.children('.icon, .svg, .plus-minus');
+          if (!expanderIcon.length) {
+            if (self.settings.displayChevron && isTopLevel) {
               expanderIcon = $('<svg class="icon chevron" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg>');
-              expanderIcon.appendTo(expander);
-            }
-          }
-
-          // Setup a plus/minus expander icon if no other icon types are present
-          var plusMinusIcon = expander.children('span.plus-minus');
-          if (plusMinusIcon.length) {
-            plusMinusIcon.attr({'role': 'presentation', 'aria-hidden': 'true'});
-          } else if (!plusMinusIcon.length && !expanderIcon.length) {
-            if ((!self.settings.displayChevron && header.parent().is('.accordion')) || header.parent().is('.accordion-pane')) {
-              plusMinusIcon = $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>');
-              plusMinusIcon.appendTo(expander);
-            }
-          }
-
-          if (expanderIcon.length) {
-            // Don't allow an SVG and an Expando-Icon to co-exist.  Remove the Expando if there's an icon present.
-            if (plusMinusIcon.length) {
-              expander.children('.plus-minus').remove();
-            }
-
-            // Swap the positions of this header's expander button if a Chevron is present, put the header back to normal if it's not.
-            if (expanderIcon.is('.chevron')) {
-              header.addClass('has-chevron');
-              expander.insertAfter(header.children('a'));
             } else {
-              header.removeClass('has-chevron');
-              expander.insertBefore(header.children('a'));
+              expanderIcon = $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>');
             }
+            expanderIcon.appendTo(expander);
+          }
+          var expanderIconOpts = {
+            'role': 'presentation',
+            'aria-hidden': 'true'
+          }
+          if (!expanderIcon.is('span')) {
+            expanderIconOpts.focusable = 'false';
+          }
+          expanderIcon.attr(expanderIconOpts);
+
+          // Move around the Expander depending on whether or not it's a chevron
+          if (expanderIcon.is('.chevron')) {
+            header.addClass('has-chevron');
+            expander.insertAfter(header.children('a'));
+          } else {
+            header.removeClass('has-chevron');
+            expander.insertBefore(header.children('a'));
+          }
+
+          // Double check to see if we have left-aligned expanders or icons present,
+          // so we can add classes that do alignment
+          if (!self.settings.displayChevron && isTopLevel) {
+            headersHaveIcons = true;
           }
 
           // Add an Audible Description to the button
@@ -142,6 +143,10 @@
           }
           description.text(Locale.translate('Expand'));
         });
+
+        if (headersHaveIcons) {
+          this.element.addClass('has-icons');
+        }
 
         // Setup correct ARIA for accordion panes, and auto-collapse them
         this.panes.each(function addPaneARIA() {
@@ -158,14 +163,23 @@
 
         // Expand to the current accordion header if we find one that's selected
         if (!this.element.data('updating')) {
-          this.expand(this.headers.filter('.is-selected'));
+          var targetsToExpand = this.headers.filter('.is-selected, .is-expanded');
+          targetsToExpand.removeClass('is-selected').removeClass('is-expanded');
+
+          if (this.settings.allowOnePane) {
+            targetsToExpand = targetsToExpand.first();
+          }
+
+          this.expand(targetsToExpand);
+          this.select(targetsToExpand.last());
         }
 
         return this;
       },
 
       handleEvents: function() {
-        var self = this;
+        var self = this,
+          headerWhereMouseDown = null;
 
         this.headers.onTouchClick('accordion').on('click.accordion', function(e) {
           self.handleHeaderClick(e, $(this));
@@ -173,12 +187,18 @@
           if (!self.originalSelection) {
             self.originalSelection = $(e.target);
           }
-
           $(this).addClass('is-focused');
-        }).on('focusout.accordion', function() {
-          $(this).removeClass('is-focused');
+        }).on('focusout.accordion', function(e) {
+          if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
+            $(this).removeClass('is-focused');
+          }
         }).on('keydown.accordion', function(e) {
           self.handleKeys(e);
+        }).on('mousedown.accordion', function(e) {
+          $(this).addClass('is-focused');
+          headerWhereMouseDown = e.target;
+        }).on('mouseup.accordion', function(e) {
+          headerWhereMouseDown = null;
         });
 
         this.anchors.on('click.accordion', function(e) {

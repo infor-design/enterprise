@@ -82,6 +82,8 @@ var express = require('express'),
         return 'tests/applicationmenu/site/layout';
       } else if (url.match(/\/different-header-types/)) {
         return 'tests/applicationmenu/different-header-types/layout';
+      } else if (url.match(/\/six-levels-with-icons/)) {
+        return 'tests/applicationmenu/six-levels-with-icons/layout';
       }
       return 'tests/applicationmenu/six-levels/layout';
     }
