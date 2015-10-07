@@ -497,11 +497,11 @@
             }
           });
 
-          $(window).on('scroll.popupmenu resize.popupmenu', function () {
+          $(window).on('scroll resize', function () {
             self.close();
           });
 
-          $('.scrollable').on('scroll.popupmenu', function () {
+          $('.scrollable').on('scroll', function () {
             self.close();
           });
 
