@@ -882,6 +882,12 @@ $.fn.datagrid = function(options) {
 
         self.triggerRowEvent('click', e, true);
         self.setActiveCell(target.closest('td'));
+
+        //Dont Expand rows or make cell editable when clicking expand button
+        if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
+          return;
+        }
+
         self.toggleRowSelection(target.closest('tr'));
         self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
       });
