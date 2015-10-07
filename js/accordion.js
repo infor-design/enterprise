@@ -115,7 +115,7 @@
           var expanderIconOpts = {
             'role': 'presentation',
             'aria-hidden': 'true'
-          }
+          };
           if (!expanderIcon.is('span')) {
             expanderIconOpts.focusable = 'false';
           }
@@ -188,7 +188,7 @@
             self.originalSelection = $(e.target);
           }
           $(this).addClass('is-focused');
-        }).on('focusout.accordion', function(e) {
+        }).on('focusout.accordion', function() {
           if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
             $(this).removeClass('is-focused');
           }
@@ -197,7 +197,7 @@
         }).on('mousedown.accordion', function(e) {
           $(this).addClass('is-focused');
           headerWhereMouseDown = e.target;
-        }).on('mouseup.accordion', function(e) {
+        }).on('mouseup.accordion', function() {
           headerWhereMouseDown = null;
         });
 
