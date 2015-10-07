@@ -497,11 +497,11 @@
             }
           });
 
-          $(window).on('scroll resize', function () {
+          $(window).on('scroll.popupmenu resize.popupmenu', function () {
             self.close();
           });
 
-          $('.scrollable').on('scroll', function () {
+          $('.scrollable').on('scroll.popupmenu', function () {
             self.close();
           });
 
@@ -649,6 +649,7 @@
         $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
         $(window).off('scroll.popupmenu resize.popupmenu');
         $('.scrollable').off('scroll.popupmenu');
+
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
 
         $('iframe').each(function () {
