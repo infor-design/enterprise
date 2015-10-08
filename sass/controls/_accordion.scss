@@ -41,6 +41,10 @@
         color: $accordion-disabled-text-color !important;
       }
 
+      span.audible {
+        color: $accordion-disabled-text-color !important;
+      }
+
       .icon {
         fill: $accordion-disabled-text-color !important;
 
@@ -233,6 +237,11 @@
     }
   }
 
+  // Set for accessibility
+  span.audible {
+    color: $accordion-text-color;
+  }
+
   > a {
     color: $accordion-text-color;
     display: inline-block;
@@ -334,6 +343,11 @@
     border-bottom-color: $accordion-selected-bg-color;
     color: $accordion-selected-text-color;
 
+    // Set for accessibility
+    span.audible {
+      color: $accordion-selected-text-color;
+    }
+
     > a {
       color: $accordion-selected-text-color;
     }
@@ -410,6 +424,10 @@
     border-bottom-color: $accordion-disabled-border-color !important;
     color: $accordion-disabled-text-color !important;
     pointer-events: none;
+
+    span.audible {
+      color: $accordion-disabled-text-color !important;
+    }
 
     a {
       color: $accordion-disabled-text-color !important;
