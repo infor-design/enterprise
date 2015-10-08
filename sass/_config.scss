@@ -227,6 +227,45 @@ $modal-btn-primary-color: $primary-color;
 $modal-btn-primary-hover-color: $graphite07;
 $modal-btn-disabled-color: $graphite03;
 
+// Accordion
+$accordion-bg-color: $graphite01;
+$accordion-alternate-bg-color: $white;
+$accordion-border-color: $graphite02;
+$accordion-pane-bg-color: $graphite02;
+$accordion-pane-alternate-bg-color: $graphite01;
+
+$accordion-text-color: $graphite06;
+$accoridon-text-active-color: $graphite10;
+
+$accordion-icon-color: $graphite04;
+$accordion-icon-hover-color: $graphite06;
+
+$accordion-focused-text-color: $primary-color;
+$accordion-focused-pane-bg-color: $azure01;
+$accordion-selected-bg-color: $primary-color;
+$accordion-selected-text-color: $white;
+
+$accordion-disabled-bg-color: $slate02;
+$accordion-disabled-border-color: $slate03;
+$accordion-disabled-text-color: $slate03;
+$accordion-disabled-pane-bg-color: $slate01;
+$accordion-disabled-pane-text-color: $slate04;
+
+// Application Menu (extends Accoridon)
+$app-accordion-header-bg-color: $slate08;
+$app-accordion-border-color: $slate09;
+$app-accordion-pane-bg-color: $slate09;
+
+$app-accordion-header-text-color: $slate02;
+$app-accordion-header-text-active-color: $white;
+$app-accordion-pane-text-color: $slate03;
+
+$app-accordion-icon-color: $slate02;
+$app-accordion-icon-hover-color: $white;
+$app-accordion-chevron-color: $slate05;
+
+$application-menu-width: 300px;
+
 // Contextual Action Panel
 $contextual-panel-bg: #d8d8d8;
 $contextual-panel-color: $graphite06;
