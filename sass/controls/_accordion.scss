@@ -34,7 +34,7 @@
 
     .accordion-header {
       background-color: $accordion-disabled-bg-color !important;
-      border-bottom-color: $accordion-disabled-border-color;
+      border-bottom-color: $accordion-disabled-border-color !important;
       color: $accordion-disabled-text-color !important;
 
       a {
