@@ -2,7 +2,7 @@
 <div class="row">
   <div class="twelve columns">
 
-      <button type="button" class="btn-menu">
+      <button type="button" class="btn-menu" id="test-btn-menu">
         <span>Add Item</span>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-dropdown"></use>
@@ -21,3 +21,13 @@
 
   </div>
 </div>
+
+<script>
+  $('#test-btn-menu').on('click', function () {
+    console.log('Click Event');
+  }).on('beforeopen', function () {
+    console.log('Before Open');
+  });
+
+
+</script>

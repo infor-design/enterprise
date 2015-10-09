@@ -446,6 +446,12 @@
       display: table-cell;
       font-weight: bold;
       padding: 15px;
+
+      span {
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+      }
     }
 
     th:not(.l-right-text) {

@@ -216,7 +216,8 @@
     text-decoration: none;
     white-space: nowrap;
 
-    > span {
+    span {
+      line-height: 30px;
       color: inherit;
       font-weight: inherit;
     }

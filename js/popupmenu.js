@@ -124,7 +124,8 @@
         // If action button menu, append arrow markup
         var containerClass = this.element.parent().attr('class');
         if (containerClass !== undefined &&
-           (this.element.hasClass('btn-actions') ||
+           (this.element.hasClass('btn-menu') ||
+            this.element.hasClass('btn-actions') ||
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
             containerClass.indexOf('more') >= 0 ||
@@ -506,9 +507,12 @@
           });
 
           self.element.triggerHandler('open', [self.menu]);
-          self.element.on('click.popupmenu touchend.popupmenu', function () {
-            self.close();
-          });
+
+          if (self.settings.trigger === 'rightClick') {
+            self.element.on('click.popupmenu touchend.popupmenu', function () {
+              self.close();
+            });
+          }
 
         }, 0);
 
@@ -655,6 +659,10 @@
         $('.scrollable').off('scroll.popupmenu');
 
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
+
+        if (this.settings.trigger === 'rightClick') {
+          this.element.off('click.popupmenu touchend.popupmenu');
+        }
 
         $('iframe').each(function () {
           var frame = $(this);
