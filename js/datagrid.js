@@ -581,6 +581,9 @@ $.fn.datagrid = function(options) {
         self.table.append(self.tableBody);
       }
 
+      //Save the height during render
+      //self.tableHeight = self.tableBody.height();
+      //self.tableBody.css('height', self.tableHeight);
       self.tableBody.empty();
 
       for (var i = 0; i < settings.dataset.length; i++) {
@@ -1747,8 +1750,7 @@ $.fn.datagrid = function(options) {
       //Get First page on Sort Action
       this.element.on('sorted', function () {
         if (self.pager) {
-
-          self.pager.pagingInfo.type = 'initial';
+          self.pager.pagingInfo.type = 'sorted';
           self.pager.pagingInfo.activePage = 1;
           self.renderPager(self.pager.pagingInfo, 'sorted');
         }

@@ -374,7 +374,6 @@
           //Render page objects
           if (!self.settings.source) {
             self.elements.hide();
-
             expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ settings.pagesize +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
             self.elements.filter(expr).show();
           } else {

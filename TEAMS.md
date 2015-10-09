@@ -57,7 +57,7 @@
 |--------------------|-------------|------|
 | Home Pages | Angular | Fredrik Erikkson |
 | Pathway | Australian / NZ Giv Self Service App| Jesser Susi |
-| Mongoose | Small set of newer controls | Bryan Petit |
+| Mongoose | Wizard, Editor Ect | Paul Horne |
 | Requisitions | | Todd Dooner and Brent Dahlen |
 | PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna Peddibhotla |
 | Rhythm Widgets | Small set of widgets | Eric Martensson |
