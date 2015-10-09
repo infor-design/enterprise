@@ -1,29 +1,6 @@
 // New Accordion Style
 //========================================================
 
-$accordion-bg-color: $graphite01;
-$accordion-alternate-bg-color: $white;
-$accordion-border-color: $graphite02;
-$accordion-pane-bg-color: $graphite02;
-$accordion-pane-alternate-bg-color: $graphite01;
-
-$accordion-text-color: $graphite06;
-$accoridon-text-active-color: $graphite10;
-
-$accordion-icon-color: $graphite04;
-$accordion-icon-hover-color: $graphite06;
-
-$accordion-focused-text-color: $primary-color;
-$accordion-focused-pane-bg-color: $azure01;
-$accordion-selected-bg-color: $primary-color;
-$accordion-selected-text-color: $white;
-
-$accordion-disabled-bg-color: $slate02;
-$accordion-disabled-border-color: $slate03;
-$accordion-disabled-text-color: $slate03;
-$accordion-disabled-pane-bg-color: $slate01;
-$accordion-disabled-pane-text-color: $slate04;
-
 .accordion {
   background-color: $accordion-bg-color;
   border-right: 1px solid $accordion-border-color;
@@ -57,10 +34,14 @@ $accordion-disabled-pane-text-color: $slate04;
 
     .accordion-header {
       background-color: $accordion-disabled-bg-color !important;
-      border-bottom-color: $accordion-disabled-border-color;
+      border-bottom-color: $accordion-disabled-border-color !important;
       color: $accordion-disabled-text-color !important;
 
       a {
+        color: $accordion-disabled-text-color !important;
+      }
+
+      span.audible {
         color: $accordion-disabled-text-color !important;
       }
 
@@ -217,6 +198,12 @@ $accordion-disabled-pane-text-color: $slate04;
       }
     }
   }
+
+  &.dont-expand-yet {
+    .accordion-pane {
+      height: 0;
+    }
+  }
 }
 
 .accordion-header {
@@ -224,6 +211,7 @@ $accordion-disabled-pane-text-color: $slate04;
   border-bottom: 1px solid $accordion-border-color;
   cursor: pointer;
   height: 46px;
+  position: relative;
   overflow: hidden;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -254,6 +242,11 @@ $accordion-disabled-pane-text-color: $slate04;
         }
       }
     }
+  }
+
+  // Set for accessibility
+  span.audible {
+    color: $accordion-text-color;
   }
 
   > a {
@@ -357,6 +350,11 @@ $accordion-disabled-pane-text-color: $slate04;
     border-bottom-color: $accordion-selected-bg-color;
     color: $accordion-selected-text-color;
 
+    // Set for accessibility
+    span.audible {
+      color: $accordion-selected-text-color;
+    }
+
     > a {
       color: $accordion-selected-text-color;
     }
@@ -433,6 +431,10 @@ $accordion-disabled-pane-text-color: $slate04;
     border-bottom-color: $accordion-disabled-border-color !important;
     color: $accordion-disabled-text-color !important;
     pointer-events: none;
+
+    span.audible {
+      color: $accordion-disabled-text-color !important;
+    }
 
     a {
       color: $accordion-disabled-text-color !important;

@@ -161,6 +161,10 @@
           }
         });
 
+        // Remove the class that prevents accordion panes from being expanded on page load.
+        // Fixes a Chrome-specific visual bug where everything appears expanded for a split-second.
+        this.element.removeClass('dont-expand-yet');
+
         // Expand to the current accordion header if we find one that's selected
         if (!this.element.data('updating')) {
           var targetsToExpand = this.headers.filter('.is-selected, .is-expanded');
@@ -299,7 +303,9 @@
 
         // Don't propagate when clicking the expander.  Propagating can cause the link to be clicked in cases
         // where it shouldn't be clicked.
-        e.stopPropagation();
+        if (e) {
+          e.stopPropagation();
+        }
 
         var pane = header.next('.accordion-pane');
         if (pane.length) {
@@ -313,31 +319,71 @@
       },
 
       handleKeys: function(e) {
-        var key = e.which,
-          target = $(e.target); // can be an anchor, or expando button
+        var self = this,
+          key = e.which,
+          target = $(e.target), // will be either an anchor or expando button.  Should NEVER be the header itself.
+          header = target.parent(),
+          expander = header.children('[class^="btn"]').first(),
+          anchor = header.children('a');
+
+        function setInitialOriginalSelection(selection) {
+          if (!selection) {
+            selection = target;
+          }
+
+          if (!self.originalSelection) {
+            self.originalSelection = selection;
+          }
+        }
 
         if (key === 9) { // Tab (also triggered by Shift + Tab)
-          if (target.is('a') && target.parent().children('.btn').length) {
-            this.originalSelection = target.parent().children('.btn');
+          if (target.is('a') && expander.length) {
+            setInitialOriginalSelection(expander);
           } else {
-            this.originalSelection = target.parent().children('a');
+            setInitialOriginalSelection(anchor);
+          }
+        }
+
+        if (key === 32) { // Spacebar
+          e.preventDefault();
+
+          // Don't let this propagate and run against the header element, if it's a button
+          if (target.is('[class^="btn"]')) {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+
+            // Firefox will attempt to run this twice, despite the fact that we're stopping propagation.
+            // Just cancel the whole thing if Firefox is running this method.
+            if ($('html').hasClass('is-firefox')) {
+              return;
+            }
+          }
+
+          if (expander.length) {
+            setInitialOriginalSelection(expander);
+            return this.handleExpanderClick(null, target);
+          } else {
+            setInitialOriginalSelection(anchor);
+            return this.handleAnchorClick(null, target);
           }
         }
 
         if (key === 37 || key === 38) { // Left Arrow/Up Arrow
           e.preventDefault();
+          setInitialOriginalSelection();
           if (e.shiftKey) {
-            return this.ascend(target);
+            return this.ascend(header);
           }
-          return this.prevHeader(target);
+          return this.prevHeader(header);
         }
 
         if (key === 39 || key === 40) { // Right Arrow/Down Arrow
           e.preventDefault();
+          setInitialOriginalSelection();
           if (e.shiftKey) {
-            return this.descend(target);
+            return this.descend(header);
           }
-          return this.nextHeader(target);
+          return this.nextHeader(header);
         }
       },
 
@@ -523,6 +569,12 @@
       getElements: function(eventTarget) {
         var target = $(eventTarget),
           header, anchor, expander, pane;
+
+        if (target.is('.accordion-header')) {
+          header = target;
+          expander = target.children('[class^="btn"]');
+          anchor = target.children('a')
+        }
 
         if (target.is('.btn')) {
           expander = target;
@@ -756,7 +808,7 @@
             }
           });
 
-        this.anchors.off('click.accordion');
+        this.anchors.off('keydown.accordion click.accordion');
 
         this.headers.children('[class^="btn"]')
           .offTouchClick('accordion')
