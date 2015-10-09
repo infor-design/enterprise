@@ -354,7 +354,7 @@
 
             // Firefox will attempt to run this twice, despite the fact that we're stopping propagation.
             // Just cancel the whole thing if Firefox is running this method.
-            if ($('html').hasClass('firefox')) {
+            if ($('html').hasClass('is-firefox')) {
               return;
             }
           }
