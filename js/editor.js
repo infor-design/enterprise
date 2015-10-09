@@ -49,7 +49,8 @@
     // Actual Plugin Code
     Editor.prototype = {
 
-      init: function() {               
+      init: function() {
+        this.isFirefox = $('html').is('.is-firefox');
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
         this.element.parent('.field').addClass('editor-container');
@@ -1037,8 +1038,13 @@
             currentElement = self.getCurrentElement();
 
         self.element
+        // Work around for Firefox with using keys was not focusing on first child in editor
+        // Firefox behaves differently than other browsers
+        .on('mousedown.editor', function () {
+          self.mousedown = true;
+        })
         .on('focus.editor', function () {
-          if (self.element === currentElement) {
+          if (self.isFirefox && !self.mousedown && self.element === currentElement) {
             self.setFocus();
           }
         })
