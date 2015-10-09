@@ -32,6 +32,10 @@
       html.addClass('is-safari');
     }
 
+    if (navigator.userAgent.indexOf('Firefox') > 0) {
+      html.addClass('is-firefox');
+    }
+
     //Class-based detection for IE
     if (ua.match(/Trident/)) {
       html.addClass('ie');
