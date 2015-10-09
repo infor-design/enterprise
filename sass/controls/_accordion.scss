@@ -198,6 +198,12 @@
       }
     }
   }
+
+  &.dont-expand-yet {
+    .accordion-pane {
+      height: 0;
+    }
+  }
 }
 
 .accordion-header {
@@ -205,6 +211,7 @@
   border-bottom: 1px solid $accordion-border-color;
   cursor: pointer;
   height: 46px;
+  position: relative;
   overflow: hidden;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
