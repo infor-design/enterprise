@@ -573,7 +573,7 @@
         if (target.is('.accordion-header')) {
           header = target;
           expander = target.children('[class^="btn"]');
-          anchor = target.children('a')
+          anchor = target.children('a');
         }
 
         if (target.is('.btn')) {
