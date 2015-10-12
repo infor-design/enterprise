@@ -75,7 +75,8 @@
 
       //Iterate all objects we are initializing
       returnObj = self.filter(':not(svg):not(use):not(.no-init)').each(function() {
-        var elem = $(this);
+        var elem = $(this),
+          noinitExcludes = '.no-init, [data-init]';
 
         function simpleInit(plugin, selector) {
           //Allow only the plugin name to be specified if the default selector is a class with the same name
@@ -86,7 +87,7 @@
 
           if ($.fn[plugin]) {
             elem.find(selector).each(function () {
-              if (($(this).is('.no-init') || $(this).attr('data-init')) && selector !=='[data-trackdirty="true"]') {
+              if ($(this).is(noinitExcludes) && selector !=='[data-trackdirty="true"]') {
                 return;
               }
 
@@ -136,11 +137,6 @@
 
           //Editors
           ['editor'],
-
-          //Menu/Split/Action Buttons
-          ['popupmenu', '.btn-filtering'],
-          ['popupmenu', '.btn-menu'],
-          ['popupmenu', '.btn-actions:not([data-init])'],
 
           //Tooltips
           ['tooltip', '[title]'],
@@ -199,8 +195,10 @@
           //Search Field
           ['searchfield', '.searchfield:not([data-init])'],
 
+          /*
           //Toolbar
           ['toolbar'],
+          */
 
           ['header'],
 
@@ -234,17 +232,34 @@
           simpleInit.apply(null, simplePluginMappings[i]);
         }
 
-        //Context Menu
         if ($.fn.popupmenu) {
-          elem.find('[data-popupmenu]:not(.no-init):not([data-init])').each(function () {
+          // Don't double-invoke menu buttons
+          var btnExcludes = ', .btn-actions, .btn-filtering, .btn-menu';
+
+          //Context Menus
+          elem.find('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
             var obj = $(this);
             obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
+          });
+
+          //Button-based Popup-Menus (Action/More Button, Menu Buttons, etc.)
+          elem.find('.btn-filtering, .btn-menu, .btn-actions').filter(':not('+ noinitExcludes +')').each(function() {
+            var triggerButton = $(this);
+
+            // Don't auto-invoke Toolbar's Popupmenus.
+            // Toolbar needs to completely control its contents and invoke each one manually.
+            if (triggerButton.parentsUntil('.toolbar').length > 0) {
+              return;
+            }
+
+            var options = $.fn.parseOptions(this);
+            triggerButton.popupmenu(options);
           });
         }
 
         //Popovers
         if ($.fn.popover) {
-          elem.find('[data-popover]:not(.no-init):not([data-init])').each(function () {
+          elem.find('[data-popover]:not('+ noinitExcludes +')').each(function () {
             var obj = $(this),
               trigger = obj.attr('data-trigger'),
               title = obj.attr('data-title');
@@ -260,7 +275,7 @@
 
         //Cardstack
         if ($.fn.listview) {
-          elem.find('.listview:not(.no-init):not([data-init])').each(function () {
+          elem.find('.listview:not('+ noinitExcludes +')').each(function () {
             var cs = $(this),
               attr = cs.attr('data-dataset'),
               tmpl = cs.attr('data-tmpl'),
@@ -277,6 +292,13 @@
             }
 
             cs.listview(options);
+          });
+        }
+
+        // Toolbar
+        if ($.fn.toolbar) {
+          elem.find('.toolbar:not(.no-init):not([data-init])').each(function() {
+            $(this).toolbar();
           });
         }
 

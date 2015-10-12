@@ -53,8 +53,12 @@
       build: function() {
 
         var self = this;
+
         this.element.attr('role', 'toolbar');
         this.buildAriaLabel();
+
+        // Strip unncessary newlines/whitespace
+        this.element.removeHtmlWhitespace();
 
         // keep track of how many popupmenus there are with an ID.
         // Used for managing events that are bound to $(document)
@@ -140,7 +144,17 @@
             linkspan.detach().prependTo(popupLi);
           }
 
+          if (item.is('.searchfield')) {
+            if (!item.data('searchfield')) {
+              item.searchfield();
+            }
+          }
+
           if (item.is('.btn-menu')) {
+            if (!item.data('popupmenu')) {
+              item.popupmenu();
+            }
+
             var submenu = item.data('popupmenu').menu.clone(),
               id = submenu.attr('id');
 
