@@ -103,6 +103,7 @@ module.exports = function(grunt) {
             'temp/amd/timepicker.js',
             'temp/amd/tmpl.js',
             'temp/amd/toolbar.js',
+            'temp/amd/toolbarsearchfield.js',
             'temp/amd/tooltip.js',
             'temp/amd/tree.js',
             'temp/amd/validation.js',

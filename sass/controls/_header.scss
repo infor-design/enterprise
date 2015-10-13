@@ -161,16 +161,6 @@ $header-height: 60px;
       > *:first-child {
         margin-left: 1.5rem;
       }
-
-      + .buttonset {
-        width: calc(55% - 20px);
-      }
-    }
-
-    &.has-more-button {
-      .title + .buttonset {
-        width: calc(55% - 70px);
-      }
     }
   }
 
@@ -456,6 +446,7 @@ $header-height: 60px;
 // Overrides the default styling for Toolbar Buttonsets that would normally shrink the "buttonset" to a small size,
 // leaving room for the Title to be visible.  In this case, we just add some padding to the right side to correctly
 // line up the right edge of the buttons in the Page Header to the rest of the page.
+/*
 @include respond-to(phablet) {
   .header > .toolbar {
     .title {
@@ -477,6 +468,7 @@ $header-height: 60px;
     }
   }
 }
+*/
 
 // Print Style Sheet
 @media print {

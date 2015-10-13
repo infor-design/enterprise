@@ -26,7 +26,9 @@
 
     // Settings and Options
     var pluginName = 'toolbar',
-        defaults = {},
+        defaults = {
+          maxVisibleButtons: 2 // Total amount of buttons that can be present, including the More button
+        },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -40,32 +42,52 @@
     Toolbar.prototype = {
 
       init: function() {
-        this
+        return this
           .setup()
           .build()
           .handleEvents();
       },
 
       setup: function() {
+        // Design guidelines state that no less than one button, and no more than 3, can be visible at a time.
+        if (this.settings.maxVisibleButtons <= 0) {
+          this.settings.maxVisibleButtons = 3;
+        }
+        if (this.settings.maxVisibleButtons > 3) {
+          this.settings.maxVisibleButtons = 3;
+        }
+
         return this;
       },
 
       build: function() {
-
         var self = this;
 
         this.element.attr('role', 'toolbar');
         this.buildAriaLabel();
 
-        // Strip unncessary newlines/whitespace
+        // Remove random whitespace (major visual problems in this control if this isn't present)
         this.element.removeHtmlWhitespace();
 
         // keep track of how many popupmenus there are with an ID.
         // Used for managing events that are bound to $(document)
-        this.id = (parseInt($('.toolbar, .formatter-toolbar').length, 10)+1);
+        if (!this.id) {
+          this.id = (parseInt($('.toolbar, .formatter-toolbar').length, 10)+1);
+        }
+
+        // Check for a "title" element.  This element is optional.
+        this.title = this.element.children('.title');
 
         // Container for main group of buttons and input fields.  Only these spill into the More menu.
         this.buttonset = this.element.children('.buttonset');
+        if (!this.buttonset.length) {
+          this.buttonset = $('<div class="buttonset"></div>');
+          if (this.title.length) {
+            this.buttonset.insertAfter(this.title);
+          } else {
+            this.buttonset.prependTo(this.element);
+          }
+        }
 
         // Add and invoke More Button, if it doesn't exist
         this.more = this.element.find('.btn-actions');
@@ -80,21 +102,28 @@
             .appendTo(moreContainer);
         }
 
-        if (!this.more.data('button') && !this.element.hasClass('no-actions-button')) {
-          this.more.button();
-        }
-
         // Reference all interactive items in the toolbar
         this.items = this.buttonset.children('button, input')
           .add(this.buttonset.find('.searchfield-wrapper').children('input')) // Searchfield Wrappers
-          .add(this.element.find('.title').children('button'))
+          .add(this.title.children('button'))
           .add(this.more);
 
         // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
-        var popupPlugin = this.more.data('popupmenu');
-        this.moreMenu = popupPlugin ? popupPlugin.menu : $('<ul class="popupmenu"></ul>').insertAfter(this.more);
-        this.defaultMenuItems = this.moreMenu.find('li:not(.separator)').length > 0;
+        var popupMenuInstance = this.more.data('popupmenu'),
+          moreAriaAttr = this.more.attr('aria-controls');
+        if (!popupMenuInstance) {
+          this.moreMenu = $('#' + moreAriaAttr);
+          if (!this.moreMenu.length) {
+            this.moreMenu = this.more.next('.popupmenu');
+          }
+          if (!this.moreMenu.length) {
+            this.moreMenu = $('<ul class="popupmenu"></ul>').insertAfter(this.more);
+          }
+        } else {
+          this.moreMenu = popupMenuInstance.menu;
+        }
+        this.defaultMenuItems = this.moreMenu.children('li:not(.separator)').length > 0;
 
         function menuItemFilter() {
           //jshint validthis:true
@@ -176,15 +205,17 @@
           }
         });
 
-        if (!popupPlugin) {
-          this.more.popupmenu({
+        if (popupMenuInstance) {
+          this.more.trigger('updated');
+        } else {
+          var actionButtonOpts = $.fn.parseOptions(this.more[0]);
+          this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          });
+          }));
         }
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.
-        this.more.attr('tabindex','-1');
         this.items.attr('tabindex', '-1');
 
         var active = this.items.filter('.is-selected');
@@ -202,7 +233,10 @@
         }
 
         // Toggles the More Menu based on overflow of toolbar items
+        this.adjustButtonVisibility();
         this.toggleMoreMenu();
+
+        this.element.triggerHandler('rendered');
 
         return this;
       },
@@ -230,7 +264,8 @@
           self.handleSelected(e, anchor);
         });
 
-        this.element.on('updated.toolbar', function() {
+        this.element.on('updated.toolbar', function(e) {
+          e.stopPropagation();
           self.updated();
         }).on('recalculateButtons.toolbar', function() {
           self.adjustButtonVisibility();
@@ -419,51 +454,12 @@
 
       adjustButtonVisibility: function() {
         var self = this,
-          transitionEnd = $.fn.transitionEndName();
-
-        this.items.filter(':not(.btn-actions)').each(function() {
-          var item = $(this);
-
-          // Don't do this for searchfields
-          if (item.is('.searchfield')) {
-            return;
-          }
-
-          if (self.isItemOverflowed(item)) {
-            item.one(transitionEnd, function() {
-              item.css('visibility', 'hidden');
-            }).addClass('is-overflowed');
-
-            if (document.activeElement === item[0] && item.is(':not(.btn-actions):not(.searchfield)')) {
-              // set focus to last visible item
-              self.getLastVisibleButton().focus();
-            }
-          } else {
-            item.off(transitionEnd);
-            item.css('visibility', '').removeClass('is-overflowed');
-          }
-        });
-      },
-
-      // Item is considered overflow if it's right-most edge sits past the right-most edge of the border.
-      isItemOverflowed: function(item) {
-        if (!item || item.length === 0) {
-          return true;
-        }
-
-        if (this.buttonset.scrollLeft() > 0) {
-          this.buttonset.scrollLeft(0);
-        }
-        var offset = ($(item).offset().left + $(item).outerWidth()) - this.buttonset.offset().left;
-        return offset >= this.buttonset.width() + 1;
-      },
-
-      checkOverflowItems: function() {
-        var self = this,
           visibleLis = [];
 
-        function menuItemFilter(i, item) {
-          return $(item).data('action-button-link');
+        function menuItemFilter() {
+          // jshint validthis:true
+          var i = $(this);
+          return (i.data('action-button-link') && i.is(':not(.searchfield)'));
         }
 
         this.items.filter(menuItemFilter).each(function() {
@@ -472,16 +468,46 @@
 
           if (!self.isItemOverflowed(i)) {
             li.addClass('hidden');
+            i.css('display', '').removeClass('is-overflowed');
           } else {
             li.removeClass('hidden');
+            i.css('display', 'block').addClass('is-overflowed');
             visibleLis.push(li);
           }
         });
 
-        if (visibleLis.length) {
-          visibleLis[0].focus();
-        } else {
-          this.moreMenu.find('.hidden').last().next().focus();
+        return {
+          visible: visibleLis
+        };
+      },
+
+      // Item is considered overflow if it's right-most edge sits past the right-most edge of the border.
+      isItemOverflowed: function(item) {
+        if (!item || item.length === 0) {
+          return true;
+        }
+
+        // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed
+        if (this.title.length && (this.items.index(item)) >= this.settings.maxVisibleButtons) {
+          return true;
+        }
+
+        if (this.buttonset.scrollTop() > 0) {
+          this.buttonset.scrollTop(0);
+        }
+        var offset = ($(item).offset().top + $(item).outerHeight()) - this.buttonset.offset().top;
+        return offset >= this.buttonset.outerHeight() + 1;
+      },
+
+      checkOverflowItems: function() {
+        var items = this.adjustButtonVisibility();
+
+        if ($.contains(this.buttonset[0], document.activeElement)) {
+          if (items.visible.length) {
+            items.visible[items.visible.length - 1].focus();
+          } else {
+            this.moreMenu.find('.hidden').last().next().focus();
+          }
         }
       },
 
@@ -490,9 +516,12 @@
           return;
         }
 
+        var items = this.moreMenu.children('li:not(.separator)');
+
         if (this.element.outerWidth() > 1 && this.buttonset.length > 0 && // Makes sure we're not animating Open or remaining Closed
-          (this.buttonset[0].scrollWidth > this.buttonset.outerWidth() + 1 || // Inner scrolling area doesn't exceed control width
-          this.defaultMenuItems)) { // No default menu items defined in the More Menu (will always show if there are)
+          (this.buttonset[0].scrollHeight > this.buttonset.outerHeight() + 1 || // Inner scrolling area doesn't exceed control width
+          this.defaultMenuItems || // No default menu items defined in the More Menu (will always show if there are)
+          items.length > items.filter('.hidden').length )) { // At least one menu item will show up in the spill-over menu
           this.element.addClass('has-more-button');
         } else {
           this.element.removeClass('has-more-button');
@@ -505,7 +534,7 @@
         if (!this.element.attr('aria-label')) {
           var isHeader = (this.element.closest('header.header').length ===1),
             id = this.element.attr('id') || '',
-            title = this.element.find('.title'),
+            title = this.element.children('.title'),
             prevLabel = this.element.prev('label'),
             prevSpan = this.element.prev('.label'),
             labelText = isHeader ? $('header.header').find('h1').text() :
@@ -520,25 +549,21 @@
       updated: function() {
         this
           .unbind()
-          .teardown();
+          .teardown()
         // Rebuild the control
-        this
-          .setup()
-          .build()
-          .handleEvents();
+          .init();
       },
 
       enable: function() {
         this.element.prop('disabled', false);
         this.buttons.prop('disabled', false);
-        this.moreButton.prop('disabled', false);
+        this.more.prop('disabled', false);
       },
 
       disable: function() {
         this.element.prop('disabled', true);
         this.buttons.prop('disabled', true);
-        this.moreButton.prop('disabled', true);
-        this.popupmenu.close();
+        this.more.prop('disabled', true).data('popupmenu').close();
       },
 
       unbind: function() {

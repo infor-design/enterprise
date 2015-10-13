@@ -216,7 +216,7 @@
 
   // Makes Vertical Alignment work well
   &::before {
-    @include vertical-alignment-spacer;
+    //@include vertical-alignment-spacer;
   }
 
   &:not(.is-selected) {

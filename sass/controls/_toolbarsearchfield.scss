@@ -1,0 +1,18 @@
+// Toolbar Searchfields
+//================================================== */
+
+.toolbar-searchfield-trigger {
+  // TODO
+}
+
+.toolbar-searchfield {
+  display: none;
+  position: absolute;
+
+  &.active {
+    display: block;
+    width: 0;
+
+    // NOTE: Javascript will set the width, left, and right properties
+  }
+}

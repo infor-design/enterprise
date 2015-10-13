@@ -195,11 +195,6 @@
           //Search Field
           ['searchfield', '.searchfield:not([data-init])'],
 
-          /*
-          //Toolbar
-          ['toolbar'],
-          */
-
           ['header'],
 
           ['fileupload'],
@@ -224,7 +219,9 @@
 
           ['wizard'],
 
-          ['popdown', '[data-popdown]']
+          ['popdown', '[data-popdown]'],
+
+          ['toolbarsearchfield', '.toolbar-searchfield-trigger']
         ];
 
         //Do initialization for all the simple controls
@@ -248,7 +245,7 @@
 
             // Don't auto-invoke Toolbar's Popupmenus.
             // Toolbar needs to completely control its contents and invoke each one manually.
-            if (triggerButton.parentsUntil('.toolbar').length > 0) {
+            if (triggerButton.parents('.toolbar').length > 0) {
               return;
             }
 
@@ -298,7 +295,15 @@
         // Toolbar
         if ($.fn.toolbar) {
           elem.find('.toolbar:not(.no-init):not([data-init])').each(function() {
-            $(this).toolbar();
+            var t = $(this);
+            // Don't re-invoke toolbars that are part of the page/section headers.
+            // header.js manually invokes these toolbars during its setup process.
+            if (t.parents('.header').length) {
+              return;
+            }
+
+            var options = $.fn.parseOptions(this);
+            t.toolbar(options);
           });
         }
 
