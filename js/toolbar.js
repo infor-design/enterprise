@@ -516,12 +516,14 @@
           return;
         }
 
-        var items = this.moreMenu.children('li:not(.separator)');
+        var toolbarItems = this.buttonset.children(':not(.searchfield, .separator)'),
+          overflowItems = this.moreMenu.children('li:not(.separator)');
 
         if (this.element.outerWidth() > 1 && this.buttonset.length > 0 && // Makes sure we're not animating Open or remaining Closed
           (this.buttonset[0].scrollHeight > this.buttonset.outerHeight() + 1 || // Inner scrolling area doesn't exceed control width
           this.defaultMenuItems || // No default menu items defined in the More Menu (will always show if there are)
-          items.length > items.filter('.hidden').length )) { // At least one menu item will show up in the spill-over menu
+          overflowItems.length > overflowItems.filter('.hidden').length || // At least one menu item will show up in the spill-over menu
+          overflowItems.length > toolbarItems.length)) {
           this.element.addClass('has-more-button');
         } else {
           this.element.removeClass('has-more-button');

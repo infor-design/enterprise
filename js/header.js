@@ -89,6 +89,14 @@
 
         if (this.hasTitleButton) {
           this.toolbarElem.addClass('has-title-button');
+          var appMenu = $('#application-menu').data('application-menu');
+          if (appMenu) {
+            //appMenu.modifyTriggers([this.titleButton]);
+          } else {
+            $('#application-menu').applicationmenu({
+              triggers: [this.titleButton]
+            });
+          }
         }
 
         // Application Tabs would be available from the Application Start, so activate them during build if they exist
