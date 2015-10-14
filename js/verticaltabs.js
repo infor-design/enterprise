@@ -86,7 +86,7 @@
         if (!this.moreMenu.length) {
           this.moreMenu = $('<ul class="popupmenu"></ul>').insertAfter(this.more);
         }
-        this.moreMenu.addClass('is-padded');
+        this.moreMenu.addClass('has-icons');
         this.defaultMoreItems = this.moreMenu.children('li');
         this.anchors.each(function moreMenuBuilder() {
           var li = $(this).parent().clone(),

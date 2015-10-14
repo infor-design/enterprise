@@ -1014,7 +1014,7 @@ $.fn.datagrid = function(options) {
           toolbar.addClass('has-more-button');
         }
 
-        var menu = $('<ul class="popupmenu is-padded"></ul>');
+        var menu = $('<ul class="popupmenu has-icons"></ul>');
 
         if (settings.toolbar.personalize) {
           menu.append('<li><a href="#">' + Locale.translate('PersonalizeColumns') + '</a></li>');
