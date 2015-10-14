@@ -75,7 +75,8 @@
   width: 115px;
 }
 
-.icon-dropdown {
+.icon-dropdown,
+.btn-menu .icon {
   height: 10px;
 }
 
@@ -89,7 +90,7 @@
 
 &.icon-favorite {
   svg {
-    fill: $rating-bg-color;
+    fill: $rating-bg-color !important;
   }
 }
 
