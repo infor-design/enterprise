@@ -40,15 +40,13 @@
         source: function(req, response) {
           var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
-          if (req.sortField) {
-            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+          if (req.sortId) {
+            url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
           }
 
           if (req.filterExpr && req.filterExpr[0]) {
             url += '&filter=' + req.filterExpr[0].value;
           }
-
-          console.log(req.sortField);
 
           $.getJSON(url, function(res) {
             req.total = res.total;

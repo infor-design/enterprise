@@ -199,6 +199,15 @@
         return this;
       },
 
+      //Select the nth tick
+      select: function(n) {
+        this.ticks.find('.complete').removeClass('completed');
+        this.ticks.find('.current').removeClass('current');
+        this.ticks.eq(n).addClass('current');
+        this.ticks.filter('a:lt(' + n + ')').addClass('completed');
+        this.updated();
+      },
+
       // Teardown - Remove added markup and events
       destroy: function() {
         this.unbind();

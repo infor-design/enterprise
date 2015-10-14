@@ -60,7 +60,7 @@
 | Mongoose | Wizard, Editor Ect | Paul Horne |
 | Requisitions | | Todd Dooner and Brent Dahlen |
 | PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna Peddibhotla |
-| Rhythm Widgets | Small set of widgets | Eric Martensson |
+| Rhythm Widgets | Dropdown, Date Picker, Text Area, Spinbox | Eric Martensson |
 | SmartStream | ASP | Wim Denayer |
 | SXE | Angular | Peter Cullen |
 | S3 | Starting Next Year | Rajan Shanmugavelu |

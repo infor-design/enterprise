@@ -148,6 +148,11 @@
         this.element.attr('aria-haspopup', true);
         this.element.attr('aria-controls', id);
 
+        this.markupItems();
+      },
+
+      markupItems: function () {
+
         this.menu.find('li').attr('role', 'presentation');
         this.menu.find('.popupmenu').parent().parent().addClass('submenu');
         this.menu.find('.submenu').children('a').each(function(i, value) {
@@ -187,6 +192,7 @@
         });
 
         this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
+
       },
 
       handleEvents: function() {
@@ -468,7 +474,7 @@
 
       },
 
-      open: function(e) {
+      open: function(e, ajaxReturn) {
         var self = this;
 
         var canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
@@ -476,9 +482,22 @@
           return;
         }
 
-        if (this.settings.beforeOpen) {
-          alert();
+        if (this.settings.beforeOpen && !ajaxReturn) {
+         var response = function (content) {
+            self.menu.empty().append(content);
+            self.markupItems();
+            self.open(e, true);
+          };
+
+          if (typeof settings.beforeOpen === 'string') {
+            window[settings.beforeOpen](response);
+            return;
+          }
+
+          settings.beforeOpen(response);
+          return;
         }
+
 
         $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.element.addClass('is-open');

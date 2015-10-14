@@ -521,8 +521,8 @@ var express = require('express'),
        };
     };
 
-    if (req.query.sortField) {
-      productsAll.sort(sortBy(req.query.sortField, (req.query.sortAsc ==='true' ? true : false), function(a){return a.toString().toUpperCase();}));
+    if (req.query.sortId) {
+      productsAll.sort(sortBy(req.query.sortId, (req.query.sortAsc ==='true' ? true : false), function(a){return a.toString().toUpperCase();}));
     }
 
     for (i = start; i < end && i < total; i++) {

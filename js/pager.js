@@ -355,13 +355,14 @@
               return;
             };
 
-            if (api.sortColumn.sortField) {
-              self.pagerInfo.sortAsc = api.sortColumn.sortAsc;
-              self.pagerInfo.sortField = api.sortColumn.sortField;
+            if (api.sortColumn.sortId) {
+              self.pagingInfo.sortAsc = api.sortColumn.sortAsc;
+              self.pagingInfo.sortField = api.sortColumn.sortField;
+              self.pagingInfo.sortId = api.sortColumn.sortId;
             }
 
             if (api.filterExpr) {
-               self.pagerInfo.filterExpr = api.filterExpr;
+               self.pagingInfo.filterExpr = api.filterExpr;
             }
 
             self.settings.source(self.pagingInfo, response);
@@ -402,7 +403,10 @@
 
         //Update the UI
         this.pagerBar.find('.pager-count input').val(this.activePage);
-        this.pagerBar.find('.pager-total-pages').text(this._pageCount);
+
+        if (this._pageCount !== '0') {
+          this.pagerBar.find('.pager-total-pages').text(this._pageCount);
+        }
 
         if (pagingInfo.firstPage) {
           this.pagerBar.find('.pager-first a').attr('disabled', 'disabled');

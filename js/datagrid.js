@@ -582,8 +582,8 @@ $.fn.datagrid = function(options) {
       }
 
       //Save the height during render
-      //self.tableHeight = self.tableBody.height();
-      //self.tableBody.css('height', self.tableHeight);
+      self.tableHeight = self.tableBody.height();
+      self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
       self.tableBody.empty();
 
       for (var i = 0; i < settings.dataset.length; i++) {
@@ -593,8 +593,7 @@ $.fn.datagrid = function(options) {
                   (settings.rowHeight !== 'medium' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
                   (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                   (!settings.cellNavigation ? ' is-clickable' : '' ) +
-                  '"' + (this.settings.paging ? ' style="display:none"' : '' ) +'>';
-                  //'">';
+                  '"' +'>';
 
         for (var j = 0; j < settings.columns.length; j++) {
           var col = settings.columns[j],
@@ -658,6 +657,7 @@ $.fn.datagrid = function(options) {
       }
 
       self.tableBody.append(tableHtml);
+      self.tableBody.css({'height': '', 'display': ''});
       self.displayCounts();
 
       self.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
