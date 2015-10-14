@@ -235,8 +235,15 @@
 
           //Context Menus
           elem.find('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
-            var obj = $(this);
-            obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
+            var triggerButton = $(this),
+              options = $.fn.parseOptions(this),
+              popupData = triggerButton.attr('data-popupmenu');
+
+            if (popupData) {
+              options.menuId = popupData;
+            }
+
+            triggerButton.popupmenu(options);
           });
 
           //Button-based Popup-Menus (Action/More Button, Menu Buttons, etc.)
