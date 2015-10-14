@@ -255,6 +255,7 @@
           }
 
           if (e.keyCode === 13 && self.list && self.list.is(':visible')) {
+            self.list.find('.is-selected').find('a').trigger('click');
             if (self.element.data('popupmenu')) {
               self.element.data('popupmenu').close();
             }
