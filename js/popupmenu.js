@@ -27,6 +27,7 @@
         trigger: 'click',  //click, rightClick, immediate ect
         autoFocus: true,
         mouseFocus: true,
+        beforeOpen: null, //Ajax callback for open event
         ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
         eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
       },
@@ -469,7 +470,15 @@
 
       open: function(e) {
         var self = this;
-        this.element.trigger('beforeOpen', [this.menu]);
+
+        var canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
+        if (canOpen === false) {
+          return;
+        }
+
+        if (this.settings.beforeOpen) {
+          alert();
+        }
 
         $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.element.addClass('is-open');
@@ -506,7 +515,7 @@
             self.close();
           });
 
-          self.element.triggerHandler('open', [self.menu]);
+          self.element.trigger('open', [self.menu]);
 
           if (self.settings.trigger === 'rightClick') {
             self.element.on('click.popupmenu touchend.popupmenu', function () {
@@ -574,6 +583,7 @@
         if (self.settings.autoFocus) {
           setTimeout(function () {
             self.menu.children('li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first().find('a').focus();
+            self.element.trigger('afteropen', [self.menu]);
           }, 1);
         }
       },
