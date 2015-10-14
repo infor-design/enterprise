@@ -26,7 +26,8 @@
         source: [], //Defines the data to use, must be specified.
         tags: false, //Allows tags to be shown/generated.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
-        filterMode: 'startsWith'  // startsWith and contains Supported
+        filterMode: 'startsWith',  // startsWith and contains Supported
+        delay: 500
       },
       settings = $.extend({}, defaults, options);
 
@@ -319,7 +320,7 @@
               });
             }
 
-          }, 500); //no pref for this lets keep it simple.
+          }, self.settings.delay); //no pref for this lets keep it simple.
 
         }).on('focus.autocomplete', function () {
           if (self.noSelect) {
