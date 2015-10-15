@@ -366,7 +366,7 @@
             delta = (0 - (o.left - scrollable.deltaWidth) + 1) * -1;
             self.tooltip.css('left', o.left + delta);
             arrowPosLeft = parseInt(arrow.css('left'), 10);
-            arrow.css('left', arrowPosLeft - delta);
+            //arrow.css('left', arrowPosLeft - delta);
 
             // Check again.  If it's still bleeding off the left edge, swap it to a right-placed Tooltip.
             if (offLeftEdgeCondition()) {
