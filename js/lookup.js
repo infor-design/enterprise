@@ -215,6 +215,11 @@
         });
 
         self.modal = $('body').data('modal');
+
+        setTimeout(function () {
+          //Placeholder attribute in browsers that do not handle it
+          $(self.modal).placeholderPolyfill();
+        }, 0);
       },
 
       //Overridable Function in which we create the grid on the current ui dialog.

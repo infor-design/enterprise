@@ -392,7 +392,8 @@
       },
 
       resize: function() {
-        var top, left, 
+        var top, left,
+          modalContent = $('.modal-content', this.element) ,
           bodyHeight = $('.modal-body', this.element).height(),
           calcHeight = ($(window).height()* 0.9)-180; //90% -(180 :extra elements-height)
 
@@ -407,6 +408,13 @@
         this.element.css({
           margin : '-'+ top +'px 0 0 -'+ left +'px'
         });
+
+        // target smaller height (ie. landscape iphone 4/5s)
+        if (calcHeight < 110) {
+          this.element.css({ 'margin-top': '-'+ (top-22) +'px', 'max-height': '99%'});
+          modalContent.css({'padding-top': '15px'});
+          $('.modal-title', modalContent).css({'margin-bottom': '15px'});
+        }
       },
 
       isOpen: function() {
