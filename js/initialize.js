@@ -219,9 +219,7 @@
 
           ['wizard'],
 
-          ['popdown', '[data-popdown]'],
-
-          ['toolbarsearchfield', '.toolbar-searchfield-trigger']
+          ['popdown', '[data-popdown]']
         ];
 
         //Do initialization for all the simple controls
@@ -301,7 +299,7 @@
 
         // Toolbar
         if ($.fn.toolbar) {
-          elem.find('.toolbar:not(.no-init):not([data-init])').each(function() {
+          elem.find('.toolbar:not('+ noinitExcludes +')').each(function() {
             var t = $(this);
             // Don't re-invoke toolbars that are part of the page/section headers.
             // header.js manually invokes these toolbars during its setup process.
@@ -311,6 +309,19 @@
 
             var options = $.fn.parseOptions(this);
             t.toolbar(options);
+          });
+        }
+
+        // Toolbar-Searchfield
+        if ($.fn.toolbarsearchfield) {
+          elem.find('.toolbar-searchfield-trigger:not(:not('+ noinitExcludes +')').each(function() {
+            var ts = $(this);
+            if (ts.parents('.toolbar').length) {
+              return;
+            }
+
+            var options = $.fn.parseOptions(this);
+            ts.toolbar(options);
           });
         }
 
