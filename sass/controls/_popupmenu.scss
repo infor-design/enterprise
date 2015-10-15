@@ -222,6 +222,15 @@
       font-weight: inherit;
     }
 
+    small {
+      @include font-size(11);
+      display: block;
+      margin-top: -3px;
+      line-height: normal;
+      margin-bottom: 8px;
+      margin-top: -3px;
+    }
+
     &[disabled] {
       color: $disabled-color;
       opacity: .6;
