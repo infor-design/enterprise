@@ -514,6 +514,7 @@
       field.next().next('.icon-error').remove();
       field.next('.inforCheckboxLabel').next('.icon-error').remove();
       field.parent('.field').find('span.error').remove();
+      field.parent('.field').find('.icon-error').remove();
       field.off('focus.validate focus.tooltip');
       if (field.data('tooltip')) {
         field.data('tooltip').destroy();

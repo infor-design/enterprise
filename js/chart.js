@@ -477,7 +477,7 @@ window.Chart = function(container) {
             return;
           }
 
-          $(container).trigger('selected', [undefined, d]);
+          $(container).trigger('selected', [path[0], d]);
         }).on('mouseenter', function () {
           /*var shape = d3.select(this),
             content = 'test';
