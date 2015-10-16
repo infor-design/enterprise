@@ -194,6 +194,12 @@
             popupLi.addClass('submenu').append(submenu);
           }
 
+          if (item.is('.toolbar-searchfield-trigger')) {
+            if (!item.data('toolbarsearchfield')) {
+              item.toolbarsearchfield();
+            }
+          }
+
           // Setup data links between the buttons and their corresponding list items
           item.data('action-button-link', a);
           popupLi.data('original-button', item);
@@ -292,6 +298,9 @@
           itemEvts = itemLink.listEvents();
           toolbarEvts = this.element.listEvents();
 
+          // Make sure the active button is set properly
+          this.setActiveButton(itemLink);
+
           // Fire Angular Events
           if (itemLink.attr('ng-click') || itemLink.attr('data-ng-click')) {
             itemLink.trigger('click');
@@ -320,7 +329,6 @@
               return;
             }
           }
-
         }
       },
 
@@ -442,7 +450,7 @@
           } else {
             this.activeButton = activeButton;
           }
-          activeButton.attr('tabindex', '0').addClass('is-selected');
+          this.activeButton.attr('tabindex', '0').addClass('is-selected');
         } else {
           this.activeButton = activeButton.addClass('is-selected').attr('tabindex', '0');
           if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
@@ -508,7 +516,7 @@
       checkOverflowItems: function() {
         var items = this.adjustButtonVisibility();
 
-        if ($.contains(this.buttonset[0], document.activeElement)) {
+        if (!$.contains(this.buttonset[0], document.activeElement)) {
           if (items.visible.length) {
             items.visible[items.visible.length - 1].focus();
           } else {
