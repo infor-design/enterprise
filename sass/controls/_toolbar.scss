@@ -29,6 +29,7 @@ $toolbar-buttonset-height: 44px;
 
     > * {
       margin: 5px 5px 5px 0;
+      vertical-align: top;
 
       &:last-child {
         margin-right: 1px;
@@ -296,6 +297,7 @@ $toolbar-buttonset-height: 44px;
 */
 
 // Overrides the styling for Buttonsets so that they shrink to a small size, leaving room for the Title to be visible.
+/*
 @include respond-to(phablet) {
   .toolbar {
     .searchfield-wrapper {
@@ -343,4 +345,4 @@ $toolbar-buttonset-height: 44px;
     }
   }
 }
-
+*/

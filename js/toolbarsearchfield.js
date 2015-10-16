@@ -1,5 +1,6 @@
 /**
 * Toolbar Searchfield (TODO: bitly link to soho xi docs)
+* NOTE:  Depends on both a Toolbar control and Searchfield control to be present
 */
 
 // NOTE:  There are AMD Blocks available
@@ -26,7 +27,9 @@
 
     // Settings and Options
     var pluginName = 'toolbarsearchfield',
-        defaults = {},
+        defaults = {
+          searchfieldPlaceholder: Locale.translate('Keyword')
+        },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -47,13 +50,175 @@
 
       // Creates and manages any markup the control needs to function.
       build: function() {
+        // Used for managing events that are bound to $(document)
+        if (!this.id) {
+          this.id = (parseInt($('.toolbar-searchfield').length, 10)+1).toString();
+        }
+
+        // Build the searchfield element
+        this.input = this.element;
+
+        // If inside a toolbar, make sure to append it to the root toolbar element.
+        this.toolbarParent = this.element.parents('.toolbar');
+
+        // Setup ARIA
+        this.input.attr({
+          'aria-label': this.settings.searchfieldPlaceholder,
+          'placeholder': this.settings.searchfieldPlaceholder
+        });
+
+        // Invoke Searchfield, pass settings on
+        this.input.searchfield(this.settings);
+        this.inputWrapper = this.input.parent('.searchfield-wrapper');
+        this.inputWrapper.addClass('toolbar-searchfield-wrapper');
+
         return this;
       },
 
       // Main entry point for setting up event handlers.
       handleEvents: function() {
-        console.log('Toolbar Searchfield Created!');
+        var self = this;
+
+        this.input.on('focusin.toolbarsearchfield', function(e) {
+          self.handleFocus(e);
+        }).on('focusout.toolbarsearchfield', function() {
+          clearTimeout(self.focusTimer);
+          self.inputWrapper.removeClass('has-focus');
+        });
+
+        this.input.on('focusout.toolbarsearchfield', function(e) {
+          self.handleBlur(e);
+        });
+
+        // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
+        $(document).on('keydown.toolbarsearchfield-' + this.id, function(e) {
+          self.handleOutsideKeydown(e);
+        });
+
+        console.log('All events have been added to the Toolbar Searchfield');
         return this;
+      },
+
+      handleDeactivationEvents: function() {
+        var self = this;
+
+        $(document).on('click.toolbarsearchfield-' + this.id, function(e) {
+          self.handleOutsideClick(e);
+        });
+      },
+
+      handleFocus: function(e) {
+        var self = this;
+        clearTimeout(this.focusTimer);
+
+        this.inputWrapper.addClass('has-focus');
+
+        this.focusTimer = setTimeout(function searchfieldActivationTimer() {
+          self.activate();
+        }, 400);
+      },
+
+      handleBlur: function(e) {
+        clearTimeout(this.focusTimer);
+
+        if (this.inputWrapper.hasClass('active')) {
+          this.deactivate();
+        }
+      },
+
+      handleOutsideClick: function(e) {
+        var self = this,
+          target = $(e.target);
+
+        this.tabKeyPressed = false;
+
+        if ($.contains(this.element[0], e.target) || $.contains(this.inputWrapper[0], e.target) ||
+          target.is(this.element) || target.is(this.inputWrapper)) {
+          return;
+        }
+
+        $(document).off('click.toolbarsearchfield-' + this.id);
+        this.deactivate();
+      },
+
+      handleOutsideKeydown: function(e) {
+        var key = e.which;
+
+        this.tabKeyPressed = false;
+        if (key === 9) {
+          this.tabKeyPressed = true;
+        }
+      },
+
+      activate: function() {
+        if (this.inputWrapper.hasClass('active')) {
+          return;
+        }
+
+        var self = this;
+        this.inputWrapper.addClass('active');
+
+        function activateCallback() {
+          self.input.focus();
+          self.handleDeactivationEvents();
+          console.log('Toolbar Searchfield Activated!');
+        }
+
+        if (this.tabKeyPressed) {
+          activateCallback();
+          return;
+        }
+
+        setTimeout(activateCallback, 400);
+      },
+
+      deactivate: function() {
+        var self = this,
+          textMethod = 'removeClass';
+
+        if (this.input.val().trim() !== '') {
+          textMethod = 'addClass';
+        }
+        this.inputWrapper[textMethod]('has-text');
+
+        function deactivateCallback() {
+          self.inputWrapper.removeClass('active');
+          console.log('Toolbar Searchfield De-activated!');
+        }
+
+        if (this.tabKeyPressed) {
+          deactivateCallback();
+          return;
+        }
+
+        setTimeout(deactivateCallback, 400);
+      },
+
+      // sets the positioning of the input element
+      position: function(open) {
+        var elemPos, elemWidth, elemHeight;
+
+        elemPos = this.element.offset();
+        elemWidth = this.element.outerWidth();
+        elemHeight = this.element.outerHeight();
+
+        // Open
+        if (open) {
+          this.inputWrapper.css({
+            left: elemPos.left,
+            right: elemPos.left + elemWidth,
+            width: elemWidth
+          });
+          return;
+        }
+
+        // Close
+        this.inputWrapper.css({
+          left: elemPos.left + (elemWidth/2),
+          right: elemPos.left + (elemWidth/2),
+          top: elemPos.top,
+          width: 0
+        });
       },
 
       // Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that

@@ -68,6 +68,7 @@
 }
 
 // This variation Slides out on focus
+/*
 .toolbar {
   .searchfield-wrapper {
     margin: 4px 0 6px;
@@ -79,10 +80,6 @@
       margin-left: -85px;
       pointer-events: none;
       text-transform: uppercase;
-    }
-
-    &:last-child {
-      margin-right: 10px;
     }
 
     > .icon {
@@ -111,10 +108,10 @@
     @include searchfield-text-style();
     border: 1px solid transparent;
     cursor: pointer;
-    padding-left: 36px;
+    //padding-left: 36px;
     text-overflow: ellipsis;
     transition: width .3s cubic-bezier(.17, .04, .03, .94);
-    width: 115px;
+    //width: 115px;
 
     &.empty {
       padding-left: 0;
@@ -142,7 +139,7 @@
       border: 1px solid $graphite03;
       color: initial;
       cursor: text;
-      width: 225px;
+      //width: 225px;
 
       &::-webkit-input-placeholder {
         color: transparent;
@@ -189,6 +186,7 @@
 
   }
 }
+*/
 
 @include respond-to(phablet) {
   .searchfield {
@@ -238,10 +236,11 @@
 
   .toolbar {
     // Searchfield in the Header Toolbar always sits at the same width/padding
+    /*
     .searchfield {
       border-bottom: 1px solid $slate09;
-      padding-left: 36px;
-      width: 225px;
+      //padding-left: 36px;
+      //width: 225px;
 
       &.empty {
         width: 225px;
@@ -263,5 +262,6 @@
         }
       }
     }
+    */
   }
 }

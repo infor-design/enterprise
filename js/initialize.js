@@ -78,6 +78,11 @@
         var elem = $(this),
           noinitExcludes = '.no-init, [data-init]';
 
+        function invokeWithInlineOptions(elem, plugin) {
+          var options = $.fn.parseOptions(elem);
+          $(elem)[plugin](options);
+        }
+
         function simpleInit(plugin, selector) {
           //Allow only the plugin name to be specified if the default selector is a class with the same name
           //Like $.fn.header applying to elements that match .header
@@ -91,8 +96,7 @@
                 return;
               }
 
-              var options = $.fn.parseOptions(this);
-              $(this)[plugin](options);
+              invokeWithInlineOptions(this, plugin);
             });
           }
 
@@ -192,9 +196,6 @@
           //Busy Indicator
           ['busyindicator','.busy'],
 
-          //Search Field
-          ['searchfield', '.searchfield:not([data-init])'],
-
           ['header'],
 
           ['fileupload'],
@@ -254,8 +255,7 @@
               return;
             }
 
-            var options = $.fn.parseOptions(this);
-            triggerButton.popupmenu(options);
+            invokeWithInlineOptions(triggerButton, 'popupmenu');
           });
         }
 
@@ -307,22 +307,27 @@
               return;
             }
 
-            var options = $.fn.parseOptions(this);
-            t.toolbar(options);
+            invokeWithInlineOptions(t, 'toolbar');
           });
         }
 
-        // Toolbar-Searchfield
-        if ($.fn.toolbarsearchfield) {
-          elem.find('.toolbar-searchfield-trigger:not(:not('+ noinitExcludes +')').each(function() {
-            var ts = $(this);
-            if (ts.parents('.toolbar').length) {
-              return;
-            }
+        // Searchfield
+        if ($.fn.searchfield) {
+          var searchfields = elem.find('.searchfield:not('+ noinitExcludes +')'),
+            toolbarSearchfields = searchfields.filter(function() {
+              return $(this).parents('.toolbar').length;
+            });
+          searchfields = searchfields.not(toolbarSearchfields);
 
-            var options = $.fn.parseOptions(this);
-            ts.toolbar(options);
+          searchfields.each(function() {
+            invokeWithInlineOptions(this, 'searchfield');
           });
+
+          if ($.fn.toolbarsearchfield) {
+            toolbarSearchfields.each(function() {
+              invokeWithInlineOptions(this, 'toolbarsearchfield');
+            });
+          }
         }
 
         elem.find('.modal-search .close').on('click', function () {
