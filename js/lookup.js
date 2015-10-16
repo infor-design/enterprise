@@ -220,6 +220,15 @@
           //Placeholder attribute in browsers that do not handle it
           $(self.modal).placeholderPolyfill();
         }, 0);
+
+        // Wait until search field available
+        setTimeout(function () {
+          $('.modal.is-visible .searchfield').on('keypress', function (e) {
+            if (e.keyCode === 13) {
+              return false; // Prevent for closing modal
+            }
+          });
+        }, 300);
       },
 
       //Overridable Function in which we create the grid on the current ui dialog.
