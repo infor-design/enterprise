@@ -108,6 +108,9 @@
           .add(this.title.children('button'))
           .add(this.more);
 
+        this.buttonsetItems = this.buttonset.children('button, input')
+          .add(this.buttonset.find('.searchfield-wrapper').children('input'));
+
         // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
         var popupMenuInstance = this.more.data('popupmenu'),
@@ -462,16 +465,15 @@
           return (i.data('action-button-link') && i.is(':not(.searchfield)'));
         }
 
-        this.items.filter(menuItemFilter).each(function() {
+        this.buttonsetItems.filter(menuItemFilter).removeClass('is-overflowed').each(function() {
           var i = $(this),
             li = i.data('action-button-link').parent();
 
           if (!self.isItemOverflowed(i)) {
             li.addClass('hidden');
-            i.css('display', '').removeClass('is-overflowed');
           } else {
             li.removeClass('hidden');
-            i.css('display', 'block').addClass('is-overflowed');
+            i.addClass('is-overflowed');
             visibleLis.push(li);
           }
         });
@@ -487,9 +489,13 @@
           return true;
         }
 
-        // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed
-        if (this.title.length && (this.items.index(item)) >= this.settings.maxVisibleButtons) {
-          return true;
+        // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
+        if (this.title.length && (this.buttonsetItems.index(item) >= this.settings.maxVisibleButtons)) {
+          // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
+          // This prevents ONE item from being present in the menu by itself
+          if (!this.buttonsetItems.last().is(item) || item.prev().is('.is-overflowed')) {
+            return true;
+          }
         }
 
         if (this.buttonset.scrollTop() > 0) {
@@ -516,18 +522,15 @@
           return;
         }
 
-        var toolbarItems = this.buttonset.children(':not(.searchfield, .separator)'),
-          overflowItems = this.moreMenu.children('li:not(.separator)');
+        var overflowItems = this.moreMenu.children('li:not(.separator)'),
+          hiddenOverflowItems = overflowItems.not('.hidden');
 
-        if (this.element.outerWidth() > 1 && this.buttonset.length > 0 && // Makes sure we're not animating Open or remaining Closed
-          (this.buttonset[0].scrollHeight > this.buttonset.outerHeight() + 1 || // Inner scrolling area doesn't exceed control width
-          this.defaultMenuItems || // No default menu items defined in the More Menu (will always show if there are)
-          overflowItems.length > overflowItems.filter('.hidden').length || // At least one menu item will show up in the spill-over menu
-          overflowItems.length > toolbarItems.length)) {
-          this.element.addClass('has-more-button');
-        } else {
-          this.element.removeClass('has-more-button');
+        var method = 'removeClass';
+        if (this.defaultMenuItems || hiddenOverflowItems.length > 0) {
+          method = 'addClass';
         }
+
+        this.element[method]('has-more-button');
       },
 
       buildAriaLabel: function() {

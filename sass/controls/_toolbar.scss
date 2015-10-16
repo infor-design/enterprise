@@ -33,10 +33,10 @@ $toolbar-buttonset-height: 44px;
       &:last-child {
         margin-right: 1px;
       }
-    }
 
-    > .is-overflowed {
-      opacity: 0;
+      &.is-overflowed {
+        display: block;
+      }
     }
 
     > [class^="btn"] {
