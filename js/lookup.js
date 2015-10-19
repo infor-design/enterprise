@@ -223,7 +223,7 @@
 
         // Wait until search field available
         setTimeout(function () {
-          $('.modal.is-visible .searchfield').on('keypress', function (e) {
+          $('.modal.is-visible .searchfield').on('keypress.lookup', function (e) {
             if (e.keyCode === 13) {
               return false; // Prevent for closing modal
             }
@@ -237,7 +237,7 @@
           lookupGrid = $('#lookup-datagrid');
 
         if (self.settings.options) {
-          self.settings.options.cellNavigation = false;
+          // self.settings.options.cellNavigation = false;
           lookupGrid.datagrid(self.settings.options);
         }
         self.grid = lookupGrid.data('datagrid');
