@@ -76,6 +76,12 @@
 
         this.accordion = this.menu.find('.accordion');
 
+        // Check to make sure that the internal Accordion Control is invoked
+        var accordion = this.accordion.data('accordion');
+        if (!accordion) {
+          this.accordion.accordion();
+        }
+
         // Reposition the Application Menu to somewhere directly in the 'body' tag if it isn't already there.
         // Don't mess with it if it's already in the body.
         this.originalParent = this.menu.parent();
@@ -92,12 +98,6 @@
           this.menu.detach().insertAfter(target);
         }
         this.adjustHeight();
-
-        // Check to make sure that the internal Accordion Control is invoked
-        var accordion = this.accordion.data('accordion');
-        if (!accordion) {
-          this.accordion.accordion();
-        }
 
         return this;
       },

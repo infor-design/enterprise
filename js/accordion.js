@@ -161,14 +161,10 @@
           }
         });
 
-        // Remove the class that prevents accordion panes from being expanded on page load.
-        // Fixes a Chrome-specific visual bug where everything appears expanded for a split-second.
-        this.element.removeClass('dont-expand-yet');
-
         // Expand to the current accordion header if we find one that's selected
         if (!this.element.data('updating')) {
           var targetsToExpand = this.headers.filter('.is-selected, .is-expanded');
-          targetsToExpand.removeClass('is-selected').removeClass('is-expanded');
+          //targetsToExpand.removeClass('is-selected').removeClass('is-expanded');
 
           if (this.settings.allowOnePane) {
             targetsToExpand = targetsToExpand.first();
@@ -192,6 +188,12 @@
             self.originalSelection = $(e.target);
           }
           $(this).addClass('is-focused');
+
+          var selected = self.headers.filter('.is-selected');
+          if (selected.length && selected[0] !== this) {
+            selected.removeClass('is-selected');
+          }
+
         }).on('focusout.accordion', function() {
           if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
             $(this).removeClass('is-focused');
@@ -310,6 +312,7 @@
         var pane = header.next('.accordion-pane');
         if (pane.length) {
           this.toggle(header);
+          this.select(header);
           expander.focus();
           return;
         }
@@ -337,6 +340,8 @@
         }
 
         if (key === 9) { // Tab (also triggered by Shift + Tab)
+          this.headers.removeClass('is-selected');
+
           if (target.is('a') && expander.length) {
             setInitialOriginalSelection(expander);
           } else {
@@ -397,6 +402,12 @@
         // Make sure we select the anchor
         var anchor = element,
           header = anchor.parent();
+
+        if (element.is('.accordion-header')) {
+          header = element;
+          anchor = header.children('a');
+        }
+
         if (anchor.is('[class^="btn"]')) {
           anchor = element.next('a');
         }
