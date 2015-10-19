@@ -161,14 +161,10 @@
           }
         });
 
-        // Remove the class that prevents accordion panes from being expanded on page load.
-        // Fixes a Chrome-specific visual bug where everything appears expanded for a split-second.
-        this.element.removeClass('dont-expand-yet');
-
         // Expand to the current accordion header if we find one that's selected
         if (!this.element.data('updating')) {
           var targetsToExpand = this.headers.filter('.is-selected, .is-expanded');
-          targetsToExpand.removeClass('is-selected').removeClass('is-expanded');
+          //targetsToExpand.removeClass('is-selected').removeClass('is-expanded');
 
           if (this.settings.allowOnePane) {
             targetsToExpand = targetsToExpand.first();

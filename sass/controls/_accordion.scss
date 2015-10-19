@@ -198,12 +198,6 @@
       }
     }
   }
-
-  &.dont-expand-yet {
-    .accordion-pane {
-      height: 0;
-    }
-  }
 }
 
 .accordion-header {
@@ -482,6 +476,7 @@
 .accordion-pane {
   background-color: $accordion-pane-bg-color;
   border-bottom: 1px solid $accordion-border-color;
+  height: 0;
   overflow: hidden;
 
   .accordion-content {

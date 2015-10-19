@@ -96,10 +96,6 @@
           padding-left: 63px;
         }
 
-        > [class^="btn"]:first-child {
-          margin-left: 50px;
-        }
-
         > .icon,
         > [class^="btn"] {
 
@@ -131,6 +127,10 @@
         .accordion-header {
           > a {
             padding-left: 97px;
+          }
+
+          > [class^="btn"]:first-child {
+            margin-left: 50px;
           }
 
           > .icon,
