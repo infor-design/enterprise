@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>{{title}}</title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" id="sohoxi-stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+
+  <script src="/js/jquery-3.0.0-alpha1.js"></script>
+  <script src="/js/sohoxi.js"></script>
+  <script src="/js/cultures/en-US.js"></script>
+  <script src="/js/cultures/de-DE.js"></script>
+
+</head>
+<body>
+  {{> controls/svg}}
+
+  <div class="row">
+    <div class="twelve columns">
+
+      <div class="field">
+        <label for="date-field" class="label">Date Field</label>
+        <input id="date-field" class="datepicker" placeholder="M / D / YYYY" name="date-field" type="text">
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    $('body').initialize('de-DE');
+  </script>
+
+</body>
+</html>

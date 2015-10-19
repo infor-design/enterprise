@@ -63,15 +63,14 @@ var express = require('express'),
     res.render('patterns/' + end, patternOptions);
   });
 
-  app.get('/tests/amd/*', function (req, res) {
+  app.get('/tests/distribution/*', function (req, res) {
     var amdOptions = {
         title: 'SoHo XI',
         subtitle: 'AMD tests',
-        layout: 'tests/layout',
         amd: true
       };
-    var end = req.url.replace('/tests/amd/','');
-    res.render('tests/' + end, amdOptions);
+    var end = req.url.replace('/tests/distribution/','');
+    res.render('tests/distribution/' + end, amdOptions);
   });
 
   app.get('/tests/applicationmenu/*', function(req, res) {

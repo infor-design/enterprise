@@ -1,31 +1,3 @@
-<style>
-.main .columns {
-  margin-bottom: 50px;
-}
-.patterns {
-  height: 60px;
-  width: 200px;
-}
-.patterns rect {
-  fill: #999999;
-}
-.patterns rect.blue {
-  fill: #368AC0;
-}
-.patterns rect.green {
-  fill: #76B051;
-}
-.patterns rect.red {
-  fill: #E4882B;
-}
-
-.with-background {
-  height: 60px;
-  width: 200px;
-  background-color: #FBE9BF;
-  display: inline-block;
-}
-</style>
 
 <div class="svg-patterns">
  <svg xmlns="http://www.w3.org/2000/svg">
@@ -107,72 +79,40 @@
   </svg>
 </div>
 
-<div class="main">
-  <div class="row">
-
-    <div class="three columns">
-      <h2>Hatch</h2>
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#hatch)" class="blue"/>
-      </svg>
-    </div>
-
-    <div class="three columns">
-      <h2>Double hatch</h2>
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#doublehatch)"/>
-      </svg>
-    </div>
-
-    <div class="three columns">
-      <h2>Cross hatch</h2>
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#crosshatch)" class="green"/>
-      </svg>
-    </div>
-
-    <div class="three columns">
-      <h2>Stitch</h2>
-      <span class="with-background">
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#stitch)" class="red"/>
-      </svg>
-      </span>
-    </div>
-
-  </div>
-
-
-
-  <div class="row">
-
-    <div class="three columns">
-      <h2>Dots</h2>
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#dots)"/>
-      </svg>
-    </div>
-
-    <div class="three columns">
-      <h2>Squares</h2>
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#squares)" class="red"/>
-      </svg>
-    </div>
-
-    <div class="three columns">
-      <h2>Xs</h2>
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#xs)" class="blue"/>
-      </svg>
-    </div>
-
-    <div class="three columns">
-      <h2>Triangles</h2>
-      <svg class="patterns" focusable="false" aria-hidden="true" role="presentation">
-        <rect width="100%" height="100%" mask="url(#triangles)"/>
-      </svg>
-    </div>
-
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Vertical Bar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
   </div>
 </div>
+
+<script>
+ var dataset = [{
+      data: [{
+          name: 'Category A',
+          //'Requirements Exceeding Net Change',
+          value: 373,
+          color: 'error',
+          pattern: 'hatch'
+      }, {
+          name: 'Category B',
+          value: 372,
+          color: '#8ED1C6',
+          pattern: 'crosshatch'
+      }, {
+          name: 'Category C',
+          value: 236.35,
+          color: '#9279A6'
+      }],
+      name: ''
+    }];
+
+  $('#bar-example').chart({type: 'bar', dataset: dataset});
+</script>

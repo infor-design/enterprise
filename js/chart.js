@@ -31,7 +31,7 @@ window.Chart = function(container) {
   this.colors = d3.scale.ordinal().range(colorRange);
 
   this.chartColor = function(i, chartType, data) {
-    var specColor = data.data.color;
+    var specColor = data.color;
 
     //error, alert, alertYellow, good, neutral or hex
     if (specColor && specColor ==='error' ) {
@@ -55,11 +55,15 @@ window.Chart = function(container) {
     }
 
     if (specColor && specColor.indexOf('#') === 0) {
-      return data.data.color;
+      return data.color;
     }
 
     if (chartType === 'pie') {
       return this.pieColors(i);
+    }
+
+    if (chartType === 'bar') {
+      return this.colors(i);
     }
   };
 
@@ -104,23 +108,6 @@ window.Chart = function(container) {
           charts.selectElem(this, series);
         }
       });
-/*
-    .on('click.chart focus.chart', '.chart-legend-item', function () {
-      // For Bar and series charts
-      var triggerIdx = $(this).index(),
-          bars = $(container).find('.bar'),
-          targetGroup = $(this).closest('.chart-legend').siblings('.chart-container').find('svg .series-group').eq(triggerIdx);
-
-        bars.css('opacity', 1);
-        targetGroup.css({
-          'opacity': 1
-        })
-        .siblings('.series-group').css({
-          'opacity': 0.5
-        });
-
-       charts.selectElem(this, series);
-    });*/
 
     $(container).append(legend);
   };
@@ -186,7 +173,7 @@ window.Chart = function(container) {
 
     //Get the Legend Series'
     series = dataset.map(function (d) {
-      return {name: d.name};
+      return {name: d.name, color: d.color, pattern: d.pattern};
     });
 
     //Map the Data Sets and Stack them.
@@ -196,7 +183,9 @@ window.Chart = function(container) {
         // axis (the stacked amount) is y
         return {
             y: o.value,
-            x: o.name
+            x: o.name,
+            color: o.color,
+            pattern: o.pattern
         };
       });
     });
@@ -213,12 +202,12 @@ window.Chart = function(container) {
         return {
             x: d.y,
             y: d.x,
-            x0: d.y0
+            x0: d.y0,
+            color: d.color,
+            pattern: d.pattern
         };
       });
     });
-
-    //margins.left += (maxTextWidth*5.1);
 
     var h = parseInt($(container).parent().height()) - margins.bottom,
       w = parseInt($(container).parent().width()) - margins.left,
@@ -305,19 +294,29 @@ window.Chart = function(container) {
       .append('g')
       .attr('class', 'series-group')
       .style('fill', function (d, i) {
-        return charts.colors(i);
+        return charts.chartColor(i, 'bar', series[i]);
       });
 
     var maxBarHeight = 45;
 
     rects = groups.selectAll('rect')
-      .data(function (d) {
+      .data(function (d, i) {
+        d.forEach(function(d) {
+          d.index = i;
+        });
+
         return d;
     })
     .enter()
     .append('rect')
     .attr('class', function(d, i) {
       return 'series-'+i+' bar';
+    })
+    .style('fill', function(d, i) {
+      return ((dataset.length === 1) ? charts.chartColor(i, 'bar', dataset[0][i]) : '');
+    })
+    .attr('mask', function (d, i) {
+      return ((dataset.length === 1) ? 'url(#' + dataset[0][i].pattern + ')' : (series[d.index].pattern ? 'url(#' + series[d.index].pattern + ')' : ''));
     })
     .attr('x', function (d) {
       return xScale(d.x0);

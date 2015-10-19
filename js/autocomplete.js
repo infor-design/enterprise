@@ -27,7 +27,7 @@
         tags: false, //Allows tags to be shown/generated.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
         filterMode: 'startsWith',  // startsWith and contains Supported
-        delay: 500
+        delay: 300
       },
       settings = $.extend({}, defaults, options);
 

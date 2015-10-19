@@ -30,7 +30,7 @@
   window.Locale = {
 
     currentLocale:  {name: '', data: {}}, //default
-    cultures: [],
+    cultures: {},
     culturesPath: existingCulturePath,
 
     //Sets the Lang in the Html Header
@@ -63,7 +63,7 @@
     },
 
     addCulture: function(locale, data) {
-      this.cultures[locale]= data;
+      this.cultures[locale] = data;
     },
 
     //Set the Local
@@ -403,7 +403,7 @@
 
     // Overridable culture messages
     translate: function(key) {
-      if (this.currentLocale.data === undefined) {
+      if (this.currentLocale.data === undefined || this.currentLocale.data.messages === undefined) {
         return key;
       }
 
@@ -434,8 +434,6 @@
       return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
   };
-
-  window.Locale.set('en-US');
 
 /* start-amd-strip-block */
 }));
