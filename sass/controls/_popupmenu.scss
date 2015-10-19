@@ -143,8 +143,10 @@
   }
 
   &.is-padded .icon:not(.arrow) {
-    margin-left: 13px;
-    margin-right: -6px;
+    height: 18px;
+    margin-left: 2px;
+    margin-right: -13px;
+    margin-top: 1px;
   }
 
   &.has-icons > li {

@@ -121,6 +121,11 @@ window.Formatters = {
         classes = ranges[i].classes;
         text = (ranges[i].text ? ranges[i].text : classes.split(' ')[0]);
       }
+
+      if (value === ranges[i].value) {
+        classes = ranges[i].classes;
+        text = (ranges[i].text ? ranges[i].text : value);
+      }
     }
 
     return {'classes': classes, 'text': text};
@@ -142,6 +147,13 @@ window.Formatters = {
   Alert: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
     return '<svg class="icon datagrid-alert-icon icon-' + ranges.classes +'" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-' + ranges.classes +'"/></svg><span class="datagrid-alert-text">' + (ranges.text === 'value' ? value : ranges.text) + '</span>';
+  },
+
+  Color: function (row, cell, value, col) {
+    var ranges = Formatters.ClassRange(row, cell, value, col),
+      text = ((value === null || value === undefined || value === '') ? '--' : value.toString());
+
+    return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
   // TODOs
@@ -253,6 +265,7 @@ $.fn.datagrid = function(options) {
         columns: [],
         dataset: [],
         editable: false,
+        isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
         rowHeight: 'medium', //(short, medium or tall)
         selectable: false, //false, 'single' or 'multiple'
@@ -306,11 +319,9 @@ $.fn.datagrid = function(options) {
 
     //Initialize as a Table
     initFromTable: function () {
-
       if (this.settings.dataset === 'table') {
         this.element.remove();
       }
-
     },
 
     initTableWidth: function () {
@@ -341,14 +352,14 @@ $.fn.datagrid = function(options) {
 
       //Init from Table
       if (this.settings.dataset === 'table') {
-        self.table = $(this.element).addClass('datagrid');
+        self.table = $(this.element).addClass('datagrid'+ (!this.settings.isList ? ' is-readonly' : ''));
 
         if (this.element.closest('.datagrid-wrapper').length === 0) {
           this.element.wrap('<div class="datagrid-wrapper"><div class="datagrid-container"></div></div>');
         }
         self.settings.dataset = self.htmlToDataset();
       } else {
-        self.table = $('<table role="grid"></table>').addClass('datagrid');
+        self.table = $('<table role="grid"></table>').addClass('datagrid'+ (this.settings.isList ? ' is-readonly' : ''));
         self.element.addClass('datagrid-container');
       }
 
@@ -799,6 +810,7 @@ $.fn.datagrid = function(options) {
 
         if (self.toolbar) {
           self.toolbar.find('.datagrid-result-count').text('(' + count + ' ' + Locale.translate('Results') + ')');
+          self.toolbar.find('.datagrid-row-count').text(count);
         }
       }, 1);
     },

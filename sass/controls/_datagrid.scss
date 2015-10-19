@@ -350,6 +350,17 @@ $datagrid-header-height: 40px;
       color: $datagrid-cell-readonly-color;
     }
   }
+
+  //Readonly - List Datagrid
+  &.is-readonly {
+    td {
+      background-color: transparent;
+    }
+
+    tr td {
+      border-left: 1px solid transparent;
+    }
+  }
 }
 
 // Sorting
@@ -549,3 +560,9 @@ td .btn-actions {
 .datagrid-result-count {
   @include font-size(14);
 }
+
+.datagrid-row-count {
+  line-height: 10px;
+}
+
+
