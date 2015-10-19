@@ -205,8 +205,8 @@
   border-bottom: 1px solid $accordion-border-color;
   cursor: pointer;
   height: 46px;
-  position: relative;
   overflow: hidden;
+  position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
 
@@ -333,12 +333,13 @@
     margin: 0 19px 0 18px;
 
     + a {
-      width: calc(100% - 55px);
+      width: calc(100% - 56px);
     }
   }
 
   // Selected color scheme
   &:active,
+  &.is-selected,
   &.is-focused {
     background-color: $accordion-selected-bg-color;
     border-bottom-color: $accordion-selected-bg-color;
@@ -380,6 +381,12 @@
     }
   }
 
+  &.is-selected {
+    a {
+      color: $accordion-selected-text-color;
+    }
+  }
+
   &.has-chevron {
     > [class^="btn"] {
       padding: 0;
@@ -399,7 +406,7 @@
   &:not(.is-focused):not(:active):hover,
   &.child-selected:not(.is-focused) {
     > a {
-      color: $accoridon-text-active-color;
+      color: $accordion-text-active-color;
     }
 
     > [class^="btn"] {
@@ -517,7 +524,7 @@
 
       + a {
         padding: 10px 0 10px 1px;
-        width: calc(100% - 55px);
+        width: calc(100% - 56px);
       }
     }
 

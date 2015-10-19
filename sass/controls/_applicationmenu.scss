@@ -129,9 +129,11 @@
             padding-left: 97px;
           }
 
+          /*
           > [class^="btn"]:first-child {
             margin-left: 50px;
           }
+          */
 
           > .icon,
           > [class^="btn"] {
@@ -292,7 +294,8 @@
       }
     }
 
-    &.is-focused {
+    &.is-focused,
+    &.is-selected {
       border-bottom-color: $accordion-selected-bg-color;
 
       > a {
@@ -339,6 +342,12 @@
 
       .icon:not(.chevron) {
         fill: $app-accordion-icon-hover-color;
+      }
+    }
+
+    &.is-selected {
+      a {
+        color: $accordion-selected-text-color;
       }
     }
 

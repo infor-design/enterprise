@@ -188,6 +188,12 @@
             self.originalSelection = $(e.target);
           }
           $(this).addClass('is-focused');
+
+          var selected = self.headers.filter('.is-selected');
+          if (selected.length && selected[0] !== this) {
+            selected.removeClass('is-selected');
+          }
+
         }).on('focusout.accordion', function() {
           if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
             $(this).removeClass('is-focused');
@@ -306,6 +312,7 @@
         var pane = header.next('.accordion-pane');
         if (pane.length) {
           this.toggle(header);
+          this.select(header);
           expander.focus();
           return;
         }
@@ -333,6 +340,8 @@
         }
 
         if (key === 9) { // Tab (also triggered by Shift + Tab)
+          this.headers.removeClass('is-selected');
+
           if (target.is('a') && expander.length) {
             setInitialOriginalSelection(expander);
           } else {
@@ -393,6 +402,12 @@
         // Make sure we select the anchor
         var anchor = element,
           header = anchor.parent();
+
+        if (element.is('.accordion-header')) {
+          header = element;
+          anchor = header.children('a');
+        }
+
         if (anchor.is('[class^="btn"]')) {
           anchor = element.next('a');
         }
