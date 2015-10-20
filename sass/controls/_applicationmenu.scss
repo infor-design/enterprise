@@ -103,19 +103,6 @@
             padding-left: 0;
           }
         }
-
-        /*
-        &.has-chevron {
-          > a {
-            width: calc(100% - 101px);
-          }
-
-          > .icon + a {
-            padding-left: 0;
-            width: calc(100% - 163px);
-          }
-        }
-        */
       }
 
       .accordion-pane {
@@ -126,21 +113,15 @@
         // Level 2
         .accordion-header {
           > a {
-            padding-left: 97px;
+            padding-left: 63px;
           }
-
-          /*
-          > [class^="btn"]:first-child {
-            margin-left: 50px;
-          }
-          */
 
           > .icon,
           > [class^="btn"] {
 
             + a {
               padding-left: 0;
-              width: calc(100% - 98px);
+              width: calc(100% - 63px);
             }
           }
         }
@@ -153,7 +134,7 @@
           // Level 3
           .accordion-header {
             > a {
-              padding-left: 129px;
+              padding-left: 97px;
             }
 
             > .icon,
@@ -162,7 +143,7 @@
 
               + a {
                 padding-left: 0;
-                width: calc(100% - 132px);
+                width: calc(100% - 131px);
               }
             }
           }
@@ -175,7 +156,7 @@
             // Level 4
             .accordion-header {
               > a {
-                padding-left: 164px;
+                padding-left: 129px;
               }
 
               > .icon,
@@ -184,7 +165,7 @@
 
                 + a {
                   padding-left: 0;
-                  width: calc(100% - 167px);
+                  width: calc(100% - 165px);
                 }
               }
             }
@@ -197,7 +178,7 @@
               // Level 5
               .accordion-header {
                 > a {
-                  padding-left: 198px;
+                  padding-left: 164px;
                 }
 
                 > .icon,
@@ -219,7 +200,7 @@
                 // Level 6
                 .accordion-header {
                   > a {
-                    padding-left: 232px;
+                    padding-left: 198px;
                   }
 
                   > .icon,
@@ -235,7 +216,7 @@
 
                 .accordion-pane {
                   .accordion-content {
-                    padding-left: 232px;
+                    padding-left: 198px;
                   }
                 }
               }

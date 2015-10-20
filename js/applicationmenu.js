@@ -79,7 +79,8 @@
         // Check to make sure that the internal Accordion Control is invoked
         var accordion = this.accordion.data('accordion');
         if (!accordion) {
-          this.accordion.accordion();
+          var accOpts = $.fn.parseOptions(this.accordion[0]);
+          this.accordion.accordion(accOpts);
         }
 
         // Reposition the Application Menu to somewhere directly in the 'body' tag if it isn't already there.
