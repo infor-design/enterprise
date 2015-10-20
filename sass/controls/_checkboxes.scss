@@ -210,6 +210,14 @@ span.checkbox > input:hover + label:before {
   @include checkbox-animation;
 }
 
+.checkbox.is-partial:checked + label:after {
+  border-radius: 0;
+  border-width: 0 2px 0 0;
+  left: 9px;
+  top: -5px;
+  transform: scaleX(-1) rotate(90deg);
+}
+
 .checkbox-group-label {
   display: block;
   @include font-size(12);

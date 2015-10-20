@@ -731,6 +731,8 @@
       },
 
       teardown: function() {
+        var wrapper = this.menu.parent('.popupmenu-wrapper');
+
         this.menu.parent().off('contextmenu.popupmenu');
         if (this.element.hasClass('btn-actions')) {
           this.menu.parent().removeClass('bottom').find('.arrow').remove();
@@ -754,6 +756,8 @@
         this.menu.find('.popupmenu').each(function() {
           unwrapPopup($(this));
         });
+
+        wrapper.remove();
 
         this.detach();
         this.element

@@ -19,6 +19,15 @@ $header-height: 60px;
     width: 100%;
   }
 
+  &.azure,
+  &.azure06 {
+    background-color: $primary-color;
+  }
+
+  &.azure07 {
+    background-color: $azure07;
+  }
+
   > * {
     vertical-align: middle;
   }
@@ -71,6 +80,7 @@ $header-height: 60px;
     border: 1px solid transparent;
     border-radius: 18px;
     color: $header-icon-color;
+    opacity: .7;
 
     > .icon {
       fill: $header-icon-color !important;
@@ -95,6 +105,8 @@ $header-height: 60px;
       > span {
         color: $inverse-color !important;
       }
+
+      opacity: 1;
     }
 
     &:focus:not(.hide-focus) {
