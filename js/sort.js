@@ -35,6 +35,7 @@
 
       init: function() {
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        this.isIE11 = /Trident.*rv[ :]*11\./i.test(navigator.userAgent);
         this.handleEvents();
       },
 
@@ -133,6 +134,13 @@
               self.dragging.hide();
 
               overItem[placeholder.index() < overItem.index() ? 'after' : 'before'](placeholder);
+
+              // Fix: IE-11 on windows-10 svg wss disappering
+              var svg = $('svg', overItem);
+              if(self.isIE11 && svg.length) {
+                overItem.html(overItem.html());
+              }
+
               self.placeholders.not(placeholder).detach();
             }
             else if (!self.placeholders.is(this)) {
