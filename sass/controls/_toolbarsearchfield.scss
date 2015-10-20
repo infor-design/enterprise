@@ -19,27 +19,11 @@ $toolbarsearchfield-empty-width: 34px;
     vertical-align: middle;
   }
 
-  &.active {
-    width: 225px;
-  }
-
-  &.has-focus {
-    box-shadow: 0 0 0 2px transparent,
-      0 0 0 1px $primary-color;
-  }
-
-  &.has-text {
-    width: $toolbarsearchfield-filled-out-width;
-
-    &.active {
-      width: $toolbarsearchfield-max-width;
-    }
-  }
-
-  // NOTE: Javascript will set the width, left, and right properties of the wrapper
-
   .searchfield {
-    border: 0 !important;
+    @include antialiased();
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
     box-shadow: none !important;
     color: $tertiary-btn-color;
     @include font-size(12);
@@ -48,6 +32,8 @@ $toolbarsearchfield-empty-width: 34px;
     outline: 0 !important;
     text-overflow: ellipsis;
     text-transform: uppercase;
+    @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94),
+      border-color 300ms cubic-bezier(.17, .04, .03, .94));
     width: 100%;
 
     &::-webkit-input-placeholder {
@@ -71,5 +57,80 @@ $toolbarsearchfield-empty-width: 34px;
 
   .icon {
     fill: $tertiary-btn-color;
+  }
+
+  &.active {
+    width: 225px;
+
+    // During the animation "out", the text goes transparent
+    .searchfield {
+      background-color: rgba($graphite02, 1);
+      border-bottom-color: rgba($graphite03, 1);
+      color: transparent;
+
+      &::-webkit-input-placeholder {
+        color: transparent;
+      }
+
+      &::-moz-placeholder {
+        color: transparent;
+      }
+
+      &:-ms-input-placeholder {
+        color: transparent;
+      }
+    }
+
+    // Once the field is open, color and font size change to match other Searchfields.
+    &.is-open {
+      .searchfield {
+        color: $tertiary-btn-color;
+        @include font-size(14);
+        font-weight: normal;
+        text-transform: none;
+
+        &::-webkit-input-placeholder {
+          color: $tertiary-btn-color;
+          @include font-size(14);
+          font-weight: normal;
+          text-transform: none;
+        }
+
+        &::-moz-placeholder {
+          color: $tertiary-btn-color;
+          @include font-size(14);
+          font-weight: normal;
+          text-transform: none;
+        }
+
+        &:-ms-input-placeholder {
+          color: $tertiary-btn-color;
+          @include font-size(14);
+          font-weight: normal;
+          text-transform: none;
+        }
+      }
+    }
+
+  }
+
+  &.has-focus {
+    .icon {
+      fill: $primary-color;
+    }
+
+    &.active {
+      .icon {
+        fill: $tertiary-btn-color;
+      }
+    }
+  }
+
+  &.has-text {
+    width: $toolbarsearchfield-filled-out-width;
+
+    &.active {
+      width: $toolbarsearchfield-max-width;
+    }
   }
 }

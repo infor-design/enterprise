@@ -79,7 +79,10 @@
       handleEvents: function() {
         var self = this;
 
-        this.input.on('focusin.toolbarsearchfield', function(e) {
+        this.input
+        .on('mousedown.toolbarsearchfield', function() {
+          self.fastActivate = true;
+        }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
         }).on('focusout.toolbarsearchfield', function() {
           clearTimeout(self.focusTimer);
@@ -95,7 +98,6 @@
           self.handleOutsideKeydown(e);
         });
 
-        console.log('All events have been added to the Toolbar Searchfield');
         return this;
       },
 
@@ -113,9 +115,16 @@
 
         this.inputWrapper.addClass('has-focus');
 
-        this.focusTimer = setTimeout(function searchfieldActivationTimer() {
+        function searchfieldActivationTimer() {
           self.activate();
-        }, 400);
+        }
+
+        if (this.fastActivate) {
+          searchfieldActivationTimer();
+          return;
+        }
+
+        this.focusTimer = setTimeout(searchfieldActivationTimer, 300);
       },
 
       handleBlur: function(e) {
@@ -130,8 +139,6 @@
         var self = this,
           target = $(e.target);
 
-        this.tabKeyPressed = false;
-
         if ($.contains(this.element[0], e.target) || $.contains(this.inputWrapper[0], e.target) ||
           target.is(this.element) || target.is(this.inputWrapper)) {
           return;
@@ -144,9 +151,9 @@
       handleOutsideKeydown: function(e) {
         var key = e.which;
 
-        this.tabKeyPressed = false;
+        this.fastActivate = false;
         if (key === 9) {
-          this.tabKeyPressed = true;
+          this.fastActivate = true;
         }
       },
 
@@ -158,18 +165,17 @@
         var self = this;
         this.inputWrapper.addClass('active');
 
+        if (this.animationTimer) {
+          clearTimeout(this.animationTimer);
+        }
+
         function activateCallback() {
-          self.input.focus();
+          self.inputWrapper.addClass('is-open');
+          self.input.focus(); // for iOS
           self.handleDeactivationEvents();
-          console.log('Toolbar Searchfield Activated!');
         }
 
-        if (this.tabKeyPressed) {
-          activateCallback();
-          return;
-        }
-
-        setTimeout(activateCallback, 400);
+        this.animationTimer = setTimeout(activateCallback, 300);
       },
 
       deactivate: function() {
@@ -181,17 +187,23 @@
         }
         this.inputWrapper[textMethod]('has-text');
 
-        function deactivateCallback() {
-          self.inputWrapper.removeClass('active');
-          console.log('Toolbar Searchfield De-activated!');
+        if (this.animationTimer) {
+          clearTimeout(this.animationTimer);
         }
 
-        if (this.tabKeyPressed) {
+        function deactivateCallback() {
+          self.inputWrapper.removeClass('is-open');
+          self.fastActivate = false;
+        }
+
+        self.inputWrapper.removeClass('active');
+
+        if (this.fastActivate) {
           deactivateCallback();
           return;
         }
 
-        setTimeout(deactivateCallback, 400);
+        this.animationTimer = setTimeout(deactivateCallback, 300);
       },
 
       // sets the positioning of the input element
