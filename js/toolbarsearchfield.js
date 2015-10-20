@@ -104,12 +104,12 @@
       handleDeactivationEvents: function() {
         var self = this;
 
-        $(document).on('click.toolbarsearchfield-' + this.id, function(e) {
+        $(document).onTouchClick('toolbarsearchfield-' + this.id).on('click.toolbarsearchfield-' + this.id, function(e) {
           self.handleOutsideClick(e);
         });
       },
 
-      handleFocus: function(e) {
+      handleFocus: function() {
         var self = this;
         clearTimeout(this.focusTimer);
 
@@ -127,7 +127,7 @@
         this.focusTimer = setTimeout(searchfieldActivationTimer, 300);
       },
 
-      handleBlur: function(e) {
+      handleBlur: function() {
         clearTimeout(this.focusTimer);
 
         if (this.inputWrapper.hasClass('active')) {
@@ -136,15 +136,14 @@
       },
 
       handleOutsideClick: function(e) {
-        var self = this,
-          target = $(e.target);
+        var target = $(e.target);
 
         if ($.contains(this.element[0], e.target) || $.contains(this.inputWrapper[0], e.target) ||
           target.is(this.element) || target.is(this.inputWrapper)) {
           return;
         }
 
-        $(document).off('click.toolbarsearchfield-' + this.id);
+        $(document).offTouchClick('toolbarsearchfield-' + this.id).off('click.toolbarsearchfield-' + this.id);
         this.deactivate();
       },
 
@@ -163,11 +162,17 @@
         }
 
         var self = this;
-        this.inputWrapper.addClass('active');
 
         if (this.animationTimer) {
           clearTimeout(this.animationTimer);
         }
+
+        // Places the input wrapper into the toolbar on smaller breakpoints
+        if (this.shouldBeFullWidth()) {
+          this.inputWrapper.detach().prependTo(this.toolbarParent);
+        }
+
+        this.inputWrapper.addClass('active');
 
         function activateCallback() {
           self.inputWrapper.addClass('is-open');
@@ -196,6 +201,11 @@
           self.fastActivate = false;
         }
 
+        // Puts the input wrapper back where it should be if it's been moved due to small form factors.
+        if (this.inputWrapper.parent().is(this.toolbarParent)) {
+          this.inputWrapper.detach().prependTo(this.toolbarParent.children('.buttonset'));
+        }
+
         self.inputWrapper.removeClass('active');
 
         if (this.fastActivate) {
@@ -204,6 +214,10 @@
         }
 
         this.animationTimer = setTimeout(deactivateCallback, 300);
+      },
+
+      shouldBeFullWidth: function() {
+        return $(window).width() < 767;
       },
 
       // sets the positioning of the input element
