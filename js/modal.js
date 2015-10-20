@@ -289,10 +289,10 @@
         //Look for other nested dialogs and adjust the zindex.
         $('.modal').each(function (i) {
           var modal = $(this);
-          modal.css('z-index', (1000 + (i + 1)).toString());
+          modal.css('z-index', (1020 + (i + 1)).toString());
 
           if (modal.data('modal') && modal.data('modal').overlay) {
-            modal.data('modal').overlay.css('z-index', (1000 + i).toString());
+            modal.data('modal').overlay.css('z-index', (1020 + i).toString());
           }
         });
 
@@ -402,7 +402,7 @@
         this.extraPadding = this.isOpen() ? 0 : parseInt($('.modal-content', this.element).css('padding-left'), 10)- 2;
         this.extraPadding = this.settings.isAlert ? this.extraPadding *1.6 : this.extraPadding;
 
-        left = (this.element.outerWidth() /2) + this.extraPadding;        
+        left = (this.element.outerWidth() /2) + this.extraPadding;
         top = (this.element.outerHeight() /2) + this.extraPadding *1.4;
 
         this.element.css({

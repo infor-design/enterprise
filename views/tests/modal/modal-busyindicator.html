@@ -1,0 +1,126 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <hr class="fieldset-hr">
+      <h2 class="fieldset-title">Busy Indicator - Standalone Example (Non-UI-Blocking)</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+
+    <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button><br /><br>
+    <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button><br>
+    <div id="standalone-busy" class="busy card"></div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+      <hr class="fieldset-hr">
+      <h2 class="fieldset-title">On Input Fields</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <label class="label" for="busy-input">Busy Input Field</label>
+      <input class="busy" type="text" id="busy-input" data-block-ui="false" data-completion-time="2000" data-close-time="3000"/>
+
+      <br><button class="btn" id="trigger-busy-input" type="button">Load</button><br><br>
+    </div>
+  </div>
+
+  <div class="one-half column">
+    <div class="field">
+      <label class="label" for="busy-dropdown">Busy Dropdown</label>
+      <select class="dropdown busy" id="busy-dropdown" data-block-ui="false" data-completion-time="2000" data-close-time="3000">
+        <option selected>Busy</option>
+        <option>Preoccupied</option>
+        <option>Distracted</option>
+        <option>Engaged</option>
+      </select>
+
+      <br><button class="btn" id="trigger-busy-dropdown" type="button">Load</button><br><br>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#busy-start-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('start.busyindicator');
+    });
+
+    $('#busy-complete-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('complete.busyindicator');
+    });
+
+    $('#busy-form button[type="submit"]').click(function(e) {
+      e.preventDefault();
+      $('#busy-form').trigger('start.busyindicator');
+    });
+
+    $('#trigger-busy-input').click(function(e) {
+      e.preventDefault();
+      $('#busy-input').trigger('start');
+    });
+
+    $('#trigger-busy-dropdown').click(function(e) {
+      e.preventDefault();
+      $('#busy-dropdown').trigger('start');
+    });
+
+  });
+</script>
+
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" data-modal="modal-1">Add Context</button>
+    <div class="modal" id="modal-1">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title" >Add Context</h1>
+        </div>
+
+        <div class="modal-body">
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type" name="type">
+              <option value="1">Context #1</option>
+              <option value="2">Context #2</option>
+              <option value="3">Context #3</option>
+              <option value="4">Context #4</option>
+              <option value="5">Context #5</option>
+            </select>
+          </div>
+
+
+          <div class="field">
+            <label for="context-name" class="required">Name</label>
+            <input id="context-name"  aria-required="true" data-validate="required" name="context-name" type="text">
+          </div>
+
+          <div class="field">
+           <label for="context-desc" class="required">Page Title</label>
+           <textarea id="context-desc" aria-required="true" data-validate="required" name="context-desc" maxlength="50"></textarea>
+          </div>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" style="width:50%">Cancel</button>
+            <button type="button" id="submit" class="btn-modal-primary" style="width:50%">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

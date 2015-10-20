@@ -1,0 +1,174 @@
+<!-- BEGIN Actual Layout Markup -->
+<div class="page-container builder">
+
+   <div class="sidebar scrollable" role="complementary">
+      <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+   </div>
+
+   <div id="maincontent" class="main scrollable builder-pane" role="main">
+
+      <div class="builder-header azure06">
+         <div class="toolbar no-actions-button">
+            <div class="title">
+               <h2>
+                  <span class="panel-title">Builder Panel Title</span><br>
+                  <span class="panel-subhead">Builder Panel Subheader</span>
+               </h2>
+            </div>
+            <div class="buttonset">
+
+               <!--Enabled Generic-->
+               <button class="btn" type="button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-filter"></use>
+                  </svg>
+                  <span>Category</span>
+               </button>
+
+               <!--Enabled Tertiary Icon-->
+               <button class="btn-tertiary" type="button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-calendar"></use>
+                  </svg>
+                  <span>Date</span>
+               </button>
+
+               <!--Disabled Generic-->
+               <button class="btn" type="button" disabled>
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-mingle-share"></use>
+                  </svg>
+                  <span>Share</span>
+               </button>
+
+               <!--Disabled Tertiary Icon-->
+               <button class="btn-tertiary" type="button" disabled>
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-calendar"></use>
+                  </svg>
+                  <span>Date</span>
+               </button>
+
+               <!--Enabled Tertiary-->
+               <button class="btn" type="button">
+                  <span>Option #1</span>
+               </button>
+
+               <!--Enabled Menu-->
+               <button class="btn-menu" type="button">
+                  <span>Option #2</span>
+               </button>
+               <ul class="popupmenu is-padded">
+                  <li><a href="#">Sub Option #1</a></li>
+                  <li><a href="#">Sub Option #2</a></li>
+                  <li><a href="#">Sub Option #3</a></li>
+                  <li class="is-checked"><a href="#">Sub Option #4</a></li>
+                  <li><a href="#">Sub Option #5</a></li>
+                  <li><a href="#">Sub Option #6</a></li>
+               </ul>
+
+               <!--Disabled Menu-->
+               <button class="btn-menu" type="button" disabled>
+                  <span>Option #3</span>
+               </button>
+               <ul class="popupmenu is-padded">
+                  <li><a href="#">Sub Option #1</a></li>
+                  <li class="is-checked"><a href="#">Sub Option #2</a></li>
+                  <li><a href="#">Sub Option #3</a></li>
+                  <li><a href="#">Sub Option #4</a></li>
+                  <li><a href="#">Sub Option #5</a></li>
+                  <li><a href="#">Sub Option #6</a></li>
+               </ul>
+
+               <button id="sidebar-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" data-popdown="builder-popdown-content">
+                  <svg class="icon" focusable="false" aria-hidden="true">
+                     <use xlink:href="#icon-settings"></use>
+                  </svg>
+                  <span>Sidebar Popup</span>
+               </button>
+            </div>
+         </div>
+         <div id="builder-popdown-content" class="popdown hidden">
+            <div class="widget">
+               <div class="widget-header">
+                  <h2 class="widget-title">My Cart <span class="extra">(8 Items)</span></h2>
+               </div>
+               <div class="widget-content">
+                  <p style="margin: 0 20px 20px;">
+                     Tag aggregate, feeds rich weblogs user-centric user-centred mashups frictionless, interactive blogospheres e-enable visionary, solutions enable vertical target seamless remix seize folksonomies--vortals efficient. Integrate, metrics. Peer-to-peer weblogs mesh methodologies platforms citizen-media revolutionary podcasts enable communities, "folksonomies best-of-breed reinvent; rss-capable mindshare."
+                  </p>
+                  <p style="margin: 0 20px 20px;">
+                     Syndicate share, synergies capture, value-added integrate B2C, integrate synthesize envisioneer podcasts orchestrate incentivize cross-platform networkeffects. Robust redefine ecologies, eyeballs, "A-list semantic," revolutionary bricks-and-clicks Cluetrain target syndicate integrate viral e-enable mindshare reintermediate whiteboard.
+                  </p>
+               </div>
+               <div class="widget-footer modal-buttonset">
+                  <button class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
+                  <button class="btn-modal-primary" style="width: 50%;">Checkout</button>
+               </div>
+            </div>
+         </div>
+
+      </div>
+      <!-- .builder-header -->
+
+      <div class="builder-content no-scroll">
+         <div class="builder-actions scrollable">
+            <div class="builder-actions-header">
+               <h3>Main Panel Contents</h3>
+            </div>
+            <div class="builder-actions-content">
+               <p>
+                  Web-enabled networks engage strategic bleeding-edge, e-services reinvent syndicate beta-test initiatives. Experiences optimize dynamic scalable dynamic mindshare communities dot-com reintermediate e-tailers deliverables, engage customized dynamic mission-critical.
+               </p>
+               <p>
+                  A-list, social, citizen-media?" Real-time orchestrate ubiquitous addelivery A-list cutting-edge sexy innovate folksonomies: paradigms feeds. Platforms cross-platform. Wireless data-driven productize, cultivate web-readiness integrateAJAX-enabled, mashups? Embrace cultivate action-items, infrastructures authentic. Rss-capable weblogs whiteboard schemas embedded harness optimize disintermediate eyeballs morph peer-to-peer, networkeffects markets tagclouds semantic, customized ecologies channels, initiatives, scalable magnetic.
+               </p>
+            </div>
+         </div>
+         <div class="builder-sidebar my-cart scrollable">
+            <div class="builder-sidebar-header">
+               <h3>Sidebar Contents</h3>
+            </div>
+            <div class="builder-sidebar-content">
+               <p style="margin: 0 20px 20px;">
+                  Tag aggregate, feeds rich weblogs user-centric user-centred mashups frictionless, interactive blogospheres e-enable visionary, solutions enable vertical target seamless remix seize folksonomies--vortals efficient. Integrate, metrics. Peer-to-peer weblogs mesh methodologies platforms citizen-media revolutionary podcasts enable communities, "folksonomies best-of-breed reinvent; rss-capable mindshare."
+               </p>
+               <p style="margin: 0 20px 20px;">
+                  Syndicate share, synergies capture, value-added integrate B2C, integrate synthesize envisioneer podcasts orchestrate incentivize cross-platform networkeffects. Robust redefine ecologies, eyeballs, "A-list semantic," revolutionary bricks-and-clicks Cluetrain target syndicate integrate viral e-enable mindshare reintermediate whiteboard.
+               </p>
+            </div>
+            <div class="builder-sidebar-footer"></div>
+         </div>
+      </div>
+      <!-- .builder-content -->
+
+   </div>
+   <!-- #maincontent.main.scrollable.builder-pane -->
+
+   <!-- Layout Template for Listview -->
+
+   <script id="task-tmpl" type="text/html">
+      <ul>
+         {{#dataset}}
+         {{#disabled}}
+         <li class="is-disabled">
+            {{/disabled}}
+            {{^disabled}}
+         <li>
+            {{/disabled}}
+            <p class="listview-heading">Task #{{task}}</p>
+            <p class="listview-subheading">{{desc}}</p>
+            <p class="listview-micro">Due: {{date}}</p>
+         </li>
+         {{/dataset}}
+      </ul>
+   </script>
+
+   <script>
+      // Initialize all SoHo Xi Controls and set the locale
+      $(function() {
+         $('body').initialize('en-US');
+      });
+   </script>
+</div>
+<!-- END Actual Layout Markup -->

@@ -68,8 +68,9 @@
     line-height: 1;
   }
 
-  [class^="btn-"] {
+  [class^="btn"] {
     color: $white;
+    opacity: .7;
 
     > span:not(.audible) {
       color: $white;
@@ -77,6 +78,42 @@
 
     > .icon {
       fill: $white;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: .4;
+
+      .icon,
+      svg {
+        fill: $white !important;
+      }
+
+      &:hover {
+        color: $white !important;
+
+        svg {
+          fill: $white !important;
+        }
+
+        span {
+          color: $white !important;
+        }
+      }
+    }
+
+    &:hover:not(:disabled) {
+      color: $white !important;
+      opacity: 1;
+
+      span {
+        color: $white !important;
+      }
+
+      .icon,
+      svg {
+        fill: $white !important;
+      }
     }
   }
 
