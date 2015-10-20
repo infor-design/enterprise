@@ -373,9 +373,9 @@
           }
 
           if (e.which === 13 && self.isOnTop()) {
-           e.stopPropagation();
-           e.preventDefault();
-           self.element.find('.btn-modal-primary:enabled').trigger('click');
+            e.stopPropagation();
+            e.preventDefault();
+            self.element.find('.btn-modal-primary:enabled').trigger('click');
           }
         });
 

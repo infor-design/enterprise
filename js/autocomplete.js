@@ -260,6 +260,8 @@
             if (self.element.data('popupmenu')) {
               self.element.data('popupmenu').close();
             }
+            e.stopPropagation();
+            e.preventDefault();
           }
 
         })
