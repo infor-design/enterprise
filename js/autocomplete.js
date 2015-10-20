@@ -264,6 +264,10 @@
             e.preventDefault();
           }
 
+          if (e.keyCode === 8 && self.list) {
+            self.element.trigger('keypress');
+          }
+
         })
         .on('keypress.autocomplete', function (e) {
           var field = $(this);
