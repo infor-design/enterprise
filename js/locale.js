@@ -62,6 +62,22 @@
       return this.culturesPath;
     },
 
+    cultureInHead: function() {
+      var isThere = false,
+        scripts = document.getElementsByTagName('script'),
+        partialPath = 'cultures';
+
+        for (var i = 0; i < scripts.length; i++) {
+          var src = scripts[i].src;
+
+          if (src.indexOf(partialPath) > -1) {
+            isThere = true;
+          }
+        }
+
+      return isThere;
+    },
+
     addCulture: function(locale, data) {
       this.cultures[locale] = data;
     },
@@ -409,7 +425,7 @@
 
       if (this.currentLocale.data.messages[key] === undefined) {
         // Substitue English Expression if missing
-        if (this.cultures['en-US'].messages[key] === undefined) {
+        if (!this.cultures['en-US'] || this.cultures['en-US'].messages[key] === undefined) {
           return undefined;
         }
         return this.cultures['en-US'].messages[key].value;
@@ -434,6 +450,12 @@
       return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
   };
+
+  $(function() {
+    if (!window.Locale.cultureInHead()) {
+      window.Locale.set('en-US');
+    }
+  });
 
 /* start-amd-strip-block */
 }));
