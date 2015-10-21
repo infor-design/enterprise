@@ -140,6 +140,11 @@ var express = require('express'),
     res.render('docs/' + end, docOpts);
   });
 
+  app.get('/partials*', function(req, res) {
+    var end = req.url.replace('/partials/','');
+    res.render('partials/' + end, docOpts);
+  });
+
   //Layouts Page
   var layoutOpts = {
     title: 'SoHo XI',

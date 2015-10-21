@@ -124,7 +124,10 @@
         }
 
         if (this.settings.beforeShow) {
-         var response = function () {
+         var response = function (grid) {
+            if (grid) {
+              self.createGrid(grid);
+            }
             self.createModal();
             self.element.trigger('open', [self.modal, self.grid]);
             return;
@@ -175,7 +178,7 @@
         }
 
         var buttons = this.settings.buttons;
-        if (this.settings.options &&this.settings.options.selectable === 'multiple' && buttons.length === 0) {
+        if (this.settings.options && this.settings.options.selectable === 'multiple' && buttons.length === 0) {
           buttons = [{
             text: Locale.translate('Cancel'),
             click: function(e, modal) {
@@ -193,7 +196,7 @@
           }];
         }
 
-        if (this.settings.options.selectable === 'single' && buttons.length === 0) {
+        if (this.settings.options && this.settings.options.selectable === 'single' && buttons.length === 0) {
           buttons = [{
             text: Locale.translate('Cancel'),
             click: function(e, modal) {
@@ -232,23 +235,34 @@
       },
 
       //Overridable Function in which we create the grid on the current ui dialog.
-      createGrid: function () {
+      createGrid: function (grid) {
         var self = this,
           lookupGrid = $('#lookup-datagrid');
 
+        if (grid) {
+          lookupGrid = grid;
+          self.settings.options = grid.data('datagrid').settings;
+        }
+
         if (self.settings.options) {
-          // self.settings.options.cellNavigation = false;
+
+          if (self.settings.options.selectable === 'single') {
+            self.settings.options.cellNavigation = false;
+            lookupGrid.find('tr').addClass('is-clickable');
+          }
+
           lookupGrid.datagrid(self.settings.options);
         }
         self.grid = lookupGrid.data('datagrid');
 
         //Mark selected rows
+        lookupGrid.off('selected.lookup');
         var val = self.element.val();
         if (val) {
           self.selectGridRows(val);
         }
 
-        if (this.settings.options.selectable === 'single') {
+        if (this.settings.options && this.settings.options.selectable === 'single') {
           lookupGrid.on('selected.lookup', function () {
             setTimeout(function () {
               self.insertRows();
@@ -256,6 +270,7 @@
             }, 100);
           });
         }
+
       },
 
       //Given a field value, select the row

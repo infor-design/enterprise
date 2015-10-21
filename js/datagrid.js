@@ -289,21 +289,22 @@ $.fn.datagrid = function(options) {
   Datagrid.prototype = {
 
     init: function(){
-     var self = this;
+      var self = this;
 
-     this.settings = settings;
-     this.initSettings();
-     this.appendToolbar();
-     this.render();
-     this.createResizeHandle();
-     this.handleEvents();
-     this.handleKeys();
-     this.handlePaging();
-     this.initTableWidth();
+      this.settings = settings;
+      this.initSettings();
+      this.appendToolbar();
+      this.render();
+      this.createResizeHandle();
+      this.handleEvents();
+      this.handleKeys();
+      this.handlePaging();
+      this.initTableWidth();
 
-     setTimeout(function () {
-      self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
-     }, 0);
+      setTimeout(function () {
+        self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
+      }, 0);
+
     },
 
     initSettings: function () {
@@ -421,6 +422,7 @@ $.fn.datagrid = function(options) {
 
         dataset.push(newRow);
       });
+
       return dataset;
     },
 
@@ -664,6 +666,7 @@ $.fn.datagrid = function(options) {
             '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">'+ renderedTmpl + '</div></div>' +
             '</td></tr>';
         }
+
         tableHtml += rowHtml;
       }
 
@@ -1217,7 +1220,7 @@ $.fn.datagrid = function(options) {
         isSingle = this.settings.selectable === 'single',
         rowIndex = (typeof idx === 'number' ? idx : this.tableBody.find('tr[role="row"]').index(idx));
 
-     if (this.settings.selectable === false) {
+      if (this.settings.selectable === false) {
         return;
       }
 
