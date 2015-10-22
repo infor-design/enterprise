@@ -42,6 +42,10 @@ $toolbar-buttonset-height: 44px;
 
     > [class^="btn"] {
       min-width: 34px;
+
+      .icon:not(.icon-dropdown) {
+        height: 18px;
+      }
     }
   }
 

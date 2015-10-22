@@ -1,8 +1,6 @@
 // Toolbar Searchfields
 //================================================== */
 
-$toolbarsearchfield-border-color: $graphite05;
-
 $toolbarsearchfield-max-width: 225px;
 $toolbarsearchfield-filled-out-width: 100px;
 $toolbarsearchfield-empty-width: 34px;
@@ -27,7 +25,7 @@ $toolbarsearchfield-empty-width: 34px;
     border: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0);
     box-shadow: none !important;
-    color: $tertiary-btn-color;
+    color: $searchfield-text-color;
     @include font-size(12);
     font-weight: 700;
     height: 34px;
@@ -39,26 +37,31 @@ $toolbarsearchfield-empty-width: 34px;
     width: 100%;
 
     &::-webkit-input-placeholder {
-      color: $tertiary-btn-color;
+      color: $searchfield-text-color;
       @include font-size(12);
       font-weight: 700;
     }
 
     &::-moz-placeholder {
-      color: $tertiary-btn-color;
+      color: $searchfield-text-color;
       @include font-size(12);
       font-weight: 700;
     }
 
     &:-ms-input-placeholder {
-      color: $tertiary-btn-color;
+      color: $searchfield-text-color;
       @include font-size(12);
       font-weight: 700;
     }
   }
 
   .icon {
-    fill: $tertiary-btn-color;
+    fill: $searchfield-text-color;
+
+    &.close {
+      background-color: rgba($searchfield-bg-color, 0);
+      fill: rgba($searchfield-text-color, 0);
+    }
   }
 
   &.active {
@@ -66,8 +69,8 @@ $toolbarsearchfield-empty-width: 34px;
 
     // During the animation "out", the text goes transparent
     .searchfield {
-      background-color: rgba($graphite02, 1);
-      border-bottom-color: rgba($graphite03, 1);
+      background-color: rgba($searchfield-bg-color, 1);
+      border-bottom-color: rgba($searchfield-border-color, 1);
       color: transparent;
 
       &::-webkit-input-placeholder {
@@ -83,37 +86,56 @@ $toolbarsearchfield-empty-width: 34px;
       }
     }
 
+    .icon {
+      &.close {
+        fill: rgba($searchfield-text-color, 0);
+        @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
+      }
+    }
+
     // Once the field is open, color and font size change to match other Searchfields.
     &.is-open {
       .searchfield {
-        color: $tertiary-btn-color;
+        color: $searchfield-text-color;
         @include font-size(14);
         font-weight: normal;
         text-transform: none;
 
         &::-webkit-input-placeholder {
-          color: $tertiary-btn-color;
+          color: $searchfield-text-color;
           @include font-size(14);
           font-weight: normal;
           text-transform: none;
         }
 
         &::-moz-placeholder {
-          color: $tertiary-btn-color;
+          color: $searchfield-text-color;
           @include font-size(14);
           font-weight: normal;
           text-transform: none;
         }
 
         &:-ms-input-placeholder {
-          color: $tertiary-btn-color;
+          color: $searchfield-text-color;
           @include font-size(14);
           font-weight: normal;
           text-transform: none;
         }
       }
+
+      .icon {
+        &.close {
+          fill: rgba($searchfield-text-color, 1);
+        }
+      }
     }
 
+  }
+
+  &:not(.is-open) {
+    .icon.close {
+      display: none !important;
+    }
   }
 
   &.has-focus {
@@ -123,7 +145,7 @@ $toolbarsearchfield-empty-width: 34px;
 
     &.active {
       .icon {
-        fill: $tertiary-btn-color;
+        fill: $searchfield-text-color;
       }
     }
   }
@@ -155,6 +177,115 @@ $toolbarsearchfield-empty-width: 34px;
 
     &.active {
       width: 100%;
+    }
+  }
+}
+
+// Inside of Listviews
+.card-header,
+.widget-header {
+  .toolbar-searchfield-wrapper {
+    .icon.close {
+      background-color: rgba($searchfield-card-bg-color, 0);
+      border-color: rgba($searchfield-card-border-color, 0);
+    }
+
+    &.active {
+      .searchfield {
+        background-color: rgba($searchfield-card-bg-color, 1);
+        border-bottom-color: rgba($searchfield-card-border-color, 1);
+      }
+
+      .icon.close {
+        background-color: rgba($searchfield-card-bg-color, 1);
+      }
+    }
+
+    &.has-focus {
+      .icon {
+        fill: $listview-toolbar-button-icon-color;
+      }
+    }
+
+    &:hover {
+      input:not([disabled]):not(:focus) {
+        + svg {
+          fill: $listview-toolbar-button-icon-hover-color;
+        }
+      }
+    }
+  }
+}
+
+.header,
+.masthead {
+  .toolbar-searchfield-wrapper {
+    .icon {
+      fill: $searchfield-header-icon-color;
+      opacity: .7;
+    }
+
+    .searchfield {
+      background-color: rgba($searchfield-header-bg-color, 0);
+      background-color: rgba($searchfield-header-border-color, 0);
+      color: $searchfield-header-text-color;
+    }
+
+    &:hover {
+      input:not([disabled]):not(:focus) {
+        + svg {
+          fill: $searchfield-header-icon-color;
+          opacity: 1;
+        }
+      }
+    }
+
+    &.active {
+      .searchfield {
+        background-color: rgba($searchfield-header-bg-color, 1);
+        border-bottom-color: rgba($searchfield-header-border-color, 1);
+        color: transparent;
+
+        &::-webkit-input-placeholder {
+          color: transparent;
+        }
+
+        &::-moz-placeholder {
+          color: transparent;
+        }
+
+        &:-ms-input-placeholder {
+          color: transparent;
+        }
+      }
+
+      .icon.close {
+        background-color: rgba($searchfield-header-bg-color, 1);
+      }
+
+      &.is-open {
+        .searchfield {
+          color: $searchfield-header-text-color;
+
+          &::-webkit-input-placeholder {
+            color: $searchfield-header-placeholder-text-color;
+          }
+
+          &::-moz-placeholder {
+            color: $searchfield-header-placeholder-text-color;
+          }
+
+          &:-ms-input-placeholder {
+            color: $searchfield-header-placeholder-text-color;
+          }
+        }
+      }
+    }
+
+    &.has-focus.active {
+      .icon {
+        fill: $searchfield-header-icon-color;
+      }
     }
   }
 }

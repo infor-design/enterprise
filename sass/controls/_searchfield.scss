@@ -18,7 +18,9 @@
     }
 
     &.close {
+      height: 16px;
       right: 0;
+      top: 9px;
     }
   }
 
@@ -30,8 +32,19 @@
 
   .searchfield {
     padding-left: 30px;
-  }
 
+    &.empty {
+      + .icon + .icon.close {
+        display: none;
+      }
+    }
+
+    &:not(.empty) {
+      + .icon + .icon.close {
+        display: inline-block;
+      }
+    }
+  }
 }
 
 @mixin searchfield-text-style() {
@@ -53,140 +66,19 @@
   width: 100%;
 
   > .searchfield {
-    background-color: $graphite01;
+    background-color: $searchfield-card-bg-color;
     border: 0;
-    border-bottom: 1px solid $graphite02;
+    border-bottom: 1px solid $searchfield-card-border-color;
     padding-left: 32px;
     width: 100%;
   }
 
   > .icon {
-    fill: $graphite03;
+    fill: $searchfield-card-icon-color;
     left: 0;
     right: auto;
   }
 }
-
-// This variation Slides out on focus
-/*
-.toolbar {
-  .searchfield-wrapper {
-    margin: 4px 0 6px;
-
-    + span {
-      color: $font-color;
-      font-weight: bold;
-      @include font-size(12);
-      margin-left: -85px;
-      pointer-events: none;
-      text-transform: uppercase;
-    }
-
-    > .icon {
-      fill: $font-color;
-    }
-
-    // Clearable Searchfield Close Icon
-    .icon.close {
-      display: none;
-    }
-
-    .searchfield:not(.empty) + .icon + .icon.close {
-      cursor: pointer;
-      display: inline-block;
-      height: 16px;
-      pointer-events: normal;
-
-      &:hover {
-        fill: $white;
-      }
-    }
-  }
-
-  .searchfield {
-    background-color: transparent;
-    @include searchfield-text-style();
-    border: 1px solid transparent;
-    cursor: pointer;
-    //padding-left: 36px;
-    text-overflow: ellipsis;
-    transition: width .3s cubic-bezier(.17, .04, .03, .94);
-    //width: 115px;
-
-    &.empty {
-      padding-left: 0;
-      width: 32px;
-
-      &.active,
-      &:active {
-        padding-left: 36px;
-        width: 225px;
-      }
-
-      &[placeholder] {
-        padding-left: 36px;
-        width: 115px;
-
-        &.active,
-        &:active {
-          width: 225px;
-        }
-      }
-    }
-
-    &.active {
-      background-color: #ffffff;
-      border: 1px solid $graphite03;
-      color: initial;
-      cursor: text;
-      //width: 225px;
-
-      &::-webkit-input-placeholder {
-        color: transparent;
-      }
-
-      &::-moz-placeholder {
-        color: transparent;
-      }
-
-      &:-ms-input-placeholder {
-        color: transparent;
-      }
-    }
-
-    &:hover:not([disabled]):not(:focus) {
-      &::-webkit-input-placeholder {
-        @include searchfield-text-style-hover();
-      }
-
-      &::-moz-placeholder {
-        @include searchfield-text-style-hover();
-      }
-
-      &:-ms-input-placeholder {
-        @include searchfield-text-style-hover();
-      }
-
-      svg {
-        fill: $primary-color;
-      }
-    }
-
-    &::-webkit-input-placeholder {
-      @include searchfield-text-style();
-    }
-
-    &::-moz-placeholder {
-      @include searchfield-text-style();
-    }
-
-    &:-ms-input-placeholder {
-      @include searchfield-text-style();
-    }
-
-  }
-}
-*/
 
 @include respond-to(phablet) {
   .searchfield {
@@ -203,65 +95,5 @@
     &:-ms-input-placeholder {
       color: transparent !important;
     }
-  }
-}
-
-// This variation has different style
-.header {
-  .searchfield-wrapper {
-    margin-top: 4px;
-  }
-
-  .searchfield {
-    background-color: $slate08;
-    border-color: transparent transparent $slate09;
-    color: $white;
-    font-weight: normal;
-    padding-left: 32px;
-    text-transform: none;
-
-    + svg.icon {
-      fill: $header-icon-color;
-      left: 0;
-    }
-
-    &.active,
-    &:active {
-      background-color: $slate08;
-      border-color: transparent transparent $slate09;
-      box-shadow: none;
-      color: $white;
-    }
-  }
-
-  .toolbar {
-    // Searchfield in the Header Toolbar always sits at the same width/padding
-    /*
-    .searchfield {
-      border-bottom: 1px solid $slate09;
-      //padding-left: 36px;
-      //width: 225px;
-
-      &.empty {
-        width: 225px;
-
-        &.active,
-        &:active {
-          padding-left: 36px;
-          width: 225px;
-        }
-
-        &[placeholder] {
-          padding-left: 36px;
-          width: 225px;
-
-          &.active,
-          &:active {
-            width: 225px;
-          }
-        }
-      }
-    }
-    */
   }
 }
