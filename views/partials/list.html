@@ -26,8 +26,9 @@
             </ul>
           </div>
      </div>
-
-      <div id="lookup-datagrid"></div>
+    <div>
+      <div id="my-datagrid"></div>
+    </div>
   </div>
 
 
@@ -56,7 +57,7 @@
     columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
 
     //Init and get the api for the grid
-    $('#lookup-datagrid').datagrid({columns:columns, dataset:data, selectable: 'single'});
+    $('#my-datagrid').datagrid({columns:columns, dataset:data, selectable: 'single'});
     $('#modal-contents').initialize();
 
   })(jQuery);

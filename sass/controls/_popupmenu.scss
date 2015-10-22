@@ -258,11 +258,12 @@
   }
 
   .icon:not(.icon-dropdown) {
-    left: -13px;
     margin-left: 5px;
     margin-right: -4px;
     position: relative;
-    top: 3px;
+    top: 5px;
+    height: 18px;
+    width: 18px;
   }
 
   .icon.icon-dropdown {

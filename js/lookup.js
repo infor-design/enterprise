@@ -42,6 +42,8 @@
       this.init();
     }
 
+    var lookupGridId = 'lookup-datagrid';
+
     // Plugin Methods
     Lookup.prototype = {
 
@@ -158,7 +160,7 @@
       //Overidable function to create the modal dialog
       createModal: function () {
         var self = this,
-          content = '<hr><div id="lookup-datagrid"></div>',
+          content = '<hr><div id="'+lookupGridId+'"></div>',
           labelText = $('label[for="'+self.element.attr('id')+'"]').contents().filter(function(){
             return this.nodeType === 3;
           })[0].nodeValue + ' ' + Locale.translate('Lookup');
@@ -237,10 +239,11 @@
       //Overridable Function in which we create the grid on the current ui dialog.
       createGrid: function (grid) {
         var self = this,
-          lookupGrid = $('#lookup-datagrid');
+          lookupGrid = $('#' + lookupGridId);
 
         if (grid) {
           lookupGrid = grid;
+          lookupGridId = grid.attr('id');
           self.settings.options = grid.data('datagrid').settings;
         }
 
