@@ -164,6 +164,7 @@ $toolbarsearchfield-empty-width: 34px;
   left: 0;
   position: absolute;
   right: 100%;
+  top: 5px;
   width: 100%;
   z-index: 10;
 
@@ -286,6 +287,17 @@ $toolbarsearchfield-empty-width: 34px;
       .icon {
         fill: $searchfield-header-icon-color;
       }
+    }
+  }
+}
+
+.header {
+  .toolbar > .toolbar-searchfield-wrapper {
+    left: 20px;
+    top: 14px;
+
+    .icon.close {
+      right: 20px;
     }
   }
 }

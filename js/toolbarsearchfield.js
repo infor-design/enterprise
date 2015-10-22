@@ -28,7 +28,8 @@
     // Settings and Options
     var pluginName = 'toolbarsearchfield',
         defaults = {
-          searchfieldPlaceholder: Locale.translate('Keyword')
+          clearable: true,  // If "true", provides an "x" button on the right edge that clears the field
+          searchfieldPlaceholder: Locale.translate('Keyword') // Sets placeholder text if provided
         },
         settings = $.extend({}, defaults, options);
 
@@ -68,9 +69,12 @@
         });
 
         // Invoke Searchfield, pass settings on
-        this.input.searchfield(this.settings);
+        var sfSettings = $.extend({}, this.settings, $.fn.parseOptions(this.input[0]));
+        this.input.searchfield(sfSettings);
         this.inputWrapper = this.input.parent('.searchfield-wrapper');
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
+
+        this.xButton = this.inputWrapper.children('.icon.close');
 
         return this;
       },
@@ -79,18 +83,10 @@
       handleEvents: function() {
         var self = this;
 
-        this.input
-        .on('mousedown.toolbarsearchfield', function() {
+        this.input.on('mousedown.toolbarsearchfield', function(e) {
           self.fastActivate = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
-        }).on('focusout.toolbarsearchfield', function() {
-          clearTimeout(self.focusTimer);
-          self.inputWrapper.removeClass('has-focus');
-        });
-
-        this.input.on('focusout.toolbarsearchfield', function(e) {
-          self.handleBlur(e);
         });
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
@@ -127,19 +123,24 @@
         this.focusTimer = setTimeout(searchfieldActivationTimer, 300);
       },
 
-      handleBlur: function() {
+      handleFakeBlur: function() {
+        var self = this;
         clearTimeout(this.focusTimer);
 
-        if (this.inputWrapper.hasClass('active')) {
-          this.deactivate();
+        function searchfieldDeactivationTimer() {
+          if (!$.contains(self.inputWrapper[0], document.activeElement) && self.inputWrapper.hasClass('active')) {
+            self.inputWrapper.removeClass('has-focus');
+            self.deactivate();
+          }
         }
+
+        this.focusTimer = setTimeout(searchfieldDeactivationTimer, 100);
       },
 
       handleOutsideClick: function(e) {
         var target = $(e.target);
 
-        if ($.contains(this.element[0], e.target) || $.contains(this.inputWrapper[0], e.target) ||
-          target.is(this.element) || target.is(this.inputWrapper)) {
+        if ($.contains(this.inputWrapper[0], e.target) || target.is(this.element) || target.is(this.inputWrapper)) {
           return;
         }
 
@@ -151,8 +152,14 @@
         var key = e.which;
 
         this.fastActivate = false;
-        if (key === 9) {
+        if (key === 9) { // Tab
           this.fastActivate = true;
+          return this.handleFakeBlur();
+        }
+
+        var wasInputTheTarget = ($(e.target).is(this.input) || $(e.target).is(this.inputWrapper));
+        if (wasInputTheTarget && (key === 37 || key === 38 || key === 39 || key === 40)) {
+          return this.handleFakeBlur();
         }
       },
 
@@ -177,9 +184,9 @@
         function activateCallback() {
           self.inputWrapper.addClass('is-open');
           self.input.focus(); // for iOS
-          self.handleDeactivationEvents();
         }
 
+        self.handleDeactivationEvents();
         this.animationTimer = setTimeout(activateCallback, 300);
       },
 
@@ -220,33 +227,6 @@
         return $(window).width() < 767;
       },
 
-      // sets the positioning of the input element
-      position: function(open) {
-        var elemPos, elemWidth, elemHeight;
-
-        elemPos = this.element.offset();
-        elemWidth = this.element.outerWidth();
-        elemHeight = this.element.outerHeight();
-
-        // Open
-        if (open) {
-          this.inputWrapper.css({
-            left: elemPos.left,
-            right: elemPos.left + elemWidth,
-            width: elemWidth
-          });
-          return;
-        }
-
-        // Close
-        this.inputWrapper.css({
-          left: elemPos.left + (elemWidth/2),
-          right: elemPos.left + (elemWidth/2),
-          top: elemPos.top,
-          width: 0
-        });
-      },
-
       // Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that
       // otherwise wouldn't automatically update.
       updated: function() {
@@ -255,8 +235,23 @@
           .init();
       },
 
+      enable: function() {
+        this.inputWrapper.addClass('is-disabled');
+        this.input.prop('disabled', true);
+      },
+
+      disable: function() {
+        this.inputWrapper.removeClass('is-disabled');
+        this.input.prop('disabled', false);
+      },
+
       // Tears down events, properties, etc. and resets the control to "factory" state
       teardown: function() {
+        this.input.off('mousedown.toolbarsearchfield mouseup.toolbarsearchfield focusin.toolbarsearchfield focusout.toolbarsearchfield');
+
+        // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
+        $(document).off('keydown.toolbarsearchfield-' + this.id);
+
         return this;
       },
 

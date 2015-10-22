@@ -10,6 +10,7 @@ $header-height: 60px;
   display: block;
   height: $header-height;
   overflow: hidden;
+  padding-right: 20px;
   @include transition(background-color 1s ease 0s,
     height 300ms cubic-bezier(.17, .04, .03, .94));
   width: 100%;

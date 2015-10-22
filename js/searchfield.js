@@ -107,12 +107,13 @@
           self.handleClick(e);
         }).on('keyup.searchfield', function(e) {
           self.handleKeyUp(e);
+        }).on('keydown.searchfield', function(e) {
+          self.handleKeydown(e);
         });
 
         if (this.settings.clearable) {
           this.xButton.onTouchClick('searchfield', '.searchfield').on('click.searchfield', function handleClear() {
-            self.element.val('').trigger('change');
-            self.checkContents();
+            self.clear();
           });
         }
 
@@ -243,6 +244,14 @@
         this.checkContents();
       },
 
+      handleKeydown: function(e) {
+        var key = e.which;
+
+        if (key === 27) {
+          this.clear();
+        }
+      },
+
       checkContents: function() {
         var text = this.element.val();
         if (!text || !text.length) {
@@ -250,6 +259,11 @@
         } else {
           this.element.removeClass('empty');
         }
+      },
+
+      clear: function() {
+        this.element.val('').trigger('change').focus();
+        this.checkContents();
       },
 
       addMoreLink: function() {
@@ -292,7 +306,7 @@
           this.element.addClass('alternate');
         }
 
-        if (this.settings.clearable || this.xButton) {
+        if (this.settings.clearable && (this.xButton && this.xButton.length)) {
           this.xButton.offTouchClick('searchfield').off().remove();
         }
 

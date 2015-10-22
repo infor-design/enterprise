@@ -113,6 +113,7 @@
           });
         }
 
+        // Application Menu
         if ($.fn.applicationmenu) {
           elem.find('#application-menu').applicationmenu({
             triggers: elem.find('.application-menu-trigger')
@@ -202,7 +203,7 @@
 
           ['about'],
 
-          ['accordion'],
+          //['accordion'],
 
           ['contextualactionpanel', '.contextual-action-panel-trigger:not(.no-init)'],
 
@@ -297,20 +298,6 @@
           });
         }
 
-        // Toolbar
-        if ($.fn.toolbar) {
-          elem.find('.toolbar:not('+ noinitExcludes +')').each(function() {
-            var t = $(this);
-            // Don't re-invoke toolbars that are part of the page/section headers.
-            // header.js manually invokes these toolbars during its setup process.
-            if (t.parents('.header').length) {
-              return;
-            }
-
-            invokeWithInlineOptions(t, 'toolbar');
-          });
-        }
-
         // Searchfield
         if ($.fn.searchfield) {
           var searchfields = elem.find('.searchfield:not('+ noinitExcludes +')'),
@@ -323,11 +310,39 @@
             invokeWithInlineOptions(this, 'searchfield');
           });
 
+          /*
           if ($.fn.toolbarsearchfield) {
             toolbarSearchfields.each(function() {
               invokeWithInlineOptions(this, 'toolbarsearchfield');
             });
           }
+          */
+        }
+
+        // Accordion
+        if ($.fn.accordion) {
+          elem.find('.accordion:not('+ noinitExcludes +')').each(function() {
+            var a = $(this);
+            if (a.parents('.application-menu').length) {
+              return;
+            }
+
+            invokeWithInlineOptions(a, 'accordion');
+          });
+        }
+
+        // Toolbar
+        if ($.fn.toolbar) {
+          elem.find('.toolbar:not('+ noinitExcludes +')').each(function() {
+            var t = $(this);
+            // Don't re-invoke toolbars that are part of the page/section headers.
+            // header.js manually invokes these toolbars during its setup process.
+            if (t.parents('.header').length) {
+              return;
+            }
+
+            invokeWithInlineOptions(t, 'toolbar');
+          });
         }
 
         elem.find('.modal-search .close').on('click', function () {

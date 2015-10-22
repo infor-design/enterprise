@@ -178,7 +178,7 @@
 
           if (item.is('.searchfield')) {
             if (!item.data('searchfield')) {
-              item.searchfield();
+              item.toolbarsearchfield();
             }
           }
 
@@ -192,12 +192,6 @@
 
             submenu.removeAttr('id').attr('data-original-menu', id).wrap($('<div class="wrapper"></div>'));
             popupLi.addClass('submenu').append(submenu);
-          }
-
-          if (item.is('.toolbar-searchfield-trigger')) {
-            if (!item.data('toolbarsearchfield')) {
-              item.toolbarsearchfield();
-            }
           }
 
           // Setup data links between the buttons and their corresponding list items
