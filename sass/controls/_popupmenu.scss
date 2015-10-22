@@ -228,15 +228,14 @@
     white-space: nowrap;
 
     span {
-      line-height: 30px;
       color: inherit;
-      font-weight: inherit;
+      font-weight: inherit;line-height: 30px;
+
     }
 
     small {
       @include font-size(11);
       display: block;
-      margin-top: -3px;
       line-height: normal;
       margin-bottom: 8px;
       margin-top: -3px;
