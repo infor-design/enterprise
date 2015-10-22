@@ -202,7 +202,7 @@
 
         if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
 
-         this.element.onTouchClick('popupmenu')
+        this.element.onTouchClick('popupmenu')
           .on('click.popupmenu', function (e) {
             if (self.element.is(':disabled')) {
               return;

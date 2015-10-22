@@ -10,12 +10,12 @@
     fill: $trigger-icon-fill-color;
     position: absolute;
     top: 8px;
+    width: 32px;
 
     &:not(.close) {
       height: 17px;
       left: 0;
       pointer-events: none;
-      width: 32px;
     }
 
     &.close {

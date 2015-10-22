@@ -187,8 +187,18 @@
               item.popupmenu();
             }
 
-            var submenu = item.data('popupmenu').menu.clone(),
+            var origSubMenu = item.data('popupmenu').menu,
+              children = origSubMenu.children('li').children('a'),
+              submenu = origSubMenu.clone(),
               id = submenu.attr('id');
+
+            submenu.children('li').each(function(i, menuItem) {
+              $(menuItem).removeAttr('id');
+              var correspondingOrigMenuItem = children.eq(i);
+
+              correspondingOrigMenuItem.data('action-button-link', $(menuItem));
+              $(menuItem).data('original-button', correspondingOrigMenuItem);
+            });
 
             submenu.removeAttr('id').attr('data-original-menu', id).wrap($('<div class="wrapper"></div>'));
             popupLi.addClass('submenu').append(submenu);
@@ -609,6 +619,13 @@
         this
           .unbind()
           .teardown();
+
+        this.more.data('popupmenu').destroy();
+
+        if (this.buttonset.children('.searchfield-wrapper').length) {
+          this.buttonset.children('.searchfield-wrapper').children('.searchfield').data('toolbarsearchfield').destroy();
+        }
+
         this.element.removeAttr('role').removeAttr('aria-label');
         $.removeData(this.element[0], pluginName);
       }
