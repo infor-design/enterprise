@@ -304,18 +304,16 @@ $.fn.datagrid = function(options) {
       setTimeout(function () {
         self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
       }, 0);
-
     },
 
     initSettings: function () {
-
       if (this.settings.dataset !== 'table' && this.element.parent().css('position') !== 'relative') {
         this.element.wrap( '<div class="datagrid-wrapper" />');
       }
 
       this.sortColumn = {sortField: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
-
+      this.lastSelectedRow = 0;// Rember index to use shift key
     },
 
     //Initialize as a Table
@@ -463,21 +461,11 @@ $.fn.datagrid = function(options) {
     //Method to Reload the data set
     //TODO: Load specific page
     loadData: function (dataset, pagerInfo) {
-      var selectedIds = this.selectedRows(),
-        rowIds = [];
-
       this.settings.dataset = dataset;
       this.renderRows();
 
       //Update Paging
       this.renderPager(pagerInfo);
-
-      //restore selected rows
-      for (var i = 0; i < selectedIds.length; i++) {
-        rowIds.push(selectedIds[i].idx);
-      }
-
-      this.selectedRows(rowIds);
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -849,13 +837,14 @@ $.fn.datagrid = function(options) {
 
     // Attach All relevant events
     handleEvents: function() {
-      var self = this;
+      var self = this,
+        isMultiple = this.settings.selectable === 'multiple';
 
       //Handle Sorting
       this.element.on('touchcancel.datagrid touchend.datagrid', 'th.is-sortable', function (e) {
         e.stopPropagation();
         e.preventDefault();
-        $(this).trigger('click');
+        $(this).trigger('click.datagrid');
       }).on('click.datagrid', 'th.is-sortable', function () {
         self.setSortColumn($(this).attr('data-column-id'));
       });
@@ -906,7 +895,13 @@ $.fn.datagrid = function(options) {
           return;
         }
 
-        self.toggleRowSelection(target.closest('tr'));
+        if(isMultiple && e.shiftKey) {
+          self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
+          e.preventDefault();
+        } else {
+          self.toggleRowSelection(target.closest('tr'));
+        }
+
         self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
       });
 
@@ -961,25 +956,24 @@ $.fn.datagrid = function(options) {
       });
 
       // Handle Clicking Header Checkbox
-      this.headerRow.onTouchClick('datagrid', 'th .datagrid-checkbox')
-            .on('click.datagrid', 'th .datagrid-checkbox', function () {
+      this
+        .headerRow.onTouchClick('datagrid', 'th .datagrid-checkbox')
+        .on('click.datagrid', 'th .datagrid-checkbox', function () {
+          var checkbox = $(this);
 
-        var checkbox = $(this);
-        if (!checkbox.hasClass('is-checked')) {
-          checkbox.addClass('is-checked').attr('aria-checked', 'true');
-          self.selectAllRows();
-        } else {
-          checkbox.removeClass('is-checked').attr('aria-checked', 'true');
-          self.selectedRows([]);
-        }
-
-      });
+          if (!checkbox.hasClass('is-checked')) {
+            checkbox.addClass('is-checked').attr('aria-checked', 'true');
+            self.selectAllRows();
+          } else {
+            checkbox.removeClass('is-checked').attr('aria-checked', 'true');
+            self.selectedRows([]);
+          }
+        });
 
       // Implement Editing Commit Functionality
       body.on('focusout.datagrid', 'td input', function () {
         self.commitCellEdit($(this));
       });
-
     },
 
     appendToolbar: function () {
@@ -1165,18 +1159,14 @@ $.fn.datagrid = function(options) {
 
     //Toggle selection on a single row
     selectRow: function (idx) {
-      if (idx === -1) {
+      var checkbox = null, row;
+
+      if (idx === undefined || idx === -1 || !this.settings.selectable) {
         return;
       }
 
-      var row = this.tableBody.find('tr[role="row"]').eq(idx),
-        checkbox = null;
-
-      if (this.settings.selectable === false) {
-        return;
-      }
-
-      if (!row || idx === undefined) {
+      row = this.tableBody.find('tr[role="row"]').eq(idx);
+      if (!row) {
         return;
       }
 
@@ -1185,15 +1175,21 @@ $.fn.datagrid = function(options) {
 
         //Select It
         this._selectedRows.push({idx: idx, data: this.settings.dataset[idx], elem: row});
+        this.lastSelectedRow = idx;// Rember index to use shift key
 
         row.addClass('is-selected').attr('aria-selected', 'true');
         row.find('td').attr('aria-selected', 'true');
-
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
       }
-
       this.syncHeaderCheckbox();
+    },
 
+    // Select rows between indexes
+    selectRowsBetweenIndexes: function(indexes) {
+      indexes.sort(function(a, b) { return a-b; });
+      for (var i = indexes[0]; i <= indexes[1]; i++) {
+        this.selectRow(i);
+      }
     },
 
     syncHeaderCheckbox: function () {
@@ -1203,16 +1199,13 @@ $.fn.datagrid = function(options) {
         headerCheckbox.addClass('is-checked').removeClass('is-partial');
         return;
       }
-
       if (this._selectedRows.length === 0) {
         headerCheckbox.removeClass('is-checked').removeClass('is-partial');
         return;
       }
-
       if (this._selectedRows.length > 0) {
         headerCheckbox.addClass('is-checked is-partial');
       }
-
     },
 
     toggleRowSelection: function (idx) {
@@ -1339,7 +1332,56 @@ $.fn.datagrid = function(options) {
 
     // Handle all keyboard behavior
     handleKeys: function () {
-      var self = this;
+      var self = this,
+        isMultiple = self.settings.selectable === 'multiple',
+        checkbox = $('th .datagrid-checkbox', self.headerRow);
+
+      // Handle header navigation
+      self.table.on('keydown.datagrid', 'th', function (e) {
+        var th = $(this),
+          key = e.which,
+          index = th.index(),
+          length = $('th', this.header).length,
+          triggerEl, move;
+
+        // Enter or Space
+        if (key === 13 || key === 32) {
+          triggerEl = (isMultiple && index === 0) ? $('.datagrid-checkbox', th) : th;
+          triggerEl.trigger('click.datagrid').focus();
+
+          if (key === 32) { // Prevent scrolling with space
+            e.preventDefault();
+          }
+        }
+
+        //Press Home, End, Left and Right arrow to move to first, last, previous or next
+        if (/35|36|37|39/i.test(key)) {
+          index++;
+
+          //Home, End or Ctrl/Meta + Left/Right arrow to move to the first or last
+          if (/35|36/i.test(key) || ((e.ctrlKey || e.metaKey) && /37|39/i.test(key))) {
+            move = (key === 35 || ((e.ctrlKey || e.metaKey) && key === 39)) ? length : 1;
+          }
+
+          // Left and Right arrow
+          else {
+            move = key === 37 ? (index > 1 ? index-1 : length) : (index < length ? index+1 : 1);
+          }
+
+          // Makeing move
+          th.removeAttr('tabindex').removeClass('is-active');
+          $('th:nth-child('+ move +')', this.header).attr('tabindex', '0').addClass('is-active').focus();
+          e.preventDefault();
+        }
+
+        // Down arrow
+        if (key === 40) {
+          th.removeAttr('tabindex');
+          self.setActiveCell(0, index);
+        }
+
+      });
+
       self.table.on('keydown.datagrid', 'td, input', function (e) {
         var handled = false,
           key = e.which;
@@ -1356,6 +1398,18 @@ $.fn.datagrid = function(options) {
           e.preventDefault();
           e.stopPropagation();
           return false;
+        }
+
+        // Set Shift key held
+        if(e.shiftKey) {
+          self.shiftHeld = true;
+        }
+
+        // If multiSelect is enabled, press Control+A to select all rows on the current page.
+        if (isMultiple && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
+          checkbox.removeClass('is-partial').addClass('is-checked').attr('aria-checked', 'true');
+          self.selectAllRows();
+          e.preventDefault();
         }
 
       });
@@ -1375,6 +1429,10 @@ $.fn.datagrid = function(options) {
 
         //Up and Down to navigate by row.
         if (key === 38 && !e.altKey && !self.editor) {
+          if (self.activeCell.row === 0) {
+            self.activeCell.node.removeAttr('tabindex');
+            $('th:nth-child('+ (self.activeCell.cell+1) +')', this.header).attr('tabindex', '0').focus();
+          }
           self.setActiveCell(self.activeCell.row-1, self.activeCell.cell);
           handled = true;
         }
@@ -1392,6 +1450,12 @@ $.fn.datagrid = function(options) {
         if (key === 40 && e.altKey && !self.editor) {
           row = self.activeCell.node.closest('tbody').find('tr:last').index();
           self.setActiveCell(row, self.activeCell.cell);
+        }
+
+        //Escape un-select all on multiSelect
+        if (key === 27 && isMultiple && !self.editor) {
+          checkbox.removeClass('is-checked').attr('aria-checked', 'true');
+          self.selectedRows([]);
         }
 
         //Press Control+Spacebar to announce the current row when using a screen reader.
@@ -1436,7 +1500,12 @@ $.fn.datagrid = function(options) {
         // Press Space to toggle row selection, or click to activate using a mouse.
         if (key === 32 && !self.settings.editable) {
           row = self.activeCell.node.closest('tr');
-          self.toggleRowSelection(row);
+          
+          if(isMultiple && e.shiftKey) {
+            self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
+          } else {
+            self.toggleRowSelection(row);
+          }
 
           // Toggle datagrid-expand with Space press
           var btn = $('.datagrid-expand-btn', row);
@@ -1445,8 +1514,6 @@ $.fn.datagrid = function(options) {
             e.preventDefault();
           }
         }
-
-        //TODO: If multiSelect is enabled, press Control+A to select all rows on the current page.
 
         //For Editable mode - press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
         if (self.settings.editable && key === 32) {
@@ -1606,11 +1673,8 @@ $.fn.datagrid = function(options) {
     // Update a specific Cell
     setActiveCell: function (row, cell) {
       var self = this,
-        prevCell = self.activeCell;
-
-      if (!this.settings.cellNavigation) {
-        return;
-      }
+        prevCell = self.activeCell,
+        isSingle = self.settings.selectable === 'single';
 
       //Support passing the td in
       if (row instanceof jQuery) {
@@ -1643,6 +1707,11 @@ $.fn.datagrid = function(options) {
       headers.eq(cell).addClass('is-active');
 
       this.activeCell.isFocused = true;
+
+      // Select row on single selectable, if cellNavigation = false
+      if (isSingle && !self.settings.cellNavigation) {
+        self.toggleRowSelection(row);
+      }
     },
 
     expandRow: function(row) {
@@ -1700,6 +1769,10 @@ $.fn.datagrid = function(options) {
       var wasFocused = this.activeCell.isFocused;
       this.renderRows();
 
+      // Update selected and Sync header checkbox
+      this.updateSelected();
+      this.syncHeaderCheckbox();
+
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
@@ -1734,6 +1807,35 @@ $.fn.datagrid = function(options) {
       return function (a, b) {
          return a = key(a), b = key(b), descending * ((a > b) - (b > a));
       };
+    },
+
+    // Update Selection
+    updateSelected: function() {
+      var self = this;
+
+      $('tr[role="row"]', self.tableBody).each(function() {
+        var row = $(this),
+          newIdx = row.index(),
+          checkbox = self.cellNode(row, self.columnIdx('selectionCheckbox'));
+
+        $.each(self._selectedRows, function(index, val) {
+          if (self.isEquals(val.data, self.settings.dataset[newIdx])) {
+            val.idx = newIdx;
+            val.elem = row;
+            checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
+            row.addClass('is-selected').attr('aria-selected', 'true').find('td').attr('aria-selected', 'true');
+            return false;
+          }
+        });
+      });
+    },
+
+    // Determine equality for two JavaScript objects
+    isEquals: function(obj1, obj2) {
+      function _equals(obj1, obj2) {
+        return JSON.stringify(obj1) === JSON.stringify($.extend(true, {}, obj1, obj2));
+      }
+      return _equals(obj1, obj2) && _equals(obj2, obj1);
     },
 
     //Default formatter just plain text style
@@ -1786,8 +1888,10 @@ $.fn.datagrid = function(options) {
           this.pager.updatePagingInfo(pagingInfo);
         }
       }
+      // Update selected and Sync header checkbox
+      this.updateSelected();
+      this.syncHeaderCheckbox();
     }
-
   };
 
   // Initialize the plugin (Once) or set settings
