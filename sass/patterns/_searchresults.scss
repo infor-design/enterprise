@@ -10,15 +10,16 @@
     color: $sr-masthead-text-color;
     margin-bottom: 3em;
     position: relative;
+    overflow: hidden;
     width: auto;
 
-    &.toolbar .title {
-      margin: 5px 1em 4px;
-      max-width: 100%;
-      padding: 2px 0;
+    &.toolbar {
 
-      > * {
-        vertical-align: top;
+      .title {
+
+        > * {
+          vertical-align: top;
+        }
       }
 
     }

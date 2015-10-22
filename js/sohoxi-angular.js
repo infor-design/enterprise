@@ -13,6 +13,23 @@
       };
   };
 
+  var datagrid = function () {
+      return {
+        replace: true,
+        scope: false,
+        link: function(scope, elem, attrs) {
+
+          var modelDataset = attrs.ngModelDataset,
+              modelColumns = attrs.ngModelColumns;
+              //modelOptions = attrs.ngModelOptions;
+
+          //Initialize
+          elem.datagrid({columns: scope[modelColumns], dataset: scope[modelDataset]});
+
+        }
+      };
+  };
+
   var datepicker = function () {
       return {
         replace: true,
@@ -173,6 +190,7 @@
 
   angular.module('sohoxi-angular')
       .directive('chart', chart)
+      .directive('datagrid', datagrid)
       .directive('datepicker', datepicker)
       .directive('dropdown', dropdown)
       .directive('multiselect', multiselect)
