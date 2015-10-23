@@ -546,12 +546,13 @@
 
   //Add a Message to a Field
   $.fn.addError = function(options) {
-    var defaults = {message: ''},
+    var defaults = {message: '', showTooltip: false, inline: false},
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
+      console.log(settings)
       var instance = new Validator(this, settings);
-      instance.addError($(this), settings.message, settings.inline);
+      instance.addError($(this), settings.message, settings.inline, settings.showTooltip);
     });
   };
 

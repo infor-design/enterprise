@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2 class="fieldset-title">Some Form</h2>
+
+     <div class="field">
+      <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
+      <input type="text" id="email-address" name="email-address" value="someone@someplace.com">
+    </div>
+
+    <button class="btn" type="button" id="show">Show Error</button>
+    <button class="btn" type="button" id="hide">Hide Error</button>
+  </div>
+</div>
+
+
+//TODO: Fix show tooltip
+<script type="text/javascript">
+  $('button').button().on('click', function () {
+    $('#email-address').removeError().addError({message: 'I have an Error.', showTooltip: true});
+  });
+
+  $('#hide').button().on('click', function () {
+    $('#email-address').removeError();
+  });
+</script>
