@@ -96,6 +96,12 @@
                 return;
               }
 
+              // Don't invoke elements inside of "container" controls that need to invoke their internal
+              // items in a specific order.
+              if ($(this).parents('.toolbar').length) {
+                return;
+              }
+
               invokeWithInlineOptions(this, plugin);
             });
           }
@@ -203,9 +209,7 @@
 
           ['about'],
 
-          //['accordion'],
-
-          ['contextualactionpanel', '.contextual-action-panel-trigger:not(.no-init)'],
+          ['contextualactionpanel', '.contextual-action-panel-trigger'],
 
           ['sidebar', '.sidebar-nav'],
 
@@ -299,6 +303,8 @@
         }
 
         // Searchfield
+        // NOTE:  The Toolbar Control itself understands how to invoke internal searchfields, so they
+        // are excluded from this initializer.
         if ($.fn.searchfield) {
           var searchfields = elem.find('.searchfield:not('+ noinitExcludes +')'),
             toolbarSearchfields = searchfields.filter(function() {
@@ -309,14 +315,6 @@
           searchfields.each(function() {
             invokeWithInlineOptions(this, 'searchfield');
           });
-
-          /*
-          if ($.fn.toolbarsearchfield) {
-            toolbarSearchfields.each(function() {
-              invokeWithInlineOptions(this, 'toolbarsearchfield');
-            });
-          }
-          */
         }
 
         // Accordion

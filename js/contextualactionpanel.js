@@ -123,15 +123,6 @@
       handleEvents: function() {
         var self = this;
 
-        if (this.closeButton.length) {
-          this.closeButton.on('touchend.contextualactionpanel touchcancel.contextualactionpanel', function(e) {
-            e.preventDefault();
-            $(e.target).click();
-          }).on('click.contextualactionpanel', function() {
-            self.close();
-          });
-        }
-
         this.panel.on('afterOpen', function() {
           if (self.toolbar) {
             self.toolbar.trigger('recalculateButtons');
@@ -153,10 +144,22 @@
           self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
         });
 
+        this.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
+          .onTouchClick('contextualactionpanel').on('click.contextualactionpanel', function() {
+          self.handleToolbarSelected();
+        });
+
         return this;
       },
 
+      handleToolbarSelected: function() {
+        this.close();
+      },
+
       teardown: function() {
+        this.toolbar.children('.buttonset').children('*.not(.searchfield)')
+          .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
+
         this.panel.detach().insertAfter(this.element);
         this.panel.find('.toolbar').data('toolbar').destroy();
         this.header.remove();
@@ -185,10 +188,6 @@
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        if (this.closeButton.length) {
-          this.closeButton.off('touchend.contextualactionpanel touchcancel.contextualactionpanel click.contextualactionpanel');
-        }
-
         this.teardown();
         $.removeData(this.element[0], pluginName);
       }
