@@ -550,7 +550,6 @@
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
-      console.log(settings)
       var instance = new Validator(this, settings);
       instance.addError($(this), settings.message, settings.inline, settings.showTooltip);
     });
