@@ -1405,10 +1405,15 @@ $.fn.datagrid = function(options) {
           self.shiftHeld = true;
         }
 
-        // If multiSelect is enabled, press Control+A to select all rows on the current page.
+        // If multiSelect is enabled, press Control+A to toggle select all rows
         if (isMultiple && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
-          checkbox.removeClass('is-partial').addClass('is-checked').attr('aria-checked', 'true');
-          self.selectAllRows();
+          if (!checkbox.hasClass('is-checked') || checkbox.hasClass('is-partial')) {
+            checkbox.removeClass('is-partial').addClass('is-checked').attr('aria-checked', 'true');
+            self.selectAllRows();
+          } else {
+            checkbox.removeClass('is-checked').attr('aria-checked', 'true');
+            self.selectedRows([]);
+          }
           e.preventDefault();
         }
 
@@ -1450,12 +1455,6 @@ $.fn.datagrid = function(options) {
         if (key === 40 && e.altKey && !self.editor) {
           row = self.activeCell.node.closest('tbody').find('tr:last').index();
           self.setActiveCell(row, self.activeCell.cell);
-        }
-
-        //Escape un-select all on multiSelect
-        if (key === 27 && isMultiple && !self.editor) {
-          checkbox.removeClass('is-checked').attr('aria-checked', 'true');
-          self.selectedRows([]);
         }
 
         //Press Control+Spacebar to announce the current row when using a screen reader.
