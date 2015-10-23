@@ -83,7 +83,7 @@
       handleEvents: function() {
         var self = this;
 
-        this.input.on('mousedown.toolbarsearchfield', function(e) {
+        this.input.on('mousedown.toolbarsearchfield', function() {
           self.fastActivate = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
@@ -247,7 +247,7 @@
 
       // Tears down events, properties, etc. and resets the control to "factory" state
       teardown: function() {
-        this.input.off('mousedown.toolbarsearchfield mouseup.toolbarsearchfield focusin.toolbarsearchfield focusout.toolbarsearchfield');
+        this.input.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield');
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).off('keydown.toolbarsearchfield-' + this.id);
