@@ -2,7 +2,7 @@
 <div class="row">
     <div class="twelve columns">
         <div class="toolbar has-more-button" role="toolbar">
-          <div class="title">Custom Toolbar</div>
+          <div class="title">Custom Toolbar<span class="datagrid-row-count">11</span><span class="datagrid-result-count">(1000 Results)</span></div>
           <div class="buttonset">
 
             <label class="audible" for="gridfilter">Keyword Search</label>
@@ -69,7 +69,8 @@
                 columns: columns,
                 idProperty:'officeId',
                 dataset: data,
-                selectable: 'single'
+                selectable: 'single',
+                toolbar: {results: true}
             }).on('selected', function (e, args) {
               // Showing the new method to update a single rows data
               var api = $('#datagrid').data('datagrid');

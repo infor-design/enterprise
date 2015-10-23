@@ -1,3 +1,5 @@
+{{> controls/svg-extended}}
+
 <div id="maincontent" class="page-container">
   <section class="header azure07">
     <div class="toolbar">
@@ -25,7 +27,7 @@
     </div>
   </section>
 
-  {{> includes/applicationmenu}}
+  {{> examples/selfportal/applicationmenu}}
 
   <div class="full-width scrollable">
     <div class="toolbar has-more-button" role="toolbar">
@@ -99,7 +101,7 @@
           editable: false,
           isList: true,
           dataset: res,
-          toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+          toolbar: {results: true}
         });
       });
 

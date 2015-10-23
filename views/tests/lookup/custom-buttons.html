@@ -1,0 +1,43 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <div class="field">
+        <label for="custom" class="label">Custom Modal Grid</label>
+        <input id="custom" data-init="false" class="lookup" name="custom" type="text">
+      </div>
+  </div>
+</div>
+
+<script>
+  var lookup = $('#custom').lookup({
+    buttons: [{
+        text: 'Apply It Now',
+        click: function() {
+          var lookup = $('#custom').data('lookup'),
+            selectedRows = lookup.grid.selectedRows();
+
+           $(this).modal('close');
+          lookup.insertRows(selectedRows);
+        },
+        isDefault: true
+    }],
+    field: function (row, field, grid) {
+      return row.productId;
+    },
+    match: function (value, row, field, grid) {
+      return (row.productId === value);
+    },
+    beforeShow: function (api, response) {
+
+      $.get('/partials/list', function (html) {
+
+        $(html).hide().appendTo('body');
+        api.settings.modalContent = $('#modal-contents');
+        response($('#my-datagrid'));
+
+      });
+
+    }
+  });
+
+</script>

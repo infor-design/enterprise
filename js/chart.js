@@ -62,6 +62,10 @@ window.Chart = function(container) {
       return this.pieColors(i);
     }
 
+    if (chartType === 'column-single') {
+      return '#368AC0';
+    }
+
     if (chartType === 'bar') {
       return this.colors(i);
     }
@@ -1002,8 +1006,12 @@ window.Chart = function(container) {
 
       //Style the bars and add interactivity
       bars.style('fill', function(d, i) {
-        return (isSingular ? '#368AC0' : charts.colors(i));
-      }).on('mouseenter', function(d) {
+        return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
+      })
+      .attr('mask', function (d, i) {
+        return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
+      })
+      .on('mouseenter', function(d) {
         var shape = $(this),
           content = '',
           x = 0,
@@ -1046,6 +1054,7 @@ window.Chart = function(container) {
     var series = xAxisValues.map(function (d) {
       return {name: d};
     });
+
     if (!isSingular) {
       charts.addLegend(series);
     }
@@ -1058,9 +1067,11 @@ window.Chart = function(container) {
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, 'shortName');
     }
+
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, 'abbrName');
     }
+
     return $(container);
   };
 
