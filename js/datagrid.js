@@ -1500,7 +1500,7 @@ $.fn.datagrid = function(options) {
         // Press Space to toggle row selection, or click to activate using a mouse.
         if (key === 32 && !self.settings.editable) {
           row = self.activeCell.node.closest('tr');
-          
+
           if(isMultiple && e.shiftKey) {
             self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
           } else {
@@ -1745,7 +1745,6 @@ $.fn.datagrid = function(options) {
     //Api Event to set the sort Column
     setSortColumn: function(id, ascending) {
       var sort;
-
       //Set Direction based on if passed in or toggling existing field
       if (ascending !== undefined) {
         this.sortColumn.sortAsc = ascending;
@@ -1753,7 +1752,7 @@ $.fn.datagrid = function(options) {
         if (this.sortColumn.sortId === id) {
           this.sortColumn.sortAsc = !this.sortColumn.sortAsc;
         } else {
-           this.sortColumn.sortAsc = false;
+           this.sortColumn.sortAsc = true;
         }
         ascending = this.sortColumn.sortAsc;
       }
@@ -1762,6 +1761,7 @@ $.fn.datagrid = function(options) {
       this.sortColumn.sortField = (this.columnIdx(id)[0] ? this.columnIdx(id)[0].field : '');
 
       //Do Sort on Data Set
+      console.log(ascending)
       this.setSortIndicator(id, ascending);
       sort = this.sortFunction(this.sortColumn.sortId, ascending);
       settings.dataset.sort(sort);
@@ -1787,7 +1787,7 @@ $.fn.datagrid = function(options) {
     },
 
     //Overridable function to conduct sorting
-    sortFunction: function(id, descending) {
+    sortFunction: function(id, ascending) {
       var key,
       primer = function(a) {
           a = (a === undefined || a === null ? '' : a);
@@ -1802,10 +1802,10 @@ $.fn.datagrid = function(options) {
         };
 
       key = function(x) { return primer(x[id]); };
-      descending = !descending ? 1 : -1;
+      ascending = !ascending ? -1 : 1;
 
       return function (a, b) {
-         return a = key(a), b = key(b), descending * ((a > b) - (b > a));
+         return a = key(a), b = key(b), ascending * ((a > b) - (b > a));
       };
     },
 
