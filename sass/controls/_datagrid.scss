@@ -75,6 +75,17 @@ $datagrid-header-height: 40px;
     &.is-active {
       background-color: $datagrid-header-active-color;
     }
+
+    //Editing and Focus State
+    &:focus {
+      background-color: $datagrid-header-hover-color;
+      border: 2px solid $primary-color;
+      cursor: pointer;
+
+      .icon {
+        opacity: 1;
+      }
+    }
   }
 
   //Grouped Headers
