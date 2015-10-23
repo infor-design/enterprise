@@ -34,7 +34,8 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         //dataset: data,
-        selectable: 'single',
+        // selectable: 'single',
+        selectable: 'multiple',
         paging: true,
         pagesize: 10,
         source: function(req, response) {
