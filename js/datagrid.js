@@ -1761,7 +1761,6 @@ $.fn.datagrid = function(options) {
       this.sortColumn.sortField = (this.columnIdx(id)[0] ? this.columnIdx(id)[0].field : '');
 
       //Do Sort on Data Set
-      console.log(ascending)
       this.setSortIndicator(id, ascending);
       sort = this.sortFunction(this.sortColumn.sortId, ascending);
       settings.dataset.sort(sort);
