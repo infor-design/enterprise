@@ -268,7 +268,7 @@
           this.oldActive = $(':focus');  //Save and restore focus for A11Y
         }
 
-        this.element.triggerHandler('beforeOpen');
+         elemCanOpen = this.element.triggerHandler('beforeopen');
 
         self.isCancelled = false;
 
@@ -297,13 +297,9 @@
         });
 
         setTimeout(function () {
-          self.element.triggerHandler('afterOpen');
-        }, 300);
-
-        setTimeout(function () {
           var focusElem = self.element.find(':focusable:not(.searchfield):first');
           self.keepFocus();
-          self.element.triggerHandler('open');
+          self.element.trigger('open');
 
           if (focusElem.length === 0) {
             focusElem = self.element.find('.btn-modal-primary');
@@ -389,6 +385,11 @@
         setTimeout(function () {
           self.disableSubmit();
         }, 10);
+
+        setTimeout(function () {
+          self.element.trigger('afteropen');
+        }, 300);
+
       },
 
       resize: function() {
@@ -526,7 +527,7 @@
 
         setTimeout( function() {
           self.overlay.remove();
-          self.element.css({'display':'none'}).trigger('afterClose');
+          self.element.css({'display':'none'}).trigger('afterclose');
         }, 300); // should match the length of time needed for the overlay to fade out
 
         if (self.settings.content) {
