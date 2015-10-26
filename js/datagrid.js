@@ -440,6 +440,18 @@ $.fn.datagrid = function(options) {
           self.setActiveCell(0, 0);
         }, 10);
       }
+
+      if (location === 'bottom') {
+        //Add to array
+        this.settings.dataset.push(data);
+
+        //Add to ui
+        this.renderRows();
+
+        setTimeout(function () {
+          self.setActiveCell(self.settings.dataset.length -1, 0);
+        }, 10);
+      }
     },
 
     //Delete a Specific Row
