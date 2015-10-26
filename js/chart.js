@@ -67,7 +67,7 @@ window.Chart = function(container) {
     }
 
     if (chartType === 'bar') {
-      return this.colors(i);
+      return '#368AC0'; //this.colors(i);
     }
   };
 
@@ -265,12 +265,11 @@ window.Chart = function(container) {
 
     yScale = d3.scale.ordinal()
       .domain(yMap)
-      .rangeRoundBands([0, height], 0.45, 0.45);
+      .rangeRoundBands([0, height], 0.32, 0.32);
 
     xAxis = d3.svg.axis()
       .scale(xScale)
       .tickSize(-height)
-      .tickPadding(10)
       .orient('middle');
 
     if (isNormalized) {
@@ -280,7 +279,6 @@ window.Chart = function(container) {
     yAxis = d3.svg.axis()
       .scale(yScale)
       .tickSize(0)
-      .tickPadding(25)
       .orient('left');
 
     svg.append('g')
@@ -301,8 +299,6 @@ window.Chart = function(container) {
         return charts.chartColor(i, 'bar', series[i]);
       });
 
-    var maxBarHeight = 45;
-
     rects = groups.selectAll('rect')
       .data(function (d, i) {
         d.forEach(function(d) {
@@ -320,16 +316,22 @@ window.Chart = function(container) {
       return ((dataset.length === 1) ? charts.chartColor(i, 'bar', dataset[0][i]) : '');
     })
     .attr('mask', function (d, i) {
-      return ((dataset.length === 1) ? 'url(#' + dataset[0][i].pattern + ')' : (series[d.index].pattern ? 'url(#' + series[d.index].pattern + ')' : ''));
+      if (dataset.length === 1 && dataset[0][i].pattern){
+        return 'url(#' + dataset[0][i].pattern + ')';
+      }
+
+      if (series[d.index].pattern) {
+        return 'url(#' + series[d.index].pattern + ')';
+      }
     })
     .attr('x', function (d) {
       return xScale(d.x0);
     })
     .attr('y', function (d) {
-      return yScale(d.y) + ((yScale.rangeBand() - maxBarHeight)/2);
+      return yScale(d.y);
     })
     .attr('height', function () {
-      return Math.min.apply(null, [yScale.rangeBand(), maxBarHeight]);
+      return yScale.rangeBand();
     })
     .attr('width', 0) //Animated in later
     .on('mouseenter', function (d, i) {
@@ -390,7 +392,7 @@ window.Chart = function(container) {
     });
 
     //Adjust the labels
-    svg.selectAll('.axis.y text').attr({'x': -15, 'y': -6});
+    svg.selectAll('.axis.y text').attr({'x': -15});
 
     //Animate the Bars In
     svg.selectAll('.bar')
