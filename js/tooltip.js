@@ -91,7 +91,7 @@
         this.tooltip = settings.tooltipElement ? $(settings.tooltipElement) : $('#tooltip');
         if (!this.tooltip.length) {
           var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
-          this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"><p>(Content)</p></div></div>');
+          this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"></div></div>');
         }
         this.place();
       },
@@ -150,9 +150,15 @@
       },
 
       setContent: function(content) {
-        var contentArea;
+        var contentArea,
+          specified = false;
 
         content = Locale.translate(content) || content;
+
+        if (content.indexOf('#') === 0) {
+          content = $(content).html();
+          specified = true;
+        }
 
         if (this.isPopover) {
           contentArea = this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
@@ -185,8 +191,13 @@
         if (contentArea.prev('.arrow').length === 0) {
           contentArea.before('<div class="arrow"></div>');
         }
-        contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
 
+        if (specified) {
+          contentArea.html(content);
+        }
+        else {
+          contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
+        }
       },
 
       show: function(newSettings, ajaxReturn) {

@@ -90,6 +90,20 @@
     word-wrap: break-word;
   }
 
+  .icon {
+    display: inline-block;
+    fill: $tooltip-color;
+    width: 18px;
+
+    + p {
+      display: inline-block;
+      margin-left: 5px;
+      margin-top: 7px;
+      vertical-align: top;
+      width: auto;
+    }
+  }
+
 }
 
 .popover {
