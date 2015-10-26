@@ -284,8 +284,10 @@
       &.plus-minus {
         &::before,
         &::after {
+          background-color: $accordion-icon-color;
           left: .15em;
-          top: .75em;
+          top: .68em;
+          width: 12px;
         }
       }
 
@@ -325,6 +327,8 @@
   }
 
   .icon {
+    height: 16px;
+    top: -2px;
     width: 18px;
   }
 
@@ -533,13 +537,13 @@
       width: 40px;
 
       .icon.plus-minus {
-        top: -1px;
+        top: -4px;
 
         &::before,
         &::after {
-          left: .25em;
+          left: .37em;
           top: .85em;
-          width: 12px;
+          width: 10px;
         }
       }
     }
