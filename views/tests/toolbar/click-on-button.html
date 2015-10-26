@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Toolbar Test: Click Handlers and Rebuilding</h2>
+
+    <p>A <a class="hyperlink" href="http://jira/browse/HFC-3084" target="_blank">bug was discovered</a> where re-invoking a toolbar can cause event listeners bound from external code to be dropped from one of its buttons/menu items.  This test recreates the conditions where this can happen.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="click-handler-toolbar" class="toolbar">
+      <div class="title"></div>
+      <div class="buttonset">
+        <button class="btn" id="button-one">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Button One</span>
+        </button>
+
+        <button class="btn" id="button-two">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-download"></use>
+          </svg>
+          <span>Button Two</span>
+        </button>
+
+        <button class="btn" id="button-three">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-tack"></use>
+          </svg>
+          <span>Button Three</span>
+        </button>
+      </div>
+    </div>
+
+    <fieldset>
+      <button class="btn-primary" id="reinvoke-toolbar">Reinvoke Toolbar</label>
+    </fieldset>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#button-two').onTouchClick('test').on('click.test', function() {
+      $('body').toast({title: 'Button Clicked!', message: 'Your button click event works!'});
+    });
+
+    $('#reinvoke-toolbar').onTouchClick('test').on('click.test', function() {
+      $('#click-handler-toolbar').toolbar();
+      $('body').toast({title: 'Toolbar Reinvoked!', message: 'The toolbar control on this page was reinvoked!'});
+    });
+  });
+</script>

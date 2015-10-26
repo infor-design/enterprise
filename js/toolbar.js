@@ -66,9 +66,6 @@
         this.element.attr('role', 'toolbar');
         this.buildAriaLabel();
 
-        // Remove random whitespace (major visual problems in this control if this isn't present)
-        this.element.removeHtmlWhitespace();
-
         // keep track of how many popupmenus there are with an ID.
         // Used for managing events that are bound to $(document)
         if (!this.id) {
@@ -110,6 +107,9 @@
 
         this.buttonsetItems = this.buttonset.children('button, input')
           .add(this.buttonset.find('.searchfield-wrapper').children('input'));
+
+        // Invoke buttons
+        this.items.filter('button, input[type="button"]').button();
 
         // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
@@ -608,8 +608,9 @@
 
       unbind: function() {
         this.items
-          .offTouchClick()
+          .offTouchClick('toolbar')
           .off('keydown.toolbar click.toolbar focus.toolbar blur.toolbar');
+
         this.more.off('beforeOpen.toolbar selected.toolbar');
         $(window).off('resize.toolbar-' + this.id);
         return this;
@@ -617,15 +618,16 @@
 
       teardown: function() {
         function menuItemFilter(i, item) {
-          return $(item).data('action-button-link');
+          var link = $(item).data('action-button-link');
+          return link !== undefined && link.length;
         }
 
         function deconstructMenuItem(i, item) {
           var a = $(item).data('action-button-link'),
             li = a.parent();
 
-          a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar')
-            .removeAttr('onclick').removeAttr('onmousedown');
+          a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar');
+            //.removeAttr('onclick').removeAttr('onmousedown');
 
           $.removeData(li[0], 'original-button');
           $.removeData(a[0], 'action-button-link');

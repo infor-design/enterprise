@@ -116,6 +116,7 @@ $toolbar-buttonset-height: 44px;
 // Styles for regular toolbar only
 .toolbar {
   margin-bottom: 5px;
+  font-size: 0;
 
   .title {
     color: $font-color;
@@ -259,94 +260,3 @@ $toolbar-buttonset-height: 44px;
     }
   }
 }
-
-// Special Rules for iOS, for unknown reasons this design just doesn't play nice with iOS
-// TODO: Figure out why
-/*
-.ios .toolbar {
-  &.searchfield-active {
-    .title,
-    .more {
-      display: none !important;
-      width: 0 !important;
-
-      > * {
-        display: none !important;
-      }
-    }
-
-    &.has-more-button {
-      .buttonset {
-        width: calc(100% - 2px);
-      }
-    }
-
-    .searchfield-wrapper {
-      position: relative;
-    }
-  }
-}
-*/
-
-/*
-// Fix an issue where on slightly smaller viewports, sometimes toolbar widths are off
-@media (max-width: $breakpoint-wide-tablet) {
-  .toolbar {
-    // Slightly modify the width of these elements on smaller breakpoints (they don't line up in some browsers)
-    .title {
-      width: 44%;
-    }
-  }
-}
-*/
-
-// Overrides the styling for Buttonsets so that they shrink to a small size, leaving room for the Title to be visible.
-/*
-@include respond-to(phablet) {
-  .toolbar {
-    .searchfield-wrapper {
-      z-index: 10;
-
-      // Standalone Searchfields in a buttonset need to be positioned differently to account for
-      // vertical alignmnent of the buttonset (buttonset height will be zero in this case, so starting position of the
-      // searchfield wrapper would be halfway down the toolbar without this)/
-      &:only-child {
-        top: -10%;
-      }
-    }
-
-    .searchfield {
-      text-overflow: none;
-      width: 32px;
-
-      &.empty {
-        padding-left: 0;
-        width: 32px;
-
-        &[placeholder] {
-          padding-left: 0;
-          width: 32px;
-        }
-      }
-    }
-
-    &.searchfield-active {
-      .searchfield-wrapper {
-        left: 0;
-        position: absolute;
-        width: calc(100% - 2px) !important; // 2px accounts for borders
-      }
-
-      .searchfield {
-        &.active,
-        &:active,
-        &.empty.active,
-        &.empty:active {
-          padding-left: 32px;
-          width: 100% !important;
-        }
-      }
-    }
-  }
-}
-*/
