@@ -67,9 +67,7 @@
           var header = $(this),
             isTopLevel = header.parent().is('.accordion');
 
-          // Strip newlines/whitespace
-          header.removeHtmlWhitespace()
-            .attr('role', 'presentation');
+          header.attr('role', 'presentation');
 
           // For backwards compatibility:  If an icon is found inside an anchor, bring it up to the level of the header.
           header.children('a').find('svg').detach().insertBefore(header.children('a'));

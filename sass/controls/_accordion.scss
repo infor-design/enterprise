@@ -4,6 +4,7 @@
 .accordion {
   background-color: $accordion-bg-color;
   border-right: 1px solid $accordion-border-color;
+  font-size: 0;
   overflow-y: visible;
 
   &.alternate {
@@ -201,9 +202,9 @@
 }
 
 .accordion-header {
-  @include font-size(16);
   border-bottom: 1px solid $accordion-border-color;
   cursor: pointer;
+  font-size: 0;
   height: 46px;
   overflow: hidden;
   position: relative;
@@ -246,6 +247,7 @@
   > a {
     color: $accordion-text-color;
     display: inline-block;
+    @include font-size(16);
     overflow: hidden;
     padding: 14px 0 14px 20px;
     text-decoration: none;
@@ -334,7 +336,7 @@
 
   // NOT the same as the above rule.
   > .icon {
-    margin: 0 19px 0 18px;
+    margin: 0 18px;
 
     + a {
       width: calc(100% - 56px);
@@ -507,7 +509,6 @@
   // These rules allow the accordion to expand
   // Level 2 Accordion Header
   .accordion-header {
-    @include font-size(14);
     height: 39px;
 
     &:not(:first-child) {
@@ -519,6 +520,7 @@
     }
 
     > a {
+      @include font-size(14);
       padding: 10px 0 10px 20px;
     }
 

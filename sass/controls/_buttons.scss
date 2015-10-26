@@ -95,7 +95,7 @@ button {
     box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
 
     &:active {
-      background-color: $primary-btn-bg-color;
+      background-color: transparent;
       box-shadow: none;
     }
   }
@@ -142,7 +142,7 @@ a.btn-primary {
     box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
 
     &:active {
-      background-color: $btn-focus-bg-color;
+      background-color: transparent;
       box-shadow: none;
     }
   }
@@ -321,6 +321,14 @@ a.btn-primary {
   .btn,
   .btn-tertiary {
     padding: 0 5px;
+
+    .icon {
+
+      // If an icon is present, the span should not be visible at this breakpoint
+      + span { // prevents oblong-shaped focus state around buttons
+        position: absolute;
+      }
+    }
   }
 
   // Reset the above rule when these types of buttons appear in toolbars
