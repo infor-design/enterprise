@@ -322,6 +322,18 @@
       width: 2px;
     }
   }
+
+  .target-line {
+    background-color: $amethyst07;
+    border-radius: 1px;
+    color: transparent;
+    height: 20px;
+    left: 45px;
+    margin-top: -15px;
+    position: relative;
+    width: 5px;
+    z-index: 1;
+  }
 }
 
 .chart-completion {
@@ -346,6 +358,11 @@
 
 .colored.label {
   color: $turquoise06;
+
+  &.amethyst07 {
+    color: $amethyst07;
+    background-color: transparent;
+  }
 
   span {
     color: $font-color;
