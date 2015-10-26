@@ -32,7 +32,8 @@
           source: null, //TODO
           modalContent: null, //Custom modal markup
           editable: true, //Can the user type random text in the field
-          typeahead: false // Future TODO
+          typeahead: false, // Future TODO
+          autoApply: true
         },
         settings = $.extend({}, defaults, options);
 
@@ -146,11 +147,6 @@
         self.createModal();
         self.element.trigger('open', [self.modal, self.grid]);
 
-        //set focus to first grid cell
-        setTimeout(function () {
-          self.grid.setActiveCell(0, 0);
-        }, 300);
-
         self.modal.element.find('.btn-actions').removeClass('is-selected');
         self.modal.element.find('.pager-pagesize').remove();
 
@@ -180,7 +176,7 @@
         }
 
         var buttons = this.settings.buttons;
-        if (this.settings.options && this.settings.options.selectable === 'multiple' && buttons.length === 0) {
+        if (this.settings.options && this.settings.options.selectable === 'multiple' && buttons.length === 0 || (!self.settings.autoApply && buttons.length === 0)) {
           buttons = [{
             text: Locale.translate('Cancel'),
             click: function(e, modal) {
@@ -198,7 +194,7 @@
           }];
         }
 
-        if (this.settings.options && this.settings.options.selectable === 'single' && buttons.length === 0) {
+        if (this.settings.options && this.settings.options.selectable === 'single' && buttons.length === 0 && self.settings.autoApply) {
           buttons = [{
             text: Locale.translate('Cancel'),
             click: function(e, modal) {
@@ -249,7 +245,7 @@
 
         if (self.settings.options) {
 
-          if (self.settings.options.selectable === 'single') {
+          if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
             self.settings.options.cellNavigation = false;
             lookupGrid.find('tr').addClass('is-clickable');
           }
@@ -265,7 +261,7 @@
           self.selectGridRows(val);
         }
 
-        if (this.settings.options && this.settings.options.selectable === 'single') {
+        if (this.settings.options && this.settings.options.selectable === 'single' && self.settings.autoApply) {
           lookupGrid.on('selected.lookup', function () {
             setTimeout(function () {
               self.insertRows();

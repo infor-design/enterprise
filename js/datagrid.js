@@ -1069,7 +1069,7 @@ $.fn.datagrid = function(options) {
       });
 
       toolbar.toolbar();
-      toolbar.find('.searchfield').searchfield().on('keypress.datagrid', function (e) {
+      toolbar.find('.searchfield').on('keypress.datagrid', function (e) {
         if (e.keyCode === 13) {
           self.keywordSearch($(this).val());
         }
