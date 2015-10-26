@@ -26,7 +26,9 @@
 
     // Settings and Options
     var pluginName = 'toolbar',
-        defaults = {},
+        defaults = {
+          maxVisibleButtons: 2 // Total amount of buttons that can be present, including the More button
+        },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -40,28 +42,52 @@
     Toolbar.prototype = {
 
       init: function() {
-        this
+        return this
           .setup()
           .build()
           .handleEvents();
       },
 
       setup: function() {
+        // Design guidelines state that no less than one button, and no more than 3, can be visible at a time.
+        if (this.settings.maxVisibleButtons <= 0) {
+          this.settings.maxVisibleButtons = 3;
+        }
+        if (this.settings.maxVisibleButtons > 3) {
+          this.settings.maxVisibleButtons = 3;
+        }
+
         return this;
       },
 
       build: function() {
-
         var self = this;
+
         this.element.attr('role', 'toolbar');
         this.buildAriaLabel();
 
+        // Remove random whitespace (major visual problems in this control if this isn't present)
+        this.element.removeHtmlWhitespace();
+
         // keep track of how many popupmenus there are with an ID.
         // Used for managing events that are bound to $(document)
-        this.id = (parseInt($('.toolbar, .formatter-toolbar').length, 10)+1);
+        if (!this.id) {
+          this.id = (parseInt($('.toolbar, .formatter-toolbar').length, 10)+1);
+        }
+
+        // Check for a "title" element.  This element is optional.
+        this.title = this.element.children('.title');
 
         // Container for main group of buttons and input fields.  Only these spill into the More menu.
         this.buttonset = this.element.children('.buttonset');
+        if (!this.buttonset.length) {
+          this.buttonset = $('<div class="buttonset"></div>');
+          if (this.title.length) {
+            this.buttonset.insertAfter(this.title);
+          } else {
+            this.buttonset.prependTo(this.element);
+          }
+        }
 
         // Add and invoke More Button, if it doesn't exist
         this.more = this.element.find('.btn-actions');
@@ -76,21 +102,31 @@
             .appendTo(moreContainer);
         }
 
-        if (!this.more.data('button') && !this.element.hasClass('no-actions-button')) {
-          this.more.button();
-        }
-
         // Reference all interactive items in the toolbar
         this.items = this.buttonset.children('button, input')
           .add(this.buttonset.find('.searchfield-wrapper').children('input')) // Searchfield Wrappers
-          .add(this.element.find('.title').children('button'))
+          .add(this.title.children('button'))
           .add(this.more);
+
+        this.buttonsetItems = this.buttonset.children('button, input')
+          .add(this.buttonset.find('.searchfield-wrapper').children('input'));
 
         // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
-        var popupPlugin = this.more.data('popupmenu');
-        this.moreMenu = popupPlugin ? popupPlugin.menu : $('<ul class="popupmenu"></ul>').insertAfter(this.more);
-        this.defaultMenuItems = this.moreMenu.find('li:not(.separator)').length > 0;
+        var popupMenuInstance = this.more.data('popupmenu'),
+          moreAriaAttr = this.more.attr('aria-controls');
+        if (!popupMenuInstance) {
+          this.moreMenu = $('#' + moreAriaAttr);
+          if (!this.moreMenu.length) {
+            this.moreMenu = this.more.next('.popupmenu');
+          }
+          if (!this.moreMenu.length) {
+            this.moreMenu = $('<ul class="popupmenu"></ul>').insertAfter(this.more);
+          }
+        } else {
+          this.moreMenu = popupMenuInstance.menu;
+        }
+        this.defaultMenuItems = this.moreMenu.children('li:not(.separator)').length > 0;
 
         function menuItemFilter() {
           //jshint validthis:true
@@ -140,12 +176,52 @@
             linkspan.detach().prependTo(popupLi);
           }
 
-          if (item.is('.btn-menu')) {
-            var submenu = item.data('popupmenu').menu.clone(),
-              id = submenu.attr('id');
+          if (item.is('.searchfield')) {
+            if (!item.data('searchfield')) {
+              item.toolbarsearchfield();
+            }
+          }
 
-            submenu.removeAttr('id').attr('data-original-menu', id).wrap($('<div class="wrapper"></div>'));
-            popupLi.addClass('submenu').append(submenu);
+          function addItemLinksRecursively(menu, diffMenu, parentItem) {
+            var children = menu.children('li'),
+              id = diffMenu.attr('id');
+
+            diffMenu.children('li').each(function(i, diffMenuItem) {
+              var dmi = $(diffMenuItem), // "Diffed" Menu Item
+                omi = children.eq(i); // Corresponding "Original" menu item
+
+              dmi.children('a').removeAttr('id');
+
+              omi.data('action-button-link', dmi);
+              dmi.data('original-button', omi.children('a'));
+
+              var omiSubMenu = omi.children('.wrapper').children('.popupmenu'),
+                dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
+
+              if (dmiSubMenu.length && dmiSubMenu.length) {
+                dmi.addClass('submenu');
+                addItemLinksRecursively(dmiSubMenu, omiSubMenu, dmi);
+              }
+            });
+
+            diffMenu.removeAttr('id').attr('data-original-menu', id);
+            parentItem.addClass('submenu');
+
+            if (parentItem.is(popupLi)) {
+              diffMenu.wrap($('<div class="wrapper"></div>'));
+              parentItem.append(diffMenu);
+            }
+          }
+
+          if (item.is('.btn-menu')) {
+            if (!item.data('popupmenu')) {
+              item.popupmenu();
+            }
+
+            var menu = item.data('popupmenu').menu,
+              diffMenu = menu.clone();
+
+            addItemLinksRecursively(menu, diffMenu, popupLi);
           }
 
           // Setup data links between the buttons and their corresponding list items
@@ -154,7 +230,7 @@
           menuItems.push(popupLi);
         }
 
-        this.items.filter(menuItemFilter).each(buildMenuItem);
+        this.items.not(this.more).filter(menuItemFilter).each(buildMenuItem);
         menuItems.reverse();
         $.each(menuItems, function(i, item) {
           if (item.text() !== '') {
@@ -162,15 +238,17 @@
           }
         });
 
-        if (!popupPlugin) {
-          this.more.popupmenu({
+        if (popupMenuInstance) {
+          this.more.trigger('updated');
+        } else {
+          var actionButtonOpts = $.fn.parseOptions(this.more[0]);
+          this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          });
+          }));
         }
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.
-        this.more.attr('tabindex','-1');
         this.items.attr('tabindex', '-1');
 
         var active = this.items.filter('.is-selected');
@@ -188,7 +266,10 @@
         }
 
         // Toggles the More Menu based on overflow of toolbar items
+        this.adjustButtonVisibility();
         this.toggleMoreMenu();
+
+        this.element.triggerHandler('rendered');
 
         return this;
       },
@@ -216,7 +297,8 @@
           self.handleSelected(e, anchor);
         });
 
-        this.element.on('updated.toolbar', function() {
+        this.element.on('updated.toolbar', function(e) {
+          e.stopPropagation();
           self.updated();
         }).on('recalculateButtons.toolbar', function() {
           self.adjustButtonVisibility();
@@ -239,6 +321,9 @@
         if (itemLink && itemLink.length > 0) {
           itemEvts = itemLink.listEvents();
           toolbarEvts = this.element.listEvents();
+
+          // Make sure the active button is set properly
+          this.setActiveButton(itemLink);
 
           // Fire Angular Events
           if (itemLink.attr('ng-click') || itemLink.attr('data-ng-click')) {
@@ -263,12 +348,11 @@
             }
 
             // Check for events directly on the element
-            if (itemEvts[type] || itemLink[0]['on' + type]) {
+            if ((itemEvts && itemEvts[type]) || itemLink[0]['on' + type]) {
               itemLink.trigger(type);
               return;
             }
           }
-
         }
       },
 
@@ -377,6 +461,7 @@
         if (activeButton.is('a')) {
           this.activeButton = activeButton.parents('.popupmenu').last().prev('button').attr('tabindex', '0');
           this.activeButton.focus();
+          this.element.trigger('selected', [this.activeButton]);
           return;
         }
 
@@ -390,13 +475,15 @@
           } else {
             this.activeButton = activeButton;
           }
-          activeButton.attr('tabindex', '0').addClass('is-selected');
+          this.activeButton.attr('tabindex', '0').addClass('is-selected');
         } else {
           this.activeButton = activeButton.addClass('is-selected').attr('tabindex', '0');
           if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
             tooltip.hide();
           }
         }
+
+        this.element.trigger('selected', [this.activeButton]);
 
         if (!noFocus) {
           this.activeButton.focus();
@@ -405,30 +492,30 @@
 
       adjustButtonVisibility: function() {
         var self = this,
-          transitionEnd = $.fn.transitionEndName();
+          visibleLis = [];
 
-        this.items.filter(':not(.btn-actions)').each(function() {
-          var item = $(this);
+        function menuItemFilter() {
+          // jshint validthis:true
+          var i = $(this);
+          return (i.data('action-button-link') && i.is(':not(.searchfield)'));
+        }
 
-          // Don't do this for searchfields
-          if (item.is('.searchfield')) {
-            return;
-          }
+        this.buttonsetItems.filter(menuItemFilter).removeClass('is-overflowed').each(function() {
+          var i = $(this),
+            li = i.data('action-button-link').parent();
 
-          if (self.isItemOverflowed(item)) {
-            item.one(transitionEnd, function() {
-              item.css('visibility', 'hidden');
-            }).addClass('is-overflowed');
-
-            if (document.activeElement === item[0] && item.is(':not(.btn-actions):not(.searchfield)')) {
-              // set focus to last visible item
-              self.getLastVisibleButton().focus();
-            }
+          if (!self.isItemOverflowed(i)) {
+            li.addClass('hidden');
           } else {
-            item.off(transitionEnd);
-            item.css('visibility', '').removeClass('is-overflowed');
+            li.removeClass('hidden');
+            i.addClass('is-overflowed');
+            visibleLis.push(li);
           }
         });
+
+        return {
+          visible: visibleLis
+        };
       },
 
       // Item is considered overflow if it's right-most edge sits past the right-most edge of the border.
@@ -437,37 +524,31 @@
           return true;
         }
 
-        if (this.buttonset.scrollLeft() > 0) {
-          this.buttonset.scrollLeft(0);
+        // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
+        if (this.title.length && (this.buttonsetItems.index(item) >= this.settings.maxVisibleButtons)) {
+          // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
+          // This prevents ONE item from being present in the menu by itself
+          if (!this.buttonsetItems.last().is(item) || item.prev().is('.is-overflowed')) {
+            return true;
+          }
         }
-        var offset = ($(item).offset().left + $(item).outerWidth()) - this.buttonset.offset().left;
-        return offset >= this.buttonset.width() + 1;
+
+        if (this.buttonset.scrollTop() > 0) {
+          this.buttonset.scrollTop(0);
+        }
+        var offset = ($(item).offset().top + $(item).outerHeight()) - this.buttonset.offset().top;
+        return offset >= this.buttonset.outerHeight() + 1;
       },
 
       checkOverflowItems: function() {
-        var self = this,
-          visibleLis = [];
+        var items = this.adjustButtonVisibility();
 
-        function menuItemFilter(i, item) {
-          return $(item).data('action-button-link');
-        }
-
-        this.items.filter(menuItemFilter).each(function() {
-          var i = $(this),
-            li = i.data('action-button-link').parent();
-
-          if (!self.isItemOverflowed(i)) {
-            li.addClass('hidden');
+        if (!$.contains(this.buttonset[0], document.activeElement)) {
+          if (items.visible.length) {
+            items.visible[items.visible.length - 1].focus();
           } else {
-            li.removeClass('hidden');
-            visibleLis.push(li);
+            this.moreMenu.find('.hidden').last().next().focus();
           }
-        });
-
-        if (visibleLis.length) {
-          visibleLis[0].focus();
-        } else {
-          this.moreMenu.find('.hidden').last().next().focus();
         }
       },
 
@@ -476,13 +557,15 @@
           return;
         }
 
-        if (this.element.outerWidth() > 1 && this.buttonset.length > 0 && // Makes sure we're not animating Open or remaining Closed
-          (this.buttonset[0].scrollWidth > this.buttonset.outerWidth() + 1 || // Inner scrolling area doesn't exceed control width
-          this.defaultMenuItems)) { // No default menu items defined in the More Menu (will always show if there are)
-          this.element.addClass('has-more-button');
-        } else {
-          this.element.removeClass('has-more-button');
+        var overflowItems = this.moreMenu.children('li:not(.separator)'),
+          hiddenOverflowItems = overflowItems.not('.hidden');
+
+        var method = 'removeClass';
+        if (this.defaultMenuItems || hiddenOverflowItems.length > 0) {
+          method = 'addClass';
         }
+
+        this.element[method]('has-more-button');
       },
 
       buildAriaLabel: function() {
@@ -491,7 +574,7 @@
         if (!this.element.attr('aria-label')) {
           var isHeader = (this.element.closest('header.header').length ===1),
             id = this.element.attr('id') || '',
-            title = this.element.find('.title'),
+            title = this.element.children('.title'),
             prevLabel = this.element.prev('label'),
             prevSpan = this.element.prev('.label'),
             labelText = isHeader ? $('header.header').find('h1').text() :
@@ -506,25 +589,21 @@
       updated: function() {
         this
           .unbind()
-          .teardown();
+          .teardown()
         // Rebuild the control
-        this
-          .setup()
-          .build()
-          .handleEvents();
+          .init();
       },
 
       enable: function() {
         this.element.prop('disabled', false);
         this.buttons.prop('disabled', false);
-        this.moreButton.prop('disabled', false);
+        this.more.prop('disabled', false);
       },
 
       disable: function() {
         this.element.prop('disabled', true);
         this.buttons.prop('disabled', true);
-        this.moreButton.prop('disabled', true);
-        this.popupmenu.close();
+        this.more.prop('disabled', true).data('popupmenu').close();
       },
 
       unbind: function() {
@@ -551,6 +630,10 @@
           $.removeData(li[0], 'original-button');
           $.removeData(a[0], 'action-button-link');
 
+          if (li.is('.submenu')) {
+            li.children('.wrapper').children('.popupmenu').children(menuItemFilter).each(deconstructMenuItem);
+          }
+
           li.remove();
         }
 
@@ -563,6 +646,13 @@
         this
           .unbind()
           .teardown();
+
+        this.more.data('popupmenu').destroy();
+
+        if (this.buttonset.children('.searchfield-wrapper').length) {
+          this.buttonset.children('.searchfield-wrapper').children('.searchfield').data('toolbarsearchfield').destroy();
+        }
+
         this.element.removeAttr('role').removeAttr('aria-label');
         $.removeData(this.element[0], pluginName);
       }

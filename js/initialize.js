@@ -75,7 +75,13 @@
 
       //Iterate all objects we are initializing
       returnObj = self.filter(':not(svg):not(use):not(.no-init)').each(function() {
-        var elem = $(this);
+        var elem = $(this),
+          noinitExcludes = '.no-init, [data-init]';
+
+        function invokeWithInlineOptions(elem, plugin) {
+          var options = $.fn.parseOptions(elem);
+          $(elem)[plugin](options);
+        }
 
         function simpleInit(plugin, selector) {
           //Allow only the plugin name to be specified if the default selector is a class with the same name
@@ -86,12 +92,17 @@
 
           if ($.fn[plugin]) {
             elem.find(selector).each(function () {
-              if (($(this).is('.no-init') || $(this).attr('data-init')) && selector !=='[data-trackdirty="true"]') {
+              if ($(this).is(noinitExcludes) && selector !=='[data-trackdirty="true"]') {
                 return;
               }
 
-              var options = $.fn.parseOptions(this);
-              $(this)[plugin](options);
+              // Don't invoke elements inside of "container" controls that need to invoke their internal
+              // items in a specific order.
+              if ($(this).parents('.toolbar').length) {
+                return;
+              }
+
+              invokeWithInlineOptions(this, plugin);
             });
           }
 
@@ -108,6 +119,7 @@
           });
         }
 
+        // Application Menu
         if ($.fn.applicationmenu) {
           elem.find('#application-menu').applicationmenu({
             triggers: elem.find('.application-menu-trigger')
@@ -136,11 +148,6 @@
 
           //Editors
           ['editor'],
-
-          //Menu/Split/Action Buttons
-          ['popupmenu', '.btn-filtering'],
-          ['popupmenu', '.btn-menu'],
-          ['popupmenu', '.btn-actions:not([data-init])'],
 
           //Tooltips
           ['tooltip', '[title]'],
@@ -196,21 +203,13 @@
           //Busy Indicator
           ['busyindicator','.busy'],
 
-          //Search Field
-          ['searchfield', '.searchfield:not([data-init])'],
-
-          //Toolbar
-          ['toolbar'],
-
           ['header'],
 
           ['fileupload'],
 
           ['about'],
 
-          ['accordion'],
-
-          ['contextualactionpanel', '.contextual-action-panel-trigger:not(.no-init)'],
+          ['contextualactionpanel', '.contextual-action-panel-trigger'],
 
           ['sidebar', '.sidebar-nav'],
 
@@ -234,17 +233,40 @@
           simpleInit.apply(null, simplePluginMappings[i]);
         }
 
-        //Context Menu
         if ($.fn.popupmenu) {
-          elem.find('[data-popupmenu]:not(.no-init):not([data-init])').each(function () {
-            var obj = $(this);
-            obj.popupmenu({menuId: obj.attr('data-popupmenu'), trigger: 'rightClick'});
+          // Don't double-invoke menu buttons
+          var btnExcludes = ', .btn-actions, .btn-filtering, .btn-menu';
+
+          //Context Menus
+          elem.find('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
+            var triggerButton = $(this),
+              options = $.fn.parseOptions(this),
+              popupData = triggerButton.attr('data-popupmenu');
+
+            if (popupData) {
+              options.menuId = popupData;
+            }
+
+            triggerButton.popupmenu(options);
+          });
+
+          //Button-based Popup-Menus (Action/More Button, Menu Buttons, etc.)
+          elem.find('.btn-filtering, .btn-menu, .btn-actions').filter(':not('+ noinitExcludes +')').each(function() {
+            var triggerButton = $(this);
+
+            // Don't auto-invoke Toolbar's Popupmenus.
+            // Toolbar needs to completely control its contents and invoke each one manually.
+            if (triggerButton.parents('.toolbar').length > 0) {
+              return;
+            }
+
+            invokeWithInlineOptions(triggerButton, 'popupmenu');
           });
         }
 
         //Popovers
         if ($.fn.popover) {
-          elem.find('[data-popover]:not(.no-init):not([data-init])').each(function () {
+          elem.find('[data-popover]:not('+ noinitExcludes +')').each(function () {
             var obj = $(this),
               trigger = obj.attr('data-trigger'),
               title = obj.attr('data-title');
@@ -260,7 +282,7 @@
 
         //Cardstack
         if ($.fn.listview) {
-          elem.find('.listview:not(.no-init):not([data-init])').each(function () {
+          elem.find('.listview:not('+ noinitExcludes +')').each(function () {
             var cs = $(this),
               attr = cs.attr('data-dataset'),
               tmpl = cs.attr('data-tmpl'),
@@ -277,6 +299,47 @@
             }
 
             cs.listview(options);
+          });
+        }
+
+        // Searchfield
+        // NOTE:  The Toolbar Control itself understands how to invoke internal searchfields, so they
+        // are excluded from this initializer.
+        if ($.fn.searchfield) {
+          var searchfields = elem.find('.searchfield:not('+ noinitExcludes +')'),
+            toolbarSearchfields = searchfields.filter(function() {
+              return $(this).parents('.toolbar').length;
+            });
+          searchfields = searchfields.not(toolbarSearchfields);
+
+          searchfields.each(function() {
+            invokeWithInlineOptions(this, 'searchfield');
+          });
+        }
+
+        // Accordion
+        if ($.fn.accordion) {
+          elem.find('.accordion:not('+ noinitExcludes +')').each(function() {
+            var a = $(this);
+            if (a.parents('.application-menu').length) {
+              return;
+            }
+
+            invokeWithInlineOptions(a, 'accordion');
+          });
+        }
+
+        // Toolbar
+        if ($.fn.toolbar) {
+          elem.find('.toolbar:not('+ noinitExcludes +')').each(function() {
+            var t = $(this);
+            // Don't re-invoke toolbars that are part of the page/section headers.
+            // header.js manually invokes these toolbars during its setup process.
+            if (t.parents('.header').length) {
+              return;
+            }
+
+            invokeWithInlineOptions(t, 'toolbar');
           });
         }
 

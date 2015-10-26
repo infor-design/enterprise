@@ -367,9 +367,9 @@
       },
 
       updated: function() {
-        this
+        return this
           .unbind()
-          .handleEvents();
+          .init();
       },
 
       // Teardown - Remove added markup and events

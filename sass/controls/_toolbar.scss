@@ -1,7 +1,7 @@
 // Toolbars
 //================================================== */
 
-$toolbar-height: 44px;
+$toolbar-buttonset-height: 44px;
 
 // See also Colors.scss
 .toolbar,
@@ -23,39 +23,36 @@ $toolbar-height: 44px;
   }
 
   .buttonset {
-    //margin: 0 10px;
+    height: $toolbar-buttonset-height;
     overflow: hidden;
-    white-space: nowrap;
     width: 98%;
 
     > * {
-      @include transition(opacity 300ms cubic-bezier(.17, .04, .03, .94));
-      margin-bottom: 5px;
-      margin-top: 5px;
+      margin: 5px 5px 5px 0;
+      vertical-align: top;
+
+      &:last-child {
+        margin-right: 1px;
+      }
+
+      &.is-overflowed {
+        display: block;
+      }
     }
 
-    &:first-child {
-      margin-left: 1px;
-    }
+    > [class^="btn"] {
+      min-width: 34px;
 
-    &:last-child {
-      margin-right: 1px;
-    }
-
-    > .is-overflowed {
-      opacity: 0;
-    }
-
-    button {
-      margin-right: 0;
+      .icon:not(.icon-dropdown) {
+        height: 18px;
+      }
     }
   }
 
   .title {
     overflow: hidden;
-    @include css3(transition, left 300ms cubic-bezier(.17, .04, .03, .94));
     white-space: nowrap;
-    width: 44%;
+    width: 45%;
 
     > * {
       vertical-align: middle;
@@ -66,15 +63,20 @@ $toolbar-height: 44px;
     }
 
     + .buttonset {
-      width: 54%;
+      text-align: right;
+      width: calc(55% - 1px); // 1px is the width of the pseudo-element preceeding the title used for vertical alignment
     }
   }
 
   // Container for More Button
   .more {
     display: none;
-    width: 60px;
-    @include css3(transition, right 300ms cubic-bezier(.17, .04, .03, .94));
+    text-align: right;
+    width: 38px;
+
+    > * {
+      margin-right: 1px;
+    }
   }
 
   .separator {
@@ -89,21 +91,23 @@ $toolbar-height: 44px;
 
   &.has-more-button {
     .buttonset {
-      width: calc(100% - 48px);
+      width: calc(100% - 39px); // 39px = width of the ".more" container + 1px for vertical spacing pseudo-element
+
+      > *:last-child {
+        margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
+      }
     }
 
     .title {
-      width: 44%;
+      width: calc(45%); // 1px for the "vertical alignment" helper psuedo-element
 
       + .buttonset {
-        width: calc(55% - 50px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
+        width: calc(55% - 39px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
       }
     }
 
     .more {
       display: inline-block !important;
-      text-align: right;
-      width: 38px;
     }
   }
 
@@ -120,8 +124,6 @@ $toolbar-height: 44px;
 
     + .buttonset {
       text-align: right;
-      @include css3(transition, width 300ms cubic-bezier(.17, .04, .03, .94),
-        margin 300ms cubic-bezier(.17, .04, .03, .94));
     }
   }
 
@@ -236,6 +238,7 @@ $toolbar-height: 44px;
     .btn-tertiary,
     .btn {
       min-width: 0;
+      padding: 0;
       width: auto;
 
       span:not(.audible) {
@@ -259,6 +262,7 @@ $toolbar-height: 44px;
 
 // Special Rules for iOS, for unknown reasons this design just doesn't play nice with iOS
 // TODO: Figure out why
+/*
 .ios .toolbar {
   &.searchfield-active {
     .title,
@@ -282,7 +286,9 @@ $toolbar-height: 44px;
     }
   }
 }
+*/
 
+/*
 // Fix an issue where on slightly smaller viewports, sometimes toolbar widths are off
 @media (max-width: $breakpoint-wide-tablet) {
   .toolbar {
@@ -292,32 +298,12 @@ $toolbar-height: 44px;
     }
   }
 }
+*/
 
 // Overrides the styling for Buttonsets so that they shrink to a small size, leaving room for the Title to be visible.
+/*
 @include respond-to(phablet) {
   .toolbar {
-    .title {
-      width: calc(100% - 40px);
-
-      + .buttonset {
-        width: 40px;
-      }
-    }
-
-    .buttonset {
-      z-index: 10;
-    }
-
-    &.has-more-button {
-      .title {
-        width: calc(100% - 90px);
-
-        + .buttonset {
-          width: 40px;
-        }
-      }
-    }
-
     .searchfield-wrapper {
       z-index: 10;
 
@@ -363,4 +349,4 @@ $toolbar-height: 44px;
     }
   }
 }
-
+*/

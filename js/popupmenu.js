@@ -50,7 +50,7 @@
       },
 
       setup: function() {
-        if (this.element.attr('data-popupmenu') && (this.settings.menu === null || this.settings.menu === undefined)) {
+        if (this.element.attr('data-popupmenu') && !this.settings.menu) {
           this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
         }
         // Backwards compatibility for "menuId" menu options coming from other controls
@@ -62,7 +62,9 @@
 
         // keep track of how many popupmenus there are with an ID.
         // Used for managing events that are bound to $(document)
-        this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
+        if (!this.id) {
+          this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
+        }
       },
 
       //Add markip including Aria
@@ -199,9 +201,8 @@
         var self = this;
 
         if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
-         this.element.onTouchClick('popupmenu')
-          .offTouchClick('popupmenu')
-          .off('click.popupmenu')
+
+        this.element.onTouchClick('popupmenu')
           .on('click.popupmenu', function (e) {
             if (self.element.is(':disabled')) {
               return;
@@ -212,8 +213,13 @@
             } else {
               self.open(e);
             }
+          })
+          .on('updated.popupmenu', function(e) {
+            e.stopPropagation();
+            self.updated();
           });
         }
+
         //settings.trigger
         if (this.settings.trigger === 'rightClick') {
           this.menu.parent().on('contextmenu.popupmenu', function (e) {

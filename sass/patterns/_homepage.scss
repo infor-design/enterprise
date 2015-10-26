@@ -27,7 +27,7 @@
     line-height: 50px;
 
     &.has-toolbar {
-      padding: 0 20px;
+      padding: 0 13px 0 20px;
 
       .toolbar {
         line-height: normal;
@@ -43,7 +43,59 @@
       }
 
       .searchfield-wrapper {
-        margin: 8px 0 5px;
+        margin: 8px 5px 5px 0;
+      }
+
+      .buttonset {
+        > *:not(.searchfield-wrapper) {
+          margin-top: 6px;
+        }
+      }
+
+      .more {
+        > * {
+          margin-top: 6px;
+        }
+      }
+    }
+
+    [class^="btn"] {
+      color: $listview-toolbar-button-text-color;
+
+      span {
+        color: $listview-toolbar-button-text-color;
+      }
+
+      .icon {
+        fill: $listview-toolbar-button-icon-color;
+      }
+
+      &:focus,
+      &:hover {
+        color: $listview-toolbar-button-text-hover-color;
+
+        span {
+          color: $listview-toolbar-button-text-hover-color;
+        }
+
+        .icon {
+          fill: $listview-toolbar-button-icon-hover-color;
+        }
+      }
+
+      &.is-selected,
+      &.is-selected:focus,
+      &.is-selected:hover {
+        color: $listview-toolbar-button-text-selected-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-toolbar-button-text-selected-color;
+
+        span {
+          color: $listview-toolbar-button-text-selected-color;
+        }
+
+        .icon {
+          fill: $listview-toolbar-button-icon-selected-color;
+        }
       }
     }
 

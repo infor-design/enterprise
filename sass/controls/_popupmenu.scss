@@ -132,31 +132,40 @@
   display: none;
   list-style: none;
   margin: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  padding: 10px 0;
+  overflow: hidden;
   -webkit-overflow-scrolling: touch;
+  padding: 10px 0;
 
-  &.is-padded a,
+    //Icon Positioning
+  .icon,
+  b {
+    fill: $popupmenu-color-filtered-text;
+    height: 18px;
+  }
+
+  &.has-icons a,
    .heading {
     padding: 0 35px;
-  }
 
-  &.is-padded .icon:not(.arrow) {
-    height: 18px;
-    margin-left: 8px;
-    margin-right: -13px;
-    margin-top: -1px;
-  }
-
-  &.has-icons > li {
-    a {
-      padding-left: 40px;
+    .icon:not(.arrow) {
+      height: 18px;
+      margin-left: 8px;
+      margin-right: -13px;
+      margin-top: 1px;
     }
+  }
 
-    .icon {
-      left: 0;
-      position: absolute;
+  &.has-icons {
+    > li {
+      a {
+        padding-left: 40px;
+      }
+
+      .icon {
+        left: 4px;
+        position: absolute;
+        top: 6px;
+      }
     }
   }
 
@@ -219,15 +228,14 @@
     white-space: nowrap;
 
     span {
-      line-height: 30px;
       color: inherit;
-      font-weight: inherit;
+      font-weight: inherit;line-height: 30px;
+
     }
 
     small {
       @include font-size(11);
       display: block;
-      margin-top: -3px;
       line-height: normal;
       margin-bottom: 8px;
       margin-top: -3px;
@@ -248,22 +256,6 @@
   i {
     color: $font-color-extrahighcontrast;
     font-style: normal;
-  }
-
-  //Icon Positioning
-  .icon,
-  b {
-    fill: $popupmenu-color-filtered-text;
-    position: absolute;
-  }
-
-  .icon:not(.icon-dropdown) {
-    margin-left: 5px;
-    margin-right: -4px;
-    position: relative;
-    top: 5px;
-    height: 18px;
-    width: 18px;
   }
 
   .icon.icon-dropdown {

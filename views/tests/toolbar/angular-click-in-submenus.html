@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2>Toolbar Test: Angular Click Event Triggers</h2>
+
+    <p>This test sets some toolbar items and submenu items up with Angular.js Click event triggers, using a "data-ng-click" attribute.  In the Toolbar control, elements containing these attributes should have a "click" event triggered on them in two cases:  When the item itself is clicked, and when its corresponding entry in the Toolbar's spillover menu is clicked.  This test sets up a series of "data-ng-click" attributes on various menu items to make sure they are all triggering properly.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="angular-events-toolbar" class="toolbar">
+      <div class="title">
+        Angular Events
+      </div>
+
+      <div class="buttonset">
+        <button id="button1" class="btn">
+          <span>Filler Button, Please Ignore</span>
+        </button>
+
+        <button id="button2" class="btn" data-ng-click>
+          <span>Contains a "data-ng-click" Attribute</span>
+        </button>
+
+        <button id="button3" class="btn-menu">
+          <span>This Menu has Items</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a id="item1" href="#">Normal</a></li>
+          <li><a id="item2" href="#">Normal</a></li>
+          <li><a id="item3" href="#">Normal</a></li>
+          <li><a id="item4" href="#" data-ng-click>Has an "data-ng-click" Attribute</a></li>
+          <li>
+            <a id="item5" href="#">Submenu</a>
+            <ul class="popupmenu">
+              <li><a id="subitem1" href="#">Normal</a></li>
+              <li><a id="subitem2" href="#" data-ng-click>Has an "data-ng-click" Attribute</a></li>
+              <li><a id="subitem3" href="#">Normal</a></li>
+              <li><a id="subitem4" href="#">Normal</a></li>
+              <li><a id="subitem5" href="#">Normal</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    function ngClickTrigger(element) {
+      $('body').toast({
+        title: $(element).attr('id') + ' triggered!',
+        message: 'Button with "data-ng-click" was clicked or triggered!'
+      });
+    }
+
+    $('#button2').add('#item4').add('#subitem2').on('click.test', function(e) {
+      ngClickTrigger($(this));
+    });
+  });
+</script>

@@ -99,6 +99,13 @@ $listview-selection-toolbar-color: $inverse-color;
 $listview-header-bg-color: $slate06;
 $listview-header-color: $white;
 
+$listview-toolbar-button-text-color: $graphite03;
+$listview-toolbar-button-icon-color: $graphite03;
+$listview-toolbar-button-text-hover-color: $white;
+$listview-toolbar-button-icon-hover-color: $white;
+$listview-toolbar-button-text-selected-color: $primary-color;
+$listview-toolbar-button-icon-selected-color: $primary-color;
+
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
@@ -311,6 +318,23 @@ $wizard-active-color: $primary-color;
 
 //Themable Variables in config.scss
 $hierarchy-line-color: $slate04;
+
+// Searchfield Colors
+$searchfield-bg-color: $slate09;
+$searchfield-border-color: $slate10;
+$searchfield-icon-color: $tertiary-btn-color;
+$searchfield-text-color: $tertiary-btn-color;
+
+$searchfield-card-bg-color: $slate08;
+$searchfield-card-border-color: $slate09;
+$searchfield-card-icon-color: $graphite06;
+$searchfield-card-text-color: $font-color;
+
+$searchfield-header-bg-color: $slate08;
+$searchfield-header-border-color: $slate07;
+$searchfield-header-text-color: $white;
+$searchfield-header-placeholder-text-color: $slate04;
+$searchfield-header-icon-color: $header-icon-color;
 
 //Image Border Color
 $image-border-color: $slate04;
