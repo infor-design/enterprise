@@ -27,7 +27,7 @@
     // Settings and Options
     var pluginName = 'toolbar',
         defaults = {
-          maxVisibleButtons: 2 // Total amount of buttons that can be present, including the More button
+          maxVisibleButtons: 3 // Total amount of buttons that can be present, not including the More button
         },
         settings = $.extend({}, defaults, options);
 
@@ -49,11 +49,8 @@
       },
 
       setup: function() {
-        // Design guidelines state that no less than one button, and no more than 3, can be visible at a time.
+        // Can't have zero buttons
         if (this.settings.maxVisibleButtons <= 0) {
-          this.settings.maxVisibleButtons = 3;
-        }
-        if (this.settings.maxVisibleButtons > 3) {
           this.settings.maxVisibleButtons = 3;
         }
 
@@ -525,7 +522,7 @@
         }
 
         // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
-        if (this.title.length && (this.buttonsetItems.index(item) >= this.settings.maxVisibleButtons)) {
+        if (this.title.length && (this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons - 1))) { // Subtract one to account for the More Button
           // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
           // This prevents ONE item from being present in the menu by itself
           if (!this.buttonsetItems.last().is(item) || item.prev().is('.is-overflowed')) {
