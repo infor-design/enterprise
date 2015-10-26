@@ -258,10 +258,16 @@
         });
 
         self.element.on('selected', function (e, link) {
-          if(self.element.hasClass('btn-filtering')) {
+          if (self.element.hasClass('btn-filtering')) {
             self.iconFilteringUpdate(link);
             e.preventDefault();
           }
+
+          if (self.menu.hasClass('is-selectable')) {
+            link.parent().prevUntil('.header').add(link.parent().nextUntil('.separator')).removeClass('is-checked');
+            link.parent().addClass('is-checked');
+          }
+
         });
 
       },
