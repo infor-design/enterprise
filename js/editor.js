@@ -271,8 +271,7 @@
       },
 
       triggerClick: function(e, btn) {
-        $('button[data-action="'+ btn +'"]').trigger('click.editor');
-        e.preventDefault();
+        $('button[data-action="'+ btn +'"]', this.toolbar).trigger('click.editor');
       },
 
       setupKeyboardEvents: function() {
@@ -306,12 +305,14 @@
               break;
             case keys.b:
               self.triggerClick(e, 'bold');
+              e.preventDefault();
               break;
             case keys.e:
               self.triggerClick(e, 'justifyCenter');
               break;
             case keys.h:
               self.triggerClick(e, 'anchor');
+              e.preventDefault();
               break;
             case keys.i:
               self.triggerClick(e, e.shiftKey ? 'image' : 'italic');
