@@ -644,28 +644,28 @@
       },
 
       teardown: function() {
-        function menuItemFilter(i, item) {
-          var link = $(item).data('action-button-link');
-          return (link !== null && link !== undefined && link.length);
-        }
-
         function deconstructMenuItem(i, item) {
-          var a = $(item).data('action-button-link'),
-            li = a.parent();
+          var li = $(item),
+            a = li.children('a'),
+            itemLink = a.data('original-button');
 
           a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar');
 
-          $.removeData(a[0], 'original-button');
-          $.removeData($(item)[0], 'action-button-link');
+          if (itemLink && itemLink.length) {
+            $.removeData(a[0], 'original-button');
+            $.removeData(itemLink[0], 'action-button-link');
+          }
 
-          if (li.is('.submenu')) {
-            li.children('.wrapper').children('.popupmenu').children(menuItemFilter).each(deconstructMenuItem);
+          if (li.is('submenu')) {
+            li.children('.wrapper').children('.popupmenu').children('li').each(deconstructMenuItem);
           }
 
           li.remove();
         }
 
-        this.items.filter(menuItemFilter).each(deconstructMenuItem);
+        this.moreMenu.children('li').each(deconstructMenuItem);
+        this.more.data('popupmenu').destroy();
+
         return this;
       },
 
@@ -674,8 +674,6 @@
         this
           .unbind()
           .teardown();
-
-        this.more.data('popupmenu').destroy();
 
         if (this.buttonset.children('.searchfield-wrapper').length) {
           this.buttonset.children('.searchfield-wrapper').children('.searchfield').data('toolbarsearchfield').destroy();
