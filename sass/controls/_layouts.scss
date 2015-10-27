@@ -352,6 +352,11 @@ body.no-scroll {
     }
   }
 
+  ~ .masthead + .page-container {
+    height: calc(100% - 98px);
+    margin-top: 98px;
+  }
+
 }
 
 .masthead {
