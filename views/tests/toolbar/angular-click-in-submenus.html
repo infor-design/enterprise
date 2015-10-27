@@ -3,7 +3,9 @@
 
     <h2>Toolbar Test: Angular Click Event Triggers</h2>
 
-    <p>This test sets some toolbar items and submenu items up with Angular.js Click event triggers, using a "data-ng-click" attribute.  In the Toolbar control, elements containing these attributes should have a "click" event triggered on them in two cases:  When the item itself is clicked, and when its corresponding entry in the Toolbar's spillover menu is clicked.  This test sets up a series of "data-ng-click" attributes on various menu items to make sure they are all triggering properly.</p>
+    <p>This test sets some toolbar items and submenu items up with Angular.js Click event triggers, using a "data-ng-click" attribute.  In the Toolbar control, elements containing these attributes should have a "click" event triggered on them in two cases:  When the item itself is clicked, and when its corresponding entry in the Toolbar's spillover menu is clicked.</p>
+
+    <p>This test sets up a series of "data-ng-click" attributes on various menu items to make sure they are all triggering properly.  We listen for the Toolbar element's "selected" event here because it's a safe way of determining when an item was clicked.</p>
 
     <p></p>
 
@@ -61,8 +63,10 @@
       });
     }
 
-    $('#button2').add('#item4').add('#subitem2').on('click.test', function(e) {
-      ngClickTrigger($(this));
-    });
+    $('#angular-events-toolbar').on('selected.test', function(e, element) {
+      if ($(element).attr('data-ng-click') !== undefined || $(element).attr('ng-click') !== undefined) {
+        ngClickTrigger($(element));
+      }
+    })
   });
 </script>

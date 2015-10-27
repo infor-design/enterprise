@@ -30,12 +30,16 @@
       @include font-size(18);
     }
 
-    .searchfield:focus {
-      width: 175px;
-    }
-
     .separator {
       margin: 3px 5px 0;
+    }
+
+    .toolbar-searchfield-wrapper.active {
+
+      .searchfield {
+        background-color: $contextual-panel-searchfield-bg-color;
+        border-color: $contextual-panel-searchfield-border-color;
+      }
     }
 
   }

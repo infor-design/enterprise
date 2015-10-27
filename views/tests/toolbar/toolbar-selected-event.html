@@ -12,7 +12,7 @@
 <div class="row">
   <div class="twelve columns">
 
-    <div id="selected-event-toolbar" class="toolbar">
+    <div id="selected-event-toolbar" class="toolbar" data-options="{maxVisibleButtons: 4}">
       <div class="title">
         Selected Event Toolbar
       </div>
@@ -26,6 +26,25 @@
           </svg>
           <span>Category</span>
         </button>
+
+        <button id="settings-button" class="btn-menu">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Settings</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a id="setting-1" href="#">Setting 1</a>
+          <li><a id="setting-2" href="#">Setting 2</a>
+          <li><a id="setting-3" href="#">Setting 3</a>
+          <li class="submenu">
+            <a id="more-options" href="#">More Settings</a>
+            <ul class="popupmenu">
+              <li><a id="sub-setting-1" href="#">Sub-Setting 1</a>
+              <li><a id="sub-setting-2" href="#">Sub-Setting 2</a>
+              <li><a id="sub-setting-3" href="#">Sub-Setting 3</a>
+            </ul>
+        </ul>
 
         <button id="date-button" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -41,22 +60,22 @@
           <span>Share</span>
         </button>
 
-        <button id="menu-button" class="btn-menu">
+        <button id="options-button" class="btn-menu">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-star-filled"></use>
           </svg>
           <span>Options</span>
         </button>
         <ul class="popupmenu">
-          <li><a id="menu-item-1" href="#">Option 1</a>
-          <li><a id="menu-item-2" href="#">Option 2</a>
-          <li><a id="menu-item-3" href="#">Option 3</a>
+          <li><a id="option-1" href="#">Option 1</a>
+          <li><a id="option-2" href="#">Option 2</a>
+          <li><a id="option-3" href="#">Option 3</a>
           <li class="submenu">
             <a id="more-options" href="#">More Options</a>
             <ul class="popupmenu">
-              <li><a id="submenu-item-1" href="#">Sub-Option 1</a>
-              <li><a id="submenu-item-2" href="#">Sub-Option 2</a>
-              <li><a id="submenu-item-3" href="#">Sub-Option 3</a>
+              <li><a id="sub-option-1" href="#">Sub-Option 1</a>
+              <li><a id="sub-option-2" href="#">Sub-Option 2</a>
+              <li><a id="sub-option-3" href="#">Sub-Option 3</a>
             </ul>
         </ul>
       </div>
