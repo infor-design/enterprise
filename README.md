@@ -49,13 +49,12 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 
 ## Install
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
-* Install gruntjs: http://gruntjs.com/ by running (`npm install -g grunt-cli`)
-* Install sass: http://sass-lang.com/
+* Install gruntjs: http://gruntjs.com/ by running the command (`npm install -g grunt-cli`)
 
 ## Get The Code
 
-* First clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
-* Move into your new repo: `cd controls`
+* Clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
+* Move into your new repo folder: `cd controls`
 * Then  `npm install` to install node package dependencies. On mac you may need `sudo npm install` as some packages require elevated permissions.
 * For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
 
