@@ -510,7 +510,8 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  margin-right: -10px !important;
+  // margin-right: -10px !important;
+  margin: 0 -10px;
   top: -2px;
 
   span:not(.icon) {
@@ -533,6 +534,10 @@ td .btn-actions {
     }
   }
 
+}
+
+.ie9 .datagrid-expand-btn {
+  top: 5px;
 }
 
 //Grid Expandable Area
