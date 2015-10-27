@@ -19,7 +19,8 @@
       data: [{
           name: 'Category A',
           //'Requirements Exceeding Net Change',
-          value: 373
+          value: 373,
+          url: 'test'
       }, {
           name: 'Category B',
           value: 372
@@ -30,5 +31,7 @@
       name: ''  //Can be optionally passed in makes less sense with one: Group 1
     }];
 
-  $('#bar-example').chart({type: 'bar', dataset: dataset});
+  $('#bar-example').chart({type: 'bar', dataset: dataset}).on('selected', function(e, ui, data) {
+    console.log(e, ui, data);
+   });
 </script>

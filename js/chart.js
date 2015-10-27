@@ -187,14 +187,12 @@ window.Chart = function(container) {
     //Map the Data Sets and Stack them.
     dataset = dataset.map(function (d) {
       return d.data.map(function (o) {
-        // Structure it so that your numeric
-        // axis (the stacked amount) is y
-        return {
+        return $.extend({}, o, {
             y: o.value,
             x: o.name,
             color: o.color,
             pattern: o.pattern
-        };
+        });
       });
     });
     stack = d3.layout.stack();
@@ -206,14 +204,16 @@ window.Chart = function(container) {
     dataset = dataset.map(function (group) {
       return group.map(function (d) {
         maxTextWidth = (d.x.length > maxTextWidth ? d.x.length : maxTextWidth);
+
         // Invert the x and y values, and y0 becomes x0
-        return {
+        return $.extend({}, d, {
             x: d.y,
             y: d.x,
             x0: d.y0,
             color: d.color,
             pattern: d.pattern
-        };
+        });
+
       });
     });
 

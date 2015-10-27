@@ -1068,7 +1068,10 @@ $.fn.datagrid = function(options) {
         args.filter('[data-option]').parent().addClass('is-checked');
       });
 
-      toolbar.toolbar();
+      if (!toolbar.data('toolbar')) {
+        toolbar.toolbar();
+      }
+
       toolbar.find('.searchfield').on('keypress.datagrid', function (e) {
         if (e.keyCode === 13) {
           self.keywordSearch($(this).val());
@@ -1719,10 +1722,6 @@ $.fn.datagrid = function(options) {
 
       this.activeCell.isFocused = true;
 
-      // Select row on single selectable, if cellNavigation = false
-      if (isSingle && !self.settings.cellNavigation) {
-        self.toggleRowSelection(row);
-      }
     },
 
     expandRow: function(row) {
