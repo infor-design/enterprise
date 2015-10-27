@@ -469,7 +469,7 @@
           }
           // Order of operations: set up event, change display prop, animate, toggle menu.
           // Menu toggle takes place after the animation starts
-          toolbar.one('animateOpenComplete', function() {
+          toolbar.one('animateopencomplete', function() {
             self.element.addClass('is-toolbar-open');
             toolbar.trigger('recalculateButtons').removeClass('is-hidden');
           }).css('display', 'block');
@@ -483,7 +483,7 @@
           title.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
 
         } else {
-          toolbar.addClass('is-hidden').one('animateClosedComplete', function(e) {
+          toolbar.addClass('is-hidden').one('animateclosedcomplete', function(e) {
             e.stopPropagation();
             $(this).css('display', 'none');
           }).animateClosed();

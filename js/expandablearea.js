@@ -158,7 +158,7 @@
         this.element.addClass('is-expanded');
         this.header.attr('aria-expanded', 'true');
         this.expandedIcon.addClass('active');
-        this.content.css('display','block').one('animateOpenComplete', function() {
+        this.content.css('display','block').one('animateopencomplete', function() {
           self.element.trigger('open-expandablearea');
         }).animateOpen();
       },
@@ -166,7 +166,7 @@
       close: function() {
         var self = this;
         this.expandedIcon.removeClass('active');
-        this.content.one('animateClosedComplete', function() {
+        this.content.one('animateclosedcomplete', function() {
           self.element.removeClass('is-expanded');
           self.header.attr('aria-expanded', 'false');
           self.element.trigger('close-expandablearea');

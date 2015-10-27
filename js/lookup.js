@@ -210,7 +210,7 @@
           buttons: buttons
         }).off('open').on('open', function () {
           self.createGrid();
-          self.element.trigger('afterOpen', [self.modal, self.grid]);
+          self.element.trigger('afteropen', [self.modal, self.grid]);
         }).off('close').on('close', function () {
           self.element.focus();
         });

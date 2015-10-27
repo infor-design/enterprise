@@ -71,11 +71,11 @@
 
         //Setup the destroy event to fire on close.  Needs to fire after the "close" event on the modal.
         this.message.on('beforeClose', function () {
-          var ok = self.element.triggerHandler('beforeClose');
+          var ok = self.element.triggerHandler('beforeclose');
           return ok;
         });
         this.message.on('beforeOpen', function () {
-          var ok = self.element.triggerHandler('beforeOpen');
+          var ok = self.element.triggerHandler('beforeopen');
           return ok;
         });
         this.message.on('open', function () {

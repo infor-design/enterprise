@@ -486,7 +486,7 @@
       },
 
       close: function () {
-        var elemCanClose = this.element.triggerHandler('beforeClose'),
+        var elemCanClose = this.element.triggerHandler('beforeclose'),
           self = this;
 
         if (elemCanClose === false) {

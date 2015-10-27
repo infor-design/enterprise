@@ -359,7 +359,7 @@
 
       unbind: function() {
         this.accordion.off('blur.applicationmenu');
-        this.menu.off('animateOpenComplete animateClosedComplete');
+        this.menu.off('animateopencomplete animateclosedcomplete');
         $(window).off('scroll.applicationmenu');
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
 

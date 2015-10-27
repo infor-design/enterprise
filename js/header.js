@@ -359,7 +359,7 @@
         this.removeWizard();
         this.removeButton();
 
-        this.element.trigger('afterReset');
+        this.element.trigger('afterreset');
         return this;
       },
 

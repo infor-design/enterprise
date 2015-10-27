@@ -443,7 +443,7 @@
             maxPasteInput = paste.substring(0, pasteLimiter);
           this.processStringAgainstMask(maxPasteInput, e);
         }
-        this.element.trigger('afterPaste.mask');
+        this.element.trigger('afterpaste.mask');
         this.killEvent(e);
       },
 

@@ -99,7 +99,7 @@
 
           this.container
             .removeClass('is-hidden')
-            .trigger('afterStart');
+            .trigger('afterstart');
           return;
         }
 
@@ -170,15 +170,15 @@
         }, self.delay);
 
         // Lets external code know that we've successully kicked off.
-        this.element.trigger('afterStart');
+        this.element.trigger('afterstart');
 
-        
+
         // Start the JS Animation Loop if IE9
         if (!$.fn.cssPropSupport('animation')) {
           self.isAnimating = true;
           self.animateWithJS();
         }
-        
+
 
         // Triggers complete if the "timeToComplete" option is set.
         if (this.completionTime > 0) {
@@ -208,7 +208,7 @@
             self.element.css('position', self.originalPositionProp);
             self.originalPositionProp = undefined;
           }
-          self.element.trigger('afterComplete.busyindicator');
+          self.element.trigger('aftercomplete.busyindicator');
           self.element.off('complete.busyindicator');
         }, 500);
       },
@@ -284,7 +284,7 @@
 
       // Teardown
       destroy: function() {
-        this.element.off('start.busyindicator complete.busyindicator afterStart.busyindicator afterComplete.busyindicator updated.busyindicator');
+        this.element.off('start.busyindicator complete.busyindicator afterstart.busyindicator aftercomplete.busyindicator updated.busyindicator');
         $.removeData(this.element[0], pluginName);
       }
     };

@@ -502,7 +502,7 @@
 
           self.element.trigger('expand', [a]);
 
-          pane.one('animateOpenComplete', function(e) {
+          pane.one('animateopencomplete', function(e) {
             e.stopPropagation();
             header.children('a').attr('aria-expanded', 'true');
             self.element.trigger('afterexpand', [a]);
@@ -538,7 +538,7 @@
 
         a.attr('aria-expanded', 'false');
 
-        pane.one('animateClosedComplete', function(e) {
+        pane.one('animateclosedcomplete', function(e) {
           e.stopPropagation();
           pane.css('display', 'none');
           self.collapse(pane.children('.accordion-header'));

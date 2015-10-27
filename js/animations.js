@@ -55,22 +55,22 @@
           $.removeData($self[0], 'is-animating');
         }
 
-        $self.off(eventName + '.animateOpen');
+        $self.off(eventName + '.animateopen');
         self.style.transition = '';
         self.style[dim] = distance;
-        $self.trigger('animateOpenComplete');
+        $self.trigger('animateopencomplete');
       }
 
       // Clear any previous attempt at this animation when the animation starts new
-      $self.one('animateOpenStart.animation', function(e) {
+      $self.one('animateopenstart.animation', function(e) {
         e.stopPropagation();
-        $self.off(eventName + '.animateOpen');
+        $self.off(eventName + '.animateopen');
       });
-      $self.trigger('animateOpenStart');
+      $self.trigger('animateopenstart');
 
       // Trigger the callback either by Timeout or by TransitionEnd
       if (eventName) {
-        $self.one(eventName + '.animateOpen', transitionEndCallback);
+        $self.one(eventName + '.animateopen', transitionEndCallback);
       }
 
       // Animate
@@ -126,22 +126,22 @@
           $.removeData($self[0], 'is-animating');
         }
 
-        $self.off(eventName + '.animatedClosed');
+        $self.off(eventName + '.animatedclosed');
         self.style.transition = '';
         self.style[dim] = '0px';
-        $self.trigger('animateClosedComplete');
+        $self.trigger('animateclosedcomplete');
       }
 
       // Clear any previous attempt at this animation when the animation starts new
-      $self.one('animateClosedStart', function(e) {
+      $self.one('animateclosedstart', function(e) {
         e.stopPropagation();
-        $self.off(eventName + '.animatedClosed');
+        $self.off(eventName + '.animatedclosed');
       });
-      $self.trigger('animateClosedStart');
+      $self.trigger('animateclosedstart');
 
       // Trigger the callback either by Timeout or by TransitionEnd
       if (eventName) {
-        $self.one(eventName + '.animatedClosed', transitionEndCallback);
+        $self.one(eventName + '.animatedclosed', transitionEndCallback);
       }
 
       // Animate

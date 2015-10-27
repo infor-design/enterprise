@@ -66,8 +66,12 @@ window.Chart = function(container) {
       return '#368AC0';
     }
 
+    if (chartType === 'bar-single') {
+      return '#368AC0';
+    }
+
     if (chartType === 'bar') {
-      return '#368AC0'; //this.colors(i);
+      return this.colors(i);
     }
   };
 
@@ -296,7 +300,7 @@ window.Chart = function(container) {
       .append('g')
       .attr('class', 'series-group')
       .style('fill', function (d, i) {
-        return charts.chartColor(i, 'bar', series[i]);
+        return charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
       });
 
     rects = groups.selectAll('rect')
@@ -313,7 +317,7 @@ window.Chart = function(container) {
       return 'series-'+i+' bar';
     })
     .style('fill', function(d, i) {
-      return ((dataset.length === 1) ? charts.chartColor(i, 'bar', dataset[0][i]) : '');
+      return charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i]);
     })
     .attr('mask', function (d, i) {
       if (dataset.length === 1 && dataset[0][i].pattern){

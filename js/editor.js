@@ -611,12 +611,12 @@
             $('[name="em-target"]').val(settings.anchor.target);
             $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
 
-            setTimeout(function () {              
+            setTimeout(function () {
               if (isTouch && id === 'editor-modal-image') {
                 button.focus();
               } else {
                 input.focus().select();
-              }              
+              }
             }, 10);
 
           })
@@ -1289,7 +1289,7 @@
         this.element.prev('.label').off('click.editor');
         $(window).off('resize.editor');
         $.each(this.modals, function(i, modal) {
-          modal.off('beforeClose close open');
+          modal.off('beforeclose close open');
         });
         this.modals = {};
 

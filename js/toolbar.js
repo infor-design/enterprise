@@ -644,8 +644,6 @@
       },
 
       teardown: function() {
-        var self = this;
-
         function menuItemFilter(i, item) {
           var link = $(item).data('action-button-link');
           return (link !== null && link !== undefined && link.length);

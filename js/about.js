@@ -190,7 +190,7 @@
       // Teardown - Remove added markup and events
       destroy: function() {
         var modal = this.modal.data('modal');
-        modal.element.off('beforeOpen.about');
+        modal.element.off('beforeopen.about');
         modal.destroy();
         this.buttons.off();
         this.element.off('open.about');

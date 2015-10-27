@@ -131,14 +131,14 @@
 
         if (next.is('ul[role="group"]')) {
           if(next.hasClass('is-open')) {
-            next.one('animateClosedComplete', function() {
+            next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
               node.closest('.folder').removeClass('is-open').end()
                   .find('use').attr('xlink:href', '#icon-tree-expand');
             }).animateClosed();
-          } 
+          }
           else {
-            next.addClass('is-open').one('animateOpenComplete', function() {
+            next.addClass('is-open').one('animateopencomplete', function() {
               node.closest('.folder').addClass('is-open').end()
                   .find('use').attr('xlink:href', '#icon-tree-collapse');
             }).animateOpen();
@@ -166,7 +166,7 @@
           }
         });
       },
-      
+
       handleKeys: function () {
 
         //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview

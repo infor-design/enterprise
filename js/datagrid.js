@@ -1735,7 +1735,7 @@ $.fn.datagrid = function(options) {
         expandButton.removeClass('is-expanded')
           .find('.plus-minus').removeClass('active');
 
-        detail.animateClosed().on('animateClosedComplete', function () {
+        detail.animateClosed().on('animateclosedcomplete', function () {
           expandRow.css('display', 'none');
         });
 

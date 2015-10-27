@@ -190,7 +190,7 @@
           oldPanel = self.panels.filter(':visible');
 
         // Cancel Activation if an event's triggered
-        var isCancelled = self.element.trigger('beforeActivate', null);
+        var isCancelled = self.element.trigger('beforeactivate', null);
         if (!isCancelled) {
           return;
         }

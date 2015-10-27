@@ -337,7 +337,7 @@
           node = domObject.leaf,
           nodeTopLevel  = node.next().not('.' + constants.line);
 
-        nodeTopLevel.animateClosed().on('animateClosedComplete', function () {
+        nodeTopLevel.animateClosed().on('animateclosedcomplete', function () {
           self.element.trigger(constants.collapsed, [nodeData, settings.dataset]);
         });
 
