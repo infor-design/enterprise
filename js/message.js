@@ -97,7 +97,7 @@
       },
       destroy: function() {
         this.message.remove();
-        $('body').off('beforeClose close beforeOpen open afterClose');
+        $('body').off('beforeclose close beforeopen open afterclose');
       }
     };
 

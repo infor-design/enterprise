@@ -1687,8 +1687,7 @@ $.fn.datagrid = function(options) {
     // Update a specific Cell
     setActiveCell: function (row, cell) {
       var self = this,
-        prevCell = self.activeCell,
-        isSingle = self.settings.selectable === 'single';
+        prevCell = self.activeCell;
 
       //Support passing the td in
       if (row instanceof jQuery) {
