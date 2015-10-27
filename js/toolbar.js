@@ -158,8 +158,8 @@
           a.text(popupLiText);
 
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
-          var icon = item.find('.icon').filter(function(){
-            return item.find('use').attr('xlink:href') !== '#icon-dropdown';
+          var icon = item.children('.icon').filter(function(){
+            return $(this).children('use').attr('xlink:href') !== '#icon-dropdown';
           });
           if (icon.length) {
             self.moreMenu.addClass('has-icons');
@@ -185,12 +185,14 @@
 
             diffMenu.children('li').each(function(i, diffMenuItem) {
               var dmi = $(diffMenuItem), // "Diffed" Menu Item
-                omi = children.eq(i); // Corresponding "Original" menu item
+                omi = children.eq(i), // Corresponding "Original" menu item
+                dmiA = dmi.children('a'), // Anchor inside of "Diffed" menu item
+                omiA = omi.children('a'); // Anchor inside of "Original" menu item
 
-              dmi.children('a').removeAttr('id');
+              dmiA.removeAttr('id');
 
-              omi.data('action-button-link', dmi);
-              dmi.data('original-button', omi.children('a'));
+              omiA.data('action-button-link', dmiA);
+              dmiA.data('original-button', omiA);
 
               var omiSubMenu = omi.children('.wrapper').children('.popupmenu'),
                 dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
@@ -223,7 +225,7 @@
 
           // Setup data links between the buttons and their corresponding list items
           item.data('action-button-link', a);
-          popupLi.data('original-button', item);
+          popupLi.children('a').data('original-button', item);
           menuItems.push(popupLi);
         }
 
@@ -286,11 +288,17 @@
             $(this).focus();
           });
 
+        this.items.not(this.more).on('selected.toolbar', function(e, anchor) {
+          e.stopPropagation();
+          self.handleSelected(e, anchor);
+        });
+
         this.more.on('keydown.toolbar', function(e) {
           self.handleKeys(e);
         }).on('beforeOpen.toolbar', function() {
           self.checkOverflowItems();
         }).on('selected.toolbar', function(e, anchor) {
+          e.stopPropagation();
           self.handleSelected(e, anchor);
         });
 
@@ -311,7 +319,7 @@
       },
 
       handleSelected: function(e, anchor) {
-        var itemLink = anchor.parent().data('original-button'),
+        var itemLink = anchor.data('original-button'),
           itemEvts,
           toolbarEvts;
 
@@ -350,11 +358,21 @@
               return;
             }
           }
+
+          // Trigger Select on the linked item, since it won't be done by another event
+          this.triggerSelect(itemLink);
+          return;
         }
+
+        // If no item link exists, it's a pre-defined menu item.
+        // Trigger 'selected' manually on the toolbar element.
+        // Normally this would happen by virtue of triggering the "click" handlers on a linked button above.
+        this.triggerSelect(anchor);
       },
 
       handleClick: function(e) {
         this.setActiveButton($(e.currentTarget));
+        this.triggerSelect($(e.currentTarget));
         return false;
       },
 
@@ -458,7 +476,6 @@
         if (activeButton.is('a')) {
           this.activeButton = activeButton.parents('.popupmenu').last().prev('button').attr('tabindex', '0');
           this.activeButton.focus();
-          this.element.trigger('selected', [this.activeButton]);
           return;
         }
 
@@ -480,11 +497,20 @@
           }
         }
 
-        this.element.trigger('selected', [this.activeButton]);
-
         if (!noFocus) {
           this.activeButton.focus();
         }
+      },
+
+      // Triggers a "selected" event on the base Toolbar element using a common element as an argument.
+      // @param {Object} element - a jQuery Object containing an anchor tag, button, or input field.
+      triggerSelect: function(element) {
+        var elem = $(element);
+        if (elem.is(this.more) || (elem.is('.btn-menu, li.submenu'))) {
+          return;
+        }
+
+        this.element.triggerHandler('selected', [elem]);
       },
 
       adjustButtonVisibility: function() {
@@ -563,6 +589,10 @@
         }
 
         this.element[method]('has-more-button');
+
+        if (method === 'removeClass') {
+          this.more.data('popupmenu').close();
+        }
       },
 
       buildAriaLabel: function() {
@@ -614,9 +644,11 @@
       },
 
       teardown: function() {
+        var self = this;
+
         function menuItemFilter(i, item) {
           var link = $(item).data('action-button-link');
-          return link !== undefined && link.length;
+          return (link !== null && link !== undefined && link.length);
         }
 
         function deconstructMenuItem(i, item) {
@@ -624,10 +656,9 @@
             li = a.parent();
 
           a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar');
-            //.removeAttr('onclick').removeAttr('onmousedown');
 
-          $.removeData(li[0], 'original-button');
-          $.removeData(a[0], 'action-button-link');
+          $.removeData(a[0], 'original-button');
+          $.removeData($(item)[0], 'action-button-link');
 
           if (li.is('.submenu')) {
             li.children('.wrapper').children('.popupmenu').children(menuItemFilter).each(deconstructMenuItem);

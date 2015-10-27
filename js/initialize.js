@@ -240,7 +240,7 @@
           //Context Menus
           elem.find('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
             var triggerButton = $(this),
-              options = $.fn.parseOptions(this),
+              options = $.extend({}, $.fn.parseOptions(this)),
               popupData = triggerButton.attr('data-popupmenu');
 
             if (popupData) {
@@ -335,7 +335,7 @@
             var t = $(this);
             // Don't re-invoke toolbars that are part of the page/section headers.
             // header.js manually invokes these toolbars during its setup process.
-            if (t.parents('.header').length) {
+            if (t.parents('.header').length || t.parents('.contextual-action-panel').length) {
               return;
             }
 
