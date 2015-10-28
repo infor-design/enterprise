@@ -1,8 +1,8 @@
 <div class="toolbar">
 	<div class="buttonset">
 		<label class="audible" for="toolbar-example-searchfield">Toolbar Searchfield</label>
-		<input class="searchfield" id="toolbar-example-searchfield" name="toolbar-example-searchfield" ng-model="searchString" />
-	
+		<input class="searchfield" id="toolbar-example-searchfield" name="toolbar-example-searchfield" placeholder="Search" ng-model="searchString" />
+
 		<button class="btn-menu" type="button">
 			<span ng-bind="data.selectedOption.name"></span>
 		</button>
@@ -11,7 +11,7 @@
 				<a href="#" ng-click="data.selectedOption = option" ng-bind="option.name"></a>
 			</li>
 		</ul>
-  
+
 		<button class="btn icon-close" type="button">
 			<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
 				<use xlink:href="#icon-close"></use>

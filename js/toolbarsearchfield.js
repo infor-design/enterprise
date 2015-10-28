@@ -29,7 +29,6 @@
     var pluginName = 'toolbarsearchfield',
         defaults = {
           clearable: true,  // If "true", provides an "x" button on the right edge that clears the field
-          searchfieldPlaceholder: Locale.translate('Keyword') // Sets placeholder text if provided
         },
         settings = $.extend({}, defaults, options);
 
@@ -63,9 +62,12 @@
         this.toolbarParent = this.element.parents('.toolbar');
 
         // Setup ARIA
+        var label = this.element.attr('placeholder') || this.element.prev('label, .label');
+        if (!label || label === '') {
+          label = Locale.translate('Keyword');
+        }
         this.input.attr({
-          'aria-label': this.settings.searchfieldPlaceholder,
-          'placeholder': this.settings.searchfieldPlaceholder
+          'aria-label': label,
         });
 
         // Invoke Searchfield, pass settings on

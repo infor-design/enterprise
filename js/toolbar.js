@@ -175,7 +175,8 @@
 
           if (item.is('.searchfield')) {
             if (!item.data('searchfield')) {
-              item.toolbarsearchfield();
+              var searchfieldOpts = $.extend({}, $.fn.parseOptions(item[0]));
+              item.toolbarsearchfield(searchfieldOpts);
             }
           }
 
