@@ -19,6 +19,10 @@
   */
   $.fn.disable = function() {
     $.each(this.data(), function(index, value) {
+      if (value instanceof jQuery) {
+        return;
+      }
+
       if (value.disable) {
         value.disable();
       }
@@ -32,6 +36,10 @@
   */
   $.fn.enable = function() {
     $.each(this.data(), function(index, value) {
+      if (value instanceof jQuery) {
+        return;
+      }
+
       if (value.enable) {
         value.enable();
       }
@@ -45,6 +53,10 @@
   */
   $.fn.readonly = function() {
     $.each(this.data(), function(index, value) {
+      if (value instanceof jQuery) {
+        return;
+      }
+
       if (value.readonly) {
         value.readonly();
       }
@@ -92,8 +104,8 @@
           }
 
           //Add class and icon
-          if (!el.prev().is('.icon-dirty')) {            
-            el.before('<span class="icon-dirty' + cssClass + '"></span>');            
+          if (!el.prev().is('.icon-dirty')) {
+            el.before('<span class="icon-dirty' + cssClass + '"></span>');
             $('label:visible', field).append('<span class="audible msg-dirty">'+ Locale.translate('MsgDirty') +'</span>');
           }
 
