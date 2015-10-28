@@ -68,7 +68,7 @@
         self.element.on('start.busyindicator', function(e) {
           e.stopPropagation();
           self.activate();
-        }).on('afterStart.busyindicator', function() {
+        }).on('afterstart.busyindicator', function() {
           // Complete event is only active once the indicator is "started"
           self.element.on('complete.busyindicator', function(e) {
             e.stopPropagation();
