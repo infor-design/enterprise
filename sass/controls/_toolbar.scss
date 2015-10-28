@@ -44,7 +44,7 @@ $toolbar-buttonset-height: 44px;
       min-width: 34px;
 
       .icon:not(.icon-dropdown) {
-        height: 18px;
+        height: 16px;
       }
     }
   }
@@ -128,7 +128,9 @@ $toolbar-buttonset-height: 44px;
     }
   }
 
-  // Change the ".btn" class to be more like ".btn-tertiary/destructive" specifically on toolbars
+  // This touches all buttons, but specifcally changes the ".btn" class to be more like
+  // ".btn-tertiary/destructive" specifically on toolbars.
+  [class^="btn"],
   .btn {
     background-color: transparent;
     border: 1px solid transparent;
@@ -248,12 +250,12 @@ $toolbar-buttonset-height: 44px;
       }
 
       .icon {
-        padding-right: 0;
         width: 32px;
 
         + span {
           color: transparent !important;
           padding: 0;
+          position: absolute;
           width: 0;
         }
       }
