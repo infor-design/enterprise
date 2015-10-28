@@ -28,6 +28,17 @@ demoBuilderItems.push({ id: 7, orderId: '8972384-3', items: 10, companyName: 'To
 demoBuilderItems.push({ id: 8, orderId: '2903866-3', items: 96, companyName: 'Top Grade-A Construction', total: '$1,900.00' });
 demoBuilderItems = demoBuilderItems.concat(demoBuilderItems); // Duplicate it
 
+var demoSwaplist = [];
+demoSwaplist.push({id: 1, value: 'opt-1', text: 'Option A'});
+demoSwaplist.push({id: 2, value: 'opt-2', text: 'Option B'});
+demoSwaplist.push({id: 3, value: 'opt-3', text: 'Option C'});
+demoSwaplist.push({id: 4, value: 'opt-4', text: 'Option D'});
+demoSwaplist.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
+demoSwaplist.push({id: 6, value: 'opt-6', text: 'Option F'});
+demoSwaplist.push({id: 7, value: 'opt-7', text: 'Option G'/*, selected: true*/});
+demoSwaplist.push({id: 8, value: 'opt-8', text: 'Option H'});
+demoSwaplist.push({id: 9, value: 'opt-9', text: 'Option I'});
+
 // Execute Page Code for Demo Page
 $(function($) {
 

@@ -97,6 +97,7 @@ module.exports = function(grunt) {
             'temp/amd/slider.js',
             'temp/amd/sort.js',
             'temp/amd/spinbox.js',
+            'temp/amd/swaplist.js',
             'temp/amd/toast.js',
             'temp/amd/tabs.js',
             'temp/amd/textarea.js',
