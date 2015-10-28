@@ -79,66 +79,6 @@ $header-height: 60px;
     top: 1px;
   }
 
-  // Buttons in the header will all appear as Tertiary/Destructive-style
-  [class^="btn"] {
-    background-color: transparent;
-    border: 1px solid transparent;
-    border-radius: 18px;
-    color: $header-icon-color;
-    opacity: .7;
-
-    > .icon {
-      fill: $header-icon-color !important;
-    }
-
-    > span {
-      color: $header-icon-color;
-    }
-
-    .audible {
-      color: $inverse-color !important;
-    }
-
-    &:focus,
-    &:hover:not([disabled]),
-    &:active:not([disabled]),
-    &[aria-expanded="true"] {
-      > .icon {
-        fill: $inverse-color !important;
-      }
-
-      > span {
-        color: $inverse-color !important;
-      }
-
-      opacity: 1;
-    }
-
-    &:focus:not(.hide-focus) {
-      border: 1px solid $inverse-color;
-      box-shadow: none;
-    }
-
-    &[disabled] {
-      span {
-        color: $header-disabled-color !important;
-      }
-
-      svg {
-        fill: $header-disabled-color !important;
-      }
-
-      &:hover {
-        background-color: transparent;
-        border-color: transparent;
-      }
-    }
-
-    .ripple-effect {
-      background-color: $header-icon-color;
-    }
-  }
-
   .tooltip-description {
     color: $inverse-color;
   }
@@ -165,6 +105,66 @@ $header-height: 60px;
 
       > *:first-child {
         margin-left: 1.5rem;
+      }
+    }
+
+    // Buttons in the header will all appear as Tertiary/Destructive-style
+    [class^="btn"] {
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 18px;
+      color: $header-icon-color;
+      opacity: .7;
+
+      > .icon {
+        fill: $header-icon-color !important;
+      }
+
+      > span {
+        color: $header-icon-color;
+      }
+
+      .audible {
+        color: $inverse-color !important;
+      }
+
+      &:focus,
+      &:hover:not([disabled]),
+      &:active:not([disabled]),
+      &[aria-expanded="true"] {
+        > .icon {
+          fill: $inverse-color !important;
+        }
+
+        > span {
+          color: $inverse-color !important;
+        }
+
+        opacity: 1;
+      }
+
+      &:focus:not(.hide-focus) {
+        border: 1px solid $inverse-color;
+        box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
+      }
+
+      &[disabled] {
+        span {
+          color: $header-disabled-color !important;
+        }
+
+        svg {
+          fill: $header-disabled-color !important;
+        }
+
+        &:hover {
+          background-color: transparent;
+          border-color: transparent;
+        }
+      }
+
+      .ripple-effect {
+        background-color: $header-icon-color;
       }
     }
   }
