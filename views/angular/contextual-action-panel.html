@@ -1,0 +1,40 @@
+<div class="row" data-ng-controller="demoCtrl">
+	<div class="twelve columns">
+		<button class="btn-secondary" ng-click="showActionPanel()">
+			Show Contextual Action Panel
+		</button>
+	</div>
+</div>
+
+  <script>
+	
+    // Example App and Controller
+    var app = angular.module('sohoxi-angular', []);
+
+    app.controller('demoCtrl', function($scope, $compile) {
+	  var modalScope = $scope.$new();
+	  var template = "<div class=\"contextual-action-panel modal\" ng-include=\"'../partials/cap-template.html'\" ng-controller=\"capCtrl as ctrl\"></div>";
+	  $scope.showActionPanel = function(){
+		var cap = $compile($(template))(modalScope);
+		var button = $(".btn-secondary");
+		cap.insertAfter(button);
+		
+		var unsubscribe = modalScope.$on('$includeContentLoaded', function () {
+			unsubscribe();
+			
+			setTimeout(function () {
+				button.contextualactionpanel({title: 'Angular CAP', trigger: 'immediate'});
+			}, 100);
+		});
+	  };
+    });
+	
+	app.controller('capCtrl', function($scope) {
+		$scope.data = {};
+		$scope.data.sortOptions = [{name: "Sort by Name", value: "sortByName"}, {name: "Sort by Status", value: "sortByStatus"}, {name: "Sort by Errors", value: "sortByErrors"}];
+		$scope.data.selectedOption = $scope.data.sortOptions[0];
+		$scope.searchString = "";
+    });
+
+  </script>
+

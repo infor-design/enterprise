@@ -89,12 +89,14 @@
 
           var toolbarTitle = this.toolbar.find('.title');
           if (!toolbarTitle.length) {
-            this.toolbar.append($('<div class="title">' + this.settings.title + '</div>'));
+            toolbarTitle = $('<div class="title">' + this.settings.title + '</div>');
+            this.toolbar.prepend(toolbarTitle);
           }
 
           var toolbarButtonset = this.toolbar.find('.buttonset');
           if (!toolbarButtonset.length) {
-            this.toolbar.append($('<div class="buttonset"></div>'));
+            toolbarButtonset = $('<div class="buttonset"></div>');
+            toolbarButtonset.insertAfter(toolbarTitle);
           }
         }
 
