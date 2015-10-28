@@ -1,0 +1,151 @@
+// Swaplist
+//================================================== //
+$sl-color-icon: $graphite03;
+$sl-color-icon-hover: $graphite04;
+$sl-color-border: $graphite04;
+
+.swaplist {
+
+  .card {
+    border-left-width: 0;
+    float: left;
+    width: 50%;
+
+    &:first-child {
+      border-left-width: 1px;
+    }
+
+    .btn {
+      background-color: transparent;
+      border: 0;
+      color: $sl-color-icon;
+      line-height: normal;
+      margin: 0;
+      min-width: 0;
+      padding: 0;
+      width: 35px;
+
+      &:after,
+      &:before {
+        border-style: dotted;
+        border-width: 1px;
+        content: '';
+        display: inline-block;
+        height: 18px;
+        position: absolute;
+        top: 7px;
+        width: 3px;
+      }
+
+      &:after {
+        border-color: $sl-color-icon $sl-color-icon $sl-color-icon transparent;
+        right: 6px;
+      }
+
+      &:before {
+        border-color: $sl-color-icon transparent $sl-color-icon $sl-color-icon;
+        left: 6px;
+      }
+
+      .icon {
+        fill: $sl-color-icon;
+        margin: 0 3px;
+        width: 15px;
+      }
+    }
+
+    .buttons {
+      position: absolute;
+      right: 10px;
+      top: 0;
+    }
+  }
+
+  &.one-third {
+    @include respond-to(phone) {
+      .card {
+        width: 50%;
+
+        &:nth-child(2) {
+          height: 180px;
+          min-height: 180px;
+
+          .btn:last-child svg {
+            @include rotate(90);
+          }
+
+          .card-content {
+            height: 130px;
+            min-height: 130px;
+          }
+        }
+
+        &:nth-child(3) {
+          border-top: 0;
+          height: 190px;
+          margin-top: -20px;
+          min-height: 190px;
+
+          .btn svg {
+            @include rotate(90);
+          }
+
+          .card-content {
+            height: 130px;
+            min-height: 130px;
+          }
+        }
+
+        .buttons {
+          right: 5px;
+        }
+      }
+    }
+
+    .card {
+      width: 33%;
+    }
+  }
+
+  .handle {
+    color: $sl-color-icon-hover;
+    display: none;
+    font-size: 1.2em;
+    left: 10px;
+    position: absolute;
+    top: 12px;
+  }
+
+  .is-muliselect {
+    ul {
+      min-height: 100%;
+    }
+
+    li {
+      border: 0;
+      padding: 9px 20px 7px;
+
+      &:before,
+      &:after,
+      &.is-selected:after {
+        content: none;
+      }
+
+      &.draggable {
+        cursor: move;
+      }
+
+      &:hover:not(.is-disabled) .handle {
+        display: inline-block;
+      }
+
+      &[aria-grabbed="true"] {
+        opacity: .4;
+      }
+    }
+
+    .over {
+      border: 1px dashed $sl-color-border;
+    }
+  }
+}
