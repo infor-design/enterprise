@@ -15,6 +15,10 @@ $header-height: 60px;
     height 300ms cubic-bezier(.17, .04, .03, .94));
   width: 100%;
 
+  .searchfield {
+    border: 1px solid transparent;
+  }
+
   .row {
     max-width: 100% !important;
     width: 100%;
