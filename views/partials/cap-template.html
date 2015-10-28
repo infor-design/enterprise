@@ -1,0 +1,23 @@
+<div class="toolbar">
+	<div class="buttonset">
+		<label class="audible" for="toolbar-example-searchfield">Toolbar Searchfield</label>
+		<input class="searchfield" id="toolbar-example-searchfield" name="toolbar-example-searchfield" ng-model="searchString" />
+	
+		<button class="btn-menu" type="button">
+			<span ng-bind="data.selectedOption.name"></span>
+		</button>
+		<ul class="popupmenu has-icons">
+			<li ng-repeat="option in data.sortOptions" ng-class="{'is-checked': data.selectedOption.value === option.value}">
+				<a href="#" ng-click="data.selectedOption = option" ng-bind="option.name"></a>
+			</li>
+		</ul>
+  
+		<button class="btn icon-close" type="button">
+			<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
+				<use xlink:href="#icon-close"></use>
+			</svg>
+			<span>Close</span>
+		</button>
+	</div>
+</div>
+<div style="height: 400px; width: 650px;" ng-include="'../partials/cap-content.html'"></div>
