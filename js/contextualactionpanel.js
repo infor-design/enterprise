@@ -173,7 +173,7 @@
         children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
 
         this.panel.removeAttr('id').removeClass('modal');
-        this.panel.data('modal').destroy();
+        this.panel.data('modal').destroy().remove();
       },
 
       close: function() {

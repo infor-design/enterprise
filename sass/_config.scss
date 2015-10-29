@@ -339,13 +339,13 @@ $timeline-indicator-complete-color: $primary-color;
 $timeline-line-color: $graphite04;
 $timeline-header-color: $primary-color;
 
-//Themable Variables in config.scss
+//Wizard
 $wizard-active-color: $primary-color;
 $wizard-default-bg: $body-bg-color;
 $wizard-bar-bg: $graphite02;
 $wizard-active-color: $primary-color;
 
-//Themable Variables in config.scss
+//Hierarch
 $hierarchy-line-color: $graphite03;
 
 //Searchfield Colors
@@ -367,6 +367,10 @@ $searchfield-header-icon-color: $header-icon-color;
 
 //Image Border Color
 $image-border-color: $graphite02;
+
+//Toast
+$toast-bg-color: $white;
+$toast-shadow: 0 0 5px rgba(0, 0, 0, .2);
 
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;

@@ -339,6 +339,10 @@ $searchfield-header-icon-color: $header-icon-color;
 //Image Border Color
 $image-border-color: $slate04;
 
+//Toast
+$toast-bg-color: $slate07;
+$toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

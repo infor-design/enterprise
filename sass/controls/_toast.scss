@@ -28,8 +28,8 @@
 }
 
 .toast {
-  background-color: #ffffff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+  background-color: $toast-bg-color;
+  box-shadow: $toast-shadow;
   @include font-size(14);
   margin: 0 0 6px;
   overflow: hidden;
@@ -38,7 +38,7 @@
   width: auto;
 
   .toast-title {
-    color: #1a1a1a;
+    color: $font-color-highcontrast;
     display: block;
     font-weight: bold;
     margin: 4.5px 0 8px;
@@ -71,6 +71,7 @@
     }
 
     svg.icon {
+      fill: $font-color;
       height: 14px;
       width: 14px;
     }
@@ -113,7 +114,6 @@
   0% { opacity: 1; transform: translate3d(0, 0, 0) scale3d(1, 1, 1); }
   100% { opacity: 0; transform: translate3d(0, 40px, 0) scale3d(.1, .6, 1); }
 }
-
 
 .toast-progress {
   background-color: $primary-color;

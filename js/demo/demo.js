@@ -276,39 +276,6 @@ $(function($) {
       ]
     });
 
-    $('#manual-contextual-panel').off('click').on('click', function() {
-
-      $('body').contextualactionpanel({
-        title: 'Expenses: $50,000.00',
-        content: '<div class="two-column"><div style="height: 300px; width: 200px;"></div></div>',
-        trigger: 'immediate',
-        buttons: [
-          {
-            type: 'input',
-            text: 'Keyword',
-            id: 'filter',
-            name: 'filter',
-            cssClass: 'searchfield'
-          }, {
-            text: 'Close',
-            cssClass: 'btn-close',
-            icon: '#icon-close',
-            click: function() {
-              $(this).modal('close');
-            }
-          }
-        ]
-      }).on('close', function () {
-        $('#new-grid').closest('.contextual-action-panel').remove();
-      });
-
-      $('#new-grid').datagrid({
-        columns: columns,
-        dataset: data
-      });
-
-    });
-
     //----------------------------------------------------------
     //  Tests: Validation
     //----------------------------------------------------------

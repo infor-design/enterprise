@@ -361,6 +361,10 @@ $searchfield-header-icon-color: $header-icon-color;
 //Image Border Color
 $image-border-color: $slate03;
 
+//Toast
+$toast-bg-color: $white;
+$toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
+
 //================================================== //
 // Core Controls
 @import 'controls';
