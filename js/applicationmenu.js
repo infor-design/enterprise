@@ -217,7 +217,7 @@
       testWidth: function() {
         if (this.isLargerThanBreakpoint()) {
           this.menu.removeClass('show-shadow');
-          if (!this.menu.hasClass('is-open') && this.isAnimating === false) {
+          if (this.settings.openOnLarge && !this.menu.hasClass('is-open') && this.isAnimating === false) {
             this.openMenu(true);
           }
         } else {
