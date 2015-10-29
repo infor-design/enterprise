@@ -164,7 +164,7 @@ $toolbar-buttonset-height: 44px;
         color: $tertiary-btn-disabled-color;
       }
 
-      svg {
+      .icon {
         fill: $tertiary-btn-disabled-color;
       }
     }
@@ -177,7 +177,7 @@ $toolbar-buttonset-height: 44px;
         box-shadow: none;
       }
 
-      svg {
+      .icon {
         fill: $tertiary-btn-active-color;
       }
     }
