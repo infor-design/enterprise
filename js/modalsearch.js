@@ -47,7 +47,7 @@
       },
 
       build: function() {
-        this.element.modal();
+        this.element.modal({autoFocus: false});
         this.modal = this.element.data('modal');
         this.overlay = this.modal.overlay;
         this.searchInput = this.modal.element.find('#big-search-field');

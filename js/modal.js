@@ -28,7 +28,8 @@
         buttons: null,  //Pass in the Buttons
         isAlert: false, //Adds alertdialog role
         content: null, //Ability to pass in dialog html content
-        cssClass: null  //Append a css class to top level
+        cssClass: null,  //Append a css class to top level
+        autoFocus: true
       },
       settings = $.extend({}, defaults, options);
 
@@ -305,7 +306,10 @@
             focusElem = self.element.find('.btn-modal-primary');
             focusElem = self.element.find('#message-title').attr('tabindex', '-1');
           }
-          focusElem.focus();
+
+          if (self.settings.autoFocus) {
+            focusElem.focus();
+          }
         }, 10);
 
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
