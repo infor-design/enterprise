@@ -20,11 +20,15 @@
 
 </head>
 <body data-ng-app="sohoxi-angular">
-  {{> includes/header}}
-  <div id="maincontent" class="page-container top-padding" role="main">
-    {{> content}}
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> controls/svg}}
+
+  <div class="page-container">
+    {{> includes/header}}
+    <div id="maincontent" class="page-container top-padding" role="main">
+      {{> content}}
+    </div>
   </div>
   <script src="/js/sohoxi-angular.js"></script>
-  {{> controls/svg}}
 </body>
 </html>

@@ -1,13 +1,16 @@
 {{> includes/head}}
 
-<body>
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> controls/svg}}
-  {{> tests/applicationmenu/site/header-from-site}}
 
-  <div id="maincontent" class="page-container scrollable" role="main">
-    {{> content}}
+  <div class="page-container no-scroll">
+    {{> tests/applicationmenu/site/header-from-site}}
+    <div id="maincontent" class="page-container scrollable" role="main">
+      {{> content}}
+    </div>
   </div>
 
-{{> tests/footer}}
+  {{> tests/footer}}
 </body>
 </html>

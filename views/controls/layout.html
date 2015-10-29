@@ -1,10 +1,13 @@
 {{> includes/head}}
-<body>
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> controls/svg}}
-  {{> includes/header}}
 
-  <div class="page-container top-padding scrollable" id="maincontent" role="main">
-    {{> content}}
+  <div class="page-container" class="no-scroll">
+    {{> includes/header}}
+    <div class="page-container top-padding scrollable" id="maincontent" role="main">
+      {{> content}}
+    </div>
   </div>
 
   {{> includes/footer}}

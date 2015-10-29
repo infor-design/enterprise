@@ -21,8 +21,9 @@
 </head>
 <body>
   {{> controls/svg}}
-  {{> includes/header}}
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   <div id="maincontent" class="page-container top-padding" role="main">
+    {{> includes/header}}
     {{> content}}
   </div>
 </body>
