@@ -271,9 +271,9 @@ body.no-scroll {
     }
 
     .main {
+      border-bottom: 1px solid $graphite02;
       border-left: 0;
       border-right: 0;
-      border-bottom: 1px solid $graphite02;
     }
 
     .sidebar + .main {
@@ -293,15 +293,15 @@ body.no-scroll {
 }
 
 .scrollable-x {
+  -webkit-overflow-scrolling: touch;
   overflow-x: auto;
   overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
 }
 
 .scrollable-y {
+  -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .page-container {
@@ -329,6 +329,7 @@ body.no-scroll {
   + .application-menu + .page-container {
     height: calc(100% - 60px);
     margin-top: 60px;
+    @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
   &.has-breadcrumb,
