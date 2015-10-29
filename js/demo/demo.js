@@ -306,7 +306,7 @@ $(function($) {
     //----------------------------------------------------------
     //  Nav Patterns: Test Page
     //----------------------------------------------------------
-    var mainHeader = $('body > header').first(),
+    var mainHeader = $('body > header, body > .page-container > header').first(),
       mainHeaderData = mainHeader.data('header');
 
     function navPatternButtonClick() {
