@@ -288,7 +288,7 @@
             e.preventDefault();
             $(e.target).click();
           }).on('click.applicationmenu', function(e) {
-            if ($(e.target).parents('.application-menu').length < 1 && !self.isLargerThanBreakpoint()) {
+            if ($(e.target).parents('.application-menu').length < 1) {
               self.closeMenu($(e.target).hasClass('application-menu-trigger'));
             }
           }).on('keydown.applicationmenu', function(e) {
@@ -299,10 +299,6 @@
 
       closeMenu: function(force) {
         if (this.isAnimating === true) {
-          return;
-        }
-
-        if (!force && this.settings.openOnLarge === true && this.isLargerThanBreakpoint() === true) {
           return;
         }
 

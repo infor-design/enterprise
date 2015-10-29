@@ -100,7 +100,7 @@ button {
     box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
 
     &:active {
-      background-color: transparent;
+      background-color: $primary-btn-active-bg-color;
       box-shadow: none;
     }
   }
@@ -147,7 +147,7 @@ a.btn-primary {
     box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
 
     &:active {
-      background-color: transparent;
+      background-color: $btn-active-bg-color;
       box-shadow: none;
     }
   }

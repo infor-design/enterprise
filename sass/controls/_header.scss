@@ -117,7 +117,7 @@ $header-height: 60px;
       opacity: .7;
 
       > .icon {
-        fill: $header-icon-color !important;
+        fill: $header-icon-color;
       }
 
       > span {
@@ -125,7 +125,7 @@ $header-height: 60px;
       }
 
       .audible {
-        color: $inverse-color !important;
+        color: $inverse-color;
       }
 
       &:focus,
@@ -133,11 +133,11 @@ $header-height: 60px;
       &:active:not([disabled]),
       &[aria-expanded="true"] {
         > .icon {
-          fill: $inverse-color !important;
+          fill: $inverse-color;
         }
 
         > span {
-          color: $inverse-color !important;
+          color: $inverse-color;
         }
 
         opacity: 1;
@@ -146,6 +146,20 @@ $header-height: 60px;
       &:focus:not(.hide-focus) {
         border: 1px solid $inverse-color;
         box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
+
+        .icon {
+          fill: $inverse-color;
+        }
+      }
+
+      &.is-selected {
+        &:focus:not(.hide-focus) {
+          color: $inverse-color;
+
+          .icon {
+            fill: $inverse-color;
+          }
+        }
       }
 
       &[disabled] {
