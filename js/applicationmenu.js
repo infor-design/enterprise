@@ -147,7 +147,7 @@
           self.testWidth();
         });
 
-        if (this.isLargerThanBreakpoint()) {
+        if (this.settings.openOnLarge && this.isLargerThanBreakpoint()) {
           this.menu.addClass('no-transition');
           $('.page-container').addClass('no-transition');
         }
