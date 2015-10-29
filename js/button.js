@@ -37,6 +37,7 @@
 
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         this.isSafari = $('html').is('.is-safari');
+        this.isFirefox = $('html').is('.is-firefox');
 
         if (this.element.hasClass('no-ripple')) {
           return;
@@ -103,8 +104,8 @@
           element.prepend(ripple);
 
           // Start the JS Animation Loop if IE9
-          // Or Safari has bug with combination like: animation, overflow, position, border-radius etc.)
-          if (!$.fn.cssPropSupport('animation') || self.isSafari) {
+          // Or Safari/Firefox has bug with combination like: animation, overflow, position, border-radius etc.)
+          if (!$.fn.cssPropSupport('animation') || self.isSafari || self.isFirefox) {
             ripple.removeClass('is-animation');
             self.animateWithJS(ripple);
           } else {
