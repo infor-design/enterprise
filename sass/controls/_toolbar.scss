@@ -175,6 +175,7 @@ $toolbar-buttonset-height: 44px;
 
       &:active {
         box-shadow: none;
+        background-color: transparent !important;
       }
 
       .icon {
