@@ -48,6 +48,7 @@ var express = require('express'),
   app.get('/controls/*', function(req, res) {
     var end = req.url.replace('/controls/','');
     controlOptions.subtitle = end.charAt(0).toUpperCase() + end.slice(1).replace('-',' ');
+    controlOptions.subtitle = controlOptions.subtitle.replace('Contextualactionpanel', 'Contextual Action Panel');
     res.render('controls/' + end, controlOptions);
   });
 

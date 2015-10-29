@@ -192,6 +192,10 @@
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
 
+          if (props.cssClass === 'separator') {
+            btn = $('<div class="separator"></div>');
+          }
+
           if (props.cssClass) {
             btn.attr('class', props.cssClass);
           } else {

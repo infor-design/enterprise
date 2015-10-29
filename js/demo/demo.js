@@ -229,54 +229,6 @@ $(function($) {
     });
 
     //----------------------------------------------------------
-    //  Examples: Contextual Action Panel
-    //----------------------------------------------------------
-
-    // Build the Datagrid that goes into the Settings-based Contextual Action Panel
-    var data = [],
-      columns = [];
-
-    columns.push({ id: 'date', name: 'Date', field: 'date', width: 125, formatter: Formatters.Date});
-    columns.push({ id: 'description', name: 'Description', field: 'description', width: 140, formatter: Formatters.Readonly});
-    columns.push({ id: 'paidBy', name: 'Paid By', field: 'PaidBy', formatter: Formatters.Readonly});
-    columns.push({ id: 'category', name: 'Category', field: 'category', formatter: Formatters.Readonly});
-    columns.push({ id: 'projectWork', name: 'Project Work', field: 'projectWork', formatter: Formatters.Readonly});
-    columns.push({ id: 'resource', name: 'Resource', field: 'resource', formatter: Formatters.Readonly});
-    columns.push({ id: 'amount', name: 'Amount', field: 'amount', formatter: Formatters.Readonly});
-
-    data.push({ date: new Date(2015, 1, 20), description: 'Pending Benefits', paidBy: 'PR', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Charles Dunn', amount: '$204.00' });
-    data.push({ date: new Date(2015, 1, 24), description: 'Pending Wages', paidBy: 'PR', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$146.00' });
-    data.push({ date: new Date(2015, 1, 24), description: 'Apple Computer INC', paidBy: 'AP', category: '2919 Supplies', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$1299.00' });
-    data.push({ date: new Date(2015, 2, 02), description: 'PO #1292', paidBy: 'AP', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$398.00' });
-
-    $('.contextual-action-panel > .datagrid').datagrid({
-      columns: columns,
-      dataset: data
-    });
-
-    // Build the Settings-based Contextual Action Panel
-    $('#js-contextual-panel').contextualactionpanel({
-      title: 'Expenses: $50,000.00',
-      buttons: [
-        {
-          text: 'Currency',
-          cssClass: 'btn',
-          click: function() {
-            alert('Currency!');
-          }
-        },
-        {
-          text: 'Close',
-          cssClass: 'btn-close',
-          icon: '#icon-close',
-          click: function() {
-            $(this).modal('close');
-          }
-        }
-      ]
-    });
-
-    //----------------------------------------------------------
     //  Tests: Validation
     //----------------------------------------------------------
 
@@ -290,7 +242,7 @@ $(function($) {
 
     // This test adds an additional validation rule.
     $.fn.validation.rules['also-required'] = {
-      check: function(value) {
+      check: function() {
         return false;
       },
       message: 'This is a custom validation rule that duplicates the functionality of the "required" rule built into the validator, but has this really long message instead.  This is testing the size of error message tooltips, as well as testing that custom rules work properly.', //TODO - Localize
