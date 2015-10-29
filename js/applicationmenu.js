@@ -24,7 +24,7 @@
     // Settings and Options
     var pluginName = 'applicationmenu',
         defaults = {
-          breakpoint: 'large', // can be 'tablet' (+720), 'desktop' +(1024), or 'large' (+1280);
+          breakpoint: 'tablet', // can be 'tablet' (+720), 'desktop' +(1024), or 'large' (+1280);
           openOnLarge: false, // If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
           triggers: [] // An Array of jQuery-wrapped elements that are able to open/close this nav menu.
         },
@@ -143,20 +143,15 @@
 
         $(window).on('scroll.applicationmenu', function() {
           self.adjustHeight();
+        }).on('resize.applicationmenu', function() {
+          self.testWidth();
         });
 
-        if (this.settings.openOnLarge) {
-          $(window).on('resize.applicationmenu', function() {
-            self.testWidth();
-          });
-
-          // Do an initial width test to roll the menu out if our breakpoint is the higher one
+        if (this.isLargerThanBreakpoint()) {
           this.menu.addClass('no-transition');
           $('.page-container').addClass('no-transition');
-          this.testWidth();
-        } else {
-          this.menu.css('display', 'none');
         }
+        this.testWidth();
 
         return this;
       },
@@ -221,10 +216,12 @@
 
       testWidth: function() {
         if (this.isLargerThanBreakpoint()) {
+          this.menu.removeClass('show-shadow');
           if (!this.menu.hasClass('is-open') && this.isAnimating === false) {
             this.openMenu(true);
           }
         } else {
+          this.menu.addClass('show-shadow');
           if (!this.element.find(document.activeElement).length && this.menu.is('.is-open') && this.isAnimating === false) {
             this.closeMenu();
           }
@@ -288,7 +285,7 @@
             e.preventDefault();
             $(e.target).click();
           }).on('click.applicationmenu', function(e) {
-            if ($(e.target).parents('.application-menu').length < 1) {
+            if ($(e.target).parents('.application-menu').length < 1 && !self.isLargerThanBreakpoint()) {
               self.closeMenu($(e.target).hasClass('application-menu-trigger'));
             }
           }).on('keydown.applicationmenu', function(e) {
