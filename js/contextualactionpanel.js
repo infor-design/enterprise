@@ -125,7 +125,7 @@
       handleEvents: function() {
         var self = this;
 
-        this.panel.on('afterOpen', function() {
+        this.panel.on('afteropen', function() {
           if (self.toolbar) {
             self.toolbar.trigger('recalculateButtons');
           }
