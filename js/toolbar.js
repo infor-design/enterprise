@@ -511,7 +511,7 @@
           return;
         }
 
-        this.element.triggerHandler('selected', [elem]);
+        this.element.trigger('selected', [elem]);
       },
 
       adjustButtonVisibility: function() {

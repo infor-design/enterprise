@@ -1,14 +1,14 @@
 <section class="masthead">
-  <div class="toolbar no-actions-button">
+  <div class="toolbar no-actions-button" data-options="{maxVisibleButtons: 6}">
     <div class="title">
-      <button id="logo-homepage">
+      <button id="logo-homepage" class="btn">
         <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-logo"></use>
         </svg>
          <span class="audible">Go To Home</span>
       </button>
 
-      <button class="btn-icon" type="button">
+      <button class="btn" type="button">
         <svg class="icon" viewBox="0 0 32 32" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-grid"></use>
         </svg>
@@ -19,33 +19,38 @@
     </div>
 
     <div class="buttonset">
-      <button type="button" class="btn-icon">
+
+      <button type="button" class="btn no-caps">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-user"></use>
         </svg>
         <span class="audible">User</span>
+        <span>John Smith</span>
       </button>
 
-      <button type="button" class="btn-icon">
+      <button type="button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-mingle-share"></use>
         </svg>
         <span class="audible">Share</span>
       </button>
 
-      <button type="button" class="btn-icon">
+      <button type="button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-bookmark-filled"></use>
         </svg>
         <span class="audible">Bookmark</span>
       </button>
 
-      <button type="button" class="btn-icon">
+      <input class="searchfield" />
+
+      <button type="button" class="btn">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-search"></use>
+          <use xlink:href="#icon-expand-app-tray"></use>
         </svg>
-        <span class="audible">Search</span>
+        <span class="audible">Expand App Tray</span>
       </button>
+
     </div>
   </div>
 </section>

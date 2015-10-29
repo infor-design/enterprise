@@ -257,6 +257,11 @@
         this.triggers.each(function() {
           var trig = $(this);
           if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
+            var header = trig.parents('.header, .masthead');
+            if (header.parents('.page-container').length) {
+              return;
+            }
+
             trig.find('.icon.app-header').removeClass('go-back').addClass('close');
             trig.trigger('icon-change');
           }

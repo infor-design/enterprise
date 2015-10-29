@@ -12,200 +12,128 @@ $masthead-button-text-focus-color: $white;
   width: 100%;
   z-index: 9000;
 
-  .icon {
-    fill: $masthead-button-text-color;
-  }
+  #logo-homepage {
+    border-radius: 0;
+    height: 34px;
+    padding: 0;
+    width: 34px;
 
-  .ripple-effect {
-    background-color: $masthead-button-text-hover-color;
-  }
-
-  *[class^="btn"] {
-    color: $masthead-button-text-color;
-
-    > span.audible {
-      color: $masthead-button-text-color !important;
+    > .icon {
+      height: 32px;
+      width: 34px;
     }
 
-    &:hover,
-    &:focus {
-      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-text-hover-color;
-      color: $masthead-button-text-hover-color;
+    .ripple-effect {
+      background-color: #f00;
+    }
+  }
 
-      > span {
+  [class^="btn"],
+  .btn {
+    height: 32px;
+    min-width: 30px;
+    padding: 0 6px;
+
+    > .icon {
+      height: 18px;
+    }
+  }
+
+  .toolbar-searchfield-wrapper {
+    > .icon {
+      top: 9px;
+    }
+
+    > .icon:not(.close) {
+      height: 15px;
+    }
+
+    &.has-focus:not(.active) {
+      > .icon {
         color: $masthead-button-text-hover-color;
       }
-
-      > .icon {
-        fill: $masthead-button-text-hover-color;
-
-        &.app-header span:not(.audible) {
-          background-color: $masthead-button-text-hover-color;
-        }
-      }
-    }
-
-    &.is-selected {
-      > span {
-        color: $masthead-button-text-focus-color;
-      }
-
-      > .icon {
-        fill: $masthead-button-text-hover-color;
-      }
     }
   }
 
-  button {
+  .searchfield {
     height: 28px;
-    margin-top: 0;
-    min-width: 28px;
-    padding-top: 0;
-    vertical-align: middle;
-
-    > span {
-      color: $masthead-button-text-color;
-    }
-
-    > .icon:not(.icon-logo) {
-      height: 20px;
-      margin-left: 0;
-      top: -5px;
-      width: 20px;
-
-      &.app-header {
-        left: -5px;
-        top: -8px;
-        @include css3(transform, scale(.8));
-      }
-
-      &.icon-dropdown {
-        height: 11px;
-      }
-    }
   }
 
-  .btn-icon {
-    min-height: 24px;
-    min-width: 24px;
-  }
-
-  .l-pull-right {
-    .btn-icon {
-      margin-right : 5px;
-    }
-
-    .btn-icon:last-child {
-      margin-right: 20px;
-    }
-  }
-
-  //Logo
-  > .icon {
-    height: 24px;
-    left: 13px;
-    margin-right: 20px;
-    top: 5px;
-  }
-
-  > .icon-logo {
-    height: 32px;
-    left: 20px;
-    margin-right: 20px;
-    top: 3px;
-  }
-
-  .l-pull-right {
-    height: 33px;
-  }
-
-  .btn-icon {
-    &.has-text > span {
-      color: $slate03;
-    }
-
-    &:hover,
-    &:active {
-
-    &.has-text > span {
-      color: $white;
-    }
-
-      svg {
-        fill: $white;
-      }
-    }
-  }
-
-  .btn-actions:not(.hide-focus) {
-    .icon {
-      fill: $slate03;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 1px $white;
-
-      .icon {
-        fill: $white;
-      }
-    }
-  }
-
-  > .toolbar {
+  .toolbar {
     height: 100%;
+    margin-bottom: 0;
 
     .title {
       height: 100%;
       padding: 0;
 
       > *:first-child {
-        margin-left: 1.9rem;
-      }
-    }
-
-    button {
-      > .icon-logo {
-        height: 28px;
-        width: 28px;
+        margin-left: 1.7rem;
       }
     }
 
     .buttonset {
-      height: 30px;
+      height: 36px;
 
-      button {
-        margin-bottom: 2px;
-        margin-top: 1px;
+      > *:not(.toolbar-searchfield-wrapper) {
+        margin: 3px 5px 2px 0;
       }
 
-      .btn-icon.has-text {
-        span:not(.audible) {
-          display: inline-block;
-          position: relative;
+      .toolbar-searchfield-wrapper {
+        margin: 2px 5px 1px 0;
+      }
+    }
+
+    [class^="btn"],
+    .btn {
+      .ripple-effect {
+        background-color: $masthead-button-text-hover-color;
+      }
+
+      span {
+        color: $masthead-button-text-color;
+      }
+
+      .icon {
+        fill: $masthead-button-text-color;
+      }
+
+      &:hover:not([disabled]) {
+        color: $masthead-button-text-hover-color;
+
+        span {
+          color: $masthead-button-text-hover-color;
+        }
+
+        .icon {
+          fill: $masthead-button-text-hover-color;
         }
       }
-    }
 
-    .more .btn-actions {
-      margin: 3px 5px 0 0;
-    }
+      &:focus:not(.hide-focus) {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-text-focus-color;
 
-    .searchfield {
-      padding: 5px 10px;
-      width: 32px;
+        span {
+          color: $masthead-button-text-focus-color;
+        }
 
-      &:focus {
-        background-color: $masthead-border-color;
-        border-color: $masthead-border-color;
-        color: $white;
-        padding: 5px 10px 5px 32px;
+        .icon {
+          fill: $masthead-button-text-focus-color;
+        }
       }
-    }
 
-    .searchfield-wrapper {
-      .icon {
-        top: 5px;
-        fill: $slate03;
+      &.is-selected {
+        &:focus:not(.hide-focus) {
+          color: $masthead-button-text-focus-color;
+
+          span {
+            color: $masthead-button-text-focus-color;
+          }
+
+          .icon {
+            fill: $masthead-button-text-focus-color;
+          }
+        }
       }
     }
   }
@@ -225,14 +153,4 @@ $masthead-button-text-focus-color: $white;
   line-height: 38px;
   margin: 0;
   vertical-align: top;
-}
-
-@include respond-to(phone) {
-  .btn-icon {
-    width: 28px;
-
-    &.has-text > span {
-      display: none;
-    }
-  }
 }
