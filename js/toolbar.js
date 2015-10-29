@@ -677,7 +677,10 @@
           .teardown();
 
         if (this.buttonset.children('.searchfield-wrapper').length) {
-          this.buttonset.children('.searchfield-wrapper').children('.searchfield').data('toolbarsearchfield').destroy();
+          var searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
+          if (searchFields.data('toolbarsearchfield')) {
+            searchFields.data('toolbarsearchfield').destroy();
+          }
         }
 
         this.element.removeAttr('role').removeAttr('aria-label');

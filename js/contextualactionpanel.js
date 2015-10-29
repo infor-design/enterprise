@@ -22,6 +22,7 @@
     // Settings and Options
     var pluginName = 'contextualactionpanel',
         defaults = {
+          id: 'contextual-action-modal-' + (parseInt($('.modal').length, 10)+1),
           buttons: null, // List of buttons that will sit in the toolbar's Buttonset area
           title: 'Contextual Action Panel', // string that fits into the toolbar's Title field
           content: null, //Pass content through to modal
@@ -49,7 +50,6 @@
       setup: function() {
         this.panel = this.element.next('.contextual-action-panel');
         this.panel.css('display', 'none');
-        this.id = (parseInt($('.modal').length, 10)+1);
 
         return this;
       },
@@ -67,7 +67,7 @@
             this.settings.content.show();
           } else {
             this.panel = $('<div class="contextual-action-panel">'+ this.settings.content +'</div>').appendTo('body');
-            this.panel.addClass('modal').attr('id', 'contextual-action-modal-' + this.id);
+            this.panel.addClass('modal').attr('id', this.settings.id);
           }
         }
 
@@ -106,9 +106,9 @@
         // Move to the body element to break stacking context issues.
         this.panel.detach().appendTo('body');
 
-        this.element.attr('data-modal', 'contextual-action-modal-' + this.id);
+        this.element.attr('data-modal', this.settings.id);
         if (!this.panel.attr('id')) {
-          this.panel.attr('id', 'contextual-action-modal-' + this.id);
+          this.panel.attr('id', this.settings.id);
         }
 
         this.panel.modal({
@@ -129,8 +129,9 @@
         var self = this;
 
         this.panel.on('afteropen', function() {
+
           if (self.toolbar) {
-            self.toolbar.trigger('recalculateButtons');
+            self.toolbar.trigger('recalculatebuttons');
           }
 
           // Select the proper element on the toolbar
@@ -173,7 +174,10 @@
         children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
 
         this.panel.removeAttr('id').removeClass('modal');
-        this.panel.data('modal').destroy().remove();
+        this.panel.data('modal').destroy();//.remove();
+
+        this.panel.remove();
+        this.element.removeAttr('data-modal');
       },
 
       close: function() {
