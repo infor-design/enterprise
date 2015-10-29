@@ -107,9 +107,9 @@
           if (!$.fn.cssPropSupport('animation') || self.isSafari) {
             ripple.removeClass('is-animation');
             self.animateWithJS(ripple);
-          }
-          else {
-            ripple.addClass('is-animation');
+          } else {
+            var elem = $('svg.ripple-effect', element);
+            elem.attr('class', elem.attr('class') + ' is-animation');
           }
 
           setTimeout(function() {

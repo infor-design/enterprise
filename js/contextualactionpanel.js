@@ -81,7 +81,10 @@
           this.header = $('<div class="modal-header"></div>');
           this.header.insertBefore(this.panel.find('.modal-body'));
 
-          this.toolbar = this.panel.find('.toolbar');
+          if (!this.toolbar) {
+            this.toolbar = this.panel.find('.toolbar');
+          }
+
           if (!this.toolbar.length) {
             this.toolbar = $('<div class="toolbar"></div>');
           }
@@ -159,7 +162,7 @@
       },
 
       teardown: function() {
-        this.toolbar.children('.buttonset').children('*.not(.searchfield)')
+        this.toolbar.children('.buttonset').children('*:not(.searchfield)')
           .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
 
         this.panel.detach().insertAfter(this.element);

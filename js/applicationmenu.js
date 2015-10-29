@@ -297,7 +297,7 @@
         }, 0);
       },
 
-      closeMenu: function(force) {
+      closeMenu: function() {
         if (this.isAnimating === true) {
           return;
         }
