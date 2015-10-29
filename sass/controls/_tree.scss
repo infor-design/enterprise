@@ -47,19 +47,15 @@
       cursor: default;
       opacity: $tree-disabled-opacity;
 
-      &:hover {
+      &:hover,
+      &:focus {
+        border-color: transparent;
+        color: $tree-link-color;
         text-decoration: none;
 
         svg {
-          stroke: $tree-icon-color;
-        }
-      }
-
-      &:focus {
-        border: none;
-        color: $tree-link-color;
-
-        svg {
+          fill: $tree-folder-link-color;
+          opacity: .5;
           stroke: $tree-icon-color;
         }
       }
