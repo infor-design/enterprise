@@ -225,7 +225,6 @@
               input = $('<input class="searchfield">').attr(attrs);
 
             buttonset.append(label, input);
-            input.searchfield();
             return;
           }
 
