@@ -168,7 +168,9 @@
 
         this.panel.detach().insertAfter(this.element);
         this.panel.find('.toolbar').data('toolbar').destroy();
-        this.header.remove();
+        if (this.header){
+          this.header.remove();
+        }
 
         var children = this.panel.find('.modal-body').children();
         children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
