@@ -127,7 +127,7 @@
 }
 
 // Toolbar
-.formatter-toolbar {
+.toolbar.formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
   border: 1px solid $editor-border-color;
   border-bottom: 1px solid $editor-middle-border-color;
@@ -140,18 +140,18 @@
       margin-right: 6px;
 
       &:first-child {
-        margin-left: 15px;
+        margin-left: 10px;
+      }
+
+      > .icon {
+        height: 18px;
       }
     }
   }
 
-  .more {
-    width: 60px;
-  }
-
   &.has-more-button {
     .buttonset {
-      width: calc(100% - 60px);
+      width: calc(100% - 50px);
     }
   }
 
