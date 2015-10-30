@@ -24,7 +24,7 @@
     var pluginName = 'popupmenu',
       defaults = {
         menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
-        trigger: 'rightClick',  //click, rightClick, immediate ect
+        trigger: 'click',  //click, rightClick, immediate ect
         autoFocus: true,
         mouseFocus: true,
         beforeOpen: null, //Ajax callback for open event
