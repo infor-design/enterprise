@@ -493,6 +493,10 @@
       },
 
       close: function () {
+        if (!this.isOpen()) {
+          return true;
+        }
+
         var elemCanClose = this.element.triggerHandler('beforeclose'),
           self = this;
 

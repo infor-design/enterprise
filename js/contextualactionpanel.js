@@ -163,23 +163,38 @@
       },
 
       teardown: function() {
-        this.toolbar.children('.buttonset').children('*:not(.searchfield)')
-          .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
+        var self = this,
+          modal = this.panel.data('modal');
 
-        this.panel.detach().insertAfter(this.element);
-        this.panel.find('.toolbar').data('toolbar').destroy();
-        if (this.header){
-          this.header.remove();
+        function teardownCallback() {
+          self.toolbar.children('.buttonset').children('*:not(.searchfield)')
+            .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
+
+
+          self.panel.detach().insertAfter(self.element);
+          self.panel.find('.toolbar').data('toolbar').destroy();
+          if (self.header){
+            self.header.remove();
+          }
+
+          var children = self.panel.find('.modal-body').children();
+          children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
+
+          self.panel.removeAttr('id').removeClass('modal');
+          self.panel.data('modal').destroy();//.remove();
+
+          self.panel.remove();
+          self.element.removeAttr('data-modal');
         }
 
-        var children = this.panel.find('.modal-body').children();
-        children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
+        if (!modal.isOpen()) {
+          return teardownCallback();
+        }
 
-        this.panel.removeAttr('id').removeClass('modal');
-        this.panel.data('modal').destroy();//.remove();
-
-        this.panel.remove();
-        this.element.removeAttr('data-modal');
+        this.panel.on('afterclose.contextualactionpanel', function() {
+          teardownCallback();
+        });
+        modal.close();
       },
 
       close: function() {
