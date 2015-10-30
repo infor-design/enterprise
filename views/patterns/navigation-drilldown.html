@@ -1,36 +1,38 @@
 <body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> controls/svg}}
   {{> includes/masthead}}
-  <header class="header is-sticky">
-    <div class="toolbar">
-      <div class="title">
-        <button class="btn-icon application-menu-trigger" type="button">
-          <span class="audible">Application Menu</span>
-          <span class="icon app-header go-back">
-            <span class="one"></span>
-            <span class="two"></span>
-            <span class="three"></span>
-          </span>
-        </button>
 
-        <h1>Level One Detail Page</h1>
+  <div class="page-container no-scroll">
+    <header class="header is-sticky">
+      <div class="toolbar">
+        <div class="title">
+          <button class="btn-icon application-menu-trigger" type="button">
+            <span class="audible">Application Menu</span>
+            <span class="icon app-header go-back">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+
+          <h1>Level One Detail Page</h1>
+        </div>
+
+        <div class="buttonset">
+          <button class="btn-icon header-search" type="button">
+            <span class="audible">Search</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-search"></use>
+            </svg>
+          </button>
+        </div>
+
+        {{> includes/header-actionbutton}}
       </div>
+    </header>
 
-      <div class="buttonset">
-        <button class="btn-icon header-search" type="button">
-          <span class="audible">Search</span>
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-search"></use>
-          </svg>
-        </button>
-      </div>
+    <div id="maincontent" class="page-container scrollable" role="main">
 
-      {{> includes/header-actionbutton}}
     </div>
-  </header>
-
-  <div id="maincontent" class="page-container scrollable" role="main">
-
-
-
   </div>

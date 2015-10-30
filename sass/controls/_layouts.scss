@@ -343,6 +343,17 @@ body.no-scroll {
     }
   }
 
+  // Alternate breadcrumb is taller than regular breadcrumb
+  &.has-alternate-breadcrumb {
+    height: 120px;
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 120px);
+      margin-top: 120px;
+    }
+  }
+
   &.has-wizard {
     height: 144px;
 

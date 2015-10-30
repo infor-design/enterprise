@@ -10,7 +10,6 @@ $header-height: 60px;
   display: block;
   height: $header-height;
   overflow: hidden;
-  padding-right: 20px;
   @include transition(background-color 1s ease 0s,
     height 300ms cubic-bezier(.17, .04, .03, .94));
   width: 100%;
@@ -99,12 +98,13 @@ $header-height: 60px;
 
   .toolbar {
     height: 60px; // Needs to not be 100% because it's possible for headers to have other controls beneath the toolbar
+    padding-right: 20px;
 
     .title {
       color: $inverse-color;
 
       > *:first-child {
-        margin-left: 1.5rem;
+        margin-left: 1.7rem;
       }
     }
 
