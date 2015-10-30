@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Contextual Action Panel Test:  Destroy Method</h2>
+
+    <p>A <a class="hyperlink" href="http://jira/browse/HFC-3103" target="_blank">bug was reported</a> where the Contextual Action Panel was not triggering its underlying Modal controls' "afterclose" properly.  The Modal Control used under the hood wasn't firing at the right time, instead attempting to fire after the Panel's element was removed from the DOM.  This test ensures that it fires before the panel is removed by displaying a Toast.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button id="contextual-panel-trigger" class="btn-secondary contextual-action-panel-trigger">
+        <span>Show Me Potato Salad</span>
+      </button>
+      <div class="contextual-action-panel">
+        <div class="field">
+          <button id="destroy-contextual" class="btn-primary">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-delete"></use>
+            </svg>
+            <span>Destroy Me</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var contextualApi = $('#contextual-panel-trigger').data('contextualactionpanel');
+
+    $('#destroy-contextual').onTouchClick('test').on('click.test', function() {
+      contextualApi.destroy();
+    });
+
+    contextualApi.panel.on('afterclose.test', function() {
+      contextualApi = undefined;
+      $('body').toast({
+        title: '"afterclose" Fired!',
+        message: '"afterclose" event was fired properly!'
+      });
+    });
+
+    /*
+    $('#rebuild-contextual').onTouchClick('test').on('click.test', function() {
+      if (contextualApi !== undefined) {
+        return;
+      }
+
+      $('<div class="contextual-action-panel"></div>').html('<div class="field">' +
+          '<button id="destroy-contextual" class="btn-primary">' +
+            '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+              '<use xlink:href="#icon-delete"></use>' +
+            '</svg>' +
+            '<span>Destroy Me</span>' +
+          '</button>' +
+        '</div>').insertAfter('#contextual-panel-trigger');
+      $('#contextual-panel-trigger').contextualactionpanel();
+      contextualApi = $('#contextual-panel-trigger').data('contextualactionpanel');
+
+      $('body').toast({
+        title: 'Contextual Panel Rebuilt!',
+        message: 'Contextual Action Panel has been rebuilt and re-invoked.'
+      });
+    });
+    */
+  });
+</script>
