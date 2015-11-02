@@ -118,6 +118,10 @@
         this.buttons = this.panel.find('.buttonset').children('button');
         this.closeButton = this.buttons.filter('.btn-close, [name="close"], .icon-close');
 
+        if (!this.toolbar) {
+          this.toolbar = this.panel.find('.toolbar');
+        }
+
         if (this.toolbar.length) {
           this.toolbar.toolbar();
         }
