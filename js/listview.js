@@ -41,6 +41,7 @@
       this.settings = settings;
       this.init();
       this.handleEvents();
+      this.handleResize();
     }
 
     // Plugin Object
@@ -327,6 +328,17 @@
            e.stopPropagation();
           });
         }
+
+        $(window).on('resize.listview', function() {
+          self.handleResize();
+        });
+      },
+
+      // Handle Resize 
+      handleResize: function () {
+        var items;
+        items = $('li, tr', this.element);
+        $('.listview-heading', items.eq(0)).width($('.listview-heading', items.eq(1)).width());
       },
 
       focus: function (item) {
