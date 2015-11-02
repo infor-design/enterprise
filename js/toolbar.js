@@ -224,6 +224,10 @@
             addItemLinksRecursively(menu, diffMenu, popupLi);
           }
 
+          if (item.is('[data-popdown]')) {
+            item.popdown();
+          }
+
           // Setup data links between the buttons and their corresponding list items
           item.data('action-button-link', a);
           popupLi.children('a').data('original-button', item);

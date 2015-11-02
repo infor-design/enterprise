@@ -169,8 +169,9 @@
 
         });
 
-       this.element.initialize();
-       this.element.trigger('rendered', [dataset]);
+        // TODO: Invoke the "element" here after we write an updated method.
+        this.element.children().initialize();
+        this.element.trigger('rendered', [dataset]);
       },
 
       // Get the Data Source. Can be an array, Object or Url
