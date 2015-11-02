@@ -83,6 +83,14 @@
           $(elem)[plugin](options);
         }
 
+        function matchedItems(selector) {
+          var items = elem.find(selector);
+          if (elem.filter(selector).length) {
+            items = items.add(elem);
+          }
+          return items;
+        }
+
         function simpleInit(plugin, selector) {
           //Allow only the plugin name to be specified if the default selector is a class with the same name
           //Like $.fn.header applying to elements that match .header
@@ -91,7 +99,7 @@
           }
 
           if ($.fn[plugin]) {
-            elem.find(selector).each(function () {
+            matchedItems(selector).each(function () {
               if ($(this).is(noinitExcludes) && selector !=='[data-trackdirty="true"]') {
                 return;
               }
@@ -107,7 +115,7 @@
           }
 
           // Radio switch
-          $('.radio-section input:radio.handle').change(function() {
+          matchedItems('.radio-section input:radio.handle').change(function() {
             if (this.checked) {
               var option = $(this).closest('.option'),
               siblings = option.siblings(),
@@ -121,7 +129,7 @@
 
         // Application Menu
         if ($.fn.applicationmenu) {
-          elem.find('#application-menu').applicationmenu({
+          matchedItems('#application-menu').applicationmenu({
             triggers: elem.find('.application-menu-trigger')
           });
         }
@@ -238,7 +246,7 @@
           var btnExcludes = ', .btn-actions, .btn-filtering, .btn-menu';
 
           //Context Menus
-          elem.find('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
+          matchedItems('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
             var triggerButton = $(this),
               options = $.extend({}, $.fn.parseOptions(this)),
               popupData = triggerButton.attr('data-popupmenu');
@@ -251,7 +259,7 @@
           });
 
           //Button-based Popup-Menus (Action/More Button, Menu Buttons, etc.)
-          elem.find('.btn-filtering, .btn-menu, .btn-actions').filter(':not('+ noinitExcludes +')').each(function() {
+          matchedItems('.btn-filtering, .btn-menu, .btn-actions').filter(':not('+ noinitExcludes +')').each(function() {
             var triggerButton = $(this);
 
             // Don't auto-invoke Toolbar's Popupmenus.
@@ -266,7 +274,7 @@
 
         //Popovers
         if ($.fn.popover) {
-          elem.find('[data-popover]:not('+ noinitExcludes +')').each(function () {
+          matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
             var obj = $(this),
               trigger = obj.attr('data-trigger'),
               title = obj.attr('data-title');
@@ -282,7 +290,7 @@
 
         //Cardstack
         if ($.fn.listview) {
-          elem.find('.listview:not('+ noinitExcludes +')').each(function () {
+          matchedItems('.listview:not('+ noinitExcludes +')').each(function () {
             var cs = $(this),
               attr = cs.attr('data-dataset'),
               tmpl = cs.attr('data-tmpl'),
@@ -306,7 +314,7 @@
         // NOTE:  The Toolbar Control itself understands how to invoke internal searchfields, so they
         // are excluded from this initializer.
         if ($.fn.searchfield) {
-          var searchfields = elem.find('.searchfield:not('+ noinitExcludes +')'),
+          var searchfields = matchedItems('.searchfield:not('+ noinitExcludes +')'),
             toolbarSearchfields = searchfields.filter(function() {
               return $(this).parents('.toolbar').length;
             });
@@ -319,7 +327,7 @@
 
         // Accordion
         if ($.fn.accordion) {
-          elem.find('.accordion:not('+ noinitExcludes +')').each(function() {
+          matchedItems('.accordion:not('+ noinitExcludes +')').each(function() {
             var a = $(this);
             if (a.parents('.application-menu').length) {
               return;
@@ -331,7 +339,7 @@
 
         // Toolbar
         if ($.fn.toolbar) {
-          elem.find('.toolbar:not('+ noinitExcludes +')').each(function() {
+          matchedItems('.toolbar:not('+ noinitExcludes +')').each(function() {
             var t = $(this);
             // Don't re-invoke toolbars that are part of the page/section headers.
             // header.js manually invokes these toolbars during its setup process.
@@ -343,14 +351,14 @@
           });
         }
 
-        elem.find('.modal-search .close').on('click', function () {
+        matchedItems('.modal-search .close').on('click', function () {
           $('.modal-search.modal').removeClass('is-visible');
           $('.modal-search.modal').hide();
           $('.overlay.modal-search').remove();
         });
 
 
-        elem.find('[data-translate="text"]').each(function () {
+        matchedItems('[data-translate="text"]').each(function () {
           var obj = $(this);
           obj.text(Locale.translate(obj.text()));
         });
@@ -358,14 +366,14 @@
         //Validation
         //Should be one of the last items to invoke
         if ($.fn.validate) {
-          elem.find('[data-validate]').validate();
-          elem.find('[data-validate-on="submit"]').validate();
+          matchedItems('[data-validate]').validate();
+          matchedItems('[data-validate-on="submit"]').validate();
         }
 
-        elem.find('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
+        matchedItems('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
       });
 
-      self.trigger('initialized');
+      self.triggerHandler('initialized');
 
       //Placeholder attribute in browsers that do not handle it
       $.fn.placeholderPolyfill();

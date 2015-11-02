@@ -131,8 +131,13 @@
 
       // Used for adding a Breadcrumb Element to the Header
       buildBreadcrumb: function() {
-        var self = this;
-        this.element.addClass('has-breadcrumb');
+        var self = this,
+          breadcrumbClass = 'has-breadcrumb';
+
+        if (this.settings.useAlternate) {
+          breadcrumbClass = 'has-alternate-breadcrumb';
+        }
+        this.element.addClass(breadcrumbClass);
 
         this.breadcrumb = this.element.find('.breadcrumb');
         if (!this.breadcrumb.length) {
@@ -398,7 +403,7 @@
           self.breadcrumb = $();
         }
 
-        self.element.removeClass('has-breadcrumb');
+        self.element.removeClass('has-breadcrumb').removeClass('has-alternate-breadcrumb');
         if (this.breadcrumb.is(':not(:hidden)')) {
           this.element.one(transitionEnd + '.breadcrumb-header', destroyBreadcrumb);
           timeout = setTimeout(destroyBreadcrumb, 300);

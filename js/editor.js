@@ -1279,6 +1279,12 @@
       destroyToolbar: function() {
         var element = this.getCurrentElement();
         // Unbind all events attached to the old element that involve triggering the toolbar hide/show
+
+        var toolbarApi = this.toolbar.data('toolbar');
+        if (toolbarApi) {
+          toolbarApi.destroy();
+        }
+
         this.toolbar.find('button').data('tooltip').destroy();
         this.toolbar.off('click.editor mousedown.editor');
         this.toolbar.remove();
@@ -1349,7 +1355,7 @@
             modal.destroy();
           }
         });
-        $.removeData(this.obj, pluginName);
+        $.removeData(this.element[0], pluginName);
       }
     };
 

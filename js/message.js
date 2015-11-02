@@ -33,13 +33,14 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Message(element) {
       this.element = $(element);
       this.init();
     }
 
     // Actual Plugin Code
-    Plugin.prototype = {
+    Message.prototype = {
+
       init: function() {
         var self = this,
           content;
@@ -70,20 +71,16 @@
         }
 
         //Setup the destroy event to fire on close.  Needs to fire after the "close" event on the modal.
-        this.message.on('beforeClose', function () {
+        this.message.on('beforeclose.message', function () {
           var ok = self.element.triggerHandler('beforeclose');
           return ok;
-        });
-        this.message.on('beforeOpen', function () {
+        }).on('beforeopen.message', function () {
           var ok = self.element.triggerHandler('beforeopen');
           return ok;
-        });
-        this.message.on('open', function () {
+        }).on('open.message', function () {
           self.element.trigger('open');
-        });
-        this.message.data('modal').element.on('afterClose', function() {
+        }).on('afterclose.message', function() {
           self.destroy();
-
           if (settings.returnFocus) {
             settings.returnFocus.focus();
           }
@@ -95,15 +92,22 @@
           this.title.removeClass('is-error').find('svg').remove();
         }
       },
+
       destroy: function() {
-        this.message.remove();
-        $('body').off('beforeclose close beforeopen open afterclose');
+        var modalData = this.message.data('modal');
+        if (modalData !== undefined) {
+          modalData.destroy();
+        }
+
+        this.message
+          .off('beforeclose.message beforeopen.message open.message afterclose.message')
+          .remove();
       }
     };
 
     // Support Chaining and Init the Control or Set Settings
     return this.each(function() {
-      new Plugin(this, settings);
+      new Message(this, settings);
     });
   };
 
