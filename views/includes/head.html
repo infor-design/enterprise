@@ -2,7 +2,12 @@
 <html lang="en-US">
 <head>
 
-  <title>{{title}}</title>
+  <title>
+    {{#subtitle}}
+      {{subtitle}} |
+    {{/subtitle}}
+    {{title}}
+  </title>
 
   <!-- Meta Info -->
   <meta charset="utf-8">
