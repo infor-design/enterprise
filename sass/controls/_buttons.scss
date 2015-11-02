@@ -39,7 +39,7 @@ button {
   > .icon {
     fill: inherit;
     position: static;
-    width: 21px;
+    width: 18px;
 
     + span:not(.audible) {
       padding-left: 5px;
@@ -84,6 +84,10 @@ button {
   border: 1px solid $primary-btn-bg-color;
   color: $btn-color;
 
+  .icon {
+    fill: $btn-color;
+  }
+
   &:hover {
     background-color: $primary-btn-hover-bg-color;
     border: 1px solid $primary-btn-hover-bg-color;
@@ -112,6 +116,10 @@ button {
     box-shadow: none;
     color: $btn-disabled-color;
     cursor: default;
+
+    .icon {
+      fill: $btn-disabled-color;
+    }
   }
 
   .ripple-effect {
@@ -130,6 +138,10 @@ a.btn-primary {
   background-color: $btn-bg-color;
   border: 1px solid $btn-bg-color;
   color: $btn-color;
+
+  .icon {
+    fill: $btn-color;
+  }
 
   &:hover {
     background-color: $btn-hover-bg-color;
@@ -169,9 +181,9 @@ a.btn-primary {
 // Destructive Actions / Third Level Button
 .btn-tertiary,
 .btn-filtering,
-.btn-menu,
 .btn-icon,
-.btn-actions {
+.btn-actions,
+.btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
   border: 1px solid transparent;
   border-radius: 18px;
   box-shadow: none;
@@ -232,7 +244,7 @@ a.btn-primary {
 }
 
 // Menu Buttons have a special state that shows up when their menus are visible.
-.btn-menu,
+.btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary),
 .btn-actions {
   &.is-open {
     color: $tertiary-btn-hover-color;

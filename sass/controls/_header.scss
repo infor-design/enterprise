@@ -198,6 +198,18 @@ $header-height: 60px;
     }
   }
 
+  .btn-menu {
+    color: $inverse-color;
+
+    .icon {
+      fill: $header-icon-color;
+    }
+
+    span {
+      color: $inverse-color;
+    }
+  }
+
   .breadcrumb {
     display: block;
     padding: 1px 20px 0;
