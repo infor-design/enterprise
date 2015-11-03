@@ -171,11 +171,21 @@
           modal = this.panel.data('modal');
 
         function teardownCallback() {
-          self.toolbar.children('.buttonset').children('*:not(.searchfield)')
+          var buttonset = self.toolbar.children('.buttonset');
+
+          buttonset.children('*:not(.searchfield)')
             .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
 
+          var menuButtons = buttonset.children('.btn-menu');
+          menuButtons.each(function() {
+            var popup = $(this).data('popupmenu');
+            if (popup) {
+              popup.destroy();
+            }
+          });
+
           self.panel.detach().insertAfter(self.element);
-          self.panel.find('.toolbar').data('toolbar').destroy();
+          self.toolbar.data('toolbar').destroy();
 
           if (self.header){
             self.header.remove();
