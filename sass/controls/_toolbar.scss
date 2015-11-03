@@ -144,9 +144,7 @@ $toolbar-buttonset-height: 44px;
     }
 
     &:hover:not([disabled]) {
-      span {
-        color: $tertiary-btn-hover-color;
-      }
+      color: $tertiary-btn-hover-color;
 
       .icon {
         fill: $tertiary-btn-hover-color;
@@ -160,10 +158,6 @@ $toolbar-buttonset-height: 44px;
       color: $tertiary-btn-disabled-color;
       cursor: default;
 
-      span {
-        color: $tertiary-btn-disabled-color;
-      }
-
       .icon {
         fill: $tertiary-btn-disabled-color;
       }
@@ -174,8 +168,8 @@ $toolbar-buttonset-height: 44px;
       color: $tertiary-btn-active-color;
 
       &:active {
-        box-shadow: none;
         background-color: transparent !important;
+        box-shadow: none;
       }
 
       .icon {
@@ -191,10 +185,6 @@ $toolbar-buttonset-height: 44px;
   // Add special coloring to toolbar buttons for ".is-selected" state
   [class^="btn"].is-selected:focus:not(.hide-focus) {
     color: $tertiary-btn-hover-color;
-
-    span {
-      color: $tertiary-btn-hover-color;
-    }
 
     .icon {
       fill: $tertiary-btn-hover-color;
@@ -254,7 +244,6 @@ $toolbar-buttonset-height: 44px;
         width: 32px;
 
         + span {
-          color: transparent !important;
           padding: 0;
           position: absolute;
           width: 0;

@@ -365,6 +365,9 @@ $image-border-color: $graphite03;
 $toast-bg-color: $white;
 $toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
 
+//Builder Pattern
+$builder-header-bg-color: $slate07;
+
 //================================================== //
 // Core Controls
 @import 'controls';

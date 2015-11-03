@@ -10,7 +10,7 @@ $header-height: 60px;
   display: block;
   height: $header-height;
   overflow: hidden;
-  @include transition(background-color 1s ease 0s,
+  @include transition(background-color 500ms ease 0s,
     height 300ms cubic-bezier(.17, .04, .03, .94));
   width: 100%;
 
@@ -23,21 +23,12 @@ $header-height: 60px;
     width: 100%;
   }
 
-  &.azure,
-  &.azure06 {
-    background-color: $primary-color;
-  }
-
-  &.azure07 {
-    background-color: $azure07;
-  }
-
   > * {
     vertical-align: middle;
   }
 
   h1 {
-    color: $inverse-color;
+    color: $header-text-color;
     display: inline-block;
     font-weight: normal;
     @include font-size(20);
@@ -51,7 +42,7 @@ $header-height: 60px;
     display: block;
 
     + .section-title {
-      color: $white;
+      color: $header-text-color;
       display: block;
       @include font-size(20);
       padding: 0;
@@ -71,7 +62,7 @@ $header-height: 60px;
   }
 
   .separator {
-    color: $inverse-color;
+    color: $header-text-color;
     @include font-size(22);
     padding: 0 4px 0 5px;
     position: relative;
@@ -79,7 +70,7 @@ $header-height: 60px;
   }
 
   .tooltip-description {
-    color: $inverse-color;
+    color: $header-text-color;
   }
 
   .header-search {
@@ -101,170 +92,12 @@ $header-height: 60px;
     padding-right: 20px;
 
     .title {
-      color: $inverse-color;
+      color: $header-text-color;
 
       > *:first-child {
         margin-left: 1.7rem;
       }
     }
-
-    // Buttons in the header will all appear as Tertiary/Destructive-style
-    [class^="btn"] {
-      background-color: transparent;
-      border: 1px solid transparent;
-      border-radius: 18px;
-      color: $header-icon-color;
-      opacity: .7;
-
-      > .icon {
-        fill: $header-icon-color;
-      }
-
-      > span {
-        color: $header-icon-color;
-      }
-
-      .audible {
-        color: $inverse-color;
-      }
-
-      &:focus,
-      &:hover:not([disabled]),
-      &:active:not([disabled]),
-      &[aria-expanded="true"] {
-        > .icon {
-          fill: $inverse-color;
-        }
-
-        > span {
-          color: $inverse-color;
-        }
-
-        opacity: 1;
-      }
-
-      &:focus:not(.hide-focus) {
-        border: 1px solid $inverse-color;
-        box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
-
-        .icon {
-          fill: $inverse-color;
-        }
-      }
-
-      &.is-selected {
-        &:focus:not(.hide-focus) {
-          color: $inverse-color;
-
-          .icon {
-            fill: $inverse-color;
-          }
-        }
-      }
-
-      &[disabled] {
-        span {
-          color: $header-disabled-color !important;
-        }
-
-        svg {
-          fill: $header-disabled-color !important;
-        }
-
-        &:hover {
-          background-color: transparent;
-          border-color: transparent;
-        }
-      }
-
-      .ripple-effect {
-        background-color: $header-icon-color;
-      }
-    }
-  }
-
-  .title .app-header {
-    height: 32px;
-    width: 32px;
-
-    &.icon > span {
-      background-color: $inverse-color;
-    }
-  }
-
-  .btn-icon:hover {
-    span:not(.icon) {
-      color: $inverse-color;
-    }
-  }
-
-  .btn-menu {
-    color: $inverse-color;
-
-    .icon {
-      fill: $header-icon-color;
-    }
-
-    span {
-      color: $inverse-color;
-    }
-  }
-
-  .breadcrumb {
-    display: block;
-    padding: 1px 20px 0;
-
-    ol {
-      padding: 3px 0;
-    }
-
-    .hyperlink {
-      color: $inverse-color;
-
-      &:active,
-      &:hover {
-        border-bottom: 1px solid $inverse-color;
-      }
-    }
-
-    li {
-      color: $inverse-color;
-
-      &:after {
-        color: $inverse-color;
-      }
-    }
-
-    &.alternate {
-      background-color: $inverse-color;
-      border-bottom: 1px solid $font-color-highcontrast;
-
-      &:hidden {
-        border-bottom: 0;
-      }
-
-      ol {
-        padding: 15px 0;
-      }
-
-      .hyperlink {
-        color: $font-color-highcontrast;
-
-        &:active,
-        &:hover {
-          border-bottom: 1px solid $font-color-highcontrast;
-        }
-      }
-
-      li {
-        color: $font-color-highcontrast;
-
-        &:after {
-          color: $font-color-highcontrast;
-        }
-      }
-    }
-
   }
 
   .toolbar.has-title-button + .breadcrumb {
@@ -469,6 +302,174 @@ $header-height: 60px;
 
 }
 
+.header,
+.subheader {
+  .toolbar {
+    // Buttons in the header will all appear as Tertiary/Destructive-style
+    [class^="btn"] {
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 18px;
+      color: $header-icon-color;
+      opacity: .7;
+
+      > .icon {
+        fill: $header-icon-color;
+      }
+
+      > span {
+        color: $header-icon-color;
+      }
+
+      .audible {
+        color: $header-icon-color;
+      }
+
+      &:focus,
+      &:hover:not([disabled]),
+      &:active:not([disabled]),
+      &[aria-expanded="true"] {
+        > .icon {
+          fill: $header-text-color;
+        }
+
+        > span {
+          color: $header-text-color;
+        }
+
+        opacity: 1;
+      }
+
+      &:focus:not(.hide-focus) {
+        border: 1px solid $header-text-color;
+        box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
+
+        .icon {
+          fill: $header-text-color;
+        }
+      }
+
+      &.is-selected {
+        &:focus:not(.hide-focus) {
+          color: $header-text-color;
+
+          .icon {
+            fill: $header-text-color;
+          }
+        }
+      }
+
+      &[disabled] {
+        span {
+          color: $header-disabled-color !important;
+        }
+
+        svg {
+          fill: $header-disabled-color !important;
+        }
+
+        &:hover {
+          background-color: transparent;
+          border-color: transparent;
+        }
+      }
+
+      .ripple-effect {
+        background-color: $header-icon-color;
+      }
+    }
+  }
+
+  .title .app-header {
+    height: 32px;
+    width: 32px;
+
+    &.icon > span {
+      background-color: $header-text-color;
+    }
+  }
+
+  .btn-icon:hover {
+    span:not(.icon) {
+      color: $header-text-color;
+    }
+  }
+
+  .btn-menu {
+    color: $header-text-color;
+
+    .icon {
+      fill: $header-icon-color;
+    }
+
+    span {
+      color: $header-text-color;
+    }
+  }
+
+  .breadcrumb {
+    display: block;
+    padding: 1px 20px 0;
+
+    ol {
+      padding: 3px 0;
+    }
+
+    .hyperlink {
+      color: $header-text-color;
+
+      &:active,
+      &:hover {
+        border-bottom: 1px solid $header-text-color;
+      }
+    }
+
+    li {
+      color: $header-text-color;
+
+      &:after {
+        color: $header-text-color;
+      }
+    }
+
+    &.alternate {
+      background-color: $inverse-color;
+      border-bottom: 1px solid $font-color-highcontrast;
+
+      &:hidden {
+        border-bottom: 0;
+      }
+
+      ol {
+        padding: 15px 0;
+      }
+
+      .hyperlink {
+        color: $font-color-highcontrast;
+
+        &:active,
+        &:hover {
+          border-bottom: 1px solid $font-color-highcontrast;
+        }
+      }
+
+      li {
+        color: $font-color-highcontrast;
+
+        &:after {
+          color: $font-color-highcontrast;
+        }
+      }
+    }
+
+  }
+}
+
+
+
+
+
+
 //Hide Text
 @media (max-width: $breakpoint-slim) {
   .header h1 {
@@ -485,33 +486,6 @@ $header-height: 60px;
   }
 
 }
-
-// Overrides the default styling for Toolbar Buttonsets that would normally shrink the "buttonset" to a small size,
-// leaving room for the Title to be visible.  In this case, we just add some padding to the right side to correctly
-// line up the right edge of the buttons in the Page Header to the rest of the page.
-/*
-@include respond-to(phablet) {
-  .header > .toolbar {
-    .title {
-      width: calc(100% - 80px);
-
-      + .buttonset {
-        width: 60px;
-      }
-    }
-
-    &.has-more-button {
-      .title {
-        width: calc(100% - 130px);
-
-        + .buttonset {
-          width: 60px;
-        }
-      }
-    }
-  }
-}
-*/
 
 // Print Style Sheet
 @media print {

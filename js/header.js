@@ -272,17 +272,11 @@
       },
 
       initPageChanger: function () {
-        this.element.find('.page-changer').on('selected', function (e, link) {
-
+        this.element.find('.page-changer').on('selected.header', function (e, link) {
           // Change Theme
           if (link.attr('data-theme')) {
-            $('body').fadeOut('fast', function() {
-              var css = $('#stylesheet, #sohoxi-stylesheet'),
-                path = css.attr('href');
-                css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + link.attr('data-theme') +'.css');
-
-              $(this).fadeIn('fast');
-            });
+            var theme = link.attr('data-theme');
+            $('body').trigger('changetheme', [theme]);
             return;
           }
 
@@ -294,7 +288,7 @@
 
           // Change Color
           var color = link.attr('data-rgbcolor');
-          $('.is-personalizable').css('background-color', color);
+          $('body').trigger('personalizecolors', [color]);
         });
       },
 

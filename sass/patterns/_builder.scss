@@ -51,7 +51,12 @@
 }
 
 .builder-header {
+  background-color: $builder-header-bg-color;
   min-height: 80px;
+
+  &.is-personalizable {
+    @include transition(background-color 500ms ease 0s);
+  }
 
   .toolbar {
     margin: 0 20px;
@@ -68,85 +73,11 @@
     line-height: 1;
   }
 
-  [class^="btn"] {
-    color: $white;
-    opacity: .7;
-
-    > span:not(.audible) {
-      color: $white;
-    }
-
-    > .icon {
-      fill: $white;
-    }
-
-    &:disabled {
-      cursor: default;
-      opacity: .4;
-
-      .icon,
-      svg {
-        fill: $white !important;
-      }
-
-      &:hover {
-        color: $white !important;
-
-        svg {
-          fill: $white !important;
-        }
-
-        span {
-          color: $white !important;
-        }
-      }
-    }
-
-    &:hover:not(:disabled) {
-      color: $white !important;
-      opacity: 1;
-
-      span {
-        color: $white !important;
-      }
-
-      .icon,
-      svg {
-        fill: $white !important;
-      }
-    }
-  }
-
   h1,
   h2,
   h3,
   h4 {
     color: $white;
-  }
-
-  .btn-menu,
-  .btn-tertiary,
-  .btn-icon,
-  .btn-actions {
-    &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $white;
-
-      &:hover {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $white;
-
-        > .icon {
-          fill: $white;
-        }
-      }
-    }
-
-    &:hover {
-      color: $white;
-
-      > .icon {
-        fill: $white;
-      }
-    }
   }
 }
 
@@ -169,7 +100,7 @@
 }
 
 .builder-actions {
-  background-color: $white;
+  background-color: $panel-bg-color;
   width: calc(100% - 323px);
 
   > .listview {
