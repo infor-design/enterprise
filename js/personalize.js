@@ -88,9 +88,9 @@
             'subheader': hex !== '' ? this.getLuminousColorShade(hex, -0.2) : ''
           },
           mappings = [
-            ['.header.is-personalizable', 'background-color', colors['header']],
-            ['.sub-header.is-personalizable', 'background-color', colors['subhheader']],
-            ['.builder-header.is-personalizable', 'background-color', colors['subheader']]
+            ['.header.is-personalizable', 'background-color', colors.header],
+            ['.sub-header.is-personalizable', 'background-color', colors.subheader],
+            ['.builder-header.is-personalizable', 'background-color', colors.subheader]
           ];
 
         function setProp(selector, prop, color) {

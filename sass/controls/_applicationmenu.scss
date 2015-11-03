@@ -239,11 +239,7 @@
       color: $app-accordion-header-text-color;
     }
 
-    .audible {
-      color: $app-accordion-chevron-color;
-    }
-
-    &:not(.is-focused) {
+    &:not(.is-focused):not(.is-selected) {
       > [class^="btn"] {
         .icon:not(.chevron) {
           fill: $app-accordion-header-text-color;
@@ -261,9 +257,15 @@
       .icon.chevron {
         fill: $app-accordion-chevron-color;
       }
+    }
 
+    &:not(.is-focused) {
       &:hover {
         > a {
+          color: $app-accordion-header-text-active-color;
+        }
+
+        span {
           color: $app-accordion-header-text-active-color;
         }
 

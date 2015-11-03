@@ -42,7 +42,7 @@
         color: $accordion-disabled-text-color !important;
       }
 
-      span.audible {
+      span {
         color: $accordion-disabled-text-color !important;
       }
 
@@ -240,8 +240,8 @@
   }
 
   // Set for accessibility
-  span.audible {
-    color: $accordion-text-color;
+  span {
+    color: inherit;
   }
 
   > a {
