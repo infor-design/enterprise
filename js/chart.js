@@ -408,7 +408,7 @@ window.Chart = function(container) {
     //Add Legends
     charts.addLegend(series);
     charts.appendTooltip();
-    charts.handleResize();
+    $(container).trigger('rendered');
 
     return $(container);
   };
@@ -669,24 +669,7 @@ window.Chart = function(container) {
     }
 
     relax();
-    var timeout;
-
-    //Handle Resize / Redraw
-    function resizePie() {
-      clearTimeout(timeout);
-      timeout = setTimeout(function () {
-        var cont = $(container);
-
-        if (!cont.is(':visible')) {
-          return true;
-        }
-        cont.empty();
-        charts.Pie(initialData, isDonut);
-      }, 100);
-    }
-
-    $(window).off('resize.pie').on('resize.pie', resizePie);
-    $(container).off('resize').on('resize', resizePie);
+    $(container).trigger('rendered');
 
     return $(container);
   };
@@ -710,7 +693,8 @@ window.Chart = function(container) {
       }, 100);
     }
 
-    $(window).off('resize.charts').on('resize.charts', resizeCharts);
+    // $(window).off('resize.charts').on('resize.charts', resizeCharts);
+    $(window).on('resize.charts', resizeCharts);
     $(container).off('resize').on('resize', resizeCharts);
 
   };
@@ -863,6 +847,8 @@ window.Chart = function(container) {
           d3.select(this).attr('r', (options.isMinMax && max === d ||
             options.isMinMax && min === d) ? (dotsize+1) : dotsize);
         });
+
+    $(container).trigger('rendered');
 
     return $(container);
   };
@@ -1066,7 +1052,6 @@ window.Chart = function(container) {
 
     //Add Tooltips
     charts.appendTooltip();
-    charts.handleResize();
 
     //See if any labels overlap and use shorter */
     if (charts.labelsColide(svg)) {
@@ -1076,6 +1061,8 @@ window.Chart = function(container) {
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, 'abbrName');
     }
+
+    $(container).trigger('rendered');
 
     return $(container);
   };
@@ -1270,7 +1257,9 @@ window.Chart = function(container) {
 
     charts.addLegend(series);
     charts.appendTooltip();
-    charts.handleResize();
+
+    $(container).trigger('rendered');
+
 
     return $(container);
   };
@@ -1369,6 +1358,7 @@ $.fn.chart = function(options) {
 
     setTimeout(function () {
       chartInst.initChartType(options);
+      chartInst.handleResize();      
     }, 300);
 
   });

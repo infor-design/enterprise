@@ -25,6 +25,11 @@
     -webkit-text-fill-color: $input-readonly-color;
     color: $input-readonly-color;
     cursor: text;
+
+    .hyperlink {
+      -webkit-text-fill-color: $hyperlink-color;
+      color: $hyperlink-color;
+    }
   }
 
   .icon-error {
@@ -75,6 +80,11 @@
     @include rem(line-height, 2.2rem);
     margin-bottom: 15px;
     -webkit-text-fill-color: $editor-color;
+
+    .hyperlink {
+      -webkit-text-fill-color: $hyperlink-color;
+      color: $hyperlink-color;
+    }
   }
 
   h3 {

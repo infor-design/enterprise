@@ -41,6 +41,7 @@
       this.settings = settings;
       this.init();
       this.handleEvents();
+      this.handleResize();
     }
 
     // Plugin Object
@@ -169,8 +170,9 @@
 
         });
 
-       this.element.children().initialize();
-       this.element.trigger('rendered', [dataset]);
+        // TODO: Invoke the "element" here after we write an updated method.
+        this.element.children().initialize();
+        this.element.trigger('rendered', [dataset]);
       },
 
       // Get the Data Source. Can be an array, Object or Url
@@ -326,6 +328,17 @@
            e.stopPropagation();
           });
         }
+
+        $(window).on('resize.listview', function() {
+          self.handleResize();
+        });
+      },
+
+      // Handle Resize
+      handleResize: function () {
+        var items;
+        items = $('li, tr', this.element);
+        $('.listview-heading', items.eq(0)).width($('.listview-heading', items.eq(1)).width());
       },
 
       focus: function (item) {
