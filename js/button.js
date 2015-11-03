@@ -78,7 +78,7 @@
 
           if ((self.element.attr('disabled')) || (!self.isTouch && e.which !== 1) ||
               ($('.ripple-effect', this).length) || (self.isTouch && e.type !== 'touchstart')) {
-            return false;
+            return;
           }
 
 
