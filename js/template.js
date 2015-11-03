@@ -33,16 +33,34 @@
 
     // Plugin Constructor
     function Plugin(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
     Plugin.prototype = {
-
       init: function() {
-        this.settings = $.extend({}, settings);
-        //Do other init
+        //Do other init (change/normalize settings, load externals, etc)
+        return this
+          .build()
+          .handleEvents();
+      },
+
+      // Add markup to the control
+      build: function() {
+        return this;
+      },
+
+      // Sets up event handlers for this control and its sub-elements
+      handleEvents: function() {
+        var self = this;
+
+        this.element.on('updated.' + pluginName, function() {
+          self.updated();
+        });
+
+        return this;
       },
 
       // Example Method
@@ -50,13 +68,22 @@
         //do something with this.settings not settings.
       },
 
-      // Teardown - Remove added markup and events
-      destroy: function() {
-        $.removeData(this.element[0], pluginName);
-      },
-
       //Handle Updating Settings
       updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      // Simple Teardown - remove events & rebuildable markup.
+      teardown: function() {
+        this.element.off('updated.' + pluginName);
+        return this;
+      },
+
+      // Teardown - Remove added markup and events
+      destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };
