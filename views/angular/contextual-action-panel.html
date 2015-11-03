@@ -1,39 +1,55 @@
 <div class="row" data-ng-controller="demoCtrl">
 	<div class="twelve columns">
-		<button class="btn-secondary" ng-click="showActionPanel()">
+		<button id="cap-trigger" class="btn-secondary" ng-click="showActionPanel()">
 			Show Contextual Action Panel
 		</button>
 	</div>
 </div>
 
   <script>
-	
+
     // Example App and Controller
     var app = angular.module('sohoxi-angular', []);
 
     app.controller('demoCtrl', function($scope, $compile) {
-	  var modalScope = $scope.$new();
-	  var template = "<div class=\"contextual-action-panel modal\" ng-include=\"'../partials/cap-template.html'\" ng-controller=\"capCtrl as ctrl\"></div>";
+	  var template = "<div class=\"contextual-action-panel modal\" ng-include=\"'../partials/cap-template.html'\"></div>";
 	  $scope.showActionPanel = function(){
+		var modalScope = $scope.$new(true);
 		var cap = $compile($(template))(modalScope);
-		var button = $(".btn-secondary");
-		cap.insertAfter(button);
-		
+		var container = $("<div id='capContainer'/>");
+		$("body").append(container);
+		cap.insertAfter(container);
+
 		var unsubscribe = modalScope.$on('$includeContentLoaded', function () {
 			unsubscribe();
-			
+
+			var element =  $(".contextual-action-panel");
 			setTimeout(function () {
-				button.contextualactionpanel({title: 'Angular CAP', trigger: 'immediate'});
+				container.contextualactionpanel({trigger: 'immediate'});
+
+				container.one("afterclose", function() {
+					console.log("afterclose");
+					// The following line will remove popupmenus correctly
+					// element.find("[aria-haspopup]").data("popupmenu").destroy();
+
+					// Destroy to avoid leaks
+					modalScope.$destroy();
+					container.remove();
+				});
 			}, 100);
 		});
 	  };
     });
-	
+
 	app.controller('capCtrl', function($scope) {
 		$scope.data = {};
 		$scope.data.sortOptions = [{name: "Sort by Name", value: "sortByName"}, {name: "Sort by Status", value: "sortByStatus"}, {name: "Sort by Errors", value: "sortByErrors"}];
 		$scope.data.selectedOption = $scope.data.sortOptions[0];
 		$scope.searchString = "";
+
+		$scope.destroyCap = function(){
+			$("#capContainer").data("contextualactionpanel").destroy();
+		}
     });
 
   </script>

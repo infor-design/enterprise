@@ -671,6 +671,10 @@
         this.moreMenu.children('li').each(deconstructMenuItem);
         this.more.data('popupmenu').destroy();
 
+        if (!this.defaultMenuItems) {
+          this.moreMenu.remove();
+        }
+
         return this;
       },
 
