@@ -73,85 +73,11 @@
     line-height: 1;
   }
 
-  [class^="btn"] {
-    color: $header-icon-color;
-    opacity: .7;
-
-    > span:not(.audible) {
-      color: $header-icon-color;
-    }
-
-    > .icon {
-      fill: $header-icon-color;
-    }
-
-    &:disabled {
-      cursor: default;
-      opacity: .4;
-
-      .icon,
-      svg {
-        fill: $header-disabled-color !important;
-      }
-
-      &:hover {
-        color: $header-disabled-color !important;
-
-        svg {
-          fill: $header-disabled-color !important;
-        }
-
-        span {
-          color: $header-disabled-color !important;
-        }
-      }
-    }
-
-    &:hover:not(:disabled) {
-      color: $header-icon-color !important;
-      opacity: 1;
-
-      span {
-        color: $header-icon-color !important;
-      }
-
-      .icon,
-      svg {
-        fill: $header-icon-color !important;
-      }
-    }
-  }
-
   h1,
   h2,
   h3,
   h4 {
     color: $white;
-  }
-
-  .btn-menu,
-  .btn-tertiary,
-  .btn-icon,
-  .btn-actions {
-    &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $white;
-
-      &:hover {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $white;
-
-        > .icon {
-          fill: $white;
-        }
-      }
-    }
-
-    &:hover {
-      color: $white;
-
-      > .icon {
-        fill: $white;
-      }
-    }
   }
 }
 
