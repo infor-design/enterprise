@@ -51,7 +51,12 @@
 }
 
 .builder-header {
+  background-color: $builder-header-bg-color;
   min-height: 80px;
+
+  &.is-personalizable {
+    @include transition(background-color 500ms ease 0s);
+  }
 
   .toolbar {
     margin: 0 20px;
@@ -69,15 +74,15 @@
   }
 
   [class^="btn"] {
-    color: $white;
+    color: $header-icon-color;
     opacity: .7;
 
     > span:not(.audible) {
-      color: $white;
+      color: $header-icon-color;
     }
 
     > .icon {
-      fill: $white;
+      fill: $header-icon-color;
     }
 
     &:disabled {
@@ -86,33 +91,33 @@
 
       .icon,
       svg {
-        fill: $white !important;
+        fill: $header-disabled-color !important;
       }
 
       &:hover {
-        color: $white !important;
+        color: $header-disabled-color !important;
 
         svg {
-          fill: $white !important;
+          fill: $header-disabled-color !important;
         }
 
         span {
-          color: $white !important;
+          color: $header-disabled-color !important;
         }
       }
     }
 
     &:hover:not(:disabled) {
-      color: $white !important;
+      color: $header-icon-color !important;
       opacity: 1;
 
       span {
-        color: $white !important;
+        color: $header-icon-color !important;
       }
 
       .icon,
       svg {
-        fill: $white !important;
+        fill: $header-icon-color !important;
       }
     }
   }
@@ -169,7 +174,7 @@
 }
 
 .builder-actions {
-  background-color: $white;
+  background-color: $panel-bg-color;
   width: calc(100% - 323px);
 
   > .listview {

@@ -242,8 +242,8 @@ $toolbarsearchfield-empty-width: 34px;
 
     &.active {
       .searchfield {
-        background-color: rgba($searchfield-header-bg-color, 1);
-        border-bottom-color: rgba($searchfield-header-border-color, 1);
+        background-color: rgba($searchfield-header-bg-color, .5);
+        border-bottom-color: rgba($searchfield-header-border-color, .7);
         color: transparent;
 
         &::-webkit-input-placeholder {
@@ -260,7 +260,7 @@ $toolbarsearchfield-empty-width: 34px;
       }
 
       .icon.close {
-        background-color: rgba($searchfield-header-bg-color, 1);
+        background-color: transparent;
       }
 
       &.is-open {

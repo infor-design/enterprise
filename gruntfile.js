@@ -80,6 +80,7 @@ module.exports = function(grunt) {
             'temp/amd/lookup.js',
             'temp/amd/listview.js',
             'temp/amd/pager.js',
+            'temp/amd/personalize.js',
             'temp/amd/popdown.js',
             'temp/amd/popupmenu.js',
             'temp/amd/progress.js',

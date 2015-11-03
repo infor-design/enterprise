@@ -10,7 +10,7 @@ $header-height: 60px;
   display: block;
   height: $header-height;
   overflow: hidden;
-  @include transition(background-color 1s ease 0s,
+  @include transition(background-color 500ms ease 0s,
     height 300ms cubic-bezier(.17, .04, .03, .94));
   width: 100%;
 
@@ -37,7 +37,7 @@ $header-height: 60px;
   }
 
   h1 {
-    color: $inverse-color;
+    color: $header-text-color;
     display: inline-block;
     font-weight: normal;
     @include font-size(20);
@@ -51,7 +51,7 @@ $header-height: 60px;
     display: block;
 
     + .section-title {
-      color: $white;
+      color: $header-text-color;
       display: block;
       @include font-size(20);
       padding: 0;
@@ -71,7 +71,7 @@ $header-height: 60px;
   }
 
   .separator {
-    color: $inverse-color;
+    color: $header-text-color;
     @include font-size(22);
     padding: 0 4px 0 5px;
     position: relative;
@@ -79,7 +79,7 @@ $header-height: 60px;
   }
 
   .tooltip-description {
-    color: $inverse-color;
+    color: $header-text-color;
   }
 
   .header-search {
@@ -101,7 +101,7 @@ $header-height: 60px;
     padding-right: 20px;
 
     .title {
-      color: $inverse-color;
+      color: $header-text-color;
 
       > *:first-child {
         margin-left: 1.7rem;
@@ -125,7 +125,7 @@ $header-height: 60px;
       }
 
       .audible {
-        color: $inverse-color;
+        color: $header-icon-color;
       }
 
       &:focus,
@@ -133,31 +133,31 @@ $header-height: 60px;
       &:active:not([disabled]),
       &[aria-expanded="true"] {
         > .icon {
-          fill: $inverse-color;
+          fill: $header-text-color;
         }
 
         > span {
-          color: $inverse-color;
+          color: $header-text-color;
         }
 
         opacity: 1;
       }
 
       &:focus:not(.hide-focus) {
-        border: 1px solid $inverse-color;
+        border: 1px solid $header-text-color;
         box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
 
         .icon {
-          fill: $inverse-color;
+          fill: $header-text-color;
         }
       }
 
       &.is-selected {
         &:focus:not(.hide-focus) {
-          color: $inverse-color;
+          color: $header-text-color;
 
           .icon {
-            fill: $inverse-color;
+            fill: $header-text-color;
           }
         }
       }
@@ -188,25 +188,25 @@ $header-height: 60px;
     width: 32px;
 
     &.icon > span {
-      background-color: $inverse-color;
+      background-color: $header-text-color;
     }
   }
 
   .btn-icon:hover {
     span:not(.icon) {
-      color: $inverse-color;
+      color: $header-text-color;
     }
   }
 
   .btn-menu {
-    color: $inverse-color;
+    color: $header-text-color;
 
     .icon {
       fill: $header-icon-color;
     }
 
     span {
-      color: $inverse-color;
+      color: $header-text-color;
     }
   }
 
@@ -219,19 +219,19 @@ $header-height: 60px;
     }
 
     .hyperlink {
-      color: $inverse-color;
+      color: $header-text-color;
 
       &:active,
       &:hover {
-        border-bottom: 1px solid $inverse-color;
+        border-bottom: 1px solid $header-text-color;
       }
     }
 
     li {
-      color: $inverse-color;
+      color: $header-text-color;
 
       &:after {
-        color: $inverse-color;
+        color: $header-text-color;
       }
     }
 

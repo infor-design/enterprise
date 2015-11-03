@@ -6,14 +6,15 @@
 // Form Background Color
 $body-bg-color:  $graphite01;
 $header-bg-color: $slate07;
-$header-icon-color: #ffffff;
+$header-icon-color: $white;
+$header-text-color: $white;
 $header-disabled-color: $slate05;
 $panel-bg-color: $white;
 $panel-border-color: $graphite02;
 
 // Base Colors
 $primary-color: $azure06;
-$inverse-color: #ffffff;
+$inverse-color: $white;
 
 //The hyperlink Style
 $hyperlink-color: $primary-color;
@@ -371,6 +372,9 @@ $image-border-color: $graphite02;
 //Toast
 $toast-bg-color: $white;
 $toast-shadow: 0 0 5px rgba(0, 0, 0, .2);
+
+//Builder Pattern
+$builder-header-bg-color: $slate06;
 
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;

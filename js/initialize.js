@@ -134,6 +134,11 @@
           });
         }
 
+        // Personalization
+        if ($.fn.personalize) {
+          matchedItems('body').personalize();
+        }
+
         //Array of plugin names and selectors (optional) for no-configuration initializations
         var simplePluginMappings = [
           //Tabs
