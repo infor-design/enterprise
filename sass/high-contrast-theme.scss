@@ -10,12 +10,12 @@
 //================================================== //
 
 // Form Background Color
-$body-bg-color:  $slate02;
+$body-bg-color:  $graphite02;
 $header-bg-color: $slate09;
 $header-icon-color: #eff0f4;
-$header-disabled-color: $slate05;
-$panel-bg-color: $slate01;
-$panel-border-color: $slate03;
+$header-disabled-color: $graphite05;
+$panel-bg-color: $graphite01;
+$panel-border-color: $graphite03;
 
 // Base Colors
 $primary-color: $azure07;
@@ -25,11 +25,11 @@ $inverse-color: #ffffff;
 $hyperlink-color: $azure09;
 
 // Text Color
-$font-color-extrahighcontrast: $slate10;
-$font-color-highcontrast: $slate10;
-$font-color: $slate08;
-$font-color-lowcontrast: $slate06;
-$label-color: $slate08;
+$font-color-extrahighcontrast: $graphite10;
+$font-color-highcontrast: $graphite10;
+$font-color: $graphite08;
+$font-color-lowcontrast: $graphite06;
+$label-color: $graphite08;
 $disabled-color: rgba(86, 86, 86, .6);
 
 // Alert Colors
@@ -39,19 +39,19 @@ $alert-yellow: #c65211;
 $alert-red: #ee0000;
 
 // Rules
-$hr-top-color: $slate03;
+$hr-top-color: $graphite03;
 $hr-bottom-color: transparent;
 
 // Popovers
 $popover-bg-color: $white;
-$popover-border-color: $slate01;
+$popover-border-color: $graphite01;
 $popover-shadow-color: #b8bac3;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
-$popover-separator-color: $slate01;
+$popover-separator-color: $graphite01;
 
 // Tooltips
-$tooltip-bg-color: $slate05;
+$tooltip-bg-color: $graphite05;
 $tooltip-border-color: transparent;
 $tooltip-color: $font-color-highcontrast;
 $tooltip-error-bg-color: $alert-red;
@@ -63,7 +63,7 @@ $popupmenu-color-filtered-text: $font-color;
 $popupmenu-bg-color: $white;
 $popupmenu-border-color: #e5e5e5;
 $popupmenu-checked-color: $font-color;
-$popupmenu-border-color: $slate03;
+$popupmenu-border-color: $graphite03;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
@@ -73,32 +73,32 @@ $primary-btn-active-bg-color: $azure08;
 
 // Secondary/Normal Buttons
 $btn-color: $inverse-color;
-$btn-bg-color: $slate06;
-$btn-hover-bg-color: $slate05;
+$btn-bg-color: $graphite06;
+$btn-hover-bg-color: $graphite05;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
-$btn-active-bg-color: $slate05;
+$btn-active-bg-color: $graphite05;
 $btn-disabled-color: $inverse-color;
-$btn-disabled-bg-color: $slate04;
+$btn-disabled-bg-color: $graphite04;
 
 // Tertiary Buttons
-$tertiary-btn-color: $slate07;
+$tertiary-btn-color: $graphite07;
 $tertiary-btn-hover-color: $primary-color;
 $tertiary-btn-active-color: $primary-color;
-$tertiary-btn-disabled-color: $slate04;
+$tertiary-btn-disabled-color: $graphite04;
 
 // Input Fields
 $input-border-color: $graphite03;
 $input-color: $graphite10;
 $input-bg-color: $inverse-color;
 $input-disabled-bg-color: transparent;
-$input-disabled-border-color: $slate03;
-$input-disabled-color: $slate04;
+$input-disabled-border-color: $graphite03;
+$input-disabled-color: $graphite04;
 $input-focus-border-color: $primary-color;
-$input-placeholder-color: $slate03;
-$input-readonly-border-color: $slate03;
-$input-readonly-bg-color: $slate03;
-$input-readonly-color: $slate07;
+$input-placeholder-color: $graphite03;
+$input-readonly-border-color: $graphite03;
+$input-readonly-bg-color: $graphite03;
+$input-readonly-color: $graphite07;
 
 //States
 $error-color: $alert-red;
@@ -108,17 +108,17 @@ $confirm-icon-fill: $alert-green;
 $info-icon-fill: $alert-info;
 
 // Autocomplete
-$autocomplete-light-text: $slate05;
-$trigger-icon-fill-color: $slate05;
+$autocomplete-light-text: $graphite05;
+$trigger-icon-fill-color: $graphite05;
 
 //List View
 $listview-bg-color: $inverse-color;
-$listview-border-color: $slate03;
+$listview-border-color: $graphite03;
 $listview-color: $font-color-extrahighcontrast;
 $listview-disabled-color: $disabled-color;
 $listview-selected-text-color: $font-color-extrahighcontrast;
 $listview-selection-toolbar-color: $inverse-color;
-$listview-header-bg-color: $slate04;
+$listview-header-bg-color: $graphite04;
 $listview-header-color: $font-color-extrahighcontrast;
 
 $listview-toolbar-button-text-color: $graphite03;
@@ -133,41 +133,41 @@ $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
 $dropdown-search-color: $autocomplete-light-text;
 $dropdown-menu-border-color: $primary-color;
-$dropdown-menu-separator-color: $slate02;
-$dropdown-group-label-color: $slate05;
+$dropdown-menu-separator-color: $graphite02;
+$dropdown-group-label-color: $graphite05;
 
 // Date Picker
-$datepicker-alt-month-color: $slate04;
+$datepicker-alt-month-color: $graphite04;
 $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
-$datepicker-today-color: $slate10;
-$datepicker-hover-bg-color: $slate02;
+$datepicker-today-color: $graphite10;
+$datepicker-hover-bg-color: $graphite02;
 
 // Color Picker
-$colorpicker-initial-bg-color: $slate06;
+$colorpicker-initial-bg-color: $graphite06;
 
 //Spinbox
 $spinbox-bg-color: $graphite03;
 $spinbox-button-color: #ffffff;
 
 //Mast Head
-$masthead-bg-color: $slate09;
-$masthead-border-color: $slate06;
+$masthead-bg-color: $graphite09;
+$masthead-border-color: $graphite06;
 
 // Icons
 $icon-color: $font-color;
 
 //Field Set
-$fieldset-border-top-color: $slate03;
+$fieldset-border-top-color: $graphite03;
 $fieldset-border-bottom-color: transparent;
 
 // Expandable Area
-$expandable-area-border-color: $slate03;
+$expandable-area-border-color: $graphite03;
 
 // Cardlist
 $cardlist-bg-color: $inverse-color;
-$cardlist-border-color: $slate03;
-$cardlist-header-bg-color: $slate06;
+$cardlist-border-color: $graphite03;
+$cardlist-header-bg-color: $graphite06;
 $cardlist-header-color: $white;
 $cardlist-actions-color: $white;
 
@@ -197,8 +197,8 @@ $editor-border-color: $input-border-color;
 $editor-focus-border-color: $input-focus-border-color;
 $editor-color: $input-color;
 $editor-toolbar-bg-color: $white;
-$editor-btn-color: $slate04;  //Was #999999  in design
-$editor-middle-border-color: $slate03;
+$editor-btn-color: $graphite04;  //Was #999999  in design
+$editor-middle-border-color: $graphite03;
 
 // Radio Buttons
 $radio-border-color: $graphite06;
@@ -213,7 +213,7 @@ $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 $pager-selected-color: $primary-color;
 $pager-focus-border-color: $input-focus-border-color;
 $pager-hover-color: $primary-color;
-$pager-disabled-color: $slate04;
+$pager-disabled-color: $graphite04;
 
 // Slider
 $slider-bg-color: $graphite04;
@@ -221,15 +221,15 @@ $slider-active-bg-color: $primary-color;
 $slider-disabled-color: $graphite01;
 
 //Modal
-$modal-bg-color: $slate01;
+$modal-bg-color: $graphite01;
 $modal-shadow: 0 0 5px rgba(255, 255, 255, .2);
-$modal-btn-color: $slate08;
-$modal-color: $slate08;
-$modal-btn-border-color: $slate05;
-$modal-btn-hover-color: $slate09;
+$modal-btn-color: $graphite08;
+$modal-color: $graphite08;
+$modal-btn-border-color: $graphite05;
+$modal-btn-hover-color: $graphite09;
 $modal-btn-primary-color: $primary-color;
 $modal-btn-primary-hover-color: $azure09;
-$modal-btn-disabled-color: $slate04;
+$modal-btn-disabled-color: $graphite04;
 
 // Accordion
 $accordion-bg-color: $graphite01;
@@ -249,27 +249,27 @@ $accordion-focused-pane-bg-color: $azure01;
 $accordion-selected-bg-color: $primary-color;
 $accordion-selected-text-color: $white;
 
-$accordion-disabled-bg-color: $slate04;
-$accordion-disabled-border-color: $slate07;
-$accordion-disabled-text-color: $slate10;
-$accordion-disabled-pane-bg-color: $slate03;
-$accordion-disabled-pane-text-color: $slate10;
+$accordion-disabled-bg-color: $graphite04;
+$accordion-disabled-border-color: $graphite07;
+$accordion-disabled-text-color: $graphite10;
+$accordion-disabled-pane-bg-color: $graphite03;
+$accordion-disabled-pane-text-color: $graphite10;
 
 // Application Menu (extends Accoridon)
-$app-accordion-header-bg-color: $slate09;
-$app-accordion-border-color: $slate10;
-$app-accordion-pane-bg-color: $slate10;
+$app-accordion-header-bg-color: $graphite09;
+$app-accordion-border-color: $graphite10;
+$app-accordion-pane-bg-color: $graphite10;
 
-$app-accordion-header-text-color: $slate01;
+$app-accordion-header-text-color: $graphite01;
 $app-accordion-header-text-active-color: $white;
-$app-accordion-pane-text-color: $slate01;
+$app-accordion-pane-text-color: $graphite01;
 
-$app-accordion-icon-color: $slate01;
+$app-accordion-icon-color: $graphite01;
 $app-accordion-icon-hover-color: $white;
-$app-accordion-chevron-color: $slate02;
+$app-accordion-chevron-color: $graphite02;
 
 // Contextual Action Panel
-$contextual-panel-bg: $slate07;
+$contextual-panel-bg: $graphite07;
 $contextual-panel-color: $white;
 
 //BreadCrumb
@@ -278,32 +278,32 @@ $breadcrumb-disabled-color: $disabled-color;
 
 // Rating (Stars)
 $rating-bg-color: $amber06;
-$rating-border-color: $slate06;
+$rating-border-color: $graphite06;
 $rating-hover-color: $primary-color;
 
 // Tabs
 $tab-selected-color: $azure09;
-$tab-border-color: $slate04;
+$tab-border-color: $graphite04;
 $tab-hover-color: $font-color-extrahighcontrast;
 
 //Charts
-$chart-line-color: $slate03;
+$chart-line-color: $graphite03;
 $chart-font-color: $font-color-extrahighcontrast;
 
 // DataGrid
-$datagrid-border-color: $slate04;
+$datagrid-border-color: $graphite04;
 $datagrid-header-color: #ffffff;
-$datagrid-header-bg-color: $slate05;
-$datagrid-header-border-color: $slate04;
-$datagrid-header-hover-color: $slate08;
-$datagrid-header-active-color: $slate08;
+$datagrid-header-bg-color: $graphite05;
+$datagrid-header-border-color: $graphite04;
+$datagrid-header-hover-color: $graphite08;
+$datagrid-header-active-color: $graphite08;
 $datagrid-cell-bg-color: #ffffff;
-$datagrid-cell-readonly-bg-color: $slate03;
-$datagrid-cell-readonly-color: $slate08;
-$datagrid-cell-border-color: $slate04;
+$datagrid-cell-readonly-bg-color: $graphite03;
+$datagrid-cell-readonly-color: $graphite08;
+$datagrid-cell-border-color: $graphite04;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #eaf8fe;
-$datagrid-row-hover-color: $slate01;
+$datagrid-row-hover-color: $graphite01;
 
 // Search Results
 $sr-masthead-text-color: $font-color;
@@ -312,8 +312,8 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $primary-color;
-$tree-icon-color: $slate06;
-$tree-line-color: $slate04;
+$tree-icon-color: $graphite06;
+$tree-line-color: $graphite04;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
 $tree-disabled-opacity: .6;
@@ -326,20 +326,20 @@ $chart-progressbar-primary-fill: $primary-color;
 $chart-progressbar-dark-fill: $graphite08;
 
 //Timeline
-$timeline-indicator-color: $slate05;
+$timeline-indicator-color: $graphite05;
 $timeline-indicator-processing-color: $primary-color;
 $timeline-indicator-complete-color: $primary-color;
-$timeline-line-color: $slate05;
+$timeline-line-color: $graphite05;
 $timeline-header-color: $azure09;
 
 //Wizard
 $wizard-active-color: $primary-color;
 $wizard-default-bg: $body-bg-color;
-$wizard-bar-bg: $slate05;
+$wizard-bar-bg: $graphite05;
 $wizard-active-color: $primary-color;
 
 //Themable Variables in config.scss
-$hierarchy-line-color: $slate03;
+$hierarchy-line-color: $graphite03;
 
 // Searchfield Colors
 $searchfield-bg-color: $white;
@@ -352,14 +352,14 @@ $searchfield-card-border-color: $graphite02;
 $searchfield-card-icon-color: $graphite03;
 $searchfield-card-text-color: $font-color;
 
-$searchfield-header-bg-color: $slate08;
-$searchfield-header-border-color: $slate09;
+$searchfield-header-bg-color: $graphite08;
+$searchfield-header-border-color: $graphite09;
 $searchfield-header-text-color: $white;
-$searchfield-header-placeholder-text-color: $slate03;
+$searchfield-header-placeholder-text-color: $graphite03;
 $searchfield-header-icon-color: $header-icon-color;
 
 //Image Border Color
-$image-border-color: $slate03;
+$image-border-color: $graphite03;
 
 //Toast
 $toast-bg-color: $white;

@@ -238,6 +238,10 @@
   height: inherit;
   padding: 20px;
   width: inherit;
+
+  .label-text {
+    @include font-size(14);
+  }
 }
 
 .chart-vertical-bar {

@@ -17,6 +17,7 @@ define([
 
   //Load the Locales because Ajax doesnt work
   require('../../../js/cultures/en-US.js');
+  require('../../../js/cultures/ar-SA.js');
   require('../../../js/cultures/de-DE.js');
   require('../../../js/cultures/nb-NO.js');
   require('../../../js/cultures/no-NO.js');
@@ -61,6 +62,11 @@ define([
       expect(Locale.formatDate(new Date(2000, 10, 8), {date: 'medium'})).to.equal('Nov 8, 2000');
       expect(Locale.formatDate(new Date(2000, 10, 8), {date: 'long'})).to.equal('November 8, 2000');
       expect(Locale.formatDate(new Date(2000, 10, 8), {pattern: 'M/d/yyyy'})).to.equal('11/8/2000');
+
+      //Other Edge Cases
+      expect(Locale.formatDate('11/8/2000')).to.equal('11/8/2000');
+      expect(Locale.formatDate()).to.be.undefined;
+
     },
 
     //Format some random date type cases
@@ -86,6 +92,25 @@ define([
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'})).to.equal('01.12.2000 13:40');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {pattern: 'M.dd.yyyy HH:mm'})).to.equal('12.01.2000 13:05');
     },
+
+    //monthYear and yearMonth
+    'should format a year and month locale': function() {
+      Locale.set('en-US');    //year, month, day, hours, mins , secs
+      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), {date: 'month'})).to.equal('November 08');
+      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'year'})).to.equal('2000 November');
+      Locale.set('de-DE');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'month'})).to.equal('01 Dezember');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {date: 'year'})).to.equal('Dezember 2000');
+    },
+
+    //monthYear and yearMonth
+    'should be able to test RTL': function() {
+      Locale.set('en-US');    //year, month, day, hours, mins , secs
+      expect(Locale.isRTL()).to.equal(false);
+      Locale.set('ar-SA');
+      expect(Locale.isRTL()).to.equal(true);
+    },
+
 
     //Test Long Formatting
     'should format long': function() {
@@ -131,6 +156,7 @@ define([
     'should be able to parse dates': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('11/8/2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
+      expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(1900, 10, 8).getTime());
       expect(Locale.parseDate('10 / 15 / 2014').getTime()).to.equal(new Date(2014, 9, 15).getTime());
       //expect(Locale.parseDate('11/8/2001 10:10 PM', Locale.calendar().dateFormat.datetime).getTime()).to.equal(new Date(2001, 10, 8, 10, 10).getTime());
       //Ensure why this works in the browser and not in node
@@ -138,20 +164,71 @@ define([
 
       Locale.set('de-DE');    //year, month, day
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
-      //expect(Locale.parseDate('11.10.2001 10:10', Locale.calendar().dateFormat.datetime).getTime()).to.equal(new Date(2001, 10, 11, 10, 10).getTime());
+    },
+
+    'can format with no seperator': function() {
+      Locale.set('en-US');
+      expect(Locale.parseDate('20151028', 'yyyyMMdd').getTime()).to.equal(new Date(2015, 9, 28).getTime());
+      expect(Locale.parseDate('28/10/2015', 'dd/MM/yyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
+      expect(Locale.parseDate('10/28/2015', 'M/d/yyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
+      expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
+      expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
+      expect(Locale.parseDate('10/28/99', 'MM/dd/yy').getTime()).to.equal(new Date(2099, 9, 28).getTime());
+
+      //We can parse either 4 or 2 digit month day
+      expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
+      expect(Locale.parseDate('222015', 'dMyyyy').getTime()).to.equal(new Date(2015, 1, 2).getTime());
+    },
+
+    'parse date time': function() {
+      Locale.set('en-US');    //year, month, day
+      expect(Locale.parseDate('10/28/2015 8:12:10', 'M/d/yyyy h:mm:ss').getTime()).to.equal(new Date(2015, 9, 28, 8, 12, 10).getTime());
+      expect(Locale.parseDate('10/28/2015 8:12:10 PM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal(new Date(2015, 9, 28, 20, 12, 10).getTime());
+      expect(Locale.parseDate('10/28/2015 8:12:10 AM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal(new Date(2015, 9, 28, 8, 12, 10).getTime());
+      expect(Locale.parseDate('10/28/2015', 'M/d/yyyy h:mm:ss')).to.be.undefined;
+      expect(Locale.parseDate('10/28/2015 20:12:10', 'M/d/yyyy HH:mm:ss').getTime()).to.equal(new Date(2015, 9, 28, 20, 12, 10).getTime());
+      expect(Locale.parseDate('10/28/2015 30:12:10', 'M/d/yyyy HH:mm:ss').getTime()).to.equal.NaN;
+      expect(Locale.parseDate('10/28/2015 30:30:10 AM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal.NaN;
+      expect(Locale.parseDate(undefined)).to.equal.undefined;
+
+    },
+
+    'should round minutes to 60 ': function() {
+       Locale.set('en-US');
+       expect(Locale.parseDate('10/28/2015 8:65:10', 'M/d/yyyy h:mm:ss').getTime()).to.equal(new Date(2015, 9, 28, 8, 0, 10).getTime());
+       expect(Locale.parseDate('10/28/2015 8:10:65', 'M/d/yyyy h:mm:ss').getTime()).to.equal(new Date(2015, 9, 28, 8, 10, 0).getTime());
+    },
+
+    'parse date should handle leap years': function() {
+      Locale.set('en-US');    //year, month, day
+      expect(Locale.parseDate('02/29/2016', 'M/d/yyyy').getTime()).to.equal(new Date(2016, 1, 29).getTime());
+      expect(Locale.parseDate('02/30/2016', 'M/d/yyyy')).to.be.undefined;
     },
 
     'should cleanly handle non dates': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('111/81/20001')).to.be.undefined;
+      expect(Locale.formatNumber(undefined, {date: 'timestamp'})).to.be.undefined;
+      expect(Locale.parseDate('13/28/2015', 'MM/d/yyyy')).to.be.undefined;
+      expect(Locale.parseDate('10/32/2015', 'MM/dd/yyyy')).to.be.undefined;
+
     },
 
     'be able to return time format': function(){
       Locale.set('en-US');
-      expect(Locale.calendar().timeFormat).to.equal('h:mm a');
+      expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40, 45), {date: 'timestamp'})).to.equal('1:40:45 PM');
 
       Locale.set('de-DE');
-      expect(Locale.calendar().timeFormat).to.equal('HH:mm');
+      expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40, 45), {date: 'timestamp'})).to.equal('13:40:45');
+
+    },
+
+    //monthYear and yearMonth
+    'should be format time stamp': function() {
+      Locale.set('en-US');    //year, month, day, hours, mins , secs
+      expect(Locale.isRTL()).to.equal(false);
+      Locale.set('ar-SA');
+      expect(Locale.isRTL()).to.equal(true);
     },
 
     'be work with either no-NO or nb-NO': function() {

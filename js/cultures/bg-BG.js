@@ -29,11 +29,15 @@
     calendars: [{
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'seperator': '.', //Infered
+      dateFormat: {'separator': '.', //Infered
+                   'timeSeparator': ':',
                    'short': 'd.MM.yyyy', //use four digit year
                    'medium': 'd.MM.y г.',
                    'long': 'd MMMM y г.',
                    'full': 'EEEEE, d MMMM y г.',
+                   'month': 'dd MMMM',
+                   'year': 'MMMM yyyy г.',
+                   'timestamp': 'h:mm:ss a',
                    'datetime': 'd.MM.yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {

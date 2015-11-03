@@ -28,11 +28,15 @@
     calendars: [{
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'seperator': '/', //Infered
+      dateFormat: {'separator': '/', //Infered
+                   'timeSeparator': ':',
                    'short': 'M/d/yyyy', //use four digit year
                    'medium': 'dd/MM/yyyy',
                    'long': 'd MMMM، yyyy',
                    'full': 'EEEE، d MMMM، yyyy',
+                   'month': 'dd MMMM',
+                   'year': 'MMMM yyyy',
+                   'timestamp': 'h:mm:ss a',
                    'datetime': 'M/d/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
@@ -50,7 +54,7 @@
       dayPeriods: ['ص', 'م']
     }, { name: 'islamic-umalqura',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'seperator': '/', //Infered
+      dateFormat: {'separator': '/', //Infered
                    'short': 'd/M/yyyy', //use four digit year
                    'medium': 'd MMM، yyyy',
                    'long': 'd MMM، yyyy G',

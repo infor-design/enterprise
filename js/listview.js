@@ -169,7 +169,7 @@
 
         });
 
-       this.element.initialize();
+       this.element.children().initialize();
        this.element.trigger('rendered', [dataset]);
       },
 

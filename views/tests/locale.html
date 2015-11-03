@@ -12,15 +12,15 @@
         var append = function (value) {
           output.append('<span>' + value + '</span><br>');
         };
-       Locale.set('en-US');
+        Locale.set('en-US');
 
-       setTimeout(function () {
-         Locale.currentLocale.data.messages['CustomValue'] = {id: 'CustomValue', value: 'Added Custom Value'};
+        setTimeout(function () {
+          // console.log(Locale.parseDate('10/28/2015 12:12:10', 'M/d/yyyy h:mm:ss'));
+          // console.log(Locale.parseDate('10/28/2015 8:12:10 PM', 'M/d/yyyy h:mm:ss a'));
+          // console.log(new Date(2015, 9, 28, 20, 12, 10));
+          console.log(Locale.parseDate('10/28/2015 30:30:10 AM', 'M/d/yyyy h:mm:ss a'));
 
-         append(Locale.translate('CollapseAppTray'));
-         append(Locale.translate('CustomValue'));
-        }, 1000)
-
+        }, 300);
       }
     </script>
 

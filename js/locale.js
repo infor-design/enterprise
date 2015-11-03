@@ -144,9 +144,6 @@
         pattern = cal.dateFormat[attribs.date];
       }
 
-      if (!pattern) { //missing translations
-        return undefined;
-      }
       var day = value.getDate(), month = value.getMonth(), year = value.getFullYear(),
         mins = value.getMinutes(), hours = value.getHours(), seconds = value.getSeconds();
 
@@ -169,7 +166,6 @@
       ret = ret.replace('HH', hours);
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', seconds);
-      ret = ret.replace(' a', ' '+ (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
 
       //months
       ret = ret.replace('MMMM', cal.months.wide[month]);  //full
@@ -179,6 +175,9 @@
         ret = ret.replace('M', month+1);                //number unpadded
       }
 
+      //PM
+      ret = ret.replace(' a', ' '+ (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+
       //Day of Week
       ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
       ret = ret.replace('nnnn','ngày');
@@ -187,6 +186,7 @@
       return ret.trim();
     },
 
+
     // Take a date string written in the current locale and parse it into a Date Object
     parseDate: function(dateString, dateFormat) {
       var thisLocaleCalendar = this.calendar();
@@ -194,6 +194,7 @@
       if (!dateString) {
         return undefined;
       }
+
       if (!dateFormat) {
         dateFormat = this.calendar().dateFormat.short;
       }
@@ -201,12 +202,42 @@
       var formatParts,
         dateStringParts,
         dateObj = {},
-        isDateTime = (dateFormat !== this.calendar().dateFormat.short);
+        isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1);
 
       if (isDateTime) {
-        //replace [space & colon] with "/"
-        dateFormat = dateFormat.replace(/[\s:]/g,'/').replace(/[\s.]/g,'/');
-        dateString = dateString.replace(/[\s:]/g,'/');
+        //replace [space & colon & dot] with "/"
+        dateFormat = dateFormat.replace(/[\s:.-]/g,'/');
+        dateString = dateString.replace(/[\s:.]/g,'/');
+      }
+
+      if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
+        dateString = dateString.substr(0, dateString.length - 4) + '/' + dateString.substr(dateString.length - 4, dateString.length);
+        dateString = dateString.substr(0, dateString.indexOf('/')/2) + '/' + dateString.substr(dateString.indexOf('/')/2);
+      }
+
+      if (dateFormat === 'Mdyyyy') {
+        dateFormat = 'M/d/yyyy';
+      }
+
+      if (dateFormat === 'dMyyyy') {
+        dateFormat = 'd/M/yyyy';
+      }
+
+      if (dateFormat.indexOf('.') === -1  && dateFormat.indexOf('/')  === -1 && dateFormat.indexOf('-')  === -1) {
+        var lastChar = dateFormat[0],
+          newFormat = '', newDateString = '';
+
+        for (var i = 0; i < dateFormat.length; i++) {
+          newFormat +=  (dateFormat[i] !== lastChar ? '/' + dateFormat[i]  : dateFormat[i]);
+          newDateString += (dateFormat[i] !== lastChar ? '/' + dateString[i]  : dateString[i]);
+
+          if (i > 1) {
+            lastChar = dateFormat[i];
+          }
+        }
+
+        dateString = newDateString;
+        dateFormat = newFormat;
       }
 
       formatParts = dateFormat.split('/');
@@ -257,21 +288,13 @@
             dateObj.month = value-1;
             break;
           case 'yy':
-            if ((numberValue < 0 || numberValue > 99) || (numberValue < 10 && value.substr(0,1) !== '0')) {
-              return;
-            }
             dateObj.year = parseInt('20'+value, 10);
             break;
           case 'yyyy':
-            var lastTwo = value.substr(2,4),
-              lastTwoNumber = parseInt(lastTwo);
-            if ((lastTwoNumber < 0 || lastTwoNumber > 99) || (lastTwoNumber < 10 && lastTwo.substr(0,1) !== '0')) {
-              return;
-            }
             dateObj.year = value;
             break;
           case 'h':
-             if (numberValue < 0 || numberValue > 12) {
+            if (numberValue < 0 || numberValue > 12) {
               return;
             }
             dateObj.h = value;
@@ -283,6 +306,14 @@
             dateObj.h = value;
             break;
 
+          case 'ss':
+            if (numberValue < 0 || numberValue > 60) {
+              dateObj.ss = 0;
+              break;
+            }
+            dateObj.ss = value;
+            break;
+
           case 'mm':
             if (numberValue < 0 || numberValue > 60) {
               dateObj.mm = 0;
@@ -290,24 +321,26 @@
             }
             dateObj.mm = value;
             break;
+
           case 'a':
-            if(($.inArray(value.toLowerCase(), thisLocaleCalendar.dayPeriods) === -1) &&
-              ($.inArray(value.toUpperCase(), thisLocaleCalendar.dayPeriods) === -1)) {
-              return;
-            }
             if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[0]) ||
              (value.toUpperCase() === thisLocaleCalendar.dayPeriods[0])) {
               dateObj.a = 'AM';
             }
+
             if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[1]) ||
              (value.toUpperCase() === thisLocaleCalendar.dayPeriods[1])) {
               dateObj.a = 'PM';
+
+              if (dateObj.h) {
+                dateObj.h = parseInt(dateObj.h) + 12;
+              }
             }
             break;
         }
       });
 
-      dateObj.return = new Date('error');
+      dateObj.return = undefined;
       dateObj.leapYear = ((dateObj.year % 4 === 0) && (dateObj.year % 100 !== 0)) || (dateObj.year % 400 === 0);
 
       if ((isDateTime && !dateObj.h && !dateObj.mm)) {
@@ -318,16 +351,12 @@
         return undefined;
       }
 
-      if ((dateObj.leapYear && (dateObj.month === 1 && dateObj.day > 29)) ||
-        (!dateObj.leapYear && (dateObj.month === 1 && dateObj.day > 28))) {
-        return undefined;
-      }
-
       if (isDateTime) {
         if (dateObj.a) {
-          dateObj.return = new Date(dateObj.year +'/'+ (dateObj.month + 1) +'/'+ dateObj.day +' '+ dateObj.h +':'+ dateObj.mm +' '+ dateObj.a);
-        } else {
           dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
+        }
+        if (dateObj.ss !== undefined) {
+          dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss);
         }
       } else {
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
@@ -448,6 +477,10 @@
       z = z || '0';
       n = n + '';
       return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    },
+
+    isRTL: function() {
+      return this.currentLocale.data.direction === 'right-to-left';
     }
   };
 

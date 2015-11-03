@@ -180,7 +180,8 @@
       margin: 8px 5px 0 0;
 
       svg {
-        height: 32px;
+        height: 28px;
+        width: 28px;
         left: 0;
         top: 0;
       }
@@ -188,11 +189,12 @@
 
     &.next {
       left: auto;
-      margin: 11px 0 0 5px;
+      margin: 8px 0 0 5px;
       right: 20px;
 
       svg {
-        height: 32px;
+        height: 28px;
+        width: 28px;
         left: 0;
         top: 0;
       }

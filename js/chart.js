@@ -586,15 +586,12 @@ window.Chart = function(container) {
     });
 
     textLabels.append('tspan').text(function(d) {
-      return d3.round(100*(d.value/total)) + '%';
+      var toPercent = d3.format(charts.format ? charts.format : '0.0%');
+      return toPercent(d.value/total);
     })
-    .attr('dx', '5')  //-50
-    //.attr('dy', '-20px')
+    .attr('dx', '5')
     .style('font-weight', 'bold')
     .style('font-size', '14px');
-    //.style('fill', function (d, i) {
-    //  return charts.chartColor(i, 'pie', d);
-    //});
 
     if (isDonut) {
       arcs.append('text')
@@ -616,8 +613,8 @@ window.Chart = function(container) {
         return {name: d.name, percent: d.percent, elem: d.elem};
       });
 
-    var alpha = 0.5,
-    spacing = 50;
+    var alpha = 0.9,
+    spacing = 25;
 
     function relax() {
       var again = false;
@@ -653,18 +650,20 @@ window.Chart = function(container) {
             var sign = deltaY > 0 ? 1 : -1,
               adjust = sign * alpha;
 
-            da.attr('y',+y1 + adjust);
-            db.attr('y',+y2 - adjust);
+            da.attr('y', +y1 + adjust);
+            db.attr('y', +y2 - adjust);
         });
       });
 
       // Adjust our line leaders
       if (again) {
+
         var labelElements = textLabels[0];
         textLines.attr('y2',function(d,i) {
           var labelForLine = d3.select(labelElements[i]);
           return labelForLine.attr('y');
         });
+
         relax();
       }
     }
@@ -1292,6 +1291,9 @@ window.Chart = function(container) {
   };
 
   this.initChartType = function (options) {
+    if (options.format) {
+      this.format = options.format;
+    }
     if (options.type === 'pie') {
       this.Pie(options.dataset);
     }
