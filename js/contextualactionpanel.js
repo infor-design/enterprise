@@ -174,9 +174,9 @@
           self.toolbar.children('.buttonset').children('*:not(.searchfield)')
             .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
 
-
           self.panel.detach().insertAfter(self.element);
           self.panel.find('.toolbar').data('toolbar').destroy();
+
           if (self.header){
             self.header.remove();
           }
@@ -189,6 +189,9 @@
 
           self.panel.remove();
           self.element.removeAttr('data-modal');
+
+          // Trigger an afterclose event on the Contextual Action Panel's trigger element (different from the panel, which is already removed).
+          self.element.trigger('afterclose');
         }
 
         if (!modal.isOpen()) {
@@ -198,6 +201,7 @@
         this.panel.on('afterclose.contextualactionpanel', function() {
           teardownCallback();
         });
+
         modal.close();
       },
 
