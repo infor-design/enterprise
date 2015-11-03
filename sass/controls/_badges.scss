@@ -18,7 +18,7 @@
   vertical-align: middle;
 
   &.error {
-    background-color: $alert-red;
+    background-color: $error-color;
     color: #ffffff;
   }
 
@@ -33,7 +33,7 @@
   }
 
   &.info {
-    background-color: $azure07;
+    background-color: $info-icon-fill;
     color: #ffffff;
   }
 
@@ -84,7 +84,7 @@
   }
 
   &.info {
-    background-color: $azure07;
+    background-color: $info-icon-fill;
   }
 
   &.pending {

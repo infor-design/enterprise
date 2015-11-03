@@ -1,12 +1,29 @@
 
 <div class="row">
-  <div class="twelve columns">
+  <div class="full-width column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Chart Title</h2>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
 
-    <div id="datagrid">
+        <div id="datagrid">
+        </div>
+      </div>
     </div>
-
   </div>
 </div>
+
 
 <script>
   $('body').one('initialized', function () {
@@ -39,7 +56,8 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
-        rowHeight: 'short'
+        rowHeight: 'short',
+        isList: true
       }).data('datagrid');
 
       //TODO Test: You can focus on hidden columns

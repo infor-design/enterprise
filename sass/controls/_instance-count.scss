@@ -1,0 +1,43 @@
+// Instance Count
+//================================================== //
+
+
+.instance-count {
+  display: inline-block;
+  margin: 20px 10px;
+  vertical-align: top;
+  width: 150px;
+
+  .count {
+    @include font-size(22);
+    border-radius: 50%;
+    color: $white;
+    display: inline;
+    float: left;
+    font-weight: bold;
+    height: 38px;
+    padding-top: 9px;
+    text-align: center;
+    vertical-align: middle;
+    width: 38px;
+  }
+
+  // No Color Class.
+  .count[class=count] {
+    background-color: $graphite04;
+  }
+
+  .title {
+    @include font-size(14);
+    @include antialiased();
+    color: $font-color;
+    display: inline-block;
+    float: left;
+    font-size: 1.4rem;
+    line-height: 20px;
+    max-width: 50px;
+    padding-left: 11px;
+    text-align: left;
+  }
+
+}

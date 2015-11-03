@@ -239,6 +239,10 @@
       color: $app-accordion-header-text-color;
     }
 
+    .audible {
+      color: $app-accordion-chevron-color;
+    }
+
     &:not(.is-focused) {
       > [class^="btn"] {
         .icon:not(.chevron) {

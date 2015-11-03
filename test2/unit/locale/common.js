@@ -111,7 +111,6 @@ define([
       expect(Locale.isRTL()).to.equal(true);
     },
 
-
     //Test Long Formatting
     'should format long': function() {
       Locale.set('en-US');    //year, month, day, hours, mins , secs
@@ -166,7 +165,7 @@ define([
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
     },
 
-    'can format with no seperator': function() {
+    'can format with no separator': function() {
       Locale.set('en-US');
       expect(Locale.parseDate('20151028', 'yyyyMMdd').getTime()).to.equal(new Date(2015, 9, 28).getTime());
       expect(Locale.parseDate('28/10/2015', 'dd/MM/yyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
@@ -220,7 +219,6 @@ define([
 
       Locale.set('de-DE');
       expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40, 45), {date: 'timestamp'})).to.equal('13:40:45');
-
     },
 
     //monthYear and yearMonth

@@ -39,10 +39,10 @@ button {
   > .icon {
     fill: inherit;
     position: static;
-    width: 18px;
+    width: 22px;
 
     + span:not(.audible) {
-      padding-left: 5px;
+      padding-left: 6px;
     }
   }
 

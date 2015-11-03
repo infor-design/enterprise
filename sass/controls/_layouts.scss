@@ -17,6 +17,10 @@
   text-align: right;
 }
 
+.l-vertical-center {
+  @include vertical-align();
+}
+
 // Single Column Layout
 .header.is-sticky + .single-column {
   margin-top: 100px;
@@ -334,12 +338,12 @@ body.no-scroll {
 
   &.has-breadcrumb,
   &.has-tabs {
-    height: 104px;
+    height: 94px;
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 104px);
-      margin-top: 104px;
+      height: calc(100% - 94px);
+      margin-top: 94px;
     }
   }
 

@@ -18,6 +18,10 @@ $gutter-neg-size: -20px;
   &:last-child {
     margin-bottom: 20px;
   }
+
+  &.top-padding {
+    padding-top: 20px;
+  }
 }
 
 .row::after {

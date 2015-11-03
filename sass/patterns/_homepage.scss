@@ -40,6 +40,12 @@
         font-weight: 100;
         margin: 0;
         text-rendering: optimizeLegibility !important;
+        padding-top: 8px;
+      }
+
+      //Prevent FOUC
+      .searchfield {
+        border: 1px solid transparent;
       }
 
       .searchfield-wrapper {
@@ -221,6 +227,17 @@
   width: 1500px; //1340 (quad: 380 + triple)
 }
 
+.card.half-height,
+.widget.half-width {
+  height: 270px;
+  min-height: 270px;
+
+  .card-content,
+  .widget-content {
+    height: 216px;
+    min-height: 216px;
+  }
+}
 
 // Centering
 .widget-content.l-center,

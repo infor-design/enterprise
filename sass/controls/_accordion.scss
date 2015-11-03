@@ -304,6 +304,7 @@
         &.active {
           @include css3(transform, rotateX(180deg));
         }
+
       }
     }
 

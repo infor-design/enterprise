@@ -143,6 +143,7 @@ label.side,
   color: $cardlist-header-color;
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2.2rem);
+  margin-top: 2px;
 }
 
 .list-title {

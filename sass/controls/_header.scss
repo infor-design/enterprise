@@ -280,6 +280,7 @@ $header-height: 60px;
 
   .tab-container:not(.vertical) {
     padding: 1px 20px 0;
+    margin-top: -10px;
 
     &.alternate {
       .tab {
@@ -294,6 +295,16 @@ $header-height: 60px;
     .tab {
       font-weight: bold;
       padding: 6px 6px 7px;
+
+      &.dismissible svg {
+        fill: $white;
+        opacity: .6;
+
+        &:hover {
+          fill: $white !important;
+          opacity: 1;
+        }
+      }
 
       &:before {
         background-color: rgba($header-tab-normal-color, 0);
@@ -333,6 +344,7 @@ $header-height: 60px;
 
       a {
         color: $header-tab-normal-color;
+        line-height: 12px;
       }
     }
   }
@@ -414,7 +426,7 @@ $header-height: 60px;
 
     .animated-bar {
       background-color: $header-tab-hover-color;
-      margin-top: -2px;
+      margin-top: -3px;
     }
 
     .tab-focus-indicator.is-visible {
