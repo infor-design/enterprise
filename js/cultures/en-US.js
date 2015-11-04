@@ -194,6 +194,7 @@
       'MultiselectWith': {id: 'MultiselectWith', value: '. Multiselect with ', comment: 'the minutes portion of a time'},
       'NewDocument': {id: 'NewDocument', value: 'New Document', comment: 'New Document tooltip'},
       'Next': {id: 'Next', value: 'Next', comment: 'Next in icons tooltip'},
+      'NextPage': {id: 'NextPage', value: 'Next Page', comment: 'Next on Pager'},
       'NextMonth': {id: 'NextMonth', value: 'Next Month', comment: 'the label for the button that moves calendar to next/prev'},
       'NoResults': {id: 'NoResults', value: 'No Results', comment: 'Search Results Text'},
       'Notes': {id: 'Notes', value: 'Notes', comment: 'Notes icon tooltip'},

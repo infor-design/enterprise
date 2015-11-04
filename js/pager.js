@@ -58,7 +58,7 @@
         this.pagerBar = this.element.prev('.pager-toolbar');
 
         if (this.pagerBar.length === 0) {
-          this.pagerBar = $('<ul class="pager-toolbar"> <li class="pager-prev"> <a href="#" rel="prev"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-previous-page"></use></svg> <span class="audible">Previous</span> </a> </li> <li class="pager-next"> <a href="#" rel="next"> <span class="audible">Next</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-next-page"></use></svg> </a> </li> </ul>');
+          this.pagerBar = $('<ul class="pager-toolbar"> <li class="pager-prev"> <a href="#" rel="prev" title="PreviousPage"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-previous-page"></use></svg> <span class="audible">Previous</span> </a> </li> <li class="pager-next"> <a href="#" rel="next" title="NextPage"> <span class="audible">Next</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-next-page"></use></svg> </a> </li> </ul>');
 
           if (this.isTable && this.settings.type === 'list') {
             this.settings.type = 'table';
@@ -66,8 +66,8 @@
 
           if (this.settings.type === 'table') {
             //Add More Buttons
-            this.pagerBar.prepend('<li class="pager-first"> <a href="#" rel="prev"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-first-page"></use></svg> <span class="audible">First</span> </a> </li>');
-            this.pagerBar.append('<li class="pager-last"> <a href="#" rel="prev"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-last-page"></use></svg> <span class="audible">Last</span> </a> </li>');
+            this.pagerBar.prepend('<li class="pager-first"> <a href="#" title="FirstPage"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-first-page"></use></svg> <span class="audible">First</span> </a> </li>');
+            this.pagerBar.append('<li class="pager-last"> <a href="#" title="LastPage"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-last-page"></use></svg> <span class="audible">Last</span> </a> </li>');
           }
 
           if (this.isTable) {
@@ -79,6 +79,8 @@
               this.element.before(this.pagerBar);
             }
           }
+
+          this.pagerBar.find('a').tooltip();
         }
       },
 
