@@ -1350,11 +1350,7 @@
       destroy: function () {
         $('html').off('mouseup.editor');
         this.destroyToolbar();
-        $.each(this.modals, function(i, modal) {
-          if (modal.data('modal')) {
-            modal.destroy();
-          }
-        });
+        $('.editor-source, #editor-modal-url, #editor-modal-image').remove();
         $.removeData(this.element[0], pluginName);
       }
     };
