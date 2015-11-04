@@ -1,0 +1,211 @@
+<body class="no-scroll">
+<style type="text/css">
+  .pane {
+    background-color: #ffffff;
+  }
+
+  .pane .content {
+      background: repeating-linear-gradient(45deg, #ffffff, #ffffff 10px, #fafafa 10px, #fafafa 20px);
+      height: 500px;
+      width: 100%;
+  }
+  .content > p {
+      font-size: 5em;
+      text-align: center;
+  }
+
+  .pane.top-left {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    top: 0;
+    left: 0;
+    margin: 20px 10px 10px 20px;
+  }
+
+  .pane.top-right {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    top: 0;
+    right: 0;
+    margin: 20px 20px 10px 10px;
+  }
+
+  .pane.bottom-left {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    bottom: 0;
+    left: 0;
+    margin: 10px 10px 20px 20px;
+  }
+
+  .pane.bottom-right {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    bottom: 0;
+    right: 0;
+    margin: 10px 20px 20px 10px; /* top, right, bottom, left */
+  }
+
+  .pane.left {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(100% - 40px);
+    width: calc(50% - 30px);
+    margin: 20px 10px 20px 20px;
+    top: 0;
+    left: 0;
+  }
+
+  .pane.right {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(100% - 40px);
+    width: calc(50% - 30px);
+    margin: 20px 20px 20px 10px;
+    top: 0;
+    right: 0;
+  }
+
+  .pane.top {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(50% - 30px);
+    width: calc(100% - 40px);
+    margin: 20px 20px 10px 20px;
+    top: 0;
+  }
+
+  .pane.bottom {
+    display: inline-block;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    height: calc(50% - 30px);
+    width: calc(100% - 40px);
+    margin: 10px 20px 20px 20px;
+    bottom: 0;
+  }
+
+  @media only screen and (min-width: 0px) and (max-width: 768px),
+         only screen and (min-height: 0px) and (max-height: 600px) {
+    .pane.top,
+    .pane.bottom,
+    .pane.left,
+    .pane.right,
+    .pane.top-left,
+    .pane.top-right,
+    .pane.bottom-left,
+    .pane.bottom-right {
+      width: calc(100% - 40px);
+      margin: 0 0 20px 20px;
+      position: relative;
+      height: auto; }
+
+    .pane:first-child {
+      margin-top: 20px; } }
+</style>
+{{> controls/svg}}
+{{> includes/masthead}}
+<header class="header is-sticky has-breadcrumb">
+    <div class="toolbar">
+        <div class="title">
+            <h1>Landmark Page Pane Patterns</h1>
+        </div>
+
+        <div class="buttonset">
+            <button class="btn-icon header-search" type="button">
+                <span class="audible">Search</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-search"></use>
+                </svg>
+            </button>
+        </div>
+
+        {{> includes/header-actionbutton}}
+    </div>
+
+    <div class="tab-container">
+        <ul class="tab-list">
+            <li class="tab"><a href="#header-tab1">Left/Right</a></li>
+            <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
+            <li class="tab"><a href="#header-tab3">Left Column</a></li>
+            <li class="tab"><a href="#header-tab4">Right Column</a></li>
+            <li class="tab"><a href="#header-tab5">Top Row</a></li>
+            <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
+            <li class="tab"><a href="#header-tab7">4 Panes</a></li>
+        </ul>
+    </div>
+</header>
+
+<div id="maincontent" class="page-container scrollable" role="main">
+    <div id="header-tab1" class="tab-panel">
+        <div class="page-container scrollable">
+            <section class="pane left card"><div class="content"><p>one</p></div></section>
+            <section class="pane right card"><div class="content"><p>two</p></div></section>
+        </div>
+    </div>
+    <div id="header-tab2">
+        <div class="page-container scrollable">
+            <section class="pane top card"><div class="content"><p>one</p></div></section>
+            <section class="pane bottom card"><div class="content"><p>two</p></div></section>
+        </div>
+    </div>
+    <div id="header-tab3">
+        <div class="page-container scrollable">
+            <section class="pane left card"><div class="content"><p>one</p></div></section>
+            <section class="pane top-right card"><div class="content"><p>two</p></div></section> <!--position absolute-->
+            <section class="pane bottom-right card"><div class="content"><p>three</p></div></section>
+        </div>
+    </div>
+    <div id="header-tab4">
+        <div class="page-container scrollable">
+            <section class="pane right card"><div class="content"><p>one</p></div></section>
+            <section class="pane top-left card"><div class="content"><p>two</p></div></section>
+            <section class="pane bottom-left card"><div class="content"><p>three</p></div></section>
+        </div>
+    </div>
+    <div id="header-tab5">
+        <div class="page-container scrollable">
+            <section class="pane top card"><div class="content"><p>one</p></div></section>
+            <section class="pane bottom-left card"><div class="content"><p>two</p></div></section>
+            <section class="pane bottom-right card"><div class="content"><p>three</p></div></section>
+        </div>
+    </div>
+    <div id="header-tab6">
+        <div class="page-container scrollable">
+            <section class="pane top-left card"><div class="content"><p>one</p></div></section>
+            <section class="pane bottom card"><div class="content"><p>two</p></div></section>
+            <section class="pane top-right card"><div class="content"><p>three</p></div></section>
+        </div>
+    </div>
+    <div id="header-tab7">
+        <div class="page-container scrollable">
+            <section class="pane top-left card"><div class="content"><p>One</p></div></section>
+            <section class="pane bottom-left card"><div class="content"><p>two</p></div></section>
+            <section class="pane top-right card"><div class="content"><p>three</p></div></section>
+            <section class="pane bottom-right card"><div class="content"><p>Four</p></div></section>
+        </div>
+    </div>
+</div>
