@@ -49,6 +49,14 @@
     ];
 		$scope.data.selectedOption = $scope.data.sortOptions[0];
 		$scope.searchString = '';
+		$scope.closeBtnText = 'Close';
+		var clickCount = 0;
+		
+		$scope.onClickOption = function (option){
+			clickCount++;
+			$scope.data.selectedOption = option;
+			$scope.closeBtnText = 'Close ' + clickCount;
+		};
 
 		$scope.destroyCap = function() {
 			$('#capContainer').data('contextualactionpanel').destroy();
