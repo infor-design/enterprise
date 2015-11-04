@@ -115,8 +115,8 @@ $toolbar-buttonset-height: 44px;
 
 // Styles for regular toolbar only
 .toolbar {
-  margin-bottom: 5px;
   font-size: 0;
+  margin-bottom: 5px;
 
   .title {
     color: $font-color;
@@ -178,7 +178,7 @@ $toolbar-buttonset-height: 44px;
     }
 
     .ripple-effect {
-      background: #8dd2fb;
+      background-color: $tertiary-btn-ripple-color;
     }
   }
 

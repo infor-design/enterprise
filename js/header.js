@@ -27,11 +27,11 @@
         defaults = {
           demoOptions: true, // Used to enable/disable default SoHo Xi options for demo purposes
           useBackButton: true, // If true, displays a back button next to the title in the header toolbar
-          useBreadcrumb: true, // If true, displays a breadcrumb on drilldown
-          usePopupmenu: true, // If true, changes the Header Title into a popupmenu that can change the current page
+          useBreadcrumb: false, // If true, displays a breadcrumb on drilldown
+          usePopupmenu: false, // If true, changes the Header Title into a popupmenu that can change the current page
           tabs: null, // If defined as an array of Tab objects, displays a series of tabs that represent application sections
           wizardTicks: null, // If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
-          useAlternate: true // If true, use alternate background/text color for sub-navigation areas
+          useAlternate: false // If true, use alternate background/text color for sub-navigation areas
         },
         settings = $.extend({}, defaults, options);
 
@@ -225,18 +225,32 @@
       },
 
       buildPopupmenu: function() {
-        this.titlePopup = this.toolbarElem.children('.title').find('.btn-menu');
+        var title = this.toolbarElem.children('.title');
+        this.titlePopup = title.find('.btn-menu');
         if (!this.titlePopup.length) {
-
+          var heading = title.find('h1'); // If H1 doesn't exist here, you're doing it wrong.
+          heading.wrap('<button id="header-menu" class="btn-menu"></button>');
+          this.titlePopup = heading.parent('.btn-menu');
         }
         this.titlePopupMenu = this.titlePopup.next('.popupmenu');
         if (!this.titlePopupMenu.length) {
-
+          this.titlePopupMenu = $('<ul class="popupmenu is-selectable has-icons"></ul>').insertAfter(this.titlePopup);
+          var menuOpts = $('<li class="is-checked"><a href="#">Page One Title</a></li>' +
+            '<li><a href="#">Page Two Title</a></li>' +
+            '<li><a href="#">Page Three Title</a></li>' +
+            '<li class="is-disabled"><a href="#">Page Four Title</a></li>' +
+            '<li><a href="#">Page Five Title</a></li>').appendTo(this.titlePopupMenu);
         }
         this.titlePopupMenu.addClass('is-selectable');
 
+        // Set the text on the Title
+        this.titlePopup.children('h1').text(this.titlePopupMenu.children().first().text());
+
         // Invoke the Popupmenu on the Title
-        this.titlePopup.popupmenu();
+        this.titlePopup.button().popupmenu();
+
+        // Update the Header toolbar to account for the new button
+        this.toolbarElem.trigger('updated');
       },
 
       handleEvents: function() {
@@ -268,16 +282,7 @@
         // Popupmenu Events
         if (this.settings.usePopupmenu) {
           this.titlePopup.on('selected.header', function(e, anchor) {
-            var t = $(this),
-              li = anchor.parent();
-
-            if (li.hasClass('is-checked')) {
-              return;
-            }
-
-            t.children('h1').text(anchor.text());
-            t.data('popupmenu').menu.find('li').not(li).removeClass('is-checked');
-            li.addClass('is-checked');
+            $(this).children('h1').text(anchor.text());
           });
         }
 
@@ -512,7 +517,22 @@
       },
 
       removePopupmenu: function() {
+        var self = this;
 
+        if (!this.titlePopup || !this.titlePopup.length) {
+          return;
+        }
+
+        this.titlePopup.data('popupmenu').destroy();
+        this.titlePopup.data('button').destroy();
+        this.titlePopupMenu.remove();
+        this.titlePopup.children('h1').detach().insertBefore(self.titlePopup);
+        this.titlePopup.remove();
+
+        this.titlePopup = undefined;
+        this.titlePopupMenu = undefined;
+
+        this.toolbarElem.trigger('updated');
       },
 
       // teardown events

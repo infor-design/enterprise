@@ -97,6 +97,10 @@ $header-height: 60px;
       > *:first-child {
         margin-left: 1.7rem;
       }
+
+      .btn-menu {
+        text-transform: none;
+      }
     }
   }
 
@@ -377,6 +381,7 @@ $header-height: 60px;
       .ripple-effect {
         background-color: $header-icon-color;
       }
+
     }
   }
 
@@ -395,7 +400,7 @@ $header-height: 60px;
     }
   }
 
-  .btn-menu {
+  .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
     color: $header-text-color;
 
     .icon {
@@ -404,6 +409,15 @@ $header-height: 60px;
 
     span {
       color: $header-text-color;
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: none;
+      color: $header-text-color;
+    }
+
+    .ripple-effect {
+      background-color: $header-icon-color;
     }
   }
 

@@ -58,6 +58,13 @@
               </button>
             </p>
 
+            <h2>Popupmenu</h2>
+            <p>
+              <button id="navpattern-create-popupmenu" class="btn-secondary">
+                <span>Create Navigation Popupmenu</span>
+              </button>
+            </p>
+
           </div>
 
           <div class="tab-panel" id="header-tabs-level-1" style="display: none;">
@@ -105,5 +112,213 @@
 
     </div>
   </div>
+
+  <script type="text/javascript">
+    //----------------------------------------------------------
+    //  Nav Patterns: Test Page
+    //----------------------------------------------------------
+    var mainHeader = $('body > header, body > .page-container > header').first(),
+      mainHeaderData = mainHeader.data('header');
+
+    function navPatternButtonClick() {
+      var btn = $(this),
+        btns = $('[id^="navpattern-"]'),
+        newOpts = $.extend({}, btn.data('demoOptions')),
+        type;
+
+      $('body > .page-container').find('.wizard-panel:not(.tab-panel)').removeAttr('id');
+
+      newOpts.useAlternate = $('#navpattern-alt-breadcrumb').prop('checked');
+      mainHeader.header(newOpts);
+      mainHeaderData = mainHeader.data('header');
+
+      type = btn.data('navType');
+      if (!type) {
+        btns.enable();
+      } else {
+        switch(type) {
+          case 'drilldown':
+          btns.not('#navpattern-reset').not('[id*="#navpattern-drilldown-"]').disable();
+          break;
+          case 'breadcrumb':
+          btns.not('#navpattern-reset').not('[id*="#navpattern-breadcrumb-"]').disable();
+          break;
+          case 'tabs':
+          btns.not('#navpattern-reset').disable();
+          break;
+          case 'wizard':
+          btns.not('#navpattern-reset').disable();
+          break;
+          case 'popupmenu':
+          btns.not('#navpattern-reset').disable();
+          break;
+        }
+      }
+
+      var callback = $(this).data('demoCallback');
+      if (callback && typeof callback === 'function') {
+        callback.apply(this);
+      }
+    }
+
+    function navPatternDrillUpLoop() {
+      while (mainHeaderData.levelsDeep.length > 2 ) {
+        mainHeader.trigger('drillup');
+      }
+    }
+
+    mainHeader.on('drillTop.demo', function() {
+      $('[id^="navpattern-"]').enable();
+    });
+
+    $('#navpattern-reset')
+      .data('demoOptions', {
+        tabs: null,
+        useBackbutton: true,
+        useBreadcrumb: false,
+        usePopupmenu: false,
+        wizardTicks: null
+      }).click(navPatternButtonClick);
+
+    var drilldownOpts = {
+      tabs: null,
+      useBackbutton: true,
+      useBreadcrumb: false,
+      usePopupmenu: false,
+      wizardTicks: null
+    };
+
+    $('#navpattern-drilldown-1')
+      .data('demoOptions', drilldownOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Drilldown Level One']);
+      })
+      .data('navType', 'drilldown')
+      .click(navPatternButtonClick);
+
+    $('#navpattern-drilldown-2')
+      .data('demoOptions', drilldownOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Drilldown Level One']);
+        mainHeader.trigger('drilldown', ['Drilldown Level Two']);
+      })
+      .data('navType', 'drilldown')
+      .click(navPatternButtonClick);
+
+    var breadcrumbOpts = {
+      tabs: null,
+      useBackbutton: true,
+      useBreadcrumb: true,
+      usePopupmenu: false,
+      wizardTicks: null
+    };
+
+    $('#navpattern-breadcrumb-1').data('demoOptions', breadcrumbOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Breadcrumb Level One']);
+      })
+      .data('navType', 'breadcrumb')
+      .click(navPatternButtonClick);
+
+    $('#navpattern-breadcrumb-2')
+      .data('demoOptions', breadcrumbOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Breadcrumb Level One']);
+        mainHeader.trigger('drilldown', ['Breadcrumb Level Two']);
+      })
+      .data('navType', 'breadcrumb')
+      .click(navPatternButtonClick);
+
+    $('#navpattern-breadcrumb-3')
+      .data('demoOptions', breadcrumbOpts)
+      .data('demoCallback', function () {
+        navPatternDrillUpLoop();
+        mainHeader.trigger('drilldown', ['Breadcrumb Level One']);
+        mainHeader.trigger('drilldown', ['Breadcrumb Level Two']);
+        mainHeader.trigger('drilldown', ['Breadcrumb Level Three']);
+      })
+      .data('navType', 'breadcrumb')
+      .click(navPatternButtonClick);
+
+    var createTabsOpts = {
+      useBreadcrumb: false,
+      useBackbutton: false,
+      usePopupmenu: false,
+      tabs: [1,2], // NOTE: these settings aren't final.
+      wizardTicks: null
+    };
+
+    $('#navpattern-create-tabs')
+      .data('demoOptions', createTabsOpts)
+      .data('navType', 'tabs')
+      .click(navPatternButtonClick);
+
+    var createWizardOpts = {
+      useBreadcrumb: false,
+      useBackbutton: false,
+      usePopupmenu: false,
+      tabs: null,
+      wizardTicks: [1,2] // NOTE: these settings aren't final.
+    };
+
+    function wizardCallback() {
+      var wizard = mainHeader.data('header').wizard,
+        wizardPanels = $('body > .page-container').find('.wizard-panel');
+
+      wizard.data('wizard').ticks.each(function(i, item) {
+        var id = $(item).text().trim().replace(/ /g, '-').toLowerCase();
+
+        if (wizardPanels[i] !== wizardPanels[0]) {
+          $(item).attr('data-wizard-panel', '' + id);
+          $(wizardPanels[i]).attr('id', id);
+        }
+        else {
+          // Use the default ID for the first panel
+          $(item).attr('data-wizard-panel', $(wizardPanels[i]).attr('id'));
+          //$(wizardPanels[i]).attr('id', $(item).attr('id'));
+        }
+      });
+
+      wizard.off('stepchange.demo').on('stepchange.demo', function stepChangeListener(e, tick) {
+        var thisPanel = wizardPanels.filter('#'+ tick.attr('data-wizard-panel')),
+          otherPanels = wizardPanels.not('#'+ tick.attr('data-wizard-panel'));
+
+        otherPanels.css({'display': 'none', 'opacity': '0'});
+        thisPanel.css('display', 'block');
+        thisPanel[0].offsetHeight;
+        thisPanel.css('opacity', '1');
+      });
+    }
+
+    $('#navpattern-create-wizard')
+      .data('demoOptions', createWizardOpts)
+      .data('demoCallback', wizardCallback)
+      .data('navType', 'wizard')
+      .click(navPatternButtonClick);
+
+    var createPopupmenuOpts = {
+      useBreadcrumb: false,
+      useBackbutton: false,
+      usePopupmenu: true,
+      tabs: null,
+      wizardTicks: null // NOTE: these settings aren't final.
+    };
+
+    function popupmenuCallback() {
+      alert('build popupmenu');
+    }
+
+    $('#navpattern-create-popupmenu')
+      .data('demoOptions', createPopupmenuOpts)
+      .data('demoCallback', popupmenuCallback)
+      .data('navType', 'popupmenu')
+      .click(navPatternButtonClick);
+
+
+  </script>
 
 </body>
