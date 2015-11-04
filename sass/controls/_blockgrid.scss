@@ -6,9 +6,11 @@
   text-align: left;
 
   .block {
+    border-radius: 2px;
     display: inline-block;
     margin: 20px 0 0 20px;
-    text-align: left;
+    padding-top: 10px;
+    text-align: center;
     vertical-align: top;
     width: 200px;
 
@@ -20,17 +22,34 @@
       display: block;
       margin-bottom: 10px;
     }
+
+    &.is-selected {
+      background-color: $selected-bg-color;
+    }
   }
 
   &.l-center {
     text-align: center;
   }
 
-  &.blockgrid-150px .block {
-    width: 150px;
+  &.blockgrid-md .block {
+    width: 145px;
   }
 
-  &.blockgrid-100px .block {
-    width: 100px;
+  &.blockgrid-sm .block {
+    width: 120px;
+  }
+
+  &.is-selectable {
+    cursor: pointer;
+  }
+
+  .blockgrid-title {
+    @include antialiased();
+    @include font-size(14);
+    color: $font-color;
+    display: block;
+    padding-bottom: 10px;
+    text-align: center;
   }
 }

@@ -210,7 +210,6 @@ define([
       expect(Locale.formatNumber(undefined, {date: 'timestamp'})).to.be.undefined;
       expect(Locale.parseDate('13/28/2015', 'MM/d/yyyy')).to.be.undefined;
       expect(Locale.parseDate('10/32/2015', 'MM/dd/yyyy')).to.be.undefined;
-
     },
 
     'be able to return time format': function(){
