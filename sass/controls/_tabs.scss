@@ -97,6 +97,10 @@
 // Tab Body
 .tab-panel {
   margin-top: 20px;
+
+  &.top-padding {
+    margin-top: 40px !important;
+  }
 }
 
 // Set padding/height etc. when using Vertical Tabs directly inside a page container

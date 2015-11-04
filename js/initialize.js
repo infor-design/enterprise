@@ -368,8 +368,18 @@
           obj.text(Locale.translate(obj.text()));
         });
 
+        //Toggle boxes on image list
+        matchedItems('.block').on('click', function () {
+          $(this).toggleClass('is-selected');
+        });
+
         //Validation
         //Should be one of the last items to invoke
+        if ($.fn.validate) {
+          matchedItems('[data-validate]').validate();
+          matchedItems('[data-validate-on="submit"]').validate();
+        }
+
         if ($.fn.validate) {
           matchedItems('[data-validate]').validate();
           matchedItems('[data-validate-on="submit"]').validate();
