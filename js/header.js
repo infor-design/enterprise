@@ -28,6 +28,7 @@
           demoOptions: true, // Used to enable/disable default SoHo Xi options for demo purposes
           useBackButton: true, // If true, displays a back button next to the title in the header toolbar
           useBreadcrumb: true, // If true, displays a breadcrumb on drilldown
+          usePopupmenu: true, // If true, changes the Header Title into a popupmenu that can change the current page
           tabs: null, // If defined as an array of Tab objects, displays a series of tabs that represent application sections
           wizardTicks: null, // If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
           useAlternate: true // If true, use alternate background/text color for sub-navigation areas
@@ -106,6 +107,10 @@
 
         if (this.settings.wizardTicks && this.settings.wizardTicks.length) {
           this.buildWizard();
+        }
+
+        if (this.settings.usePopupmenu) {
+          this.buildPopupmenu();
         }
 
         return this;
@@ -219,6 +224,21 @@
         this.wizard.wizard();
       },
 
+      buildPopupmenu: function() {
+        this.titlePopup = this.toolbarElem.children('.title').find('.btn-menu');
+        if (!this.titlePopup.length) {
+
+        }
+        this.titlePopupMenu = this.titlePopup.next('.popupmenu');
+        if (!this.titlePopupMenu.length) {
+
+        }
+        this.titlePopupMenu.addClass('is-selectable');
+
+        // Invoke the Popupmenu on the Title
+        this.titlePopup.popupmenu();
+      },
+
       handleEvents: function() {
         var self = this;
 
@@ -244,6 +264,22 @@
             e.returnValue = false;
           }
         });
+
+        // Popupmenu Events
+        if (this.settings.usePopupmenu) {
+          this.titlePopup.on('selected.header', function(e, anchor) {
+            var t = $(this),
+              li = anchor.parent();
+
+            if (li.hasClass('is-checked')) {
+              return;
+            }
+
+            t.children('h1').text(anchor.text());
+            t.data('popupmenu').menu.find('li').not(li).removeClass('is-checked');
+            li.addClass('is-checked');
+          });
+        }
 
         return this;
       },
@@ -342,6 +378,9 @@
         if (this.settings.useBreadcrumb) {
           this.removeBreadcrumb();
         }
+        if (this.settings.usePopupmenu) {
+          this.removePopupmenu();
+        }
 
         this.titleText.text(title);
         this.element.trigger('drillTop');
@@ -356,6 +395,7 @@
         this.removeBreadcrumb();
         this.removeTabs();
         this.removeWizard();
+        this.removePopupmenu();
         this.removeButton();
 
         this.element.trigger('afterreset');
@@ -469,6 +509,10 @@
         } else {
           destroyWizard();
         }
+      },
+
+      removePopupmenu: function() {
+
       },
 
       // teardown events
