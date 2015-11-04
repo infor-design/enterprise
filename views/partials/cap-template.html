@@ -11,7 +11,7 @@
 				</button>
 				<ul class="popupmenu has-icons">
 					<li ng-repeat="option in data.sortOptions" ng-class="{'is-checked': data.selectedOption.value === option.value}">
-						<a href="#" ng-click="data.selectedOption = option" ng-bind="option.name"></a>
+						<a href="#" ng-click="onClickOption(option)" data-ng-bind="option.name"></a>
 					</li>
 				</ul>
 
@@ -19,7 +19,7 @@
 					<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
 						<use xlink:href="#icon-close"></use>
 					</svg>
-					<span>Close</span>
+					<span data-ng-bind="closeBtnText"></span>
 				</button>
 			</div>
 		</div>
