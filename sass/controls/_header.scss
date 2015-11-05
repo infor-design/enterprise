@@ -175,6 +175,10 @@ $header-height: 60px;
         bottom: 1px;
       }
 
+      &:first-child {
+        padding-left: 0;
+      }
+
       &:not(.is-disabled):hover {
         color: $header-tab-hover-color;
 
