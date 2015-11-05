@@ -87,9 +87,11 @@
         this.more = this.element.find('.btn-actions');
         if (this.more.length === 0 && !this.element.hasClass('no-actions-button')) {
           var moreContainer = this.element.find('.more');
+
           if (!moreContainer.length) {
             moreContainer = $('<div class="more"></div>').appendTo(this.element);
           }
+
           this.more = $('<button class="btn-actions" type="button"></button>')
             .html('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></svg>' +
               '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
@@ -153,14 +155,20 @@
 
           var popupLiText = span.length ? span.text() :
             title !== '' && title !== undefined ? item.attr('title') :
-            tooltipText ? tooltipText : item.text();
+            tooltipText ? tooltipText : item.text(),
+            markup = item.children('span').not('.audible').length === 1 ? item.html() : '';
 
-          a.text(popupLiText);
+          if (markup) {
+            a.html(markup);
+          } else {
+            a.text(popupLiText);
+          }
 
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
           var icon = item.children('.icon').filter(function(){
             return $(this).children('use').attr('xlink:href') !== '#icon-dropdown';
           });
+
           if (icon.length) {
             self.moreMenu.addClass('has-icons');
             a.html('<span>' + a.text() + '</span>');
@@ -246,10 +254,13 @@
           this.more.trigger('updated');
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
+
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          }));
+          })).on('beforeopen', function () {
+            self.updated();
+          });
         }
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.

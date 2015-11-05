@@ -63,9 +63,8 @@
   fill: $info-icon-fill;
 }
 
-.icon-close {
-  height: 14px;
-  position: relative;
+svg.icon-close {
+  height: 16px !important;
 }
 
 .icon-sohoxi {

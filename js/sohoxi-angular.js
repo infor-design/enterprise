@@ -120,6 +120,19 @@
       };
   };
 
+  var popupmenu = function () {
+      return {
+        replace: true,
+        scope: false,
+        link: function(scope, elem) {
+          elem.popupmenu();
+          if (elem.is(':button')) {
+            elem.button();
+          }
+        }
+      };
+  };
+
   var slider = function () {
       return {
         replace: true,
@@ -174,6 +187,16 @@
       };
   };
 
+  var toolbar = function () {
+      return {
+        replace: true,
+        scope: false,
+        link: function(scope, elem) {
+          elem.toolbar();
+        }
+      };
+  };
+
   var wizard = function () {
       return {
         replace: true,
@@ -195,7 +218,9 @@
       .directive('dropdown', dropdown)
       .directive('multiselect', multiselect)
       .directive('popdown', popdown)
+      .directive('popupmenu', popupmenu)
       .directive('slider', slider)
+      .directive('toolbar', toolbar)
       .directive('wizard', wizard);
 
 }());
