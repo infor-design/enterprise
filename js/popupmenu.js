@@ -104,7 +104,7 @@
         // to prevent containment issues.
         if (this.menu.parent().not('body').length > 0) {
           this.originalParent = this.menu.parent();
-          this.menu.detach().prependTo('body');
+          this.menu.detach().appendTo('body');
         }
 
         this.menu.addClass('popupmenu')

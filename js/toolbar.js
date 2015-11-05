@@ -258,9 +258,7 @@
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          })).on('beforeopen', function () {
-            self.updated();
-          });
+          }));
         }
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.
