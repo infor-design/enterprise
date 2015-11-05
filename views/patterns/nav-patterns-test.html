@@ -12,8 +12,8 @@
 
           <div class="tab-panel wizard-panel" id="header-tabs-home">
             <div class="field">
-              <input id="navpattern-alt-breadcrumb" type="checkbox" class="checkbox"/>
-              <label for="navpattern-alt-breadcrumb" class="checkbox-label">Use Alternate Color-Scheme for Nav Patterns</label>
+              <input id="navpattern-alt" type="checkbox" class="checkbox"/>
+              <label for="navpattern-alt" class="checkbox-label">Use Alternate Color-Scheme for Nav Patterns</label>
             </div>
             <p>
               <button id="navpattern-reset" class="btn-secondary">
@@ -120,6 +120,17 @@
     var mainHeader = $('body > header, body > .page-container > header').first(),
       mainHeaderData = mainHeader.data('header');
 
+    function setAvailableAlternates() {
+      if (this.checked) {
+        $('#navpattern-create-wizard').disable();
+        $('#navpattern-create-popupmenu').disable();
+        return;
+      }
+
+      $('#navpattern-create-wizard').enable();
+      $('#navpattern-create-popupmenu').enable();
+    }
+
     function navPatternButtonClick() {
       var btn = $(this),
         btns = $('[id^="navpattern-"]'),
@@ -128,13 +139,14 @@
 
       $('body > .page-container').find('.wizard-panel:not(.tab-panel)').removeAttr('id');
 
-      newOpts.useAlternate = $('#navpattern-alt-breadcrumb').prop('checked');
+      newOpts.useAlternate = $('#navpattern-alt').prop('checked');
       mainHeader.header(newOpts);
       mainHeaderData = mainHeader.data('header');
 
       type = btn.data('navType');
       if (!type) {
         btns.enable();
+        setAvailableAlternates.apply($('#navpattern-alt')[0]);
       } else {
         switch(type) {
           case 'drilldown':
@@ -167,8 +179,13 @@
       }
     }
 
+    // When the checkbox is checked, disable buttons that don't have associated Alternate patterns
+    $('#navpattern-alt').on('change.demo', setAvailableAlternates);
+
+    // When drillup ends, reset buttons
     mainHeader.on('drillTop.demo', function() {
       $('[id^="navpattern-"]').enable();
+      setAvailableAlternates.apply($('#navpattern-alt')[0]);
     });
 
     $('#navpattern-reset')
@@ -308,13 +325,8 @@
       wizardTicks: null // NOTE: these settings aren't final.
     };
 
-    function popupmenuCallback() {
-      alert('build popupmenu');
-    }
-
     $('#navpattern-create-popupmenu')
       .data('demoOptions', createPopupmenuOpts)
-      .data('demoCallback', popupmenuCallback)
       .data('navType', 'popupmenu')
       .click(navPatternButtonClick);
 

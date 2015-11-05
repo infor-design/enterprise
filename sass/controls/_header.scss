@@ -49,7 +49,7 @@ $header-height: 60px;
       text-transform: capitalize;
     }
 
-    .alert svg {
+    .alert .icon {
       line-height: inherit;
       margin-left: 7px;
       position: absolute;
@@ -108,22 +108,58 @@ $header-height: 60px;
     padding-left: 65px;
   }
 
-  // Tabs
-  $header-tab-normal-color: $graphite03;
-  $header-tab-hover-color: $inverse-color;
-  $header-tab-alt-bg-color: $inverse-color;
-  $header-tab-alt-normal-color: $graphite06;
-  $header-tab-alt-hover-color: $font-color-highcontrast;
-
   .tab-container:not(.vertical) {
-    padding: 1px 20px 0;
     margin-top: -10px;
+    padding: 1px 20px 0;
 
     &.alternate {
       .tab {
-        &.is-selected {
+        padding: 8px 6px 9px;
+
+        &:before {
+          bottom: 0;
+        }
+
+        &.is-selected:not(.is-disabled) {
           a {
-            color: $graphite06;
+            color: $header-tab-alt-selected-color;
+          }
+
+          .icon:not(.is-error):not(.icon-error) {
+            fill: $header-tab-alt-selected-color;
+          }
+
+          &:hover {
+            &:before {
+              background-color: rgba($header-tab-alt-selected-color, 1);
+            }
+
+            a {
+              color: $header-tab-alt-selected-color;
+            }
+
+            .icon:not(.is-error):not(.icon-error) {
+              fill: $header-tab-alt-selected-color;
+            }
+          }
+        }
+      }
+
+      .animated-bar {
+        background-color: $header-tab-alt-selected-color;
+        margin-top: 0;
+        top: 42px;
+      }
+
+      .tab-more {
+        padding: 13px 0 14px 14px;
+
+        &.is-selected,
+        &.is-open {
+          color: $header-tab-alt-selected-color;
+
+          .icon:not(.is-error):not(.icon-error) {
+            fill: $header-tab-alt-selected-color;
           }
         }
       }
@@ -133,18 +169,14 @@ $header-height: 60px;
       font-weight: bold;
       padding: 6px 6px 7px;
 
-      &.dismissible svg {
-        fill: $white;
-        opacity: .6;
-
-        &:hover {
-          fill: $white !important;
-          opacity: 1;
-        }
+      a {
+        color: $header-tab-normal-color;
+        line-height: 12px;
       }
 
       &:before {
         background-color: rgba($header-tab-normal-color, 0);
+        bottom: 1px;
       }
 
       &:not(.is-disabled):hover {
@@ -156,6 +188,10 @@ $header-height: 60px;
 
         a {
           color: $header-tab-hover-color;
+        }
+
+        .icon:not(.is-error):not(.icon-error) {
+          fill: $header-tab-hover-color;
         }
       }
 
@@ -179,9 +215,18 @@ $header-height: 60px;
         }
       }
 
-      a {
-        color: $header-tab-normal-color;
-        line-height: 12px;
+      &.dismissible {
+        .icon {
+          fill: $white;
+          opacity: .6;
+        }
+
+        &:hover {
+          .icon:not(.is-error):not(.icon-error) {
+            fill: $white !important;
+            opacity: 1;
+          }
+        }
       }
     }
   }
@@ -191,15 +236,18 @@ $header-height: 60px;
 
     &.alternate {
       background-color: $header-tab-alt-bg-color;
-      border-bottom: 1px solid #d8d8d8;
+      border-bottom: 1px solid $header-tabcontainer-border-color;
 
       .animated-bar {
         background-color: rgba($header-tab-alt-hover-color, 1);
-        //margin-top: 1px;
       }
 
       .tab-focus-indicator.is-visible {
         border-color: $header-tab-alt-hover-color;
+      }
+
+      .tab-list {
+        height: 43px; // Reset to 43
       }
 
       .tab {
@@ -250,11 +298,13 @@ $header-height: 60px;
         &.popup-is-open,
         &.is-selected,
         &:hover {
+          color: $header-tab-alt-hover-color;
+
           span {
-            color: $header-tab-alt-hover-color;
+            color: inherit;
           }
 
-          svg {
+          .icon:not(.is-error):not(.icon-error) {
             fill: $header-tab-alt-hover-color;
           }
         }
@@ -272,6 +322,7 @@ $header-height: 60px;
 
     .tab-list {
       border-bottom: 0;
+      height: 38px;
     }
   }
 
@@ -290,7 +341,7 @@ $header-height: 60px;
         color: $header-tab-hover-color;
       }
 
-      svg {
+      .icon:not(.is-error):not(.icon-error) {
         fill: $header-tab-hover-color;
       }
     }

@@ -114,7 +114,7 @@
 
 .page-container  > .tab-panel {
   height: 100%;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 // More Button
@@ -124,10 +124,10 @@
   display: inline-block;
   @include font-size(14);
   max-width: 102px;
-  padding: 3px 0 0 14px;
+  padding: 11px 0 11px 14px;
   position: absolute;
   right: 0;
-  top: 6px;
+  top: 0;
   @include css3(transition, background-color .25s ease);
   visibility: hidden;
 
@@ -402,7 +402,7 @@
     }
 
     .tab-more {
-      padding: 6px 0 6px 14px;
+      padding: 20px 0 20px 14px;
       top: 8px;
     }
 
