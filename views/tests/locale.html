@@ -18,7 +18,7 @@
           // console.log(Locale.parseDate('10/28/2015 12:12:10', 'M/d/yyyy h:mm:ss'));
           // console.log(Locale.parseDate('10/28/2015 8:12:10 PM', 'M/d/yyyy h:mm:ss a'));
           // console.log(new Date(2015, 9, 28, 20, 12, 10));
-          console.log(Locale.parseDate('10/28/2015 30:30:10 AM', 'M/d/yyyy h:mm:ss a'));
+          console.log(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), {date: "timestamp"}));
 
         }, 300);
       }

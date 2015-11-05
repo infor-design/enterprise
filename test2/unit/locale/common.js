@@ -69,6 +69,21 @@ define([
 
     },
 
+    'should format timestamp': function() {
+      expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), {date: 'timestamp'})).to.equal('10:20:05 AM');
+      expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), {pattern: 'hhmmss'})).to.equal('102005');
+
+      var dt = new Date(),
+        h = (dt.getHours() > 12 ? dt.getHours()-12 : dt.getHours()).toString(),
+        h24 = Locale.pad(dt.getHours(), 2).toString(),
+        m = Locale.pad(dt.getMinutes(), 2).toString(),
+        s = Locale.pad(dt.getSeconds(), 2).toString();
+
+      expect(Locale.formatDate(dt, {pattern: 'hhmmss'})).to.equal(h+m+s);
+      expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal(h24+m+s);
+      expect(Locale.formatDate(dt, {date: 'timestamp'})).to.equal(h+m+s);
+    },
+
     //Format some random date type cases
     'should format other dates': function() {
       Locale.set('de-DE');    //year, month, day

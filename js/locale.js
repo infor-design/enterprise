@@ -165,7 +165,7 @@
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('HH', hours);
       ret = ret.replace('mm', this.pad(mins, 2));
-      ret = ret.replace('ss', seconds);
+      ret = ret.replace('ss', this.pad(seconds, 2));
 
       //months
       ret = ret.replace('MMMM', cal.months.wide[month]);  //full
