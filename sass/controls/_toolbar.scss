@@ -43,9 +43,11 @@ $toolbar-buttonset-height: 44px;
     > [class^="btn"] {
       min-width: 34px;
 
+      /*
       .icon:not(.icon-dropdown) {
         height: 22px;
       }
+      */
     }
   }
 
@@ -237,7 +239,11 @@ $toolbar-buttonset-height: 44px;
 
       span:not(.audible) {
         display: inline-block;
-        padding: 0 10px;
+        //padding: 0 10px;
+
+        &:last-child {
+          padding-right: 10px;
+        }
       }
 
       .icon {

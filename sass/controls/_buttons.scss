@@ -39,10 +39,15 @@ button {
   > .icon {
     fill: inherit;
     position: static;
+    height: 18px;
     width: 22px;
 
     + span:not(.audible) {
       padding-left: 6px;
+    }
+
+    + * + span {
+      padding-left: 0;
     }
   }
 
@@ -353,5 +358,7 @@ a.btn-primary {
     .btn-teritary {
       padding: 0 10px;
     }
+
+
  	}
 }
