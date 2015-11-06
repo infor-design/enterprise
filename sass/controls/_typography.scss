@@ -6,12 +6,12 @@ $font-regular: Helvetica, Arial;
 
 // Special Fonts for Certain Languages
 $cultures-font-family: (
-  'ar-EG': ('Tahoma', 'DejaVu'),
-  'ar-SA': ('Tahoma', 'DejaVu'),
-  'ja-JP': ('MS PGothic', 'ＭＳ Ｐゴシック'),
-  'ko-KR': ('Batang', 'Gulim'),
-  'zh-CN': ('SimSun', 'NSimSun', 'SimHei'),
-  'zh-tw': ('MingLiU')
+  'ar-EG': ('Tahoma', 'DejaVu', 'Helvetica', 'Arial'),
+  'ar-SA': ('Tahoma', 'DejaVu', 'Helvetica', 'Arial'),
+  'ja-JP': ('MS PGothic', 'Helvetica', 'Arial'),
+  'ko-KR': ('Helvetica', 'Arial', 'Batang', 'Gulim'),
+  'zh-CN': ('Helvetica', 'Arial', 'Microsoft YaHei New', '微软雅黑', '宋体', 'SimSun', 'STXihei', '华文细黑'),
+  'zh-tw': ('Helvetica', 'Arial', 'MingLiU')
 );
 
 // Body Sizes and Color
@@ -29,7 +29,7 @@ html {
 
   @each $key, $value in $cultures-font-family {
     &[lang='#{$key}'] body {
-      font-family: $value, $font-regular;
+      font-family: $value;
     }
   }
 }

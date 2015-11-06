@@ -186,10 +186,23 @@
       return ret.trim();
     },
 
+    isValidDate: function (date) {
+      if (Object.prototype.toString.call(date) === '[object Date]') {
+        // it is a date
+        if (isNaN(date.getTime())) {  // d.valueOf() could also work
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    },
 
     // Take a date string written in the current locale and parse it into a Date Object
     parseDate: function(dateString, dateFormat) {
-      var thisLocaleCalendar = this.calendar();
+      var thisLocaleCalendar = this.calendar(),
+        orgDatestring = dateString;
 
       if (!dateString) {
         return undefined;
@@ -223,16 +236,21 @@
         dateFormat = 'd/M/yyyy';
       }
 
-      if (dateFormat.indexOf('.') === -1  && dateFormat.indexOf('/')  === -1 && dateFormat.indexOf('-')  === -1) {
+      if (dateFormat.indexOf(' ') > 1 ) {
+        dateFormat = dateFormat.replace(/[\s:.]/g,'/');
+        dateString = dateString.replace(/[\s:.]/g,'/');
+      }
+
+      if (dateFormat.indexOf(' ') === -1 && dateFormat.indexOf('.') === -1  && dateFormat.indexOf('/')  === -1 && dateFormat.indexOf('-')  === -1) {
         var lastChar = dateFormat[0],
           newFormat = '', newDateString = '';
 
-        for (var i = 0; i < dateFormat.length; i++) {
-          newFormat +=  (dateFormat[i] !== lastChar ? '/' + dateFormat[i]  : dateFormat[i]);
-          newDateString += (dateFormat[i] !== lastChar ? '/' + dateString[i]  : dateString[i]);
+        for (var j = 0; j < dateFormat.length; j++) {
+          newFormat +=  (dateFormat[j] !== lastChar ? '/' + dateFormat[j]  : dateFormat[j]);
+          newDateString += (dateFormat[j] !== lastChar ? '/' + dateString[j]  : dateString[j]);
 
-          if (i > 1) {
-            lastChar = dateFormat[i];
+          if (j > 1) {
+            lastChar = dateFormat[j];
           }
         }
 
@@ -256,8 +274,9 @@
       var month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM'),
         year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
 
-      $.each(dateStringParts, function(i, value) {
+      for (var i = 0; i < dateStringParts.length; i++) {
         var pattern = formatParts[i],
+          value = dateStringParts[i],
           numberValue = parseInt(value);
 
         switch(pattern) {
@@ -286,6 +305,16 @@
               return;
             }
             dateObj.month = value-1;
+            break;
+          case 'MMMM':
+            var textMonths = this.calendar().months.wide;
+
+            for (var k = 0; k < textMonths.length; k++) {
+              if (orgDatestring.indexOf(textMonths[k]) > -1) {
+                dateObj.month = k;
+              }
+            }
+
             break;
           case 'yy':
             dateObj.year = parseInt('20'+value, 10);
@@ -338,7 +367,7 @@
             }
             break;
         }
-      });
+      }
 
       dateObj.return = undefined;
       dateObj.leapYear = ((dateObj.year % 4 === 0) && (dateObj.year % 100 !== 0)) || (dateObj.year % 400 === 0);
@@ -347,8 +376,16 @@
         return undefined;
       }
 
-      if ((!dateObj.year ||(!dateObj.month && dateObj.month !==0) || !dateObj.day)) {
-        return undefined;
+      if (!dateObj.year) {
+        dateObj.year = (new Date()).getFullYear();
+      }
+
+      if (!dateObj.month) {
+        dateObj.month = (new Date()).getMonth();
+      }
+
+      if (!dateObj.day) {
+        dateObj.day = 1;
       }
 
       if (isDateTime) {
@@ -362,7 +399,7 @@
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
       }
 
-      return dateObj.return;
+      return (this.isValidDate(dateObj.return) ? dateObj.return : undefined);
 
     },
 

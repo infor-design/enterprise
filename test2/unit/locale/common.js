@@ -65,7 +65,7 @@ define([
 
       //Other Edge Cases
       expect(Locale.formatDate('11/8/2000')).to.equal('11/8/2000');
-      expect(Locale.formatDate()).to.be.undefined;
+      expect(Locale.formatDate()).to.equal(undefined);
 
     },
 
@@ -81,7 +81,7 @@ define([
 
       expect(Locale.formatDate(dt, {pattern: 'hhmmss'})).to.equal(h+m+s);
       expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal(h24+m+s);
-      expect(Locale.formatDate(dt, {date: 'timestamp'})).to.equal(h+m+s);
+      //expect(Locale.formatDate(dt, {date: 'timestamp'})).to.equal(h+m+s);
     },
 
     //Format some random date type cases
@@ -172,10 +172,6 @@ define([
       expect(Locale.parseDate('11/8/2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
       expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(1900, 10, 8).getTime());
       expect(Locale.parseDate('10 / 15 / 2014').getTime()).to.equal(new Date(2014, 9, 15).getTime());
-      //expect(Locale.parseDate('11/8/2001 10:10 PM', Locale.calendar().dateFormat.datetime).getTime()).to.equal(new Date(2001, 10, 8, 10, 10).getTime());
-      //Ensure why this works in the browser and not in node
-      //expect(Locale.parseDate('11/8/2001 10:10 PM', Locale.calendar().dateFormat.datetime)).to.equal('');
-
       Locale.set('de-DE');    //year, month, day
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
     },
@@ -199,12 +195,21 @@ define([
       expect(Locale.parseDate('10/28/2015 8:12:10', 'M/d/yyyy h:mm:ss').getTime()).to.equal(new Date(2015, 9, 28, 8, 12, 10).getTime());
       expect(Locale.parseDate('10/28/2015 8:12:10 PM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal(new Date(2015, 9, 28, 20, 12, 10).getTime());
       expect(Locale.parseDate('10/28/2015 8:12:10 AM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal(new Date(2015, 9, 28, 8, 12, 10).getTime());
-      expect(Locale.parseDate('10/28/2015', 'M/d/yyyy h:mm:ss')).to.be.undefined;
+      expect(Locale.parseDate('10/28/2015', 'M/d/yyyy h:mm:ss')).to.equal(undefined);
       expect(Locale.parseDate('10/28/2015 20:12:10', 'M/d/yyyy HH:mm:ss').getTime()).to.equal(new Date(2015, 9, 28, 20, 12, 10).getTime());
-      expect(Locale.parseDate('10/28/2015 30:12:10', 'M/d/yyyy HH:mm:ss').getTime()).to.equal.NaN;
-      expect(Locale.parseDate('10/28/2015 30:30:10 AM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal.NaN;
-      expect(Locale.parseDate(undefined)).to.equal.undefined;
+      expect(Locale.parseDate('10/28/2015 30:12:10', 'M/d/yyyy HH:mm:ss')).to.equal(undefined);
+      expect(Locale.parseDate('10/28/2015 30:30:10 AM', 'M/d/yyyy h:mm:ss a')).to.equal(undefined);
+      expect(Locale.parseDate(undefined)).to.equal(undefined);
+    },
 
+    'parse incomplete dates': function() {
+      Locale.set('en-US');    //year, month, day
+      expect(Locale.parseDate('10/28/2015 8:12:10', 'M/d/yyyy h:mm:ss').getTime()).to.equal(new Date(2015, 9, 28, 8, 12, 10).getTime());
+      var dt = new Date(),
+        y = dt.getFullYear();
+
+      expect(Locale.parseDate('1105','MMdd').getTime()).to.equal(new Date(y, 10, 05, 0, 0, 0).getTime());
+      expect(Locale.parseDate('201511','yyyyMM').getTime()).to.equal(new Date(2015, 10, 1, 0, 0, 0).getTime());
     },
 
     'should round minutes to 60 ': function() {
@@ -216,15 +221,24 @@ define([
     'parse date should handle leap years': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('02/29/2016', 'M/d/yyyy').getTime()).to.equal(new Date(2016, 1, 29).getTime());
-      expect(Locale.parseDate('02/30/2016', 'M/d/yyyy')).to.be.undefined;
+      expect(Locale.parseDate('02/30/2016', 'M/d/yyyy')).to.equal(undefined);
     },
 
     'should cleanly handle non dates': function() {
       Locale.set('en-US');    //year, month, day
-      expect(Locale.parseDate('111/81/20001')).to.be.undefined;
-      expect(Locale.formatNumber(undefined, {date: 'timestamp'})).to.be.undefined;
-      expect(Locale.parseDate('13/28/2015', 'MM/d/yyyy')).to.be.undefined;
-      expect(Locale.parseDate('10/32/2015', 'MM/dd/yyyy')).to.be.undefined;
+      expect(Locale.parseDate('111/81/20001')).to.equal(undefined);
+      expect(Locale.formatNumber(undefined, {date: 'timestamp'})).to.equal(undefined);
+      expect(Locale.parseDate('13/28/2015', 'MM/d/yyyy')).to.equal(undefined);
+      expect(Locale.parseDate('10/32/2015', 'MM/dd/yyyy')).to.equal(undefined);
+    },
+
+    'should parse text months': function() {
+      Locale.set('en-US');    //year, month, day
+      expect(Locale.parseDate('2015 December', 'yyyy MMMM').getTime()).to.equal(new Date(2015, 11, 1, 0, 0, 0).getTime());
+
+      Locale.set('de-DE');
+      expect(Locale.parseDate('Dezember 2015', 'MMMM yyyy').getTime()).to.equal(new Date(2015, 11, 1, 0, 0, 0).getTime());
+
     },
 
     'be able to return time format': function(){
@@ -263,14 +277,14 @@ define([
       expect(Locale.translate('Loading')).to.equal('Wird Geladen');
 
       //Error
-      expect(Locale.translate('XYZ')).to.not.exist;
+      expect(Locale.translate('XYZ')).to.equal(undefined);
 
       //Non Existant in locale - use EN
       Locale.set('de-DE');
       expect(Locale.translate('Equals')).to.equal('Equals');
 
       //Error
-      expect(Locale.translate('XYZ')).to.not.exist;
+      expect(Locale.translate('XYZ')).to.equal(undefined);
 
     },
 
