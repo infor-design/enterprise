@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Control: Prevent Dismissible</h2>
+
+    <p>Individual Tabs can return false when a "beforeclose" event is triggered, causing that tab not to close.  This test demonstrates that functionality on the very last tab in the tabset.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="dismissible-tabs" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#tabs-main">Main</a></li>
+        <li class="tab dismissible"><a href="#tabs-dismissible">Dismissible</a></li>
+        <li class="tab dismissible"><a href="#tabs-prevented-dismissible">Prevented Dismissible</a></li>
+      </ul>
+      <div id="tabs-main" class="tab-panel">
+        <h2>Main</h2>
+        <p>This is just a regular tab.</p>
+      </div>
+      <div id="tabs-dismissible" class="tab-panel">
+        <h2>Dismissible</h2>
+        <p>This tab can be dismissed at all times.</p>
+      </div>
+      <div id="tabs-prevented-dismissible" class="tab-panel">
+        <h2>Prevented Dismissible</h2>
+        <p>This tab returns "false" during the tab control's "beforeclose" event, which prevents this tab from ever being closed.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var tabs = $('#dismissible-tabs');
+
+    function announceEvent(e, li) {
+      var type = e.type,
+        a = li.children('a'),
+        href = a.attr('href');
+
+      $('body').toast({
+        title: '<span style="color: #bb6666; font-weight: bold;">' + e.type + '</span> triggered!',
+        message: 'A ' + e.type + ' event was triggered on the <span class="color: #66bbbb; font-weight: bold;">' + href + '</span> tab.'
+      });
+
+      if (type === 'beforeclose' && href === '#tabs-prevented-dismissible') {
+        return false;
+      }
+      return true;
+    }
+
+    $('#dismissible-tabs').on('beforeclose.demo close.demo afterclose.demo', announceEvent);
+
+  });
+</script>

@@ -207,7 +207,7 @@
           if (elem.parent().hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
-            self.remove($(this).prev().attr('href'));
+            self.closeDismissibleTab($(this).prev().attr('href'));
           }
         }
 
@@ -465,7 +465,7 @@
           case 8:
             if (e.altKey && currentLi.is('.dismissible')) {
               e.preventDefault();
-              self.remove(currentA.attr('href'));
+              self.closeDismissibleTab(currentA.attr('href'));
             }
             return;
           case 13: // Enter
@@ -523,7 +523,7 @@
           }
 
           e.preventDefault();
-          this.remove(tab.children('a').attr('href'));
+          this.closeDismissibleTab(tab.children('a').attr('href'));
         }
       },
 
@@ -554,20 +554,21 @@
       handlePanelKeydown: function(e) {
         var key = e.which,
           panel = $(e.target),
+          a = this.anchors.filter('#' + panel.attr('id')),
           tab = this.anchors.filter('#' + panel.attr('id')).parent();
 
         if (tab.is('.dismissible')) {
           // Close a Dismissible Tab
           if (e.altKey && key === 46) { // Alt + Delete
             e.preventDefault();
-            return this.remove(tab.children('a').attr('href'));
+            return this.closeDismissibleTab(a.attr('href'));
           }
         }
 
         // Takes focus away from elements inside a Tab Panel and brings focus to its corresponding Tab
         if ((e.ctrlKey && key === 38) && $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
           e.preventDefault();
-          return this.activate(tab.children('a').attr('href'));
+          return this.activate(a.attr('href'));
         }
       },
 
@@ -760,6 +761,11 @@
           targetLiIndex = this.tablist.children('li').index(targetLi),
           prevLi = targetLi.prev();
 
+        var canClose = this.element.triggerHandler('beforeclose', [targetLi]);
+        if (!canClose) {
+          return;
+        }
+
         // Remove these from the collections
         this.panels = this.panels.not(targetPanel);
         this.anchors = this.anchors.not(targetAnchor);
@@ -774,6 +780,8 @@
 
         // Adjust tablist height
         this.setOverflow();
+
+        this.element.trigger('close', [targetLi]);
 
         // If any tabs are left in the list, set the previous tab as the currently active one.
         var count = targetLiIndex - 1;
@@ -793,6 +801,9 @@
         this.activate(a.attr('href'));
         this.focusBar(prevLi);
         a.focus();
+
+        this.element.trigger('afterclose', [targetLi]);
+
         return this;
       },
 
@@ -1316,6 +1327,10 @@
         this.disabledElems = [];
 
         this.updateAria(this.tablist.find('.is-selected > a'));
+      },
+
+      closeDismissibleTab: function(tabId) {
+        return this.remove(tabId);
       },
 
       teardown: function() {
