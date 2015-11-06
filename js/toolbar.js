@@ -146,23 +146,7 @@
             popupLi.addClass('is-disabled');
           }
 
-          // Order of operations for populating the List Item text:
-          // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
-          var span = item.find('.audible'),
-            title = item.attr('title'),
-            tooltip = item.data('tooltip'),
-            tooltipText = tooltip ? tooltip.content : undefined;
-
-          var popupLiText = span.length ? span.text() :
-            title !== '' && title !== undefined ? item.attr('title') :
-            tooltipText ? tooltipText : item.text(),
-            markup = item.children('span').not('.audible').length === 1 ? item.html() : '';
-
-          if (markup) {
-            a.html(markup);
-          } else {
-            a.text(popupLiText);
-          }
+          a.text(self.getItemText(item));
 
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
           var icon = item.children('.icon').filter(function(){
@@ -258,7 +242,17 @@
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          }));
+          })).on('beforeopen', function() {
+            //Refresh Text
+            self.moreMenu.find('a').each(function () {
+              var a = $(this),
+                item = $(this).data('originalButton'),
+                text = self.getItemText(item);
+
+              a.text(text.trim());
+
+            });
+          });
         }
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.
@@ -285,6 +279,21 @@
         this.element.triggerHandler('rendered');
 
         return this;
+      },
+
+      getItemText: function (item) {
+         // Order of operations for populating the List Item text:
+        // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
+        var span = item.find('.audible'),
+          title = item.attr('title'),
+          tooltip = item.data('tooltip'),
+          tooltipText = tooltip ? tooltip.content : undefined;
+
+        var popupLiText = span.length ? span.text() :
+          title !== '' && title !== undefined ? item.attr('title') :
+          tooltipText ? tooltipText : item.text();
+
+        return popupLiText;
       },
 
       handleEvents: function() {
