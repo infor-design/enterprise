@@ -388,7 +388,8 @@
         }
 
         var li = a.parent(),
-          focusedByKeyboard = a.data('focused-by-click') !== true;
+          dataFocusedClick = a.data('focused-by-click'),
+          focusedByKeyboard = (dataFocusedClick && dataFocusedClick === false);
         $.removeData(a[0], 'focused-by-click');
 
         if (this.isTabOverflowed(li)) {
@@ -409,7 +410,8 @@
           return;
         }
 
-        var focusedByKeyboard = this.moreButton.data('focused-by-click') !== true;
+        var dataFocusedClick = this.moreButton.data('focused-by-click'),
+          focusedByKeyboard = (dataFocusedClick && dataFocusedClick === false);
         $.removeData(this.moreButton[0], 'focused-by-click');
 
         this.focusState.removeClass('is-visible');
