@@ -199,7 +199,12 @@
 
         // Some tabs have icons that can be clicked and manipulated
         function handleIconClick(e) {
-          if ($(this).parent().hasClass('dismissible')) {
+          var elem = $(this);
+          if (elem.is('[disabled]') || elem.parent().hasClass('is-disabled')) {
+            return;
+          }
+
+          if (elem.parent().hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
             self.remove($(this).prev().attr('href'));
@@ -513,6 +518,10 @@
         }
 
         if (e.altKey && key === 46) { // Alt + Del
+          if (tab.children('a').is('[disabled]') || tab.hasClass('is-disabled')) {
+            return;
+          }
+
           e.preventDefault();
           this.remove(tab.children('a').attr('href'));
         }
@@ -1215,14 +1224,99 @@
 
       disable: function() {
         this.element.prop('disabled', true).addClass('is-disabled');
+
+        if (!this.disabledElems) {
+          this.disabledElems = [];
+        }
+
+        var self = this,
+          tabs = this.tablist.children('li:not(.separator)');
+
+        tabs.each(function() {
+          var li = $(this),
+            a = li.children('a'),
+            panel = $(a.attr('href'));
+
+          if (li.is('.is-disabled') || a.prop('disabled') === true) {
+            self.disabledElems.push({
+              elem: li,
+              originalTabindex: li.attr('tabindex'),
+              originalDisabled: a.prop('disabled')
+            });
+          }
+
+          li.addClass('is-disabled');
+          a.prop('disabled', true);
+          panel.addClass('is-disabled');
+          panel.find('*').each(function() {
+            var t = $(this);
+
+            // These are shadow inputs.  They are already handled by virtue of running .disable() on the original select tag.
+            if (t.is('input.dropdown, input.multiselect')) {
+              return;
+            }
+
+            if (t.attr('tabindex') === '-1' || t.attr('disabled')) {
+              self.disabledElems.push({
+                elem: t,
+                originalTabindex: t.attr('tabindex'),
+                originalDisabled: t.prop('disabled')
+              })
+            }
+
+            t.disable();
+          });
+        });
+
         this.updateAria($());
       },
 
       enable: function() {
         this.element.prop('disabled', false).removeClass('is-disabled');
+
+        var self = this,
+          tabs = this.tablist.children('li:not(.separator)');
+
+        tabs.each(function() {
+          var li = $(this),
+            a = li.children('a'),
+            panel = $(a.attr('href'));
+
+          li.removeClass('is-disabled');
+          a.prop('disabled', false);
+          panel.removeClass('is-disabled');
+          panel.find('*').each(function() {
+            var t = $(this);
+            if (t.enable && typeof t.enable === 'function') {
+              t.enable();
+            }
+          });
+
+          $.each(self.disabledElems, function(i, obj) {
+            var attrTarget = obj.elem.is('.tab') ? obj.elem.children('a') : obj.elem;
+            if (obj.elem.disable && typeof obj.elem.disable === 'function') {
+              obj.elem.disable();
+            }
+
+            if (obj.elem.is('li')) {
+              obj.elem.addClass('is-disabled');
+              return;
+            }
+
+            // These are shadow inputs.  They are already handled by virtue of running .disable() on the original select tag.
+            if (obj.elem.is('input.dropdown, input.multiselect')) {
+              return;
+            }
+
+            obj.elem.attr('tabindex', obj.originalTabindex);
+            attrTarget.prop('disabled', obj.originalDisabled);
+          });
+        });
+
+        this.disabledElems = [];
+
         this.updateAria(this.tablist.find('.is-selected > a'));
       },
-
 
       teardown: function() {
         this.panels.removeAttr('style');

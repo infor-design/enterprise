@@ -184,7 +184,7 @@
           $('<li class="tab"><a href="#header-tabs-level-2" role="tab">Level 2 Detail</a></li>').appendTo(tablist);
         }
 
-        this.element.addClass('has-tabs');
+        this.element.addClass(this.settings.useAlternate ? 'has-alternate-tabs' : 'has-tabs');
         this.tabsContainer[this.settings.useAlternate ? 'addClass' : 'removeClass']('alternate');
 
         // NOTE: For demo purposes the markup for tab panels is already inside the Nav Patterns Test page.
@@ -476,7 +476,7 @@
           $('#header-tabs-level-2').css('display', 'none');
         }
 
-        this.element.removeClass('has-tabs');
+        this.element.removeClass('has-tabs').removeClass('has-alternate-tabs');
         if (this.tabsContainer.is(':not(:hidden)')) {
           this.element.one(transitionEnd + '.tabs-header', destroyTabs);
           timeout = setTimeout(destroyTabs, 300);
