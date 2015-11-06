@@ -65,14 +65,6 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: '需要', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: '設置時間', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: '今天', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: '小時', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: '分鐘', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: '期', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. 使用箭頭鍵選擇.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: '載入中', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

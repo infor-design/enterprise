@@ -65,16 +65,6 @@
     },
     //Resx
     messages: {
-     'MoreActions': {id: 'MoreActions', value: 'Mas acciones', comment: 'Skip link in header, jumps when clicked on to main area'},
-     'SkipToMain': {id: 'SkipToMain', value: 'Saltar al contenido principal', comment: 'Skip link in header, jumps when clicked on to main area'},
-     'Required': {id: 'Required', value: 'necesario', comment: 'indicates a form field is manditory'},
-     'SetTime': {id: 'SetTime', value: 'Establecer hora', comment: 'button text that inserts time when clicked'},
-     'Today': {id: 'Today', value: 'hoy', comment: 'refering to today on a calendar'},
-     'Hours': {id: 'Hours', value: 'horas', comment: 'the hour portion of a time'},
-     'Minutes': {id: 'Minutes', value: 'acta', comment: 'the minutes portion of a time'},
-     'Period': {id: 'Period', value: 'período', comment: 'the am/pm portion of a time'},
-     'UseArrow': {id: 'UseArrow', value: '. Utilice las teclas de flecha para seleccionar.', comment: 'Instructional comments for screen readers'},
-     'Loading': {id: 'Loading', value: 'Cargando', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 
