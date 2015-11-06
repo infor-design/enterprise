@@ -306,6 +306,11 @@ $datagrid-header-height: 40px;
       }
     }
 
+    //Readonly
+    &.is-readonly {
+      background-color: $datagrid-cell-readonly-bg-color;
+    }
+
     //Inline Editting
     &.is-editing {
       background-color: $panel-bg-color !important;
