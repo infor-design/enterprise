@@ -451,7 +451,7 @@
         number = parseFloat(number);
       }
 
-      var parts = number.toFixed(maximumFractionDigits).split('.');
+      var parts = this.truncateDecimals(number, maximumFractionDigits).split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
       formattedNum = parts.join(decimal);
 
@@ -461,6 +461,14 @@
       }
 
       return formattedNum;
+    },
+
+    truncateDecimals: function (number, digits) {
+      var multiplier = Math.pow(10, digits),
+        adjustedNum = number * multiplier,
+        truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+
+      return (truncatedNum / multiplier).toFixed(digits);
     },
 
     //Take a Formatted Number and return a real number
