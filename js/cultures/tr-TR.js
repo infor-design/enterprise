@@ -58,20 +58,13 @@
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
+      percentFormat: '%#,##0',
       minusSign: '-',
       decimal: ',',
       group: '.'
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'gereken', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Saat Set', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'Bugün Mü', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'Saat', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'dakika', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'önem', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Seçmek için ok tuşlarını kullanın.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'yükleme', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));
