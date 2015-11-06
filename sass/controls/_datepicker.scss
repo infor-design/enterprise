@@ -43,7 +43,7 @@
 // IE Hack
 .ie9 .datepicker + .icon,
 .ie10 .datepicker + .icon {
-  background: url('about:blank') no-repeat 0 0 transparent;
+  background-color: rgba($white, 0);
 }
 
 .calendar {

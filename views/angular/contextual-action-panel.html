@@ -23,19 +23,16 @@
   		var unsubscribe = modalScope.$on('$includeContentLoaded', function () {
   			unsubscribe();
 
-  			setTimeout(function() {
-  				container.contextualactionpanel({trigger: 'immediate'});
+  			container.contextualactionpanel({trigger: 'immediate'});
+  			container.one('afterclose.example', function() {
+				if (console) {
+					console.log('"afterclose" Event has been fired.');
+				}
 
-  				container.one('afterclose.example', function() {
-            if (console) {
-              console.log('"afterclose" Event has been fired.');
-            }
-
-  					// Destroy to avoid leaks
-  					modalScope.$destroy();
-  					container.remove();
-  				});
-  			}, 100);
+  				// Destroy to avoid leaks
+  				modalScope.$destroy();
+  				container.remove();
+  			});
   		});
 	  };
   });
@@ -43,10 +40,10 @@
 	app.controller('capCtrl', function($scope) {
 		$scope.data = {};
 		$scope.data.sortOptions = [
-      {name: 'Sort by Name', value: 'sortByName'},
-      {name: 'Sort by Status', value: 'sortByStatus'},
-      {name: 'Sort by Errors', value: 'sortByErrors'}
-    ];
+		  {name: 'Sort by Name', value: 'sortByName'},
+		  {name: 'Sort by Status', value: 'sortByStatus'},
+		  {name: 'Sort by Errors', value: 'sortByErrors'}
+		];
 		$scope.data.selectedOption = $scope.data.sortOptions[0];
 		$scope.searchString = '';
 		$scope.closeBtnText = 'Close';

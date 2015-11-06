@@ -1055,7 +1055,7 @@ $.fn.datagrid = function(options) {
           more.append(menu);
         }
 
-        this.element.before(toolbar);
+        this.element.parent('.datagrid-wrapper').before(toolbar);
       }
 
       toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {

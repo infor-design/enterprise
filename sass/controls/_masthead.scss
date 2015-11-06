@@ -33,10 +33,6 @@ $masthead-button-text-focus-color: $white;
     height: 32px;
     min-width: 30px;
     padding: 0 6px;
-
-    > .icon {
-      height: 18px;
-    }
   }
 
   .toolbar-searchfield-wrapper {
@@ -146,7 +142,7 @@ $masthead-button-text-focus-color: $white;
 }
 
 .masthead-appname {
-  color: $slate03;
+  color: $header-text-color;
   display: inline-block;
   font-weight: bold;
   @include font-size(12);

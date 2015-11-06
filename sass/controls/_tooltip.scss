@@ -116,7 +116,7 @@
 
   &.top {
     .arrow {
-      border-top-color: $popover-border-color;
+      border-top-color: $popover-arrow-border-color;
     }
 
     .arrow:after {
@@ -126,7 +126,7 @@
 
   &.bottom {
     .arrow {
-      border-bottom-color: $popover-border-color;
+      border-bottom-color: $popover-arrow-border-color;
       top: -12px;
     }
 
@@ -138,7 +138,7 @@
 
   &.right {
     .arrow {
-      border-right-color: $popover-border-color;
+      border-right-color: $popover-arrow-border-color;
     }
 
     .arrow:after {
@@ -148,7 +148,7 @@
 
   &.left {
     .arrow {
-      border-left-color: $popover-border-color;
+      border-left-color:$popover-arrow-border-color;
     }
 
     .arrow:after {

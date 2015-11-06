@@ -256,20 +256,6 @@
             self.open(e, true);
           }
         });
-
-        self.element.on('selected', function (e, link) {
-          if (self.element.hasClass('btn-filtering')) {
-            self.iconFilteringUpdate(link);
-            e.preventDefault();
-          }
-
-          if (self.menu.hasClass('is-selectable')) {
-            link.parent().prevUntil('.header').add(link.parent().nextUntil('.separator')).removeClass('is-checked');
-            link.parent().addClass('is-checked');
-          }
-
-        });
-
       },
 
       handleKeys: function () {
@@ -281,15 +267,28 @@
           .on('click.popupmenu', 'a', function (e) {
 
           var anchor = $(this),
-            href = anchor.attr('href');
+            href = anchor.attr('href'),
+            parent = anchor.parent();
 
           if (anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
             //Do not close parent items of submenus on click
+            e.preventDefault();
             return;
           }
 
           if (anchor.find('input[checkbox]').length > 0) {
             return;
+          }
+
+          if (self.element.hasClass('btn-filtering')) {
+            self.iconFilteringUpdate(anchor);
+            e.preventDefault();
+          }
+
+          // If the menu is "selectable", place the checkmark where it's supposed to go.
+          if (self.menu.hasClass('is-selectable')) {
+            parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
+            parent.addClass('is-checked');
           }
 
           self.element.trigger('selected', [anchor]);

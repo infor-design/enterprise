@@ -71,7 +71,7 @@
           }
 
           if (this.isTable) {
-            this.element.parent('table').after(this.pagerBar);
+            this.element.closest('.datagrid-wrapper').after(this.pagerBar);
           } else {
             if (this.settings.position ==='bottom') {
               this.element.after(this.pagerBar);

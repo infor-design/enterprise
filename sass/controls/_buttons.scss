@@ -44,6 +44,10 @@ button {
     + span:not(.audible) {
       padding-left: 6px;
     }
+
+    + * + span {
+      padding-left: 0;
+    }
   }
 
   &:not(.no-caps) {
@@ -238,7 +242,7 @@ a.btn-primary {
   }
 
   .ripple-effect {
-    background-color: #8dd2fb;
+    background-color: $tertiary-btn-ripple-color;
   }
 
 }
@@ -353,5 +357,7 @@ a.btn-primary {
     .btn-teritary {
       padding: 0 10px;
     }
+
+
  	}
 }

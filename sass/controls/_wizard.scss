@@ -273,6 +273,21 @@ $header-wizard-active-color: $white;
   }
 }
 
+// Sectional Wizard (used as an alternative to Wizard in the Header)
+.section-wizard {
+  background-color: $white;
+  border-bottom: 1px solid $graphite02;
+  padding: 20px 0 0;
+
+  .wizard-header {
+    background-color: transparent;
+
+    .tick:not(.complete):not(.current) {
+      background-color: $white;
+    }
+  }
+}
+
 // Hide the text from the non-current ticks in small form factors
 @include respond-to(phone) {
   .wizard-header {

@@ -1,0 +1,44 @@
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> controls/svg}}
+  {{> includes/masthead}}
+
+  <div class="page-container no-scroll">
+    <header class="header is-personalizable has-wizard">
+      <div class="toolbar">
+        <div class="title">
+          <h1>Page One Title</h1>
+        </div>
+
+        <div class="buttonset">
+          <input class="searchfield" />
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+
+      <div class="wizard">
+        <div class="wizard-header">
+          <div class="bar">
+            <div class="completed-range"></div>
+            <a href="#" class="tick complete">
+              <span class="label">Context Apps</span>
+            </a>
+            <a href="#" class="tick complete">
+              <span class="label">Utility Apps</span>
+            </a>
+            <a href="#" class="tick current">
+              <span class="label">Inbound Configuration</span>
+            </a>
+            <a href="#" class="tick">
+              <span class="label">OID Mapping</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="maincontent" class="page-container scrollable" role="main">
+
+    </div>
+  </div>

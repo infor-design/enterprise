@@ -347,6 +347,16 @@ body.no-scroll {
     }
   }
 
+  &.has-alternate-tabs {
+    height: 100px;
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 100px);
+      margin-top: 100px;
+    }
+  }
+
   // Alternate breadcrumb is taller than regular breadcrumb
   &.has-alternate-breadcrumb {
     height: 120px;

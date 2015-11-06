@@ -346,6 +346,16 @@ $toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
 //Builder Pattern
 $builder-header-bg-color: $slate08;
 
+// Header Tabs
+$header-tabcontainer-border-color: $graphite09;
+$header-tab-normal-color: $graphite03;
+$header-tab-hover-color: $inverse-color;
+$header-tab-selected-color: $inverse-color;
+$header-tab-alt-bg-color: $graphite10;
+$header-tab-alt-normal-color: $graphite06;
+$header-tab-alt-hover-color: $font-color-highcontrast;
+$header-tab-alt-selected-color: $primary-color;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;
