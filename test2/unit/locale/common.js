@@ -27,6 +27,8 @@ define([
   require('../../../js/cultures/fi-FI.js');
   require('../../../js/cultures/lt-LT.js');
   require('../../../js/cultures/vi-VN.js');
+  require('../../../js/cultures/tr-TR.js');
+  require('../../../js/cultures/it-IT.js');
 
   registerSuite({
 
@@ -351,6 +353,18 @@ define([
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.123, {style: 'currency'})).to.equal('12.345,12 €');
     },
+
+    'should format percent': function() {
+      Locale.set('en-US');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5.00 %');
+
+      Locale.set('tr-TR');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5,00');
+
+      Locale.set('it-IT');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5,00%');
+    },
+
 
     'should parse numbers back': function() {
       Locale.set('en-US');

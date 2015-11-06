@@ -422,7 +422,7 @@
     // minimumFractionDigits (0), maximumFractionDigits (3)
     formatNumber: function(number, options) {
       //Lookup , decimals, decimalSep, thousandsSep
-      var formattedNum, curFormat,
+      var formattedNum, curFormat, percentFormat,
         decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
         group = options && options.group ? options.group : this.numbers().group,
         minimumFractionDigits = options && options.minimumFractionDigits ? options.minimumFractionDigits : 0,
@@ -437,7 +437,7 @@
         minimumFractionDigits = 0;
       }
 
-      //Doc Note: Uses Rounding
+      //TODO: Doc Note: Uses Truncation
       if (options && options.style === 'currency') {
         var sign = this.currentLocale.data.currencySign;
 
@@ -447,8 +447,21 @@
         curFormat = curFormat.replace('¤', sign);
       }
 
+      if (options && options.style === 'percent') {
+        var percentSign = this.currentLocale.data.numbers.percentSign;
+
+        maximumFractionDigits = 2;
+        minimumFractionDigits = 2;
+        percentFormat = this.currentLocale.data.numbers.percentFormat;
+        percentFormat = percentFormat.replace('¤', percentSign);
+      }
+
       if (typeof number === 'string') {
         number = parseFloat(number);
+      }
+
+      if (options && options.style === 'percent') {
+        number = number * 100;
       }
 
       var parts = this.truncateDecimals(number, maximumFractionDigits).split('.');
@@ -458,6 +471,10 @@
       //TODO: Confirm Logic After All Locales are added.
       if (options && options.style === 'currency') {
         formattedNum = curFormat.replace('#,##0.00', formattedNum);
+      }
+
+      if (options && options.style === 'percent') {
+        formattedNum = percentFormat.replace('#,##0', formattedNum);
       }
 
       return formattedNum;

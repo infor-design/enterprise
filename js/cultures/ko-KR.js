@@ -59,20 +59,13 @@
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
+      percentFormat: '#,##0 %',
       minusSign: '-',
       decimal: '.',
       group: ','
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: '필수', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: '시간 설정', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: '오늘', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: '시간', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: '분', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: '기간', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. 선택 화살표 키를 사용하여.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: '로드', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));
