@@ -249,8 +249,7 @@
                 item = $(this).data('originalButton'),
                 text = self.getItemText(item);
 
-              a.text(text.trim());
-
+              a.find('span').text(text.trim());
             });
           });
         }
