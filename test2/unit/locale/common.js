@@ -365,7 +365,6 @@ define([
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5,00%');
     },
 
-
     'should parse numbers back': function() {
       Locale.set('en-US');
       expect(Locale.parseNumber('$12,345.13')).to.equal(12345.13);
@@ -373,7 +372,14 @@ define([
       Locale.set('de-DE');
       expect(Locale.parseNumber('12.345,12 €')).to.equal(12345.12);
       expect(Locale.parseNumber(undefined)).to.equal(undefined);
-    }
+    },
+
+    'should parse with multiple group separators': function() {
+      Locale.set('en-US');
+      expect(Locale.parseNumber('1,234,567,890.12346')).to.equal(1234567890.12346);
+
+   }
+
 
   });
 
