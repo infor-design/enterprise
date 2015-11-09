@@ -249,7 +249,9 @@
                 item = $(this).data('originalButton'),
                 text = self.getItemText(item);
 
-              a.find('span').text(text.trim());
+              if (item) {
+                a.find('span').text(text.trim());
+              }
             });
           });
         }
@@ -280,9 +282,12 @@
         return this;
       },
 
+      // Order of operations for populating the List Item text:
+      // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
       getItemText: function (item) {
-         // Order of operations for populating the List Item text:
-        // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
+        if (!item) {
+          return;
+        }
         var span = item.find('.audible'),
           title = item.attr('title'),
           tooltip = item.data('tooltip'),
