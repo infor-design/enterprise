@@ -58,20 +58,13 @@
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
+      percentFormat: '#,##0%',
       minusSign: '-',
       decimal: ',',
       group: ' '
     },
     //Resx - Approved By Translation Team
     messages: {
-      'Required': {id: 'Required', value: 'требуется', comment: 'indicates a form field is manditory'},
-      'SetTime': {id: 'SetTime', value: 'Установка времени', comment: 'button text that inserts time when clicked'},
-      'Today': {id: 'Today', value: 'сегодня Днем', comment: 'refering to today on a calendar'},
-      'Hours': {id: 'Hours', value: 'часов', comment: 'the hour portion of a time'},
-      'Minutes': {id: 'Minutes', value: 'минут', comment: 'the minutes portion of a time'},
-      'Period': {id: 'Period', value: 'период', comment: 'the am/pm portion of a time'},
-      'UseArrow': {id: 'UseArrow', value: '. Используйте клавиши со стрелками, чтобы выбрать.', comment: 'Instructional comments for screen readers'},
-      'Loading': {id: 'Loading', value: 'загрузка', comment: 'Text below spinning indicator to indicate loading'}
     }
   });
 }));

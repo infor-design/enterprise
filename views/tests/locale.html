@@ -12,15 +12,12 @@
         var append = function (value) {
           output.append('<span>' + value + '</span><br>');
         };
-        Locale.set('de-DE');
-
         setTimeout(function () {
-          Locale.set('de-DE');
-          // console.log(Locale.parseDate('10/28/2015 12:12:10', 'M/d/yyyy h:mm:ss'));
-          console.log(Locale.parseDate('Dezember 2015', 'MMMM yyyy'));
-         // console.log(Locale.calendar().dateFormat.month, Locale.calendar().dateFormat.year);
-         // console.log(Locale.parseDate('111/81/20001'));
-         // console.log(Locale.parseDate('1105', 'MMdd'));
+          //Locale.set('de-DE');
+          //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:5}));
+          //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:4}));
+
+          append(Locale.formatNumber(0.0500000, {style: 'percent'}));
 
         }, 300);
       }
