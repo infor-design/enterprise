@@ -316,6 +316,9 @@
               break;
             case keys.i:
               self.triggerClick(e, e.shiftKey ? 'image' : 'italic');
+              if (!e.shiftKey) {
+                e.preventDefault();
+              }
               break;
             case keys.l:
               self.triggerClick(e, 'justifyLeft');
@@ -331,6 +334,7 @@
               break;
             case keys.u:
               self.triggerClick(e, 'underline');
+              e.preventDefault();
               break;
             case keys.sv:
               self.triggerClick(e, currentElement === self.element ? 'source' : 'visual');
