@@ -492,7 +492,7 @@
       numString = input;
 
       if (!numString) {
-        return undefined;
+        return NaN;
       }
 
       numString = numString.replace(new RegExp('\\' + numSettings.group, 'g'), '');

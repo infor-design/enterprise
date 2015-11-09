@@ -373,7 +373,15 @@ define([
 
       Locale.set('de-DE');
       expect(Locale.parseNumber('12.345,12 €')).to.equal(12345.12);
-      expect(Locale.parseNumber(undefined)).to.equal(undefined);
+    },
+
+    'should return NaN for bad numbers': function() {
+      Locale.set('en-US');
+      expect(NaN).to.deep.equal(NaN);
+      expect(Locale.parseNumber()).to.deep.equal(NaN);
+      expect(Locale.parseNumber('')).to.deep.equal(NaN);
+      expect(Locale.parseNumber('sdf')).to.deep.equal(NaN);
+      expect(Locale.parseNumber(undefined)).to.deep.equal(NaN);
     },
 
     'should parse with multiple group separators': function() {
