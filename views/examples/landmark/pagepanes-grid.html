@@ -1,0 +1,255 @@
+<style type="text/css">
+  .pane {
+    /*background-color: #ffffff;*/
+    display: inline-block;
+    position: absolute;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .pane.bottom-left {
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    bottom: 0;
+    left: 0;
+    margin: 10px 10px 20px 20px;
+  }
+
+  .pane.bottom-right {
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    bottom: 0;
+    right: 0;
+    margin: 10px 20px 20px 10px; /* top, right, bottom, left */
+  }
+
+  .pane.top-left {
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    top: 0;
+    left: 0;
+    margin: 20px 10px 10px 20px;
+ }
+
+  .pane.top-right {
+    height: calc(50% - 30px);
+    width: calc(50% - 30px);
+    top: 0;
+    right: 0;
+    margin: 20px 20px 10px 10px;
+  }
+
+  .pane.left {
+    height: calc(100% - 40px);
+    width: calc(50% - 30px);
+    margin: 20px 10px 20px 20px;
+    top: 0;
+    left: 0;
+  }
+
+  .pane.right {
+    height: calc(100% - 40px);
+    width: calc(50% - 30px);
+    margin: 20px 20px 20px 10px;
+    top: 0;
+    right: 0;
+  }
+
+  .pane.top {
+    height: calc(50% - 30px);
+    width: calc(100% - 40px);
+    margin: 20px 20px 10px 20px;
+    top: 0;
+  }
+
+  .pane.bottom {
+    height: calc(50% - 30px);
+    width: calc(100% - 40px);
+    margin: 10px 20px 20px 20px;
+    bottom: 0;
+  }
+
+  @media only screen and (min-width: 0px) and (max-width: 768px),
+  only screen and (min-height: 0px) and (max-height: 600px) {
+    .pane.top,
+    .pane.bottom,
+    .pane.left,
+    .pane.right,
+    .pane.top-left,
+    .pane.top-right,
+    .pane.bottom-left,
+    .pane.bottom-right {
+      width: calc(100% - 40px);
+      margin: 0 0 20px 20px;
+      position: relative;
+      height: auto;
+    }
+    .pane:first-child {
+      margin-top: 20px;
+    }
+  }
+
+  .landmark-card-content {
+    height: calc(100% - 50px) !important;
+    overflow: hidden !important;
+    min-height: 0px !important;
+  }
+
+  .datagrid.contained {
+    height: auto !important;
+  }
+
+</style>
+{{> controls/svg}}
+{{> includes/masthead}}
+<header class="header is-sticky has-breadcrumb">
+  <div class="toolbar">
+    <div class="title">
+      <h1>Landmark Page Pane Patterns</h1>
+    </div>
+
+    <div class="buttonset">
+      <button class="btn-icon header-search" type="button">
+        <span class="audible">Search</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-search"></use>
+          </svg>
+      </button>
+    </div>
+      {{> includes/header-actionbutton}}
+  </div>
+
+  <div class="tab-container">
+    <ul class="tab-list">
+      <li class="tab"><a href="#header-tab1">Left/Right</a></li>
+      <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
+      <li class="tab"><a href="#header-tab3">Left Column</a></li>
+      <li class="tab"><a href="#header-tab4">Right Column</a></li>
+      <li class="tab"><a href="#header-tab5">Top Row</a></li>
+      <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
+      <li class="tab"><a href="#header-tab7">4 Panes</a></li>
+     </ul>
+  </div>
+</header>
+
+<div id="maincontent" class="page-container scrollable" role="main">
+  <div id="header-tab1" class="tab-panel">
+    <div class="page-container">
+      <section class="pane left">{{> examples/landmark/pagepanes-grid1}}</section>
+      <section class="pane right">{{> examples/landmark/pagepanes-grid2}}</section>
+    </div>
+  </div>
+  <div id="header-tab2">
+    <div class="page-container">
+      <section class="pane top">{{> examples/landmark/pagepanes-grid1}}</section>
+      <section class="pane bottom">{{> examples/landmark/pagepanes-grid2}}</section>
+    </div>
+  </div>
+  <div id="header-tab3">
+    <div class="page-container">
+      <section class="pane left">{{> examples/landmark/pagepanes-grid1}}</section>
+      <section class="pane top-right">{{> examples/landmark/pagepanes-grid2}}</section>
+      <section class="pane bottom-right">{{> examples/landmark/pagepanes-grid3}}</section>
+    </div>
+  </div>
+  <div id="header-tab4">
+    <div class="page-container">
+      <section class="pane right">{{> examples/landmark/pagepanes-grid1}}</section>
+      <section class="pane top-left">{{> examples/landmark/pagepanes-grid2}}</section>
+      <section class="pane bottom-left">{{> examples/landmark/pagepanes-grid3}}</section>
+    </div>
+  </div>
+  <div id="header-tab5">
+    <div class="page-container">
+      <section class="pane top">{{> examples/landmark/pagepanes-grid1}}</section>
+      <section class="pane bottom-left">{{> examples/landmark/pagepanes-grid2}}</section>
+      <section class="pane bottom-right">{{> examples/landmark/pagepanes-grid3}}</section>
+    </div>
+  </div>
+  <div id="header-tab6">
+    <div class="page-container">
+      <section class="pane top-left">{{> examples/landmark/pagepanes-grid2}}</section>
+      <section class="pane top-right">{{> examples/landmark/pagepanes-grid3}}</section>
+      <section class="pane bottom">{{> examples/landmark/pagepanes-grid1}}</section>
+    </div>
+  </div>
+  <div id="header-tab7">
+    <div class="page-container">
+      <section class="pane top-left">{{> examples/landmark/pagepanes-grid1}}</section>
+      <section class="pane top-right">{{> examples/landmark/pagepanes-grid2}}</section>
+      <section class="pane bottom-left">{{> examples/landmark/pagepanes-grid3}}</section>
+      <section class="pane bottom-right">{{> examples/landmark/pagepanes-grid4}}</section>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    init();
+  });
+
+  function getColumns()
+  {
+    var columns = [];
+    //Define Columns for the Grid.
+
+    columns.push({
+      id        : 'selectionCheckbox',
+      sortable  : false,
+      resizable : false,
+      width     : 50,
+      formatter : Formatters.SelectionCheckbox,
+      align     : 'center'
+    });
+
+
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+    columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    return columns;
+  }
+
+  function init()
+  {
+    var gridPageSize = 10;
+
+    $('.datagrid').datagrid({
+      columns: getColumns(),
+      selectable: 'single',
+      rowHeight: 'short', //(short, medium or tall)
+      paging: true,
+      pagesize: gridPageSize,
+      indeterminate: true,
+      source: function(req, response) {
+        var pageNum = req.activePage;
+        var pagesize = req.pagesize;
+
+        if (req.type === 'initial')
+        {
+          pageNum = 1;
+          pagesize = gridPageSize;
+        }
+
+        var url = '/api/compressors?pageNum='+ pageNum +'&pageSize='+ pagesize;
+
+        if (req.sortField)
+          url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+
+        if (req.filterExpr && req.filterExpr[0])
+          url += '&filter=' + req.filterExpr[0].value;
+
+        $.getJSON(url, function(res) {
+          req.total = res.total;
+          response(res.data, req);  //Option 1, return paging info here.
+        });
+      }
+    });
+
+    $('body').on("initialized", function() {
+      $(".datagrid-wrapper").css({"overflow":"auto", "height":"calc(100% - 55px)"});
+    });
+  }
+</script>
