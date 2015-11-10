@@ -442,11 +442,11 @@ window.Chart = function(container) {
 
     svg.attr('width', '100%')
       .attr('height', '100%')
-      .attr('viewBox','0 0 ' + dims.width + ' ' + dims.height);
+      .attr('viewBox','0 0 ' + dims.width + ' ' + (dims.height + 10));
 
     // move the origin of the group's coordinate space to the center of the SVG element
-    arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ? 0 : 15))  + ')');
-    labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + ((dims.height / 2) + (isDonut ? 0 : 15)) + ')');
+    arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2)  + ')');
+    labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2) + ')');
 
     var pieData = pie(chartData);
 
@@ -482,11 +482,11 @@ window.Chart = function(container) {
               .style('stroke', color)
               .style('stroke-width', 0)
               .attr('transform', 'scale(1.025, 1.025)');
-            $(container).trigger('selected', [path[0], d]);
+            $(container).trigger('selected', [path[0], d.data]);
             return;
           }
 
-          $(container).trigger('selected', [path[0], d]);
+          $(container).trigger('selected', [path[0], d.data]);
         }).on('mouseenter', function () {
           /*var shape = d3.select(this),
             content = 'test';
@@ -1358,7 +1358,7 @@ $.fn.chart = function(options) {
 
     setTimeout(function () {
       chartInst.initChartType(options);
-      chartInst.handleResize();      
+      chartInst.handleResize();
     }, 300);
 
   });
