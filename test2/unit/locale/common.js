@@ -357,6 +357,8 @@ define([
     'should format percent': function() {
       Locale.set('en-US');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5.00 %');
+      expect(Locale.formatNumber(0.050000, {style: 'percent', maximumFractionDigits: 0})).to.equal('5 %');
+      expect(Locale.formatNumber(0.05234, {style: 'percent', maximumFractionDigits: 4})).to.equal('5.2340 %');
 
       Locale.set('tr-TR');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5,00');
@@ -365,15 +367,29 @@ define([
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5,00%');
     },
 
-
     'should parse numbers back': function() {
       Locale.set('en-US');
       expect(Locale.parseNumber('$12,345.13')).to.equal(12345.13);
 
       Locale.set('de-DE');
       expect(Locale.parseNumber('12.345,12 €')).to.equal(12345.12);
-      expect(Locale.parseNumber(undefined)).to.equal(undefined);
-    }
+    },
+
+    'should return NaN for bad numbers': function() {
+      Locale.set('en-US');
+      expect(NaN).to.deep.equal(NaN);
+      expect(Locale.parseNumber()).to.deep.equal(NaN);
+      expect(Locale.parseNumber('')).to.deep.equal(NaN);
+      expect(Locale.parseNumber('sdf')).to.deep.equal(NaN);
+      expect(Locale.parseNumber(undefined)).to.deep.equal(NaN);
+    },
+
+    'should parse with multiple group separators': function() {
+      Locale.set('en-US');
+      expect(Locale.parseNumber('1,234,567,890.12346')).to.equal(1234567890.12346);
+
+   }
+
 
   });
 

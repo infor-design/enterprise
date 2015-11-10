@@ -425,8 +425,8 @@
       var formattedNum, curFormat, percentFormat,
         decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
         group = options && options.group ? options.group : this.numbers().group,
-        minimumFractionDigits = options && options.minimumFractionDigits ? options.minimumFractionDigits : 0,
-        maximumFractionDigits = options && options.maximumFractionDigits ? options.maximumFractionDigits : 3;
+        minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 0),
+        maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 3);
 
       if (number === undefined || number === null || number === '') {
         return undefined;
@@ -441,8 +441,6 @@
       if (options && options.style === 'currency') {
         var sign = this.currentLocale.data.currencySign;
 
-        maximumFractionDigits = 2;
-        minimumFractionDigits = 2;
         curFormat = this.currentLocale.data.currencyFormat;
         curFormat = curFormat.replace('¤', sign);
       }
@@ -450,8 +448,6 @@
       if (options && options.style === 'percent') {
         var percentSign = this.currentLocale.data.numbers.percentSign;
 
-        maximumFractionDigits = 2;
-        minimumFractionDigits = 2;
         percentFormat = this.currentLocale.data.numbers.percentFormat;
         percentFormat = percentFormat.replace('¤', percentSign);
       }
@@ -496,10 +492,10 @@
       numString = input;
 
       if (!numString) {
-        return undefined;
+        return NaN;
       }
 
-      numString = numString.replace(numSettings.group, '');
+      numString = numString.replace(new RegExp('\\' + numSettings.group, 'g'), '');
       numString = numString.replace(numSettings.decimal, '.');
       numString = numString.replace(numSettings.percentSign, '');
       numString = numString.replace(this.currentLocale.data.currencySign, '');
