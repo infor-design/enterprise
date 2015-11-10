@@ -371,6 +371,28 @@ $datagrid-header-height: 40px;
 
   //Readonly - List Datagrid
   &.is-readonly {
+
+    th {
+      background-color: $datagrid-readonly-header-bg-color;
+
+      .datagrid-header-text {
+        color: $datagrid-readonly-header-color;
+      }
+
+      &.is-sortable:hover {
+        background-color: $datagrid-readonly-header-hover-color;
+      }
+
+      .sort-indicator .icon {
+        fill: $datagrid-readonly-sort-icon-color;
+      }
+
+      &.is-sorted-asc .sort-asc .icon,
+      &.is-sorted-desc .sort-desc .icon {
+        fill: $datagrid-readonly-sort-icon-hover-color;
+      }
+    }
+
     td {
       background-color: transparent;
     }

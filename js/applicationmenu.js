@@ -87,7 +87,7 @@
         // Don't mess with it if it's already in the body.
         this.originalParent = this.menu.parent();
         if (this.originalParent[0] !== $('body')[0]) {
-          var target = $('body').children('.svg-icons'),
+          var target = $('body').children('.svg-icons .svg-icons-extended'),
             masthead = $('body').children('.masthead'),
             mainHeader = $('body').children('.header').first();
           if (masthead && masthead.length) {
@@ -96,7 +96,7 @@
           if (mainHeader && mainHeader.length) {
             target = mainHeader;
           }
-          this.menu.detach().insertAfter(target);
+          this.menu.detach().insertAfter(target.last());
         }
         this.adjustHeight();
 

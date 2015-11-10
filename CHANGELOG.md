@@ -1,16 +1,25 @@
+# 4.0.6
+
+Minor QA Release
+
+## Breaking Changes
+* All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
+* bar-progress type chart was renamed to completion-chart
+
+## Ui Changes
+* In the High Contrast themes all colors changed from slate to the graphite spectrum
+
+[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=23807&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Clin)
 
 # 4.0.5
 
 Minor QA Release.
 
 ## New Features
-* Datagrid Editing
 * Accordion Refactoring ([HFC-2886](http://jira/browse/HFC-2886))
 * Lookup
 
 ## Breaking Changes
-* All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
-* bar-progress type chart was renamed to completion-chart
 * Accordion Refactoring
 ** Some markup modifications are necessary to retain compatibility with all Accordion controls.  All current examples of Accordions in this repository have been updated to reflect the new Markup (and by proxy, all Application Menus as well).  Markup Changes include:
 *** `<div class=".accordion-pane"></div>` elements are no longer nested inside of `<div class=".accordion-header"></div>` elements.  Place the Panes immediately following the Headers.

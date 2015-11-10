@@ -176,34 +176,7 @@ var express = require('express'),
   };
 
   app.get('/examples/', function(req, res) {
-    res.render('examples/index', exampleOpts);
-  });
-
-  app.get('/examples/common-nav/*', function(req, res) {
-    var commonNavOpts = {
-      title: 'Application Title',
-      layout: 'examples/common-nav/layout',
-      enableLiveReload: true
-    },
-      end = req.url.replace('/examples/common-nav/', '');
-
-    if (end.match(/\?/)) {
-      var param = end.substr(end.indexOf('?'), end.length - 1);
-      commonNavOpts.title = decodeURIComponent(param.substr(param.indexOf('=') + 1, param.length - 1)); // 6 = "?title="
-      end = end.replace(param, '');
-    }
-
-    if (end.match('a1')) {
-      commonNavOpts.layout += '-a1';
-    } else if (end.match('a2')) {
-      commonNavOpts.layout += '-a2';
-    } else if (end.match('b1')) {
-      commonNavOpts.layout += '-b1';
-    } else if (end.match('b2')) {
-      commonNavOpts.layout += '-b2';
-    }
-
-    res.render('examples/common-nav/' + end, commonNavOpts);
+    res.render('controls/index', exampleOpts);
   });
 
   app.get('/examples', function(req, res) {

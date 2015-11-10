@@ -4,15 +4,6 @@
 
 // Contained Scrolling Example's definitions for columns
 //================================================== //
-@mixin striped-bg-light {
-  background: repeating-linear-gradient(
-    45deg,
-    #ffffff,
-    #ffffff 10px,
-    #fafafa 10px,
-    #fafafa 20px
-  );
-}
 
 .contained-scrolling-left-col {
   background-color: #ffffff;
@@ -24,7 +15,6 @@
   width: calc(30% - 20px);
 
   > .content {
-    @include striped-bg-light;
     height: 5000px;
     width: 3000px;
   }
@@ -42,7 +32,6 @@
   width: calc(70% - 40px);
 
   > .content {
-    @include striped-bg-light;
     height: 5000px;
     width: 3000px;
   }
@@ -58,23 +47,8 @@
   width: calc(70% - 40px);
 
   > .content {
-    @include striped-bg-light;
     height: 5000px;
     width: 3000px;
-  }
-}
-
-.demo-stripes {
-  @include striped-bg-light;
-
-  &.darker {
-    background: repeating-linear-gradient(
-      45deg,
-      #f3f3f3,
-      #f3f3f3 10px,
-      #ededed 10px,
-      #ededed 20px
-    );
   }
 }
 

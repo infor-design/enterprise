@@ -156,6 +156,11 @@ window.Formatters = {
     return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
+  Button: function (row, cell, value, col) {
+    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '--' : value.toString());
+    return '<button type="button" class="btn ' + (col.cssClass ? col.cssClass : '') + '">' + text + '</span>';
+  },
+
   // TODOs
   // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // Select (Drop Down)
@@ -169,7 +174,6 @@ window.Formatters = {
   // Currency
   // Percent
   // File Upload (Simple)
-  // Text Button (1 or 2)
   // Menu Button
   // Icon Button (Approved and SoHo Xi Standard)
   // Toggle Button (No)
@@ -640,12 +644,21 @@ $.fn.datagrid = function(options) {
           // Add Column Css Classes
           cssClass += (col.readonly ? 'is-readonly ' : '');
           cssClass += (col.cssClass ? col.cssClass : '');
+          cssClass += (col.focusable ? 'is-focusable ' : '');
 
           rowHtml += '<td role="gridcell" aria-colindex="' + (j+1) + '" '+
               ' aria-describedby="' + self.uniqueID(self.gridCount, '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
               '><div class="datagrid-cell-wrapper">';
+
+          if (col.contentVisible) {
+            var canShow = col.contentVisible(i, j, settings.dataset[i], col);
+            if (!canShow) {
+              formatted = '';
+            }
+          }
+
           rowHtml += formatted + '</div></td>';
         }
 
@@ -1715,12 +1728,15 @@ $.fn.datagrid = function(options) {
       }
 
       self.activeCell.node.focus();
+      if (self.activeCell.node.hasClass('is-focusable')) {
+        self.activeCell.node.find('button').focus();
+      }
+
       var headers = self.headerNodes();
       headers.removeClass('is-active');
       headers.eq(cell).addClass('is-active');
 
       this.activeCell.isFocused = true;
-
     },
 
     expandRow: function(row) {

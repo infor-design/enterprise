@@ -6,6 +6,7 @@
 // Form Background Color
 $body-bg-color:  $graphite01;
 $header-bg-color: $slate07;
+$header-border-color: $slate08;
 $header-icon-color: $white;
 $header-text-color: $white;
 $header-disabled-color: $slate05;
@@ -310,6 +311,7 @@ $datagrid-header-bg-color: $graphite06;
 $datagrid-header-border-color: $graphite02;
 $datagrid-header-hover-color: $graphite07;
 $datagrid-header-active-color: $graphite07;
+
 $datagrid-cell-bg-color: #ffffff;
 $datagrid-cell-readonly-bg-color: $graphite01;
 $datagrid-cell-readonly-color: $graphite05;
@@ -317,6 +319,12 @@ $datagrid-cell-border-color: $graphite02;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #eaf8fe;
 $datagrid-row-hover-color: #e4e4e4;
+
+$datagrid-readonly-header-bg-color: #e4e4e4;
+$datagrid-readonly-header-color: $graphite05;
+$datagrid-readonly-header-hover-color: $graphite02;
+$datagrid-readonly-sort-icon-color: $graphite03;
+$datagrid-readonly-sort-icon-hover-color: $graphite05;
 
 // Search Results
 $sr-masthead-text-color: $font-color;

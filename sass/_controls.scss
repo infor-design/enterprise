@@ -1,4 +1,4 @@
-@import 'controls/colors';
+
 @import 'controls/icons';
 @import 'controls/typography';
 @import 'controls/layouts';
@@ -69,6 +69,10 @@
 @import 'patterns/builder';
 @import 'patterns/commonnav';
 @import 'patterns/full-width';
+@import 'patterns/list-detail';
 
 // Core Layouts
 @import 'layouts/object-summary';
+
+// These controls come last
+@import 'controls/colors';
