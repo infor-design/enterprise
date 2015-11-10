@@ -162,6 +162,7 @@
       'Inventory': {id: 'Inventory', value: 'Inventory', comment: 'Icon button tooltop for Inventory Action'},
       'IsEmpty': {id: 'IsEmpty', value: 'Is Empty', comment: 'Is Empty in icons for filtering'},
       'IsNotEmpty': {id: 'IsNotEmpty', value: 'Is Not Empty', comment: 'Is Not Empty in icons for filtering'},
+      'ItemsSelected': {id: 'ItemsSelected', value: 'Items selected', comment: 'Num of Items selected for swaplist'},
       'JustifyCenter': {id: 'JustifyCenter', value: 'Justify Center', comment: 'justify text to center in the editor'},
       'JustifyLeft': {id: 'JustifyLeft', value: 'Justify Left', comment: 'justify text to left in the editor'},
       'JustifyRight': {id: 'JustifyRight', value: 'Justify Right', comment: 'justify text to right in the editor'},
