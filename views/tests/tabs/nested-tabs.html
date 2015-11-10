@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Test: Nested Tabs</h2>
+
+    <p>A <a class="hyperlink" href="http://jira/browse/HFC-3125" target="_blank">bug was reported</a> where a nested Tabs Control was having issues activating one of its tabs due to being hidden.  This test attempts to demonstrate Nested Tabs Controls working correctly.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+  <div id="main-tabs-container" class="tab-container">
+    <ul class="tab-list">
+      <li><a href="#tab1">tab 1</a></li>
+      <li><a href="#tab2">tab 2</a></li>
+    </ul>
+    <div id="tab1" class="tab-panel">
+      <p>hello</p>
+    </div>
+    <div id="tab2" class="tab-panel">
+
+      <div id="nested-tabs-container" class="tab-container">
+        <ul class="tab-list">
+          <li><a href="#tab3">tab 3</a></li>
+          <li><a href="#tab4">tab 4</a></li>
+        </ul>
+        <div id="tab3" class="tab-panel">
+          <p>hello</p>
+        </div>
+        <div id="tab4" class="tab-panel">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+</div>
