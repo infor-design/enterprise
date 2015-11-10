@@ -1,0 +1,66 @@
+// List Detail Pattern
+//================================================== //
+
+// Common design between List/Detail and Builder Patterns
+.list-detail {
+  font-size: 0;
+  height: 100%;
+
+  .main {
+    background-color: $panel-bg-color;
+    border-left: 0;
+  }
+
+  .sidebar {
+    border-right: 0;
+
+    .listview {
+      border-right: 1px solid $panel-border-color;
+    }
+
+    .header {
+      border-right: 1px solid $header-border-color;
+
+      &.azure07 {
+        border-right: 1px solid $azure09;
+      }
+    }
+  }
+
+}
+
+// In List-Detail View, Main/Sidebar slide left/right instead of being stacked
+@include respond-to(phone) {
+
+  .list-detail {
+    .main,
+    .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      position: absolute;
+
+      &.scrollable,
+      &.scrollable-y {
+        height: 100%;
+        overflow: auto;
+      }
+    }
+
+    .main {
+      @include css3(transform, translateX(100%));
+    }
+
+    .sidebar {
+      @include css3(transform, translateX(0));
+    }
+
+    &.show-detail {
+      .main {
+        @include css3(transform, translateX(0));
+      }
+
+      .sidebar {
+        @include css3(transform, translateX(-100%));
+      }
+    }
+  }
+}
