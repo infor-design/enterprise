@@ -26,6 +26,9 @@
           'btnFullAccess': '.btn-moveto-selected',
           'btnSelectedLeft': '.btn-moveto-left',
           'btnSelectedRight': '.btn-moveto-right',
+          'numOfSelectionsClass': 'num-of-selections',
+          'itemContentTempl': '',
+          'itemContentClass': 'swaplist-item-content',
 
           'triggerAfterSwap': 'swapupdate',
           'triggerBeforeSwap': 'beforeswap',
@@ -60,7 +63,8 @@
       // Handle Events
       handleEvents: function() {
         var self = this,
-          settings = self.settings;
+          settings = self.settings,
+          selections = self.selections;
 
 
         // TOP BUTTONS =============================================================================
@@ -106,8 +110,8 @@
           //Escape is the abort keystroke (for any target element)
           if(e.keyCode === 27) {
             var index, list = $('.listview', container).data('listview');
-            if(self.selections.items.length) {
-              index = $(self.selections.items[self.selections.items.length-1]);
+            if(selections.items.length) {
+              index = $(selections.items[selections.items.length-1]);
             } else if(list.selectedItems.length) {
               index = $(list.selectedItems[list.selectedItems.length-1]);
             } else {
@@ -140,16 +144,18 @@
 
 
         // DRAGGABLE ===============================================================================
-        self.element.onTouchClick('swaplist', self.dragElements)
+        self.element
+        .onTouchClick('swaplist', self.dragElements)
 
         // Dragstart - initiate dragging
         .on(self.dragStart, self.dragElements, function(e) {
-          var target = $(e.target),
+          var orig, pos, posOwner, placeholderContainer,
+            target = $(e.target).closest('li'),            
             isInSelection = false,
             list = $('.listview', target.closest('.card')).data('listview');
 
-          if (!!self.handle && !self.selections.isHandle) {
-            return false;
+          if (!!self.handle && !selections.isHandle) {
+            return;
           }
 
           if(!self.isTouch) {
@@ -166,73 +172,123 @@
           }
 
           self.clearSelections(); // Clear selection before fill
-          self.element.trigger(settings.triggerBeforeSwap, [self.selections.items]);
-          self.selections.draggedIndex = target.closest('li').index();
-          self.selections.owner = target.closest('.card');
+          self.element.trigger(settings.triggerBeforeSwap, [selections.items]);
 
+          selections.owner = target.closest('.card');
+          selections.dragged = target;
+          selections.draggedIndex = target.index();
+          selections.placeholder = target.clone(true);
+          selections.placeholder.attr('id', 'sl-placeholder');
 
-          if(self.isTouch) {
-            // Target items were not LI with touch for selected items from listview
-            $.each(list.selectedItems, function(index, val) {
-              self.selections.items[index] = val.closest('li');
-            });
+          selections.items = list.selectedItems;
+          $('.'+ settings.numOfSelectionsClass, settings.itemContentTempl).html(selections.items.length);
+          self.addDropeffects();
 
-          } else {
-            self.selections.items = list.selectedItems;
+          if(!self.isTouch) {
+            selections.dragged.addClass('is-dragging');
             e.originalEvent.dataTransfer.setData('text', '');
-            self.addDropeffects();
+
+            if (selections.items.length > 1) {
+              $('.'+ settings.itemContentClass, selections.dragged).html(settings.itemContentTempl.html());
+            }
+          }
+          else {
+            orig = e.originalEvent;
+            pos = target.position();
+            posOwner = selections.owner.position();
+
+            self.offset = {
+              x: orig.changedTouches[0].pageX - (posOwner.left + pos.left),
+              y: orig.changedTouches[0].pageY - (posOwner.top + pos.top + target.outerHeight(true)*1.2)
+            };
+
+            self.containers.css({'z-index': 1});
+            selections.placeholderTouch = selections.dragged.clone(true);
+            selections.placeholderTouch.attr('id', 'sl-placeholder-touch').removeClass('is-selected').hide();
+
+            // Mobile view with three container(available, selected, fullAccess) prepend to parent
+            placeholderContainer = (self.element.is('.one-third') && self.isMaxWidth(766)) ? self.element.parent() : self.element;
+            placeholderContainer.prepend('<ul id="sl-placeholder-container"></ul>');
+
+            $('#sl-placeholder-container').append(selections.placeholderTouch);
+            $('#sl-placeholder-container, #sl-placeholder-touch').css({width: selections.owner.width() +'px'});
+            self.draggTouchElement(e, selections.placeholderTouch);
           }
           e.stopPropagation();
         })
 
         // Dragenter - set that related/droptarget
-        .on(self.dragEnter, self.dragElements, function(e) {
-          self.element.trigger(settings.triggerWhileDragging, [self.selections.items]);
-          self.selections.related = e.target;
+        .on(self.dragEnterWhileDragging, self.dragElements, function(e) {
+          self.element.trigger(settings.triggerWhileDragging, [selections.items]);
+          selections.related = e.target;
           $('ul, li', this.element).removeClass('over');
           $(e.target).closest('ul, li').addClass('over');
-          self.selections.droptarget = $(self.selections.related).closest('.card');
+          selections.droptarget = $(selections.related).closest('.card');
+          $('[aria-grabbed="true"]', self.element).not(selections.dragged).slideUp();
           e.stopPropagation();
         })
 
         // Dragover - allow the drag by preventing default, for touch set related/droptarget
-        .on(self.dragOver, self.dragElements, function(e) {
-          var overItem = this, touch;
-          e.preventDefault();
+        .on(self.dragOverWhileDragging, self.dragElements, function(e) {
+          var touch,
+            overItem = this;
 
           if(self.isTouch) {
-            if (!!self.handle && !self.selections.isHandle) {
-              return false;
+            if (!!self.handle && !selections.isHandle) {
+              return;
             }
             touch = e.originalEvent.touches[0];
             overItem = self.getElementByTouchInList($('ul, li', self.element), touch.pageX, touch.pageY) || overItem;
 
-            self.element.trigger(settings.triggerWhileDragging, [self.selections.items]);
-            self.selections.related = overItem;
+            selections.dragged.addClass('is-dragging');
+            selections.placeholderTouch.addClass('is-dragging is-dragging-touch');
+            selections.placeholderTouch.show();
+            $('[aria-grabbed="true"]', self.element).not(selections.dragged).not(selections.placeholderTouch).slideUp();
+
+            if (selections.items.length > 1) {
+              $('.'+ settings.itemContentClass, (selections.dragged.add(selections.placeholderTouch)))
+                .html(settings.itemContentTempl.html());
+            }
+            self.draggTouchElement(e, selections.placeholderTouch);
+
+            self.element.trigger(settings.triggerWhileDragging, [selections.items]);
+            selections.related = overItem;
             $('ul, li', this.element).removeClass('over');
             overItem.closest('ul, li').addClass('over');
-            self.selections.droptarget = self.selections.related.closest('.card');
+            selections.droptarget = selections.related.closest('.card');
           }
+          e.preventDefault();
         })
 
         // Dragend - implement items being validly dropped into targets
         .on(self.dragEnd, self.dragElements, function(e) {
-          var related = $(self.selections.related).closest('li');
+          var related = $(selections.related).closest('li');
 
-          self.unselectElements($('.listview', self.selections.owner).data('listview'));
-          $.each(self.selections.items, function(index, val) {
-            if ($('li', self.selections.droptarget).length && !$(self.selections.related).is('ul')) {
-              var isLess = (related.index() < self.selections.draggedIndex);
+          self.unselectElements($('.listview', selections.owner).data('listview'));
+          $.each(selections.items, function(index, val) {
+            if ($('li', selections.droptarget).length && !$(selections.related).is('ul')) {
+              var isLess = (related.index() < selections.draggedIndex);
               related[isLess ? 'before' : 'after'](isLess ? val : 
-                $(self.selections.items[(self.selections.items.length-1) - index]));
+                $(selections.items[(selections.items.length-1) - index]));
             } else {
-              $('ul', self.selections.droptarget).append(val);
+              $('ul', selections.droptarget).append(val);
             }
             $(val).focus();
           });
 
-          self.selections.isHandle = null;
-          self.afterUpdate($('.listview', self.selections.droptarget).data('listview'));
+          if (selections.items.length > 1) {
+            $('.'+ settings.itemContentClass, selections.dragged).html(
+              $('.'+ settings.itemContentClass, selections.placeholder).html()
+            );
+          }
+
+          if(self.isTouch) {
+            self.containers.css({'z-index': ''});
+          }          
+
+          selections.isHandle = null;
+          $('[aria-grabbed="true"]', self.element).show();
+          self.afterUpdate($('.listview', selections.droptarget).data('listview'));
           e.preventDefault();
           e.stopPropagation();
         });
@@ -241,6 +297,8 @@
 
       // Set elements
       setElements: function() {
+        this.offset = null;
+
         this.containers = $(
           this.settings.available +','+ 
           this.settings.selected +','+ 
@@ -258,8 +316,8 @@
 
         this.dragElements = 'ul, li:not(.is-disabled)';
         this.dragStart = 'dragstart.swaplist touchstart.swaplist gesturestart.swaplist';
-        this.dragEnter = 'dragenter.swaplist';
-        this.dragOver = 'dragover.swaplist touchmove.swaplist gesturechange.swaplist';
+        this.dragEnterWhileDragging = 'dragenter.swaplist';
+        this.dragOverWhileDragging = 'dragover.swaplist touchmove.swaplist gesturechange.swaplist';
         this.dragEnd = 'dragend.swaplist touchend.swaplist touchcancel.swaplist gestureend.swaplist';
 
         this.selections = {
@@ -268,8 +326,19 @@
           'related': null,
           'droptarget': null,
           'isHandle': null,
+          'placeholder': null,
+          'placeholderTouch': null,
+          'dragged': null,
           'draggedIndex': null
         };
+
+        if (this.settings.itemContentTempl === '') {
+          this.settings.itemContentTempl = $('<div/>').html(
+            '<p>'+
+              '<span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+ Locale.translate('ItemsSelected')+
+            '</p>'
+          );
+        }
       },
 
       // When list is Empty force to add css class "is-muliselect"
@@ -339,6 +408,26 @@
         return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
       },
 
+      // Detect browser support for match-media
+      isMatchMediaSupports: function() {
+        return (typeof window.matchMedia !== 'undefined' || typeof window.msMatchMedia !== 'undefined');
+      },
+
+      // Detect browser viewport
+      viewport: function() {
+        var e = window, a = 'inner';
+        if (!('innerWidth' in window)) {
+          a = 'client';
+          e = document.documentElement || document.body;
+        }
+        return { width : e[a+'Width'] , height : e[a+'Height'] };
+      },
+
+      // Check given [max-width] is true/false
+      isMaxWidth: function(w) {
+        return ((this.isMatchMediaSupports() && window.matchMedia('(max-width: '+ w +'px)').matches) || this.viewport().width <= w);
+      },
+
       // Make Draggable
       makeDraggable: function() {
         var self = this,
@@ -376,6 +465,15 @@
         return returns;
       },
 
+      // Dragg touch element
+      draggTouchElement: function(e, elm) {
+        var orig = e.originalEvent;
+        elm.css({
+          top: orig.changedTouches[0].pageY - this.offset.y,
+          left: orig.changedTouches[0].pageX - this.offset.x
+        });
+      },
+
       // Shorctut for testing whether a modifier is pressed
       hasModifier: function(e) {
         return (e.ctrlKey || e.metaKey || e.shiftKey);
@@ -403,21 +501,29 @@
 
       // Clear selections
       clearSelections: function() {
-        $('ul, li', this.element).removeClass('over');
         this.selections.items = [];
         this.selections.owner = null;
         this.selections.related = null;
         this.selections.droptarget = null;
+        this.selections.dragged = null;
+        this.selections.placeholder = null;
+        this.selections.placeholderTouch = null;
+        $('ul, li', this.element).removeClass('over');
+        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder').remove();
       },
 
       // After update
       afterUpdate: function(list) {
         var self = this;
+
         setTimeout(function() {
-          self.unselectElements(list);
+          list.select(self.selections.placeholder);
+          self.selections.placeholder.focus();
+          self.unselectElements(list);          
           self.clearDropeffects();
           self.element.trigger(self.settings.triggerAfterSwap, [self.selections.items]);
           self.clearSelections();
+          self.items.removeClass('is-dragging is-dragging-touch');
         }, 100);
       },
 
@@ -426,7 +532,8 @@
         this.actionButtons.off('click.swaplist');
         this.containers.off('keydown.swaplist');
         this.selectedButtons.off('keydown.swaplist');
-        this.element.off(this.dragStart+' '+this.dragEnter +' '+this.dragOver +' '+this.dragEnd, this.dragElements);
+        this.element.off(this.dragStart+' '+this.dragEnterWhileDragging +' '+this.dragOverWhileDragging +' '+this.dragEnd, this.dragElements);
+        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder').remove();
 
         $.removeData(this.element[0], pluginName);
       }
