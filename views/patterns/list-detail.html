@@ -4,25 +4,7 @@
 
   <div id="maincontent" class="two-column page-container fixed list-detail">
 
-    <div class="sidebar scrollable" role="complementary">
-      {{={{{ }}}=}}
-
-        <script id="task-tmpl" type="text/html">
-          <ul>
-            {{#dataset}}
-              {{#disabled}}
-                <li class="is-disabled">
-              {{/disabled}}
-              {{^disabled}}
-                <li>
-              {{/disabled}}
-                <p class="listview-heading">Task #{{task}}</p>
-                <p class="listview-subheading">{{desc}}</p>
-                <p class="listview-micro">Due: {{date}}</p>
-              </li>
-            {{/dataset}}
-          </ul>
-        </script>
+    <div class="sidebar " role="complementary">
 
         <header class="header azure07">
           <div class="toolbar">
@@ -34,11 +16,10 @@
               <input class="searchfield" placeholder="Search">
             </div>
 
-            {{> includes/header-actionbutton}}
           </div>
         </header>
 
-        <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+        <div class="listview scrollable" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
     </div>
 
     <div class="main scrollable" role="main">
@@ -47,10 +28,6 @@
         <div class="toolbar">
           <div class="title">
             <h1>Auto Suite - PRD </h1>
-          </div>
-
-          <div class="buttonset">
-            <input class="searchfield" placeholder="Search">
           </div>
 
           {{> includes/header-actionbutton}}
@@ -63,4 +40,23 @@
 
     </div>
   </div>
+
+{{={{{ }}}=}}
+
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}}</p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
 

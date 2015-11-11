@@ -96,10 +96,15 @@
 
 // Tab Body
 .tab-panel {
-  margin-top: 20px;
+  padding: 20px;
 
   &.top-padding {
-    margin-top: 40px !important;
+    padding-top: 40px !important;
+  }
+
+  &.alternate {
+    background-color: $body-bg-color;
+    min-height: 100%;
   }
 }
 

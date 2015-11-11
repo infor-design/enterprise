@@ -645,6 +645,19 @@ var express = require('express'),
     res.end(JSON.stringify(cartItems));
   });
 
+  app.get('/api/deployments', function(req, res) {
+    var cartItems = [
+      { id: 1, success: true, name: 'AutoSuite - PRD', date: '01-13-2015'},
+      { id: 2, success: true, name: 'AutoSuite - TEST', date: '01-13-2015'},
+      { id: 3, success: true, name: 'Deployment 3', date: '01-13-2015'},
+      { id: 4, success: false, name: 'Deployment 4', date: '01-13-2015'},
+      { id: 5, success: true, name: 'Deployment 5', date: '01-13-2015'}
+     ];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(cartItems));
+  });
+
 
 module.exports = app;
 

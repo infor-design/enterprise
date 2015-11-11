@@ -13,6 +13,7 @@
 
   .sidebar {
     border-right: 0;
+    height: 100%;
 
     .listview {
       border-right: 1px solid $panel-border-color;
@@ -21,8 +22,52 @@
     .header {
       border-right: 1px solid $header-border-color;
 
+      .toolbar {
+        padding-right: 5px;
+      }
+
       &.azure07 {
         border-right: 1px solid $azure09;
+      }
+
+      + .listview {
+        height: calc(100% - 70px);
+      }
+
+      .title {
+        width: calc(100% - 41px);
+      }
+
+      .buttonset {
+        width: 40px;
+      }
+    }
+  }
+
+  .toolbar {
+
+    .searchfield-wrapper {
+      width: 35px;
+
+      input {
+        color: transparent;
+        transition: none !important;
+      }
+
+      &.is-open {
+        width: 220px;
+
+        input {
+          color: $header-text-color;
+        }
+
+        + .title {
+          opacity: 0;
+        }
+      }
+
+      .close {
+        right: 5px !important;
       }
     }
   }

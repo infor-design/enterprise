@@ -189,7 +189,11 @@
         }
 
         self.handleDeactivationEvents();
-        this.animationTimer = setTimeout(activateCallback, 300);
+        var header = this.inputWrapper.closest('.header'),
+          headerWidth = header.width();
+
+        this.animationTimer = setTimeout(activateCallback, (header.length > 0 && headerWidth < 320) ? 0 : 300);
+
       },
 
       deactivate: function() {
@@ -226,7 +230,11 @@
       },
 
       shouldBeFullWidth: function() {
-        return $(window).width() < 767;
+        var header = this.inputWrapper.closest('.header'),
+          headerWidth = header.width(),
+          windowWidth = $(window).width();
+
+        return windowWidth < 767 || (header.length > 0 && headerWidth < 320);
       },
 
       // Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that
