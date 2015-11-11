@@ -77,21 +77,13 @@
           }
         }
 
-        //Setup Keyboard Support and Aria
-        this.id = this.element.attr('id');
-        if (!this.id) {
-          this.id = 'listview-'+ ($('.listview').index(this.element) + 1);
-          this.element.attr('id', self.id);
-        }
-
         this.element.attr({'tabindex': '-1'});
         this.element.parent('.card-content, .widget-content').css('overflow', 'hidden');
 
          // Add Aria Roles
-        this.element.attr({'role' : 'listbox',
-          'aria-label' : (this.settings.description ? this.settings.description : this.element.closest('.card, .widget').find('.card-title, .widget-title').text()),
-          'aria-activedescendant': self.id + '-item-0'});
-
+        this.element.attr({ 'role' : 'listbox',
+          'aria-label' : this.settings.description || card.find('.card-title, .widget-title').text()
+        });
       },
 
       getTotals: function(dataset) {
@@ -131,9 +123,11 @@
           this.element.html(renderedTmpl);
         }
 
-        // Add an Id or Checkboxes
+        // Add Aria
+        $('ul', this.element).attr({'role': 'presentation'});
+
+        // Add an Checkboxes
         var first = this.element.find('li, tbody > tr').first(),
-          addId = (first.attr('id') === undefined),
           items = this.element.find('li, tr'),
           isMultiselect = (this.settings.selectable === 'multiple');
 
@@ -144,10 +138,6 @@
           var row = $(this);
 
           row.attr('role', 'option');
-
-          if (addId && !row.attr('id')) {
-            row.attr('id', self.id + '-item-' + i);
-          }
 
           if (isMultiselect) {
             // Add Selection Checkboxes
@@ -218,9 +208,7 @@
           var item = $(this);
 
           // First element if disabled
-          if ((item.attr('id') === item.parent().children().first().attr('id')) &&
-             (item.hasClass('is-disabled'))) {
-
+          if (item.is(':first-child') && item.hasClass('is-disabled')) {
             var e = $.Event('keydown.listview');
               e.keyCode= 40; // move down
             isSelect = true;
