@@ -865,6 +865,25 @@
         return tabId ? tab.removeClass('is-disabled') : null;
       },
 
+      // Renames a tab and resets the focusable bar/animation.
+      rename: function(tabId, name) {
+        if (!tabId || !name) {
+          return;
+        }
+
+        var tab = this.getTabFromId(tabId);
+        tab.children('a').text(name.toString());
+
+        this.positionFocusState();
+        this.focusBar();
+      },
+
+      // returns the currently active tab
+      getActiveTab: function() {
+        var visible = this.panels.filter(':visible');
+        return this.anchors.filter('[href="#'+ visible.first().attr('id') +'"]');
+      },
+
       // Takes a tab ID and returns a jquery object containing the previous available tab
       findPreviousAvailableTab: function(tabId) {
         var tab = this.getTabFromId(tabId),
