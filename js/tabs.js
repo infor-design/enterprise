@@ -97,19 +97,19 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.tablist = self.element.find('.tab-list')
+        self.tablist = self.element.children('.tab-list')
           .attr({
             'class': 'tab-list',
             'role': 'tablist',
             'aria-multiselectable': 'false'
           });
 
-        self.focusState = self.container.find('.tab-focus-indicator');
+        self.focusState = self.container.children('.tab-focus-indicator');
         if (!self.focusState.length) {
           self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
         }
 
-        self.animatedBar = self.container.find('.animated-bar');
+        self.animatedBar = self.container.children('.animated-bar');
         if (!self.animatedBar.length) {
           self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
         }
@@ -125,7 +125,7 @@
         }
 
         //for each item in the tabsList...
-        self.anchors = self.tablist.children('li:not(.separator):not(:hidden)').children('a');
+        self.anchors = self.tablist.children('li:not(.separator)').children('a');
         self.anchors.each(function prepareAnchor() {
           var a = $(this);
           a.attr({'role': 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', 'tabindex': '-1'})
@@ -327,6 +327,9 @@
           self.checkFocusedElements();
         }).on('updated.tabs', function() {
           self.updated();
+        }).on('activate.tabs', function(e) {
+          // Stop propagation of the activate event from going higher up into the DOM tree
+          e.stopPropagation();
         });
 
         // Check to see if we need to add/remove the more button on resize
