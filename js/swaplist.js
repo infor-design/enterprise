@@ -100,7 +100,7 @@
           if(e.keyCode === 77 && self.hasModifier(e)) { // Modifier + M
             if(!container.is(settings.selected) || 
               (container.is(settings.selected) && self.selectedButtons.length === 1)) {
-              self.actionButtons.trigger('click.swaplist');
+              container.find(self.actionButtons).trigger('click.swaplist');
             } else {
               self.selectedButtons.first().focus();
             }
@@ -372,6 +372,8 @@
         list = $('.listview', from).data('listview');
 
         self.clearSelections();
+        self.selections.owner = from;
+        self.selections.droptarget = to;
 
         if(self.isTouch) {
           $.each(list.selectedItems, function(index, val) {
@@ -390,7 +392,7 @@
             $('ul', to).append(val);
             $(val).focus();
           });
-          
+
           self.afterUpdate($('.listview', to).data('listview'));
         }
       },
@@ -447,7 +449,7 @@
               if(this.dragDrop) { this.dragDrop(); } //ie9
               return false;
             }).end()
-            .attr({'aria-grabbed': false, 'draggable': true, 'tabindex': 0})
+            .attr({'draggable': true})
             .addClass(self.handle ? '' : 'draggable');
         }
       },
@@ -491,11 +493,9 @@
 
       // Removing dropeffect from the target containers
       clearDropeffects: function() {
-        this.targets.each(function() {
-          $(this).attr({'aria-dropeffect': 'none'}).removeAttr('tabindex');
-        });
+        this.targets.attr({'aria-dropeffect': 'none'}).removeAttr('tabindex');
         $.each(this.selections.items, function(index, val) {
-          $(val).attr({'aria-grabbed': false}).removeAttr('tabindex');
+          $(val).removeAttr('tabindex aria-grabbed');
         });
       },
 
@@ -512,14 +512,28 @@
         $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder').remove();
       },
 
+      // Update attributes
+      updateAttributes: function(list) {
+        var items = $('li', list),
+          size = items.length;
+
+        items.each(function(i) {
+          $(this).attr({ 'aria-posinset': i+1, 'aria-setsize': size });          
+        });
+      },
+
       // After update
       afterUpdate: function(list) {
         var self = this;
 
         setTimeout(function() {
-          list.select(self.selections.placeholder);
-          self.selections.placeholder.focus();
+          if (self.selections.placeholder) {
+            list.select(self.selections.placeholder);
+            self.selections.placeholder.focus();
+          }
           self.unselectElements(list);          
+          self.updateAttributes($('.listview', self.selections.owner));
+          self.updateAttributes($('.listview', self.selections.droptarget));
           self.clearDropeffects();
           self.element.trigger(self.settings.triggerAfterSwap, [self.selections.items]);
           self.clearSelections();
