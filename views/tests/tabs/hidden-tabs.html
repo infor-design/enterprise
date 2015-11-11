@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Test: Hidden Tabs</h2>
+
+    <p>It should be possible to hide tabs inside a Tabs Control.  The Tabs Control should be smart enough to skip hidden tabs when keying through the Tab list with the arrow keys.  It should also be possible to programmatically hide/show tabs.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field" style="margin-bottom: 20px;">
+      <button id="toggle-hidden-tabs" class="btn-primary">
+        <span>Show Hidden Tabs</span>
+      </button>
+    </div>
+
+    <div id="hidden-tabs-container" class="tab-container">
+      <ul class="tab-list">
+        <li><a href="#tab1">Tab #1</a></li>
+        <li class="hidden"><a href="#tab2">Tab #2</a></li>
+        <li><a href="#tab3">Tab #3</a></li>
+        <li><a href="#tab4">Tab #4</a></li>
+        <li class="hidden"><a href="#tab5">Tab #5</a></li>
+        <li><a href="#tab6">Tab #6</a></li>
+      </ul>
+      <div id="tab1" class="tab-panel">
+        <h2>Tab #1</h2>
+        <p>Relationships seize transition feeds design B2C customized infrastructures e-commerce implement expedite monetize incentivize compelling. Plug-and-play networkeffects intuitive holistic visionary user-contributed recontextualize interactive enable B2B standards-compliant; evolve technologies platforms engage. Engage; orchestrate integrate 24/7 killer portals e-enable.</p>
+      </div>
+      <div id="tab2" class="tab-panel">
+        <h2>Tab #2</h2>
+        <p style="font-size: larger; font-weight: bold;">
+          YOU FOUND ME!
+        </p>
+      </div>
+      <div id="tab3" class="tab-panel">
+        <h2>Tab #3</h2>
+        <p>Relationships benchmark niches best-of-breed innovate integrate plug-and-play life-hacks enhance user-centred; social seamless, B2C; mission-critical global. Revolutionary harness next-generation users--supply-chains, turn-key rich paradigms, bandwidth vertical; Cluetrain customized reinvent visualize, benchmark A-list, "networking, deliver ubiquitous transform mesh 24/365 platforms."</p>
+      </div>
+      <div id="tab4" class="tab-panel">
+        <h2>Tab #4</h2>
+        <p>Extend distributed; content. Widgets tag, dynamic interactive reintermediate cross-media, synthesize. Eyeballs empower networkeffects innovate user-centric infomediaries portals drive scalable brand integrateAJAX-enabled users deliver networks platforms empower productize.</p>
+      </div>
+      <div id="tab5" class="tab-panel">
+        <h2>Tab #5</h2>
+        <p style="font-size: larger; font-weight: bold;">
+          YOU FOUND ME!
+        </p>
+      </div>
+      <div id="tab6" class="tab-panel">
+        <h2>Tab #6</h2>
+        <p>Communities revolutionize out-of-the-box e-tailers bleeding-edge disintermediate reinvent, 24/7 convergence empower paradigms disintermediate frictionless viral impactful leading-edge, data-driven user-centric ecologies.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var tabsAPI = $('#hidden-tabs-container').data('tabs'),
+      toggler = $('#toggle-hidden-tabs');
+    toggler.data('tabs-hidden', true);
+
+    toggler.onTouchClick('test').on('click.test', function() {
+      var data = $(this).data('tabs-hidden');
+      if (!data || data === false) {
+        tabsAPI.hide('tab2');
+        tabsAPI.hide('tab5');
+        toggler.children('span').text('Show Hidden Tabs');
+        toggler.data('tabs-hidden', true);
+        return;
+      }
+
+      tabsAPI.show('tab2');
+      tabsAPI.show('tab5');
+      toggler.children('span').text('Hide Tab #\'s 2/5');
+      toggler.data('tabs-hidden', false);
+    });
+  });
+</script>

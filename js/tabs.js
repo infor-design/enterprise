@@ -844,28 +844,44 @@
 
       // Hides a tab
       hide: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
+        tab.addClass('hidden');
         this.findPreviousAvailableTab(tabId);
-        return tabId ? tab.addClass('hidden') : null;
+        return this;
       },
 
       // Shows a tab
       show: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
-        return tabId ? tab.removeClass('hidden') : null;
+        tab.removeClass('hidden');
+        this.focusBar();
+        this.positionFocusState();
+        return this;
       },
 
       // Disables an individual tab
       disableTab: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
+        tab.addClass('is-disabled');
         this.findPreviousAvailableTab(tabId);
-        return tabId ? tab.addClass('is-disabled') : null;
+        return this;
       },
 
       // Enables an individual tab
       enableTab: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
-        return tabId ? tab.removeClass('is-disabled') : null;
+        tab.removeClass('is-disabled');
+        this.focusBar();
+        this.positionFocusState();
+        return this;
       },
 
       // Renames a tab and resets the focusable bar/animation.
@@ -901,9 +917,10 @@
         if (tab.is('.is-selected') && target.length) {
           this.activate(target.children('a').attr('href'));
           target.children('a').focus();
-          this.focusBar(target);
-          this.positionFocusState();
         }
+
+        this.focusBar();
+        this.positionFocusState();
 
         return target;
       },
