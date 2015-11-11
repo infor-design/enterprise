@@ -108,6 +108,7 @@
         }
 
         this.menu.addClass('popupmenu')
+          .data('trigger', this.element)
           .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'))
           .wrap('<div class="popupmenu-wrapper"></div>');
 
@@ -768,6 +769,7 @@
           unwrapPopup($(this));
         });
 
+        $.removeData(this.menu[0], 'trigger');
         wrapper.remove();
 
         this.detach();
