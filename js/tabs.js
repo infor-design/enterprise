@@ -349,9 +349,7 @@
           return false;
         }
 
-        var nonVisibleExcludes = ':not(.separator):not(:hidden)',
-          a = li.children('a');
-
+        var nonVisibleExcludes = ':not(.separator):not(:hidden)';
 
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
         li.addClass('is-selected');
@@ -1004,9 +1002,9 @@
                 .removeClass('has-popupmenu')
                 .insertAfter(popupLi.children('a'));
 
-              clone.children('li').each(function(i, item) {
+              clone.children('li').each(function(i) {
                 var li = $(this),
-                  a = li.children('a');
+                  a = li.children('a'),
                   originalLi = submenu.children('li').eq(i),
                   originalA = originalLi.children('a');
 
@@ -1080,7 +1078,6 @@
         // popup menu options as if they were tabs.
         $(document).bindFirst('keydown.popupmenu', function handlePopupMenuKeydown(e) {
           var key = e.which,
-            targetHref = '',
             currentMenuItem = $(e.target);
 
           function isFocusedElement() {
@@ -1320,7 +1317,7 @@
                 elem: t,
                 originalTabindex: t.attr('tabindex'),
                 originalDisabled: t.prop('disabled')
-              })
+              });
             }
 
             t.disable();
@@ -1402,7 +1399,6 @@
             popup.menu.children('li:not(.separator)').each(function() {
               var li = $(this),
                 a = li.children('a'),
-                href = a.attr('href'),
                 panel = a.data('panel-link');
 
               $.removeData(a[0], 'panel-link');
@@ -1429,7 +1425,7 @@
         this.tabsIndex = undefined;
 
         if (this.moreButton.data('popupmenu')) {
-          var popup = this.moreButton.data('popupmenu')
+          var popup = this.moreButton.data('popupmenu');
           popup.menu.find('li:not(.separator)').each(function() {
             var li = $(this),
               a = li.children('a');

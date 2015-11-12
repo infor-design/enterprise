@@ -132,6 +132,7 @@
             this.element.hasClass('btn-actions') ||
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
+            this.element.closest('.tab-container').length > 0 ||
             containerClass.indexOf('more') >= 0 ||
             containerClass.indexOf('btn-group') >= 0)) {
 
@@ -335,7 +336,31 @@
 
           //Select Checkboxes
           if (key === 32) {
-            $(e.target).find('input:checkbox').trigger('click');
+            var target = $(e.target),
+              checkbox = target.find('input:checkbox');
+            if (checkbox.length) {
+              checkbox.trigger('click');
+              return;
+            }
+
+            // Spacebar acts like Enter if there aren't any checkboxes (trigger links, etc)
+            e.preventDefault();
+
+            var a = $();
+            // Return here and let Tabs control handle the spacebar
+            if (target.is('.tab') || target.parent().is('.tab') || target.is('.tab-more')) {
+              return;
+            }
+            if (target.is('li')) {
+              a = target.children('a');
+            }
+            if (target.is('a')) {
+              a = target;
+            }
+            if (a.length) {
+              a.trigger('click');
+              return;
+            }
           }
 
           focus = self.menu.find(':focus');
@@ -482,6 +507,12 @@
               wrapper.find('div.arrow').css({'left': 'auto', 'right': '10px'});
             }
           }
+        }
+
+        if (this.element.is('.tab') || this.element.is('.tab-more')) {
+          wrapper.css({'top': target.offset().top + target.outerHeight() + 15 }).children('.arrow')
+            .removeAttr('style')
+            .css({'left': '30px', 'right': 'auto'});
         }
 
       },
