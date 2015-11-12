@@ -34,7 +34,9 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmen
 
 **disabled** – The button is dimmed to .7 opacity and cannot be pressed
 
-**close** – With focus on the button pressing space or enter will toggle the display of the drop-down menu. Focus remains on the button.
+**hover** – hovering of menu items
+
+**disabled** – Disabled menu items
 
 ## Themes
 
@@ -49,6 +51,7 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmen
 **high contrast**
 
 ![enter image description here](http://git.infor.com/projects/SOHO/repos/controls/browse/specs/images/menubutton-highcontrast.png?at=ad9c7ab8492e24e1ff4d3c98908e7a8a14eef8f3&raw)
+
 
 ## Events
 
@@ -73,6 +76,7 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmen
 
 **Tab Key** - With focus on the button pressing the tab key will take the user to the next tab focusable item on the page. With focus on the drop-down menu, pressing the tab key will take the user to the next tab focusable item on the page. Note that this may be difficult to achieve on a web page.
 
+
 ## Behaviors
 
 **Positioning Logic** – The following logic should be used..
@@ -85,6 +89,7 @@ b) if it does not fit vertically from top to bottom
 **Right To Left** – Icons and menu direction move to the right side and reverse. The button moves to the opposite side of the toolbar.
 [image needed]
 
+
 ## Features
 
 **Sub Menus** – Can optionally add one level of sub menus (need image)
@@ -93,11 +98,13 @@ b) if it does not fit vertically from top to bottom
 
 **Heading** - Used to add headings to separated menu content groups
 
+
 ## Mobile
 
 **Touch** - when a button is touched there is a 300ms delay this should be normalized so the button opens immediately. This applies
 
 **Close out** - when using a screen reader the user cannot click out of the menu to close. For this case we need to add an extra X icon to the control.
+
 
 ## Animations
 
