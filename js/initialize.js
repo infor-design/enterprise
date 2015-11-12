@@ -214,7 +214,7 @@
           ['timepicker'],
 
           //Busy Indicator
-          ['busyindicator','.busy'],
+          ['busyindicator','.busy, .busy-xs, .busy-sm'],
 
           ['header'],
 
