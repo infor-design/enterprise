@@ -81,8 +81,10 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmen
 
 **Positioning Logic** – The following logic should be used..
 
-a) Check if the button will fit more on the top or bottom of the button and place it there
-b) if it does not fit vertically from top to bottom
+- Check if the button will fit more on the top or bottom of the button and place it there
+- if it does not fit vertically from top to bottom add a scrollbar and shrink it to fit between the top or bottom of the control and the bottom of the page
+- the menu should grow to fit contents to a max of 320px after that teh contents is ellipised....
+- if a submenu wont fit on the left side of the page it should flip to the right. the arrow should not change to the other side.
 
 **Submenu Ease of Use** – Logic should be used to prevent the submenu from opening as the user moves the mouse down the list for each row they pass. To do this you need to watch the mouse move, mouse start and hover event. On mouse enter get the x position and store it on next mouse enter check if the x position is down or moving at a 45% angle then use a 300ms timeout to open the menu if the mouse is moving the left direction.
 
