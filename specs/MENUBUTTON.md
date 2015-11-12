@@ -2,6 +2,8 @@ Menu Button
 
 Menu Header Buttons appear in any content header (page headers, card headers, list headers, etc.) and are associated with a group of related actions. For Menu Buttons, none of the actions have a higher priority than the others, so there is no default. When users click a Menu Button, the system displays a menu of actions that can be performed and the user then selects the desired action. Actions on a Menu Button are always a two-click process (click to display menu, then click to select action).
 
+![enter image description here](http://git.infor.com/projects/SOHO/repos/controls/browse/specs/images/menubutton-darkui.png)
+
 ## Usage Guidlines
 
 Restrict icon usage to very familiar actions. Icons should always be used with a text label, except on mobile displays.
@@ -65,4 +67,5 @@ Restrict icon usage to very familiar actions. Icons should always be used with a
 Should animate down with a cubic bezier animation http://cubic-bezier.com/#.94,.03,.04,.17 (Example needed).
 
 ## Accessibility
+
 
