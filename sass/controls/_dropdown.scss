@@ -44,6 +44,7 @@ input.multiselect {
     border-color: $input-disabled-border-color;
     color: $input-disabled-color;
     cursor: default;
+    -webkit-text-fill-color: $input-disabled-color;
 
     + .icon {
       background-color: $input-disabled-bg-color;

@@ -9,6 +9,12 @@ fieldset {
     @include antialiased();
     padding-bottom: 30px;
   }
+
+  &[disabled] {
+    > legend {
+      color: $disabled-color;
+    }
+  }
 }
 
 .fieldset-title,

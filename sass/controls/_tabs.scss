@@ -64,6 +64,12 @@
       pointer-events: none;
     }
   }
+
+  &.is-disabled {
+    .icon {
+      color: $disabled-color !important;
+    }
+  }
 }
 
 // Animated Bar
@@ -105,6 +111,21 @@
   &.alternate {
     background-color: $body-bg-color;
     min-height: 100%;
+  }
+
+  // Change text color when disabled
+  &.is-disabled {
+    color: $disabled-color;
+
+    label,
+    .label {
+      color: inherit;
+    }
+
+    h1, h2, h3, h4, p {
+      color: inherit;
+    }
+
   }
 }
 
@@ -436,6 +457,20 @@
 
   // Entire tab control disabled state
   &.is-disabled {
+    color: $disabled-color;
+
+    label,
+    .label {
+      color: inherit;
+    }
+
+    h1, h2, h3, h4, p {
+      color: inherit;
+    }
+
+    .tab-list {
+      border-bottom-color: $disabled-color;
+    }
 
     .tab,
     .separator {
@@ -443,7 +478,7 @@
     }
 
     .tab {
-      color: $disabled-color;
+      color: $disabled-color !important;
 
       &::before {
         content: none !important;
@@ -455,6 +490,10 @@
       .count {
         color: $disabled-color !important;
         cursor: default;
+      }
+
+      .icon {
+        fill: $disabled-color !important;
       }
     }
 

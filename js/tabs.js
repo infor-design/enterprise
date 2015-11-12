@@ -97,19 +97,19 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.tablist = self.element.find('.tab-list')
+        self.tablist = self.element.children('.tab-list')
           .attr({
             'class': 'tab-list',
             'role': 'tablist',
             'aria-multiselectable': 'false'
           });
 
-        self.focusState = self.container.find('.tab-focus-indicator');
+        self.focusState = self.container.children('.tab-focus-indicator');
         if (!self.focusState.length) {
           self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
         }
 
-        self.animatedBar = self.container.find('.animated-bar');
+        self.animatedBar = self.container.children('.animated-bar');
         if (!self.animatedBar.length) {
           self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
         }
@@ -125,8 +125,8 @@
         }
 
         //for each item in the tabsList...
-        self.anchors = self.tablist.children('li:not(.separator):not(:hidden)').children('a');
-        self.anchors.each(function () {
+        self.anchors = self.tablist.children('li:not(.separator)').children('a');
+        self.anchors.each(function prepareAnchor() {
           var a = $(this);
           a.attr({'role': 'tab', 'aria-expanded': 'false', 'aria-selected': 'false', 'tabindex': '-1'})
            .parent().attr('role', 'presentation').addClass('tab');
@@ -164,7 +164,11 @@
 
           // Associated the current one
           var href = a.attr('href');
+
           if (href !== undefined && href !== '#') {
+            var panel = $(href);
+            a.data('panel-link', panel);
+            panel.data('tab-link', a);
             self.panels = self.panels.add($(href));
           }
 
@@ -172,7 +176,15 @@
           // NOTE: dropdown tabs shouldn't have children, so they aren't accounted for here
           if (popup) {
             popup.menu.children('li').each(function() {
-              self.panels = self.panels.add( $($(this).children('a').attr('href')) );
+              var a = $(this).children('a'),
+                href = a.attr('href'),
+                panel = $(href);
+
+              a.data('panel-link', panel);
+              panel.data('tab-link', a);
+
+              self.panels = self.panels.add(panel);
+              self.anchors = self.anchors.add(a);
             });
           }
         }
@@ -193,16 +205,19 @@
         // Clicking the 'a' triggers the click on the 'li'
         function routeAnchorClick(e) {
           e.preventDefault();
-          e.stopPropagation();
-          $(this).parent().trigger('click');
         }
 
         // Some tabs have icons that can be clicked and manipulated
         function handleIconClick(e) {
-          if ($(this).parent().hasClass('dismissible')) {
+          var elem = $(this);
+          if (elem.is('[disabled]') || elem.parent().hasClass('is-disabled')) {
+            return;
+          }
+
+          if (elem.parent().hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
-            self.remove($(this).prev().attr('href'));
+            self.closeDismissibleTab($(this).prev().attr('href'));
           }
         }
 
@@ -263,9 +278,6 @@
             var href = $(anchor).attr('href');
             self.activate(href);
             a.focus();
-            self.updateAria(a);
-            self.focusBar(li);
-            self.positionFocusState();
           });
         }
 
@@ -315,6 +327,9 @@
           self.checkFocusedElements();
         }).on('updated.tabs', function() {
           self.updated();
+        }).on('activate.tabs', function(e) {
+          // Stop propagation of the activate event from going higher up into the DOM tree
+          e.stopPropagation();
         });
 
         // Check to see if we need to add/remove the more button on resize
@@ -341,9 +356,8 @@
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
         li.addClass('is-selected');
 
-        // Don't activate a dropdown tab, but open its popupmenu.
+        // Don't activate a dropdown tab.  Clicking triggers the Popupmenu Control attached.
         if (li.is('.has-popupmenu')) {
-          li.data('popupmenu').open();
           return;
         }
 
@@ -351,10 +365,9 @@
         if (this.popupmenu) {
           this.popupmenu.close();
         }
-        a.focus();
+
         this.focusState.removeClass('is-visible');
-        this.positionFocusState(a);
-        this.focusBar(li);
+        // Tab will be focused by virtue of clicking
       },
 
       handleMoreButtonClick: function(e) {
@@ -383,7 +396,8 @@
         }
 
         var li = a.parent(),
-          focusedByKeyboard = a.data('focused-by-click') !== true;
+          dataFocusedClick = a.data('focused-by-click'),
+          focusedByKeyboard = (dataFocusedClick && dataFocusedClick === false);
         $.removeData(a[0], 'focused-by-click');
 
         if (this.isTabOverflowed(li)) {
@@ -404,7 +418,8 @@
           return;
         }
 
-        var focusedByKeyboard = this.moreButton.data('focused-by-click') !== true;
+        var dataFocusedClick = this.moreButton.data('focused-by-click'),
+          focusedByKeyboard = (dataFocusedClick && dataFocusedClick === false);
         $.removeData(this.moreButton[0], 'focused-by-click');
 
         this.focusState.removeClass('is-visible');
@@ -456,30 +471,36 @@
           return self.tablist.children('li' + allExcludes).first();
         }
 
+        function checkAngularClick() {
+          if (currentA.attr('ng-click') || currentA.attr('data-ng-click')) { // Needed to fire the "Click" event in Angular situations
+            currentA.click();
+          }
+        }
+
         switch(e.which) {
           case 8:
             if (e.altKey && currentLi.is('.dismissible')) {
               e.preventDefault();
-              self.remove(currentA.attr('href'));
+              self.closeDismissibleTab(currentA.attr('href'));
             }
             return;
           case 13: // Enter
+            self.focusState.removeClass('is-visible');
+            return;
           case 32: // Spacebar
             if (currentLi.hasClass('has-popupmenu')) {
               currentLi.data('popupmenu').open();
               return;
             }
             self.activate(currentA.attr('href'));
-            if (currentA.attr('ng-click') || currentA.attr('data-ng-click')) { // Needed to fire the "Click" event in Angular situations
-              currentA.click();
-            }
+            checkAngularClick();
             self.focusState.removeClass('is-visible');
             return;
           case 38:
             e.preventDefault(); // jshint ignore:line
           case 37:
             targetLi = previousTab();
-             e.preventDefault();
+            e.preventDefault();
             break;
           case 40:
             e.preventDefault(); // jshint ignore:line
@@ -513,8 +534,12 @@
         }
 
         if (e.altKey && key === 46) { // Alt + Del
+          if (tab.children('a').is('[disabled]') || tab.hasClass('is-disabled')) {
+            return;
+          }
+
           e.preventDefault();
-          this.remove(tab.children('a').attr('href'));
+          this.closeDismissibleTab(tab.children('a').attr('href'));
         }
       },
 
@@ -545,62 +570,65 @@
       handlePanelKeydown: function(e) {
         var key = e.which,
           panel = $(e.target),
+          a = this.anchors.filter('#' + panel.attr('id')),
           tab = this.anchors.filter('#' + panel.attr('id')).parent();
 
         if (tab.is('.dismissible')) {
           // Close a Dismissible Tab
           if (e.altKey && key === 46) { // Alt + Delete
             e.preventDefault();
-            return this.remove(tab.children('a').attr('href'));
+            return this.closeDismissibleTab(a.attr('href'));
           }
         }
 
         // Takes focus away from elements inside a Tab Panel and brings focus to its corresponding Tab
         if ((e.ctrlKey && key === 38) && $.contains(document.activeElement, panel[0])) { // Ctrl + Up Arrow
           e.preventDefault();
-          return this.activate(tab.children('a').attr('href'));
+          return this.activate(a.attr('href'));
         }
       },
 
       activate: function(href) {
         var self = this,
-          a = self.anchors.filter('[href="' + href + '"]'),
-          ui = {
-                newTab: a.parent(),
-                oldTab: self.anchors.parents().filter('.is-selected'),
-                panels: self.panels.filter('[id="' + href.replace(/#/g, '') + '"]'),
-                oldPanel: self.panels.filter(':visible')
-              };
+          a = this.anchors.filter('[href="' + href + '"]'),
+          targetTab, targetPanel, oldTab, oldPanel;
 
-        var isCancelled = self.element.trigger('beforeactivate', [ui]);
+        targetTab = a.parent();
+        targetPanel = this.panels.filter('[id="'+ href.replace(/#/g, '') +'"]');
+        oldTab = self.anchors.parents().filter('.is-selected');
+        oldPanel = self.panels.filter(':visible');
+
+        var isCancelled = self.element.trigger('beforeactivate', [a]);
         if (!isCancelled) {
           return;
         }
 
         self.panels.hide();
-        self.updateAria(a);
+        self.element.trigger('activate', [a]);
 
-        self.element.trigger('activate', [ui]);
-
-        ui.panels.stop().fadeIn(250, function() {
+        targetPanel.stop().fadeIn(250, function() {
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
-          self.element.trigger('afteractivate', [ui]);
+          self.element.trigger('afteractivate', [a]);
         });
 
-        ui.oldTab.removeClass('is-selected');
-        ui.newTab.addClass('is-selected');
+        // Update the currently-selected tab
+        self.updateAria(a);
+        oldTab.removeClass('is-selected');
 
-        //Init Label Widths..
-        ui.panels.find('.autoLabelWidth').each(function() {
-          var container = $(this),
-            labels = container.find('.inforLabel');
+        if (targetTab.is('.tab')) {
+          targetTab.addClass('is-selected');
+        }
 
-          if (labels.autoWidth) {
-            labels.autoWidth();
+        var ddMenu = targetTab.parents('.popupmenu');
+        if (ddMenu.length) {
+          var tab = ddMenu.data('trigger');
+          if (tab.length) {
+            tab.addClass('is-selected');
           }
-        });
+        }
 
+        // Hide tooltips that may have been generated inside a tab.
         setTimeout(function () {
           $('#validation-tooltip').hide();
           $('#tooltip').hide();
@@ -724,6 +752,11 @@
         this.panels = this.panels.add(tabContentMarkup);
         this.anchors = this.anchors.add(anchorMarkup);
 
+        // Link the two items via data()
+        anchorMarkup.data('panel-link', tabContentMarkup);
+        tabContentMarkup.data('tab-link', anchorMarkup);
+        // TODO: When Dropdown Tabs can be added/removed, add that here
+
         // Adjust tablist height
         this.setOverflow();
 
@@ -751,6 +784,11 @@
           targetLiIndex = this.tablist.children('li').index(targetLi),
           prevLi = targetLi.prev();
 
+        var canClose = this.element.triggerHandler('beforeclose', [targetLi]);
+        if (canClose === false) {
+          return false;
+        }
+
         // Remove these from the collections
         this.panels = this.panels.not(targetPanel);
         this.anchors = this.anchors.not(targetAnchor);
@@ -765,6 +803,8 @@
 
         // Adjust tablist height
         this.setOverflow();
+
+        this.element.trigger('close', [targetLi]);
 
         // If any tabs are left in the list, set the previous tab as the currently active one.
         var count = targetLiIndex - 1;
@@ -784,6 +824,9 @@
         this.activate(a.attr('href'));
         this.focusBar(prevLi);
         a.focus();
+
+        this.element.trigger('afterclose', [targetLi]);
+
         return this;
       },
 
@@ -801,28 +844,63 @@
 
       // Hides a tab
       hide: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
+        tab.addClass('hidden');
         this.findPreviousAvailableTab(tabId);
-        return tabId ? tab.addClass('hidden') : null;
+        return this;
       },
 
       // Shows a tab
       show: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
-        return tabId ? tab.removeClass('hidden') : null;
+        tab.removeClass('hidden');
+        this.focusBar();
+        this.positionFocusState();
+        return this;
       },
 
       // Disables an individual tab
       disableTab: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
+        tab.addClass('is-disabled');
         this.findPreviousAvailableTab(tabId);
-        return tabId ? tab.addClass('is-disabled') : null;
+        return this;
       },
 
       // Enables an individual tab
       enableTab: function(tabId) {
+        if (!tabId) { return this; }
+
         var tab = this.getTabFromId(tabId);
-        return tabId ? tab.removeClass('is-disabled') : null;
+        tab.removeClass('is-disabled');
+        this.focusBar();
+        this.positionFocusState();
+        return this;
+      },
+
+      // Renames a tab and resets the focusable bar/animation.
+      rename: function(tabId, name) {
+        if (!tabId || !name) {
+          return;
+        }
+
+        var tab = this.getTabFromId(tabId);
+        tab.children('a').text(name.toString());
+
+        this.positionFocusState();
+        this.focusBar();
+      },
+
+      // returns the currently active tab
+      getActiveTab: function() {
+        var visible = this.panels.filter(':visible');
+        return this.anchors.filter('[href="#'+ visible.first().attr('id') +'"]');
       },
 
       // Takes a tab ID and returns a jquery object containing the previous available tab
@@ -839,9 +917,10 @@
         if (tab.is('.is-selected') && target.length) {
           this.activate(target.children('a').attr('href'));
           target.children('a').focus();
-          this.focusBar(target);
-          this.positionFocusState();
         }
+
+        this.focusBar();
+        this.positionFocusState();
 
         return target;
       },
@@ -911,16 +990,28 @@
               popupLi = $(item).clone().removeClass('tab is-selected');
               popupLi.find('.icon').remove(); // NOTE: Remove this to show the close icon in overflow menu
               popupLi
-                .appendTo(menuHtml)
-                .attr('data-tab-href', $(item).children('a').attr('href'));
+                .appendTo(menuHtml);
+
                 // Remove onclick methods from the popup <li> because they are called
                 // on the "select" event in context of the original button
-              popupLi.children('a').removeAttr('onclick');
+              popupLi.children('a')
+                .data('original-tab', $(item).children('a'))
+                .removeAttr('onclick');
             }
             if ($(item).is('.has-popupmenu')) {
-              $('#' + $(item).attr('aria-controls')).clone()
+              var submenu = $('#' + $(item).attr('aria-controls')),
+                clone = submenu.clone()
                 .removeClass('has-popupmenu')
                 .insertAfter(popupLi.children('a'));
+
+              clone.children('li').each(function(i, item) {
+                var li = $(this),
+                  a = li.children('a');
+                  originalLi = submenu.children('li').eq(i),
+                  originalA = originalLi.children('a');
+
+                a.data('original-tab', originalA);
+              });
             }
           }
         });
@@ -965,37 +1056,13 @@
 
         var menu = self.popupmenu.menu;
 
-        // Add the "is-selected" class to the currently focused item in this popup menu.
-        function handleAnchorFocus() {
-          $(this).parents('ul').find('li').removeClass('is-selected');
-          $(this).parent().addClass('is-selected');
-          self.moreButton.addClass('is-selected');
-          self.focusBar();
-        }
-
-        function handleAnchorKeydown(e) {
-          var target = $(e.currentTarget);
-          switch(e.which) {
-            case 13:
-            case 32:
-              e.preventDefault();
-              target.parents('ul').find('li').removeClass('is-selected');
-              target.addClass('is-selected');
-              self.activate(target.attr('href'));
-              break;
-          }
-        }
-
         function handleDestroy() {
           menu.off();
           self.focusState.removeClass('is-visible');
           $('#tab-container-popupmenu').remove();
         }
 
-        menu
-          .on('focus.popupmenu', 'a', handleAnchorFocus)
-          .on('keydown.popupmenu', 'a', handleAnchorKeydown)
-          .on('destroy.popupmenu', handleDestroy);
+        menu.on('destroy.popupmenu', handleDestroy);
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
         // Otherwise, focus the first item in the list.
@@ -1013,13 +1080,18 @@
         // popup menu options as if they were tabs.
         $(document).bindFirst('keydown.popupmenu', function handlePopupMenuKeydown(e) {
           var key = e.which,
-            targetHref = '';
+            targetHref = '',
+            currentMenuItem = $(e.target);
+
+          function isFocusedElement() {
+            return this === document.activeElement;
+          }
 
           function prevMenuItem() {
             // If the first item in the popup menu is already focused, close the menu and focus
             // on the last visible item in the tabs list.
-            var first = menu.find('li.is-selected:first-child');
-            if (first.length > 0) {
+            var first = menu.find('li:first-child > a');
+            if (first.filter(isFocusedElement).length > 0) {
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
@@ -1030,8 +1102,8 @@
           function nextMenuItem() {
             // If the last item in the popup menu is already focused, close the menu and focus
             // on the first visible item in the tabs list.
-            var last = menu.find('li.is-selected:last-child');
-            if (last.length > 0 && last.is(':not(.submenu)')) {
+            var last = menu.find('li:last-child > a');
+            if (last.filter(isFocusedElement).length > 0 && last.parent().is(':not(.submenu)')) {
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
@@ -1040,25 +1112,21 @@
           }
 
           switch(key) {
-            case 13: // enter
-            case 32: // spacebar
-              e.preventDefault();
-              targetHref = menu.find('li.is-selected').attr('data-tab-href');
-              self.popupmenu.close();
-              break;
-            case 27: // escape
-              e.preventDefault();
-              self.popupmenu.close();
-              self.tablist.children('.is-selected').children('a').focus();
-              break;
             case 37: // left
-              $(document).trigger({type: 'keydown.popupmenu', which: 38});
+              if (currentMenuItem.is('a')) {
+                if (currentMenuItem.parent().is(':not(:first-child)')) {
+                  e.preventDefault(); // Prevent popupmenu from closing on left key
+                }
+                $(document).trigger({type: 'keydown.popupmenu', which: 38});
+              }
               break;
             case 38: // up
               prevMenuItem();
               break;
             case 39: // right
-              $(document).trigger({type: 'keydown.popupmenu', which: 40});
+              if (currentMenuItem.is('a') && !currentMenuItem.parent('.submenu').length) {
+                $(document).trigger({type: 'keydown.popupmenu', which: 40});
+              }
               break;
             case 40: // down
               nextMenuItem();
@@ -1215,14 +1283,103 @@
 
       disable: function() {
         this.element.prop('disabled', true).addClass('is-disabled');
+
+        if (!this.disabledElems) {
+          this.disabledElems = [];
+        }
+
+        var self = this,
+          tabs = this.tablist.children('li:not(.separator)');
+
+        tabs.each(function() {
+          var li = $(this),
+            a = li.children('a'),
+            panel = $(a.attr('href'));
+
+          if (li.is('.is-disabled') || a.prop('disabled') === true) {
+            self.disabledElems.push({
+              elem: li,
+              originalTabindex: li.attr('tabindex'),
+              originalDisabled: a.prop('disabled')
+            });
+          }
+
+          li.addClass('is-disabled');
+          a.prop('disabled', true);
+          panel.addClass('is-disabled');
+          panel.find('*').each(function() {
+            var t = $(this);
+
+            // These are shadow inputs.  They are already handled by virtue of running .disable() on the original select tag.
+            if (t.is('input.dropdown, input.multiselect')) {
+              return;
+            }
+
+            if (t.attr('tabindex') === '-1' || t.attr('disabled')) {
+              self.disabledElems.push({
+                elem: t,
+                originalTabindex: t.attr('tabindex'),
+                originalDisabled: t.prop('disabled')
+              })
+            }
+
+            t.disable();
+          });
+        });
+
         this.updateAria($());
       },
 
       enable: function() {
         this.element.prop('disabled', false).removeClass('is-disabled');
+
+        var self = this,
+          tabs = this.tablist.children('li:not(.separator)');
+
+        tabs.each(function() {
+          var li = $(this),
+            a = li.children('a'),
+            panel = $(a.attr('href'));
+
+          li.removeClass('is-disabled');
+          a.prop('disabled', false);
+          panel.removeClass('is-disabled');
+          panel.find('*').each(function() {
+            var t = $(this);
+            if (t.enable && typeof t.enable === 'function') {
+              t.enable();
+            }
+          });
+
+          $.each(self.disabledElems, function(i, obj) {
+            var attrTarget = obj.elem.is('.tab') ? obj.elem.children('a') : obj.elem;
+            if (obj.elem.disable && typeof obj.elem.disable === 'function') {
+              obj.elem.disable();
+            }
+
+            if (obj.elem.is('li')) {
+              obj.elem.addClass('is-disabled');
+              return;
+            }
+
+            // These are shadow inputs.  They are already handled by virtue of running .disable() on the original select tag.
+            if (obj.elem.is('input.dropdown, input.multiselect')) {
+              return;
+            }
+
+            obj.elem.attr('tabindex', obj.originalTabindex);
+            attrTarget.prop('disabled', obj.originalDisabled);
+          });
+        });
+
+        this.disabledElems = [];
+
         this.updateAria(this.tablist.find('.is-selected > a'));
       },
 
+      closeDismissibleTab: function(tabId) {
+        return this.remove(tabId);
+      },
 
       teardown: function() {
         this.panels.removeAttr('style');
@@ -1242,6 +1399,17 @@
         dds.each(function() {
           var popup = $(this).data('popupmenu');
           if (popup) {
+            popup.menu.children('li:not(.separator)').each(function() {
+              var li = $(this),
+                a = li.children('a'),
+                href = a.attr('href'),
+                panel = a.data('panel-link');
+
+              $.removeData(a[0], 'panel-link');
+              if (panel && panel.length) {
+                $.removeData(panel[0], 'tab-link');
+              }
+            });
             popup.destroy();
           }
         });
@@ -1261,7 +1429,16 @@
         this.tabsIndex = undefined;
 
         if (this.moreButton.data('popupmenu')) {
-          this.moreButton.data('popupmenu').destroy();
+          var popup = this.moreButton.data('popupmenu')
+          popup.menu.find('li:not(.separator)').each(function() {
+            var li = $(this),
+              a = li.children('a');
+
+            if (a.data('original-tab')) {
+              $.removeData(a[0], 'original-tab');
+            }
+          });
+          popup.destroy();
         }
         this.moreButton.off().remove();
         this.moreButton = undefined;
