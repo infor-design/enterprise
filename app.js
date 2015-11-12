@@ -196,17 +196,22 @@ var express = require('express'),
     enableLiveReload: true
   };
 
-  app.get('/angular/', function(req, res) {
-    res.render('angular/index', angularOpts);
-  });
-
-  app.get('/angular', function(req, res) {
-    res.render('angular/index', angularOpts);
-  });
-
   app.get('/angular*', function(req, res) {
     var end = req.url.replace('/angular/','');
     res.render('angular/' + end, angularOpts);
+  });
+
+  // React Support
+  var angularOpts = {
+    title: 'SoHo XI',
+    subtitle: 'React',
+    layout: 'react/layout',
+    enableLiveReload: true
+  };
+
+  app.get('/react*', function(req, res) {
+    var end = req.url.replace('/react/','');
+    res.render('react/' + end, angularOpts);
   });
 
   // Knockout Support
