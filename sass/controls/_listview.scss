@@ -54,7 +54,7 @@
       color: $listview-selected-text-color;
     }
 
-    li {
+    li:not(:hover):not(:focus) {
       &:nth-child(odd) {
         background-color: $listview-bg-color;
       }
@@ -157,7 +157,7 @@
     }
 
     &.listview-micro {
-      top: -50px;
+      top: 76px;
     }
   }
 
@@ -256,6 +256,10 @@
 
     p {
       color: $listview-selected-text-color;
+    }
+
+    .listview-micro {
+      color: $listview-selected-text-color !important;
     }
   }
 
