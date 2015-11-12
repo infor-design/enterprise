@@ -98,10 +98,10 @@ $header-height: 60px;
         text-transform: none;
       }
     }
-  }
 
-  .toolbar.has-title-button + .breadcrumb {
-    padding-left: 65px;
+    &.has-title-button + .breadcrumb {
+      padding-left: 65px;
+    }
   }
 
   .tab-container:not(.vertical) {
@@ -109,6 +109,8 @@ $header-height: 60px;
     padding: 1px 20px 0;
 
     &.alternate {
+      margin-top: -5px;
+
       .tab {
         padding: 8px 6px 9px;
 
