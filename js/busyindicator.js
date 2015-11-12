@@ -93,7 +93,7 @@
           this.label.remove();
           this.label = $('<span>' + this.loadingText + '</span>').appendTo(this.container);
 
-          if (this.element.is('input, .dropdown, .multiselect')) {
+          if (this.element.is('input, .dropdown, .multiselect, .busy-xs, .busy-sm')) {
             this.label.addClass('audible');
           }
 
@@ -122,6 +122,10 @@
           this.element.css('position', 'relative');
           this.overlay = $('<div class="overlay busy is-hidden"></div>').appendTo(this.element);
           this.container.addClass('blocked-ui');
+        }
+
+        if (this.element.is('.busy-xs, .busy-sm')) {
+          this.label.addClass('audible');
         }
 
         // Append the markup to the page
@@ -163,7 +167,9 @@
 
         // Fade in shortly after adding the markup to the page (prevents the indicator from abruptly showing)
         setTimeout(function() {
-          self.container.removeClass('is-hidden');
+          if (self.container) {
+            self.container.removeClass('is-hidden');
+          }
           if (self.overlay) {
             self.overlay.removeClass('is-hidden');
           }
@@ -200,7 +206,9 @@
         // Give the indicator time to fade out before removing all of its components from view
         self.closeTimeout = setTimeout(function() {
           clearTimeout(self.closeTimeout);
-          self.container.remove();
+          if (self.container) {
+            self.container.remove();
+          }
           self.container = undefined;
           self.loader = undefined;
           if (self.overlay) {

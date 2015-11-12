@@ -138,3 +138,53 @@ input + .busy-indicator-container,
     }
   }
 }
+
+.busy-xs {
+  min-height: 20px;
+  min-width: 20px;
+
+  .busy-indicator-container.blocked-ui {
+    top: calc(50% - 8px);
+  }
+
+  .busy-indicator {
+    height: inherit;
+    margin: 2px;
+    width: inherit;
+
+    .bar {
+      height: 1.2em;
+      margin-right: .1em;
+      width: .2em;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.busy-sm {
+  min-height: 40px;
+  min-width: 40px;
+
+  .busy-indicator-container.blocked-ui {
+    top: calc(50% - 18px);
+  }
+
+  .busy-indicator {
+    height: inherit;
+    margin: 4px;
+    width: inherit;
+
+    .bar {
+      height: 2.8em;
+      margin-right: .3em;
+      width: .3em;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

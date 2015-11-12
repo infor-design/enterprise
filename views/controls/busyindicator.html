@@ -52,7 +52,8 @@
   <div class="one-half column">
     <div class="field">
       <label class="label" for="busy-input">Busy Input Field</label>
-      <input class="busy" type="text" id="busy-input" data-block-ui="false" data-completion-time="2000" data-close-time="3000"/>
+      <!-- <input class="busy" type="text" id="busy-input" data-block-ui="false" data-completion-time="2000" data-close-time="3000"/> -->
+      <input class="busy" type="text" id="busy-input" data-block-ui="false"/>
 
       <br><button class="btn" id="trigger-busy-input" type="button">Load</button><br><br>
     </div>
@@ -72,6 +73,59 @@
     </div>
   </div>
 </div>
+
+
+
+<div class="row">
+  <div class="twelve columns">
+      <hr class="fieldset-hr">
+      <h2 class="fieldset-title">Small Busy Indicator</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+
+    <div style="display: table;">
+      <button class="btn" id="trigger-busy-sm" type="button" 
+        style="display: inline-block; vertical-align: middle;">Load</button>
+
+      <div style="display: inline-block; vertical-align: middle; font-size: 14px;">Some Text</div>
+
+      <div class="busy-sm" id="busy-sm" data-completion-time="2000" data-close-time="3000" 
+        style="display: inline-block; vertical-align: middle;"></div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="twelve columns">
+      <hr class="fieldset-hr">
+      <h2 class="fieldset-title">Extra Small Busy Indicator</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+
+    <div style="display: table;">
+      <button class="btn" id="trigger-busy-xs" type="button" 
+        style="display: inline-block; vertical-align: middle;">Load</button>
+
+      <div style="display: inline-block; vertical-align: middle; font-size: 12px;">Some Text</div>
+
+      <div class="busy-xs" id="busy-xs" data-completion-time="2000" data-close-time="3000" 
+        style="display: inline-block; vertical-align: middle;"></div>
+    </div>
+
+  </div>
+</div>
+
+<br><br>
+<div style="height: 100px;"></div>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -99,6 +153,16 @@
     $('#trigger-busy-dropdown').click(function(e) {
       e.preventDefault();
       $('#busy-dropdown').trigger('start');
+    });
+
+    $('#trigger-busy-sm').click(function(e) {
+      e.preventDefault();
+      $('#busy-sm').trigger('start');
+    });
+
+    $('#trigger-busy-xs').click(function(e) {
+      e.preventDefault();
+      $('#busy-xs').trigger('start');
     });
 
   });
