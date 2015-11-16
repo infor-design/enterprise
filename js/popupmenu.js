@@ -272,7 +272,7 @@
             href = anchor.attr('href'),
             parent = anchor.parent();
 
-          if (anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
+          if (anchor.attr('disabled') || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
             //Do not close parent items of submenus on click
             e.preventDefault();
             return;
@@ -660,7 +660,6 @@
           wrapper = ul.parent();
         }
 
-
         var menu = wrapper.children('.popupmenu'),
           mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
         li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
@@ -712,6 +711,7 @@
             wrapper.css('top', (wrapper.offset().top * -1));
             menuHeight = menu.outerHeight();
           }
+
           // Do one more check to see if the bottom edge bleeds off the screen.
           // If it does, shrink the menu's Y size and make it scrollable.
           if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {

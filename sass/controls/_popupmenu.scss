@@ -244,6 +244,7 @@
     &[disabled] {
       color: $disabled-color;
       opacity: .6;
+      pointer-events: none;
     }
   }
 
