@@ -4,7 +4,6 @@ Menu Header Buttons appear in any content header (page headers, card headers, li
 
 ![image here](http://git.infor.com/projects/SOHO/repos/controls/browse/specs/images/menubutton-darkui.png?at=ad9c7ab8492e24e1ff4d3c98908e7a8a14eef8f3&raw)
 
-
 ## Usage Guidlines
 
 Restrict icon usage to very familiar actions. Icons should always be used with a text label, except on mobile displays.
@@ -32,7 +31,7 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmen
 
 ## States
 
-**disabled** – The button is dimmed to .7 opacity and cannot be pressed
+**disabled** – The button is dimmed to .7 opacity and cannot be pressed, or the menu is dimmed to .7 opacity and cannot be clicked or activated with the keyboard. It can be focused with teh keyboard however, this is so screen readers can read it's disabled state.
 
 **hover** – hovering of menu items
 
@@ -76,6 +75,8 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmen
 
 **Tab Key** - With focus on the button pressing the tab key will take the user to the next tab focusable item on the page. With focus on the drop-down menu, pressing the tab key will take the user to the next tab focusable item on the page. Note that this may be difficult to achieve on a web page.
 
+For More Info See:
+http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
 ## Behaviors
 
@@ -86,11 +87,18 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmen
 - the menu should grow to fit contents to a max of 320px after that teh contents is ellipised....
 - if a submenu wont fit on the left side of the page it should flip to the right. the arrow should not change to the other side.
 
-**Submenu Ease of Use** – Logic should be used to prevent the submenu from opening as the user moves the mouse down the list for each row they pass. To do this you need to watch the mouse move, mouse start and hover event. On mouse enter get the x position and store it on next mouse enter check if the x position is down or moving at a 45% angle then use a 300ms timeout to open the menu if the mouse is moving the left direction.
+**Submenu Ease of Use** – Logic should be used to prevent the submenu from opening as the user moves the mouse down the list for each row they pass. To do this you need to watch the mouse move, mouse start and hover event. On mouse enter get the x position and store it on next mouse enter check if the x position is down or moving at a 45% angle then use a 300ms timeout to open the menu if the mouse is moving the left direction. For more info see http://bjk5.com/post/44698559168/breaking-down-amazons-mega-dropdown
 
 **Right To Left** – Icons and menu direction move to the right side and reverse. The button moves to the opposite side of the toolbar.
 [image needed]
 
+**Break out of Overflow** – Menus cant be positioned inline. They usually have to be positioned at the document level. This is because parent elements may have overflow hidden. So that means the menu would be cut off and not visible out of the overflow.
+
+**iFrame Support** – The menu can be overtop of an iFrame (in most modern browsers). The use case is a toolbar on top over an iframe full of contents. When the user clicks into the Iframe we need to add a click handler to catch and close the menu while still allowing focus into the iframe. This is only possible if the iframe is on same domain.
+
+**Updateable** – It should be easy to update the menu contents with either the ajax call or by direct markup manipulation.
+
+**Bindable** – It should be possible to bind the menu elements to frameworks like Angular (ng-Click, ng-binding) and React.
 
 ## Features
 
