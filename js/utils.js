@@ -292,6 +292,45 @@
     return options;
   };
 
+  // Timer - can be use for play/pause or stop for given time
+  // use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]
+  // then can be listen events as [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
+  // or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
+  $.fn.timer = function(callback, delay) {
+    var self = $(this),
+      interval,
+      speed = 10,
+      counter = 0,
+      cancel = function() {
+        self.trigger('cancel');
+        clearInterval(interval);
+        counter = 0;
+      },
+      pause = function() {
+        self.trigger('pause');
+        clearInterval(interval);
+      },
+      resume = function() {
+        self.trigger('resume');
+        update();
+      },
+      update = function() {
+        interval = setInterval(function() {
+          counter += speed;
+          self.trigger('update', [{'counter': counter}]);
+          if (counter > delay) {
+            self.trigger('timeout');
+            callback.apply(arguments);
+            clearInterval(interval);
+            counter = 0;
+          }
+        }, speed);
+      };
+    update();
+    return { event: this, cancel: cancel, pause: pause, resume: resume };
+  };
+
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
