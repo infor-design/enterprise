@@ -1,3 +1,20 @@
+<style>
+.pane {
+  background-color: transparent;
+}
+
+.pane.left {
+  display: inline-block;
+  min-height: 0;
+  overflow: hidden;
+  position: absolute;
+  height: calc(100% - 40px);
+  width: calc(50% - 30px);
+  margin: 20px 10px 20px 20px;
+  top: 0;
+  left: 0;''
+}
+</style>
 
 <div class="row">
   <div class="twelve columns">
@@ -47,10 +64,9 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
+      var grid = $('#datagrid').datagrid({
         columns: columns,
         selectable: 'multiple',
         paging: true,

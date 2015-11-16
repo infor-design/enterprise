@@ -1,0 +1,135 @@
+//  Panes Layout Pattern
+//================================================== //
+
+.pane {
+
+  //Alternate Color
+  &.alternate {
+    background-color: $white;
+  }
+
+  //Content Area
+  .content {
+    min-height: 300px;
+    width: 100%;
+  }
+
+  //Directional Panes
+  &.top-left {
+    display: inline-block;
+    height: calc(50% - 30px);
+    left: 0;
+    margin: 20px 10px 10px 20px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    width: calc(50% - 30px);
+  }
+
+  &.top-right {
+    display: inline-block;
+    height: calc(50% - 30px);
+    margin: 20px 20px 10px 10px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(50% - 30px);
+  }
+
+  &.bottom-left {
+    bottom: 0;
+    display: inline-block;
+    height: calc(50% - 30px);
+    left: 0;
+    margin: 10px 10px 20px 20px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    width: calc(50% - 30px);
+  }
+
+  &.bottom-right {
+    bottom: 0;
+    display: inline-block;
+    height: calc(50% - 30px);
+    margin: 10px 20px 20px 10px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    width: calc(50% - 30px);
+  }
+
+  &.left {
+    display: inline-block;
+    height: calc(100% - 40px);
+    left: 0;
+    margin: 20px 10px 20px 20px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    width: calc(50% - 30px);
+  }
+
+  &.right {
+    display: inline-block;
+    height: calc(100% - 40px);
+    margin: 20px 20px 20px 10px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: calc(50% - 30px);
+  }
+
+  &.top {
+    display: inline-block;
+    height: calc(50% - 30px);
+    margin: 20px 20px 10px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    width: calc(100% - 40px);
+  }
+
+  &.bottom {
+    bottom: 0;
+    display: inline-block;
+    height: calc(50% - 30px);
+    margin: 10px 20px 20px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    width: calc(100% - 40px);
+  }
+}
+
+@include respond-to(tabletdown) {
+
+  .pane.top,
+  .pane.bottom,
+  .pane.left,
+  .pane.right,
+  .pane.top-left,
+  .pane.top-right,
+  .pane.bottom-left,
+  .pane.bottom-right {
+    height: auto;
+    margin: 0 0 20px 20px;
+    position: relative;
+    width: calc(100% - 40px);
+  }
+
+  .pane:first-child {
+    margin-top: 20px;
+  }
+
+}
+
+

@@ -9,6 +9,10 @@
   .main {
     background-color: $panel-bg-color;
     border-left: 0;
+
+    &.alternate {
+      background-color: $body-bg-color;
+    }
   }
 
   .sidebar {

@@ -33,7 +33,7 @@
 
   .content {
     background-color: $inverse-color;
-    border: 1px solid #d8d8d8;
+    border: 1px solid $graphite02;
   }
 }
 
@@ -43,7 +43,7 @@
 }
 
 .no-scroll {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 body.no-scroll {
@@ -90,14 +90,45 @@ body.no-scroll {
   }
 
   &.fixed {
+
     .sidebar {
       width: 250px;
     }
 
     .main {
+      min-height: 100%;
       vertical-align: top;
       width: calc(100% - 250px);
     }
+
+  }
+
+  &.fixed-md {
+
+    .sidebar {
+      width: 350px;
+    }
+
+    .main {
+      min-height: 100%;
+      vertical-align: top;
+      width: calc(100% - 350px);
+    }
+
+  }
+
+  &.fixed-lg {
+
+    .sidebar {
+      width: 450px;
+    }
+
+    .main {
+      min-height: 100%;
+      vertical-align: top;
+      width: calc(100% - 450px);
+    }
+
   }
 
 }
@@ -220,11 +251,13 @@ body.no-scroll {
     }
 
     // Undo fixed-widths
-    &.fixed {
+    &.fixed,
+    &.fixed-md,
+    &.fixed-lg {
       .main,
       .sidebar {
         display: block;
-        width: 100%;
+        width: 100% !important; //Override Inline Css
       }
     }
 
@@ -403,8 +436,8 @@ body.no-scroll {
     &.has-tabs {
       + .page-container,
       + .application-menu + .page-container {
-        height: calc(100% - 137px);
-        margin-top: 137px;
+        height: calc(100% - 133px);
+        margin-top: 133px;
       }
     }
 

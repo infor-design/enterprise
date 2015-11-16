@@ -21,7 +21,6 @@
 
           var modelDataset = attrs.ngModelDataset,
               modelColumns = attrs.ngModelColumns;
-              //modelOptions = attrs.ngModelOptions;
 
           //Initialize
           elem.datagrid({columns: scope[modelColumns], dataset: scope[modelDataset]});

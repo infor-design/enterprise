@@ -13,10 +13,7 @@ $datagrid-header-height: 40px;
   border-radius: 2px;
   clear: both;
   height: auto;
-  margin-bottom: 20px;
   overflow-x: auto;
-  //width: auto; //fallback support for calc()
-  //width: calc(100% + 20px); //20px extra for scrolbar
 
   .resize-handle {
     border: 0;
@@ -39,6 +36,11 @@ $datagrid-header-height: 40px;
   overflow: hidden;
   //Doesnt work on expandable grid table-layout: fixed;
   width: auto;
+
+  //Frozen Headers
+  &.datagrid-clone {
+    height: auto;
+  }
 
   // Table Headers
   th {
@@ -287,7 +289,6 @@ $datagrid-header-height: 40px;
     color: $datagrid-data-color;
     height: 48px;
     line-height: 48px;
-    max-width: 100px;
     outline: none;
     overflow: hidden;
     text-overflow: ellipsis;
