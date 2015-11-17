@@ -73,14 +73,10 @@ $busy-indicator-check-color: $inverse-color;
 // Overlay Override for Busy Indicator
 .busy.overlay {
   background-color: $body-bg-color;
-  @include opacity(.85);
+  @include opacity(.75);
   position: absolute;
   @include transition(opacity 500ms);
   visibility: visible;
-
-  &.is-hidden {
-    @include opacity(0);
-  }
 }
 
 // Animation Keyframes

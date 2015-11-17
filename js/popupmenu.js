@@ -206,6 +206,7 @@
 
         this.element.onTouchClick('popupmenu')
           .on('click.popupmenu', function (e) {
+
             if (self.element.is(':disabled')) {
               return;
             }

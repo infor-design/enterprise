@@ -1,51 +1,55 @@
 
 <div class="row">
-    <div class="twelve columns">
+  <div class="twelve columns">
 
-       <div class="toolbar" role="toolbar">
-          <div class="title">
-            Custom Grid Toolbar
-            <span class="datagrid-result-count">(N Results)</span>
-          </div>
-          <div class="buttonset">
-            <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
-            <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
+   <div class="toolbar" role="toolbar">
+      <div class="title">
+        Custom Grid Toolbar
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+      <div class="buttonset">
+        <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
+        <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
 
-            <button class="btn">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-filter"></use>
-              </svg>
-              <span>Category</span>
-            </button>
-          </div>
+        <button class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Category</span>
+        </button>
+      </div>
 
-          <div class="more">
-            <button class="btn-actions">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-more"></use>
-              </svg>
-              <span class="audible">More Actions</span>
-            </button>
-            <ul class="popupmenu">
-              <li><a href="#">Option One</a></li>
-              <li><a href="#">Option Two</a></li>
-              <li><a href="#">Option Three</a></li>
-            </ul>
-          </div>
-        </div>
+      <div class="more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li class="heading">Options</li>
+          <li><a href="#">Option One</a></li>
+          <li><a href="#">Option Two</a></li>
+          <li><a href="#">Option Three</a></li>
+          <li class="heading">Row Height</li>
+          <li><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-checked"><a data-option="row-medium" href="#">Medium</a></li>
+          <li><a data-option="row-tall" href="#">Tall</a></li>
 
-        <div id="datagrid">
-        </div>
+        </ul>
+      </div>
     </div>
+
+    <div id="datagrid">
+    </div>
+  </div>
 </div>
 
 <script>
     $('body').one('initialized', function () {
 
         Locale.set('en-US').done(function () {
-            var grid,
-                    columns = [],
-                    data = [];
+            var columns = [], data = [];
 
             // Define Some Sample Data
             data.push({ id: 1, productId: 2142201, sku: 'SKU #9000001-237', productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
@@ -72,30 +76,9 @@
                 idProperty:'officeId',
                 dataset: data,
                 selectable: 'single',
-                toolbar: {results: true}
-            }).on('selected', function (e, args) {
-              // Showing the new method to update a single rows data
-              var api = $('#datagrid').data('datagrid');
-              if (args[0]) {
-                //args[0].data.activity = 'Updated';
-
-                api.updateRow(args[0].idx, { id: args[0].data.id, productId: 2642206, sku: 'Updated', productName: 'Updated', activity:  'Updated', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
-              }
+                toolbar: {results: true, rowHeight: true}
             });
 
-            // Showing the new method to keep selections on loadData
-            $('#add-btn').on('click', function () {
-              data[0].activity = 'Reloaded';
-              data[1].activity = 'Reloaded';
-              data[2].activity = 'Reloaded';
-              data[3].activity = 'Reloaded';
-              data[4].activity = 'Reloaded';
-              data[5].activity = 'Reloaded';
-              data[6].activity = 'Reloaded';
-
-              var api = $('#datagrid').data('datagrid');
-              api.loadData(data);
-            });
         });
 
     });
