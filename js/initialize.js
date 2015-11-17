@@ -37,6 +37,9 @@
     }
 
     //Class-based detection for IE
+    if (ua.match(/Edge\//)) {
+      html.addClass('ie ie-edge');
+    }
     if (ua.match(/Trident/)) {
       html.addClass('ie');
     }
