@@ -336,6 +336,13 @@
           body.attr('id', descById);
           this.element.attr('aria-labeledby', id);
           this.element.attr('aria-describedby', descById);
+
+          //Contextual Action Panel Case - Has a toolbar
+          if (this.element.find('.toolbar .title').length) {
+            this.element.find('.toolbar .title').attr('id', descById);
+            this.element.attr('aria-describedby', descById);
+          }
+
         }
 
         this.mainContent = $('body').children('.scrollable-container');

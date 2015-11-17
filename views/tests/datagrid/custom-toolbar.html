@@ -1,35 +1,37 @@
 
 <div class="row">
     <div class="twelve columns">
-        <div class="toolbar has-more-button" role="toolbar">
-          <div class="title">Custom Toolbar<span class="datagrid-row-count">11</span><span class="datagrid-result-count">(1000 Results)</span></div>
+
+       <div class="toolbar" role="toolbar">
+          <div class="title">
+            Custom Grid Toolbar
+            <span class="datagrid-result-count">(N Results)</span>
+          </div>
           <div class="buttonset">
+            <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
+            <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
 
-            <label class="audible" for="gridfilter">Keyword Search</label>
-            <input class="searchfield" name="searchfield" placeholder="Keyword" id="gridfilter">
-
-            <button class="btn" type="button">
+            <button class="btn">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-calendar"></use>
+                <use xlink:href="#icon-filter"></use>
               </svg>
-              <span>Date Filter</span>
+              <span>Category</span>
             </button>
-
           </div>
 
           <div class="more">
-
             <button class="btn-actions">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xlink:href="#icon-more"></use>
-              </svg><span class="audible">Grid Features</span>
+              </svg>
+              <span class="audible">More Actions</span>
             </button>
-            <ul class="popupmenu has-icons"></ul>
+            <ul class="popupmenu">
               <li><a href="#">Option One</a></li>
               <li><a href="#">Option Two</a></li>
+              <li><a href="#">Option Three</a></li>
             </ul>
           </div>
-
         </div>
 
         <div id="datagrid">

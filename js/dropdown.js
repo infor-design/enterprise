@@ -46,10 +46,10 @@
       init: function() {
         var orgId = this.element.attr('id'),
           id = orgId + '-shdo', //The Shadow Input Element. We use the dropdown to serialize.
-          cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' : 
-            this.element.is('.dropdown-sm') ? 'dropdown input-sm' : 
+          cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
+            this.element.is('.dropdown-sm') ? 'dropdown input-sm' :
             this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
-        
+
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
         this.orgLabel = orgId !== undefined ? $('label[for="' + this.element.attr('id') + '"]') :
@@ -289,10 +289,11 @@
 
         self.element.on('activate', function () {
           self.activate();
-        }).on('updated', function () {
+        }).on('updated', function (e) {
           self.closeList();
           self.updateList();
           self.setValue();
+          e.stopPropagation();
         }).on('openList.dropdown', function() {
           self.toggleList();
         });
