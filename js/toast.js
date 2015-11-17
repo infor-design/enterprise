@@ -48,49 +48,67 @@
 
       // Show a Single Toast Message
       show: function() {
-        var self = this,
+        var self = this, 
+          settings = self.settings,
+          maxHideTime = parseFloat(settings.timeout),
+          isPausePlay = false,
+          percentage = 100,
+          timer,
           container = $('#toast-container'),
-          closeBtn = $('<button type="button" class="btn-close" title="'+ Locale.translate('Close') +
-            '" aria-hidden="true"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span class="audible"> ' +
-            Locale.translate('Close') +'</span></button>'),
-          toast = $('<div class="toast"></div>'),
+          toast = $('<div class="toast"><span class="toast-title">'+ settings.title+ 
+            '</span><span class="toast-message">'+ settings.message + '</span></div>'),
+          closeBtn = $('<button type="button" class="btn-close" title="'+ Locale.translate('Close')+
+            '" aria-hidden="true"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+ 
+            '<use xlink:href="#icon-close"></use></svg><span class="audible"> '+ Locale.translate('Close')+'</span></button>'),
           progress = $('<div class="toast-progress"></div>');
 
-        if (container.length === 0) {
+        if (!container.length) {
           container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite"></div>').appendTo('body');
         }
 
         //TODO: RTL
         container.removeClass('toast-top-left toast-top-right toast-bottom-right toast-bottom-left')
-          .addClass('toast-' + this.settings.position.replace(' ', '-'));
+          .addClass('toast-' + settings.position.replace(' ', '-'));
 
-        toast.append('<span class="toast-title">'+ this.settings.title + '</span>');
-        toast.append('<span class="toast-message">'+ this.settings.message + '</span>');
+        settings.timeout = settings.audibleOnly ? 100 : settings.timeout;
 
-        if (this.settings.progressBar) {
+        // Start timer
+        timer = new $.fn.timer(function() {
+          self.remove(toast);
+        }, settings.timeout);
+
+        if (settings.progressBar) {
           toast.append(progress);
-          var maxHideTime = parseFloat(self.settings.timeout),
-              hideEta = new Date().getTime() + maxHideTime,
-              interval = setInterval(function () {
-            var percentage = ((hideEta - (new Date().getTime())) / maxHideTime) * 100;
-            progress.width(percentage + '%');
-          }, 10);
         }
 
-        container.append(toast);
-        toast.addClass((this.settings.audibleOnly ? 'audible' : 'effect-scale'));
-        toast.append(closeBtn);
-
-        closeBtn.on('click', function () {
-          self.remove(toast);
-          clearInterval(interval);
+        $(timer.event).on('update', function(e, data) {
+          percentage = ((maxHideTime - data.counter) / maxHideTime) * 100;
+          if (settings.progressBar) {
+            progress.width(percentage + '%');
+          }
         });
 
-        setTimeout(function () {
-         self.remove(toast);
-         clearInterval(interval);
-        }, (this.settings.audibleOnly ? 100 : this.settings.timeout));
+        container.append(toast);
+        toast.addClass((settings.audibleOnly ? 'audible' : 'effect-scale'));
+        toast.append(closeBtn);
 
+        $(document).on('keydown keyup', function(e) {
+          e = e || window.event;          
+          if(e.ctrlKey && e.altKey && e.keyCode === 80) { //[Control + Alt + P] - Pause/Play toggle
+            isPausePlay = e.type === 'keydown' ? true : false;
+            timer[isPausePlay ? 'pause' : 'resume']();
+          }
+        });
+
+        toast.on('mousedown.toast touchstart.toast mouseup.toast touchend.toast', function (e) {
+          isPausePlay = /mousedown|touchstart/i.test(e.type) ? true : false;
+          timer[isPausePlay ? 'pause' : 'resume']();
+        });
+
+        closeBtn.on('click', function () {
+          timer.cancel();
+          self.remove(toast);
+        });
       },
 
       // Remove the Message and Animate
@@ -128,3 +146,9 @@
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
+
+
+
+
+
+
