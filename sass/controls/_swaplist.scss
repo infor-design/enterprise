@@ -93,6 +93,8 @@ $sl-color-shadow: #000000;
   }
 
   &.one-third {
+    min-width: 370px;
+
     .card {
       width: 33%;
     }
@@ -107,6 +109,7 @@ $sl-color-shadow: #000000;
 
           .btn:last-child svg {
             @include rotate(90);
+            // transform: translateX(5px) translateY(0) rotate(45deg);
           }
 
           .card-content {
@@ -123,6 +126,8 @@ $sl-color-shadow: #000000;
 
           .btn svg {
             @include rotate(90);
+            // transform: translateX(7px) translateY(0) rotate(45deg);
+            // margin-right: 10px;
           }
 
           .card-content {
@@ -199,6 +204,31 @@ $sl-color-shadow: #000000;
   .swaplist {
     .handle {
       top: 8px;
+    }
+  }
+}
+
+// Firefox
+.is-firefox {
+  .swaplist {
+    &.one-third {
+      @include respond-to(phone) {
+        /*------------------------------*/
+        .card {
+          &:nth-child(2) {
+            .btn:last-child svg {
+              transform: translateX(5px) translateY(0) rotate(45deg);
+            }
+          }
+          &:nth-child(3) {
+            .btn svg {
+              transform: translateX(7px) translateY(0) rotate(45deg);
+              margin-right: 10px;
+            }
+          }
+        }
+        /*------------------------------*/
+      }
     }
   }
 }
