@@ -1,0 +1,39 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="tabs-normal" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab"><a href="#tabs-1">Tab One</a></li>
+        <li class="tab"><a href="#tabs-2">Tab Two</a></li>
+        <li class="tab"><a href="#tabs-3">Attachments</a></li>
+        <li class="tab"><a href="#tabs-4">Tab Three</a></li>
+      </ul>
+      <div id="tabs-1" class="tab-panel">
+
+        <div class="field">
+          <label for="updatable" class="label">Updatable</label>
+          <select id="updatable" name="updatable" class="dropdown">
+            <option value="1" selected>Option One</option>
+            <option value="2">Option Two</option>
+            <option value="3">Option Three</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  <button type="button" class="btn">Update</button>
+</div>
+
+<script>
+    $('button').on('click', function () {
+      $('#updatable').append('<option value="4" selected>Option Three</option>').trigger('updated');
+    });
+
+    $('#tabs-normal').on('updated', function () {
+      alert('You Should Not See Me.');
+    });
+</script>

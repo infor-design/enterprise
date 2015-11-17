@@ -1,9 +1,23 @@
+
+# 4.0.7 - Minor QA Release
+Release Date: TBD
+
+## Breaking Changes
+* 2015-11-16 Notes on this change
+
+## Ui Changes
+* 2015-11-16 Notes on this change
+
+[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=23807&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Clin)
+
+
 # 4.0.6
+Release Date: 2015-11-16
 
 Minor QA Release
 
 ## Breaking Changes
-* All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
+* 2015-11-16 All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
 * bar-progress type chart was renamed to completion-chart
 * List detail has new markup
 
@@ -11,7 +25,9 @@ Minor QA Release
 * In the High Contrast themes all colors changed from slate to the graphite spectrum
 * List detail has style changes
 
-[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=23807&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Clin)
+[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24229&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C1cc1c31a8cdb97563913b83b2468cfb8026e167b%7Clin)
+
+
 
 # 4.0.5
 
@@ -36,21 +52,24 @@ Minor QA Release.
 
 [Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24079&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Cli)
 
-# 4.0.4
 
-Minor QA Release
-
-## New Features
-*
-*
+# 4.0.4 - Minor QA Release
+Release Date: TBD
 
 ## Breaking Changes
-*
-*
+* 2015-11-16 Notes on this change
+
+
+## New Features
+* 2015-11-16 Notes on this change
+
+
+## Breaking Changes
+* 2015-11-16 Notes on this change
+
 
 ## Ui Changes
-*
-*
+* 2015-11-16 Notes on this change
 
 
 [Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=23807&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Clin)

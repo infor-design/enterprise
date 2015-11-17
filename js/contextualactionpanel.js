@@ -115,6 +115,7 @@
           buttons: self.settings.buttons,
           trigger: (self.settings.trigger ? self.settings.trigger : 'click')
         });
+
         this.buttons = this.panel.find('.buttonset').children('button');
         this.closeButton = this.buttons.filter('.btn-close, [name="close"], .icon-close');
 

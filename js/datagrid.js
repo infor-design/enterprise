@@ -1083,6 +1083,10 @@ $.fn.datagrid = function(options) {
           title = $('<div class="title">' + settings.toolbar.title + '  </div>');
         }
 
+        if (!title) {
+          title = toolbar.find('.title');
+        }
+
         if (settings.toolbar.results) {
           //Actually value filled in displayResults
           title.append('<span class="datagrid-result-count"></span>');
