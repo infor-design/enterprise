@@ -593,7 +593,7 @@
         $('[name="em-target"]').dropdown();
 
         $('#editor-modal-url, #editor-modal-image').modal()
-          .on('beforeOpen', function () {
+          .on('beforeopen', function () {
             self.savedSelection = self.saveSelection();
 
             if ($(this).attr('id') === 'editor-modal-url') {
