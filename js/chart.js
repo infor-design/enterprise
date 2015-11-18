@@ -97,8 +97,14 @@ window.Chart = function(container) {
       }
 
       var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
-        color = $('<span class="chart-legend-color"></span>').css('background-color', charts.colors(i)),
+        hexColor = charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
+
+      var color = $('<span class="chart-legend-color"></span>').css('background-color', (series[i].pattern ? 'transparent' : hexColor)),
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
+
+      if (series[i].pattern) {
+        color.append('<svg width="12" height="12"><rect style="'+ hexColor +'" mask="url(#'+ series[i].pattern +')" height="12" width="12"/></svg>');
+      }
 
       if (series[i].percent) {
         var pct = $('<span class="chart-legend-percent"></span>').text(series[i].percent);
@@ -317,7 +323,7 @@ window.Chart = function(container) {
       return 'series-'+i+' bar';
     })
     .style('fill', function(d, i) {
-      return charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i]);
+      return charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i]);
     })
     .attr('mask', function (d, i) {
       if (dataset.length === 1 && dataset[0][i].pattern){
@@ -704,17 +710,7 @@ window.Chart = function(container) {
     return charts.Pie(chartData, true);
   };
 
-  /**
-  * Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
-  * to fit into a certain area.
-  *
-  * @param d {Object} Dimensions
-  * @d {srcWidth: Number} Source width
-  * @d {srcHeight: Number} Source height
-  * @d {maxWidth: Number} Fittable area maximum available width
-  * @d {maxHeight: Number} Fittable area maximum available height
-  * @return {Object} { width, heigth }
-  */
+  //Conserve aspect ratio of the orignal region. Useful when shrinking/enlarging
   this.calculateAspectRatioFit = function (d) {
     var ratio = Math.min(d.maxWidth / d.srcWidth, d.maxHeight / d.srcHeight);
     return { width: d.srcWidth*ratio, height: d.srcHeight*ratio };

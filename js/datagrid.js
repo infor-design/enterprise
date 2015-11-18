@@ -694,9 +694,9 @@ $.fn.datagrid = function(options) {
           }
 
           // Add Column Css Classes
-          cssClass += (col.readonly ? 'is-readonly ' : '');
+          cssClass += (col.readonly ? ' is-readonly ' : '');
           cssClass += (col.cssClass ? col.cssClass : '');
-          cssClass += (col.focusable ? 'is-focusable ' : '');
+          cssClass += (col.focusable ? ' is-focusable ' : '');
           var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
 
           rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
@@ -1618,11 +1618,20 @@ $.fn.datagrid = function(options) {
           }
         }
 
-        if (self.settings.editable && key ===13) {
+        if (self.settings.editable && key === 13) {
           if (self.editor) {
             self.commitCellEdit(self.editor.input);
             self.setActiveCell(self.activeCell.row, self.activeCell.cell);
           } else {
+            self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
+          }
+          return;
+        }
+
+        //A printable character navigatable
+        if ([13, 37, 38, 39, 9, 40].indexOf(key) === -1 && !e.ctrlKey && !e.metaKey && self.settings.editable) {
+
+          if (!self.editor) {
             self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
           }
         }
@@ -1647,8 +1656,11 @@ $.fn.datagrid = function(options) {
 
       //Locate the Editor
       var col = this.columnSettings(cell);
-
       if (!col.editor) {
+
+        if (event.keyCode === 32) {
+          this.toggleRowSelection(this.activeCell.node.closest('tr'));
+        }
         return;
       }
 
@@ -1676,10 +1688,6 @@ $.fn.datagrid = function(options) {
       this.editor.val(cellValue);
       this.editor.focus();
 
-      var rowNode = cellParent.closest('tr');
-      if (!rowNode.hasClass('is-selected')) {
-        this.toggleRowSelection(rowNode.closest('tr'));
-      }
     },
 
     commitCellEdit: function(input) {
