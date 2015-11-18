@@ -80,14 +80,19 @@ $datagrid-header-height: 40px;
 
     //Editing and Focus State
     &:focus {
-      @include css3(box-shadow, inset 0 0 0 2px $primary-color);
-      background-color: $datagrid-header-hover-color;
-      cursor: pointer;
-      outline: none;
+      background-color: $datagrid-header-focus-bg-color;
+      color: $white;
 
       .icon {
+        fill: $slate03;
         opacity: 1;
       }
+
+      &.is-sorted-asc .sort-asc .icon,
+      &.is-sorted-desc .sort-desc .icon {
+        fill: $white;
+      }
+
     }
   }
 
