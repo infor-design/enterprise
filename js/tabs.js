@@ -814,6 +814,10 @@
           }
         }
         if (prevLi.length === 0) {
+          if (!this.tablist.children('li:not(.separator)').length) {
+            this.positionFocusState();
+            this.defocusBar();
+          }
           return this;
         }
 
