@@ -8,7 +8,7 @@ Release Date: TBD
 ## Ui Changes
 * 2015-11-16 Notes on this change
 
-[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=23807&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Clin)
+[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin)
 
 
 # 4.0.6
@@ -25,8 +25,7 @@ Minor QA Release
 * In the High Contrast themes all colors changed from slate to the graphite spectrum
 * List detail has style changes
 
-[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24229&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C1cc1c31a8cdb97563913b83b2468cfb8026e167b%7Clin)
-
+[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24229&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin)
 
 
 # 4.0.5
