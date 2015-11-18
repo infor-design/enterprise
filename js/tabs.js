@@ -1420,7 +1420,7 @@
           .removeAttr('aria-selected')
           .removeAttr('tabindex');
 
-        this.element.off('focusout.tabs');
+        this.element.off('focusout.tabs updated.tabs activate.tabs');
         $(window).off('resize.tabs' + this.tabsIndex);
         this.tabsIndex = undefined;
 
