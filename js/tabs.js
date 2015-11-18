@@ -1167,7 +1167,7 @@
           paddingLeft, width;
 
         if (!target || target === undefined || !target.length || !self.anchors.length) {
-          self.animatedBar.removeClass('visible');
+          self.animatedBar.removeClass('visible').removeClass('no-transition');
           return;
         }
 
