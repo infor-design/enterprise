@@ -39,8 +39,8 @@
     Plugin.prototype = {
 
       init: function() {
-        this.element.addClass(this.element.is('.textarea-xs') ? 'input-xs' : 
-            this.element.is('.textarea-sm') ? 'input-sm' : 
+        this.element.addClass(this.element.is('.textarea-xs') ? 'input-xs' :
+            this.element.is('.textarea-sm') ? 'input-sm' :
             this.element.is('.textarea-lg') ? 'input-lg' : '');
 
         if (settings.characterCounter && this.element.attr('maxlength')) {

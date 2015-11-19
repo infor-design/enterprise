@@ -47,11 +47,11 @@ module.exports = function(grunt) {
       options: {
         separator: '',
         banner: '<%= banner %>'+'<%= amdHeader %>',
-        footer: '\n}));\n//# sourceURL=<%= pkg.name %>.js'
+        footer: '\n}));\n//# sourceURL=<%= pkg.shortName %>.js'
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.name %>.js': [
+          'dist/js/<%= pkg.shortName %>.js': [
             'temp/amd/utils.js',
             'temp/amd/animations.js',
             'temp/amd/locale.js',
