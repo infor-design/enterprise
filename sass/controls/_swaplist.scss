@@ -1,16 +1,9 @@
 // Swaplist
 //================================================== //
-$sl-color-background: $graphite01;
-$sl-color-border: $graphite04;
-$sl-color-border-hover: $azure06;
-$sl-color-icon: $graphite03;
-$sl-color-icon-hover: $graphite06;
-$sl-color-shadow: #000000;
-
 @mixin is-dragging() {
-  @include css3(box-shadow, 0 0 5px 0 rgba($sl-color-shadow, .75));
-  background-color: $sl-color-background;
-  border: 1px solid $sl-color-background;
+  @include css3(box-shadow, 0 0 5px 0 rgba($swaplist-shadow-color, .75));
+  background-color: $swaplist-bg-color;
+  border: 1px solid $swaplist-bg-color;
   opacity: .4;
   padding: 9px 20px 8px;
 }
@@ -35,7 +28,7 @@ $sl-color-shadow: #000000;
     .card-header .btn {
       background-color: transparent;
       border: 0;
-      color: $sl-color-icon;
+      color: $swaplist-icon-color;
       line-height: normal;
       margin: 0;
       min-width: 0;
@@ -55,31 +48,31 @@ $sl-color-shadow: #000000;
       }
 
       &:after {
-        border-color: $sl-color-icon $sl-color-icon $sl-color-icon transparent;
+        border-color: $swaplist-icon-color $swaplist-icon-color $swaplist-icon-color transparent;
         right: 6px;
       }
 
       &:before {
-        border-color: $sl-color-icon transparent $sl-color-icon $sl-color-icon;
+        border-color: $swaplist-icon-color transparent $swaplist-icon-color $swaplist-icon-color;
         left: 6px;
       }
 
       &:hover,
       &:focus:not(.hide-focus):not(.is-disabled) {
         &:after {
-          border-color: $sl-color-border-hover $sl-color-border-hover $sl-color-border-hover transparent;
+          border-color: $swaplist-border-color-hover $swaplist-border-color-hover $swaplist-border-color-hover transparent;
         }
 
         &:before {
-          border-color: $sl-color-border-hover transparent $sl-color-border-hover $sl-color-border-hover;
+          border-color: $swaplist-border-color-hover transparent $swaplist-border-color-hover $swaplist-border-color-hover;
         }
       }
       &:focus:not(.hide-focus):not(.is-disabled) {
-        box-shadow: 0 0 0 1px $sl-color-border-hover;
+        box-shadow: 0 0 0 1px $swaplist-border-color-hover;
       }
 
       .icon {
-        fill: $sl-color-icon;
+        fill: $swaplist-icon-color;
         margin: 0 3px;
         width: 15px;
       }
@@ -141,7 +134,7 @@ $sl-color-shadow: #000000;
   }
 
   .handle {
-    color: $sl-color-icon-hover;
+    color: $swaplist-icon-color-hover;
     display: none;
     font-size: 2em;
     left: 10px;
@@ -178,7 +171,7 @@ $sl-color-shadow: #000000;
     }
 
     .over {
-      border: 1px dashed $sl-color-border;
+      border: 1px dashed $swaplist-border-color;
     }
   }
 

@@ -96,7 +96,8 @@ $listview-bg-color-alternate: $slate08;
 $listview-border-color: $slate06;
 $listview-color: $inverse-color;
 $listview-disabled-color: $slate03;
-$listview-selected-text-color: $slate04;
+$selected-bg-color: #287cb2;
+$listview-selected-text-color: $white;
 $listview-selection-toolbar-color: $inverse-color;
 $listview-header-bg-color: $slate06;
 $listview-header-color: $white;
@@ -129,6 +130,10 @@ $colorpicker-initial-bg-color: $slate04;
 //Spinbox
 $spinbox-bg-color: $slate06;
 $spinbox-button-color: $body-bg-color;
+
+//Swaplist
+$swaplist-icon-color-hover: $white;
+$swaplist-border-color-hover: $white;
 
 //Mast Head
 $masthead-bg-color: $header-bg-color;
