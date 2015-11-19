@@ -126,7 +126,6 @@
   <ul>
     {{#dataset}}
       <li>
-        <div style="top: 10px; position: relative">
         {{#success}}
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-error"><use xlink:href="#icon-error"/>
           </svg>
@@ -135,9 +134,10 @@
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-confirm"><use xlink:href="#icon-confirm"/>
           </svg>
         {{/success}}
+        <div>
+          <p class="listview-heading">{{name}}</p>
+          <p class="listview-micro">Deployed On: {{date}}</p>
         </div>
-        <p class="listview-heading">{{name}}</p>
-        <p class="listview-micro">Deployed On: {{date}}</p>
       </li>
     {{/dataset}}
   </ul>

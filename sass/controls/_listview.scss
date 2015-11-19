@@ -84,14 +84,6 @@
     }
   }
 
-  .icon-confirm,
-  .icon-pending,
-  .icon-error {
-    float: left;
-    margin: 1px 15px 10px 00;
-    top: 0;
-  }
-
   li {
     @include transition(background-color .15s ease 0s);
     border: 1px solid transparent;
@@ -123,8 +115,14 @@
       padding: 15px 20px 15px 17px;
     }
 
-    .btn-icon {
-      top: 0;
+    > .icon {
+      float: left;
+      margin: 1px 15px 10px 0;
+      vertical-align: middle;
+
+      + * {
+        display: inline-block;
+      }
     }
   }
 
@@ -150,6 +148,10 @@
   .l-pull-right {
     position: relative;
     top: -30px;
+
+    button {
+      margin: 0 25px;
+    }
 
     .icon-error {
       left: -10px;
@@ -202,8 +204,6 @@
   }
 
   button {
-    margin: 0 25px;
-
     &:not(.tableview button) {
       background-color: transparent;
       border-radius: 0;
@@ -317,7 +317,6 @@
     }
 
     td {
-
       .row:last-child {
         margin-bottom: 0;
       }
@@ -410,7 +409,6 @@
       height: 100%;
     }
   }
-
 }
 
 .listview-table {
@@ -510,8 +508,13 @@
 
 
 // Users With Access
-@include respond-to(phone) {
-  .listview[aria-label='Users With Access'] {
+.listview[aria-label='Users With Access'] {
+
+  .l-pull-right {
+    top: -5px;
+  }
+
+  @include respond-to(phone) {
 
     li {
       padding: 9px 20px 15px;
@@ -519,7 +522,7 @@
 
     .l-pull-right {
       float: none;
-      margin-top: 10px;
+      margin: 10px 0 0 36px;
       top: auto;
 
       button {
