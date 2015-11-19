@@ -44,6 +44,33 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 --- | --- | --- | --- | --- |
 IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 
+# Getting the Code
+
+## Npm
+This node module is hosted on a private repo [npm.infor.com](http://npm.infor.com:4873). To be able to install it in your project you need to tell npm on your system to fetch packages with the '@infor' scope from the correct registry.
+
+Also your project should be initialized with a package.json. This can be done via npm init.
+
+```bash
+npm set registry http://npm.infor.com:4873 --scope=@infor
+```
+
+### Installation
+Run the following
+
+```bash
+npm install --save @infor/sohoxi
+```
+
+The files can then be seen in the folder /node_modules/@infor/sohoxi/dist
+
+### Updating
+Run the following, where X.X.X is the version to update to
+
+```bash
+npm install --save @infor/sohoxi@4.0.7
+```
+
 
 # Running the Development Project
 

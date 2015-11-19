@@ -873,27 +873,31 @@ $.fn.datagrid = function(options) {
 
     //Show Summary and any other count info
     displayCounts: function(totals) {
-      var self = this;
+      var self = this,
+        count = self.tableBody.find('tr:visible').length;
 
-      setTimeout(function () {
-        var count = self.tableBody.find('tr:visible').length;
+      //Consitutues Client Side Paging
+      if (self.settings.paging && self.settings.source === null) {
+        count = self.settings.dataset.length;
+      }
 
-        //Consitutues Client Side Paging
-        if (self.settings.paging && self.settings.source === null) {
-          count = self.settings.dataset.length;
+      if (totals && totals !== -1) {
+        count = totals;
+      }
+
+      if (self.toolbar) {
+        var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
+
+        if (self.settings.toolbar.selectCount) {
+          //TODO: This on the Contextual Toolbar
+          //countText += '<span class="datagrid-selected-count">  | '+ self._selectedRows.length + ' ' + Locale.translate('Selected') + ')</span>';
         }
 
-        if (totals && totals !== -1) {
-          count = totals;
-        }
+        self.toolbar.find('.datagrid-result-count').html(countText);
 
-        if (self.toolbar) {
-          var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
-          self.toolbar.find('.datagrid-result-count').text(countText);
-          self.toolbar.attr('aria-label',  self.toolbar.find('.title').text());
-          self.toolbar.find('.datagrid-row-count').text(count);
-        }
-      }, 1);
+        self.toolbar.attr('aria-label',  self.toolbar.find('.title').text());
+        self.toolbar.find('.datagrid-row-count').text(count);
+      }
     },
 
     //Trigger event on parent and compose the args
@@ -1086,12 +1090,12 @@ $.fn.datagrid = function(options) {
         if (!title) {
           title = toolbar.find('.title');
         }
+        toolbar.append(title);
 
         if (settings.toolbar.results) {
           //Actually value filled in displayResults
           title.append('<span class="datagrid-result-count"></span>');
         }
-        toolbar.append(title);
 
         var buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
         if (settings.toolbar.dateFilter) {
@@ -1331,6 +1335,8 @@ $.fn.datagrid = function(options) {
 
       this.element.trigger('selected', [this._selectedRows]);
       this.syncHeaderCheckbox();
+      this.displayCounts();
+
       return this._selectedRows;
     },
 
@@ -1403,6 +1409,8 @@ $.fn.datagrid = function(options) {
       }
 
       this.element.trigger('selected', [this._selectedRows]);
+      this.displayCounts();
+
       return this._selectedRows;
     },
 

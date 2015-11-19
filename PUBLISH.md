@@ -18,17 +18,15 @@ The username is admin and password is Ap5T7IPF2o, use your regular email address
 git tag 4.0.7
 ```
 
-* Checkout the tag
+* Checkout the tag (Why?)
 
 ```bash
-git checkout vX.X.X
+git checkout 4.0.7
 ```
+
 * Publish to [npm.infor.com](http://npm.infor.com:4873)
 
 ```bash
 npm publish
 ```
 
-* Write release notes
-
-* Anounce the new version to the community
