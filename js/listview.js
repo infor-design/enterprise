@@ -156,8 +156,7 @@
           // Add Aria disabled
           if (row.hasClass('is-disabled')) {
             row.attr('aria-disabled','true');
-          }
-
+          }          
         });
 
         // TODO: Invoke the "element" here after we write an updated method.
@@ -327,6 +326,20 @@
         var items;
         items = $('li, tr', this.element);
         $('.listview-heading', items.eq(0)).width($('.listview-heading', items.eq(1)).width());
+        this.setChildIconsValign();
+      },
+
+      // Fix: for vertical-align to icons and buttons
+      setChildIconsValign: function() {
+        $('li > .icon, li > button', this.element).each(function() {
+          var item = $(this),
+          itemHeihgt = item.is('button') ? 42 : 22,
+          row = item.closest('li'),
+          padding = parseInt(row.css('padding-top'), 10) + parseInt(row.css('padding-bottom'), 10),
+          rowHeight = row.outerHeight() - padding;
+
+          item.css({top: ((rowHeight - itemHeihgt)/2) +'px'});
+        });
       },
 
       focus: function (item) {
