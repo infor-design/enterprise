@@ -33,7 +33,8 @@
           modalContent: null, //Custom modal markup
           editable: true, //Can the user type random text in the field
           typeahead: false, // Future TODO
-          autoApply: true
+          autoApply: true,
+          validator: null //A function that fires to let you validate form items on open and select
         },
         settings = $.extend({}, defaults, options);
 
@@ -133,6 +134,10 @@
             }
             self.createModal();
             self.element.trigger('open', [self.modal, self.grid]);
+
+            if (self.settings.validator) {
+              self.settings.validator(self.element, self.modal, self.grid);
+            }
             return;
           };
 
@@ -151,6 +156,11 @@
         self.modal.element.find('.pager-pagesize').remove();
 
         self.element.trigger('afteropen', [self.modal, self.grid]);
+
+        if (self.settings.validator) {
+          self.settings.validator(self.element, self.modal, self.grid);
+        }
+
       },
 
       //Overidable function to create the modal dialog
@@ -261,12 +271,20 @@
           self.selectGridRows(val);
         }
 
-        if (this.settings.options && this.settings.options.selectable === 'single' && self.settings.autoApply) {
+        if (this.settings.options) {
           lookupGrid.on('selected.lookup', function () {
-            setTimeout(function () {
-              self.insertRows();
-              self.modal.close();
-            }, 100);
+
+            if (self.settings.validator) {
+              self.settings.validator(self.element, self.modal, self.grid);
+            }
+
+            if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
+              setTimeout(function () {
+                self.insertRows();
+                self.modal.close();
+              }, 100);
+            }
+
           });
         }
 

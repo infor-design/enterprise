@@ -47,6 +47,14 @@
   }
 }
 
+.field .lookup-wrapper {
+  .icon-error,
+  .icon-confirm {
+    margin-right: -20px;
+    right: 55px;
+  }
+}
+
 .icon-confirm {
   fill: $confirm-icon-fill;
 }
