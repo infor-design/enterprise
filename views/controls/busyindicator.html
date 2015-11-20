@@ -52,9 +52,7 @@
   <div class="one-half column">
     <div class="field">
       <label class="label" for="busy-input">Busy Input Field</label>
-      <!-- <input class="busy" type="text" id="busy-input" data-block-ui="false" data-completion-time="2000" data-close-time="3000"/> -->
       <input class="busy" type="text" id="busy-input" data-block-ui="false"/>
-
       <br><button class="btn" id="trigger-busy-input" type="button">Load</button><br><br>
     </div>
   </div>
@@ -62,7 +60,7 @@
   <div class="one-half column">
     <div class="field">
       <label class="label" for="busy-dropdown">Busy Dropdown</label>
-      <select class="dropdown busy" id="busy-dropdown" data-block-ui="false" data-completion-time="2000" data-close-time="3000">
+      <select class="dropdown busy" id="busy-dropdown" data-block-ui="false" data-delay="0" data-completion-time="5000" data-close-time="6000">
         <option selected>Busy</option>
         <option>Preoccupied</option>
         <option>Distracted</option>
@@ -92,7 +90,7 @@
 
       <div style="display: inline-block; vertical-align: middle; font-size: 14px;">Some Text</div>
 
-      <div class="busy-sm" id="busy-sm" data-completion-time="2000" data-close-time="3000"
+      <div class="busy-sm" id="busy-sm" data-delay="0" data-completion-time="5000" data-close-time="6000"
         style="display: inline-block; vertical-align: middle;"></div>
     </div>
 
@@ -110,16 +108,17 @@
 
 <div class="row">
   <div class="one-half column">
-
+<!--
     <div style="display: table;">
       <button class="btn" id="trigger-busy-xs" type="button"
         style="display: inline-block; vertical-align: middle;">Load</button>
 
       <div style="display: inline-block; vertical-align: middle; font-size: 12px;">Some Text</div>
 
-      <div class="busy-xs" id="busy-xs" data-completion-time="2000" data-close-time="3000"
+      <div class="busy-xs" id="busy-xs" data-delay="0" data-completion-time="5000" data-close-time="6000"
         style="display: inline-block; vertical-align: middle;"></div>
     </div>
+-->
 
   </div>
 </div>

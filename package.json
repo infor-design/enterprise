@@ -15,7 +15,7 @@
     "eslint": "eslint src -f node_modules/eslint-bamboo-formatter/reporter.js",
     "build": "grunt"
   },
-  "main": "server.js",
+  "main": "sohoxi.js",
   "dependencies": {
   },
   "devDependencies": {

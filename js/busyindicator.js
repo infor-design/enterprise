@@ -25,7 +25,7 @@
         defaults = {
           blockUI: true, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
           text: null, //Custom Text To Show or Will Show Localized Loading....
-          delay: 3000, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
+          delay: 1000, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
           timeToClose: 0, // fires the 'close' trigger at a certain timing interval.  If 0, goes indefinitely.
         },

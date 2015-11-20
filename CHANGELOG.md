@@ -6,10 +6,9 @@ Release Date: TBD
 * 2015-11-16 Notes on this change
 
 ## Ui Changes
-* 2015-11-16 Notes on this change
+* 2015-11-20 We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange
 
 [Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin)
-
 
 # 4.0.6
 Release Date: 2015-11-16

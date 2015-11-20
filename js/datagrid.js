@@ -534,6 +534,7 @@ $.fn.datagrid = function(options) {
 
       //Update Paging
       this.renderPager(pagerInfo);
+      this.selectedRows([]);
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -1524,7 +1525,7 @@ $.fn.datagrid = function(options) {
 
       });
 
-      self.table.on('keyup.datagrid', 'td', function (e) {
+      self.table.on('keydown.datagrid', 'td', function (e) {
         var key = e.which, row,
           handled = false;
 
@@ -1638,7 +1639,6 @@ $.fn.datagrid = function(options) {
 
         //A printable character navigatable
         if ([13, 37, 38, 39, 9, 40].indexOf(key) === -1 && !e.ctrlKey && !e.metaKey && self.settings.editable) {
-
           if (!self.editor) {
             self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
           }

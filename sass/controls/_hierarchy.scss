@@ -74,6 +74,10 @@ $hierarchy-line-width: 1px;
       border-left-color: $ruby06;
     }
 
+    &.is-selected {
+      box-shadow: 0 0 0 5px rgba(203,235,244,0.83); //rgba(220, 236, 242, 1);
+    }
+
     //Styling for objects in the leafs
     img,
     .image-placeholder {
@@ -140,6 +144,10 @@ $hierarchy-line-width: 1px;
     .btn-expand {
       left: -12px;
       top: 17px;
+
+      .icon {
+        height: 22px;
+      }
     }
   }
 
@@ -233,6 +241,7 @@ $hierarchy-line-width: 1px;
       margin-left: 45px;
       overflow: hidden;
       padding-left: 30px;
+      padding-right: 5px;
 
       li {
         margin: 15px 0;

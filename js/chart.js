@@ -473,7 +473,7 @@ window.Chart = function(container) {
         })
         .on('click', function (d, i) {
           var isSelected = d3.select(this).classed('is-selected'),
-            color = charts.chartColor(i, 'pie', d);
+            color = charts.chartColor(i, 'pie', d.data);
 
           d3.select('.chart-container .is-selected')
             .classed('is-selected', false)
@@ -511,7 +511,7 @@ window.Chart = function(container) {
         });
 
     g.append('path')
-      .style('fill', function(d, i) { return charts.chartColor(i, 'pie', d); })
+      .style('fill', function(d, i) { return charts.chartColor(i, 'pie', d.data); })
       .transition().duration(750)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
