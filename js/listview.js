@@ -50,6 +50,8 @@
         this.setup();
         this.refresh();
         this.selectedItems = [];
+        this.lastSelectedRow = 0; // Rember index to use shift key
+        this.isSelectedAll = false; // Rember if all selected or not
         this.sortInit('listview', 'click.listview', 'data-sortlist');
       },
 
@@ -198,10 +200,52 @@
         self.list.data = ds;
       },
 
+      // Toggle all
+      toggleAll: function() {        
+        this[this.isSelectedAll ? 
+          'unselectRowsBetweenIndexes' : 
+          'selectRowsBetweenIndexes']([0, $('li, tbody tr', this.element).length-1]);
+        this.isSelectedAll = !this.isSelectedAll;
+      },
+
+      // Select rows between indexes
+      selectRowsBetweenIndexes: function(indexes) {
+        this.clearSelection();
+        indexes.sort(function(a, b) { return a-b; });
+        for (var i = indexes[0]; i <= indexes[1]; i++) {
+          var item = $('li, tbody tr', this.element).eq(i);
+          if(!item.is('.is-disabled, .is-selected')) {
+            this.select(item);
+          }
+        }
+      },
+
+      // Unselect rows between indexes
+      unselectRowsBetweenIndexes: function(indexes) {
+        indexes.sort(function(a, b) { return a-b; });
+        for (var i = indexes[0]; i <= indexes[1]; i++) {
+          var item = $('li, tbody tr', this.element).eq(i);
+          if(!item.is('.is-disabled') && item.is('.is-selected')) {
+            this.select(item);
+          }
+        }
+      },
+
+      // Clear Selection
+      clearSelection: function() {
+        if (window.getSelection) {
+          window.getSelection().removeAllRanges();
+        } else if (document.selection) {
+          document.selection.empty();
+        }
+      },
+
       // Handle Keyboard / Navigation Ect
       handleEvents: function () {
         var self = this,
-          isSelect = false, isFocused = false;
+          isSelect = false,
+          isFocused = false,
+          isMultiple = self.settings.selectable === 'multiple';
 
         this.element.on('focus.listview', 'li, tbody tr', function () {
           var item = $(this);
@@ -232,8 +276,8 @@
             key = e.keyCode || e.charCode || 0,
             metaKey = e.metaKey;
 
-           if (item.index() === 0 && e.keyCode === 38) {
-             return;
+          if (item.index() === 0 && e.keyCode === 38) {
+            return;
           }
 
           if ((key === 40 || key === 38) && !metaKey) {// move down or up
@@ -246,7 +290,6 @@
                 self.focus(newItem);
               }
             }
-
             e.preventDefault();
           }
 
@@ -266,10 +309,22 @@
 
           if (key === 32) { // Space to toggle selection
             if ($(e.target).is(item)) {
-              self.select(item);
+              if(isMultiple && e.shiftKey) {
+                self.selectRowsBetweenIndexes([self.lastSelectedRow, item.index()]);
+              } else {
+                self.select(item);
+              }
               e.preventDefault();
             }
           }
+
+          // If multiSelect is enabled, press Control+A to toggle select all rows
+          if (isMultiple && ((e.ctrlKey || e.metaKey) && key === 65)) {
+            self.toggleAll();
+            self.focus(item);
+            e.preventDefault();
+          }
+
         });
 
         // Selection View Click/Touch
@@ -291,12 +346,18 @@
 
           this.element
           .onTouchClick('listview', 'li, tr, input, select, label, button')
-          .on('click.listview', 'li, tr', function () {
+          .on('click.listview', 'li, tr', function (e) {
             var item = $(this);
 
             if (!isFocused && !item.hasClass('is-disabled')) {
               isSelect = true;
-              self.select(item);
+              // self.select(item);
+              if(isMultiple && e.shiftKey) {
+                self.selectRowsBetweenIndexes([self.lastSelectedRow, item.index()]);
+                e.preventDefault();
+              } else {
+                self.select(item);
+              }
               item.focus();
             }
 
@@ -459,6 +520,7 @@
         } else {
           if (this.settings.selectable) {
             li.addClass('is-selected');
+            self.lastSelectedRow = li.index();// Rember index to use shift key
           }
         }
 
