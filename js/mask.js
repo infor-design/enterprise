@@ -29,8 +29,8 @@
           definitions: {
             '#': /[0-9]/,
             '0': /[0-9]/,
-            'x': /[A-Za-z]/,
-            '*': /[A-Za-z0-9]/,
+            'x': /[\u00C0-\u017Fa-zA-Z]/,
+            '*': /[\u00C0-\u017Fa-zA-Z0-9]/,
             '~': /[-0-9]/,
             'a': /[APap]/,
             'm': /[Mm]/
@@ -105,7 +105,7 @@
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
-        self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, function(e) {
+        self.element.on('keypress.mask ' + self.env.pasteEvent, function(e) {
           self.handleKeyEvents(self, e);
         });
 
@@ -315,7 +315,7 @@
         // Convert Keycode to Character String
         if (key >= 96 && key <= 105) { // Using The Numpad
           character = String.fromCharCode(key - 48);
-        } else if (!e.shiftyKey && (key >= 65 && key <= 90)) {
+        } else if (!e.shiftKey && (key >= 65 && key <= 90)) {
           character = String.fromCharCode(key + 32);
         } else if (e.shiftKey && shiftUps.hasOwnProperty(key)) { // User was pressing Shift + any key
           character = shiftUps[key];
