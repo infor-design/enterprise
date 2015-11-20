@@ -66,7 +66,6 @@
           settings = self.settings,
           selections = self.selections;
 
-
         // TOP BUTTONS =============================================================================
         self.actionButtons.onTouchClick('swaplist').on('click.swaplist', function () {
           var actionButton = $(this),
@@ -105,22 +104,6 @@
               self.selectedButtons.first().focus();
             }
             e.preventDefault();
-          }
-
-          //Escape is the abort keystroke (for any target element)
-          if(e.keyCode === 27) {
-            var index, list = $('.listview', container).data('listview');
-            if(selections.items.length) {
-              index = $(selections.items[selections.items.length-1]);
-            } else if(list.selectedItems.length) {
-              index = $(list.selectedItems[list.selectedItems.length-1]);
-            } else {
-              index = $('li:first', container);
-            }
-            self.unselectElements(list);
-            self.clearDropeffects();
-            self.clearSelections();
-            index.focus();
           }
         });
 
@@ -172,7 +155,7 @@
           }
 
           self.clearSelections(); // Clear selection before fill
-          self.element.trigger(settings.triggerBeforeSwap, [selections.items]);
+          self.element.triggerHandler(settings.triggerBeforeSwap, [selections.items]);
 
           selections.owner = target.closest('.card');
           selections.dragged = target;
@@ -219,7 +202,7 @@
 
         // Dragenter - set that related/droptarget
         .on(self.dragEnterWhileDragging, self.dragElements, function(e) {
-          self.element.trigger(settings.triggerWhileDragging, [selections.items]);
+          self.element.triggerHandler(settings.triggerWhileDragging, [selections.items]);
           selections.related = e.target;
           $('ul, li', this.element).removeClass('over');
           $(e.target).closest('ul, li').addClass('over');
@@ -251,7 +234,7 @@
             }
             self.draggTouchElement(e, selections.placeholderTouch);
 
-            self.element.trigger(settings.triggerWhileDragging, [selections.items]);
+            self.element.triggerHandler(settings.triggerWhileDragging, [selections.items]);
             selections.related = overItem;
             $('ul, li', this.element).removeClass('over');
             overItem.closest('ul, li').addClass('over');
@@ -386,7 +369,7 @@
         self.unselectElements(list);
 
         if (self.selections.items.length) {
-          self.element.trigger(self.settings.triggerBeforeSwap, [self.selections.items]);
+          self.element.triggerHandler(self.settings.triggerBeforeSwap, [self.selections.items]);
 
           $.each(self.selections.items, function(index, val) {
             $('ul', to).append(val);
@@ -495,7 +478,8 @@
       clearDropeffects: function() {
         this.targets.attr({'aria-dropeffect': 'none'}).removeAttr('tabindex');
         $.each(this.selections.items, function(index, val) {
-          $(val).removeAttr('tabindex aria-grabbed');
+          val = $(val);
+          val.removeAttr('aria-grabbed' + (!val.is(':focus') ? ' tabindex' : ''));
         });
       },
 
@@ -535,7 +519,7 @@
           self.updateAttributes($('.listview', self.selections.owner));
           self.updateAttributes($('.listview', self.selections.droptarget));
           self.clearDropeffects();
-          self.element.trigger(self.settings.triggerAfterSwap, [self.selections.items]);
+          self.element.triggerHandler(self.settings.triggerAfterSwap, [self.selections.items]);
           self.clearSelections();
           self.items.removeClass('is-dragging is-dragging-touch');
         }, 100);
