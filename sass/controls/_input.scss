@@ -67,14 +67,27 @@
     margin-right: 20px;
   }
 
-  &.currency:before {
-    color: $input-placeholder-color;
+  &.percent,
+  &.currency {
+
+    &::before,
+    &::after {
+      color: $input-placeholder-color;
+      display: inline-block;
+      @include font-size(14);
+      position: absolute;
+      top: 29px;
+    }
+  }
+
+  &.currency::before {
     content: attr(data-currency-symbol);
-    display: inline-block;
-    @include font-size(14);
     left: 10px;
-    position: absolute;
-    top: 29px;
+  }
+
+  &.percent::before {
+    content: attr(data-currency-symbol);
+    left: 10px;
   }
 
 }
