@@ -29,18 +29,20 @@
           definitions: {
             '#': /[0-9]/,
             '0': /[0-9]/,
-            'x': /[A-Za-z]/,
-            '*': /[A-Za-z0-9]/,
+            'x': /[\u00C0-\u017Fa-zA-Z]/,
+            '*': /[\u00C0-\u017Fa-zA-Z0-9]/,
             '~': /[-0-9]/,
             'a': /[APap]/,
             'm': /[Mm]/
           },
-          number: false
+          number: false,
+          showSymbol: 'none', // can be 'currency', 'percent'
         },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Mask(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -62,7 +64,7 @@
         //
         // if no pattern is provided in settings, use a pre-determined pattern based
         // on element type, or grab the pattern from the element itself.
-        self.pattern = self.element.attr('data-mask') || settings.pattern || '';
+        self.pattern = self.element.attr('data-mask') || this.settings.pattern || '';
 
         // If a "mode" is defined, special formatting rules may apply to this mask.
         // Otherwise, the standard single-character pattern match will take place.
@@ -83,11 +85,29 @@
 
         // If 'showCurrency' is defined and the mask mode is 'number', a span will be drawn that will show the
         // localized currency symbol.
-        self.showCurrency = self.mode === 'number' && self.element.attr('data-show-currency');
-        if (self.showCurrency) {
-          var symbol = (Locale.currentLocale.data ? Locale.currentLocale.data.currencySign : '$');
-          $('<span class="audible currency"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
-          this.element.parent('.field').attr('data-currency-symbol', '' + symbol).addClass('currency');
+        var symbolType = self.element.attr('data-show-currency') || this.settings.showSymbol,
+          symbols = ['currency', 'percent'],
+          symbol;
+
+        // Backwards compat with the old "data-show-currency"
+        if (symbolType === true) {
+          symbolType = 'currency';
+        }
+
+        if (symbolType && symbolType !== 'none' && symbols.indexOf(symbolType) !== -1 && self.mode === 'number') {
+          switch(symbolType) {
+            case 'currency':
+              symbol = (Locale.currentLocale.data ? Locale.currentLocale.data.currencySign : '$');
+              break;
+            case 'percent':
+              symbol = '%';
+              break;
+          }
+
+          $('<span class="audible ' + symbolType + '"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
+          this.element.parent('.field')
+            .attr('data-currency-symbol', '' + symbol)
+            .addClass(symbolType);
         }
 
         // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
@@ -105,23 +125,36 @@
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
-        self.element.on('keydown.mask keypress.mask ' + self.env.pasteEvent, function(e) {
+        self.element.on('keypress.mask ' + self.env.pasteEvent, function(e) {
+          if (self.element.prop('readonly')) {
+            e.preventDefault();
+            return false;
+          }
           self.handleKeyEvents(self, e);
         });
 
         // when the element is focused, store its initial value.
-        self.element.on('focus.mask', function() {
+        self.element.on('focus.mask', function(e) {
+          if (self.element.prop('disabled') || self.element.prop('readonly')) {
+            e.preventDefault();
+            return false;
+          }
           self.initValue = self.element.val();
         });
 
         // listen for an event called "updated" that can be triggered by other plugins, that forces the mask
         // to completely re-evaluate itself.
-        self.element.on('updated', function(e) {
+        self.element.on('updated.mask', function(e) {
           self.evaluateCurrentContents(undefined, e);
         });
 
         // remove the value when blurred
-        self.element.on('blur.mask', function() {
+        self.element.on('blur.mask', function(e) {
+          if (self.element.prop('readonly')) {
+            e.preventDefault();
+            return false;
+          }
+
           self.initValue = null;
 
           if (self.mustComplete) {
@@ -315,7 +348,7 @@
         // Convert Keycode to Character String
         if (key >= 96 && key <= 105) { // Using The Numpad
           character = String.fromCharCode(key - 48);
-        } else if (!e.shiftyKey && (key >= 65 && key <= 90)) {
+        } else if (!e.shiftKey && (key >= 65 && key <= 90)) {
           character = String.fromCharCode(key + 32);
         } else if (e.shiftKey && shiftUps.hasOwnProperty(key)) { // User was pressing Shift + any key
           character = shiftUps[key];
@@ -451,7 +484,7 @@
       // pattern matching characters ("definitions"). If the character is not in the array,
       // it is considered "literal", and will be placed into the input field as part of the mask.
       isCharacterLiteral: function(patternChar) {
-        return $.inArray(patternChar, Object.keys(settings.definitions)) === -1;
+        return $.inArray(patternChar, Object.keys(this.settings.definitions)) === -1;
       },
 
       // Tests the character provided against the current langauge's decimal selector
@@ -779,7 +812,7 @@
       // and its unmatchable literals.
       getPatternParts: function() {
         var self = this,
-          defKeys = Object.keys(settings.definitions),
+          defKeys = Object.keys(this.settings.definitions),
           patternEditableParts = [],
           patternLiteralParts = [],
           patternStartsWithLiteral = false,
@@ -1182,7 +1215,7 @@
       // Takes a character from the pattern string in Settings, gets the corresponding Regex string
       // from the definitions array in Settings, and tests the character against the Regex.
       testCharAgainstRegex: function(typedChar, patternChar) {
-        var regex = settings.definitions[patternChar];
+        var regex = this.settings.definitions[patternChar];
         return !regex ? false : regex.test(typedChar);
       },
 
@@ -1233,7 +1266,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Mask(this, settings));
       }
