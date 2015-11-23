@@ -106,11 +106,17 @@
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
         self.element.on('keypress.mask ' + self.env.pasteEvent, function(e) {
+          if (this.prop('readonly')) {
+            return;
+          }
           self.handleKeyEvents(self, e);
         });
 
         // when the element is focused, store its initial value.
         self.element.on('focus.mask', function() {
+          if (this.prop('disabled') || this.prop('readonly')) {
+            return;
+          }
           self.initValue = self.element.val();
         });
 
@@ -122,6 +128,10 @@
 
         // remove the value when blurred
         self.element.on('blur.mask', function() {
+          if (this.prop('readonly')) {
+            return;
+          }
+
           self.initValue = null;
 
           if (self.mustComplete) {
