@@ -221,6 +221,17 @@
   }
 }
 
+// IE9
+.ie9 {
+  .swaplist {
+    .is-muliselect {
+      [aria-grabbed="true"]:not(.is-dragging) {
+        display: none;
+      }
+    }
+  }
+}
+
 // Touch placeholder
 #sl-placeholder-container {
   p,
