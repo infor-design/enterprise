@@ -125,6 +125,16 @@
           }
         });
 
+        self.element.on('keydown.swaplist', self.tabButtonsStr, function(e) {
+          var btn = $(this),
+            keyCode = e.keyCode || e.which;
+
+          if(keyCode === 9 && !e.shiftKey) { // Tab key
+            $('li:first-child', btn.closest('.card')).focus();
+            e.preventDefault();
+          }
+        });
+
 
         // DRAGGABLE ===============================================================================
         self.element
@@ -245,18 +255,29 @@
 
         // Dragend - implement items being validly dropped into targets
         .on(self.dragEnd, self.dragElements, function(e) {
-          var related = $(selections.related).closest('li');
+          var related = $(selections.related).closest('li'),
+          ul = $('ul', selections.droptarget),
+          currentSize = $('li', ul).length,
+          size = self.selections.items.length + currentSize;
 
           self.unselectElements($('.listview', selections.owner).data('listview'));
+
           $.each(selections.items, function(index, val) {
-            if ($('li', selections.droptarget).length && !$(selections.related).is('ul')) {
-              var isLess = (related.index() < selections.draggedIndex);
-              related[isLess ? 'before' : 'after'](isLess ? val : 
-                $(selections.items[(selections.items.length-1) - index]));
+            val = $(val);
+            // val = $(val).removeAttr('aria-grabbed');
+            if (currentSize && !$(selections.related).is('ul')) {
+              var isLess = (related.index() < selections.draggedIndex),
+                el = isLess ? val : $(selections.items[(selections.items.length-1) - index]),
+                posinset = related.index()+(isLess ? index+1 : index+2);
+
+              val.attr({ 'aria-posinset': posinset, 'aria-setsize': size });
+              related[isLess ? 'before' : 'after'](el);
+
             } else {
-              $('ul', selections.droptarget).append(val);
+              val.attr({ 'aria-posinset': currentSize+index+1, 'aria-setsize': size });
+              ul.append(val);
             }
-            $(val).focus();
+            val.focus();
           });
 
           if (selections.items.length > 1) {
@@ -296,6 +317,12 @@
         this.selectedButtons = $(
           this.settings.btnSelectedLeft +','+ 
           this.settings.btnSelectedRight, this.element);
+
+        this.tabButtonsStr = ''+
+          this.settings.btnAvailable +' '+ 
+          this.settings.btnFullAccess +' '+ 
+          (this.selectedButtons.length > 1 ? 
+            this.settings.btnSelectedRight : this.settings.btnSelectedLeft);
 
         this.dragElements = 'ul, li:not(.is-disabled)';
         this.dragStart = 'dragstart.swaplist touchstart.swaplist gesturestart.swaplist';
@@ -348,7 +375,8 @@
 
       // Move Elements 
       moveElements: function(from, to) {
-        var self = this, list;
+        var ul, size, currentSize, 
+          self = this, list;
 
         from = (typeof from !== 'string') ? from : $(from, self.element);
         to = (typeof to !== 'string') ? to : $(to, self.element);
@@ -371,9 +399,15 @@
         if (self.selections.items.length) {
           self.element.triggerHandler(self.settings.triggerBeforeSwap, [self.selections.items]);
 
+          ul = $('ul', to);
+          currentSize = $('li', ul).length;
+          size = self.selections.items.length + currentSize;
+
           $.each(self.selections.items, function(index, val) {
-            $('ul', to).append(val);
-            $(val).focus();
+            val = $(val);
+            val.attr({ 'aria-posinset': currentSize+index+1, 'aria-setsize': size });
+            ul.append(val);
+            val.focus();
           });
 
           self.afterUpdate($('.listview', to).data('listview'));
