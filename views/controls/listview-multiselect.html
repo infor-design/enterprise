@@ -48,12 +48,8 @@
 </div>
 
 <script>
-    $('#remove').on('click', function () {
-      debugger;
-      console.log($('#multiselect-listview').data('listview').selectedItems);
-    });
 
     $('#multiselect-listview').on('selected', function (e, args) {
-     console.log(e, args);
+     console.log(args);
     });
 </script>

@@ -158,7 +158,7 @@
           // Add Aria disabled
           if (row.hasClass('is-disabled')) {
             row.attr('aria-disabled','true');
-          }          
+          }
         });
 
         // TODO: Invoke the "element" here after we write an updated method.
@@ -201,9 +201,9 @@
       },
 
       // Toggle all
-      toggleAll: function() {        
-        this[this.isSelectedAll ? 
-          'unselectRowsBetweenIndexes' : 
+      toggleAll: function() {
+        this[this.isSelectedAll ?
+          'unselectRowsBetweenIndexes' :
           'selectRowsBetweenIndexes']([0, $('li, tbody tr', this.element).length-1]);
         this.isSelectedAll = !this.isSelectedAll;
       },
@@ -524,11 +524,9 @@
           }
         }
 
-        if (this.settings.selectable === 'multiple') {
-          li.parent().find('.is-selected').each(function (i) {
-            self.selectedItems[i] = $(this);
-          });
-        }
+        li.parent().find('.is-selected').each(function (i) {
+          self.selectedItems[i] = $(this);
+        });
 
         li.parent().children().removeAttr('tabindex');
         li.attr('tabindex', 0);
