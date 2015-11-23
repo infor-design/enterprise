@@ -387,8 +387,15 @@ define([
     'should parse with multiple group separators': function() {
       Locale.set('en-US');
       expect(Locale.parseNumber('1,234,567,890.12346')).to.equal(1234567890.12346);
+    },
 
-   }
+   'should handle big numbers': function() {
+      Locale.set('en-US');
+      expect(Locale.parseNumber('1123456789123456.57')).to.equal(1123456789123456.57);
+      expect(Locale.parseNumber('1123456789123.57')).to.equal(1123456789123.57);
+      expect(Locale.parseNumber('112345678912345.57')).to.equal(112345678912345.57);
+      expect(Locale.parseNumber('11234567891.57')).to.equal(11234567891.57);
+    }
 
 
   });

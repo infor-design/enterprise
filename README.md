@@ -21,7 +21,7 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 * Responsive
 * Touch Friendly
 * Retina Ready with SVG images and icons
-* IE8 Support not included at the moment (TBD Might not be :)
+* IE8 is not supported
 * Rewrites: Grid / DateField
 * Globalization
 * Input Formatting
