@@ -63,7 +63,7 @@
         this.toolbarParent = this.element.parents('.toolbar');
 
         // Setup ARIA
-        var label = this.element.attr('placeholder') || this.element.prev('label, .label');
+        var label = this.element.attr('placeholder') || this.element.prev('label, .label').text().trim();
         if (!label || label === '') {
           label = Locale.translate('Keyword');
         }
