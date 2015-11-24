@@ -288,16 +288,23 @@ $toolbarsearchfield-empty-width: 34px;
       }
     }
   }
+
+  // Small adjustments for being the full-width toolbar searchfield
+  .toolbar > .toolbar-searchfield-wrapper.active {
+    width: calc(100% - 40px);
+
+    .searchfield {
+      // Don't be semi-transparent in this mode, since it sits over top of other things
+      background-color: rgba($searchfield-header-bg-color, 1);
+      border-bottom-color: rgba($searchfield-header-border-color, 1);
+    }
+  }
 }
 
 .header {
   .toolbar > .toolbar-searchfield-wrapper {
     left: 20px;
     top: 14px;
-
-    .icon.close {
-      right: 20px;
-    }
   }
 }
 
