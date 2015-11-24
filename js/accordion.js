@@ -541,7 +541,6 @@
         pane.one('animateclosedcomplete', function(e) {
           e.stopPropagation();
           pane.css('display', 'none');
-          self.collapse(pane.children('.accordion-header'));
           self.element.trigger('aftercollapse', [a]);
         }).animateClosed();
       },

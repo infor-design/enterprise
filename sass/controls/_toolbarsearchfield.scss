@@ -64,7 +64,7 @@ $toolbarsearchfield-empty-width: 34px;
   }
 
   &.active {
-    width: 225px;
+    width: $toolbarsearchfield-max-width;
 
     // During the animation "out", the text goes transparent
     .searchfield {
@@ -288,15 +288,122 @@ $toolbarsearchfield-empty-width: 34px;
       }
     }
   }
+
+  // Small adjustments for being the full-width toolbar searchfield
+  .toolbar > .toolbar-searchfield-wrapper.active {
+    width: calc(100% - 40px);
+
+    .searchfield {
+      // Don't be semi-transparent in this mode, since it sits over top of other things
+      background-color: rgba($searchfield-header-bg-color, 1);
+      border-bottom-color: rgba($searchfield-header-border-color, 1);
+    }
+  }
 }
 
 .header {
   .toolbar > .toolbar-searchfield-wrapper {
     left: 20px;
     top: 14px;
+  }
+}
 
-    .icon.close {
-      right: 20px;
+// For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
+@media(min-width: $breakpoint-phone-to-tablet) {
+  .toolbar-searchfield-wrapper.non-collapsible {
+    width: $toolbarsearchfield-max-width;
+
+    // reset all the styling for the searchfield to correctly appear open.
+    .searchfield {
+      background-color: rgba($searchfield-bg-color, 1);
+      border-bottom-color: rgba($searchfield-border-color, 1);
+      color: $searchfield-text-color;
+      @include font-size(14);
+      font-weight: normal;
+      text-transform: none;
+
+      &::-webkit-input-placeholder {
+        color: $searchfield-text-color;
+        @include font-size(14);
+        font-weight: normal;
+        text-transform: none;
+      }
+
+      &::-moz-placeholder {
+        color: $searchfield-text-color;
+        @include font-size(14);
+        font-weight: normal;
+        text-transform: none;
+      }
+
+      &:-ms-input-placeholder {
+        color: $searchfield-text-color;
+        @include font-size(14);
+        font-weight: normal;
+        text-transform: none;
+      }
+    }
+
+    &.has-text {
+      width: $toolbarsearchfield-max-width;
+
+      &.active {
+        width: $toolbarsearchfield-max-width;
+      }
+    }
+
+    &.has-focus {
+      .icon {
+        fill: $searchfield-text-color;
+      }
     }
   }
+
+  .card-header,
+  .widget-header {
+    .toolbar-searchfield-wrapper.non-collapsible {
+      // reset all the styling for the searchfield to correctly appear open.
+      .searchfield {
+        background-color: rgba($searchfield-card-bg-color, 1);
+        border-bottom-color: rgba($searchfield-card-border-color, 1);
+      }
+
+      &.has-focus {
+        .icon {
+          fill: $listview-toolbar-button-icon-color;
+        }
+      }
+    }
+  }
+
+  .header,
+  .masthead {
+    .toolbar-searchfield-wrapper.non-collapsible {
+      // reset all the styling for the searchfield to correctly appear open.
+      .searchfield {
+        background-color: rgba($searchfield-header-bg-color, .5);
+        border-bottom-color: rgba($searchfield-header-border-color, .7);
+        color: $searchfield-header-text-color;
+
+        &::-webkit-input-placeholder {
+          color: $searchfield-header-placeholder-text-color;
+        }
+
+        &::-moz-placeholder {
+          color: $searchfield-header-placeholder-text-color;
+        }
+
+        &:-ms-input-placeholder {
+          color: $searchfield-header-placeholder-text-color;
+        }
+      }
+
+      &.has-focus {
+        .icon {
+          fill: $searchfield-header-icon-color;
+        }
+      }
+    }
+  }
+
 }
