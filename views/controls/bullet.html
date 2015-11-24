@@ -1,0 +1,30 @@
+
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Bullet (Targeted Achievement) Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bullet-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+ var dataset = [{
+      data: [
+        {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150,225,300], 'measures': [220,270], 'markers': [250]},
+        {'title': 'Profit', 'subtitle': '%', 'ranges': [20,25,30], 'measures': [21,23], 'markers': [26]},
+      ],
+      name: ''  //Can be optionally passed in makes less sense with one: Group 1
+    }];
+
+  $('#bullet-example').chart({type: 'bullet', dataset: dataset})
+    .on('selected', function(e, ui, data) {
+      console.log(e, ui, data);
+    });
+</script>
