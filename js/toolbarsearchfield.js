@@ -29,6 +29,7 @@
     var pluginName = 'toolbarsearchfield',
         defaults = {
           clearable: true,  // If "true", provides an "x" button on the right edge that clears the field
+          collapsible: true // If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
         },
         settings = $.extend({}, defaults, options);
 
@@ -75,6 +76,10 @@
         this.input.searchfield(sfSettings);
         this.inputWrapper = this.input.parent('.searchfield-wrapper');
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
+
+        // Add/remove the collapsible setting
+        var collapsibleMethod = this.settings.collapsible ? 'removeClass' : 'addClass';
+        this.inputWrapper[collapsibleMethod]('non-collapsible');
 
         this.xButton = this.inputWrapper.children('.icon.close');
 
@@ -182,18 +187,22 @@
         }
 
         this.inputWrapper.addClass('active');
+        this.handleDeactivationEvents();
 
         function activateCallback() {
           self.inputWrapper.addClass('is-open');
           self.input.focus(); // for iOS
         }
 
-        self.handleDeactivationEvents();
+        if (this.settings.collapsible === false && !this.shouldBeFullWidth()) {
+          activateCallback();
+          return;
+        }
+
         var header = this.inputWrapper.closest('.header'),
           headerWidth = header.width();
 
         this.animationTimer = setTimeout(activateCallback, (header.length > 0 && headerWidth < 320) ? 0 : 300);
-
       },
 
       deactivate: function() {
@@ -221,7 +230,7 @@
 
         self.inputWrapper.removeClass('active');
 
-        if (this.fastActivate) {
+        if (this.fastActivate || this.settings.collapsible === false) {
           deactivateCallback();
           return;
         }
