@@ -45,7 +45,6 @@
 
   $('#pie-chart-example').chart({type: 'pie', dataset: pieData}).on('contextmenu', function(e, ui, d) {
 
-      console.log(d);
 
       $(this).popupmenu({trigger: 'immediate', menu: 'action-popupmenu', eventObj: e})
       .off('selected')

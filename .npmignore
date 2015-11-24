@@ -1,0 +1,7 @@
+*.xml
+*.xlsx
+designs
+Makefile
+test
+sql
+images

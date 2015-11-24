@@ -218,13 +218,13 @@ window.Editors = {
     this.init();
   },
 
-  Checkbox: function(row, cell, value, container, column, event) {
+  Checkbox: function(row, cell, value, container, column, e) {
 
     this.name = 'Checkbox';
     this.orginalValue = value;
 
     this.init = function () {
-      this.input = $('<input type="checkbox" class="checkbox"/>').appendTo(container);
+      this.input = $('<input type="checkbox" class="checkboxn"/>').appendTo(container);
       this.input.after('<label class="checkbox-label">&nbsp;</label>');
 
       if (column.align) {
@@ -239,7 +239,7 @@ window.Editors = {
         return  this.input.prop('checked');
       }
 
-      if (event.type === 'click') {
+      if (e.type === 'click' || (e.type === 'keydown' && e.keyCode === 32)) {
         //just toggle it
         isChecked = !value;
       }
@@ -248,7 +248,8 @@ window.Editors = {
     };
 
     this.focus = function () {
-      this.input.focus();
+      //  this.input.focus();
+      this.input.trigger('focusout');
     };
 
     this.destroy = function () {
@@ -1606,7 +1607,7 @@ $.fn.datagrid = function(options) {
         if (key === 32 && !self.settings.editable) {
           row = self.activeCell.node.closest('tr');
 
-          if(isMultiple && e.shiftKey) {
+          if (isMultiple && e.shiftKey) {
             self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
           } else {
             self.toggleRowSelection(row);
@@ -1638,7 +1639,7 @@ $.fn.datagrid = function(options) {
         }
 
         //A printable character navigatable
-        if ([13, 37, 38, 39, 9, 40].indexOf(key) === -1 && !e.ctrlKey && !e.metaKey && self.settings.editable) {
+        if ([13, 32, 37, 38, 39, 9, 40].indexOf(key) === -1 && !e.ctrlKey && !e.metaKey && self.settings.editable) {
           if (!self.editor) {
             self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
           }
@@ -1658,6 +1659,7 @@ $.fn.datagrid = function(options) {
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
+
       if (!this.settings.editable) {
         return;
       }

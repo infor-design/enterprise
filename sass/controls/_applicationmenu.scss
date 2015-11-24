@@ -13,10 +13,6 @@
   position: fixed;
   @include css3(transform, translateZ(0));
   @include transition(left 300ms cubic-bezier(.17, .04, .03, .94),
-    -moz-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
-    -ms-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
-    -o-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
-    -webkit-box-shadow 300ms cubic-bezier(.17, .04, .03, .94),
     box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
   width: $application-menu-width;
   z-index: 500;
