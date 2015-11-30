@@ -24,8 +24,25 @@ killServers ()
 killServers
 
 # start selenium
-./node_modules/.bin/selenium-standalone start &
-sleep 3s
+# set this up as file descriptor #3
+exec 3< <(./node_modules/.bin/selenium-standalone start)
+
+while read line; do
+   case "$line" in
+    *"Selenium started"*)
+      FOUNDIT=true
+      break
+      ;;
+   *)
+      echo ''
+      ;;
+   esac
+done <&3
+
+if [[!$FOUNDIT]]; then
+  echo 'Could not find or start a selenium server... exiting...'
+  exit 1
+fi
 
 # run intern, wait til it finishes
 # config=test2/intern.local.functional
@@ -33,6 +50,9 @@ sleep 3s
 
 # kill the servers when we're done
 killServers
+
+# kill file descriptor #3
+exec 3<&-
 
 echo 'SoHo Xi Test Suite has been shutdown.'
 
