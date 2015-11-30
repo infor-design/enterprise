@@ -6,8 +6,10 @@ dist/css/
 dist/js/
 temp/
 .DS_Store
+npm-debug.log
 phantomjsdriver.log
-xunit.xml
 report.xml
+sohoxi-test-report.html
+xunit.xml
 .idea/
 .idea

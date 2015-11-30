@@ -1,7 +1,7 @@
 define([
     'intern!object',
     'intern/chai!expect',
-    'leadfoot/keys',
+    'intern/dojo/node!../../../node_modules/intern/node_modules/leadfoot/keys',
     'require'
 ], function (registerSuite, expect, k, require) {
 
@@ -19,6 +19,8 @@ define([
     },
 
     'validation position is correct': function() {
+      this.skip();
+
       var fieldWidth = 0;
 
       return this.remote
