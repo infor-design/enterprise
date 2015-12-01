@@ -18,18 +18,27 @@
   var donutData = [{
     data: [{
         name: 'Component A',
-        value: 30
+        value: 30,
+        tooltip: 'Tooltip by Data <br> Component A <br> Information'
     }, {
         name: 'Component B',
-        value: 40
+        value: 40,
+        tooltip: 'Tooltip by Data <br> Component B <br> Information'
     }],
     centerLabel: 'Donut Chart'
   }];
 
-  $('#pie-donut-example').chart({type: 'donut', dataset: donutData, tooltip: function (response) {
-    //Ajax Call or async op
-    setTimeout(function () {
-      response('<strong>Tooltips Provide <br> Interesting Information</strong>');
-    }, 400);
-  }});
+  // $('#pie-donut-example').chart({type: 'donut', dataset: donutData});
+  
+  // $('#pie-donut-example').chart({type: 'donut', dataset: donutData, tooltip: 'Tooltip by attribute'});
+
+  $('#pie-donut-example').chart({type: 'donut', dataset: donutData, 
+    tooltip: function(response) {
+      //Ajax Call or async op
+      setTimeout(function () {
+        response('<strong>Tooltips Provide <br> Interesting Information</strong>');
+      }, 400);
+    }
+  });
+
 </script>
