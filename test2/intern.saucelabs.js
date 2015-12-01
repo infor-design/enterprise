@@ -62,9 +62,8 @@ define({
   },
 
   reporters: [
-    { 'id': 'JUnit', 'filename': 'intern-test-results.xml' },
-    { 'id': 'Pretty' },
-    'test2/reporters/end'
+    { 'id': 'JUnit', 'filename': 'junit.xml' },
+    { 'id': 'Pretty' }
   ],
 
   // Non-functional test suite(s) to run in each browser
