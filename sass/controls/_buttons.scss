@@ -197,10 +197,6 @@ a.btn-primary {
   &:hover {
     color: $tertiary-btn-hover-color;
 
-    span {
-      color: $tertiary-btn-hover-color;
-    }
-
     .icon {
       fill: $tertiary-btn-hover-color;
     }
@@ -212,7 +208,6 @@ a.btn-primary {
 
   &:focus:not(.hide-focus) {
     box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-hover-color;
-    color: $tertiary-btn-color;
 
     &:active {
       box-shadow: none;
@@ -224,9 +219,11 @@ a.btn-primary {
     color: $tertiary-btn-disabled-color;
     cursor: default;
 
+    /*
     span {
       color: $tertiary-btn-disabled-color;
     }
+    */
 
     .icon {
       fill: $tertiary-btn-disabled-color;
@@ -234,7 +231,7 @@ a.btn-primary {
   }
 
   span {
-    color: $tertiary-btn-color;
+    color: inherit;
   }
 
   .icon {

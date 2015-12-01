@@ -62,9 +62,8 @@ define({
   },
 
   reporters: [
-    { 'id': 'JUnit', 'filename': 'report.xml' },
+    { 'id': 'JUnit', 'filename': 'junit.xml' },
     { 'id': 'Pretty'}
-    //{ 'id': 'test2/reporters/sohoxi-reporter', 'filename': 'sohoxi-test-report.html' }
   ],
 
   // Non-functional test suite(s) to run in each browser

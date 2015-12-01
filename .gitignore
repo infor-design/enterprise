@@ -6,6 +6,7 @@ dist/css/
 dist/js/
 temp/
 .DS_Store
+junit.xml
 npm-debug.log
 phantomjsdriver.log
 report.xml
