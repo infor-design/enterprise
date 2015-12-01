@@ -87,6 +87,11 @@
       var self = this;
       this.dff = $.Deferred();
 
+      //Map incorrect java locale to correct locale
+      if (locale === 'in-ID') {
+        locale = 'id-ID';
+      }
+
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.currentLocale.name = locale;
 
