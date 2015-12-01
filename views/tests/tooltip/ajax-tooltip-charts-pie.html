@@ -1,0 +1,58 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  var pieData = [{
+      data: [{
+          name: 'Component A',
+          value: 10.1,
+          url: '/componentA',
+          tooltip: 'Tooltip by Data <br> Component A <br> Information'
+      }, {
+          name: 'Component B',
+          value: 10.2,
+          tooltip: 'Tooltip by Data <br> Component B <br> Information'
+      }, {
+          name: 'Component C',
+          value: 14.35,
+          tooltip: 'Tooltip by Data <br> Component C <br> Information'
+      }, {
+          name: 'Component D',
+          value: 15.6,
+          tooltip: 'Tooltip by Data <br> Component D <br> Information'
+      }, {
+          name: 'Component E',
+          value: 21.6,
+          tooltip: 'Tooltip by Data <br> Component E <br> Information'
+      }, {
+          name: 'Component F',
+          value: 41.6,
+          tooltip: 'Tooltip by Data <br> Component F <br> Information'
+      }]
+    }];
+
+  $('#pie-chart-example').chart({type: 'pie', dataset: pieData});
+  
+  // $('#pie-chart-example').chart({type: 'pie', dataset: pieData, tooltip: 'Tooltip by attribute'});
+
+  // $('#pie-chart-example').chart({type: 'pie', dataset: pieData, 
+  //   tooltip: function(response) {
+  //     //Ajax Call or async op
+  //     setTimeout(function () {
+  //       response('<strong>Tooltips Provide <br> Interesting Information</strong>');
+  //     }, 400);
+  //   }
+  // });
+</script>

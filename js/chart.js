@@ -419,7 +419,9 @@ window.Chart = function(container) {
     return $(container);
   };
 
-  this.Pie = function(initialData, isDonut) {
+  this.Pie = function(initialData, isDonut, tooltipData) {
+
+    var tooltipDataCache = [];
 
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
@@ -437,10 +439,11 @@ window.Chart = function(container) {
     });
 
     // Store our chart dimensions
-    var dims = {
-      height: parseInt($(container).parent().height()),  //header + 20 px padding
-      width: parseInt($(container).parent().width())
-    };
+    var parent = $(container).parent(),
+      dims = {
+        height: parseInt(parent.height()),  //header + 20 px padding
+        width: parseInt(parent.width())
+      };
 
     dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 35 : 50));
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
@@ -493,18 +496,47 @@ window.Chart = function(container) {
           }
 
           $(container).trigger('selected', [path[0], d.data]);
-        }).on('mouseenter', function () {
-          /*var shape = d3.select(this),
-            content = 'test';
+        })
+        .on('mouseenter', function(d, i) {
+          var size, 
+            content = '',
+            offset = parent.offset(),
+            centroid = pieArcs.centroid(d, i),
+            midAngle = Math.atan2(centroid[1], centroid[0]),
+            x = dims.width/2 + centroid[0] + offset.left,
+            y = dims.height/2 + centroid[1] + offset.top -14,
 
-          var yPosS = shape[0][0].getBoundingClientRect().top + $(window).scrollTop(),
-              xPosS = shape[0][0].getBoundingClientRect().left + $(window).scrollLeft();
+            show = function() {
+              size = charts.getTooltipSize(content);
+              x -= size.width/2;
+              y -= size.height;
 
-          var size = charts.getTooltipSize(content),
-            x = xPosS + (parseFloat(shape.attr('width'))/2) - (size.width/2),
-            y = yPosS - size.height - 13;
+              if(content !== '') {
+                charts.showTooltip(x, y, content, 'top');
+              }              
+            };
 
-          charts.showTooltip(x, t, content, 'top');*/
+            x += Math.cos(midAngle) * (isDonut ? -5 : 37);
+            y += Math.sin(midAngle) * (isDonut ? -5 : 37);
+
+          if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+            var runInterval = true,
+              interval = setInterval(function() {
+                if(runInterval) {
+                  runInterval = false;
+                  tooltipData(function (data) {
+                    content = tooltipDataCache[i] = data;
+                  });
+                }
+                if(content !== '') {
+                  clearInterval(interval);
+                  show();
+                }
+              }, 10);              
+          } else {
+            content = tooltipDataCache[i] || tooltipData || d.data.tooltip || '';
+            show();
+          }
         })
         .on('mouseleave', function () {
           charts.hideTooltip();
@@ -614,6 +646,7 @@ window.Chart = function(container) {
 
         if (parseInt(d.percent) > 10) {
           d3.select(textLines[0][i]).style('stroke', 'transparent');
+          // d3.select(labelGroups[0][i]).select('circle').style('fill', '#000');
           d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
         }
         return {name: d.name, percent: d.percent, elem: d.elem};
@@ -1416,7 +1449,7 @@ window.Chart = function(container) {
       this.format = options.format;
     }
     if (options.type === 'pie') {
-      this.Pie(options.dataset);
+      this.Pie(options.dataset, false, options.tooltip);
     }
     if (options.type === 'bar') {
       this.HorizontalBar(options.dataset);
@@ -1434,7 +1467,7 @@ window.Chart = function(container) {
       this.Column(options.dataset);
     }
     if (options.type === 'donut') {
-      this.Pie(options.dataset, true);
+      this.Pie(options.dataset, true, options.tooltip);
     }
     if (options.type === 'sparkline') {
       this.Sparkline(options.dataset, options);
