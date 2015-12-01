@@ -1109,7 +1109,6 @@ window.Chart = function(container) {
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
 
-
     var svg = d3.select(container).append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
@@ -1260,6 +1259,143 @@ window.Chart = function(container) {
     return $(container);
   };
 
+  this.Bullet = function(chartData) {
+    $(container).addClass('bullet-chart');
+
+    //Append the SVG in the parent area.
+    var dataset = chartData,
+      parent = $(container).parent(),
+      margin = {top: 30, right: 55, bottom: 35, left: 65},
+      width = parent.width() - margin.left - margin.right,
+      height = parent.height() - margin.top - margin.bottom - 30; //legend
+
+    var svg = d3.select(container).append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    //Functions Used in the Loop
+    function bulletWidth(x) {
+      var x0 = x(0);
+      return function(d) {
+        return Math.abs(x(d) - x0);
+      };
+    }
+
+    for (var i = 0; i < dataset[0].data.length; i++) {
+      var duration = 600,
+          barHeight = 25,
+          rowData = dataset[0].data[i],
+          ranges = rowData.ranges.slice().sort(d3.descending),
+          markers = rowData.markers.slice().sort(d3.descending),
+          measures = rowData.measures.slice().sort(d3.descending);
+
+      var g = svg.append('g')
+              .attr('class', 'bullet')
+              .attr('transform', 'translate(0, ' + (i * (barHeight*3)) + ')');
+
+
+      //Add Title and Subtitle
+      var title = g.append('g');
+
+      var text = title.append('text')
+          .attr('class', 'title')
+          .attr('dy', '-5px')
+          .text(function(d) { return rowData.title; }); // jshint ignore:line
+
+      text.append('tspan')
+          .attr('class', 'subtitle')
+          .attr('dx', '10px')
+          .text(function(d) { return rowData.subtitle; }); // jshint ignore:line
+
+      // Compute the new x-scale.
+      var x1 = d3.scale.linear()
+          .domain([0, Math.max(ranges[0], markers[0], measures[0])])
+          .range([0, width]);
+
+      // Derive width-scales from the x-scales.
+      var w1 = bulletWidth(x1);
+
+      // Update the range rects.
+      var range = g.selectAll('rect.range')
+          .data(ranges);
+
+      range.enter().append('rect')
+          .attr('class', function(d, i) { return 'range s' + i; })  // jshint ignore:line
+          .attr('width', 0)
+          .attr('height', barHeight);
+
+      range.transition()
+          .duration(duration)
+          .attr('width', w1);
+
+      // Update the measure rects.
+      var measure = g.selectAll('rect.measure')
+          .data(measures);
+
+      measure.enter().append('rect')
+          .attr('class', function(d, i) { return 'measure s' + i; }) // jshint ignore:line
+          .attr('width', 0)
+          .attr('height', 3)
+          .attr('y', 11);
+
+      measure.transition()
+          .duration(duration)
+          .attr('width', w1);
+
+      // Update the marker lines.
+      var marker = g.selectAll('line.marker')
+          .data(markers);
+
+      marker.enter().append('line')
+          .attr('class', 'marker')
+          .attr('x1', x1)
+          .attr('x2', x1)
+          .attr('y1', barHeight / 6)
+          .attr('y2', barHeight * 5 / 6);
+
+      marker.transition()
+          .duration(duration)
+          .attr('x1', x1)
+          .attr('x2', x1)
+          .attr('y1', barHeight / 6)
+          .attr('y2', barHeight * 5 / 6);
+
+      // Update the tick groups.
+      var tick = g.selectAll('g.tick')
+          .data(x1.ticks(8));
+
+      // Initialize the ticks with the old scale, x0.
+      var tickEnter = tick.enter().append('g')
+          .attr('class', 'tick')
+          .attr('transform', 'translate(0,0)')
+          .style('opacity', 0);
+
+      tickEnter.append('line')
+          .attr('y1', barHeight)
+          .attr('y2', barHeight * 7 / 6);
+
+      tickEnter.append('text')
+          .attr('text-anchor', 'middle')
+          .attr('dy', '1em')
+          .attr('y', barHeight * 7 / 6)
+          .text(function (d) {
+            return d;
+          });
+
+      // Transition the entering ticks to the new scale, x1.
+      tickEnter.transition()
+          .duration(duration)
+          .attr('transform', function (d) {
+            return 'translate(' + x1(d) + ',0)';
+          })  // jshint ignore:line
+          .style('opacity', 1);
+    }
+
+
+  };
+
   //Select the element and fire the event, make the inverse selector opace
   this.selectElement = function(elem, inverse, data) {
     var isSelected = elem.classed('is-selected');
@@ -1327,6 +1463,9 @@ window.Chart = function(container) {
     if (options.type === 'area') {
       this.Line(options.dataset, options, true);
     }
+    if (options.type === 'bullet') {
+      this.Bullet(options.dataset, options);
+    }
   };
 
 };
@@ -1359,5 +1498,3 @@ $.fn.chart = function(options) {
 
   });
 };
-
-
