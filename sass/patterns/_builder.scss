@@ -44,6 +44,13 @@
     width: calc(100% - 253px);
   }
 
+  .l-pull-right.listview-micro {
+    top: 48px;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
 }
 
 .builder-pane {
@@ -101,6 +108,7 @@
 
 .builder-actions {
   background-color: $panel-bg-color;
+  // min-width: 1010px;
   width: calc(100% - 323px);
 
   > .listview {
@@ -245,9 +253,15 @@
   }
 }
 
-// Inside the builder pane, the cart will show up as a popupmenu when on Tablet view-size and lower, so hide the cart
-@include respond-to(tabletdown) {
+#builder-popdown-content {
+  .l-pull-right.listview-micro {
+    top: 48px;
+  }
+}
 
+// Inside the builder pane, the cart will show up as a popupmenu when on Tablet view-size and lower, so hide the cart
+// @media screen and (max-width: 1585px) {
+@include respond-to(tabletdown) {
   .builder-actions {
     display: block;
     width: auto;
