@@ -1,3 +1,5 @@
+/* jshint node:true */
+
 // set variables for environment
 var express = require('express'),
   app = express(),
@@ -665,4 +667,3 @@ var express = require('express'),
 
 
 module.exports = app;
-

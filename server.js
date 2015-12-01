@@ -1,3 +1,5 @@
+/* jshint node:true */
+
 var app = require('./app');
 // With the express server and routes defined, we can start to listen for requests.
 var port = process.env.PORT || 4000;
