@@ -334,6 +334,8 @@
             '93': '}',
             '92': '|',
             '59': ':',
+            '37': '%',
+            '38': '&',
             '39': '\"',
             '44': '<',
             '46': '>',
@@ -346,9 +348,7 @@
         }
 
         // Convert Keycode to Character String
-        if (key >= 96 && key <= 105) { // Using The Numpad
-          character = String.fromCharCode(key - 48);
-        } else if (!e.shiftKey && (key >= 65 && key <= 90)) {
+        if (!e.shiftKey && (key >= 65 && key <= 90)) {
           character = String.fromCharCode(key + 32);
         } else if (e.shiftKey && shiftUps.hasOwnProperty(key)) { // User was pressing Shift + any key
           character = shiftUps[key];
@@ -372,32 +372,6 @@
           self.initValue = self.element.val();
         }
 
-        if (eventType === 'keydown') {
-          // backspace || delete
-          if (key === 8 || key === 46 || (self.env.iPhone && key === 127)) {
-            self.handleBackspace(evt);
-          //} else if (key === 13) { // enter
-          //Commented out to solve  issue in grid editor
-          } else if (key === 27) { // escape
-            self.handleEscape(evt);
-          // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
-          } else if (evt.altKey) {
-            self.killEvent(e);
-          } else if (key === 9) { // Allows tabbing)
-            return self.handleTab(evt);
-          } else if (evt.metaKey || evt.ctrlKey || // Allow keystrokes that include the meta key or control keys (copy/paste/etc)
-            (36 < key && key < 41) || // Allows arrows alone (needed for Firefox)
-            (evt.shiftKey && 36 < key && key < 41)) { // Allows arrows accompanied by Shift
-            return;
-          }
-
-          if (self.mode === 'number') {
-            self.processNumberMask(typedChar, evt);
-          } else {
-            self.processMask(typedChar, evt);
-          }
-        }
-
         if (eventType === 'keypress') {
           // Ignore all of these keys or combinations containing these keys
           if (evt.ctrlKey || evt.metaKey || key < 32) {
@@ -405,14 +379,6 @@
           // Never allow any combinations with the alt key, since on Mac OSX it's used to create special characters
           } else if (evt.altKey) {
             self.killEvent(e);
-          // Need to additionally check for arrow key combinations here because some browsers
-          // Will fire keydown and keypress events for arrow keys.
-          } else if (evt.shiftKey && 36 < key && key < 41 && typedChar !== '(') {
-            return;
-          } else if ((36 < key && key < 41) && typedChar !== '\'' && typedChar !== '(')  {
-            // '(' is keycode 40 on some browsers
-            // '/' is keycode 39 on some browsers
-            return;
           }
 
           if (self.mode === 'number') {

@@ -1,0 +1,182 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2>Keycode Tester</h2>
+
+    <p>Keycodes are weird:</p>
+
+    <ul style="list-style: disc outside; margin-left: 40px; margin-bottom: 20px; font-size: 1.4rem;">
+      <li><a class="hyperlink" href="http://www.quirksmode.org/dom/events/keys.html" target="_blank">Quirksmode</a></li>
+      <li><a class="hyperlink" href="http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes" target="_blank">Cambia Research</a> (note: only specific to Keydown events (which produce KeyCodes), not Keypress (which produces ASCII Codes)</li>
+      <li><a class="hyperlink" href="http://unixpapa.com/js/key.html" target="_blank">Unix Papa</a></li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="keycode-tester">Type any key</label>
+      <input id="keycode-tester" name="keycode-tester"/>
+    </div>
+
+    <div class="field">
+      <button id="clear-console" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-delete"></use>
+        </svg>
+        <span>Clear Keycode Console</span>
+      </button>
+    </div>
+
+    <fieldset style="margin-bottom: 20px" class="radio-group">
+      <legend>Event Type</legend>
+        <input type="radio" id="evttype-keydown" name="evttype" class="radio" value="keydown" checked />
+        <label class="radio-label" for="evttype-keydown">Listen for "keydown"</label>
+        <br>
+        <input type="radio" id="evttype-keypress" name="evttype" class="radio " value="keypress" />
+        <label class="radio-label" for="evttype-keypress">Listen for "keypress"</label>
+    </fieldset>
+
+    <fieldset style="margin-bottom: 20px" class="radio-group">
+      <legend>Character Translation Method</legend>
+        <input type="radio" id="trans-fromcharcode" name="trans" class="radio" value="fromCharCode" checked />
+        <label class="radio-label" for="trans-fromcharcode">Use <em>String.prototype.fromCharCode()</em></label>
+        <br>
+        <input type="radio" id="trans-tochar" name="trans" class="radio " value="toChar" />
+        <label class="radio-label" for="trans-tochar">Use SoHo Xi's <em>Mask.prototype.toChar()</em></label>
+    </fieldset>
+
+    <!-- used for getting the mask API -->
+    <div class="field hidden">
+      <label for="hidden-mask">Hidden Masked Field</label>
+      <input id="hidden-mask" name="hidden-mask" data-mask="***********" />
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Key Output Console</h2>
+        <div id="meta-keys" style="position: absolute; text-align: right; right: 13px; top: 0;"></div>
+      </div>
+      <div id="key-console" class="card-content" style="padding: 13px 20px;"></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var settings = {};
+
+    function getSettings() {
+      settings = {
+        eventType: $('input[name="evttype"]:checked').val(),
+        translationMethod: $('input[name="trans"]:checked').val()
+      };
+    }
+
+    function keyEvent(e) {
+      var keycode = e.which,
+        key,
+        lines = $('#key-console').find('.demo-line'),
+        type = e.originalEvent.type;
+
+      key = settings.translationMethod === 'fromCharCode' ? String.fromCharCode(keycode) : $('#hidden-mask').data('mask').toChar(e);
+
+      if (lines.length > 17) {
+        lines.first().remove();
+      }
+
+      // NOTE: Special and Meta keys are only used with "keydown" events.
+      // "keypress" does not test for these keys, and in some cases, will return a keycode through e.which that would normally respond as one of these keys.
+      var specialKeycodeKeys = {
+        '8' : 'Backspace',
+        '9' : 'Tab',
+        '13': 'Enter',
+        '20': 'Caps Lock',
+        '27': 'Escape',
+        '32': 'Spacebar',
+        '37': 'Left Arrow',
+        '38': 'Up Arrow',
+        '39': 'Right Arrow',
+        '40': 'Down Arrow'
+      };
+      var metaKeys = {
+        '16' : 'Shift',
+        '17' : 'Control',
+        '18' : 'Alt/Option',
+        '91' : 'Command/Meta'
+      };
+
+      if (type === 'keydown') {
+        if (specialKeycodeKeys['' + keycode] !== undefined) {
+          key = specialKeycodeKeys['' + keycode];
+        }
+
+        if (metaKeys['' + keycode] !== undefined) {
+          var keyTag = $('<div class="tag graphite02" style="margin-right: 2px;">'+ metaKeys['' + keycode] +'</div>');
+          $('#meta-keys').append(keyTag);
+          $(this).one('keyup.demo', function() {
+            keyTag.remove();
+          });
+          return true;
+        }
+      }
+
+      var specialASCIIKeys = {
+        '0': '[NON-PRINTABLE KEY]',
+        '27': 'Escape'
+      }
+
+      if (type === 'keypress') {
+        if (specialASCIIKeys['' + keycode] !== undefined) {
+          key = specialASCIIKeys['' + keycode];
+        }
+      }
+
+      var charType = 'KeyCode';
+      if (type === 'keypress') {
+        charType = 'ASCII Code';
+      }
+
+      $('#key-console').append('<span class="demo-line" style="display: block; font-size: 1.4rem; margin-bottom: 0.5rem;"><span style="font-weight: bold;">'+ key +'</span> key was pressed!  e.which = <span style="font-weight: bold;">'+ keycode +'</span> ('+ charType +')</span>');
+
+      $('#key-console').scrollTop($('#key-console')[0].scrollHeight);
+
+      return true;
+    }
+
+    function clearOutput() {
+      $('#keycode-tester').val('');
+      $('#key-console').empty();
+    }
+
+    getSettings();
+
+    // Bind event to start
+    $('#keycode-tester').on(settings.eventType + '.demo', keyEvent);
+
+    $('#clear-console').onTouchClick('demo').on('click.demo', clearOutput);
+
+    // Change settings when radios are changed
+    $('[name="evttype"]').onTouchClick('demo').on('click.demo', function() {
+      getSettings();
+      clearOutput();
+
+      $('#keycode-tester')
+        .off('keydown.demo keypress.demo')
+        .on(settings.eventType + '.demo', keyEvent);
+    });
+
+    $('[name="trans"]').onTouchClick('demo').on('click.demo', function() {
+      getSettings();
+      clearOutput();
+    });
+
+  });
+</script>
