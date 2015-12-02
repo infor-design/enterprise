@@ -533,9 +533,10 @@ $.fn.datagrid = function(options) {
       this.settings.dataset = dataset;
       this.renderRows();
 
-      //Update Paging
+      //Update Paging and Clear Rows
       this.renderPager(pagerInfo);
       this.selectedRows([]);
+      this.syncHeaderCheckbox();
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -1403,6 +1404,7 @@ $.fn.datagrid = function(options) {
             for (var j = 0; j < this.settings.dataset.length; j++) {
               this.unselectRow(j);
             }
+            this._selectedRows = [];
           }
 
         } else {
