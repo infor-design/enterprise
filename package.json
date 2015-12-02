@@ -11,25 +11,21 @@
   "scripts": {
     "start": "node server.js",
     "stop": "./bin/stop.sh",
-
     "eslint": "eslint src -f node_modules/eslint-bamboo-formatter/reporter.js",
     "build": "grunt",
-
     "install-test-deps": "npm install selenium-standalone && npm run install-drivers",
-      "install-drivers": "./node_modules/.bin/selenium-standalone install --version=2.47.1 --baseURL=http://selenium-release.storage.googleapis.com --drivers.chrome.version=2.18 --drivers.chrome.baseURL=http://chromedriver.storage.googleapis.com --drivers.ie.arch=x64 --drivers.ie.baseURL=http://selenium-release.storage.googleapis.com",
+    "install-drivers": "./node_modules/.bin/selenium-standalone install --version=2.47.1 --baseURL=http://selenium-release.storage.googleapis.com --drivers.chrome.version=2.18 --drivers.chrome.baseURL=http://chromedriver.storage.googleapis.com --drivers.ie.arch=x64 --drivers.ie.baseURL=http://selenium-release.storage.googleapis.com",
     "selenium": "./node_modules/.bin/selenium-standalone start",
     "test": "./bin/test.sh"
-
   },
   "main": "sohoxi.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "express": "^3.4.8",
     "chai": "^1.9.1",
     "chai-jquery": "^1.2.3",
     "colors": "^0.6.2",
     "connect-multiparty": "^2.0.0",
+    "express": "^3.21.2",
     "grunt": "~0.4.2",
     "grunt-banner": "^0.3.1",
     "grunt-contrib-clean": "^0.6.0",
