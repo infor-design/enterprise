@@ -284,7 +284,7 @@
 
       // Triggered by the "updated.searchfield" event
       updated: function() {
-        this.teardown().build();
+        this.teardown().init();
       },
 
       enable: function() {

@@ -1,0 +1,35 @@
+ <div class="row">
+  <div class="one-half column">
+
+      <div class="field">
+        <label for="searchfield">Search</label>
+        <input id="searchfield" name="searchfield" class="searchfield" data-autocomplete="source"/>
+      </div>
+
+    </div>
+</div>
+
+<script>
+  // Initialize all SoHo Xi Controls and set the local
+  $(function() {
+  $('#searchfield').searchfield({
+    source: function(request, response) {
+      var data = [];
+      var matches = [];
+      data.push('Minnesota');
+      data.push('California');
+      data.push('Washington');
+      data.push('Iowa');
+      data.push('Hawaii');
+      data.push('Missouri');
+      data.push('Vermont');
+      for (var i=0; i < data.length; i++) {
+        if (data[i].toLowerCase().indexOf(request.toLowerCase()) != -1) {
+          matches.push(data[i]);
+        }
+      }
+      response(request, matches);
+    }
+  });
+  });
+</script>

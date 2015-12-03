@@ -117,6 +117,9 @@
         });
       }
 
+      if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
+        self.dff.resolve(self.currentLocale.name);
+      }
       self.setCurrentLocale(locale, self.cultures[locale]);
       return this.dff.promise();
     },
@@ -126,6 +129,7 @@
 
       if (data) {
         this.currentLocale.data = data;
+        this.currentLocale.dataName = name;
       }
       this.updateLang();
     },
