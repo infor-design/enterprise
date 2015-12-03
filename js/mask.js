@@ -303,7 +303,7 @@
           character = '',
           toAscii = {
             '188': '44',
-            '109': '45',
+            //'109': '45', // changes "m" to "-" when using keypress
             '190': '46',
             '191': '47',
             '192': '96',
