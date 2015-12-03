@@ -6,9 +6,9 @@ $font-regular: Helvetica, Arial;
 
 // Special Fonts for Certain Languages
 $cultures-font-family: (
-  'ar-EG': ('Tahoma', 'DejaVu', 'Helvetica', 'Arial'),
-  'ar-SA': ('Tahoma', 'DejaVu', 'Helvetica', 'Arial'),
-  'ja-JP': ('MS PGothic', 'Helvetica', 'Arial'),
+  'ar-EG': ('Helvetica', 'Arial', 'Tahoma', 'DejaVu'),
+  'ar-SA': ('Helvetica', 'Arial', 'Tahoma', 'DejaVu', 'Helvetica', 'Arial'),
+  'ja-JP': ('Helvetica', 'Arial', 'MS PGothic'),
   'ko-KR': ('Helvetica', 'Arial', 'Batang', 'Gulim'),
   'zh-CN': ('Helvetica', 'Arial', 'Microsoft YaHei New', '微软雅黑', '宋体', 'SimSun', 'STXihei', '华文细黑'),
   'zh-tw': ('Helvetica', 'Arial', 'MingLiU')

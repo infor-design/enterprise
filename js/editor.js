@@ -491,9 +491,9 @@
             'quote': '<button type="button" class="btn" title="'+ Locale.translate('Blockquote') + '" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
             'orderedlist': '<button type="button" class="btn" title="'+ Locale.translate('OrderedList') + '" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
             'unorderedlist': '<button type="button" class="btn" title="'+ Locale.translate('UnorderedList') + '" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-            'justifyLeft': '<button type="button" class="btn" title="'+ Locale.translate('AlignLeft') + '" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-            'justifyCenter': '<button type="button" class="btn" title="'+ Locale.translate('AlignCenter') + '" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-            'justifyRight': '<button type="button" class="btn" title="'+ Locale.translate('AlignRight') + '" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
+            'justifyLeft': '<button type="button" class="btn" title="'+ Locale.translate('JustifyLeft') + '" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
+            'justifyCenter': '<button type="button" class="btn" title="'+ Locale.translate('JustifyCenter') + '" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
+            'justifyRight': '<button type="button" class="btn" title="'+ Locale.translate('JustifyRight') + '" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
             'source': '<button type="button" class="btn" title="'+ Locale.translate('ViewSource') + '" data-action="source" >' + buttonLabels.source + '</button>',
             'visual': '<button type="button" class="btn" title="'+ Locale.translate('ViewVisual') + '" data-action="visual" >' + buttonLabels.visual + '</button>'
           };

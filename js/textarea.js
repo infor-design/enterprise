@@ -31,8 +31,8 @@
 
     // Plugin Constructor
     function Plugin(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Plugin Methods
@@ -105,26 +105,26 @@
         var length = self.element.val().length,
           max = self.element.attr('maxlength'),
           remaining = (parseInt(max)-length),
-          text = remaining.toString() + ' ' + (settings.charRemainingText ? settings.charRemainingText : Locale.translate('CharactersLeft'));
+          text = remaining.toString() + ' ' + (settings.charRemainingText ? settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft')));
 
-          if (self.counter) {
-            if (length === 0) {
-              text = (settings.charMaxText ? settings.charMaxText : Locale.translate('CharactersMax')) + max;
-              self.counter.text(text);
-              self.counter.removeClass('almost-empty');
+        if (self.counter) {
+          if (length === 0) {
+            text = (settings.charMaxText ? settings.charMaxText : Locale.translate('CharactersMax')) + max;
+            self.counter.text(text);
+            self.counter.removeClass('almost-empty');
+          } else {
+            self.counter.text(text);
+            if (remaining < 10) {
+              self.counter.addClass('almost-empty');
             } else {
-              self.counter.text(text);
-              if (remaining < 10) {
-                self.counter.addClass('almost-empty');
-              } else {
-                self.counter.removeClass('almost-empty');
-              }
+              self.counter.removeClass('almost-empty');
             }
           }
+        }
 
-          if (self.printarea) {
-            self.printarea.text(self.element.val());
-          }
+        if (self.printarea) {
+          self.printarea.text(self.element.val());
+        }
       },
 
       enable: function () {

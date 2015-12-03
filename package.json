@@ -52,6 +52,7 @@
     "phantomjs": "^1.9.17",
     "requirejs": "^2.1.19",
     "selenium-chromedriver": "0.0.2",
+    "selenium-standalone": "^4.7.2",
     "spec-xunit-file": "0.0.1-3",
     "webdriverio": "^2.4.0",
     "webdriverjs-selenium-bundle": "0.0.2"

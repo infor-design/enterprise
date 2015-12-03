@@ -35,7 +35,14 @@
 
     //Sets the Lang in the Html Header
     updateLang: function () {
-      $('html').attr('lang', this.currentLocale.name);
+      var html = $('html');
+
+      html.attr('lang', this.currentLocale.name);
+      if (this.isRTL()) {
+        html.attr('dir', 'rtl');
+      } else {
+        html.removeAttr('dir');
+      }
     },
 
     //Get the path to the directory with the cultures
@@ -93,15 +100,14 @@
       }
 
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
-        this.currentLocale.name = locale;
+        this.setCurrentLocale(locale);
 
         //fetch the local and cache it
         $.ajax({
           url: this.getCulturesPath() + this.currentLocale.name + '.js',
           dataType: 'script',
           success: function () {
-            self.currentLocale.name = locale;
-            self.currentLocale.data = self.cultures[locale];
+            self.setCurrentLocale(locale, self.cultures[locale]);
             self.addCulture(locale, self.currentLocale.data);
             self.dff.resolve(self.currentLocale.name);
           },
@@ -111,14 +117,17 @@
         });
       }
 
-      this.currentLocale.name = locale;
-      self.currentLocale.data = self.cultures[locale];
-      this.updateLang();
-
-      if (locale && self.currentLocale.data) {
-        self.dff.resolve(self.currentLocale.name);
-      }
+      self.setCurrentLocale(locale, self.cultures[locale]);
       return this.dff.promise();
+    },
+
+    setCurrentLocale: function(name, data) {
+      this.currentLocale.name = name;
+
+      if (data) {
+        this.currentLocale.data = data;
+      }
+      this.updateLang();
     },
 
     //Format a Date Object and return it parsed in the current locale
@@ -528,7 +537,12 @@
 
     // Short cut function to get 'first' calendar
     calendar: function() {
-      return this.currentLocale.data.calendars[0];
+      if (this.currentLocale.data.calendars) {
+        return this.currentLocale.data.calendars[0];
+      }
+
+      //Defaults to ISO 8601
+      return {dateFormat: 'yyyy-MM-dd', timeFormat: 'HH:mm:ss'};
     },
 
     // Short cut function to get numbers
@@ -547,11 +561,11 @@
     }
   };
 
-  $(function() {
-    if (!window.Locale.cultureInHead()) {
-      window.Locale.set('en-US');
-    }
-  });
+
+  if (!window.Locale.cultureInHead()) {
+    window.Locale.set('en-US');
+  }
+
 
 /* start-amd-strip-block */
 }));

@@ -326,3 +326,19 @@
     margin: 10px 0;
   }
 }
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .popupmenu.has-icons > li a {
+    padding-left: 0;
+    padding-right: 40px;
+  }
+
+  .popupmenu li.is-checked > a::before,
+  .popupmenu li.is-checked.is-selected > a::before {
+    left: 0;
+    right: 13px;
+  }
+
+}

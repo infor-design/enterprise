@@ -9,7 +9,9 @@
             Test by selecting a row, then clicking "Reload Data", and make sure the row selections are cleared.
          </h4>
 
-         <button type="button" id="reload" class="btn-primary"><span>Reload Data</span></button>
+         <button type="button" id="reload" class="btn"><span>Reload Data</span></button>
+         <button type="button" id="show" class="btn"><span>Show Selected </span></button>
+
       </div>
    </div>
 
@@ -61,6 +63,11 @@
             // Reload function
             $('#reload').click(function () {
                grid.loadData(data, true);
+
+            });
+
+            $('#show').click(function () {
+               console.log(grid.selectedRows());
             });
          });
 

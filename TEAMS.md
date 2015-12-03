@@ -83,4 +83,4 @@
 | GT Nexus |   | Tom Sorgie |
 | Lawson Portal |   | Jake Harington/Andy |
 | S&OP | Vaadin and GWT | Duncan Simpson |
-| Self Portal  | ?? | Hal Walters |
+| Self Portal - Cloudsuite | ?? | Hal Walters |

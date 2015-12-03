@@ -47,7 +47,7 @@ define({
     packages: [
       { name: 'controls', location: '.' },
       { name: 'colors', location: './node_modules/colors' },
-      { name: 'jsdom', location: './node_modules/jsdom/lib' },
+      { name: 'jsdom', location: './node_modules/jsdom/lib' }
     ]
   },
 
