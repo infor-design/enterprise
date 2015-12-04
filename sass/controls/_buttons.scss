@@ -131,10 +131,32 @@ button {
   }
 }
 
-a.btn-primary {
+a.btn,
+a.btn-primary,
+a.btn-secondary,
+a.btn-tertiary,
+a.btn-menu {
   display: inline-block;
+  line-height: 31px;
+  margin-bottom: -2px;
   text-decoration: none;
+
+  &:not(:root:root) {
+    margin-bottom: auto;
+  }
 }
+
+@-moz-document url-prefix() { 
+  a.btn,
+  a.btn-primary,
+  a.btn-secondary,
+  a.btn-tertiary,
+  a.btn-menu {
+    line-height: 32px;
+    margin-bottom: -3px;
+  }
+}
+
 
 // Normal / Secondary Button
 .btn,
