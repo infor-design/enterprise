@@ -1218,6 +1218,10 @@
         }
       },
 
+      updated: function() {
+        return this;
+      },
+
       destroy: function() {
         if (this.showCurrency) {
           this.element.parent('.field').removeClass('currency').attr('data-currency-symbol', '');

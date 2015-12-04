@@ -1,0 +1,158 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Contextual Action Panel Test:  Updates with "trigger: immediate" Setting</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid" class="datagrid"></div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var columns = [], data = [];
+
+  // Define Some Sample Data
+  data.push({ email: 'jane.doe@aol.com', first_name: 'Jane', last_name: 'Doe', customer_admin: 'Yes', primary_contact: 'Yes', portal_access: 'Yes', active: 'Yes', work_phone: '(555) 123-4567', mobile_phone: '', id: 1111 });
+  data.push({ email: 'joe.blow@aol.com', first_name: 'Joe', last_name: 'Blow', customer_admin: 'Yes', primary_contact: 'Yes', portal_access: 'Yes', active: 'Yes', work_phone: '(123) 456-7890', mobile_phone: '', id: 1112 });
+  data.push({ email: 'captain.kirk@aol.com', first_name: 'James', last_name: 'Kirk', customer_admin: 'No', primary_contact: 'Yes', portal_access: 'No', active: 'Yes', work_phone: '(999) 111-2222', mobile_phone: '', id: 1113 });
+
+  //Define Columns for the Grid.
+  columns.push({ id: 'email', name: 'Email', field: 'email', width: 274});
+  columns.push({ id: 'first_name', name: 'First Name', field: 'first_name', width: 200});
+  columns.push({ id: 'last_name', name: 'Last Name', field: 'last_name', width: 250});
+  columns.push({ id: 'customer_admin', name: 'Customer Admin', field: 'customer_admin', width: 135});
+  columns.push({ id: 'primary_contact', name: 'Primary Contact', field: 'primary_contact', width: 135});
+  columns.push({ id: 'portal_access', name: 'Portal Access', field: 'portal_access', width: 135});
+  columns.push({ id: 'active', name: 'Active', field: 'active', width: 80});
+  columns.push({ id: 'work_phone', name: 'Work Phone', field: 'work_phone', sortable: false, width: 180});
+  columns.push({ id: 'mobile_phone', name: 'Mobile Phone', field: 'mobile_phone', sortable: false, width: 180});
+
+  $('body').on('initialized', function() {
+
+    function editContactDetails(contact) {
+      //TODO - remove below line when delete service call is created
+      //$('#delete-user-field').css('visibility', 'visible');
+
+      $('#email-field').val(contact.email).attr('data-is-edit', true).attr('data-contact-id', contact.id);
+      $('#first-name-field').val(contact.first_name);
+      $('#last-name-field').val(contact.last_name);
+      $('#customer-admin-select-shdo, #customer-admin-select').val(contact.customer_admin);
+      $('#contact-active-select-shdo, #contact-active-select').val(contact.active);
+      $('#primary-contact-select-shdo, #primary-contact-select').val(contact.primary_contact);
+      $('#portal-access-select-shdo, #portal-access-select').val(contact.portal_access);
+      $('#mobile-phone-field').val(contact.mobile_phone);
+      $('#work-phone-field').val(contact.work_phone);
+    }
+
+    function openEditContactPanel(row, contact) {
+      $(row).contextualactionpanel({
+        id: 'edit-contact-panel',
+        title: 'Edit Contact Information',
+        content: '\
+          <div class="row">\
+            <div class="six columns">\
+              <div class="field">\
+                <label class="required" for="email-field">Email</label>\
+                <input id="email-field" class="required" name="email-field" type="text" aria-required="true" data-validate="emailPositive required" data-validation-events="{\'required\': \'blur change\', \'emailPositive\': \'blur change\'}" readonly/>\
+              </div>\
+              <div class="field">\
+                <label class="required" for="first-name-field">First Name</label>\
+                <input id="first-name-field" class="required" name="first-name" type="text" data-validate="required" aria-required="true">\
+              </div>\
+              <div class="field">\
+                <label class="required" for="last-name-field">Last Name</label>\
+                <input id="last-name-field" class="required" name="last-name" type="text" data-validate="required" aria-required="true">\
+              </div>\
+              <div class="field">\
+                <label for="customer-admin-select">Customer Admin</label>\
+                <select id="customer-admin-select" class="dropdown" name="customer-admin-select">\
+                  <option value="Yes" data-val="Yes">Yes</option>\
+                  <option value="No" data-val="No">No</option>\
+                </select>\
+              </div>\
+              <div id="active-field" class="field">\
+                <label for="contact-active-select">Active</label>\
+                <select id="contact-active-select" class="dropdown" name="contact-active-select">\
+                  <option value="Yes" data-val="Yes">Yes</option>\
+                  <option value="No" data-val="No">No</option>\
+                </select>\
+              </div>\
+            </div>\
+            <div class="six columns">\
+              <div class="field">\
+                <label for="primary-contact-select">Primary Contact</label>\
+                <select id="primary-contact-select" class="dropdown" name="primary-contact-select">\
+                  <option value="Yes" data-val="Yes">Yes</option>\
+                  <option value="No" data-val="No">No</option>\
+                </select>\
+              </div>\
+              <div class="field">\
+                <label for="portal-access-select">Allow Portal Access</label>\
+                <select id="portal-access-select" class="dropdown" name="portal-access-select">\
+                  <option value="Yes" data-val="Yes">Yes</option>\
+                  <option value="No" data-val="No">No</option>\
+                </select>\
+              </div>\
+              <div class="field">\
+                <label for="mobile-phone-field">Mobile Phone</label>\
+                <input id="mobile-phone-field" name="mobile-phone-field" type="text" placeholder="(123) 456-7890" data-mask="(###) ###-####" data-mask-mode="group" maxlength="20">\
+              </div>\
+              <div class="field">\
+                <label for="work-phone-field">Work Phone</label>\
+                <input id="work-phone-field" name="work-phone-field" type="text" placeholder="(123) 456-7890" data-mask="(###) ###-####" data-mask-mode="group" maxlength="20">\
+              </div>\
+              <div id="delete-user-field" class="field" style="visibility: hidden;">\
+                <button id="delete-user-button" class="btn-secondary" style="margin-top:18px;left:25%;">Delete Contact?</button>\
+              </div>\
+            </div>\
+          </div>',
+        trigger: 'immediate',
+        buttons: [
+          {
+            text: 'Save',
+            cssClass: 'btn',
+            icon: '#icon-save',
+            click: function() {
+              if (saveContact()){
+                $(this).modal('close');
+              }
+            }
+          }, {
+            cssClass: 'separator'
+          }, {
+            text: 'Close',
+            cssClass: 'btn',
+            icon: '#icon-close',
+            click: function() {
+              $(this).modal('close');
+            }
+          }
+        ]
+      }).on('beforeopen.contextualactionpanel', function(e) {
+        editContactDetails(contact);
+      });
+    }
+
+    //Init and get the api for the grid
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      selectable: 'single',
+      cellNavigation: false,
+      paging: true,
+      pagesize: 10,
+      pagesizes: [10, 25, 50, 75],
+      toolbar: {title: 'Current Contacts', results: true, keywordFilter: true, advancedFilter: true, actions: false, views: true, rowHeight: true}
+    }).on('selected.test', function (e, args) {
+      console.log(args);
+      openEditContactPanel(args, args[0].data);
+    });
+
+  });
+</script>

@@ -3,6 +3,7 @@
 Release Date: TBD
 
 ## Breaking Changes
+* 2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.
 * 2015-11-16 Notes on this change
 
 ## Ui Changes

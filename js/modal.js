@@ -499,7 +499,7 @@
           });
       },
 
-      close: function () {
+      close: function (noDestroy) {
         if (!this.isOpen()) {
           return true;
         }
@@ -546,30 +546,49 @@
         setTimeout( function() {
           self.overlay.remove();
           self.element.css({'display':'none'}).trigger('afterclose');
-        }, 300); // should match the length of time needed for the overlay to fade out
 
-        if (self.settings.content) {
-          self.element.remove();
-        }
+          if (!noDestroy) {
+            self.destroy();
+          }
+        }, 300); // should match the length of time needed for the overlay to fade out
       },
 
+      // NOTE: Destroy method needs to function as a callback because it's
       destroy: function() {
-        this.close();
+        var self = this,
+          canDestroy = this.element.trigger('beforedestroy');
 
-        if (this.modalButtons) {
-          this.element.find('button').off('click.modal');
+        if (!canDestroy) {
+          return;
         }
 
-        if (this.element.find('.detailed-message').length === 1) {
-          $(window).off('resize.modal-' + this.id);
+        function destroyCallback() {
+          if (self.modalButtons) {
+            self.element.find('button').off('click.modal');
+          }
+
+          if (self.element.find('.detailed-message').length === 1) {
+            $(window).off('resize.modal-' + this.id);
+          }
+
+          if (self.settings.trigger === 'click') {
+            self.trigger.off('click.modal');
+          }
+
+          self.element.remove();
+          $.removeData(self.element[0], 'modal');
         }
 
-        if (this.settings.trigger === 'click') {
-          this.trigger.off('click.modal');
+        if (!this.isOpen()) {
+          destroyCallback();
+          return;
         }
 
-        $.removeData($(this.element),'modal');
-        this.element.trigger('destroy.modal');
+        this.element.one('afterclose.modal', function() {
+          destroyCallback();
+        });
+
+        this.close(true);
       }
     };
 
