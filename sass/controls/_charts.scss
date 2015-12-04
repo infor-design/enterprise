@@ -132,6 +132,12 @@
 .chart-swatch {
   display: table;
 
+  .swatch-caption {
+    display: table-caption;
+    margin-bottom: .7em;
+    text-align: center;
+  }
+
   .swatch-row {
     display: table-row;
     height: 25px;

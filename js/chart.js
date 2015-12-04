@@ -165,6 +165,20 @@ window.Chart = function(container) {
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
   };
 
+  //Is Fully Visible
+  this.isFullyVisible = function (elem) {
+    var off = elem.offset(), 
+      et = off.top,
+      el = off.left,
+      eh = elem.height(),
+      ew = elem.width(),
+      wh = window.innerHeight,
+      ww = window.innerWidth,
+      wx = window.pageXOffset,
+      wy = window.pageYOffset;
+    return (et >= wy && el >= wx && et + eh <= wh + wy && el + ew <= ww + wx);  
+  };
+
   this.HorizontalBar = function(dataset, isNormalized) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
     var maxTextWidth, width, height, series, rects, svg, stack,
@@ -883,26 +897,71 @@ window.Chart = function(container) {
   };
 
   // Column Chart - Sames as bar but reverse axis
-  this.Column = function(chartData) {
+  this.Column = function(chartData, isStacked) {
 
-   var dataset = chartData,
+    var datasetStacked, 
+      dataset = chartData,
       self = this,
       parent = $(container).parent(),
       isSingular = (dataset.length === 1),
-      margin = {top: 40, right: 40, bottom: (isSingular ? 50 : 35), left: 45},
-      legendHeight = 40,
+      margin = {top: 40, right: 40, bottom: (isSingular ? (isStacked ? 20 : 50) : 35), left: 45},
+      legendHeight = 55,
       width = parent.width() - margin.left - margin.right - 10,
-      height = parent.height() - margin.top - margin.bottom - (isSingular ? 0 : legendHeight);
+      height = parent.height() - margin.top - margin.bottom - (isSingular ? (isStacked ? legendHeight : 0) : legendHeight);
 
     $(container).addClass('column-chart');
 
     var x0 = d3.scale.ordinal()
-        .rangeRoundBands([0, width], 0.1);
+      .rangeRoundBands([0, width], 0.1);
 
     var x1 = d3.scale.ordinal();
 
     var y = d3.scale.linear().nice()
-        .range([height, 0]);
+      .range([height, 0]);
+
+    if(isStacked) {
+      //Map the Data Sets and Stack them.
+      if(isSingular) {
+        datasetStacked = dataset[0].data.map(function (d) {
+          return [$.extend({}, d, {
+            y: d.value,
+            x: d.name,
+            color: d.color,
+            pattern: d.pattern,
+            parentName: d.name
+          })];
+        });
+      } else {
+        datasetStacked = dataset.map(function (d) {
+          return d.data.map(function (o) {
+            return $.extend({}, o, {
+              y: o.value,
+              x: o.name,
+              color: o.color,
+              pattern: o.pattern,
+              parentName: d.name
+            });
+          });
+        });
+      }
+
+      var stack = d3.layout.stack();
+      stack(datasetStacked);
+
+      var xScale = d3.scale.ordinal()
+        .domain(d3.range(datasetStacked[0].length))
+        .rangeRoundBands([0, width], 0.05);
+
+      var yScale = d3.scale.linear()
+        .domain([0,       
+          d3.max(datasetStacked, function(d) {
+            return d3.max(d, function(d) {
+              return d.y0 + d.y;
+            });
+          })
+        ])
+        .range([0, height]);
+    }
 
     //List the values along the x axis
     var xAxisValues = dataset[0].data.map(function (d) {return d.name;});
@@ -919,11 +978,12 @@ window.Chart = function(container) {
         .tickPadding(12)
         .orient('left');
 
-    var svg = d3.select(container).append('svg')
+    var svg = d3.select(container)
+      .append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .append('g')
+          .attr('transform', 'translate('+ margin.left +','+ margin.top +')');
 
     // Get the Different Names
     var names = dataset.map(function (d) {
@@ -931,9 +991,15 @@ window.Chart = function(container) {
     });
 
     //Get the Maxes of each series
-    var maxes = dataset.map(function (d) {
+    var maxesStacked, maxes = dataset.map(function (d) {
       return d3.max(d.data, function(d){ return d.value;});
     });
+
+    if (isStacked) {
+      maxesStacked = datasetStacked.map(function (d) {
+        return d3.max(d, function(d){ return d.y + d.y0;});
+      });
+    }
 
     if (isSingular) {
       names = dataset[0].data.map(function (d) {
@@ -941,19 +1007,16 @@ window.Chart = function(container) {
       });
     }
 
-    x0.domain(names);
-    if (isSingular) {
-      x1.domain(xAxisValues).rangeRoundBands([0, width]);
-    } else {
-      x1.domain(xAxisValues).rangeRoundBands([0, x0.rangeBand()]);
-    }
+    x0.domain(isStacked ? xAxisValues : names);
+    x1.domain(xAxisValues).rangeRoundBands([0, (isSingular||isStacked) ? width : x0.rangeBand()]);
+    y.domain([0, d3.max(isStacked ? maxesStacked : maxes)]);
 
-    y.domain([0, d3.max(maxes)]);
-
-    svg.append('g')
+    if (!isSingular || (isSingular && !isStacked)) {
+      svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
+    }
 
     svg.append('g')
         .attr('class', 'y axis')
@@ -973,110 +1036,168 @@ window.Chart = function(container) {
     }
 
     var barMaxWidth = 25, bars;
+
     // Add the bars - done different depending on if grouped or singlular
     if (isSingular) {
       bars = svg.selectAll('rect')
-        .data(dataArray)
-      .enter().append('rect')
+        .data(isStacked ? datasetStacked : dataArray)
+        .enter()
+        .append('rect')
         .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
         .attr('x', function(d) {
-          return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
+          return isStacked ? xScale(0) : (x1(d.name) + (x1.rangeBand() - barMaxWidth)/2);
         })
         .attr('y', function() {
           return height;
         })
         .attr('height', function() {
           return 0;
+        })
+        .style('fill', function(d, i) {
+          return charts.chartColor(i, 'bar', chartData[0].data[i]);
         });
 
         bars.transition().duration(1000)
-          .attr('y', function(d) { return y(d.value); })
-          .attr('height', function(d) { return height - y(d.value); });
-
-    } else {
+          .attr('y', function(d) { 
+            return isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) : y(d.value); 
+          })
+          .attr('height', function(d) { 
+            return isStacked ? yScale(d[0].y) : (height - y(d.value)); 
+          });
+    } 
+    else {
 
       var xValues = svg.selectAll('.x-value')
-          .data(dataArray)
-        .enter().append('g')
+          .data(isStacked ? datasetStacked : dataArray)
+          .enter()
+          .append('g')
           .attr('class', 'g')
+          .style('fill', function(d, i) {
+            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
+          })
           .attr('transform', function(d) {
-            return 'translate(' + x0(d.name) + ',0)';
+            return 'translate(' + x0(isStacked ? xAxisValues[0] : d.name) + ',0)';
           });
 
         bars = xValues.selectAll('rect')
-          .data(function(d) {
-            return d.values;
-          })
-        .enter().append('rect')
-          .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
-          .attr('x', function(d) {
-            return x1(d.name) + (x1.rangeBand() - barMaxWidth)/2 ;
-          })
-          .attr('y', function() {
-            return height;
-          })
-          .attr('height', function() {
-            return 0;
-          });
+          .data(function(d) {return isStacked ? d : d.values;})
+          .enter()
+          .append('rect')
+            .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
+            .attr('x', function(d, i) {
+              return isStacked ? xScale(i) : (x1(d.name) + (x1.rangeBand() - barMaxWidth)/2);
+            })
+            .attr('y', function() {return height;})
+            .attr('height', function() {return 0;});
 
-          bars.transition().duration(1000)
-            .attr('y', function(d) { return y(d.value); })
-            .attr('height', function(d) { return height - y(d.value); });
+        bars.transition().duration(1000)
+          .attr('y', function(d) { return isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (y(d.value)); })
+          .attr('height', function(d) { return isStacked ? yScale(d.y) : (height-y(d.value)); });
       }
 
       //Style the bars and add interactivity
-      bars.style('fill', function(d, i) {
-        return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
-      })
-      .attr('mask', function (d, i) {
-        return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
-      })
-      .on('mouseenter', function(d) {
-        var shape = $(this),
-          content = '',
-          x = 0,
+      if(!isStacked) {
+        bars.style('fill', function(d, i) {
+          return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
+        }).attr('mask', function (d, i) {
+          return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
+        });
+      }
+
+      bars
+      // Mouseenter
+      .on('mouseenter', function(d, i) {
+        var x, y, j, l, size,
+          shape = $(this),
+          content = '';
+
+        // Stacked
+        if(isStacked) { 
+          if (isSingular) {
+            content = '<p><b>'+ d[0].value +'</b> '+ d[0].name +'</p>';
+          }
+          else {
+            content = '<div class="chart-swatch">';
+            content += '<div class="swatch-caption"><b>'+ datasetStacked[0][i].name +'</b></div>';
+            for(j=datasetStacked.length-1,l=0; j>=l; j--) {
+              content += '<div class="swatch-row">';
+              content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
+              content += '<span>'+ datasetStacked[j][i].parentName +'</span><b>'+ datasetStacked[j][i].value +'</b></div>';
+            }
+            content += '</div>';
+          }
+          size = charts.getTooltipSize(content);
+          x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
+          y = shape[0].getBoundingClientRect().top - size.height - 10;
+        }
+
+        // No Stacked
+        else {
+          if (dataset.length === 1) {
+            content = '<p><b>'+ d.value + '</b> '+ d.name +'</p>';
+          }
+          else {
+            content = '<div class="chart-swatch">';
+            var data = d3.select(this.parentNode).datum().values;
+
+            for (j=0,l=data.length; j<l; j++) {
+              content += '<div class="swatch-row">';
+              content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
+              content += '<span>'+ data[j].name +'</span><b>'+ data[j].value +'</b></div>';
+            }
+            content += '</div>';
+          }
+          size = charts.getTooltipSize(content);
+          x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
           y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
-
-        if (dataset.length === 1) {
-          content = '<p><b>' + d.value + ' </b>' + d.name + '</p>';
-        } else {
-         content = '<div class="chart-swatch">';
-         var data = d3.select(this.parentNode).datum().values;
-
-         for (var j = 0; j < data.length; j++) {
-          content += '<div class="swatch-row"><div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div><span>' + data[j].name + '</span><b> ' + data[j].value + ' </b></div>';
-         }
-         content += '</div>';
+          if (dataset.length > 1) {
+            x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
+            y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
+          }
         }
-
-        var size = charts.getTooltipSize(content);
-        x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
-        if (dataset.length > 1) {
-          x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
-          y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
-        }
-
         charts.showTooltip(x, y, content, 'top');
-      }).on('mouseleave', function() {
+      })
+
+      // Mouseleave
+      .on('mouseleave', function() {
         charts.hideTooltip();
-      }) .on('click', function (d, i) {
+      })
+
+      // Click
+      .on('click', function (d, i) {
         var bar = d3.select(this);
-
         charts.selectElement(bar, svg.selectAll('rect'), d);
-        charts.selectElement(svg.selectAll('.x .tick:nth-child(' + (i+1) +')'), svg.selectAll('.x .tick'), d);
 
+        if(!isSingular) {
+          var index = isStacked ? i : names.indexOf(d3.select(this.parentNode).datum().name);
+            if (index > -1) {
+              charts.selectElement(svg.selectAll('.x .tick:nth-child('+(index+1)+')'), svg.selectAll('.x .tick'), d);
+            }
+          }
         return;
-      }).on('contextmenu',function (d) {
+      })
+
+      // Contextmenu
+      .on('contextmenu',function (d) {
         self.triggerContextMenu(d3.select(this)[0][0], d);
       });
 
     //Add Legend
-    var series = xAxisValues.map(function (d) {
+    var seriesStacked, series = xAxisValues.map(function (d) {
       return {name: d};
     });
 
-    if (!isSingular) {
+    if(isStacked && !isSingular) {
+      seriesStacked = names.map(function (d) {
+        return {name: d};
+      });
+    }
+
+    if(isStacked && isSingular) {
       charts.addLegend(series);
+    }
+    else if (!isSingular) {
+      charts.addLegend(isStacked ? seriesStacked : series);
     }
 
     //Add Tooltips
@@ -1092,7 +1213,6 @@ window.Chart = function(container) {
     }
 
     $(container).trigger('rendered');
-
     return $(container);
   };
 
@@ -1460,10 +1580,10 @@ window.Chart = function(container) {
     if (options.type === 'bar-grouped') {
       this.HorizontalBar(options.dataset, false, true);
     }
-    if (options.type === 'column') {
-      this.Column(options.dataset);
+    if (options.type === 'column-stacked') {
+      this.Column(options.dataset, true);
     }
-    if (options.type === 'column-grouped') {
+    if (options.type === 'column' || options.type === 'column-grouped') {
       this.Column(options.dataset);
     }
     if (options.type === 'donut') {
