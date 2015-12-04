@@ -133,8 +133,18 @@
       handleEvents: function() {
         var self = this;
 
-        this.panel.on('afteropen', function() {
+        // Convenience method that takes an event from the Modal control's panel element,
+        // and triggers any listeners that may be looking at the Contextual Action Panel's trigger instead.
+        function passEvent(e) {
+          self.element.triggerHandler(e.type);
+        }
 
+        this.panel.on('open.contextualactionpanel close.contextualactionpanel', function(e) {
+          passEvent(e);
+        }).on('beforeopen.contextualactionpanel', function(e) {
+          $(this).initialize();
+          passEvent(e);
+        }).on('afteropen.contextualactionpanel', function() {
           if (self.toolbar) {
             self.toolbar.trigger('recalculatebuttons');
           }
@@ -153,6 +163,8 @@
 
           // Focus the first focusable element inside the Contextual Panel's Body
           self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
+        }).on('beforedestroy.contextualactionpanel', function() {
+          self.teardown();
         });
 
         this.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
@@ -169,51 +181,33 @@
 
       teardown: function() {
         var self = this,
-          modal = this.panel.data('modal');
+          buttonset = self.toolbar.children('.buttonset');
 
-        function teardownCallback() {
-          var buttonset = self.toolbar.children('.buttonset');
+        buttonset.children('*:not(.searchfield)')
+          .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
 
-          buttonset.children('*:not(.searchfield)')
-            .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
-
-          var menuButtons = buttonset.children('.btn-menu');
-          menuButtons.each(function() {
-            var popup = $(this).data('popupmenu');
-            if (popup) {
-              popup.destroy();
-            }
-          });
-
-          self.panel.detach().insertAfter(self.element);
-          self.toolbar.data('toolbar').destroy();
-
-          if (self.header){
-            self.header.remove();
+        var menuButtons = buttonset.children('.btn-menu');
+        menuButtons.each(function() {
+          var popup = $(this).data('popupmenu');
+          if (popup) {
+            popup.destroy();
           }
-
-          var children = self.panel.find('.modal-body').children();
-          children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
-
-          self.panel.removeAttr('id').removeClass('modal');
-          self.panel.data('modal').destroy();//.remove();
-
-          self.panel.remove();
-          self.element.removeAttr('data-modal');
-
-          // Trigger an afterclose event on the Contextual Action Panel's trigger element (different from the panel, which is already removed).
-          self.element.trigger('afterclose');
-        }
-
-        if (!modal.isOpen()) {
-          return teardownCallback();
-        }
-
-        this.panel.on('afterclose.contextualactionpanel', function() {
-          teardownCallback();
         });
 
-        modal.close();
+        //self.panel.detach().insertAfter(self.element);
+        self.toolbar.data('toolbar').destroy();
+
+        if (self.header){
+          self.header.remove();
+        }
+
+        var children = self.panel.find('.modal-body').children();
+        children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
+
+        self.element.removeAttr('data-modal');
+
+        // Trigger an afterclose event on the Contextual Action Panel's trigger element (different from the panel, which is already removed).
+        self.element.trigger('afterteardown');
       },
 
       close: function() {
@@ -233,7 +227,7 @@
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.teardown();
+        this.panel.data('modal').destroy();
         $.removeData(this.element[0], pluginName);
       }
     };
