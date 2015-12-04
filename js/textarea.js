@@ -66,6 +66,11 @@
           var length = self.element.val().length,
           max = self.element.attr('maxlength');
 
+          if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
+            self.update(self);
+            return;
+          }
+
           if (!self.isPrintable(e.which)) {
             return;
           }
@@ -73,6 +78,7 @@
           if (length >= max && !self.isSelected(this)) {
             e.preventDefault();
           }
+
         })
         .on('blur.textarea', function () {
           self.update(self);
