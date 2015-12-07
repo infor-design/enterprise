@@ -1,7 +1,13 @@
 <div class="row">
-  <div class="twelve columns">
+  <div class="six columns">
 
-    <h2 class="fieldset-title">Empty Tabset Example</h2>
+    <h2>Empty Tabset Example</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
 
     <div id="empty" class="tab-container">
       <ul class="tab-list"></ul>
@@ -13,17 +19,58 @@
       </button>
     </div>
 
-    <script type="text/javascript">
-      var demoTabsCounts = 0;
-      $('#addNewTabs').on('click.demo', function() {
-        $('#empty').data('tabs').add('new-tab-' + demoTabsCounts, {
-          name: 'New Tab ' + demoTabsCounts,
-          content: 'You created a new tab with an ID of ' + demoTabsCounts + '!',
-          isDismissible: true
-        });
-        demoTabsCounts++;
-      });
-    </script>
+    <fieldset class="radio-group">
+      <legend>Settings</legend>
+
+      <input type="radio" class="radio" name="howToName" id="howToName1" value="add" checked/>
+      <label for="howToName1" class="radio-label">Include the tab name in the <em>add()</em> method</label>
+      <br>
+      <input type="radio" class="radio" name="howToName" id="howToName2" value="rename" />
+      <label for="howToName2" class="radio-label">Use the <em>rename()</em> method after adding the tab</label>
+    </fieldset>
 
   </div>
 </div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    var demoTabsCounts = 0,
+      settings = {};
+    function getSettings() {
+      settings = {
+        nameMethod: $('input[name="howToName"]:checked').val()
+      };
+    }
+
+    // Setup the settings
+    $('[name="howToName"]').onTouchClick('demo').on('click.demo', function() {
+      getSettings();
+    });
+
+    $('#addNewTabs').onTouchClick('demo').on('click.demo', function() {
+      var tabSettings = {
+        content: '<h3>New Tab '+ demoTabsCounts + '</h3><p>You created a new tab with an ID of ' + demoTabsCounts + '!</p>',
+        isDismissible: true
+      }, name = 'New Tab ' + demoTabsCounts;
+
+      if (settings.nameMethod === 'add') {
+        tabSettings.name = name;
+      }
+
+      var tabsAPI = $('#empty').data('tabs');
+      tabsAPI.add('new-tab-' + demoTabsCounts, tabSettings);
+
+      if (settings.nameMethod === 'rename') {
+        tabsAPI.rename('new-tab-' + demoTabsCounts, name);
+      }
+
+      demoTabsCounts++;
+    });
+
+    // Trigger stuff
+    getSettings();
+
+  });
+
+</script>

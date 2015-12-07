@@ -168,7 +168,7 @@
           });
 
         this.updateRange();
-        this.element.trigger('activate', [active]);
+        this.element.trigger('activated', [active]);
 
         setTimeout(function () {
           self.element.trigger('afteractivate', [active]);

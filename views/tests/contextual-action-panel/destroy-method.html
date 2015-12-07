@@ -55,6 +55,7 @@
       $('#destroy-contextual').onTouchClick('test').on('click.test', function() {
         contextualApi.destroy();
         $('#invoke-contextual').prop('disabled', false);
+        $('#contextual-panel-trigger').prop('disabled', true);
       });
 
       contextualApi.panel.on('afterclose.test', function() {
@@ -101,6 +102,7 @@
         message: 'Contextual Action Panel has been rebuilt and re-invoked.'
       });
       $('#invoke-contextual').prop('disabled', true);
+      $('#contextual-panel-trigger').prop('disabled', false);
     });
 
   });

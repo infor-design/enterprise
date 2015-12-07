@@ -327,7 +327,7 @@
           self.checkFocusedElements();
         }).on('updated.tabs', function() {
           self.updated();
-        }).on('activate.tabs', function(e) {
+        }).on('activated.tabs', function(e) {
           // Stop propagation of the activate event from going higher up into the DOM tree
           e.stopPropagation();
         });
@@ -602,7 +602,7 @@
         }
 
         self.panels.hide();
-        self.element.trigger('activate', [a]);
+        self.element.trigger('activated', [a]);
 
         targetPanel.stop().fadeIn(250, function() {
           $('#tooltip').addClass('is-hidden');
@@ -892,11 +892,15 @@
           return;
         }
 
-        var tab = this.getTabFromId(tabId);
+        var self = this,
+          tab = this.getTabFromId(tabId);
+
         tab.children('a').text(name.toString());
 
-        this.positionFocusState();
-        this.focusBar();
+        var doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
+
+        self.positionFocusState(doesTabExist);
+        self.focusBar(doesTabExist);
       },
 
       // returns the currently active tab

@@ -183,6 +183,9 @@
         var self = this,
           buttonset = self.toolbar.children('.buttonset');
 
+        this.panel.off('open.contextualactionpanel close.contextualactionpanel ' +
+          'beforeopen.contextualactionpanel afterclose.contextualactionpanel');
+
         buttonset.children('*:not(.searchfield)')
           .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
 
@@ -211,7 +214,12 @@
       },
 
       close: function() {
-        this.panel.data('modal').close();
+        var destroy;
+        if (this.settings.trigger === 'immediate') {
+          destroy = true;
+        }
+
+        this.panel.data('modal').close(destroy);
       },
 
       disable: function() {
