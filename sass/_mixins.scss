@@ -8,7 +8,7 @@
 }
 
 // Prefixes that we use throughout
-$prefixes: -webkit-, -moz-, -ms-, -o-, '';
+$prefixes: -webkit-, -moz-, -o-, '';
 
 // Builds a list of vendor-prefixed animation definitions
 @mixin animation($animate...) {
@@ -32,7 +32,6 @@ $prefixes: -webkit-, -moz-, -ms-, -o-, '';
 @mixin keyframes($animation-name) {
   @-webkit-keyframes #{$animation-name} {@content;}
   @-moz-keyframes #{$animation-name} {@content;}
-  @-ms-keyframes #{$animation-name} {@content;}
   @keyframes #{$animation-name} {@content;}
 }
 

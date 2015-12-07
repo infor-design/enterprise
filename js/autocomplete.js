@@ -27,7 +27,7 @@
         tags: false, //Allows tags to be shown/generated.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
         filterMode: 'startsWith',  // startsWith and contains Supported
-        delay: 300
+        delay: 300 // delay is the delay between key strokes on the keypad before it thinks you stopped typing
       },
       settings = $.extend({}, defaults, options);
 

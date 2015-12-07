@@ -84,3 +84,4 @@
 | Lawson Portal |   | Jake Harington/Andy |
 | S&OP | Vaadin and GWT | Duncan Simpson |
 | Self Portal - Cloudsuite | ?? | Hal Walters |
+| Infor BI Modeling | Hasn’t been released yet. Doing a quick assessment on required changes for Xi, no dedicated Xi release plan yet. The application is part of the SOA Farm and based on BI Farm Architecture http://bit.ly/1OL2mvx.  The client is implemented as a Plugin for BI Dashboards. | Guido Buecker <Guido.Buecker@infor.com> |

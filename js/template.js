@@ -32,14 +32,14 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Template(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    Template.prototype = {
       init: function() {
         //Do other init (change/normalize settings, load externals, etc)
         return this
@@ -95,7 +95,7 @@
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Template(this, settings));
       }
     });
   };

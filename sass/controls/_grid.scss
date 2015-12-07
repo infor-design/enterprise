@@ -127,6 +127,12 @@ $gutter-neg-size: -20px;
   .full.column {
     margin-left: $gutter-size;
     width: calc(100% - 20px);
+
+    &.center {
+      min-width: 300px;
+      text-align: center;
+      display: block;
+    }
   }
 
   .one-third.column {

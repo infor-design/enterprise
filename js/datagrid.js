@@ -482,17 +482,10 @@ $.fn.datagrid = function(options) {
 
       //Clone and create a table with one row and the table headers in front
       //make this not readable to screen readers
-      var clone = $('<table class="datagrid datagrid-clone" role="presentation" aria-hidden="true"></table>').append(this.headerRow.clone()).append('<tbody></tbody>');
-      clone.insertBefore(this.element.closest('.datagrid-wrapper'));
+      this.clone = $('<table class="datagrid datagrid-clone" role="presentation" aria-hidden="true"></table>').append(this.headerRow.clone()).append('<tbody></tbody>');
+      this.clone.insertBefore(this.element.closest('.datagrid-wrapper'));
 
-      var firstRow = this.tableBody.find('tr:first'),
-        rowClone = firstRow.clone();
-
-      firstRow.find('td').each(function () {
-        $(this).css('width', $(this).outerWidth());
-      });
-
-      clone.find('tbody').append(rowClone.addClass('collapsed'));
+      this.syncFixedHeader();
 
       this.headerRow.addClass('audible');
       this.wrapper.css({'height': 'calc(100% - 140px)'});
@@ -502,13 +495,34 @@ $.fn.datagrid = function(options) {
 
     //Revert Fixed Header
     unFixHeader: function () {
-     this.fixedHeader = false;
+      this.fixedHeader = false;
+
       if (this.wrapper.prev().is('.datagrid-clone')) {
         this.wrapper.prev().remove();
         this.headerRow.removeClass('audible');
         this.wrapper.css({'height': '', 'overflow': ''});
         this.wrapper.find('.datagrid-container').css({'height': '', 'overflow': ''});
       }
+    },
+
+    syncFixedHeader: function () {
+      var self = this,
+       firstRow = this.tableBody.find('tr:first');
+
+      firstRow.find('td').each(function (i) {
+        var actualCol = self.headerRow.find('th').eq(i),
+          colWidth = actualCol.outerWidth(),
+          rowWidth = $(this).outerWidth();
+
+          if (self.visibleColumns()[i].width) {
+            //colWidth = self.visibleColumns()[i].width;
+          }
+
+          $(this).css('width', Math.max(colWidth, rowWidth));
+      });
+
+      //this.clone.find('tbody').append(rowClone);
+
     },
 
     //Delete a Specific Row
@@ -1275,7 +1289,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (!row.hasClass('is-selected')) {
-        checkbox = this.cellNode(row, this.columnIdx('selectionCheckbox'));
+        checkbox = this.cellNode(row, this.columnIdxById('selectionCheckbox'));
 
         //Select It
         this._selectedRows.push({idx: idx, data: this.settings.dataset[idx], elem: row});
@@ -1352,7 +1366,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (row.hasClass('is-selected')) {
-        checkbox = this.cellNode(row, this.columnIdx('selectionCheckbox'));
+        checkbox = this.cellNode(row, this.columnIdxById('selectionCheckbox'));
 
         selIdx = undefined;
         for (var i = 0; i < this._selectedRows.length; i++) {
@@ -1418,13 +1432,13 @@ $.fn.datagrid = function(options) {
       return this._selectedRows;
     },
 
-    //TODO Rename Get the column object by id
+    //Get the column object by id
     columnById: function(id) {
       return $.grep(this.settings.columns, function(e) { return e.id === id; });
     },
 
-    //TODO Rename Get the column index
-    columnIdx: function(id) {
+    //Get the column index from the col's id
+    columnIdxById: function(id) {
       var cols = this.settings.columns,
         idx = -1;
 
@@ -1872,7 +1886,7 @@ $.fn.datagrid = function(options) {
       }
 
       this.sortColumn.sortId = id;
-      this.sortColumn.sortField = (this.columnIdx(id)[0] ? this.columnIdx(id)[0].field : '');
+      this.sortColumn.sortField = (this.columnIdxById(id)[0] ? this.columnIdxById(id)[0].field : '');
 
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
@@ -1931,7 +1945,7 @@ $.fn.datagrid = function(options) {
       $('tr[role="row"]', self.tableBody).each(function() {
         var row = $(this),
           newIdx = row.index(),
-          checkbox = self.cellNode(row, self.columnIdx('selectionCheckbox'));
+          checkbox = self.cellNode(row, self.columnIdxById('selectionCheckbox'));
 
         $.each(self._selectedRows, function(index, val) {
           if (self.isEquals(val.data, self.settings.dataset[newIdx])) {
