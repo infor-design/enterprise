@@ -2,7 +2,7 @@
 //================================================== //
 
 @mixin checkbox-animation {
-  @include animation('.15s ease 0s normal none 1 running check');
+  @include animation(check 0.15s);
 }
 
 @mixin checkbox-transform-rules {
