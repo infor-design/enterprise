@@ -8,7 +8,7 @@
 }
 
 // Prefixes that we use throughout
-$prefixes: -webkit-, -moz-, -o-, '';
+$prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 // Builds a list of vendor-prefixed animation definitions
 @mixin animation($animate...) {
