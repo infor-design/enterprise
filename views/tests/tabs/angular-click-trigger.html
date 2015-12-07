@@ -111,7 +111,7 @@
       });
     }
 
-    $('#tabs-normal').on('activate.test', function(e, anchor) {
+    $('#tabs-normal').on('activated.test', function(e, anchor) {
       if ($(anchor).attr('data-ng-click') !== undefined || $(anchor).attr('ng-click') !== undefined) {
         ngClickTrigger($(anchor));
       }

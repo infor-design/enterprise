@@ -1,11 +1,23 @@
 <div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Example:  "activated" Event</h2>
+
+    <p>Provides a visual example of the Tabs "activated" event and its firing timing.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
   <div class="twelve columns">
 
-    <div id="tabs-normal" class="tab-container">
+    <div id="tabs" class="tab-container">
       <ul class="tab-list">
-        <li class="tab  is-selected"><a href="#tabs-normal-contracts">Contracts</a></li>
+        <li class="tab"><a href="#tabs-normal-contracts">Contracts</a></li>
         <li class="tab"><a href="#tabs-normal-opportunities">Opportunites</a></li>
-        <li class="tab"><a href="#tabs-normal-attachments">Attachments</a></li>
+        <li class="tab is-selected"><a href="#tabs-normal-attachments">Attachments</a></li>
         <li class="tab"><a href="#tabs-normal-contacts">Contacts</a></li>
         <li class="tab"><a href="#tabs-normal-notes">Notes</a></li>
       </ul>
@@ -14,60 +26,40 @@
       </div>
       <div id="tabs-normal-opportunities" class="tab-panel" style="display: none;">
         <p>Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage; ROI, unleash reinvent innovative podcasts citizen-media networking.<p>
-        <div class="field">
-          <label class="required" for="text-normal-opportunities">Text</label>
-          <input type="text" name="text-normal-opportunities" id="text-normal-opportunities" data-validate="required">
-        </div>
-        <div class="field">
-          <label class="required" for="tel-normal-opportunities">Telephone</label>
-          <input type="tel" name="tel-normal-opportunities" id="tel-normal-opportunities" data-validate="required" aria-required="true">
-        </div>
       </div>
       <div id="tabs-normal-attachments" class="tab-panel" style="display: none;">
         <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
       </div>
       <div id="tabs-normal-contacts" class="tab-panel" style="display: none;">
         <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!</p>
-        <br>
-        <div class="field">
-          <label class="required" for="text-normal-contacts">Text</label>
-          <input type="text" name="text-normal-contacts" id="text-normal-contacts" data-validate="required">
-        </div>
-        <div class="field">
-          <label class="required" for="tel-normal-contacts">Telephone</label>
-          <input type="tel" name="tel-normal-contacts" id="tel-normal-contacts" data-validate="required" aria-required="true">
-        </div>
-        <div class="field">
-          <label class="required" for="email-normal-contacts">Email</label>
-          <input type="email" name="email-normal-contacts" id="email-normal-contacts" autocomplete="off" data-validate="required email" aria-required="true">
-        </div>
       </div>
       <div id="tabs-normal-notes" class="tab-panel" style="display: none;">
         <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
-        <div class="field">
-          <label class="required" for="name-normal-notes">Name</label>
-          <input type="text" name="name-normal-notes" id="name-normal-notes" data-validate="required" aria-required="true">
-        </div>
-        <div class="field">
-          <label for="message-normal-notes">Textarea</label>
-          <textarea name="message-normal-notes" id="message-normal-notes" autocomplete="off"></textarea>
-        </div>
       </div>
     </div>
 
-
-    <script type="text/javascript">
-      /*$('#tabs-normal').on('activated.demo', function(e, args) {
-        console.log(args);
-      });*/
-
-      //Later
-      setTimeout(function () {
-        $('#tabs-normal').tabs();
-        var api = $('#tabs-normal').data('tabs');
-        api.select('tabs-normal-notes');  //or with ;#
-      }, 1000);
-    </script>
-
   </div>
 </div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#tabs').on('activated.test', function(e, anchor) {
+      var color = '#aa1111',
+        anchorName, anchorId;
+
+      if (!anchor) {
+        anchorName = '[undefined anchor name]';
+        anchorId = '[undefined anchor id]';
+        color = '#1111aa';
+      } else {
+        anchorName = anchor.text().trim();
+        anchorId = anchor.attr('href');
+      }
+
+      $('body').toast({
+        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> triggered!',
+        message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
+      });
+    });
+  });
+</script>

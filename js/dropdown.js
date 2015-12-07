@@ -287,9 +287,9 @@
           self.toggleList();
         });
 
-        self.element.on('activate', function () {
+        self.element.on('activated.dropdown', function () {
           self.activate();
-        }).on('updated', function (e) {
+        }).on('updated.dropdown', function (e) {
           self.closeList();
           self.updateList();
           self.setValue();
