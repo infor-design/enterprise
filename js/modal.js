@@ -499,7 +499,7 @@
           });
       },
 
-      close: function (noDestroy) {
+      close: function (destroy) {
         if (!this.isOpen()) {
           return true;
         }
@@ -547,7 +547,7 @@
           self.overlay.remove();
           self.element.css({'display':'none'}).trigger('afterclose');
 
-          if (!noDestroy) {
+          if (self.settings.trigger === 'immediate' || destroy) {
             self.destroy();
           }
         }, 300); // should match the length of time needed for the overlay to fade out
