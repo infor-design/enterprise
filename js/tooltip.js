@@ -439,7 +439,11 @@
           this.tooltip.find('.arrow').css('right', '178px');
         }
 
-        if (this.activeElement.is('.timepicker') || this.activeElement.is('.datepicker')) {
+        if (this.activeElement.is('.timepicker')) {
+          extraOffset = -20;
+        }
+
+        if (this.activeElement.is('.datepicker')) {
           extraOffset = -15;
         }
 
