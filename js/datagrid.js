@@ -487,7 +487,7 @@ $.fn.datagrid = function(options) {
 
       this.syncFixedHeader();
 
-      this.headerRow.addClass('audible');
+      //this.headerRow.addClass('audible');
       this.wrapper.css({'height': 'calc(100% - 140px)'});
       this.wrapper.find('.datagrid-container').css({'height': '100%', 'overflow': 'auto'});
       this.fixedHeader = true;
@@ -515,10 +515,14 @@ $.fn.datagrid = function(options) {
           rowWidth = $(this).outerWidth();
 
           if (self.visibleColumns()[i].width) {
-            //colWidth = self.visibleColumns()[i].width;
+            if (colWidth.toString().indexOf('%') > -1) {
+              colWidth = self.visibleColumns()[i].width;
+            }
           }
 
-          $(this).css('width', Math.max(colWidth, rowWidth));
+          console.log(colWidth, rowWidth, self.visibleColumns()[i].width);
+          $(this).css('width', colWidth);
+          actualCol.css('width', colWidth);
       });
 
       //this.clone.find('tbody').append(rowClone);

@@ -74,6 +74,7 @@
         scripts = document.getElementsByTagName('script'),
         partialPath = 'cultures';
 
+
         for (var i = 0; i < scripts.length; i++) {
           var src = scripts[i].src;
 
@@ -120,7 +121,12 @@
       if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
         self.dff.resolve(self.currentLocale.name);
       }
+
       self.setCurrentLocale(locale, self.cultures[locale]);
+
+      if (self.cultures[locale] && this.cultureInHead()) {
+        self.dff.resolve(self.currentLocale.name);
+      }
       return this.dff.promise();
     },
 
@@ -565,10 +571,11 @@
     }
   };
 
-
-  if (!window.Locale.cultureInHead()) {
-    window.Locale.set('en-US');
-  }
+  $(function() {
+    if (!window.Locale.cultureInHead()) {
+      window.Locale.set('en-US');
+    }
+  });
 
 
 /* start-amd-strip-block */
