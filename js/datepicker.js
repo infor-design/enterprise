@@ -82,10 +82,6 @@
             self.closeCalendar();
           } else {
             self.openCalendar();
-
-            setTimeout(function() {
-              self.setFocusAfterOpen();
-            }, 200);
           }
         });
 
@@ -292,7 +288,7 @@
       openCalendar: function () {
         var self = this;
 
-        if (this.element.is(':disabled')) {
+        if (this.element.is(':disabled') || this.element.attr('readonly')) {
           return;
         }
 
@@ -408,6 +404,10 @@
           }
         });
 
+        setTimeout(function() {
+          self.setFocusAfterOpen();
+        }, 200);
+
       },
 
       // Open the calendar in a popup
@@ -466,6 +466,9 @@
 
       // Set focus after opening the calendar
       setFocusAfterOpen: function () {
+        if (!this.calendar) {
+          return;
+        }
         this.calendar.find('.is-selected').attr('tabindex', 0).focus();
       },
 
