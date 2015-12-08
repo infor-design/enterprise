@@ -511,8 +511,8 @@ $.fn.datagrid = function(options) {
 
       firstRow.find('td').each(function (i) {
         var actualCol = self.headerRow.find('th').eq(i),
-          colWidth = actualCol.outerWidth(),
-          rowWidth = $(this).outerWidth();
+          colWidth = actualCol.outerWidth();
+          //rowWidth = $(this).outerWidth();
 
           if (self.visibleColumns()[i].width) {
             if (colWidth.toString().indexOf('%') > -1) {
@@ -520,7 +520,7 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          console.log(colWidth, rowWidth, self.visibleColumns()[i].width);
+          //console.log(colWidth, rowWidth, self.visibleColumns()[i].width);
           $(this).css('width', colWidth);
           actualCol.css('width', colWidth);
       });
