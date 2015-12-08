@@ -507,25 +507,28 @@ $.fn.datagrid = function(options) {
 
     syncFixedHeader: function () {
       var self = this,
-       firstRow = this.tableBody.find('tr:first');
+       firstRow = this.tableBody.find('tr:first'),
+       rowClone = firstRow.clone();
 
-      firstRow.find('td').each(function (i) {
+      this.clone.find('tbody').append(rowClone);
+
+      rowClone.find('td').each(function (i) {
         var actualCol = self.headerRow.find('th').eq(i),
-          colWidth = actualCol.outerWidth();
-          //rowWidth = $(this).outerWidth();
+          newCol = self.clone.find('th').eq(i),
+          colWidth = actualCol.outerWidth(),
+          width = self.visibleColumns()[i].width;
 
-          if (self.visibleColumns()[i].width) {
-            if (colWidth.toString().indexOf('%') > -1) {
-              colWidth = self.visibleColumns()[i].width;
+          if (width) {
+            if (width.toString().indexOf('%') > -1) {
+              colWidth = width;
             }
           }
-
-          //console.log(colWidth, rowWidth, self.visibleColumns()[i].width);
-          $(this).css('width', colWidth);
           actualCol.css('width', colWidth);
+          newCol.css('width', colWidth);
+          $(this).css('width', colWidth);
       });
 
-      //this.clone.find('tbody').append(rowClone);
+      rowClone.remove();
 
     },
 
