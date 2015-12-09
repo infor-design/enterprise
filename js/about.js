@@ -95,15 +95,15 @@
         if (this.settings.version || this.settings.productName) {
           var productAndVersion = '' + (this.settings.productName ? this.settings.productName + ' ' : '') +
             (this.settings.version ? this.settings.version : '');
-          $('<p></p>').html(productAndVersion).appendTo(body);
+          $('<p></p>').text(productAndVersion).appendTo(body);
         }
 
         if (this.settings.content) {
-          $('<div class="additional-content"></div>').html(this.settings.content).appendTo(body);
+          $('<div class="additional-content"></div>').text(this.settings.content).appendTo(body);
         }
 
         if (this.settings.useDefaultCopyright || !this.settings.content) {
-          $('<p></p>').html(this.defaultCopyright).appendTo(body);
+          $('<p></p>').text(this.defaultCopyright).appendTo(body);
         }
 
         if (this.settings.deviceSpecs) {
@@ -112,7 +112,7 @@
               '<span class="platform">Platform: ' + specs.os + '</span><br>' +
               '<span class="locale">Locale: ' + specs.locale + '</span><br>' +
               '<span class="cookiesEnabled">Cookies Enabled: ' + specs.cookiesEnabled + '</span><br>';
-          $('<p></p>').html(text).appendTo(body);
+          $('<p></p>').text(text).appendTo(body);
         }
 
         $('<div class="modal-buttonset"><button type="button" name="done" class="btn-modal">Done</button></div>').appendTo(this.modal.find('.modal-content'));

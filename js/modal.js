@@ -81,6 +81,8 @@
       },
 
       appendContent: function () {
+        var fullContent = false;
+
         this.element = $(
           '<div class="modal">' +
             '<div class="modal-content">'+
@@ -91,7 +93,12 @@
             '</div>'+
           '</div>');
 
-        this.element.find('.modal-body').append(this.settings.content);
+        if ($(this.settings.content).is('.modal')) {
+          this.element = $(this.settings.content);
+          fullContent = true;
+        } else {
+          this.element.find('.modal-body').append(this.settings.content);
+        }
         this.element.appendTo('body');
 
         if (this.settings.cssClass) {
@@ -99,6 +106,7 @@
         }
 
         this.addButtons(this.settings.buttons);
+
       },
 
       reStructure: function() {
