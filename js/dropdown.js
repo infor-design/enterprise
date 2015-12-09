@@ -501,12 +501,6 @@
             // into the SearchInput.  If search mode is on, Tab should 'select' the currently highlighted
             // option in the list, update the SearchInput and close the list.
             if (self.isOpen()) {
-
-              // In multi-select mode, commiting changes works differently and should not be done with tab
-              if (this.settings.multiple === false) {
-                this.selectOption($(options[selectedIndex]));
-              }
-
               self.closeList(false);
               this.activate();
             }
