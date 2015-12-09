@@ -62,7 +62,7 @@ define({
   },
 
   reporters: [
-    { 'id': 'JUnit', 'filename': 'junit.xml' },
+    { 'id': 'JUnit', 'filename': 'junit-functional.xml' },
     { 'id': 'Pretty'}
   ],
 
@@ -75,5 +75,5 @@ define({
   ],
 
   // A regular expression matching URLs to files that should not be included in code coverage analysis
-  excludeInstrumentation: /^(?:tests|node_modules|_all)\//
+  excludeInstrumentation: /^(?:tests|test2|node_modules|_all)\//
 });

@@ -1,6 +1,7 @@
 define([
   'intern!object',
-  'intern/chai!expect'
+  'intern/chai!expect',
+  'intern/order!../../../node_modules/jquery/dist/jquery'
 ], function(registerSuite, expect) {
 
   'use strict';
@@ -14,7 +15,26 @@ define([
 
     'Basic Tests': function() {
       expect(true).to.be.true; // jshint ignore:line
-    }
+    },
+
+    'Does the DOM exist?': function() {
+      expect(window).to.exist; // jshint ignore:line
+    },
+
+    'Dependencies': {
+      'jQuery': {
+        'Does jQuery exist?': function() {
+          expect($).to.exist; //jshint ignore:line
+        },
+
+        'Can we actually do stuff we jQuery?': function() {
+          var newDOM = $('<div id="you-there"></div>');
+          expect(newDOM).to.exist;
+          expect(newDOM[0]).to.exist;
+        }
+      }
+    },
+
   });
 
 });
