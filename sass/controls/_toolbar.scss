@@ -54,6 +54,7 @@ $toolbar-buttonset-height: 44px;
 
   .title {
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     width: 45%;
 
