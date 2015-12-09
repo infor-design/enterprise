@@ -505,7 +505,13 @@
 
             if (this.element.closest('.buttonset').length > 0 ) {
               wrapper.css({'left': (target.offset().left + target.outerWidth() + 5) - menuWidth});
-              wrapper.find('div.arrow').css({'left': 'auto', 'right': '10px'});
+              wrapper.find('div.arrow').css({'left': 'auto', 'right': '16px'});
+            }
+
+            if (wrapper.offset().left < 0) {
+              wrapper.css('left', '10px');
+              var arrowPos = this.element.outerWidth() + this.element.offset().left - 27;
+              wrapper.find('div.arrow').css('left', arrowPos);
             }
           }
         }

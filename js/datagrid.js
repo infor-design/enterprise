@@ -356,8 +356,7 @@ $.fn.datagrid = function(options) {
       this.fixedHeader = false;
 
       if (this.element.hasClass('datagrid-contained')) {
-        this.fixedHeader = true;
-        //TODO this.element.closest('.datagrid-wrapper').parent().css('height'));
+        this.fixHeader();
       }
 
     },
@@ -374,9 +373,10 @@ $.fn.datagrid = function(options) {
           this.element.wrap('<div class="datagrid-wrapper"><div class="datagrid-container"></div></div>');
         }
         self.settings.dataset = self.htmlToDataset();
+        self.container = this.element.closest('.datagrid-wrapper');
       } else {
         self.table = $('<table role="grid"></table>').addClass('datagrid'+ (this.settings.isList ? ' is-readonly' : ''));
-        self.element.addClass('datagrid-container');
+        self.container = self.element.addClass('datagrid-container');
       }
 
       self.table.empty();
@@ -474,6 +474,7 @@ $.fn.datagrid = function(options) {
 
     //Fixed Header - TODO
     fixHeader: function () {
+      var self = this;
 
       //Already Wrapped
       if (this.wrapper.prev().is('.datagrid-clone')) {
@@ -484,31 +485,42 @@ $.fn.datagrid = function(options) {
       //make this not readable to screen readers
       this.clone = $('<table class="datagrid datagrid-clone" role="presentation" aria-hidden="true"></table>').append(this.headerRow.clone()).append('<tbody></tbody>');
       this.clone.insertBefore(this.element.closest('.datagrid-wrapper'));
+      this.clone.wrap('<div class="datagrid-scrollable-header"></div>');
 
+      this.fixedHeader = true;
       this.syncFixedHeader();
 
-      //this.headerRow.addClass('audible');
+      this.headerRow.addClass('audible');
       this.wrapper.css({'height': 'calc(100% - 140px)'});
       this.wrapper.find('.datagrid-container').css({'height': '100%', 'overflow': 'auto'});
-      this.fixedHeader = true;
+
+      this.container.on('scroll.datagrid', function () {
+        self.clone.parent().scrollLeft($(this).scrollLeft());
+      });
     },
 
     //Revert Fixed Header
     unFixHeader: function () {
       this.fixedHeader = false;
 
-      if (this.wrapper.prev().is('.datagrid-clone')) {
+      if (this.wrapper.prev().is('.datagrid-scrollable-header')) {
         this.wrapper.prev().remove();
         this.headerRow.removeClass('audible');
         this.wrapper.css({'height': '', 'overflow': ''});
         this.wrapper.find('.datagrid-container').css({'height': '', 'overflow': ''});
+        this.container.off('scroll.datagrid');
       }
     },
 
     syncFixedHeader: function () {
+
+      if (!this.fixedHeader) {
+        return;
+      }
+
       var self = this,
-       firstRow = this.tableBody.find('tr:first'),
-       rowClone = firstRow.clone();
+        firstRow = this.tableBody.find('tr:first'),
+        rowClone = firstRow.clone();
 
       this.clone.find('tbody').append(rowClone);
 
@@ -516,6 +528,7 @@ $.fn.datagrid = function(options) {
         var actualCol = self.headerRow.find('th').eq(i),
           newCol = self.clone.find('th').eq(i),
           colWidth = actualCol.outerWidth(),
+          rowCell = firstRow.find('td').eq(i),
           width = self.visibleColumns()[i].width;
 
           if (width) {
@@ -523,13 +536,16 @@ $.fn.datagrid = function(options) {
               colWidth = width;
             }
           }
+
           actualCol.css('width', colWidth);
           newCol.css('width', colWidth);
           $(this).css('width', colWidth);
+          rowCell.css('width', colWidth);
       });
 
       rowClone.remove();
 
+      this.clone.css('width', self.table.css('width'));
     },
 
     //Delete a Specific Row
@@ -558,6 +574,8 @@ $.fn.datagrid = function(options) {
       this.renderPager(pagerInfo);
       this.selectedRows([]);
       this.syncHeaderCheckbox();
+      this.syncFixedHeader();
+
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -830,9 +848,11 @@ $.fn.datagrid = function(options) {
       if (!percent) {
         return;
       }
+
       if (reset) {
         self.table.css('width', self.element.width());
       }
+
       if (typeof width !=='number') { //calculate percentage
         width = percent / 100 * self.element.width();
       }
@@ -841,7 +861,7 @@ $.fn.datagrid = function(options) {
         var col = $(this);
 
         if (col.attr('data-column-id') === id) {
-          col.css('width', width);
+          col.css('width', width, firstRows);
           total += width;
         } else {
           total += col.outerWidth();
@@ -854,7 +874,6 @@ $.fn.datagrid = function(options) {
       });
 
       self.table.css('width', total);
-
     },
 
     // Get child offset

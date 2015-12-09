@@ -62,7 +62,7 @@
 | PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna Peddibhotla |
 | Rhythm Widgets | Dropdown, Date Picker, Text Area, Spinbox | Eric Martensson |
 | SmartStream | ASP | Wim Denayer |
-| SXE | Angular | Peter Cullen |
+| SXE | Angular - Huge app it will be another year. | Peter Cullen |
 | S3 | Starting Next Year | Rajan Shanmugavelu |
 | Infor Mobility Framework | HTML5 and Cordova (Mobile Framework) | Daniel Thil |
 | Product Certification Manger |  Upgrade  | Kishor Dhumal <Kishor.Dhumal@infor.com> |

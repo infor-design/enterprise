@@ -16,7 +16,8 @@
     "install-test-deps": "npm install selenium-standalone && npm run install-drivers",
     "install-drivers": "./node_modules/.bin/selenium-standalone install --version=2.47.1 --baseURL=http://selenium-release.storage.googleapis.com --drivers.chrome.version=2.18 --drivers.chrome.baseURL=http://chromedriver.storage.googleapis.com --drivers.ie.arch=x64 --drivers.ie.baseURL=http://selenium-release.storage.googleapis.com",
     "selenium": "./node_modules/.bin/selenium-standalone start",
-    "test": "./bin/test.sh"
+    "test": "./bin/test.sh",
+    "watch": "grunt watch"
   },
   "main": "sohoxi.js",
   "dependencies": {},

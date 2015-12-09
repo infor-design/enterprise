@@ -5,7 +5,12 @@ $datagrid-header-height: 40px;
 
 .datagrid-wrapper {
   position: relative;
+}
 
+//The scrollable header
+.datagrid-scrollable-header {
+  overflow: hidden;
+  width: 100%;
 }
 
 // Grid Container Div
@@ -26,6 +31,9 @@ $datagrid-header-height: 40px;
     z-index: 1;
   }
 
+  &.datagrid-contained {
+    border: 1px solid $datagrid-cell-border-color;
+  }
 }
 
 // Grid Styling

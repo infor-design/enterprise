@@ -25,6 +25,7 @@ $toolbar-buttonset-height: 44px;
   .buttonset {
     height: $toolbar-buttonset-height;
     overflow: hidden;
+    padding-left: 1px;  //for the focus state
     width: 98%;
 
     > * {
@@ -234,7 +235,6 @@ $toolbar-buttonset-height: 44px;
     .btn-tertiary,
     .btn {
       min-width: 0;
-      padding: 0;
       width: auto;
 
       span:not(.audible) {
