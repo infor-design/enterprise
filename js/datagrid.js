@@ -487,7 +487,7 @@ $.fn.datagrid = function(options) {
 
       this.syncFixedHeader();
 
-      this.headerRow.addClass('audible');
+      //this.headerRow.addClass('audible');
       this.wrapper.css({'height': 'calc(100% - 140px)'});
       this.wrapper.find('.datagrid-container').css({'height': '100%', 'overflow': 'auto'});
       this.fixedHeader = true;
@@ -507,21 +507,28 @@ $.fn.datagrid = function(options) {
 
     syncFixedHeader: function () {
       var self = this,
-       firstRow = this.tableBody.find('tr:first');
+       firstRow = this.tableBody.find('tr:first'),
+       rowClone = firstRow.clone();
 
-      firstRow.find('td').each(function (i) {
+      this.clone.find('tbody').append(rowClone);
+
+      rowClone.find('td').each(function (i) {
         var actualCol = self.headerRow.find('th').eq(i),
+          newCol = self.clone.find('th').eq(i),
           colWidth = actualCol.outerWidth(),
-          rowWidth = $(this).outerWidth();
+          width = self.visibleColumns()[i].width;
 
-          if (self.visibleColumns()[i].width) {
-            //colWidth = self.visibleColumns()[i].width;
+          if (width) {
+            if (width.toString().indexOf('%') > -1) {
+              colWidth = width;
+            }
           }
-
-          $(this).css('width', Math.max(colWidth, rowWidth));
+          actualCol.css('width', colWidth);
+          newCol.css('width', colWidth);
+          $(this).css('width', colWidth);
       });
 
-      //this.clone.find('tbody').append(rowClone);
+      rowClone.remove();
 
     },
 

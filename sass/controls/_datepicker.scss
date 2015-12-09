@@ -38,6 +38,13 @@
       fill: $input-disabled-border-color;
     }
   }
+
+  &[readonly] {
+    + .icon {
+      cursor: none;
+      fill: $trigger-icon-fill-color;
+    }
+  }
 }
 
 // IE Hack
