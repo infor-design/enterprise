@@ -228,45 +228,6 @@ module.exports = function(grunt) {
       amd: ['temp']
     },
 
-    run: {
-      'selenium-start': {
-        options: {
-          ready: new RegExp('Selenium started'),
-          wait: false
-        },
-        cmd: 'selenium-standalone',
-        args: ['start'],
-      },
-
-      'intern-functional-local': {
-        options: {
-          ready: new RegExp('SoHo Xi Tests Completed!'),
-          wait: false
-        },
-        cmd: './node_modules/.bin/intern-runner',
-        args: ['config=test2/intern.local.functional']
-      },
-
-      'intern-unit-only': {
-        options: {
-          ready: new RegExp('SoHo Xi Tests Completed!'),
-          wait: false
-        },
-        cmd: './node_modules/.bin/intern-client',
-        args: ['config=test2/intern.local.unit']
-      },
-
-      'intern-saucelabs': {
-        options: {
-          ready: new RegExp('SoHo Xi Tests Completed!'),
-          wait: false
-        },
-        cmd: './node_modules/.bin/intern-runner',
-        args: ['config=test2/intern.saucelabs']
-      },
-
-    },
-
   });
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
