@@ -206,6 +206,10 @@
             }
           }
 
+          if (props.validate !== undefined && !props.validate) {
+            btn.addClass('no-validation');
+          }
+
           var attrs = {},
             attrTypes = ['id', 'name', 'text'];
 

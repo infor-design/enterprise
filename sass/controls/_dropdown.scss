@@ -76,13 +76,13 @@ input.multiselect {
     cursor: pointer;
     display: inline-block;
     fill: $trigger-icon-fill-color;
-    height: 33px;
+    height: 32px;
     margin-left: -33px;
     pointer-events: none;
     position: absolute;
-    right: 12px;
+    right: 6px;
     top: 1px;
-    width: 10px;
+    width: 18px;
   }
 
   &.is-readonly {
@@ -297,10 +297,10 @@ input.multiselect {
   > .icon {
     fill: $trigger-icon-fill-color;
     height: 32px;
-    margin-left: -22px;
+    margin-left: -26px;
     position: absolute;
     @include css3(transform, rotate(180deg));
-    width: 10px;
+    width: 18px;
 
     &.search {
       height: 18px;
