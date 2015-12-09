@@ -36,6 +36,7 @@ define({
       username: 'tmcconechy',
       accessKey: 'ffbed6ba-df11-4bc3-9110-a5ba478e8b41'
   },
+
   // Configuration options for the module loader; any AMD configuration options supported by the specified AMD loader
   // can be used here
   loaders: {
@@ -52,7 +53,7 @@ define({
   },
 
   reporters: [
-    { 'id': 'JUnit', 'filename': 'junit.xml' },
+    { 'id': 'JUnit', 'filename': 'junit-unit.xml' },
     { 'id': 'Pretty' }
   ],
 
@@ -60,7 +61,7 @@ define({
   suites: ['test2/unit/_all'],
 
   // Functional test suite(s) to run in each browser once non-functional tests are completed
-  functionalSuites: ['tests/functional/index'],
+  functionalSuites: [],
 
   // A regular expression matching URLs to files that should not be included in code coverage analysis
   excludeInstrumentation: /^(?:tests|node_modules)\//
