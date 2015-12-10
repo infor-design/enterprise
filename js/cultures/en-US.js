@@ -176,6 +176,7 @@
       'Load': {id: 'Load', value: 'Load', comment: 'Load icon tooltip'},
       'Loading': {id: 'Loading', value: 'Loading', comment: 'Text below spinning indicator to indicate loading'},
       'Locked': {id: 'Locked', value: 'Locked', comment: 'Locked tooltip'},
+      'Logout': {id: 'Logout', value: 'Log Out', comment: 'Log out of the application'},
       'Lookup': {id: 'Lookup', value: 'Lookup', comment: 'Lookup - As in looking up a record or value'},
       'Lowest': {id: 'Lowest', value: 'Lowest', comment: 'Lowest - As in Lowest value'},
       'Mail': {id: 'Mail', value: 'Mail', comment: 'Mail tooltip'},

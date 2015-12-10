@@ -426,19 +426,20 @@ $datagrid-header-height: 40px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: 2px 0 0 5px;
+  margin: 6px 0 0 4px;
   vertical-align: top;
 
   .icon {
     fill: $graphite04;
-    height: 24px;
+    height: 18px;
     opacity: 0;
     @include transition(all 250ms ease);
-    width: 11px;
+    width: 18px;
   }
 
   .sort-asc > .icon {
     @include css3(transform, rotate(180deg));
+    left: -2px;
   }
 
   span {
