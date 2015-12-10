@@ -1869,9 +1869,13 @@ $.fn.datagrid = function(options) {
     },
 
     expandRow: function(row) {
-      var expandRow = this.table.find('tr').eq(row+1),
+      var self = this,
+        expandRow = this.table.find('tr').eq(row+1),
         expandButton = this.table.find('tr').eq(row).find('.datagrid-expand-btn'),
         detail = expandRow.find('.datagrid-row-detail');
+
+      // Get data item for this row
+      var item = self.settings.dataset[row - (row + 1)/2];
 
       if (expandRow.hasClass('is-expanded')) {
         expandRow.removeClass('is-expanded');
@@ -1880,6 +1884,7 @@ $.fn.datagrid = function(options) {
 
         detail.animateClosed().on('animateclosedcomplete', function () {
           expandRow.css('display', 'none');
+          self.element.trigger('collapserow', [{grid: self, row: row, detail: detail, item: item}]);
         });
 
       } else {
@@ -1893,6 +1898,7 @@ $.fn.datagrid = function(options) {
         expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
 
         detail.animateOpen();
+        self.element.trigger('expandrow', [{grid: self, row: row, detail: detail, item: item}]);
       }
     },
 

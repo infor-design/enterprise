@@ -6,7 +6,7 @@
             Date Picker Set Value Example
          </h1>
          <h4>
-            All these fields should be initialized with the display value of "5/10/2015", otherwise something is broken.
+            All these fields should be initialized with the display value of "5/10/2015" (on EST zone) otherwise something is broken.
          </h4>
          <br/>
       </div>
@@ -52,6 +52,7 @@
             $('#date-field-2').data('datepicker').setValue('2015-05-10T12:00:00');
 
             // Test full UTC with Date object
+            console.log(new Date('2015-05-10T00:00:00'));
             console.log(new Date('2015-05-10T00:00:00'));
             console.log(new Date('2015-05-10T12:00:00'));
             console.log(new Date('2015-05-10T23:00:00'));

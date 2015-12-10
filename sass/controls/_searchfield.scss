@@ -82,7 +82,7 @@
 }
 
 @include respond-to(phablet) {
-  .searchfield {
+  .toolbar .searchfield {
     text-overflow: clip;
 
     &::-webkit-input-placeholder {

@@ -39,7 +39,13 @@
 
           {{#dataset}}
             <tr>
-              <td class="listview-image-column"><img alt="Placeholder Image" src="{{thumb}}" /></td>
+              <td>
+              </td>
+              <td class="listview-image-column">
+                <div class="image-sm">
+                  <img alt="Placeholder Image" src="{{thumb}}" />
+                </div>
+              </td>
               <td>
                 <p><a href="#" class="hyperlink listview-heading">{{productName}}</a></p>
                 <p class="listview-subheading">#{{productId}}</p>
@@ -62,6 +68,7 @@
     </script>
 
     <div class="listview-header">
+      <button tabindex="-1" class="btn-icon btn-expand"><span class="icon plus-minus active"></span><span class="audible">Expand / Collapse</span></button>
       <a href="#" class="hyperlink listview-heading">Order #10001-123</a>
       <p class="listview-subheading">Order Placed: May 12, 2015</p>
     </div>

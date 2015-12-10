@@ -380,6 +380,19 @@
         $(window).on('resize.listview', function() {
           self.handleResize();
         });
+
+        //Animate open and Closed from the header
+        self.element.prev('.listview-header').onTouchClick().on('click', function () {
+          var icon = $(this).find('.plus-minus');
+          if (icon.hasClass('active')) {
+            icon.removeClass('active');
+            self.element.animateClosed();
+          } else {
+            icon.addClass('active');
+            self.element.animateOpen();
+          }
+        });
+
       },
 
       // Handle Resize

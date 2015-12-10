@@ -45,7 +45,16 @@
         idProperty:'officeId',
         dataset: data,
         rowTemplate: rowTemplate
-      }).data('datagrid');
+      });
+
+      grid.on('expandrow', function (e, args) {
+        console.log('expandrow', e, args);
+      });
+
+      grid.on('collapserow', function (e, args) {
+        console.log('collapserow', e, args);
+      });
+
   });
 
 });

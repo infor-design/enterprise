@@ -475,6 +475,17 @@
     @include font-size(18);
   }
 
+  .btn-expand {
+    display: inline-block;
+    float: left;
+    left: -7px;
+
+    .icon.plus-minus::before,
+    .icon.plus-minus::after {
+      left: .8em;
+    }
+  }
+
   .listview-subheading {
     @include font-size(14);
     color: $font-color-lowcontrast;
@@ -508,38 +519,25 @@
   }
 }
 
+//Search Toolbar on List view
+.listview-search {
 
-// Users With Access
-.listview[aria-label='Users With Access'] {
-
-  .l-pull-right {
-    top: -5px;
+  .searchfield-wrapper {
+    background-color: $body-bg-color;
+    height: 38px;
+    margin-bottom: 0;
+    width: 100%;
   }
 
-  @include respond-to(phone) {
+  .icon {
+    left: 15px !important;
+  }
 
-    li {
-      padding: 9px 20px 15px;
-    }
-
-    .l-pull-right {
-      float: none;
-      margin: 10px 0 0 36px;
-      top: auto;
-
-      button {
-        margin: 0 0 0 5px;
-      }
-
-      .checkbox {
-        left: 8px;
-        top: 10px;
-      }
-
-      .checkbox-label {
-        left: 5px;
-      }
-    }
+  input {
+    height: 38px;
+    padding-left: 50px !important;
+    padding-top: 10px;
+    width: 100%;
   }
 }
 
