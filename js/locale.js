@@ -293,6 +293,14 @@
         dateStringParts = dateString.split('.');
       }
 
+      if (formatParts.length === 1) {
+        formatParts = dateFormat.split('-');
+      }
+
+      if (dateStringParts.length === 1) {
+        dateStringParts = dateString.split('-');
+      }
+
       // Check the incoming date string's parts to make sure the values are valid against the localized
       // Date pattern.
       var month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM'),

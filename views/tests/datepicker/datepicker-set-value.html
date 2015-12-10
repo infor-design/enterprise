@@ -1,0 +1,70 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main">
+
+   <div class="row">
+      <div class="twelve columns">
+         <h1>
+            Date Picker Set Value Example
+         </h1>
+         <h4>
+            All these fields should be initialized with the display value of "5/10/2015", otherwise something is broken.
+         </h4>
+         <br/>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="twelve columns">
+         <div class="field">
+            <label for="date-field" class="label">Date Field</label>
+            <input id="date-field" class="datepicker" type="text">
+         </div>
+
+         <div class="field">
+            <label for="date-field-2" class="label">Date Field 2</label>
+            <input id="date-field-2" class="datepicker" type="text">
+         </div>
+
+         <div class="field">
+            <label for="date-field-3" class="label">Date Field 3</label>
+            <input id="date-field-3" class="datepicker" type="text">
+         </div>
+
+         <div class="field">
+            <label for="date-field-4" class="label">Date Field 4</label>
+            <input id="date-field-4" class="datepicker" type="text">
+         </div>
+
+         <div class="field">
+            <label for="date-field-5" class="label">Date Field 5</label>
+            <input id="date-field-5" class="datepicker" type="text">
+         </div>
+      </div>
+   </div>
+
+   <script>
+      $('body').on('initialized', function () {
+         Locale.set('en-US').done(function () {
+
+            // Test full UTC
+            $('#date-field').data('datepicker').setValue('2015-05-10T00:00:00');
+
+            // Test full UTC around midday
+            $('#date-field-2').data('datepicker').setValue('2015-05-10T12:00:00');
+
+            // Test full UTC with Date object
+            console.log(new Date('2015-05-10T00:00:00'));
+            console.log(new Date('2015-05-10T12:00:00'));
+            console.log(new Date('2015-05-10T23:00:00'));
+
+            $('#date-field-3').data('datepicker').setValue(new Date('2015-05-10T00:00:00'));
+
+            // Test date only
+            $('#date-field-4').data('datepicker').setValue(Locale.parseDate('10-05-2015', 'dd-MM-yyyy'));
+
+            // Test date only different format
+            $('#date-field-5').data('datepicker').setValue(Locale.parseDate('05-10-2015', 'MM-dd-yyyy'));
+         });
+      });
+   </script>
+
+</div>

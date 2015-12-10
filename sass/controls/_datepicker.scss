@@ -158,16 +158,22 @@
     margin: 17px auto 0;
     padding: 0 10px;
     width: 100%;
+
+    thead {
+      height: 20px;
+      vertical-align: top;
+    }
   }
 }
 
 // Header Area of Calendar
 .calendar-header {
   border-bottom: 1px solid $popover-separator-color;
-  height: 70px;
-  line-height: 77px;
+  height: 56px;
+  line-height: 62px;
   position: relative;
-  text-align: center;
+  text-align: left;
+  text-indent: 25px;
 
   button {
     background-color: $popover-bg-color;
@@ -176,11 +182,11 @@
     color: transparent;
     cursor: pointer;
     display: block;
-    left: 20px;
+    right: 37px;
     line-height: 1;
     margin-top: 11px;
     position: absolute;
-    top: 11px;
+    top: 3px;
     transition: border-color .3s ease;
 
     &.prev {
@@ -197,7 +203,7 @@
     &.next {
       left: auto;
       margin: 8px 0 0 5px;
-      right: 20px;
+      right: 11px;
 
       svg {
         height: 28px;
@@ -222,7 +228,7 @@
 .calendar-footer {
   border-top: 1px solid $popover-separator-color;
   height: 50px;
-  margin-top: 25px;
+  margin-top: 10px;
 
   button {
     @include css3(transition, color .3s ease 0s);
@@ -255,6 +261,8 @@
 
 // Popup Adjustments
 #calendar-popup {
+  border-radius: 2px;
+
   .arrow {
     left: 137px;
   }

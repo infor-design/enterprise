@@ -77,7 +77,7 @@ define([
 
       var dt = new Date(),
         h = (dt.getHours() > 12 ? dt.getHours()-12 : dt.getHours()).toString(),
-        h24 = Locale.pad(dt.getHours(), 2).toString(),
+        h24 = dt.getHours().toString(),
         m = Locale.pad(dt.getMinutes(), 2).toString(),
         s = Locale.pad(dt.getSeconds(), 2).toString();
 
@@ -240,6 +240,23 @@ define([
 
       Locale.set('de-DE');
       expect(Locale.parseDate('Dezember 2015', 'MMMM yyyy').getTime()).to.equal(new Date(2015, 11, 1, 0, 0, 0).getTime());
+    },
+
+    'should parse Dates with - in them': function() {
+      Locale.set('en-US');    //year, month, day
+
+      // Test date only
+      expect(Locale.parseDate('2015-05-10', 'yyyy-dd-MM').getTime()).to.equal(new Date(2015, 09, 5, 0, 0, 0).getTime());
+
+      // Test date only different format
+      expect(Locale.parseDate('05-10-2015', 'dd-MM-yyyy').getTime()).to.equal(new Date(2015, 09, 5, 0, 0, 0).getTime());
+
+      // Test full UTC
+      //$('#date-field').data('datepicker').setValue('2015-05-10T00:00:00');
+      // Test full UTC around midday
+      //$('#date-field-2').data('datepicker').setValue('2015-05-10T12:00:00');
+      // Test full UTC with Date object
+      //$('#date-field-3').data('datepicker').setValue(new Date('2015-05-10T00:00:00'));
 
     },
 
@@ -261,9 +278,9 @@ define([
 
     'be work with either no-NO or nb-NO': function() {
       Locale.set('no-NO');
-      expect(Locale.translate('Loading')).to.equal('Laster');
+      expect(Locale.translate('Loading')).to.equal('Laster opp');
       Locale.set('nb-NO');
-      expect(Locale.translate('Loading')).to.equal('Laster');
+      expect(Locale.translate('Loading')).to.equal('Laster opp');
       expect(Locale.calendar().timeFormat).to.equal('HH.mm');
       Locale.set('en-US');
     },
@@ -284,7 +301,7 @@ define([
 
       //Non Existant in locale - use EN
       Locale.set('de-DE');
-      expect(Locale.translate('Equals')).to.equal('Equals');
+      expect(Locale.translate('Equals')).to.equal('Gleich');
 
       //Error
       expect(Locale.translate('XYZ')).to.equal(undefined);
