@@ -71,7 +71,7 @@
 | M3 - Sales Hub | Angular | Jorgen Nilsson |
 | Landmark | Starting after Gap List | Andrew Lipensky |
 | CLM | Angular  | Eric Noble |
-| Optiva | Whole Food Release - March, Apr: Stabilize UI Code Freeze: Aug, Release: Dec  | Ramesh Mallikarjun |
+| Optiva | Whole Food Release - -  | Ramesh Mallikarjun |
 | WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando |
 | NGCC - Content Creator HCM - LMS |   | Shakeeb Murtaza |
 | Ion Desk  | Silverlight Conversion / Bybrid  | Massimo Capoccia|
