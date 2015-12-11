@@ -96,21 +96,21 @@
       handleEvents: function () {
         var self = this;
 
-        this.icon.on('click.lookup', function () {
-          self.openDialog();
+        this.icon.on('click.lookup', function (e) {
+          self.openDialog(e);
         });
 
         //Space or Enter opens the dialog in this field
         this.element.on('keyup.lookup', function (e) {
           if (e.which === 40) {
-            self.openDialog();
+            self.openDialog(e);
           }
         });
 
       },
 
       //Create and Open the Dialog
-      openDialog: function () {
+      openDialog: function (e) {
         var self = this,
           canOpen = self.element.triggerHandler('beforeopen');
 
@@ -123,7 +123,7 @@
         }
 
         if (self.settings.click) {
-          self.settings.click(null, this);
+          self.settings.click(e, this);
           return;
         }
 
