@@ -165,32 +165,27 @@ window.Chart = function(container) {
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
   };
 
-  //Is Fully Visible
-  this.isFullyVisible = function (elem) {
-    var off = elem.offset(), 
-      et = off.top,
-      el = off.left,
-      eh = elem.height(),
-      ew = elem.width(),
-      wh = window.innerHeight,
-      ww = window.innerWidth,
-      wx = window.pageXOffset,
-      wy = window.pageYOffset;
-    return (et >= wy && el >= wx && et + eh <= wh + wy && el + ew <= ww + wx);  
-  };
-
-  this.HorizontalBar = function(dataset, isNormalized) {
+  this.HorizontalBar = function(dataset, isNormalized, isStacked) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
     var maxTextWidth, width, height, series, rects, svg, stack,
-        xMax, xScale, yScale, yAxis, yMap, xAxis, groups;
+        xMax, xScale, yScale, yAxis, yMap, xAxis, groups, legendMap, gindex, 
+        totalBarsInGroup, tatalGroupArea, totalHeightTobeUse, gap, barHeight;
+    
+    var tooltipInterval,
+      tooltipDataCache = [],
+      tooltipData = charts.tooltip;
+
+    var maxBarHeight = 30,
+      legendHeight = 40;
+
+    isStacked = isStacked === undefined ? true : isStacked;
 
     var margins = {
-      top: 30,
+      top: isStacked ? 30 : 20,
       left: 30,
       right: 30,
       bottom: 30 // 30px plus size of the bottom axis (20)
-    },
-    legendHeight = 40;
+    };
 
     $(container).addClass('chart-vertical-bar');
     $(container).closest('.widget-content').addClass('l-center');
@@ -220,10 +215,14 @@ window.Chart = function(container) {
 
     //Calculate max text width
     maxTextWidth = 0;
-
-    dataset = dataset.map(function (group) {
+    dataset = dataset.map(function (group, i) {
+      if(!isStacked) {
+        maxTextWidth = (series[i].name.length > maxTextWidth ? series[i].name.length : maxTextWidth);
+      }
       return group.map(function (d) {
-        maxTextWidth = (d.x.length > maxTextWidth ? d.x.length : maxTextWidth);
+        if(isStacked) {
+          maxTextWidth = (d.x.length > maxTextWidth ? d.x.length : maxTextWidth);
+        }
 
         // Invert the x and y values, and y0 becomes x0
         return $.extend({}, d, {
@@ -237,7 +236,7 @@ window.Chart = function(container) {
       });
     });
 
-    var h = parseInt($(container).parent().height()) - margins.bottom,
+    var h = parseInt($(container).parent().height()) - margins.bottom - (isStacked ? 0 : (legendHeight/2)),
       w = parseInt($(container).parent().width()) - margins.left,
       textWidth = margins.left + (maxTextWidth*6);
 
@@ -251,11 +250,11 @@ window.Chart = function(container) {
 
     xMax = d3.max(dataset, function (group) {
       return d3.max(group, function (d) {
-          return d.x + d.x0;
+          return isStacked ? (d.x + d.x0) : d.x;
       });
     });
 
-    if (isNormalized) {
+    if (isStacked && isNormalized) {
       var gMax = [];
       //get the max for each array group
       dataset.forEach(function(d) {
@@ -283,20 +282,42 @@ window.Chart = function(container) {
       .nice()
       .range([0, barWith]).nice();
 
-    yMap = dataset[0].map(function (d) {
-      return d.y;
-    });
+    if(isStacked) { 
+      yMap = dataset[0].map(function (d) {
+        return d.y;
+      });
+
+      barHeight = 0.32;
+    } else {
+      yMap = series.map(function (d) {
+        return d.name;
+      });
+
+      legendMap = dataset[0].map(function (d) {
+        return {'name': d.y};
+      });
+
+      gindex = 0;
+      totalBarsInGroup = legendMap.length;
+      tatalGroupArea = height/yMap.length;
+      barHeight = tatalGroupArea/totalBarsInGroup;
+      totalHeightTobeUse = totalBarsInGroup > 1 ? tatalGroupArea-(barHeight*1.2) : maxBarHeight;
+      gap = tatalGroupArea - totalHeightTobeUse;
+
+      maxBarHeight = totalHeightTobeUse/totalBarsInGroup;
+      barHeight = 0;
+    }
 
     yScale = d3.scale.ordinal()
       .domain(yMap)
-      .rangeRoundBands([0, height], 0.32, 0.32);
+      .rangeRoundBands([0, height], barHeight, barHeight);
 
     xAxis = d3.svg.axis()
       .scale(xScale)
       .tickSize(-height)
       .orient('middle');
 
-    if (isNormalized) {
+    if (isStacked && isNormalized) {
       xAxis.tickFormat(function(d) { return d + '%'; });
     }
 
@@ -327,8 +348,10 @@ window.Chart = function(container) {
       .data(function (d, i) {
         d.forEach(function(d) {
           d.index = i;
+          if(!isStacked) {
+            d.gindex = gindex++;
+          }
         });
-
         return d;
     })
     .enter()
@@ -337,7 +360,9 @@ window.Chart = function(container) {
       return 'series-'+i+' bar';
     })
     .style('fill', function(d, i) {
-      return charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i]);
+      return isStacked ? 
+        (charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i])) :
+        (charts.chartColor(i, 'bar', dataset[d.index][i]));
     })
     .attr('mask', function (d, i) {
       if (dataset.length === 1 && dataset[0][i].pattern){
@@ -349,36 +374,63 @@ window.Chart = function(container) {
       }
     })
     .attr('x', function (d) {
-      return xScale(d.x0);
+      return isStacked ? (xScale(d.x0)) : 0;
     })
     .attr('y', function (d) {
-      return yScale(d.y);
+      return isStacked ? yScale(d.y) : 
+        ((((tatalGroupArea-totalHeightTobeUse)/2)+(d.gindex*maxBarHeight))+(d.index*gap));
     })
     .attr('height', function () {
-      return yScale.rangeBand();
+      return isStacked ? (yScale.rangeBand()) : maxBarHeight;
     })
     .attr('width', 0) //Animated in later
     .on('mouseenter', function (d, i) {
-      var shape = d3.select(this),
-            content = '',
-            total = 0, totals = [];
+      var j, l,
+        total = 0,
+        totals = [],
+        content = '',
+        data = d3.select(this.parentNode).datum(),
+        mid = Math.round(data.length/2),
+        shape = d3.select(this),
+
+        show = function(xPosS, yPosS, isTooltipBottom) {
+          var size = charts.getTooltipSize(content),
+            x = xPosS+(parseFloat(shape.attr('width'))/2)-(size.width/2),
+            y = isTooltipBottom ? yPosS : (yPosS-size.height-13);
+
+          if(content !== '') {
+            charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
+          }
+        };
 
        if (dataset.length === 1) {
           content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
-        } else {
-         content = '<div class="chart-swatch">';
+        } 
+        else {
+          content = '<div class="chart-swatch">';
 
-         for (var j = 0; j < dataset.length; j++) {
-          total = 0;
+          if(isStacked) {
+            for (j=0,l=dataset.length; j<l; j++) {
+              total = 0;
+              for (var k=0,kl=dataset.length; k<kl; k++) {
+                total += dataset[k][i].x;
+                totals[k] = dataset[k][i].x;
+              }
+              content += '<div class="swatch-row"><div style="background-color:'+charts.colors(j)+';"></div><span>'+ series[j].name +'</span><b> '+ Math.round((totals[j]/total)*100) +'% </b></div>';
+            }
 
-          for (var k = 0; k < dataset.length; k++) {
-            total += dataset[k][i].x;
-            totals[k] = dataset[k][i].x;
           }
-
-          content += '<div class="swatch-row"><div style="background-color:'+charts.colors(j)+';"></div><span>' + series[j].name + '</span><b> ' + Math.round((totals[j]/total)*100) + '% </b></div>';
-         }
-         content += '</div>';
+          else {
+            if(mid > 1) {
+              shape = d3.select(this.parentNode).select('.series-' + mid);
+            }
+            for (j=0,l=data.length; j<l; j++) {
+              content += '<div class="swatch-row">';
+              content += '<div style="background-color:'+charts.colors(j)+';"></div>';
+              content += '<span>'+ data[j].name +'</span><b>'+ data[j].value +'</b></div>';
+            }
+          }
+          content += '</div>';
         }
 
         if (total > 0) {
@@ -388,13 +440,31 @@ window.Chart = function(container) {
         var yPosS = shape[0][0].getBoundingClientRect().top + $(window).scrollTop(),
             xPosS = shape[0][0].getBoundingClientRect().left + $(window).scrollLeft();
 
-        var size = charts.getTooltipSize(content),
-          x = xPosS + (parseFloat(shape.attr('width'))/2) - (size.width/2),
-          y = yPosS - size.height - 13;
+        var maxBarsForTopTooltip = 6,
+          isTooltipBottom = (!isStacked && (data.length > maxBarsForTopTooltip));
 
-        charts.showTooltip(x, y, content, 'top');
+        if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+          content = '';
+            var runInterval = true;
+            tooltipInterval = setInterval(function() {
+              if(runInterval) {
+                runInterval = false;
+                tooltipData(function (data) {
+                  content = tooltipDataCache[i] = data;
+                });
+              }
+              if(content !== '') {
+                clearInterval(tooltipInterval);
+                show(xPosS, yPosS, isTooltipBottom);
+              }
+            }, 10);
+          } else {
+            content = tooltipDataCache[i] || tooltipData || d.tooltip || content || '';
+            show(xPosS, yPosS, isTooltipBottom);
+          }
     })
     .on('mouseleave', function () {
+      clearInterval(tooltipInterval);
       charts.hideTooltip();
     })
     .on('click', function (d, i) {
@@ -426,16 +496,18 @@ window.Chart = function(container) {
       });
 
     //Add Legends
-    charts.addLegend(series);
+    charts.addLegend(isStacked ? series : legendMap);
     charts.appendTooltip();
     $(container).trigger('rendered');
 
     return $(container);
   };
 
-  this.Pie = function(initialData, isDonut, tooltipData) {
+  this.Pie = function(initialData, isDonut) {
 
-    var tooltipDataCache = [];
+    var tooltipInterval,
+      tooltipDataCache = [],
+      tooltipData = charts.tooltip;
 
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
@@ -534,25 +606,26 @@ window.Chart = function(container) {
             y += Math.sin(midAngle) * (isDonut ? -5 : 37);
 
           if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
-            var runInterval = true,
-              interval = setInterval(function() {
-                if(runInterval) {
-                  runInterval = false;
-                  tooltipData(function (data) {
-                    content = tooltipDataCache[i] = data;
-                  });
-                }
-                if(content !== '') {
-                  clearInterval(interval);
-                  show();
-                }
-              }, 10);
+            var runInterval = true;
+            tooltipInterval = setInterval(function() {
+              if(runInterval) {
+                runInterval = false;
+                tooltipData(function (data) {
+                  content = tooltipDataCache[i] = data;
+                });
+              }
+              if(content !== '') {
+                clearInterval(tooltipInterval);
+                show();
+              }
+            }, 10);
           } else {
             content = tooltipDataCache[i] || tooltipData || d.data.tooltip || '';
             show();
           }
         })
         .on('mouseleave', function () {
+          clearInterval(tooltipInterval);
           charts.hideTooltip();
         });
 
@@ -911,6 +984,10 @@ window.Chart = function(container) {
 
     $(container).addClass('column-chart');
 
+    var tooltipInterval,
+      tooltipDataCache = [],
+      tooltipData = charts.tooltip;
+
     var x0 = d3.scale.ordinal()
       .rangeRoundBands([0, width], 0.1);
 
@@ -1107,9 +1184,37 @@ window.Chart = function(container) {
       bars
       // Mouseenter
       .on('mouseenter', function(d, i) {
-        var x, y, j, l, size,
+        var x, y, j, l, size, isTooltipBottom,
+          maxBarsForTopTooltip = 6,
+          thisShape = this,
           shape = $(this),
-          content = '';
+          content = '',
+
+          show = function(isTooltipBottom) {
+            size = charts.getTooltipSize(content);
+            x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
+
+            if(isStacked) {
+              y = shape[0].getBoundingClientRect().top - size.height - 10;
+            }
+            else {
+              y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
+              if (dataset.length > 1) {
+                x = thisShape.parentNode.getBoundingClientRect().left - (size.width /2) + (thisShape.parentNode.getBoundingClientRect().width/2);
+                if (isTooltipBottom) {
+                  y += charts.tooltip.outerHeight() + 50;
+                  if (y > (thisShape.parentNode.getBoundingClientRect().bottom + 10)) {
+                    y = thisShape.parentNode.getBoundingClientRect().bottom + 10;
+                  }
+                } else {
+                  y = thisShape.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
+                }
+              }              
+            }
+            if(content !== '') {
+              charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
+            }
+          };
 
         // Stacked
         if(isStacked) { 
@@ -1132,7 +1237,7 @@ window.Chart = function(container) {
         }
 
         // No Stacked
-        else {
+        else { 
           if (dataset.length === 1) {
             content = '<p><b>'+ d.value + '</b> '+ d.name +'</p>';
           }
@@ -1145,21 +1250,43 @@ window.Chart = function(container) {
               content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
               content += '<span>'+ data[j].name +'</span><b>'+ data[j].value +'</b></div>';
             }
-            content += '</div>';
+            content += '</div>';            
+            isTooltipBottom = data.length > maxBarsForTopTooltip;
           }
           size = charts.getTooltipSize(content);
           x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
           y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
           if (dataset.length > 1) {
             x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
-            y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
-          }
+            y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;            
+          }          
         }
-        charts.showTooltip(x, y, content, 'top');
+
+        if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+          content = '';
+          var runInterval = true;
+          tooltipInterval = setInterval(function() {
+            if(runInterval) {
+              runInterval = false;
+              tooltipData(function (data) {
+                content = tooltipDataCache[i] = data;
+              });
+            }
+            if(content !== '') {
+              clearInterval(tooltipInterval);
+              show();
+            }
+          }, 10);
+        } else {
+          content = tooltipDataCache[i] || tooltipData || d.tooltip || content || '';
+          show(isTooltipBottom);
+        }
+
       })
 
       // Mouseleave
       .on('mouseleave', function() {
+        clearInterval(tooltipInterval);
         charts.hideTooltip();
       })
 
@@ -1568,17 +1695,20 @@ window.Chart = function(container) {
     if (options.format) {
       this.format = options.format;
     }
-    if (options.type === 'pie') {
-      this.Pie(options.dataset, false, options.tooltip);
+    if (options.tooltip) {
+      this.tooltip = options.tooltip;
     }
-    if (options.type === 'bar') {
+    if (options.type === 'pie') {
+      this.Pie(options.dataset);
+    }
+    if (options.type === 'bar' || options.type === 'bar-stacked') {
       this.HorizontalBar(options.dataset);
     }
     if (options.type === 'bar-normalized') {
       this.HorizontalBar(options.dataset, true);
     }
     if (options.type === 'bar-grouped') {
-      this.HorizontalBar(options.dataset, false, true);
+      this.HorizontalBar(options.dataset, true, false); //dataset, isNormalized, isStacked
     }
     if (options.type === 'column-stacked') {
       this.Column(options.dataset, true);
@@ -1587,7 +1717,7 @@ window.Chart = function(container) {
       this.Column(options.dataset);
     }
     if (options.type === 'donut') {
-      this.Pie(options.dataset, true, options.tooltip);
+      this.Pie(options.dataset, true);
     }
     if (options.type === 'sparkline') {
       this.Sparkline(options.dataset, options);

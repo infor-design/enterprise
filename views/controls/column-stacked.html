@@ -17,7 +17,7 @@
     var dataset = [{
         data: [{
             name: 'JAN',
-            value: 12
+            value: 12,
         }, {
             name: 'FEB',
             value: 11
@@ -134,5 +134,16 @@
       }];
 
     $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset});
+
+    // $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset, tooltip: 'Tooltip by attribute'});
+
+    // $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset, 
+    //   tooltip: function(response) {
+    //     //Ajax Call or async op
+    //     setTimeout(function () {
+    //       response('<strong>Tooltips Provide <br> Interesting Information</strong>');
+    //     }, 400);
+    //   }
+    // });
 
 </script>
