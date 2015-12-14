@@ -335,8 +335,6 @@ window.Chart = function(container) {
       .attr('class', 'axis y')
       .call(yAxis);
 
-    // console.log('test');
-    // return;
     groups = svg.selectAll('g.group')
       .data(dataset)
       .enter()
@@ -1193,7 +1191,6 @@ window.Chart = function(container) {
           content = '',
 
           show = function(isTooltipBottom) {
-            console.log(isTooltipBottom);
             size = charts.getTooltipSize(content);
             x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
 
@@ -1210,7 +1207,7 @@ window.Chart = function(container) {
                     y = thisShape.parentNode.getBoundingClientRect().bottom + 10;
                   }
                 } else {
-                  y = thisShape.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;                  
+                  y = thisShape.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
                 }
               }              
             }
