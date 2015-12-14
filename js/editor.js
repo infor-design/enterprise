@@ -69,7 +69,16 @@
           .bindPaste()
           .setPlaceholders()
           .bindWindowActions()
-          .setupKeyboardEvents();
+          .setupKeyboardEvents()
+          .onPasteTriggered();
+
+        // if($('html').is('.ie-edge') && document.addEventListener) {
+        // if(document.addEventListener) {
+        //   document.addEventListener('paste', this.onPasteTriggered, false);
+        // }
+        // } else {
+          // this.setImageBuffer();          
+        // }
       },
 
       initElements: function () {
@@ -949,13 +958,13 @@
       },
 
       //Handle Pasted In Text
-      bindPaste: function () {
+      bindPaste: function () {        
         var self = this;
         if (!self.pasteEvent) {
           self.pasteEvent = self.getPasteEvent();
         }
 
-        this.pasteWrapper = function (e) {
+        this.pasteWrapper = function (e) {          
 
           var paste = e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData ?
             e.originalEvent.clipboardData.getData('text/plain') : // Standard
@@ -970,15 +979,21 @@
             return this;
           }
 
-          if (paste && !e.defaultPrevented) {
+            
+          if (paste && !e.defaultPrevented) {            
             e.preventDefault();
             paragraphs = paste.split(/[\r\n]/g);
+            // alert(paragraphs[0]);
             for (p = 0; p < paragraphs.length; p += 1) {
               if (paragraphs[p] !== '') {
                 if (navigator.userAgent.match(/firefox/i) && p === 0) {
                   html += self.htmlEntities(paragraphs[p]);
                 } else {
-                  html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+                  if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
+                    html += '<img src="' + self.htmlEntities(paragraphs[p]) + '" />';                    
+                  } else {
+                    html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';                    
+                  }
                 }
               }
             }
@@ -997,7 +1012,7 @@
         return this;
       },
 
-      pasteHtmlAtCaret: function(html) {
+      pasteHtmlAtCaret: function(html) {        
           var sel, range;
           if (window.getSelection) {
             // IE9 and non-IE
@@ -1057,9 +1072,14 @@
         // Work around for Chrome's bug wrapping contents in <span>
         // http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
         .on('DOMNodeInserted', function(e) {
-          if (e.target.tagName === 'SPAN') {
-            var target = $(e.target),
-              helper = $('<b>helper</b>');
+          var target = $(e.target),
+            helper = $('<b>helper</b>');
+            // alert(e.target.tagName);
+
+          if (e.target.tagName === 'IMG') {
+            target.removeAttr('id style srcset');
+          }
+          else if (e.target.tagName === 'SPAN') {
 
             target.before(helper);
             helper.after(target.contents());
@@ -1349,6 +1369,34 @@
           }
         }, 1);
 
+      },
+
+      // Called whenever a paste event has occured
+      onPasteTriggered: function () {
+        if(!this.isFirefox && document.addEventListener) {
+          document.addEventListener('paste', function (e) {
+            if(typeof e.clipboardData !== 'undefined') {
+              var copiedData = e.clipboardData.items[0]; // Get the clipboard data
+              // If the clipboard data is of type image, read the data
+              if(copiedData.type.indexOf('image') === 0) {
+                var imageFile = copiedData.getAsFile(); 
+                // We will use HTML5 FileReader API to read the image file
+                var reader = new FileReader();
+                
+                reader.onload = function (evt) {
+                  var result = evt.target.result; // base64 encoded image
+                  document.execCommand('insertImage', false, result);
+                  // Create an image element and append it to the content editable div
+                  // var img = document.createElement('img');
+                  // img.src = result;
+                  // document.getElementById('editablediv').appendChild(img);
+                };
+                // Read the image file
+                reader.readAsDataURL(imageFile);
+              }
+            }
+          }, false);
+        }
       },
 
       destroy: function () {
