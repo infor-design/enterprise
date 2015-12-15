@@ -290,10 +290,8 @@
         self.element.on('activated.dropdown', function () {
           self.activate();
         }).on('updated.dropdown', function (e) {
-          self.closeList();
-          self.updateList();
-          self.setValue();
           e.stopPropagation();
+          self.updated();
         }).on('openList.dropdown', function() {
           self.toggleList();
         });
@@ -1202,15 +1200,32 @@
         this.closeList();
       },
 
-
       // Triggered whenever the plugin's settings are changed
-      update: function() {
+      updated: function() {
+        this.closeList();
+
         // Update the 'multiple' property
         if (this.settings.multiple && this.settings.multiple === true) {
           this.element.prop('multiple', true);
         } else {
           this.element.prop('multiple', false);
         }
+
+        // update "readonly" prop
+        if (this.element.prop('readonly')) {
+          this.readonly();
+        } else {
+          this.input.removeClass('is-readonly');
+        }
+
+        // update "disabled" prop
+        this.input.prop('disabled', this.element.prop('disabled'));
+
+        // update the list and set a new value, if applicable
+        this.updateList();
+        this.setValue();
+
+        return this;
       },
 
       destroy: function() {
@@ -1232,7 +1247,7 @@
 
       if (instance) {
         instance.settings = $.extend({}, settings, instance.settings);
-        instance.update();
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Dropdown(this, settings));
       }
