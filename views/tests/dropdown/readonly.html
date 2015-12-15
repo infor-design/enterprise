@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: Readonly</h2>
+
+    <p><b>NOTE:</b>  Input fields before and after the Dropdown exist to help functional tests that examine the focus/blur functionality of the Dropdown control.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="random-input-1">First Random Input</label>
+      <input id="random-input-1" />
+    </div>
+
+    <div class="field">
+      <label for="readonly-dropdown">Readonly Dropdown</label>
+      <select id="readonly-dropdown" class="dropdown" readonly>
+        <option value="1">Item 1</option>
+        <option value="1">Item 2</option>
+        <option value="1">Item 3</option>
+        <option value="1">Item 4</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="random-input-2">First Random Input</label>
+      <input id="random-input-2" />
+    </div>
+
+    <div class="field">
+      <button id="readonly-toggle" class="btn-primary">
+        <span><span id="description-text">Remove</span> Readonly Attribute</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var b = $(this);
+
+    // Toast if the menu opens
+    $('#readonly-dropdown').on('dropdownopen.test', function() {
+      b.toast({
+        title: 'Dropdown Opened',
+        message: 'The Dropdown Control on this page has opened'
+      })
+    });
+
+    // Toggle the Readonly attribute on the <select> tag
+    $('#readonly-toggle').onTouchClick('test').on('click.test', function() {
+      var attr = $('#readonly-dropdown').prop('readonly');
+
+      if (attr) {
+        $('#description-text').text('Add');
+        $('#readonly-dropdown').prop('readonly', false).trigger('updated');
+        return;
+      }
+
+      $('#description-text').text('Remove');
+      $('#readonly-dropdown').prop('readonly', true).trigger('updated');
+    });
+
+  });
+</script>

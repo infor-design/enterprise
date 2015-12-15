@@ -1,35 +1,34 @@
 <div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: Special Characters</h2>
+
+    <p>This test explores the Dropdown control dealing with special characters, script-injection attacks, and other items related to manipulation of the contents of the list.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
   <div class="twelve columns">
 
-    <div class="row" style="margin-top: 6em;">
-      <div class="six columns">
-
-        <p>
-          This test explores the Dropdown control dealing with special characters, script-injection attacks, and other items related to manipulation of the contents of the list.
-        </p>
-
-      </div>
-      <div class="six columns">
-
-        <div class="field">
-          <label for="special" class="label">Special Chars</label>
-          <select id="special" name="special" class="dropdown">
-            <option value="a&#039;z">A&#039;rizona</option>
-            <option value="<">&lt;</option>
-            <option value=">">&gt;</option>
-            <option value="\\myserver\path\">\\myserver\path\</option>
-            <option value="a&#039;z">A&#039;rizona</option>
-            <option value="<=">&lt;=</option>
-            <option value=">=">&gt;=</option>
-            <option value="script">&lt;script&gt;alert('")&lt;/script&gt;</option>
-            <option value="1">&lt;test&gt;</option>
-            <option value="7" >Customer &amp; Internal</option>
-            <option value="a" selected>Apostraphe's</option>
-            <option value="p'p">papa john's pizza</option>
-           </select>
-        </div>
-
-      </div>
+    <div class="field">
+      <label for="special" class="label">Special Chars</label>
+      <select id="special" name="special" class="dropdown">
+        <option value="a&#039;z">A&#039;rizona</option>
+        <option value="<">&lt;</option>
+        <option value=">">&gt;</option>
+        <option value="\\myserver\path\">\\myserver\path\</option>
+        <option value="a&#039;z">A&#039;rizona</option>
+        <option value="<=">&lt;=</option>
+        <option value=">=">&gt;=</option>
+        <option value="script">&lt;script&gt;alert('")&lt;/script&gt;</option>
+        <option value="1">&lt;test&gt;</option>
+        <option value="7" >Customer &amp; Internal</option>
+        <option value="a" selected>Apostraphe's</option>
+        <option value="p'p">papa john's pizza</option>
+       </select>
     </div>
 
   </div>
