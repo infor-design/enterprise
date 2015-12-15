@@ -41,7 +41,7 @@
 
   &[readonly] {
     + .icon {
-      cursor: none;
+      cursor: default;
       fill: $trigger-icon-fill-color;
     }
   }

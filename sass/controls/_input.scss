@@ -310,20 +310,46 @@ textarea.error:focus {
   color: $inverse-color;
 }
 
+// Shorter/Legacy Inputs
+.field-short {
+  position: relative;
+
+  input {
+    @include font-size(12);
+    margin-bottom: 10px;
+    padding: 5px;
+    resize: none;
+    text-align: left;
+    width: 150px;
+  }
+
+  label {
+    display: inline-block;
+    padding-right: 5px;
+    padding-top: 5px;
+    vertical-align: top;
+  }
+}
+
 // Field Sizes
-.input-lg {
+.input-lg,
+.field-short .input-lg {
   width: 400px;
 }
 
-.input-med {  //Default
+.input-med,
+.field-short .input-med {  //Default
   width: 300px;
 }
 
-.input-sm {
+.input-sm,
+.field-short .input-sm {
   width: 150px;
 }
 
-.input-xs {
+.input-xs,
+.field-short .input-xs {
+
   width: 75px;
 
   &.error {
@@ -334,4 +360,3 @@ textarea.error:focus {
 .input-full {
   width: 100%;
 }
-

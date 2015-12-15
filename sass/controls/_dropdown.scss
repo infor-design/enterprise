@@ -351,3 +351,46 @@ input.multiselect {
   box-shadow: 0 0 5px rgba(237, 28, 36, .2);
   color: $input-color !important;
 }
+
+//Shorter Field Size
+.field-short {
+
+  input.dropdown {
+    @include font-size(12);
+    padding: 5px 28px 5px 5px;
+    margin-bottom: 0px;
+    width: 150px;
+  }
+
+  input.dropdown + .icon,
+  input.multiselect + .icon {
+    height: 30px;
+    right: 4px;
+    top: -2px;
+    width: 16px;
+  }
+
+  .dropdown-wrapper {
+    margin-bottom: 10px;
+  }
+
+}
+
+//Drop Down List
+.dropdown-list.dropdown-tall {
+
+  input {
+    @include font-size(12);
+  }
+
+  ul {
+    @include font-size(12);
+    line-height: 30px;
+  }
+
+  > .icon {
+    height: 30px;
+    margin-left: -24px;
+    width: 16px;
+  }
+}

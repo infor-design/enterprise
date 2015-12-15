@@ -463,7 +463,7 @@ var express = require('express'),
     var products = [], productsAll = [],
       start = (req.query.pageNum -1) * req.query.pageSize,
       end = req.query.pageNum * req.query.pageSize,
-      total = 1000, i = 0, j = 0, filteredTotal = 0;
+      total = 1000, i = 0, j = 0, filteredTotal = 0, seed= 1;
 
     //TODO: if (req.query.filter) {
     for (j = 0; j < total; j++) {
@@ -493,7 +493,11 @@ var express = require('express'),
 
       if (!filteredOut) {
         filteredTotal++;
-        productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+        productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor ' + seed, activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: 'OK', orderDate: new Date(2014, 12, seed), action: 'Action'});
+      }
+      seed ++;
+      if (seed > 10) {
+        seed = 1;
       }
     }
 

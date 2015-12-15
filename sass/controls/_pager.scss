@@ -21,15 +21,15 @@
       color: $label-color;
       cursor: pointer;
       display: inline-block;
-      height: 30px;
+      height: 28px;
       line-height: 30px;
-      margin: 2px 0 2px 2px;
-      padding: 0 5px;
+      margin: 3px 0 0;
+      padding: 0;
       position: relative;
       text-align: center;
       text-decoration: none;
       transition: all .2s ease;
-      width: 30px;
+      width: 28px;
 
       &:focus {
         @include css3(box-shadow, 0 0 1px 1px $pager-focus-border-color inset);
@@ -86,7 +86,7 @@
   @include font-size(14);
   display: inline-block;
   line-height: 23px;
-  margin: 5px 10px;
+  margin: 7px -20px 5px 10px;
   vertical-align: top;
 
   input {
@@ -99,7 +99,10 @@
   }
 
   .pager-total-pages {
+    display: inline-block;
     line-height: 23px;
+    min-width: 35px;
+    text-align: left;
   }
 }
 
@@ -137,10 +140,10 @@
     }
 
     .icon {
-      height: 14px;
+      height: 22px;
       margin-left: -2px;
       margin-right: 2px;
-      width: 15px;
+      width: 22px;
     }
   }
 }

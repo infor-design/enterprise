@@ -713,7 +713,11 @@
           });
         }
 
+        var isTall = (this.element.closest('.field-short').length === 1);
+
         self.list
+          .removeClass('dropdown-tall')
+          .addClass(isTall ? 'dropdown-tall' : '')
           .onTouchClick('list', 'li')
           .on('click.list', 'li', function () {
             var val = $(this).attr('data-val'),

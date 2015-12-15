@@ -301,12 +301,12 @@ $.fn.datagrid = function(options) {
       this.initSettings();
       this.appendToolbar();
       this.render();
+      this.initFixedHeader();
       this.createResizeHandle();
-      this.handleEvents();
-      this.handleKeys();
       this.handlePaging();
       this.initTableWidth();
-      this.initTableHeight();
+      this.handleEvents();
+      this.handleKeys();
 
       setTimeout(function () {
         self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
@@ -350,15 +350,6 @@ $.fn.datagrid = function(options) {
         this.element.css('max-width', w);
         $('.modal').css('overflow','hidden').find('.modal-body').css('overflow-x','hidden');
       }
-    },
-
-    initTableHeight: function () {
-      this.fixedHeader = false;
-
-      if (this.element.hasClass('datagrid-contained')) {
-        this.fixHeader();
-      }
-
     },
 
     //Render the Header and Rows
@@ -472,6 +463,14 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    initFixedHeader: function () {
+
+      if (this.element.hasClass('datagrid-contained')) {
+        this.fixHeader();
+      }
+
+    },
+
     //Fixed Header - TODO
     fixHeader: function () {
       var self = this;
@@ -497,6 +496,8 @@ $.fn.datagrid = function(options) {
       this.container.on('scroll.datagrid', function () {
         self.clone.parent().scrollLeft($(this).scrollLeft());
       });
+
+      this.handleEvents();
     },
 
     //Revert Fixed Header
@@ -520,6 +521,7 @@ $.fn.datagrid = function(options) {
 
       var self = this,
         firstRow = this.tableBody.find('tr:first'),
+        total = 0,
         rowClone = firstRow.clone();
 
       this.clone.find('tbody').append(rowClone);
@@ -532,20 +534,23 @@ $.fn.datagrid = function(options) {
           width = self.visibleColumns()[i].width;
 
           if (width) {
-            if (width.toString().indexOf('%') > -1) {
+            //if (width.toString().indexOf('%') > -1) {
               colWidth = width;
-            }
+           // }
+          } else {
+            colWidth = rowCell.outerWidth();
           }
 
           actualCol.css('width', colWidth);
           newCol.css('width', colWidth);
           $(this).css('width', colWidth);
           rowCell.css('width', colWidth);
+          total += colWidth;
       });
 
+      this.clone.css('width', total);
+      this.table.css('width', total);
       rowClone.remove();
-
-      this.clone.css('width', self.table.css('width'));
     },
 
     //Delete a Specific Row
@@ -574,7 +579,6 @@ $.fn.datagrid = function(options) {
       this.renderPager(pagerInfo);
       this.selectedRows([]);
       this.syncHeaderCheckbox();
-      this.syncFixedHeader();
 
     },
 
@@ -631,11 +635,6 @@ $.fn.datagrid = function(options) {
 
         if (column.hidden) {
           continue;
-        }
-
-        if (j === settings.columns.length-1) {
-          //Ignore width on last column
-          column.width = undefined;
         }
 
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
@@ -695,6 +694,13 @@ $.fn.datagrid = function(options) {
       //Save the height during render
       self.tableHeight = self.tableBody.height();
       self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
+
+      //Save prev widths - to avoid glitch during sort refresh
+      var cellWidths = [];
+      self.tableBody.find('tr:first td').each(function (i) {
+        cellWidths[i] = $(this).outerWidth();
+      });
+
       self.tableBody.empty();
 
       for (var i = 0; i < settings.dataset.length; i++) {
@@ -704,7 +710,7 @@ $.fn.datagrid = function(options) {
                   (settings.rowHeight !== 'medium' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
                   (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                   (!settings.cellNavigation ? ' is-clickable' : '' ) +
-                  '"' +'>';
+                   '"' + '>';
 
         for (var j = 0; j < settings.columns.length; j++) {
           var col = settings.columns[j],
@@ -745,6 +751,7 @@ $.fn.datagrid = function(options) {
               ' aria-describedby="' + self.uniqueID(self.gridCount, '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
+             (cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
               '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
@@ -770,7 +777,7 @@ $.fn.datagrid = function(options) {
             renderedTmpl = compiledTmpl.render({dataset: item});
           }
 
-          rowHtml += '<tr class="datagrid-expandable-row"><td colspan="100%">' +
+          rowHtml += '<tr class="datagrid-expandable-row"><td colspan="'+ this.visibleColumns().length +'">' +
             '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">'+ renderedTmpl + '</div></div>' +
             '</td></tr>';
         }
@@ -779,6 +786,7 @@ $.fn.datagrid = function(options) {
       }
 
       self.tableBody.append(tableHtml);
+
       self.tableBody.css({'height': '', 'display': ''});
       self.displayCounts();
 
@@ -818,6 +826,14 @@ $.fn.datagrid = function(options) {
       return this.headerRow.find('tr:not(.datagrid-header-groups) th');
     },
 
+    cloneHeaderNodes: function () {
+      if (!this.clone) {
+        return [];
+      }
+
+      return this.clone.find('thead').find('tr:not(.datagrid-header-groups) th');
+    },
+
     firstRowNodes: function () {
       return this.tableBody.find('tr:first td');
     },
@@ -853,6 +869,10 @@ $.fn.datagrid = function(options) {
         self.table.css('width', self.element.width());
       }
 
+      if (reset && self.fixedHeader) {
+          self.clone.css('width', self.element.width());
+      }
+
       if (typeof width !=='number') { //calculate percentage
         width = percent / 100 * self.element.width();
       }
@@ -863,17 +883,23 @@ $.fn.datagrid = function(options) {
         if (col.attr('data-column-id') === id) {
           col.css('width', width, firstRows);
           total += width;
+
         } else {
           total += col.outerWidth();
         }
 
         if (self.fixedHeader) {
-          $(firstRows[i]).css('min-width', width);
+          self.cloneHeaderNodes().eq(i).css('width', width);
         }
 
       });
 
       self.table.css('width', total);
+
+      if (self.fixedHeader) {
+        self.clone.css('width', total);
+      }
+
     },
 
     // Get child offset
@@ -978,22 +1004,23 @@ $.fn.datagrid = function(options) {
         isMultiple = this.settings.selectable === 'multiple';
 
       //Handle Sorting
-      this.element.on('touchcancel.datagrid touchend.datagrid', 'th.is-sortable', function (e) {
+      this.element.add(this.clone).off('touchcancel.datagrid touchend.datagrid').on('touchcancel.datagrid touchend.datagrid', 'th.is-sortable', function (e) {
         e.stopPropagation();
         e.preventDefault();
         $(this).trigger('click.datagrid');
-      }).on('click.datagrid', 'th.is-sortable', function () {
+      }).off('click.datagrid').on('click.datagrid', 'th.is-sortable', function () {
         self.setSortColumn($(this).attr('data-column-id'));
       });
 
       //Handle Clicking Buttons and links in formatters
-      this.table.on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
+      this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
         e.stopPropagation();
         e.preventDefault();
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
           cell = elem.index(),
-          row = $(this).closest('tr').index(),
+          rowNode = $(this).closest('tr'),
+          row = rowNode.attr('aria-rowindex')-1,
           col = self.columnSettings(cell),
           item = self.settings.dataset[row];
 
@@ -1006,18 +1033,18 @@ $.fn.datagrid = function(options) {
         }
 
         if (btn.is('.datagrid-expand-btn')) {
-          self.expandRow(row+1);
+          self.expandRow(rowNode.index()+1);
         }
 
         return false;
       });
 
       var body = this.table.find('tbody');
-      body.on('touchcancel.datagrid touchend.datagrid', 'td', function (e) {
+      body.off('touchcancel.datagrid touchend.datagrid').on('touchcancel.datagrid touchend.datagrid', 'td', function (e) {
         e.stopPropagation();
         e.preventDefault();
         $(this).trigger('click');
-      }).on('click.datagrid', 'td', function (e) {
+      }).off('click.datagrid').on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
 
         if (target.closest('.datagrid-row-detail').length === 1) {
@@ -1042,12 +1069,12 @@ $.fn.datagrid = function(options) {
         self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
       });
 
-      body.on('dblclick.datagrid', 'tr', function (e) {
+      body.off('dblclick.datagrid').on('dblclick.datagrid', 'tr', function (e) {
         self.triggerRowEvent('dblclick', e, true);
       });
 
       //Handle Context Menu Option
-      body.on('contextmenu.datagrid', 'tr', function (e) {
+      body.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tr', function (e) {
         self.triggerRowEvent('contextmenu', e, (self.settings.menuId ? true : false));
 
         if (self.settings.menuId) {
@@ -1058,12 +1085,13 @@ $.fn.datagrid = function(options) {
       });
 
       // Move the drag handle to the end or start of the column
-      this.headerRow.on('mousemove.datagrid touchstart.datagrid touchmove.datagrid', 'th', function (e) {
+      this.headerRow.add((this.clone ? this.clone.find('thead') : [])).off('mousemove.datagrid touchstart.datagrid touchmove.datagrid').on('mousemove.datagrid touchstart.datagrid touchmove.datagrid', 'th', function (e) {
         if (self.dragging) {
           return;
         }
 
         self.currentHeader = $(e.target).closest('th');
+        var isClone = self.currentHeader.closest('.datagrid-clone').length;
 
         if (!self.currentHeader.hasClass('is-resizable')) {
           return;
@@ -1090,11 +1118,14 @@ $.fn.datagrid = function(options) {
         }
 
         self.resizeHandle.css('left', leftPos + 'px');
+        self.resizeHandle.css('top', (isClone ? '-40px' : 'auto'));
+
       });
 
       // Handle Clicking Header Checkbox
       this
-        .headerRow.onTouchClick('datagrid', 'th .datagrid-checkbox')
+        .headerRow.offTouchClick().onTouchClick('datagrid', 'th .datagrid-checkbox')
+        .off('click.datagrid')
         .on('click.datagrid', 'th .datagrid-checkbox', function () {
           var checkbox = $(this);
 
@@ -1108,7 +1139,7 @@ $.fn.datagrid = function(options) {
         });
 
       // Implement Editing Commit Functionality
-      body.on('focusout.datagrid', 'td input', function () {
+      body.off('focusout.datagrid').on('focusout.datagrid', 'td input', function () {
         self.commitCellEdit($(this));
       });
     },
@@ -1927,6 +1958,8 @@ $.fn.datagrid = function(options) {
 
       var wasFocused = this.activeCell.isFocused;
       this.renderRows();
+      this.syncFixedHeader();
+
 
       // Update selected and Sync header checkbox
       this.updateSelected();
@@ -1937,6 +1970,7 @@ $.fn.datagrid = function(options) {
       }
 
       this.element.trigger('sorted', [this.sortColumn]);
+
     },
 
     setSortIndicator: function(id, ascending) {
@@ -1945,6 +1979,13 @@ $.fn.datagrid = function(options) {
       this.headerRow.find('[data-column-id="' +id + '"]')
         .addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc')
         .attr('aria-sort', ascending ? 'ascending' : 'descending');
+
+      if (this.fixedHeader && this.clone) {
+        this.clone.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc').attr('aria-sort', 'none');
+        this.clone.find('[data-column-id="' +id + '"]')
+          .addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc')
+          .attr('aria-sort', ascending ? 'ascending' : 'descending');
+      }
     },
 
     //Overridable function to conduct sorting
@@ -2022,6 +2063,8 @@ $.fn.datagrid = function(options) {
        if (self.filterExpr) {
         self.highlightSearchRows(self.filterExpr[0].value);
        }
+
+       self.syncFixedHeader();
 
       });
 

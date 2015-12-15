@@ -18,7 +18,7 @@
                 <use xlink:href="#icon-more"></use>
               </svg><span class="audible">Grid Features</span>
             </button>
-            <ul class="popupmenu has-icons"></ul>
+            <ul class="popupmenu has-icons">
               <li><a href="#">Option One</a></li>
               <li><a href="#">Option Two</a></li>
             </ul>
@@ -45,10 +45,10 @@
       data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 400});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 300});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, width: 300});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 300});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', width: 300});
+      //columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 300});
+      //columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', width: 300});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

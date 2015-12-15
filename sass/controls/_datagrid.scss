@@ -11,6 +11,19 @@ $datagrid-header-height: 40px;
 .datagrid-scrollable-header {
   overflow: hidden;
   width: 100%;
+
+  //Frozen Header
+  + .datagrid-wrapper {
+    height: calc(100% - 140px);
+
+    .datagrid {
+      margin-top: -40px;
+    }
+
+    thead {
+      position: relative;
+    }
+  }
 }
 
 // Grid Container Div
@@ -33,8 +46,15 @@ $datagrid-header-height: 40px;
 
   &.datagrid-contained {
     border: 1px solid $datagrid-cell-border-color;
+
+    //Frozen Headers
+    .datagrid {
+      height: auto;
+    }
+
   }
 }
+
 
 // Grid Styling
 .datagrid {
@@ -44,7 +64,7 @@ $datagrid-header-height: 40px;
   height: 100%;
   min-width: 100%;
   overflow: hidden;
-  //Doesnt work on expandable grid table-layout: fixed;
+  table-layout: fixed; //this lets us resize to lower than content width
   width: auto;
 
   //Frozen Headers

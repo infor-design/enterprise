@@ -27,7 +27,7 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 100});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 100});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 100});
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 100, formatter: Formatters.Decimal});
