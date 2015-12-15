@@ -15,6 +15,8 @@ define([
       return $('#new').data('dropdown').destroy();
     }
 
+    var urlRoot = 'http://localhost:4000/tests/dropdown/';
+
     /*
      * Tests the common functionality among all items in the SoHo Xi suite for this control.
      * This includes repsonses to basic functionality, common event triggers and API methods.
@@ -26,7 +28,7 @@ define([
 
       setup: function() {
         return this.remote
-          .get(require.toUrl('http://localhost:4000/tests/dropdown/common'))
+          .get(require.toUrl(urlRoot + 'common'))
             .setFindTimeout(5000)
             .setWindowSize(1024, 768);
       },
@@ -34,7 +36,7 @@ define([
       'Lifecycle': {
         setup: function() {
           return this.remote
-            .get(require.toUrl('http://localhost:4000/tests/dropdown/common'));
+            .get(require.toUrl(urlRoot + 'common'));
         },
 
         // NOTE: All tests in this group run without refreshing the page
@@ -72,6 +74,12 @@ define([
       'API States': {
 
         'Initialized states': {
+
+          beforeEach: function() {
+            return this.remote
+              .get(urlRoot + 'common');
+          },
+
           'should support being initialized as hidden': function() {
             // Check the original <select> tag for CSS like "visibility: hidden;" or "display: none;"
             // Check the pseudo markup to ensure that these properties carried over
@@ -127,9 +135,9 @@ define([
         },
 
         'Response to input while disabled': {
-          setup: function() {
+          beforeEach: function() {
             return this.remote
-              .get(require.toUrl('http://localhost:4000/tests/dropdown/common'));
+              .get(require.toUrl(urlRoot + 'common'));
           },
 
           'can not receive focus while disabled': function() {
@@ -154,7 +162,7 @@ define([
               .findById('disabled-shdo')
                 .click()
                 .end()
-              .setTimeout(10)
+              .setFindTimeout(10)
               // Check for the existence of the dropdown list.  It should not exist because
               // the dropdown should not have opened.
               .findById('dropdown-list')
@@ -167,10 +175,8 @@ define([
           },
 
           'will not respond to taps while disabled': function() {
-            this.skip();
-
             // attempt to tap while the element is disabled
-            if (!this.remote.session._capabilties.touchEnabled) {
+            if (!this.remote.session.capabilities.touchEnabled) {
               this.skip();
             }
 
@@ -178,7 +184,7 @@ define([
               .findById('disabled-shdo')
                 .tap()
                 .end()
-              .sleep(300)
+              .setFindTimeout(10)
               .findById('dropdown-list')
                 .then(function() {
                   throw 'Dropdown List should not have opened!';
@@ -216,29 +222,115 @@ define([
           },
 
           'can respond to clicks while in read-only mode, but will not open the menu': function() {
-            this.skip();
+            return this.remote
+              .get(require.toUrl(urlRoot + 'readonly'))
+              .setFindTimeout(10)
+              // Click the dropdown pseudo element
+              .findById('readonly-dropdown-shdo')
+                .click()
+                .end()
+              // attempt to find the dropdown list (should not exist because this is a "readonly" dropdown)
+              .findDisplayedById('dropdown-list')
+                .then(function() {
+                  throw 'Dropdown List should not have opened!';
+                }, function(error) {
+                  expect(error).to.exist;
+                })
+                .end()
+              // Check the currently active element (should be the psuedo-element)
+              .getActiveElement()
+                .getAttribute('id')
+                .then(function(id) {
+                  expect(id).to.equal('readonly-dropdown-shdo');
+                })
+                .end();
           },
 
           'can respond to taps while in read-only mode, but will not open the menu': function() {
-            this.skip();
+            // attempt to tap while the element is disabled
+            if (!this.remote.session.capabilities.touchEnabled) {
+              this.skip();
+            }
+
+            return this.remote;
           },
 
-          'will ignore keyboarded attempts to open the menu while in read-only mode': function() {
-            this.skip();
+          'will not open the menu by keyboard while in read-only mode': function() {
+            return this.remote
+              .get(require.toUrl(urlRoot + 'readonly'))
+              .setFindTimeout(10)
+              // click the input that's above the readonly dropdown
+              .findById('random-input-1')
+                .click()
+                .end()
+              // Tab once to get to the dropdown
+              .pressKeys([k.TAB, k.NULL])
+                .end()
+              // Make sure we're selected
+              .getActiveElement()
+                .getAttribute('id')
+                .then(function(id) {
+                  expect(id).to.equal('readonly-dropdown-shdo');
+                })
+                .end()
+              // Activate the dropdown with Down Arrow
+              .pressKeys([k.ARROW_DOWN])
+                .end()
+              // Getting the active element should still be the "shdo" element, since the menu should not have opened.
+              .getActiveElement()
+                .getAttribute('id')
+                .then(function(id) {
+                  expect(id).to.equal('readonly-dropdown-shdo');
+                })
+                .end();
           }
         },
 
       },
 
       'API Methods': {
+        setup: function() {
+            return this.remote
+              .get(require.toUrl('http://localhost:4000/tests/dropdown/api-states'));
+          },
+
         'responds properly to "disable();"': function() {
           // use jQuery to run the disable() method on an existing dropdown
-          this.skip();
+          // // NOTE: A button inside test page manages the "disable()" API method.
+          return this.remote
+            .findById('disable')
+              .click()
+              .end()
+            .setFindTimeout(10) // Prevents this test from hanging too long because the element won't exist
+            .findById('states-test-shdo')
+              .click()
+              .end()
+            .findById('dropdown-list')
+              .then(function() {
+                  throw 'Dropdown List should not have opened!';
+                }, function(error) {
+                  expect(error).to.exist;
+                })
+                .end();
         },
 
         'responds properly to "enable();"': function() {
-          // use jQuery to run the enable() method on an existing dropdown
-          this.skip();
+          // use jQuery to run the enable() method on an existing dropdown.
+          // NOTE: A button inside test page manages the "enable()" API method.
+          return this.remote
+            .findById('enable')
+              .click()
+              .end()
+            .findById('states-test-shdo')
+              .click()
+              .end()
+            .findById('dropdown-list')
+              .then(function(element) {
+                  expect(element).to.exist;
+                }, function(error) {
+                  throw 'Dropdown list should exist on the page, but is not available';
+                })
+                .end();
         }
       },
 

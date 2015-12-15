@@ -29,7 +29,7 @@ define({
     //{ browserName: 'chrome', version: '34', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
     //{ browserName: 'safari', version: '6', platform: 'OS X 10.8' },
     //{ browserName: 'safari', version: '7', platform: 'OS X 10.9' }
-    { browserName: 'firefox' }
+    { browserName: 'chrome' }
   ],
 
   // Maximum number of simultaneous integration tests that should be executed on the remote WebDriver service
