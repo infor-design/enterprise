@@ -22,6 +22,10 @@
       data.push({ id: 5, productId: 2542205, sku: 'SKU #9000001-233', productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
       data.push({ id: 5, productId: 2642205, sku: 'SKU #9000001-232', productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
       data.push({ id: 6, productId: 2642206, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 7, productId: 2642207, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 8, productId: 2642208, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 9, productId: 2642209, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 10, productId: 2642210, sku: 'SKU #9000001-231', productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
       //Define Columns for the Grid.
 
@@ -46,7 +50,9 @@
         idProperty:'officeId',
         dataset: data,
         rowTemplate: rowTemplate,
-        paging: true
+        paging: true,
+        pagesize: 4,
+        pagesizes: [2, 4, 5]
       });
 
       grid.on('expandrow', function (e, args) {

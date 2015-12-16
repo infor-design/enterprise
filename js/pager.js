@@ -305,6 +305,7 @@
         }
 
         //Remove from the front until selected is visible and we have at least howMany showing
+        //rowTemplate
         if (!this.settings.source) {
           elems = pb.find(this.buttonExpr);
           elems.show();
@@ -318,6 +319,7 @@
               $(this).hide();
             }
           });
+
         }
       },
 
@@ -374,11 +376,16 @@
           self.element.trigger('paging', self.pagingInfo);
           self.elements = self.element.children();
 
+          var isExpandable = (self.settings.rowTemplate !== undefined);
+
           //Render page objects
           if (!self.settings.source) {
+            var rows = (isExpandable ? settings.pagesize * 2 : settings.pagesize);
+
             self.elements.hide();
-            expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ settings.pagesize +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * settings.pagesize) +'):gt('+ (((self.activePage-1) *settings.pagesize) -1) +')');
+            expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ rows +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * rows) +'):gt('+ (((self.activePage-1) * rows) -1) +')');
             self.elements.filter(expr).show();
+
           } else {
             self.elements.show();
           }

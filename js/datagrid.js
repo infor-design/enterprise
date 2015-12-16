@@ -2054,7 +2054,7 @@ $.fn.datagrid = function(options) {
       }
 
       var pagerElem = this.tableBody.addClass('paginated');
-      pagerElem.pager({source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, pagesizes: this.settings.pagesizes});
+      pagerElem.pager({source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, rowTemplate: this.settings.rowTemplate, pagesizes: this.settings.pagesizes});
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {
