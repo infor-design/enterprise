@@ -2,7 +2,6 @@
 //================================================== //
 
 .breadcrumb {
-
   li {
     display: inline-block;
     list-style: none;
@@ -16,11 +15,18 @@
       content: '';
       padding: 0;
     }
+
+    .current,
+    &.current {
+      @include font-size(12);
+      color: $breadcrumb-color;
+      font-weight: bold;
+    }
   }
 
   .hyperlink {
-    color: $breadcrumb-color;
     @include font-size(12);
+    color: $breadcrumb-color;
     font-weight: 100;
     line-height: 2em;
     text-decoration: none;
@@ -55,5 +61,4 @@
     top: -2px;
     vertical-align: middle;
   }
-
 }
