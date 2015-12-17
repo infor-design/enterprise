@@ -1,11 +1,10 @@
-// Toggle Switches
+// Switch
 //================================================== //
 
 .switch {
   clear: both;
   display: block;
   margin: 20px 0;
-  position: relative;
 
   // Text Label
   label {
@@ -13,15 +12,20 @@
     text-indent: 60px;
   }
 
+  //Invisible Input
+  input {
+    position: absolute;
+  }
+
   // Unchecked Styling
   input:empty {
     margin-left: -999px;
 
     ~ label {
+      @include no-select();
       cursor: pointer;
       line-height: 17px;
       position: relative;
-      @include no-select();
     }
 
     ~ label:before {
@@ -35,10 +39,10 @@
 
     ~ label:before,
     ~ label:after {
+      @include css3(transition, all 200ms cubic-bezier(.17, .04, .03, .94) 0s);
       content: ' ';
       display: block;
       position: absolute;
-      @include css3(transition, all 200ms cubic-bezier(.17, .04, .03, .94) 0s);
     }
 
     ~ label:after {
@@ -94,6 +98,8 @@
 
 }
 
-input.switch {
-  position: absolute;
+//Rule to remove bottom padding on modal if its the last element.
+.modal-body-wrapper .switch:last-child {
+  margin-bottom: 0;
 }
+
