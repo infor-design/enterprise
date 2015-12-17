@@ -132,6 +132,7 @@ button {
 }
 
 a.btn,
+a.btn-icon,
 a.btn-primary,
 a.btn-secondary,
 a.btn-tertiary,
@@ -139,10 +140,17 @@ a.btn-menu {
   display: inline-block;
   line-height: 31px;
   margin-bottom: -2px;
+  min-width: auto;
   text-decoration: none;
+  width: auto;
 
   &:not(:root:root) {
     margin-bottom: auto;
+  }
+
+  &.btn-icon {
+    line-height: 32px;
+    padding: 0 6px;
   }
 }
 
