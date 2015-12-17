@@ -1680,18 +1680,24 @@ $.fn.datagrid = function(options) {
         if (key === 32 && !self.settings.editable) {
           row = self.activeCell.node.closest('tr');
 
+          if ($(e.target).closest('.datagrid-row-detail').length === 1) {
+            return;
+          }
+
+          // Toggle datagrid-expand with Space press
+          var btn = $(e.target).find('.datagrid-expand-btn');
+          if (btn && btn.length) {
+            btn.trigger('mouseup.datagrid');
+            e.preventDefault();
+            return;
+          }
+
           if (isMultiple && e.shiftKey) {
             self.selectRowsBetweenIndexes([self.lastSelectedRow, row.index()]);
           } else {
             self.toggleRowSelection(row);
           }
 
-          // Toggle datagrid-expand with Space press
-          var btn = $('.datagrid-expand-btn', row);
-          if (btn && btn.length) {
-            btn.trigger('mouseup.datagrid');
-            e.preventDefault();
-          }
         }
 
         //For Editable mode - press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
@@ -1900,6 +1906,7 @@ $.fn.datagrid = function(options) {
     },
 
     expandRow: function(row) {
+
       var self = this,
         expandRow = this.table.find('tr').eq(row+1),
         expandButton = this.table.find('tr').eq(row).find('.datagrid-expand-btn'),
