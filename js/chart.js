@@ -168,9 +168,9 @@ window.Chart = function(container) {
   this.HorizontalBar = function(dataset, isNormalized, isStacked) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
     var maxTextWidth, width, height, series, rects, svg, stack,
-        xMax, xScale, yScale, yAxis, yMap, xAxis, groups, legendMap, gindex, 
+        xMax, xScale, yScale, yAxis, yMap, xAxis, groups, legendMap, gindex,
         totalBarsInGroup, tatalGroupArea, totalHeightTobeUse, gap, barHeight;
-    
+
     var tooltipInterval,
       tooltipDataCache = [],
       tooltipData = charts.tooltip;
@@ -282,7 +282,7 @@ window.Chart = function(container) {
       .nice()
       .range([0, barWith]).nice();
 
-    if(isStacked) { 
+    if(isStacked) {
       yMap = dataset[0].map(function (d) {
         return d.y;
       });
@@ -360,7 +360,7 @@ window.Chart = function(container) {
       return 'series-'+i+' bar';
     })
     .style('fill', function(d, i) {
-      return isStacked ? 
+      return isStacked ?
         (charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i])) :
         (charts.chartColor(i, 'bar', dataset[d.index][i]));
     })
@@ -377,7 +377,7 @@ window.Chart = function(container) {
       return isStacked ? (xScale(d.x0)) : 0;
     })
     .attr('y', function (d) {
-      return isStacked ? yScale(d.y) : 
+      return isStacked ? yScale(d.y) :
         ((((tatalGroupArea-totalHeightTobeUse)/2)+(d.gindex*maxBarHeight))+(d.index*gap));
     })
     .attr('height', function () {
@@ -405,7 +405,7 @@ window.Chart = function(container) {
 
        if (dataset.length === 1) {
           content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
-        } 
+        }
         else {
           content = '<div class="chart-swatch">';
 
@@ -972,15 +972,15 @@ window.Chart = function(container) {
   // Column Chart - Sames as bar but reverse axis
   this.Column = function(chartData, isStacked) {
 
-    var datasetStacked, 
+    var datasetStacked,
       dataset = chartData,
       self = this,
       parent = $(container).parent(),
       isSingular = (dataset.length === 1),
-      margin = {top: 40, right: 40, bottom: (isSingular ? (isStacked ? 20 : 50) : 35), left: 45},
-      legendHeight = 55,
+      margin = {top: 40, right: 40, bottom: (isSingular && chartData[0].name === undefined ? (isStacked ? 20 : 50) : 35), left: 45},
+      legendHeight = 40,
       width = parent.width() - margin.left - margin.right - 10,
-      height = parent.height() - margin.top - margin.bottom - (isSingular ? (isStacked ? legendHeight : 0) : legendHeight);
+      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked ? legendHeight : 0) : legendHeight);
 
     $(container).addClass('column-chart');
 
@@ -1030,7 +1030,7 @@ window.Chart = function(container) {
         .rangeRoundBands([0, width], 0.05);
 
       var yScale = d3.scale.linear()
-        .domain([0,       
+        .domain([0,
           d3.max(datasetStacked, function(d) {
             return d3.max(d, function(d) {
               return d.y0 + d.y;
@@ -1135,14 +1135,13 @@ window.Chart = function(container) {
         });
 
         bars.transition().duration(1000)
-          .attr('y', function(d) { 
-            return isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) : y(d.value); 
+          .attr('y', function(d) {
+            return isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) : y(d.value);
           })
-          .attr('height', function(d) { 
-            return isStacked ? yScale(d[0].y) : (height - y(d.value)); 
+          .attr('height', function(d) {
+            return isStacked ? yScale(d[0].y) : (height - y(d.value));
           });
-    } 
-    else {
+    } else {
 
       var xValues = svg.selectAll('.x-value')
           .data(isStacked ? datasetStacked : dataArray)
@@ -1209,7 +1208,7 @@ window.Chart = function(container) {
                 } else {
                   y = thisShape.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
                 }
-              }              
+              }
             }
             if(content !== '') {
               charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
@@ -1217,7 +1216,7 @@ window.Chart = function(container) {
           };
 
         // Stacked
-        if(isStacked) { 
+        if(isStacked) {
           if (isSingular) {
             content = '<p><b>'+ d[0].value +'</b> '+ d[0].name +'</p>';
           }
@@ -1237,7 +1236,7 @@ window.Chart = function(container) {
         }
 
         // No Stacked
-        else { 
+        else {
           if (dataset.length === 1) {
             content = '<p><b>'+ d.value + '</b> '+ d.name +'</p>';
           }
@@ -1250,7 +1249,7 @@ window.Chart = function(container) {
               content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
               content += '<span>'+ data[j].name +'</span><b>'+ data[j].value +'</b></div>';
             }
-            content += '</div>';            
+            content += '</div>';
             isTooltipBottom = data.length > maxBarsForTopTooltip;
           }
           size = charts.getTooltipSize(content);
@@ -1258,8 +1257,8 @@ window.Chart = function(container) {
           y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
           if (dataset.length > 1) {
             x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
-            y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;            
-          }          
+            y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;
+          }
         }
 
         if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
@@ -1314,16 +1313,19 @@ window.Chart = function(container) {
       return {name: d};
     });
 
-    if(isStacked && !isSingular) {
+    if (isSingular && chartData[0].name) {
+      charts.addLegend([{name: chartData[0].name}]);
+    }
+
+    if (isStacked && !isSingular) {
       seriesStacked = names.map(function (d) {
         return {name: d};
       });
     }
 
-    if(isStacked && isSingular) {
+    if (isStacked && isSingular) {
       charts.addLegend(series);
-    }
-    else if (!isSingular) {
+    } else if (!isSingular) {
       charts.addLegend(isStacked ? seriesStacked : series);
     }
 
@@ -1575,18 +1577,17 @@ window.Chart = function(container) {
               .attr('class', 'bullet')
               .attr('transform', 'translate(0, ' + (i * (barHeight*3)) + ')');
 
-
       //Add Title and Subtitle
       var title = g.append('g');
 
       var text = title.append('text')
           .attr('class', 'title')
-          .attr('dy', '-5px')
+          .attr('dy', '-6px')
           .text(function(d) { return rowData.title; }); // jshint ignore:line
 
       text.append('tspan')
           .attr('class', 'subtitle')
-          .attr('dx', '10px')
+          .attr('dx', '15px')
           .text(function(d) { return rowData.subtitle; }); // jshint ignore:line
 
       // Compute the new x-scale.
@@ -1630,8 +1631,8 @@ window.Chart = function(container) {
 
       marker.enter().append('line')
           .attr('class', 'marker')
-          .attr('x1', x1)
-          .attr('x2', x1)
+          .attr('x1', 0)
+          .attr('x2', 0)
           .attr('y1', barHeight / 6)
           .attr('y2', barHeight * 5 / 6);
 
@@ -1641,6 +1642,19 @@ window.Chart = function(container) {
           .attr('x2', x1)
           .attr('y1', barHeight / 6)
           .attr('y2', barHeight * 5 / 6);
+
+      //Difference
+      marker.enter().append('text')
+          .attr('class', 'difference')
+          .attr('text-anchor', 'middle')
+          .attr('y', barHeight /2 + 4)
+          .attr('dx', '-50px')
+          .attr('x', 0)
+          .text((markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]));
+
+      marker.transition()
+          .duration(duration)
+          .attr('x', width);  //x1
 
       // Update the tick groups.
       var tick = g.selectAll('g.tick')
@@ -1658,7 +1672,7 @@ window.Chart = function(container) {
 
       tickEnter.append('text')
           .attr('text-anchor', 'middle')
-          .attr('dy', '1em')
+          .attr('dy', '1.1em')
           .attr('y', barHeight * 7 / 6)
           .text(function (d) {
             return d;

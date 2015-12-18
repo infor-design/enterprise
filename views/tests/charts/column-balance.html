@@ -1,0 +1,53 @@
+ <div class="homepage page-container scrollable" id="maincontent" data-columns="3" role="main">
+      <div class="content">
+
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">On Hand Blance</h2>
+            <button class="btn-actions" type="button">
+              <span class="audible">More actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Action One</a></li>
+              <li><a href="#">Action Two</a></li>
+            </ul>
+          </div>
+
+          <div class="widget-content">
+            <div id="column-bar-example" class="chart-container">
+            </div>
+
+          </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var dataset = [{
+          data: [{
+              name: 'MA-1',
+              shortName: 'MA-1',
+              abbrName: 'M',
+              value: 100
+          }, {
+              name: 'RAW AM',
+              shortName: 'RAW',
+              abbrName: 'R',
+              value: 84
+          }, {
+              name: 'WMS AM',
+              shortName: 'WMS',
+              abbrName: 'W',
+              value: 2
+          }],
+          name: 'Item: FS-N10006'
+        }];
+
+
+    $('#column-bar-example').chart({type: 'column', dataset: dataset});
+
+</script>

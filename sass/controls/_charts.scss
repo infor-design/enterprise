@@ -383,3 +383,43 @@
   position: fixed;
   top: -9999999px;
 }
+
+//Bullet Chart
+.bullet-chart {
+
+  @include font-size(12);
+
+  .marker {
+    stroke: $azure07;
+    stroke-width: 2px;
+  }
+
+  .tick line {
+    stroke: $graphite08;
+    stroke-width: .5px;
+  }
+
+  .title {
+    @include font-size(12);
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    fill: $graphite04;
+    font-weight: normal;
+    text-transform: none;
+  }
+
+  //Handles max 3 ranges
+
+}
+
+.bullet {
+  .range.s0 {fill: $slate01;};
+  .range.s1 {fill: $slate02;};
+  .range.s2 {fill: $slate03;};
+  .measure.s0 {fill: $azure03;};
+  .measure.s1 {fill: $azure07;};
+  .measure.s2 {fill: $azure10;};
+}
