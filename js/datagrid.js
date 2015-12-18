@@ -314,7 +314,8 @@ $.fn.datagrid = function(options) {
     },
 
     initSettings: function () {
-      if (this.settings.dataset !== 'table' && this.element.parent().css('position') !== 'relative') {
+
+      if (this.settings.dataset !== 'table') {
         this.element.wrap( '<div class="datagrid-wrapper" />');
       }
 
@@ -870,14 +871,14 @@ $.fn.datagrid = function(options) {
       }
 
       if (reset && self.fixedHeader) {
-          self.clone.css('width', self.element.width());
+        self.clone.css('width', self.element.width());
       }
 
       if (typeof width !=='number') { //calculate percentage
         width = percent / 100 * self.element.width();
       }
 
-      self.headerNodes().each(function (i) {
+      self.headerNodes().each(function () {
         var col = $(this);
 
         if (col.attr('data-column-id') === id) {
@@ -888,11 +889,14 @@ $.fn.datagrid = function(options) {
           total += col.outerWidth();
         }
 
-        if (self.fixedHeader) {
-          self.cloneHeaderNodes().eq(i).css('width', width);
-        }
-
       });
+
+      if (self.fixedHeader) {
+        self.headerNodes().each(function (i) {
+          var w = $(this).outerWidth();
+          self.cloneHeaderNodes().eq(i).css('width', w);
+        });
+      }
 
       self.table.css('width', total);
 
@@ -933,7 +937,7 @@ $.fn.datagrid = function(options) {
             self.currentHeader.offset();
 
         self.dragging = true;
-        self.setColumnWidth(id, ui.left - offset.left + 6 + self.element.scrollLeft());
+        self.setColumnWidth(id, ui.left - offset.left - 6 + self.element.scrollLeft());
       })
       .on('dragend.datagrid', function () {
         self.dragging = false;
@@ -1091,13 +1095,13 @@ $.fn.datagrid = function(options) {
         }
 
         self.currentHeader = $(e.target).closest('th');
-        var isClone = self.currentHeader.closest('.datagrid-clone').length;
 
         if (!self.currentHeader.hasClass('is-resizable')) {
           return;
         }
 
-        var leftEdge = parseInt(self.currentHeader.position().left),
+        var isClone = self.currentHeader.closest('.datagrid-clone').length,
+          leftEdge = parseInt(self.currentHeader.position().left),
           rightEdge = leftEdge + self.currentHeader.outerWidth(),
           alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX),
           leftPos = 0;
@@ -1551,6 +1555,7 @@ $.fn.datagrid = function(options) {
           // Makeing move
           th.removeAttr('tabindex').removeClass('is-active');
           $('th:nth-child('+ move +')', this.header).attr('tabindex', '0').addClass('is-active').focus();
+
           e.preventDefault();
         }
 
@@ -1562,6 +1567,25 @@ $.fn.datagrid = function(options) {
 
       });
 
+
+      //Set clone's focus state
+      self.table.on('focus.datagrid', 'th', function () {
+        var th = $(this);
+
+        if (self.fixedHeader) {
+          self.clone.find('thead th').eq(th.index()).addClass('is-focused');
+        }
+      });
+
+      self.table.on('blur.datagrid', 'th', function () {
+        var th = $(this);
+
+        if (self.fixedHeader) {
+          self.clone.find('thead th').eq(th.index()).removeClass('is-focused');
+        }
+      });
+
+      //Handle Editing / Keyboard
       self.table.on('keydown.datagrid', 'td, input', function (e) {
         var handled = false,
           key = e.which;
@@ -1598,6 +1622,8 @@ $.fn.datagrid = function(options) {
         }
 
       });
+
+      //Handle rest of the keyboard
 
       self.table.on('keydown.datagrid', 'td', function (e) {
         var key = e.which, row,
@@ -1965,8 +1991,7 @@ $.fn.datagrid = function(options) {
 
       var wasFocused = this.activeCell.isFocused;
       this.renderRows();
-      this.syncFixedHeader();
-
+      //this.syncFixedHeader();
 
       // Update selected and Sync header checkbox
       this.updateSelected();
@@ -2071,7 +2096,7 @@ $.fn.datagrid = function(options) {
         self.highlightSearchRows(self.filterExpr[0].value);
        }
 
-       self.syncFixedHeader();
+       //self.syncFixedHeader();
 
       });
 
