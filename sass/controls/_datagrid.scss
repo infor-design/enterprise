@@ -63,7 +63,7 @@ $datagrid-header-height: 40px;
   height: 100%;
   min-width: 100%;
   overflow: hidden;
-  table-layout: fixed; //this lets us resize to lower than content width
+  //table-layout: fixed; //this lets us resize to lower than content width but it causes layout issues with default col sizes
   width: auto;
 
   //Frozen Headers
@@ -491,7 +491,7 @@ $datagrid-header-height: 40px;
 // Cell Template Styling
 .datagrid-row-heading {
   @include font-size(16);
-  color: #1a1a1a;
+  color: $datagrid-cell-color;
   @include ellipsis();
 }
 
@@ -571,6 +571,46 @@ td .btn-actions {
 
 }
 
+//Datagrid Dropdown Formatter
+td.datagrid-trigger-cell {
+  cursor: pointer;
+
+  .icon {
+    fill: $datagrid-cell-color;
+    top: 5px;
+    visibility: hidden;
+  }
+
+  .trigger {
+    color: $datagrid-cell-color;
+    display: inline-block;
+    text-align: left;
+    width: calc(100% - 10px);
+  }
+
+  &:hover,
+  &:focus {
+    .icon {
+      visibility: visible;
+    }
+  }
+
+  //Datagrid Dropdown Editor
+  &.is-editing {
+    padding: 0;
+
+    .datagrid-cell-wrapper {
+      padding: 0;
+    }
+
+    .dropdown-wrapper {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+
 .datagrid-checkbox-wrapper {
   position: relative;
 }
@@ -587,7 +627,7 @@ td .btn-actions {
   }
 
   + span {
-    color: #1a1a1a;
+    color: $datagrid-cell-color;
     padding-left: 10px;
   }
 

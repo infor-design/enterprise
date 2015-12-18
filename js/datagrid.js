@@ -161,9 +161,23 @@ window.Formatters = {
     return '<button type="button" class="btn ' + (col.cssClass ? col.cssClass : '') + '">' + text + '</span>';
   },
 
+  Dropdown: function (row, cell, value, col) {
+    var formattedValue = value;
+
+    if (col.options && value) {
+      for (var i = 0; i < col.options.length; i++) {
+        if (col.options[i].value === value) {
+          formattedValue = col.options[i].label;
+        }
+      }
+    }
+
+    return '<span class="trigger">' + formattedValue + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-dropdown"/></svg>';
+  },
+
   // TODOs
-  // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // Select (Drop Down)
+  // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // Multi Select
   // Re Order - Drag Indicator
   // Sparkline
@@ -184,8 +198,8 @@ window.Editors = {
   //Supports, Text, Numeric, Integer via mask
   Input: function(row, cell, value, container, column) {
 
-    this.name = 'Text';
-    this.orginalValue = value;
+    this.name = 'input';
+    this.originalValue = value;
 
     this.init = function () {
       this.input = $('<input type="text"/>').appendTo(container);
@@ -220,8 +234,8 @@ window.Editors = {
 
   Checkbox: function(row, cell, value, container, column, e) {
 
-    this.name = 'Checkbox';
-    this.orginalValue = value;
+    this.name = 'checkbox';
+    this.originalValue = value;
 
     this.init = function () {
       this.input = $('<input type="checkbox" class="checkboxn"/>').appendTo(container);
@@ -258,7 +272,54 @@ window.Editors = {
     };
 
     this.init();
-  }
+  },
+
+  Dropdown: function(row, cell, value, container, column) {
+
+    this.name = 'dropdown';
+    this.originalValue = value;
+
+    this.init = function () {
+      //Uses formatter
+      this.input = $('<select class="dropdown"></select>').appendTo(container);
+
+      if (column.options) {
+        for (var i = 0; i < column.options.length; i++) {
+          var html = $('<option></<option>'),
+            opt = column.options[i];
+
+          if (opt.selected || value === opt.value) {
+            html.attr('selected', 'true');
+          }
+
+          html.attr('value', opt.value).attr('id', opt.id);
+          html.text(opt.label);
+          this.input.append(html);
+        }
+      }
+
+      this.input.dropdown();
+      this.input = this.input.parent().find('input');
+    };
+
+    this.val = function (value) {
+      if (value) {
+        this.input.val(value);
+      }
+
+      return this.input.val();
+    };
+
+    this.focus = function () {
+      this.input.focus();
+    };
+
+    this.destroy = function () {
+
+    };
+
+    this.init();
+  },
 };
 
 $.fn.datagrid = function(options) {
@@ -580,7 +641,7 @@ $.fn.datagrid = function(options) {
       this.renderPager(pagerInfo);
       this.selectedRows([]);
       this.syncHeaderCheckbox();
-
+      this.syncFixedHeader();
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -742,9 +803,9 @@ $.fn.datagrid = function(options) {
           }
 
           if (typeof formatter ==='string') {
-            formatted = window.Formatters[formatter](i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i]).toString();
+            formatted = window.Formatters[formatter](i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i], self).toString();
           } else {
-            formatted = formatter(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i]).toString();
+            formatted = formatter(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i], self).toString();
           }
 
           if (formatted.indexOf('<span class="is-readonly">') === 0) {
@@ -754,6 +815,10 @@ $.fn.datagrid = function(options) {
           if (formatted.indexOf('datagrid-checkbox') > -1 ||
             formatted.indexOf('btn-actions') > -1) {
             cssClass += ' l-center-text';
+          }
+
+          if (formatted.indexOf('trigger') > -1) {
+            cssClass += ' datagrid-trigger-cell';
           }
 
           if (col.align) {
@@ -811,6 +876,7 @@ $.fn.datagrid = function(options) {
       self.displayCounts();
 
       self.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
+      self.tableBody.find('.dropdown').dropdown();
 
       //Set Tab Index and active Cell
       setTimeout(function () {
@@ -1818,11 +1884,9 @@ $.fn.datagrid = function(options) {
       //Editor.init
       cellParent.addClass('is-editing');
       cellNode.empty();
-
       this.editor = new col.editor(row, cell, cellValue, cellNode, col, event);
       this.editor.val(cellValue);
       this.editor.focus();
-
     },
 
     commitCellEdit: function(input) {
