@@ -601,6 +601,19 @@ $.fn.datagrid = function(options) {
       return visible;
     },
 
+    getColumnGroup: function(idx) {
+      var total = 0,
+        colGroups = this.settings.columnGroups;
+
+      for (var l = 0; l < colGroups.length; l++) {
+        total += colGroups[l].colspan;
+
+        if (total >= idx) {
+          return this.uniqueID(this.gridCount, '-header-group-' + l);
+        }
+      }
+    },
+
     //Render the Header
     renderHeader: function() {
       var self = this,
@@ -610,12 +623,16 @@ $.fn.datagrid = function(options) {
 
       if (colGroups) {
 
-        var total = 0;
+        var total = 0,
+          uniqueID;
+
         headerRow += '<tr role="row" class="datagrid-header-groups">';
 
         for (var k = 0; k < colGroups.length; k++) {
           total += parseInt(colGroups[k].colspan);
-          headerRow += '<th colspan="' + colGroups[k].colspan + '"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">'+ colGroups[k].name +'</span></div></th>';
+          uniqueID = self.uniqueID(self.gridCount, '-header-group-' + k);
+
+          headerRow += '<th colspan="' + colGroups[k].colspan + '" id="' + uniqueID + '"' + '><div class="datagrid-column-wrapper "><span class="datagrid-header-text">'+ colGroups[k].name +'</span></div></th>';
         }
 
         if (total < this.visibleColumns().length) {
@@ -641,6 +658,7 @@ $.fn.datagrid = function(options) {
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
          ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"' +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
+         (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
          headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + (settings.columns[j].name ? settings.columns[j].name : '') + '</span>';
 
@@ -753,7 +771,8 @@ $.fn.datagrid = function(options) {
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
              (cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
-              '><div class="datagrid-cell-wrapper">';
+             (self.settings.columnGroups ? 'headers = "' + self.uniqueID(self.gridCount, '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+             '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
             var canShow = col.contentVisible(i, j, settings.dataset[i], col);
@@ -931,6 +950,7 @@ $.fn.datagrid = function(options) {
         if (!self.currentHeader) {
           return;
         }
+
         var id = self.currentHeader.attr('data-column-id'),
           offset = (self.element.parent().css('position')!=='static') ?
             self.getChildOffset(self.currentHeader) :

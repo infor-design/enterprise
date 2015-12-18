@@ -36,7 +36,7 @@
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
-        columnGroups: [{colspan: 3, name: 'Column Group One'}, {colspan: 4, name: 'Column Group Two'}], //Numeric Column Span Groups
+        columnGroups: [{colspan: 3, id: 'group1', name: 'Column Group One'}, {colspan: 4, id: 'group2', name: 'Column Group Two'}], //Numeric Column Span Groups
         dataset: data
       }).data('datagrid');
 
