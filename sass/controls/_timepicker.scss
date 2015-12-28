@@ -80,3 +80,16 @@
   }
 
 }
+
+// Short Fields
+.field-short {
+  .timepicker {
+
+    + .icon,
+    + .tooltip-description + .icon {
+      height: 14px;
+      margin-top: 6px;
+      margin-left: -24px;
+    }
+  }
+}

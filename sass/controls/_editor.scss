@@ -22,13 +22,13 @@
   &.is-readonly .editor {
     background-color: $input-readonly-bg-color;
     border-color: $input-readonly-border-color;
-    -webkit-text-fill-color: $input-readonly-color;
     color: $input-readonly-color;
     cursor: text;
+    -webkit-text-fill-color: $input-readonly-color;
 
     .hyperlink {
-      -webkit-text-fill-color: $hyperlink-color;
       color: $hyperlink-color;
+      -webkit-text-fill-color: $hyperlink-color;
     }
   }
 
@@ -37,6 +37,17 @@
     right: 15px;
     top: 77px;
   }
+
+  // Customize the formatter toolbar if it's inside an editor
+  .formatter-toolbar {
+    border-bottom: 1px solid $editor-middle-border-color;
+    margin-bottom: 0;
+    z-index: 20;
+
+    [class^="btn"] {
+      border-radius: 2px;
+    }
+  }
 }
 
 .editor {
@@ -44,7 +55,6 @@
   border: 1px solid $editor-border-color;
   border-radius: 0 0 2px 2px;
   border-top: 1px solid transparent;
-  -webkit-text-fill-color: $editor-color;
   color: $editor-color;
   display: block;
   float: left;
@@ -55,6 +65,7 @@
   outline: none;
   overflow: auto;
   padding: 15px 10px 10px;
+  -webkit-text-fill-color: $editor-color;
   width: 100%;
 
   //States
@@ -82,8 +93,8 @@
     -webkit-text-fill-color: $editor-color;
 
     .hyperlink {
-      -webkit-text-fill-color: $hyperlink-color;
       color: $hyperlink-color;
+      -webkit-text-fill-color: $hyperlink-color;
     }
   }
 
@@ -96,21 +107,21 @@
   }
 
   h4 {
-    -webkit-text-fill-color: $editor-color;
     color: $editor-color;
     @include font-size(18);
     @include rem(line-height, 1.8rem);
     @include rem(margin-bottom, 1.5rem);
+    -webkit-text-fill-color: $editor-color;
   }
 
   ul,
   ol {
-    -webkit-text-fill-color: $input-color;
     color: $input-color;
     @include rem(line-height, 2.2rem);
     @include rem(margin-left, 2rem);
     @include font-size(14);
     list-style: disc;
+    -webkit-text-fill-color: $input-color;
   }
 
   ol {
@@ -140,10 +151,7 @@
 .toolbar.formatter-toolbar {
   background-color: $editor-toolbar-bg-color;
   border: 1px solid $editor-border-color;
-  border-bottom: 1px solid $editor-middle-border-color;
   border-radius: 2px 2px 0 0;
-  margin-bottom: 0;
-  z-index: 20;
 
   .buttonset {
     [class^="btn"] {
@@ -168,10 +176,12 @@
   [class^="btn"] {
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
-    border-radius: 2px;
     color: $editor-btn-color;
     min-width: 34px;
-    padding: 0 !important; //overrides some media queries
+
+    &.btn {
+      padding: 0 !important; //overrides some media queries
+    }
 
     > .icon {
       fill: $editor-btn-color;
@@ -192,7 +202,6 @@
     }
 
     > span {
-      @include font-size(16);
       color: $font-color;
     }
 
@@ -226,8 +235,12 @@
 
   [data-element='h3'] .icon,
   [data-element='h4'] .icon {
-    width: 35px;
     padding-right: 3px;
+    width: 35px;
+  }
+
+  [data-action="visual"] span {
+    @include font-size(16);
   }
 
   .icon {
@@ -320,10 +333,10 @@
 //Placeholder
 .editor-placeholder {
   color: $input-placeholder-color;
-}
 
-.editor-placeholder.error {
-  color: $error-color;
+  &.error {
+    color: $error-color;
+  }
 }
 
 .editor-placeholder:after {

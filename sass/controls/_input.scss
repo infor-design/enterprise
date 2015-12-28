@@ -339,8 +339,8 @@ textarea.error:focus {
   width: 400px;
 }
 
-.input-med,
-.field-short .input-med {  //Default
+.input-md,
+.field-short .input-md {  //Default
   width: 300px;
 }
 
@@ -351,12 +351,7 @@ textarea.error:focus {
 
 .input-xs,
 .field-short .input-xs {
-
   width: 75px;
-
-  &.error {
-    padding: 9px 38px 8px 10px;
-  }
 }
 
 .input-full {

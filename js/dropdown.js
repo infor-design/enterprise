@@ -99,6 +99,18 @@
           this.settings.noSearch = this.element.attr('data-no-search') === 'true';
         }
 
+        // Persist sizing defintions
+        var sizingStrings = ['-xs', '-sm', '-md', '-lg'],
+          classString = this.element.attr('class'),
+          s;
+
+        for (var i = 0; i < sizingStrings.length; i++) {
+          s = sizingStrings[i];
+          if (classString.match(s)) {
+            this.input.addClass('dropdown' + s);
+          }
+        }
+
         this.updateList();
         this.setValue();
         this.setInitial();
@@ -711,11 +723,12 @@
           });
         }
 
-        var isTall = (this.element.closest('.field-short').length === 1);
+        // Persist the "short" input field
+        var isShort = (this.element.closest('.field-short').length === 1);
 
         self.list
           .removeClass('dropdown-tall')
-          .addClass(isTall ? 'dropdown-tall' : '')
+          .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
           .on('click.list', 'li', function () {
             var val = $(this).attr('data-val'),

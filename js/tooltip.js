@@ -427,23 +427,11 @@
 
         this.tooltip.find('.arrow').css('right', '');
 
-        if (this.activeElement.is('.input-sm')) {
-          extraWidth = -64;
-          extraOffset = 164;
-          this.tooltip.find('.arrow').css('right', '102px');
-        }
-
-         if (this.activeElement.is('.input-xs')) {
-          extraWidth = -64;
-          extraOffset = 240;
-          this.tooltip.find('.arrow').css('right', '178px');
-        }
-
-        if (this.activeElement.is('.timepicker')) {
+        if (this.activeElement.is('.timepicker') && this.activeElement.parent().is(':not(.field-short)')) {
           extraOffset = -20;
         }
 
-        if (this.activeElement.is('.datepicker')) {
+        if (this.activeElement.is('.datepicker') && this.activeElement.parent().is(':not(.field-short)')) {
           extraOffset = -15;
         }
 
