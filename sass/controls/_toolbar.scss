@@ -229,18 +229,19 @@ $toolbar-buttonset-height: 44px;
 }
 
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
-  .toolbar:not(.formatter-toolbar) {
+  .toolbar {
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
     .btn-tertiary,
     .btn {
       min-width: 0;
+      padding: 0;
       width: auto;
 
       span:not(.audible) {
         display: inline-block;
-        //padding: 0 10px;
+        padding: 0 10px;
 
         &:last-child {
           padding-right: 10px;
@@ -251,6 +252,7 @@ $toolbar-buttonset-height: 44px;
         width: 32px;
 
         + span {
+          color: transparent;
           padding: 0;
           position: absolute;
           width: 0;

@@ -178,9 +178,31 @@
     border: 1px solid transparent;
     color: $editor-btn-color;
     min-width: 34px;
+    padding: 0 !important; //overrides some media queries
 
-    &.btn {
-      padding: 0 !important; //overrides some media queries
+    span:not(.audible) {
+      display: inline-block;
+      padding: 0 10px;
+
+      &:not(:last-child) {
+        padding-right: 0;
+      }
+
+      + .icon {
+        padding-left: 0;
+      }
+    }
+
+    .icon {
+      width: 32px;
+
+      + span:not(.audible) {
+        padding: 0;
+
+        &:last-child {
+          padding-right: 10px;
+        }
+      }
     }
 
     > .icon {
