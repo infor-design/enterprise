@@ -30,6 +30,23 @@ killServers ()
   fi
 }
 
+runXvfb()
+{
+  # run Xvfb as file descriptor 7 and export the variable
+  echo "Starting X Virtual Frame Buffer..."
+  exec 7< <(Xvfb :99 -ac -screen 0 1280x1024x24 &)
+  export DISPLAY=:99
+}
+
+checkXvfb()
+{
+  if hash Xvfb 2>/dev/null; then
+    runXvfb
+  else
+    echo 'Could not find Xvfb on this system.  Attempting to execute test suite without a virtual display. (Ignore this message if running on a development machine...)'
+  fi
+}
+
 # don't run multiple selenium JARs & standalone instances
 killServers
 
@@ -76,24 +93,24 @@ if [[ $FOUNDSELENIUM != true ]]; then
   exit 1
 fi
 
-# run Xvfb as file descriptor 7 and export the variable
-echo "Starting X Virtual Frame Buffer..."
-exec 7< <(Xvfb :99 -ac -screen 0 1280x1024x24)
-export DISPLAY=:99
+# Check for and run X Virtual Frame Buffer, if applicable
+checkXvfb
 
 echo "Starting Intern Test Suite with arguments ${INTERN_ARGS}..."
 
 # run intern, wait til it finishes.
-# config=test2/intern.local.functional
+# config=test2/intern.buildserver.functional
 # kill the servers when we're done.
 ./node_modules/.bin/intern-runner config=test2/intern.buildserver.functional
 
 # kill file descriptors #3 and #7
 killServers
 exec 3<&-
-exec 7<&-
-unset DISPLAY
+if { exec 0>&7; }; then
+  exec 7<&-
+  unset DISPLAY
+fi
 
 echo 'SoHo Xi Test Suite has been shutdown.'
 
-exit
+exit 0
