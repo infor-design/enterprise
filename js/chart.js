@@ -111,6 +111,19 @@ window.Chart = function(container) {
         textBlock.append(pct);
       }
 
+      if (series[i].display && series[i].display==='block') {
+        seriesLine.css({'float':'none', 'display':'block'});
+      }
+
+      if (series[i].display && series[i].display==='twocolumn') {
+        legend.css({'margin':'2em auto auto', 'border-top':'1px solid #ccc', 'padding-top':'1em'});
+        if($(container).width() < 400) {
+          seriesLine.css({'float':'none', 'display':'block'});
+        } else {
+          seriesLine.css({'float':'none', 'display':'inline-block', 'width': '45%'});
+        }
+      }
+
       seriesLine.append(color, textBlock);
       legend.append(seriesLine);
     }
@@ -124,6 +137,25 @@ window.Chart = function(container) {
       });
 
     $(container).append(legend);
+  };
+
+  this.renderLegend = function() {
+    if (charts.legendformatter && typeof charts.legendformatter === 'function') {    
+      var markup = '';
+      var runInterval = true,
+      legendInterval = setInterval(function () {
+        if(runInterval) {
+          runInterval = false;
+          charts.legendformatter(function (data) {
+            markup = data;
+          });
+        }
+        if(markup !== '') {
+          clearInterval(legendInterval);
+          $(container).append(markup);
+        }
+      }, 10);
+    }
   };
 
   //Add Toolbar to the page
@@ -163,6 +195,13 @@ window.Chart = function(container) {
   //Hide Tooltip
   this.hideTooltip = function() {
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
+  };
+
+  //Format Currency
+  this.formatCurrency = function(num) {
+    var symbol = (Locale.currentLocale.data ? Locale.currentLocale.data.currencySign : '$');
+    num = (isNaN(num * 1)) ? 0 : num;
+    return symbol + (num * 1).toFixed(2);
   };
 
   this.HorizontalBar = function(dataset, isNormalized, isStacked) {
@@ -505,15 +544,17 @@ window.Chart = function(container) {
 
   this.Pie = function(initialData, isDonut) {
 
-    var tooltipInterval,
-      tooltipDataCache = [],
-      tooltipData = charts.tooltip;
-
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
       labels = svg.append('g').attr('class','labels'),
       self = this,
       centerLabel = initialData[0].centerLabel;
+
+    var tooltipInterval,
+      tooltipDataCache = [],
+      tooltipData = charts.tooltip;
+
+    var labelstyle = charts.labelstyle || 'color-percentage-on-top';
 
     var chartData = initialData[0].data;
     $(container).addClass('chart-pie');
@@ -532,6 +573,29 @@ window.Chart = function(container) {
       };
 
     dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 35 : 50));
+    var total = d3.sum(chartData, function(d){ return d.value; });
+
+    //Calculate Percents for Legend
+    var arcPercentage = [],
+      lessthan10 = [];
+
+    chartData.map(function (d, i) {
+      var percentage = d3.round(100*(d.value/total));
+      arcPercentage.push(percentage);
+      if(percentage <10) {
+        lessthan10.push(i);
+      }
+      return {name: d.name, percent: d.percent, elem: d.elem};
+    });
+
+    var alpha = 0.9,
+      spacing = 45,
+      isSmaller = (spacing*lessthan10.length) > (spacing*2);
+
+    spacing = isSmaller ? 40 : 45;
+
+    dims.outerRadius = isSmaller ? (dims.outerRadius-35) : dims.outerRadius;
+    dims.outerRadius = (dims.width > 360 || isSmaller) ? dims.outerRadius : (dims.outerRadius-35);
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
     dims.labelRadius = dims.outerRadius + 11;
 
@@ -554,15 +618,25 @@ window.Chart = function(container) {
     var enteringArcs = arcs.selectAll('.arc').data(pieData).enter();
     charts.appendTooltip();
 
+    var centers = [];
     var g = enteringArcs.append('g')
-        .attr('class', 'arc')
+        .attr('class', function (d) {
+          var extra = 20,
+            mid = ((d.endAngle - d.startAngle)/2) + d.startAngle,
+            x = ((dims.outerRadius - extra) * Math.sin(mid)),
+            y = (-1 * (dims.outerRadius - extra) * Math.cos(mid));
+
+          centers.push([x,y]);
+          return 'arc';
+        })
         .attr('d', pieArcs)
         .on('contextmenu',function (d) {
           self.triggerContextMenu(d3.select(this).select('path')[0][0], d);
         })
         .on('click', function (d, i) {
           var isSelected = d3.select(this).classed('is-selected'),
-            color = charts.chartColor(i, 'pie', d.data);
+            color = charts.chartColor(i, 'pie', d.data),
+            path = d3.select(this);
 
           d3.select('.chart-container .is-selected')
             .classed('is-selected', false)
@@ -570,28 +644,20 @@ window.Chart = function(container) {
             .style('stroke-width', '1px')
             .attr('transform', '');
 
-          var path = d3.select(this);
-
           if (!isSelected) {
             path.classed('is-selected', true)
-              .style('stroke', color)
-              .style('stroke-width', 0)
-              .attr('transform', 'scale(1.025, 1.025)');
+                .style('stroke', color)
+                .style('stroke-width', 0)
+                .attr('transform', 'scale(1.025, 1.025)');
             $(container).trigger('selected', [path[0], d.data]);
             return;
           }
-
           $(container).trigger('selected', [path[0], d.data]);
         })
         .on('mouseenter', function(d, i) {
-          var size,
+          var size, x, y, t,
+            offset = parent.offset(), 
             content = '',
-            offset = parent.offset(),
-            centroid = pieArcs.centroid(d, i),
-            midAngle = Math.atan2(centroid[1], centroid[0]),
-            x = dims.width/2 + centroid[0] + offset.left,
-            y = dims.height/2 + centroid[1] + offset.top -14,
-
             show = function() {
               size = charts.getTooltipSize(content);
               x -= size.width/2;
@@ -602,8 +668,9 @@ window.Chart = function(container) {
               }
             };
 
-            x += Math.cos(midAngle) * (isDonut ? -5 : 37);
-            y += Math.sin(midAngle) * (isDonut ? -5 : 37);
+          t = d3.transform(arcs.attr('transform'));
+          x = t.translate[0] + centers[i][0] + offset.left;
+          y = t.translate[1] + centers[i][1] + offset.top -14;
 
           if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
             var runInterval = true;
@@ -620,6 +687,7 @@ window.Chart = function(container) {
               }
             }, 10);
           } else {
+            tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
             content = tooltipDataCache[i] || tooltipData || d.data.tooltip || '';
             show();
           }
@@ -674,14 +742,13 @@ window.Chart = function(container) {
           var centroid = pieArcs.centroid(d),
            midAngle = Math.atan2(centroid[1], centroid[0]),
            y = Math.sin(midAngle) * dims.labelRadius;
-
           return y;
         },
         'class': 'label-line'
     });
 
-    var total = d3.sum(chartData, function(d){ return d.value; });
-    var textLabels = labelGroups.append('text').attr({
+    var textX=[], textY=[], 
+      textLabels = labelGroups.append('text').attr({
         x: function (d) {
           var centroid = pieArcs.centroid(d),
             midAngle = Math.atan2(centroid[1], centroid[0]),
@@ -689,34 +756,61 @@ window.Chart = function(container) {
             sign = (x > 0) ? 1 : -1,
             labelX = x + (1 * sign);
 
+          textX.push(labelX);
           return labelX;
         },
         y: function (d) {
           var centroid = pieArcs.centroid(d),
             midAngle = Math.atan2(centroid[1], centroid[0]),
             y = Math.sin(midAngle) * dims.labelRadius;
-
-          return (y > 0) ? y + 25 : y;
+          textY.push(y);
+          return y;
         },
         'text-anchor': function (d) {
           var centroid = pieArcs.centroid(d),
            midAngle = Math.atan2(centroid[1], centroid[0]),
             x = Math.cos(midAngle) * dims.labelRadius;
-
           return (x > 0) ? 'start' : 'end';
         },
         'class': 'label-text'
-    }).text(function (d) {
-      return d.data.name;
     });
 
     textLabels.append('tspan').text(function(d) {
-      var toPercent = d3.format(charts.format ? charts.format : '0.0%');
-      return toPercent(d.value/total);
+      var value = (/currency/i.test(labelstyle)) ? charts.formatCurrency(d.value): d.value,
+        toPercent = d3.format(charts.format ? charts.format : '0.0%');
+      toPercent = toPercent(d.value/total);
+      return (/value-on-top/i.test(labelstyle)) ? value : toPercent;
     })
-    .attr('dx', '5')
+    .attr('class', function() {
+      return (/value-on-top/i.test(labelstyle)) ? 'lb-value' : 'lb-percentage';
+    })
     .style('font-weight', 'bold')
-    .style('font-size', '14px');
+    .style('font-size', function()  {
+      return (dims.width > 450) ? '1.6em' : '1.2em';
+    })
+    .style('fill', function(d, i) {
+      return (labelstyle.substring(0, 5)==='color') ?
+        (charts.chartColor(i, 'pie', d.data)) : '';
+    });
+
+    textLabels.append('tspan').text(function(d) {
+      return d.data.name;
+    })
+    .attr('x', function(d, i) {
+      return textX[i]-2;
+    })
+    .attr('dy', '14')
+    .attr('class', 'lb-text')    
+    .style('font-size', '1em');
+
+    if (/value-on-top/i.test(labelstyle)) {
+      textLabels.append('tspan').text(function(d) {
+        var toPercent = d3.format(charts.format ? charts.format : '0.0%');
+        return ' ('+ toPercent(d.value/total) +')';
+      })
+      .attr('class', 'lb-percentage-sm')
+      .style('font-size', '1em');
+    }
 
     if (isDonut) {
       arcs.append('text')
@@ -726,68 +820,74 @@ window.Chart = function(container) {
       .text(centerLabel);
     }
 
-    //Calculate Percents for Legend
     chartData.map(function (d, i) {
-        d.percent = d3.round(100*(d.value/total)) + '%';
-        d.elem = enteringArcs[0][i];
-
-        if (parseInt(d.percent) > 10) {
-          d3.select(textLines[0][i]).style('stroke', 'transparent');
-          // d3.select(labelGroups[0][i]).select('circle').style('fill', '#000');
-          d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
-        }
-        return {name: d.name, percent: d.percent, elem: d.elem};
-      });
-
-    var alpha = 0.9,
-    spacing = 25;
+      var percentage = d3.round(100*(d.value/total));
+      d.percent = percentage + '%';
+      d.elem = enteringArcs[0][i];
+      if (parseInt(d.percent) > 10) {
+        d3.select(textLines[0][i]).style('stroke', 'transparent');
+        d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
+      }
+      return {name: d.name, percent: d.percent, elem: d.elem};
+    });
 
     function relax() {
       var again = false;
-      textLabels.each(function () {
-          var a = this,
-            da = d3.select(this),
-            y1 = da.attr('y');
+      textLabels.each(function (d) {
+        var a = this,
+          da = d3.select(this),
+          y1 = da.attr('y');
 
-      textLabels.each(function () {
-            var b = this;
-            // a & b are the same element and don't collide.
-            if (a === b) {
-              return;
-            }
-            var db = d3.select(this);
+        if(d.startAngle === 0) {
+          y1 = Number(y1)+1;
+          da.attr('y', y1);
+        }
 
-            // a & b are on opposite sides of the chart and don't collide
-            if (da.attr('text-anchor') !== db.attr('text-anchor')) {
-              return;
-            }
+        textLabels.each(function () {
+          var b = this;
+          // a & b are the same element and don't collide.
+          if (a === b) {
+            return;
+          }
+          var db = d3.select(this);
 
-            // calculate the distance between these elements.
-            var y2 = db.attr('y'),
-              deltaY = y1 - y2;
+          // a & b are on opposite sides of the chart and don't collide
+          if (da.attr('text-anchor') !== db.attr('text-anchor')) {
+            return;
+          }
 
-            // they don't collide.
-            if (Math.abs(deltaY) > spacing) {
-              return;
-            }
+          // calculate the distance between these elements.
+          var y2 = db.attr('y'),
+            deltaY = y1 - y2;
 
-            // If the labels collide, we'll push each of the two labels up and down
-            again = true;
-            var sign = deltaY > 0 ? 1 : -1,
-              adjust = sign * alpha;
+          // they don't collide.
+          if (Math.abs(deltaY) > spacing) {
+            return;
+          }
 
-            da.attr('y', +y1 + adjust);
-            db.attr('y', +y2 - adjust);
+          // If the labels collide, we'll push each of the two labels up and down
+          again = true;
+          var sign = deltaY > 0 ? 1 : -1,
+            adjust = sign * alpha;
+
+          da.attr('y', +y1 + adjust);
+          db.attr('y', +y2 - adjust);
         });
       });
 
       // Adjust our line leaders
       if (again) {
 
+        textLabels.attr('y',function() {
+          var y = Number(d3.select(this).attr('y'));
+          return y > 0 ? (isSmaller ? (y-0.8) : (y+1)) : (isSmaller ? (y-1.8) : (y-1));
+        });
+
         var labelElements = textLabels[0];
         textLines.attr('y2',function(d,i) {
-          var labelForLine = d3.select(labelElements[i]);
-          return labelForLine.attr('y');
+          var labelForLine = d3.select(labelElements[i]),
+            y = labelForLine.attr('y');
+          return y;
         });
 
         relax();
@@ -795,9 +895,158 @@ window.Chart = function(container) {
     }
 
     relax();
-    $(container).trigger('rendered');
 
+    var resizeFontsTo = function(size) {
+      svg.selectAll('.label').each(function (d, i) {
+        var label = d3.select(this),
+          lbText = label.select('.label-text'),
+          lbLine = label.select('.label-line'),
+          lbPercentage = lbText.select('.lb-percentage'),
+          y = Number(lbText.attr('y'));
+
+        y = arcPercentage[i]<10 ? y+20 : y;
+
+        lbText.attr('y', y);
+        lbLine.attr('y2', y);
+        lbPercentage.style('font-size', size);
+      });
+    };
+
+    var removeLinebreak = function() {
+      svg.selectAll('.label').each(function () {
+        var label = d3.select(this),
+          labelText = label.select('.label-text'),
+          lbLine = label.select('.label-line'),
+          lbText = labelText.select('.lb-text'),
+          y = Number(labelText.attr('y')),
+          removed = labelText.select('.lb-percentage').remove();
+
+        labelText.append(function() {
+          return removed.node();
+        });
+
+        lbText.attr('dy', null).text(lbText.text()+' ');
+        lbLine.attr('y2', y);
+        labelText.attr('y', y);
+        removed.style('font-size', '1em');
+      });
+    };
+
+    //-----------------------------------------
+    svg.selectAll('.labels').each(function () {
+      var labels = d3.select(this),
+      rect1 = this.getBoundingClientRect();
+      // console.log(initialData[0].data);
+      // console.log(rect1.top);
+      if(rect1.left < 45) {
+        charts.applyAltLabels(svg, initialData[0].data, 'shortName', '.label-text tspan.lb-text');
+      }
+
+      if(rect1.top < 95) {
+        // console.log(1);
+        charts.elementTransform({'element': arcs, 'addtoY': 85});
+        charts.elementTransform({'element': labels, 'addtoY': 85});
+        removeLinebreak();
+      }
+      else if(rect1.top < 105) {
+        // console.log(2);
+        charts.elementTransform({'element': arcs, 'addtoY': 60});
+        charts.elementTransform({'element': labels, 'addtoY': 60});
+        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 2});
+        resizeFontsTo('1.1em');
+      }
+      else if(rect1.top < 115) {
+        // console.log(3);
+        charts.elementTransform({'element': arcs, 'addtoY': 65});
+        charts.elementTransform({'element': labels, 'addtoY': 65});
+      }
+      else if(rect1.top < 125) {
+        // console.log(4);
+        charts.elementTransform({'element': arcs, 'addtoY': 62});
+        charts.elementTransform({'element': labels, 'addtoY': 62});
+      }
+      else if(rect1.top < 135) {
+        // console.log(5);
+        charts.elementTransform({'element': arcs, 'addtoY': 45});
+        charts.elementTransform({'element': labels, 'addtoY': 45});
+      }
+      else if(rect1.top < 145) {
+        // console.log(6);
+        charts.elementTransform({'element': arcs, 'addtoY': 40});
+        charts.elementTransform({'element': labels, 'addtoY': 40});
+      }
+      else if(rect1.top < 155) {
+        // console.log(7);
+        charts.elementTransform({'element': arcs, 'addtoY': 30});
+        charts.elementTransform({'element': labels, 'addtoY': 30});
+      }
+      else if(rect1.top < 165) {
+        // console.log(8);
+        charts.elementTransform({'element': arcs, 'addtoY': 20});
+        charts.elementTransform({'element': labels, 'addtoY': 20});
+        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
+      }
+      else if(rect1.top < 185) {
+        // console.log(9);
+        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 3});
+      }
+      else if(rect1.top < 205) {
+        // console.log(10);
+        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
+      }
+    });
+
+    //Get the Legend Series'
+    var series = initialData[0].data.map(function (d) {
+      var name = d.name +', '+ d.value +' ('+ d.percent +')';
+      return {name:name, display:'twocolumn'};
+    });
+
+    //Add Legends
+    if (!charts.legendhide) {
+      charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
+    }
+    //-----------------------------------------
+
+    $(container).trigger('rendered');
     return $(container);
+  };
+
+  this.elementTransform = function(options) {
+    options.element.attr('transform', function () {
+      var el = options.sameAs || this,
+        t = d3.transform(d3.select(el).attr('transform')),
+        x = t.translate[0],
+        y = t.translate[1];
+
+      x = options.addtoX ? (x>0?(x+options.addtoX):(x-options.addtoX)) : x;
+      y = options.addtoY ? (y>0?(y+options.addtoY):(y-options.addtoY)) : y;
+      return 'translate('+ x +','+ y +')';
+    });
+  };
+
+  this.moveLabels = function(options) {
+    var labelElements = options.textLabels[0];
+    if (options.addtoX) {
+      options.textLabels.attr('x',function() {
+        var x = d3.select(this).attr('x');
+        return x > 0 ? (x + options.addtoX) : (x - options.addtoX);
+      });
+      options.textLines.attr('x2',function(d, i) {
+        var labelForLine = d3.select(labelElements[i]);
+        return labelForLine.attr('x');
+      });
+    }
+    else if (options.addtoY) {
+      options.textLabels.attr('y',function() {
+        var y = Number(d3.select(this).attr('y'));
+        return y > 0 ? (y + options.addtoY) : (y - options.addtoY);
+      });
+      options.textLines.attr('y2',function(d, i) {
+        var labelForLine = d3.select(labelElements[i]);
+        return labelForLine.attr('y');
+      });
+    }
   };
 
   //TODO: Test this with two charts on the page.
@@ -1372,11 +1621,13 @@ window.Chart = function(container) {
     return collides;
   };
 
-  this.applyAltLabels = function(svg, dataArray, elem) {
-    var ticks = svg.selectAll('.x text');
+  this.applyAltLabels = function(svg, dataArray, elem, selector) {
+    var ticks = selector ? svg.selectAll(selector) : svg.selectAll('.x text');
 
     ticks.each(function(d, i) {
-      d3.select(this).text(dataArray[i][elem]);
+      var text = dataArray[i][elem];
+      text = text || d3.select(this).text().substring(0, 7) +'...';
+      d3.select(this).text(text);
     });
   };
 
@@ -1711,6 +1962,21 @@ window.Chart = function(container) {
     }
     if (options.tooltip) {
       this.tooltip = options.tooltip;
+    }
+    if (options.legendhide) {
+      this.legendhide = options.legendhide;
+    }
+    if (options.legendformatter) {
+      this.legendformatter = options.legendformatter;
+    }
+    if (options.labelstyle) {
+      // 'color-percentage-on-top' (default)
+      // 'percentage-on-top'
+      // 'color-value-on-top'
+      // 'value-on-top'
+      // 'color-value-on-top-as-currency'
+      // 'value-on-top-as-currency'
+      this.labelstyle = options.labelstyle;
     }
     if (options.type === 'pie') {
       this.Pie(options.dataset);

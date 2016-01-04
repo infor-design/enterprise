@@ -976,6 +976,11 @@ $.fn.datagrid = function(options) {
 
       });
 
+      var columnSettings = this.columnById(id);
+      if (columnSettings[0].width) {
+        columnSettings[0].width = width;
+      }
+
       if (self.fixedHeader) {
         self.headerNodes().each(function (i) {
           var w = $(this).outerWidth();
