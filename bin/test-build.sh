@@ -2,6 +2,9 @@
 # Run SoHo Xi testing suite on the build server.
 # First, runs the Intern unit tests.
 # Then, starts Selenium, The Intern, and cleans up afterward.
+#
+# NOTE:  This script has a hard dependency on X Virtual Frame Buffer, needed to headlessly run Firefox/Chrome/etc
+# http://elementalselenium.com/tips/38-headless
 
 echo "Starting SoHo Xi Test Suite..."
 
@@ -51,7 +54,7 @@ if [[ $FOUNDSOHO != true ]]; then
 fi
 
 # run Intern once using the "client", to run Unit tests only
-./node_modules/.bin/intern-client config=test2/intern.local.unit
+./node_modules/.bin/intern-client config=test2/intern.buildserver.unit
 
 # start selenium
 # set this up as file descriptor #6
@@ -73,16 +76,24 @@ if [[ $FOUNDSELENIUM != true ]]; then
   exit 1
 fi
 
+# run Xvfb as file descriptor 7 and export the variable
+echo "Starting X Virtual Frame Buffer..."
+exec 7< <(Xvfb :99 -ac -screen 0 1280x1024x24)
+export DISPLAY=:99
+
 echo "Starting Intern Test Suite with arguments ${INTERN_ARGS}..."
 
 # run intern, wait til it finishes.
 # config=test2/intern.local.functional
 # kill the servers when we're done.
-./node_modules/.bin/intern-runner config=test2/intern.local.functional && killServers
+./node_modules/.bin/intern-runner config=test2/intern.buildserver.functional
 
-# kill file descriptor #3
+# kill file descriptors #3 and #7
+killServers
 exec 3<&-
+exec 7<&-
+unset DISPLAY
 
 echo 'SoHo Xi Test Suite has been shutdown.'
 
-exit $?
+exit
