@@ -349,12 +349,12 @@
               return;
             }
 
-            // Spacebar acts like Enter if there aren't any checkboxes (trigger links, etc)
-            e.preventDefault();
-
             var a = $();
+
             // Return here and let Tabs control handle the spacebar
             if (target.is('.tab') || target.parent().is('.tab') || target.is('.tab-more')) {
+              // Spacebar acts like Enter if there aren't any checkboxes (trigger links, etc)
+              e.preventDefault();
               return;
             }
             if (target.is('li')) {
