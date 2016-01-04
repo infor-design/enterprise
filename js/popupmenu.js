@@ -142,6 +142,11 @@
           wrapper.addClass('bottom').append(arrow);
         }
 
+        // If inside of a ".field-short" container, make smaller
+        if (this.element.closest('.field-short').length) {
+          this.menu.addClass('popupmenu-short');
+        }
+
         // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
         if (containerClass !== undefined &&
           (this.element.closest('.masthead').length > 0)) {
@@ -520,6 +525,11 @@
           wrapper.css({'top': target.offset().top + target.outerHeight() + 15 }).children('.arrow')
             .removeAttr('style')
             .css({'left': '30px', 'right': 'auto'});
+        }
+
+        // Locale: Right to Left
+        if(Locale.isRTL() && (this.menu[0].id === 'colorpicker-menu')) {
+          wrapper.css('left', parseInt(wrapper.css('left'), 10) -29);
         }
 
       },

@@ -357,9 +357,8 @@ input.multiselect {
 
   input.dropdown {
     @include font-size(12);
-    padding: 5px 28px 5px 5px;
-    margin-bottom: 0px;
-    width: 150px;
+    margin-bottom: 0;
+    padding: 5px 18px 5px 5px;
   }
 
   input.dropdown + .icon,
@@ -376,21 +375,96 @@ input.multiselect {
 
 }
 
-//Drop Down List
-.dropdown-list.dropdown-tall {
+// Different Width Dropdowns
+.dropdown-lg,
+.field-short .dropdown-lg {
+  width: 403px;
+}
+
+.dropdown-md,
+.field-short .dropdown-md {
+  width: 303px;
+}
+
+.dropdown-sm,
+.field-short .dropdown-sm {
+  width: 150px;
+}
+
+.dropdown-xs,
+.field-short .dropdown-xs {
+  width: 75px;
+}
+
+// Shorter Drop Down Lists
+.dropdown-list.dropdown-short {
 
   input {
     @include font-size(12);
+    padding: 5px 32px 5px 5px;
   }
 
   ul {
     @include font-size(12);
-    line-height: 30px;
+    line-height: 25px;
+    text-indent: 5px;
   }
 
-  > .icon {
-    height: 30px;
-    margin-left: -24px;
+  > .icon,
+  > .icon.search {
+    height: 24px;
+    margin-left: -21px;
+    margin-top: 0;
     width: 16px;
   }
+}
+
+
+//RTL Styles
+html[dir='rtl'] {
+
+  input.dropdown,
+  input.multiselect {
+    padding: 9px 10px 8px 32px;
+
+    // Icon States
+    + .icon {
+      margin-left: inherit;
+      margin-right: -33px;
+      left: 6px;
+      right: auto;
+    }
+  }
+
+  // The List
+  .dropdown-list {
+
+    &.multiple {
+      
+      li.is-selected:not(.group-label):after {
+        left: inherit;
+        right: 21px;
+      }
+
+      li.is-disabled.is-selected:not(.group-label):after {
+        left: inherit;
+        right: 21px;
+      }
+    }
+
+    > .icon {
+      margin-left: inherit;
+      margin-right: -26px;
+
+      &.search {
+        margin-left: inherit;
+        margin-right: -26px;
+      }
+    }
+  }
+
+  .dropdown-search {
+    padding: 9px 10px 8px 32px;
+  }
+
 }

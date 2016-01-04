@@ -325,19 +325,45 @@
     border-bottom: 1px solid $popupmenu-border-color;
     margin: 10px 0;
   }
+
+  // Short fields
+  // Some javascript in "popupmenu.js" that facilitates this.
+  &.popupmenu-short {
+    a {
+      line-height: 24px;
+      padding: 0 25px 0 10px;
+    }
+
+    li {
+      &.is-checked,
+      &.is-checked.is-selected {
+        > a:before {
+          height: 11px;
+          left: 8px;
+          width: 5px;
+        }
+      }
+    }
+
+    &.has-icons {
+      > li a {
+        padding-left: 25px;
+      }
+    }
+  }
 }
 
 //RTL Styles
 html[dir='rtl'] {
 
   .popupmenu.has-icons > li a {
-    padding-left: 0;
+    padding-left: 30px;
     padding-right: 40px;
   }
 
   .popupmenu li.is-checked > a::before,
   .popupmenu li.is-checked.is-selected > a::before {
-    left: 0;
+    left: auto;
     right: 13px;
   }
 

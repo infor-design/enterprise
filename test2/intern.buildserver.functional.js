@@ -63,7 +63,7 @@ define({
 
   reporters: [
     { 'id': 'JUnit', 'filename': 'junit-functional.xml' },
-    { 'id': 'Pretty'}
+    { 'id': 'Console' }
   ],
 
   // Non-functional test suite(s) to run in each browser

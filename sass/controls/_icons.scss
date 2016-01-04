@@ -283,3 +283,26 @@ svg.icon-logo {
   -webkit-transition: none 0s ease 0s !important;
   transition: none 0s ease 0s !important;
 }
+
+//RTL Styles
+html[dir='rtl'] {
+  .icon.app-header {
+    &.go-back {
+      span.one {
+        @include css3(transform, rotate(45deg) translateX(5.75px) translateY(-2.5px) scaleX(.6));
+      }
+
+      span.three {
+        @include css3(transform, rotate(-45deg) translateX(5.75px) translateY(2.5px) scaleX(.6));
+      }
+    }
+  }
+
+  .img-placeholder {
+    svg {
+      margin-left: inherit;
+      margin-right: 26px;
+    }
+
+  }
+}

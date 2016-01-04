@@ -2,6 +2,9 @@
 # Run SoHo Xi testing suite on the build server.
 # First, runs the Intern unit tests.
 # Then, starts Selenium, The Intern, and cleans up afterward.
+#
+# NOTE:  This script has a hard dependency on X Virtual Frame Buffer, needed to headlessly run Firefox/Chrome/etc
+# http://elementalselenium.com/tips/38-headless
 
 echo "Starting SoHo Xi Test Suite..."
 
@@ -24,6 +27,23 @@ killServers ()
   if [[ $SERVER_PID ]]; then
     echo '"selenium-standalone" server process found.  Stopping "selenium-standalone"...'
     kill -9 $SERVER_PID
+  fi
+}
+
+runXvfb()
+{
+  # run Xvfb as file descriptor 7 and export the variable
+  echo "Starting X Virtual Frame Buffer..."
+  exec 7< <(Xvfb :99 -ac -screen 0 1280x1024x24 &)
+  export DISPLAY=:99
+}
+
+checkXvfb()
+{
+  if hash Xvfb 2>/dev/null; then
+    runXvfb
+  else
+    echo 'Could not find Xvfb on this system.  Attempting to execute test suite without a virtual display. (Ignore this message if running on a development machine...)'
   fi
 }
 
@@ -51,7 +71,7 @@ if [[ $FOUNDSOHO != true ]]; then
 fi
 
 # run Intern once using the "client", to run Unit tests only
-./node_modules/.bin/intern-client config=test2/intern.local.unit
+./node_modules/.bin/intern-client config=test2/intern.buildserver.unit
 
 # start selenium
 # set this up as file descriptor #6
@@ -73,16 +93,24 @@ if [[ $FOUNDSELENIUM != true ]]; then
   exit 1
 fi
 
+# Check for and run X Virtual Frame Buffer, if applicable
+checkXvfb
+
 echo "Starting Intern Test Suite with arguments ${INTERN_ARGS}..."
 
 # run intern, wait til it finishes.
-# config=test2/intern.local.functional
+# config=test2/intern.buildserver.functional
 # kill the servers when we're done.
-./node_modules/.bin/intern-runner config=test2/intern.local.functional && killServers
+./node_modules/.bin/intern-runner config=test2/intern.buildserver.functional
 
-# kill file descriptor #3
+# kill file descriptors #3 and #7
+killServers
 exec 3<&-
+if { exec 0>&7; }; then
+  exec 7<&-
+  unset DISPLAY
+fi
 
 echo 'SoHo Xi Test Suite has been shutdown.'
 
-exit $?
+exit 0

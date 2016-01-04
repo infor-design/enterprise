@@ -127,6 +127,8 @@
       // Toggle / Open the List
       toggleList: function () {
         var self = this;
+          // firsttime = true;
+
         if (self.element.is(':disabled')) {
           return;
         }
@@ -135,9 +137,17 @@
         self.updateColorMenu();
 
         // Show Menu
-        self.swatch.popupmenu({trigger: 'immediate', ariaListbox: true, menuId: 'colorpicker-menu'})
+        self.swatch
+        .popupmenu({trigger: 'immediate', ariaListbox: true, menuId: 'colorpicker-menu'})
         .on('open.colorpicker', function () {
           self.element.parent().addClass('is-open');
+          // var menu = $('#colorpicker-menu').closest('.popupmenu-wrapper');
+          // if (Locale.isRTL() && firsttime) {
+          //   firsttime = false;
+          //   setTimeout(function(){
+          //     menu.css('left', parseInt(menu.css('left'), 10) -29);
+          //   },0);
+          // }
         })
         .on('close.colorpicker', function () {
           $('#colorpicker-menu').parent('.popupmenu-wrapper').remove();

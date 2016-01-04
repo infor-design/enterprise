@@ -108,3 +108,31 @@
     }
   }
 }
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .colorpicker {
+    
+    // Color Piece
+    + .swatch {
+      border-left: inherit;
+      border-right: 1px solid $input-border-color;
+      left: inherit;
+      right: -10px;
+
+      // Trigger Button
+      .icon {
+        left: inherit;
+        right: 37px;
+      }
+    }
+
+    //Open/Focus State is in the input
+    &.is-open + .swatch {
+      border-left-color: inherit;
+      border-right-color: transparent;
+    }
+  }
+
+}

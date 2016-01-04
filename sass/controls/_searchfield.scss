@@ -33,6 +33,7 @@
 
   .searchfield {
     padding-left: 34px;
+    padding-right: 34px;
 
     &.empty {
       + .icon + .icon.close {
@@ -95,6 +96,24 @@
 
     &:-ms-input-placeholder {
       color: transparent !important;
+    }
+  }
+}
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .searchfield-wrapper {
+    > .icon {
+      &:not(.close) {
+        left: auto;
+        right: 0;
+      }
+
+      &.close {
+        left: 0;
+        right: auto;
+      }
     }
   }
 }

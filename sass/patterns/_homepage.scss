@@ -245,3 +245,36 @@
   overflow: hidden;
   text-align: center;
 }
+
+//RTL Styles
+html[dir='rtl'] {
+  .card,
+  .widget {
+
+    .card-header,
+    .widget-header {
+
+      &.has-toolbar {
+        padding: 0 20px 0 13px;
+
+        .searchfield-wrapper {
+          margin: 8px 0 5px 5px;
+        }
+      }
+
+      > button {
+        float: right;
+      }
+      > h2,
+      > h1 {
+        float: right;
+        width: 100%;
+      }
+
+      &:not(.has-toolbar) > .btn-actions {
+        left: 18px;
+        right: auto;
+      }
+    }
+  }
+}

@@ -272,3 +272,15 @@
   }
 }
 
+// Short fields
+.field-short {
+  .datepicker {
+    padding-right: 18px;
+
+    + .icon {
+      height: 13px;
+      margin-left: -18px;
+      margin-top: 6px;
+    }
+  }
+}

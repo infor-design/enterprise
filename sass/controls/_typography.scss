@@ -114,7 +114,6 @@ label,
   color: $label-color;
   display: block;
   @include font-size(12);
-  height: 13px;
   line-height: 13px;
   margin-bottom: 5px;
 }

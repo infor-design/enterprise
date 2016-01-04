@@ -154,7 +154,7 @@ a.btn-menu {
   }
 }
 
-@-moz-document url-prefix() { 
+@-moz-document url-prefix() {
   a.btn,
   a.btn-primary,
   a.btn-secondary,
@@ -387,4 +387,75 @@ a.btn-menu {
 
 
  	}
+}
+
+// Short field buttons
+.field-short {
+  [class*="btn"] {
+    height: 25px;
+    margin-bottom: 10px;
+    min-width: 0;
+
+    > .icon:not(.icon-dropdown) {
+      height: 14px;
+    }
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary,
+  .btn-menu,
+  .btn-icon,
+  .btn-actions,
+  .btn-close {
+    padding: 0 5px;
+  }
+
+  .btn-icon,
+  .btn-actions,
+  .btn-close {
+    border-radius: 12px;
+  }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+  button {
+    margin-left: 5px;
+
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+
+  // How all button types will deal with iconography
+  [class^="btn"] {
+    > .icon {
+
+      + span:not(.audible) {
+        padding-right: 6px;
+      }
+
+      + * + span {
+        padding-right: 0;
+      }
+    }
+
+    span {
+      + .icon {
+        padding-right: 5px;
+      }
+
+      + * + .icon {
+        padding-right: 5px;
+      }
+
+      &.audible {
+        + .icon {
+          padding-right: 0;
+        }
+      }
+    }
+  }
 }
