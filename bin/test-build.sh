@@ -54,7 +54,7 @@ if [[ $FOUNDSOHO != true ]]; then
 fi
 
 # run Intern once using the "client", to run Unit tests only
-./node_modules/.bin/intern-client config=test2/intern.local.unit
+./node_modules/.bin/intern-client config=test2/intern.buildserver.unit
 
 # start selenium
 # set this up as file descriptor #6
@@ -86,13 +86,14 @@ echo "Starting Intern Test Suite with arguments ${INTERN_ARGS}..."
 # run intern, wait til it finishes.
 # config=test2/intern.local.functional
 # kill the servers when we're done.
-./node_modules/.bin/intern-runner config=test2/intern.local.functional && killServers
+./node_modules/.bin/intern-runner config=test2/intern.buildserver.functional
 
 # kill file descriptors #3 and #7
+killServers
 exec 3<&-
-exec 6<&-
+exec 7<&-
 unset DISPLAY
 
 echo 'SoHo Xi Test Suite has been shutdown.'
 
-exit $?
+exit
