@@ -7,7 +7,7 @@
     list-style: none;
 
     &:after {
-      content: '/';
+      content: '\002F';
       padding: 0 12px;
     }
 
@@ -60,5 +60,22 @@
     position: relative;
     top: -2px;
     vertical-align: middle;
+  }
+}
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .breadcrumb {
+    li {
+
+      &:after {
+        content: '\005C';
+      }
+
+      &:last-child:after {
+        content: '';
+      }
+    }
   }
 }

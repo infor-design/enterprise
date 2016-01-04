@@ -1630,12 +1630,20 @@ $.fn.datagrid = function(options) {
 
           //Home, End or Ctrl/Meta + Left/Right arrow to move to the first or last
           if (/35|36/i.test(key) || ((e.ctrlKey || e.metaKey) && /37|39/i.test(key))) {
-            move = (key === 35 || ((e.ctrlKey || e.metaKey) && key === 39)) ? length : 1;
+            if (Locale.isRTL()) {
+              move = (key === 36 || ((e.ctrlKey || e.metaKey) && key === 37)) ? length : 1;
+            } else {
+              move = (key === 35 || ((e.ctrlKey || e.metaKey) && key === 39)) ? length : 1;
+            }
           }
 
           // Left and Right arrow
           else {
-            move = key === 37 ? (index > 1 ? index-1 : length) : (index < length ? index+1 : 1);
+            if (Locale.isRTL()) {
+              move = key === 39 ? (index > 1 ? index-1 : length) : (index < length ? index+1 : 1);
+            } else {
+              move = key === 37 ? (index > 1 ? index-1 : length) : (index < length ? index+1 : 1);
+            }
           }
 
           // Makeing move
@@ -1716,13 +1724,21 @@ $.fn.datagrid = function(options) {
           handled = false;
 
         //Left and Right to navigate by cell.
-        if (key === 37 && !e.altKey && !self.editor) {
-          self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
+        if (/37|39/i.test(key) && !e.altKey && !self.editor) {
+          if ((key === 37 && !Locale.isRTL()) || (key === 39 && Locale.isRTL())) {
+            self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
+          } else {
+            self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
+          }
         }
 
-        if (key === 39 && !e.altKey && !self.editor) {
-          self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
-        }
+        // if (key === 37 && !e.altKey && !self.editor) {
+        //   self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
+        // }
+
+        // if (key === 39 && !e.altKey && !self.editor) {
+        //   self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
+        // }
 
         //Up and Down to navigate by row.
         if (key === 38 && !e.altKey && !self.editor) {

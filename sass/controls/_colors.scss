@@ -92,3 +92,14 @@
 span.alert-green {
   color: #50773e;
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .palette-table {
+    th {
+      text-align: right;
+      padding-right: 25px;
+    }
+  }
+}

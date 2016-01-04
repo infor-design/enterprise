@@ -95,12 +95,13 @@
 
           //Set css class
           input.addClass('dirty');
-          if ((input.attr('type')==='checkbox' || input.attr('type')==='radio') && input.is(':checked')) {
-            cssClass += ' is-checked';
+          if ((input.attr('type')==='checkbox' || input.attr('type')==='radio')) {
+            cssClass +=' dirty-'+ input.attr('type') + 
+                      (input.is(':checked') ? ' is-checked' : '');
           }
           if (input.is('select')) {
             cssClass += ' is-select';
-            el = $('.dropdown-wrapper input[type="text"]', field);
+           el = $('.dropdown-wrapper input[type="text"]', field);
           }
 
           //Add class and icon

@@ -156,8 +156,8 @@
           this.container.add(this.overlay).css({
             left: rect.left,
             top: rect.top,
-            bottom: rect.top + h,
-            right: rect.left + w,
+            bottom: rect.bottom,
+            right: rect.right,
             height: h,
             width: w
           });

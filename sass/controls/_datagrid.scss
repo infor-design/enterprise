@@ -691,3 +691,31 @@ td.datagrid-trigger-cell {
 }
 
 
+//RTL Styles
+html[dir='rtl'] {
+  .datagrid-column-wrapper {
+    margin-left: inherit;
+    margin-right: 20px;
+  }
+
+  //Grid Checkboxes
+  .datagrid-checkbox {
+    left: auto;
+    right: -10px;
+
+    &:before {
+      margin-left: inherit;
+      margin-right: 0;
+    }
+
+    &.is-checked:after {
+      left: auto;
+      right: 6px;
+    }
+
+    &.is-partial:after {
+      margin-left: inherit;
+      margin-right: -3px;
+    }
+  }
+}

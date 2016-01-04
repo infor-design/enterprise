@@ -357,13 +357,13 @@
 html[dir='rtl'] {
 
   .popupmenu.has-icons > li a {
-    padding-left: 0;
+    padding-left: 30px;
     padding-right: 40px;
   }
 
   .popupmenu li.is-checked > a::before,
   .popupmenu li.is-checked.is-selected > a::before {
-    left: 0;
+    left: auto;
     right: 13px;
   }
 
