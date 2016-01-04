@@ -85,3 +85,28 @@ html[dir="rtl"] {
     text-overflow: ellipsis;
   }
 }
+
+// Short fields
+.field-short {
+  .lookup-wrapper {
+    margin-bottom: 0;
+
+    .trigger {
+      height: 24px;
+      margin-left: -19px;
+      width: 18px;
+
+      .icon {
+        height: 16px;
+        top: 5px;
+        width: 18px;
+      }
+    }
+  }
+
+  input.lookup {
+    padding-right: 18px;
+  }
+}
+
+

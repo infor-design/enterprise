@@ -142,6 +142,11 @@
           wrapper.addClass('bottom').append(arrow);
         }
 
+        // If inside of a ".field-short" container, make smaller
+        if (this.element.closest('.field-short').length) {
+          this.menu.addClass('popupmenu-short');
+        }
+
         // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
         if (containerClass !== undefined &&
           (this.element.closest('.masthead').length > 0)) {

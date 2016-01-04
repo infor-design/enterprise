@@ -154,7 +154,7 @@ a.btn-menu {
   }
 }
 
-@-moz-document url-prefix() { 
+@-moz-document url-prefix() {
   a.btn,
   a.btn-primary,
   a.btn-secondary,
@@ -387,4 +387,34 @@ a.btn-menu {
 
 
  	}
+}
+
+// Short field buttons
+.field-short {
+  [class*="btn"] {
+    height: 25px;
+    margin-bottom: 10px;
+    min-width: 0;
+
+    > .icon:not(.icon-dropdown) {
+      height: 14px;
+    }
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary,
+  .btn-menu,
+  .btn-icon,
+  .btn-actions,
+  .btn-close {
+    padding: 0 5px;
+  }
+
+  .btn-icon,
+  .btn-actions,
+  .btn-close {
+    border-radius: 12px;
+  }
 }
