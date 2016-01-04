@@ -527,6 +527,11 @@
             .css({'left': '30px', 'right': 'auto'});
         }
 
+        // Locale: Right to Left
+        if(Locale.isRTL() && (this.menu[0].id === 'colorpicker-menu')) {
+          wrapper.css('left', parseInt(wrapper.css('left'), 10) -29);
+        }
+
       },
 
       open: function(e, ajaxReturn) {

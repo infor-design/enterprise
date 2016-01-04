@@ -356,3 +356,17 @@ textarea.error:focus {
 .input-full {
   width: 100%;
 }
+
+//RTL Styles
+html[dir='rtl'] {
+  .field .checkbox-label,
+  .field .checkbox > label {
+    margin-left: inherit;
+    margin-right: -5px;
+  }
+
+  input,
+  textarea {
+    text-align: right;
+  }
+}

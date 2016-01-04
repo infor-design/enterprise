@@ -184,3 +184,62 @@ input + .busy-indicator-container,
     }
   }
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .busy-indicator {
+    .bar {
+      margin-left: .5em;
+      margin-right: 0;
+
+      &:last-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  // Display changes based on host element type
+  input + .busy-indicator-container,
+  .dropdown-wrapper > .busy-indicator-container {
+    .busy-indicator {
+      left: 0;
+      right: auto;
+
+      .bar {
+        margin-left: .3em;
+        margin-right: 0;
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .busy-xs {
+    .busy-indicator {
+      .bar {
+        margin-left: .1em;
+        margin-right: 0;
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .busy-sm {
+    .busy-indicator {
+      .bar {
+        margin-left: .3em;
+        margin-right: 0;
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}

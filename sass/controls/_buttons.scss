@@ -418,3 +418,44 @@ a.btn-menu {
     border-radius: 12px;
   }
 }
+
+//RTL Styles
+html[dir='rtl'] {
+  button {
+    margin-left: 5px;
+
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+
+  // How all button types will deal with iconography
+  [class^="btn"] {
+    > .icon {
+
+      + span:not(.audible) {
+        padding-right: 6px;
+      }
+
+      + * + span {
+        padding-right: 0;
+      }
+    }
+
+    span {
+      + .icon {
+        padding-right: 5px;
+      }
+
+      + * + .icon {
+        padding-right: 5px;
+      }
+
+      &.audible {
+        + .icon {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}

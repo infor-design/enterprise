@@ -250,3 +250,40 @@ span.checkbox > input:hover + label:before {
     margin-left: 0;
   }
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+
+  input.checkbox:checked + label:after,
+  input.checkbox:checked + input[type="hidden"] + label:after,
+  span.checkbox > input:checked + label:after {
+    left: auto;
+    right: 14px;
+  }
+
+  input.checkbox + label,
+  input.checkbox + input[type="hidden"] + label,
+  span.checkbox > label {
+    padding-left: inherit;
+    padding-right: 32px;
+  }
+
+  input.checkbox + label:before,
+  input.checkbox + input[type="hidden"] + label:before,
+  span.checkbox > label:before {
+    margin-left: inherit;
+    margin-right: -27px;
+  }
+
+  input.checkbox.partial:checked + label:after,
+  input.checkbox.partial:checked + input[type="hidden"] + label:after,
+  span.checkbox.partial > input:checked + label:after {
+    right: 8px;
+  }
+
+  .dirty-checkbox {
+    right: 8px;
+  }
+
+}

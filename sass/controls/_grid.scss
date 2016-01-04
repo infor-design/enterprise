@@ -150,3 +150,25 @@ $gutter-neg-size: -20px;
     width: calc(50% - 20px);
   }
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .row {
+    .column,
+    .columns {
+      float: right;
+
+      &.l-center {
+        .field {
+          text-align: center;
+
+          label {
+            text-align: right;
+          }
+        }
+      }
+
+    }
+  }
+}

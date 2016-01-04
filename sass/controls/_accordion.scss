@@ -670,3 +670,163 @@
 .accordion-content {
   padding: 14px 0;
 }
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .accordion {
+    // Reset the padding for various things when we have icons present
+    &.has-icons {
+      // Level 1
+
+      > .accordion-header {
+        > a {
+          padding-right: 55px;
+        }
+
+        > .icon,
+        > [class^="btn"] {
+
+          + a {
+            padding-right: 0;
+          }
+        }
+      }
+
+      .accordion-pane {
+        .accordion-content {
+          padding-right: 55px;
+        }
+
+        // Level 2
+        .accordion-header {
+          > a {
+            padding-right: 55px;
+          }
+
+          > .icon,
+          > [class^="btn"] {
+            margin-left: 7px;
+
+            + a {
+              padding-right: 0;
+            }
+          }
+        }
+
+        .accordion-pane {
+          .accordion-content {
+            padding-right: 83px;
+          }
+
+          // Level 3
+          .accordion-header {
+            > a {
+              padding-right: 88px;
+            }
+
+            > .icon,
+            > [class^="btn"] {
+
+              + a {
+                padding-right: 0;
+              }
+            }
+          }
+
+          .accordion-pane {
+            .accordion-content {
+              padding-right: 120px;
+            }
+
+            // Level 4
+            .accordion-header {
+              > a {
+                padding-right: 120px;
+              }
+
+              > .icon,
+              > [class^="btn"] {
+
+                + a {
+                  padding-right: 0;
+                }
+              }
+            }
+
+            .accordion-pane {
+              .accordion-content {
+                padding-right: 153px;
+              }
+
+              // Level 5
+              .accordion-header {
+                > a {
+                  padding-right: 152px;
+                }
+
+                > .icon,
+                > [class^="btn"] {
+
+                  + a {
+                    padding-right: 0;
+                  }
+                }
+              }
+
+              .accordion-pane {
+                .accordion-content {
+                  padding-right: 185px;
+                }
+
+                // Level 6
+                .accordion-header {
+                  > a {
+                    padding-right: 184px;
+                  }
+
+                  > .icon,
+                  > [class^="btn"] {
+
+                    + a {
+                      padding-right: 0;
+                    }
+                  }
+                }
+
+                .accordion-pane {
+                  .accordion-content {
+                    padding-right: 216px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .accordion-header {
+    > a {
+      padding: 14px 20px 14px 0;
+    }
+
+    &.has-chevron {
+      // > [class^="btn"] {
+      //   padding: 0;
+      // }
+
+      // > a {
+      //   width: calc(100% - 55px);
+      // }
+
+      > .icon {
+        + a {
+          padding-right: initial;
+          // width: calc(100% - 109px);
+        }
+      }
+    }
+  }
+}
