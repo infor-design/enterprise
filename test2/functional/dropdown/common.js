@@ -141,6 +141,10 @@ define([
           },
 
           'can not receive focus while disabled': function() {
+            // NOTE: This test is skipped because the tab key doesn't work in Firefox.  May be a bug in Intern/Webdriver
+            // https://github.com/theintern/intern/issues/564
+            this.skip();
+
             // select something focusable, attempt to key over to the dropdown without success
             return this.remote
               .findById('towns-optgroup-shdo')
@@ -197,6 +201,10 @@ define([
 
         'Response to input while in read-only mode': {
           'can be focused/defocused while in read-only mode': function() {
+            // NOTE: This test is skipped because the tab key doesn't work in Firefox.  May be a bug in Intern/Webdriver
+            // https://github.com/theintern/intern/issues/564
+            this.skip();
+
             // Use keyboard to focus/defocus
             return this.remote
               .findById('towns-optgroup-shdo')
