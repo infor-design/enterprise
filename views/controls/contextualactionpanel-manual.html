@@ -27,14 +27,14 @@
             cssClass: 'btn',
             icon: '#icon-close',
             click: function() {
-              $(this).modal('close');
+              $(this).modal().destroy();
             }
           }
         ]
       }).on('open', function () {
         $(this).initialize();
       }).on('close', function () {
-        //
+        console.log('close');
       });
 
 
