@@ -32,10 +32,7 @@ define({
 
   // Name of the tunnel class to use for WebDriver tests
   tunnel: 'NullTunnel',
-  tunnelOptions: {
-      username: 'tmcconechy',
-      accessKey: 'ffbed6ba-df11-4bc3-9110-a5ba478e8b41'
-  },
+  tunnelOptions: {},
 
   // Configuration options for the module loader; any AMD configuration options supported by the specified AMD loader
   // can be used here
@@ -54,7 +51,7 @@ define({
 
   reporters: [
     { 'id': 'JUnit', 'filename': 'junit-unit.xml' },
-    { 'id': 'Pretty' }
+    { 'id': 'Console' }
   ],
 
   // Non-functional test suite(s) to run in each browser
