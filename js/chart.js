@@ -546,7 +546,6 @@ window.Chart = function(container) {
 
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
-      // labels = svg.append('g').attr('class','labels'),
       self = this,
       centerLabel = initialData[0].centerLabel;
 
@@ -597,6 +596,7 @@ window.Chart = function(container) {
 
     dims.outerRadius = isSmaller ? (dims.outerRadius-35) : dims.outerRadius;
     dims.outerRadius = (dims.width > 360 || isSmaller) ? dims.outerRadius : (dims.outerRadius-35);
+    dims.outerRadius = (lessthan10.length > 3) ? (dims.outerRadius-5) : dims.outerRadius;
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
     dims.labelRadius = dims.outerRadius + 11;
 
@@ -799,7 +799,7 @@ window.Chart = function(container) {
       })
       .style('font-weight', 'bold')
       .style('font-size', function()  {
-        return (dims.width > 450) ? '1.6em' : '1.2em';
+        return (dims.width > 450) ? '1.3em' : '1.1em';
       })
       .style('fill', function(d, i) {
         return (labelstyle.substring(0, 5)==='color') ?
@@ -813,7 +813,7 @@ window.Chart = function(container) {
         .attr('x', function(d, i) {
           return textX[i]-2;
         })
-        .attr('dy', '14')
+        .attr('dy', '18')
         .attr('class', 'lb-text')    
         .style('font-size', '1em');
 
@@ -995,8 +995,9 @@ window.Chart = function(container) {
         }
         else if(rect1.top < 125) {
           // console.log(4);
-          charts.elementTransform({'element': arcs, 'addtoY': 62});
-          charts.elementTransform({'element': labels, 'addtoY': 62});
+          charts.elementTransform({'element': arcs, 'addtoY': 61});
+          charts.elementTransform({'element': labels, 'addtoY': 61});
+          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 4});
         }
         else if(rect1.top < 135) {
           // console.log(5);
@@ -1012,6 +1013,7 @@ window.Chart = function(container) {
           // console.log(7);
           charts.elementTransform({'element': arcs, 'addtoY': 30});
           charts.elementTransform({'element': labels, 'addtoY': 30});
+          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 4});
         }
         else if(rect1.top < 165) {
           // console.log(8);
@@ -1104,7 +1106,6 @@ window.Chart = function(container) {
       }, 100);
     }
 
-    // $(window).off('resize.charts').on('resize.charts', resizeCharts);
     $(window).on('resize.charts', resizeCharts);
     $(container).off('resize').on('resize', resizeCharts);
 
