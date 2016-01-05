@@ -670,8 +670,8 @@
           return;
         }
         var tooltip = handle.data('tooltip');
+
         function update() {
-          tooltip.setContent();
           tooltip.position();
           handle.focus();
         }
