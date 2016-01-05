@@ -546,7 +546,7 @@ window.Chart = function(container) {
 
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
-      labels = svg.append('g').attr('class','labels'),
+      // labels = svg.append('g').attr('class','labels'),
       self = this,
       centerLabel = initialData[0].centerLabel;
 
@@ -554,7 +554,8 @@ window.Chart = function(container) {
       tooltipDataCache = [],
       tooltipData = charts.tooltip;
 
-    var labelstyle = charts.labelstyle || 'color-percentage-on-top';
+    var labelstyle = charts.labelstyle || 'color-percentage-on-top',
+      legendshow = charts.legendshow || false;
 
     var chartData = initialData[0].data;
     $(container).addClass('chart-pie');
@@ -605,7 +606,6 @@ window.Chart = function(container) {
 
     // move the origin of the group's coordinate space to the center of the SVG element
     arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2)  + ')');
-    labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2) + ')');
 
     var pieData = pie(chartData);
 
@@ -708,10 +708,23 @@ window.Chart = function(container) {
          };
       });
 
+
     // Now we'll draw our label lines, etc.
-    var enteringLabels = labels.selectAll('.label').data(pieData).enter();
-    var labelGroups = enteringLabels.append('g').attr('class', 'label');
-    labelGroups.append('circle').attr({
+    var textLines, textLabels;
+    function drawLinesAndLabels(opt) {
+      opt = opt || {};
+      svg.selectAll('.labels').remove();
+
+      if (opt.removeLabels) {
+        return;
+      }
+
+      var labels = svg.append('g').attr('class','labels');
+        labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2) + ')');
+
+      var enteringLabels = labels.selectAll('.label').data(pieData).enter();
+      var labelGroups = enteringLabels.append('g').attr('class', 'label');
+      labelGroups.append('circle').attr({
         x: 0,
         y: 0,
         r: 2,
@@ -723,9 +736,9 @@ window.Chart = function(container) {
           return 'translate(' + x + ',' + y + ')';
         },
         'class': 'label-circle'
-    });
+      });
 
-    var textLines = labelGroups.append('line').attr({
+      textLines = labelGroups.append('line').attr({
         x1: function (d) {
           return pieArcs.centroid(d)[0];
         },
@@ -745,156 +758,161 @@ window.Chart = function(container) {
           return y;
         },
         'class': 'label-line'
-    });
-
-    var textX=[], textY=[],
-      textLabels = labelGroups.append('text').attr({
-        x: function (d) {
-          var centroid = pieArcs.centroid(d),
-            midAngle = Math.atan2(centroid[1], centroid[0]),
-            x = Math.cos(midAngle) * dims.labelRadius,
-            sign = (x > 0) ? 1 : -1,
-            labelX = x + (1 * sign);
-
-          textX.push(labelX);
-          return labelX;
-        },
-        y: function (d) {
-          var centroid = pieArcs.centroid(d),
-            midAngle = Math.atan2(centroid[1], centroid[0]),
-            y = Math.sin(midAngle) * dims.labelRadius;
-          textY.push(y);
-          return y;
-        },
-        'text-anchor': function (d) {
-          var centroid = pieArcs.centroid(d),
-           midAngle = Math.atan2(centroid[1], centroid[0]),
-            x = Math.cos(midAngle) * dims.labelRadius;
-          return (x > 0) ? 'start' : 'end';
-        },
-        'class': 'label-text'
-    });
-
-    textLabels.append('tspan').text(function(d) {
-      var value = (/currency/i.test(labelstyle)) ? charts.formatCurrency(d.value): d.value,
-        toPercent = d3.format(charts.format ? charts.format : '0.0%');
-      toPercent = toPercent(d.value/total);
-      return (/value-on-top/i.test(labelstyle)) ? value : toPercent;
-    })
-    .attr('class', function() {
-      return (/value-on-top/i.test(labelstyle)) ? 'lb-value' : 'lb-percentage';
-    })
-    .style('font-weight', 'bold')
-    .style('font-size', function()  {
-      return (dims.width > 450) ? '1.6em' : '1.2em';
-    })
-    .style('fill', function(d, i) {
-      return (labelstyle.substring(0, 5)==='color') ?
-        (charts.chartColor(i, 'pie', d.data)) : '';
-    });
-
-    textLabels.append('tspan').text(function(d) {
-      return d.data.name;
-    })
-    .attr('x', function(d, i) {
-      return textX[i]-2;
-    })
-    .attr('dy', '14')
-    .attr('class', 'lb-text')
-    .style('font-size', '1em');
-
-    if (/value-on-top/i.test(labelstyle)) {
-      textLabels.append('tspan').text(function(d) {
-        var toPercent = d3.format(charts.format ? charts.format : '0.0%');
-        return ' ('+ toPercent(d.value/total) +')';
-      })
-      .attr('class', 'lb-percentage-sm')
-      .style('font-size', '1em');
-    }
-
-    if (isDonut) {
-      arcs.append('text')
-      .attr('dy', '.35em')
-      .style('text-anchor', 'middle')
-      .attr('class', 'chart-donut-text')
-      .text(centerLabel);
-    }
-
-    chartData.map(function (d, i) {
-      var percentage = d3.round(100*(d.value/total));
-      d.percent = percentage + '%';
-      d.elem = enteringArcs[0][i];
-      if (parseInt(d.percent) > 10) {
-        d3.select(textLines[0][i]).style('stroke', 'transparent');
-        d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
-      }
-      return {name: d.name, percent: d.percent, elem: d.elem};
-    });
-
-    function relax() {
-      var again = false;
-      textLabels.each(function (d) {
-        var a = this,
-          da = d3.select(this),
-          y1 = da.attr('y');
-
-        if(d.startAngle === 0) {
-          y1 = Number(y1)+1;
-          da.attr('y', y1);
-        }
-
-        textLabels.each(function () {
-          var b = this;
-          // a & b are the same element and don't collide.
-          if (a === b) {
-            return;
-          }
-          var db = d3.select(this);
-
-          // a & b are on opposite sides of the chart and don't collide
-          if (da.attr('text-anchor') !== db.attr('text-anchor')) {
-            return;
-          }
-
-          // calculate the distance between these elements.
-          var y2 = db.attr('y'),
-            deltaY = y1 - y2;
-
-          // they don't collide.
-          if (Math.abs(deltaY) > spacing) {
-            return;
-          }
-
-          // If the labels collide, we'll push each of the two labels up and down
-          again = true;
-          var sign = deltaY > 0 ? 1 : -1,
-            adjust = sign * alpha;
-
-          da.attr('y', +y1 + adjust);
-          db.attr('y', +y2 - adjust);
-        });
       });
 
-      // Adjust our line leaders
-      if (again) {
+      var textX=[], textY=[];
+        textLabels = labelGroups.append('text').attr({
+          x: function (d) {
+            var centroid = pieArcs.centroid(d),
+              midAngle = Math.atan2(centroid[1], centroid[0]),
+              x = Math.cos(midAngle) * dims.labelRadius,
+              sign = (x > 0) ? 1 : -1,
+              labelX = x + (1 * sign);
 
-        textLabels.attr('y',function() {
-          var y = Number(d3.select(this).attr('y'));
-          return y > 0 ? (isSmaller ? (y-0.8) : (y+1)) : (isSmaller ? (y-1.8) : (y-1));
-        });
+            textX.push(labelX);
+            return labelX;
+          },
+          y: function (d) {
+            var centroid = pieArcs.centroid(d),
+              midAngle = Math.atan2(centroid[1], centroid[0]),
+              y = Math.sin(midAngle) * dims.labelRadius;
+            textY.push(y);
+            return y;
+          },
+          'text-anchor': function (d) {
+            var centroid = pieArcs.centroid(d),
+             midAngle = Math.atan2(centroid[1], centroid[0]),
+              x = Math.cos(midAngle) * dims.labelRadius;
+            return (x > 0) ? 'start' : 'end';
+          },
+          'class': 'label-text'
+      });
 
-        var labelElements = textLabels[0];
-        textLines.attr('y2',function(d,i) {
-          var labelForLine = d3.select(labelElements[i]),
-            y = labelForLine.attr('y');
-          return y;
-        });
+      textLabels.append('tspan').text(function(d) {
+        var value = (/currency/i.test(labelstyle)) ? charts.formatCurrency(d.value): d.value,
+          toPercent = d3.format(charts.format ? charts.format : '0.0%');
+        toPercent = toPercent(d.value/total);
+        return (/value-on-top/i.test(labelstyle)) ? value : toPercent;
+      })
+      .attr('class', function() {
+        return (/value-on-top/i.test(labelstyle)) ? 'lb-value' : 'lb-percentage';
+      })
+      .style('font-weight', 'bold')
+      .style('font-size', function()  {
+        return (dims.width > 450) ? '1.6em' : '1.2em';
+      })
+      .style('fill', function(d, i) {
+        return (labelstyle.substring(0, 5)==='color') ?
+          (charts.chartColor(i, 'pie', d.data)) : '';
+      });
 
-        relax();
+      if (!opt.removeNames) {
+        textLabels.append('tspan').text(function(d) {
+          return d.data.name;
+        })
+        .attr('x', function(d, i) {
+          return textX[i]-2;
+        })
+        .attr('dy', '14')
+        .attr('class', 'lb-text')    
+        .style('font-size', '1em');
+
+        if (/value-on-top/i.test(labelstyle)) {
+          textLabels.append('tspan').text(function(d) {
+            var toPercent = d3.format(charts.format ? charts.format : '0.0%');
+            return ' ('+ toPercent(d.value/total) +')';
+          })
+          .attr('class', 'lb-percentage-sm')
+          .style('font-size', '1em');
+        }
       }
-    }
 
-    relax();
+      if (isDonut) {
+        arcs.append('text')
+        .attr('dy', '.35em')
+        .style('text-anchor', 'middle')
+        .attr('class', 'chart-donut-text')
+        .text(centerLabel);
+      }
+
+      chartData.map(function (d, i) {
+        var percentage = d3.round(100*(d.value/total));
+        d.percent = percentage + '%';
+        d.elem = enteringArcs[0][i];
+        if (parseInt(d.percent) > 10) {
+          d3.select(textLines[0][i]).style('stroke', 'transparent');
+          d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
+        }
+        return {name: d.name, percent: d.percent, elem: d.elem};
+      });
+
+      function relax() {
+        var again = false;
+        textLabels.each(function (d) {
+          var a = this,
+            da = d3.select(this),
+            y1 = da.attr('y');
+
+          if(d.startAngle === 0) {
+            y1 = Number(y1)+1;
+            da.attr('y', y1);
+          }
+
+          textLabels.each(function () {
+            var b = this;
+            // a & b are the same element and don't collide.
+            if (a === b) {
+              return;
+            }
+            var db = d3.select(this);
+
+            // a & b are on opposite sides of the chart and don't collide
+            if (da.attr('text-anchor') !== db.attr('text-anchor')) {
+              return;
+            }
+
+            // calculate the distance between these elements.
+            var y2 = db.attr('y'),
+              deltaY = y1 - y2;
+
+            // they don't collide.
+            if (Math.abs(deltaY) > spacing) {
+              return;
+            }
+
+            // If the labels collide, we'll push each of the two labels up and down
+            again = true;
+            var sign = deltaY > 0 ? 1 : -1,
+              adjust = sign * alpha;
+
+            da.attr('y', +y1 + adjust);
+            db.attr('y', +y2 - adjust);
+          });
+        });
+
+        // Adjust our line leaders
+        if (again) {
+
+          textLabels.attr('y',function() {
+            var y = Number(d3.select(this).attr('y'));
+            return y > 0 ? (isSmaller ? (y-0.8) : (y+1)) : (isSmaller ? (y-1.8) : (y-1));
+          });
+
+          var labelElements = textLabels[0];
+          textLines.attr('y2',function(d,i) {
+            var labelForLine = d3.select(labelElements[i]),
+              y = labelForLine.attr('y');
+            return y;
+          });
+
+          relax();
+        }
+      }
+
+      relax();
+    }
+    drawLinesAndLabels();
+
 
     var resizeFontsTo = function(size) {
       svg.selectAll('.label').each(function (d, i) {
@@ -934,66 +952,84 @@ window.Chart = function(container) {
 
     //-----------------------------------------
     svg.selectAll('.labels').each(function () {
-      var labels = d3.select(this),
-      rect1 = this.getBoundingClientRect();
+      var thisLabel = this,
+        labels = d3.select(this),
+      rect1 = this.getBoundingClientRect(),
+      fixNames = function () {
+        rect1 = thisLabel.getBoundingClientRect();
+        if(rect1.left < 46) {
+          legendshow = true;
+          spacing = 25;
+          drawLinesAndLabels({removeNames: true});
+          return true;
+        }
+      };
       // console.log(initialData[0].data);
-      // console.log(rect1.top);
+      // console.log('left: ' + rect1.left);
+
       if(rect1.left < 45) {
+        // console.log('L:'+ 1);
         charts.applyAltLabels(svg, initialData[0].data, 'shortName', '.label-text tspan.lb-text');
+        if (svg.select('.label-text tspan.lb-text').text().substring(6) === '...') {
+          legendshow = true;
+        }
+      }
+      if (!fixNames()) {
+        if(rect1.top < 95) {
+          // console.log(1);
+          charts.elementTransform({'element': arcs, 'addtoY': 85});
+          charts.elementTransform({'element': labels, 'addtoY': 85});
+          removeLinebreak();
+        }
+        else if(rect1.top < 105) {
+          // console.log(2);
+          charts.elementTransform({'element': arcs, 'addtoY': 60});
+          charts.elementTransform({'element': labels, 'addtoY': 60});
+          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 2});
+          resizeFontsTo('1.1em');
+        }
+        else if(rect1.top < 115) {
+          // console.log(3);
+          charts.elementTransform({'element': arcs, 'addtoY': 65});
+          charts.elementTransform({'element': labels, 'addtoY': 65});
+        }
+        else if(rect1.top < 125) {
+          // console.log(4);
+          charts.elementTransform({'element': arcs, 'addtoY': 62});
+          charts.elementTransform({'element': labels, 'addtoY': 62});
+        }
+        else if(rect1.top < 135) {
+          // console.log(5);
+          charts.elementTransform({'element': arcs, 'addtoY': 45});
+          charts.elementTransform({'element': labels, 'addtoY': 45});
+        }
+        else if(rect1.top < 145) {
+          // console.log(6);
+          charts.elementTransform({'element': arcs, 'addtoY': 40});
+          charts.elementTransform({'element': labels, 'addtoY': 40});
+        }
+        else if(rect1.top < 155) {
+          // console.log(7);
+          charts.elementTransform({'element': arcs, 'addtoY': 30});
+          charts.elementTransform({'element': labels, 'addtoY': 30});
+        }
+        else if(rect1.top < 165) {
+          // console.log(8);
+          charts.elementTransform({'element': arcs, 'addtoY': 20});
+          charts.elementTransform({'element': labels, 'addtoY': 20});
+          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
+        }
+        else if(rect1.top < 185) {
+          // console.log(9);
+          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 3});
+        }
+        else if(rect1.top < 205) {
+          // console.log(10);
+          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
+        }
+        fixNames();
       }
 
-      if(rect1.top < 95) {
-        // console.log(1);
-        charts.elementTransform({'element': arcs, 'addtoY': 85});
-        charts.elementTransform({'element': labels, 'addtoY': 85});
-        removeLinebreak();
-      }
-      else if(rect1.top < 105) {
-        // console.log(2);
-        charts.elementTransform({'element': arcs, 'addtoY': 60});
-        charts.elementTransform({'element': labels, 'addtoY': 60});
-        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 2});
-        resizeFontsTo('1.1em');
-      }
-      else if(rect1.top < 115) {
-        // console.log(3);
-        charts.elementTransform({'element': arcs, 'addtoY': 65});
-        charts.elementTransform({'element': labels, 'addtoY': 65});
-      }
-      else if(rect1.top < 125) {
-        // console.log(4);
-        charts.elementTransform({'element': arcs, 'addtoY': 62});
-        charts.elementTransform({'element': labels, 'addtoY': 62});
-      }
-      else if(rect1.top < 135) {
-        // console.log(5);
-        charts.elementTransform({'element': arcs, 'addtoY': 45});
-        charts.elementTransform({'element': labels, 'addtoY': 45});
-      }
-      else if(rect1.top < 145) {
-        // console.log(6);
-        charts.elementTransform({'element': arcs, 'addtoY': 40});
-        charts.elementTransform({'element': labels, 'addtoY': 40});
-      }
-      else if(rect1.top < 155) {
-        // console.log(7);
-        charts.elementTransform({'element': arcs, 'addtoY': 30});
-        charts.elementTransform({'element': labels, 'addtoY': 30});
-      }
-      else if(rect1.top < 165) {
-        // console.log(8);
-        charts.elementTransform({'element': arcs, 'addtoY': 20});
-        charts.elementTransform({'element': labels, 'addtoY': 20});
-        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
-      }
-      else if(rect1.top < 185) {
-        // console.log(9);
-        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 3});
-      }
-      else if(rect1.top < 205) {
-        // console.log(10);
-        charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
-      }
     });
 
     //Get the Legend Series'
@@ -1003,7 +1039,7 @@ window.Chart = function(container) {
     });
 
     //Add Legends
-    if (!charts.legendhide) {
+    if (legendshow || charts.legendformatter) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
     }
     //-----------------------------------------
@@ -1627,7 +1663,7 @@ window.Chart = function(container) {
 
     ticks.each(function(d, i) {
       var text = dataArray[i][elem];
-      text = text || d3.select(this).text().substring(0, 7) +'...';
+      text = text || d3.select(this).text().substring(0, 6) +'...';
       d3.select(this).text(text);
     });
   };
@@ -1964,8 +2000,8 @@ window.Chart = function(container) {
     if (options.tooltip) {
       this.tooltip = options.tooltip;
     }
-    if (options.legendhide) {
-      this.legendhide = options.legendhide;
+    if (options.legendshow) {
+      this.legendshow = options.legendshow;
     }
     if (options.legendformatter) {
       this.legendformatter = options.legendformatter;
