@@ -263,13 +263,22 @@
           this.element.data('mask').destroy();
         }
 
-        var mask = '##/##/####'.replace(new RegExp('/', 'g'), sep);
+        var mask = '##/##/####'.replace(new RegExp('/', 'g'), sep),
+          validation = 'date availableDate',
+          events = '{"date": "blur ", "availableDate": "blur "}',
+          customValidation = this.element.attr('data-validate'),
+          customEvents = this.element.attr('data-validation-events');
+
+        if (customValidation === 'required' && !customEvents) {
+          validation = customValidation + ' ' + validation;
+          events = '{"required": "change blur", "date": "blur ", "availableDate": "blur "}';
+        }
 
         this.element
           .attr({
             'data-mask': mask,
-            'data-validate': 'date availableDate',
-            'data-validation-events': '{"date": "blur ", "availableDate": "blur "}',
+            'data-validate': validation,
+            'data-validation-events': events,
             'data-mask-mode': 'date'
           }).mask().validate();
 

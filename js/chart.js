@@ -140,7 +140,7 @@ window.Chart = function(container) {
   };
 
   this.renderLegend = function() {
-    if (charts.legendformatter && typeof charts.legendformatter === 'function') {    
+    if (charts.legendformatter && typeof charts.legendformatter === 'function') {
       var markup = '';
       var runInterval = true,
       legendInterval = setInterval(function () {
@@ -656,7 +656,7 @@ window.Chart = function(container) {
         })
         .on('mouseenter', function(d, i) {
           var size, x, y, t,
-            offset = parent.offset(), 
+            offset = parent.offset(),
             content = '',
             show = function() {
               size = charts.getTooltipSize(content);
@@ -747,7 +747,7 @@ window.Chart = function(container) {
         'class': 'label-line'
     });
 
-    var textX=[], textY=[], 
+    var textX=[], textY=[],
       textLabels = labelGroups.append('text').attr({
         x: function (d) {
           var centroid = pieArcs.centroid(d),
@@ -800,7 +800,7 @@ window.Chart = function(container) {
       return textX[i]-2;
     })
     .attr('dy', '14')
-    .attr('class', 'lb-text')    
+    .attr('class', 'lb-text')
     .style('font-size', '1em');
 
     if (/value-on-top/i.test(labelstyle)) {
@@ -1242,12 +1242,12 @@ window.Chart = function(container) {
 
     var x1 = d3.scale.ordinal();
 
-    var y = d3.scale.linear().nice()
+    var y = d3.scale.linear()
       .range([height, 0]);
 
-    if(isStacked) {
+    if (isStacked) {
       //Map the Data Sets and Stack them.
-      if(isSingular) {
+      if (isSingular) {
         datasetStacked = dataset[0].data.map(function (d) {
           return [$.extend({}, d, {
             y: d.value,
@@ -1302,6 +1302,7 @@ window.Chart = function(container) {
         .scale(y)
         .tickSize(-width)
         .tickPadding(12)
+        .tickFormat(d3.format(charts.format ? charts.format : 's'))
         .orient('left');
 
     var svg = d3.select(container)
@@ -1335,7 +1336,7 @@ window.Chart = function(container) {
 
     x0.domain(isStacked ? xAxisValues : names);
     x1.domain(xAxisValues).rangeRoundBands([0, (isSingular||isStacked) ? width : x0.rangeBand()]);
-    y.domain([0, d3.max(isStacked ? maxesStacked : maxes)]);
+    y.domain([0, d3.max(isStacked ? maxesStacked : maxes)]).nice();
 
     if (!isSingular || (isSingular && !isStacked)) {
       svg.append('g')
