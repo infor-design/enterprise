@@ -1,5 +1,16 @@
 // Sliders
 //================================================== //
+
+// Avoid the FoUC
+// Ranges are styled similarly to their pseudo-markup in size.
+input[type="range"] {
+  height: 4px;
+  margin: 20px 4% 35px;
+  position: relative;
+  visibility: hidden;
+  width: 92%;
+}
+
 .slider-wrapper {
   background-color: $slider-bg-color;
   height: 4px;
