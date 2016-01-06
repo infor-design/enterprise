@@ -34,6 +34,8 @@ $header-height: 60px;
     @include font-size(20);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
     margin-bottom: 0;
+    text-overflow: ellipsis;
+    width: calc(100% - 60px);
   }
 
   .page-title {
@@ -89,6 +91,7 @@ $header-height: 60px;
 
     .title {
       color: $header-text-color;
+      text-overflow: clip;
 
       > *:first-child {
         margin-left: 1.7rem;
@@ -537,21 +540,44 @@ $header-height: 60px;
 
 
 
-//Hide Text
-@media (max-width: $breakpoint-slim) {
-  .header h1 {
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    span {
-      max-width: 150px;
+//Hide text behind an ellipsis when on smaller breaks
+@media (max-width: $breakpoint-phone-to-tablet - 1) {
+  .header {
+    h1 {
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      &.has-more-button {
+        .title {
+          width: calc(60%);
+
+          + .buttonset {
+            width: calc(40% - 39px);
+          }
+        }
+      }
     }
   }
+}
 
+@media(max-width: $breakpoint-phablet - 1) {
+  // On this breakpoint, the Headers show less buttons and more of the Page Title
+  .header {
+    .toolbar {
+      &.has-more-button {
+        .title {
+          width: calc(70%);
+
+          + .buttonset {
+            width: calc(30% - 39px);
+          }
+        }
+      }
+    }
+  }
 }
 
 //RTL Styles

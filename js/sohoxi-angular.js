@@ -164,20 +164,20 @@
           scope.$watch(modelMax, function(newValue, oldValue) {
             if (newValue !== oldValue) {
               elem.attr('max', newValue).trigger('updated');
-              api.value(modelVal);
+              api.refresh(modelVal);
             }
           });
 
           scope.$watch(modelMin, function(newValue, oldValue) {
             if (newValue !== oldValue) {
               elem.attr('min', newValue).trigger('updated');
-              api.value(modelVal);
+              api.refresh(modelVal);
             }
           });
 
           scope.$watch(model, function(newValue, oldValue) {
             if (newValue !== oldValue) {
-              api.value(newValue);
+              api.refresh(newValue);
               modelVal = newValue;
             }
           });
