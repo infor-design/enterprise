@@ -70,12 +70,6 @@
       return Math.sqrt( Math.pow(bX - aX, 2) + Math.pow(bY - aY, 2) );
     }
 
-    // In cases of Vertical Slider, convert a value that would normally set position using the 'bottom' attribute
-    // to instead be used as a 'top' attribute.
-    function bottomToTop(bottomVal) {
-      var topVal = bottomVal
-    }
-
     // Actual Plugin Code
     Slider.prototype = {
 
@@ -237,6 +231,17 @@
         if (this.element.hasClass('vertical')) {
           this.wrapper.addClass('vertical');
           isVertical = true;
+        }
+
+        // Retain any width or height size properties from the original range element onto the Pseudo-markup
+        var style = this.element.attr('style');
+        if (style) {
+          if (isVertical && style.match(/height/)) {
+            this.wrapper.css('height', this.element.css('height'));
+          }
+          if (!isVertical && style.match('/width/')) {
+            this.wrapper.css('width', this.element.css('width'));
+          }
         }
 
         // Handles
