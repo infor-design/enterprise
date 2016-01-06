@@ -326,7 +326,7 @@ $datagrid-cell-readonly-bg-color: $graphite01;
 $datagrid-cell-readonly-color: $graphite05;
 $datagrid-cell-border-color: $graphite02;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: #eaf8fe;
+$datagrid-row-selected-color: rgba(203, 235, 244, .3); //#eaf8fe;
 $datagrid-row-hover-color: #e4e4e4;
 
 $datagrid-readonly-header-bg-color: #e4e4e4;

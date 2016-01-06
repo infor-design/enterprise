@@ -656,7 +656,7 @@ $.fn.datagrid = function(options) {
       this.settings.dataset.splice(row, 1);
       this.renderRows();
 
-      this.element.trigger('removerow', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
+      this.element.trigger('rowremove', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
     },
 
     //Remove all selected rows
@@ -864,7 +864,19 @@ $.fn.datagrid = function(options) {
           }
 
           // Add Column Css Classes
+
+          //Add a readonly class if set on the column
           cssClass += (col.readonly ? ' is-readonly ' : '');
+
+          //Run a function that helps check if editable
+          if (col.isEditable && !col.readonly) {
+            var canEdit = col.isEditable(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), col, this.settings.dataset[i]);
+
+            if (!canEdit) {
+              cssClass += ' is-readonly ';
+            }
+          }
+
           cssClass += (col.cssClass ? col.cssClass : '');
           cssClass += (col.focusable ? ' is-focusable ' : '');
           var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
@@ -1929,21 +1941,26 @@ $.fn.datagrid = function(options) {
       //Locate the Editor
       var col = this.columnSettings(cell);
       if (!col.editor) {
-
         if (event.keyCode === 32) {
           this.toggleRowSelection(this.activeCell.node.closest('tr'));
         }
         return;
       }
-
-      //TODO: Check if cell is editable via hook function
-
-      // Put the Cell into Edit Mode
+      // Put the Cell into Focus Mode
       this.setActiveCell(row, cell);
 
       var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
         cellValue = (cellNode.text() ? cellNode.text() : this.fieldValue(this.settings.dataset[row], col.field));
+
+      //Check if cell is editable via hook function
+      if (col.isEditable) {
+        var canEdit = col.isEditable(row, cell, cellValue, col, this.settings.dataset[row]);
+
+        if (!canEdit) {
+          return false;
+        }
+      }
 
       if (cellParent.hasClass('is-editing')) {
         //Already in edit mode
