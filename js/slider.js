@@ -207,7 +207,8 @@
       },
 
       addMarkup: function() {
-        var self = this;
+        var self = this,
+          isVertical = false;
 
         if (self.element[0].tagName !== 'INPUT') {
           throw new Error('Element with ID "' + self.element.id + '" cannot invoke a slider;  it\'s not an Input element.');
@@ -226,6 +227,23 @@
         self.hitarea = $('<div class="slider-hit-area"></div>').appendTo(self.wrapper);
         self.range = $('<div class="slider-range"></div>').appendTo(self.wrapper);
 
+          // Set to a vertical slider if the class exists on the input
+        if (this.element.hasClass('vertical')) {
+          this.wrapper.addClass('vertical');
+          isVertical = true;
+        }
+
+        // Retain any width or height size properties from the original range element onto the Pseudo-markup
+        var style = this.element.attr('style');
+        if (style) {
+          if (isVertical && style.match(/height/)) {
+            this.wrapper.css('height', this.element.css('height'));
+          }
+          if (!isVertical && style.match('/width/')) {
+            this.wrapper.css('width', this.element.css('width'));
+          }
+        }
+
         // Handles
         self.handles = [];
         var labelText = self.element.prev('label').text(),
@@ -241,21 +259,30 @@
           // Add WAI-ARIA to the handles
           handle.attr({
             'role' : 'slider',
-            'aria-orientation' : 'horizontal',
+            'aria-orientation' : (isVertical ? 'vertical' : 'horizontal'),
             'aria-valuemin' : self.settings.min,
             'aria-valuemax' : self.settings.max
           });
           handle.appendTo(self.wrapper);
         });
 
+        function positionTick(tick) {
+          var pos = 'calc(' + self.convertValueToPercentage(tick.value) + '% - 6px)';
+          tick.element = $('<div class="tick" data-value="'+ tick.value +'"></div>');
+          tick.label = $('<span class="label">' + tick.description + '</span>');
+          tick.element.css((isVertical ? 'bottom' : 'left'), pos).append(tick.label);
+          self.wrapper.append(tick.element);
+
+          if (isVertical) {
+            return;
+          }
+
+          tick.label.css('left', -(self.ticks[i].label.outerWidth()/2 - self.ticks[i].element.width()/2) + 'px');
+        }
+
         // Ticks
         for (var i = 0; i < self.ticks.length; i++) {
-          var leftTickPos = 'calc(' + self.convertValueToPercentage(self.ticks[i].value) + '% - 6px)';
-          self.ticks[i].element = $('<div class="tick" data-value="'+ self.ticks[i].value +'"></div>');
-          self.ticks[i].label = $('<span class="label">' + self.ticks[i].description + '</span>');
-          self.ticks[i].element.css('left', leftTickPos).append(self.ticks[i].label);
-          self.wrapper.append(self.ticks[i].element);
-          self.ticks[i].label.css('left', '-' + (self.ticks[i].label.outerWidth()/2 - self.ticks[i].element.width()/2) + 'px');
+          positionTick(self.ticks[i]);
         }
 
         self.value(self.settings.value);
@@ -268,7 +295,7 @@
               content: function() {
                 return '' + self.getModifiedTextValue(Math.floor(self.value()[i]));
               },
-              placement: 'top',
+              placement: (isVertical ? 'right' : 'bottom'),
               trigger: 'focus',
               keepOpen: self.settings.persistTooltip
             });
@@ -284,14 +311,27 @@
       },
 
       bindEvents: function() {
-        var self = this;
+        var self = this,
+          isVertical = this.wrapper.hasClass('vertical');
 
         function updateHandleFromDraggable(e, handle, args) {
           if (self.isDisabled()) {
             return;
           }
 
-          var val = (args.left / (self.wrapper.width() - handle.outerWidth())) * 100,
+          function conversion() {
+            if (isVertical) {
+              var wh = self.wrapper.height(),
+              // Vertical Slider accounts for limits set on the height by SoHo Xi Drag.js
+              adjustedHeight = wh - handle.outerHeight();
+
+              return ((adjustedHeight - args.top) / adjustedHeight) * 100;
+            }
+
+            return args.left / (self.wrapper.width() - handle.outerWidth()) * 100;
+          }
+
+          var val = conversion(),
             rangeVal = self.convertPercentageToValue(val);
 
           // Ranged values need to check to make sure that the higher-value handle doesn't drawindowg past the
@@ -324,7 +364,7 @@
         $.each(self.handles, function (i, handle) {
           var draggableOptions = {
             containment: 'parent',
-            axis: 'x',
+            axis: (isVertical ? 'y' : 'x'),
             clone: false
           };
 
@@ -381,6 +421,7 @@
           }
 
           var self = this,
+            isVertical = this.wrapper.hasClass('vertical'),
             pageX = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageX : e.pageX,
             pageY = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageY : e.pageY,
             mouseX = pageX - self.wrapper.offset().left - $(document).scrollLeft(),
@@ -398,8 +439,17 @@
             targetOldVal = oldVals[0],
             targetHandle = self.handles[0];
 
+          function conversion() {
+            if (isVertical) {
+              var wh = self.wrapper.height();
+              return ((wh - mouseY) / wh) * 100;
+            }
+
+            return (mouseX / self.wrapper.width()) * 100;
+          }
+
           // Convert the coordinates of the mouse click to a value
-          var val = mouseX / self.wrapper.width() * 100, // TODO: Make an option to have this work Vertically if we need it later
+          var val = conversion(),
             rangeVal = self.convertPercentageToValue(val);
 
           // If the slider is a range, we may use the second handle instead of the first
@@ -554,7 +604,8 @@
         var self = this,
           newVal = this.value(),
           percentages = [],
-          color = this.getColorClosestToValue();
+          color = this.getColorClosestToValue(),
+          isVertical = self.wrapper.hasClass('vertical');
 
         for (var i = 0; i < this.ticks.length; i++) {
           var condition = !this.settings.range ? this.ticks[i].value <= newVal[0] :
@@ -585,27 +636,10 @@
           });
         }
 
-        // Change the text color of ticks if either handle value matches their value
-        var higherTicks = [];
-
-        if (this.handles[1]) {
-          higherTicks = this.ticks.filter(function(obj) {
-            return obj.value === newVal[1];
-          }) || [];
-        }
-
         // Remove any text colors that already existed.
         $.each(self.ticks, function(i) {
           self.ticks[i].label.css('color', '');
         });
-
-        /* Set the text colors to the background color of the tick
-        if (lowerTicks.length > 0 && !this.element.is(':disabled')) {
-          lowerTicks[0].label.css('color', lowerTicks[0].element.css('background-color'));
-        }
-        if (higherTicks.length > 0) {
-          higherTicks[0].label.css('color', higherTicks[0].element.css('background-color'));
-        }*/
 
         // Convert the stored values from ranged to percentage
         percentages[0] = this.convertValueToPercentage(newVal[0]);
@@ -613,34 +647,43 @@
           percentages[1] = this.convertValueToPercentage(newVal[1]);
         }
 
+        var posAttrs = (isVertical ? ['bottom', 'top'] : ['left', 'right']),
+          cssProps = {};
+
         // If no arguments are provided, update both handles with the latest stored values.
         if (!this.handles[1]) {
-          this.range.css({
-            'left' : '0%',
-            'right' : (100 - percentages[0]) + '%'
-          });
+          cssProps[posAttrs[0]] = '0%';
+          cssProps[posAttrs[1]] = (100 - percentages[0]) + '%';
         } else {
-          this.range.css({
-            'left': percentages[0] + '%',
-            'right': (100 - percentages[1]) + '%'
-          });
+          cssProps[posAttrs[0]] = percentages[0] + '%';
+          cssProps[posAttrs[1]] = (100 - percentages[1]) + '%';
         }
-        this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)');
+        this.range.css(cssProps);
+
+        function positionHandle(handle, percentage) {
+          // isVertical ? 'top' : 'left';
+          var basePosition = isVertical ? posAttrs[1] : posAttrs[0],
+            realPercentage = isVertical ? 100 - percentage : percentage;
+
+          handle.css(basePosition, 'calc(' + realPercentage + '% - ' + handle.outerWidth()/2 + 'px)');
+        }
+
         if (this.handles[0].hasClass('is-animated')) {
           this.handles[0].data('animationTimeout', setTimeout( function() {
             self.handles[0].removeClass('is-animated').trigger('slide-animation-end');
             self.range.removeClass('is-animated');
           }, 201));
         }
+        positionHandle(this.handles[0], percentages[0]);
 
         if (this.handles[1]) {
-          this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)');
           if (this.handles[1].hasClass('is-animated')) {
             this.handles[1].data('animationTimeout', setTimeout( function() {
               self.handles[1].removeClass('is-animated').trigger('slide-animation-end');
               self.range.removeClass('is-animated');
             }, 201));
           }
+          positionHandle(this.handles[1], percentages[1]);
 
           // update the 'aria-valuemin' attribute on the Max handle, and the 'aria-valuemax' attribute on the Min handle
           // for better screen reading compatability
@@ -669,9 +712,26 @@
         if (!this.settings.tooltip) {
           return;
         }
+
+        if (!handle) {
+          var tooltipLow = this.handles[0].data('tooltip'),
+            tooltipHigh;
+
+          if (this.handles[1]) {
+            tooltipHigh = this.handles[1].data('tooltip');
+          }
+
+          tooltipLow.hide();
+          if (tooltipHigh) {
+            tooltipHigh.hide();
+          }
+
+          return;
+        }
+
         var tooltip = handle.data('tooltip');
+
         function update() {
-          tooltip.setContent();
           tooltip.position();
           handle.focus();
         }
@@ -745,7 +805,7 @@
             'aria-valuetext': valueText
           });
         });
-        self.updateRange();
+
         self.element.trigger('change');
         return self._value;
       },
@@ -773,6 +833,25 @@
 
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      // Externally-facing function that updates the current values and correctly animates the
+      // range handles, if applicable.
+      refresh: function(lowVal, highVal) {
+        var newLowVal = lowVal || undefined,
+          newHighVal = highVal || undefined,
+          oldVals = this.value();
+
+        this.checkHandleDifference(this.handles[0], oldVals[0], newLowVal);
+        if (this.handles[1]) {
+          this.checkHandleDifference(this.handles[1], oldVals[1], newHighVal);
+        }
+
+        var vals = this.value(newLowVal, newHighVal);
+        this.updateRange();
+        this.updateTooltip();
+
+        return vals;
       },
 
       // Settings and markup are complicated in the slider so we just destroy and re-invoke it
