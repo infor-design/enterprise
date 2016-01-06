@@ -140,13 +140,13 @@
       if (selects.length) {
         selects.on('change.validate', function (e) {
           self.validate($(this), true, e);
-        }).on('dropdownopen.validate', function() {
+        }).on('listopened.validate', function() {
           var field = $(this),
             tooltip = field.data('tooltip');
             if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
               tooltip.hide();
             }
-        }).on('dropdownclose.validate', function() {
+        }).on('listclosed.validate', function() {
           var field = $(this),
             tooltip = field.data('tooltip');
             if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {

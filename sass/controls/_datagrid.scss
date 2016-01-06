@@ -73,7 +73,7 @@ $datagrid-header-height: 40px;
 
   // Table Headers
   th {
-    @include transition(background-color 250ms ease);
+    @include transition(background-color 700ms ease);
     background-color: $datagrid-header-bg-color;
     border-left: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
@@ -148,13 +148,13 @@ $datagrid-header-height: 40px;
 
       .datagrid-header-text {
         float: right;
-        line-height: 40px;
-        margin-right: 20px;
+        margin-top: 14px;
+        padding-right: 20px;
       }
 
       .sort-indicator {
-        float: right;
-        margin: 2px 10px 0 0;
+        left: -5px;
+        position: relative;
       }
     }
   }
@@ -226,7 +226,7 @@ $datagrid-header-height: 40px;
     .datagrid-alert-icon {
       display: inline-block;
       height: 20px;
-      top: 12px;
+      top: 13px !important; //ios styles may override otherwise
     }
 
     .badge {
@@ -308,7 +308,7 @@ $datagrid-header-height: 40px;
     .datagrid-cell-wrapper {
       border: 1px solid transparent;
       display: block;
-      height: 100%;
+      height: inherit;
       margin: 0;
       padding: 0 20px;
       width: 100%;
@@ -366,6 +366,7 @@ $datagrid-header-height: 40px;
         left: 9px;
       }
 
+      //Normal Input
       input {
         border: 1px solid transparent;
         outline: none;
@@ -376,6 +377,19 @@ $datagrid-header-height: 40px;
           box-shadow: none;
           outline: none;
         }
+      }
+
+      //Drop Down
+      .dropdown {
+        border: medium none;
+        line-height: inherit;
+        padding: 0 20px;
+      }
+
+      .icon {
+        right: 10px;
+        top: 7px;
+        visibility: visible;
       }
     }
 
@@ -690,6 +704,31 @@ td.datagrid-trigger-cell {
   line-height: 10px;
 }
 
+//Inline Editing - Dropdown
+.datagrid-dropdown-list {
+  border-radius: 0 0 3px 3px;
+  margin-left: -1px;
+  margin-top: -1px;
+
+  input {
+    height: 48px;
+    text-indent: 10px;
+  }
+
+  svg {
+    fill: $graphite10;
+    margin-top: 6px;
+    right: 13px;
+  }
+
+  .icon.search {
+    margin-top: 14px !important;
+  }
+
+  li a {
+    padding-left: 10px;
+  }
+}
 
 //RTL Styles
 html[dir='rtl'] {
@@ -719,3 +758,4 @@ html[dir='rtl'] {
     }
   }
 }
+

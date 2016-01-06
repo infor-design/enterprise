@@ -308,9 +308,9 @@
         left: auto;
         pointer-events: none;
         position: absolute;
-        right: 11px;
+        right: 8px;
         top: 2px;
-        width: 9px;
+        width: 16px;
         @include css3(transform, rotate(-90deg));
       }
     }

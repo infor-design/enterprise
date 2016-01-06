@@ -27,22 +27,26 @@ window.Formatters = {
   Decimal:  function(row, cell, value, col) {
     var formatted;
 
-    if (typeof Locale !== undefined && true) {
+    formatted = value;
+
+    if (typeof Locale !== undefined) {
        formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
     }
 
-    formatted = ((value === null || value === undefined) ? '' : value);
+    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
     return formatted;
   },
 
   Integer:  function(row, cell, value, col) {
     var formatted;
 
-    if (typeof Locale !== undefined && true) {
+    formatted = value;
+
+    if (typeof Locale !== undefined) {
       formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'integer'}));
     }
 
-    formatted = ((value === null || value === undefined) ? '' : value);
+    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
     return formatted;
   },
 
@@ -64,6 +68,7 @@ window.Formatters = {
 
   Drilldown: function () {
     var text = Locale.translate('Drilldown');
+
     if (text === undefined) {
       text = '';
     }
@@ -262,7 +267,6 @@ window.Editors = {
     };
 
     this.focus = function () {
-      //  this.input.focus();
       this.input.trigger('focusout');
     };
 
@@ -274,7 +278,7 @@ window.Editors = {
     this.init();
   },
 
-  Dropdown: function(row, cell, value, container, column) {
+  Dropdown: function(row, cell, value, container, column, event) {
 
     this.name = 'dropdown';
     this.originalValue = value;
@@ -282,6 +286,7 @@ window.Editors = {
     this.init = function () {
       //Uses formatter
       this.input = $('<select class="dropdown"></select>').appendTo(container);
+      this.select = this.input;
 
       if (column.options) {
         for (var i = 0; i < column.options.length; i++) {
@@ -300,6 +305,7 @@ window.Editors = {
 
       this.input.dropdown();
       this.input = this.input.parent().find('input');
+
     };
 
     this.val = function (value) {
@@ -311,11 +317,32 @@ window.Editors = {
     };
 
     this.focus = function () {
-      this.input.focus();
+      var self = this;
+
+      this.select.trigger('activate');
+
+      //Check if isClick or cell touch and just open the list
+      if (event.type === 'click') {
+        //Revert cell on selection
+        this.select.trigger('openlist');
+      } else {
+         //Keyboard
+         this.input.focus();
+      }
+
+      this.select.on('listclosed', function () {
+        self.input.trigger('focusout');
+
+        setTimeout(function () {
+          container.parent().trigger('focus');
+        }, 2);
+
+      });
+
     };
 
     this.destroy = function () {
-
+      //We dont need to destroy since it will when the list is closed
     };
 
     this.init();
@@ -1235,7 +1262,19 @@ $.fn.datagrid = function(options) {
 
       // Implement Editing Commit Functionality
       body.off('focusout.datagrid').on('focusout.datagrid', 'td input', function () {
-        self.commitCellEdit($(this));
+        var elem = $(this);
+
+        setTimeout(function () {
+          var focus = $(':focus');
+
+          //some targets we ignore and do not clear/commit tet
+          if (focus.hasClass('dropdown-search')) {
+            return;
+          }
+
+          self.commitCellEdit(elem);
+        }, 1);
+
       });
     },
 

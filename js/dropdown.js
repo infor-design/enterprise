@@ -304,7 +304,7 @@
         }).on('updated.dropdown', function (e) {
           e.stopPropagation();
           self.updated();
-        }).on('openList.dropdown', function() {
+        }).on('openlist.dropdown', function() {
           self.toggleList();
         });
 
@@ -698,6 +698,14 @@
         $('#dropdown-list').remove(); //remove old ones
 
         this.list.appendTo('body').show();
+
+        //In a grid cell
+        this.isInGrid = this.input.closest('.datagrid-row').length === 1;
+
+        if (this.isInGrid) {
+          this.list.addClass('datagrid-dropdown-list');
+        }
+
         this.position();
 
         var noScroll = this.settings.multiple;
@@ -712,7 +720,7 @@
         this.searchInput.val(!this.settings.multiple ? current.text() : this.input.val());
         this.activate(true); // Focus the Search Input
         this.handleSearchEvents();
-        this.element.trigger('dropdownopen'); // TODO: Change event name?
+        this.element.trigger('listopened'); // TODO: Change event name?
 
         // iOS-specific keypress event that listens for when you click the "done" button
         if ($('html').is('.ios, .android')) {
@@ -901,12 +909,17 @@
             this.list.width(maxWidth - 20);
            }
         } else {
-           this.list.width(this.input.outerWidth()-2);
+          this.list.width(this.input.outerWidth()-2);
+
+          if (this.isInGrid) {
+            this.list.width(this.input.outerWidth());
+          }
         }
       },
 
       //Close list and detch events
       closeList: function() {
+
         if (this.touchmove) {
           this.touchmove = false;
         }
@@ -923,7 +936,7 @@
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
         $(window).off('resize.dropdown');
 
-        this.element.trigger('dropdownclose'); // TODO: Change event name?
+        this.element.trigger('listclosed');
       },
 
       //Set option into view
