@@ -524,7 +524,9 @@ $.fn.datagrid = function(options) {
 
     //Delete a Specific Row
     addRow: function (data, location) {
-      var self = this;
+      var self = this,
+        row = 0, cell = 0;
+
       location = (!location ? 'top' : location);
 
       if (location === 'top') {
@@ -535,7 +537,7 @@ $.fn.datagrid = function(options) {
         this.renderRows();
 
         setTimeout(function () {
-          self.setActiveCell(0, 0);
+          self.setActiveCell(row, cell);
         }, 10);
       }
 
@@ -547,9 +549,13 @@ $.fn.datagrid = function(options) {
         this.renderRows();
 
         setTimeout(function () {
-          self.setActiveCell(self.settings.dataset.length -1, 0);
+          row = self.settings.dataset.length -1;
+          self.setActiveCell(row, 0);
         }, 10);
       }
+
+      var rowNode = this.tableBody.find('tr').eq(row);
+      self.element.trigger('addrow', {row: row, cell: cell, target: rowNode, value: data, oldValue: []});
     },
 
     initFixedHeader: function () {
@@ -644,8 +650,13 @@ $.fn.datagrid = function(options) {
 
     //Delete a Specific Row
     removeRow: function (row) {
+      var rowNode = this.tableBody.find('tr').eq(row),
+        rowData = this.settings.dataset[row];
+
       this.settings.dataset.splice(row, 1);
       this.renderRows();
+
+      this.element.trigger('removerow', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
     },
 
     //Remove all selected rows
