@@ -585,27 +585,10 @@
           });
         }
 
-        // Change the text color of ticks if either handle value matches their value
-        var higherTicks = [];
-
-        if (this.handles[1]) {
-          higherTicks = this.ticks.filter(function(obj) {
-            return obj.value === newVal[1];
-          }) || [];
-        }
-
         // Remove any text colors that already existed.
         $.each(self.ticks, function(i) {
           self.ticks[i].label.css('color', '');
         });
-
-        /* Set the text colors to the background color of the tick
-        if (lowerTicks.length > 0 && !this.element.is(':disabled')) {
-          lowerTicks[0].label.css('color', lowerTicks[0].element.css('background-color'));
-        }
-        if (higherTicks.length > 0) {
-          higherTicks[0].label.css('color', higherTicks[0].element.css('background-color'));
-        }*/
 
         // Convert the stored values from ranged to percentage
         percentages[0] = this.convertValueToPercentage(newVal[0]);
@@ -625,7 +608,7 @@
             'right': (100 - percentages[1]) + '%'
           });
         }
-        this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)');
+
         if (this.handles[0].hasClass('is-animated')) {
           this.handles[0].data('animationTimeout', setTimeout( function() {
             self.handles[0].removeClass('is-animated').trigger('slide-animation-end');
@@ -633,14 +616,18 @@
           }, 201));
         }
 
+        this.handles[0].css('left', 'calc(' + percentages[0] + '% - ' + this.handles[0].outerWidth()/2 + 'px)');
+
         if (this.handles[1]) {
-          this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)');
+
           if (this.handles[1].hasClass('is-animated')) {
             this.handles[1].data('animationTimeout', setTimeout( function() {
               self.handles[1].removeClass('is-animated').trigger('slide-animation-end');
               self.range.removeClass('is-animated');
             }, 201));
           }
+
+          this.handles[1].css('left', 'calc(' + percentages[1] + '% - ' + this.handles[1].outerWidth()/2 + 'px)');
 
           // update the 'aria-valuemin' attribute on the Max handle, and the 'aria-valuemax' attribute on the Min handle
           // for better screen reading compatability
@@ -669,6 +656,23 @@
         if (!this.settings.tooltip) {
           return;
         }
+
+        if (!handle) {
+          var tooltipLow = this.handles[0].data('tooltip'),
+            tooltipHigh;
+
+          if (this.handles[1]) {
+            tooltipHigh = this.handles[1].data('tooltip');
+          }
+
+          tooltipLow.hide();
+          if (tooltipHigh) {
+            tooltipHigh.hide();
+          }
+
+          return;
+        }
+
         var tooltip = handle.data('tooltip');
 
         function update() {
@@ -745,7 +749,7 @@
             'aria-valuetext': valueText
           });
         });
-        self.updateRange();
+
         self.element.trigger('change');
         return self._value;
       },
@@ -773,6 +777,25 @@
 
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      // Externally-facing function that updates the current values and correctly animates the
+      // range handles, if applicable.
+      refresh: function(lowVal, highVal) {
+        var newLowVal = lowVal || undefined,
+          newHighVal = highVal || undefined,
+          oldVals = this.value();
+
+        this.checkHandleDifference(this.handles[0], oldVals[0], newLowVal);
+        if (this.handles[1]) {
+          this.checkHandleDifference(this.handles[1], oldVals[1], newHighVal);
+        }
+
+        var vals = this.value(newLowVal, newHighVal);
+        this.updateRange();
+        this.updateTooltip();
+
+        return vals;
       },
 
       // Settings and markup are complicated in the slider so we just destroy and re-invoke it
