@@ -9,24 +9,108 @@ input[type="range"] {
   position: relative;
   visibility: hidden;
   width: 92%;
+
+  &.vertical {
+    -webkit-appearance: slider-vertical;
+    writing-mode: bt-lr;
+  }
 }
 
 .slider-wrapper {
   background-color: $slider-bg-color;
-  height: 4px;
-  margin: 25px 4% 50px;
   position: relative;
   @include css3(touch-callout, none);
   @include css3(user-select, none);
-  width: 92%;
+
+  &:not(.vertical) {
+    height: 4px;
+    margin: 25px 0 50px;
+    width: 92%;
+
+    .slider-hit-area {
+      bottom: -10px;
+      left: 0;
+      right: 0;
+      top: -10px;
+    }
+
+    > .tick {
+      margin-top: -4px;
+
+      &::after {
+        margin-left: -6px;
+      }
+
+      > .label {
+        left: 3px;
+        top: 26px;
+      }
+    }
+
+    .slider-handle {
+      margin-top: -10px;
+
+      &.is-animated {
+        @include css3(transition, left 200ms, right 200ms);
+      }
+    }
+
+    .slider-range {
+      height: inherit;
+
+      &.is-animated {
+        @include css3(transition, top 200ms, bottom 200ms);
+      }
+    }
+  }
+
+  &.vertical {
+    height: 94%;
+    margin: calc(25px + 4%) 50px calc(50px + 4%);
+    min-height: 150px;
+    width: 4px;
+
+    .slider-hit-area {
+      bottom: 0;
+      left: -10px;
+      right: -10px;
+      top: 0;
+    }
+
+    > .tick {
+      margin-left: -4px;
+
+      &::after {
+        margin-left: -6px;
+      }
+
+      > .label {
+        right: 24px;
+        text-align: right;
+        top: 0;
+      }
+    }
+
+    .slider-handle {
+      margin-left: -10px;
+
+      &.is-animated {
+        @include css3(transition, top 200ms, bottom 200ms);
+      }
+    }
+
+    .slider-range {
+      width: inherit;
+
+      &.is-animated {
+        @include css3(transition, left 200ms, right 200ms);
+      }
+    }
+  }
 
   .slider-hit-area {
-    bottom: -10px;
     cursor: pointer;
-    left: 0;
     position: absolute;
-    right: 0;
-    top: -10px;
   }
 
   > .tick {
@@ -36,7 +120,6 @@ input[type="range"] {
     display: inline-block;
     height: 12px;
     line-height: 12px;
-    margin-top: -4px;
     outline: 0;
     position: absolute;
     text-align: center;
@@ -55,7 +138,6 @@ input[type="range"] {
       border-radius: 50%;
       content: '';
       height: 12px;
-      margin-left: -6px;
       position: absolute;
       width: 12px;
     }
@@ -66,10 +148,8 @@ input[type="range"] {
 
     > .label {
       color: $font-color-highcontrast;
-      left: 3px;
       position: absolute;
       text-overflow: ellipsis;
-      top: 26px;
       white-space: nowrap;
     }
 
@@ -126,15 +206,10 @@ input[type="range"] {
   display: inline-block;
   height: 24px;
   line-height: 24px;
-  margin-top: -10px;
   position: absolute;
   width: 24px;
   @include css3(touch-callout, none);
   z-index: 20;
-
-  &.is-animated {
-    @include css3(transition, left 200ms, right 200ms);
-  }
 
   // Focus Border
   &::after {
@@ -198,12 +273,7 @@ input[type="range"] {
   background-color: $primary-color;
   cursor: pointer;
   display: block;
-  height: inherit;
   position: absolute;
-
-  &.is-animated {
-    @include css3(transition, left 200ms, right 200ms);
-  }
 
   &.is-dragging {
     @include css3(transition, none);
@@ -212,14 +282,26 @@ input[type="range"] {
 
 @include respond-to(large) {
   .slider-wrapper {
-    margin: 25px 3% 50px;
-    width: 94%;
+    &:not(.vertical) {
+      margin: 25px 3% 50px;
+      width: 94%;
+    }
+
+    &.vertical {
+      height: 94%;
+    }
   }
 }
 
 @include respond-to(extralarge) {
   .slider-wrapper {
-    margin: 25px 2.5% 50px;
-    width: 95%;
+    &:not(.vertical) {
+      margin: 25px 2.5% 50px;
+      width: 95%;
+    }
+
+    &.vertical {
+      height: 95%;
+    }
   }
 }
