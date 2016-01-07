@@ -228,6 +228,18 @@ module.exports = function(grunt) {
       amd: ['temp']
     },
 
+    compress: {
+      main: {
+        options: {
+          archive: 'dist/all.zip'
+        },
+
+        files: [
+          {src: ['dist/**'], dest: 'dist/'}
+        ]
+      }
+    }
+
   });
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
@@ -244,7 +256,8 @@ module.exports = function(grunt) {
     'uglify',
     'copy:main',
     'cssmin',
-    'usebanner'
+    'usebanner',
+    'compress'
   ]);
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.

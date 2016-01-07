@@ -325,6 +325,11 @@
             self.element.trigger('updated');
           }, 1);
         });
+
+        //Close List on Resize
+        $(window).on('resize.dropdown', function() {
+          self.closeList();
+        });
       },
 
       ignoreKeys: function (input, e) {
