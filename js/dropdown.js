@@ -167,8 +167,11 @@
           }
 
           //Badge Support
+          self.badges = false;
+
           if (option.attr('data-badge')) {
-            listOption.append('<span class="badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'graphite06') + '">' + option.attr('data-badge') + '</span>');
+            self.badges = true;
+            listOption.append('<span class="badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'azure07') + '">' + option.attr('data-badge') + '</span>');
           }
         }
 
@@ -252,6 +255,8 @@
         if (this.element.attr('maxlength')) {
            this.input.val(text.substr(0, this.element.attr('maxlength')));
         }
+
+        this.setBadge(opts);
       },
 
       copyClass: function(from, to, prop) {
@@ -1118,6 +1123,17 @@
         // Fire the change event with the new value if the noTrigger flag isn't set
         if (!noTrigger) {
           this.element.val(val).trigger('change').trigger('selected', [option, isAdded]);
+        }
+
+        this.setBadge(option);
+      },
+
+      setBadge: function (option) {
+        //Badge Support
+        if (this.badges) {
+          this.element.parent().find('.badge')
+            .attr('class', 'badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'azure07'))
+            .text(option.attr('data-badge'));
         }
       },
 

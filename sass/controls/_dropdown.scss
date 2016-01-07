@@ -22,6 +22,10 @@ select.multiselect {
     position: absolute;
   }
 
+  + .badge {
+    margin-left: -52px;
+    margin-top: -70px;
+  }
 }
 
 input.dropdown,
@@ -175,6 +179,22 @@ input.multiselect {
         @include checkbox-checked-before-style;
         border-color: $inverse-color;
       }
+    }
+
+    // Badge Support
+    .badge {
+      display: inline-block;
+      float: right;
+      margin-left: -40px;
+      margin-top: 4px;
+      position: relative;
+      right: 8px;
+      text-indent: 0;
+    }
+
+    &.is-focused .badge.info {
+      background-color: $inverse-color;
+      color: $primary-color;
     }
   }
 
@@ -440,7 +460,7 @@ html[dir='rtl'] {
   .dropdown-list {
 
     &.multiple {
-      
+
       li.is-selected:not(.group-label):after {
         left: inherit;
         right: 21px;
