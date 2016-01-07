@@ -19,8 +19,7 @@
     "watch": "grunt watch",
     "test": "./bin/test-build.sh",
     "test:functional": "./bin/test.sh runner config=test2/intern.local.functional",
-    "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
-    "compress": "grunt compress"
+    "test:unit": "./bin/test.sh client config=test2/intern.local.unit"
   },
   "main": "sohoxi.js",
   "dependencies": {},
