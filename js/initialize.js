@@ -22,10 +22,6 @@
       ua = navigator.userAgent || navigator.vendor || window.opera,
       html = $('html'); // User-agent string
 
-    if (!locale) {
-      locale = 'en-US';
-    }
-
     if (navigator.userAgent.indexOf('Safari')  !== -1 &&
         navigator.userAgent.indexOf('Chrome')  === -1 &&
         navigator.userAgent.indexOf('Android') === -1) {
@@ -72,8 +68,7 @@
       }
     }
 
-    //Set Locale
-    Locale.set(locale).done(function () {
+    var initAll = function () {
       var returnObj;
 
       //Iterate all objects we are initializing
@@ -397,7 +392,15 @@
       $.fn.placeholderPolyfill();
 
       return returnObj;
-    });
+    };
+
+    //Just initialize no local provided.
+    if (!locale) {
+      initAll();
+    } else {
+      //Set Locale
+      Locale.set(locale).done(initAll);
+    }
 
     return this;
   };

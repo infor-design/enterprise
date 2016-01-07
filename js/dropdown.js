@@ -160,9 +160,15 @@
           if (option.attr('data-attr')) {
             listOption.attr('data-attr', option.attr('data-attr'));
           }
+
           //Tooltip Support
           if (option.attr('title') && $.fn.tooltip) {
             listOption.attr('title', option.attr('title')).tooltip();
+          }
+
+          //Badge Support
+          if (option.attr('data-badge')) {
+            listOption.append('<span class="badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'graphite06') + '">' + option.attr('data-badge') + '</span>');
           }
         }
 

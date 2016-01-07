@@ -92,6 +92,7 @@
 
     //Set the Local
     set: function (locale) {
+
       var self = this;
       this.dff = $.Deferred();
 
