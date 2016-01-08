@@ -377,6 +377,13 @@
           });
         }
 
+        //If used with a Pager Control, listen for the end of the page and scroll the Listview to the top
+        if (this.element.data('pager')) {
+          this.element.on('afterpaging.listview', function() {
+            self.element.scrollTop(0);
+          });
+        }
+
         $(window).on('resize.listview', function() {
           self.handleResize();
         });
@@ -401,6 +408,10 @@
         items = $('li, tr', this.element);
         $('.listview-heading', items.eq(0)).width($('.listview-heading', items.eq(1)).width());
         this.setChildIconsValign();
+
+        if (this.element.data('pager')) {
+          this.element.data('pager').renderBar();
+        }
       },
 
       // Fix: for vertical-align to icons and buttons
@@ -580,7 +591,7 @@
 
       destroy: function() {
         this.element.removeData(pluginName);
-        this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview').empty();
+        this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
       }
     };
 
