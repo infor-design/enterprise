@@ -17,11 +17,16 @@
 
 
 // Two Connected Fields
-.compound-field > .field {
+.compound-field > .field,
+.compound-field > .field-short {
   clear: both;
   display: inline-block;
   margin-right: 20px;
   vertical-align: top;
+}
+
+.compound-field > .field-short {
+  margin-right: 10px;
 }
 
 // Report Style Fields

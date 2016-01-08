@@ -18,10 +18,11 @@ window.Formatters = {
        return '';
     }
 
-    if (typeof Locale !== undefined && true) {
+    if (typeof Locale !== undefined) {
        formatted = Locale.formatDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
     }
-    return formatted;
+
+    return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-calendar"><use xlink:href="#icon-calendar"/></svg>';
   },
 
   Decimal:  function(row, cell, value, col) {
@@ -101,7 +102,7 @@ window.Formatters = {
   },
 
   // Multi Line TextArea
-  TextArea: function (row, cell, value) {
+  Textarea: function (row, cell, value) {
     var formatted = ((value === null || value === undefined) ? '' : value);
     return '<span class="datagrid-textarea">'+ formatted + '</span>';
   },
@@ -216,7 +217,6 @@ window.Editors = {
       if (column.mask) {
         this.input.mask({pattern: column.mask});
       }
-
     };
 
     this.val = function (value) {
@@ -228,6 +228,34 @@ window.Editors = {
 
     this.focus = function () {
       this.input.focus().select();
+    };
+
+    this.destroy = function () {
+      this.input.remove();
+    };
+
+    this.init();
+  },
+
+  Textarea: function(row, cell, value, container) {
+
+    this.name = 'textarea';
+    this.originalValue = value;
+
+    this.init = function () {
+      this.input = $('<textarea class="textarea"></textarea>').appendTo(container);
+    };
+
+    this.val = function (value) {
+      if (value) {
+        //note that focus will help move text to end of input.
+        this.input.focus().val(value);
+      }
+      return this.input.val();
+    };
+
+    this.focus = function () {
+      this.input.focus();
     };
 
     this.destroy = function () {
@@ -303,7 +331,7 @@ window.Editors = {
         }
       }
 
-      this.input.dropdown();
+      this.input.dropdown(column.editorOptions);
       this.input = this.input.parent().find('input');
 
     };
@@ -347,6 +375,37 @@ window.Editors = {
 
     this.init();
   },
+
+  Date: function(row, cell, value, container) {
+
+    this.name = 'date';
+    this.originalValue = value;
+
+    this.init = function () {
+      this.input = $('<input class="datefield"/>').appendTo(container);
+      this.input.datepicker();
+    };
+
+    this.val = function (value) {
+      if (value) {
+        //Note that the value should be formatted from the formatter.
+        this.input.val(value);
+      }
+
+      return this.input.val();
+    };
+
+    this.focus = function () {
+      this.input.focus();
+    };
+
+    this.destroy = function () {
+      this.input.remove();
+    };
+
+    this.init();
+
+  }
 };
 
 $.fn.datagrid = function(options) {
@@ -1204,7 +1263,7 @@ $.fn.datagrid = function(options) {
           return;
         }
 
-        if(isMultiple && e.shiftKey) {
+        if (isMultiple && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
           e.preventDefault();
         } else {
@@ -1284,7 +1343,7 @@ $.fn.datagrid = function(options) {
         });
 
       // Implement Editing Commit Functionality
-      body.off('focusout.datagrid').on('focusout.datagrid', 'td input', function () {
+      body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea', function () {
         var elem = $(this);
 
         setTimeout(function () {
@@ -1903,6 +1962,14 @@ $.fn.datagrid = function(options) {
         }
 
         if (self.settings.editable && key === 13) {
+          //Allow shift to add a new line
+          if ($(e.target).is('textarea') && e.shiftKey) {
+            return;
+          }
+
+          e.preventDefault();
+          e.stopPropagation();
+
           if (self.editor) {
             self.commitCellEdit(self.editor.input);
             self.setActiveCell(self.activeCell.row, self.activeCell.cell);
