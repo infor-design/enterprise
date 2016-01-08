@@ -582,7 +582,9 @@
 
   $(function() {
     if (!window.Locale.cultureInHead()) {
-      window.Locale.set('en-US');
+      setTimeout(function() {
+        window.Locale.set('en-US');
+      }, 0);
     }
 
     // ICONS: Right to Left Direction
@@ -605,7 +607,7 @@
           var use = $('use', this).attr('xlink:href');
           if(use && $.inArray(use.substring(1), icons) !== -1) {
             $(this).addClass('icon-rtl-rotate');
-          }          
+          }
         });
       }
     }, 300);
