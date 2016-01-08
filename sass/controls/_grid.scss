@@ -154,21 +154,47 @@ $gutter-neg-size: -20px;
 
 //RTL Styles
 html[dir='rtl'] {
-  .row {
-    .column,
-    .columns {
-      float: right;
 
-      &.l-center {
-        .field {
-          text-align: center;
+  .column,
+  .columns {
+    float: right;
 
-          label {
-            text-align: right;
-          }
+    &.l-center {
+      .field {
+        label {
+          text-align: right;
         }
       }
-
     }
   }
+
+  // For tabledevices larger than 550px
+  @media (min-width: $breakpoint-phone-to-tablet) {
+    .row {
+      padding-left: 20px;
+      padding-right: inherit;
+    }
+
+    .one.column,
+    .one.columns,
+    .two.columns,
+    .three.columns,
+    .four.columns,
+    .five.columns,
+    .six.columns,
+    .seven.columns,
+    .eight.columns,
+    .nine.columns,
+    .ten.columns,
+    .eleven.columns,
+    .twelve.columns,
+    .full.column,
+    .one-third.column,
+    .two-thirds.column,
+    .one-half.column {
+      margin-left: inherit;
+      margin-right: $gutter-size;
+    }
+  }
+
 }

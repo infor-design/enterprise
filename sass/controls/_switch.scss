@@ -103,3 +103,37 @@
   margin-bottom: 0;
 }
 
+
+//RTL Styles
+html[dir='rtl'] {
+  .switch {
+    // Unchecked Styling
+    input:empty {
+      margin-left: inherit;
+      margin-right: -999px;
+
+      ~ label:before {
+        left: auto;
+        right: 0;
+      }
+
+      ~ label:after {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    //Checked Styling - Toggle Handle
+    input:checked ~ label:after {
+      left: auto;
+      right: 29px;
+    }
+
+    // Active State
+    input:not(:disabled):active ~ label:after {
+      left: auto;
+      right: 12px;
+    }
+  }
+}
+

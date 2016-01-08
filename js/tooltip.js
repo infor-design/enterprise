@@ -315,7 +315,8 @@
           winH = winH - (this.scrollparent.offset().top + scrollable.offsetTop);
           winW = winW - (this.scrollparent.offset().left + scrollable.offsetLeft);
         }
-
+        
+        var rightOffset;
         switch(settings.placement) {
           case 'offset':
             // Used for error messages (validation)
@@ -338,18 +339,35 @@
             }
             break;
           case 'right':
-            self.placeToRight(scrollable);
-            var rightOffset = self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth();
-            if (rightOffset >= winW) {
-              self.tooltip.removeClass('right').addClass('left');
+            if (Locale.isRTL()) {
               self.placeToLeft(scrollable);
+              if (this.tooltip.offset().left - scrollable.deltaWidth <= 0) {
+                self.tooltip.removeClass('left').addClass('right');
+                self.placeToRight(scrollable);
+              }
+            } else {
+              self.placeToRight(scrollable);
+              rightOffset = self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth();
+              if (rightOffset >= winW) {
+                self.tooltip.removeClass('right').addClass('left');
+                self.placeToLeft(scrollable);
+              }
             }
             break;
           default: //left
-            self.placeToLeft(scrollable);
-            if (this.tooltip.offset().left - scrollable.deltaWidth <= 0) {
-              self.tooltip.removeClass('left').addClass('right');
+            if (Locale.isRTL()) {
               self.placeToRight(scrollable);
+              rightOffset = self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth();
+              if (rightOffset >= winW) {
+                self.tooltip.removeClass('right').addClass('left');
+                self.placeToLeft(scrollable);
+              }
+            } else {
+              self.placeToLeft(scrollable);
+              if (this.tooltip.offset().left - scrollable.deltaWidth <= 0) {
+                self.tooltip.removeClass('left').addClass('right');
+                self.placeToRight(scrollable);
+              }
             }
             break;
         }

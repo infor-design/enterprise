@@ -369,4 +369,11 @@ html[dir='rtl'] {
   textarea {
     text-align: right;
   }
+
+  // Required Indicator
+  label.required:after,
+  .label.required:after {
+    left: auto;
+    right: 3px;
+  }
 }

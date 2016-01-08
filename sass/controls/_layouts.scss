@@ -675,3 +675,29 @@ body.no-scroll {
   min-height: calc(100% - 60px);
   min-width: 100%;
 }
+
+
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .scrollable {
+    direction: ltr;
+
+    > * {
+      direction: rtl;
+    }
+  }
+
+  .l-pull-right {
+    float: left;
+  }
+
+  .l-pull-left {
+    float: right;
+  }
+
+  .l-right-text {
+    text-align: left;
+  }
+}
