@@ -2,8 +2,7 @@ node_modules/
 designs/
 public/js/
 public/stylesheets/
-dist/css/
-dist/js/
+dist/
 temp/
 .DS_Store
 junit.xml

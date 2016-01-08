@@ -2124,7 +2124,7 @@ $.fn.datagrid = function(options) {
         } else {
           this.settings.dataset[row][col.field] = coercedVal;
         }
-        this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal});
+        this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
       }
     },
 
