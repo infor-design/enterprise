@@ -159,14 +159,6 @@
 
 //RTL Styles
 html[dir='rtl'] {
-  // Buttons
-  .pager-prev svg,
-  .pager-first svg,
-  .pager-last svg,
-  .pager-next svg {
-    @include css3(transform, rotate(180deg));
-  }
-
   // Pager for Tables
   .pager-count {
     margin: 7px 10px 5px -13px;

@@ -423,3 +423,46 @@
   .measure.s1 {fill: $azure07;};
   .measure.s2 {fill: $azure10;};
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+  // Progess Bar Charts
+  .chart-completion-target,
+  .chart-completion {
+
+    span:not(.audible) {
+      right: auto;
+      left: 2px;
+      text-align: left;
+    }
+
+    .completed {
+      border-right: 0 solid $chart-progressbar-bg-color;
+      border-left: 1px solid $chart-progressbar-bg-color;
+
+      &::after {
+        left: auto;
+        right: 100%;
+      }
+    }
+
+    .target {
+      span:not(.audible) {
+        left: -2px;
+        right: auto;
+        text-align: right;
+      }
+
+      &::after {
+        left: auto;
+        right: 100%;
+      }
+    }
+
+    .target-line {
+      left: auto;
+      right: 45px;
+    }
+  }
+}

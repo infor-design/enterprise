@@ -284,6 +284,15 @@ svg.icon-logo {
   transition: none 0s ease 0s !important;
 }
 
+.icon-rtl-rotate {
+  // @include css3(transform, rotate(180deg));
+  -webkit-transform: scaleX(-1);
+  -ms-filter: fliph;
+  filter: fliph;
+  transform: scaleX(-1);
+  left: -50px;
+}
+
 //RTL Styles
 html[dir='rtl'] {
   .icon.app-header {
@@ -303,6 +312,12 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: 26px;
     }
-
   }
+
+  .icon-dirty:not(.dirty-checkbox) {
+    @include css3(border-radius, 2px 0 0);
+    border-color: $dirty-icon-fill $dirty-icon-fill transparent transparent;
+    margin: 1px 1px 0 0;
+  }
+
 }

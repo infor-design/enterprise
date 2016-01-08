@@ -89,12 +89,11 @@
   padding: 30px 0 0 27px;
   position: relative;
 
-//
-//3D sign Effect
-//@include css3(transform-origin, 50% 50% 0);
-//@include css3(transition, all .3s);
-//@include css3(backface-visibility, hidden);
-//
+  // //3D sign Effect
+  // @include css3(transform-origin, 50% 50% 0);
+  // @include css3(transition, all .3s);
+  // @include css3(backface-visibility, hidden);
+
 
   // Messages/Content
   h1 {
@@ -219,8 +218,39 @@
 //RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
+    margin: 5px -27px 5px 0;
     button {
       margin-left: 0;
+    }
+  }
+  .modal-content {
+    padding: 30px 27px 0 0;
+
+    // Messages/Content
+    h1 {
+      margin-left: 25px;
+      padding-left: 20px;
+      margin-right: inherit;
+      padding-right: inherit;
+      text-align: right;
+
+      &.is-error {
+        svg {
+          left: auto;
+          margin-left: 10px;
+          margin-right: 8px;
+          right: 5px;
+        }
+      }
+    }
+
+    .modal-body-wrapper {
+      padding-left: 30px; // For checkbox, focus states on left side
+      padding-right: 3px;
+    }
+
+    .message {
+      text-align: right;
     }
   }
 }

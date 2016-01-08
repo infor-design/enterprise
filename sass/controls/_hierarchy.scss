@@ -214,7 +214,7 @@ $hierarchy-line-width: 1px;
     > li {
       display: inline-block;
       margin-top: 10px;
-      padding: 20px 10px 20px 10px;
+      padding: 20px 10px;
       vertical-align: top;
 
       //Draw Line Up and Left
@@ -227,7 +227,7 @@ $hierarchy-line-width: 1px;
         margin-left: -110px;
         margin-top: -25px;
         position: absolute;
-        width: 410px;
+        width: 415px;
         z-index: -1;
       }
 
@@ -240,7 +240,7 @@ $hierarchy-line-width: 1px;
     li ul {
       margin-left: 45px;
       overflow: hidden;
-      padding-left: 30px;
+      padding-left: 31px;
       padding-right: 5px;
 
       li {
@@ -289,11 +289,11 @@ $hierarchy-line-width: 1px;
 
     // Top of the Chain
     .root {
-      margin: 0 0px 10px;
+      margin: 0 0 10px;
 
       &::after {
         height: 190px;
-        margin-left: -221px;
+        margin-left: -218px;
       }
     }
 
@@ -324,6 +324,190 @@ $hierarchy-line-width: 1px;
         margin-left: -149px;
         margin-top: -110px;
         width: 1px;
+      }
+    }
+  }
+}
+
+
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .hierarchy {
+    legend {
+      li {
+        margin-left: 20px;
+        margin-right: inherit;
+      }
+
+      .key {
+        float: right;
+      }
+    }
+
+
+    // A node in the tree
+    .leaf {
+      border-left: 1px solid $panel-border-color;
+      border-right: 5px solid $graphite06;
+
+      &.azure08 {
+        border-left-color: $panel-border-color;
+        border-right-color: $azure08;
+      }
+
+      &.turquoise02 {
+        border-left-color: $panel-border-color;
+        border-right-color: $turquoise02;
+      }
+
+      &.amethyst06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $amethyst06;
+      }
+
+      &.slate06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $slate06;
+      }
+
+      &.amber06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $amber06;
+      }
+
+      &.emerald07 {
+        border-left-color: $panel-border-color;
+        border-right-color: $emerald07;
+      }
+
+      &.ruby06 {
+        border-left-color: $panel-border-color;
+        border-right-color: $ruby06;
+      }
+
+      //Styling for objects in the leafs
+      img,
+      .image-placeholder {
+        float: right;
+        margin-left: inherit;
+        margin-right: 14px;
+      }
+
+      .detail {
+        // display: inline-block;
+        float: right;
+        margin-left: 10px;
+        margin-right: 20px;
+        text-align: right;
+      }
+      .btn-icon {
+        float: left;
+        left: auto;
+        right: 0;
+      }
+    }
+
+    //Adjust size for buttons
+    ul > li > .leaf {
+      .btn-expand {
+        left: auto;
+        right: -12px;
+      }
+    }
+
+    //The Top Level Node
+    .root {
+
+      //draw a line down
+      &:after {
+        margin-left: inherit;
+        margin-right: -65px;
+      }
+    }
+
+    //The Second to Top Level - Flows left to right
+    .top-level {
+      li {
+        //Draw Line Up and Left
+        &:before {
+          margin-left: inherit;
+          margin-right: 150px;
+        }
+      }
+    }
+
+    //The Bottom Levels - Flow Down and Up
+    .sub-level {
+      // Top Level Nodes still follow left to right
+      > li {
+        //Draw Line Up and Left
+        &:before {
+          border-left: 0 solid $hierarchy-line-color;
+          border-right: $hierarchy-line-width solid $hierarchy-line-color;
+          margin-left: inherit;
+          margin-right: -110px;
+        }
+
+        &:last-child::before {
+          width: 0;
+        }
+      }
+
+      // Child Nodes - 4th level down
+      li ul {
+        margin-left: inherit;
+        margin-right: 45px;
+        padding-left: 5px;
+        padding-right: 30px;
+
+        li {
+          .ln {
+            border-left: 0 solid $hierarchy-line-color;
+            border-right: $hierarchy-line-width solid $hierarchy-line-color;
+            margin-left: inherit;
+            margin-right: -27px;
+          }
+        }
+      }
+    }
+  }
+
+  //Media Query for Mobile View
+  @include respond-to(phablet) {
+    .hierarchy {
+      // Top of the Chain
+      .root {
+        &:after {
+          margin-left: inherit;
+          margin-right: -205px;
+        }
+      }
+
+      //Top level attached to root
+      .top-level li {
+        &:before {
+          border-left: 0 solid $hierarchy-line-color;
+          border-right: 1px solid $hierarchy-line-color;
+          margin-left: inherit;
+          margin-right: -149px;
+        }
+      }
+
+      //Bottom Nodes
+      .sub-level > li {
+        &:before {
+          border-left: 0 solid $hierarchy-line-color;
+          border-right: 1px solid $hierarchy-line-color;
+          margin-left: inherit;
+          margin-right: -149px;
+        }
+
+        // Child Nodes - 4th level down
+        ul {
+          padding-left: 34px;
+        }
       }
     }
   }

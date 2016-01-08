@@ -461,6 +461,11 @@ html[dir='rtl'] {
 
     &.multiple {
 
+      li:not(.group-label):before {
+        margin-left: inherit;
+        margin-right: -27px;
+      }
+
       li.is-selected:not(.group-label):after {
         left: inherit;
         right: 21px;
