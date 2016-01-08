@@ -157,6 +157,27 @@
   }
 }
 
+// Inside Widgets
+.card,
+.widget {
+  .pager-toolbar {
+    margin: 0;
+  }
+
+  .pager-prev,
+  .pager-next {
+    position: absolute;
+  }
+
+  .pager-prev {
+    left: 15px;
+  }
+
+  .pager-next {
+    right: 15px;
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
   // Pager for Tables

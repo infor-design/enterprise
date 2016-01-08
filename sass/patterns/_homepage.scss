@@ -5,7 +5,7 @@
   background-color: $cardlist-bg-color;
   border: 1px solid $cardlist-border-color;
   border-radius: 2px;
-  height: 370px;
+  //height: 370px;
   margin-bottom: 20px;
   min-height: 360px;
   position: relative;
@@ -15,13 +15,14 @@
   .card-footer,
   .widget-header,
   .widget-footer {
+    background-color: $cardlist-header-bg-color;
     padding: 13px 20px;
     position: relative;
   }
 
   .card-header,
   .widget-header {
-    background-color: $cardlist-header-bg-color;
+
     border-bottom: 1px solid $cardlist-border-color;
     height: 50px;
     line-height: 50px;
@@ -143,6 +144,12 @@
     height: 318px;
     min-height: 318px;
     overflow: auto;
+  }
+
+  .card-footer,
+  .widget-footer {
+    border-top: 1px solid $cardlist-border-color;
+    min-height: 50px;
   }
 }
 

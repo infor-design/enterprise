@@ -33,21 +33,20 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
-      this.settings = settings;
+    function Pager(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
     // Actual Plugin Code
-    Plugin.prototype = {
+    Pager.prototype = {
 
       init: function() {
         this.activePage = this.settings.activePage;
         this.isTable = this.element.is('tbody');
         this.buttonExpr = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
         this.createPagerBar();
-        this.elements = this.element.children();
         this.renderBar();
         this.renderPages(false, 'initial');
         this.handleEvents();
@@ -81,6 +80,26 @@
           }
 
           this.pagerBar.find('a').tooltip();
+        }
+
+        // Inside of Listviews, place the pager bar inside of the card/widget footer
+        if (this.settings.type === 'list') {
+          var self = this,
+            widgetTypes = ['widget', 'card'];
+
+          widgetTypes.forEach(function(type) {
+            var widgetContent = self.element.closest('.' + type + '-content');
+            if (!widgetContent.length) {
+              return;
+            }
+
+            var widgetFooter = widgetContent.next('.' + type + '-footer');
+            if (!widgetFooter.length) {
+              widgetFooter = $('<div class="'+ type +'-footer"></div>').insertAfter(widgetContent);
+            }
+
+            self.pagerBar.appendTo(widgetFooter);
+          });
         }
       },
 
@@ -264,6 +283,18 @@
         return this._pageCount;
       },
 
+      // Reliably gets all the pre-rendered elements in the container and returns them for use.
+      getPageableElements: function() {
+        var elements = this.element.children();
+
+        // Adjust for cases where the root is a <ul>
+        if (elements.is('ul')) {
+          elements = elements.children();
+        }
+
+        return elements;
+      },
+
       // Render Pages
       renderBar: function() {
         //How many can fit?
@@ -274,12 +305,12 @@
 
         //Check Data Attr
         if (this.element.attr('data-pagesize')) {
-          settings.pagesize = this.element.attr('data-pagesize');
+          this.settings.pagesize = this.element.attr('data-pagesize');
         }
 
         //Adjust Page count numbers
         if (!this.settings.source) {
-          pc = Math.ceil(this.elements.not('.is-filtered').length/settings.pagesize);
+          pc = Math.ceil(this.getPageableElements().not('.is-filtered').length/this.settings.pagesize);
           if (this.pageCount() !== pc) {
             this.pageCount(pc);
           }
@@ -374,20 +405,20 @@
 
           //Make an ajax call and wait
           self.element.trigger('paging', self.pagingInfo);
-          self.elements = self.element.children();
+          var elements = self.getPageableElements();
 
           var isExpandable = (self.settings.rowTemplate !== undefined);
 
           //Render page objects
           if (!self.settings.source) {
-            var rows = (isExpandable ? settings.pagesize * 2 : settings.pagesize);
+            var rows = (isExpandable ? self.settings.pagesize * 2 : self.settings.pagesize);
 
-            self.elements.hide();
+            elements.hide();
             expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ rows +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * rows) +'):gt('+ (((self.activePage-1) * rows) -1) +')');
-            self.elements.filter(expr).show();
+            elements.filter(expr).show();
 
           } else {
-            self.elements.show();
+            elements.show();
           }
 
           if (!self.settings.source) {
@@ -438,7 +469,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (!instance) {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Pager(this, settings));
       }
     });
   };

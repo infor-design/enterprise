@@ -36,6 +36,10 @@
 
       + .listview {
         height: calc(100% - 70px);
+
+        &.paginated {
+          height: calc(100% - 108px); // size of pagination bar = 38px
+        }
       }
 
       .title {
@@ -45,6 +49,25 @@
       .buttonset {
         width: 40px;
       }
+    }
+
+    .pager-toolbar {
+      border-top: 1px solid $panel-border-color;
+      margin: 0;
+      position: relative;
+    }
+
+    .pager-prev,
+    .pager-next {
+      position: absolute;
+    }
+
+    .pager-prev {
+      left: 10px;
+    }
+
+    .pager-next {
+      right: 10px;
     }
   }
 
