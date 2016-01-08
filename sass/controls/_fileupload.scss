@@ -71,3 +71,37 @@ label.fileupload {
 .ie10 .fileupload .icon {
   background-color: rgba($white, 0);
 }
+
+//RTL Styles
+html[dir='rtl'] {
+
+  label.fileupload {
+    left: auto;
+    right: 300px;
+
+    // Label
+    span:not(.audible) {
+      left: auto;
+      right: -35px;
+
+      @media (max-width: 374px) {
+        left: auto;
+        right: -55px;
+      }
+    }
+
+    // Make this flow offscreen
+    input[type="file"] {
+      left: auto;
+      right: -1000px;
+    }
+  }
+
+  .field-fileupload {
+    input[type="text"] {
+      padding-left: 40px;
+      padding-right: 10px;
+    }
+  }
+
+}

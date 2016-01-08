@@ -53,3 +53,16 @@
     text-align: center;
   }
 }
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .blockgrid {
+    text-align: right;
+
+    .block {
+      margin: 20px 20px 0 0;
+    }
+  }
+
+}

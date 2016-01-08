@@ -584,6 +584,32 @@
     if (!window.Locale.cultureInHead()) {
       window.Locale.set('en-US');
     }
+
+    // ICONS: Right to Left Direction
+    setTimeout(function() {
+      if (window.Locale.isRTL()) {
+        var icons = [
+          'icon-first-page',
+          'icon-last-page',
+          'icon-next-page',
+          'icon-previous-page',
+          'icon-left-arrow',
+          'icon-right-arrow',
+          'icon-caret-left',
+          'icon-caret-right',
+          'icon-collapse-app-tray',
+          'icon-expand-app-tray',
+          'icon-cart'
+        ];
+        $('svg').each(function() {
+          var use = $('use', this).attr('xlink:href');
+          if(use && $.inArray(use.substring(1), icons) !== -1) {
+            $(this).addClass('icon-rtl-rotate');
+          }          
+        });
+      }
+    }, 300);
+
   });
 
 

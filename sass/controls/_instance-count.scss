@@ -41,3 +41,19 @@
   }
 
 }
+
+//RTL Styles
+html[dir='rtl'] {
+  .instance-count {
+    .count {
+      float: right;
+    }
+
+    .title {
+      float: right;
+      padding-left: inherit;
+      padding-right: 11px;
+      text-align: right;
+    }
+  }
+}

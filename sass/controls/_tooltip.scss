@@ -291,3 +291,96 @@
     }
   }
 }
+
+
+
+
+html[dir='rtl'] {
+
+  .popover,
+  .tooltip {
+    left: auto;
+    right: -9999px;
+    text-align: right;
+  }
+
+  .tooltip {
+    .icon {
+      + p {
+        margin-left: inherit;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .popover {
+    &.right {
+      .arrow {
+        border-left-color: $popover-arrow-border-color;
+        border-right-color: transparent;
+      }
+
+      .arrow:after {
+        border-left-color: $popover-bg-color;
+        border-right-color: transparent;
+      }
+    }
+
+    &.left {
+      .arrow {
+        border-left-color: transparent;
+        border-right-color: $popover-arrow-border-color;
+      }
+
+      .arrow:after {
+        border-left-color: transparent;
+        border-right-color: $popover-bg-color;
+      }
+    }
+  }
+
+  .tooltip-content {
+    p {
+      margin-left: inherit;
+      margin-right: 0;
+    }
+  }
+
+  .popover-content {
+    margin-left: inherit;
+    margin-right: 0;
+  }
+
+  .right {
+    .arrow {
+      border-left-width: 11px;
+      border-right-width: 0;
+      left: auto;
+      right: -11px;
+
+      &:after {
+        border-left-width: 11px;
+        border-right-width: 0;
+        left: auto;
+        right: 1px;
+      }
+    }
+  }
+
+  .left {
+    .arrow {
+      border-left-width: 0;
+      border-right-width: 11px;
+      left: -10px;
+      right: auto;
+
+      &:after {
+        border-left-width: 0;
+        border-right-width: 11px;
+        left: inherit;
+        right: -11px;
+      }
+    }
+  }
+
+}

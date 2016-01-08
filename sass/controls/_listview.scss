@@ -568,3 +568,113 @@
   }
 }
 
+//RTL Styles
+html[dir='rtl'] {
+
+  .listview {
+
+    &[aria-label^='Icons'] li {
+      padding: 16px 12px 15px;
+    }
+
+    .listview-image-round {
+      float: right;
+      margin-left: 20px;
+      margin-right: inherit;
+    }
+
+    .badge {
+      float: right;
+      margin-left: 15px;
+      margin-right: inherit;
+
+      &.pending::before {
+        left: auto;
+        right: .35em !important;
+      }
+    }
+
+    li {
+
+      &.error {
+        border-left: 3px solid $error-color !important;
+        border-right: 0 solid $error-color !important;
+        padding: 15px 17px 15px 20px;
+      }
+
+      > .icon {
+        float: right;
+        margin: 1px 0 10px 15px;
+      }
+    }
+
+    .day-sign,
+    .hour-sign {
+      margin-left: 5px;
+      margin-right: inherit;
+    }
+
+    .dropdown-wrapper {
+      float: right;
+    }
+
+    .l-pull-right {
+      .icon-error {
+        left: auto;
+        right: -10px;
+      }
+    }
+
+    .field {
+      float: left;
+    }
+
+    .checkbox-label {
+      left: auto;
+      right: 20px;
+    }
+
+    .listview-thumbnail {
+      float: right;
+      margin-left: 20px;
+      margin-right: inherit;
+    }
+
+    // Selection Checkboxes
+    .listview-checkbox {
+      margin-left: inherit;
+      margin-right: -5px;
+
+      + p {
+        margin-left: inherit;
+        margin-right: 35px;
+      }
+    }
+
+    &.is-muliselect li:before {
+      left: auto;
+      margin-left: inherit;
+      margin-right: 0;
+      right: 14px;
+    }
+
+    &.is-muliselect li {
+      padding-left: inherit;
+      padding-right: 43px;
+
+      &.is-selected:after {
+        left: auto;
+        right: 20px;
+      }
+    }
+  }
+
+  .listview-table {
+    &.show-headers {
+      th:not(.l-right-text) {
+        text-align: right;
+      }
+    }
+  }
+
+}

@@ -284,7 +284,7 @@
         var rightEdgePos = po.left + this.popdown.outerWidth(true);
         if (rightEdgePos > winW) { // Checking the right edge
           adjustX = true;
-          XoffsetFromTrigger = rightEdgePos - winW;
+          XoffsetFromTrigger = rightEdgePos - winW + (Locale.isRTL() ? 20 : 0);
         }
 
         if (adjustX) {

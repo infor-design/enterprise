@@ -1172,34 +1172,36 @@
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
             self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected') : undefined,
-          paddingLeft, width;
+          paddingLeft, paddingRight, width;
 
         if (!target || target === undefined || !target.length || !self.anchors.length) {
           self.animatedBar.removeClass('visible').removeClass('no-transition');
           return;
         }
-
         paddingLeft = parseInt(target.css('padding-left'), 10) || 0;
+        paddingRight = parseInt(target.css('padding-right'), 10) || 0;
         width = target.innerWidth();
 
         if (target.is('.tab')) {
-          paddingLeft = paddingLeft + parseInt(target.children('a').css('padding-left'), 10) || 0;
+          paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
+          paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
           width = target.children('a').width();
         }
         if (target.is('.dismissible.tab') || target.is('.has-popupmenu.tab')) {
-          width = width + 27;
+          paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 27;
+          width += 27;
         }
         if (target.is('.tab-more')) {
-          width = width - 14;
+          width -=14;
         }
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
         this.animationTimeout = setTimeout(function() {
-          self.animatedBar.css({
-            'left' : (paddingLeft + target.position().left) + 'px',
-            'width' : width + 'px'
-          });
+          var left = Locale.isRTL() ?
+            (paddingRight+target.position().left) : (paddingLeft+target.position().left);
+            self.animatedBar.css({'left': left +'px', 'width': width +'px'});
+
           if (callback && typeof callback === 'function') {
             callback();
           }
@@ -1208,12 +1210,11 @@
 
       defocusBar: function() {
         var self = this,
-          newLeft = (self.animatedBar.position().left + (self.animatedBar.outerWidth()/2)) + 'px';
+          left = Locale.isRTL() ? 0 : (self.animatedBar.position().left+(self.animatedBar.outerWidth()/2));
+
         clearTimeout(self.animationTimeout);
-        this.animatedBar.css({
-          'left' : newLeft,
-          'width' : '0'
-        });
+        this.animatedBar.css({'left': left +'px', 'width': '0'});
+
         this.animationTimeout = setTimeout(function() {
           self.animatedBar.removeClass('visible').removeAttr('style');
         }, 350);

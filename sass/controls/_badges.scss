@@ -174,3 +174,10 @@
 }
 
 
+//RTL Styles
+html[dir='rtl'] {
+  .hyperlink + .tag {
+    margin-left: inherit;
+    margin-right: 10px;
+  }
+}
