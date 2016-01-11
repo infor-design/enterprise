@@ -580,12 +580,13 @@
     }
   };
 
+if (!window.Locale.cultureInHead()) {
+  //setTimeout(function() {
+    window.Locale.set('en-US');
+  //}, 10);
+}
   $(function() {
-    if (!window.Locale.cultureInHead()) {
-      setTimeout(function() {
-        window.Locale.set('en-US');
-      }, 0);
-    }
+
 
     // ICONS: Right to Left Direction
     setTimeout(function() {
