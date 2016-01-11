@@ -980,15 +980,13 @@ $.fn.datagrid = function(options) {
       }
 
       self.tableBody.append(tableHtml);
-
       self.tableBody.css({'height': '', 'display': ''});
-      self.displayCounts();
-
       self.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
       self.tableBody.find('.dropdown').dropdown();
 
       //Set Tab Index and active Cell
       setTimeout(function () {
+        self.displayCounts();
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
       }, 100);
     },

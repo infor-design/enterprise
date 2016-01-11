@@ -2,7 +2,11 @@
 <div class="row">
   <div class="twelve columns">
     <div role="toolbar" class="toolbar">
-      <div class="title">Data Grid Header Title  <span class="datagrid-result-count"></span></div>
+
+      <div class="title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
 
       <div class="buttonset">
 
@@ -33,7 +37,7 @@
 
   $('body').one('initialized', function () {
 
-    Locale.set('de-DE').done(function () {
+    Locale.set('en-US').done(function () {
         var grid,
           columns = [],
           data = [];
@@ -80,8 +84,6 @@
         }).on('rowremove', function (e, args) {
           console.log(e, args);
         });
-
-        gridApi = grid.data('datagrid');
 
     });
   });
