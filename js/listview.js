@@ -37,11 +37,9 @@
 
     // Plugin Constructor
     function ListView(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
-      this.settings = settings;
       this.init();
-      this.handleEvents();
-      this.handleResize();
     }
 
     // Plugin Object
@@ -53,6 +51,8 @@
         this.lastSelectedRow = 0; // Rember index to use shift key
         this.isSelectedAll = false; // Rember if all selected or not
         this.sortInit('listview', 'click.listview', 'data-sortlist');
+        this.handleEvents();
+        this.handleResize();
       },
 
       setup: function() {
@@ -589,9 +589,19 @@
         }
       },
 
-      destroy: function() {
-        this.element.removeData(pluginName);
+      updated: function() {
+        // TODO: Updated
+        return this;
+      },
+
+      teardown: function() {
         this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
+        this.element.removeData(pluginName);
       }
     };
 
@@ -599,7 +609,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new ListView(this, settings));
       }
