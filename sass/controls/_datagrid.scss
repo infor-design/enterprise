@@ -329,7 +329,8 @@ $datagrid-header-height: 40px;
     white-space: nowrap;
 
     //Editing and Focus State
-    &:focus .datagrid-cell-wrapper {
+    &:focus .datagrid-cell-wrapper,
+    &.is-focused .datagrid-cell-wrapper {
       border: 1px solid $primary-color;
     }
 
@@ -394,7 +395,7 @@ $datagrid-header-height: 40px;
 
         &:focus {
           box-shadow: none;
-           outline: none;
+          outline: none;
         }
       }
 
@@ -402,6 +403,18 @@ $datagrid-header-height: 40px;
         right: 10px;
         top: 7px;
         visibility: visible;
+      }
+
+      //Date Picker
+      .datepicker {
+        border: none;
+        padding-left: 20px;
+
+        + .icon {
+          position: relative;
+          right: 1.5px;
+          top: 3px;
+        }
       }
     }
 
@@ -749,6 +762,11 @@ td.datagrid-trigger-cell {
   li a {
     padding-left: 10px;
   }
+}
+
+//Inline Editing Date Picker
+.is-focused .trigger + .icon {
+  visibility: visible;
 }
 
 //RTL Styles

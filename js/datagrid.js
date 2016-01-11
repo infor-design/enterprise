@@ -376,13 +376,13 @@ window.Editors = {
     this.init();
   },
 
-  Date: function(row, cell, value, container) {
+  Date: function(row, cell, value, container, column, event) {
 
     this.name = 'date';
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="datefield"/>').appendTo(container);
+      this.input = $('<input class="datepicker"/>').appendTo(container);
       this.input.datepicker();
     };
 
@@ -396,7 +396,24 @@ window.Editors = {
     };
 
     this.focus = function () {
+      var self = this;
+
       this.input.focus();
+
+      //Check if isClick or cell touch and just open the list
+      if (event.type === 'click') {
+        this.input.parent().find('.icon').trigger('click');
+        this.input.closest('td').addClass('is-focused');
+
+        this.input.on('change.datagrid', function () {
+          self.input.closest('td').removeClass('is-focused');
+          self.input.trigger('focusout');
+
+          setTimeout(function () {
+            container.parent().trigger('focus');
+          }, 2);
+        });
+      }
     };
 
     this.destroy = function () {
@@ -1348,7 +1365,11 @@ $.fn.datagrid = function(options) {
           var focus = $(':focus');
 
           //some targets we ignore and do not clear/commit tet
-          if (focus.hasClass('dropdown-search')) {
+          if (focus.is('.datepicker', '.dropdown-search')) {
+            return;
+          }
+
+          if (focus.closest('.calendar').length === 1) {
             return;
           }
 
