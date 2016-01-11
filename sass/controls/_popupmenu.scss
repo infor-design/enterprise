@@ -356,15 +356,30 @@
 //RTL Styles
 html[dir='rtl'] {
 
-  .popupmenu.has-icons > li a {
-    padding-left: 30px;
-    padding-right: 40px;
-  }
+  .popupmenu {
+    &.has-icons > li a {
+      padding-left: 30px;
+      padding-right: 40px;
+    }
 
-  .popupmenu li.is-checked > a::before,
-  .popupmenu li.is-checked.is-selected > a::before {
-    left: auto;
-    right: 13px;
+    li {
+      &.is-checked > a:before,
+      &.is-checked.is-selected > a:before {
+        left: auto;
+        right: 13px;
+      }
+    }
+
+    .submenu > a {
+      padding-left: 48px;
+      padding-right: 30px;
+
+      > .icon.icon-dropdown {
+        @include css3(transform, rotate(90deg));
+        left: 8px;
+        right: auto;
+      }
+    }
   }
 
 }

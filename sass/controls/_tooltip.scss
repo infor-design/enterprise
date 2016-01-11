@@ -299,12 +299,21 @@ html[dir='rtl'] {
 
   .popover,
   .tooltip {
-    left: auto;
-    right: -9999px;
     text-align: right;
   }
 
   .tooltip {
+
+    &.right:not(.is-error) .arrow:after {
+      border-left-color: $tooltip-bg-color;
+      border-right-color: transparent;
+    }
+
+    &.left:not(.is-error) .arrow:after {
+      border-left-color: transparent;
+      border-right-color: $tooltip-bg-color;
+    }
+
     .icon {
       + p {
         margin-left: inherit;
