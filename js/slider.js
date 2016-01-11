@@ -36,7 +36,6 @@
 
     // Plugin Constructor
     function Slider(element) {
-      console.log(Locale.currentLocale, Locale.isRTL());
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
