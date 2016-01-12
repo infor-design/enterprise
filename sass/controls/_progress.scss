@@ -24,3 +24,13 @@
     display: inline-block;
   }
 }
+
+//RTL Styles
+html[dir='rtl'] {
+  .progress {
+    .progress-bar {
+      left: auto;
+      right: 0;
+    }
+  }
+}

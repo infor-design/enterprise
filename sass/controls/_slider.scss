@@ -168,6 +168,7 @@ input[type="range"] {
 
       &:after {
         background-color: $pager-disabled-color;
+        // background-color: transparent;
       }
     }
 
@@ -302,6 +303,50 @@ input[type="range"] {
 
     &.vertical {
       height: 95%;
+    }
+  }
+}
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .slider-wrapper {
+      &.vertical {
+        > .tick {
+          margin-left: inherit;
+          margin-right: -4px;
+
+          &::after {
+            margin-left: inherit;
+            margin-right: -6px;
+          }
+
+          > .label {
+            left: 24px;
+            right: auto;
+            text-align: left;
+          }
+        }
+
+        .slider-handle {
+          margin-left: inherit;
+          margin-right: -10px;
+        }
+
+      }
+
+    > .tick {
+      &.inherit:after {
+        background-color: transparent !important;
+      }
+    }
+
+    &.is-disabled {
+      > .tick {
+        &:after {
+          background-color: transparent;
+        }
+      }
     }
   }
 }

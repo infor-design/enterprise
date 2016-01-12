@@ -233,6 +233,10 @@
           isVertical = true;
         }
 
+        // Set RTL
+        this.isRtlHorizontal = (Locale.isRTL() && !isVertical);
+        this.isRtlVertical = (Locale.isRTL() && isVertical);
+
         // Retain any width or height size properties from the original range element onto the Pseudo-markup
         var style = this.element.attr('style');
         if (style) {
@@ -267,7 +271,11 @@
         });
 
         function positionTick(tick) {
-          var pos = 'calc(' + self.convertValueToPercentage(tick.value) + '% - 6px)';
+          var convertValueToPercentage = self.isRtlHorizontal ?
+              (100 - self.convertValueToPercentage(tick.value)) : 
+              self.convertValueToPercentage(tick.value),
+            pos = 'calc(' + convertValueToPercentage + '% - 6px)';
+
           tick.element = $('<div class="tick" data-value="'+ tick.value +'"></div>');
           tick.label = $('<span class="label">' + tick.description + '</span>');
           tick.element.css((isVertical ? 'bottom' : 'left'), pos).append(tick.label);
@@ -327,7 +335,6 @@
 
               return ((adjustedHeight - args.top) / adjustedHeight) * 100;
             }
-
             return args.left / (self.wrapper.width() - handle.outerWidth()) * 100;
           }
 
@@ -444,7 +451,6 @@
               var wh = self.wrapper.height();
               return ((wh - mouseY) / wh) * 100;
             }
-
             return (mouseX / self.wrapper.width()) * 100;
           }
 
@@ -498,7 +504,8 @@
       },
 
       convertPercentageToValue: function(percentage) {
-        return (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
+        var val = (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
+        return this.isRtlHorizontal ? (this.settings.max - val + this.settings.min) : val;
       },
 
       // Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
@@ -533,10 +540,18 @@
             self.decreaseValue(e, handle, this.settings.min);
             break;
           case 38: case 39: // Right and Up increase the spinbox value
-            self.increaseValue(e, handle);
+            if (self.isRtlHorizontal && key === 39) {
+              self.decreaseValue(e, handle);
+            } else {
+              self.increaseValue(e, handle);
+            }
             break;
           case 37: case 40: // Left and Down decrease the spinbox value
-            self.decreaseValue(e, handle);
+            if (self.isRtlHorizontal && key === 37) {
+              self.increaseValue(e, handle);
+            } else {
+              self.decreaseValue(e, handle);
+            }
             break;
         }
       },
@@ -647,7 +662,8 @@
           percentages[1] = this.convertValueToPercentage(newVal[1]);
         }
 
-        var posAttrs = (isVertical ? ['bottom', 'top'] : ['left', 'right']),
+        var posAttrs = (isVertical ? ['bottom', 'top'] : 
+          (self.isRtlHorizontal ? ['right', 'left'] : ['left', 'right'])),
           cssProps = {};
 
         // If no arguments are provided, update both handles with the latest stored values.
