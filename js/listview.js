@@ -558,7 +558,7 @@
         li.attr('aria-selected', !isChecked);
         this.element.trigger('selected', [this.selectedItems]);
 
-        var toolbar = this.element.closest('.card, .widget').find('.listview-toolbar'),
+        var toolbar = this.element.closest('.card, .widget').find('.listview-toolbar, .contextual-toolbar'),
           toolbarControl = toolbar.data('toolbar');
 
         if (self.selectedItems.length > 0) {
@@ -573,9 +573,9 @@
           }).css('display', 'block');
           toolbar.animateOpen({distance: 52});
 
-          var title = toolbar.find('.title, .listview-selection-count');
+          var title = toolbar.find('.title, .selection-count');
           if (!title || !title.length) {
-            title = $('<div class="title listview-selection-count"></div>');
+            title = $('<div class="title selection-count"></div>');
             toolbar.prepend(title);
           }
           title.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));

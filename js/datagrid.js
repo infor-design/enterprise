@@ -89,7 +89,7 @@ window.Formatters = {
 
   SelectionCheckbox: function (row, cell, value, col) {
     var isChecked = (value==undefined ? false : value == true); // jshint ignore:line
-    return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
+    return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox datagrid-selection-checkbox' +
      (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span></div>';
   },
 
@@ -398,7 +398,7 @@ window.Editors = {
     this.focus = function () {
       var self = this;
 
-      this.input.focus();
+      this.input.select().focus();
 
       //Check if isClick or cell touch and just open the list
       if (event.type === 'click') {
@@ -439,6 +439,7 @@ $.fn.datagrid = function(options) {
         menuId: null,  //Id to the right click context menu
         rowHeight: 'medium', //(short, medium or tall)
         selectable: false, //false, 'single' or 'multiple'
+        clickToSelect: false,
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
         //Paging Options
         paging: false,
@@ -486,6 +487,9 @@ $.fn.datagrid = function(options) {
       this.sortColumn = {sortField: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
       this.lastSelectedRow = 0;// Rember index to use shift key
+
+      this.contextualToolbar = this.element.closest('.datagrid-wrapper').prev('.contextual-toolbar');
+      this.contextualToolbar.addClass('datagrid-contextual-toolbar');
     },
 
     //Initialize as a Table
@@ -725,14 +729,16 @@ $.fn.datagrid = function(options) {
     },
 
     //Delete a Specific Row
-    removeRow: function (row) {
+    removeRow: function (row, nosync) {
       var rowNode = this.tableBody.find('tr').eq(row),
         rowData = this.settings.dataset[row];
 
+      this.unselectRow(row, nosync);
+
       this.settings.dataset.splice(row, 1);
       this.renderRows();
-
       this.element.trigger('rowremove', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
+
     },
 
     //Remove all selected rows
@@ -740,9 +746,11 @@ $.fn.datagrid = function(options) {
       var self = this,
         selectedRows = this.selectedRows();
 
-      for (var i = 0; i < selectedRows.length; i++) {
-        self.removeRow(selectedRows[i].idx);
+      for (var i = selectedRows.length-1; i >= 0; i--) {
+        self.removeRow(selectedRows[i].idx, true);
       }
+
+      this.syncSelectedUI();
     },
 
     //Method to Reload the data set
@@ -754,7 +762,7 @@ $.fn.datagrid = function(options) {
       //Update Paging and Clear Rows
       this.renderPager(pagerInfo);
       this.selectedRows([]);
-      this.syncHeaderCheckbox();
+      this.syncSelectedUI();
       this.syncFixedHeader();
     },
 
@@ -1186,6 +1194,10 @@ $.fn.datagrid = function(options) {
         self.toolbar.attr('aria-label',  self.toolbar.find('.title').text());
         self.toolbar.find('.datagrid-row-count').text(count);
       }
+
+      if (self.contextualToolbar) {
+        self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
+      }
     },
 
     //Trigger event on parent and compose the args
@@ -1278,10 +1290,12 @@ $.fn.datagrid = function(options) {
           return;
         }
 
-        if (isMultiple && e.shiftKey) {
+        var canSelect = self.settings.clickToSelect ? true : $(target).is('.datagrid-selection-checkbox') || $(target).find('.datagrid-selection-checkbox').length ===1;
+
+        if (canSelect && isMultiple && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
           e.preventDefault();
-        } else {
+        } else if (canSelect) {
           self.toggleRowSelection(target.closest('tr'));
         }
 
@@ -1564,7 +1578,7 @@ $.fn.datagrid = function(options) {
       }
 
       this.selectedRows(rows);
-      this.syncHeaderCheckbox();
+      this.syncSelectedUI();
     },
 
     //Toggle selection on a single row
@@ -1591,7 +1605,8 @@ $.fn.datagrid = function(options) {
         row.find('td').attr('aria-selected', 'true');
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
       }
-      this.syncHeaderCheckbox();
+      this.syncSelectedUI();
+
     },
 
     // Select rows between indexes
@@ -1602,20 +1617,36 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    syncHeaderCheckbox: function () {
+    //Set ui elements based on selected rows
+    syncSelectedUI: function () {
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox');
 
+      //Sync the header checkbox
       if (this._selectedRows.length === this.settings.dataset.length) {
         headerCheckbox.addClass('is-checked').removeClass('is-partial');
-        return;
       }
+
       if (this._selectedRows.length === 0) {
         headerCheckbox.removeClass('is-checked').removeClass('is-partial');
-        return;
       }
+
       if (this._selectedRows.length > 0) {
         headerCheckbox.addClass('is-checked is-partial');
       }
+
+      //Open or Close the Contextual Toolbar.
+      if (this.contextualToolbar.length !== 1) {
+        return;
+      }
+
+      if (this._selectedRows.length === 0) {
+        this.contextualToolbar.animateClosed();
+      }
+
+      if (this._selectedRows.length > 0) {
+        this.contextualToolbar.css('display', 'block').animateOpen();
+      }
+
     },
 
     toggleRowSelection: function (idx) {
@@ -1643,13 +1674,12 @@ $.fn.datagrid = function(options) {
       }
 
       this.element.trigger('selected', [this._selectedRows]);
-      this.syncHeaderCheckbox();
       this.displayCounts();
 
       return this._selectedRows;
     },
 
-    unselectRow: function (idx) {
+    unselectRow: function (idx, nosync) {
       var row = this.tableBody.find('tr[role="row"]').eq(idx),
         checkbox = null, selIdx;
 
@@ -1657,26 +1687,28 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (row.hasClass('is-selected')) {
-        checkbox = this.cellNode(row, this.columnIdxById('selectionCheckbox'));
+      checkbox = this.cellNode(row, this.columnIdxById('selectionCheckbox'));
 
-        selIdx = undefined;
-        for (var i = 0; i < this._selectedRows.length; i++) {
-          if (this._selectedRows[i].idx === idx) {
-            selIdx = i;
-          }
+      selIdx = undefined;
+      for (var i = 0; i < this._selectedRows.length; i++) {
+        if (this._selectedRows[i].idx === idx) {
+          selIdx = i;
         }
-
-        if (selIdx !== undefined) {
-          this._selectedRows.splice(selIdx, 1);
-        }
-
-        row.removeClass('is-selected').removeAttr('aria-selected');
-        row.find('td').removeAttr('aria-selected');
-
-        checkbox.find('.datagrid-checkbox').removeClass('is-checked').attr('aria-checked', 'false');
       }
-      this.syncHeaderCheckbox();
+
+      if (selIdx !== undefined) {
+        this._selectedRows.splice(selIdx, 1);
+      }
+
+      row.removeClass('is-selected').removeAttr('aria-selected');
+      row.find('td').removeAttr('aria-selected');
+
+      checkbox.find('.datagrid-checkbox').removeClass('is-checked').attr('aria-checked', 'false');
+
+      if (!nosync) {
+        this.syncSelectedUI();
+      }
+
     },
 
     //Set the selected rows by passing the row index or an array of row indexes
@@ -2253,7 +2285,7 @@ $.fn.datagrid = function(options) {
 
       // Update selected and Sync header checkbox
       this.updateSelected();
-      this.syncHeaderCheckbox();
+      this.syncSelectedUI();
 
       if (wasFocused && this.activeCell.node.length === 1) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
@@ -2384,7 +2416,7 @@ $.fn.datagrid = function(options) {
       }
       // Update selected and Sync header checkbox
       this.updateSelected();
-      this.syncHeaderCheckbox();
+      this.syncSelectedUI();
     }
   };
 

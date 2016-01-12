@@ -228,6 +228,91 @@ $toolbar-buttonset-height: 44px;
   }
 }
 
+// Styles for contextual toolbar
+.contextual-toolbar,
+.listview-toolbar {
+  background-color: $primary-color;
+  border-radius: 2px 2px 0 0;
+  margin: 0;
+  overflow: hidden !important;
+  z-index: 20;
+
+  + .listview {
+    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
+    height: calc(100% - 50px);
+  }
+
+  // Override Toolbar styles
+  &.toolbar {
+    height: 52px;
+    margin-bottom: 0;
+    padding-left: 20px;
+    padding-right: 13px;
+
+    .title {
+      @include font-size(16);
+      color: $listview-selection-toolbar-color;
+    }
+
+    [class^="btn"] {
+      color: $listview-selection-toolbar-color;
+      min-width: 0;
+
+      > span {
+        color: $listview-selection-toolbar-color;
+      }
+
+      > .icon {
+        fill: $listview-selection-toolbar-color;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-selection-toolbar-color;
+      }
+
+      &:hover,
+      &:focus:not(.hide-focus) {
+        color: $listview-selection-toolbar-color !important;
+
+        > .icon {
+          fill: $listview-selection-toolbar-color;
+        }
+      }
+
+      &.is-selected {
+        color: $listview-selection-toolbar-color;
+
+        &:focus:not(.hide-focus) {
+          color: $listview-selection-toolbar-color;
+
+          > .icon {
+            fill: $listview-selection-toolbar-color;
+          }
+        }
+      }
+
+      .ripple {
+        background-color: $listview-selection-toolbar-color;
+      }
+    }
+  }
+
+  &.is-hidden {
+    height: 0;
+    display: none;
+
+    + .listview {
+      height: 100%;
+    }
+  }
+}
+
+.datagrid-contextual-toolbar {
+  border: 2px solid $datagrid-border-color;
+  border-bottom: 0;
+  border-right-width: 1px;
+}
+
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
   .toolbar {
     // Show text with icon buttons by using this class.

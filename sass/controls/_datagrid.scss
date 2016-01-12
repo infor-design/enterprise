@@ -149,6 +149,7 @@ $datagrid-header-height: 40px;
       .datagrid-header-text {
         float: right;
         margin-top: 14px;
+        max-width: calc(100% - 30px);
         padding-right: 20px;
       }
 
