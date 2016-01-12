@@ -98,7 +98,6 @@ $listview-color: $inverse-color;
 $listview-disabled-color: $slate03;
 $selected-bg-color: #287cb2;
 $listview-selected-text-color: $white;
-$listview-selection-toolbar-color: $inverse-color;
 $listview-header-bg-color: $slate06;
 $listview-header-color: $white;
 
@@ -108,6 +107,9 @@ $listview-toolbar-button-text-hover-color: $white;
 $listview-toolbar-button-icon-hover-color: $white;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
+
+//Contextual Toolbar
+$contextual-toolbar-color: $inverse-color;
 
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
@@ -288,6 +290,7 @@ $datagrid-cell-readonly-color: $slate02;
 $datagrid-cell-border-color: $slate06;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #5a5d64; //Or 8dc9e6
+$datagrid-row-selected-color-dark: #5a5d64; //#eaf8fe;
 $datagrid-row-hover-color: $slate09;
 
 $datagrid-header-focus-bg-color: $primary-color;

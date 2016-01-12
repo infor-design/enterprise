@@ -22,6 +22,11 @@ window.Formatters = {
        formatted = Locale.formatDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
     }
 
+    if (typeof value === 'string') {
+      var value2 = Locale.parseDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
+      formatted = Locale.formatDate(value2, (col.dateFormat ? {pattern: col.dateFormat}: null));
+    }
+
     return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-calendar"><use xlink:href="#icon-calendar"/></svg>';
   },
 
@@ -405,13 +410,13 @@ window.Editors = {
         this.input.parent().find('.icon').trigger('click');
         this.input.closest('td').addClass('is-focused');
 
-        this.input.on('change.datagrid', function () {
+        this.input.on('listclosed', function () {
           self.input.closest('td').removeClass('is-focused');
           self.input.trigger('focusout');
 
           setTimeout(function () {
-            container.parent().trigger('focus');
-          }, 2);
+            container.parent().focus();
+          }, 1);
         });
       }
     };
@@ -439,7 +444,7 @@ $.fn.datagrid = function(options) {
         menuId: null,  //Id to the right click context menu
         rowHeight: 'medium', //(short, medium or tall)
         selectable: false, //false, 'single' or 'multiple'
-        clickToSelect: false,
+        clickToSelect: true,
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
         //Paging Options
         paging: false,
@@ -1387,8 +1392,13 @@ $.fn.datagrid = function(options) {
             return;
           }
 
+          if (elem.is('.datepicker')) {
+            return;
+          }
+
           self.commitCellEdit(elem);
-        }, 1);
+
+        }, 100);
 
       });
     },
@@ -2147,19 +2157,20 @@ $.fn.datagrid = function(options) {
         formatted = '',
         formatter = (col.formatter ? col.formatter : this.defaultFormatter);
 
-      if (typeof formatter ==='string') {
-        formatted = window.Formatters[formatter](row-1, cell, value, col, settings.dataset[row]).toString();
-      } else {
-        formatted = formatter(row-1, cell, value, col, settings.dataset[row]).toString();
-      }
-
-      cellNode.find('.datagrid-cell-wrapper').html(formatted);
       var oldVal = (col.field ? this.settings.dataset[row][col.field] : ''),
         coercedVal = this.coerceValue(value, oldVal, col, row, cell);
 
       if (!coercedVal) {
         coercedVal = value;
       }
+
+      if (typeof formatter ==='string') {
+        formatted = window.Formatters[formatter](row-1, cell, coercedVal, col, settings.dataset[row]).toString();
+      } else {
+        formatted = formatter(row-1, cell, coercedVal, col, settings.dataset[row]).toString();
+      }
+
+      cellNode.find('.datagrid-cell-wrapper').html(formatted);
 
       if (col.field && coercedVal !== oldVal) {
         if (col.field.indexOf('.') > -1 ) {

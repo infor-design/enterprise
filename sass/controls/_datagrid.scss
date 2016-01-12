@@ -182,9 +182,13 @@ $datagrid-header-height: 40px;
     }
 
     &.is-selected td:not(.is-editing),
-    &.is-selected td:not(.is-editing) .datagrid-cell-wrapper,
-    &.is-selected td:not(.is-editing) .is-readonly {
+    &.is-selected td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
+    }
+
+    &.is-selected td:not(.is-editing).is-readonly .datagrid-cell-wrapper,
+    &.is-selected td:not(.is-editing).is-readonly span {
+      background-color: $datagrid-row-selected-color-dark;
     }
 
     &.is-clickable {

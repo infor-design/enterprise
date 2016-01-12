@@ -424,6 +424,7 @@
         this.popup.hide();
         this.element.removeClass('is-active');
         this.popup.remove();
+        this.element.trigger('listclosed');
       },
 
       // Check date in obj, return: true|false

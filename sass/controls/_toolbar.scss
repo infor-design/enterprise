@@ -229,8 +229,7 @@ $toolbar-buttonset-height: 44px;
 }
 
 // Styles for contextual toolbar
-.contextual-toolbar,
-.listview-toolbar {
+.contextual-toolbar {
   background-color: $primary-color;
   border-radius: 2px 2px 0 0;
   margin: 0;
@@ -251,48 +250,48 @@ $toolbar-buttonset-height: 44px;
 
     .title {
       @include font-size(16);
-      color: $listview-selection-toolbar-color;
+      color: $contextual-toolbar-color;
     }
 
     [class^="btn"] {
-      color: $listview-selection-toolbar-color;
+      color: $contextual-toolbar-color;
       min-width: 0;
 
       > span {
-        color: $listview-selection-toolbar-color;
+        color: $contextual-toolbar-color;
       }
 
       > .icon {
-        fill: $listview-selection-toolbar-color;
+        fill: $contextual-toolbar-color;
       }
 
       &:focus {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-selection-toolbar-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
       }
 
       &:hover,
       &:focus:not(.hide-focus) {
-        color: $listview-selection-toolbar-color !important;
+        color: $contextual-toolbar-color !important;
 
         > .icon {
-          fill: $listview-selection-toolbar-color;
+          fill: $contextual-toolbar-color;
         }
       }
 
       &.is-selected {
-        color: $listview-selection-toolbar-color;
+        color: $contextual-toolbar-color;
 
         &:focus:not(.hide-focus) {
-          color: $listview-selection-toolbar-color;
+          color: $contextual-toolbar-color;
 
           > .icon {
-            fill: $listview-selection-toolbar-color;
+            fill: $contextual-toolbar-color;
           }
         }
       }
 
       .ripple {
-        background-color: $listview-selection-toolbar-color;
+        background-color: $contextual-toolbar-color;
       }
     }
   }

@@ -126,7 +126,7 @@ $listview-border-color: $graphite02;
 $listview-color: $graphite06;
 $listview-disabled-color: $input-disabled-color;
 $listview-selected-text-color: $graphite06;
-$listview-selection-toolbar-color: $inverse-color;
+
 $listview-header-bg-color: #e4e4e4;
 $listview-header-color: $graphite05;
 $listview-subhead-color: $graphite04;
@@ -137,6 +137,9 @@ $listview-toolbar-button-text-hover-color: $primary-color;
 $listview-toolbar-button-icon-hover-color: $primary-color;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
+
+//Contextual Toolbar
+$contextual-toolbar-color: $inverse-color;
 
 // Swaplist
 $swaplist-bg-color: $graphite01;
@@ -327,6 +330,7 @@ $datagrid-cell-readonly-color: $graphite05;
 $datagrid-cell-border-color: $graphite02;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: rgba(203, 235, 244, .3); //#eaf8fe;
+$datagrid-row-selected-color-dark: rgba(203, 235, 244, .8); //#eaf8fe;
 $datagrid-row-hover-color: #e4e4e4;
 
 $datagrid-readonly-header-bg-color: #e4e4e4;

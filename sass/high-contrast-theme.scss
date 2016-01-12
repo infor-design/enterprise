@@ -118,7 +118,6 @@ $listview-border-color: $graphite03;
 $listview-color: $font-color-extrahighcontrast;
 $listview-disabled-color: $disabled-color;
 $listview-selected-text-color: $font-color-extrahighcontrast;
-$listview-selection-toolbar-color: $inverse-color;
 $listview-header-bg-color: $graphite04;
 $listview-header-color: $font-color-extrahighcontrast;
 $listview-subhead-color: $graphite06;
@@ -129,6 +128,9 @@ $listview-toolbar-button-text-hover-color: $white;
 $listview-toolbar-button-icon-hover-color: $white;
 $listview-toolbar-button-text-selected-color: $white;
 $listview-toolbar-button-icon-selected-color: $white;
+
+//Contextual Toolbar
+$contextual-toolbar-color: $inverse-color;
 
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
@@ -299,12 +301,14 @@ $datagrid-header-bg-color: $graphite05;
 $datagrid-header-border-color: $graphite04;
 $datagrid-header-hover-color: $graphite08;
 $datagrid-header-active-color: $graphite08;
+$datagrid-cell-color: #ffffff;
 $datagrid-cell-bg-color: #ffffff;
 $datagrid-cell-readonly-bg-color: $graphite03;
 $datagrid-cell-readonly-color: $graphite08;
 $datagrid-cell-border-color: $graphite04;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #eaf8fe;
+$datagrid-row-selected-color-dark: #eaf8fe;
 $datagrid-row-hover-color: $graphite01;
 
 $datagrid-header-focus-bg-color: $primary-color;
