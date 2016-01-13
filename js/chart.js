@@ -51,7 +51,7 @@ window.Chart = function(container) {
     }
 
     if (specColor && specColor ==='neutral' ) {
-      return '#BDBDBD';
+      return '#dbdbdb';
     }
 
     if (specColor && specColor.indexOf('#') === 0) {
@@ -814,7 +814,7 @@ window.Chart = function(container) {
           return textX[i]-2;
         })
         .attr('dy', '18')
-        .attr('class', 'lb-text')    
+        .attr('class', 'lb-text')
         .style('font-size', '1em');
 
         if (/value-on-top/i.test(labelstyle)) {
@@ -1835,6 +1835,7 @@ window.Chart = function(container) {
 
     //Append the SVG in the parent area.
     var dataset = chartData,
+      noMarkers = false,
       parent = $(container).parent(),
       margin = {top: 30, right: 55, bottom: 35, left: 65},
       width = parent.width() - margin.left - margin.right,
@@ -1859,8 +1860,13 @@ window.Chart = function(container) {
           barHeight = 25,
           rowData = dataset[0].data[i],
           ranges = rowData.ranges.slice().sort(d3.descending),
-          markers = rowData.markers.slice().sort(d3.descending),
-          measures = rowData.measures.slice().sort(d3.descending);
+          markers = (rowData.markers ? rowData.markers.slice().sort(d3.descending) : []),
+          measures = (rowData.measures ? rowData.measures.slice().sort(d3.descending) : []);
+
+      if (markers.length === 0) {
+        markers = measures;
+        noMarkers = true;
+      }
 
       var g = svg.append('g')
               .attr('class', 'bullet')
@@ -1894,6 +1900,11 @@ window.Chart = function(container) {
       range.enter().append('rect')
           .attr('class', function(d, i) { return 'range s' + i; })  // jshint ignore:line
           .attr('width', 0)
+          .style('fill', function(d,i) {
+            if (chartData[0].barColors) {
+              return chartData[0].barColors[i];
+            }
+          }) // jshint ignore:line
           .attr('height', barHeight);
 
       range.transition()
@@ -1908,6 +1919,11 @@ window.Chart = function(container) {
           .attr('class', function(d, i) { return 'measure s' + i; }) // jshint ignore:line
           .attr('width', 0)
           .attr('height', 3)
+          .style('fill', function(d,i) {
+            if (chartData[0].lineColors) {
+              return chartData[0].lineColors[i];
+            }
+          }) // jshint ignore:line
           .attr('y', 11);
 
       measure.transition()
@@ -1919,9 +1935,14 @@ window.Chart = function(container) {
           .data(markers);
 
       marker.enter().append('line')
-          .attr('class', 'marker')
+          .attr('class', (noMarkers ? 'hidden' : 'marker'))
           .attr('x1', 0)
           .attr('x2', 0)
+          .style('stroke', function(d,i) {
+            if (chartData[0].markerColors) {
+              return chartData[0].markerColors[i];
+            }
+          }) // jshint ignore:line
           .attr('y1', barHeight / 6)
           .attr('y2', barHeight * 5 / 6);
 
@@ -1933,13 +1954,18 @@ window.Chart = function(container) {
           .attr('y2', barHeight * 5 / 6);
 
       //Difference
-      marker.enter().append('text')
-          .attr('class', 'difference')
-          .attr('text-anchor', 'middle')
-          .attr('y', barHeight /2 + 4)
-          .attr('dx', '-50px')
-          .attr('x', 0)
-          .text((markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]));
+      var dif = (markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]);
+
+      if (Math.abs(markers[0] - measures[0]) !== 0) {
+        marker.enter().append('text')
+            .attr('class', 'difference')
+            .attr('text-anchor', 'middle')
+            .attr('y', barHeight /2 + 4)
+            .attr('dx', '-50px')
+            .attr('x', 0)
+            .text(dif);
+      }
+
 
       marker.transition()
           .duration(duration)
@@ -1975,7 +2001,6 @@ window.Chart = function(container) {
           })  // jshint ignore:line
           .style('opacity', 1);
     }
-
 
   };
 

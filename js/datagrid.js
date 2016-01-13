@@ -27,6 +27,9 @@ window.Formatters = {
       formatted = Locale.formatDate(value2, (col.dateFormat ? {pattern: col.dateFormat}: null));
     }
 
+    if (!col.editor) {
+      return formatted;
+    }
     return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-calendar"><use xlink:href="#icon-calendar"/></svg>';
   },
 
@@ -412,9 +415,9 @@ window.Editors = {
 
         this.input.on('listclosed', function () {
           self.input.closest('td').removeClass('is-focused');
-          self.input.trigger('focusout');
 
           setTimeout(function () {
+            self.input.trigger('focusout');
             container.parent().focus();
           }, 1);
         });

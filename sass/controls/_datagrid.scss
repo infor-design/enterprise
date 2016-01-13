@@ -619,7 +619,9 @@ td .btn-actions {
 
 //Datagrid Dropdown Formatter
 td.datagrid-trigger-cell {
-  cursor: pointer;
+  &:not(.is-readonly) {
+    cursor: pointer;
+  }
 
   .icon {
     fill: $graphite06;
@@ -641,8 +643,8 @@ td.datagrid-trigger-cell {
     width: calc(100% - 10px);
   }
 
-  &:hover,
-  &:focus {
+  &:not(.is-readonly):hover,
+  &:not(.is-readonly):focus {
     .icon {
       visibility: visible;
     }
@@ -661,7 +663,6 @@ td.datagrid-trigger-cell {
     }
   }
 }
-
 
 
 .datagrid-checkbox-wrapper {
