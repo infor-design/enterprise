@@ -94,3 +94,48 @@
     }
   }
 }
+
+//RTL Styles
+html[dir='rtl'] {
+  .timepicker {
+    + .icon,
+    + .tooltip-description + .icon {
+      margin-left: inherit;
+      margin-right: -32px;
+    }
+
+    + .icon + .icon-error {
+      left: 50px;
+      right: auto;
+    }
+
+    + .audible + .icon + .icon-error {
+      left: 55px;
+      right: auto;
+    }
+  }
+
+  .timepicker-popup {
+    .dropdown {
+      + .icon {
+        left: 10px;
+        right: auto;
+      }
+    }
+  }
+
+  // Short Fields
+  .field-short {
+    .timepicker {
+      padding-left: 18px;
+      padding-right: inherit;
+
+      + .icon,
+      + .tooltip-description + .icon {
+        margin-left: inherit;
+        margin-right: -24px;
+      }
+    }
+  }
+
+}

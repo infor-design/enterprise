@@ -291,12 +291,22 @@
             if (self.element.attr('max')) { self.element.val(self.element.attr('max')); }
             break;
           case 38: case 39: // Right and Up increase the spinbox value
-            self.addButtonStyle(self.buttons.up);
-            self.increaseValue();
+            if (Locale.isRTL() && key === 39) {
+              self.addButtonStyle(self.buttons.down);
+              self.decreaseValue();
+            } else {
+              self.addButtonStyle(self.buttons.up);
+              self.increaseValue();
+            }
             break;
           case 37: case 40: // Left and Down decrease the spinbox value
-            self.addButtonStyle(self.buttons.down);
-            self.decreaseValue();
+            if (Locale.isRTL() && key === 37) {
+              self.addButtonStyle(self.buttons.up);
+              self.increaseValue();
+            } else {
+              self.addButtonStyle(self.buttons.down);
+              self.decreaseValue();
+            }
             break;
         }
       },
@@ -305,13 +315,23 @@
         if (self.isDisabled()) {
           return;
         }
+        var key = e.which;
+
         // Spinbox Control Button styles are added/removed on keyup.
-        switch (e.which) {
+        switch (key) {
           case 38: case 39:
-            self.removeButtonStyle(self.buttons.up);
+            if (Locale.isRTL() && key === 39) {
+              self.removeButtonStyle(self.buttons.down);
+            } else {              
+              self.removeButtonStyle(self.buttons.up);
+            }
             break;
           case 37: case 40:
-            self.removeButtonStyle(self.buttons.down);
+            if (Locale.isRTL() && key === 39) {
+              self.removeButtonStyle(self.buttons.up);
+            } else {              
+              self.removeButtonStyle(self.buttons.down);
+            }
             break;
         }
 

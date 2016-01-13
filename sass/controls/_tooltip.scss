@@ -360,6 +360,31 @@ html[dir='rtl'] {
     margin-right: 0;
   }
 
+  .top {
+    .arrow {
+      &:after {
+        left: auto;
+        right: -11px;
+      }
+    }
+  }
+
+  .bottom {
+    .arrow {
+      &:after {
+        left: auto;
+        right: -11px;
+      }
+    }
+
+    &.offset {
+      .arrow {
+        left: 18px;
+        right: auto;
+      }
+    }
+  }
+
   .right {
     .arrow {
       border-left-width: 11px;

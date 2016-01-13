@@ -290,11 +290,33 @@ svg.icon-logo {
   -ms-filter: fliph;
   filter: fliph;
   transform: scaleX(-1);
-  left: -50px;
 }
 
 //RTL Styles
 html[dir='rtl'] {
+  .field {
+    .icon-error,
+    .icon-confirm,
+    .icon-alert,
+    .icon-info,
+    .icon-pending {
+      left: 30px;
+      margin-left: -21px;
+      margin-right: inherit;
+      right: auto;
+    }
+
+    .lookup-wrapper {
+      .icon-error,
+      .icon-confirm {
+        left: 55px;
+        margin-left: -20px;
+        margin-right: inherit;
+        right: auto;
+      }
+    }
+  }
+
   .icon.app-header {
     &.go-back {
       span.one {

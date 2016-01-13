@@ -298,3 +298,58 @@ $header-wizard-active-color: $white;
     }
   }
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .wizard-header {
+    .completed-range {
+      left: auto;
+      right: 0;
+    }
+
+    .tick {
+      margin-left: inherit;
+      margin-right: -4px;
+
+      // Border for incomplete or non-current ticks
+      &::after {
+        left: auto;
+        right: 0;
+      }
+
+      // Default Placement for Focus State
+      &::before {
+        left: auto;
+        right: $wizard-tick-size / 2;
+      }
+
+      &:focus::before {
+        left: auto;
+        right: -.5em;
+      }
+
+      &.current,
+      &.complete {
+        &::after {
+          left: auto;
+          right: $wizard-tick-border-width;
+        }
+      }
+    }
+  }
+
+  // Toolbar with wizard for some patterns
+  .wizard-toolbar {
+    .wizard {
+      float: left;
+      padding-left: 30px;
+      padding-right: inherit;
+
+      .label {
+        padding-left: inherit;
+        padding-right: 2.5px;
+      }
+    }
+  }
+}

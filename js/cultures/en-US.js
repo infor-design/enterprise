@@ -159,6 +159,7 @@
       'InsertImage': {id: 'InsertImage', value: 'Insert Image', comment: 'Insert Image in an editor'},
       'Italic': {id: 'Italic', value: 'Italic', comment: 'Make Text Italic'},
       'InvalidDate': {id: 'InvalidDate', value: 'Invalid Date', comment: 'validation message for wrong date format (short)'},
+      'InvalidTime': {id: 'InvalidTime', value: 'Invalid Time', comment: 'validation message for wrong time format'},
       'Inventory': {id: 'Inventory', value: 'Inventory', comment: 'Icon button tooltop for Inventory Action'},
       'IsEmpty': {id: 'IsEmpty', value: 'Is Empty', comment: 'Is Empty in icons for filtering'},
       'IsNotEmpty': {id: 'IsNotEmpty', value: 'Is Not Empty', comment: 'Is Not Empty in icons for filtering'},
