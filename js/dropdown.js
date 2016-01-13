@@ -1136,8 +1136,14 @@
       setBadge: function (option) {
         //Badge Support
         if (this.badges) {
-          this.element.parent().find('.badge')
-            .attr('class', 'badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'azure07'))
+          var badge = this.element.parent().find('.badge');
+
+          if (badge.length === 0) {
+            this.element.parent().find('.dropdown-wrapper').append('<span class="badge">1</span>');
+            badge = this.element.parent().find('.badge');
+          }
+
+          badge.attr('class', 'badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'azure07'))
             .text(option.attr('data-badge'));
         }
       },

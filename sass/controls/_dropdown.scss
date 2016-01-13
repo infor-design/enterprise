@@ -22,9 +22,11 @@ select.multiselect {
     position: absolute;
   }
 
-  + .badge {
-    margin-left: -52px;
-    margin-top: -70px;
+  .badge {
+    display: inline-block;
+    position: absolute;
+    right: 28px;
+    top: 6px;
   }
 }
 
