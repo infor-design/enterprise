@@ -733,10 +733,10 @@
           }, 0);
         }
 
-        this.searchInput.val(!this.settings.multiple ? current.text() : this.input.val());
+        this.searchInput.val(!this.settings.multiple ? current.find('a').text() : this.input.val());
         this.activate(true); // Focus the Search Input
         this.handleSearchEvents();
-        this.element.trigger('listopened'); // TODO: Change event name?
+        this.element.trigger('listopened');
 
         // iOS-specific keypress event that listens for when you click the "done" button
         if ($('html').is('.ios, .android')) {
@@ -1030,6 +1030,7 @@
 
       //Select an option and optionally trigger events
       selectOption: function(option, noTrigger) {
+
         if (!option) {
           return option;
         }
