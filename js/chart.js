@@ -885,8 +885,8 @@ window.Chart = function(container) {
             var sign = deltaY > 0 ? 1 : -1,
               adjust = sign * alpha;
 
-            da.attr('y', +y1 + adjust);
-            db.attr('y', +y2 - adjust);
+            da.attr('y', + y1 + adjust);
+            db.attr('y', + y2 - adjust);
           });
         });
 

@@ -25,7 +25,6 @@
   $.fn.tree = function(options) {
     var pluginName = 'tree',
       defaults = {
-        option1: 'false'  //None Yet
       },
       settings = $.extend({}, defaults, options);
 
@@ -92,13 +91,17 @@
           subNode = a.next();
 
           //Inject Icons
+          var text = a.text();
+          a.text('');
           if (a.children('svg').length === 0) {
-            a.prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-document"></use></svg>');
+            a.prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-tree-node"></use></svg>');
           }
+
+          a.append('<span class="tree-text">' + text + '</span>');
 
           if (subNode.is('ul')) {
             subNode.attr('role', 'group').parent().addClass('folder');
-            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-tree-collapse' : '#icon-tree-expand');
+            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
           }
 
           if (li.is('[class^="icon"]')) {
@@ -134,13 +137,13 @@
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
               node.closest('.folder').removeClass('is-open').end()
-                  .find('use').attr('xlink:href', '#icon-tree-expand');
+                  .find('use').attr('xlink:href', '#icon-closed-folder');
             }).animateClosed();
           }
           else {
             next.addClass('is-open').one('animateopencomplete', function() {
               node.closest('.folder').addClass('is-open').end()
-                  .find('use').attr('xlink:href', '#icon-tree-collapse');
+                  .find('use').attr('xlink:href', '#icon-open-folder');
             }).animateOpen();
           }
           node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
