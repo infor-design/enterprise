@@ -129,9 +129,10 @@
 
         this.ticks.each(function(i) {
           var tick = $(this),
-            label = tick.children('.label');
+            label = tick.children('.label'),
+            left = Locale.isRTL() ? (100-tickPos[i]) : tickPos[i];
 
-          tick.css('left', tickPos[i] + '%');
+          tick.css('left', left + '%');
 
           if (label.length) {
             label.css('left', '-' + (label.outerWidth()/2 - tick.outerWidth()/2) + 'px');
@@ -177,9 +178,10 @@
 
       updateRange: function() {
         var currentTick = this.ticks.filter('.current').last(),
-          widthPercentage = (100 * parseFloat(currentTick.css('left')) / parseFloat(currentTick.parent().css('width'))) + '%';
+          widthPercentage = (100 * parseFloat(currentTick.css('left')) / parseFloat(currentTick.parent().css('width')));
+        widthPercentage = Locale.isRTL() ? (100-widthPercentage) : widthPercentage;
 
-        this.completedRange.css('width', widthPercentage);
+        this.completedRange.css('width', widthPercentage +'%');
         return this;
       },
 

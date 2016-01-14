@@ -446,16 +446,19 @@
         this.tooltip.find('.arrow').css('right', '');
 
         if (this.activeElement.is('.timepicker') && this.activeElement.parent().is(':not(.field-short)')) {
-          extraOffset = -20;
+          extraOffset = Locale.isRTL() ? 25 : -20;
         }
 
         if (this.activeElement.is('.datepicker') && this.activeElement.parent().is(':not(.field-short)')) {
           extraOffset = -15;
         }
+        var left = o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth;
+
+        left = Locale.isRTL() ? (left - (this.activeElement.outerWidth() - this.tooltip.outerWidth())) : left;
 
         this.tooltip.css({'width': this.tooltip.width() + extraWidth,
                           'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
-                          'left' : o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth });
+                          'left': left });
       },
       placeBelow: function (scrollable) {
         var o = this.activeElement.offset();

@@ -124,3 +124,48 @@
   position: absolute;
   width: 100%;
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .toast-container {
+    &.toast-bottom-right {
+      left: 10px;
+      right: auto;
+    }
+
+    &.toast-bottom-left {
+      left: auto;
+      right: 10px;
+    }
+
+    &.toast-top-right {
+      left: 10px;
+      right: auto;
+    }
+
+    &.toast-top-left {
+      left: auto;
+      right: 10px;
+    }
+  }
+
+  .toast {
+    padding: 10px 12px 10px 32px;
+
+    .toast-message {
+      padding-left: 5px;
+      padding-right: inherit;
+    }
+
+    .btn-close {
+      left: 0;
+      right: auto;
+    }
+  }
+
+  .toast-progress {
+    left: auto;
+    right: 0;
+  }
+}

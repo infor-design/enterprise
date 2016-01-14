@@ -246,3 +246,67 @@
   }
 }
 
+
+//RTL Styles
+html[dir='rtl'] {
+  .swaplist {
+
+    .card {
+      border-left-width: 1px;
+      border-right-width: 0;
+      float: right;
+      // width: 50%;
+
+      &:first-child {
+        border-left-width: 0;
+        border-right-width: 1px;
+      }
+
+      .card-header .btn {
+        &:after {
+          border-color: $swaplist-icon-color transparent $swaplist-icon-color $swaplist-icon-color;
+          left: 6px;
+          right: auto;
+        }
+
+        &:before {
+          border-color: $swaplist-icon-color $swaplist-icon-color $swaplist-icon-color transparent;
+          left: auto;
+          right: 6px;
+        }
+
+        &:hover,
+        &:focus:not(.hide-focus):not(.is-disabled) {
+          &:after {
+            border-color: $swaplist-border-color-hover transparent $swaplist-border-color-hover $swaplist-border-color-hover;
+          }
+
+          &:before {
+            border-color: $swaplist-border-color-hover $swaplist-border-color-hover $swaplist-border-color-hover transparent;
+          }
+        }
+      }
+
+      .buttons {
+        left: 10px;
+        right: auto;
+      }
+    }
+
+    &.one-third {
+      @include respond-to(phone) {
+        .card {
+          .buttons {
+            left: 5px;
+            right: auto;
+          }
+        }
+      }
+    }
+
+    .handle {
+      left: auto;
+      right: 10px;
+    }
+  }
+}

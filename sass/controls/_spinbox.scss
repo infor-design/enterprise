@@ -113,13 +113,70 @@ input::-webkit-inner-spin-button {
   }
 
   &.is-disabled {
-
     > .spinbox-control {
       background-color: $input-disabled-bg-color;
       border-color: $input-disabled-border-color;
       color: $disabled-color;
       cursor: default;
       -webkit-text-fill-color: $disabled-color;
+    }
+  }
+}
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .spinbox-control {
+    &.up {
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 0;
+      border-left: 1px solid $input-border-color;
+      border-right: 0;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 0;
+    }
+
+    &.down {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 2px;
+      border-left: 0;
+      border-right: 1px solid $input-border-color;
+      border-top-left-radius: 0;
+      border-top-right-radius: 2px;
+    }
+
+    &.is-disabled {
+      border-color: $input-disabled-border-color;
+    }
+  }
+
+  .spinbox-wrapper {
+    .icon-error {
+      left: 6px;
+      margin-left: inherit;
+      margin-right: -18px;
+      right: auto;
+    }
+
+    &.is-focused {
+      > .spinbox-control {
+        border-color: $input-focus-border-color;
+
+        &.is-active {
+          border-color: $input-focus-border-color;
+        }
+
+        &.is-disabled {
+          border-color: $input-disabled-border-color;
+        }
+      }
+
+    }
+
+    &.is-disabled {
+      > .spinbox-control {
+        border-color: $input-disabled-border-color;
+      }
     }
   }
 }

@@ -396,7 +396,8 @@
           nums = val.split(':'),
           hours = 1,
           minutes = 0,
-          period = 'AM';
+          period = Locale.translateDayPeriod('AM');
+          // period = 'AM';
 
         nums[0] = parseInt(nums[0].replace(/ /g, ''), 10);
         if (isNaN(nums[0])) {
@@ -435,7 +436,10 @@
         var hours = $('#timepicker-hours').val() || '',
           minutes = $('#timepicker-minutes').val() || '',
           period = ($('#timepicker-period').val() || '').toUpperCase(),
-          timeString = '' + hours + ':' + minutes + ' ' + period;
+          timeString = '' + hours + ':' + minutes;
+
+        period = (!this.show24Hours && period === '') ? $('#timepicker-period-shdo').val() : period;
+        timeString += ' ' + Locale.translateDayPeriod(period);
 
         this.element.val(timeString)
           .trigger('change');

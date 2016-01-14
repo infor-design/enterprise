@@ -107,11 +107,14 @@
 //RTL Styles
 html[dir='rtl'] {
   .switch {
+    input {
+      padding: 0;
+      width: 0;
+      border: 0;
+    }
+
     // Unchecked Styling
     input:empty {
-      margin-left: inherit;
-      margin-right: -999px;
-
       ~ label:before {
         left: auto;
         right: 0;
@@ -136,4 +139,3 @@ html[dir='rtl'] {
     }
   }
 }
-

@@ -554,6 +554,14 @@
       return this.currentLocale.data.messages[key].value;
     },
 
+    // Translate Day Period
+    translateDayPeriod: function(period) {
+      if (/am|pm|AM|PM/i.test(period)) {
+        return Locale.calendar().dayPeriods[/AM|am/i.test(period) ? 0 : 1];
+      }
+      return period;
+    },
+
     // Short cut function to get 'first' calendar
     calendar: function() {
       if (this.currentLocale.data.calendars) {
@@ -577,7 +585,130 @@
 
     isRTL: function() {
       return this.currentLocale.data.direction === 'right-to-left';
+    },
+
+    flipIconsHorizontally: function() {
+      var icons = [
+        'icon-attach',
+        'icon-bottom-aligned',
+        'icon-bullet-list',
+        'icon-cancel',
+        'icon-cart',
+        'icon-collapse-app-tray',
+        'icon-cut',
+        'icon-document',
+        'icon-drilldown',
+        'icon-duplicate',
+        'icon-expand-app-tray',
+        'icon-export',
+        'icon-first-page',
+        'icon-folder',
+        'icon-import',
+        'icon-last-page',
+        'icon-launch',
+        'icon-left-align',
+        'icon-left-text-align',
+        'icon-left-arrow',
+        'icon-new-document',
+        'icon-next-page',
+        'icon-number-list',
+        'icon-paste',
+        'icon-previous-page',
+        'icon-quote',
+        'icon-redo',
+        'icon-refresh',
+        'icon-right-align',
+        'icon-right-arrow',
+        'icon-right-text-align',
+        'icon-save',
+        'icon-search-folder',
+        'icon-search-list',
+        'icon-search',
+        'icon-send',
+        'icon-tack',
+        'icon-tree-collapse',
+        'icon-tree-expand',
+        'icon-undo',
+        'icon-unlocked',
+        'icon-add-grid-record',
+        'icon-add-grid-row',
+        'icon-additional-help',
+        'icon-bubble',
+        'icon-cascade',
+        'icon-change-font',
+        'icon-clear-screen',
+        'icon-script',
+        'icon-clockwise-90',
+        'icon-close-cancel',
+        'icon-close-save',
+        'icon-contacts',
+        'icon-copy-from',
+        'icon-copy-mail',
+        'icon-copy-url',
+        'icon-counter-clockwise-90',
+        'icon-create-report',
+        'icon-delete-grid-record',
+        'icon-delete-grid-row',
+        'icon-display',
+        'icon-employee-directory',
+        'icon-export-2',
+        'icon-export-to-pdf',
+        'icon-generate-key',
+        'icon-get-more-rows',
+        'icon-group-selection',
+        'icon-headphones',
+        'icon-help',
+        'icon-helper-list-select',
+        'icon-history',
+        'icon-invoice-released',
+        'icon-language',
+        'icon-logout',
+        'icon-key',
+        'icon-lasso',
+        'icon-line-bar-chart',
+        'icon-line-chart',
+        'icon-new-expense-report',
+        'icon-new-payment-request',
+        'icon-new-time-sheet',
+        'icon-new-travel-plan',
+        'icon-no-attachment',
+        'icon-no-comment',
+        'icon-no-filter',
+        'icon-overlay-line',
+        'icon-pdf-file',
+        'icon-phone',
+        'icon-payment-request',
+        'icon-pie-chart',
+        'icon-queries',
+        'icon-quick-access',
+        'icon-refresh-current',
+        'icon-restore-user',
+        'icon-run-quick-access',
+        'icon-save-close',
+        'icon-save-new',
+        'icon-search-results-history',
+        'icon-select',
+        'icon-send-submit',
+        'icon-show-last-x-days',
+        'icon-special-item',
+        'icon-stacked',
+        'icon-timesheet',
+        'icon-unsubscribe',
+        'icon-update-preview',
+        'icon-zoom-100',
+        'icon-zoom-in',
+        'icon-zoom-out',
+        'icon-caret-left',
+        'icon-caret-right'
+      ];
+      $('svg').each(function() {
+        var use = $('use', this).attr('xlink:href');
+        if(use && $.inArray(use.substring(1), icons) !== -1) {
+          $(this).addClass('icon-rtl-rotate');
+        }
+      });
     }
+
   };
 
 if (!window.Locale.cultureInHead()) {
@@ -587,29 +718,10 @@ if (!window.Locale.cultureInHead()) {
 }
   $(function() {
 
-
     // ICONS: Right to Left Direction
     setTimeout(function() {
       if (window.Locale.isRTL()) {
-        var icons = [
-          'icon-first-page',
-          'icon-last-page',
-          'icon-next-page',
-          'icon-previous-page',
-          'icon-left-arrow',
-          'icon-right-arrow',
-          'icon-caret-left',
-          'icon-caret-right',
-          'icon-collapse-app-tray',
-          'icon-expand-app-tray',
-          'icon-cart'
-        ];
-        $('svg').each(function() {
-          var use = $('use', this).attr('xlink:href');
-          if(use && $.inArray(use.substring(1), icons) !== -1) {
-            $(this).addClass('icon-rtl-rotate');
-          }
-        });
+        window.Locale.flipIconsHorizontally();
       }
     }, 300);
 

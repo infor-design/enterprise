@@ -131,3 +131,72 @@
     }
   }
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+  .timeline {
+    // vertical line
+    &:before {
+      border-left: 0;
+      border-right: 1px dashed $timeline-line-color;
+      left: auto;
+      right: 1.125em;
+    }
+  }
+
+  .timeline-block {
+    .date {
+      margin-left: inherit;
+      margin-right: 6em;
+
+      > .icon {
+        margin-left: 8px;
+        margin-right: inherit;
+      }
+    }
+
+    .indicator-container {
+      float: right;
+    }
+
+    .content {
+      margin-left: inherit;
+      margin-right: 6em;
+    }
+
+  }
+
+  @media (min-width: $breakpoint-phone-to-tablet) {
+    .timeline {
+      &:before {
+        left: auto;
+        right: 12.65em;
+      }
+    }
+
+    .timeline-block {
+      .date,
+      .indicator-container,
+      .content {
+        float: right;
+      }
+
+      .date {
+        margin-left: inherit;
+        margin-right: 0;
+        text-align: left;
+      }
+
+      .indicator-container {
+        margin-left: inherit;
+        margin-right: 11.5em;
+      }
+
+      .content {
+        margin-left: inherit;
+        margin-right: 3em;
+      }
+    }
+  }
+}
