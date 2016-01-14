@@ -782,6 +782,18 @@ html[dir='rtl'] {
     margin-right: 20px;
   }
 
+  //Datagrid Dropdown Formatter
+  td.datagrid-trigger-cell {
+    .icon-calendar {
+      left: auto;
+      right: 3px;
+    }
+
+    .trigger {
+      text-align: right;
+    }
+  }
+
   //Grid Checkboxes
   .datagrid-checkbox {
     left: auto;
@@ -802,5 +814,6 @@ html[dir='rtl'] {
       margin-right: -3px;
     }
   }
+
 }
 

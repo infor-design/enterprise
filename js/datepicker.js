@@ -318,13 +318,20 @@
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
         this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'offset', offset: {top: 20, left: 150}, width: '200',
+            placement: 'offset', offset: {top: 20, left: Locale.isRTL() ? -150 : 150}, width: '200',
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
             }).on('open.datepicker', function () {
               self.days.find('.is-selected').attr('tabindex', 0).focus();
             });
+
+        // ICONS: Right to Left Direction
+        setTimeout(function() {
+          if (Locale.isRTL()) {
+            Locale.flipIconsHorizontally();
+          }
+        }, 0);              
 
         this.handleKeys($('#calendar-popup'));
         $('.calendar-footer a', this.calendar).button();

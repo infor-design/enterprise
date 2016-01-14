@@ -760,8 +760,9 @@
       },
 
       time: {
-        check: function(value, field) {
+        check: function(value, field) {          
           value = value.replace(/ /g, '');
+          this.message = Locale.translate('InvalidTime');
           var pattern = field && field.attr('data-time-format') !== undefined ? field.attr('data-time-format') : Locale.calendar().timeFormat,
             is24Hour = (pattern.match('HH') || []).length > 0,
             maxHours = is24Hour ? 24 : 12,

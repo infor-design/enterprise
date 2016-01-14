@@ -253,11 +253,20 @@
 
           //right arrow
           if (charCode === 37) {
-            if (target.next().hasClass('is-open')) {
-              self.toggleNode(target);
+            if (Locale.isRTL()) {
+              if (target.next().hasClass('is-open')) {
+                next = target.next().find('a:first');
+                self.setSelectedNode(next, true);
+              } else {
+                self.toggleNode(target);
+              }
             } else {
-              next = target.closest('.folder').find('a:first');
-              self.setSelectedNode(next, true);
+              if (target.next().hasClass('is-open')) {
+                self.toggleNode(target);
+              } else {
+                next = target.closest('.folder').find('a:first');
+                self.setSelectedNode(next, true);
+              }
             }
             e.stopPropagation();
             return false;
@@ -265,11 +274,20 @@
 
           //left arrow
           if (charCode === 39) {
-            if (target.next().hasClass('is-open')) {
-              next = target.next().find('a:first');
-              self.setSelectedNode(next, true);
+            if (Locale.isRTL()) {
+              if (target.next().hasClass('is-open')) {
+                self.toggleNode(target);
+              } else {
+                next = target.closest('.folder').find('a:first');
+                self.setSelectedNode(next, true);
+              }
             } else {
-              self.toggleNode(target);
+              if (target.next().hasClass('is-open')) {
+                next = target.next().find('a:first');
+                self.setSelectedNode(next, true);
+              } else {
+                self.toggleNode(target);
+              }
             }
             e.stopPropagation();
             return false;

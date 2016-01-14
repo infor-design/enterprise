@@ -284,3 +284,94 @@
     }
   }
 }
+
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .datepicker {
+    + .icon,
+    + .tooltip-description + .icon {
+      margin-left: inherit;
+      margin-right: -24px;
+    }
+
+    + .icon + .icon-error {
+      left: 50px;
+      right: auto;
+    }
+
+    + .audible + .icon + .icon-error {
+      left: 50px;
+      right: auto;
+    }
+  }
+
+  // Header Area of Calendar
+  .calendar-header {
+    text-align: right;
+
+    button {
+      left: 37px;
+      right: auto;
+
+      &.prev {
+        margin: 8px 0 0 5px;
+
+        svg {
+          left: auto;
+          right: 0;
+        }
+      }
+
+      &.next {
+        left: 11px;
+        margin: 8px 5px 0 0;
+        right: auto;
+
+        svg {
+          left: auto;
+          right: 0;
+        }
+      }
+
+    }
+  }
+
+
+  //Footer Buttons
+  .calendar-footer {
+    button {
+      border-left: 1px solid transparent;
+      border-right: 1px solid $popover-separator-color;
+      float: right;
+      margin: 0;
+
+      &:nth-child(1) {
+        border-left: 1px solid $popover-separator-color;
+        border-right: 1px solid transparent;
+      }
+    }
+  }
+
+  // Popup Adjustments
+  #calendar-popup {
+    .arrow {
+      left: auto;
+      right: 137px;
+    }
+  }
+
+  // Short fields
+  .field-short {
+    .datepicker {
+      padding-left: 18px;
+      padding-right: inherit;
+
+      + .icon {
+        margin-left: inherit;
+        margin-right: -18px;
+      }
+    }
+  }
+}
