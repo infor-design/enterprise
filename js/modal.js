@@ -163,7 +163,7 @@
         this.modalButtons = buttons;
 
         if (!buttons) {
-          var inlineBtns = body.find('.modal-buttonset button');
+          var inlineBtns = this.element.find('.modal-buttonset button');
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
           inlineBtns.css('width', btnWidth + '%').button();
