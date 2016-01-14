@@ -348,11 +348,11 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $primary-color;
+$tree-active-bg-color: #cae2ed;
 $tree-icon-color: $graphite06;
-$tree-line-color: $graphite04;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
-$tree-disabled-opacity: .6;
+$tree-disabled-color: $graphite04;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $graphite02;

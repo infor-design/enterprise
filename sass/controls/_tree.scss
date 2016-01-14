@@ -7,6 +7,8 @@
   a {
     @include font-size(14);
     @include antialiased();
+    @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94));
+
     border: 1px solid transparent;
     border-radius: 2px;
     color: $tree-link-color;
@@ -14,14 +16,28 @@
     padding: 10px 8px 5px 6px;
     text-decoration: none;
 
+    //Text in the tree items
     .tree-text {
+      @include transition(border 300ms cubic-bezier(.17, .04, .03, .94), color 300ms cubic-bezier(.17, .04, .03, .94));
       border-bottom: 1px solid transparent;
     }
 
+    // Icons
+    svg {
+      @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
+      fill: $tree-icon-color;
+      height: 16px;
+      margin: 0 9px 0 0;
+      top: 2px;
+      width: 16px;
+    }
+
+    //Ignore Visited Color Change
     &:visited {
       color: $tree-link-color;
     }
 
+    //Focus State
     &:focus {
       border: 1px solid $tree-selected-color;
       border-radius: 2px;
@@ -32,6 +48,7 @@
       }
     }
 
+    //Hover State
     &:hover {
       border: 1px solid transparent;
       color: $tree-selected-color;
@@ -45,26 +62,40 @@
       }
     }
 
+    //Active State
     &:active {
+      background-color: $tree-active-bg-color;
       border: 1px solid transparent;
-      color: $tree-selected-color;
+      border-radius: 5px;
+
+      .tree-text {
+        border-bottom-color: $tree-selected-color;
+      }
     }
 
+    //Disable State
     &.is-disabled {
       @include unselectable;
       cursor: default;
-      opacity: $tree-disabled-opacity;
+
+      .tree-text {
+        color: $tree-disabled-color;
+      }
+
+      svg {
+        fill: $tree-disabled-color;
+      }
 
       &:hover,
       &:focus {
-        border-color: transparent;
-        color: $tree-link-color;
-        text-decoration: none;
+        color: $tree-disabled-color;
 
         svg {
-          fill: $tree-folder-link-color;
-          opacity: .5;
-          stroke: $tree-icon-color;
+          fill: $tree-disabled-color;
+        }
+
+        .tree-text {
+          border-color: transparent;
         }
       }
     }
@@ -84,7 +115,6 @@
     &.is-selected {
       > a {
         color: $tree-selected-color;
-        text-decoration: none;
 
         svg {
           fill: $tree-selected-color;
@@ -128,17 +158,9 @@
     }
   }
 
-  // Icons
-  svg {
-    fill: $tree-icon-color;
-    height: 16px;
-    margin: 0 9px 0 0;
-    top: 2px;
-    width: 16px;
-  }
 }
 
-//RTL Styles
+//RTL Tree
 html[dir='rtl'] {
   .tree {
     a {
