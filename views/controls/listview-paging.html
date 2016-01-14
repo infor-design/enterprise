@@ -71,9 +71,9 @@
 
         $('#paginated-listview').listview({
           dataset: testData,
+          paging: true,
+          pagesize: 10,
           template: $('#project-tmpl').html()
-        }).pager({
-          pagesize: 10
         });
       });
     </script>

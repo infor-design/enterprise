@@ -116,12 +116,13 @@
             <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
           </div>
         </div>
-        <div class="listview" id="period-end" data-tmpl="period-end-tmpl" data-dataset="/api/periods" data-selectable="single"></div>
+        <div class="listview" id="period-end" data-options="{template: 'period-end-tmpl', selectable: 'single', source: '/api/periods'}"></div>
       </div>
     </div>
   </div>
 </div>
 
+<!--
 <div class="row">
   <div class="twelve columns">
       <hr class="fieldset-hr">
@@ -175,6 +176,7 @@
 
   </div>
 </div>
+-->
 
 <div class="row">
   <div class="twelve columns">
@@ -217,7 +219,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" data-tmpl="alerts-tmpl" data-dataset="/api/tasks"></div>
+        <div class="listview" data-options="{ template: 'alerts-tmpl', source: '/api/tasks' }"></div>
       </div>
     </div>
   </div>
@@ -265,13 +267,11 @@
       </div>
 
       <div class="card-content">
-        <div class="listview alternate-row" data-tmpl="alternate-row-tmpl" data-dataset="/api/construction-cart-items"></div>
+        <div class="listview alternate-row" data-options="{ template: 'alternate-row-tmpl', source: '/api/construction-cart-items' }"></div>
       </div>
     </div>
   </div>
 </div>
-
-
 
 <script id="icons-example-tmpl" type="text/html">
   <ul>
@@ -340,7 +340,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" id="icons-example" data-tmpl="icons-example-tmpl" data-dataset="/api/people"></div>
+        <div class="listview" id="icons-example" data-options="{ template: 'icons-example-tmpl', source: '/api/people' }"></div>
       </div>
 
     </div>
