@@ -27,21 +27,22 @@
     // Settings and Options
     var pluginName = 'listview',
       defaults = {
-        dataset: null,  //Object or Array or url
+        dataset: [], // Array of data
         template: null,  //Html Template String
         description: null,  //Audible Label (or use parent title)
+        paging: false, // If true, activates paging
+        pagesize: 10, // If paging is activated, sets the number of listview items available per page
         selectable: 'single', //false, 'single' or 'multiple'
-        selectOnFocus: true //true or false
+        selectOnFocus: true, //true or false
+        source: null, // External function that can be used to provide a datasource
      },
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function ListView(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
-      this.settings = settings;
       this.init();
-      this.handleEvents();
-      this.handleResize();
     }
 
     // Plugin Object
@@ -53,6 +54,8 @@
         this.lastSelectedRow = 0; // Rember index to use shift key
         this.isSelectedAll = false; // Rember if all selected or not
         this.sortInit('listview', 'click.listview', 'data-sortlist');
+        this.handleEvents();
+        this.handleResize();
       },
 
       setup: function() {
@@ -67,7 +70,6 @@
 
         if (selectOnFocus && selectOnFocus.length) {
           this.settings.selectOnFocus = JSON.parse(selectOnFocus);
-
         }
 
         self.actionButton = card.find('.btn-actions');
@@ -108,7 +110,7 @@
         return totals;
       },
 
-      render: function(dataset) {
+      render: function(dataset, pagerInfo) {
         var self = this,
           totals = {};
 
@@ -123,6 +125,18 @@
             renderedTmpl = compiledTmpl.render({dataset: dataset, totals: totals});
 
           this.element.html(renderedTmpl);
+        }
+
+        // Add Pager, if applicable
+        if (this.settings.paging) {
+          this.element.pager({
+            pagesize: self.settings.pagesize,
+            source: self.settings.source
+          });
+
+          if (pagerInfo) {
+            this.element.data('pager').updatePagingInfo(pagerInfo);
+          }
         }
 
         // Add Aria
@@ -168,36 +182,57 @@
 
       // Get the Data Source. Can be an array, Object or Url
       refresh: function () {
-        this.loadApi();
+        this.loadData();
 
         if (this.list) {
           this.render(this.list.data);
         }
       },
 
-      // Load api data
-      loadApi: function (ds) {
-        var self = this;
+      // Load Data from an external API
+      loadData: function (ds, pagerInfo) {
         ds = ds || this.settings.dataset;
+        pagerInfo = pagerInfo || {};
 
         if (!ds) {
           return;
         }
 
-        self.list = self.list || {};
-
-        if (ds.indexOf('http') === 0 || ds.indexOf('/') === 0) {
-          $.ajax({
-            url: ds,
-            async: false,
-            dataType: 'json',
-            success: function(data) {
-              self.list.data = data;
-            }
-          });
-          return;
+        function done(response, pagingInfo) {
+          ds = response;
+          this.render(ds, pagingInfo);
         }
-        self.list.data = ds;
+
+        var self = this,
+          s = this.settings.source;
+
+        // If paging is not active, and a source is present, attempt to retrieve information from the datasource
+        // TODO: Potentially abstract this datasource concept out for use elsewhere
+        if (!this.settings.paging && s) {
+          switch (typeof s) {
+            case 'function':
+              return s(pagerInfo, done);
+            case 'string':
+              if (s.indexOf('http') === 0 || s.indexOf('/') === 0) {
+                $.ajax({
+                  url: s,
+                  async: false,
+                  dataType: 'json',
+                  success: function(response) {
+                    ds = self.settings.dataset = response;
+                    return self.render(ds, pagerInfo);
+                  }
+                });
+              }
+              return;
+            default:
+              ds = this.settings.dataset = s;
+              return this.render(s, pagerInfo);
+          }
+        }
+
+        // Otherwise, simply render with the existing dataset
+        this.render(ds, pagerInfo);
       },
 
       // Toggle all
@@ -482,7 +517,7 @@
 
         //reload data
         if (options.reloadApi || options.reloadApiNoSort) {
-          this.loadApi();
+          this.loadData();
         }
 
         //reload data but no sort change
@@ -589,9 +624,19 @@
         }
       },
 
-      destroy: function() {
-        this.element.removeData(pluginName);
+      updated: function() {
+        // TODO: Updated
+        return this;
+      },
+
+      teardown: function() {
         this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
+        this.element.removeData(pluginName);
       }
     };
 
@@ -599,7 +644,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new ListView(this, settings));
       }

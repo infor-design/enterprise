@@ -3,6 +3,7 @@
 
 .pager-toolbar {
   @include font-size(14);
+  height: 38px;
   margin: 10px 0;
   max-height: 38px;
   overflow: hidden;

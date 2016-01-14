@@ -25,8 +25,8 @@
           type: 'list', //Differet types of pagers: list, table and more
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
-          pagesize: 15, //Can be calculate or a specific number
           source: null,  //Call Back Function for Pager Data Source
+          pagesize: 15, //Can be calculate or a specific number
           pagesizes: [15, 25, 50, 75],
           indeterminate: false // Will not show anything that lets you go to a specific page
         },
@@ -43,43 +43,88 @@
     Pager.prototype = {
 
       init: function() {
-        this.activePage = this.settings.activePage;
-        this.isTable = this.element.is('tbody');
+        //this.activePage = this.settings.activePage;
+        this.setup();
         this.buttonExpr = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
         this.createPagerBar();
+        this.setActivePage(this.settings.activePage); //Get First Page
         this.renderBar();
         this.renderPages(false, 'initial');
         this.handleEvents();
-        this.setActivePage(this.settings.activePage); //Get First Page
+      },
+
+      setup: function() {
+        // Adjust for the possibility of the pager being attached to a Table instead of normal grid markup
+        if (this.element.is('tbody')) {
+          this.isTable = true;
+          this.settings.type = 'table';
+          this.mainContainer = this.element.closest('.datagrid-wrapper');
+        }
+
+        // If contained by a widget/card container, build some settings for that
+        var widgetContainer = this.element.closest('.card, .widget');
+        if (widgetContainer.length) {
+          this.isList = true;
+          this.settings.type = 'list';
+          this.mainContainer = widgetContainer;
+        }
+
+        return this;
       },
 
       createPagerBar: function () {
         this.pagerBar = this.element.prev('.pager-toolbar');
 
         if (this.pagerBar.length === 0) {
-          this.pagerBar = $('<ul class="pager-toolbar"> <li class="pager-prev"> <a href="#" rel="prev" title="PreviousPage"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-previous-page"></use></svg> <span class="audible">Previous</span> </a> </li> <li class="pager-next"> <a href="#" rel="next" title="NextPage"> <span class="audible">Next</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-next-page"></use></svg> </a> </li> </ul>');
-
-          if (this.isTable && this.settings.type === 'list') {
-            this.settings.type = 'table';
-          }
+          this.pagerBar = $('<ul class="pager-toolbar"></ul>');
+          var buttons = '<li class="pager-prev">' +
+              '<a href="#" rel="prev" title="PreviousPage">' +
+                '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+                  '<use xlink:href="#icon-previous-page"></use>' +
+                '</svg>' +
+                '<span class="audible">Previous</span>' +
+              '</a>' +
+            '</li>' +
+            '<li class="pager-next">' +
+              '<a href="#" rel="next" title="NextPage">' +
+                '<svg class="icon" focusable="false" role="presentation" aria-hidden="true">' +
+                  '<use xlink:href="#icon-next-page"></use>' +
+                '</svg>' +
+                '<span class="audible">Next</span> ' +
+              '</a>' +
+            '</li>';
 
           if (this.settings.type === 'table') {
-            //Add More Buttons
-            this.pagerBar.prepend('<li class="pager-first"> <a href="#" title="FirstPage"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-first-page"></use></svg> <span class="audible">First</span> </a> </li>');
-            this.pagerBar.append('<li class="pager-last"> <a href="#" title="LastPage"> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"><use xlink:href="#icon-last-page"></use></svg> <span class="audible">Last</span> </a> </li>');
+            buttons = '<li class="pager-first">' +
+              '<a href="#" title="FirstPage">' +
+                '<svg class="icon" focusable="false" role="presentation" aria-hidden="true">' +
+                  '<use xlink:href="#icon-first-page"></use>' +
+                '</svg>' +
+                '<span class="audible">First</span>' +
+              '</a>' +
+            '</li>' +
+            buttons +
+            '<li class="pager-last">' +
+              '<a href="#" title="LastPage">' +
+                '<svg class="icon" focusable="false" role="presentation" aria-hidden="true">' +
+                  '<use xlink:href="#icon-last-page"></use>' +
+                '</svg>' +
+                '<span class="audible">Last</span>' +
+              '</a>' +
+            '</li>';
           }
 
-          if (this.isTable) {
-            this.element.closest('.datagrid-wrapper').after(this.pagerBar);
+          this.pagerBar.html(buttons);
+        }
+
+        if (this.isTable) {
+          this.mainContainer.after(this.pagerBar);
+        } else {
+          if (this.settings.position ==='bottom') {
+            this.element.after(this.pagerBar);
           } else {
-            if (this.settings.position ==='bottom') {
-              this.element.after(this.pagerBar);
-            } else {
-              this.element.before(this.pagerBar);
-            }
+            this.element.before(this.pagerBar);
           }
-
-          this.pagerBar.find('a').tooltip();
         }
 
         // Inside of Listviews, place the pager bar inside of the card/widget footer
@@ -101,6 +146,8 @@
             self.pagerBar.appendTo(widgetFooter);
           });
         }
+
+        this.pagerBar.find('a').tooltip();
       },
 
       // Attach All relevant events
@@ -159,11 +206,15 @@
 
       //Set or Get Current Page
       setActivePage: function(pageNum, force, op) {
-
         var lis = this.pagerBar.find(this.buttonExpr);
 
+        // Check to make sure our internal active page is set
+        if (!this.activePage || isNaN(this.activePage)) {
+          this.activePage = this.settings.activePage;
+        }
+
         if (pageNum === 0 || pageNum > this.pageCount()) {
-          return;
+          return this.activePage;
         }
 
         if (pageNum === undefined) {
@@ -359,25 +410,33 @@
       // Render Paged Items
       renderPages: function(uiOnly, op) {
         var expr,
-          self = this;
-
-        this.pagingInfo = {activePage: this.activePage, pagesize: this.settings.pagesize, type: op, total: -1};
+          self = this,
+          request = {
+            activePage: self.activePage,
+            pagesize: self.settings.pagesize,
+            type: op,
+            total: -1
+          };
 
         //Make an ajax call and wait
         setTimeout(function () {
-          var table = self.element.closest('.datagrid-container'),
-            doPaging = table.triggerHandler('beforepaging', self.pagingInfo);
+          var doPaging = self.element.triggerHandler('beforepaging', request);
 
           if (doPaging === false) {
             return;
           }
 
           if (self.settings.source && !uiOnly) {
-            var api = table.data('datagrid');
+            var api, response;
 
-            var response = function (data, pagingInfo) {
-              self.currPage = self.activePage;
+            // Distinguish between datagrid and listview
+            if (self.isTable) {
+              api = self.mainContainer.children('.datagrid-container').data('datagrid');
+            } else {
+              api = self.element.data('listview');
+            }
 
+            response = function(data, pagingInfo) {
               //Render Data
               api.loadData(data, pagingInfo, true);
 
@@ -390,47 +449,44 @@
               return;
             };
 
-            if (api.sortColumn.sortId) {
-              self.pagingInfo.sortAsc = api.sortColumn.sortAsc;
-              self.pagingInfo.sortField = api.sortColumn.sortField;
-              self.pagingInfo.sortId = api.sortColumn.sortId;
+            if (api.sortColumn && api.sortColumn.sortId) {
+              request.sortAsc = api.sortColumn.sortAsc;
+              request.sortField = api.sortColumn.sortField;
+              request.sortId = api.sortColumn.sortId;
             }
 
             if (api.filterExpr) {
-               self.pagingInfo.filterExpr = api.filterExpr;
+               request.filterExpr = api.filterExpr;
             }
 
-            self.settings.source(self.pagingInfo, response);
+            self.settings.source(request, response);
           }
 
           //Make an ajax call and wait
-          self.element.trigger('paging', self.pagingInfo);
-          var elements = self.getPageableElements();
-
-          var isExpandable = (self.settings.rowTemplate !== undefined);
+          self.element.trigger('paging', request);
+          var elements = self.getPageableElements(),
+            isExpandable = (self.settings.rowTemplate !== undefined);
 
           //Render page objects
           if (!self.settings.source) {
             var rows = (isExpandable ? self.settings.pagesize * 2 : self.settings.pagesize);
-
             elements.hide();
             expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ rows +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * rows) +'):gt('+ (((self.activePage-1) * rows) -1) +')');
             elements.filter(expr).show();
-
           } else {
             elements.show();
           }
 
           if (!self.settings.source) {
-            self.element.trigger('afterpaging', self.pagingInfo);
-            self.updatePagingInfo(self.pagingInfo);
+            self.element.trigger('afterpaging', request);
+            self.updatePagingInfo(request);
           }
 
         }, 0);
       },
 
       updatePagingInfo: function(pagingInfo) {
-        this.settings.pagesize = pagingInfo.pagesize;
+        this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
         this.pagerBar.find('.btn-menu span').text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
 
         if (this.settings.source) {
