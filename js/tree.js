@@ -48,8 +48,7 @@
         links.each(function(i) {
           var a = $(this),
             parentCount = 0,
-            subNode,
-            li = a.parent('li');
+            subNode;
 
           //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
           a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
