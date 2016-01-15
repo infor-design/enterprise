@@ -237,6 +237,10 @@
         dateFormat = this.calendar().dateFormat.short;
       }
 
+      if (dateFormat.pattern) {
+        dateFormat = dateFormat.pattern;
+      }
+
       var formatParts,
         dateStringParts,
         dateObj = {},

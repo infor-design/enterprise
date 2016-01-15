@@ -104,8 +104,8 @@
             a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
           }
 
-          if (li.is('[class^="icon"]')) {
-            a.find('use').attr('xlink:href','#'+ li.attr('class'));
+          if (a.is('[class^="icon"]')) {
+            a.find('use').attr('xlink:href','#'+ a.attr('class'));
           }
         });
       },

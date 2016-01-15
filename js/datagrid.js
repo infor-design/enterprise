@@ -24,7 +24,9 @@ window.Formatters = {
 
     if (typeof value === 'string') {
       var value2 = Locale.parseDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
-      formatted = Locale.formatDate(value2, (col.dateFormat ? {pattern: col.dateFormat}: null));
+      if (value2) {
+        formatted = Locale.formatDate(value2, (col.dateFormat ? {pattern: col.dateFormat}: null));
+      }
     }
 
     if (!col.editor) {
