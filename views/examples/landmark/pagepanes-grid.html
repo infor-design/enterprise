@@ -6,82 +6,81 @@
 
     <header class="header is-personalizable has-tabs">
       <div class="toolbar">
-          <div class="title">
-              <h1>Landmark Page Pane Patterns</h1>
-          </div>
+        <div class="title">
+          <h1>Landmark Page Pane Patterns</h1>
+        </div>
 
-          <div class="buttonset">
-              <button class="btn-icon header-search" type="button">
-                  <span class="audible">Search</span>
-                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                      <use xlink:href="#icon-search"></use>
-                  </svg>
-              </button>
-          </div>
-
-          {{> includes/header-actionbutton}}
+        <div class="buttonset">
+          <button class="btn-icon header-search" type="button">
+            <span class="audible">Search</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-search"></use>
+            </svg>
+          </button>
+        </div>
+        {{> includes/header-actionbutton}}
       </div>
 
       <div class="tab-container">
-          <ul class="tab-list">
-              <li class="tab"><a href="#header-tab1">Left/Right</a></li>
-              <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
-              <li class="tab"><a href="#header-tab3">Left Column</a></li>
-              <li class="tab"><a href="#header-tab4">Right Column</a></li>
-              <li class="tab"><a href="#header-tab5">Top Row</a></li>
-              <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
-              <li class="tab"><a href="#header-tab7">4 Panes</a></li>
-          </ul>
+        <ul class="tab-list">
+          <li class="tab"><a href="#header-tab1">Left/Right</a></li>
+          <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
+          <li class="tab"><a href="#header-tab3">Left Column</a></li>
+          <li class="tab"><a href="#header-tab4">Right Column</a></li>
+          <li class="tab"><a href="#header-tab5">Top Row</a></li>
+          <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
+          <li class="tab"><a href="#header-tab7">4 Panes</a></li>
+        </ul>
       </div>
     </header>
 
     <div id="maincontent" class="page-container scrollable" role="main">
       <div id="header-tab1" class="tab-panel">
         <div class="page-container">
-          <section class="pane left">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane right">{{> examples/landmark/pagepanes-grid2}}</section>
+          <section class="pane left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+          <section class="pane right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
         </div>
       </div>
       <div id="header-tab2">
         <div class="page-container">
-          <section class="pane top">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane bottom">{{> examples/landmark/pagepanes-grid2}}</section>
+          <section class="pane top no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+          <section class="pane bottom no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
         </div>
       </div>
       <div id="header-tab3">
         <div class="page-container">
-          <section class="pane left">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane top-right">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-right">{{> examples/landmark/pagepanes-grid3}}</section>
+          <section class="pane left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+          <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+          <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
         </div>
       </div>
       <div id="header-tab4">
         <div class="page-container">
-          <section class="pane right">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane top-left">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-left">{{> examples/landmark/pagepanes-grid3}}</section>
+          <section class="pane right no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+          <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+          <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
         </div>
       </div>
       <div id="header-tab5">
         <div class="page-container">
-          <section class="pane top">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane bottom-left">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-right">{{> examples/landmark/pagepanes-grid3}}</section>
+          <section class="pane top no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+          <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+          <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
         </div>
       </div>
       <div id="header-tab6">
         <div class="page-container">
-          <section class="pane top-left">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane top-right">{{> examples/landmark/pagepanes-grid3}}</section>
-          <section class="pane bottom">{{> examples/landmark/pagepanes-grid1}}</section>
+          <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+          <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
+          <section class="pane bottom no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
         </div>
       </div>
       <div id="header-tab7">
         <div class="page-container">
-          <section class="pane top-left">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane top-right">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-left">{{> examples/landmark/pagepanes-grid3}}</section>
-          <section class="pane bottom-right">{{> examples/landmark/pagepanes-grid4}}</section>
+          <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+          <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+          <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
+          <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid4}}</section>
         </div>
       </div>
     </div>
@@ -117,9 +116,10 @@
     function init() {
       var gridPageSize = 10;
 
-      $('.datagrid').datagrid({
+      $('.datagrid-contained').datagrid({
         columns: getColumns(),
         selectable: 'single',
+        clickToSelect: true,
         rowHeight: 'short', //(short, medium or tall)
         paging: true,
         pagesize: gridPageSize,
@@ -150,7 +150,6 @@
           });
         }
       });
-
     }
 
     $(function() {
