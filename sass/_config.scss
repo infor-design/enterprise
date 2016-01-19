@@ -213,10 +213,14 @@ $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Switch
 $switch-checked-color: $primary-color;
-$switch-checked-bg-color: $azure01;
+$switch-checked-bg-color: $azure04;
 $switch-unchecked-bar-color: $input-disabled-border-color;
+$switch-unchecked-border-color: $graphite03;
+$switch-unchecked-bg-color: $body-bg-color;
 $switch-unchecked-color: $font-color;
-$switch-disabled-color: $input-disabled-border-color;
+$switch-unchecked-pressed-bg-color: #bdd7e6;
+$switch-disabled-border-color: $input-disabled-border-color;
+$switch-disabled-color: $graphite03;
 $switch-disabled-label-color: #aaaaaa;
 
 // Editor
