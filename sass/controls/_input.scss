@@ -113,6 +113,11 @@ textarea {
   width: 300px;
 }
 
+input:hover,
+textarea:hover {
+  border-color: $input-hover-border-color;
+}
+
 input[disabled],
 textarea[disabled] {
   background-color: $input-disabled-bg-color;
@@ -264,7 +269,7 @@ textarea.error,
 input.error:focus,
 textarea.error:focus {
   border-color: $error-color !important;
-  box-shadow: 0 0 5px rgba(237, 28, 36, .2);
+  //box-shadow: 0 0 5px rgba(237, 28, 36, .2);
   color: $input-color !important;
 }
 

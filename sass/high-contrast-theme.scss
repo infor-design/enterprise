@@ -92,15 +92,16 @@ $tertiary-btn-hover-color: $graphite10;
 $tertiary-btn-active-color: $graphite10;
 
 // Input Fields
-$input-border-color: $graphite03;
+$input-border-color: $graphite05;
 $input-color: $graphite10;
 $input-bg-color: $inverse-color;
 $input-disabled-bg-color: transparent;
 $input-disabled-border-color: $graphite03;
 $input-disabled-color: $graphite04;
+$input-hover-border-color: $graphite10;
 $input-focus-border-color: $primary-color;
 $input-placeholder-color: $graphite03;
-$input-readonly-border-color: $graphite03;
+$input-readonly-border-color: $input-border-color;
 $input-readonly-bg-color: $graphite03;
 $input-readonly-color: $graphite07;
 

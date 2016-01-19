@@ -91,8 +91,9 @@ $input-disabled-bg-color: transparent;
 $input-disabled-border-color: $slate06;
 $input-disabled-color: $disabled-color;
 $input-focus-border-color: $primary-color;
+$input-hover-border-color: $slate03;
 $input-placeholder-color: $slate05;
-$input-readonly-border-color: $slate05;
+$input-readonly-border-color: $input-border-color;
 $input-readonly-bg-color: $slate06;
 $input-readonly-color: $slate03;
 
