@@ -28,6 +28,7 @@
       position: relative;
     }
 
+    // ::before is the bar
     ~ label:before {
       background-color: $switch-unchecked-bar-color;
       border-radius: 2px;
@@ -45,14 +46,16 @@
       position: absolute;
     }
 
+    // ::after is the actual sphere
     ~ label:after {
-      background-color: $switch-unchecked-color;
-      border: solid 6px $switch-unchecked-color;
+      background-color: $switch-unchecked-bg-color;
+      border: 1px solid $switch-unchecked-border-color;
       border-radius: 50%;
-      height: 10px;
+      box-shadow: 0 0 0 0 rgba($switch-checked-bg-color, 0);
+      height: 18px;
       left: 0;
-      top: -4px;
-      width: 10px;
+      top: -3px;
+      width: 18px;
     }
   }
 
@@ -69,10 +72,15 @@
   }
 
   // Active State
-  input:not(:disabled):active ~ label:after {
-    background-color: $body-bg-color;
-    border-color: $switch-checked-color;
-    left: 12px;
+  input:not(:disabled):active ~ label:after,
+  input:not(:disabled):focus ~ label:after {
+    background-color: $switch-unchecked-pressed-bg-color;
+    box-shadow: 0 0 0 10px rgba($switch-checked-color, .2);
+  }
+
+  input:not(:disabled):checked:active ~ label:after,
+  input:not(:disabled):checked:focus ~ label:after {
+    background-color: $switch-checked-color;
   }
 
   //Disabled
@@ -87,13 +95,7 @@
 
   input:disabled ~ label:after {
     background-color: $switch-disabled-color;
-    border-color: $switch-disabled-color;
-  }
-
-  input:focus {
-    ~ label:after {
-      background-color: $body-bg-color;
-    }
+    border-color: $switch-disabled-border-color;
   }
 
 }
@@ -108,9 +110,9 @@
 html[dir='rtl'] {
   .switch {
     input {
+      border: 0;
       padding: 0;
       width: 0;
-      border: 0;
     }
 
     // Unchecked Styling
@@ -132,10 +134,5 @@ html[dir='rtl'] {
       right: 29px;
     }
 
-    // Active State
-    input:not(:disabled):active ~ label:after {
-      left: auto;
-      right: 12px;
-    }
   }
 }

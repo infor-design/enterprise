@@ -143,6 +143,7 @@
 // More Button
 .tab-more {
   background-color: transparent;
+  color: $tab-text-color;
   cursor: pointer;
   display: inline-block;
   @include font-size(14);
@@ -153,10 +154,6 @@
   top: 0;
   @include css3(transition, background-color .25s ease);
   visibility: hidden;
-
-  span {
-    color: $tab-text-color;
-  }
 
   &:focus {
     outline: none;
