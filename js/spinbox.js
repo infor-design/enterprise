@@ -27,8 +27,8 @@
 
     // Plugin Constructor
     function Spinbox(element) {
-        this.element = $(element);
-        this.init();
+      this.element = $(element);
+      this.init();
     }
 
     // Plugin Methods
@@ -182,7 +182,9 @@
           // Prevents an issue where changing the value with arrow keys doesn't trigger the "change" event on blur.
           self.element.trigger('change');
         }).on('keydown.spinbox', function(e) {
-          self.handleKeys(e, self);
+          self.handleKeyDown(e, self);
+        }).on('keypress.spinbox', function(e) {
+          self.handleKeyPress(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
         }).on('afterPaste.mask', function() {
@@ -256,30 +258,12 @@
         }
       },
 
-      handleKeys: function(e, self) {
-        if (self.isDisabled()) {
+      handleKeyDown: function(e, self) {
+        var key = e.which,
+          validKeycodes = [35, 36, 37, 38, 39, 40];
+
+        if ($.inArray(key, validKeycodes) === -1) {
           return;
-        }
-        var key = e.which;
-
-        // If the key is a number, pre-calculate the value of the number to see if it would be
-        // greater than the maximum, or less than the minimum.  If it's fine, let it through.
-        // Doing this check here prevents visual jitter.
-        if ((key > 47 && key < 58) || (key > 95 && key < 106)) {
-          e.preventDefault();
-
-          var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
-            min = self.element.attr('min'),
-            max = self.element.attr('max');
-
-          if (num < min) {
-            return self.updateVal(min);
-          }
-          if (num > max) {
-            return self.updateVal(max);
-          }
-
-          return self.updateVal(num);
         }
 
         // If the keycode got this far, it's an arrow key, HOME, or END.
@@ -311,6 +295,34 @@
         }
       },
 
+      handleKeyPress: function(e, self) {
+        if (self.isDisabled()) {
+          return;
+        }
+        var key = e.which;
+
+        // NOTE:
+        if (key < 48 || (key > 57 && key < 96) || key > 105) {
+          return;
+        }
+
+        // If the key is a number, pre-calculate the value of the number to see if it would be
+        // greater than the maximum, or less than the minimum.  If it's fine, let it through.
+        // Doing this check here prevents visual jitter.
+        var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
+          min = self.element.attr('min'),
+          max = self.element.attr('max');
+
+        if (num < min) {
+          e.preventDefault();
+          return self.updateVal(min);
+        }
+        if (num > max) {
+          e.preventDefault();
+          return self.updateVal(max);
+        }
+      },
+
       handleKeyup: function(e, self) {
         if (self.isDisabled()) {
           return;
@@ -322,14 +334,14 @@
           case 38: case 39:
             if (Locale.isRTL() && key === 39) {
               self.removeButtonStyle(self.buttons.down);
-            } else {              
+            } else {
               self.removeButtonStyle(self.buttons.up);
             }
             break;
           case 37: case 40:
             if (Locale.isRTL() && key === 39) {
               self.removeButtonStyle(self.buttons.up);
-            } else {              
+            } else {
               self.removeButtonStyle(self.buttons.down);
             }
             break;
