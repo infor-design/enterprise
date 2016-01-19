@@ -435,7 +435,7 @@
             }
 
             //Highlight Term
-            var exp = new RegExp('(' + term + ')', 'i'),
+            var exp = new RegExp('(' + term + ')', 'i');
             text = listOpt.text().replace(exp, '<i>$1</i>');
             listOpt.show().children('a').html(text);
           }
