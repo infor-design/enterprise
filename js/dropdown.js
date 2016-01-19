@@ -418,15 +418,6 @@
             containsTerm = true;
           }
 
-          /*
-          $.each(parts, function() {
-            if (this.indexOf(term) === 0) {
-              containsTerm = true;
-              return false;
-            }
-          });
-          */
-
           //Find List Item - Starts With
           if (containsTerm) {
             if (!selected) {
