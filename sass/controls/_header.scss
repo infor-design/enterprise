@@ -115,7 +115,10 @@ $header-height: 60px;
       margin-top: -5px;
 
       .tab {
-        padding: 8px 6px 9px;
+
+        a {
+          padding: 16px 11px 15px;
+        }
 
         &:before {
           bottom: 0;
@@ -168,11 +171,11 @@ $header-height: 60px;
 
     .tab {
       font-weight: bold;
-      padding: 6px 6px 7px;
 
       a {
         color: $header-tab-normal-color;
         line-height: 12px;
+        padding: 13px 11px 14px;
       }
 
       &:before {
@@ -318,7 +321,7 @@ $header-height: 60px;
 
     .animated-bar {
       background-color: $header-tab-hover-color;
-      margin-top: -3px;
+      margin-top: 6px;
     }
 
     .tab-focus-indicator.is-visible {
@@ -333,6 +336,7 @@ $header-height: 60px;
 
   .tab-more {
     color: $header-tab-normal-color;
+    padding: 10px 0 12px 14px;
     right: 20px;
 
     .icon {
