@@ -395,7 +395,8 @@
 
         var li = a.parent(),
           dataFocusedClick = a.data('focused-by-click'),
-          focusedByKeyboard = (dataFocusedClick && dataFocusedClick === false);
+          focusedByKeyboard = dataFocusedClick === undefined || (dataFocusedClick && dataFocusedClick === false);
+
         $.removeData(a[0], 'focused-by-click');
 
         if (this.isTabOverflowed(li)) {
@@ -1185,23 +1186,24 @@
         if (target.is('.tab')) {
           paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
           paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
-          width = target.children('a').width();
+          width = target.children('a').width() + (paddingLeft*2);
         }
         if (target.is('.dismissible.tab') || target.is('.has-popupmenu.tab')) {
-          paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 27;
-          width += 27;
+          paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 20;
+          width += 20;
         }
         if (target.is('.tab-more')) {
-          width -=14;
+          //width -= 22;
         }
+
+        var left = Locale.isRTL() ?
+          (paddingRight + target.position().left) : (target.position().left);
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
         this.animationTimeout = setTimeout(function() {
-          var left = Locale.isRTL() ?
-            (paddingRight+target.position().left) : (paddingLeft+target.position().left);
-            self.animatedBar.css({'left': left +'px', 'width': width +'px'});
 
+          self.animatedBar.css({'left': left + 'px', 'width': width + 'px'});
           if (callback && typeof callback === 'function') {
             callback();
           }
@@ -1242,7 +1244,7 @@
           width = width + 9;
         }
         if (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a')) {
-          width = width + 32;
+          width = width + 22;
         }
         if (target.is('.tab-more')) {
           if (this.settings.tabCounts) {

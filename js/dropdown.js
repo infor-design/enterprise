@@ -409,16 +409,23 @@
         $.each(self.element[0].options, function () {
           //Filter List
           var opt = $(this),
+            text = opt.text(),
             listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
-            parts = opt.text().toLowerCase().split(' '),
             containsTerm = false;
 
+          // Match the search term to a portion or all of the list option
+          if (text && text.toString().toUpperCase().indexOf(term.toUpperCase()) !== -1) {
+            containsTerm = true;
+          }
+
+          /*
           $.each(parts, function() {
             if (this.indexOf(term) === 0) {
               containsTerm = true;
               return false;
             }
           });
+          */
 
           //Find List Item - Starts With
           if (containsTerm) {

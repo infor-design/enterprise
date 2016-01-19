@@ -132,8 +132,7 @@
             this.element.hasClass('btn-actions') ||
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
-            this.element.closest('.tab-container').length > 0 ||
-            containerClass.indexOf('more') >= 0 ||
+            (containerClass.indexOf('more') >= 0 && this.element.is(':not(.tab-more)')) ||
             containerClass.indexOf('btn-group') >= 0)) {
 
           var arrow = $('<div class="arrow"></div>'),
@@ -448,6 +447,10 @@
           menuHeight = this.menu.outerHeight(),
           xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 34 : 0;
 
+        if (target.is('svg, .icon') && target.closest('.tab').length) {
+          target = target.closest('.tab');
+        }
+
         if (this.settings.trigger === 'rightClick' || (e !== null && e !== undefined && this.settings.trigger === 'immediate')) {
           wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
                         'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
@@ -521,15 +524,13 @@
           }
         }
 
-        if (this.element.is('.tab') || this.element.is('.tab-more')) {
-          wrapper.css({'top': target.offset().top + target.outerHeight() + 15 }).children('.arrow')
-            .removeAttr('style')
-            .css({'left': '30px', 'right': 'auto'});
+        if (this.element.closest('.tab').length || this.element.closest('.tab-more').length) {
+          wrapper.css({ 'top': target.offset().top + target.outerHeight() });
         }
 
         // Locale: Right to Left
         if(Locale.isRTL() && (this.menu[0].id === 'colorpicker-menu')) {
-          wrapper.css('left', parseInt(wrapper.css('left'), 10) -29);
+          wrapper.css('left', parseInt(wrapper.css('left'), 10) - 29);
         }
 
       },
