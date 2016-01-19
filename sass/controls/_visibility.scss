@@ -1,4 +1,4 @@
-// User Input - Labels, TextBox, TextArea, Visibility Classes
+// Visibility Classes - To hide and show at various media
 //================================================== //
 
 .show {
@@ -18,7 +18,7 @@
   visibility: hidden;
 }
 
-// Off Screen Text
+// Off Screen Text for Accessibility
 .sr-only,
 .audible {
   clip: rect(0px, 0px, 0px, 0px);
@@ -54,7 +54,7 @@
   }
 }
 
-// visibility classes for different form factors
+// Visibility classes for different form factors
 [class*="visible-sm-"] {
   display: none;
 }
@@ -140,7 +140,7 @@
   display: none !important;
 }
 
-// Classes
+// Print Classes
 @media print {
   .visible-print-block {
     display: block !important;

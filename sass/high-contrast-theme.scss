@@ -58,6 +58,11 @@ $tooltip-color: $font-color-highcontrast;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
 
+// Badges
+$badge-neutral-bg-color: $graphite04;
+$badge-neutral-color: $font-color-extrahighcontrast;
+$badge-info-bg-color: $primary-color;
+
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-color-filtered-text: $font-color;
@@ -79,14 +84,12 @@ $btn-hover-bg-color: $graphite05;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite05;
-$btn-disabled-color: $inverse-color;
-$btn-disabled-bg-color: $graphite04;
+$btn-disabled-opacity:.5;
 
 // Tertiary Buttons
 $tertiary-btn-color: $graphite07;
-$tertiary-btn-hover-color: $primary-color;
-$tertiary-btn-active-color: $primary-color;
-$tertiary-btn-disabled-color: $graphite04;
+$tertiary-btn-hover-color: $graphite10;
+$tertiary-btn-active-color: $graphite10;
 
 // Input Fields
 $input-border-color: $graphite03;
@@ -178,7 +181,7 @@ $cardlist-actions-color: $white;
 // Checkboxes
 $checkbox-color: $primary-color;
 $checkbox-arrow-color: #ffffff;
-$checkbox-border-color: $graphite03;
+$checkbox-border-color: $graphite04;
 $checkbox-bg-color: #ffffff;
 $checkbox-disabled-font-color: $disabled-color;
 $checkbox-disabled-border-color: $input-disabled-border-color;
@@ -206,11 +209,12 @@ $editor-middle-border-color: $graphite03;
 
 // Radio Buttons
 $radio-border-color: $graphite06;
+$radio-hover-border-color: $graphite09;
 $radio-selected-color: $primary-color;
-$radio-disabled-opacity: .65;
-$radio-disabled-border-color: $input-disabled-border-color;
-$radio-disabled-bg-color: $input-readonly-bg-color;
-$radio-disabled-select-bg-color: $input-readonly-bg-color;
+$radio-selected-bg-color: $white;
+$radio-disabled-border-color: $graphite04;
+$radio-disabled-bg-color: $body-bg-color;
+$radio-disabled-select-bg-color: $graphite04;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Pager
@@ -278,7 +282,6 @@ $contextual-panel-color: $white;
 
 //BreadCrumb
 $breadcrumb-color: $font-color-highcontrast;
-$breadcrumb-disabled-color: $disabled-color;
 
 // Rating (Stars)
 $rating-bg-color: $amber06;
@@ -376,6 +379,10 @@ $toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
 //Builder Pattern
 $builder-header-bg-color: $slate07;
 
+//About
+$about-text-border-color: $graphite03;
+$about-text-hover-border-color: $graphite04;
+
 // Header Tabs
 $header-tabcontainer-border-color: $graphite04;
 $header-tab-normal-color: $graphite01;
@@ -406,6 +413,15 @@ $swaplist-border-color-hover: $white;
   &:focus {
     outline: 1px dotted $hyperlink-color;
     outline-offset: 1px;
+  }
+
+  &.back {
+    border-bottom: 1px solid transparent;
+    padding-right: 15px;
+
+    span {
+      border-bottom: 1px solid $hyperlink-color;
+    }
   }
 }
 

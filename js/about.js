@@ -86,7 +86,7 @@
         this.modal = $('<div class="modal about" id="about-modal"></div>');
         $('<div class="modal-content"></div>').appendTo(this.modal);
         var header = $('<div class="modal-header"></div>').appendTo(this.modal.find('.modal-content'));
-        $('<div class="close-container"><button name="close" class="btn-icon has-text"><svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span>'+Locale.translate('Close')+'</span></button></div>').appendTo(header);
+        $('<div class="close-container"><button name="close" class="btn-icon hide-focus"><svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span>'+Locale.translate('Close')+'</span></button></div>').appendTo(header);
         $('<svg class="about-logo" viewBox="0 0 44 44" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-logo-trademark"></use></svg>').appendTo(header);
         this.title = $('<h1 class="title"></h1>').text(this.settings.appName).appendTo(this.modal.find('.modal-header'));
 
@@ -115,8 +115,12 @@
           $('<p></p>').html(text).appendTo(body);
         }
 
-        $('<div class="modal-buttonset"><button type="button" name="done" class="btn-modal">Done</button></div>').appendTo(this.modal.find('.modal-content'));
+        //$('<div class="modal-buttonset"><button type="button" name="done" class="btn-modal">Done</button></div>').appendTo(this.modal.find('.modal-content'));
         this.buttons = this.modal.find('button');
+
+        this.modal.find('.hide-focus').one('blur', function () {
+          $(this).removeClass('hide-focus');
+        });
 
         this.element.attr('data-modal','about-modal');
 

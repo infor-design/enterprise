@@ -27,7 +27,7 @@
 
   &:hover input:not([disabled]):not(:focus) {
     + svg {
-      fill: $primary-color;
+      fill: $tertiary-btn-hover-color;
     }
   }
 

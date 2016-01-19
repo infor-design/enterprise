@@ -6,13 +6,9 @@
 .page-container.builder {
 
   .back {
-    margin-left: 20px;
-
-    &:before {
-      content: '\003C'; //less-than sign
-      display: inline-block;
-      padding-right: 5px;
-    }
+    margin-left: 23px;
+    position: relative;
+    top: -3px;
   }
 
   .compound-field > .field {

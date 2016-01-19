@@ -52,6 +52,11 @@ $tooltip-color: $white;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
 
+// Badges
+$badge-neutral-bg-color: $slate03;
+$badge-neutral-color: $slate10;
+$badge-info-bg-color: $primary-color;
+
 // Popup Menu
 $popupmenu-color: $white;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
@@ -61,15 +66,22 @@ $popupmenu-checked-color: $white;
 $popupmenu-hover-color: $slate05;
 
 // Form Buttons - Same
-// Secondary/Normal Buttons - Same Except Disabled
-$btn-disabled-color: $slate04;
-$btn-disabled-bg-color: $slate06;
+
+//Disabled Buttons
+$btn-disabled-opacity:.5;
+
+// Secondary/Normal Buttons
+$btn-color: $white;
+$btn-bg-color: $slate03;
+$btn-hover-bg-color: $slate04;
+$btn-focus-bg-color: $primary-color;
+$btn-focus-border-color: $primary-color;
+$btn-active-bg-color: $slate04;
 
 // Tertiary Buttons
 $tertiary-btn-color: $slate03;
-$tertiary-btn-hover-color: $primary-color;
-$tertiary-btn-active-color: $primary-color;
-$tertiary-btn-disabled-color: $slate05;
+$tertiary-btn-hover-color: $slate01;
+$tertiary-btn-active-color: $slate01;
 
 // Input Fields
 $input-border-color: $slate04;
@@ -189,11 +201,12 @@ $editor-middle-border-color: $slate07;
 
 // Radio Buttons
 $radio-border-color: $slate04;
+$radio-hover-border-color: $slate03;
 $radio-selected-color: $primary-color;
-$radio-disabled-opacity: .65;
-$radio-disabled-border-color: $slate06;
-$radio-disabled-bg-color: $slate06;
-$radio-disabled-select-bg-color: $slate06;
+$radio-selected-bg-color: $slate03;
+$radio-disabled-border-color: $slate05;
+$radio-disabled-bg-color: $body-bg-color;
+$radio-disabled-select-bg-color: $slate05;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 //Pager
@@ -261,7 +274,6 @@ $contextual-panel-color: $slate02;
 
 //BreadCrumb
 $breadcrumb-color: $slate02;
-$breadcrumb-disabled-color: $slate06;
 
 // Rating (Stars)
 $rating-bg-color: $amber04;
@@ -358,6 +370,10 @@ $toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
 
 //Builder Pattern
 $builder-header-bg-color: $slate08;
+
+//About
+$about-text-border-color: $slate08;
+$about-text-hover-border-color: $slate09;
 
 // Header Tabs
 $header-tabcontainer-border-color: $graphite09;

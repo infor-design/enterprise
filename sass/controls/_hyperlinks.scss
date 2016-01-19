@@ -36,6 +36,35 @@
       border-bottom: 1px solid $disabled-color;
     }
   }
+
+  //Back - on the breadcrumb page
+  &.back {
+    @include font-size(12);
+    color: $hyperlink-color;
+    margin-left: -10px;
+
+    .icon {
+      fill: $hyperlink-color;
+      height: 24px;
+      left: 3px;
+      top: 8px;
+      width: 24px;
+    }
+
+    span {
+      border-bottom: 1px solid transparent;
+    }
+
+    &:active:not([disabled]),
+    &:focus:not([disabled]),
+    &:hover:not([disabled]) {
+       border-bottom: 1px solid transparent;
+
+       span {
+         border-bottom: 1px solid $hyperlink-color;
+       }
+    }
+  }
 }
 
 // Links Stacked

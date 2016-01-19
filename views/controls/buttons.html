@@ -3,6 +3,7 @@
   <div class="four columns">
     <span class="label">Primary</span>
     <button class="btn-primary" type="button">Action</button><br><br><br>
+    <button class="btn-primary" type="button" disabled>Action</button><br><br>
   </div>
 
   <div class="four columns">
@@ -13,7 +14,21 @@
 
   <div class="four columns">
     <span class="label">Tertiary</span>
-    <button class="btn-tertiary" type="button">Action</button><br><br><br>
-    <button class="btn-tertiary" type="button" disabled>Action</button><br><br><br>
+
+    <button type="button" class="btn-tertiary">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-filter"/>
+      </svg>
+      <span>Action</span>
+    </button>
+    <br><br><br>
+
+    <button type="button" class="btn-tertiary" disabled>
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-filter"/>
+      </svg>
+      <span>Action</span>
+    </button>
+    <br><br><br>
   </div>
 </div>

@@ -482,15 +482,17 @@ $header-height: 60px;
     padding: 1px 20px 0;
 
     ol {
-      padding: 3px 0;
+      padding: 18px 0;
     }
 
     .hyperlink {
       color: $header-text-color;
 
       &:active,
-      &:hover {
+      &:hover,
+      &:focus {
         border-bottom: 1px solid $header-text-color;
+        color: $header-text-color;
       }
     }
 

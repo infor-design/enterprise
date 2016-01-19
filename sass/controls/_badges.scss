@@ -2,90 +2,57 @@
 //================================================== */
 
 // See also Colors.scss
-.tag {
-  background-color: $graphite02;
+.tag,
+.badge {
+  background-color: $badge-neutral-bg-color;
   border-radius: 15px;
-  color: $graphite08;
+  color: $badge-neutral-color;
   display: inline-block;
   @include font-size(12);
   @include antialiased();
   font-weight: normal;
-  height: 25px;
-  line-height: 26px;
-  margin: 0 0 8px;
-  padding: 0 12px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 10px;
   text-decoration: none;
   vertical-align: middle;
 
   &.error {
     background-color: $error-color;
-    color: #ffffff;
+    color: $white;
   }
 
   &.alert {
     background-color: $alert-yellow;
-    color: #ffffff;
+    color: $font-color-highcontrast;
+  }
+
+  &.neutral {
+    background-color: $badge-neutral-bg-color;
+    color: $font-color-highcontrast;
   }
 
   &.good {
     background-color: $alert-green;
-    color: #ffffff;
+    color: $white;
   }
 
   &.info {
-    background-color: $info-icon-fill;
-    color: #ffffff;
+    background-color: $badge-info-bg-color;
+    color: $white;
   }
 
   &.graphite03,
   &.graphite02 {
     color: $font-color-highcontrast;
   }
-}
 
-.hyperlink + .tag {
-  margin-bottom: 0;
-  margin-left: 10px;
-  margin-top: -2px;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  .tag {
-    line-height: 27px;
+  &.round {
+    padding: 0 8px;
   }
 }
 
 .badge {
-  background-color: #e0e5ee;
-  border-radius: 50%;
-  color: #ffffff;
-  display: inline-block;
-  @include font-size(13);
-  @include antialiased();
-  font-weight: normal;
-  letter-spacing: .0325em;
-  margin-left: 5px;
-  min-width: 22px;
-  padding: .4rem;
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;
-
-  &.error {
-    background-color: $alert-red;
-  }
-
-  &.alert {
-    background-color: $alert-yellow;
-  }
-
-  &.good {
-    background-color: $alert-green;
-  }
-
-  &.info {
-    background-color: $info-icon-fill;
-  }
 
   &.pending {
     min-height: 22px;
@@ -97,10 +64,10 @@
       border-radius: 55%;
       content: '';
       height: 58%;
-      left: .3em;
+      left: .22em;
       position: absolute;
       top: .25em;
-      width: 58%;
+      width: 60%;
     }
 
     // Clock hands
@@ -155,12 +122,12 @@
       width: 100%;
     }
   }
+}
 
-  &.large {
-    letter-spacing: .035em;
-    padding: .6rem;
-    @include font-size(20);
-  }
+.hyperlink + .tag {
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-top: -2px;
 }
 
 .alert {
@@ -172,7 +139,6 @@
     }
   }
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

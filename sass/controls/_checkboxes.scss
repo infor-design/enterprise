@@ -42,7 +42,7 @@
   content: '';
   height: 10px;
   left: 8px;
-  margin-top: 9px;
+  margin-top: 10px;
   position: absolute;
   @include css3(transform, scaleX(-1) rotate(135deg));
   width: 4px;
@@ -57,15 +57,15 @@
 }
 
 @mixin checkbox-hover-state {
-  border-color: $primary-color;
+  border-color: $checkbox-hover-border-color;
 }
 
 @mixin checkbox-partial-after-style {
   border-width: 0 0 3px;
-  margin-left: 0;
+  margin-left: 1px;
   margin-top: -2px;
   @include css3(transform, none);
-  width: 12px;
+  width: 10px;
 }
 
 input.checkbox,
@@ -174,9 +174,9 @@ span.checkbox > input:focus + label:before {
 }
 
 // Hover State
-input.checkbox:hover + label:before,
-input.checkbox:hover + input[type="hidden"] + label:before,
-span.checkbox > input:hover + label:before {
+input.checkbox:not(:checked):not(:disabled):hover + label:before,
+input.checkbox:not(:checked):not(:disabled):hover + input[type="hidden"] + label:before,
+span.checkbox > input:not(:checked):not(:disabled):hover + label:before {
   @include checkbox-hover-state;
 }
 
@@ -206,16 +206,8 @@ span.checkbox > input:hover + label:before {
   @include checkbox-transform-rules;
 }
 
-.checkbox:not(.is-partial):checked + label:after {
+.checkbox:not(.partial):checked + label:after {
   @include checkbox-animation;
-}
-
-.checkbox.is-partial:checked + label:after {
-  border-radius: 0;
-  border-width: 0 2px 0 0;
-  left: 9px;
-  top: -5px;
-  transform: scaleX(-1) rotate(90deg);
 }
 
 .checkbox-group-label {

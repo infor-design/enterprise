@@ -15,6 +15,7 @@ button {
 
 // How all button types will deal with iconography
 [class^="btn"] {
+  //Fixes an issue about the circle effect coming out of the button.
   @include css3-extended(backface-visibility, hidden, (-webkit-, -moz-));
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
@@ -78,6 +79,7 @@ button {
 .btn,
 .btn-primary,
 .btn-secondary {
+  @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94));
   border-radius: 2px;
   padding: 0 15px;
 }
@@ -86,7 +88,7 @@ button {
 .btn-primary {
   background-color: $primary-btn-bg-color;
   border: 1px solid $primary-btn-bg-color;
-  color: $btn-color;
+  color: $primary-btn-color;
 
   .icon {
     fill: $btn-color;
@@ -100,7 +102,7 @@ button {
   &:active {
     background-color: $primary-btn-active-bg-color;
     border: 1px solid $primary-btn-active-bg-color;
-    color: $btn-color;
+    box-shadow: none;
   }
 
   &:focus {
@@ -115,19 +117,20 @@ button {
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $btn-disabled-bg-color;
-    border-color: $btn-disabled-bg-color;
+    background-color: $primary-btn-bg-color;
+    border-color: $primary-btn-bg-color;
     box-shadow: none;
-    color: $btn-disabled-color;
+    color: $primary-btn-color;
     cursor: default;
+    opacity: $btn-disabled-opacity;
 
     .icon {
-      fill: $btn-disabled-color;
+      fill: $primary-btn-color;
     }
   }
 
   .ripple-effect {
-    background-color: $white;
+    background-color: rgba(255, 255, 255, .7);
   }
 }
 
@@ -185,8 +188,7 @@ a.btn-menu {
   &:active {
     background-color: $btn-active-bg-color;
     border: 1px solid $btn-active-bg-color;
-    color: $btn-color;
-  }
+ }
 
   &:focus {
     border: 1px solid $btn-focus-bg-color;
@@ -200,11 +202,12 @@ a.btn-menu {
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $btn-disabled-bg-color;
-    border: 1px solid $btn-disabled-bg-color;
+    background-color: $btn-bg-color;
+    border: 1px solid $btn-bg-color;
     box-shadow: none;
-    color: $btn-disabled-color;
+    color: $btn-color;
     cursor: default;
+    opacity: $btn-disabled-opacity;
   }
 
   .ripple-effect {
@@ -219,7 +222,7 @@ a.btn-menu {
 .btn-actions,
 .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
   border: 1px solid transparent;
-  border-radius: 18px;
+  border-radius: 2px;
   box-shadow: none;
   color: $tertiary-btn-color;
   overflow: hidden;
@@ -237,7 +240,7 @@ a.btn-menu {
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-hover-color;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $btn-focus-bg-color;
 
     &:active {
       box-shadow: none;
@@ -246,17 +249,12 @@ a.btn-menu {
 
   &[disabled],
   &[disabled]:hover {
-    color: $tertiary-btn-disabled-color;
+    color: $tertiary-btn-color;
     cursor: default;
-
-    /*
-    span {
-      color: $tertiary-btn-disabled-color;
-    }
-    */
+    opacity: $btn-disabled-opacity;
 
     .icon {
-      fill: $tertiary-btn-disabled-color;
+      fill: $tertiary-btn-color;
     }
   }
 

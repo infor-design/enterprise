@@ -49,10 +49,10 @@
     // Trigger Button
     .icon {
       background-color: transparent;
-      height: 10px;
-      left: 37px;
-      top: 12px;
-      width: 32px;
+      height: 16px;
+      left: 46px;
+      top: 9px;
+      width: 16px;
     }
 
     &:hover:not(:disabled) .icon {
@@ -113,7 +113,7 @@
 html[dir='rtl'] {
 
   .colorpicker {
-    
+
     // Color Piece
     + .swatch {
       border-left: inherit;

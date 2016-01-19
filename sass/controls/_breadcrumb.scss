@@ -3,12 +3,14 @@
 
 .breadcrumb {
   li {
+    @include antialiased();
+    color: $breadcrumb-color;
     display: inline-block;
     list-style: none;
 
     &:after {
       content: '\002F';
-      padding: 0 12px;
+      padding: 0 10px;
     }
 
     &:last-child:after {
@@ -20,14 +22,14 @@
     &.current {
       @include font-size(12);
       color: $breadcrumb-color;
-      font-weight: bold;
+      //Removed in the design font-weight: bold;
     }
   }
 
   .hyperlink {
     @include font-size(12);
+    @include antialiased();
     color: $breadcrumb-color;
-    font-weight: 100;
     line-height: 2em;
     text-decoration: none;
 
@@ -36,33 +38,26 @@
     }
 
     &:hover:not([disabled]) {
-      border-bottom: 1px solid $breadcrumb-color !important;
+      border-bottom: 1px solid $breadcrumb-hover-color;
+      color: $breadcrumb-hover-color;
     }
 
     &:focus {
-      border-bottom: 1px solid $breadcrumb-color !important;
+      border-bottom: 1px solid $breadcrumb-hover-color;
       border-radius: 2px;
-      color: $breadcrumb-color;
+      color: $breadcrumb-hover-color;
     }
 
     &:active {
-      border-bottom: 1px solid $breadcrumb-color !important;
-      color: $breadcrumb-color;
+      border-bottom: 1px solid $breadcrumb-hover-color;
+      color: $breadcrumb-hover-color;
     }
 
     &.current {
-      font-weight: bold;
+      //font-weight: bold;
     }
   }
-
-  .breadcrumb-arrow {
-    color: $breadcrumb-disabled-color;
-    position: relative;
-    top: -2px;
-    vertical-align: middle;
-  }
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

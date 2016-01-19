@@ -26,7 +26,7 @@ $font-color-highcontrast: $graphite08;
 $font-color: $graphite06;
 $font-color-lowcontrast: $graphite04;
 $label-color: $graphite06;
-$disabled-color: $graphite03;
+$disabled-color: $graphite04;
 
 //Selection Color
 $selected-bg-color: #dcecf2;
@@ -51,6 +51,11 @@ $tooltip-color: $white;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
 
+// Badges
+$badge-neutral-bg-color: $graphite03;
+$badge-neutral-color: $font-color-highcontrast;
+$badge-info-bg-color: $primary-color;
+
 // Popup Menu
 $popupmenu-color: $font-color;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
@@ -66,25 +71,26 @@ $popupmenu-alternate-hover-color: $graphite09;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
-$primary-btn-hover-bg-color: $azure08;
+$primary-btn-color: $inverse-color;
+$primary-btn-hover-bg-color: $azure07;
 $primary-btn-focus-bg-color: $primary-color;
-$primary-btn-active-bg-color: $azure08;
+$primary-btn-active-bg-color: $azure07;
+
+//Disabled Buttons
+$btn-disabled-opacity: .5;
 
 // Secondary/Normal Buttons
-$btn-color: $inverse-color;
-$btn-bg-color: $slate04;
-$btn-hover-bg-color: $slate05;
+$btn-color: $graphite06;
+$btn-bg-color: $graphite03;
+$btn-hover-bg-color: $graphite04;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
-$btn-active-bg-color: $slate06;
-$btn-disabled-color: $inverse-color;
-$btn-disabled-bg-color: $slate02;
+$btn-active-bg-color: $graphite04;
 
 // Tertiary Buttons
 $tertiary-btn-color: $graphite06;
-$tertiary-btn-hover-color: $primary-color;
-$tertiary-btn-active-color: $primary-color;
-$tertiary-btn-disabled-color: $slate03;
+$tertiary-btn-hover-color: $graphite10;
+$tertiary-btn-active-color: $graphite10;
 $tertiary-btn-ripple-color: #8DC9E6;
 
 // Buttons
@@ -94,7 +100,7 @@ $button-font-size: 12;
 $menubutton-height: 34px;
 
 // Input Fields
-$input-border-color: $graphite03;
+$input-border-color: $graphite04;
 $input-color: $graphite08;
 $input-bg-color: transparent;
 $input-disabled-bg-color: transparent;
@@ -195,12 +201,13 @@ $cardlist-actions-color: $graphite06;
 // Checkboxes
 $checkbox-color: $primary-color;
 $checkbox-arrow-color: #ffffff;
-$checkbox-border-color: #666666;
+$checkbox-border-color: $graphite04;
 $checkbox-bg-color: transparent;
-$checkbox-disabled-font-color: #c2c2c2;
-$checkbox-disabled-border-color: #c2c2c2;
+$checkbox-hover-border-color: $graphite08;
+$checkbox-disabled-font-color: $graphite04;
+$checkbox-disabled-border-color: $graphite03;
 $checkbox-disabled-bg-color: #ececec;
-$checkbox-disabled-select-bg-color: #c2c2c2;
+$checkbox-disabled-select-bg-color: $graphite03;
 $checkbox-disabled-arrow-color: #f4f4f4;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
@@ -222,12 +229,13 @@ $editor-btn-color: $graphite05;  //Was #999999  in design
 $editor-middle-border-color: $graphite02;
 
 // Radio Buttons
-$radio-border-color: $graphite05;
+$radio-border-color: $graphite04;
+$radio-hover-border-color: $graphite08;
 $radio-selected-color: $primary-color;
-$radio-disabled-opacity: .65;
-$radio-disabled-border-color: #c2c2c2;
-$radio-disabled-bg-color: #ececec;
-$radio-disabled-select-bg-color: #c2c2c2;
+$radio-selected-bg-color: $white;
+$radio-disabled-border-color: $graphite03;
+$radio-disabled-bg-color: $body-bg-color;
+$radio-disabled-select-bg-color: $graphite03;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 //Pager
@@ -298,8 +306,8 @@ $contextual-panel-searchfield-bg-color: $body-bg-color;
 $contextual-panel-searchfield-border-color: $graphite03;
 
 //BreadCrumb
-$breadcrumb-color: $graphite05;
-$breadcrumb-disabled-color: $graphite02;
+$breadcrumb-color: $graphite06;
+$breadcrumb-hover-color: $primary-color;
 
 // Rating (Stars)
 $rating-bg-color: $amber06;
@@ -403,6 +411,10 @@ $toast-shadow: 0 0 5px rgba(0, 0, 0, .2);
 
 //Builder Pattern
 $builder-header-bg-color: $slate06;
+
+//About
+$about-text-border-color: $graphite02;
+$about-text-hover-border-color: $graphite04;
 
 // Header Tabs
 $header-tabcontainer-border-color: $graphite02;
