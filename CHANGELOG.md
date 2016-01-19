@@ -10,24 +10,26 @@ Release Date: TBD
 
 * 2016-01-18 - "hyperlink back" class now requires use of an SVG element.
 * 2016-01-18 - breadcrumb-arrow class removed use breadcrumb class for header breadcrumbs
+* 2016-01-14 - Tree - requires updates to SVG icons
+* 2016-01-11 - Listview - Changed the name of the listview-toolbar class to contextual-toolbar as it is shared with datagrid.
 * 2016-01-11 - Listview - Modified the "dataset" property that previously could contain both an array of data, or a string containing a URL.  This has now been separated into two properties:  "dataset", which always represents the array of internal data, and "source", which is the original set of data as an array, an object, or a URL.  This normalizes the API to be similar to other controls that implement "source", and makes interfacing with the Pager control easier.
 * 2016-01-11 - Listview - Changed the 'loadApi()' method to 'loadData()', to standardize against datagrid.  Did this to make the interfacing of both controls with the Pager control work better, and to be consistent.
 * 2016-01-05 - Dropdown - Changed the name of the openList event to openlist for consistency.
 * 2015-12-07 - Dropdown/Menu Button - Changed the size of the view box n the svg element. That needs to be updated when updating the css or dropdown arrows look too small.
 * 2015-12-07 - Dropdown/Multiselect, Tabs, Vertical Tabs, Wizard - changed the name of the "activate" event to "activated", to prevent conflicts with the built-in "activate" event in Windows browsers (IE/Edge).  This issue is documented in HFC-3221.
 * 2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.
-* 2016-14-01 - Tree - requires updates to SVG icons
 
 ## Ui Changes
+* 2016-01-19 - Tabs Control - Reworked the style to match the SoHo Xi Style Guide v1.2
 * 2016-01-18 - Radios - Text colors and border colors and a few states changed
 * 2016-01-18 - Checkboxes - Text colors and border colors and a few states changed
 * 2016-01-15 - Breadcrumbs - Text colors changed
 * 2016-01-15 - Badges - Height Changed, text color changed.
 * 2016-01-15 - Action Buttons - Changed the colors and all states.
 * 2016-01-15 - About - Changed the text colors and added a border. Removed the redundent button.
-* 2016-14-01 - Tree - Changed (finalized finally) the styles for trees, added new SVG icons, changed colors and states.
-* 2015-11-20 We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange
+* 2016-01-14 - Tree - Changed (finalized finally) the styles for trees, added new SVG icons, changed colors and states.
 * 2015-12-09 - Datepicker - Style changes to date picker
+* 2015-11-20 - We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange
 
 [Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin)
 

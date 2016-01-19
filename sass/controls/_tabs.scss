@@ -22,7 +22,6 @@
   content: '';
   display: block;
   height: 2px;
-  left: 50%;
   position: absolute;
   @include css3(transition, background-color .25s ease);
   width: 0;
@@ -30,14 +29,12 @@
 
 @mixin tab-after-hover {
   background-color: $tab-hover-color;
-  left: 17px;
-  width: calc(100% - 34px);
+  width: 100%;
 }
 
 @mixin tab-after-selected-hover {
   background-color: $tab-selected-color;
-  left: 17px;
-  width: calc(100% - 34px);
+  width: 100%;
 }
 
 .tab-list {
@@ -150,12 +147,16 @@
   display: inline-block;
   @include font-size(14);
   max-width: 102px;
-  padding: 11px 0 11px 14px;
+  padding: 6px 0 10px 14px;
   position: absolute;
   right: 0;
   top: 0;
   @include css3(transition, background-color .25s ease);
   visibility: hidden;
+
+  span {
+    color: $tab-text-color;
+  }
 
   &:focus {
     outline: none;
@@ -170,6 +171,7 @@
   }
 
   .icon {
+    fill: $tab-text-color;
     height: 16px;
     margin: 0;
     vertical-align: middle;
@@ -208,7 +210,8 @@
 
   .tab {
     border-radius: 2px 2px 0 0;
-    padding: 5px 6px 7px;
+    color: $tab-text-color;
+    padding: 0;
     @include css3(transition, background-color .25s ease);
 
     &:first-child {
@@ -217,6 +220,10 @@
       a {
         padding-left: 0;
       }
+    }
+
+    &:not(.last-child) {
+      margin-right: 10px;
     }
 
     &:before {
@@ -242,7 +249,6 @@
 
       &:first-child::before {
         left: 0;
-        width: calc(100% - 17px);
       }
     }
 
@@ -273,11 +279,11 @@
     }
 
     &.dismissible {
-      padding-right: 21px;
+      padding-right: 8px;
 
       .icon {
         height: 10px;
-        margin-left: -5px;
+        margin-left: -3px;
         margin-top: -1px;
         padding-right: 1px;
         position: relative;
@@ -309,16 +315,20 @@
 
     a {
       @include antialiased();
-      color: $font-color;
+      color: $tab-text-color;
       @include font-size(14);
       font-weight: normal;
       line-height: 16px;
-      padding: 7px 11px;
+      padding: 7px 11px 10px;
       text-decoration: none;
 
       > * {
         line-height: 1.14;
       }
+    }
+
+    .icon {
+      fill: $tab-text-color;
     }
 
     .count {
@@ -370,7 +380,7 @@
   // Ref: http://bradsknutson.com/blog/css-sliding-underline/
   .tab-list {
     border-bottom: 1px solid $tab-border-color;
-    height: 43px;
+    height: 34px;
     overflow: hidden;
     padding: 0;
     width: 100%;
@@ -420,20 +430,18 @@
   &.has-counts {
 
     .animated-bar {
-      top: 71px;
+      top: 59px;
     }
 
     .tab-list {
-      height: 74px;
+      height: 62px;
     }
 
     .tab-more {
-      padding: 20px 0 20px 14px;
-      top: 8px;
+      padding: 22px 0 22px 14px;
     }
 
     .tab {
-      padding: 7px 6px 8px;
 
       &:first-child {
         padding-left: 0;
@@ -452,7 +460,7 @@
   }
 
   .animated-bar {
-    top: 40px;
+    top: 31px;
   }
 
   // Entire tab control disabled state
@@ -576,7 +584,7 @@ html[dir='rtl'] {
   // More Button
   .tab-more {
     left: 0;
-    padding: 11px 14px 11px 0;
+    padding: 8px 14px 8px 0;
     right: auto;
   }
 }
