@@ -130,12 +130,12 @@
         if (containerClass !== undefined &&
            (this.element.hasClass('btn-menu') ||
             this.element.hasClass('btn-actions') ||
+            this.settings.menu === 'colorpicker-menu' ||
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
             (containerClass.indexOf('more') >= 0 && this.element.is(':not(.tab-more)')) ||
             containerClass.indexOf('btn-group') >= 0)) {
-
-          var arrow = $('<div class="arrow"></div>'),
+         var arrow = $('<div class="arrow"></div>'),
             wrapper = this.menu.parent('.popupmenu-wrapper');
 
           wrapper.addClass('bottom').append(arrow);
@@ -526,11 +526,6 @@
 
         if (this.element.closest('.tab').length || this.element.closest('.tab-more').length) {
           wrapper.css({ 'top': target.offset().top + target.outerHeight() });
-        }
-
-        // Locale: Right to Left
-        if(Locale.isRTL() && (this.menu[0].id === 'colorpicker-menu')) {
-          wrapper.css('left', parseInt(wrapper.css('left'), 10) - 29);
         }
 
       },

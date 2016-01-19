@@ -54,11 +54,12 @@
           initialValue = this.element.val();
 
         //Add Button
-        this.swatch = $('<span class="swatch"></span>');
-        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.swatch);
         this.container = $('<div class="colorpicker-container"></div>');
         colorpicker.wrap(this.container);
-        colorpicker.after(this.swatch);
+        this.container = colorpicker.parent();
+        this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
+        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.container);
+        this.icon.wrap('<span class="trigger"></span>');
 
         //Add Masking to show the #
         colorpicker.attr('data-mask', '*******').mask();
@@ -90,7 +91,7 @@
       // Attach Control Events
       handleEvents: function () {
         var self = this;
-        this.swatch.on('click.colorpicker', function () {
+        this.icon.parent().onTouchClick().on('click.colorpicker', function () {
           self.toggleList();
         });
 
@@ -127,8 +128,6 @@
       // Toggle / Open the List
       toggleList: function () {
         var self = this;
-          // firsttime = true;
-
         if (self.element.is(':disabled')) {
           return;
         }
@@ -137,17 +136,10 @@
         self.updateColorMenu();
 
         // Show Menu
-        self.swatch
+        self.element
         .popupmenu({trigger: 'immediate', ariaListbox: true, menuId: 'colorpicker-menu'})
         .on('open.colorpicker', function () {
           self.element.parent().addClass('is-open');
-          // var menu = $('#colorpicker-menu').closest('.popupmenu-wrapper');
-          // if (Locale.isRTL() && firsttime) {
-          //   firsttime = false;
-          //   setTimeout(function(){
-          //     menu.css('left', parseInt(menu.css('left'), 10) -29);
-          //   },0);
-          // }
         })
         .on('close.colorpicker', function () {
           $('#colorpicker-menu').parent('.popupmenu-wrapper').remove();

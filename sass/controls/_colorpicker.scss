@@ -2,7 +2,7 @@
 //================================================== //
 
 .colorpicker-container {
-  background-color: $input-bg-color;;
+  background-color: $input-bg-color;
   border: 1px solid $input-border-color;
   border-radius: 2px;
   overflow: hidden;
@@ -10,7 +10,6 @@
 
   &.is-focused {
     border-color: $input-focus-border-color;
-    box-shadow: 0 0 5px rgba(8, 150, 233, .2);
   }
 
   &.is-disabled {
@@ -18,33 +17,47 @@
     border-color: $input-disabled-border-color;
   }
 
+  &:hover:not(.is-focused):not(.is-open) {
+    border-color: $input-hover-border-color;
+  }
+
   &.is-open {
     border-color: $input-focus-border-color;
   }
-}
 
-.field > .colorpicker-container {
-  margin-bottom: 20px;
-}
-
-.colorpicker {
-  border: 0 !important;
-  max-height: 34px;
-  padding: 11px 10px 8px;
-  width: 90px; //Small Size
-
-  // Color Piece
-  + .swatch {
-    background-color: $colorpicker-initial-bg-color;
-    border-left: 1px solid $input-border-color;
+  .trigger {
     cursor: pointer;
     display: inline-block;
     height: 34px;
-    left: -10px;
-    position: relative;
-    top: 0;
+    margin-left: -5px;
     vertical-align: top;
-    width: 40px;
+    width: 31px;
+  }
+
+  .icon {
+    fill: $trigger-icon-fill-color;
+    height: 17px;
+    left: 8px;
+    position: relative;
+    top: 9px;
+    width: 17px;
+
+    &:hover {
+      fill: $trigger-hover-color;
+    }
+  }
+
+  // Color Piece
+  .swatch {
+    background-color: $colorpicker-initial-bg-color;
+    border-radius: 2px;
+    display: inline-block;
+    height: 32px;
+    left: 1px;
+    position: relative;
+    top: 1px;
+    vertical-align: top;
+    width: 32px;
 
     // Trigger Button
     .icon {
@@ -64,49 +77,57 @@
     }
   }
 
-  &::-ms-clear {
-    display: none;
+  .colorpicker {
+    border: 0;
+    max-height: 34px;
+    padding: 11px 10px 8px;
+    width: 90px; //Small Size
+
+    &::-ms-clear {
+      display: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:disabled + .swatch {
+      cursor: default;
+      opacity: .6;
+    }
+
   }
+}
 
-  &:disabled + .swatch {
-    cursor: default;
-    opacity: .6;
-  }
+.popupmenu.colorpicker {
+  max-width: 310px;
+  min-height: 100px;
+  min-width: 100px;
+  width: auto;
 
-  //Open/Focus State is in the input
-  &.is-open + .swatch {
-    border-left-color: transparent;
-  }
+  li {
+    display: inline-block;
+    height: 20px;
+    margin: 10px;
+    width: 20px;
 
-  &.popupmenu {
-    border: 1px solid $input-focus-border-color;
-    border-radius: 0 0 3px 3px;
-    max-height: 160px;
-    min-width: 69px;
-    width: auto;
-
-    li a {
+    a {
       padding: 1px;
     }
-
-    li a:focus {
-      background-color: transparent !important;
-      border-color: $input-focus-border-color;
-    }
-
-    .swatch {
-      background-color: #333333;
-      display: block;
-      height: 33px;
-      width: 48px;
-    }
-
-    &.is-open {
-      border: 1px solid $input-focus-border-color !important;
-      margin-top: -10px;
-      padding: 0;
-    }
   }
+
+  .swatch {
+    background-color: $graphite04;
+    display: block;
+    height: 20px;
+    margin: 10px;
+    width: 20px;
+  }
+
+}
+
+.field > .colorpicker-container {
+  margin-bottom: 20px;
 }
 
 //RTL Styles

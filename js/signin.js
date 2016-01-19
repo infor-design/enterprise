@@ -22,9 +22,7 @@
 
     // Settings and Options
     var pluginName = 'signin',
-        defaults = {
-          propertyName: 'defaultValue'
-        },
+        defaults = {},
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -77,7 +75,7 @@
                   iconCapslock.remove();
                 } else {
                   fieldParent.append(cssIcon);
-                }             
+                }
               }
             }, 150);
 

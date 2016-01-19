@@ -107,6 +107,7 @@ $input-disabled-bg-color: transparent;
 $input-disabled-border-color: $graphite02;
 $input-disabled-color: $disabled-color;
 $input-focus-border-color: $primary-color;
+$input-hover-border-color: $graphite10;
 $input-placeholder-color: $graphite04;
 $input-readonly-border-color: #dadada;
 $input-readonly-bg-color: #e9e9e9;
@@ -121,8 +122,8 @@ $info-icon-fill: $alert-info;
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
-$trigger-icon-fill-color: $graphite04;
-$trigger-hover-color: $graphite05;
+$trigger-icon-fill-color: $graphite06;
+$trigger-hover-color: $graphite10;
 $trigger-active-color: $primary-color;
 
 //List View
