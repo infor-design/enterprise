@@ -4,11 +4,11 @@
 
 window.Formatters = {
   Text: function(row, cell, value) {
-    return ((value === null || value === undefined || value === '') ? '--' : value.toString());
+    return ((value === null || value === undefined || value === '') ? '' : value.toString());
   },
 
   Readonly: function(row, cell, value) {
-    return '<span class="is-readonly">' + ((value === null || value === undefined) ? '--' : value) + '</span>';
+    return '<span class="is-readonly">' + ((value === null || value === undefined) ? '' : value) + '</span>';
   },
 
   Date: function(row, cell, value, col) {
@@ -167,13 +167,13 @@ window.Formatters = {
 
   Color: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col),
-      text = ((value === null || value === undefined || value === '') ? '--' : value.toString());
+      text = ((value === null || value === undefined || value === '') ? '' : value.toString());
 
     return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
   Button: function (row, cell, value, col) {
-    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '--' : value.toString());
+    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString());
     return '<button type="button" class="btn ' + (col.cssClass ? col.cssClass : '') + '">' + text + '</span>';
   },
 
