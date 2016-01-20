@@ -127,7 +127,6 @@
   background-color: $popupmenu-bg-color;
   border: 1px solid $popupmenu-border-color;
   border-radius: 3px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   color: $popupmenu-color;
   display: none;
   list-style: none;
@@ -221,7 +220,7 @@
     border: 1px solid transparent;
     color: $popupmenu-color;
     display: block;
-    line-height: 30px;
+    line-height: 32px;
     padding: 0 30px 0 20px;
     position: relative;
     text-decoration: none;
@@ -229,8 +228,8 @@
 
     span {
       color: inherit;
-      font-weight: inherit;line-height: 30px;
-
+      font-weight: inherit;
+      line-height: 33px;
     }
 
     small {
@@ -381,5 +380,39 @@ html[dir='rtl'] {
       }
     }
   }
+}
 
+//Footer Buttons
+.popup-footer {
+  border-top: 1px solid $popover-separator-color;
+  height: 50px;
+  margin-top: 10px;
+
+  button {
+    @include css3(transition, color .3s ease 0s);
+    @include font-size(12);
+    border: 1px solid transparent;
+    border-left: 1px solid $popover-separator-color;
+    border-radius: 0;
+    color: $modal-btn-color;
+    float: left;
+    font-weight: bold;
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 50%;
+
+    &:hover {
+      color: $modal-btn-hover-color;
+    }
+
+    &:nth-child(1) {
+      border-left: 1px solid transparent;
+    }
+  }
 }

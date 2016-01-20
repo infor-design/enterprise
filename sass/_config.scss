@@ -60,9 +60,9 @@ $badge-info-bg-color: $primary-color;
 $popupmenu-color: $font-color;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $inverse-color;
-$popupmenu-border-color: #e5e5e5;
+$popupmenu-border-color: $graphite03;
 $popupmenu-checked-color: $azure08;
-$popupmenu-hover-color: #ededed;
+$popupmenu-hover-color: $graphite02;
 $popupmenu-alternate-bg-color: $graphite08;
 $popupmenu-alternate-border-color: $graphite08;
 $popupmenu-alternate-color: $white;
@@ -80,7 +80,7 @@ $primary-btn-active-bg-color: $azure07;
 $btn-disabled-opacity: .5;
 
 // Secondary/Normal Buttons
-$btn-color: $graphite06;
+$btn-color: $graphite07;
 $btn-bg-color: $graphite03;
 $btn-hover-bg-color: $graphite04;
 $btn-focus-bg-color: $primary-color;

@@ -238,6 +238,7 @@
       'Search': {id: 'Search', value: 'Search', comment: 'Search tooltip'},
       'SearchFolder': {id: 'SearchFolder', value: 'Search in Folder', comment: 'Search Folder tooltip'},
       'SearchList': {id: 'SearchList', value: 'Search List', comment: 'Search List tooltip'},
+      'Select': {id: 'Select', value: 'Select', comment: 'text describing a select action'},
       'Selected': {id: 'Selected', value: 'Selected', comment: 'text describing a selected object'},
       'Send': {id: 'Send', value: 'Send', comment: 'Send tooltip'},
       'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},

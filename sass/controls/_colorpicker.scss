@@ -100,19 +100,26 @@
 }
 
 .popupmenu.colorpicker {
-  max-width: 310px;
-  min-height: 100px;
-  min-width: 100px;
+  margin-left: -33px;
+  max-width: 342px;
+  min-height: 50px;
+  min-width: 200px;
+  padding: 20px 20px 0;
   width: auto;
 
   li {
     display: inline-block;
     height: 20px;
-    margin: 10px;
-    width: 20px;
+    margin: 4px;
+    width: 22px;
 
     a {
-      padding: 1px;
+      border: 1px solid $white;
+      padding: 0;
+
+      &:focus {
+        outline: 1px solid $primary-color;
+      }
     }
   }
 
@@ -120,8 +127,18 @@
     background-color: $graphite04;
     display: block;
     height: 20px;
-    margin: 10px;
     width: 20px;
+  }
+
+  + .arrow {
+    left: 44px;
+  }
+
+  .popup-footer {
+    display: block;
+    margin-left: -20px;
+    margin-top: 15px;
+    width: calc(100% + 40px);
   }
 
 }

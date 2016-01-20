@@ -23,14 +23,78 @@
     // Settings and Options
     var pluginName = 'colorpicker',
         defaults = {
-          colors: [{label: 'Azure', value: '368AC0'},
-                   {label: 'Amber', value: 'EFA836'},
-                   {label: 'Amethyst', value: '9279A6'},
-                   {label: 'Turquoise', value: '579E95'},
-                   {label: 'Ruby', value: 'B94E4E'},
-                   {label: 'Emerald', value: '76B051'},
-                   {label: 'Graphite', value: '5C5C5C'},
-                   {label: 'Slate', value: '50535A'}]
+          colors: [
+            {label: 'Slate', number: '10', value: '1a1a1a'},
+            {label: 'Slate', number: '09', value: '292929'},
+            {label: 'Slate', number: '08', value: '383838'},
+            {label: 'Slate', number: '07', value: '454545'},
+            {label: 'Slate', number: '06', value: '5C5C5C'},
+            {label: 'Slate', number: '05', value: '737373'},
+            {label: 'Slate', number: '04', value: '999999'},
+            {label: 'Slate', number: '03', value: 'BDBDBD'},
+            {label: 'Slate', number: '02', value: 'D8D8D8'},
+            {label: 'Slate', number: '01', value: 'F0F0F0'},
+            {label: 'Amber', number: '10', value: 'D66221'},
+            {label: 'Amber', number: '09', value: 'DE7223'},
+            {label: 'Amber', number: '08', value: 'E68425'},
+            {label: 'Amber', number: '07', value: 'EB9728'},
+            {label: 'Amber', number: '06', value: 'EFAA30'},
+            {label: 'Amber', number: '05', value: 'F2BC41'},
+            {label: 'Amber', number: '04', value: 'F4C951'},
+            {label: 'Amber', number: '03', value: 'F7D475'},
+            {label: 'Amber', number: '02', value: 'F8E09C'},
+            {label: 'Amber', number: '01', value: 'FBE9BF'},
+            {label: 'Ruby', number: '10', value: '880E0E'},
+            {label: 'Ruby', number: '09', value: '941E1E'},
+            {label: 'Ruby', number: '08', value: 'A13030'},
+            {label: 'Ruby', number: '07', value: 'AD4242'},
+            {label: 'Ruby', number: '06', value: 'B94E4E'},
+            {label: 'Ruby', number: '05', value: 'C65F5F'},
+            {label: 'Ruby', number: '04', value: 'D26D6D'},
+            {label: 'Ruby', number: '03', value: 'DE8181'},
+            {label: 'Ruby', number: '02', value: 'EB9D9D'},
+            {label: 'Ruby', number: '01', value: 'F4BCBC'},
+            {label: 'Turquoise', number: '10', value: '0E5B52'},
+            {label: 'Turquoise', number: '09', value: '206B62'},
+            {label: 'Turquoise', number: '08', value: '317C73'},
+            {label: 'Turquoise', number: '07', value: '448D83'},
+            {label: 'Turquoise', number: '06', value: '579E95'},
+            {label: 'Turquoise', number: '05', value: '69ADA3'},
+            {label: 'Turquoise', number: '04', value: '7BBFB5'},
+            {label: 'Turquoise', number: '03', value: '8ED1C6'},
+            {label: 'Turquoise', number: '02', value: 'A9E1D6'},
+            {label: 'Turquoise', number: '01', value: 'C0EDE3'},
+            {label: 'Emerald', number: '10', value: '397514'},
+            {label: 'Emerald', number: '09', value: '44831F'},
+            {label: 'Emerald', number: '08', value: '56932E'},
+            {label: 'Emerald', number: '07', value: '66A140'},
+            {label: 'Emerald', number: '06', value: '76B051'},
+            {label: 'Emerald', number: '05', value: '89BF65'},
+            {label: 'Emerald', number: '04', value: '9CCE7C'},
+            {label: 'Emerald', number: '03', value: 'AFDC91'},
+            {label: 'Emerald', number: '02', value: 'C3E8AC'},
+            {label: 'Emerald', number: '01', value: 'D5F6C0'},
+            {label: 'Amethyst', number: '10', value: '4B2A5E'},
+            {label: 'Amethyst', number: '09', value: '5A3A6F'},
+            {label: 'Amethyst', number: '08', value: '6C4B81'},
+            {label: 'Amethyst', number: '07', value: '7D5F92'},
+            {label: 'Amethyst', number: '06', value: '8E72A4'},
+            {label: 'Amethyst', number: '05', value: 'A189B8'},
+            {label: 'Amethyst', number: '04', value: 'B59ECA'},
+            {label: 'Amethyst', number: '03', value: 'C7B4DB'},
+            {label: 'Amethyst', number: '02', value: 'DACCEC'},
+            {label: 'Amethyst', number: '01', value: 'E9A0f7'},
+            {label: 'Azure', number: '10', value: '133C59'},
+            {label: 'Azure', number: '09', value: '134D71'},
+            {label: 'Azure', number: '08', value: '1D5F8A'},
+            {label: 'Azure', number: '07', value: '2876A8'},
+            {label: 'Azure', number: '06', value: '368AC0'},
+            {label: 'Azure', number: '05', value: '4EA0D1'},
+            {label: 'Azure', number: '04', value: '69B5DD'},
+            {label: 'Azure', number: '03', value: '8DC9E6'},
+            {label: 'Azure', number: '02', value: 'ADD8EB'},
+            {label: 'Azure', number: '01', value: 'CBEBF4'}
+          ]
         },
         settings = $.extend({}, defaults, options);
 
@@ -151,6 +215,11 @@
           self.swatch.css('background-color', '#' + item.data('value'));
           self.element.focus();
         });
+
+        //Append Buttons
+        this.menu = $('#colorpicker-menu');
+        this.menu.append('<li class="popup-footer"> <button class="cancel btn-tertiary" type="button">' + Locale.translate('Cancel') + '</button> <button class=" btn-tertiary"type="button">' + Locale.translate('Select') + '</button> </li>');
+
       },
 
       // Set the Visible Color
@@ -166,11 +235,11 @@
           var li = $('<li></li>'),
               a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
 
-          a.attr('title', Locale.translate(settings.colors[i].label) + ' #' + settings.colors[i].value );
+          a.attr('title', Locale.translate(settings.colors[i].label) + (settings.colors[i].number ? settings.colors[i].number : '') + ' #' + settings.colors[i].value );
           a.find('.swatch').css('background-color', '#' + settings.colors[i].value);
-          a.data('label', Locale.translate(settings.colors[i].label));
+          a.data('label', Locale.translate(settings.colors[i].label) +  (settings.colors[i].number ? settings.colors[i].number : ''));
           a.data('value', settings.colors[i].value);
-          a.tooltip({placement: 'right'});
+          a.tooltip();
           menu.append(li);
         }
 
