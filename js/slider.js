@@ -240,10 +240,18 @@
         // Retain any width or height size properties from the original range element onto the Pseudo-markup
         var style = this.element.attr('style');
         if (style) {
-          if (isVertical && style.match(/height/)) {
+          if (style.match(/min-height/)) {
+            this.wrapper.css('min-height', this.element.css('min-height'));
+            style = style.replace('min-height', '');
+          }
+          if (style.match(/height/)) {
             this.wrapper.css('height', this.element.css('height'));
           }
-          if (!isVertical && style.match('/width/')) {
+          if (style.match('/min-width/')) {
+            this.wrapper.css('min-width', this.element.css('min-width'));
+            style = style.replace('min-width', '');
+          }
+          if (style.match('/width/')) {
             this.wrapper.css('width', this.element.css('width'));
           }
         }
