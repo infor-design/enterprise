@@ -20,6 +20,7 @@ select.multiselect {
   .icon-info,
   .icon-pending {
     position: absolute;
+    right: 50px;
   }
 
   .badge {
@@ -492,6 +493,17 @@ html[dir='rtl'] {
 
   .dropdown-search {
     padding: 9px 10px 8px 32px;
+  }
+
+  .dropdown-wrapper {
+    .icon-error,
+    .icon-confirm,
+    .icon-alert,
+    .icon-info,
+    .icon-pending {
+      left: 50px;
+      right: auto;
+    }
   }
 
 }

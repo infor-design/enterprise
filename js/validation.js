@@ -425,7 +425,7 @@
         } else if (field.is('.dropdown, .multiselect')) {
           field.parent().find('.dropdown-wrapper').append(svg);
         } else if (field.is('.spinbox')) {
-          field.after(svg);
+          field.parent().append(svg);
         } else if (field.is('.lookup')) {
           field.parent().append(svg);
         } else {
@@ -760,7 +760,7 @@
       },
 
       time: {
-        check: function(value, field) {          
+        check: function(value, field) {
           value = value.replace(/ /g, '');
           this.message = Locale.translate('InvalidTime');
           var pattern = field && field.attr('data-time-format') !== undefined ? field.attr('data-time-format') : Locale.calendar().timeFormat,
