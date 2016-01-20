@@ -8,6 +8,7 @@ Release Date: TBD
 
 ## Breaking Changes
 
+* 2016-01-18 - Color Picker: the colors array should get colors in a 10xN grid.
 * 2016-01-18 - "hyperlink back" class now requires use of an SVG element.
 * 2016-01-18 - breadcrumb-arrow class removed use breadcrumb class for header breadcrumbs
 * 2016-01-14 - Tree - requires updates to SVG icons
@@ -20,6 +21,8 @@ Release Date: TBD
 * 2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.
 
 ## Ui Changes
+* 2016-01-20 - Color Picker - Has a different popup style and swatch is moved.
+* 2016-01-19 - Progress Bar - Is heigher and has darker colors.
 * 2016-01-19 - Switch Control - Reworked the style to match the SoHo Xi Style Guide v1.2
 * 2016-01-19 - Tabs Control - Reworked the style to match the SoHo Xi Style Guide v1.2
 * 2016-01-18 - Radios - Text colors and border colors and a few states changed

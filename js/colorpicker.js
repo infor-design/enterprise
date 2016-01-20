@@ -218,8 +218,14 @@
 
         //Append Buttons
         this.menu = $('#colorpicker-menu');
-        this.menu.append('<li class="popup-footer"> <button class="cancel btn-tertiary" type="button">' + Locale.translate('Cancel') + '</button> <button class=" btn-tertiary"type="button">' + Locale.translate('Select') + '</button> </li>');
+        //if (this.menu.find('.popup-footer').length === 0) {
+        //this.menu.append('<li class="popup-footer"> <button class="cancel btn-tertiary" type="button">' + Locale.translate('Cancel') + '</button> <button class="btn-primary" type="button">' + Locale.translate('Select') + '</button> </li>');
+        ////var btns = this.menu.find('button').button();
+        //}
 
+        setTimeout(function () {
+          self.menu.find('.is-selected').focus();
+        }, 1);
       },
 
       // Set the Visible Color
@@ -234,6 +240,10 @@
         for (var i = 0; i < settings.colors.length; i++) {
           var li = $('<li></li>'),
               a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
+
+          if (this.element.val().replace('#', '') === settings.colors[i].value) {
+            a.addClass('is-selected');
+          }
 
           a.attr('title', Locale.translate(settings.colors[i].label) + (settings.colors[i].number ? settings.colors[i].number : '') + ' #' + settings.colors[i].value );
           a.find('.swatch').css('background-color', '#' + settings.colors[i].value);

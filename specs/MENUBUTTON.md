@@ -92,6 +92,8 @@ http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 **Right To Left** – Icons and menu direction move to the right side and reverse. The button moves to the opposite side of the toolbar.
 [image needed]
 
+**Hover Focus** – When moving the mouse the item you hover will be focus'd. For example hover then arrow up and down from that point.
+
 **Break out of Overflow** – Menus cant be positioned inline. They usually have to be positioned at the document level. This is because parent elements may have overflow hidden. So that means the menu would be cut off and not visible out of the overflow.
 
 **iFrame Support** – The menu can be overtop of an iFrame (in most modern browsers). The use case is a toolbar on top over an iframe full of contents. When the user clicks into the Iframe we need to add a click handler to catch and close the menu while still allowing focus into the iframe. This is only possible if the iframe is on same domain.

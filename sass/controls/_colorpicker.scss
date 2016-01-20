@@ -12,13 +12,23 @@
     border-color: $input-focus-border-color;
   }
 
+  &:hover:not(.is-focused):not(.is-open):not(.is-disabled) {
+    border-color: $input-hover-border-color;
+  }
+
   &.is-disabled {
     background-color: $input-disabled-bg-color;
     border-color: $input-disabled-border-color;
-  }
 
-  &:hover:not(.is-focused):not(.is-open) {
-    border-color: $input-hover-border-color;
+    &:hover {
+      border-color: $input-disabled-border-color;
+    }
+
+    .icon,
+    .icon:hover {
+      cursor: default;
+      fill: $trigger-disabled-color;
+    }
   }
 
   &.is-open {
@@ -101,10 +111,10 @@
 
 .popupmenu.colorpicker {
   margin-left: -33px;
-  max-width: 342px;
+  max-width: 352px;
   min-height: 50px;
   min-width: 200px;
-  padding: 20px 20px 0;
+  padding: 25px;
   width: auto;
 
   li {
@@ -120,6 +130,20 @@
       &:focus {
         outline: 1px solid $primary-color;
       }
+
+      &.is-selected:after {
+        border-color: $white $white $white transparent;
+        border-style: solid;
+        border-width: 2px 2px 0 0;
+        content: '';
+        height: 10px;
+        left: 7px;
+        margin-top: -17px;
+        position: absolute;
+        transform: scaleX(-1) rotate(135deg);
+        width: 4px;
+        z-index: 1;
+      }
     }
   }
 
@@ -134,12 +158,13 @@
     left: 44px;
   }
 
-  .popup-footer {
-    display: block;
-    margin-left: -20px;
-    margin-top: 15px;
-    width: calc(100% + 40px);
-  }
+  // Leave out for now
+  //.popup-footer {
+  //  display: block;
+  //  margin-left: -20px;
+  //  margin-top: 15px;
+  //  width: calc(100% + 40px);
+  //}
 
 }
 

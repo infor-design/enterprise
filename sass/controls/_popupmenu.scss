@@ -15,7 +15,7 @@
 
   &.top {
     .arrow {
-      border-top-color: $popover-shadow-color;
+      border-top-color: $popover-arrow-border-color;
     }
 
     .arrow:after {
@@ -25,7 +25,7 @@
 
   &.bottom {
     .arrow {
-      border-bottom-color: $popover-shadow-color;
+      border-bottom-color: $popover-arrow-border-color;
       left: auto;
       right: 10px;
       top: -7px;
@@ -40,7 +40,7 @@
 
   &.right {
     .arrow {
-      border-right-color: $popover-shadow-color;
+      border-right-color: $popover-arrow-border-color;
     }
 
     .arrow:after {
@@ -50,7 +50,7 @@
 
   &.left {
     .arrow {
-      border-left-color: $popover-shadow-color;
+      border-left-color: $popover-arrow-border-color;
     }
 
     .arrow:after {
@@ -413,6 +413,16 @@ html[dir='rtl'] {
 
     &:nth-child(1) {
       border-left: 1px solid transparent;
+    }
+
+    &.btn-primary {
+      background-color: $popover-bg-color;
+      color: $primary-color;
+
+      &:hover {
+        border: 1px solid transparent;
+        border-left: 1px solid $popover-separator-color;
+      }
     }
   }
 }

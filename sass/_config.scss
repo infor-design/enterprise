@@ -39,10 +39,10 @@ $hr-bottom-color: $white;
 $popover-bg-color: $white;
 $popover-border-color: transparent;
 $popover-arrow-border-color: rgba(0, 0, 0, .086);
-$popover-shadow-color: #e5e5e5;
+$popover-arrow-border-color: $graphite03;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
-$popover-separator-color: #eeeeee;
+$popover-separator-color: $graphite03;
 
 // Tooltips
 $tooltip-bg-color: $slate08;
@@ -127,6 +127,7 @@ $autocomplete-light-text: $graphite05;
 $trigger-icon-fill-color: $graphite06;
 $trigger-hover-color: $graphite10;
 $trigger-active-color: $primary-color;
+$trigger-disabled-color: $graphite04;
 
 //List View
 $listview-bg-color: $inverse-color;

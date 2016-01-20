@@ -370,9 +370,12 @@
 
           focus = self.menu.find(':focus');
 
-          //Right Close Submenu
+          var isPicker = (self.settings.menu === 'colorpicker-menu');
+
+          //Left Close Submenu
           if (key === 37) {
             e.preventDefault();
+
             if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
               focus.closest('.popupmenu').removeClass('is-open').parent().prev('a').focus();
               focus.closest('.popupmenu').removeClass('is-open').parent().parent().removeClass('is-submenu-open');
@@ -380,7 +383,7 @@
           }
 
           //Up on Up
-          if (key === 38) {
+          if ((!isPicker && key === 38) || (isPicker && key === 37)) {
              e.preventDefault();
 
             //Go back to Top on the last one
@@ -391,8 +394,16 @@
             focus.parent().prevAll(excludes).first().find('a').focus();
           }
 
+          //Up a square
+          if ((isPicker && key === 38)) {
+            e.preventDefault();
+            if (focus.parent().prevAll(excludes).length > 0) {
+              $(focus.parent().prevAll(excludes)[9]).find('a').focus();
+            }
+          }
+
           //Right Open Submenu
-          if (key === 39) {
+          if (key === 39 ) {
             e.preventDefault();
             if (focus.parent().hasClass('submenu')) {
               self.showSubmenu(focus.parent());
@@ -401,7 +412,7 @@
           }
 
           //Down
-          if (key === 40) {
+          if ((!isPicker && key === 40) || (isPicker && key === 39)) {
             e.preventDefault();
             //Go back to Top on the last one
             if (focus.parent().nextAll(excludes).length === 0) {
@@ -414,6 +425,15 @@
             }
             focus.parent().nextAll(excludes).first().find('a').focus();
           }
+
+          //Down a square
+          if ((isPicker && key === 40)) {
+            e.preventDefault();
+            if (focus.parent().nextAll(excludes).length > 0) {
+              $(focus.parent().nextAll(excludes)[9]).find('a').focus();
+            }
+          }
+
         });
       },
 
