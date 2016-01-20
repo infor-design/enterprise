@@ -45,7 +45,8 @@ $popover-color: $font-color;
 $popover-separator-color: #eeeeee;
 
 // Tooltips
-$tooltip-bg-color: $graphite06;
+$tooltip-bg-color: $slate08;
+// $tooltip-bg-color: $graphite06;
 $tooltip-border-color: transparent;
 $tooltip-color: $white;
 $tooltip-error-bg-color: $alert-red;
@@ -106,10 +107,11 @@ $input-bg-color: transparent;
 $input-disabled-bg-color: transparent;
 $input-disabled-border-color: $graphite02;
 $input-disabled-color: $disabled-color;
+$input-hover-border-color: $graphite08;
 $input-focus-border-color: $primary-color;
 $input-hover-border-color: $graphite10;
 $input-placeholder-color: $graphite04;
-$input-readonly-border-color: #dadada;
+$input-readonly-border-color: $input-border-color;
 $input-readonly-bg-color: #e9e9e9;
 $input-readonly-color: $graphite04;
 
@@ -367,6 +369,11 @@ $tree-icon-color: $graphite06;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
 $tree-disabled-color: $graphite04;
+
+//Progress
+$progress-bg-color: transparent;
+$progress-border-color: $graphite04;
+$progress-bar-bg-color: $azure06;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $graphite02;

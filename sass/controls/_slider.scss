@@ -24,7 +24,7 @@ input[type="range"] {
 
   &:not(.vertical) {
     height: 4px;
-    margin: 25px 0 50px;
+    margin: 25px 4% 50px;
     width: 92%;
 
     .slider-hit-area {
@@ -35,10 +35,10 @@ input[type="range"] {
     }
 
     > .tick {
-      margin-top: -4px;
+      margin-top: -2px;
 
       &::after {
-        margin-left: -6px;
+        margin-left: -4px;
       }
 
       > .label {
@@ -48,7 +48,7 @@ input[type="range"] {
     }
 
     .slider-handle {
-      margin-top: -10px;
+      margin-top: -7px;
 
       &.is-animated {
         @include css3(transition, left 200ms, right 200ms);
@@ -59,7 +59,7 @@ input[type="range"] {
       height: inherit;
 
       &.is-animated {
-        @include css3(transition, top 200ms, bottom 200ms);
+        @include css3(transition, left 200ms, right 200ms);
       }
     }
   }
@@ -78,10 +78,10 @@ input[type="range"] {
     }
 
     > .tick {
-      margin-left: -4px;
+      margin-left: -2px;
 
       &::after {
-        margin-left: -6px;
+        margin-left: -4px;
       }
 
       > .label {
@@ -92,7 +92,7 @@ input[type="range"] {
     }
 
     .slider-handle {
-      margin-left: -10px;
+      margin-left: -6px;
 
       &.is-animated {
         @include css3(transition, top 200ms, bottom 200ms);
@@ -103,7 +103,7 @@ input[type="range"] {
       width: inherit;
 
       &.is-animated {
-        @include css3(transition, left 200ms, right 200ms);
+        @include css3(transition, top 200ms, bottom 200ms);
       }
     }
   }
@@ -115,11 +115,11 @@ input[type="range"] {
 
   > .tick {
     background-color: transparent;
-    border-radius: 12px;
+    border-radius: 8px;
     cursor: pointer;
     display: inline-block;
-    height: 12px;
-    line-height: 12px;
+    height: 8px;
+    line-height: 8px;
     outline: 0;
     position: absolute;
     text-align: center;
@@ -127,7 +127,7 @@ input[type="range"] {
     -webkit-touch-callout: none;
     -ms-user-select: none;
     -webkit-user-select: none;
-    width: 12px;
+    width: 8px;
 
     &.complete:after {
       background-color: $slider-active-bg-color;
@@ -137,9 +137,9 @@ input[type="range"] {
       background-color: $slider-bg-color;
       border-radius: 50%;
       content: '';
-      height: 12px;
+      height: 8px;
       position: absolute;
-      width: 12px;
+      width: 8px;
     }
 
     &.inherit:after {
@@ -200,17 +200,30 @@ input[type="range"] {
 .slider-handle {
   background-color: $slider-active-bg-color;
   border: 6px solid $slider-active-bg-color;
-  border-radius: 24px;
+  border-radius: 16px;
   box-shadow: 0 0 0 20px transparent; //Increase touch point
   color: transparent;
   cursor: pointer;
   display: inline-block;
-  height: 24px;
-  line-height: 24px;
+  height: 16px;
+  line-height: 16px;
   position: absolute;
-  width: 24px;
+  width: 16px;
   @include css3(touch-callout, none);
   z-index: 20;
+
+  &::after,
+  &::before {
+    border-color: inherit;
+    border-radius: 50%;
+    content: '';
+    left: -19px;
+    position: absolute;
+    top: -19px;
+    @include transition(transform 200ms ease 0s);
+    @include scale(0);
+    z-index: 19;
+  }
 
   // Focus Border
   &::after {
@@ -219,10 +232,8 @@ input[type="range"] {
     border-radius: 50%;
     content: '';
     height: 40px;
-    left: -15px;
     position: absolute;
     @include scale(0);
-    top: -15px;
     @include transition(transform 200ms ease 0s);
     width: 40px;
     z-index: 19;
@@ -234,10 +245,8 @@ input[type="range"] {
     border-color: inherit;
     border-radius: 50%;
     content: '';
-    left: -14px;
     opacity: .1;
     position: absolute;
-    top: -15px;
     @include transition(transform 200ms ease 0s);
     @include scale(0);
     z-index: 19;
@@ -245,7 +254,6 @@ input[type="range"] {
 
   &:focus,
   &:active {
-    background-color: $inverse-color !important; // Needs !important to override inline CSS for background color on active state.
     border-color: $slider-active-bg-color;
     outline: 0;
   }
@@ -311,29 +319,28 @@ input[type="range"] {
 //RTL Styles
 html[dir='rtl'] {
   .slider-wrapper {
-      &.vertical {
-        > .tick {
+    &.vertical {
+      > .tick {
+        margin-left: inherit;
+        margin-right: -2px;
+
+        &::after {
           margin-left: inherit;
           margin-right: -4px;
-
-          &::after {
-            margin-left: inherit;
-            margin-right: -6px;
-          }
-
-          > .label {
-            left: 24px;
-            right: auto;
-            text-align: left;
-          }
         }
 
-        .slider-handle {
-          margin-left: inherit;
-          margin-right: -10px;
+        > .label {
+          left: 24px;
+          right: auto;
+          text-align: left;
         }
-
       }
+
+      .slider-handle {
+        margin-left: inherit;
+        margin-right: -7px;
+      }
+    }
 
     > .tick {
       &.inherit:after {
