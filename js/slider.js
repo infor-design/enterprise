@@ -272,9 +272,9 @@
 
         function positionTick(tick) {
           var convertValueToPercentage = self.isRtlHorizontal ?
-              (100 - self.convertValueToPercentage(tick.value)) : 
+              (100 - self.convertValueToPercentage(tick.value)) :
               self.convertValueToPercentage(tick.value),
-            pos = 'calc(' + convertValueToPercentage + '% - 6px)';
+            pos = 'calc(' + convertValueToPercentage + '% - 4px)';
 
           tick.element = $('<div class="tick" data-value="'+ tick.value +'"></div>');
           tick.label = $('<span class="label">' + tick.description + '</span>');
@@ -662,7 +662,7 @@
           percentages[1] = this.convertValueToPercentage(newVal[1]);
         }
 
-        var posAttrs = (isVertical ? ['bottom', 'top'] : 
+        var posAttrs = (isVertical ? ['bottom', 'top'] :
           (self.isRtlHorizontal ? ['right', 'left'] : ['left', 'right'])),
           cssProps = {};
 
