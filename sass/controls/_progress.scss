@@ -2,8 +2,8 @@
 //================================================== //
 
 .progress {
-  background: #f1f1f1;
-  border: 1px solid #d8d8d8;
+  background: $progress-bg-color;
+  border: 1px solid $progress-border-color;
   border-radius: 4px;
   height: 8px;
   margin: 20px 0;
@@ -12,7 +12,7 @@
   width: 100%;
 
   .progress-bar {
-    background: #0c7ad8;
+    background: $progress-bar-bg-color;
     border-radius: 4px;
     height: 6px;
     left: 0;

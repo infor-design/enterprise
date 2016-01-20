@@ -45,7 +45,8 @@ $popover-color: $font-color;
 $popover-separator-color: #eeeeee;
 
 // Tooltips
-$tooltip-bg-color: $graphite06;
+$tooltip-bg-color: $slate08;
+// $tooltip-bg-color: $graphite06;
 $tooltip-border-color: transparent;
 $tooltip-color: $white;
 $tooltip-error-bg-color: $alert-red;
@@ -368,6 +369,11 @@ $tree-icon-color: $graphite06;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
 $tree-disabled-color: $graphite04;
+
+//Progress
+$progress-bg-color: transparent;
+$progress-border-color: $graphite04;
+$progress-bar-bg-color: $azure06;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $graphite02;
