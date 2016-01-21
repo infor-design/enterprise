@@ -221,9 +221,10 @@ $radio-disabled-select-bg-color: $graphite04;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Pager
-$pager-selected-color: $primary-color;
+$pager-text-color: $azure03;
+$pager-selected-color: $graphite01;
 $pager-focus-border-color: $input-focus-border-color;
-$pager-hover-color: $primary-color;
+$pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $graphite04;
 
 // Slider
