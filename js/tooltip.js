@@ -24,7 +24,7 @@
     var pluginName = 'tooltip',
       defaults = {
         content: null, //Takes title attribute or feed content. Can be a function or jQuery markup
-        offset: {top: 15, left: 0}, //how much room to leave
+        offset: {top: 10, left: 0}, //how much room to leave
         placement: 'top',  //can be top/left/bottom/right/offset
         trigger: 'hover', //supports click and manual and hover (future focus)
         title: null, //Title for Infor Tips
@@ -432,7 +432,8 @@
       placeBelowOffset: function(scrollable) {
        var o = this.activeElement.offset(),
           extraOffset = (this.element.parent().find('.icon').length > 1 ? -12 : 4),
-          extraWidth = 10;
+          extraWidth = 10,
+          lessTop = 0;
 
         if (this.activeElement.is('input.dropdown')) {
           extraWidth = -20;
@@ -452,12 +453,18 @@
         if (this.activeElement.is('.datepicker') && this.activeElement.parent().is(':not(.field-short)')) {
           extraOffset = -15;
         }
+
+        if (settings.isError) {
+          extraOffset = 0;
+          lessTop = 2;
+        }
+
         var left = o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth;
 
         left = Locale.isRTL() ? (left - (this.activeElement.outerWidth() - this.tooltip.outerWidth())) : left;
 
         this.tooltip.css({'width': this.tooltip.width() + extraWidth,
-                          'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
+                          'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight - lessTop,
                           'left': left });
       },
       placeBelow: function (scrollable) {
