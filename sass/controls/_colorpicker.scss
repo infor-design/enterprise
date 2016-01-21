@@ -124,7 +124,7 @@
     width: 22px;
 
     a {
-      border: 1px solid $white;
+      border: 1px solid $popupmenu-bg-color;
       padding: 0;
 
       &:focus {
@@ -175,26 +175,16 @@
 //RTL Styles
 html[dir='rtl'] {
 
-  .colorpicker {
+  .colorpicker-container {
 
     // Color Piece
-    + .swatch {
-      border-left: inherit;
-      border-right: 1px solid $input-border-color;
-      left: inherit;
-      right: -10px;
-
-      // Trigger Button
-      .icon {
-        left: inherit;
-        right: 37px;
-      }
+    .swatch {
+      left: 0;
+      right: 1px;
     }
 
-    //Open/Focus State is in the input
-    &.is-open + .swatch {
-      border-left-color: inherit;
-      border-right-color: transparent;
+    .icon {
+      left: 0;
     }
   }
 

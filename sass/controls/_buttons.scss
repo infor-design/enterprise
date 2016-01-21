@@ -421,11 +421,11 @@ a.btn-menu {
 html[dir='rtl'] {
   button {
     margin-left: 5px;
-    margin-right: inherit;
+    margin-right: 0;
 
     &:last-child {
       margin-left: 0;
-      margin-right: inherit;
+      margin-right: 0;
     }
   }
 

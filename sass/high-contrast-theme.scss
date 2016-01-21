@@ -19,7 +19,7 @@ $panel-bg-color: $graphite01;
 $panel-border-color: $graphite03;
 
 // Base Colors
-$primary-color: $azure07;
+$primary-color: $azure09;
 $inverse-color: #ffffff;
 
 //The hyperlink Style
@@ -45,7 +45,7 @@ $hr-bottom-color: transparent;
 
 // Popovers
 $popover-bg-color: $white;
-$popover-border-color: $graphite03;
+$popover-border-color: $graphite04;
 $popover-arrow-border-color: $graphite04;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
@@ -62,9 +62,8 @@ $badge-info-bg-color: $primary-color;
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-color-filtered-text: $font-color;
 $popupmenu-bg-color: $white;
-$popupmenu-border-color: $graphite04;
 $popupmenu-checked-color: $font-color;
-$popupmenu-border-color: $graphite03;
+$popupmenu-border-color: $graphite04;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
@@ -74,7 +73,7 @@ $primary-btn-active-bg-color: $azure08;
 
 // Secondary/Normal Buttons
 $btn-color: $inverse-color;
-$btn-bg-color: $graphite06;
+$btn-bg-color: $graphite07; //08 is AAA
 $btn-hover-bg-color: $graphite05;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
