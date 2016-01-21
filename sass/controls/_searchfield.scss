@@ -13,15 +13,17 @@
     width: 32px;
 
     &:not(.close) {
-      height: 18px;
+      height: 14px;
       left: 0;
       pointer-events: none;
+      top: 10px;
     }
 
     &.close {
-      height: 16px;
+      cursor: pointer;
+      height: 14px;
       right: 0;
-      top: 9px;
+      top: 11px;
     }
   }
 
