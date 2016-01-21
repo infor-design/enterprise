@@ -57,7 +57,7 @@
     border-bottom: 0 none;
     border-top: 1px solid $fieldset-border-top-color;
     margin-bottom: 10px;
-    margin-left: -20px;
+    margin-left: -27px;
     margin-top: 10px;
     padding: 0;
   }
@@ -88,6 +88,7 @@
   margin: 5px;
   padding: 30px 0 0 27px;
   position: relative;
+  overflow: hidden;
 
   // //3D sign Effect
   // @include css3(transform-origin, 50% 50% 0);
