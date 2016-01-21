@@ -234,10 +234,10 @@ $slider-disabled-color: $graphite01;
 
 //Modal
 $modal-bg-color: $graphite01;
-$modal-shadow: 0 0 5px rgba(255, 255, 255, .2);
+$modal-border-color: $graphite05;
 $modal-btn-color: $graphite08;
 $modal-color: $graphite08;
-$modal-btn-border-color: $graphite05;
+$modal-btn-border-color: $modal-border-color;
 $modal-btn-hover-color: $graphite09;
 $modal-btn-primary-color: $primary-color;
 $modal-btn-primary-hover-color: $azure09;
