@@ -6,7 +6,7 @@
   background-color: $popupmenu-bg-color;
   border: 1px solid $popupmenu-border-color;
   border-radius: 4px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
+  //box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
   left: -9999px;
   opacity: 0;
   position: absolute;
@@ -27,6 +27,11 @@
     z-index: 10;
   }
 
+  .arrow,
+  .arrow:after {
+    border-width: 12px;
+  }
+
   &.top {
     @include css3(transform, translate3d(0, 10%, 0));
 
@@ -42,9 +47,12 @@
   &.bottom {
     .arrow {
       border-bottom-color: $popupmenu-border-color;
+      top: -24px !important;
 
       &::after {
         border-bottom-color: $popupmenu-bg-color;
+        top: -11px !important;
+        left: -12px !important;
       }
     }
   }

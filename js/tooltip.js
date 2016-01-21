@@ -315,7 +315,7 @@
           winH = winH - (this.scrollparent.offset().top + scrollable.offsetTop);
           winW = winW - (this.scrollparent.offset().left + scrollable.offsetLeft);
         }
-        
+
         var rightOffset;
         switch(settings.placement) {
           case 'offset':
@@ -478,10 +478,12 @@
                           'left': o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2) - scrollable.deltaWidth});
       },
       placeToRight: function (scrollable) {
-        var o = this.activeElement.offset();
+        var o = this.activeElement.offset(),
+          extraLeft = (this.isPopover ? 10 : 0);
+
         this.tooltip.removeAttr('style');
         this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
-                          'left': o.left + scrollable.offsetLeft + settings.offset.left + this.activeElement.outerWidth() + settings.offset.top - scrollable.deltaWidth});
+                          'left': o.left + scrollable.offsetLeft + extraLeft + settings.offset.left + this.activeElement.outerWidth() + settings.offset.top - scrollable.deltaWidth});
       },
       placeToLeft: function (scrollable) {
         var o = this.activeElement.offset();

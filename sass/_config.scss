@@ -37,10 +37,9 @@ $hr-bottom-color: $white;
 
 // Popovers
 $popover-bg-color: $white;
-$popover-border-color: transparent;
-$popover-arrow-border-color: rgba(0, 0, 0, .086);
+$popover-border-color: $graphite03;
 $popover-arrow-border-color: $graphite03;
-$popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+$popover-box-shadow: none;
 $popover-color: $font-color;
 $popover-separator-color: $graphite03;
 
@@ -60,7 +59,7 @@ $badge-info-bg-color: $primary-color;
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-arrow-color: $graphite06;
-$popupmenu-heading-color: $graphite06;
+$popupmenu-heading-color: $graphite05;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $inverse-color;
 $popupmenu-border-color: $graphite03;
@@ -124,11 +123,12 @@ $dirty-icon-fill: $amber05;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $alert-info;
 
-// Autocomplete
+// Autocomplete / Triggers
 $autocomplete-light-text: $graphite05;
 $trigger-icon-fill-color: $graphite06;
 $trigger-hover-color: $graphite10;
 $trigger-active-color: $primary-color;
+$trigger-focus-color: $primary-color;
 $trigger-disabled-color: $graphite04;
 
 //List View
@@ -167,14 +167,15 @@ $dropdown-color: $input-color;
 $dropdown-search-color: $autocomplete-light-text;
 $dropdown-menu-border-color: $primary-color;
 $dropdown-menu-separator-color: $graphite04;
-$dropdown-group-label-color: $graphite04;
+$dropdown-group-label-color: $graphite05;
 
 //Date Picker
 $datepicker-alt-month-color: $graphite04;
 $datepicker-selected-bg-color: $azure06;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $graphite10;
-$datepicker-hover-bg-color: $graphite01;
+$datepicker-hover-bg-color: $graphite02;
+$datepicker-disabled-bg-color: $graphite01;
 
 // Color Picker
 $colorpicker-initial-bg-color: $graphite03;

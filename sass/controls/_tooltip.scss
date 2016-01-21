@@ -123,6 +123,11 @@
   pointer-events: auto;
   z-index: 3010;
 
+  .arrow,
+  .arrow:after {
+    border-width: 12px;
+  }
+
   &.top {
     .arrow {
       border-top-color: $popover-arrow-border-color;
@@ -141,27 +146,35 @@
 
     .arrow:after {
       border-bottom-color: $popover-bg-color;
-      top: 2px;
+      left: -12px;
+      top: 1px;
     }
   }
 
   &.right {
     .arrow {
       border-right-color: $popover-arrow-border-color;
+      margin-top: -11px;
+      left: -12px;
     }
 
     .arrow:after {
       border-right-color: $popover-bg-color;
+      top: -12px;
     }
   }
 
   &.left {
     .arrow {
       border-left-color: $popover-arrow-border-color;
+      margin-top: -11px;
+      right: -11px;
     }
 
     .arrow:after {
       border-left-color: $popover-bg-color;
+      left: -13px;
+      top: -12px;
     }
   }
 
@@ -193,7 +206,7 @@
 }
 
 .tooltip-title {
-  border-bottom: 1px solid $graphite02;
+  border-bottom: 1px solid $popover-separator-color;
   color: $font-color-highcontrast;
   @include font-size(16);
   font-weight: normal;

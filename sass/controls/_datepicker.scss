@@ -16,11 +16,11 @@
     z-index: 1;
 
     &:hover {
-      fill: $primary-color;
+      fill: $trigger-hover-color;
     }
 
     &:active {
-      fill: $primary-color;
+      fill: $trigger-active-color;
     }
   }
 
@@ -80,7 +80,7 @@
   // Cells / Days
   td {
     border: 1px solid transparent;
-    border-radius: 35px;
+    border-radius: 50%;
     color: $font-color-highcontrast;
     cursor: pointer;
     @include rem(font-size, 1.2rem);
@@ -127,7 +127,7 @@
     &.is-disabled,
     &.is-disabled:active {
       @include unselectable;
-      background-color: $datepicker-hover-bg-color;
+      background-color: $datepicker-disabled-bg-color;
       cursor: default;
     }
 
@@ -228,7 +228,7 @@
   border-radius: 2px;
 
   .arrow {
-    left: 137px;
+    left: 132px;
   }
 
   .tooltip-content {
