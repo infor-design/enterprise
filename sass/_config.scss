@@ -342,29 +342,26 @@ $chart-line-color: $graphite04;
 $chart-font-color: $graphite05;
 
 // DataGrid
-$datagrid-border-color: $graphite01;
+$datagrid-border-color: $graphite02;
 $datagrid-header-color: #ffffff;
 $datagrid-header-bg-color: $graphite06;
 $datagrid-header-border-color: $graphite02;
-$datagrid-header-hover-color: $graphite07;
-$datagrid-header-active-color: $graphite07;
-
+$datagrid-header-hover-color: $graphite08;
+$datagrid-header-active-color: $graphite08;
 $datagrid-cell-color: $graphite10;
 $datagrid-cell-bg-color: #ffffff;
 $datagrid-cell-readonly-bg-color: $graphite01;
 $datagrid-cell-readonly-color: $graphite05;
 $datagrid-cell-border-color: $graphite02;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: rgba(203, 235, 244, .3); //#eaf8fe;
-$datagrid-row-selected-color-dark: rgba(203, 235, 244, .8); //#eaf8fe;
+$datagrid-row-selected-color: #d8f0f7;
+$datagrid-row-selected-color-dark: #d4ebf3;
 $datagrid-row-hover-color: #e4e4e4;
-
 $datagrid-readonly-header-bg-color: #e4e4e4;
 $datagrid-readonly-header-color: $graphite05;
 $datagrid-readonly-header-hover-color: $graphite02;
 $datagrid-readonly-sort-icon-color: $graphite03;
 $datagrid-readonly-sort-icon-hover-color: $graphite05;
-
 $datagrid-header-focus-bg-color: $primary-color;
 
 // Search Results
