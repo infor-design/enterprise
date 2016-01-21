@@ -91,8 +91,16 @@ window.Formatters = {
   },
 
   Checkbox: function (row, cell, value, col) {
-    //treat 1, true or '1' as checked
-    var isChecked = (value == undefined ? false : value == true); // jshint ignore:line
+    var isChecked;
+
+    // Use isChecked function if exists
+    if (col.isChecked) {
+      isChecked = col.isChecked(value);
+    } else {
+      //treat 1, true or '1' as checked
+      isChecked = (value == undefined ? false : value == true); // jshint ignore:line
+    }
+
     return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
      (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span></div>';
   },
@@ -290,15 +298,22 @@ window.Editors = {
     };
 
     this.val = function (value) {
-      var isChecked = value;
+      var isChecked;
 
       if (value === undefined) {
-        return  this.input.prop('checked');
+        return this.input.prop('checked');
+      }
+
+      // Use isChecked function if exists
+      if (column.isChecked) {
+        isChecked = column.isChecked(value);
+      } else {
+        isChecked = value;
       }
 
       if (e.type === 'click' || (e.type === 'keydown' && e.keyCode === 32)) {
         //just toggle it
-        isChecked = !value;
+        isChecked = !isChecked;
       }
 
       this.input.prop('checked', isChecked);
@@ -2165,7 +2180,8 @@ $.fn.datagrid = function(options) {
       var oldVal = (col.field ? this.settings.dataset[row][col.field] : ''),
         coercedVal = this.coerceValue(value, oldVal, col, row, cell);
 
-      if (!coercedVal) {
+      //coerced value may be coerced to empty string, null, or 0
+      if (coercedVal === undefined) {
         coercedVal = value;
       }
 
