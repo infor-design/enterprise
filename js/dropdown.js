@@ -141,7 +141,7 @@
           upTopOpts = 0;
         //Keep a list generated and append as needed
         self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
-        self.listUl = $('<ul tabindex="-1" role="listbox"></ul>').appendTo(self.list);
+        self.listUl = $('<ul role="listbox"></ul>').appendTo(self.list);
         self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
 
         function setOptions(option, listOption) {
@@ -782,6 +782,16 @@
             e.stopPropagation();
             $(e.target).parent().trigger('click');
             return false;
+          })
+          .on('mouseenter.list', 'li', function() {
+            var target = $(this),
+              opts = self.listUl.children();
+
+            opts.removeClass('is-focused');
+            if (target.is('.separator, .group-label')) {
+              return;
+            }
+            target.addClass('is-focused');
           });
 
         $(window).on('resize.dropdown', function() {
@@ -942,7 +952,7 @@
 
         this.list.hide().remove();
         this.list.offTouchClick('list')
-          .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list');
+          .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list');
         this.listUl.find('li').show();
         this.input.removeClass('is-open').attr('aria-expanded', 'false');
         this.searchInput.removeAttr('aria-activedescendant');
