@@ -2,15 +2,15 @@
 //================================================== /
 .popover,
 .tooltip {
+  @include font-size(15);
   background-clip: padding-box;
   background-color: $tooltip-bg-color;
   border: 1px solid $tooltip-border-color;
   border-radius: 2px;
   color: $tooltip-color;
-  @include font-size(15);
   left: -9999px;
   max-width: 300px;
-  min-width: 60px;
+  min-width: 40px;
   opacity: 1;
   padding: 1px;
   pointer-events: none;
@@ -52,6 +52,7 @@
 
   &.is-error {
     background-color: $tooltip-error-bg-color;
+    border-color: $tooltip-error-border-color;
     pointer-events: auto;
 
     p {
@@ -84,7 +85,8 @@
   }
 
   p {
-    color: $tooltip-error-color;
+    @include font-size(12);
+    color: $tooltip-color;
     text-align: center;
     word-break: normal;
     word-wrap: break-word;
@@ -93,15 +95,22 @@
   .icon {
     display: inline-block;
     fill: $tooltip-color;
-    width: 18px;
+    height: 14px;
+    margin-top: 2px;
+    width: 14px;
 
     + p {
       display: inline-block;
-      margin-left: 5px;
-      margin-top: 7px;
+      margin-left: 2px;
+      margin-top: 2px;
       vertical-align: top;
       width: auto;
     }
+  }
+
+  .action-tooltip {
+    font-weight: bold;
+    text-transform: uppercase;
   }
 
 }
@@ -148,7 +157,7 @@
 
   &.left {
     .arrow {
-      border-left-color:$popover-arrow-border-color;
+      border-left-color: $popover-arrow-border-color;
     }
 
     .arrow:after {
@@ -194,7 +203,7 @@
 }
 
 .tooltip-content {
-  padding: 7px 13px;
+  padding: 7px 10px 5px;
 
   // Error Tooltip Styling
   li {
@@ -214,7 +223,7 @@
 .arrow:after {
   border-color: transparent;
   border-style: solid;
-  border-width: 11px;
+  border-width: 6px;
   display: block;
   height: 0;
   position: absolute;
@@ -228,14 +237,14 @@
 .top {
   .arrow {
     border-bottom-width: 0;
-    bottom: -10px;
+    bottom: -6px;
     left: 50%;
-    margin-left: -11px;
+    margin-left: -7px;
 
     &:after {
       border-bottom-width: 0;
-      left: -11px;
-      top: -11px;
+      left: -7px;
+      top: -7px;
     }
   }
 }
@@ -244,12 +253,12 @@
   .arrow {
     border-top-width: 0;
     left: 50%;
-    margin-left: -12px;
-    top: -11px;
+    margin-left: -7px;
+    top: -6px;
 
     &:after {
       border-top-width: 0;
-      left: -11px;
+      left: -6px;
       top: 0;
     }
   }
@@ -265,14 +274,14 @@
 .right {
   .arrow {
     border-left-width: 0;
-    left: -11px;
-    margin-top: -11px;
+    left: -7px;
+    margin-top: -6px;
     top: 50%;
 
     &:after {
       border-left-width: 0;
       left: 1px;
-      top: -11px;
+      top: -6px;
     }
   }
 }
@@ -280,14 +289,14 @@
 .left {
   .arrow {
     border-right-width: 0;
-    margin-top: -11px;
-    right: -10px;
+    margin-top: -6px;
+    right: -7px;
     top: 50%;
 
     &:after {
       border-right-width: 0;
-      left: -11px;
-      top: -11px;
+      left: -6px;
+      top: -6px;
     }
   }
 }
@@ -317,7 +326,7 @@ html[dir='rtl'] {
     .icon {
       + p {
         margin-left: inherit;
-        margin-right: 5px;
+        margin-right: 2px;
       }
     }
   }
