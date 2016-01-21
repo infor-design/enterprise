@@ -230,9 +230,10 @@ $radio-disabled-select-bg-color: $slate05;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 //Pager
-$pager-selected-color: $primary-color;
+$pager-text-color: $primary-color;
+$pager-selected-color: $font-color-extrahighcontrast;
 $pager-focus-border-color: $input-focus-border-color;
-$pager-hover-color: $primary-color;
+$pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $slate06;
 
 //Slider

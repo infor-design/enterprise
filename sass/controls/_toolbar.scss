@@ -313,6 +313,15 @@ $toolbar-buttonset-height: 44px;
   border-right-width: 1px;
 }
 
+@include respond-to(phone) {
+  .toolbar {
+    .btn,
+    .btn-tertiary {
+      padding: 0 5px;
+    }
+  }
+}
+
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
   .toolbar {
     // Show text with icon buttons by using this class.
