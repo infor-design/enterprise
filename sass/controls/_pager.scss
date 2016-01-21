@@ -18,19 +18,17 @@
 
     a {
       border: 1px solid transparent;
-      border-radius: 3px;
-      color: $label-color;
+      color: $pager-text-color;
       cursor: pointer;
       display: inline-block;
       height: 28px;
       line-height: 30px;
-      margin: 3px 0 0;
-      padding: 0;
+      margin: 3px 4px;
+      padding: 0 2px;
       position: relative;
       text-align: center;
       text-decoration: none;
       transition: all .2s ease;
-      width: 28px;
 
       &:focus {
         @include css3(box-shadow, 0 0 1px 1px $pager-focus-border-color inset);
@@ -46,9 +44,24 @@
       }
     }
 
+    &:not(.selected):hover {
+      a {
+        border-bottom: 1px solid $pager-text-color;
+      }
+    }
+
+    &.pager-prev,
+    &.pager-last,
+    &.pager-first,
+    &.pager-next {
+      &:hover a {
+        border-bottom: 0;
+      }
+    }
+
     &.selected a {
-      background-color: $pager-selected-color;
-      color: $inverse-color;
+      color: $pager-selected-color;
+      font-weight: bold;
 
       &:focus {
         @include css3(box-shadow, 0 0 1px 1px #ffffff inset);
@@ -67,15 +80,23 @@
 }
 
 // Buttons
-.pager-prev svg,
-.pager-first svg,
-.pager-last svg,
-.pager-next svg {
-  fill: $font-color;
-  height: 17px;
-  left: 1px;
-  top: 4px;
-  width: 18px;
+.pager-prev,
+.pager-first,
+.pager-last,
+.pager-next {
+  border-radius: 3px;
+  margin: 0;
+  padding: 0;
+  width: 28px;
+
+  svg {
+    fill: $font-color;
+    height: 17px;
+    left: 1px;
+    top: 3px;
+    width: 18px;
+  }
+
 }
 
 .paginated li {
@@ -92,6 +113,7 @@
 
   input {
     @include font-size(14);
+    font-weight: bold;
     height: 23px;
     line-height: 23px;
     padding: 3px 0 1px;
