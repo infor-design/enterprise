@@ -168,17 +168,25 @@ $toolbar-buttonset-height: 44px;
       }
     }
 
-    &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-active-color;
-      color: $tertiary-btn-active-color;
+    &:focus {
 
+      // Prevents the normal .btn background color from fading in
       &:active {
         background-color: transparent !important;
-        box-shadow: none;
       }
 
-      .icon {
-        fill: $tertiary-btn-active-color;
+      &:not(.hide-focus) {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-active-color;
+        color: $tertiary-btn-active-color;
+
+        &:active {
+          background-color: transparent !important;
+          box-shadow: none;
+        }
+
+        .icon {
+          fill: $tertiary-btn-active-color;
+        }
       }
     }
 

@@ -61,6 +61,12 @@ $toolbarsearchfield-empty-width: 34px;
       background-color: rgba($searchfield-bg-color, 0);
       fill: rgba($searchfield-text-color, 0);
     }
+
+    &:not(.close) {
+      height: 18px;
+      top: 8px;
+      @include transition(height 300ms cubic-bezier(.17, .04, .03, .94), top 300ms cubic-bezier(.17, .04, .03, .94));
+    }
   }
 
   &.active {
@@ -145,6 +151,8 @@ $toolbarsearchfield-empty-width: 34px;
     &.active {
       .icon {
         fill: $searchfield-text-color;
+        height: 14px;
+        top: 10px;
       }
     }
   }
