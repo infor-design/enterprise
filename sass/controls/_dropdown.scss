@@ -110,7 +110,6 @@ input.multiselect {
   background-color: $popupmenu-bg-color;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: 0 0 5px rgba(8, 150, 233, .2);
   max-height: 300px;
   min-height: 30px;
   -webkit-overflow-scrolling: touch;
@@ -171,12 +170,7 @@ input.multiselect {
     }
 
     &.is-focused {
-      background-color: $primary-color;
-      color: $inverse-color;
-
-      > a {
-        color: $inverse-color;
-      }
+      background-color: $popupmenu-hover-color;
 
       &:not(.group-label):before {
         @include checkbox-checked-before-style;
@@ -213,17 +207,9 @@ input.multiselect {
 
     li {
       i {
-        color: $primary-color;
-      }
-
-      &.is-focused {
-        a {
-          color: $azure01;
-        }
-
-        i {
-          color: $inverse-color;
-        }
+        color: $font-color-extrahighcontrast;
+        font-weight: bold;
+        letter-spacing: -.2;
       }
 
       &.is-disabled {
@@ -252,13 +238,12 @@ input.multiselect {
 
     li.is-focused:not(.group-label):before {
       @include checkbox-unchecked-before-style;
-      background-color: $popupmenu-hover-color;
     }
 
     li.is-focused,
     li.is-selected.is-focused,
     li:hover:not(.group-label) {
-      background-color: $popupmenu-hover-color;
+      //background-color: $popupmenu-hover-color;
 
       > a {
         color: $font-color-highcontrast;
@@ -292,7 +277,7 @@ input.multiselect {
     &.search-mode {
       a {
         i {
-          color: $azure06;
+          color: $font-color-highcontrast;
         }
       }
     }
@@ -307,7 +292,7 @@ input.multiselect {
     text-transform: uppercase;
 
     &:not(:first-child) {
-      border-top: 1px solid $popover-separator-color;
+      border-top: 1px solid $dropdown-menu-separator-color;
       margin-top: 10px;
     }
 
@@ -336,6 +321,7 @@ input.multiselect {
 }
 
 .dropdown-search {
+  background-color: $body-bg-color;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-color;
   border-radius: 0;
