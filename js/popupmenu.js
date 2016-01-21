@@ -548,6 +548,10 @@
           wrapper.css({ 'top': target.offset().top + target.outerHeight() });
         }
 
+        if (this.element.is('.autocomplete')) {
+          wrapper.css({ 'top': target.offset().top + target.outerHeight(true) + 11 });
+        }
+
       },
 
       open: function(e, ajaxReturn) {
