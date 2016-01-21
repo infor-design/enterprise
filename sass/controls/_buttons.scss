@@ -365,8 +365,6 @@ a.btn-menu {
 @include respond-to(phone) {
   .btn,
   .btn-tertiary {
-    padding: 0 5px;
-
     .icon {
 
       // If an icon is present, the span should not be visible at this breakpoint
