@@ -47,6 +47,12 @@
       console.log('open');
     }).on('afteropen', function () {
       console.log('afteropen');
+    }).on('beforeclose', function() {
+      console.log('beforeclose');
+    }).on('close', function() {
+      console.log('close');
+    }).on('afterclose', function() {
+      console.log('afterclose');
     });
 
   });
