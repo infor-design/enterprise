@@ -126,6 +126,16 @@ svg.icon-logo {
     margin: 0;
     z-index: 1;
   }
+
+  &.dirty-checkbox {
+    left: 0;
+    top: -2px;
+  }
+
+  &.dirty-checkbox.is-checked {
+    top: 0;
+    z-index: 2;
+  }
 }
 
 .img-placeholder {

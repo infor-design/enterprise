@@ -96,4 +96,11 @@
   }
 }
 
+//Right To Left Styles
+html[dir='rtl'] {
+  .hyperlink.back .icon {
+    left: 0;
+    right: 3px;
+  }
+}
 

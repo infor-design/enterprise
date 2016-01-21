@@ -2,14 +2,15 @@
 //================================================== //
 
 .skip-link {
-  background: #ffffff;
-  border: 1px solid #ffffff;
+  @include font-size(12);
+  background: $skip-link-bg-color;
+  border: 1px solid $skip-link-border-color;
   border-bottom-right-radius: 2px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .2);
-  color: $primary-color;
-  @include font-size(14);
+  border-top: 1px;
+  color: $skip-link-color;
   left: 0;
-  padding: 10px;
+  line-height: 30px;
+  padding: 0 10px;
   position: absolute;
   text-decoration: none;
   top: -40px;
@@ -17,13 +18,12 @@
   z-index: 100;
 
   &:hover {
-    color: $primary-color;
+    color: $skip-link-color;
     text-decoration: underline;
   }
 }
 
 .skip-link:focus {
-  border-color: $primary-color;
   left: 0;
   outline: 0 none;
   position: absolute;
@@ -31,3 +31,10 @@
   transition: top .3s ease-in 0s, background .3s linear 0s;
 }
 
+//Right To Left Styles
+html[dir='rtl'] {
+  .skip-link:focus {
+    left: initial;
+    right: 0;
+  }
+}

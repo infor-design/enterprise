@@ -61,12 +61,12 @@ input::-webkit-inner-spin-button {
   }
 
   &:hover {
-    color: $primary-color;
+    color: $spinbox-hover-color;
   }
 
   &.is-active {
-    background-color: $spinbox-bg-color;
-    color: $font-color-highcontrast;
+    //background-color: $spinbox-active-color;
+    color: $spinbox-active-color;
   }
 
   &.is-disabled {

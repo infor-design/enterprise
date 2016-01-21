@@ -149,6 +149,11 @@ $colorpicker-initial-bg-color: $slate04;
 $spinbox-bg-color: $slate06;
 $spinbox-button-color: $body-bg-color;
 
+//Skip Link
+$skip-link-border-color: $slate09;
+$skip-link-bg-color: $slate06;
+$skip-link-color: $white;
+
 //Swaplist
 $swaplist-icon-color-hover: $white;
 $swaplist-border-color-hover: $white;
@@ -321,11 +326,11 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $primary-color;
+$tree-active-bg-color: $slate04;
 $tree-icon-color: $slate03;
-$tree-line-color: $slate05;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
-$tree-disabled-opacity: .6;
+$tree-disabled-color: $slate05;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $slate04;

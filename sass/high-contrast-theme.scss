@@ -19,7 +19,7 @@ $panel-bg-color: $graphite01;
 $panel-border-color: $graphite03;
 
 // Base Colors
-$primary-color: $azure09;
+$primary-color: $azure07;
 $inverse-color: #ffffff;
 
 //The hyperlink Style
@@ -151,6 +151,11 @@ $colorpicker-initial-bg-color: $graphite06;
 //Spinbox
 $spinbox-bg-color: $graphite03;
 $spinbox-button-color: #ffffff;
+
+//Skip Link
+$skip-link-border-color: $graphite04;
+$skip-link-bg-color: $white;
+$skip-link-color: $primary-color;
 
 //Mast Head
 $masthead-bg-color: $slate10;
@@ -318,11 +323,11 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $primary-color;
-$tree-icon-color: $graphite06;
-$tree-line-color: $graphite04;
+$tree-active-bg-color: #cae2ed;
+$tree-icon-color: $graphite07;
 $tree-link-color: $font-color-extrahighcontrast;
 $tree-folder-link-color: $font-color-extrahighcontrast;
-$tree-disabled-opacity: .6;
+$tree-disabled-color: $graphite05;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $graphite01;
