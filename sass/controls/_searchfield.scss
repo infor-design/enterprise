@@ -13,15 +13,17 @@
     width: 32px;
 
     &:not(.close) {
-      height: 18px;
+      height: 14px;
       left: 0;
       pointer-events: none;
+      top: 10px;
     }
 
     &.close {
-      height: 16px;
+      cursor: pointer;
+      height: 14px;
       right: 0;
-      top: 9px;
+      top: 11px;
     }
   }
 
@@ -63,23 +65,47 @@
   text-transform: uppercase;
 }
 
+@mixin context-searchfield-boxshadow() {
+  border: 0;
+  box-shadow: 0 3px 5px 0 rgba($searchfield-context-boxshadow-color, .7);
+}
+
 // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
-.searchfield-wrapper.alternate {
+.searchfield-wrapper.context {
   width: 100%;
 
   > .searchfield {
-    background-color: $searchfield-card-bg-color;
+    background-color: $searchfield-context-bg;
     border: 0;
-    border-bottom: 1px solid $searchfield-card-border-color;
+    border-bottom: 1px solid $searchfield-context-border-color;
     padding-left: 32px;
     width: 100%;
+
+    &.is-open {
+      @include context-searchfield-boxshadow();
+    }
   }
 
   > .icon {
-    fill: $searchfield-card-icon-color;
-    left: 0;
-    right: auto;
+    fill: $searchfield-context-icon-color;
+
+    &:not(.close) {
+      left: 0;
+      right: auto;
+    }
   }
+
+  &.alternate {
+    > .searchfield {
+      background-color: $searchfield-context-alt-bg;
+    }
+  }
+}
+
+// Context Searchfield's Popupmenu has alternate styles
+.popupmenu.autocomplete.context {
+  border-top: 1px solid $searchfield-context-border-color !important;
+  @include context-searchfield-boxshadow();
 }
 
 @include respond-to(phablet) {

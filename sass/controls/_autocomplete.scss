@@ -6,12 +6,12 @@
   border: 1px solid $input-focus-border-color;
   border-radius: 0 0 3px 3px;
   border-top: 1px solid $dropdown-menu-separator-color;
-  box-shadow: 0 1px 0 1px rgba(8, 150, 233, .2);
+  line-height: 30px;
   margin-top: -11px;
   overflow: auto;
 
   li {
-    color: $autocomplete-light-text;
+    color: $popupmenu-color;
 
     &.is-selected,
     &:hover {
@@ -30,6 +30,10 @@
     > .icon {
       position: static;
     }
+
+    span {
+      line-height: normal;
+    }
   }
 
   a:before,
@@ -39,8 +43,12 @@
 }
 
 input.autocomplete.is-open {
-  background-color: $popupmenu-bg-color;
+  background-color: $autocomplete-active-bg-color;
   border: 1px solid $dropdown-menu-border-color;
   border-bottom: 1px solid $dropdown-menu-separator-color;
   border-radius: 3px 3px 0 0;
+
+  ~ .icon:not(.close) {
+    fill: $primary-color;
+  }
 }

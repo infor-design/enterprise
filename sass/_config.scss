@@ -126,6 +126,7 @@ $info-icon-fill: $alert-info;
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
+$autocomplete-active-bg-color: $body-bg-color;
 $trigger-icon-fill-color: $graphite06;
 $trigger-hover-color: $graphite10;
 $trigger-active-color: $primary-color;
@@ -412,6 +413,13 @@ $searchfield-bg-color: $graphite02;
 $searchfield-border-color: $graphite03;
 $searchfield-icon-color: $tertiary-btn-color;
 $searchfield-text-color: $tertiary-btn-color;
+
+$searchfield-context-bg: $graphite01;
+$searchfield-context-alt-bg: $white;
+$searchfield-context-border-color: $graphite03;
+$searchfield-context-boxshadow-color: $graphite03;
+$searchfield-context-icon-color: $graphite04;
+$searchfield-context-text-color: $font-color;
 
 $searchfield-card-bg-color: $graphite01;
 $searchfield-card-border-color: $graphite02;

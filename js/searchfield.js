@@ -47,31 +47,6 @@
       build: function() {
         this.label = this.element.prev('label, .label');
 
-        this.wrapper = this.element.parent('.searchfield-wrapper');
-        if (!this.wrapper || !this.wrapper.length) {
-          this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
-          // Label for toolbar-inlined searchfields needs to be inside the wrapper to help with positioning.
-          if (this.element.closest('.toolbar').length) {
-            this.label.prependTo(this.wrapper);
-          }
-
-          // bump the 'alternate' class up to the wrapper level
-          if (this.element.hasClass('alternate')) {
-            this.wrapper.addClass('alternate');
-            this.element.removeClass('alternate');
-          }
-        }
-
-        // Add Icon
-        var icon = this.wrapper.find('.icon');
-        if (!icon || !icon.length) {
-          icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
-        }
-        // Swap icon position to in-front if we have an "alternate" class.
-        if (this.wrapper.hasClass('alternate')) {
-          icon.insertBefore(this.element);
-        }
-
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
         // Autocomplete settings are fed the same settings as Searchfield
         if (this.settings.source || this.element.attr('data-autocomplete')) {
@@ -81,6 +56,35 @@
 
         //Prevent browser typahead
         this.element.attr('autocomplete','off');
+
+        this.wrapper = this.element.parent('.searchfield-wrapper');
+        if (!this.wrapper || !this.wrapper.length) {
+          this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
+          // Label for toolbar-inlined searchfields needs to be inside the wrapper to help with positioning.
+          if (this.element.closest('.toolbar').length) {
+            this.label.prependTo(this.wrapper);
+          }
+
+          var customClasses = ['context', 'alternate'],
+            c;
+          for (var i = 0; i < customClasses.length; i++) {
+            if (this.element.hasClass(customClasses[i])) {
+              c = customClasses[i];
+              this.wrapper.addClass(c);
+              this.element.removeClass(c);
+            }
+          }
+        }
+
+        // Add Icon
+        var icon = this.wrapper.find('.icon');
+        if (!icon || !icon.length) {
+          icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
+        }
+        // Swap icon position to in-front if we have an "alternate" class.
+        if (this.wrapper.hasClass('context')) {
+          icon.insertBefore(this.element);
+        }
 
         if (this.settings.clearable) {
           this.xButton = $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"/></svg>');
@@ -109,6 +113,8 @@
           self.handleKeyUp(e);
         }).on('keydown.searchfield', function(e) {
           self.handleKeydown(e);
+        }).on('beforeopen.searchfield', function(e, menu) { // propagates from Autocomplete's Popupmenu
+          self.handlePopupBeforeOpen(e, menu);
         });
 
         if (this.settings.clearable) {
@@ -252,6 +258,21 @@
         }
       },
 
+      // Modifies the menu at $('#autocomplete-list') to propagate/remove style classes on the Searchfield element.
+      handlePopupBeforeOpen: function(e, menu) {
+        if (!menu) {
+          return;
+        }
+
+        var contextClassMethod = this.wrapper.hasClass('context') ? 'addClass' : 'removeClass',
+          altClassMethod = this.wrapper.hasClass('alternate') ? 'addClass' : 'removeClass';
+
+        menu[contextClassMethod]('context');
+        menu[altClassMethod]('alternate');
+
+        return true;
+      },
+
       checkContents: function() {
         var text = this.element.val();
         if (!text || !text.length) {
@@ -302,8 +323,8 @@
           this.autocomplete.destroy();
         }
 
-        if (this.wrapper.hasClass('alternate')) {
-          this.element.addClass('alternate');
+        if (this.wrapper.hasClass('context')) {
+          this.element.addClass('context');
         }
 
         if (this.settings.clearable && (this.xButton && this.xButton.length)) {
