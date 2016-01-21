@@ -327,9 +327,10 @@
     }
 
     .icon-error {
+      fill: $error-icon-fill;
       height: 16px;
       position: absolute;
-      right: -2px;
+      right: -10px;
       top: 10px;
       width: 16px;
     }
@@ -559,6 +560,11 @@ html[dir='rtl'] {
   .tab-more {
     left: 0;
     padding: 8px 14px 8px 0;
+    right: auto;
+  }
+
+  .tab-container:not(.vertical) .tab .icon-error {
+    left: -10px;
     right: auto;
   }
 }
