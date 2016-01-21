@@ -244,6 +244,10 @@
     color: inherit;
   }
 
+  span.audible {
+    color: $white;
+  }
+
   > a {
     color: $accordion-text-color;
     display: inline-block;
