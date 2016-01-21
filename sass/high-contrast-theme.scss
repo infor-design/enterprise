@@ -109,6 +109,7 @@ $info-icon-fill: $azure08;
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
+$autocomplete-active-bg-color: $body-bg-color;
 $trigger-icon-fill-color: $graphite05;
 
 //List View
@@ -360,6 +361,13 @@ $searchfield-border-color: $graphite03;
 $searchfield-icon-color: $tertiary-btn-color;
 $searchfield-text-color: $tertiary-btn-color;
 
+$searchfield-context-bg: $graphite01;
+$searchfield-context-alt-bg: $white;
+$searchfield-context-border-color: $graphite03;
+$searchfield-context-boxshadow-color: $graphite03;
+$searchfield-context-icon-color: $graphite04;
+$searchfield-context-text-color: $font-color;
+
 $searchfield-card-bg-color: $graphite01;
 $searchfield-card-border-color: $graphite02;
 $searchfield-card-icon-color: $graphite03;
@@ -396,7 +404,12 @@ $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $primary-color;
 
 //Swaplist
+$swaplist-icon-color: $graphite02;
+$swaplist-icon-color-hover: $white;
 $swaplist-border-color-hover: $white;
+$swaplist-text-color: $font-color-highcontrast;
+$swaplist-title-text-color: $graphite02;
+
 
 
 //================================================== //

@@ -321,7 +321,7 @@
             noPopupMenusOpen = self.tablist.children('[aria-expanded="true"]').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
-            self.focusBar(self.tablist.find('.is-selected').first());
+            //self.focusBar(self.tablist.find('.is-selected').first());
             self.positionFocusState();
           }
           self.checkFocusedElements();
@@ -349,7 +349,8 @@
           return false;
         }
 
-        var nonVisibleExcludes = ':not(.separator):not(:hidden)';
+        var nonVisibleExcludes = ':not(.separator):not(:hidden)',
+          a = li.children('a');
 
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
         li.addClass('is-selected');
@@ -359,13 +360,18 @@
           return;
         }
 
-        this.activate(li.find('a').attr('href'));
+        this.activate(a.attr('href'));
         if (this.popupmenu) {
           this.popupmenu.close();
         }
 
         this.focusState.removeClass('is-visible');
-        // Tab will be focused by virtue of clicking
+
+        // NOTE: If we switch the focusing-operations back to how they used to be (blue bar moving around with the focus state)
+        // remove the below three lines and uncomment all the commented-out "this.focusBar()" directives.
+        a.focus();
+        this.positionFocusState(a);
+        this.focusBar(li);
       },
 
       handleMoreButtonClick: function(e) {
@@ -403,11 +409,11 @@
           this.buildPopupMenu(a.attr('href'));
           this.moreButton.addClass('is-focused');
           this.positionFocusState(this.moreButton);
-          this.focusBar(this.moreButton);
+          //this.focusBar(this.moreButton);
         } else {
           li.addClass('is-focused');
           this.positionFocusState(a, focusedByKeyboard);
-          this.focusBar(li);
+          //this.focusBar(li);
         }
       },
 
@@ -1033,7 +1039,7 @@
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
-        self.focusBar(self.moreButton);
+        //self.focusBar(self.moreButton);
 
         function closeMenu() {
           $(this).off('close.tabs selected.tabs');
@@ -1055,6 +1061,11 @@
           if (tab.length && a.length && typeof a[0].onclick === 'function') {
             a[0].onclick.apply(a[0]);
           }
+
+          // Focus the More Button
+          // NOTE: If we switch the focusing-operations back to how they used to be (blue bar moving around with the focus state)
+          // remove the line below.
+          self.moreButton.focus();
         }
 
         self.moreButton
@@ -1187,6 +1198,13 @@
           paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
           paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
           width = target.children('a').width() + (paddingLeft*2);
+          // Dirty hack
+          if (target.is(':first-child, :last-child')) {
+            width = width - 1;
+          }
+          if ($('html').hasClass('is-firefox')) {
+            width = width - 1;
+          }
         }
         if (target.is('.dismissible.tab') || target.is('.has-popupmenu.tab')) {
           paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 20;
@@ -1198,6 +1216,10 @@
 
         var left = Locale.isRTL() ?
           (paddingRight + target.position().left) : (target.position().left);
+
+        // Round the math results
+        //width = Math.round(width);
+        //left = Math.round(left);
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
@@ -1239,10 +1261,13 @@
           height = parseInt(target.outerHeight());
 
         // Modifications on a specific basis
+        // NOTE:  Uncomment the first one if we have to change the state type back
+        /*
         if (target.is('.tab:first-child > a')) {
           pos.left = pos.left - 10;
           width = width + 9;
         }
+        */
         if (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a')) {
           width = width + 22;
         }
@@ -1267,7 +1292,7 @@
           height: height
         });
 
-        if (unhide === true) {
+        if (unhide && unhide === true) {
           this.focusState.addClass('is-visible');
         }
       },

@@ -104,6 +104,7 @@ $input-readonly-color: $slate03;
 
 // Autocomplete
 $autocomplete-light-text: $slate04;
+$autocomplete-active-bg-color: $body-bg-color;
 $trigger-icon-fill-color: $slate04;
 $trigger-hover-color: $slate02;
 $trigger-active-color: $primary-color;
@@ -158,8 +159,13 @@ $skip-link-bg-color: $slate06;
 $skip-link-color: $white;
 
 //Swaplist
+$swaplist-bg-color-hover: $graphite09;
+$swaplist-border-color-card: $graphite10;
+$swaplist-icon-color: $graphite02;
 $swaplist-icon-color-hover: $white;
 $swaplist-border-color-hover: $white;
+$swaplist-title-text-color: $graphite01;
+$swaplist-text-color: $graphite01;
 
 //Mast Head
 $masthead-bg-color: $header-bg-color;
@@ -363,6 +369,13 @@ $searchfield-bg-color: $slate09;
 $searchfield-border-color: $slate10;
 $searchfield-icon-color: $tertiary-btn-color;
 $searchfield-text-color: $tertiary-btn-color;
+
+$searchfield-context-bg: $slate08;
+$searchfield-context-alt-bg: $slate10;
+$searchfield-context-border-color: $slate09;
+$searchfield-context-boxshadow-color: $slate09;
+$searchfield-context-icon-color: $graphite06;
+$searchfield-context-text-color: $font-color;
 
 $searchfield-card-bg-color: $slate08;
 $searchfield-card-border-color: $slate09;

@@ -17,6 +17,8 @@
 .swaplist {
 
   .card {
+    border-bottom-width: 1px;
+    border-color: $swaplist-border-color-card;
     border-left-width: 0;
     float: left;
     width: 50%;
@@ -37,36 +39,47 @@
 
       &:after,
       &:before {
-        border-style: dotted;
-        border-width: 1px;
+        background: $swaplist-icon-color; //border color
         content: '';
         display: inline-block;
-        height: 18px;
+        left: 8px;
         position: absolute;
         top: 7px;
-        width: 3px;
       }
 
-      &:after {
-        border-color: $swaplist-icon-color $swaplist-icon-color $swaplist-icon-color transparent;
-        right: 6px;
+      &:after { //border left and right
+        box-shadow: 0 7px 0 $swaplist-icon-color, 0 14px 0 $swaplist-icon-color,
+        18px 0 0 $swaplist-icon-color, 18px 7px 0 $swaplist-icon-color, 18px 14px 0 $swaplist-icon-color;
+        height: 5px;
+        width: 2px;
       }
 
-      &:before {
-        border-color: $swaplist-icon-color transparent $swaplist-icon-color $swaplist-icon-color;
-        left: 6px;
+      &:before { //border top and bottom
+        box-shadow: 15px 0 0 $swaplist-icon-color,
+        0 18px 0 $swaplist-icon-color, 15px 18px 0 $swaplist-icon-color;
+        height: 2px;
+        width: 5px;
       }
 
       &:hover,
       &:focus:not(.hide-focus):not(.is-disabled) {
+
+        &:after,
+        &:before {
+          background: $swaplist-icon-color-hover; //border color
+        }
+
         &:after {
-          border-color: $swaplist-border-color-hover $swaplist-border-color-hover $swaplist-border-color-hover transparent;
+          box-shadow: 0 7px 0 $swaplist-icon-color-hover, 0 14px 0 $swaplist-icon-color-hover,
+          18px 0 0 $swaplist-icon-color-hover, 18px 7px 0 $swaplist-icon-color-hover, 18px 14px 0 $swaplist-icon-color-hover;
         }
 
         &:before {
-          border-color: $swaplist-border-color-hover transparent $swaplist-border-color-hover $swaplist-border-color-hover;
+          box-shadow: 15px 0 0 $swaplist-icon-color-hover,
+          0 18px 0 $swaplist-icon-color-hover, 15px 18px 0 $swaplist-icon-color-hover;
         }
       }
+
       &:focus:not(.hide-focus):not(.is-disabled) {
         box-shadow: 0 0 0 1px $swaplist-border-color-hover;
       }
@@ -74,7 +87,7 @@
       .icon {
         fill: $swaplist-icon-color;
         margin: 0 3px;
-        width: 15px;
+        width: 12px;
       }
     }
 
@@ -82,6 +95,13 @@
       position: absolute;
       right: 10px;
       top: 0;
+    }
+
+    .card-title {
+      color: $swaplist-title-text-color;
+    }
+    p {
+      color: $swaplist-text-color;
     }
   }
 
@@ -139,7 +159,7 @@
     font-size: 2em;
     left: 10px;
     position: absolute;
-    top: 12px;
+    top: 7px;
   }
 
   .is-muliselect {
@@ -149,7 +169,8 @@
 
     li {
       border: 1px solid transparent;
-      padding: 9px 20px 7px;
+      margin-bottom: 1px;
+      padding: 4px 20px;
 
       &:before,
       &:after,
@@ -161,9 +182,34 @@
         cursor: move;
       }
 
-      &:hover:not(.is-disabled) .handle {
-        display: inline-block;
+      &:hover:not(.is-disabled):not(.is-selected),
+      &:focus:not(.is-disabled):not(.is-selected), {
+        background-color: $swaplist-bg-color-hover;        
+
+        .handle {
+          display: inline-block;
+          color: $swaplist-text-color;
+        }
       }
+
+      &.is-selected {
+        background-color: $swaplist-bg-color-selected;
+
+        p {
+          color: $swaplist-text-color-selected;            
+        }
+
+        &:hover:not(.is-disabled),
+        &:focus:not(.is-disabled) {
+          background-color: $swaplist-bg-color-selected;        
+
+          .handle {
+            display: inline-block;
+            color: $swaplist-text-color-selected;
+          }
+        }
+      }
+
 
       &.is-dragging {
         @include is-dragging();
@@ -184,7 +230,7 @@
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   .swaplist {
     .handle {
-      top: 10px;
+      top: 5px;
     }
   }
 }
@@ -193,7 +239,7 @@
 .ios {
   .swaplist {
     .handle {
-      top: 8px;
+      top: 3px;
     }
   }
 }
@@ -260,31 +306,6 @@ html[dir='rtl'] {
       &:first-child {
         border-left-width: 0;
         border-right-width: 1px;
-      }
-
-      .card-header .btn {
-        &:after {
-          border-color: $swaplist-icon-color transparent $swaplist-icon-color $swaplist-icon-color;
-          left: 6px;
-          right: auto;
-        }
-
-        &:before {
-          border-color: $swaplist-icon-color $swaplist-icon-color $swaplist-icon-color transparent;
-          left: auto;
-          right: 6px;
-        }
-
-        &:hover,
-        &:focus:not(.hide-focus):not(.is-disabled) {
-          &:after {
-            border-color: $swaplist-border-color-hover transparent $swaplist-border-color-hover $swaplist-border-color-hover;
-          }
-
-          &:before {
-            border-color: $swaplist-border-color-hover $swaplist-border-color-hover $swaplist-border-color-hover transparent;
-          }
-        }
       }
 
       .buttons {

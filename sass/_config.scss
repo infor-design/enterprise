@@ -125,6 +125,7 @@ $info-icon-fill: $alert-info;
 
 // Autocomplete / Triggers
 $autocomplete-light-text: $graphite05;
+$autocomplete-active-bg-color: $body-bg-color;
 $trigger-icon-fill-color: $graphite06;
 $trigger-hover-color: $graphite10;
 $trigger-active-color: $primary-color;
@@ -155,11 +156,17 @@ $contextual-toolbar-color: $inverse-color;
 
 // Swaplist
 $swaplist-bg-color: $graphite01;
-$swaplist-border-color: $graphite04;
+$swaplist-bg-color-hover: $graphite02;
+$swaplist-bg-color-selected: $azure06;
+$swaplist-border-color: $graphite06;
 $swaplist-border-color-hover: $azure06;
-$swaplist-icon-color: $graphite03;
-$swaplist-icon-color-hover: $graphite06;
+$swaplist-border-color-card: $graphite03;
+$swaplist-icon-color: $graphite06;
+$swaplist-icon-color-hover: $azure06;
 $swaplist-shadow-color: #000000;
+$swaplist-title-text-color: $graphite10;
+$swaplist-text-color: $graphite10;
+$swaplist-text-color-selected: $white;
 
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
@@ -332,7 +339,7 @@ $rating-border-color: $slate04;
 $rating-hover-color: $primary-color;
 
 // Tabs
-$tab-text-color: $font-color-extrahighcontrast;
+$tab-text-color: $font-color;
 $tab-selected-color: $primary-color;
 $tab-border-color: $graphite03;
 $tab-hover-color: $font-color-extrahighcontrast;
@@ -410,6 +417,13 @@ $searchfield-bg-color: $graphite02;
 $searchfield-border-color: $graphite03;
 $searchfield-icon-color: $tertiary-btn-color;
 $searchfield-text-color: $tertiary-btn-color;
+
+$searchfield-context-bg: $graphite01;
+$searchfield-context-alt-bg: $white;
+$searchfield-context-border-color: $graphite03;
+$searchfield-context-boxshadow-color: $graphite03;
+$searchfield-context-icon-color: $graphite04;
+$searchfield-context-text-color: $font-color;
 
 $searchfield-card-bg-color: $graphite01;
 $searchfield-card-border-color: $graphite02;
