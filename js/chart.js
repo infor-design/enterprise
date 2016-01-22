@@ -208,7 +208,7 @@ window.Chart = function(container) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
     var maxTextWidth, width, height, series, rects, svg, stack,
         xMax, xScale, yScale, yAxis, yMap, xAxis, groups, legendMap, gindex,
-        totalBarsInGroup, tatalGroupArea, totalHeightTobeUse, gap, barHeight;
+        totalBarsInGroup, totalGroupArea, totalHeight, gap, barHeight;
 
     var tooltipInterval,
       tooltipDataCache = [],
@@ -321,7 +321,7 @@ window.Chart = function(container) {
       .nice()
       .range([0, barWith]).nice();
 
-    if(isStacked) {
+    if (isStacked) {
       yMap = dataset[0].map(function (d) {
         return d.y;
       });
@@ -338,12 +338,11 @@ window.Chart = function(container) {
 
       gindex = 0;
       totalBarsInGroup = legendMap.length;
-      tatalGroupArea = height/yMap.length;
-      barHeight = tatalGroupArea/totalBarsInGroup;
-      totalHeightTobeUse = totalBarsInGroup > 1 ? tatalGroupArea-(barHeight*1.2) : maxBarHeight;
-      gap = tatalGroupArea - totalHeightTobeUse;
-
-      maxBarHeight = totalHeightTobeUse/totalBarsInGroup;
+      totalGroupArea = height/yMap.length;
+      barHeight = totalGroupArea/totalBarsInGroup;
+      totalHeight = totalBarsInGroup > 1 ? totalGroupArea-(barHeight*1.3) : maxBarHeight;
+      gap = totalGroupArea - totalHeight;
+      maxBarHeight = totalHeight / totalBarsInGroup;
       barHeight = 0;
     }
 
@@ -387,9 +386,11 @@ window.Chart = function(container) {
       .data(function (d, i) {
         d.forEach(function(d) {
           d.index = i;
+
           if(!isStacked) {
             d.gindex = gindex++;
           }
+
         });
         return d;
     })
@@ -417,7 +418,7 @@ window.Chart = function(container) {
     })
     .attr('y', function (d) {
       return isStacked ? yScale(d.y) :
-        ((((tatalGroupArea-totalHeightTobeUse)/2)+(d.gindex*maxBarHeight))+(d.index*gap));
+        ((((totalGroupArea-totalHeight)/2)+(d.gindex*maxBarHeight))+(d.index*gap));
     })
     .attr('height', function () {
       return isStacked ? (yScale.rangeBand()) : maxBarHeight;
