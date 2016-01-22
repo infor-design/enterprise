@@ -42,6 +42,10 @@
           fill: $pager-disabled-color;
         }
       }
+
+      .audible {
+        color: $graphite10;
+      }
     }
 
     &:not(.selected):hover {

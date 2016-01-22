@@ -26,13 +26,13 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function SignIn(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    SignIn.prototype = {
 
       init: function() {
         this.settings = settings;
@@ -40,8 +40,7 @@
       },
 
       handleKeys: function() {
-        var form = this.element.find('form'),
-          self = this,
+        var self = this,
           cssIcon = $('<svg class="icon icon-capslock" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-capslock"/></svg>');
 
           // Disable default [caps lock on] popup in IE
@@ -81,7 +80,8 @@
 
           });
 
-          form.on('submit.signin', function () {
+          this.element.
+            on('blur.signin change.signin keypress.signin', 'input', function () {
             var confirmPassword = $('#confirm-password');
             if (confirmPassword.length && ((!(confirmPassword.val()).length) || (confirmPassword.hasClass('error')))) {
               return false;
@@ -89,6 +89,7 @@
             $('#username').val($('#username-display').val());
             $('#password').val($('#password-display').val());
             $('#new-password').val($('#new-password-display').val());
+
           });
       },
 
@@ -119,7 +120,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new SignIn(this, settings));
       }
     });
   };

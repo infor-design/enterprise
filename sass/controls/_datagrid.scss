@@ -236,7 +236,7 @@ $datagrid-header-height: 40px;
 
     .badge {
       color: $inverse-color;
-      line-height: 15px;
+      line-height: 25px;
       margin-top: 0;
       top: 0;
 
@@ -245,13 +245,12 @@ $datagrid-header-height: 40px;
       }
 
       &.info .audible {
-        background-color: $inverse-color;
+        background-color: #767676;
       }
     }
 
     .tag {
-      line-height: 28px;
-      margin-top: 5px;
+      line-height: 26px;
 
       &[class*='azure'] {
         color: #ffffff;

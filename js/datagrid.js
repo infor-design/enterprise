@@ -1134,7 +1134,7 @@ $.fn.datagrid = function(options) {
       });
 
       var columnSettings = this.columnById(id);
-      if (columnSettings[0].width) {
+      if (columnSettings[0] && columnSettings[0].width) {
         columnSettings[0].width = width;
       }
 

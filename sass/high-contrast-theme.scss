@@ -19,7 +19,7 @@ $panel-bg-color: $graphite01;
 $panel-border-color: $graphite03;
 
 // Base Colors
-$primary-color: $azure07;
+$primary-color: $azure08;
 $inverse-color: #ffffff;
 
 //The hyperlink Style
@@ -221,8 +221,8 @@ $radio-disabled-select-bg-color: $graphite04;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 // Pager
-$pager-text-color: $azure03;
-$pager-selected-color: $graphite01;
+$pager-text-color: $primary-color;
+$pager-selected-color: $font-color-highcontrast;
 $pager-focus-border-color: $input-focus-border-color;
 $pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $graphite04;
@@ -308,7 +308,7 @@ $datagrid-header-bg-color: $graphite05;
 $datagrid-header-border-color: $graphite04;
 $datagrid-header-hover-color: $graphite08;
 $datagrid-header-active-color: $graphite08;
-$datagrid-cell-color: #ffffff;
+$datagrid-cell-color: $font-color;
 $datagrid-cell-bg-color: #ffffff;
 $datagrid-cell-readonly-bg-color: $graphite03;
 $datagrid-cell-readonly-color: $graphite08;
