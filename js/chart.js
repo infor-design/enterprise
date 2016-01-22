@@ -1905,7 +1905,24 @@ window.Chart = function(container) {
               return chartData[0].barColors[i];
             }
           }) // jshint ignore:line
-          .attr('height', barHeight);
+          .attr('height', barHeight)
+          .on('click', function (d) {
+            var bar = d3.select(this);
+
+            /*svg.selectAll('.axis.y .tick').style('font-weight', 'normal');
+            svg.selectAll('.bar').style('opacity', 1);
+            d3.select(this.parentNode).style('opacity', 1);
+
+            if (this.classList && this.classList.contains('is-selected')) {
+              svg.selectAll('.is-selected').classed('is-selected', false);
+            } else {
+              svg.selectAll('.is-selected').classed('is-selected', false);
+              bar.classed('is-selected', true);
+              svg.selectAll('.axis.y .tick:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
+              svg.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.6);
+            }/*/
+            $(container).trigger('selected', [bar, chartData[0].data]);
+          }); // jshint ignore:line
 
       range.transition()
           .duration(duration)

@@ -308,6 +308,7 @@
         }
 
         this.element.addClass('is-active');
+        this.element.trigger('listopened');
 
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');

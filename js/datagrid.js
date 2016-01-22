@@ -426,19 +426,22 @@ window.Editors = {
       this.input.select().focus();
 
       //Check if isClick or cell touch and just open the list
+
       if (event.type === 'click') {
         this.input.parent().find('.icon').trigger('click');
         this.input.closest('td').addClass('is-focused');
-
-        this.input.on('listclosed', function () {
-          self.input.closest('td').removeClass('is-focused');
-
-          setTimeout(function () {
-            self.input.trigger('focusout');
-            container.parent().focus();
-          }, 1);
-        });
       }
+
+      this.input.on('listclosed', function () {
+        self.input.closest('td').removeClass('is-focused');
+
+        setTimeout(function () {
+          self.input.trigger('focusout');
+          container.parent().focus();
+        }, 1);
+
+      });
+
     };
 
     this.destroy = function () {
@@ -1404,7 +1407,7 @@ $.fn.datagrid = function(options) {
           var focus = $(':focus');
 
           //some targets we ignore and do not clear/commit tet
-          if (focus.is('.datepicker', '.dropdown-search')) {
+          if (focus.is('.dropdown-search')) {
             return;
           }
 
@@ -1412,13 +1415,9 @@ $.fn.datagrid = function(options) {
             return;
           }
 
-          if (elem.is('.datepicker')) {
-            return;
-          }
-
           self.commitCellEdit(elem);
 
-        }, 100);
+        }, elem.is('.datepicker') ? 200 : 1);
 
       });
     },

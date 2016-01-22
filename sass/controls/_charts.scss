@@ -387,6 +387,10 @@
 //Bullet Chart
 .bullet-chart {
 
+  .range {
+    cursor: pointer;
+  }
+
   @include font-size(12);
 
   .marker {
