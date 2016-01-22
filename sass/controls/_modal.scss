@@ -15,6 +15,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   position: fixed;
+  top: 50%;
   // Ignoring the mixin and doing manual CSS3 vendor-prefixing here because this is complicated
   @include css3(transform, scale(.9));
   -moz-transition: opacity .2s, -moz-transform .2s;
@@ -23,7 +24,6 @@
   -webkit-transition: opacity .2s, -webkit-transform .2s;
   transition: opacity .2s, transform .2s;
   width: auto;
-  top: 50%;
   z-index: 1001;
 
   &.is-visible {
@@ -45,8 +45,8 @@
       margin-left: -22px;
       right: 8px;
     }
-
   }
+
   .textarea-wordcount {
     margin-bottom: 10px;
     margin-top: -9px;
@@ -83,12 +83,12 @@
 
 .modal-content {
   background: $modal-bg-color;
-  box-shadow: $modal-shadow;
-  color: #666666;
+  border: 1px solid $modal-border-color;
+  color: $font-color;
   margin: 5px;
-  padding: 30px 0 0 27px;
-  position: relative;
   overflow: hidden;
+  padding: 20px 0 0 20px;
+  position: relative;
 
   // //3D sign Effect
   // @include css3(transform-origin, 50% 50% 0);
@@ -106,27 +106,31 @@
     padding-right: 20px;
     text-align: left;
 
+    > * {
+      vertical-align: middle;
+    }
+
     &:focus {
       outline: none;
     }
 
     &.is-error {
-      color: $ruby05;
+      color: #e84f4f;
 
-      svg {
-        margin-left: 8px;
-        margin-right: 10px;
-        right: 5px;
-        top: -2px;
+      .icon {
+        fill: #e84f4f;
+        margin-left: 5px;
+        margin-right: 4px;
+        top: auto;
+        left: -6px;
       }
     }
   }
 
   .modal-body-wrapper {
     overflow: auto;
-    padding-right: 30px;
     padding-bottom: 20px;
-    padding-left: 3px; // For checkbox, focus states on left side
+    padding-right: 20px;
   }
 
   // Modal Buttons
@@ -154,11 +158,25 @@
   }
 }
 
+.modal-body {
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  p:first-of-type {
+    padding-top: 0;
+  }
+
+  p:last-child {
+    padding-bottom: 0;
+  }
+}
+
 //Toolbar Buttons
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin: 5px 0 5px -27px;
+  margin: 5px 0 0 -27px;
 
   button {
     border: 1px solid transparent;
@@ -187,8 +205,9 @@
     }
 
     &:focus {
-      @include focus-state();
-      box-shadow: none;
+      border: 1px solid $input-focus-border-color;
+      outline: none;
+      outline-color: transparent;
     }
 
     &[disabled],
@@ -246,8 +265,7 @@ html[dir='rtl'] {
     }
 
     .modal-body-wrapper {
-      padding-left: 30px; // For checkbox, focus states on left side
-      padding-right: 3px;
+      padding-left: 30px;
     }
 
     .message {
