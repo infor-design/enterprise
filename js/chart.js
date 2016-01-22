@@ -1878,12 +1878,12 @@ window.Chart = function(container) {
       var text = title.append('text')
           .attr('class', 'title')
           .attr('dy', '-6px')
-          .text(function(d) { return rowData.title; }); // jshint ignore:line
+          .text(function() { return rowData.title; });
 
       text.append('tspan')
           .attr('class', 'subtitle')
           .attr('dx', '15px')
-          .text(function(d) { return rowData.subtitle; }); // jshint ignore:line
+          .text(function() { return rowData.subtitle; });
 
       // Compute the new x-scale.
       var x1 = d3.scale.linear()
@@ -1898,31 +1898,18 @@ window.Chart = function(container) {
           .data(ranges);
 
       range.enter().append('rect')
-          .attr('class', function(d, i) { return 'range s' + i; })  // jshint ignore:line
+          .attr('class', function(d, i) { return 'range s' + i; })
           .attr('width', 0)
           .style('fill', function(d,i) {
             if (chartData[0].barColors) {
               return chartData[0].barColors[i];
             }
-          }) // jshint ignore:line
+          })
           .attr('height', barHeight)
-          .on('click', function (d) {
+          .on('click', function () {
             var bar = d3.select(this);
-
-            /*svg.selectAll('.axis.y .tick').style('font-weight', 'normal');
-            svg.selectAll('.bar').style('opacity', 1);
-            d3.select(this.parentNode).style('opacity', 1);
-
-            if (this.classList && this.classList.contains('is-selected')) {
-              svg.selectAll('.is-selected').classed('is-selected', false);
-            } else {
-              svg.selectAll('.is-selected').classed('is-selected', false);
-              bar.classed('is-selected', true);
-              svg.selectAll('.axis.y .tick:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
-              svg.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.6);
-            }/*/
             $(container).trigger('selected', [bar, chartData[0].data]);
-          }); // jshint ignore:line
+          });
 
       range.transition()
           .duration(duration)
@@ -1933,14 +1920,14 @@ window.Chart = function(container) {
           .data(measures);
 
       measure.enter().append('rect')
-          .attr('class', function(d, i) { return 'measure s' + i; }) // jshint ignore:line
+          .attr('class', function(d, i) { return 'measure s' + i; })
           .attr('width', 0)
           .attr('height', 3)
           .style('fill', function(d,i) {
             if (chartData[0].lineColors) {
               return chartData[0].lineColors[i];
             }
-          }) // jshint ignore:line
+          })
           .attr('y', 11);
 
       measure.transition()
@@ -1959,7 +1946,7 @@ window.Chart = function(container) {
             if (chartData[0].markerColors) {
               return chartData[0].markerColors[i];
             }
-          }) // jshint ignore:line
+          })
           .attr('y1', barHeight / 6)
           .attr('y2', barHeight * 5 / 6);
 
@@ -2015,7 +2002,7 @@ window.Chart = function(container) {
           .duration(duration)
           .attr('transform', function (d) {
             return 'translate(' + x1(d) + ',0)';
-          })  // jshint ignore:line
+          })
           .style('opacity', 1);
     }
 

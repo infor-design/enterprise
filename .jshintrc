@@ -63,6 +63,9 @@
   // Suppress warnings about == null comparisons.
   "eqnull": true,
 
+  // allow functions in a loop since d3 does this all over.
+  "loopfunc": true,
+
   // Allow Some Globals used in tests and packages
   "predef": ["Tmpl", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Locale", "chai", "assert", "expect", "should", "Editors", "Formatters", "Chart", "angular", "jquery", "module", "__dirname", "Buffer", "require", "ko"],
 
