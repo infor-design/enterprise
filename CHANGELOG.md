@@ -2,9 +2,8 @@
 # 4.0.7 - Minor QA Release
 Release Date: TBD
 * Bullet Chart
-* Fixed Datagrid Header
-* Chart Fixes
 * Datagrid Editing
+* Datagrid Contextual Toolbar
 
 ## Breaking Changes
 

@@ -1451,12 +1451,13 @@ $.fn.datagrid = function(options) {
         }
 
         var buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
-        if (settings.toolbar.dateFilter) {
-          buttonSet.append('<button class="btn" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
-        }
 
         if (settings.toolbar.keywordFilter) {
           buttonSet.append('<label class="audible" for="gridfilter">'+ Locale.translate('Keyword') +'</label><input class="searchfield" name="searchfield" placeholder="' + Locale.translate('Keyword') + '" id="gridfilter">');
+        }
+
+        if (settings.toolbar.dateFilter) {
+          buttonSet.append('<button class="btn" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
         }
 
         if (settings.toolbar.actions) {
