@@ -3,8 +3,6 @@
 
 .radio:not(:checked),
 .radio:checked {
-  margin-left: 7px;
-  margin-top: 7px;
   opacity: 0;
   position: absolute;
   width: auto;
@@ -51,9 +49,9 @@
   border-radius: 50%;
   content: '';
   height: 6px;
-  left: .71em;
+  left: 9px;
   position: absolute;
-  top: .3em;
+  top: 4px;
   transition: all .2s ease 0s;
   width: 6px;
 }
@@ -179,9 +177,9 @@
     }
 
     &:first-child {
-      position: relative;
       margin-left: 0;
       margin-bottom: 30px;
+      position: relative;
 
       &:after {
         border-right: 1px solid $graphite03;
@@ -303,6 +301,26 @@ html[dir='rtl'] {
         margin-left: inherit;
       }
     }
+  }
+
+}
+
+// Short Fields
+.field-short {
+
+  .radio:not(:checked) + label,
+  .radio:checked + label {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .radio-label {
+    width: auto;
+  }
+
+  .radio:not(:checked) + label:after,
+  .radio:checked + label:after {
+    top: 9px;
   }
 
 }

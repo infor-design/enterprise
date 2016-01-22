@@ -279,3 +279,21 @@ html[dir='rtl'] {
   }
 
 }
+
+// Short Fields
+.field-short {
+
+  input.checkbox {
+    padding: 0;
+  }
+
+  .checkbox-label,
+  input.checkbox + label,
+  input.checkbox + input[type="hidden"] + label,
+  span.checkbox > label {
+    margin-left: -5px;
+    padding-top: 0;
+    width: auto;
+  }
+
+}
