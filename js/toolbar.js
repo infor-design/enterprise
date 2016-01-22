@@ -257,21 +257,35 @@
         }
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.
-        this.items.attr('tabindex', '-1');
+        function setActiveToolbarItem() {
+          self.items.attr('tabindex', '-1');
 
-        var active = this.items.filter('.is-selected');
-        if (active.length) {
-          this.activeButton = active.first().attr('tabindex', '0');
-          this.items.not(this.activeButton).removeClass('is-selected');
-        } else {
-          active = this.items.filter(':visible:not(:disabled)').first();
-          this.activeButton = active.attr('tabindex', '0');
+          var active = self.items.filter('.is-selected');
+          if (active.length) {
+            self.activeButton = active.first().attr('tabindex', '0');
+            self.items.not(self.activeButton).removeClass('is-selected');
+            return;
+          }
+
+          // Set active to the first item in the toolbar.
+          active = self.items.filter(':visible:not(:disabled)').first().attr('tabindex', '0');
+          self.activeButton = active;
+
+          // If the whole toolbar is hidden (contextual toolbars, etc),
+          // automatically set the first non-disabled item as visible
+          if (self.element.is(':hidden, .is-hidden')) {
+            self.activeButton = self.items.filter(':not(:disabled)').first().attr('tabindex', '0');
+            return;
+          }
+
+          if (self.isItemOverflowed(active)) {
+            active.attr('tabindex', '-1');
+            self.activeButton = self.more.addClass('is-selected').attr('tabindex', '0');
+          }
+          return;
         }
 
-        if (this.isItemOverflowed(active)) {
-          active.attr('tabindex', '-1');
-          this.activeButton = this.more.addClass('is-selected').attr('tabindex', '0');
-        }
+        setActiveToolbarItem();
 
         // Toggles the More Menu based on overflow of toolbar items
         this.adjustButtonVisibility();
