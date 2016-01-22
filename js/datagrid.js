@@ -789,7 +789,8 @@ $.fn.datagrid = function(options) {
 
       //Update Paging and Clear Rows
       this.renderPager(pagerInfo);
-      this.selectedRows([]);
+      this.selectedRows();
+
       this.syncSelectedUI();
       this.syncFixedHeader();
     },

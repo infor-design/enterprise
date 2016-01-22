@@ -153,6 +153,7 @@ $listview-toolbar-button-icon-selected-color: $primary-color;
 
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
+$contextual-toolbar-bg-color: $primary-color;
 
 // Swaplist
 $swaplist-bg-color: $graphite01;
@@ -362,11 +363,11 @@ $datagrid-cell-color: $graphite10;
 $datagrid-cell-bg-color: #ffffff;
 $datagrid-cell-readonly-bg-color: $graphite01;
 $datagrid-cell-readonly-color: $graphite05;
-$datagrid-cell-border-color: $graphite02;
+$datagrid-cell-border-color: $graphite03;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #d8f0f7;
 $datagrid-row-selected-color-dark: #d4ebf3;
-$datagrid-row-hover-color: #e4e4e4;
+$datagrid-row-hover-color: $graphite02;
 $datagrid-readonly-header-bg-color: #e4e4e4;
 $datagrid-readonly-header-color: $graphite05;
 $datagrid-readonly-header-hover-color: $graphite02;

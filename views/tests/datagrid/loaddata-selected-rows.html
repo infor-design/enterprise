@@ -66,12 +66,15 @@
 
             // Reload function
             $('#reload').click(function () {
-               grid.loadData(data, true);
+               grid.loadData(data);
             });
 
             // Render rows function
             $('#render').click(function () {
-               grid.renderRows();
+              //var opts = {selectedRows: grid.selectedRows()};
+              grid.renderRows();
+              grid.selectedRows([1,2]);
+              grid.syncSelectedUI();
             });
 
             // Show underlying selections

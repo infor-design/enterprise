@@ -239,8 +239,7 @@ $toolbar-buttonset-height: 44px;
 
 // Styles for contextual toolbar
 .contextual-toolbar {
-  background-color: $primary-color;
-  border-radius: 2px 2px 0 0;
+  background-color: $contextual-toolbar-bg-color;
   margin: 0;
   overflow: hidden !important;
   z-index: 20;
@@ -316,9 +315,12 @@ $toolbar-buttonset-height: 44px;
 }
 
 .datagrid-contextual-toolbar {
-  border: 2px solid $datagrid-border-color;
-  border-bottom: 0;
-  border-right-width: 1px;
+  margin-left: 2px;
+  margin-right: 1px;
+
+  .buttonset {
+    height: 40px;
+  }
 }
 
 @include respond-to(phone) {

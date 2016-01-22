@@ -147,7 +147,8 @@
 
       // Add/Update Aria
       addAria: function () {
-        this.element.attr('aria-haspopup', true);
+        this.element.attr('role', 'combobox').attr('aria-autocomplete', 'list');
+
         $('label[for="'+ this.element.attr('id') + '"]')
           .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
       },
