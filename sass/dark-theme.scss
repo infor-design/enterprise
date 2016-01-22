@@ -243,10 +243,10 @@ $slider-disabled-color: $slate08;
 
 //Modal
 $modal-bg-color: $slate07;
-$modal-shadow: 0 0 5px rgba(0, 0, 0, .2);
+$modal-border-color: $slate09;
 $modal-btn-color: $slate04;
 $modal-color: $white;
-$modal-btn-border-color: $slate09;
+$modal-btn-border-color: $modal-border-color;
 $modal-btn-hover-color: $slate03;
 $modal-btn-primary-color: $primary-color;
 $modal-btn-primary-hover-color: $azure05;

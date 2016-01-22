@@ -45,7 +45,7 @@ $(function($) {
   // Message.html View Specifics
   $('#show-application-error').on('click', function() {
       $('body').message({
-          title: 'Application Error',
+          title: '<span>Application Error</span>',
           isError: true,
           returnFocus: $(this),
           message: 'This application has experienced a system error due to the lack of internet access. Please restart the application in order to proceed.',
