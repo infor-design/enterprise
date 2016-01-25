@@ -341,7 +341,7 @@ window.Chart = function(container) {
       totalBarsInGroup = legendMap.length;
       totalGroupArea = height/yMap.length;
       barHeight = totalGroupArea/totalBarsInGroup;
-      totalHeight = totalBarsInGroup > 1 ? 
+      totalHeight = totalBarsInGroup > 1 ?
         totalGroupArea - (barHeight * gapBetweenGroups) : maxBarHeight;
       gap = totalGroupArea - totalHeight;
       maxBarHeight = totalHeight / totalBarsInGroup;
@@ -573,7 +573,7 @@ this.Pie = function(initialData, isDonut, options) {
     if (!lb.isTwoline && options && !options.labels.colorLabel1) {
       lb.colorLabel1 = lb.colorLabel2;
     }
-    
+
     var self = this,
       parent = $(container).parent();
 
@@ -775,7 +775,7 @@ this.Pie = function(initialData, isDonut, options) {
             .style({
               'font-weight': lb.isTwoline ? 'bold' : 'normal',
               'font-size': lb.isTwoline ? (dims.width > 450 ? '1.3em' : '1.1em') : '1em',
-              'fill': function(d, i) { 
+              'fill': function(d, i) {
                 return labelsColorFormatter(d, i, lb.colorLabel1);
               }
             });
@@ -833,9 +833,9 @@ this.Pie = function(initialData, isDonut, options) {
               var x = pieArcs.centroid(d)[0],
                 y = pieArcs.centroid(d)[1];
               return 'translate(' + x + ',' + y + ')';
-            }        
+            }
           })
-          .style('fill', function(d, i) { 
+          .style('fill', function(d, i) {
             return labelsColorFormatter(d, i, lb.colorLine);
           });
 
@@ -860,7 +860,7 @@ this.Pie = function(initialData, isDonut, options) {
               return y;
             }
           })
-          .style('stroke', function(d, i) { 
+          .style('stroke', function(d, i) {
             return labelsColorFormatter(d, i, lb.colorLine);
           });
 
@@ -1977,7 +1977,7 @@ this.Pie = function(initialData, isDonut, options) {
           .on('mouseenter', function() {
 
             var bar = d3.select(this),
-              data = chartData[0].data[bar.attr('data-idx')],
+              //data = chartData[0].data[bar.attr('data-idx')],
               rect = d3.select(this)[0][0].getBoundingClientRect(),
               content = '<p>Test</p>',
               size = charts.getTooltipSize(content),
