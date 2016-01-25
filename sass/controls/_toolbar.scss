@@ -321,6 +321,10 @@ $toolbar-buttonset-height: 44px;
   .buttonset {
     height: 40px;
   }
+
+  .title {
+    padding-top: 3px;
+  }
 }
 
 @include respond-to(phone) {

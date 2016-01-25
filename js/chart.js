@@ -1911,7 +1911,23 @@ window.Chart = function(container) {
           .on('click', function () {
             var bar = d3.select(this);
             $(container).trigger('selected', [bar, chartData[0].data[bar.attr('data-idx')]]);
+          })
+          .on('mouseenter', function() {
+            var bar = d3.select(this);
+            console.log(chartData[0].data[bar.attr('data-idx')]);
+
+            var rect = d3.select(this)[0][0].getBoundingClientRect(),
+            content = '<p>Test</p>',
+            size = charts.getTooltipSize(content),
+            x = rect.x,
+            y = rect.y - size.height + $(window).scrollTop();
+
+            charts.showTooltip(x, y, content, 'top');
+          })
+          .on('mouseleave', function() {
+            charts.hideTooltip();
           });
+
 
       range.transition()
           .duration(duration)
@@ -2006,6 +2022,11 @@ window.Chart = function(container) {
           })
           .style('opacity', 1);
     }
+
+    //Add Legends
+    //charts.addLegend(isStacked ? series);
+    charts.appendTooltip();
+    $(container).trigger('rendered');
 
   };
 

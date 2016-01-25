@@ -465,7 +465,7 @@ $.fn.datagrid = function(options) {
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
-        rowHeight: 'medium', //(short, medium or tall)
+        rowHeight: 'normal', //(short, medium or normal)
         selectable: false, //false, 'single' or 'multiple'
         clickToSelect: true,
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
@@ -938,7 +938,7 @@ $.fn.datagrid = function(options) {
         var isEven = (i % 2 === 0);
 
         rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row'+
-                  (settings.rowHeight !== 'medium' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
+                  (settings.rowHeight !== 'normal' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
                   (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                   (!settings.cellNavigation ? ' is-clickable' : '' ) +
                    '"' + '>';
@@ -1487,8 +1487,8 @@ $.fn.datagrid = function(options) {
           menu.append('<li class="separator"></li>' +
             '<li class="heading">' + Locale.translate('RowHeight') + '</li>' +
             '<li><a data-option="row-short">' + Locale.translate('Short') + '</a></li>' +
-            '<li class="is-checked"><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
-            '<li><a data-option="row-tall">' + Locale.translate('Tall') + '</a></li>');
+            '<li><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
+            '<li class="is-checked"><a data-option="row-normal">' + Locale.translate('Normal') + '</a></li>');
         }
 
         if (settings.toolbar.actions) {
@@ -1500,7 +1500,7 @@ $.fn.datagrid = function(options) {
 
       toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {
         var action = args.attr('data-option');
-        if (action === 'row-short' || action === 'row-medium' || action === 'row-tall') {
+        if (action === 'row-short' || action === 'row-medium' || action === 'row-normal') {
           self.rowHeight(action.substr(4));
         }
 
@@ -1528,7 +1528,7 @@ $.fn.datagrid = function(options) {
       }
 
       //TODO: Save in Grid Personalization
-      this.tableBody.find('tr').removeClass('short-rowheight medium-rowheight tall-rowheight')
+      this.table.removeClass('short-rowheight medium-rowheight normal-rowheight')
         .addClass(settings.rowHeight + '-rowheight');
 
       return settings.rowHeight;
