@@ -130,6 +130,10 @@
     type: 'pie',
     dataset: pieData,
     legendformatter: fnLegendformatter,
-    labelstyle: 'color-value-on-top-as-currency'
+    labels: {
+      contextLabel1: 'value',
+      contextLabel2: 'name (percentage)',
+      formatterLabel1: '$,.2f'// Currency
+    }
   });
 </script>

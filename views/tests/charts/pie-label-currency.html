@@ -41,17 +41,13 @@
         value: 158.6,
       }]
     }];
- // 'color-percentage-on-top' (default)
-      // 'percentage-on-top'
-      // 'color-value-on-top'
-      // 'value-on-top'
-      // 'color-value-on-top-as-currency'
-      // 'value-on-top-as-currency'
 
   $('#pie-chart-example').chart({
     type: 'pie',
     dataset: pieData,
-    removeNames: true,
-    labelstyle: 'value-on-top-as-currency'
+    labels: {
+      contextLabel1: 'value',
+      formatterLabel1: '$,.2f',// Currency
+    }
   });
 </script>
