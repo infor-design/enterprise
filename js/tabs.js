@@ -953,7 +953,7 @@
       //Selects a Tab
       select: function (href) {
         var anchor = this.anchors.filter('[href="#' + href.replace(/#/g, '') + '"]');
-        this.positionFocusState();
+        this.positionFocusState(undefined, false);
         this.focusBar(anchor.parent());
         this.activate(anchor.attr('href'));
         anchor.focus();
@@ -1292,8 +1292,10 @@
           height: height
         });
 
-        if (unhide && unhide === true) {
-          this.focusState.addClass('is-visible');
+        var method = 'addClass';
+        if (unhide) {
+          method = unhide === true ? 'addClass' : 'removeClass';
+          this.focusState[method]('is-visible');
         }
       },
 
