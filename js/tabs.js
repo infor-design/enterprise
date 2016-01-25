@@ -953,7 +953,7 @@
       //Selects a Tab
       select: function (href) {
         var anchor = this.anchors.filter('[href="#' + href.replace(/#/g, '') + '"]');
-        this.positionFocusState();
+        this.positionFocusState(undefined, false);
         this.focusBar(anchor.parent());
         this.activate(anchor.attr('href'));
         anchor.focus();
@@ -1258,7 +1258,8 @@
         var pos = target.offset(),
           offset = this.tablist.offset(),
           width = parseInt(target.outerWidth()),
-          height = parseInt(target.outerHeight());
+          height = parseInt(target.outerHeight()),
+          left, top;
 
         // Modifications on a specific basis
         // NOTE:  Uncomment the first one if we have to change the state type back
@@ -1283,17 +1284,29 @@
           }
         }
 
+        left = pos.left - offset.left;
+        top = pos.top - offset.top;
+
+        // Header tabs get a slight modification
+        if (this.element.parent().is('.header, header')) {
+          left = left + parseInt(this.element.css('padding-left'));
+          height = height - 4;
+          top = top + 5;
+        }
+
         this.focusState.css({
-          left: pos.left - offset.left,
-          top: pos.top - offset.top,
+          left: left,
+          top: top,
           right: (pos.left - offset.left) + width,
           bottom: (pos.top - offset.top) + height,
           width: width,
           height: height
         });
 
-        if (unhide && unhide === true) {
-          this.focusState.addClass('is-visible');
+        var method = 'addClass';
+        if (unhide) {
+          method = unhide === true ? 'addClass' : 'removeClass';
+          this.focusState[method]('is-visible');
         }
       },
 

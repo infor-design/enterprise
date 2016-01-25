@@ -312,21 +312,6 @@
           }
         });
 
-        setTimeout(function () {
-          var focusElem = self.element.find(':focusable:not(.searchfield):first');
-          self.keepFocus();
-          self.element.trigger('open');
-
-          if (focusElem.length === 0) {
-            focusElem = self.element.find('.btn-modal-primary');
-            focusElem = self.element.find('#message-title').attr('tabindex', '-1');
-          }
-
-          if (self.settings.autoFocus) {
-            focusElem.focus();
-          }
-        }, 10);
-
         $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
 
         // Ensure aria-labelled by points to the id
@@ -390,7 +375,7 @@
         $(this.element).on('keypress.modal', function (e) {
           var target = $(e.target);
 
-          if (target.is('textarea') || target.is(':button') || target.is('.dropdown')) {
+          if (target.is('textarea') || target.is(':button') || target.is('.dropdown') || target.closest('.tab-list').length) {
             return;
           }
 
@@ -408,9 +393,43 @@
           self.getTabbableElements().first.focus();
         });
 
+        function focusElement() {
+          var focusElem = self.element.find(':focusable:not(.searchfield):first');
+          self.keepFocus();
+          self.element.trigger('open');
+
+          if (focusElem.length === 0) {
+            focusElem = self.element.find('.btn-modal-primary');
+            focusElem = self.element.find('#message-title').attr('tabindex', '-1');
+          }
+
+          if (!self.settings.autoFocus) {
+            return;
+          }
+
+          // If the selected element is a tab, actually make sure it's the "selected" tab.
+          var selected, tabParent;
+          if (focusElem.is('.tab:not(.is-selected) a')) {
+            tabParent = focusElem.closest('.tab-container');
+            selected = tabParent.find('.is-selected');
+            if (selected.length) {
+              focusElem = selected;
+              tabParent.data('tabs').select(selected.children('a').attr('href'));
+              return;
+            }
+          }
+
+          // Otherwise, just focus
+          focusElem.focus();
+        }
+
         setTimeout(function () {
           self.disableSubmit();
         }, 10);
+
+        setTimeout(function () {
+          focusElement();
+        }, 200);
 
         setTimeout(function () {
           self.element.trigger('afteropen');
@@ -497,15 +516,6 @@
               }
 
               self.element.find('#message-title').removeAttr('tabindex');
-            }
-
-            // Don't allow the modal to close if we hit enter to select a tab
-            if (keyCode === 13 && !$(e.target).is('textarea')) {
-              var tabContainerParents = $(e.target).parentsUntil(self.element).filter('.tab-container');
-              if (tabContainerParents.length) {
-                e.preventDefault();
-                e.stopPropagation();
-              }
             }
 
           });
