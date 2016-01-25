@@ -615,7 +615,7 @@ this.Pie = function(initialData, isDonut, options) {
       spacing = 45,
       isSmaller = (spacing*lessthan10.length) > (spacing*2);
 
-    spacing = isSmaller ? 40 : 45;
+    spacing = isSmaller && lb.isTwoline ? (spacing - 5) : !lb.isTwoline ? 25 : spacing;
 
     // Store our chart dimensions
     var dims = {
