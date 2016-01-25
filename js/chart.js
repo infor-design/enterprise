@@ -215,7 +215,8 @@ window.Chart = function(container) {
       tooltipData = charts.tooltip;
 
     var maxBarHeight = 30,
-      legendHeight = 40;
+      legendHeight = 40,
+      gapBetweenGroups = 0.5; // As of one bar height (barHeight * 0.5)
 
     isStacked = isStacked === undefined ? true : isStacked;
 
@@ -340,7 +341,8 @@ window.Chart = function(container) {
       totalBarsInGroup = legendMap.length;
       totalGroupArea = height/yMap.length;
       barHeight = totalGroupArea/totalBarsInGroup;
-      totalHeight = totalBarsInGroup > 1 ? totalGroupArea-(barHeight*1.3) : maxBarHeight;
+      totalHeight = totalBarsInGroup > 1 ? 
+        totalGroupArea - (barHeight * gapBetweenGroups) : maxBarHeight;
       gap = totalGroupArea - totalHeight;
       maxBarHeight = totalHeight / totalBarsInGroup;
       barHeight = 0;
@@ -543,19 +545,47 @@ window.Chart = function(container) {
     return $(container);
   };
 
-  this.Pie = function(initialData, isDonut) {
+this.Pie = function(initialData, isDonut, options) {
+    var defaults = {
+      labels: {
+        // true|false
+        isTwoline: true,
+
+        // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
+        contextLabel1: 'percentage',
+        contextLabel2: 'name',
+
+        // d3 Format
+        // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
+        // [null | formatter string] - Only value will be formated
+        formatterLabel1: null,
+        formatterLabel2: null,
+
+        // 'default'|'color-as-arc'|'#000000'|'black'
+        colorLabel1: 'color-as-arc',
+        colorLabel2: 'default',
+        colorLine: 'default'
+      }
+    },
+    settings = $.extend(true, defaults, options),
+    lb = settings.labels;
+
+    if (!lb.isTwoline && options && !options.labels.colorLabel1) {
+      lb.colorLabel1 = lb.colorLabel2;
+    }
+    
+    var self = this,
+      parent = $(container).parent();
 
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
-      self = this,
       centerLabel = initialData[0].centerLabel;
 
     var tooltipInterval,
       tooltipDataCache = [],
       tooltipData = charts.tooltip;
 
-    var labelstyle = charts.labelstyle || 'color-percentage-on-top',
-      legendshow = charts.legendshow || false;
+    var legendshow = charts.legendshow || false;
 
     var chartData = initialData[0].data;
     $(container).addClass('chart-pie');
@@ -566,14 +596,6 @@ window.Chart = function(container) {
       return d.value;
     });
 
-    // Store our chart dimensions
-    var parent = $(container).parent(),
-      dims = {
-        height: parseInt(parent.height()),  //header + 20 px padding
-        width: parseInt(parent.width())
-      };
-
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 35 : 50));
     var total = d3.sum(chartData, function(d){ return d.value; });
 
     //Calculate Percents for Legend
@@ -595,18 +617,25 @@ window.Chart = function(container) {
 
     spacing = isSmaller ? 40 : 45;
 
+    // Store our chart dimensions
+    var dims = {
+      height: parseInt(parent.height()),  //header + 20 px padding
+      width: parseInt(parent.width())
+    };
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 35 : 50));
     dims.outerRadius = isSmaller ? (dims.outerRadius-35) : dims.outerRadius;
     dims.outerRadius = (dims.width > 360 || isSmaller) ? dims.outerRadius : (dims.outerRadius-35);
     dims.outerRadius = (lessthan10.length > 3) ? (dims.outerRadius-5) : dims.outerRadius;
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
     dims.labelRadius = dims.outerRadius + 11;
+    dims.center = { x: dims.width / 2, y: dims.height / 2 };
 
     svg.attr('width', '100%')
       .attr('height', '100%')
       .attr('viewBox','0 0 ' + dims.width + ' ' + (dims.height + 10));
 
     // move the origin of the group's coordinate space to the center of the SVG element
-    arcs.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2)  + ')');
+    arcs.attr('transform', 'translate(' + dims.center.x + ',' + dims.center.y  + ')');
 
     var pieData = pie(chartData);
 
@@ -711,58 +740,131 @@ window.Chart = function(container) {
 
 
     // Now we'll draw our label lines, etc.
-    var textLines, textLabels;
-    function drawLinesAndLabels(opt) {
-      opt = opt || {};
-      svg.selectAll('.labels').remove();
+    var textLines, textLabels, textX=[], textY=[],
+      labelsContextFormatter = function (d, context, formatterString, isShortName) {
+        formatterString = /percentage/i.test(context) ? '0.0%' : formatterString;
+        var r,
+          format = d3.format(formatterString || ''),
+          percentage = format(d.value / total),
+          name = isShortName ? (d.data.shortName || d.data.name.substring(0, 6) +'...') : d.data.name,
+          value = formatterString && formatterString !== '0.0%' ? format(d.value) : d.value;
 
-      if (opt.removeLabels) {
-        return;
-      }
+        // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
+        switch (context) {
+          case 'name': r = name; break;
+          case 'value': r = value; break;
+          case 'percentage': r = percentage; break;
+          case 'name, value': r = name + ', '  + value; break;
+          case 'name (value)': r = name + ' (' + value + ')'; break;
+          case 'name (percentage)': r = name + ' (' + percentage + ')'; break;
+          default: r = name + ', ' + value + ' (' + percentage + ')'; break;
+        }
+        return r || '';
+      },
 
-      var labels = svg.append('g').attr('class','labels');
-        labels.attr('transform', 'translate(' + (dims.width / 2) + ',' + (dims.height / 2) + ')');
+      labelsColorFormatter = function (d, i, opt) {
+        return opt === 'color-as-arc' ? (charts.chartColor(i, 'pie', d.data)) : (opt === 'default' ? '' : opt);
+      },
 
-      var enteringLabels = labels.selectAll('.label').data(pieData).enter();
-      var labelGroups = enteringLabels.append('g').attr('class', 'label');
-      labelGroups.append('circle').attr({
-        x: 0,
-        y: 0,
-        r: 2,
-        fill: '#000000',
-        transform: function (d) {
-          var x = pieArcs.centroid(d)[0],
-            y = pieArcs.centroid(d)[1];
+      drawTextlabels = function (isShortName) {
+        textLabels.selectAll('.lb-label1').each(function() {
+          d3.select(this)
+            .text(function(d) {
+              return labelsContextFormatter(d, lb.contextLabel1, lb.formatterLabel1, isShortName);
+            })
+            .style({
+              'font-weight': lb.isTwoline ? 'bold' : 'normal',
+              'font-size': lb.isTwoline ? (dims.width > 450 ? '1.3em' : '1.1em') : '1em',
+              'fill': function(d, i) { 
+                return labelsColorFormatter(d, i, lb.colorLabel1);
+              }
+            });
+        });
 
-          return 'translate(' + x + ',' + y + ')';
-        },
-        'class': 'label-circle'
-      });
+        if (lb.isTwoline) {
+          textLabels.selectAll('.lb-label2').each(function() {
+            d3.select(this)
+              .text(function(d) {
+                return labelsContextFormatter(d, lb.contextLabel2, lb.formatterLabel2, isShortName);
+              })
+              .style({
+                'font-size': '1em',
+                'fill': function(d, i) {
+                  return labelsColorFormatter(d, i, lb.colorLabel2);
+                }
+              });
+          });
+        }
+      },
 
-      textLines = labelGroups.append('line').attr({
-        x1: function (d) {
-          return pieArcs.centroid(d)[0];
-        },
-        y1: function (d) {
-          return pieArcs.centroid(d)[1];
-        },
-        x2: function (d) {
-          var centroid = pieArcs.centroid(d),
-            midAngle = Math.atan2(centroid[1], centroid[0]),
-            x = Math.cos(midAngle) * dims.labelRadius;
-          return x;
-        },
-        y2: function (d) {
-          var centroid = pieArcs.centroid(d),
-           midAngle = Math.atan2(centroid[1], centroid[0]),
-           y = Math.sin(midAngle) * dims.labelRadius;
-          return y;
-        },
-        'class': 'label-line'
-      });
+      showAllLines = function (color) {
+        textLines.style('stroke', function(d, i) {
+          return labelsColorFormatter(d, i, color);
+        });
+        svg.selectAll('circle').style('fill', function(d, i) {
+          return labelsColorFormatter(d, i, color);
+        });
+      },
 
-      var textX=[], textY=[];
-        textLabels = labelGroups.append('text').attr({
+      hideExLines = function () {
+        textLines.each(function(d, i) {
+          var format = d3.format('0.0%'),
+            percentage = format(d.value / total);
+
+          if (parseInt(percentage) > 10) {
+            d3.select(this).style('stroke', 'transparent');
+            d3.select(svg.selectAll('circle')[0][i]).style('fill', 'transparent');
+          }
+        });
+      },
+
+      addLinesAndLabels = function () {
+        svg.selectAll('.labels').remove();
+
+        var labels = svg.append('g').attr('class','labels'),
+          enteringLabels = labels.selectAll('.label').data(pieData).enter(),
+          labelGroups = enteringLabels.append('g').attr('class', 'label');
+
+        labels.attr('transform', 'translate(' + dims.center.x + ',' + dims.center.y + ')');
+
+        labelGroups.append('circle')
+          .attr({'class': 'label-circle', x: 0, y: 0, r: 2,
+            transform: function (d) {
+              var x = pieArcs.centroid(d)[0],
+                y = pieArcs.centroid(d)[1];
+              return 'translate(' + x + ',' + y + ')';
+            }        
+          })
+          .style('fill', function(d, i) { 
+            return labelsColorFormatter(d, i, lb.colorLine);
+          });
+
+        textLines = labelGroups.append('line')
+          .attr({'class': 'label-line',
+            x1: function (d) {
+              return pieArcs.centroid(d)[0];
+            },
+            y1: function (d) {
+              return pieArcs.centroid(d)[1];
+            },
+            x2: function (d) {
+              var centroid = pieArcs.centroid(d),
+                midAngle = Math.atan2(centroid[1], centroid[0]),
+                x = Math.cos(midAngle) * dims.labelRadius;
+              return x;
+            },
+            y2: function (d) {
+              var centroid = pieArcs.centroid(d),
+               midAngle = Math.atan2(centroid[1], centroid[0]),
+               y = Math.sin(midAngle) * dims.labelRadius;
+              return y;
+            }
+          })
+          .style('stroke', function(d, i) { 
+            return labelsColorFormatter(d, i, lb.colorLine);
+          });
+
+        textLabels = labelGroups.append('text').attr({'class': 'label-text',
           x: function (d) {
             var centroid = pieArcs.centroid(d),
               midAngle = Math.atan2(centroid[1], centroid[0]),
@@ -785,67 +887,29 @@ window.Chart = function(container) {
              midAngle = Math.atan2(centroid[1], centroid[0]),
               x = Math.cos(midAngle) * dims.labelRadius;
             return (x > 0) ? 'start' : 'end';
-          },
-          'class': 'label-text'
-      });
+          }
+        });
 
-      textLabels.append('tspan').text(function(d) {
-        var value = (/currency/i.test(labelstyle)) ? charts.formatCurrency(d.value): d.value,
-          toPercent = d3.format(charts.format ? charts.format : '0.0%');
-        toPercent = toPercent(d.value/total);
-        return (/value-on-top/i.test(labelstyle)) ? value : toPercent;
-      })
-      .attr('class', function() {
-        return (/value-on-top/i.test(labelstyle)) ? 'lb-value' : 'lb-percentage';
-      })
-      .style('font-weight', 'bold')
-      .style('font-size', function()  {
-        return (dims.width > 450) ? '1.3em' : '1.1em';
-      })
-      .style('fill', function(d, i) {
-        return (labelstyle.substring(0, 5)==='color') ?
-          (charts.chartColor(i, 'pie', d.data)) : '';
-      });
-
-      if (!opt.removeNames) {
-        textLabels.append('tspan').text(function(d) {
-          return d.data.name;
-        })
-        .attr('x', function(d, i) {
-          return textX[i]-2;
-        })
-        .attr('dy', '18')
-        .attr('class', 'lb-text')
-        .style('font-size', '1em');
-
-        if (/value-on-top/i.test(labelstyle)) {
-          textLabels.append('tspan').text(function(d) {
-            var toPercent = d3.format(charts.format ? charts.format : '0.0%');
-            return ' ('+ toPercent(d.value/total) +')';
-          })
-          .attr('class', 'lb-percentage-sm')
-          .style('font-size', '1em');
+        textLabels.append('tspan').attr('class', 'lb-label1');
+        if (lb.isTwoline) {
+          textLabels.append('tspan')
+            .attr({'class': 'lb-label2',
+              'x': function(d, i) { return textX[i]-2; },
+              'dy': '18'
+            });
         }
-      }
+        drawTextlabels();
 
-      if (isDonut) {
-        arcs.append('text')
-        .attr('dy', '.35em')
-        .style('text-anchor', 'middle')
-        .attr('class', 'chart-donut-text')
-        .text(centerLabel);
-      }
-
-      chartData.map(function (d, i) {
-        var percentage = d3.round(100*(d.value/total));
-        d.percent = percentage + '%';
-        d.elem = enteringArcs[0][i];
-        if (parseInt(d.percent) > 10) {
-          d3.select(textLines[0][i]).style('stroke', 'transparent');
-          d3.select(labelGroups[0][i]).select('circle').style('fill', 'transparent');
+        if (isDonut) {
+          arcs.append('text')
+            .attr('dy', '.35em')
+            .style('text-anchor', 'middle')
+            .attr('class', 'chart-donut-text')
+            .text(centerLabel);
         }
-        return {name: d.name, percent: d.percent, elem: d.elem};
-      });
+        hideExLines();
+      };
+      addLinesAndLabels();
 
       function relax() {
         var again = false;
@@ -893,61 +957,34 @@ window.Chart = function(container) {
 
         // Adjust our line leaders
         if (again) {
-
           textLabels.attr('y',function() {
             var y = Number(d3.select(this).attr('y'));
             return y > 0 ? (isSmaller ? (y-0.8) : (y+1)) : (isSmaller ? (y-1.8) : (y-1));
           });
-
           var labelElements = textLabels[0];
           textLines.attr('y2',function(d,i) {
             var labelForLine = d3.select(labelElements[i]),
               y = labelForLine.attr('y');
             return y;
           });
-
           relax();
         }
       }
-
       relax();
-    }
-    drawLinesAndLabels();
-
 
     var resizeFontsTo = function(size) {
       svg.selectAll('.label').each(function (d, i) {
         var label = d3.select(this),
           lbText = label.select('.label-text'),
           lbLine = label.select('.label-line'),
-          lbPercentage = lbText.select('.lb-percentage'),
+          lbLabel1 = lbText.select('.lb-label1'),
           y = Number(lbText.attr('y'));
 
         y = arcPercentage[i]<10 ? y+20 : y;
 
         lbText.attr('y', y);
         lbLine.attr('y2', y);
-        lbPercentage.style('font-size', size);
-      });
-    };
-
-    var removeLinebreak = function() {
-      svg.selectAll('.label').each(function () {
-        var label = d3.select(this),
-          labelText = label.select('.label-text'),
-          lbLine = label.select('.label-line'),
-          lbText = labelText.select('.lb-text'),
-          y = Number(labelText.attr('y')),
-          removed = labelText.select('.lb-percentage').remove();
-
-        labelText.append(function() {
-          return removed.node();
-        });
-
-        lbText.attr('dy', null).text(lbText.text()+' ');
-        lbLine.attr('y2', y);
-        labelText.attr('y', y);
-        removed.style('font-size', '1em');
+        lbLabel1.style('font-size', size);
       });
     };
 
@@ -956,31 +993,51 @@ window.Chart = function(container) {
       var thisLabel = this,
         labels = d3.select(this),
       rect1 = this.getBoundingClientRect(),
+
       fixNames = function () {
         rect1 = thisLabel.getBoundingClientRect();
         if(rect1.left < 46) {
           legendshow = true;
           spacing = 25;
-          drawLinesAndLabels({removeNames: true});
+          lb.isTwoline = false;
+          lb.contextLabel1 = 'percentage';
+          addLinesAndLabels();
+          relax();
           return true;
         }
+      },
+
+      forceToOneLabel = function () {
+        legendshow = true;
+        spacing = 25;
+        lb.isTwoline = false;
+        lb.contextLabel1 = 'name (value)';
+        lb.formatterLabel1 = '0.0%';//Percentage
+        lb.colorLabel1 = 'default';
+
+        textLabels.selectAll('.lb-label2').remove();
+        drawTextlabels();
+        relax();
       };
       // console.log(initialData[0].data);
       // console.log('left: ' + rect1.left);
+      // console.log('top: ' + rect1.top);
 
       if(rect1.left < 45) {
-        // console.log('L:'+ 1);
-        charts.applyAltLabels(svg, initialData[0].data, 'shortName', '.label-text tspan.lb-text');
-        if (svg.select('.label-text tspan.lb-text').text().substring(6) === '...') {
-          legendshow = true;
-        }
+      //   // console.log('L:'+ 1);
+        drawTextlabels({ isShortName: true });
+        svg.selectAll('.label-text tspan').each(function() {
+          if (d3.select(this).text().substring(6) === '...') {
+            legendshow = true;
+          }
+        });
       }
       if (!fixNames()) {
         if(rect1.top < 95) {
           // console.log(1);
           charts.elementTransform({'element': arcs, 'addtoY': 85});
           charts.elementTransform({'element': labels, 'addtoY': 85});
-          removeLinebreak();
+          forceToOneLabel();
         }
         else if(rect1.top < 105) {
           // console.log(2);
@@ -1007,8 +1064,11 @@ window.Chart = function(container) {
         }
         else if(rect1.top < 145) {
           // console.log(6);
-          charts.elementTransform({'element': arcs, 'addtoY': 40});
-          charts.elementTransform({'element': labels, 'addtoY': 40});
+          forceToOneLabel();
+          showAllLines();
+          charts.elementTransform({'element': arcs, 'addtoY': 65});
+          charts.elementTransform({'element': labels, 'addtoY': 65});
+          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 27});
         }
         else if(rect1.top < 155) {
           // console.log(7);
@@ -1041,7 +1101,7 @@ window.Chart = function(container) {
       return {name:name, display:'twocolumn'};
     });
 
-    //Add Legends
+    // Add Legends
     if (legendshow || charts.legendformatter) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
     }
@@ -2064,17 +2124,8 @@ window.Chart = function(container) {
     if (options.legendformatter) {
       this.legendformatter = options.legendformatter;
     }
-    if (options.labelstyle) {
-      // 'color-percentage-on-top' (default)
-      // 'percentage-on-top'
-      // 'color-value-on-top'
-      // 'value-on-top'
-      // 'color-value-on-top-as-currency'
-      // 'value-on-top-as-currency'
-      this.labelstyle = options.labelstyle;
-    }
     if (options.type === 'pie') {
-      this.Pie(options.dataset);
+      this.Pie(options.dataset, false, options);
     }
     if (options.type === 'bar' || options.type === 'bar-stacked') {
       this.HorizontalBar(options.dataset);
@@ -2092,7 +2143,7 @@ window.Chart = function(container) {
       this.Column(options.dataset);
     }
     if (options.type === 'donut') {
-      this.Pie(options.dataset, true);
+      this.Pie(options.dataset, true, options);
     }
     if (options.type === 'sparkline') {
       this.Sparkline(options.dataset, options);

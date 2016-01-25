@@ -248,6 +248,11 @@
   .label-text {
     @include font-size(14);
   }
+
+  .label-line {
+    fill: none;
+    stroke-width: 2px;
+  }
 }
 
 .chart-vertical-bar {
