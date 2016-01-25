@@ -552,26 +552,26 @@ this.Pie = function(initialData, isDonut, options) {
         isTwoline: true,
 
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
-        contextLabel1: 'percentage',
-        contextLabel2: 'name',
+        contentsTop: 'percentage',
+        contentsBottom: 'name',
 
-        // d3 Format
+        // Use d3 Format
         // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
         // [null | formatter string] - Only value will be formated
-        formatterLabel1: null,
-        formatterLabel2: null,
+        formatterTop: null,
+        formatterBottom: null,
 
         // 'default'|'color-as-arc'|'#000000'|'black'
-        colorLabel1: 'color-as-arc',
-        colorLabel2: 'default',
-        colorLine: 'default'
+        colorTop: 'color-as-arc',
+        colorBottom: 'default',
+        lineColor: 'default'
       }
     },
     settings = $.extend(true, defaults, options),
     lb = settings.labels;
 
-    if (!lb.isTwoline && options && !options.labels.colorLabel1) {
-      lb.colorLabel1 = lb.colorLabel2;
+    if (!lb.isTwoline && options && !options.labels.colorTop) {
+      lb.colorTop = lb.colorBottom;
     }
 
     var self = this,
@@ -770,13 +770,13 @@ this.Pie = function(initialData, isDonut, options) {
         textLabels.selectAll('.lb-label1').each(function() {
           d3.select(this)
             .text(function(d) {
-              return labelsContextFormatter(d, lb.contextLabel1, lb.formatterLabel1, isShortName);
+              return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName);
             })
             .style({
               'font-weight': lb.isTwoline ? 'bold' : 'normal',
               'font-size': lb.isTwoline ? (dims.width > 450 ? '1.3em' : '1.1em') : '1em',
               'fill': function(d, i) {
-                return labelsColorFormatter(d, i, lb.colorLabel1);
+                return labelsColorFormatter(d, i, lb.colorTop);
               }
             });
         });
@@ -785,12 +785,12 @@ this.Pie = function(initialData, isDonut, options) {
           textLabels.selectAll('.lb-label2').each(function() {
             d3.select(this)
               .text(function(d) {
-                return labelsContextFormatter(d, lb.contextLabel2, lb.formatterLabel2, isShortName);
+                return labelsContextFormatter(d, lb.contentsBottom, lb.formatterBottom, isShortName);
               })
               .style({
                 'font-size': '1em',
                 'fill': function(d, i) {
-                  return labelsColorFormatter(d, i, lb.colorLabel2);
+                  return labelsColorFormatter(d, i, lb.colorBottom);
                 }
               });
           });
@@ -836,7 +836,7 @@ this.Pie = function(initialData, isDonut, options) {
             }
           })
           .style('fill', function(d, i) {
-            return labelsColorFormatter(d, i, lb.colorLine);
+            return labelsColorFormatter(d, i, lb.lineColor);
           });
 
         textLines = labelGroups.append('line')
@@ -861,7 +861,7 @@ this.Pie = function(initialData, isDonut, options) {
             }
           })
           .style('stroke', function(d, i) {
-            return labelsColorFormatter(d, i, lb.colorLine);
+            return labelsColorFormatter(d, i, lb.lineColor);
           });
 
         textLabels = labelGroups.append('text').attr({'class': 'label-text',
@@ -1000,7 +1000,7 @@ this.Pie = function(initialData, isDonut, options) {
           legendshow = true;
           spacing = 25;
           lb.isTwoline = false;
-          lb.contextLabel1 = 'percentage';
+          lb.contentsTop = 'percentage';
           addLinesAndLabels();
           relax();
           return true;
@@ -1011,9 +1011,9 @@ this.Pie = function(initialData, isDonut, options) {
         legendshow = true;
         spacing = 25;
         lb.isTwoline = false;
-        lb.contextLabel1 = 'name (value)';
-        lb.formatterLabel1 = '0.0%';//Percentage
-        lb.colorLabel1 = 'default';
+        lb.contentsTop = 'name (value)';
+        lb.formatterTop = '0.0%';//Percentage
+        lb.colorTop = 'default';
 
         textLabels.selectAll('.lb-label2').remove();
         drawTextlabels();
