@@ -1900,6 +1900,7 @@ window.Chart = function(container) {
 
       range.enter().append('rect')
           .attr('class', function(d, i) { return 'range s' + i; })
+          .attr('data-idx', i)
           .attr('width', 0)
           .style('fill', function(d,i) {
             if (chartData[0].barColors) {
@@ -1907,10 +1908,9 @@ window.Chart = function(container) {
             }
           })
           .attr('height', barHeight)
-          .on('click', function (d, i) {
+          .on('click', function () {
             var bar = d3.select(this);
-            console.log(chartData.length, i)
-            $(container).trigger('selected', [bar, chartData[0].data]);
+            $(container).trigger('selected', [bar, chartData[0].data[bar.attr('data-idx')]]);
           });
 
       range.transition()
