@@ -1907,8 +1907,9 @@ window.Chart = function(container) {
             }
           })
           .attr('height', barHeight)
-          .on('click', function () {
+          .on('click', function (d, i) {
             var bar = d3.select(this);
+            console.log(chartData.length, i)
             $(container).trigger('selected', [bar, chartData[0].data]);
           });
 
@@ -1970,7 +1971,6 @@ window.Chart = function(container) {
             .attr('x', 0)
             .text(dif);
       }
-
 
       marker.transition()
           .duration(duration)

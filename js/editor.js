@@ -291,14 +291,14 @@
             e  : 69, // {Ctrl + E} justifyCenter
             h  : 72, // {Ctrl + H} anchor
             i  : 73, // {Ctrl + I} italic --------with SHIFT: {Ctrl + Shift + I} image
-            l  : 76, // {Ctrl + L} justifyLeft
-            o  : 79, // {Ctrl + O} orderedlist ---with SHIFT: {Ctrl + Shift + O} unorderedlist
-            q  : 81, // {Ctrl + Q} append-blockquotez
+            l  : 76, // {Ctrl + L} justifyLeft, {Ctrl + Shift + L}  bullet list
+            n  : 78, // {Ctrl + Shift + N} numbered list
+            q  : 81, // {Ctrl + Q} blockquotes
             r  : 82, // {Ctrl + R} justifyRight
             u  : 85, // {Ctrl + U} underline
             h3 : 51, // {Ctrl + 3} h3
             h4 : 52, // {Ctrl + 4} h4
-            sv : 192 // {Ctrl + ~} source -or- visual
+            sv : 192 // {Ctrl + ~} toggle source -or- visualview
           };
 
         currentElement.on('keydown.editor', function(e) {
@@ -330,10 +330,12 @@
               }
               break;
             case keys.l:
-              self.triggerClick(e, 'justifyLeft');
+              self.triggerClick(e, e.shiftKey ? 'insertunorderedlist' : 'justifyLeft');
               break;
-            case keys.o:
-              self.triggerClick(e, e.shiftKey ? 'insertunorderedlist' : 'insertorderedlist');
+            case keys.n:
+              if (e.shiftKey) {
+                self.triggerClick(e, 'insertorderedlist');
+              }
               break;
             case keys.q:
               self.triggerClick(e, 'append-blockquote');
