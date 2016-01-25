@@ -1976,9 +1976,9 @@ this.Pie = function(initialData, isDonut, options) {
           })
           .on('mouseenter', function() {
 
-            var bar = d3.select(this),
+            //var bar = d3.select(this),
               //data = chartData[0].data[bar.attr('data-idx')],
-              rect = d3.select(this)[0][0].getBoundingClientRect(),
+            var rect = d3.select(this)[0][0].getBoundingClientRect(),
               content = '<p>Test</p>',
               size = charts.getTooltipSize(content),
               x = d3.event.pageX - (size.width/2),
