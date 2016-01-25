@@ -70,6 +70,58 @@ $datagrid-header-height: 40px;
     height: auto;
   }
 
+    //Row Height Feature
+  .medium-rowheight tr td {
+    height: 55px;
+    line-height: 55px;
+
+    .datagrid-row-heading {
+      margin-top: 25px;
+    }
+
+    .btn-actions {
+      top: 13px;
+    }
+
+    .hyperlink {
+      height: 55px;
+      overflow: visible;
+    }
+
+    .datagrid-alert-icon {
+      top: 14px;
+    }
+  }
+
+  &.short-rowheight tr td {
+    height: 32px;
+    line-height: 32px;
+
+    span {
+      line-height: 32px;
+    }
+
+    .badge {
+      line-height: 13px;
+      top: 0;
+
+      &:before {
+        margin-top: 0;
+      }
+    }
+
+    .datagrid-alert-icon {
+      top: 5px;
+    }
+
+    .tag {
+      height: 22px;
+      line-height: 24px;
+      margin-top: 4px;
+      padding: 0 10px 4px;
+    }
+  }
+
   // Table Headers
   th {
     @include transition(background-color 700ms ease);
@@ -237,13 +289,9 @@ $datagrid-header-height: 40px;
 
     .badge {
       color: $inverse-color;
-      line-height: 25px;
+      line-height: 24px;
       margin-top: 0;
       top: 0;
-
-      &:before {
-        margin-top: -10px;
-      }
 
       &.info .audible {
         background-color: #767676;
@@ -255,58 +303,6 @@ $datagrid-header-height: 40px;
 
       &[class*='azure'] {
         color: #ffffff;
-      }
-    }
-
-    //Row Height Feature
-    &.medium-rowheight td {
-      height: 55px;
-      line-height: 55px;
-
-      .datagrid-row-heading {
-        margin-top: 25px;
-      }
-
-      .btn-actions {
-        top: 13px;
-      }
-
-      .hyperlink {
-        height: 55px;
-        overflow: visible;
-      }
-
-      .datagrid-alert-icon {
-        top: 14px;
-      }
-    }
-
-    &.short-rowheight td {
-      height: 32px;
-      line-height: 32px;
-
-      span {
-        line-height: 32px;
-      }
-
-      .badge {
-        line-height: 13px;
-        top: 0;
-
-        &:before {
-          margin-top: 0;
-        }
-      }
-
-      .datagrid-alert-icon {
-        top: 5px;
-      }
-
-      .tag {
-        height: 22px;
-        line-height: 24px;
-        margin-top: 4px;
-        padding: 0 10px 4px;
       }
     }
 

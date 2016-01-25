@@ -20,6 +20,7 @@ Release Date: TBD
 * 2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.
 
 ## Ui Changes
+* 2016-01-21 - Datagrid - changed row height options, border colors, toolbar height and darkened some states
 * 2016-01-21 - Pager - Updated Pager Style to match SoHo Xi Style Guide v1.2
 * 2016-01-21 - Tabs - Blue Bar no longer moves with the "focus" state, and only moves when the "selected" Tab changes.
 * 2016-01-21 - Dropdown/Multiselect - Reworked Style to match SoHo Xi Style Guide v1.2, can now focus items in the list after hovering or after keying with the keyboard.

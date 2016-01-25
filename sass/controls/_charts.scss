@@ -424,11 +424,12 @@
   .range.s0 {fill: $slate01;};
   .range.s1 {fill: $slate02;};
   .range.s2 {fill: $slate03;};
-  .measure.s0 {fill: $azure03;};
-  .measure.s1 {fill: $azure07;};
-  .measure.s2 {fill: $azure10;};
+  .measure.s0 {fill: $azure02;};
+  .measure.s1 {fill: $azure04;};
+  .measure.s2 {fill: $azure06;};
+  .measure.s3 {fill: $azure08;};
+  .measure.s4 {fill: $azure10;};
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

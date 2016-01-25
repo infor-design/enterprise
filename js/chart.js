@@ -487,13 +487,13 @@ window.Chart = function(container) {
           content = '';
             var runInterval = true;
             tooltipInterval = setInterval(function() {
-              if(runInterval) {
+              if (runInterval) {
                 runInterval = false;
                 tooltipData(function (data) {
                   content = tooltipDataCache[i] = data;
                 });
               }
-              if(content !== '') {
+              if (content !== '') {
                 clearInterval(tooltipInterval);
                 show(xPosS, yPosS, isTooltipBottom);
               }
@@ -1898,6 +1898,8 @@ window.Chart = function(container) {
       var range = g.selectAll('rect.range')
           .data(ranges);
 
+      var tooltipInterval;
+
       range.enter().append('rect')
           .attr('class', function(d, i) { return 'range s' + i; })
           .attr('data-idx', i)
@@ -1913,18 +1915,22 @@ window.Chart = function(container) {
             $(container).trigger('selected', [bar, chartData[0].data[bar.attr('data-idx')]]);
           })
           .on('mouseenter', function() {
-            var bar = d3.select(this);
-            console.log(chartData[0].data[bar.attr('data-idx')]);
 
-            var rect = d3.select(this)[0][0].getBoundingClientRect(),
-            content = '<p>Test</p>',
-            size = charts.getTooltipSize(content),
-            x = rect.x,
-            y = rect.y - size.height + $(window).scrollTop();
+            var bar = d3.select(this),
+              data = chartData[0].data[bar.attr('data-idx')],
+              rect = d3.select(this)[0][0].getBoundingClientRect(),
+              content = '<p>Test</p>',
+              size = charts.getTooltipSize(content),
+              x = d3.event.pageX - (size.width/2),
+              y = rect.y - size.height + $(window).scrollTop();
 
-            charts.showTooltip(x, y, content, 'top');
+            tooltipInterval = setTimeout(function() {
+              charts.showTooltip(x, y, content, 'top');
+            }, 300);
+
           })
           .on('mouseleave', function() {
+            clearInterval(tooltipInterval);
             charts.hideTooltip();
           });
 
