@@ -20,6 +20,12 @@ Release Date: TBD
 * 2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.
 
 ## Ui Changes
+* 2016-01-25 - Swap List - Changed fonts down a size, colors.
+* 2016-01-25 - Pager - Color Changes, Handle Changes, Pressed/Focus State
+* 2016-01-25 - Skip Link - Dropped Drop Shadow, reduced font size
+* 2016-01-25 - Modal/PopDown/Popover/Toast - Dropped Drop Shadow, since size reduction and border color increase
+* 2016-01-25 - Inputs/Text Area/Search Field/Spin Box - various styles
+* 2016-01-25 - Links - slight changes, font size to 12px in some situation
 * 2016-01-21 - Datagrid - changed row height options, border colors, toolbar height and darkened some states
 * 2016-01-21 - Pager - Updated Pager Style to match SoHo Xi Style Guide v1.2
 * 2016-01-21 - Tabs - Blue Bar no longer moves with the "focus" state, and only moves when the "selected" Tab changes.
@@ -35,7 +41,7 @@ Release Date: TBD
 * 2016-01-15 - Action Buttons - Changed the colors and all states.
 * 2016-01-15 - About - Changed the text colors and added a border. Removed the redundent button.
 * 2016-01-14 - Tree - Changed (finalized finally) the styles for trees, added new SVG icons, changed colors and states.
-* 2015-12-09 - Datepicker - Style changes to date picker
+* 2015-12-09 - Datepicker - Style various styles and button positions on date picker
 * 2015-11-20 - We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange
 
 [Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin)

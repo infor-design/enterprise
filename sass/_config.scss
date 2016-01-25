@@ -277,7 +277,7 @@ $slider-disabled-color: $graphite01;
 
 //Modal
 $modal-bg-color: #ffffff;
-$modal-border-color: $graphite04;
+$modal-border-color: $graphite03;
 $modal-btn-color: $graphite06;
 $modal-color: $graphite06;
 $modal-btn-border-color: $modal-border-color;
@@ -349,6 +349,7 @@ $tab-hover-color: $font-color-extrahighcontrast;
 //Charts
 $chart-line-color: $graphite04;
 $chart-font-color: $graphite05;
+$chart-font-color-inverse: $graphite06;
 
 // DataGrid
 $datagrid-border-color: $graphite02;
@@ -445,7 +446,8 @@ $image-border-color: $graphite02;
 
 //Toast
 $toast-bg-color: $white;
-$toast-shadow: 0 0 5px rgba(0, 0, 0, .2);
+$toast-border-color: $graphite03;
+$toast-shadow: none; //0 0 5px rgba(0, 0, 0, .2);
 
 //Builder Pattern
 $builder-header-bg-color: $slate06;

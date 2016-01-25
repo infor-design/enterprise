@@ -2046,7 +2046,7 @@ this.Pie = function(initialData, isDonut, options) {
 
       if (Math.abs(markers[0] - measures[0]) !== 0) {
         marker.enter().append('text')
-            .attr('class', 'difference')
+            .attr('class', 'inverse')
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
             .attr('dx', '-50px')

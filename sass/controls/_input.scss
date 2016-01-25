@@ -98,6 +98,8 @@
 // Input Style
 input,
 textarea {
+  @include css3(transition, border 300ms ease);
+
   -webkit-appearance: none;
   background-color: $input-bg-color;
   border: 1px solid $input-border-color;

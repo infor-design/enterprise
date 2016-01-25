@@ -245,7 +245,7 @@
   }
 
   span.audible {
-    color: $white;
+    color: #040404;
   }
 
   > a {
@@ -358,7 +358,7 @@
 
     // Set for accessibility
     span.audible {
-      color: $accordion-selected-text-color;
+      color: $white;
     }
 
     > a {
@@ -445,7 +445,7 @@
     pointer-events: none;
 
     span.audible {
-      color: $accordion-disabled-text-color !important;
+      color: #ffffff !important;
     }
 
     a {

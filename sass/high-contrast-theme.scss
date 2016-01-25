@@ -301,6 +301,7 @@ $tab-hover-color: $font-color-extrahighcontrast;
 //Charts
 $chart-line-color: $graphite03;
 $chart-font-color: $font-color-extrahighcontrast;
+$chart-font-color-inverse: $font-color-extrahighcontrast;
 
 // DataGrid
 $datagrid-border-color: $graphite04;
@@ -386,7 +387,8 @@ $image-border-color: $graphite03;
 
 //Toast
 $toast-bg-color: $white;
-$toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
+$toast-border-color: $graphite05;
+$toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
 //Builder Pattern
 $builder-header-bg-color: $slate07;

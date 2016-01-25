@@ -48,17 +48,17 @@
 
       // Show a Single Toast Message
       show: function() {
-        var self = this, 
+        var self = this,
           settings = self.settings,
           maxHideTime = parseFloat(settings.timeout),
           isPausePlay = false,
           percentage = 100,
           timer,
           container = $('#toast-container'),
-          toast = $('<div class="toast"><span class="toast-title">'+ settings.title+ 
+          toast = $('<div class="toast"><span class="toast-title">'+ settings.title+
             '</span><span class="toast-message">'+ settings.message + '</span></div>'),
           closeBtn = $('<button type="button" class="btn-close" title="'+ Locale.translate('Close')+
-            '" aria-hidden="true"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+ 
+            '" aria-hidden="true"><svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+
             '<use xlink:href="#icon-close"></use></svg><span class="audible"> '+ Locale.translate('Close')+'</span></button>'),
           progress = $('<div class="toast-progress"></div>');
 
@@ -66,7 +66,6 @@
           container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite"></div>').appendTo('body');
         }
 
-        //TODO: RTL
         container.removeClass('toast-top-left toast-top-right toast-bottom-right toast-bottom-left')
           .addClass('toast-' + settings.position.replace(' ', '-'));
 
@@ -83,6 +82,11 @@
 
         $(timer.event).on('update', function(e, data) {
           percentage = ((maxHideTime - data.counter) / maxHideTime) * 100;
+
+          if (Locale.isRTL()) {
+            percentage = 100 - percentage;
+          }
+
           if (settings.progressBar) {
             progress.width(percentage + '%');
           }
@@ -93,7 +97,7 @@
         toast.append(closeBtn);
 
         $(document).on('keydown keyup', function(e) {
-          e = e || window.event;          
+          e = e || window.event;
           if(e.ctrlKey && e.altKey && e.keyCode === 80) { //[Control + Alt + P] - Pause/Play toggle
             isPausePlay = e.type === 'keydown' ? true : false;
             timer[isPausePlay ? 'pause' : 'resume']();

@@ -37,6 +37,10 @@
     @include antialiased();
   }
 
+  .inverse {
+    fill: $chart-font-color-inverse !important;
+  }
+
   .chart-donut-text {
     @include font-size(18);
     font-weight: lighter;
@@ -400,12 +404,12 @@
   @include font-size(12);
 
   .marker {
-    stroke: $azure07;
+    stroke: $primary-color;
     stroke-width: 2px;
   }
 
   .tick line {
-    stroke: $graphite08;
+    stroke: $font-color;
     stroke-width: .5px;
   }
 
@@ -416,7 +420,7 @@
   }
 
   .subtitle {
-    fill: $graphite04;
+    fill: $font-color-lowcontrast;
     font-weight: normal;
     text-transform: none;
   }

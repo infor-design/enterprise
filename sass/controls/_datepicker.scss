@@ -24,6 +24,14 @@
     }
   }
 
+  &.is-active {
+    border-color: $input-focus-border-color;
+
+    + .icon {
+      fill: $trigger-active-color;
+    }
+  }
+
   + .icon + .icon-error {
     right: 50px;
   }

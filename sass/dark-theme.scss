@@ -145,7 +145,7 @@ $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $inverse-color;
 $datepicker-hover-bg-color: $slate05;
-$datepicker-disabled-bg-color: $slate06;
+$datepicker-disabled-bg-color: $slate07;
 
 // Color Picker
 $colorpicker-initial-bg-color: $slate04;
@@ -310,6 +310,7 @@ $tab-hover-color: $font-color-extrahighcontrast;
 //Charts
 $chart-line-color: $slate03;
 $chart-font-color: $slate01;
+$chart-font-color-inverse: $graphite06;
 
 // DataGrid
 $datagrid-border-color: $slate06;
@@ -395,7 +396,8 @@ $image-border-color: $slate04;
 
 //Toast
 $toast-bg-color: $slate07;
-$toast-shadow: 0 0 5px rgba(255, 255, 255, .2);
+$toast-border-color: $slate09;
+$toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
 
 //Builder Pattern
 $builder-header-bg-color: $slate08;
