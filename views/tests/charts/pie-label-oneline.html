@@ -3,7 +3,7 @@
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 class="widget-title">Pie Chart Legend Show</h2>
+          <h2 class="widget-title">Pie Chart Label Currency</h2>
         </div>
         <div class="widget-content">
           <div id="pie-chart-example" class="chart-container">
@@ -45,6 +45,9 @@
   $('#pie-chart-example').chart({
     type: 'pie',
     dataset: pieData,
-    legendshow: true,
+    labels: {
+      isTwoline: false,
+      contextLabel1: 'name (percentage)'
+    }
   });
 </script>
