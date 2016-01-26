@@ -70,10 +70,10 @@ $datagrid-header-height: 40px;
     height: auto;
   }
 
-    //Row Height Feature
-  .medium-rowheight tr td {
-    height: 55px;
-    line-height: 55px;
+  //Row Height Feature
+  &.medium-rowheight tr td {
+    height: 40px;
+    line-height: 40px;
 
     .datagrid-row-heading {
       margin-top: 25px;
@@ -83,13 +83,21 @@ $datagrid-header-height: 40px;
       top: 13px;
     }
 
-    .hyperlink {
-      height: 55px;
-      overflow: visible;
+    .datagrid-alert-icon {
+      top: 9px !important;
+    }
+  }
+
+  &.medium-rowheight {
+
+    //Resize the headers too
+    .datagrid-column-wrapper,
+    th {
+      height: 30px;
     }
 
-    .datagrid-alert-icon {
-      top: 14px;
+    .sort-indicator {
+      margin: 1px 0 0 4px;
     }
   }
 
@@ -102,7 +110,7 @@ $datagrid-header-height: 40px;
     }
 
     .badge {
-      line-height: 13px;
+      line-height: 22px;
       top: 0;
 
       &:before {
@@ -117,8 +125,35 @@ $datagrid-header-height: 40px;
     .tag {
       height: 22px;
       line-height: 24px;
-      margin-top: 4px;
+      margin-top: 0;
       padding: 0 10px 4px;
+    }
+
+    .datagrid-alert-icon {
+      top: 5px !important;
+    }
+
+  }
+
+  &.short-rowheight {
+
+    //Resize the headers too
+    .datagrid-column-wrapper,
+    th {
+      height: 25px;
+    }
+
+    .sort-indicator {
+      margin: 0 0 0 4px;
+
+      .icon {
+        height: 16px;
+        width: 16px;
+      }
+
+      .sort-desc {
+        margin-top: -1px;
+      }
     }
   }
 

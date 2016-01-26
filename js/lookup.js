@@ -100,7 +100,7 @@
           self.openDialog(e);
         });
 
-        //Space or Enter opens the dialog in this field
+        //Down Arrow opens the dialog in this field
         this.element.on('keyup.lookup', function (e) {
           if (e.which === 40) {
             self.openDialog(e);

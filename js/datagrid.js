@@ -2325,7 +2325,6 @@ $.fn.datagrid = function(options) {
       }
 
       this.element.trigger('sorted', [this.sortColumn]);
-
     },
 
     setSortIndicator: function(id, ascending) {

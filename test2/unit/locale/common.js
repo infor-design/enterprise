@@ -412,8 +412,13 @@ define([
       expect(Locale.parseNumber('1123456789123.57')).to.equal(1123456789123.57);
       expect(Locale.parseNumber('112345678912345.57')).to.equal(112345678912345.57);
       expect(Locale.parseNumber('11234567891.57')).to.equal(11234567891.57);
-    }
+    },
 
+    'should handle minimumFractionDigits 0': function() {
+      this.skip();
+      Locale.set('en-US');
+      expect(Locale.formatNumber('123.251', {minimumFractionDigits:2 , maximumFractionDigits: 2})).to.equal('123.25');
+    }
 
   });
 
