@@ -16,7 +16,7 @@ Can be an icon only, text or text and icon button. It has an arrow to indicate a
 
 ## Markup
 
-       <button type="button" class="btn-menu">
+      <button type="button" class="btn-menu">
         <span>Add Item</span>
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-dropdown"></use>
