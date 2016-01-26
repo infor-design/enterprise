@@ -1,5 +1,34 @@
+# 4.1.1 - Patch Release
+Release Date: Jan 26, 2015
 
-# 4.0.7 - Minor QA Release
+* Bullet Chart
+
+## Breaking Changes
+* 2016-01-18 -
+
+## Ui Changes
+* 2016-01-18 -
+
+[Jira Release Notes 4.1.0](http://jira.infor.com/secure/ReleaseNote.jspa?version=24959&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin)
+
+
+# 4.1.0 - Minor  Release
+Release Date: Jan 26, 2015
+
+* Bullet Chart
+* Datagrid Contextual Toolbar
+* Design Changes for V1.2 of Design Specs
+
+## Breaking Changes
+
+See 4.0.7 Changes
+
+## Ui Changes
+See 4.0.7 Changes
+
+[Jira Release Notes 4.1.0](http://jira.infor.com/secure/ReleaseNote.jspa?version=24959&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin)
+
+# 4.0.7 - Patch QA Release
 Release Date: TBD
 * Bullet Chart
 * Datagrid Editing
@@ -44,12 +73,12 @@ Release Date: TBD
 * 2015-12-09 - Datepicker - Style various styles and button positions on date picker
 * 2015-11-20 - We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange
 
-[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin)
+[Jira Release Notes 4.0.7](http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin)
 
 # 4.0.6
 Release Date: 2015-11-16
 
-Minor QA Release
+Patch QA Release
 
 ## Breaking Changes
 * 2015-11-16 All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
@@ -65,7 +94,7 @@ Minor QA Release
 
 # 4.0.5
 
-Minor QA Release.
+Patch QA Release.
 
 ## New Features
 * Accordion Refactoring ([HFC-2886](http://jira/browse/HFC-2886))
@@ -87,7 +116,7 @@ Minor QA Release.
 [Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24079&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Cli)
 
 
-# 4.0.4 - Minor QA Release
+# 4.0.4 - Patch QA Release
 Release Date: TBD
 
 ## Breaking Changes
