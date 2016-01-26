@@ -120,7 +120,7 @@
             this.moreMenu = this.more.next('.popupmenu');
           }
           if (!this.moreMenu.length) {
-            this.moreMenu = $('<ul class="popupmenu"></ul>').insertAfter(this.more);
+            this.moreMenu = $('<ul id="popupmenu-toolbar-'+ this.id +'" class="popupmenu"></ul>').insertAfter(this.more);
           }
         } else {
           this.moreMenu = popupMenuInstance.menu;
