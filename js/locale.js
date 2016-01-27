@@ -143,7 +143,6 @@
 
     //Format a Date Object and return it parsed in the current locale
     formatDate: function(value, attribs) {
-
       //We will use http://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
       if (!attribs) {
         attribs = {date: 'short'};  //can be date, time, datetime or pattern

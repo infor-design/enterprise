@@ -19,13 +19,13 @@ window.Formatters = {
     }
 
     if (typeof Locale !== undefined) {
-       formatted = Locale.formatDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
+       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
     }
 
     if (typeof value === 'string') {
-      var value2 = Locale.parseDate(value, (col.dateFormat ? {pattern: col.dateFormat}: null));
+      var value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       if (value2) {
-        formatted = Locale.formatDate(value2, (col.dateFormat ? {pattern: col.dateFormat}: null));
+        formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       }
     }
 
