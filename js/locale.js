@@ -474,6 +474,10 @@
         minimumFractionDigits = 0;
       }
 
+      if (options && options.style === 'percent') {
+        minimumFractionDigits = 2;
+      }
+
       //TODO: Doc Note: Uses Truncation
       if (options && options.style === 'currency') {
         var sign = this.currentLocale.data.currencySign;
@@ -497,9 +501,20 @@
         number = number * 100;
       }
 
-      var parts = this.truncateDecimals(number, maximumFractionDigits).split('.');
+      var parts = this.truncateDecimals(number, maximumFractionDigits, minimumFractionDigits).split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
       formattedNum = parts.join(decimal);
+
+      if (minimumFractionDigits === 0) { //Not default
+        formattedNum = formattedNum.replace(/(\.[0-9]*?)0+$/, '$1'); // remove trailing zeros
+        formattedNum = formattedNum.replace(/\.$/, '');              // remove trailing dot
+      }
+
+      if (minimumFractionDigits > 0) {
+        var expr = new RegExp('(\\..{' + minimumFractionDigits+ '}[0-9]*?)0+$');
+        formattedNum = formattedNum.replace(expr, '$1'); // remove trailing zeros
+        formattedNum = formattedNum.replace(/\.$/, '');  // remove trailing dot
+      }
 
       //TODO: Confirm Logic After All Locales are added.
       if (options && options.style === 'currency') {

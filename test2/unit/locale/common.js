@@ -375,7 +375,7 @@ define([
       Locale.set('en-US');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5.00 %');
       expect(Locale.formatNumber(0.050000, {style: 'percent', maximumFractionDigits: 0})).to.equal('5 %');
-      expect(Locale.formatNumber(0.05234, {style: 'percent', maximumFractionDigits: 4})).to.equal('5.2340 %');
+      expect(Locale.formatNumber(0.05234, {style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4})).to.equal('5.234 %');
 
       Locale.set('tr-TR');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5,00');
@@ -417,7 +417,18 @@ define([
     'should handle minimumFractionDigits 0': function() {
       this.skip();
       Locale.set('en-US');
-      expect(Locale.formatNumber('123.251', {minimumFractionDigits:2 , maximumFractionDigits: 2})).to.equal('123.25');
+      expect(Locale.formatNumber('12345', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123');
+      expect(Locale.formatNumber('12345.1', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.1');
+      expect(Locale.formatNumber('12345.12', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.12');
+      expect(Locale.formatNumber('12345.123', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.12');
+      expect(Locale.formatNumber('12345.1234', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.12');
+
+      expect(Locale.formatNumber('12345', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123');
+      expect(Locale.formatNumber('12345.1', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.1');
+      expect(Locale.formatNumber('12345.12', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.12');
+      expect(Locale.formatNumber('12345.123', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.123');
+      expect(Locale.formatNumber('12345.12345678', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.1234');
+
     }
 
   });
