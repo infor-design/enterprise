@@ -155,7 +155,7 @@
 
     span,
     b {
-      color: $inverse-color;
+      color: $tooltip-color;
       display: table-cell;
       line-height: 12px;
       padding: 0 10px 0 10px;
@@ -174,7 +174,7 @@
 }
 
 .chart-tooltip-total {
-  color: $inverse-color;
+  color: $tooltip-color;
   display: block;
   margin-bottom: 10px;
   text-align: center;
