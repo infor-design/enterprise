@@ -7,7 +7,7 @@
         <use xlink:href="#icon-dropdown"></use>
       </svg>
     </button>
-    <ul class="popupmenu has-icons is-selectable" id="menu-id-1">
+    <ul class="popupmenu has-icons is-selectable">
       <li class="is-checked"><a href="#" data-theme="grey-theme">Light</a></li>
       <li><a href="#" data-theme="dark-theme">Dark</a></li>
       <li><a href="#" data-theme="high-contrast-theme">High Contrast</a></li>
@@ -20,7 +20,7 @@
 
   $(function() {
 
-    $('#test-btn-menu').button().popupmenu({menu: 'menu-id-1'})
+    $('#test-btn-menu').button().popupmenu()
     .on('click', function () {
       console.log('click event');
     }).on('selected', function (e, args) {
