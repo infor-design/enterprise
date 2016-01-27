@@ -1,0 +1,33 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <button type="button" class="btn-menu" data-init="false" id='test-btn-menu'>
+      <span>Theme</span>
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-dropdown"></use>
+      </svg>
+    </button>
+    <ul class="popupmenu has-icons is-selectable" id="menu-id-1">
+      <li class="is-checked"><a href="#" data-theme="grey-theme">Light</a></li>
+      <li><a href="#" data-theme="dark-theme">Dark</a></li>
+      <li><a href="#" data-theme="high-contrast-theme">High Contrast</a></li>
+  </ul>
+  </div>
+</div>
+
+
+<script>
+
+  $(function() {
+
+    $('#test-btn-menu').button().popupmenu({menu: 'menu-id-1'})
+    .on('click', function () {
+      console.log('click event');
+    }).on('selected', function (e, args) {
+      console.log(args);
+    });
+
+    //Get Selected Item anytime
+    console.log($('#test-btn-menu').data('popupmenu').menu.find('.is-checked'));
+  });
+</script>
