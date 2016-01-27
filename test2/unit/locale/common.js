@@ -414,20 +414,19 @@ define([
       expect(Locale.parseNumber('11234567891.57')).to.equal(11234567891.57);
     },
 
-    'should handle minimumFractionDigits 0': function() {
-      this.skip();
+    'should handle minimumFractionDigits': function() {
       Locale.set('en-US');
-      expect(Locale.formatNumber('12345', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123');
-      expect(Locale.formatNumber('12345.1', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.1');
-      expect(Locale.formatNumber('12345.12', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.12');
-      expect(Locale.formatNumber('12345.123', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.12');
-      expect(Locale.formatNumber('12345.1234', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('123.12');
+      expect(Locale.formatNumber('12345', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('12,345');
+      expect(Locale.formatNumber('12345.1', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('12,345.1');
+      expect(Locale.formatNumber('12345.12', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('12,345.12');
+      expect(Locale.formatNumber('12345.123', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('12,345.12');
+      expect(Locale.formatNumber('12345.1234', {minimumFractionDigits:0 , maximumFractionDigits: 2})).to.equal('12,345.12');
 
-      expect(Locale.formatNumber('12345', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123');
-      expect(Locale.formatNumber('12345.1', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.1');
-      expect(Locale.formatNumber('12345.12', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.12');
-      expect(Locale.formatNumber('12345.123', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.123');
-      expect(Locale.formatNumber('12345.12345678', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('123.1234');
+      expect(Locale.formatNumber('12345', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('12,345.00');
+      expect(Locale.formatNumber('12345.1', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('12,345.10');
+      expect(Locale.formatNumber('12345.12', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('12,345.12');
+      expect(Locale.formatNumber('12345.123', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('12,345.123');
+      expect(Locale.formatNumber('12345.12345678', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('12,345.1234');
 
     }
 
