@@ -10,29 +10,24 @@
   text-align: center;
 
   li {
-    border: 1px solid transparent;
     cursor: pointer;
     display: inline-block;
     overflow: hidden;
     width: auto;
 
     a {
-      border: 1px solid transparent;
+      border-bottom: 1px solid transparent;
       color: $pager-text-color;
       cursor: pointer;
       display: inline-block;
-      height: 28px;
+      height: 34px;
       line-height: 30px;
-      margin: 3px 4px;
+      margin: 0 4px;
       padding: 0 2px;
       position: relative;
       text-align: center;
       text-decoration: none;
       transition: all .2s ease;
-
-      &:focus {
-        @include css3(box-shadow, 0 0 1px 1px $pager-focus-border-color inset);
-      }
 
       // Disabled
       &[disabled] {
@@ -58,6 +53,7 @@
     &.pager-last,
     &.pager-first,
     &.pager-next {
+      & a,
       &:hover a {
         border-bottom: 0;
       }
@@ -66,10 +62,6 @@
     &.selected a {
       color: $pager-selected-color;
       font-weight: bold;
-
-      &:focus {
-        @include css3(box-shadow, 0 0 1px 1px #ffffff inset);
-      }
     }
   }
 
@@ -88,19 +80,30 @@
 .pager-first,
 .pager-last,
 .pager-next {
-  border-radius: 3px;
   margin: 0;
   padding: 0;
-  width: 28px;
 
   svg {
     fill: $font-color;
     height: 17px;
     left: 1px;
-    top: 3px;
+    top: 7px;
     width: 18px;
   }
 
+  a {
+    backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
+    border-radius: 17px;
+    height: 34px;
+    overflow: hidden;  // Makes the round ripple-effect pressed state work
+    -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
+    -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
+    width: 34px;
+  }
+
+  .ripple-effect {
+    background-color: $tertiary-btn-ripple-color;
+  }
 }
 
 .paginated li {

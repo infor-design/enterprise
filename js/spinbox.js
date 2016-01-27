@@ -462,6 +462,15 @@
       // Teardown
       destroy: function() {
         this.element.data('mask').destroy();
+
+        this.buttons.each(function() {
+          var buttonAPI = $(this).data('button');
+
+          if (buttonAPI) {
+            buttonAPI.destroy();
+          }
+        });
+
         this.buttons.up.off('click.spinbox mousedown.spinbox');
         this.buttons.up.remove();
         this.buttons.down.off('click.spinbox mousedown.spinbox');
