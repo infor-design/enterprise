@@ -528,7 +528,7 @@ $.fn.datagrid = function(options) {
     },
 
     initTableWidth: function () {
-      var th = $('th:first', this.header),
+      var th = this.headerRow.find('th:first'),
         width = 0;
 
       if (th && th.length) {
@@ -536,7 +536,7 @@ $.fn.datagrid = function(options) {
         this.setColumnWidth(th.attr('data-column-id'), width);
       }
 
-      if(this.element.parents().hasClass('modal')) {
+      if (this.element.parents().hasClass('modal')) {
         var el = $('.modal .modal-content'),
           w = this.table.width() +
             parseInt(el.css('padding-left'), 10) +

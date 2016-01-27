@@ -9,7 +9,6 @@ npm adduser --registry http://npm.infor.com:4873 --scope=@infor
 The username is admin and password is Ap5T7IPF2o, use your regular email address.
 
 npm set registry http://registry.npmjs.org
-npm set registry http://registry.npmjs.org
 
 ## Checklist
 
@@ -39,3 +38,5 @@ npm publish
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
 * Comment in the analytics in footer.js - deploy to to http://107.170.15.202:4000
+* Create branch for major versions inside stash
+
