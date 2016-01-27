@@ -71,8 +71,8 @@
 
         if (!this.buttons) {
           this.buttons = {
-            'down' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control down">-</span>').insertBefore(this.element),
-            'up' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control up">+</span>').insertAfter(this.element)
+            'down' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control down">-</span>').insertBefore(this.element).button(),
+            'up' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control up">+</span>').insertAfter(this.element).button()
           };
         }
 
@@ -462,6 +462,15 @@
       // Teardown
       destroy: function() {
         this.element.data('mask').destroy();
+
+        this.buttons.each(function() {
+          var buttonAPI = $(this).data('button');
+
+          if (buttonAPI) {
+            buttonAPI.destroy();
+          }
+        });
+
         this.buttons.up.off('click.spinbox mousedown.spinbox');
         this.buttons.up.remove();
         this.buttons.down.off('click.spinbox mousedown.spinbox');

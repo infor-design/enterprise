@@ -73,10 +73,18 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
 
+        function removeHideFocus() {
+          var self = $(this);
+
+          setTimeout(function() {
+            self.removeClass('hide-focus');
+          }, 1);
+        }
+
         this.element
         .on('touchstart.button click.button', function (e) {
 
-          if ((self.element.attr('disabled')) || (!self.isTouch && e.which !== 1) ||
+          if ((self.element.attr('disabled')) || self.element.is('.is-disabled') || (!self.isTouch && e.which !== 1) ||
               ($('.ripple-effect', this).length) || (self.isTouch && e.type !== 'touchstart')) {
             return;
           }
@@ -118,14 +126,11 @@
           }, 1000);
 
         })
-        .on('focusout.button', function () {
-          var self = $(this);
+        .on('focusout.button', removeHideFocus);
 
-          setTimeout(function() {
-            self.removeClass('hide-focus');
-          }, 1);
-
-        });
+        if (this.element.is('a, span')) {
+          this.element.on('mouseup.button touchend.button touchcancel.button', removeHideFocus);
+        }
       },
 
       // Browsers that don't support CSS-based animation can still show the animation
@@ -145,8 +150,7 @@
       },
 
       destroy: function() {
-        this.element.off('touchstart.button mousedown.button mouseup.button mouseleave.button');
-        this.element.off('focusout.button');
+        this.element.off('touchstart.button touchend.button touchcancel.button mousedown.button mouseup.button mouseleave.button focusout.button');
 
         if (this.element.hasClass('btn-actions')) {
           this.element.data('tooltip').destroy();

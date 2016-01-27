@@ -43,7 +43,6 @@
     Pager.prototype = {
 
       init: function() {
-        //this.activePage = this.settings.activePage;
         this.setup();
         this.buttonExpr = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
         this.createPagerBar();
@@ -115,6 +114,8 @@
           }
 
           this.pagerBar.html(buttons);
+
+          this.pagerBar.children('li').children('a').button();
         }
 
         if (this.isTable) {
