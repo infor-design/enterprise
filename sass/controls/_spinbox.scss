@@ -40,21 +40,21 @@ input::-webkit-inner-spin-button {
   font-weight: 700;
   line-height: normal;
   @include font-size(14);
+  overflow: hidden;
   padding: 9px 10px;
+  position: relative;
   resize: none;
   text-align: center;
   @include css3(user-select, none);
   width: 33px;
 
   &.up {
-    background-color: $spinbox-button-color;
     border-bottom-right-radius: 2px;
     border-left: 0;
     border-top-right-radius: 2px;
   }
 
   &.down {
-    background-color: $spinbox-button-color;
     border-bottom-left-radius: 2px;
     border-right: 0;
     border-top-left-radius: 2px;
@@ -65,7 +65,6 @@ input::-webkit-inner-spin-button {
   }
 
   &.is-active {
-    //background-color: $spinbox-active-color;
     color: $spinbox-active-color;
   }
 
@@ -120,6 +119,10 @@ input::-webkit-inner-spin-button {
       cursor: default;
       -webkit-text-fill-color: $disabled-color;
     }
+  }
+
+  .ripple-effect {
+    background-color: $tertiary-btn-ripple-color;
   }
 }
 

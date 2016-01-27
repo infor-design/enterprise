@@ -71,8 +71,8 @@
 
         if (!this.buttons) {
           this.buttons = {
-            'down' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control down">-</span>').insertBefore(this.element),
-            'up' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control up">+</span>').insertAfter(this.element)
+            'down' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control down">-</span>').insertBefore(this.element).button(),
+            'up' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control up">+</span>').insertAfter(this.element).button()
           };
         }
 
