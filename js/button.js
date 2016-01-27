@@ -73,11 +73,9 @@
           this.element.attr('title', Locale.translate('MoreActions')).tooltip();
         }
 
-        function removeHideFocus() {
-          var self = $(this);
-
+        function removeHideFocus(self) {
           setTimeout(function() {
-            self.removeClass('hide-focus');
+            $(self).removeClass('hide-focus');
           }, 1);
         }
 
@@ -126,10 +124,14 @@
           }, 1000);
 
         })
-        .on('focusout.button', removeHideFocus);
+        .on('focusout.button', function() {
+          removeHideFocus(this);
+        });
 
         if (this.element.is('a, span')) {
-          this.element.on('mouseup.button touchend.button touchcancel.button', removeHideFocus);
+          this.element.on('mouseup.button touchend.button touchcancel.button', function() {
+            removeHideFocus(this);
+          });
         }
       },
 
