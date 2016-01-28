@@ -414,11 +414,11 @@
 
       },
 
-      removeNode: function (node) {
+      removeNode: function () {
 
       },
 
-      editNode: function (node) {
+      editNode: function () {
 
       },
 
