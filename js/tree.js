@@ -37,85 +37,101 @@
     // Plugin Methods
     Plugin.prototype = {
       init: function() {
-        this.setupTree();
+        this.settings = $.extend({}, settings);
+        this.initTree();
         this.handleKeys();
         this.setupEvents();
         this.setupHeight();
+        this.loadData(this.settings.dataset);
       },
-      setupTree: function() {
-        var links = this.element.find('a');
 
-        links.each(function(i) {
-          var a = $(this),
-            parentCount = 0,
-            subNode;
+      //Init Tree from ul, li, a markup structure in DOM
+      initTree: function() {
+        var links = this.element.find('a'),
+          self = this;
 
-          //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
-          a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
+        links.each(function() {
+          var a = $(this);
 
-          // Add Aria disabled
-          if (a.hasClass('is-disabled')) {
-            a.attr('aria-disabled','true');
-            var childSection = a.next();
-
-            if(childSection.is('ul.is-open')) {
-              $('a', childSection).addClass('is-disabled').attr('aria-disabled','true');
-              $('ul', a.parent()).addClass('is-disabled');
-            }
-          }
-
-          if (i === 0) {
-            // self.setSelectedNode(a, false);
-            a.attr('tabindex', '0');
-          }
-
-          //parentCount 'aria-level' to the node's level depth
-          parentCount = a.parentsUntil(this.element, 'ul').length - 1;
-          a.attr('aria-level', parentCount + 1);
-
-          //Set the current tree item node position relative to its aria-setsize
-          var posinset = a.parent().index();
-          a.attr('aria-posinset', posinset + 1);
-
-          //Set the current tree item aria-setsize
-          var listCount = a.closest('li').siblings().addBack().length;
-          a.attr('aria-setsize', listCount);
-
-          //Set the current tree item node expansion state
-          if (a.next('ul').children().length > 0) {
-            a.attr('aria-expanded', a.next().hasClass('is-open') ? 'true' : 'false');
-          }
-
-          //adds role=group' to all subnodes
-          subNode = a.next();
-
-          //Inject Icons
-          var text = a.text();
-          a.text('');
-          if (a.children('svg').length === 0) {
-            a.prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-tree-node"></use></svg>');
-          }
-
-          a.append('<span class="tree-text">' + text + '</span>');
-
-          if (subNode.is('ul')) {
-            subNode.attr('role', 'group').parent().addClass('folder');
-            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
-          }
-
-          if (a.is('[class^="icon"]')) {
-            a.find('use').attr('xlink:href','#'+ a.attr('class'));
-          }
+          self.decorateNode(a);
         });
       },
+
+      //From the LI, Read props and add stuff
+      decorateNode: function(a) {
+        var parentCount = 0,
+            subNode;
+
+        //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
+        a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
+
+        // Add Aria disabled
+        if (a.hasClass('is-disabled')) {
+          a.attr('aria-disabled','true');
+          var childSection = a.next();
+
+          if (childSection.is('ul.is-open')) {
+            $('a', childSection).addClass('is-disabled').attr('aria-disabled','true');
+            $('ul', a.parent()).addClass('is-disabled');
+          }
+        }
+
+        if (a.index() === 0) {
+          a.attr('tabindex', '0');
+        }
+
+        //parentCount 'aria-level' to the node's level depth
+        parentCount = a.parentsUntil(this.element, 'ul').length - 1;
+        a.attr('aria-level', parentCount + 1);
+
+        //Set the current tree item node position relative to its aria-setsize
+        var posinset = a.parent().index();
+        a.attr('aria-posinset', posinset + 1);
+
+        //Set the current tree item aria-setsize
+        var listCount = a.closest('li').siblings().addBack().length;
+        a.attr('aria-setsize', listCount);
+
+        //Set the current tree item node expansion state
+        if (a.next('ul').children().length > 0) {
+          a.attr('aria-expanded', a.next().hasClass('is-open') ? 'true' : 'false');
+        }
+
+        //adds role=group' to all subnodes
+        subNode = a.next();
+
+        //Inject Icons
+        var text = a.text();
+        a.text('');
+        if (a.children('svg').length === 0) {
+          a.prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-tree-node"></use></svg>');
+        }
+
+        a.append('<span class="tree-text">' + text + '</span>');
+
+        if (subNode.is('ul')) {
+          subNode.attr('role', 'group').parent().addClass('folder');
+          a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
+        }
+
+        if (a.is('[class^="icon"]')) {
+          a.find('use').attr('xlink:href','#'+ a.attr('class'));
+        }
+      },
+
+      //Expand all Parents
       expandAll: function() {
         var nodes = this.element.find('ul[role=group]');
         nodes.addClass('is-open');
       },
+
+      //Collapse all Parents
       collapseAll: function () {
         var nodes = this.element.find('ul[role=group]');
         nodes.removeClass('is-open');
       },
+
+      //Set a node as the selected on
       setSelectedNode: function (node, focus) {
         if (node.length === 0) {
           return;
@@ -128,18 +144,19 @@
         }
         this.element.trigger('selected', [node]);
       },
+
+      //Animate open/closed the node
       toggleNode: function(node) {
         var next = node.next();
 
         if (next.is('ul[role="group"]')) {
-          if(next.hasClass('is-open')) {
+          if (next.hasClass('is-open')) {
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
               node.closest('.folder').removeClass('is-open').end()
                   .find('use').attr('xlink:href', '#icon-closed-folder');
             }).animateClosed();
-          }
-          else {
+          } else {
             next.addClass('is-open').one('animateopencomplete', function() {
               node.closest('.folder').addClass('is-open').end()
                   .find('use').attr('xlink:href', '#icon-open-folder');
@@ -149,21 +166,22 @@
         }
       },
 
+      //Setup event handles
       setupEvents: function () {
         var self = this;
         self.element.on('updated.tree', function () {
-          self.setupTree();
+          self.initTree();
         });
       },
 
+      //TODO: Refactor to use animateOpen and animateClosed
       setupHeight: function() {
         $('ul[role="group"]', this.element).each(function() {
           var g = $(this);
 
-          if(g.hasClass('is-open')) {
+          if (g.hasClass('is-open')) {
             g.css('height', 'auto');
-          }
-          else {
+          } else {
             g.css('height', 0);
           }
         });
@@ -334,6 +352,73 @@
           }
 
         });
+
+      },
+
+      //handle Loading JSON
+      loadData: function (dataset) {
+        var self = this;
+        if (!dataset) {
+          return;
+        }
+
+        for (var i = 0; i < dataset.length; i++) {
+          self.addNode(dataset[i]);
+        }
+      },
+
+      addNode: function (node, location) {
+        var li = $('<li></li>'),
+            a = $('<a href="#"></a>').appendTo(li);
+
+        location = (!location ? 'bottom' : location); //supports button or top or jquery node
+
+        a.attr({
+          'id': node.id,
+          'href': node.href
+        }).text(node.text);
+
+        if (node.open) {
+          a.parent().addClass('is-open');
+        }
+
+        if (node.icon) {
+          a.addClass(node.icon);
+        }
+
+        //Handle Location
+        if (location === 'bottom') {
+          this.element.append(li);
+        }
+
+        if (location === 'top') {
+          this.element.prepend(li);
+        }
+
+        if (location instanceof jQuery) {
+          this.element.after(location.parent('li'));
+        }
+
+        // Support ParentId in JSON
+        if (node.parent) {
+          //TODO
+        }
+
+        this.decorateNode(a);
+
+        if (node.selected) {
+          this.setSelectedNode(a, node.focus);
+        }
+
+        //TODO: Add Children
+
+      },
+
+      removeNode: function (node) {
+
+      },
+
+      editNode: function (node) {
 
       },
 
