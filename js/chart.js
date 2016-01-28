@@ -1974,15 +1974,29 @@ this.Pie = function(initialData, isDonut, options) {
             var bar = d3.select(this);
             $(container).trigger('selected', [bar, chartData[0].data[bar.attr('data-idx')]]);
           })
-          .on('mouseenter', function() {
+          .on('mouseenter', function(d, i) {
 
-            //var bar = d3.select(this),
-              //data = chartData[0].data[bar.attr('data-idx')],
-            var rect = d3.select(this)[0][0].getBoundingClientRect(),
-              content = '<p>Test</p>',
+            var bar = d3.select(this),
+              data = chartData[0].data[bar.attr('data-idx')],
+              rect = d3.select(this)[0][0].getBoundingClientRect(),
+              next = d3.select(this.nextSibling),
+              content = '<p>' + d + '</p>',
               size = charts.getTooltipSize(content),
-              x = d3.event.pageX - (size.width/2),
-              y = rect.y - size.height + $(window).scrollTop();
+              x = 0,
+              y = rect.y - size.height + $(window).scrollTop(),
+              w = d3.select(this).attr('width'),
+              nextWidth = next.attr('width');
+
+            if (nextWidth && next.classed('range')) {
+              var sliceW = (w - nextWidth) / 2;
+              x = (rect.x + (w - sliceW) - (size.width/2));
+            } else {
+              x = rect.x + (rect.width/2) - (size.width/2);
+            }
+
+            if (data.tooltip && data.tooltip[i]) {
+              content = data.tooltip[data.tooltip.length - i -1];
+            }
 
             tooltipInterval = setTimeout(function() {
               charts.showTooltip(x, y, content, 'top');

@@ -428,6 +428,11 @@ define([
       expect(Locale.formatNumber('12345.123', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('12,345.123');
       expect(Locale.formatNumber('12345.12345678', {minimumFractionDigits:2 , maximumFractionDigits: 4})).to.equal('12,345.1234');
 
+      //Leave out the maximumFractionDigits
+      expect(Locale.formatNumber('12345', {minimumFractionDigits:2})).to.equal('12,345.00');
+      expect(Locale.formatNumber('12345', {minimumFractionDigits:0})).to.equal('12,345');
+      expect(Locale.formatNumber('12345.1', {minimumFractionDigits:0})).to.equal('12,345.1');
+
     }
 
   });

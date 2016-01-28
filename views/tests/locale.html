@@ -17,19 +17,20 @@
           //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:5}));
           //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:4}));
 
+          append(Locale.formatNumber('12345', {minimumFractionDigits:2}));
+
           append(Locale.formatNumber(12345, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
 
            append(Locale.formatNumber(12345.1, {style:"decimal", minimumFractionDigits:2, maximumFractionDigits: 4}));
 
            append(Locale.formatNumber(12345.12, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
 
-             append(Locale.formatNumber(12345.123, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
+          append(Locale.formatNumber(12345.123, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
+
+           append(Locale.formatNumber(12345.1234, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
 
 
- append(Locale.formatNumber(12345.1234, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
-
-
- append(Locale.formatNumber(12345.12345, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
+           append(Locale.formatNumber(12345.12345, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
 
 
         }, 300);

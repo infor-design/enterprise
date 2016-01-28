@@ -461,7 +461,7 @@
       var formattedNum, curFormat, percentFormat,
         decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
         group = options && options.group ? options.group : this.numbers().group,
-        minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 0),
+        minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 2),
         maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 3);
 
       if (number === undefined || number === null || number === '') {
@@ -515,7 +515,7 @@
         formattedNum = formattedNum.replace(/\.$/, '');  // remove trailing dot
       }
 
-      //TODO: Confirm Logic After All Locales are added.
+      //Confirm Logic After All Locales are added.
       if (options && options.style === 'currency') {
         formattedNum = curFormat.replace('#,##0.00', formattedNum);
       }
