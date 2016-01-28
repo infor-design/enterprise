@@ -22,7 +22,7 @@
     // Settings and Options
     var pluginName = 'about',
         defaults = {
-          appName: 'Infor Application Name',
+          appName: 'Infor Application Name Test',
           content: undefined,
           copyrightYear: new Date().getFullYear(),
           deviceSpecs: true,
