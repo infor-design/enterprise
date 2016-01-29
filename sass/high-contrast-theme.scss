@@ -15,11 +15,11 @@ $header-bg-color: $slate09;
 $header-border-color: $slate10;
 $header-icon-color: #eff0f4;
 $header-disabled-color: $graphite05;
-$panel-bg-color: $graphite01;
-$panel-border-color: $graphite03;
+$panel-bg-color: $graphite03;
+$panel-border-color: $graphite06;
 
 // Base Colors
-$primary-color: $azure08;
+$primary-color: $azure07;
 $inverse-color: #ffffff;
 
 //The hyperlink Style
@@ -31,7 +31,7 @@ $font-color-highcontrast: $graphite10;
 $font-color: $graphite08;
 $font-color-lowcontrast: $graphite06;
 $label-color: $graphite08;
-$disabled-color: rgba(86, 86, 86, .6);
+$disabled-color: $graphite05;
 
 // Alert Colors
 $alert-info: $azure07;
@@ -74,12 +74,12 @@ $primary-btn-active-bg-color: $azure08;
 
 // Secondary/Normal Buttons
 $btn-color: $inverse-color;
-$btn-bg-color: $graphite07; //08 is AAA
+$btn-bg-color: $graphite06;
 $btn-hover-bg-color: $graphite05;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite05;
-$btn-disabled-opacity:.5;
+$btn-disabled-color: $graphite04;
 
 // Tertiary Buttons
 $tertiary-btn-color: $graphite07;
@@ -87,17 +87,17 @@ $tertiary-btn-hover-color: $graphite10;
 $tertiary-btn-active-color: $graphite10;
 
 // Input Fields
-$input-border-color: $graphite05;
+$input-border-color: $graphite06;
 $input-color: $graphite10;
-$input-bg-color: $inverse-color;
+$input-bg-color: $white;
 $input-disabled-bg-color: transparent;
-$input-disabled-border-color: $graphite03;
-$input-disabled-color: $graphite04;
+$input-disabled-border-color: $graphite04;
+$input-disabled-color: $graphite05;
 $input-hover-border-color: $graphite10;
 $input-focus-border-color: $primary-color;
-$input-placeholder-color: $graphite03;
+$input-placeholder-color: $graphite05;
 $input-readonly-border-color: $input-border-color;
-$input-readonly-bg-color: $graphite03;
+$input-readonly-bg-color: $graphite04;
 $input-readonly-color: $graphite07;
 
 //States
@@ -177,11 +177,11 @@ $fieldset-border-bottom-color: transparent;
 $expandable-area-border-color: $graphite03;
 
 // Cardlist
-$cardlist-bg-color: $inverse-color;
-$cardlist-border-color: $graphite03;
-$cardlist-header-bg-color: $graphite06;
-$cardlist-header-color: $white;
-$cardlist-actions-color: $white;
+$cardlist-bg-color: $graphite01;
+$cardlist-border-color: $graphite06;
+$cardlist-header-bg-color: $graphite01;
+$cardlist-header-color: $graphite08;
+$cardlist-actions-color: $graphite08;
 
 // Checkboxes
 $checkbox-color: $primary-color;
@@ -305,21 +305,21 @@ $chart-font-color: $font-color-extrahighcontrast;
 $chart-font-color-inverse: $font-color-extrahighcontrast;
 
 // DataGrid
-$datagrid-border-color: $graphite04;
+$datagrid-border-color: $graphite06;
 $datagrid-header-color: #ffffff;
-$datagrid-header-bg-color: $graphite05;
-$datagrid-header-border-color: $graphite04;
-$datagrid-header-hover-color: $graphite08;
+$datagrid-header-bg-color: $graphite08;
+$datagrid-header-border-color: $graphite06;
+$datagrid-header-hover-color: $graphite10;
 $datagrid-header-active-color: $graphite08;
 $datagrid-cell-color: $font-color;
-$datagrid-cell-bg-color: #ffffff;
-$datagrid-cell-readonly-bg-color: $graphite03;
+$datagrid-cell-bg-color: $graphite01;
+$datagrid-cell-readonly-bg-color: $graphite02;
 $datagrid-cell-readonly-color: $graphite08;
-$datagrid-cell-border-color: $graphite04;
+$datagrid-cell-border-color: $graphite06;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: #eaf8fe;
-$datagrid-row-selected-color-dark: #eaf8fe;
-$datagrid-row-hover-color: $graphite01;
+$datagrid-row-selected-color: rgba(37, 120, 160, .20);
+$datagrid-row-selected-color-dark: rgba(37, 120, 160, .30);
+$datagrid-row-hover-color: $graphite03;
 
 $datagrid-header-focus-bg-color: $primary-color;
 

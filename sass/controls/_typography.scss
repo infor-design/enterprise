@@ -111,11 +111,18 @@ p {
 // Labels
 label,
 .label {
+  @include font-size(12);
   color: $label-color;
   display: block;
-  @include font-size(12);
   line-height: 13px;
   margin-bottom: 5px;
+}
+
+.is-disabled.label,
+.is-disabled .label,
+label.is-disabled,
+.is-disabled label {
+  color: $disabled-color;
 }
 
 .data-description {

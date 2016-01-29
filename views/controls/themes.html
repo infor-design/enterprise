@@ -8,15 +8,37 @@
           <div class="field">
             <label for="normal-field">Label</label>
             <input type="text" id="normal-field" name="normal-field" value="Data">
-            <button class="btn-primary" type="button" style="margin-left: 40px">Button</button>
           </div>
 
           <div class="field">
             <label for="readonly-field">Label</label>
             <input type="text" id="readonly-field" name="readonly-field" value="Read only Data" readonly>
-            <button class="btn-secondary" type="button" style="margin-left: 40px">Button</button>
           </div>
 
+          <div class="field is-disabled">
+            <label for="disabled-field">Label</label>
+            <input type="text" id="disabled-field" name="disabled-field" value="Disabled Data" disabled>
+          </div>
+
+          <button class="btn-primary" type="button">Button</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button class="btn-secondary" type="button">Button</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button class="btn-tertiary" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-calendar"></use>
+            </svg>
+            <span>Date</span>
+          </button>
+          <button disabled class="btn-tertiary" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-calendar"></use>
+            </svg>
+            <span>Date</span>
+          </button>
+
+
+          <br><br>
           <a class="hyperlink" href="#">Hyperlink</a>
 
         </div>

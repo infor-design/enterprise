@@ -159,12 +159,11 @@ $toolbar-buttonset-height: 44px;
     &[disabled]:hover {
       background-color: transparent;
       border-color: transparent;
-      color: $tertiary-btn-color;
+      color: $btn-disabled-color;
       cursor: default;
-      opacity: $btn-disabled-opacity;
 
       .icon {
-        fill: $tertiary-btn-color;
+        fill: $btn-disabled-color;
       }
     }
 
