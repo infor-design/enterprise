@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Mask Test:  Change Event</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="date-input">Date Input</label>
+      <input id="date-input" name="date-input" type="text" placeholder="M/d/yyyy" data-mask="##/##/####" data-mask-mode="date" data-validate="date"/>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+$('body').on('initialized', function() {
+    $('#date-input').on('change.test', function(e) {
+      var color = '#aa1111',
+        targetName, targetId;
+
+      if (!e) {
+        targetName = '[undefined anchor name]';
+        targetId = '[undefined anchor id]';
+        color = '#1111aa';
+      } else {
+        targetName = $(e.target).text().trim();
+        targetId = $(e.target).attr('id');
+      }
+
+      $('body').toast({
+        title: 'Input <span style="color: '+ color +'; font-weight: bold;">"' + targetId + '"</span> changed!',
+        message: 'The "<b>'+ targetName +'</b>" input\'s value was changed!'
+      });
+    });
+  });
+</script>
