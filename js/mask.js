@@ -155,14 +155,16 @@
             return false;
           }
 
-          self.initValue = null;
+          var val = self.element.val();
 
           if (self.mustComplete) {
             self.checkCompletion();
           }
-          if (self.initValue !== self.element.val()) {
+          if (val && self.initValue !== val) {
             self.element.trigger('change');
           }
+
+          self.initValue = null;
         });
 
         // Test contents of the input field.  If there are characters, run them
