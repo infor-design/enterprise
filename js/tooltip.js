@@ -30,9 +30,11 @@
         title: null, //Title for Infor Tips
         beforeShow: null, //Call back for ajax tooltip
         popover: null , //force it to be a popover (no content)
+        closebutton: null, //Show X close button next to title in popover
         isError: false, //Add error classes
         tooltipElement: null, // ID selector for an alternate element to use to contain the tooltip classes
-        keepOpen: false // Forces the tooltip to stay open in situations where it would normally close.
+        keepOpen: false, // Forces the tooltip to stay open in situations where it would normally close.
+        extraClass: null // Extra css class
       },
       settings = $.extend({}, defaults, options);
 
@@ -64,6 +66,12 @@
 
         if (this.element.is('.dropdown, .multiselect')) {
           this.activeElement = $('#' + this.element.attr('id') + '-shdo');
+        }
+
+        settings.closebutton = (settings.closebutton || this.element.data('closebutton')) ? true : false;
+
+        if (this.element.data('extraClass') && this.element.data('extraClass').length) {
+          settings.extraClass = this.element.data('extraClass');
         }
       },
 
@@ -150,14 +158,27 @@
       },
 
       setContent: function(content) {
-        var contentArea,
-          specified = false;
+        var self = this,
+          contentArea,
+          specified = false,
+          closeBtnX = $('<button type="button" class="btn-icon l-pull-right"><span>Close</span></button>')
+                        .prepend('<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg>')
+                        .css({'margin-top':'-9px'})
+                        .on('click', function() {
+                          self.hide();
+                        });
 
         content = Locale.translate(content) || content;
 
         if (content.indexOf('#') === 0) {
           content = $(content).html();
           specified = true;
+        }
+
+        if (settings.extraClass && typeof settings.extraClass === 'string') {
+          this.tooltip.addClass(settings.extraClass);
+        } else {
+          this.tooltip.removeAttr('class').addClass('tooltip bottom is-hidden');
         }
 
         if (this.isPopover) {
@@ -175,8 +196,13 @@
             this.tooltip.find('.tooltip-title').hide();
           }
 
+          if (settings.closebutton) {
+            $('.tooltip-title', this.tooltip).append(closeBtnX);
+          }
+
           contentArea.initialize();
           return;
+
         } else {
           this.tooltip.find('.tooltip-title').hide();
         }
@@ -198,6 +224,7 @@
         else {
           contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
         }
+
       },
 
       show: function(newSettings, ajaxReturn) {
