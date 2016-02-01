@@ -784,12 +784,21 @@ $.fn.datagrid = function(options) {
     //Method to Reload the data set
     //TODO: Load specific page
     loadData: function (dataset, pagerInfo) {
+      var self = this;
+
+      var oldRows = (this.selectedRows() ? this.selectedRows().slice() : []);
       this.settings.dataset = dataset;
       this.renderRows();
 
       //Update Paging and Clear Rows
       this.renderPager(pagerInfo);
-      this.selectedRows();
+      this.selectedRows([]);
+
+      if (pagerInfo && pagerInfo.preserveSelected) {
+        for (var i = 0; i < oldRows.length; i++) {
+          self.selectRow(oldRows[i].idx, true);
+        }
+      }
 
       this.syncSelectedUI();
       this.syncFixedHeader();
@@ -1093,6 +1102,10 @@ $.fn.datagrid = function(options) {
         var col = this.settings.columns[j];
 
         if (col.hidden) {
+          continue;
+        }
+
+        if (col.id && ['selectionCheckbox', 'expander'].indexOf(col.id) > -1) {
           continue;
         }
 
