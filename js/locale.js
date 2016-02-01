@@ -462,7 +462,7 @@
         decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
         group = options && options.group ? options.group : this.numbers().group,
         minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 2),
-        maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 3);
+        maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: (options && options.minimumFractionDigits ? options.minimumFractionDigits :3));
 
       if (number === undefined || number === null || number === '') {
         return undefined;
