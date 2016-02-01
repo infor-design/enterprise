@@ -29,6 +29,8 @@
       console.log('beforeopen event');
     }).on('afteropen', function () {
       console.log('afteropen event');
+    }).on('selected', function (a,b,c) {
+      console.log(a,b,c);
     });
 
   });

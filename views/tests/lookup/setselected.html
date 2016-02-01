@@ -1,0 +1,34 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="product-lookup" class="label">Products</label>
+      <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text">
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  var url = '/api/lookupInfo';
+  $.getJSON(url, function(data) {
+    var columns = data[0].columns,
+      dataset = data[0].dataset;
+
+    $('#product-lookup').lookup({
+        field: 'productId',
+        options: {
+          columns: columns,
+          dataset: dataset,
+          selectable: 'multiple', //multiple or single
+          toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true , rowHeight: true}
+        }
+    }).on('afteropen', function (e, elem, grid) {
+      grid.selectedRows([1,2,3]);
+    });
+
+  });
+
+</script>
