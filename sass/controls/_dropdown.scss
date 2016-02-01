@@ -105,6 +105,20 @@ input.multiselect {
   }
 }
 
+.inline {
+
+  + .dropdown-wrapper {
+    input.dropdown,
+    input.multiselect {
+      + .icon {
+        top: 22px;
+      }
+    }
+  }
+
+}
+
+
 // The List
 .dropdown-list {
   background-color: $popupmenu-bg-color;

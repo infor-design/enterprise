@@ -118,6 +118,30 @@ input + .busy-indicator-container,
   }
 }
 
+.inline {
+  + .busy-indicator-container,
+  .dropdown-wrapper > .busy-indicator-container {
+    .busy-indicator {
+      background-color: $body-bg-color;
+      height: 28px;
+      margin: .33em .3em .3em;
+      position: absolute;
+      right: 0;
+      width: 40px;
+
+      .bar {
+        height: 2.8em;
+        margin-right: .3em;
+        width: .3em;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
 .ie9 {
   .busy-indicator {
     .bar {

@@ -69,6 +69,10 @@ $toolbarsearchfield-empty-width: 34px;
     }
   }
 
+  .inline ~ .icon {
+    top: 11px;
+  }
+
   &.active {
     width: $toolbarsearchfield-max-width;
 
@@ -153,6 +157,10 @@ $toolbarsearchfield-empty-width: 34px;
         fill: $searchfield-text-color;
         height: 14px;
         top: 10px;
+      }
+
+      .inline ~ .icon {
+        top: 15px;
       }
     }
   }

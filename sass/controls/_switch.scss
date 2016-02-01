@@ -21,6 +21,7 @@
   input:empty {
     margin-left: -999px;
 
+    ~ .label-text,
     ~ label {
       @include no-select();
       cursor: pointer;
@@ -29,6 +30,7 @@
     }
 
     // ::before is the bar
+    ~ .label-text:before,
     ~ label:before {
       background-color: $switch-unchecked-bar-color;
       border-radius: 2px;
@@ -38,6 +40,8 @@
       width: 44px;
     }
 
+    ~ .label-text:before,
+    ~ .label-text:after,
     ~ label:before,
     ~ label:after {
       @include css3(transition, all 200ms cubic-bezier(.17, .04, .03, .94) 0s);
@@ -47,6 +51,7 @@
     }
 
     // ::after is the actual sphere
+    ~ .label-text:after,
     ~ label:after {
       background-color: $switch-unchecked-bg-color;
       border: 1px solid $switch-unchecked-border-color;
@@ -60,11 +65,13 @@
   }
 
   //Checked Styling - Inner
+  input:checked ~ .label-text:before,
   input:checked ~ label:before {
     background-color: $switch-checked-bg-color;
   }
 
   //Checked Styling - Toggle Handle
+  input:checked ~ .label-text:after,
   input:checked ~ label:after {
     background: $switch-checked-color;
     border-color: $switch-checked-color;
@@ -72,27 +79,34 @@
   }
 
   // Active State
+  input:not(:disabled):active ~ .label-text:after,
+  input:not(:disabled):focus ~ .label-text:after,
   input:not(:disabled):active ~ label:after,
   input:not(:disabled):focus ~ label:after {
     background-color: $switch-unchecked-pressed-bg-color;
     box-shadow: 0 0 0 10px rgba($switch-checked-color, .2);
   }
 
+  input:not(:disabled):checked:active ~ .label-text:after,
+  input:not(:disabled):checked:focus ~ .label-text:after,
   input:not(:disabled):checked:active ~ label:after,
   input:not(:disabled):checked:focus ~ label:after {
     background-color: $switch-checked-color;
   }
 
   //Disabled
+  input:disabled ~ .label-text,
   input:disabled ~ label {
     color: $switch-disabled-label-color;
     cursor: default;
   }
 
+  input:disabled ~ .label-text:before,
   input:disabled ~ label:before {
     background-color: $switch-disabled-color;
   }
 
+  input:disabled ~ .label-text:after,
   input:disabled ~ label:after {
     background-color: $switch-disabled-color;
     border-color: $switch-disabled-border-color;
@@ -120,11 +134,13 @@ html[dir='rtl'] {
       margin-left: 0;
       margin-right: -999px;
 
+      ~ .label-text:before,
       ~ label:before {
         left: auto;
         right: 0;
       }
 
+      ~ .label-text:after,
       ~ label:after {
         left: auto;
         right: 0;
@@ -132,6 +148,7 @@ html[dir='rtl'] {
     }
 
     //Checked Styling - Toggle Handle
+    input:checked ~ .label-text:after,
     input:checked ~ label:after {
       left: auto;
       right: 29px;

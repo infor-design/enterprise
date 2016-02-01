@@ -40,12 +40,12 @@
       handleEvents: function () {
         var self = this;
 
-        this.element.on('change', 'input', function () {
-          if ($(this).closest('.rating').hasClass('is-readonly')) {
-            return;
-          }
-          var idx = $(this).index()/2;
-          self.val(idx+1);
+        $('input', self.element).each(function(index) {
+          $(this).on('change', function () {
+            if (!self.element.hasClass('is-readonly')) {
+              self.val(index + 1);
+            }
+          });
         });
       },
       val: function(value) {
@@ -58,7 +58,8 @@
         chkIdx = Math.round(this.currentValue);
 
         for (i = 0; i < this.allInputs.length; i++) {
-          var input = $(this.allInputs[i]);
+          var input = $(this.allInputs[i]),
+            svgSelector = input.parent().is('.inline') ? 'svg' : 'label';
 
           if (i < value) {
             input.addClass('is-filled').removeClass('is-half');
@@ -67,14 +68,14 @@
           }
 
           //Handle Half Star
-          input.next('label').find('use').attr('xlink:href', '#icon-star-filled');
+          input.next(svgSelector).find('use').attr('xlink:href', '#icon-star-filled');
 
           if (i+1 === chkIdx) {
             input.prop('checked', true);
           }
 
           if (chkIdx !== self.currentValue && i+1 === chkIdx) {
-           input.addClass('is-half').next('label').find('use').attr('xlink:href', '#icon-star-half');
+           input.addClass('is-half').next(svgSelector).find('use').attr('xlink:href', '#icon-star-half');
           }
         }
         if (chkIdx <= 0) {

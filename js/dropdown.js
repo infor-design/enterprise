@@ -45,31 +45,52 @@
     Dropdown.prototype = {
       init: function() {
         var orgId = this.element.attr('id'),
-          id = orgId + '-shdo', //The Shadow Input Element. We use the dropdown to serialize.
+          prefix = '-shdo',
+          name = this.element.attr('name'),
+          id = orgId + prefix, //The Shadow Input Element. We use the dropdown to serialize.
           cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
             this.element.is('.dropdown-sm') ? 'dropdown input-sm' :
             this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
 
+        this.inlineLabel = this.element.closest('label');
+        this.inlineLabelText = this.inlineLabel.find('.label-text');
+        this.isInlineLabel = this.element.parent().is('.inline');
+
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
-        this.orgLabel = orgId !== undefined ? $('label[for="' + this.element.attr('id') + '"]') :
-          this.element.prev('label, .label').length ? this.element.prev('label, .label') : $();
+        this.orgLabel = orgId !== undefined ? $('label[for="' + orgId + '"]') :
+          (this.element.prev('label, .label').length ? this.element.prev('label, .label') :
+            (this.isInlineLabel ? this.element.parent() : $()));
 
-        this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.element);
+        this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.isInlineLabel ? this.inlineLabel : this.element);
 
         this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
-        this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({'role': 'combobox'})
-                        .attr({'aria-autocomplete': 'list', 'aria-controls': 'dropdown-list'})
-                        .attr({'aria-readonly': 'true', 'aria-expanded': 'false'})
-                        .attr({'aria-describedby' : id + '-instructions', 'id': id});
+        this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({
+                       'role': 'combobox',
+                       'aria-autocomplete': 'list',
+                       'aria-controls': 'dropdown-list',
+                       'aria-readonly': 'true',
+                       'aria-expanded': 'false',
+                       'aria-describedby' : (orgId ? id : name + prefix) + '-instructions',
+                       'id': (orgId ? id : name + prefix)
+                     });
 
-        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
+        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');        
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.wrapper.append(this.input, this.trigger, this.icon);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
-          this.element.after(this.label);
+          if (this.isInlineLabel) {
+            this.wrapper
+                .append($('<label></label>')
+                  .attr('for', name + prefix)
+                  .html(this.label.find('.label-text').html())
+                );
+          }
+          else {
+            this.element.after(this.label);
+          }
           this.wrapper.append(this.input, this.trigger, this.icon);
         } else {
           this.wrapper.append(this.input, this.trigger, this.icon);
@@ -185,7 +206,7 @@
           var selectedOpts = self.element.find('option:selected');
           // Show a "selected" header if any options have been selected.
           if (selectedOpts.length > 0) {
-            self.listUl.append($('<li role="presentation" class="group-label" focusable="false"></li>').text(Locale.translate('Selected') + ' ' + this.label.text()));
+            self.listUl.append($('<li role="presentation" class="group-label" focusable="false"></li>').text(Locale.translate('Selected') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text())));
           }
           selectedOpts.each(function(i) {
             var option = $(this),
@@ -201,7 +222,8 @@
           });
           // Only show the "all" header if there are no other optgroups present
           if (selectedOpts.length > 0 && !self.element.find('optgroup').length) {
-            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('All ' + this.label.text()));
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('All ' + 
+              (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text())));
           }
         }
 

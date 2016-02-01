@@ -35,8 +35,10 @@
     Spinbox.prototype = {
 
       init: function() {
-        var self = this;
-        self
+        this.inlineLabel = this.element.closest('label');
+        this.inlineLabelText = this.inlineLabel.find('.label-text');
+        this.isInlineLabel = this.element.parent().is('.inline');
+        this
           .setInitialValue()
           .addMarkup()
           .bindEvents();
@@ -63,8 +65,11 @@
 
       addMarkup: function() {
         var self = this;
-        if (this.element.parent('.spinbox-wrapper').length === 0) {
-          this.element.wrap('<div class="spinbox-wrapper"></div>');
+        if (this.isInlineLabel) {
+          this.inlineLabel.addClass('spinbox-wrapper');
+        }
+        else if (!this.element.parent('.spinbox-wrapper').length) {
+          this.element.wrap('<span class="spinbox-wrapper"></span>');
         }
 
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

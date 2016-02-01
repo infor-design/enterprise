@@ -102,6 +102,12 @@
   }
 }
 
+.inline.searchfield-wrapper {
+  > .icon {
+    top: 30px;
+  }
+}
+
 // Context Searchfield's Popupmenu has alternate styles
 .popupmenu.autocomplete.context {
   border-top: 1px solid $searchfield-context-border-color !important;

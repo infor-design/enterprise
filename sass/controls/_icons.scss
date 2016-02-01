@@ -1,8 +1,10 @@
 // Icons and Icon Buttons
 //================================================== //
 
+// Svg Styles
 .icon {
   display: inline-block;
+  fill: $graphite04;
   height: 18px; //Older ones at 32 but now based on 40
   position: relative;
   width: 22px;
@@ -11,11 +13,6 @@
     height: 14px;
     width: 14px;
   }
-}
-
-// Svg Styles
-.icon {
-  fill: #999999;
 }
 
 // Specific Icon Types
@@ -32,10 +29,6 @@
   width: 20px;
 }
 
-.icon-pending {
-  width: 18px;
-}
-
 .field {
   .icon-error,
   .icon-confirm,
@@ -45,13 +38,23 @@
     margin-right: -21px;
     right: 30px;
   }
-}
 
-.field .lookup-wrapper {
-  .icon-error,
-  .icon-confirm {
-    margin-right: -20px;
-    right: 55px;
+  label {
+    .icon-error,
+    .icon-confirm,
+    .icon-alert,
+    .icon-info,
+    .icon-pending {
+      top: 15px;
+    }
+  }
+
+  .lookup-wrapper {
+    .icon-error,
+    .icon-confirm {
+      margin-right: -20px;
+      right: 55px;
+    }
   }
 }
 
@@ -69,6 +72,7 @@
   border-radius: 50%;
   fill: $white;
   height: 18px;
+  width: 18px;
 }
 
 .icon-info {
@@ -130,11 +134,27 @@ svg.icon-logo {
   &.dirty-checkbox {
     left: 0;
     top: -2px;
+
+    &.is-checked {
+      top: 0;
+      z-index: 2;
+    }
   }
 
-  &.dirty-checkbox.is-checked {
-    top: 0;
-    z-index: 2;
+}
+
+.inline {
+  .icon-dirty {
+    margin-top: 8px;
+
+    &.dirty-checkbox {
+      margin-top: inherit;
+      top: 1px;
+
+      &.is-checked {
+        top: 0;
+      }
+    }
   }
 }
 

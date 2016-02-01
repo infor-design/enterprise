@@ -5,6 +5,7 @@
   background-color: $input-bg-color;
   border: 1px solid $input-border-color;
   border-radius: 2px;
+  display: inline-block;
   overflow: hidden;
   width: 150px;
 
@@ -170,6 +171,17 @@
 
 .field > .colorpicker-container {
   margin-bottom: 20px;
+}
+
+.inline.colorpicker-container {
+  .colorpicker {
+    width: 80px;
+  }
+
+  .label-text {
+    position: absolute;
+    top: -18px;
+  }
 }
 
 //RTL Styles

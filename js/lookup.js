@@ -51,6 +51,9 @@
 
       init: function() {
         this.settings = settings;
+        this.inlineLabel = this.element.closest('label');
+        this.inlineLabelText = this.inlineLabel.find('.label-text');
+        this.isInlineLabel = !!this.inlineLabelText.length;
         this.build();
         this.handleEvents();
         this.grid = null;
@@ -63,8 +66,16 @@
 
         //Add Button
         this.icon = $('<span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search-list"/></svg></span>');
-        this.container = $('<div class="lookup-wrapper"></div>');
-        lookup.wrap(this.container);
+        if (this.isInlineLabel) {
+          this.inlineLabel.addClass('lookup-wrapper');
+        }
+        else {
+          this.container = $('<span class="lookup-wrapper"></span>');
+          lookup.wrap(this.container);
+        }
+
+        // this.container = $('<span class="lookup-wrapper"></span>');
+        // lookup.wrap(this.container);
         lookup.after(this.icon);
 
         //Add Masking to show the #
@@ -87,8 +98,8 @@
         var self = this;
 
         setTimeout(function () {
-          $('label[for="'+ self.element.attr('id') + '"]')
-          .append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
+          var el = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+ self.element.attr('id') + '"]');
+          el.append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
         }, 500);
       },
 
@@ -167,9 +178,9 @@
       createModal: function () {
         var self = this,
           content = '<hr><div id="'+lookupGridId+'"></div>',
-          labelText = $('label[for="'+self.element.attr('id')+'"]').contents().filter(function(){
-            return this.nodeType === 3;
-          })[0].nodeValue + ' ' + Locale.translate('Lookup');
+          labelText = (self.isInlineLabel ? self.inlineLabelText : $('label[for="'+self.element.attr('id')+'"]')).text();
+        
+        labelText += ' ' + Locale.translate('Lookup');
 
         if (this.settings.title) {
           labelText = this.settings.title;

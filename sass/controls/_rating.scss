@@ -5,10 +5,10 @@
   display: inline-block;
 
   input {
+    @include opacity(0);
     cursor: pointer;
     height: 14px;
     margin: 4px 0 0 1px;
-    @include opacity(0);
     position: absolute;
     width: 14px;
     z-index: 1;
@@ -38,6 +38,7 @@
     width: 22px;
   }
 
+  .rating .inline input:focus + svg.icon,
   input:focus + label > svg.icon {
     stroke: $rating-hover-color !important;
   }
@@ -45,31 +46,35 @@
 }
 
 .rating-text {
+  @include font-size(14);
   color: $rating-border-color;
   display: inline-block;
-  @include font-size(14);
   line-height: 20px;
   padding-left: 40px;
 }
 
+.rating:not(.is-readonly) .inline input:hover + svg.icon,
 .rating:not(.is-readonly) input:hover + label > svg.icon {
   stroke: $rating-hover-color;
 }
 
-.rating input:checked + label > svg.icon,
+.rating .inline .is-filled + svg.icon,
 .rating .is-filled + label > svg.icon {
+  @include opacity(1);
   fill: $rating-bg-color;
   stroke: $rating-bg-color;
-  @include opacity(1);
 }
 
+.rating .inline input:checked + svg.icon,
+.rating .inline .is-half + svg.icon,
 .rating input:checked + label > svg.icon,
 .rating .is-half + label > svg.icon {
+  @include opacity(1);
   fill: $rating-bg-color;
   stroke: transparent;
-  @include opacity(1);
 }
 
+.rating:not(.is-readonly) .inline input:active + svg.icon,
 .rating:not(.is-readonly) input:active + label > svg.icon {
   stroke: $rating-hover-color;
 }

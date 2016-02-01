@@ -108,8 +108,11 @@
     Plugin.prototype = {
 
       init: function() {
-       this.build();
-       this.handleEvents();
+        this.inlineLabel = this.element.closest('label');
+        this.inlineLabelText = this.inlineLabel.find('.label-text');
+        this.isInlineLabel = this.element.parent().is('.inline');
+        this.build();
+        this.handleEvents();
       },
 
       // Add the extra markup
@@ -118,8 +121,14 @@
           initialValue = this.element.val();
 
         //Add Button
-        this.container = $('<div class="colorpicker-container"></div>');
-        colorpicker.wrap(this.container);
+        if (this.isInlineLabel) {
+          this.inlineLabel.addClass('colorpicker-container');
+        }
+        else {
+          this.container = $('<span class="colorpicker-container"></span>');
+          colorpicker.wrap(this.container);
+        }
+
         this.container = colorpicker.parent();
         this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
         this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>').appendTo(this.container);
