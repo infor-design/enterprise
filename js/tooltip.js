@@ -260,6 +260,10 @@
             }
           });
 
+          if (settings.isError && !self.element.is(':visible')) {
+            self.hide();
+          }
+
           $(window).on('resize.tooltip', function() {
             self.hide();
           });
@@ -272,6 +276,7 @@
           }
 
           self.element.trigger('aftershow', [self.tooltip]);
+
         }, 400);
 
       },
@@ -455,7 +460,7 @@
         }
 
         if (settings.isError) {
-          extraOffset = 0;
+          extraOffset = 2;
           lessTop = 2;
         }
 

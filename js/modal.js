@@ -427,6 +427,9 @@
           self.disableSubmit();
         }, 10);
 
+        var fields = this.element.find('[data-validate]');
+        fields.removeClass('disable-validation');
+
         setTimeout(function () {
           focusElement();
         }, 200);
@@ -527,7 +530,10 @@
         }
 
         var elemCanClose = this.element.triggerHandler('beforeclose'),
-          self = this;
+          self = this,
+          fields = this.element.find('[data-validate]');
+
+        fields.addClass('disable-validation');
 
         if (elemCanClose === false) {
           return false;

@@ -117,15 +117,16 @@
         field.on(events, function (e) {
 
           var field = $(this);
-          if ($(this).css('visibility') === 'is-hidden' || !$(this).is(':visible')) {
-            return;
-          }
-
-          if (clickObj !== null && clickObj.is('.dropdown-option')) {
-            return;
-          }
-
           setTimeout(function () {
+
+            if (field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
+              return;
+            }
+
+            if (clickObj !== null && clickObj.is('.dropdown-option')) {
+              return;
+            }
+
             self.validate(field, field.closest('.modal-engaged').length === 1 ? false : true, e);
           }, 150);
         });
