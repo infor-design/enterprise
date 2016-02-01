@@ -129,7 +129,7 @@
 
         function menuItemFilter() {
           //jshint validthis:true
-          return $(this).parent('.buttonset').length;
+          return $(this).parent('.buttonset, .inline').length;
         }
 
         var menuItems = [];

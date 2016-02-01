@@ -47,7 +47,7 @@
           this.counter = $('<span class="textarea-wordcount">Chars Left..</span>').insertAfter(this.element);
         }
         if (settings.printable) {
-          this.printarea = $('<div class="textarea-print"></div>').insertBefore(this.element);
+          this.printarea = $('<span class="textarea-print"></span>').insertBefore(this.element);
         }
         this.handleEvents();
         this.update(this);

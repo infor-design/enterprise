@@ -430,7 +430,8 @@
         } else if (field.is('.lookup')) {
           field.parent().append(svg);
         } else {
-          field.parent('.field').append(svg);
+          field.parent().append(svg);
+          // field.parent('.field').append(svg);
         }
 
         $('.icon-confirm', loc.parent('.field')).remove();

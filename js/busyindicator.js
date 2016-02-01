@@ -42,6 +42,10 @@
     BusyIndicator.prototype = {
 
       init: function() {
+        this.inlineLabel = this.element.closest('label');
+        this.inlineLabelText = this.inlineLabel.find('.label-text');
+        this.isInlineLabel = this.element.parent().is('.inline');
+
         this
           .setup()
           .handleEvents();
@@ -138,7 +142,7 @@
 
           if (this.element.is('input')) {
             target = this.element;
-            this.container.insertAfter(this.element);
+            this.container.insertAfter(this.isInlineLabel ? this.inlineLabel : this.element);
           } else {
             var dd = this.element.data('dropdown');
             target = dd.input;

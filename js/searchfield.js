@@ -41,6 +41,9 @@
     SearchField.prototype = {
 
       init: function() {
+        this.inlineLabel = this.element.closest('label');
+        this.inlineLabelText = this.inlineLabel.find('.label-text');
+        this.isInlineLabel = this.element.parent().is('.inline');
         this.build().setupEvents();
       },
 
@@ -58,8 +61,14 @@
         this.element.attr('autocomplete','off');
 
         this.wrapper = this.element.parent('.searchfield-wrapper');
-        if (!this.wrapper || !this.wrapper.length) {
-          this.wrapper = this.element.wrap('<div class="searchfield-wrapper"></div>').parent();
+        if (!this.wrapper || !this.wrapper.length) {          
+          if (this.isInlineLabel) {
+            this.wrapper = this.inlineLabel.addClass('searchfield-wrapper');
+          }
+          else {
+            this.wrapper = this.element.wrap('<span class="searchfield-wrapper"></span>').parent();
+          }
+
           // Label for toolbar-inlined searchfields needs to be inside the wrapper to help with positioning.
           if (this.element.closest('.toolbar').length) {
             this.label.prependTo(this.wrapper);

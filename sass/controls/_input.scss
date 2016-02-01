@@ -1,5 +1,44 @@
 // User Input - TextBox, Textarea
 //================================================== //
+// rem font sizin
+
+// Required Indicator
+@mixin required-indicator() {
+  @include font-size(18);
+  color: $error-color;
+  content: '*';
+  display: inline-block;
+  left: 3px;
+  line-height: 10px;
+  position: relative;
+  top: 2px;
+}
+
+// Labels without the "for" attribute
+@mixin inline-control-label($controls) {
+  @each $control in $controls {
+    &.inline-#{$control} {
+      .label-text {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+@mixin inline-control($controls) {
+  $exclude-controls: '';
+  @each $control in $controls {
+    $exclude-controls: $exclude-controls + ':not(.#{$control})';
+  }
+
+  input,
+  textarea {
+    &#{$exclude-controls} {
+      margin: 5px 0 12px;
+    }
+  }
+}
+
 
 // Field Style
 .field .checkbox-label,
@@ -214,17 +253,30 @@ textarea[disabled] + .textarea-wordcount {
   }
 }
 
+.inline {
+  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker');
+  @include inline-control-label($controls);
+  @include inline-control($controls);
+
+  .label-text {
+    display: block;
+  }
+}
+
 // Required Indicator
-label.required:after,
-.label.required:after {
-  color: $error-color;
-  content: '*';
-  display: inline-block;
-  @include font-size(18);
-  left: 3px;
-  line-height: 10px;
-  position: relative;
-  top: 2px;
+label,
+.label {
+
+  &.required {
+    &:after:not(.inline) {
+      @include required-indicator();
+    }
+
+    .label-text:after {
+      @include required-indicator();
+    }
+  }
+
 }
 
 // Placeholder - Inline help

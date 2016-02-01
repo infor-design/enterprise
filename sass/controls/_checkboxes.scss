@@ -77,6 +77,7 @@ span.checkbox > input {
   width: 18px;
 }
 
+label.inline .checkbox ~ .label-text,
 input.checkbox + label,
 input.checkbox + input[type="hidden"] + label,
 span.checkbox > label {
@@ -87,18 +88,21 @@ span.checkbox > label {
   @include no-select();
 }
 
+label.inline .checkbox ~ .label-text:before,
 input.checkbox + label:before,
 input.checkbox + input[type="hidden"] + label:before,
 span.checkbox > label:before {
   @include checkbox-unchecked-before-style;
 }
 
+label.inline .checkbox:checked ~ .label-text:before,
 input.checkbox:checked + label:before,
 input.checkbox:checked + input[type="hidden"] + label:before,
 span.checkbox > input:checked + label:before {
   @include checkbox-checked-before-style;
 }
 
+label.inline .checkbox:checked ~ .label-text:after,
 input.checkbox:checked + label:after,
 input.checkbox:checked + input[type="hidden"] + label:after,
 span.checkbox > input:checked + label:after {
@@ -128,6 +132,7 @@ span.checkbox > input + label {
   margin-top: 2px;
 }
 
+label.inline .checkbox.partial:checked ~ .label-text:after,
 input.checkbox.partial:checked + label:after,
 input.checkbox.partial:checked + input[type="hidden"] + label:after,
 span.checkbox.partial > input:checked + label:after {
@@ -141,6 +146,7 @@ span.checkbox.partial > input:checked + label:after {
 }
 
 // Disabled State
+label.inline .checkbox:disabled ~ .label-text,
 input.checkbox:disabled + label,
 input.checkbox:disabled + input[type="hidden"] + label,
 span.checkbox > input:disabled + label {
@@ -148,18 +154,21 @@ span.checkbox > input:disabled + label {
   color: $checkbox-disabled-font-color;
 }
 
+label.inline .checkbox:disabled:not(:checked) ~ .label-text:before,
 input.checkbox:disabled:not(:checked) + label:before,
 input.checkbox:disabled:not(:checked) + input[type="hidden"] + label:before,
 span.checkbox > input:disabled:not(:checked) + label:before {
   @include checkbox-unchecked-disabled-before-style;
 }
 
+label.inline .checkbox:disabled:checked ~ .label-text:before,
 input.checkbox:disabled:checked + label:before,
 input.checkbox:disabled:checked + input[type="hidden"] + label:before,
 span.checkbox > input:disabled:checked + label:before {
   @include checkbox-checked-disabled-before-style;
 }
 
+label.inline .checkbox:disabled:checked ~ .label-text:after,
 input.checkbox:disabled:checked + label:after,
 input.checkbox:disabled:checked + input[type="hidden"] + label:after,
 span.checkbox > input:disabled:checked + label:after {
@@ -167,6 +176,7 @@ span.checkbox > input:disabled:checked + label:after {
 }
 
 // Focus State
+label.inline .checkbox:focus ~ .label-text:before,
 input.checkbox:focus + label:before,
 input.checkbox:focus + input[type="hidden"] + label:before,
 span.checkbox > input:focus + label:before {
@@ -174,6 +184,7 @@ span.checkbox > input:focus + label:before {
 }
 
 // Hover State
+label.inline .checkbox:not(:checked):not(:disabled):hover ~ .label-text:before,
 input.checkbox:not(:checked):not(:disabled):hover + label:before,
 input.checkbox:not(:checked):not(:disabled):hover + input[type="hidden"] + label:before,
 span.checkbox > input:not(:checked):not(:disabled):hover + label:before {
@@ -181,6 +192,7 @@ span.checkbox > input:not(:checked):not(:disabled):hover + label:before {
 }
 
 // Labels
+label.inline .checkbox ~ .label-text,
 .checkbox-label {
   line-height: 21px;
 }
@@ -202,10 +214,12 @@ span.checkbox > input:not(:checked):not(:disabled):hover + label:before {
   }
 }
 
+label.inline .checkbox ~ .label-text:after,
 .checkbox + label:after {
   @include checkbox-transform-rules;
 }
 
+label.inline .checkbox:not(.partial):checked ~ .label-text:after,
 .checkbox:not(.partial):checked + label:after {
   @include checkbox-animation;
 }
@@ -218,6 +232,7 @@ span.checkbox > input:not(:checked):not(:disabled):hover + label:before {
 
 // Print Support
 @media print {
+  label.inline .checkbox ~ .label-text,
   .checkbox + label:before {
     content: none;
   }
@@ -229,12 +244,14 @@ span.checkbox > input:not(:checked):not(:disabled):hover + label:before {
     width: unset;
   }
 
+  label.inline .checkbox ~ .label-text,
   input.checkbox + label,
   input.checkbox + input[type="hidden"] + label,
   span.checkbox > label {
     padding-left: 8px;
   }
 
+  label.inline .checkbox ~ .label-text::before,
   input.checkbox + label::before,
   input.checkbox + input[type="hidden"] + label::before,
   span.checkbox > label::before {
@@ -243,10 +260,15 @@ span.checkbox > input:not(:checked):not(:disabled):hover + label:before {
   }
 }
 
+label.inline:not(.checkbox-label) .checkbox ~ .label-text {
+  margin: 0 auto 5px -5px;
+}
+
 
 //RTL Styles
 html[dir='rtl'] {
 
+  label.inline .checkbox:checked ~ .label-text:after,
   input.checkbox:checked + label:after,
   input.checkbox:checked + input[type="hidden"] + label:after,
   span.checkbox > input:checked + label:after {
@@ -254,6 +276,7 @@ html[dir='rtl'] {
     right: 14px;
   }
 
+  label.inline .checkbox ~ .label-text,
   input.checkbox + label,
   input.checkbox + input[type="hidden"] + label,
   span.checkbox > label {
@@ -261,6 +284,7 @@ html[dir='rtl'] {
     padding-right: 32px;
   }
 
+  label.inline .checkbox ~ .label-text:before,
   input.checkbox + label:before,
   input.checkbox + input[type="hidden"] + label:before,
   span.checkbox > label:before {
@@ -268,6 +292,7 @@ html[dir='rtl'] {
     margin-right: -27px;
   }
 
+  label.inline .checkbox.partial:checked ~ .label-text:after,
   input.checkbox.partial:checked + label:after,
   input.checkbox.partial:checked + input[type="hidden"] + label:after,
   span.checkbox.partial > input:checked + label:after {
@@ -287,6 +312,7 @@ html[dir='rtl'] {
     padding: 0;
   }
 
+  label.inline .checkbox ~ .label-text,
   .checkbox-label,
   input.checkbox + label,
   input.checkbox + input[type="hidden"] + label,

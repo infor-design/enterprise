@@ -123,6 +123,26 @@
     return this;
   };
 
+  /**
+  * Labels without the "for" attribute
+  */
+  $(function () {
+    var str, control,
+      labelText = $('.label-text'),
+      labels = labelText.closest('label, .label');
+
+    labels.each(function () {
+      control = $('input, textarea, select', this);
+      str = control.attr('class');
+
+      $(this).addClass(function () {
+        // Add "inline" and "inline-{control}" class to label
+        // assuming control class is first thing in class string
+        return 'inline' + (str ? ' inline-'+ (str.indexOf(' ') === -1 ? str : str.substr(0, str.indexOf(' '))) : '');
+      });
+    });
+  });
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
