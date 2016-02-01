@@ -40,17 +40,18 @@ $hr-bottom-color: transparent;
 // Popovers
 $popover-bg-color: $slate06;
 $popover-border-color: $slate09;
+$popover-box-shadow: 0 2px 5px rgba(0,0,0,.4);
 $popover-arrow-border-color: $slate09;
-$popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
-$popover-separator-color: $slate09;
+$popover-separator-color: $slate05;
 
 //Progress
 $progress-border-color: $graphite05;
 
 // Tooltips
-$tooltip-bg-color: $white;
-$tooltip-border-color: $graphite03;
+$tooltip-bg-color: $graphite01;
+$tooltip-border-color: $graphite01;
+$tooltip-box-shadow: 0 2px 5px rgba(0,0,0,.4);
 $tooltip-color: $graphite10;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
@@ -67,6 +68,7 @@ $popupmenu-heading-color: $slate01;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $slate06;
 $popupmenu-border-color: $slate09;
+$popupmenu-box-shadow: 0 2px 5px rgba(0,0,0,.4);
 $popupmenu-checked-color: $white;
 $popupmenu-hover-color: $slate05;
 
@@ -136,7 +138,7 @@ $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
 $dropdown-search-color: $autocomplete-light-text;
 $dropdown-menu-border-color: $primary-color;
-$dropdown-menu-separator-color: $slate05;
+$dropdown-menu-separator-color: $slate03;
 $dropdown-group-label-color: $slate03;
 
 // Date Picker
@@ -245,10 +247,11 @@ $slider-disabled-color: $slate08;
 
 //Modal
 $modal-bg-color: $slate07;
-$modal-border-color: $slate09;
-$modal-btn-color: $slate04;
-$modal-color: $white;
-$modal-btn-border-color: $modal-border-color;
+$modal-border-color: $slate05;
+$modal-box-shadow: 0 2px 5px rgba(0,0,0,.4);
+$modal-btn-color: $slate03;
+$modal-color: $slate01;
+$modal-btn-border-color: $slate05;
 $modal-btn-hover-color: $slate03;
 $modal-btn-primary-color: $primary-color;
 $modal-btn-primary-hover-color: $azure05;

@@ -65,7 +65,7 @@
   background-color: $popover-bg-color;
   display: inline-block;
   min-height: 300px;
-  min-width: 300px;
+  min-width: 297px;
   text-align: center;
   vertical-align: middle;
   width: auto;
@@ -177,8 +177,8 @@
 // Header Area of Calendar
 .calendar-header {
   border-bottom: 1px solid $popover-separator-color;
-  height: 56px;
-  line-height: 62px;
+  height: 48px;
+  line-height: 52px;
   position: relative;
   text-align: left;
   text-indent: 25px;
@@ -198,11 +198,11 @@
     transition: border-color .3s ease;
 
     &.prev {
-      margin: 8px 5px 0 0;
+      margin: 4px 5px 0 0;
 
       svg {
-        height: 28px;
-        width: 28px;
+        height: 24px;
+        width: 24px;
         left: 0;
         top: 0;
       }
@@ -210,12 +210,12 @@
 
     &.next {
       left: auto;
-      margin: 8px 0 0 5px;
+      margin: 4px 0 0 5px;
       right: 11px;
 
       svg {
-        height: 28px;
-        width: 28px;
+        height: 24px;
+        width: 24px;
         left: 0;
         top: 0;
       }

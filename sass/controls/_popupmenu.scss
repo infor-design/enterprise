@@ -126,6 +126,7 @@
 .popupmenu {
   background-color: $popupmenu-bg-color;
   border: 1px solid $popupmenu-border-color;
+  box-shadow: $popupmenu-box-shadow;
   border-radius: 3px;
   color: $popupmenu-color;
   display: none;

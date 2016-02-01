@@ -5,7 +5,12 @@
 
      <div class="field">
       <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
-      <input type="text" id="email-address" class="lookup" name="email-address" value="someone@someplace.com">
+      <input type="text" id="email-address" class="lookup" name="email-address" value="someone@someplace.com"  data-validate="required" >
+    </div>
+
+    <div class="field">
+      <label for="username-display">Username</label>
+      <input class="lookup" name="username-display" id="username-display" autocomplete="off" data-validate="required"  />
     </div>
 
     <button class="btn" type="button" id="show">Show Error</button>
@@ -15,10 +20,10 @@
 
 <script type="text/javascript">
   $('button').button().on('click', function () {
-    $('#email-address').removeError().addError({message: 'I have an Error.', showTooltip: true});
+    $('#username-display').removeError().addError({message: 'I have an Error.', showTooltip: true});
   });
 
   $('#hide').button().on('click', function () {
-    $('#email-address').removeError();
+    $('#username-display').removeError();
   });
 </script>

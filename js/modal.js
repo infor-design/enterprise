@@ -196,6 +196,7 @@
 
         btnWidth = 100/buttons.length;
 
+        var cnt = 0;
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
@@ -217,6 +218,11 @@
           if (props.validate !== undefined && !props.validate) {
             btn.addClass('no-validation');
           }
+
+          if (cnt === 0) {
+            btn.addClass('hide-focus');
+          }
+          cnt++;
 
           var attrs = {},
             attrTypes = ['id', 'name', 'text'];

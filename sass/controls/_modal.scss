@@ -84,6 +84,7 @@
 .modal-content {
   background: $modal-bg-color;
   border: 1px solid $modal-border-color;
+  box-shadow: $modal-box-shadow;
   color: $font-color;
   margin: 5px;
   overflow: hidden;
@@ -94,7 +95,6 @@
   // @include css3(transform-origin, 50% 50% 0);
   // @include css3(transition, all .3s);
   // @include css3(backface-visibility, hidden);
-
 
   // Messages/Content
   h1 {
@@ -141,7 +141,7 @@
   }
 
   .message {
-    color: #666666;
+    color: $modal-color;
     font-size: 1.5rem;
     line-height: 20px;
     max-width: 369px;
@@ -204,7 +204,7 @@
       border-left: 1px solid transparent;
     }
 
-    &:focus {
+    &:focus:not(.hide-focus) {
       border: 1px solid $input-focus-border-color;
       outline: none;
       outline-color: transparent;
