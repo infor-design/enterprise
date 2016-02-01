@@ -172,7 +172,7 @@ input.multiselect {
     &.is-focused {
       background-color: $popupmenu-hover-color;
 
-      &:not(.group-label):before {
+      &::before {
         @include checkbox-checked-before-style;
         border-color: $inverse-color;
       }
@@ -227,16 +227,16 @@ input.multiselect {
       text-indent: 42px;
     }
 
-    li:not(.group-label):before {
+    li::before {
       top: 6px;
       @include checkbox-unchecked-before-style;
     }
 
-    li.is-disabled:not(.group-label):before {
+    li.is-disabled::before {
       @include checkbox-unchecked-disabled-before-style;
     }
 
-    li.is-focused:not(.group-label):before {
+    li.is-focused::before {
       @include checkbox-unchecked-before-style;
     }
 
@@ -250,24 +250,32 @@ input.multiselect {
       }
     }
 
-    li.is-selected:not(.group-label):before {
+    li.is-selected::before {
       @include checkbox-checked-before-style;
     }
 
-    li.is-selected:not(.group-label):after {
+    li.is-selected::after {
       @include checkbox-checked-after-style;
       left: 21px;
       margin-top: 8px;
     }
 
-    li.is-disabled.is-selected:not(.group-label):before {
+    li.is-disabled.is-selected::before {
       @include checkbox-checked-disabled-before-style;
     }
 
-    li.is-disabled.is-selected:not(.group-label):after {
+    li.is-disabled.is-selected::after {
       @include checkbox-checked-disabled-after-style;
       left: 21px;
       margin-top: 8px;
+    }
+
+    li.group-label,
+    li.separator {
+      &::before,
+      &::after {
+        content: none;
+      }
     }
 
     a {
@@ -426,6 +434,39 @@ input.multiselect {
     margin-top: 0;
     width: 16px;
   }
+
+  // Multiple
+  &.multiple {
+    li {
+      &::before {
+        top: 4px;
+        margin-left: 0;
+      }
+
+      &::after {
+        left: 11px;
+        margin-top: 6px;
+      }
+
+      &.is-focused {
+        &::before {
+          margin-left: 0;
+        }
+
+        &::after {
+          left: 11px;
+          margin-top: 6px;
+        }
+      }
+
+      a {
+        display: inline-block;
+        padding-left: 18px;
+        padding-top: 1px;
+      }
+    }
+  }
+
 }
 
 
@@ -450,17 +491,17 @@ html[dir='rtl'] {
 
     &.multiple {
 
-      li:not(.group-label):before {
+      li::before {
         margin-left: inherit;
         margin-right: -27px;
       }
 
-      li.is-selected:not(.group-label):after {
+      li.is-selected::after {
         left: inherit;
         right: 21px;
       }
 
-      li.is-disabled.is-selected:not(.group-label):after {
+      li.is-disabled.is-selected::after {
         left: inherit;
         right: 21px;
       }
