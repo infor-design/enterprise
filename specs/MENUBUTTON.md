@@ -109,6 +109,10 @@ http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
 **Heading** - Used to add headings to separated menu content groups
 
+**Single Select** - Used to allow for marking an item as a selected one. The item will appear ticked the next time and the menu will be closed. The other items will be unticked
+
+**Multi Select** - Used to allow for checkbox, multi select of menu options. In this case the menu will not close when a checkbox is clicked
+
 
 ## Mobile
 

@@ -117,10 +117,10 @@ button {
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $primary-btn-bg-color;
-    border-color: $primary-btn-bg-color;
+    background-color: $primary-btn-disabled-bg-color;
+    border-color: $primary-btn-disabled-bg-color;
     box-shadow: none;
-    color: $btn-disabled-color;
+    color: $primary-btn-disabled-color;
     cursor: default;
 
     .icon {
@@ -340,7 +340,7 @@ a.btn-menu {
   width: 2px;
 
   &.is-animation {
-    @include css3(animation, ripple-animation 1s);
+    @include css3(animation, ripple-animation 700s);
   }
 
   .ripple-circle {
@@ -350,11 +350,11 @@ a.btn-menu {
 
 @include keyframes(ripple-animation) {
   0% {
-    opacity: .4;
+    opacity: .1;
   }
 
   100% {
-    @include css3(transform, scale(100));
+    @include css3(transform, scale(2));
     opacity: 0;
   }
 }

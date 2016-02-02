@@ -87,7 +87,6 @@
             return;
           }
 
-
           var element = $(this),
             btnOffset = element.offset(),
             xPos = e.pageX - btnOffset.left,
