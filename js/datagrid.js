@@ -528,14 +528,6 @@ $.fn.datagrid = function(options) {
     },
 
     initTableWidth: function () {
-      var th = this.headerRow.find('th:first'),
-        width = 0;
-
-      if (th && th.length) {
-        width = (this.settings.columns[0].width ? this.settings.columns[0].width : th.width());
-        this.setColumnWidth(th.attr('data-column-id'), width);
-      }
-
       if (this.element.parents().hasClass('modal')) {
         var el = $('.modal .modal-content'),
           w = this.table.width() +
@@ -571,6 +563,8 @@ $.fn.datagrid = function(options) {
       self.renderHeader();
       self.renderRows();
       self.element.append(self.table);
+      self.setColumnWidths();
+
       self.wrapper = self.element.closest('.datagrid-wrapper');
     },
 
@@ -630,7 +624,7 @@ $.fn.datagrid = function(options) {
       return dataset;
     },
 
-    //Delete a Specific Row
+    //Add a Row
     addRow: function (data, location) {
       var self = this,
         row = 0, cell = 0;
@@ -674,7 +668,7 @@ $.fn.datagrid = function(options) {
 
     },
 
-    //Fixed Header - TODO
+    //Fixed Header
     fixHeader: function () {
       var self = this;
 
@@ -897,13 +891,13 @@ $.fn.datagrid = function(options) {
       self.headerRow = $(headerRow);
       self.table.append(self.headerRow);
       self.table.find('th[title]').tooltip();
+      self.setColumnWidths();
 
       //TODO: Drag Drop Columns Option
       /*self.headerNodes().drag({clone: true, containment: 'parent'}).on('dragstart', function (e, pos, clone) {
         clone.css({'position': 'absolute', top: '30px', 'background-color': '#5c5c5c', 'height': '48px'});
       });*/
 
-      this.setInitialColumnWidths();
     },
 
     //Return Value from the Object handling dotted notation
@@ -1054,7 +1048,7 @@ $.fn.datagrid = function(options) {
       }, 100);
     },
 
-    setInitialColumnWidths: function () {
+    setColumnWidths: function () {
       var total = 0, self = this;
 
       for (var i = 0; i < settings.columns.length; i++) {
@@ -1075,6 +1069,7 @@ $.fn.datagrid = function(options) {
       }
 
       this.table.css('width', total);
+
     },
 
     //Returns all header nodes (not the groups)
@@ -2438,6 +2433,11 @@ $.fn.datagrid = function(options) {
       //Get First page on Sort Action
       this.element.on('sorted', function () {
         if (self.pager) {
+
+          if (!self.pager.pagingInfo) {
+            self.pager.pagingInfo = {};
+          }
+
           self.pager.pagingInfo.type = 'sorted';
           self.pager.pagingInfo.activePage = 1;
           self.renderPager(self.pager.pagingInfo, 'sorted');

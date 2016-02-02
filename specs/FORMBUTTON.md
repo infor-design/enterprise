@@ -75,7 +75,7 @@ http://access.aol.com/dhtml-style-guide-working-group/#button
 
 ## Mobile
 
-**Touch** - When a button is touched there is a 300ms delay this should be normalized so the button opens immediately.
+**Touch** - When a button is touched some schools say you should normalize the 300ms touch delay for percieved performance. However, this my cause issues with accessibility as a pinch over the button would be treated as a click.
 
 ## Animations
 

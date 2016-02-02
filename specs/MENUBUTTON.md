@@ -137,6 +137,9 @@ http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
  - The menu a element should have role = "menuitem"
  - The menu a element should have role = "menuitemcheckbox" if it contains a check
 
+## Future Considerations
+ - Avoid use of setTimeout...
+
 ## Implementations
 
  - Core version [link] - This is the most complete implementation

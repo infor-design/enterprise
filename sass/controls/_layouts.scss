@@ -21,6 +21,11 @@
   @include vertical-align();
 }
 
+//An extra Div to pad down
+.page-contents {
+  margin-top: 30px;
+}
+
 // Single Column Layout
 .header.is-sticky + .single-column {
   margin-top: 100px;
@@ -676,8 +681,6 @@ body.no-scroll {
   min-width: 100%;
 }
 
-
-
 //RTL Styles
 html[dir='rtl'] {
 
@@ -701,3 +704,4 @@ html[dir='rtl'] {
     text-align: left;
   }
 }
+

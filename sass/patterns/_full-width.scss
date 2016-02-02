@@ -4,4 +4,8 @@
 .full-width {
   margin: 30px;
   width: calc(100% - 60px);
+
+  &.contained {
+    height: inherit;
+  }
 }

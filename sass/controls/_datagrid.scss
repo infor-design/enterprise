@@ -44,8 +44,6 @@ $datagrid-header-height: 40px;
   }
 
   &.datagrid-contained {
-    border: 1px solid $datagrid-cell-border-color;
-
     //Frozen Headers
     .datagrid {
       height: auto;
@@ -207,7 +205,6 @@ $datagrid-header-height: 40px;
       &.is-sorted-desc .sort-desc .icon {
         fill: $white;
       }
-
     }
   }
 

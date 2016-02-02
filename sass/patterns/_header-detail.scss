@@ -1,0 +1,17 @@
+// Form - List - Footer or Form - List Contained Pattern
+//================================================== //
+.header-detail {
+  margin: 30px;
+  width: calc(100% - 60px);
+
+  &.contained,
+  .contained {
+    height: inherit;
+  }
+
+  .header {
+    background-color: transparent;
+    display: initial;
+    height: auto;
+  }
+}
