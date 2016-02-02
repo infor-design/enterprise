@@ -295,7 +295,7 @@
         return this.setup();
       },
 
-      // Teardown
+      // Teardown / Destroy
       destroy: function() {
         this.element.off('start.busyindicator complete.busyindicator afterstart.busyindicator aftercomplete.busyindicator updated.busyindicator');
         $.removeData(this.element[0], pluginName);
