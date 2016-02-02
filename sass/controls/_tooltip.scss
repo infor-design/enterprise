@@ -231,6 +231,44 @@
   p {
     margin-left: 0;
   }
+
+
+}
+
+.alt {
+  background-color: $graphite01;
+  max-width: inherit;
+  padding-bottom: 30px;
+
+  .tooltip-title {
+    background-color: $white;
+    padding: 10px 5px 10px 15px;
+  }
+
+  .tooltip-content {
+    padding: 15px;
+  }
+
+  .arrow:after {
+    border-right-color: $graphite01 !important;
+  }
+
+  .modal-buttonset {
+    background-color: $white;
+    border: 1px solid $popover-separator-color;
+    height: 40px;
+    margin: 15px 0 0 -17px;
+    position: absolute;
+    width: calc(100% + 2px);
+
+    button {
+      height: 40px;
+    }
+  }
+
+  th, td {
+    font-size: 12px;
+  }
 }
 
 .popover-content {
