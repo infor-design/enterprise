@@ -75,7 +75,7 @@
                        'id': (orgId ? id : name + prefix)
                      });
 
-        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');        
+        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
 
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
           this.wrapper.append(this.input, this.trigger, this.icon);
@@ -222,7 +222,7 @@
           });
           // Only show the "all" header if there are no other optgroups present
           if (selectedOpts.length > 0 && !self.element.find('optgroup').length) {
-            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('All ' + 
+            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('All ' +
               (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text())));
           }
         }
@@ -346,11 +346,6 @@
           setTimeout(function () {
             self.element.trigger('updated');
           }, 1);
-        });
-
-        //Close List on Resize
-        $(window).on('resize.dropdown', function() {
-          self.closeList();
         });
       },
 
@@ -816,12 +811,6 @@
             target.addClass('is-focused');
           });
 
-        $(window).on('resize.dropdown', function() {
-          if (document.activeElement !== self.searchInput[0]) {
-            self.closeList();
-          }
-        });
-
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
           return target.is('.option-text') || target.is('.dropdown-option') || target.is('.dropdown') ||
@@ -844,7 +833,7 @@
           pos;
 
         function clickDocument(e) {
-          if (touchPrevented || isDropdownElement($(e.target))) {
+          if (touchPrevented || isDropdownElement($(e.target)) || $(e.target).is('svg')) {
             touchPrevented = false;
             return;
           }
@@ -889,6 +878,17 @@
         setTimeout(function() {
           var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
           parentScroll.on('scroll.dropdown', scrollDocument);
+
+          // In mobile environments, bind against an orientation change.
+          // in desktop environments, bind against window.resize
+          if (window.orientation === undefined) {
+            $(window).on('resize.dropdown', function() {
+              if (document.activeElement !== self.searchInput[0]) {
+                self.closeList();
+              }
+            });
+          }
+
         }, 100);
       },
 
