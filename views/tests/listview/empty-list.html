@@ -45,6 +45,9 @@
 
 <script>
   var data = [];
+  for (var i = 10 - 1; i >= 0; i--) {
+    data.push({firstName: 'User '+ i, lastName: 'Name '+ i});
+  }
 
   $('#list-one').listview({dataset: data, template: $('#employee-tmpl').html()});
 </script>

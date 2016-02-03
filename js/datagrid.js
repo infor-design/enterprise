@@ -688,8 +688,23 @@ $.fn.datagrid = function(options) {
 
       this.headerRow.addClass('audible');
 
-      this.wrapper.css({'height': 'calc(100% - 140px)'});
+      var next = this.wrapper.parent().next(),
+        prev = this.wrapper.parent().prev(),
+        diff = (next.length ===0 ? 0 : next.outerHeight()) + (prev.length ===0 ? 0 : prev.outerHeight()),
+        outerHeight = 'calc(100% - '+diff+ 'px)';
+
+      this.wrapper.parent('.contained').css('height', outerHeight);
       this.wrapper.find('.datagrid-container').css({'height': '100%', 'overflow': 'auto'});
+
+      //Next if exist and the pager toolbar height
+      var innerHeight = (this.settings.paging ? (next.length === 0 ? 80 : 48) : 0);
+      innerHeight += (next.length === 0 ? 0 : parseInt(next.outerHeight()));
+
+      if (this.wrapper.parent().is('.pane')) {
+        innerHeight = 144;
+      }
+
+      this.wrapper.css('height', 'calc(100% - '+ (innerHeight)+ 'px)');
 
       this.container.on('scroll.datagrid', function () {
         self.clone.parent().scrollLeft($(this).scrollLeft());
