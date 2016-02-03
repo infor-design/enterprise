@@ -687,6 +687,8 @@ $.fn.datagrid = function(options) {
       this.syncFixedHeader();
 
       this.headerRow.addClass('audible');
+      console.log(this.wrapper);
+
       this.wrapper.css({'height': 'calc(100% - 140px)'});
       this.wrapper.find('.datagrid-container').css({'height': '100%', 'overflow': 'auto'});
 

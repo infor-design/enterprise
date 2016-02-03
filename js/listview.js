@@ -113,7 +113,7 @@
       render: function(dataset, pagerInfo) {
         var self = this,
           totals = {};
-
+        console.log(dataset)
         // Render "mustache" Template
         if (Tmpl && dataset && this.settings.template) {
 
@@ -121,6 +121,8 @@
             totals = this.getTotals(dataset);
           }
 
+          console.table(dataset);
+          console.log(dataset.length)
           var compiledTmpl = Tmpl.compile(this.settings.template),
             renderedTmpl = compiledTmpl.render({dataset: dataset, totals: totals});
 
