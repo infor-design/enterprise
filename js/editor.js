@@ -71,14 +71,6 @@
           .bindWindowActions()
           .setupKeyboardEvents()
           .onPasteTriggered();
-
-        // if($('html').is('.ie-edge') && document.addEventListener) {
-        // if(document.addEventListener) {
-        //   document.addEventListener('paste', this.onPasteTriggered, false);
-        // }
-        // } else {
-          // this.setImageBuffer();
-        // }
       },
 
       initElements: function () {
@@ -291,8 +283,9 @@
             e  : 69, // {Ctrl + E} justifyCenter
             h  : 72, // {Ctrl + H} anchor
             i  : 73, // {Ctrl + I} italic --------with SHIFT: {Ctrl + Shift + I} image
-            l  : 76, // {Ctrl + L} justifyLeft, {Ctrl + Shift + L}  bullet list
-            n  : 78, // {Ctrl + Shift + N} numbered list
+            l  : 76, // {Ctrl + L} justifyLeft
+            bl : 55, // {Ctrl + + Shift + 7} bullet list
+            n  : 56, // {Ctrl + Shift + 8} numbered list
             q  : 81, // {Ctrl + Q} blockquotes
             r  : 82, // {Ctrl + R} justifyRight
             u  : 85, // {Ctrl + U} underline
@@ -304,6 +297,8 @@
         currentElement.on('keydown.editor', function(e) {
           e = (e) ? e : window.event;
           keys.charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false);
+
+          console.log(keys.charCode, e.ctrlKey, e.shiftKey);
 
           switch (e.ctrlKey && keys.charCode) {
             case keys.h3:
@@ -329,8 +324,17 @@
                 e.preventDefault();
               }
               break;
+            case keys.bl:
+              if (e.shiftKey) {
+                self.triggerClick(e, 'insertunorderedlist');
+              }
+              e.preventDefault();
+              break;
             case keys.l:
-              self.triggerClick(e, e.shiftKey ? 'insertunorderedlist' : 'justifyLeft');
+              if (!e.shiftKey) {
+                self.triggerClick(e, 'justifyLeft');
+              }
+              e.preventDefault();
               break;
             case keys.n:
               if (e.shiftKey) {

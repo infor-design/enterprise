@@ -58,7 +58,8 @@
   color: $editor-color;
   display: block;
   float: left;
-  @include font-size(16);
+  @include font-size(14);
+  @include rem(line-height, 2.2rem);
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
