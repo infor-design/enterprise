@@ -1983,15 +1983,15 @@ this.Pie = function(initialData, isDonut, options) {
               content = '<p>' + d + '</p>',
               size = charts.getTooltipSize(content),
               x = 0,
-              y = rect.y - size.height + $(window).scrollTop(),
+              y = rect.top - size.height + $(window).scrollTop() - 5,
               w = d3.select(this).attr('width'),
               nextWidth = next.attr('width');
 
             if (nextWidth && next.classed('range')) {
               var sliceW = (w - nextWidth) / 2;
-              x = (rect.x + (w - sliceW) - (size.width/2));
+              x = (rect.left + (w - sliceW) - (size.width/2));
             } else {
-              x = rect.x + (rect.width/2) - (size.width/2);
+              x = rect.left + (rect.width/2) - (size.width/2);
             }
 
             if (data.tooltip && data.tooltip[i]) {
