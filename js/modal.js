@@ -397,7 +397,6 @@
           self.keepFocus();
           self.element.trigger('open');
 
-          console.log(focusElem.length);
           if (focusElem.length === 0) {
             focusElem = self.element.find('.btn-modal-primary');
           }
