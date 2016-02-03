@@ -360,25 +360,19 @@ a.btn-menu {
 }
 
 @include respond-to(phone) {
-  .btn,
-  .btn-tertiary {
-    .icon {
-
-      // If an icon is present, the span should not be visible at this breakpoint
-      + span { // prevents oblong-shaped focus state around buttons
-        position: absolute;
-      }
-    }
-  }
-
   // Reset the above rule when these types of buttons appear in toolbars
   .toolbar {
     .btn,
     .btn-teritary {
       padding: 0 10px;
+
+      .icon {
+        // If an icon is present, the span should not be visible at this breakpoint
+        + span { // prevents oblong-shaped focus state around buttons
+          position: absolute;
+        }
+      }
     }
-
-
  	}
 }
 

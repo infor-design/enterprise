@@ -291,9 +291,11 @@
             self.hide();
           }
 
-          $(window).on('resize.tooltip', function() {
-            self.hide();
-          });
+          if (window.orientation === undefined) {
+            $(window).on('resize.tooltip', function() {
+              self.hide();
+            });
+          }
 
           // Click to close
           if (settings.isError) {
