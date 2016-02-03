@@ -606,7 +606,13 @@
             }
           });
 
-          $(window).on('scroll.popupmenu resize.popupmenu', function () {
+          if (window.orientation === undefined) {
+            $(window).on('resize.popupmenu', function() {
+              self.close();
+            });
+          }
+
+          $(window).on('scroll.popupmenu', function () {
             self.close();
           });
 
