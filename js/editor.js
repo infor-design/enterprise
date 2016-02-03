@@ -298,8 +298,6 @@
           e = (e) ? e : window.event;
           keys.charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false);
 
-          console.log(keys.charCode, e.ctrlKey, e.shiftKey);
-
           switch (e.ctrlKey && keys.charCode) {
             case keys.h3:
               self.triggerClick(e, 'append-' + settings.firstHeader);
