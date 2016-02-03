@@ -196,7 +196,6 @@
 
         btnWidth = 100/buttons.length;
 
-        var cnt = 0;
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
@@ -219,11 +218,6 @@
             btn.addClass('no-validation');
           }
 
-          if (cnt === 0) {
-            btn.addClass('hide-focus');
-          }
-          cnt++;
-
           var attrs = {},
             attrTypes = ['id', 'name', 'text'];
 
@@ -236,7 +230,6 @@
               attrs[attrTypes[i]] = props[attrTypes[i]];
             }
           }
-
 
           if (props.type === 'input') {
             var label = $('<label class="audible" for="filter">' + props.text + '</label>'),
@@ -404,9 +397,17 @@
           self.keepFocus();
           self.element.trigger('open');
 
+          console.log(focusElem.length);
           if (focusElem.length === 0) {
             focusElem = self.element.find('.btn-modal-primary');
-            focusElem = self.element.find('#message-title').attr('tabindex', '-1');
+          }
+
+          if (focusElem.length === 1 && focusElem.is('.btn-modal')) {
+            focusElem = self.element.find('.btn-modal-primary');
+          }
+
+          if (focusElem.length === 1 && focusElem.is('button')) {
+            focusElem.addClass('hide-focus');
           }
 
           if (!self.settings.autoFocus) {
@@ -427,6 +428,7 @@
 
           // Otherwise, just focus
           focusElem.focus();
+
         }
 
         setTimeout(function () {
