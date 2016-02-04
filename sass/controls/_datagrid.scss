@@ -6,6 +6,7 @@ $datagrid-header-height: 40px;
 .datagrid-wrapper {
   border: 1px solid $datagrid-border-color;
   position: relative;
+  min-width: 100%;
 }
 
 //The scrollable header
@@ -31,6 +32,7 @@ $datagrid-header-height: 40px;
 .datagrid-container {
   clear: both;
   height: auto;
+  min-width: 100%;
   overflow-x: auto;
 
   .resize-handle {

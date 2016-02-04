@@ -11,7 +11,7 @@
     // Node/CommonJS
     module.exports = factory(require('jquery'));
   } else {
-    // Browser globals
+    // Browser globalsddd
     factory(jQuery);
   }
 }(function($) {
