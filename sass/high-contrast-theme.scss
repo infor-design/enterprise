@@ -30,14 +30,14 @@ $font-color-extrahighcontrast: $graphite10;
 $font-color-highcontrast: $graphite10;
 $font-color: $graphite09;
 $font-color-lowcontrast: $graphite06;
-$label-color: $graphite08;
+$label-color: $graphite09;
 $disabled-color: $graphite05;
 
 // Alert Colors
-$alert-info: $azure07;
-$alert-green: $emerald09;
-$alert-yellow: #c65211;
-$alert-red: #ee0000;
+$alert-info: $azure09;
+$alert-green: #80ce4d;
+$alert-yellow: #ffd726;
+$alert-red: #ad4242;
 
 // Rules
 $hr-top-color: $graphite03;
@@ -53,6 +53,13 @@ $popover-color: $font-color;
 $popover-separator-color: $graphite06;
 
 // Tooltips
+$tooltip-bg-color: $graphite08;
+$tooltip-border-color: $graphite08;
+$tooltip-box-shadow: 0 2px 5px rgba(0,0,0,.2);
+$tooltip-color: $white;
+$tooltip-error-bg-color: $alert-red;
+$tooltip-error-border-color:  $alert-red;
+$tooltip-error-color: $white;
 
 // Badges
 $badge-neutral-bg-color: $graphite04;
@@ -75,9 +82,9 @@ $primary-btn-focus-bg-color: $primary-color;
 $primary-btn-active-bg-color: $azure08;
 
 // Secondary/Normal Buttons
-$btn-color: #000000;
-$btn-bg-color: $graphite04;
-$btn-hover-bg-color: $graphite05;
+$btn-color: $white;
+$btn-bg-color: $graphite09;
+$btn-hover-bg-color: $graphite06;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite05;
@@ -85,8 +92,8 @@ $btn-disabled-color: $graphite04;
 
 // Tertiary Buttons
 $tertiary-btn-color: $graphite08;
-$tertiary-btn-hover-color: $graphite10;
-$tertiary-btn-active-color: $graphite10;
+$tertiary-btn-hover-color: $graphite06;
+$tertiary-btn-active-color: $graphite06;
 
 // Input Fields
 $input-border-color: $graphite06;
@@ -96,7 +103,7 @@ $input-disabled-bg-color: transparent;
 $input-disabled-border-color: $graphite05;
 $input-disabled-color: $graphite05;
 $input-hover-border-color: $black;
-$input-focus-border-color: $primary-color;
+$input-focus-border-color: $azure07;
 $input-placeholder-color: $graphite05;
 $input-readonly-border-color: $input-border-color;
 $input-readonly-bg-color: $graphite04;
@@ -105,7 +112,7 @@ $input-readonly-color: $graphite07;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
-$dirty-icon-fill: $amber10;
+$dirty-icon-fill: #ffd726;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $azure08;
 
@@ -187,7 +194,7 @@ $expandable-area-border-color: $graphite03;
 $cardlist-bg-color: $graphite01;
 $cardlist-border-color: $graphite06;
 $cardlist-header-bg-color: $graphite01;
-$cardlist-header-color: $graphite10;
+$cardlist-header-color: $black;
 $cardlist-actions-color: $graphite10;
 
 // Checkboxes
@@ -459,4 +466,8 @@ $swaplist-title-text-color: $graphite02;
   }
 }
 
-
+//Input has double border
+input:not(:focus):hover,
+textarea:not(:focus):hover {
+  box-shadow: 0 0 0 1px #000000;
+}
