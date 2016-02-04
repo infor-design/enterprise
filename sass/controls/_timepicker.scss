@@ -35,11 +35,12 @@
   }
 }
 
-.ie9 .timepicker + .icon {
+.ie9 .timepicker + .icon,
+.ie10 .timepicker + .icon {
   background-color: rgba($white, 0);
 }
 
-.timepicker-popup {
+#timepicker-popup {
 
   > .tooltip-content {
     padding: 0;
