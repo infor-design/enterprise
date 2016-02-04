@@ -163,7 +163,7 @@
         //Keep a list generated and append as needed
         self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
         self.listUl = $('<ul role="listbox"></ul>').appendTo(self.list);
-        self.list.prepend('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
+        self.list.prepend('<span class="trigger"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></span>');
 
         function setOptions(option, listOption) {
           //Add a data-val attribute that matches the original option value
@@ -472,6 +472,10 @@
           .children('use').attr('xlink:href', '#icon-dropdown');
 
         function stripHtml(obj) {
+          if (!obj[0]) {
+            return '';
+          }
+
           return obj[0].textContent || obj[0].innerText;
         }
 
@@ -800,6 +804,10 @@
             $(e.target).parent().trigger('click');
             return false;
           })
+          .onTouchClick('list', '.trigger, svg')
+          .on('click.list', '.trigger, svg', function() {
+            self.closeList();
+          })
           .on('mouseenter.list', 'li', function() {
             var target = $(this),
               opts = self.listUl.children();
@@ -890,6 +898,7 @@
           }
 
         }, 100);
+
       },
 
       // Set size and positioning of the list

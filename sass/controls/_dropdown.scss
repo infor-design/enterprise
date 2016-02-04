@@ -324,22 +324,31 @@ input.multiselect {
     }
   }
 
-  > .icon {
-    fill: $trigger-icon-fill-color;
+  > .trigger {
+    cursor: pointer;
     height: 32px;
     margin-left: -26px;
     position: absolute;
-    @include css3(transform, rotate(180deg));
-    width: 18px;
+    z-index: 1;
+    width: 26px;
 
-    &.search {
-      height: 18px;
-      margin-left: -26px;
-      margin-top: 7px;
-      @include css3(transform, rotate(0deg));
-      width: 16px;
+    .icon {
+      background-color: rgba($white, 0);
+      fill: $trigger-icon-fill-color;
+      height: 32px;
+      @include css3(transform, rotate(180deg));
+      width: 18px;
+
+      &.search {
+        height: 18px;
+        margin-top: 7px;
+        @include css3(transform, rotate(0deg));
+        width: 16px;
+      }
     }
   }
+
+
 }
 
 .dropdown-search {
