@@ -3,8 +3,9 @@
 
 .radio {
   opacity: 0;
+  left: 0px;
   position: absolute;
-  width: auto;
+  width: 0px;
 }
 
 .inline .radio ~ .label-text,

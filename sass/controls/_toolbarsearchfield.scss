@@ -10,6 +10,7 @@ $toolbarsearchfield-empty-width: 34px;
   display: inline-block;
   margin-bottom: 0 !important;
   width: $toolbarsearchfield-empty-width;
+
   @include transition(width 300ms cubic-bezier(.17, .04, .03, .94),
     left 300ms cubic-bezier(.17, .04, .03, .94),
     right 300ms cubic-bezier(.17, .04, .03, .94));
