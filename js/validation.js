@@ -115,10 +115,13 @@
         events = self.extractEvents(events);
 
         field.on(events, function (e) {
+          //Skip on Tab
+          if (e.type === 'keyup' && e.keyCode === 9) {
+            return;
+          }
 
           var field = $(this);
           setTimeout(function () {
-
             if (field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
               return;
             }
@@ -128,7 +131,7 @@
             }
 
             self.validate(field, field.closest('.modal-engaged').length === 1 ? false : true, e);
-          }, 150);
+          }, 300);
         });
       });
 
