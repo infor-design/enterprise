@@ -405,7 +405,7 @@
             focusElem = self.element.find('.btn-modal-primary');
           }
 
-          if (focusElem.length === 1 && focusElem.is('button')) {
+          if (focusElem.length === 1 && focusElem.is('button') && !focusElem.is(':disabled')) {
             focusElem.addClass('hide-focus');
           }
 
