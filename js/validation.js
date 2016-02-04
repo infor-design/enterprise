@@ -490,6 +490,19 @@
         field.data('tooltip').show();
       });
 
+      var timeout;
+
+      svg.on('mouseenter.validate', function() {
+        timeout = setTimeout(function () {
+          field.data('tooltip').show();
+        }, 300);
+      });
+
+      svg.on('mouseleave.validate', function() {
+         field.data('tooltip').hide();
+         timeout = clearTimeout(timeout);
+      });
+
       if (showTooltip) {
         field.data('tooltip').show();
       }
