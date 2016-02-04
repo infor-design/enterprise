@@ -16,7 +16,7 @@ $header-border-color: $slate10;
 $header-icon-color: #eff0f4;
 $header-disabled-color: $slate05;
 $panel-bg-color: $slate07;
-$panel-border-color: $slate09;
+$panel-border-color: $slate07;
 
 // Base Colors
 $primary-color: $azure06;
@@ -31,7 +31,7 @@ $font-color-highcontrast: $slate01;
 $font-color: $slate02;
 $font-color-lowcontrast: $slate03;
 $label-color: $slate03;
-$disabled-color: $slate05;
+$disabled-color: $slate04;
 
 // Rules
 $hr-top-color: $slate09;
@@ -78,7 +78,7 @@ $popupmenu-hover-color: $slate05;
 $btn-disabled-color: $slate05;
 
 // Secondary/Normal Buttons
-$btn-color: $slate08;
+$btn-color: $slate10;
 $btn-bg-color: $slate03;
 $btn-hover-bg-color: $slate04;
 $btn-focus-bg-color: $primary-color;
@@ -87,28 +87,35 @@ $btn-active-bg-color: $slate04;
 
 // Tertiary Buttons
 $tertiary-btn-color: $slate03;
-$tertiary-btn-hover-color: $slate01;
-$tertiary-btn-active-color: $slate01;
+$tertiary-btn-hover-color: $white;
+$tertiary-btn-active-color: $white;
 
 // Input Fields
 $input-border-color: $slate04;
 $input-color: $white;
 $input-bg-color: transparent;
 $input-disabled-bg-color: transparent;
-$input-disabled-border-color: $slate06;
+$input-disabled-border-color: $slate05;
 $input-disabled-color: $disabled-color;
 $input-focus-border-color: $primary-color;
-$input-hover-border-color: $slate03;
-$input-placeholder-color: $slate05;
+$input-hover-border-color: $slate02;
+$input-placeholder-color: $disabled-color;
 $input-readonly-border-color: $input-border-color;
 $input-readonly-bg-color: $slate06;
 $input-readonly-color: $slate03;
 
+//States
+$error-color: $alert-red;
+$error-icon-fill: $alert-red;
+$dirty-icon-fill: $amber03;
+$confirm-icon-fill: $alert-green;
+$info-icon-fill: $primary-color;
+
 // Autocomplete
 $autocomplete-light-text: $slate04;
 $autocomplete-active-bg-color: $body-bg-color;
-$trigger-icon-fill-color: $slate04;
-$trigger-hover-color: $slate02;
+$trigger-icon-fill-color: $slate03;
+$trigger-hover-color: $white;
 $trigger-active-color: $primary-color;
 
 //List View
@@ -142,7 +149,8 @@ $dropdown-menu-separator-color: $slate03;
 $dropdown-group-label-color: $slate03;
 
 // Date Picker
-$datepicker-alt-month-color: $slate04;
+$datepicker-alternate-month-color: $slate05;
+$datepicker-day-color: $slate03;
 $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $inverse-color;
@@ -187,7 +195,7 @@ $expandable-area-border-color: $slate06;
 
 // Cardlist
 $cardlist-bg-color: $slate07;
-$cardlist-border-color: $slate09;
+$cardlist-border-color: $slate05;
 $cardlist-header-bg-color: $slate07;
 $cardlist-header-color: $white;
 $cardlist-actions-color: $white;
@@ -317,22 +325,24 @@ $chart-font-color: $slate01;
 $chart-font-color-inverse: $graphite06;
 
 // DataGrid
-$datagrid-border-color: $slate06;
-$datagrid-header-color: #ffffff;
-$datagrid-header-bg-color: $slate05;
+$datagrid-border-color: $slate05;
+$datagrid-header-color: $slate10;
+$datagrid-header-bg-color: $slate03;
 $datagrid-header-border-color: $slate06;
-$datagrid-header-hover-color: $slate04;
+$datagrid-header-hover-color: $slate02;
 $datagrid-header-active-color: $slate04;
-$datagrid-cell-color: #ffffff;
-$datagrid-cell-bg-color: $slate07;
-$datagrid-cell-readonly-bg-color: $slate08;
+$datagrid-sort-icon-color: $slate04;
+$datagrid-sort-icon-sorted-color: $slate10;
+
+$datagrid-cell-color: $white;
+$datagrid-cell-bg-color: $slate08;
+$datagrid-cell-readonly-bg-color: $slate07;
 $datagrid-cell-readonly-color: $slate02;
 $datagrid-cell-border-color: $slate06;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: #5a5d64; //Or 8dc9e6
-$datagrid-row-selected-color-dark: #5a5d64; //#eaf8fe;
-$datagrid-row-hover-color: $slate09;
-
+$datagrid-row-selected-color: rgba(54, 138, 192, .30); //Or 8dc9e6
+$datagrid-row-selected-color-dark: rgba(54, 138, 192, .35); //#eaf8fe;
+$datagrid-row-hover-color: $slate06;
 $datagrid-header-focus-bg-color: $primary-color;
 
 // Search Results

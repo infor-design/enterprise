@@ -522,7 +522,7 @@ $datagrid-header-height: 40px;
   vertical-align: top;
 
   .icon {
-    fill: $graphite04;
+    fill: $datagrid-sort-icon-color;
     height: 18px;
     opacity: 0;
     @include transition(all 250ms ease);
@@ -547,7 +547,7 @@ $datagrid-header-height: 40px;
   }
 
   .sort-asc .icon {
-    fill: $inverse-color;
+    fill: $datagrid-sort-icon-sorted-color;
   }
 }
 
@@ -557,7 +557,7 @@ $datagrid-header-height: 40px;
   }
 
   .sort-desc .icon {
-    fill: $inverse-color;
+    fill: $datagrid-sort-icon-sorted-color;
   }
 }
 

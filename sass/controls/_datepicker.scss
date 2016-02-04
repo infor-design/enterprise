@@ -77,7 +77,7 @@
   // Header
   thead {
     th {
-      color: $font-color-highcontrast;
+      color: $datepicker-day-color;
       @include rem(font-size, 1.2rem);
       margin: 20px;
       text-transform: uppercase;
@@ -89,7 +89,7 @@
   td {
     border: 1px solid transparent;
     border-radius: 50%;
-    color: $font-color-highcontrast;
+    color: $datepicker-day-color;
     cursor: pointer;
     @include rem(font-size, 1.2rem);
     height: 35px;
@@ -103,19 +103,20 @@
     }
 
     //Other month color
-    &.alt {
-      color: $datepicker-alt-month-color;
+    &.alternate {
+      color: $datepicker-alternate-month-color;
 
       span {
-        color: $datepicker-alt-month-color;
+        color: $datepicker-alternate-month-color;
       }
     }
 
     //Today
     &.is-today,
     &.is-today:focus {
-      border-color: $datepicker-today-color;
+      //border-color: $datepicker-today-color;
       color: $datepicker-today-color;
+      font-weight: bold;
 
       span {
         color: $datepicker-today-color;

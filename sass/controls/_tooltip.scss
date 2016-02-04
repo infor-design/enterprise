@@ -21,6 +21,7 @@
   transition: opacity .4s ease;
   white-space: normal;
   z-index: 5010;
+
 }
 
 .tooltip {
@@ -37,6 +38,7 @@
 
   &.top:not(.is-error) .arrow:after {
     border-top-color: $tooltip-bg-color;
+    top: -6px;
   }
 
   &.bottom:not(.is-error) .arrow:after {
@@ -196,6 +198,45 @@
     }
   }
 
+  &.alternate {
+    background-color: $graphite01;
+    border: 1px solid $popover-separator-color;
+    box-shadow: none;
+    max-width: inherit;
+    padding-bottom: 30px;
+
+    .tooltip-title {
+      background-color: $white;
+      color: $graphite10;
+      font-size: 1.8rem;
+      padding: 15px 5px 15px 15px;
+    }
+
+    .modal-buttonset {
+      background-color: $white;
+      border: 1px solid $popover-separator-color;
+      margin: 15px 0 0 -22px;
+      position: absolute;
+      width: calc(100% + 2px);
+    }
+
+    &.popover .arrow:after {
+      border-right-color: $graphite01;
+    }
+
+    th {
+      color: $graphite06;
+      font-size: 1.2rem;
+    }
+
+    td,
+    p {
+      color: $graphite10;
+      font-size: 1.4rem;
+    }
+  }
+
+
 }
 
 .popover p,
@@ -233,44 +274,6 @@
   }
 
 
-}
-
-.alt {
-  background-color: $graphite01;
-  border: 1px solid $popover-separator-color;
-  box-shadow: none;
-  max-width: inherit;
-  padding-bottom: 30px;
-
-  .tooltip-title {
-    background-color: $white;
-    color: $graphite10;
-    font-size: 1.8rem;
-    padding: 15px 5px 15px 15px;
-  }
-
-  .modal-buttonset {
-    background-color: $white;
-    border: 1px solid $popover-separator-color;
-    margin: 15px 0 0 -22px;
-    position: absolute;
-    width: calc(100% + 2px);
-  }
-
-  &.popover .arrow:after {
-    border-right-color: $graphite01;
-  }
-
-  th {
-    color: $graphite06;
-    font-size: 1.2rem;
-  }
-
-  td,
-  p {
-    color: $graphite10;
-    font-size: 1.4rem;
-  }
 }
 
 .popover-content {

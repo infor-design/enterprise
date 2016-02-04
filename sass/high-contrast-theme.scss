@@ -10,25 +10,25 @@
 //================================================== //
 
 // Form Background Color
-$body-bg-color:  $graphite02;
+$body-bg-color:  $graphite03;
 $header-bg-color: $slate09;
 $header-border-color: $slate10;
 $header-icon-color: #eff0f4;
 $header-disabled-color: $graphite05;
-$panel-bg-color: $graphite03;
+$panel-bg-color: $graphite02;
 $panel-border-color: $graphite06;
 
 // Base Colors
-$primary-color: $azure07;
+$primary-color: $azure09;
 $inverse-color: #ffffff;
 
 //The hyperlink Style
-$hyperlink-color: $azure09;
+$hyperlink-color: $azure10;
 
 // Text Color
 $font-color-extrahighcontrast: $graphite10;
 $font-color-highcontrast: $graphite10;
-$font-color: $graphite08;
+$font-color: $graphite09;
 $font-color-lowcontrast: $graphite06;
 $label-color: $graphite08;
 $disabled-color: $graphite05;
@@ -44,8 +44,8 @@ $hr-top-color: $graphite03;
 $hr-bottom-color: transparent;
 
 // Popovers
-$popover-bg-color: $white;
-$popover-border-color: $graphite04;
+$popover-bg-color: $graphite01;
+$popover-border-color: $graphite03;
 $popover-box-shadow: 0 2px 5px rgba(0,0,0,.2);
 $popover-arrow-border-color: $graphite04;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
@@ -75,8 +75,8 @@ $primary-btn-focus-bg-color: $primary-color;
 $primary-btn-active-bg-color: $azure08;
 
 // Secondary/Normal Buttons
-$btn-color: $inverse-color;
-$btn-bg-color: $graphite06;
+$btn-color: #000000;
+$btn-bg-color: $graphite04;
 $btn-hover-bg-color: $graphite05;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
@@ -84,18 +84,18 @@ $btn-active-bg-color: $graphite05;
 $btn-disabled-color: $graphite04;
 
 // Tertiary Buttons
-$tertiary-btn-color: $graphite07;
+$tertiary-btn-color: $graphite08;
 $tertiary-btn-hover-color: $graphite10;
 $tertiary-btn-active-color: $graphite10;
 
 // Input Fields
 $input-border-color: $graphite06;
-$input-color: $graphite10;
+$input-color: #000000;
 $input-bg-color: $white;
 $input-disabled-bg-color: transparent;
-$input-disabled-border-color: $graphite04;
+$input-disabled-border-color: $graphite05;
 $input-disabled-color: $graphite05;
-$input-hover-border-color: $graphite10;
+$input-hover-border-color: $black;
 $input-focus-border-color: $primary-color;
 $input-placeholder-color: $graphite05;
 $input-readonly-border-color: $input-border-color;
@@ -112,7 +112,11 @@ $info-icon-fill: $azure08;
 // Autocomplete
 $autocomplete-light-text: $graphite05;
 $autocomplete-active-bg-color: $body-bg-color;
-$trigger-icon-fill-color: $graphite05;
+$trigger-icon-fill-color: $graphite07;
+$trigger-hover-color: $graphite10;
+$trigger-active-color: $primary-color;
+$trigger-focus-color: $primary-color;
+$trigger-disabled-color: $graphite04;
 
 //List View
 $listview-bg-color: $inverse-color;
@@ -144,10 +148,11 @@ $dropdown-menu-separator-color: $graphite02;
 $dropdown-group-label-color: $graphite05;
 
 // Date Picker
-$datepicker-alt-month-color: $graphite04;
+$datepicker-alternate-month-color: $graphite04;
+$datepicker-day-color: $graphite08;
 $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
-$datepicker-today-color: $graphite10;
+$datepicker-today-color: $black;
 $datepicker-hover-bg-color: $graphite02;
 $datepicker-disabled-bg-color: $graphite01;
 
@@ -182,8 +187,8 @@ $expandable-area-border-color: $graphite03;
 $cardlist-bg-color: $graphite01;
 $cardlist-border-color: $graphite06;
 $cardlist-header-bg-color: $graphite01;
-$cardlist-header-color: $graphite08;
-$cardlist-actions-color: $graphite08;
+$cardlist-header-color: $graphite10;
+$cardlist-actions-color: $graphite10;
 
 // Checkboxes
 $checkbox-color: $primary-color;
@@ -320,8 +325,8 @@ $datagrid-cell-readonly-bg-color: $graphite02;
 $datagrid-cell-readonly-color: $graphite08;
 $datagrid-cell-border-color: $graphite06;
 $datagrid-data-color: $font-color-extrahighcontrast;
-$datagrid-row-selected-color: rgba(37, 120, 160, .20);
-$datagrid-row-selected-color-dark: rgba(37, 120, 160, .30);
+$datagrid-row-selected-color: rgba(37, 120, 169, .20);
+$datagrid-row-selected-color-dark: rgba(37, 120, 169, .25);
 $datagrid-row-hover-color: $graphite03;
 
 $datagrid-header-focus-bg-color: $primary-color;
