@@ -274,8 +274,7 @@
           .on('click.popupmenu', 'a', function (e) {
 
           var anchor = $(this),
-            href = anchor.attr('href'),
-            parent = anchor.parent();
+            href = anchor.attr('href');
 
           if (anchor.attr('disabled') || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
             //Do not close parent items of submenus on click
