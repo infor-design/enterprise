@@ -9,6 +9,7 @@ $toolbarsearchfield-empty-width: 34px;
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0 !important;
+  overflow: hidden;
   width: $toolbarsearchfield-empty-width;
 
   @include transition(width 300ms cubic-bezier(.17, .04, .03, .94),
