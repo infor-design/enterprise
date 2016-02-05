@@ -292,13 +292,18 @@
             e.preventDefault();
           }
 
-          // If the menu is "selectable", place the checkmark where it's supposed to go.
-          if (self.menu.hasClass('is-selectable')) {
-            parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
-            parent.addClass('is-checked');
+          if (self.menu.hasClass('is-selectable') || self.menu.hasClass('is-multiselectable')) {
+            self.select(anchor);
           }
 
+          // Trigger a selected event containing the anchor that was selected
           self.element.trigger('selected', [anchor]);
+
+          // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
+          if (self.menu.hasClass('is-multiselectable')) {
+            return;
+          }
+
           self.close();
 
           if (self.element.is('.autocomplete')) {
@@ -322,7 +327,11 @@
         //Select on Focus
         if (this.settings.mouseFocus) {
           this.menu.on('mouseenter.popupmenu', 'a', function () {
-            $(this).focus();
+            var a = $(this);
+            a.parent().addClass('is-focused');
+            a.focus();
+          }).on('mouseleave.popupmenu', 'a', function() {
+            $(this).parent().removeClass('is-focused');
           });
         }
 
@@ -768,6 +777,37 @@
         li.addClass('is-submenu-open');
       },
 
+      select: function(anchor) {
+        var single = this.menu.is('.is-selectable'),
+          multiple = this.menu.is('.is-multiselectable'),
+          parent = anchor.parent();
+
+        if (!single && !multiple) {
+          return;
+        }
+
+        // If the menu is "selectable", place the checkmark where it's supposed to go.
+        if (single) {
+          parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
+          return parent.addClass('is-checked');
+        }
+
+        if (multiple) {
+          if (parent.hasClass('is-checked')) {
+            return parent.removeClass('is-checked');
+          }
+          return parent.addClass('is-checked');
+        }
+      },
+
+      getSelected: function() {
+        if (!this.menu.is('.is-selectable, .is-multiselectable')) {
+          return $();
+        }
+
+        return this.menu.children('.is-checked').children('a');
+      },
+
       detach: function () {
         $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
         $(window).off('scroll.popupmenu resize.popupmenu');
@@ -798,6 +838,8 @@
         this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
         this.menu.find('.popupmenu').css({'left': '', 'top': '', 'height': '', 'width': ''});
+
+        this.menu.find('.is-focused').removeClass('is-focused');
 
         this.element.on('close.popupmenu', function (e) {
           $(this).off('close.popupmenu');

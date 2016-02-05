@@ -126,8 +126,8 @@
 .popupmenu {
   background-color: $popupmenu-bg-color;
   border: 1px solid $popupmenu-border-color;
-  box-shadow: $popupmenu-box-shadow;
   border-radius: 3px;
+  box-shadow: $popupmenu-box-shadow;
   color: $popupmenu-color;
   display: none;
   list-style: none;
@@ -186,32 +186,13 @@
     position: static;
     white-space: nowrap;
 
-    &:focus,
-    &.is-submenu-open {
-      background-color: $popupmenu-hover-color;
-    }
-
-    &:not(.is-selected) > a:focus {
+    &.is-submenu-open,
+    &.is-focused {
       background-color: $popupmenu-hover-color;
     }
 
     &.disabled > a:focus {
       box-shadow: none;
-    }
-
-    // Selected
-    &.is-checked > a:before,
-    &.is-checked.is-selected > a:before {
-      border-color: $popupmenu-checked-color $popupmenu-checked-color $popupmenu-checked-color transparent;
-      border-style: solid;
-      border-width: 0 2px 2px 0;
-      content: '';
-      height: 14px;
-      left: 13px;
-      margin-top: 4px;
-      position: absolute;
-      @include css3(transform, rotate(45deg));
-      width: 7px;
     }
   }
 
@@ -335,22 +316,91 @@
       padding: 0 25px 0 10px;
     }
 
-    li {
-      &.is-checked,
-      &.is-checked.is-selected {
-        > a:before {
-          height: 11px;
-          left: 8px;
-          width: 5px;
-        }
-      }
-    }
-
     &.has-icons {
       > li a {
         padding-left: 25px;
       }
     }
+  }
+
+  &.is-selectable {
+    li {
+      // Selected
+      &.is-checked > a:before,
+      &.is-checked.is-selected > a:before {
+        border-color: $popupmenu-checked-color $popupmenu-checked-color $popupmenu-checked-color transparent;
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        content: '';
+        height: 11px;
+        left: 17px;
+        margin-top: 7px;
+        position: absolute;
+        @include css3(transform, rotate(45deg));
+        width: 5px;
+      }
+    }
+
+    &.popupmenu-short {
+      li {
+        &.is-checked,
+        &.is-checked.is-selected {
+          > a:before {
+            height: 11px;
+            left: 8px;
+            width: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  &.is-multiselectable {
+    li {
+      position: relative;
+
+      &::before,
+      &.is-focused::before {
+        @include checkbox-unchecked-before-style;
+        margin-left: 12px;
+        top: 8px;
+      }
+
+      &.is-checked::before {
+        @include checkbox-checked-before-style;
+        margin-left: 12px;
+        top: 8px;
+      }
+
+      &.is-checked::after {
+        @include checkbox-checked-after-style;
+        left: 18px;
+        margin-top: 8px;
+        top: 2px;
+      }
+
+      &.is-disabled {
+        &::before {
+          @include checkbox-unchecked-disabled-before-style;
+          margin-left: 12px;
+          top: 8px;
+        }
+
+        &.is-checked {
+          &::before {
+            @include checkbox-checked-disabled-before-style;
+          }
+
+          &::after {
+            @include checkbox-checked-disabled-after-style;
+            left: 21px;
+            margin-top: 8px;
+          }
+        }
+      }
+
+    }
+
   }
 }
 
@@ -399,6 +449,43 @@
   }
 }
 
+// Not sure why these don't line up in Firefox
+.is-firefox {
+  .popupmenu {
+    &.is-selectable {
+      li {
+        &.is-checked > a:before,
+        &.is-checked.is-selected > a:before {
+          margin-top: 6px;
+        }
+      }
+    }
+
+    &.is-multiselectable {
+      li {
+        &::before,
+        &.is-focused::before {
+          top: 7px;
+        }
+
+        &.is-checked::before {
+          top: 7px;
+        }
+
+        &.is-checked::after {
+          top: 1px;
+        }
+
+        &.is-disabled {
+          &::before {
+            top: 7px;
+          }
+        }
+      }
+    }
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
 
@@ -408,11 +495,13 @@ html[dir='rtl'] {
       padding-right: 40px;
     }
 
-    li {
-      &.is-checked > a:before,
-      &.is-checked.is-selected > a:before {
-        left: auto;
-        right: 13px;
+    &.is-selectable {
+      li {
+        &.is-checked > a:before,
+        &.is-checked.is-selected > a:before {
+          left: auto;
+          right: 13px;
+        }
       }
     }
 
