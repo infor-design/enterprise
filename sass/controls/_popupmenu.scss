@@ -334,7 +334,7 @@
         content: '';
         height: 11px;
         left: 17px;
-        margin-top: 8px;
+        margin-top: 7px;
         position: absolute;
         @include css3(transform, rotate(45deg));
         width: 5px;
@@ -365,16 +365,6 @@
         margin-left: 12px;
         top: 8px;
       }
-
-      /*
-      &.is-focused,
-      &.is-selected.is-focused,
-      &:hover:not(.group-label) {
-        > a {
-          color: $font-color-highcontrast;
-        }
-      }
-      */
 
       &.is-checked::before {
         @include checkbox-checked-before-style;
@@ -459,6 +449,43 @@
   }
 }
 
+// Not sure why these don't line up in Firefox
+.is-firefox {
+  .popupmenu {
+    &.is-selectable {
+      li {
+        &.is-checked > a:before,
+        &.is-checked.is-selected > a:before {
+          margin-top: 6px;
+        }
+      }
+    }
+
+    &.is-multiselectable {
+      li {
+        &::before,
+        &.is-focused::before {
+          top: 7px;
+        }
+
+        &.is-checked::before {
+          top: 7px;
+        }
+
+        &.is-checked::after {
+          top: 1px;
+        }
+
+        &.is-disabled {
+          &::before {
+            top: 7px;
+          }
+        }
+      }
+    }
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
 
@@ -468,11 +495,13 @@ html[dir='rtl'] {
       padding-right: 40px;
     }
 
-    li {
-      &.is-checked > a:before,
-      &.is-checked.is-selected > a:before {
-        left: auto;
-        right: 13px;
+    &.is-selectable {
+      li {
+        &.is-checked > a:before,
+        &.is-checked.is-selected > a:before {
+          left: auto;
+          right: 13px;
+        }
       }
     }
 
