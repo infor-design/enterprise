@@ -224,7 +224,7 @@
     },
 
     // Take a date string written in the current locale and parse it into a Date Object
-    parseDate: function(dateString, dateFormat) {
+    parseDate: function(dateString, dateFormat, isStrict) {
       var thisLocaleCalendar = this.calendar(),
         orgDatestring = dateString;
 
@@ -412,15 +412,15 @@
         return undefined;
       }
 
-      if (!dateObj.year) {
+      if (!dateObj.year && !isStrict) {
         dateObj.year = (new Date()).getFullYear();
       }
 
-      if (!dateObj.month) {
+      if (!dateObj.month && !isStrict) {
         dateObj.month = (new Date()).getMonth();
       }
 
-      if (!dateObj.day) {
+      if (!dateObj.day && !isStrict) {
         dateObj.day = 1;
       }
 

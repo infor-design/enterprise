@@ -118,7 +118,7 @@ button {
   &[disabled],
   &[disabled]:hover {
     background-color: $primary-btn-disabled-bg-color;
-    border-color: $primary-btn-disabled-bg-color;
+    border-color: $primary-btn-disabled-border-color;
     box-shadow: none;
     color: $primary-btn-disabled-color;
     cursor: default;

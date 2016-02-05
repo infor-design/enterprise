@@ -659,7 +659,7 @@
         check: function (value) {
           this.message = Locale.translate('InvalidDate');
           var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime : Locale.calendar().dateFormat.short,
-            parsedDate = Locale.parseDate(value, dateFormat);
+            parsedDate = Locale.parseDate(value, dateFormat, true);
 
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },

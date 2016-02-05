@@ -70,7 +70,7 @@
         }
 
         if (this.element.hasClass('btn-actions') && !this.element.data('tooltip')) {
-          this.element.attr('title', Locale.translate('MoreActions')).tooltip();
+          this.element.attr('title', Locale.translate('More')).tooltip();
         }
 
         function removeHideFocus(self) {

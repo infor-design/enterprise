@@ -77,9 +77,13 @@ $popupmenu-border-color: $graphite04;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
+$primary-btn-color: $inverse-color;
 $primary-btn-hover-bg-color: $azure08;
 $primary-btn-focus-bg-color: $primary-color;
 $primary-btn-active-bg-color: $azure08;
+$primary-btn-disabled-color: $inverse-color;
+$primary-btn-disabled-bg-color: rgba(19, 77, 113, .5); //Primary at 50%
+$primary-btn-disabled-border-color: rgba(19, 77, 113, .5);
 
 // Secondary/Normal Buttons
 $btn-color: $white;
@@ -97,17 +101,17 @@ $tertiary-btn-active-color: $graphite06;
 
 // Input Fields
 $input-border-color: $graphite06;
-$input-color: #000000;
+$input-color: $black;
 $input-bg-color: $white;
 $input-disabled-bg-color: transparent;
-$input-disabled-border-color: $graphite05;
+$input-disabled-border-color: $graphite04;
 $input-disabled-color: $graphite05;
 $input-hover-border-color: $black;
 $input-focus-border-color: $azure07;
 $input-placeholder-color: $graphite05;
 $input-readonly-border-color: $input-border-color;
 $input-readonly-bg-color: $graphite04;
-$input-readonly-color: $graphite07;
+$input-readonly-color: $black;
 
 //States
 $error-color: $alert-red;
@@ -119,8 +123,8 @@ $info-icon-fill: $azure08;
 // Autocomplete
 $autocomplete-light-text: $graphite05;
 $autocomplete-active-bg-color: $body-bg-color;
-$trigger-icon-fill-color: $graphite07;
-$trigger-hover-color: $graphite10;
+$trigger-icon-fill-color: $graphite09;
+$trigger-hover-color: $graphite06;
 $trigger-active-color: $primary-color;
 $trigger-focus-color: $primary-color;
 $trigger-disabled-color: $graphite04;
@@ -156,12 +160,16 @@ $dropdown-group-label-color: $graphite05;
 
 // Date Picker
 $datepicker-alternate-month-color: $graphite04;
-$datepicker-day-color: $graphite08;
+$datepicker-day-color: $black;
 $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $black;
-$datepicker-hover-bg-color: $graphite02;
-$datepicker-disabled-bg-color: $graphite01;
+$datepicker-hover-bg-color: $graphite03;
+$datepicker-disabled-bg-color: $graphite02;
+
+.calendar-table .is-today {
+  text-decoration: underline;
+}
 
 // Color Picker
 $colorpicker-initial-bg-color: $graphite06;
@@ -251,7 +259,7 @@ $slider-disabled-color: $graphite01;
 //Modal
 $modal-bg-color: $graphite01;
 $modal-border-color: $graphite06;
-$modal-box-shadow: 0 2px 5px rgba(0,0,0,.2);
+$modal-box-shadow: 0 2px 5px rgba(0, 0 ,0, .2);
 $modal-btn-color: $graphite08;
 $modal-color: $graphite08;
 $modal-btn-border-color: $graphite06;
