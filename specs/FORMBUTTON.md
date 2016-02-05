@@ -53,7 +53,6 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_buttons.
 
 ![enter image description here](http://git.infor.com/projects/SOHO/repos/controls/browse/specs/images/menubutton-highcontrast.png?at=ad9c7ab8492e24e1ff4d3c98908e7a8a14eef8f3&raw)
 
-
 ## Events
 
 **click** – a click event would fire when the button is clicked, this is a browser standard event

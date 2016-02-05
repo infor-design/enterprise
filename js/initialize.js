@@ -236,6 +236,8 @@
 
           ['wizard'],
 
+          ['splitter'],
+
           ['popdown', '[data-popdown]']
         ];
 

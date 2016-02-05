@@ -1,0 +1,46 @@
+// Splitter
+//========================================================
+
+$splitter-box-shadow-color: rgba(54, 138, 192, .75);
+
+.splitter {
+  @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94));
+  background-color: inherit;
+  cursor: ew-resize;
+  height: 100%;
+  position: absolute;
+  width: 20px;
+
+  &:hover,
+  &:active,
+  &.is-dragging {
+    background-color: $graphite02;
+
+    &::after {
+      color: $graphite10;
+    }
+  }
+
+  &.is-dragging {
+    box-shadow: -2px 0 3px 0 $splitter-box-shadow-color;
+  }
+
+  &::after {
+    color: $graphite06;
+    content: '⁞';
+    display: block;
+    font-size: 28px;
+    left: 5px;
+    margin-top: -12px;
+    position: absolute;
+    top: 50%;
+  }
+}
+
+@include respond-to(phone) {
+  .splitter {
+    display: none;
+  }
+}
+
+

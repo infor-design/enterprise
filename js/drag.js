@@ -81,6 +81,7 @@
             };
 
             self.originalPos = pos;
+            self.element.addClass('is-dragging');
             self.element.trigger('dragstart', pos);
           })
 
@@ -144,6 +145,8 @@
             self.clone = self.element.clone(true);
             self.clone.appendTo('body');
           }
+
+          self.element.addClass('is-dragging');
           self.element.trigger('dragstart', [pos, self.clone]);
         });
 
@@ -157,6 +160,7 @@
         $(document).off('mousemove.draggable mouseup.draggable');
 
         this.element.trigger('dragend', pos);
+        this.element.removeClass('is-dragging');
 
         if (this.clone) {
           if (settings.axis === 'x') {
