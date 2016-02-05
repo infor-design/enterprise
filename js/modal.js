@@ -393,7 +393,7 @@
         });
 
         function focusElement() {
-          var focusElem = self.element.find(':focusable:not(.searchfield):first');
+          var focusElem = self.element.find(':focusable').not('.modal-header .searchfield').first();
           self.keepFocus();
           self.element.trigger('open');
 
