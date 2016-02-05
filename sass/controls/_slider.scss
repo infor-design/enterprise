@@ -184,16 +184,11 @@ input[type="range"] {
 
 }
 
-.ie9 {
+// Tick Margins are screwy in old versions of IE
+.ie:not(.ie-edge) {
   .slider-wrapper > .tick::after {
     margin-left: 0;
     z-index: -1;
-  }
-}
-
-.ie11 {
-  .slider-wrapper > .tick::after {
-    margin-left: -1px;
   }
 }
 
