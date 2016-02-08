@@ -593,6 +593,12 @@ this.Pie = function(initialData, isDonut, options) {
       return +a.value - +b.value;
     });
 
+    var total = d3.sum(chartData, function(d){ return d.value; });
+
+    chartData = chartData.map(function (d) {
+      return { elm:d, name:d.name, value:d.value, percent:d3.round(100*(d.value/total)) };
+    });
+
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
       lines = svg.append('g').attr('class','lines'),
@@ -605,18 +611,16 @@ this.Pie = function(initialData, isDonut, options) {
     });
     // .sort(null);
 
-    var total = d3.sum(chartData, function(d){ return d.value; });
-
-    var percentage = chartData.map(function (d) {
-      return d3.round(100*(d.value/total));
-    });
-
     // Store our chart dimensions
     var dims = {
       height: parseInt(parent.height()),  //header + 20 px padding
       width: parseInt(parent.width()),
     };
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 35);
+
+    console.log((Math.max(dims.width, dims.height)));
+
+    var isSmall = ((Math.max(dims.width, dims.height)) < 400);
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isSmall ? 65 : 35));
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
     dims.labelRadius = dims.outerRadius + 20;
     dims.center = { x: dims.width / 2, y: dims.height / 2 };
@@ -914,7 +918,7 @@ this.Pie = function(initialData, isDonut, options) {
             sign = (x1 > 0 ? 1 : -1),
             x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
 
-          if (orgLabelPos[i].y !== y1) {
+          if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
             label.attr('x', x);
 
             if (lb.isTwoline) {
@@ -939,7 +943,7 @@ this.Pie = function(initialData, isDonut, options) {
           if(labelsRect.left < 45 || labelsRect.width > (dims.width - 15)) {// 15: extra padding
             drawTextlabels({ isShortName: true });
             svg.selectAll('.label-text tspan').each(function() {
-              if (d3.select(this).text().substring(6) === '...') {
+              if (d3.select(this).text().substring(5) === '...') {
                 legendshow = true;
               }
             });
@@ -960,7 +964,7 @@ this.Pie = function(initialData, isDonut, options) {
             ];
 
           // Draw line from center of arc to label
-          if (lb.linehideWhenMoreThanPercentage > percentage[i]) {
+          if (lb.linehideWhenMoreThanPercentage > chartData[i].percent) {
             lines.append('path')
               .attr({
                 'class': 'label-line',
@@ -976,8 +980,8 @@ this.Pie = function(initialData, isDonut, options) {
       })();
 
     //Get the Legend Series'
-    var series = initialData[0].data.map(function (d) {
-      var name = d.name +', '+ d.value +' ('+ d.percent +')';
+    var series = chartData.map(function (d) {
+      var name = d.name +', '+ d.value +' ('+ d.percent +'%)';
       return {name:name, display:'twocolumn'};
     });
 
