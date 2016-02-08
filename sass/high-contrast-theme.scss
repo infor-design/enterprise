@@ -23,7 +23,7 @@ $primary-color: $azure09;
 $inverse-color: #ffffff;
 
 //The hyperlink Style
-$hyperlink-color: $azure10;
+$hyperlink-color: $azure09;
 
 // Text Color
 $font-color-extrahighcontrast: $graphite10;
@@ -46,7 +46,7 @@ $hr-bottom-color: transparent;
 // Popovers
 $popover-bg-color: $graphite01;
 $popover-border-color: $graphite03;
-$popover-box-shadow: 0 2px 5px rgba(0,0,0,.2);
+$popover-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
 $popover-arrow-border-color: $graphite04;
 $popover-box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
 $popover-color: $font-color;
@@ -70,7 +70,7 @@ $badge-info-bg-color: $primary-color;
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-color-filtered-text: $font-color;
 $popupmenu-bg-color: $white;
-$popupmenu-box-shadow: 0 2px 5px rgba(0,0,0,.2);
+$popupmenu-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
 $popupmenu-heading-color: $font-color-highcontrast;
 $popupmenu-checked-color: $font-color;
 $popupmenu-border-color: $graphite04;
@@ -87,7 +87,7 @@ $primary-btn-disabled-border-color: rgba(19, 77, 113, .5);
 
 // Secondary/Normal Buttons
 $btn-color: $white;
-$btn-bg-color: $graphite09;
+$btn-bg-color: $graphite07;
 $btn-hover-bg-color: $graphite06;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
@@ -95,7 +95,7 @@ $btn-active-bg-color: $graphite05;
 $btn-disabled-color: $graphite04;
 
 // Tertiary Buttons
-$tertiary-btn-color: $graphite08;
+$tertiary-btn-color: $graphite09;
 $tertiary-btn-hover-color: $graphite06;
 $tertiary-btn-active-color: $graphite06;
 
@@ -259,7 +259,7 @@ $slider-disabled-color: $graphite01;
 //Modal
 $modal-bg-color: $graphite01;
 $modal-border-color: $graphite06;
-$modal-box-shadow: 0 2px 5px rgba(0, 0 ,0, .2);
+$modal-box-shadow: 0 2px 5px rgba(0, 0 ,0, .3);
 $modal-btn-color: $graphite08;
 $modal-color: $graphite08;
 $modal-btn-border-color: $graphite06;
@@ -341,7 +341,7 @@ $datagrid-cell-readonly-color: $graphite08;
 $datagrid-cell-border-color: $graphite06;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: rgba(37, 120, 169, .20);
-$datagrid-row-selected-color-dark: rgba(37, 120, 169, .25);
+$datagrid-row-selected-color-dark: rgba(37, 120, 169, .35);
 $datagrid-row-hover-color: $graphite03;
 
 $datagrid-header-focus-bg-color: $primary-color;
@@ -475,7 +475,7 @@ $swaplist-title-text-color: $graphite02;
 }
 
 //Input has double border
-input:not(:focus):hover,
-textarea:not(:focus):hover {
-  box-shadow: 0 0 0 1px #000000;
+input:not(:focus):not(:disabled):hover,
+textarea:not(:focus):not(:disabled):hover {
+  box-shadow: 0 0 0 1px $black;
 }

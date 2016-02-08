@@ -271,9 +271,12 @@ $datagrid-header-height: 40px;
       background-color: $datagrid-row-selected-color;
     }
 
-    &.is-selected td:not(.is-editing).is-readonly .datagrid-cell-wrapper,
-    &.is-selected td:not(.is-editing).is-readonly span {
+    &.is-selected td:not(.is-editing).is-readonly .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color-dark;
+
+      span {
+        background-color: transparent;
+      }
     }
 
     &.is-clickable {
@@ -336,7 +339,7 @@ $datagrid-header-height: 40px;
       line-height: 26px;
 
       &[class*='azure'] {
-        color: #ffffff;
+        color: $white;
       }
     }
 
@@ -442,7 +445,7 @@ $datagrid-header-height: 40px;
 
       //Date Picker
       .datepicker {
-        border: none;
+        border: 0;
         padding-left: 20px;
 
         + .icon {

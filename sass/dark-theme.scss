@@ -16,7 +16,7 @@ $header-border-color: $slate10;
 $header-icon-color: #eff0f4;
 $header-disabled-color: $slate05;
 $panel-bg-color: $slate07;
-$panel-border-color: $slate07;
+$panel-border-color: $slate05;
 
 // Base Colors
 $primary-color: $azure06;
@@ -256,7 +256,7 @@ $slider-disabled-color: $slate08;
 //Modal
 $modal-bg-color: $slate07;
 $modal-border-color: $slate05;
-$modal-box-shadow: 0 2px 5px rgba(0,0,0,.4);
+$modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 $modal-btn-color: $slate03;
 $modal-color: $white;
 $modal-btn-border-color: $slate05;
@@ -341,7 +341,7 @@ $datagrid-cell-readonly-color: $slate02;
 $datagrid-cell-border-color: $slate06;
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: rgba(54, 138, 192, .30); //Or 8dc9e6
-$datagrid-row-selected-color-dark: rgba(54, 138, 192, .35); //#eaf8fe;
+$datagrid-row-selected-color-dark: rgba(54, 138, 192, .45); //#eaf8fe;
 $datagrid-row-hover-color: $slate06;
 $datagrid-header-focus-bg-color: $primary-color;
 
