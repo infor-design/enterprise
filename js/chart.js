@@ -617,8 +617,6 @@ this.Pie = function(initialData, isDonut, options) {
       width: parseInt(parent.width()),
     };
 
-    console.log((Math.max(dims.width, dims.height)));
-
     var isSmall = ((Math.max(dims.width, dims.height)) < 400);
     dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isSmall ? 65 : 35));
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
