@@ -424,7 +424,9 @@
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
 
-        if (field.is('textarea')) {
+        if (field.parent().find('.data-description')) {
+          field.parent().find('.data-description').before(svg);
+        } else if (field.is('textarea')) {
           field.after(svg);
         } else if (field.is('.dropdown, .multiselect')) {
           field.parent().find('.dropdown-wrapper').append(svg);
