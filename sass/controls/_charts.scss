@@ -249,6 +249,10 @@
   padding: 20px;
   width: inherit;
 
+  .tspan {
+    fill: $chart-font-color;
+  }
+
   .label-text {
     @include font-size(14);
   }

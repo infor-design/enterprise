@@ -545,6 +545,7 @@ window.Chart = function(container) {
     return $(container);
   };
 
+
 this.Pie = function(initialData, isDonut, options) {
     var defaults = {
       labels: {
@@ -564,7 +565,9 @@ this.Pie = function(initialData, isDonut, options) {
         // 'default'|'color-as-arc'|'#000000'|'black'
         colorTop: 'color-as-arc',
         colorBottom: 'default',
-        lineColor: 'default'
+        lineColor: 'default',
+        lineWidth: 2,
+        linehideWhenMoreThanPercentage: 10
       }
     },
     settings = $.extend(true, defaults, options),
@@ -577,65 +580,56 @@ this.Pie = function(initialData, isDonut, options) {
     var self = this,
       parent = $(container).parent();
 
-    var svg = d3.select(container).append('svg'),
-      arcs = svg.append('g').attr('class','arcs'),
-      centerLabel = initialData[0].centerLabel;
-
     var tooltipInterval,
       tooltipDataCache = [],
       tooltipData = charts.tooltip;
 
+    charts.appendTooltip();
+
     var legendshow = charts.legendshow || false;
 
     var chartData = initialData[0].data;
+    chartData = chartData.sort(function(a,b) {
+      return +a.value - +b.value;
+    });
+
+    var svg = d3.select(container).append('svg'),
+      arcs = svg.append('g').attr('class','arcs'),
+      lines = svg.append('g').attr('class','lines'),
+      centerLabel = initialData[0].centerLabel;
+
     $(container).addClass('chart-pie');
 
-    // Create the pie layout function.
     var pie = d3.layout.pie().value(function (d) {
-      // what property of our data object to use
       return d.value;
     });
+    // .sort(null);
 
     var total = d3.sum(chartData, function(d){ return d.value; });
 
-    //Calculate Percents for Legend
-    var arcPercentage = [],
-      lessthan10 = [];
-
-    chartData.map(function (d, i) {
-      var percentage = d3.round(100*(d.value/total));
-      arcPercentage.push(percentage);
-      if(percentage <10) {
-        lessthan10.push(i);
-      }
-      return {name: d.name, percent: d.percent, elem: d.elem};
+    var percentage = chartData.map(function (d) {
+      return d3.round(100*(d.value/total));
     });
-
-    var alpha = 0.9,
-      spacing = 45,
-      isSmaller = (spacing*lessthan10.length) > (spacing*2);
-
-    spacing = isSmaller && lb.isTwoline ? (spacing - 5) : !lb.isTwoline ? 25 : spacing;
 
     // Store our chart dimensions
     var dims = {
       height: parseInt(parent.height()),  //header + 20 px padding
-      width: parseInt(parent.width())
+      width: parseInt(parent.width()),
     };
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isDonut ? 35 : 50));
-    dims.outerRadius = isSmaller ? (dims.outerRadius-35) : dims.outerRadius;
-    dims.outerRadius = (dims.width > 360 || isSmaller) ? dims.outerRadius : (dims.outerRadius-35);
-    dims.outerRadius = (lessthan10.length > 3) ? (dims.outerRadius-5) : dims.outerRadius;
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 35);
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
-    dims.labelRadius = dims.outerRadius + 11;
+    dims.labelRadius = dims.outerRadius + 20;
     dims.center = { x: dims.width / 2, y: dims.height / 2 };
 
-    svg.attr('width', '100%')
-      .attr('height', '100%')
-      .attr('viewBox','0 0 ' + dims.width + ' ' + (dims.height + 10));
+    svg.attr({
+      'width': '100%',
+      'height': '100%',
+      'viewBox': '0 0 ' + dims.width + ' ' + dims.height
+    });
 
     // move the origin of the group's coordinate space to the center of the SVG element
     arcs.attr('transform', 'translate(' + dims.center.x + ',' + dims.center.y  + ')');
+    lines.attr('transform', 'translate(' + dims.center.x + ',' + dims.center.y + ')');
 
     var pieData = pie(chartData);
 
@@ -644,48 +638,44 @@ this.Pie = function(initialData, isDonut, options) {
         .innerRadius(dims.innerRadius)
         .outerRadius(dims.outerRadius);
 
+    var pieCircles = d3.svg.arc()
+        .innerRadius(dims.outerRadius)
+        .outerRadius(dims.outerRadius);
+
+    var pieLabelCircles = d3.svg.arc()
+        .innerRadius(dims.labelRadius)
+        .outerRadius(dims.labelRadius);
+
     // Draw the arcs.
     var enteringArcs = arcs.selectAll('.arc').data(pieData).enter();
-    charts.appendTooltip();
+    enteringArcs.append('path')
+      .attr('class', 'arc')
+      .on('contextmenu',function (d) {
+        self.triggerContextMenu(d3.select(this).select('path')[0][0], d);
+      })
+      .on('click', function (d, i) {
+        var isSelected = d3.select(this).classed('is-selected'),
+          color = charts.chartColor(i, 'pie', d.data),
+          path = d3.select(this);
 
-    var centers = [];
-    var g = enteringArcs.append('g')
-        .attr('class', function (d) {
-          var extra = 20,
-            mid = ((d.endAngle - d.startAngle)/2) + d.startAngle,
-            x = ((dims.outerRadius - extra) * Math.sin(mid)),
-            y = (-1 * (dims.outerRadius - extra) * Math.cos(mid));
+        d3.select('.chart-container .is-selected')
+          .classed('is-selected', false)
+          .style('stroke', '#fff')
+          .style('stroke-width', '1px')
+          .attr('transform', '');
 
-          centers.push([x,y]);
-          return 'arc';
-        })
-        .attr('d', pieArcs)
-        .on('contextmenu',function (d) {
-          self.triggerContextMenu(d3.select(this).select('path')[0][0], d);
-        })
-        .on('click', function (d, i) {
-          var isSelected = d3.select(this).classed('is-selected'),
-            color = charts.chartColor(i, 'pie', d.data),
-            path = d3.select(this);
-
-          d3.select('.chart-container .is-selected')
-            .classed('is-selected', false)
-            .style('stroke', '#fff')
-            .style('stroke-width', '1px')
-            .attr('transform', '');
-
-          if (!isSelected) {
-            path.classed('is-selected', true)
-                .style('stroke', color)
-                .style('stroke-width', 0)
-                .attr('transform', 'scale(1.025, 1.025)');
-            $(container).trigger('selected', [path[0], d.data]);
-            return;
-          }
+        if (!isSelected) {
+          path.classed('is-selected', true)
+              .style('stroke', color)
+              .style('stroke-width', 0)
+              .attr('transform', 'scale(1.025, 1.025)');
           $(container).trigger('selected', [path[0], d.data]);
-        })
-        .on('mouseenter', function(d, i) {
-          var size, x, y, t,
+          return;
+        }
+        $(container).trigger('selected', [path[0], d.data]);
+      })
+      .on('mouseenter', function(d, i) {
+          var size, x, y, t, tx, ty,
             offset = parent.offset(),
             content = '',
             show = function() {
@@ -698,9 +688,12 @@ this.Pie = function(initialData, isDonut, options) {
               }
             };
 
-          t = d3.transform(arcs.attr('transform'));
-          x = t.translate[0] + centers[i][0] + offset.left;
-          y = t.translate[1] + centers[i][1] + offset.top -14;
+          var circles = svg.selectAll('.pie-circle');
+          t = d3.transform(d3.select(circles[0][i]).attr('transform'));
+          tx = t.translate[0] + (t.translate[0] > 0 ? 10 * -1: 10 * 1);
+          ty = t.translate[1] + (t.translate[1] > 0 ? 10 * -1: 10 * 1);
+          x = tx + offset.left + dims.center.x;
+          y = ty + offset.top + dims.center.y;
 
           if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
             var runInterval = true;
@@ -722,25 +715,20 @@ this.Pie = function(initialData, isDonut, options) {
             show();
           }
         })
-        .on('mouseleave', function () {
-          clearInterval(tooltipInterval);
-          charts.hideTooltip();
-        });
-
-    g.append('path')
+      .on('mouseleave', function () {
+        clearInterval(tooltipInterval);
+        charts.hideTooltip();
+      })
       .style('fill', function(d, i) { return charts.chartColor(i, 'pie', d.data); })
       .transition().duration(750)
       .attrTween('d', function(d) {
-        var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-       return function(t) {
-           d.endAngle = i(t);
-           return pieArcs(d);
-         };
+        var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
+        return function(t) { d.endAngle = i(t); return pieArcs(d); };
       });
 
 
     // Now we'll draw our label lines, etc.
-    var textLines, textLabels, textX=[], textY=[],
+    var textLabels, textX=[], textY=[],
       labelsContextFormatter = function (d, context, formatterString, isShortName) {
         formatterString = /percentage/i.test(context) ? '0.0%' : formatterString;
         var r,
@@ -767,29 +755,29 @@ this.Pie = function(initialData, isDonut, options) {
       },
 
       drawTextlabels = function (isShortName) {
-        textLabels.selectAll('.lb-label1').each(function() {
+        svg.selectAll('.lb-top').each(function(d, i) {
           d3.select(this)
-            .text(function(d) {
+            .text(function() {
               return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName);
             })
             .style({
               'font-weight': lb.isTwoline ? 'bold' : 'normal',
               'font-size': lb.isTwoline ? (dims.width > 450 ? '1.3em' : '1.1em') : '1em',
-              'fill': function(d, i) {
+              'fill': function() {
                 return labelsColorFormatter(d, i, lb.colorTop);
               }
             });
         });
 
         if (lb.isTwoline) {
-          textLabels.selectAll('.lb-label2').each(function() {
+          svg.selectAll('.lb-bottom').each(function(d, i) {
             d3.select(this)
-              .text(function(d) {
+              .text(function() {
                 return labelsContextFormatter(d, lb.contentsBottom, lb.formatterBottom, isShortName);
               })
               .style({
                 'font-size': '1em',
-                'fill': function(d, i) {
+                'fill': function() {
                   return labelsColorFormatter(d, i, lb.colorBottom);
                 }
               });
@@ -797,28 +785,7 @@ this.Pie = function(initialData, isDonut, options) {
         }
       },
 
-      showAllLines = function (color) {
-        textLines.style('stroke', function(d, i) {
-          return labelsColorFormatter(d, i, color);
-        });
-        svg.selectAll('circle').style('fill', function(d, i) {
-          return labelsColorFormatter(d, i, color);
-        });
-      },
-
-      hideExLines = function () {
-        textLines.each(function(d, i) {
-          var format = d3.format('0.0%'),
-            percentage = format(d.value / total);
-
-          if (parseInt(percentage) > 10) {
-            d3.select(this).style('stroke', 'transparent');
-            d3.select(svg.selectAll('circle')[0][i]).style('fill', 'transparent');
-          }
-        });
-      },
-
-      addLinesAndLabels = function () {
+      addLabels = function () {
         svg.selectAll('.labels').remove();
 
         var labels = svg.append('g').attr('class','labels'),
@@ -828,44 +795,28 @@ this.Pie = function(initialData, isDonut, options) {
         labels.attr('transform', 'translate(' + dims.center.x + ',' + dims.center.y + ')');
 
         labelGroups.append('circle')
-          .attr({'class': 'label-circle', x: 0, y: 0, r: 2,
+          .style('fill', 'none')
+          .attr({'class': 'pie-circle', x: 0, y: 0, r: 1,
             transform: function (d) {
-              var x = pieArcs.centroid(d)[0],
-                y = pieArcs.centroid(d)[1];
+              var x = pieCircles.centroid(d)[0],
+                y = pieCircles.centroid(d)[1];
               return 'translate(' + x + ',' + y + ')';
             }
-          })
-          .style('fill', function(d, i) {
-            return labelsColorFormatter(d, i, lb.lineColor);
           });
 
-        textLines = labelGroups.append('line')
-          .attr({'class': 'label-line',
-            x1: function (d) {
-              return pieArcs.centroid(d)[0];
-            },
-            y1: function (d) {
-              return pieArcs.centroid(d)[1];
-            },
-            x2: function (d) {
-              var centroid = pieArcs.centroid(d),
-                midAngle = Math.atan2(centroid[1], centroid[0]),
-                x = Math.cos(midAngle) * dims.labelRadius;
-              return x;
-            },
-            y2: function (d) {
-              var centroid = pieArcs.centroid(d),
-               midAngle = Math.atan2(centroid[1], centroid[0]),
-               y = Math.sin(midAngle) * dims.labelRadius;
-              return y;
+        labelGroups.append('circle')
+          .style('fill', 'none')
+          .attr({'class': 'label-circle', x: 0, y: 0, r: 1,
+            transform: function (d) {
+              var x = pieLabelCircles.centroid(d)[0],
+                y = pieLabelCircles.centroid(d)[1];
+              return 'translate(' + x + ',' + y + ')';
             }
-          })
-          .style('stroke', function(d, i) {
-            return labelsColorFormatter(d, i, lb.lineColor);
           });
 
-        textLabels = labelGroups.append('text').attr({'class': 'label-text',
-          x: function (d) {
+        textLabels = labelGroups.append('text').attr({
+          'class': 'label-text',
+          'x': function (d) {
             var centroid = pieArcs.centroid(d),
               midAngle = Math.atan2(centroid[1], centroid[0]),
               x = Math.cos(midAngle) * dims.labelRadius,
@@ -875,7 +826,7 @@ this.Pie = function(initialData, isDonut, options) {
             textX.push(labelX);
             return labelX;
           },
-          y: function (d) {
+          'y': function (d) {
             var centroid = pieArcs.centroid(d),
               midAngle = Math.atan2(centroid[1], centroid[0]),
               y = Math.sin(midAngle) * dims.labelRadius;
@@ -890,16 +841,18 @@ this.Pie = function(initialData, isDonut, options) {
           }
         });
 
-        textLabels.append('tspan').attr('class', 'lb-label1');
+        textLabels.append('tspan').attr('class', 'lb-top');
         if (lb.isTwoline) {
           textLabels.append('tspan')
-            .attr({'class': 'lb-label2',
+            .attr({'class': 'lb-bottom',
               'x': function(d, i) { return textX[i]-2; },
               'dy': '18'
             });
         }
+
         drawTextlabels();
 
+        // Add center label only if its donut chart
         if (isDonut) {
           arcs.append('text')
             .attr('dy', '.35em')
@@ -907,193 +860,120 @@ this.Pie = function(initialData, isDonut, options) {
             .attr('class', 'chart-donut-text')
             .text(centerLabel);
         }
-        hideExLines();
       };
-      addLinesAndLabels();
+      addLabels();
 
-      function relax() {
-        var again = false;
-        textLabels.each(function (d) {
-          var a = this,
-            da = d3.select(this),
-            y1 = da.attr('y');
 
-          if(d.startAngle === 0) {
-            y1 = Number(y1)+1;
-            da.attr('y', y1);
-          }
+      // Resolve label positioning collisions
+      (function () {
+        var spacing = Math.round(textLabels.node().getBBox().height) + 1;
 
-          textLabels.each(function () {
-            var b = this;
-            // a & b are the same element and don't collide.
-            if (a === b) {
-              return;
-            }
-            var db = d3.select(this);
-
-            // a & b are on opposite sides of the chart and don't collide
-            if (da.attr('text-anchor') !== db.attr('text-anchor')) {
-              return;
-            }
-
-            // calculate the distance between these elements.
-            var y2 = db.attr('y'),
-              deltaY = y1 - y2;
-
-            // they don't collide.
-            if (Math.abs(deltaY) > spacing) {
-              return;
-            }
-
-            // If the labels collide, we'll push each of the two labels up and down
-            again = true;
-            var sign = deltaY > 0 ? 1 : -1,
-              adjust = sign * alpha;
-
-            da.attr('y', + y1 + adjust);
-            db.attr('y', + y2 - adjust);
-          });
+        // Record org x, y position
+        var orgLabelPos = textLabels[0].map(function(d) {
+          d = d3.select(d);
+          return { x: +d.attr('x'), y: +d.attr('y') };
         });
 
-        // Adjust our line leaders
-        if (again) {
-          textLabels.attr('y',function() {
-            var y = Number(d3.select(this).attr('y'));
-            return y > 0 ? (isSmaller ? (y-0.8) : (y+1)) : (isSmaller ? (y-1.8) : (y-1));
+        // Fix y position        
+        function relax() {
+          var again = false;
+          textLabels.each(function (d, i) {
+            var a = this,
+              da = d3.select(a),
+              y1 = +da.attr('y');
+
+            textLabels.each(function (d2, i2) {
+              if (i2 > i) {
+                var deltaY,
+                  b = this,
+                  db = d3.select(b),
+                  y2 = +db.attr('y');
+
+                if (da.attr('text-anchor') === db.attr('text-anchor')) {
+                  deltaY = y1 - y2;
+                  if (Math.abs(deltaY) < spacing) {
+                    again = true;
+                    db.attr('y', y2 > 0 ? y2-1 : y2+1); //padding
+                  }
+                }
+              }
+            });               
           });
-          var labelElements = textLabels[0];
-          textLines.attr('y2',function(d,i) {
-            var labelForLine = d3.select(labelElements[i]),
-              y = labelForLine.attr('y');
-            return y;
-          });
-          relax();
+          
+          if(again) {
+            relax();
+          }
         }
-      }
-      relax();
-
-    var resizeFontsTo = function(size) {
-      svg.selectAll('.label').each(function (d, i) {
-        var label = d3.select(this),
-          lbText = label.select('.label-text'),
-          lbLine = label.select('.label-line'),
-          lbLabel1 = lbText.select('.lb-label1'),
-          y = Number(lbText.attr('y'));
-
-        y = arcPercentage[i]<10 ? y+20 : y;
-
-        lbText.attr('y', y);
-        lbLine.attr('y2', y);
-        lbLabel1.style('font-size', size);
-      });
-    };
-
-    //-----------------------------------------
-    svg.selectAll('.labels').each(function () {
-      var thisLabel = this,
-        labels = d3.select(this),
-      rect1 = this.getBoundingClientRect(),
-
-      fixNames = function () {
-        rect1 = thisLabel.getBoundingClientRect();
-        if(rect1.left < 46) {
-          legendshow = true;
-          spacing = 25;
-          lb.isTwoline = false;
-          lb.contentsTop = 'percentage';
-          addLinesAndLabels();
-          relax();
-          return true;
-        }
-      },
-
-      forceToOneLabel = function () {
-        legendshow = true;
-        spacing = 25;
-        lb.isTwoline = false;
-        lb.contentsTop = 'name (value)';
-        lb.formatterTop = '0.0%';//Percentage
-        lb.colorTop = 'default';
-
-        textLabels.selectAll('.lb-label2').remove();
-        drawTextlabels();
         relax();
-      };
-      // console.log(initialData[0].data);
-      // console.log('left: ' + rect1.left);
-      // console.log('top: ' + rect1.top);
 
-      if(rect1.left < 45) {
-      //   // console.log('L:'+ 1);
-        drawTextlabels({ isShortName: true });
-        svg.selectAll('.label-text tspan').each(function() {
-          if (d3.select(this).text().substring(6) === '...') {
-            legendshow = true;
+        // Fix x position
+        textLabels.each(function(d, i) {
+          var label = d3.select(this),
+            x1 = +label.attr('x'),
+            y1 = +label.attr('y'),
+            sign = (x1 > 0 ? 1 : -1),
+            x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
+
+          if (orgLabelPos[i].y !== y1) {
+            label.attr('x', x);
+
+            if (lb.isTwoline) {
+              label.select('.lb-bottom').attr('x', x);
+            }
           }
         });
-      }
-      if (!fixNames()) {
-        if(rect1.top < 95) {
-          // console.log(1);
-          charts.elementTransform({'element': arcs, 'addtoY': 85});
-          charts.elementTransform({'element': labels, 'addtoY': 85});
-          forceToOneLabel();
-        }
-        else if(rect1.top < 105) {
-          // console.log(2);
-          charts.elementTransform({'element': arcs, 'addtoY': 60});
-          charts.elementTransform({'element': labels, 'addtoY': 60});
-          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 2});
-          resizeFontsTo('1.1em');
-        }
-        else if(rect1.top < 115) {
-          // console.log(3);
-          charts.elementTransform({'element': arcs, 'addtoY': 65});
-          charts.elementTransform({'element': labels, 'addtoY': 65});
-        }
-        else if(rect1.top < 125) {
-          // console.log(4);
-          charts.elementTransform({'element': arcs, 'addtoY': 61});
-          charts.elementTransform({'element': labels, 'addtoY': 61});
-          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 4});
-        }
-        else if(rect1.top < 135) {
-          // console.log(5);
-          charts.elementTransform({'element': arcs, 'addtoY': 45});
-          charts.elementTransform({'element': labels, 'addtoY': 45});
-        }
-        else if(rect1.top < 145) {
-          // console.log(6);
-          forceToOneLabel();
-          showAllLines();
-          charts.elementTransform({'element': arcs, 'addtoY': 65});
-          charts.elementTransform({'element': labels, 'addtoY': 65});
-          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 27});
-        }
-        else if(rect1.top < 155) {
-          // console.log(7);
-          charts.elementTransform({'element': arcs, 'addtoY': 30});
-          charts.elementTransform({'element': labels, 'addtoY': 30});
-          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 4});
-        }
-        else if(rect1.top < 165) {
-          // console.log(8);
-          charts.elementTransform({'element': arcs, 'addtoY': 20});
-          charts.elementTransform({'element': labels, 'addtoY': 20});
-          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
-        }
-        else if(rect1.top < 185) {
-          // console.log(9);
-          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 3});
-        }
-        else if(rect1.top < 205) {
-          // console.log(10);
-          charts.moveLabels({'textLabels': textLabels, 'textLines': textLines, 'addtoY': 5});
-        }
-        fixNames();
-      }
 
-    });
+      })();
+
+      // Draw lines and set short name
+      (function () {
+        var lineFunction = d3.svg.line()
+          .x(function(d) { return d.x; })
+          .y(function(d) { return d.y; })
+          .interpolate('basis');
+
+        var labels = svg.selectAll('.label'),
+          labelsRect = svg.select('.labels').node().getBoundingClientRect();
+
+          // Set short names
+          if(labelsRect.left < 45 || labelsRect.width > (dims.width - 15)) {// 15: extra padding
+            drawTextlabels({ isShortName: true });
+            svg.selectAll('.label-text tspan').each(function() {
+              if (d3.select(this).text().substring(6) === '...') {
+                legendshow = true;
+              }
+            });
+          }
+
+        // Collect source and targets [x, y] position 
+        labels.each(function(d, i) {
+          var label = d3.select(this),
+            pieCircle = label.select('.pie-circle'),
+            labelCircle = label.select('.label-circle'),
+            text = label.select('.label-text'),
+            ct = d3.transform(pieCircle.attr('transform')),
+            ct2 = d3.transform(labelCircle.attr('transform')),
+            points = [ 
+              { x:Number(ct.translate[0]), y:Number(ct.translate[1]) },
+              { x:Number(ct2.translate[0]), y:Number(ct2.translate[1]) },
+              { x:Number(text.attr('x')), y:Number(text.attr('y')) + (lb.isTwoline ? 5 : 0) }
+            ];
+
+          // Draw line from center of arc to label
+          if (lb.linehideWhenMoreThanPercentage > percentage[i]) {
+            lines.append('path')
+              .attr({
+                'class': 'label-line',
+                'd': lineFunction(points)
+              })
+              .style({
+                'stroke-width': lb.lineWidth,
+                'stroke': function() { return labelsColorFormatter(d, i, lb.lineColor); }
+              });
+            }
+        });
+
+      })();
 
     //Get the Legend Series'
     var series = initialData[0].data.map(function (d) {
@@ -1105,13 +985,14 @@ this.Pie = function(initialData, isDonut, options) {
     if (legendshow || charts.legendformatter) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
     }
-    //-----------------------------------------
 
     $(container).trigger('rendered');
     return $(container);
   };
 
-  this.elementTransform = function(options) {
+
+
+this.elementTransform = function(options) {
     options.element.attr('transform', function () {
       var el = options.sameAs || this,
         t = d3.transform(d3.select(el).attr('transform')),
