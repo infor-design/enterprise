@@ -424,7 +424,7 @@
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
 
-        if (field.parent().find('.data-description')) {
+        if (field.parent().find('.data-description').length ===1) {
           field.parent().find('.data-description').before(svg);
         } else if (field.is('textarea')) {
           field.after(svg);
