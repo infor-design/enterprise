@@ -122,6 +122,7 @@ button {
     box-shadow: none;
     color: $primary-btn-disabled-color;
     cursor: default;
+    opacity: $primary-btn-disabled-opacity;
 
     .icon {
       fill: $btn-disabled-color;
@@ -201,11 +202,12 @@ a.btn-menu {
 
   &[disabled],
   &[disabled]:hover {
-    background-color: $btn-bg-color;
-    border: 1px solid $btn-bg-color;
+    background-color: $btn-disabled-bg-color;
+    border: 1px solid $btn-disabled-border-color;
     box-shadow: none;
     color: $btn-disabled-color;
     cursor: default;
+    opacity: $btn-disabled-opacity;
   }
 
   .ripple-effect {
@@ -247,11 +249,12 @@ a.btn-menu {
 
   &[disabled],
   &[disabled]:hover {
-    color: $btn-disabled-color;
+    color: $tertiary-btn-disabled-color;
     cursor: default;
+    opacity: $tertiary-btn-disabled-opacity;
 
     .icon {
-      fill: $btn-disabled-color;
+      fill: $tertiary-btn-disabled-color;
     }
   }
 

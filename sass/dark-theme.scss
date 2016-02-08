@@ -40,7 +40,7 @@ $hr-bottom-color: transparent;
 // Popovers
 $popover-bg-color: $slate06;
 $popover-border-color: $slate09;
-$popover-box-shadow: 0 2px 5px rgba(0,0,0,.4);
+$popover-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
 $popover-arrow-border-color: $slate09;
 $popover-color: $font-color;
 $popover-separator-color: $slate05;
@@ -51,7 +51,7 @@ $progress-border-color: $graphite05;
 // Tooltips
 $tooltip-bg-color: $graphite01;
 $tooltip-border-color: $graphite01;
-$tooltip-box-shadow: 0 2px 5px rgba(0,0,0,.4);
+$tooltip-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
 $tooltip-color: $graphite10;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
@@ -68,14 +68,20 @@ $popupmenu-heading-color: $slate01;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $slate06;
 $popupmenu-border-color: $slate09;
-$popupmenu-box-shadow: 0 2px 5px rgba(0,0,0,.4);
+$popupmenu-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
 $popupmenu-checked-color: $white;
 $popupmenu-hover-color: $slate05;
 
-// Form Buttons - Same
-
-//Disabled Buttons
-$btn-disabled-color: $slate05;
+// Form Buttons
+$primary-btn-bg-color: $primary-color;
+$primary-btn-color: $inverse-color;
+$primary-btn-hover-bg-color: $azure08;
+$primary-btn-focus-bg-color: $primary-color;
+$primary-btn-active-bg-color: $azure07;
+$primary-btn-disabled-color: $primary-btn-color;
+$primary-btn-disabled-bg-color: $primary-btn-bg-color; //Primary at 50%
+$primary-btn-disabled-border-color: $primary-btn-bg-color;
+$primary-btn-disabled-opacity: .5;
 
 // Secondary/Normal Buttons
 $btn-color: $slate10;
@@ -84,11 +90,17 @@ $btn-hover-bg-color: $slate04;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $slate04;
+$btn-disabled-bg-color: $slate03;
+$btn-disabled-color: $slate10;
+$btn-disabled-border-color: $slate03;
+$btn-disabled-opacity: .5;
 
 // Tertiary Buttons
 $tertiary-btn-color: $slate03;
 $tertiary-btn-hover-color: $white;
 $tertiary-btn-active-color: $white;
+$tertiary-btn-disabled-color: $slate03;
+$tertiary-btn-disabled-opacity: .5;
 
 // Input Fields
 $input-border-color: $slate04;

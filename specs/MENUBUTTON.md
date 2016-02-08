@@ -101,6 +101,8 @@ http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
 **Bindable** – It should be possible to bind the menu elements to frameworks like Angular (ng-Click, ng-binding) and React.
 
+**Trigger** – Can trigger on right click, click, or immediate in a click event because of the shared menu logic.
+
 ## Features
 
 **Sub Menus** – Can optionally add one level of sub menus (need image)

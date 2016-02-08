@@ -82,9 +82,7 @@ $primary-btn-active-bg-color: $azure07;
 $primary-btn-disabled-color: $inverse-color;
 $primary-btn-disabled-bg-color: #93bdd8; //Primary at 50%
 $primary-btn-disabled-border-color: #93bdd8;
-
-//Disabled Buttons
-$btn-disabled-color: $graphite04;
+$primary-btn-disabled-opacity: 1;
 
 // Secondary/Normal Buttons
 $btn-color: $graphite08;
@@ -93,12 +91,18 @@ $btn-hover-bg-color: $graphite04;
 $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite04;
+$btn-disabled-bg-color: $graphite04;
+$btn-disabled-color: $graphite04;
+$btn-disabled-border-color: transparent;
+$btn-disabled-opacity: .5;
 
 // Tertiary Buttons
 $tertiary-btn-color: $graphite06;
 $tertiary-btn-hover-color: $graphite10;
 $tertiary-btn-active-color: $graphite10;
-$tertiary-btn-ripple-color: #8DC9E6;
+$tertiary-btn-ripple-color: #8dc9e6;
+$tertiary-btn-disabled-color: $graphite06;
+$tertiary-btn-disabled-opacity: .5;
 
 // Buttons
 $button-font-size: 12;
