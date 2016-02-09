@@ -176,9 +176,10 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin: 5px 0 0 -27px;
+  margin: 5px 0 0 -20px;
 
   button {
+    @include font-size(12);
     border: 1px solid transparent;
     border-left: 1px solid $modal-btn-border-color;
     border-radius: 0;
@@ -186,7 +187,6 @@
     cursor: pointer;
     float: left;
     font-weight: bold;
-    @include font-size(12);
     height: 50px;
     margin-right: 0;
     overflow: hidden;
@@ -214,6 +214,7 @@
     &[disabled]:hover {
       color: $modal-btn-disabled-color;
       cursor: default;
+      opacity: $modal-btn-disabled-opacity;
       text-decoration: none;
     }
 
@@ -228,6 +229,11 @@
 
   .btn-modal-primary {
     color: $modal-btn-primary-color;
+
+    &[disabled] {
+      color: $modal-btn-primary-disabled-color;
+      opacity: $modal-btn-disabled-opacity;
+    }
 
     &:hover {
       color: $modal-btn-primary-hover-color;

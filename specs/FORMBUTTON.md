@@ -72,6 +72,8 @@ http://access.aol.com/dhtml-style-guide-working-group/#button
 
 **Right To Left** – Icons if there and the entire button will move to the opposite side of the page.
 
+**Printable** – To Conserve ink, print just the text with no background
+
 ## Mobile
 
 **Touch** - When a button is touched some schools say you should normalize the 300ms touch delay for percieved performance. However, this my cause issues with accessibility as a pinch over the button would be treated as a click.

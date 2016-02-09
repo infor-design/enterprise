@@ -617,8 +617,6 @@ this.Pie = function(initialData, isDonut, options) {
       width: parseInt(parent.width()),
     };
 
-    console.log((Math.max(dims.width, dims.height)));
-
     var isSmall = ((Math.max(dims.width, dims.height)) < 400);
     dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isSmall ? 65 : 35));
     dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
@@ -878,7 +876,7 @@ this.Pie = function(initialData, isDonut, options) {
           return { x: +d.attr('x'), y: +d.attr('y') };
         });
 
-        // Fix y position        
+        // Fix y position
         function relax() {
           var again = false;
           textLabels.each(function (d, i) {
@@ -901,9 +899,9 @@ this.Pie = function(initialData, isDonut, options) {
                   }
                 }
               }
-            });               
+            });
           });
-          
+
           if(again) {
             relax();
           }
@@ -949,7 +947,7 @@ this.Pie = function(initialData, isDonut, options) {
             });
           }
 
-        // Collect source and targets [x, y] position 
+        // Collect source and targets [x, y] position
         labels.each(function(d, i) {
           var label = d3.select(this),
             pieCircle = label.select('.pie-circle'),
@@ -957,7 +955,7 @@ this.Pie = function(initialData, isDonut, options) {
             text = label.select('.label-text'),
             ct = d3.transform(pieCircle.attr('transform')),
             ct2 = d3.transform(labelCircle.attr('transform')),
-            points = [ 
+            points = [
               { x:Number(ct.translate[0]), y:Number(ct.translate[1]) },
               { x:Number(ct2.translate[0]), y:Number(ct2.translate[1]) },
               { x:Number(text.attr('x')), y:Number(text.attr('y')) + (lb.isTwoline ? 5 : 0) }

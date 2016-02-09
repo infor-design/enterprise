@@ -80,9 +80,9 @@ $primary-btn-hover-bg-color: $azure07;
 $primary-btn-focus-bg-color: $primary-color;
 $primary-btn-active-bg-color: $azure07;
 $primary-btn-disabled-color: $inverse-color;
-$primary-btn-disabled-bg-color: #93bdd8; //Primary at 50%
-$primary-btn-disabled-border-color: #93bdd8;
-$primary-btn-disabled-opacity: 1;
+$primary-btn-disabled-bg-color: $primary-color; //Primary at 50%
+$primary-btn-disabled-border-color: $primary-color;
+$primary-btn-disabled-opacity: .5;
 
 // Secondary/Normal Buttons
 $btn-color: $graphite08;
@@ -92,8 +92,8 @@ $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite04;
 $btn-disabled-bg-color: $graphite04;
-$btn-disabled-color: $graphite04;
-$btn-disabled-border-color: transparent;
+$btn-disabled-color: $graphite08;
+$btn-disabled-border-color: $graphite03;
 $btn-disabled-opacity: .5;
 
 // Tertiary Buttons
@@ -288,13 +288,15 @@ $slider-disabled-color: $graphite01;
 $modal-bg-color: $white;
 $modal-border-color: $white;
 $modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
-$modal-btn-color: $graphite08;
+$modal-btn-color: $graphite06;
 $modal-color: $graphite06;
 $modal-btn-border-color: $graphite03;
 $modal-btn-hover-color: $graphite08;
 $modal-btn-primary-color: $primary-color;
-$modal-btn-primary-hover-color: $graphite07;
-$modal-btn-disabled-color: $graphite03;
+$modal-btn-primary-hover-color: $azure07;
+$modal-btn-primary-disabled-color: $azure07;
+$modal-btn-disabled-color: $graphite06;
+$modal-btn-disabled-opacity: .5;
 
 // Accordion
 $accordion-bg-color: $graphite01;

@@ -272,10 +272,11 @@ $modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 $modal-btn-color: $slate03;
 $modal-color: $white;
 $modal-btn-border-color: $slate05;
-$modal-btn-hover-color: $slate03;
+$modal-btn-hover-color: $white;
 $modal-btn-primary-color: $azure04;
 $modal-btn-primary-hover-color: $azure05;
-$modal-btn-disabled-color: $slate05;
+$modal-btn-disabled-color: $white;
+$modal-btn-disabled-opacity: .3;
 
 // Accordion
 $accordion-bg-color: $slate08;
