@@ -215,6 +215,17 @@
     @include font-size(12);
   }
 
+  .lg {
+    .chart-legend-color {
+      height: 20px;
+      width: 20px;
+    }
+
+    .chart-legend-item-text {
+      vertical-align: super;
+    }
+  }
+
 }
 
 // Spark Line Charts

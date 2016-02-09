@@ -86,17 +86,29 @@ window.Chart = function(container) {
   };
 
   this.addLegend = function(series) {
-    var legend = $('<div class="chart-legend"></div>');
+    var i, legend = $('<div class="chart-legend"></div>');
     if (series.length === 0) {
       return;
     }
 
-    for (var i = 0; i < series.length; i++) {
+    // Legend width
+    var width = 0;
+    for (i = 0; i < series.length; i++) {
+      width = (series[i].name && series[i].name.length > width) ? series[i].name.length : width;
+    }
+    width += 180;
+
+    for (i = 0; i < series.length; i++) {
       if (!series[i].name) {
         continue;
       }
 
-      var seriesLine = $('<span class="chart-legend-item" tabindex="0"></span>'),
+      var extraClass = '';
+      if (series[i].display && (series[i].display === 'block' || series[i].display === 'twocolumn')) {
+        extraClass = ' lg';
+      }
+
+      var seriesLine = $('<span class="chart-legend-item'+ extraClass +'" tabindex="0"></span>'),
         hexColor = charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
       var color = $('<span class="chart-legend-color"></span>').css('background-color', (series[i].pattern ? 'transparent' : hexColor)),
@@ -112,13 +124,13 @@ window.Chart = function(container) {
       }
 
       if (series[i].display && series[i].display==='block') {
-        seriesLine.css({'float':'none', 'display':'block'});
+        seriesLine.css({'float':'none', 'display':'block', 'margin':'0 auto', 'width':width});
       }
 
       if (series[i].display && series[i].display==='twocolumn') {
         legend.css({'margin':'2em auto auto', 'border-top':'1px solid #ccc', 'padding-top':'1em'});
-        if($(container).width() < 400) {
-          seriesLine.css({'float':'none', 'display':'block'});
+        if($(container).width() < 525) {
+          seriesLine.css({'float':'none', 'display':'block', 'margin':'0 auto', 'width':width});
         } else {
           seriesLine.css({'float':'none', 'display':'inline-block', 'width': '45%'});
         }
@@ -276,9 +288,9 @@ window.Chart = function(container) {
       });
     });
 
-    var h = parseInt($(container).parent().height()) - margins.bottom - (isStacked ? 0 : (legendHeight/2)),
+    var h = parseInt($(container).parent().height()) - margins.bottom - (isStacked ? 0 : (legendHeight / 2)),
       w = parseInt($(container).parent().width()) - margins.left,
-      textWidth = margins.left + (maxTextWidth*6);
+      textWidth = margins.left + (maxTextWidth * 6);
 
     svg = d3.select(container)
       .append('svg')
@@ -339,8 +351,8 @@ window.Chart = function(container) {
 
       gindex = 0;
       totalBarsInGroup = legendMap.length;
-      totalGroupArea = height/yMap.length;
-      barHeight = totalGroupArea/totalBarsInGroup;
+      totalGroupArea = height / yMap.length;
+      barHeight = totalGroupArea / totalBarsInGroup;
       totalHeight = totalBarsInGroup > 1 ?
         totalGroupArea - (barHeight * gapBetweenGroups) : maxBarHeight;
       gap = totalGroupArea - totalHeight;
@@ -399,7 +411,7 @@ window.Chart = function(container) {
     .enter()
     .append('rect')
     .attr('class', function(d, i) {
-      return 'series-'+i+' bar';
+      return 'series-'+ i +' bar';
     })
     .style('fill', function(d, i) {
       return isStacked ?
@@ -420,7 +432,7 @@ window.Chart = function(container) {
     })
     .attr('y', function (d) {
       return isStacked ? yScale(d.y) :
-        ((((totalGroupArea-totalHeight)/2)+(d.gindex*maxBarHeight))+(d.index*gap));
+        ((((totalGroupArea - totalHeight) / 2) + (d.gindex * maxBarHeight)) + (d.index * gap));
     })
     .attr('height', function () {
       return isStacked ? (yScale.rangeBand()) : maxBarHeight;
@@ -545,11 +557,11 @@ window.Chart = function(container) {
     return $(container);
   };
 
-
 this.Pie = function(initialData, isDonut, options) {
     var defaults = {
       labels: {
         // true|false
+        isLabels: true,
         isTwoline: true,
 
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
@@ -615,17 +627,20 @@ this.Pie = function(initialData, isDonut, options) {
     var dims = {
       height: parseInt(parent.height()),  //header + 20 px padding
       width: parseInt(parent.width()),
+      widgetheight: 318
     };
+    var isSmall = (dims.width < 405);
+    dims.height = dims.height > dims.widgetheight ? dims.widgetheight : dims.height;
+    dims.height = isSmall && !lb.isLabels ? dims.width : dims.height;
 
-    var isSmall = ((Math.max(dims.width, dims.height)) < 400);
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - (isSmall ? 65 : 35));
-    dims.innerRadius = isDonut ? dims.outerRadius - 30 : 0;
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 35);
+    dims.innerRadius = isDonut ? dims.outerRadius - (!lb.isLabels ? 50 : 30) : 0;
     dims.labelRadius = dims.outerRadius + 20;
     dims.center = { x: dims.width / 2, y: dims.height / 2 };
 
     svg.attr({
       'width': '100%',
-      'height': '100%',
+      'height': ((isSmall && !lb.isLabels) || dims.height === dims.widgetheight) ? dims.height - 50 : '100%',
       'viewBox': '0 0 ' + dims.width + ' ' + dims.height
     });
 
@@ -713,7 +728,7 @@ this.Pie = function(initialData, isDonut, options) {
             }, 10);
           } else {
             tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
-            content = tooltipDataCache[i] || tooltipData || d.data.tooltip || '';
+            content = tooltipDataCache[i] || tooltipData || d.data.tooltip || d.data.elm.tooltip || '';
             show();
           }
         })
@@ -852,130 +867,136 @@ this.Pie = function(initialData, isDonut, options) {
             });
         }
 
-        drawTextlabels();
+        if (lb.isLabels) {
+          drawTextlabels();
 
-        // Add center label only if its donut chart
-        if (isDonut) {
-          arcs.append('text')
-            .attr('dy', '.35em')
-            .style('text-anchor', 'middle')
-            .attr('class', 'chart-donut-text')
-            .text(centerLabel);
+          // Add center label only if its donut chart
+          if (isDonut) {
+            arcs.append('text')
+              .attr('dy', '.35em')
+              .style('text-anchor', 'middle')
+              .attr('class', 'chart-donut-text')
+              .text(centerLabel);
+          }
         }
       };
       addLabels();
 
+      if (lb.isLabels) {
+        // Resolve label positioning collisions
+        (function () {
+          var spacing = Math.round(textLabels.node().getBBox().height) + 1;
 
-      // Resolve label positioning collisions
-      (function () {
-        var spacing = Math.round(textLabels.node().getBBox().height) + 1;
-
-        // Record org x, y position
-        var orgLabelPos = textLabels[0].map(function(d) {
-          d = d3.select(d);
-          return { x: +d.attr('x'), y: +d.attr('y') };
-        });
-
-        // Fix y position
-        function relax() {
-          var again = false;
-          textLabels.each(function (d, i) {
-            var a = this,
-              da = d3.select(a),
-              y1 = +da.attr('y');
-
-            textLabels.each(function (d2, i2) {
-              if (i2 > i) {
-                var deltaY,
-                  b = this,
-                  db = d3.select(b),
-                  y2 = +db.attr('y');
-
-                if (da.attr('text-anchor') === db.attr('text-anchor')) {
-                  deltaY = y1 - y2;
-                  if (Math.abs(deltaY) < spacing) {
-                    again = true;
-                    db.attr('y', y2 > 0 ? y2-1 : y2+1); //padding
-                  }
-                }
-              }
-            });
+          // Record org x, y position
+          var orgLabelPos = textLabels[0].map(function(d) {
+            d = d3.select(d);
+            return { x: +d.attr('x'), y: +d.attr('y') };
           });
 
-          if(again) {
-            relax();
-          }
-        }
-        relax();
+          // Fix y position
+          function relax() {
+            var again = false;
+            textLabels.each(function (d, i) {
+              var a = this,
+                da = d3.select(a),
+                y1 = +da.attr('y');
 
-        // Fix x position
-        textLabels.each(function(d, i) {
-          var label = d3.select(this),
-            x1 = +label.attr('x'),
-            y1 = +label.attr('y'),
-            sign = (x1 > 0 ? 1 : -1),
-            x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
+              textLabels.each(function (d2, i2) {
+                if (i2 > i) {
+                  var deltaY,
+                    b = this,
+                    db = d3.select(b),
+                    y2 = +db.attr('y');
 
-          if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
-            label.attr('x', x);
+                  if (da.attr('text-anchor') === db.attr('text-anchor')) {
+                    deltaY = y1 - y2;
+                    if (Math.abs(deltaY) < spacing) {
+                      again = true;
+                      db.attr('y', y2 > 0 ? y2-1 : y2+1); //padding
+                    }
+                  }
+                }
+              });
+            });
 
-            if (lb.isTwoline) {
-              label.select('.lb-bottom').attr('x', x);
+            if(again) {
+              relax();
             }
           }
-        });
+          relax();
 
-      })();
+          // Fix x position
+          textLabels.each(function(d, i) {
+            var label = d3.select(this),
+              x1 = +label.attr('x'),
+              y1 = +label.attr('y'),
+              sign = (x1 > 0 ? 1 : -1),
+              x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
 
-      // Draw lines and set short name
-      (function () {
-        var lineFunction = d3.svg.line()
-          .x(function(d) { return d.x; })
-          .y(function(d) { return d.y; })
-          .interpolate('basis');
+            if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
+              label.attr('x', x);
 
-        var labels = svg.selectAll('.label'),
-          labelsRect = svg.select('.labels').node().getBoundingClientRect();
-
-          // Set short names
-          if(labelsRect.left < 45 || labelsRect.width > (dims.width - 15)) {// 15: extra padding
-            drawTextlabels({ isShortName: true });
-            svg.selectAll('.label-text tspan').each(function() {
-              if (d3.select(this).text().substring(5) === '...') {
-                legendshow = true;
+              if (lb.isTwoline) {
+                label.select('.lb-bottom').attr('x', x);
               }
-            });
-          }
+            }
+          });
 
-        // Collect source and targets [x, y] position
-        labels.each(function(d, i) {
-          var label = d3.select(this),
-            pieCircle = label.select('.pie-circle'),
-            labelCircle = label.select('.label-circle'),
-            text = label.select('.label-text'),
-            ct = d3.transform(pieCircle.attr('transform')),
-            ct2 = d3.transform(labelCircle.attr('transform')),
-            points = [
-              { x:Number(ct.translate[0]), y:Number(ct.translate[1]) },
-              { x:Number(ct2.translate[0]), y:Number(ct2.translate[1]) },
-              { x:Number(text.attr('x')), y:Number(text.attr('y')) + (lb.isTwoline ? 5 : 0) }
-            ];
+        })();
 
-          // Draw line from center of arc to label
-          if (lb.linehideWhenMoreThanPercentage > chartData[i].percent) {
-            lines.append('path')
-              .attr({
-                'class': 'label-line',
-                'd': lineFunction(points)
-              })
-              .style({
-                'stroke-width': lb.lineWidth,
-                'stroke': function() { return labelsColorFormatter(d, i, lb.lineColor); }
+        // Draw lines and set short name
+        (function () {
+          var lineFunction = d3.svg.line()
+            .x(function(d) { return d.x; })
+            .y(function(d) { return d.y; })
+            .interpolate('basis');
+
+          var labels = svg.selectAll('.label'),
+            labelsRect = svg.select('.labels').node().getBoundingClientRect();
+
+            // Set short names
+            if(labelsRect.left < 45 || labelsRect.width > (dims.width - 15)) {// 15: extra padding
+              drawTextlabels({ isShortName: true });
+              svg.selectAll('.label-text tspan').each(function() {
+                if (d3.select(this).text().substring(5) === '...') {
+                  legendshow = true;
+                }
               });
             }
-        });
 
-      })();
+          // Collect source and targets [x, y] position
+          labels.each(function(d, i) {
+            var label = d3.select(this),
+              pieCircle = label.select('.pie-circle'),
+              labelCircle = label.select('.label-circle'),
+              text = label.select('.label-text'),
+              ct = d3.transform(pieCircle.attr('transform')),
+              ct2 = d3.transform(labelCircle.attr('transform')),
+              points = [
+                { x:Number(ct.translate[0]), y:Number(ct.translate[1]) },
+                { x:Number(ct2.translate[0]), y:Number(ct2.translate[1]) },
+                { x:Number(text.attr('x')), y:Number(text.attr('y')) + (lb.isTwoline ? 5 : 0) }
+              ];
+
+            // Draw line from center of arc to label
+            if (lb.linehideWhenMoreThanPercentage > chartData[i].percent) {
+              lines.append('path')
+                .attr({
+                  'class': 'label-line',
+                  'd': lineFunction(points)
+                })
+                .style({
+                  'stroke-width': lb.lineWidth,
+                  'stroke': function() { return labelsColorFormatter(d, i, lb.lineColor); }
+                });
+              }
+          });
+
+        })();
+      } // END: lb.isLabels
+      else {
+        legendshow = true;
+      }
 
     //Get the Legend Series'
     var series = chartData.map(function (d) {
@@ -1121,14 +1142,14 @@ this.elementTransform = function(options) {
         .attr('height', bot)
         .style('fill', '#d8d8d8')
         .on('mouseenter', function() {
-          var rect = d3.select(this)[0][0].getBoundingClientRect(),
+          var rect = this.getBoundingClientRect(),
           content = '<p>' + (chartData[0].name ? chartData[0].name +'<br> ' : '') +
             Locale.translate('Median') + ': <b>'+ median +'</b><br>'+
             Locale.translate('Range') +': <b>'+ range +'</b>'+
             (options.isPeakDot ? '<br>'+Locale.translate('Peak') +': <b>'+ max +'</b>' : '') +'</p>',
           size = charts.getTooltipSize(content),
-          x = (w-size.width)/2,
-          y = rect.y - size.height + $(window).scrollTop();
+          x = rect.left + ((rect.width - size.width)/2),
+          y = rect.top - size.height - 5; // 5: extra padding
           charts.showTooltip(x, y, content, 'top');
         })
         .on('mouseleave', function() {
@@ -1175,14 +1196,14 @@ this.elementTransform = function(options) {
         .attr('cx', function(d, i) { return x(i); })
         .attr('cy', function(d) { return y(d); })
         .on('mouseenter', function(d) {
-          var rect = d3.select(this)[0][0].getBoundingClientRect(),
+          var rect = this.getBoundingClientRect(),
             content = '<p>' + (chartData[0].name ? chartData[0].name + '<br> ' +
               ((options.isMinMax && max === d) ? Locale.translate('Highest') + ': ' :
                (options.isMinMax && min === d) ? Locale.translate('Lowest') + ': ' :
                (options.isPeakDot && max === d) ? Locale.translate('Peak') + ': ' : '') : '') + '<b>' + d  + '</b></p>',
             size = charts.getTooltipSize(content),
-            x = rect.x - (size.width /2) + 6,
-            y = rect.y - size.height - 18  + $(window).scrollTop();
+            x = rect.left - (size.width /2) + 6,
+            y = rect.top - size.height - 8;
 
           charts.showTooltip(x, y, content, 'top');
           d3.select(this).attr('r', (options.isMinMax && max === d ||
@@ -1419,6 +1440,7 @@ this.elementTransform = function(options) {
           thisShape = this,
           shape = $(this),
           content = '',
+          ePageY = d3.event.pageY,
 
           show = function(isTooltipBottom) {
             size = charts.getTooltipSize(content);
@@ -1428,7 +1450,7 @@ this.elementTransform = function(options) {
               y = shape[0].getBoundingClientRect().top - size.height - 10;
             }
             else {
-              y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
+              y = ePageY-charts.tooltip.outerHeight() - 25;
               if (dataset.length > 1) {
                 x = thisShape.parentNode.getBoundingClientRect().left - (size.width /2) + (thisShape.parentNode.getBoundingClientRect().width/2);
                 if (isTooltipBottom) {
@@ -1485,7 +1507,7 @@ this.elementTransform = function(options) {
           }
           size = charts.getTooltipSize(content);
           x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
-          y = d3.event.pageY-charts.tooltip.outerHeight() - 25;
+          y = ePageY-charts.tooltip.outerHeight() - 25;
           if (dataset.length > 1) {
             x = this.parentNode.getBoundingClientRect().left - (size.width /2) + (this.parentNode.getBoundingClientRect().width/2);
             y = this.parentNode.getBoundingClientRect().top-charts.tooltip.outerHeight() + 25;

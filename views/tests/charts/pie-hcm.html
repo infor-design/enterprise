@@ -1,0 +1,49 @@
+
+<div class="row top-padding">
+  <div class="two-thirds column">
+      <div class="widget double-height"> <!-- double-height -->
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Label Currency</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  var pieData = [{
+    data: [{
+        name: 'Company Deductions',
+        shortName: 'CD',
+        value: 8,
+      }, {
+        name: 'After-tax Deductions',
+        shortName: 'After-tax',
+        value: 11,
+      }, {
+        name: 'Pre-tax Deductions',
+        shortName: 'Pre-tax',
+        value: 12,
+      }, {
+        name: 'Taxes',
+        shortName: 'Af-tax',
+        value: 17,
+      }, {
+        name: 'Wages',
+        shortName: 'Wages',
+        value: 52,
+      }]
+    }];
+
+  $('#pie-chart-example').chart({
+    type: 'donut',
+    dataset: pieData,
+    labels: {
+      isLabels: false,
+      lineColor: 'color-as-arc'
+    }
+  });
+</script>
