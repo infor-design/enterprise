@@ -127,6 +127,7 @@ label.is-disabled,
 
 .data-description {
   @include font-size(14);
+  color: $input-color;
   margin-left: 10px;
 }
 
