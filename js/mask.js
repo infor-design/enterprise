@@ -35,9 +35,16 @@
             'a': /[APap]/,
             'm': /[Mm]/
           },
+          groupComplete: false,
+          mode: undefined,
+          mustComplete: false,
+          negative: false,
           number: false,
-          showSymbol: 'none', // can be 'currency', 'percent'
+          thousandsSeparator: false,
+          showSymbol: undefined, // can be 'currency', 'percent'
         },
+        maskModes = ['group', 'number', 'date', 'time'],
+        symbols = ['currency', 'percent'],
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -59,34 +66,54 @@
           iPhone: /iphone/i.test(this.ua)
         };
 
+        this.element.addClass('is-mask');
+
         // Order of operations when choosing pattern strings:
         // HTML5 'data-mask' attribute > Generic pattern string based on "type" attribute > nothing.
         //
         // if no pattern is provided in settings, use a pre-determined pattern based
         // on element type, or grab the pattern from the element itself.
-        self.pattern = self.element.attr('data-mask') || this.settings.pattern || '';
+        var html5DataMask = this.element.attr('data-mask') || false;
+        if (html5DataMask) {
+          this.settings.pattern = html5DataMask;
+        }
 
         // If a "mode" is defined, special formatting rules may apply to this mask.
         // Otherwise, the standard single-character pattern match will take place.
-        self.mode = self.element.attr('data-mask-mode') || undefined;
+        var html5DataMaskMode = this.element.attr('data-mask-mode') || false;
+        if (html5DataMaskMode) {
+          this.settings.mode = html5DataMaskMode;
+        }
+        if (this.settings.mode) {
+          if ($.inArray(this.settings.mode, maskModes) === -1) {
+            this.settings.mode = undefined;
+          }
+        }
 
         // If "thousands" is defined, the thousands separator for numbers (comma or decimal, based on
         // localization) will be inserted wherever necessary during typing. Will automatically set to
         // "true" if the localized thousands separator is detected inside the mask.
-        self.thousands = self.element.attr('data-thousands') || self.pattern.indexOf(',') !== -1 || false;
+        var html5DataThousands = this.element.attr('data-thousands') || false;
+        if (html5DataThousands) {
+          this.settings.thousandsSeparator = (html5DataThousands === 'true');
+        }
+        this.settings.thousandsSeparator = this.settings.pattern.indexOf(',') !== -1 || this.settings.thousandsSeparator;
 
         // If "negative" is defined, you can type the negative symbol in front of the number.
         // Will automatically set to "true" if a negative symbol is detected inside the mask.
-        self.negative = self.mode === 'number' && self.pattern.indexOf('-') !== -1;
+        this.settings.negative = this.settings.mode === 'number' && this.settings.pattern.indexOf('-') !== -1;
 
         // If 'mustComplete' is defined, you MUST complete the full mask, or the mask will revert to empty
         // once the field is blurred.
-        self.mustComplete = self.element.attr('data-must-complete') || false;
+        var html5DataMustComplete = this.element.attr('data-must-complete') || false;
+        if (html5DataMustComplete) {
+          this.settings.mustComplete = html5DataMustComplete;
+        }
 
         // If 'showCurrency' is defined and the mask mode is 'number', a span will be drawn that will show the
         // localized currency symbol.
-        var symbolType = self.element.attr('data-show-currency') || this.settings.showSymbol,
-          symbols = ['currency', 'percent'],
+        var symbolType = this.settings.showSymbol,
+          symbols = defaults.symbols,
           symbol;
 
         // Backwards compat with the old "data-show-currency"
@@ -94,7 +121,7 @@
           symbolType = 'currency';
         }
 
-        if (symbolType && symbolType !== 'none' && symbols.indexOf(symbolType) !== -1 && self.mode === 'number') {
+        if (symbolType && symbolType !== undefined && symbols.indexOf(symbolType) !== -1 && this.settings.mode === 'number') {
           switch(symbolType) {
             case 'currency':
               symbol = (Locale.currentLocale.data ? Locale.currentLocale.data.currencySign : '$');
@@ -112,15 +139,22 @@
 
         // If we are doing a grouped pattern match (for dates/times/etc), we need to store an object that contains
         // separated pieces of "editable" and "literal" parts that are used for checking validity of mask pieces.
-        if (self.mode !== 'number') {
+        var modeClassMethod = 'addClass';
+        if (self.settings.mode !== 'number') {
           self.maskParts = self.getPatternParts();
+          modeClassMethod = 'removeClass';
         }
+        this.element[modeClassMethod]('is-number-mask');
 
         // If 'self.groupComplete' is active, each section of the group pattern match must be full in order for the
         // literals in-between each section to be automatically added (meaning, you can't type a literal to end that
         // group until all characters in that group are entered).  This is used for some group matching and for time.
-        if (self.mode === 'time' || self.element.attr('data-group-complete')) {
-          //self.groupComplete = true;
+        var html5DataGroupComplete = self.element.attr('data-group-complete');
+        if (html5DataGroupComplete) {
+          this.settings.groupComplete = true;
+        }
+        if (this.settings.mode === 'time') {
+          //this.settings.groupComplete = true;
         }
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
@@ -157,7 +191,7 @@
 
           var val = self.element.val();
 
-          if (self.mustComplete) {
+          if (self.settings.mustComplete) {
             self.checkCompletion();
           }
           if (val && self.initValue !== val) {
@@ -273,7 +307,7 @@
       // Used on Blur if the "mustComplete" flag is set
       checkCompletion: function() {
         var inputLength = this.element.val().length,
-          maskLength = this.pattern.length;
+          maskLength = this.settings.pattern.length;
 
         if (maskLength !== inputLength) {
           this.element.val('');
@@ -383,7 +417,7 @@
             self.killEvent(e);
           }
 
-          if (self.mode === 'number') {
+          if (self.settings.mode === 'number') {
             self.processNumberMask(typedChar, evt);
           } else {
             self.processMask(typedChar, evt);
@@ -440,7 +474,7 @@
 
         if (paste) {
           // cut down the total size of the paste input to only be as long as the pattern allows * 2.
-          var pasteLimiter = (this.pattern.length * 2) > paste.length ? paste.length : this.pattern.length * 2,
+          var pasteLimiter = (this.settings.pattern.length * 2) > paste.length ? paste.length : this.settings.pattern.length * 2,
             maxPasteInput = paste.substring(0, pasteLimiter);
           this.processStringAgainstMask(maxPasteInput, e);
         }
@@ -486,7 +520,7 @@
         var val = this.element.val(),
           pos = this.originalPos,
           buffSize = this.buffer.length,
-          pattSize = this.pattern.length;
+          pattSize = this.settings.pattern.length;
 
         // insert the buffer's contents
         val = this.insertAtIndex(val, this.buffer, pos.begin);
@@ -499,12 +533,12 @@
         val = val.substring(0, pattSize);
 
         // Reduce the size of the string by one if a negative-capable mask contains a positive number
-        if (this.negative && val.indexOf('-') === -1) {
+        if (this.settings.negative && val.indexOf('-') === -1) {
           val = val.substring(0, (pattSize - 1));
         }
 
         // if we're dealing with numbers, figure out commas and adjust caret position accordingly.
-        if (this.mode === 'number') {
+        if (this.settings.mode === 'number') {
 
           // cut all but the first occurence of the negative symbol and decimal
           val = this.replaceAllButFirst(/-/g, val, '');
@@ -517,14 +551,14 @@
           val = valWithoutLeadZeros;
 
           var originalVal = val,
-            maskParts = this.pattern.replace(/,/g, '').split('.'),
+            maskParts = this.settings.pattern.replace(/,/g, '').split('.'),
             totalLengthMinusSeparators = maskParts[0].length + (maskParts[1] ? maskParts[1].length : 0);
 
           // strip out the decimal and any commas from the current value
           val = val.replace(/(\.|,)/g, '');
 
           // if the original value had a decimal point, place it back in the right spot
-          if (this.pattern.indexOf('.') !== -1) {
+          if (this.settings.pattern.indexOf('.') !== -1) {
             // Lots of checking of decimal position is necessary if it already exists in the value string.
             if (originalVal.indexOf('.') !== -1) {
               var inputParts = originalVal.split('.');
@@ -568,7 +602,7 @@
           }
 
           // Only do this part if the thousands separator should be present.
-          if (this.thousands) {
+          if (this.settings.thousandsSeparator) {
             // Reposition all the commas before the decimal point to be in the proper order.
             // Store the values of "added" and "removed" commas.
             var valHasDecimal = val.length - val.replace(/\./g, '').length > 0,
@@ -623,8 +657,8 @@
       processNumberMask: function(typedChar, e) {
         var self = this,
           val = self.element.val(),
-          maskWithoutInts = self.pattern.replace(/#/g, ''),
-          numMaskInts = self.pattern.length - maskWithoutInts.length,
+          maskWithoutInts = self.settings.pattern.replace(/#/g, ''),
+          numMaskInts = self.settings.pattern.length - maskWithoutInts.length,
           match,
           patternChar;
 
@@ -632,7 +666,7 @@
         self.currentMaskBeginIndex = self.currentMaskBeginIndex || self.originalPos.begin;
 
         // don't do anything if you're at the end of the pattern.  You can't type anymore.
-        if (self.currentMaskBeginIndex >= self.pattern.length) {
+        if (self.currentMaskBeginIndex >= self.settings.pattern.length) {
           self.resetStorage();
           return self.killEvent(e);
         }
@@ -652,7 +686,7 @@
         // Is the decimal already in the slice up to the caret?
         // If it is, only work with the "post-decimal" portion of the mask
         if (sliceHasDecimal) {
-          var postDecMask = self.pattern.split('.')[1],  // tests all mask characters after the decimal
+          var postDecMask = self.settings.pattern.split('.')[1],  // tests all mask characters after the decimal
             postDecSlice = sliceUpToCaret.split('.')[1], // tests only typed characters after the decimal up to the caret
             distanceFromDec = (self.originalPos.begin - 1) - sliceUpToCaret.indexOf('.');
           patternChar = postDecMask.charAt(distanceFromDec);
@@ -680,7 +714,7 @@
         }
 
         // The decimal point is not currently in the portion of the string we're working with.
-        var patternHasDecimal = self.pattern.length !== self.pattern.replace(/\./g, '').length;
+        var patternHasDecimal = self.settings.pattern.length !== self.settings.pattern.replace(/\./g, '').length;
 
         // Check the character to see if it's a decimal
         if (self.isCharacterDecimal(typedChar)) {
@@ -732,7 +766,7 @@
 
         // Test to see if the character is the negative symbol
         if (typedChar === '-') {
-          if (!self.negative || self.originalPos.begin > 0) {
+          if (!self.settings.negative || self.originalPos.begin > 0) {
             self.resetStorage();
             return self.killEvent(e);
           }
@@ -750,7 +784,7 @@
         // Actually test the typed character against the correct pattern character.
         match = self.testCharAgainstRegex(typedChar, patternChar);
         if (!match) {
-          if (self.negative && self.testCharAgainstRegex(typedChar, '~')) {
+          if (self.settings.negative && self.testCharAgainstRegex(typedChar, '~')) {
             // Let it go
           } else {
             self.resetStorage();
@@ -795,28 +829,28 @@
         });
         regexString = '[' + regexString + ']+';
         regexObj = new RegExp(regexString, 'g');
-        patternEditableParts = self.pattern.match(regexObj) || [];
+        patternEditableParts = self.settings.pattern.match(regexObj) || [];
 
         // check for literal characters at the beginning of the string before the first matchable pattern
-        if (patternEditableParts[0] && self.pattern.substring(0, 1) !== patternEditableParts[0].substring(0, 1)) {
-          patternLiteralParts.push( self.pattern.substring( 0, self.pattern.indexOf( patternEditableParts[0] )));
+        if (patternEditableParts[0] && self.settings.pattern.substring(0, 1) !== patternEditableParts[0].substring(0, 1)) {
+          patternLiteralParts.push( self.settings.pattern.substring( 0, self.settings.pattern.indexOf( patternEditableParts[0] )));
           patternStartsWithLiteral = true;
         }
 
         // set a starting index for our literal checking... may not be 0 if there were literals before the first match
-        var prevLiteralEndIndex = (patternLiteralParts && patternLiteralParts[0]) ? (self.pattern.indexOf(patternLiteralParts[0]) + patternLiteralParts[0].length) : 0;
+        var prevLiteralEndIndex = (patternLiteralParts && patternLiteralParts[0]) ? (self.settings.pattern.indexOf(patternLiteralParts[0]) + patternLiteralParts[0].length) : 0;
 
         // get all sets of literal characters in the pattern and store them
         while (i < patternEditableParts.length) {
           // start cutting the string here
           var currLiteralStartIndex = prevLiteralEndIndex + patternEditableParts[i].length,
             // get a fresh cut of the pattern minus the parts we've already dealt with
-            nextCut = self.pattern.substring(currLiteralStartIndex, self.pattern.length),
-            cutChars = self.pattern.length - nextCut.length,
+            nextCut = self.settings.pattern.substring(currLiteralStartIndex, self.settings.pattern.length),
+            cutChars = self.settings.pattern.length - nextCut.length,
             // finish cutting the string at the end of the next piece of editable pattern OR the end of the pattern
             currLiteralEndIndex = cutChars + (patternEditableParts[i+1] ? nextCut.indexOf(patternEditableParts[i+1]) : nextCut.length),
             // should contain the next literal
-            currLiteral = self.pattern.substring(currLiteralStartIndex, currLiteralEndIndex);
+            currLiteral = self.settings.pattern.substring(currLiteralStartIndex, currLiteralEndIndex);
           if (currLiteral !== '') {
             patternLiteralParts.push(currLiteral);
           }
@@ -1030,9 +1064,9 @@
 
         // If the character typed is a literal, allow it to go through if there is still a section of unmatched literals
         // and there has been at least one editable character entered in this section.  This only works if the flag
-        // 'self.groupComplete' is set to 'false' (generally used for dates).
+        // 'self.settings.groupComplete' is set to 'false' (generally used for dates).
         if (typedLiteralsAreValid &&
-          !self.groupComplete &&
+          !self.settings.groupComplete &&
           input.editables[currentSection].length > 0) {
 
           self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection+i]);
@@ -1041,10 +1075,10 @@
           return self.killEvent(e);
         }
 
-        // If 'self.groupComplete' is true, but all characters for this particular group have already been entered,
+        // If 'self.settings.groupComplete' is true, but all characters for this particular group have already been entered,
         // Allow a typed literal character to pass
         if (typedLiteralsAreValid &&
-          self.groupComplete &&
+          self.settings.groupComplete &&
           input.editables[currentSection].length === maskEditables[currentSection].length) {
 
           self.checkSectionForLiterals(e, typedChar, maskLiterals[currentSection+i]);
@@ -1156,10 +1190,10 @@
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
       processStringAgainstMask: function(string, originalEvent) {
-        switch(this.mode) {
+        switch(this.settings.mode) {
           case 'number':
             var regex = /[^0-9.-]/g;
-            if (!this.negative) {
+            if (!this.settings.negative) {
               regex = /[^0-9.]/g;
             }
             string = string.replace(regex,'');
@@ -1206,7 +1240,7 @@
       // If no direction is provided, it defaults to the current position.
       // If an optional index is provided, the cursor position will shift to that index value.
       getCharacter: function(direction, maskIndex) {
-        var mask = this.mode === 'number' ? this.pattern.replace(/,/g, '') : this.pattern,
+        var mask = this.settings.mode === 'number' ? this.settings.pattern.replace(/,/g, '') : this.settings.pattern,
           index = maskIndex ? maskIndex : this.caret().begin;
         direction = this.evaluateDirecton(direction);
 
@@ -1221,16 +1255,28 @@
       },
 
       updated: function() {
-        return this;
+        return this
+          .teardown()
+          .init();
       },
 
-      destroy: function() {
-        if (this.showCurrency) {
+      teardown: function() {
+        if (this.settings.showCurrency) {
           this.element.parent('.field').removeClass('currency').attr('data-currency-symbol', '');
           this.element.prev('label').find('.currency').remove();
         }
         this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
+
+        this.element.removeClass('is-mask').removeClass('is-number-mask');
+
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], pluginName);
+
+        return this;
       }
     };
 

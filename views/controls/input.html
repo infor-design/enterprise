@@ -41,17 +41,17 @@
   <div class="one-half column">
     <div class="field">
       <label for="decimal-field">Currency Field</label>
-      <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask="###.00" data-mask-mode="number" data-show-currency="true"/>
+      <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask data-options="{ pattern: '###.00', mode: 'number', showCurrency: true }" />
     </div>
 
     <div class="field">
       <label for="phone-number">Phone Number</label>
-      <input id="phone-number" name="phone-number" type="text" placeholder="(123) 456-7890" data-mask="(###) ###-####" data-mask-mode="group"/>
+      <input id="phone-number" name="phone-number" type="text" placeholder="(123) 456-7890" data-mask data-options="{pattern: '(###) ###-####', mode: 'group'}" />
     </div>
 
     <div class="field">
       <label for="date-input">Date Input - Error Handling</label>
-      <input id="date-input" name="date-input" type="text" placeholder="M/d/yyyy" data-mask="##/##/####" data-mask-mode="date" data-validate="date"/>
+      <input id="date-input" name="date-input" type="text" placeholder="M/d/yyyy" data-mask data-options="{ pattern: '##/##/####', mode: 'date' }" data-validate="date"/>
     </div>
 
     <div class="field">
