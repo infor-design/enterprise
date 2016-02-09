@@ -378,6 +378,11 @@ textarea.error:focus {
   color: $inverse-color;
 }
 
+// Mask Control Adjustment Classes
+.is-number-mask {
+  text-align: right;
+}
+
 // Shorter/Legacy Inputs
 .field-short {
   position: relative;
@@ -444,5 +449,10 @@ html[dir='rtl'] {
   .label.required:after {
     left: auto;
     right: 3px;
+  }
+
+  // Mask Control Adjustment Classes
+  .is-number-mask {
+    text-align: left;
   }
 }
