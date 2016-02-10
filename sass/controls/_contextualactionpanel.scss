@@ -2,11 +2,12 @@
 //================================================== //
 
 .modal.contextual-action-panel {
-  @include css3(transform, translate(0, 100%));
+  min-width: 70%;
+  @include css3(transform, translate(-50%, 50%));
   @include css3(transition-timing-function, cubic-bezier(.17, .04, .03, .94));
 
   &.is-visible {
-    @include css3(transform, translate(0, 0));
+    @include css3(transform, translate(-50%, -50%));
     @include css3(transition-timing-function, cubic-bezier(.94, .03, .04, .17));
   }
 

@@ -11,13 +11,11 @@
   max-width: 90%;
   min-width: 200px;
   opacity: 0;
-
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   position: fixed;
   top: 50%;
   // Ignoring the mixin and doing manual CSS3 vendor-prefixing here because this is complicated
-  @include css3(transform, scale(.9));
+  @include css3(transform, translate(-50%, -50%) scale(.9));
   -moz-transition: opacity .2s, -moz-transform .2s;
   -ms-transition: opacity .2s, -ms-transform .2s;
   -o-transition: opacity .2s, -o-transform .2s;
@@ -28,7 +26,7 @@
 
   &.is-visible {
     opacity: 1;
-    @include css3(transform, scale(1));
+    @include css3(transform, translate(-50%, -50%) scale(1));
   }
 
   .field {
@@ -81,6 +79,10 @@
   visibility: visible;
 }
 
+.modal-header {
+  padding: 20px 20px 0 20px;
+}
+
 .modal-content {
   background: $modal-bg-color;
   border: 1px solid $modal-border-color;
@@ -88,7 +90,6 @@
   color: $font-color;
   margin: 5px;
   overflow: hidden;
-  padding: 20px 0 0 20px;
   position: relative;
 
   // //3D sign Effect
@@ -101,9 +102,7 @@
     @include font-size(18);
     color: $modal-color;
     font-weight: normal;
-    margin-bottom: 20px;
-    margin-right: 25px;
-    padding-right: 20px;
+    -webkit-margin-after: 0;
     text-align: left;
 
     > * {
@@ -128,8 +127,8 @@
   }
 
   .modal-body-wrapper {
-    padding-bottom: 20px;
-    padding-right: 20px;
+    overflow: auto;
+    padding: 20px;
   }
 
   // Modal Buttons
@@ -175,7 +174,7 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin: 5px 0 0 -20px;
+  margin-top: 5px;
 
   button {
     @include font-size(12);
