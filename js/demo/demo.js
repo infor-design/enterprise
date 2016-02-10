@@ -42,60 +42,6 @@ demoSwaplist.push({id: 9, value: 'opt-9', text: 'Option I'});
 // Execute Page Code for Demo Page
 $(function($) {
 
-  // Message.html View Specifics
-  $('#show-application-error').on('click', function() {
-      $('body').message({
-          title: '<span>Application Error</span>',
-          isError: true,
-          returnFocus: $(this),
-          message: 'This application has experienced a system error due to the lack of internet access. Please restart the application in order to proceed.',
-          buttons: [{
-              text: 'Restart Now',
-              click: function() {
-                  $(this).modal('close');
-              },
-              isDefault: true
-          }]
-      });
-  });
-
-  $('#show-fileupload-confirmation').on('click', function() {
-      $('body').message({
-          title: 'File Upload Complete',
-          message: 'Your file "<b>photo.png</b>" was sucessfully uploaded to your personal folder and is now public for viewing.',
-          returnFocus: $(this),
-          buttons: [{
-              text: 'Done',
-              click: function() {
-                  $(this).modal('close');
-              },
-              isDefault: true
-          }]
-      });
-  });
-
-  $('#show-delete-confirmation').on('click', function() {
-
-    $('body').message({
-      title: 'Delete this Application?',
-      message: 'You are about to delete this application permanently. Would you like to proceed?',
-      returnFocus: $(this),
-      buttons: [{
-        text: 'Yes',
-        click: function(e, modal) {
-          modal.close();
-        }
-      }, {
-        text: 'No',
-        click: function(e, modal) {
-          modal.close();
-        },
-        isDefault: true
-      }]
-    });
-
-  });
-
   // Modal.html View Specifics
   $('#btn-add-comment').on('click', function() {
 

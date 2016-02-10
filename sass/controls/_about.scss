@@ -2,10 +2,10 @@
 //================================================== //
 
 .modal.about {
-  @include css3(transform, translate(0, 100%));
+  @include css3(transform, translate(-50%, 50%));
 
   &.is-visible {
-    @include css3(transform, translate(0, 0));
+    @include css3(transform, translate(-50%, -50%));
   }
 
   .close-container {
@@ -22,7 +22,6 @@
   .modal-header {
     margin: 3em 0;
     text-align: center;
-    width: calc(100% - 40px);
 
     h1 {
       color: $font-color-extrahighcontrast;
@@ -35,8 +34,8 @@
   .modal-body {
     border: 1px solid $about-text-border-color;
     border-radius: 3px;
-    max-height: 300px;
     margin-bottom: 30px;
+    max-height: 300px;
     outline: medium none;
     overflow-y: scroll;
 

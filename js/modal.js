@@ -455,22 +455,7 @@
 
         $('.modal-body-wrapper', this.element).css('max-height', bodyHeight > calcHeight ? calcHeight : '');
 
-        this.extraPadding = this.isOpen() ? 0 : parseInt($('.modal-content', this.element).css('padding-left'), 10)- 2;
-        this.extraPadding = this.settings.isAlert ? this.extraPadding *1.6 : this.extraPadding;
-
-        left = (this.element.outerWidth() /2) + this.extraPadding;
-        top = (this.element.outerHeight() /2) + this.extraPadding *1.4;
-
-        this.element.css({
-          margin : '-'+ top +'px 0 0 -'+ left +'px'
-        });
-
-        // target smaller height (ie. landscape iphone 4/5s)
-        if (calcHeight < 110) {
-          this.element.css({ 'margin-top': '-'+ (top-22) +'px', 'max-height': '99%'});
-          modalContent.css({'padding-top': '15px'});
-          $('.modal-title', modalContent).css({'margin-bottom': '15px'});
-        }
+        return;
       },
 
       isOpen: function() {

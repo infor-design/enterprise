@@ -48,7 +48,7 @@
         //Create the Markup
         this.message = $('<div class="modal"></div>');
         this.messageContent = $('<div class="modal-content"></div>');
-        this.title = $('<h1 class="modal-title" id="message-title">' + settings.title + '</h1>').appendTo(this.messageContent);
+        this.title = $('<h1 class="modal-title" id="message-title">' + settings.title + '</h1>').appendTo(this.messageContent).wrap('<div class="modal-header"></div>');
         this.content = $('<div class="modal-body"><p class="message" id="message-text">'+ settings.message +'</p></div>').appendTo(this.messageContent);
 
         //Append The Content if Passed in
