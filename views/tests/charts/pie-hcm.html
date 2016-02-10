@@ -2,15 +2,16 @@
 <div class="row top-padding">
   <div class="two-thirds column">
 
-      <div class="widget double-height"> <!-- double-height -->
+      <div class="widget auto-height">
         <div class="widget-header">
-          <h2 class="widget-title">Pie Chart Label Currency</h2>
+          <h2 class="widget-title">Taxes and Deductions</h2>
         </div>
         <div class="widget-content">
           <div id="pie-chart-example" class="chart-container">
           </div>
         </div>
       </div>
+
   </div>
 </div>
 
@@ -20,22 +21,27 @@
         name: 'Company Deductions',
         shortName: 'CD',
         value: 8,
+        tooltip: 'Company Deductions %percent%'
       }, {
         name: 'After-tax Deductions',
         shortName: 'After-tax',
         value: 11,
+        tooltip: 'After-tax Deductions %percent%'
       }, {
         name: 'Pre-tax Deductions',
         shortName: 'Pre-tax',
         value: 12,
+        tooltip: 'Pre-tax Deductions %percent%'
       }, {
         name: 'Taxes',
         shortName: 'Af-tax',
         value: 17,
+        tooltip: 'Taxes %percent%'
       }, {
         name: 'Wages',
         shortName: 'Wages',
         value: 52,
+        tooltip: 'Wages %percent%'
       }]
     }];
 
@@ -43,8 +49,7 @@
     type: 'donut',
     dataset: pieData,
     labels: {
-      isLabels: false,
-      lineColor: 'color-as-arc'
+      hideLabels: false
     }
   });
 </script>

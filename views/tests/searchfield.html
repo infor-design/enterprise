@@ -20,6 +20,22 @@
       </div>
     </div>
 
+    <div class="field">
+      <label for="searchfield-manual">searchfield non init</label>
+      <input data-init="false" id="searchfield-manual" placeholder="Type to Search" type="text" class="searchfield"/>
+    </div>
+
+    <script>
+        var items = [];
+        items.push({value: 'One', label: 'Item One'}, {value: 'Two', label: 'Item One'});
+
+        $('#searchfield-manual').searchfield({
+          source: function (e, response) {
+            response($('#searchfield-manual').val(), items);
+          }
+        });
+    </script>
+
   </div>
 </div>
 

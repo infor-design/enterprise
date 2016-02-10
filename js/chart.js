@@ -561,7 +561,7 @@ this.Pie = function(initialData, isDonut, options) {
     var defaults = {
       labels: {
         // true|false
-        isLabels: true,
+        hideLabels: true,
         isTwoline: true,
 
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
@@ -631,16 +631,16 @@ this.Pie = function(initialData, isDonut, options) {
     };
     var isSmall = (dims.width < 405);
     dims.height = dims.height > dims.widgetheight ? dims.widgetheight : dims.height;
-    dims.height = isSmall && !lb.isLabels ? dims.width : dims.height;
+    dims.height = isSmall && !lb.hideLabels ? dims.width : dims.height;
 
     dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 35);
-    dims.innerRadius = isDonut ? dims.outerRadius - (!lb.isLabels ? 50 : 30) : 0;
+    dims.innerRadius = isDonut ? dims.outerRadius - (!lb.hideLabels ? 50 : 30) : 0;
     dims.labelRadius = dims.outerRadius + 20;
     dims.center = { x: dims.width / 2, y: dims.height / 2 };
 
     svg.attr({
       'width': '100%',
-      'height': ((isSmall && !lb.isLabels) || dims.height === dims.widgetheight) ? dims.height - 50 : '100%',
+      'height': ((isSmall && !lb.hideLabels) || dims.height === dims.widgetheight) ? dims.height - 50 : '100%',
       'viewBox': '0 0 ' + dims.width + ' ' + dims.height
     });
 
@@ -692,46 +692,48 @@ this.Pie = function(initialData, isDonut, options) {
         $(container).trigger('selected', [path[0], d.data]);
       })
       .on('mouseenter', function(d, i) {
-          var size, x, y, t, tx, ty,
-            offset = parent.offset(),
-            content = '',
-            show = function() {
-              size = charts.getTooltipSize(content);
-              x -= size.width/2;
-              y -= size.height;
+        var size, x, y, t, tx, ty,
+          offset = parent.offset(),
+          content = '',
+          show = function() {
+            size = charts.getTooltipSize(content);
+            x -= size.width/2;
+            y -= size.height;
 
-              if(content !== '') {
-                charts.showTooltip(x, y, content, 'top');
-              }
-            };
+            if (content !== '') {
+              charts.showTooltip(x, y, content, 'top');
+            }
+          };
 
-          var circles = svg.selectAll('.pie-circle');
-          t = d3.transform(d3.select(circles[0][i]).attr('transform'));
-          tx = t.translate[0] + (t.translate[0] > 0 ? 10 * -1: 10 * 1);
-          ty = t.translate[1] + (t.translate[1] > 0 ? 10 * -1: 10 * 1);
-          x = tx + offset.left + dims.center.x;
-          y = ty + offset.top + dims.center.y;
+        var circles = svg.selectAll('.pie-circle');
+        t = d3.transform(d3.select(circles[0][i]).attr('transform'));
+        tx = t.translate[0] + (t.translate[0] > 0 ? 10 * -1: 10 * 1);
+        ty = t.translate[1] + (t.translate[1] > 0 ? 10 * -1: 10 * 1);
+        x = tx + offset.left + dims.center.x;
+        y = ty + offset.top + dims.center.y;
 
-          if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
-            var runInterval = true;
-            tooltipInterval = setInterval(function() {
-              if(runInterval) {
-                runInterval = false;
-                tooltipData(function (data) {
-                  content = tooltipDataCache[i] = data;
-                });
-              }
-              if(content !== '') {
-                clearInterval(tooltipInterval);
-                show();
-              }
-            }, 10);
-          } else {
-            tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
-            content = tooltipDataCache[i] || tooltipData || d.data.tooltip || d.data.elm.tooltip || '';
-            show();
-          }
-        })
+        if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+          var runInterval = true;
+          tooltipInterval = setInterval(function() {
+            if(runInterval) {
+              runInterval = false;
+              tooltipData(function (data) {
+                content = tooltipDataCache[i] = data;
+              });
+            }
+            if(content !== '') {
+              clearInterval(tooltipInterval);
+              show();
+            }
+          }, 10);
+        } else {
+          tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
+          content = tooltipDataCache[i] || tooltipData || d.data.tooltip || d.data.elm.tooltip || '';
+          content = content.replace('%percent%', d3.format('0.0%')((d.value/100)));
+          content = content.replace('%value%', d.value);
+          show();
+        }
+      })
       .on('mouseleave', function () {
         clearInterval(tooltipInterval);
         charts.hideTooltip();
@@ -867,7 +869,7 @@ this.Pie = function(initialData, isDonut, options) {
             });
         }
 
-        if (lb.isLabels) {
+        if (lb.hideLabels) {
           drawTextlabels();
 
           // Add center label only if its donut chart
@@ -882,7 +884,7 @@ this.Pie = function(initialData, isDonut, options) {
       };
       addLabels();
 
-      if (lb.isLabels) {
+      if (lb.hideLabels) {
         // Resolve label positioning collisions
         (function () {
           var spacing = Math.round(textLabels.node().getBBox().height) + 1;
@@ -993,14 +995,14 @@ this.Pie = function(initialData, isDonut, options) {
           });
 
         })();
-      } // END: lb.isLabels
+      } // END: lb.hideLabels
       else {
         legendshow = true;
       }
 
     //Get the Legend Series'
     var series = chartData.map(function (d) {
-      var name = d.name +', '+ d.value +' ('+ d.percent +'%)';
+      var name = d.name +' ('+ d.percent +'%)';
       return {name:name, display:'twocolumn'};
     });
 

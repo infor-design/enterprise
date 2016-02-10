@@ -203,6 +203,22 @@
   }
 }
 
+.card.auto-height,
+.widget.auto-height {
+  height: auto;
+
+  .widget-content,
+  .card-content {
+    height: auto;
+    min-height: auto;
+    overflow: none;
+  }
+
+  .chart-container {
+    min-height: 270px;
+  }
+}
+
 .card.double-width.to-single,
 .widget.double-width.to-single,
 .card.triple-width.to-single,
