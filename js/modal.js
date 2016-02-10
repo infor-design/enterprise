@@ -448,9 +448,7 @@
       },
 
       resize: function() {
-        var top, left,
-          modalContent = $('.modal-content', this.element) ,
-          bodyHeight = $('.modal-body', this.element).height(),
+        var bodyHeight = $('.modal-body', this.element).height(),
           calcHeight = ($(window).height()* 0.9)-180; //90% -(180 :extra elements-height)
 
         $('.modal-body-wrapper', this.element).css('max-height', bodyHeight > calcHeight ? calcHeight : '');
