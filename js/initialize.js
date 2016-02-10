@@ -388,8 +388,7 @@
         matchedItems('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
       });
 
-      self.triggerHandler('initialized');
-
+      self.trigger('initialized');
       //Placeholder attribute in browsers that do not handle it
       $.fn.placeholderPolyfill();
 

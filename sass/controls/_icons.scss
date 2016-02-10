@@ -132,10 +132,12 @@ svg.icon-logo {
   }
 
   &.dirty-checkbox {
-    left: 0;
+    left: 3px;
     top: -2px;
 
     &.is-checked {
+      border-width: 4px;
+      left: 3px;
       top: 0;
       z-index: 2;
     }

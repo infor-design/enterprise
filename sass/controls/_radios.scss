@@ -31,6 +31,7 @@
 
 .inline .radio:hover ~ .label-text:before,
 .radio:hover + label:before {
+  @include css3(transition, border-color 300ms ease);
   border-color: $radio-hover-border-color;
 }
 
@@ -83,9 +84,15 @@
 
 .inline .radio:disabled:checked ~ .label-text:before,
 .radio:disabled:checked + label:before {
-  background-color: $radio-disabled-select-bg-color;
-  border-color: $radio-disabled-select-bg-color;
+  background-color: $radio-disabled-border-color;
+  border-color: $radio-disabled-border-color;
   cursor: default;
+}
+
+.inline .radio:disabled:checked ~ .label-text:before,
+.radio:disabled:checked + label:after {
+  background-color: $radio-disabled-select-bg-color;
+  border: 2px solid $radio-disabled-select-bg-color;
 }
 
 .inline .radio:disabled ~ .label-text,

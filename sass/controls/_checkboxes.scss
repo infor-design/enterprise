@@ -57,6 +57,7 @@
 }
 
 @mixin checkbox-hover-state {
+  @include css3(transition, border-color 300ms ease);
   border-color: $checkbox-hover-border-color;
 }
 

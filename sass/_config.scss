@@ -127,7 +127,7 @@ $input-readonly-color: $graphite10;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
-$dirty-icon-fill: $amber06;
+$dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $alert-info;
 
@@ -236,7 +236,7 @@ $checkbox-bg-color: transparent;
 $checkbox-hover-border-color: $graphite08;
 $checkbox-disabled-font-color: $graphite04;
 $checkbox-disabled-border-color: $graphite03;
-$checkbox-disabled-bg-color: #ececec;
+$checkbox-disabled-bg-color: transparent;
 $checkbox-disabled-select-bg-color: $graphite03;
 $checkbox-disabled-arrow-color: #f4f4f4;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
@@ -269,7 +269,7 @@ $radio-selected-color: $primary-color;
 $radio-selected-bg-color: $white;
 $radio-disabled-border-color: $graphite03;
 $radio-disabled-bg-color: $body-bg-color;
-$radio-disabled-select-bg-color: $graphite03;
+$radio-disabled-select-bg-color: $body-bg-color;
 $radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 
 //Pager
