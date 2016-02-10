@@ -113,7 +113,6 @@
         // If 'showCurrency' is defined and the mask mode is 'number', a span will be drawn that will show the
         // localized currency symbol.
         var symbolType = this.settings.showSymbol,
-          symbols = defaults.symbols,
           symbol;
 
         // Backwards compat with the old "data-show-currency"
