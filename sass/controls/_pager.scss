@@ -9,43 +9,68 @@
   overflow: hidden;
   text-align: center;
 
+  > * {
+    vertical-align: middle;
+  }
+
+  a {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    color: $pager-text-color;
+    cursor: pointer;
+    display: inline-block;
+    height: 32px;
+    margin: 0 4px;
+    padding: 6px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all .2s ease;
+
+    // Disabled
+    &[disabled] {
+      cursor: default;
+
+      .icon {
+        fill: $pager-disabled-color;
+      }
+    }
+
+    .audible {
+      color: $graphite10;
+    }
+  }
+
   li {
     cursor: pointer;
     display: inline-block;
     overflow: hidden;
     width: auto;
 
-    a {
-      border-bottom: 1px solid transparent;
-      color: $pager-text-color;
-      cursor: pointer;
-      display: inline-block;
-      height: 34px;
-      line-height: 30px;
-      margin: 0 4px;
-      padding: 0 2px;
-      position: relative;
-      text-align: center;
-      text-decoration: none;
-      transition: all .2s ease;
+    &:hover {
+      a {
+        border-bottom: 1px solid $pager-text-color;
 
-      // Disabled
-      &[disabled] {
-        cursor: default;
-
-        svg {
-          fill: $pager-disabled-color;
+        &[disabled] {
+          border-bottom: 1px solid transparent;
         }
-      }
-
-      .audible {
-        color: $graphite10;
       }
     }
 
-    &:not(.selected):hover {
+    &.is-focused {
       a {
-        border-bottom: 1px solid $pager-text-color;
+        border: 1px solid $pager-text-color;
+
+        &[disabled] {
+          border: 1px solid transparent;
+        }
+      }
+
+      &.selected,
+      &.selected:hover {
+        a {
+          border-bottom: 1px solid $pager-text-color;
+        }
       }
     }
 
@@ -53,9 +78,11 @@
     &.pager-last,
     &.pager-first,
     &.pager-next {
-      & a,
-      &:hover a {
-        border-bottom: 0;
+
+      &:not(.is-focused):hover {
+        a {
+          border-bottom: 1px solid transparent;
+        }
       }
     }
 
@@ -83,26 +110,29 @@
   margin: 0;
   padding: 0;
 
-  svg {
+  .icon {
     fill: $font-color;
     height: 17px;
-    left: 1px;
-    top: 7px;
     width: 18px;
   }
 
   a {
     backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
-    border-radius: 17px;
-    height: 34px;
+    border-radius: 20px;
     overflow: hidden;  // Makes the round ripple-effect pressed state work
-    -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
     -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
-    width: 34px;
+    -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
   }
 
   .ripple-effect {
     background-color: $tertiary-btn-ripple-color;
+  }
+}
+
+.pager-next,
+.pager-last {
+  .icon {
+    left: 1px;
   }
 }
 
@@ -114,24 +144,25 @@
 .pager-count {
   @include font-size(14);
   display: inline-block;
-  line-height: 23px;
-  margin: 7px -13px 5px 10px;
+  line-height: normal;
   vertical-align: top;
+
+  > label {
+    font-size: inherit !important;
+    line-height: inherit !important;
+    margin-bottom: 0;
+  }
 
   input {
     @include font-size(14);
-    //font-weight: bold;
-    height: 23px;
-    line-height: 23px;
-    padding: 3px 0 1px;
+    height: 32px;
+    padding: 3px 0;
     text-align: center;
-    width: 30px;
+    width: 32px;
   }
 
   .pager-total-pages {
     display: inline-block;
-    line-height: 23px;
-    min-width: 35px;
     text-align: left;
   }
 }
