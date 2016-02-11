@@ -119,6 +119,7 @@
   a {
     backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
     border-radius: 20px;
+    margin: 0;
     overflow: hidden;  // Makes the round ripple-effect pressed state work
     -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
     -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
@@ -156,6 +157,7 @@
   input {
     @include font-size(14);
     height: 32px;
+    margin: 0 5px;
     padding: 3px 0;
     text-align: center;
     width: 32px;
@@ -165,6 +167,15 @@
     display: inline-block;
     text-align: left;
   }
+
+  + li {
+    margin-left: 10px;
+  }
+}
+
+// Put some space between the "count" section and the navigation buttons
+li + .pager-count {
+  margin-left: 10px;
 }
 
 //Special Styles for Datagrid
