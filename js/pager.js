@@ -189,6 +189,12 @@
           self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0), false, 'page');
 
           return false;
+        }).on('focus.pager', 'a', function() {
+          var li = $(this).parent('li');
+          li.addClass('is-focused');
+        }).on('blur.pager', 'a', function() {
+          var li = $(this).parent('li');
+          li.removeClass('is-focused');
         });
 
         //Toolbar functionality
@@ -280,16 +286,16 @@
           }
 
           if (!this.isTable) {
-            $('<li '+ thisClass + isAriaSelected +'><a '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
+            $('<li '+ thisClass + isAriaSelected +'><a href="#" '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
           }
         }
 
         if (this.isTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
-          var text =  Locale.translate('PageOf');
+          var text = Locale.translate('PageOf');
           text = text = text.replace('{0}', '<input data-mask="###" name="pager-pageno" value="' + this.activePage + '">');
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : '-') + '</span>');
 
-          $('<label class="pager-count">'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
+          $('<li class="pager-count"><label>'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
 
           //Setup interactivty with the numeric page input
           var lastValue = null;
