@@ -218,12 +218,13 @@ $checkbox-arrow-color: #ffffff;
 $checkbox-border-color: $slate04;
 $checkbox-bg-color: transparent;
 $checkbox-hover-border-color: $slate02;
-$checkbox-disabled-font-color: #64676f;
-$checkbox-disabled-border-color: #64676f;
-$checkbox-disabled-bg-color: #64676f;
-$checkbox-disabled-select-bg-color: #64676f;
+$checkbox-disabled-font-color: $slate05;
+$checkbox-disabled-border-color: $slate05;
+$checkbox-disabled-bg-color: $slate05;
+$checkbox-disabled-select-bg-color: $slate05;
 $checkbox-disabled-arrow-color: $slate03;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+$checkbox-label-color: $input-color;
 
 // Switch
 $switch-checked-color: $primary-color;

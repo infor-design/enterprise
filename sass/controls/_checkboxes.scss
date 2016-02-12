@@ -228,6 +228,7 @@ label.inline .checkbox:not(.partial):checked ~ .label-text:after,
 .checkbox-group-label {
   display: block;
   @include font-size(12);
+  line-height: 21px;
   margin-bottom: 10px;
 }
 

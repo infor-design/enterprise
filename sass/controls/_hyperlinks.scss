@@ -2,26 +2,45 @@
 //================================================== //
 
 .hyperlink {
+  @include font-size(12);
   @include antialiased();
-  border-bottom: 1px solid transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
   color: $hyperlink-color;
   cursor: pointer;
-  @include font-size(14);
   line-height: 22px;
+  padding: 5px 5px 4px;
   text-decoration: none;
-  @include transition(border .3s);
   white-space: nowrap;
 
-  // Mouse Over States is Same as the focus
-  &:active:not([disabled]),
-  &:focus:not([disabled]),
-  &:hover:not([disabled]) {
-    border-bottom: 1px solid $hyperlink-color;
+  &:active:not([disabled]):not(:focus),
+  &:hover:not([disabled]):not(:focus) {
+    text-decoration: underline;
+  }
+
+  &:focus:not([disabled])::after {
+    background-color: $hyperlink-color;
+    content: '';
+    height: 1px;
+    position: absolute;
+    width: inherit;
+  }
+
+  &.show-visited:visited {
+    color: $hyperlink-visited-color;
+
+    &:focus {
+      border-color: $hyperlink-visited-color;
+    }
+  }
+
+  &:focus {
+    border-color: $hyperlink-color;
   }
 
   // Disabled
   &[disabled] {
-    color: $disabled-color;
+    color: $hyperlink-disabled-color;
 
     &:hover {
       cursor: default;
@@ -32,7 +51,7 @@
     }
 
     &:focus {
-      border-bottom: 1px solid $disabled-color;
+      border-color: $disabled-color;
     }
   }
 
@@ -57,16 +76,16 @@
     &:active:not([disabled]),
     &:focus:not([disabled]),
     &:hover:not([disabled]) {
-       border-bottom: 1px solid transparent;
+      border-bottom: 1px solid transparent;
 
-       span {
-         border-bottom: 1px solid $hyperlink-color;
-       }
+      span {
+        border-bottom: 1px solid $hyperlink-color;
+      }
     }
   }
 }
 
-// Links Stacked
+// Links Stacked - as on the home page
 .link-list {
   margin-bottom: 40px;
 
@@ -93,6 +112,11 @@
     position: static;
     text-transform: uppercase;
   }
+}
+
+//Inline text shuold be 14px to match content
+p .hyperlink {
+  @include font-size(14);
 }
 
 //Right To Left Styles

@@ -10,8 +10,10 @@
 
 .inline .radio ~ .label-text,
 .radio + label {
+  @include font-size(14);
   cursor: pointer;
-  margin-bottom: 9px;
+  line-height: 21px;
+  margin-bottom: 6px;
   margin-top: 4px;
   padding-left: 35px;
   position: relative;

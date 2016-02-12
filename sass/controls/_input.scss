@@ -43,6 +43,8 @@
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
+  color: $checkbox-label-color;
+  @include font-size(14);
   display: block;
   margin-bottom: 10px;
   margin-left: -2px;

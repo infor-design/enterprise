@@ -17,9 +17,6 @@ $panel-border-color: $graphite03;
 $primary-color: $azure06;
 $inverse-color: $white;
 
-//The hyperlink Style
-$hyperlink-color: $primary-color;
-
 // Text Color
 $font-color-extrahighcontrast: $graphite10;
 $font-color-highcontrast: $graphite08;
@@ -27,6 +24,11 @@ $font-color: $graphite06;
 $font-color-lowcontrast: $graphite04;
 $label-color: $graphite06;
 $disabled-color: $graphite04;
+
+//The hyperlink Style
+$hyperlink-color: $primary-color;
+$hyperlink-visited-color: $amethyst06;
+$hyperlink-disabled-color: $disabled-color;
 
 //Selection Color
 $selected-bg-color: #dcecf2;
@@ -240,6 +242,7 @@ $checkbox-disabled-bg-color: transparent;
 $checkbox-disabled-select-bg-color: $graphite03;
 $checkbox-disabled-arrow-color: #f4f4f4;
 $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+$checkbox-label-color: $input-color;
 
 // Switch
 $switch-checked-color: $primary-color;

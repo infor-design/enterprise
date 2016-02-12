@@ -4,12 +4,12 @@
 // See also Colors.scss
 .tag,
 .badge {
+  @include antialiased();
+  @include font-size(12);
   background-color: $badge-neutral-bg-color;
   border-radius: 15px;
   color: $badge-neutral-color;
   display: inline-block;
-  @include font-size(12);
-  @include antialiased();
   font-weight: normal;
   height: 22px;
   line-height: 22px;

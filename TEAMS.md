@@ -1,5 +1,5 @@
 
-# Teams Using
+# Teams Using 3.1-3.5
 
 | Project            | Comments      |  Names |
 |--------------------|-------------|------|
@@ -60,31 +60,28 @@
 | Mongoose | Wizard, Editor Ect | Paul Horne |
 | Requisitions | | Todd Dooner and Brent Dahlen |
 | PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna Peddibhotla |
-| Rhythm Widgets | Dropdown, Date Picker, Text Area, Spinbox | Eric Martensson |
+| Rhythm Widgets | Dropdown, Date Picker, Text Area, Spinbox foldeed into | Eric Martensson |
 | SmartStream | ASP | Wim Denayer |
-| SXE | Angular - Huge app it will be another year. | Peter Cullen |
+| SXE | Angular 1.0 - using XI directly - Huge app it will be another year. | Peter Cullen |
 | S3 | Starting Next Year | Rajan Shanmugavelu |
 | Infor Mobility Framework | HTML5 and Cordova (Mobile Framework) | Daniel Thil |
 | Product Certification Manger |  Upgrade  | Kishor Dhumal <Kishor.Dhumal@infor.com> |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> |
-| Infor BI Business Modeling | Was ExtJS/YUI | Guido Buecker <Guido.Buecker@infor.com> |
 | M3 - Sales Hub | Angular | Jorgen Nilsson |
 | Landmark | Starting after Gap List | Andrew Lipensky |
 | CLM | Angular  | Eric Noble |
 | Optiva | Whole Food Release - -  | Ramesh Mallikarjun |
 | WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando |
 | NGCC - Content Creator HCM - LMS |   | Shakeeb Murtaza |
-| Ion Desk  | Silverlight Conversion / Bybrid  | Massimo Capoccia|
-| Mingle  | Angular Datepicker | Ravi Narayan |
-| LMS  | Angular (2.0) |  |
-| Supplier Exchange  | Charts | Larry Wang |
-| Infor Hospitality in France  | POS  | Bruno Martinot |
-| Infor Enroute 911  |   | James Coonce |
-| GT Nexus |   | Tom Sorgie |
-| Mingle|   | Ravi Narayan <Ravi.Narayan@infor.com> |
-| Lawson Portal |   | Jake Harington/Andy |
+| Ion Desk  | Silverlight Conversion / Hybrid / Maybe use Vaadin GWT | Massimo Capoccia|
+| LMS  | Angular (2.0) interested, using some widgets. Has PM |  |
+| Infor Hospitality in France  | POS based out of france looking at XI lifting  | Bruno Martinot |
+| Infor Enroute 911  | Actively working on converting  | James Coonce |
+| GT Nexus | Working to implement Citrus byte designs will pull and contribute from XI css/source  | Tom Sorgie |
+| Mingle|  Is pulling SASS files into Mingle | Ravi Narayan <Ravi.Narayan@infor.com> |
+| Lawson Portal |  Using XI js and css directly, actively contributing and has bi - weekly status call | Jake Harington/Andy |
 | S&OP | Vaadin and GWT | Duncan Simpson |
-| Self Portal - Cloudsuite | ?? | Hal Walters |
-| Infor Supplier Extchange |  | James Wang/George Matthews |
-| Automative  | Darnstad - wants help converting from CUX | |
+| Self Portal - Cloudsuite | Using XI js and css directly, actively implementing | Hal Walters |
+| Infor Supplier Exchange | Using some widget styling and Charts | James Wang/George Matthews |
+| Automative  | Darnstad - wants help converting from CUX need followup | |
 | Infor BI Modeling | Hasn’t been released yet. Doing a quick assessment on required changes for Xi, no dedicated Xi release plan yet. The application is part of the SOA Farm and based on BI Farm Architecture http://bit.ly/1OL2mvx.  The client is implemented as a Plugin for BI Dashboards. | Guido Buecker <Guido.Buecker@infor.com> |

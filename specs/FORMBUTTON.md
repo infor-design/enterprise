@@ -10,7 +10,12 @@ There are three types of form buttons:
 
   -Tertiary buttons are used for destructive actions as well as actions that you do not want to call out visually.
 
+Can be an icon only, text or text and icon button...
+
+
 ![image here](http://git.infor.com/projects/SOHO/repos/controls/browse/specs/images/menubutton-darkui.png?at=ad9c7ab8492e24e1ff4d3c98908e7a8a14eef8f3&raw)
+
+Live Example - In all Themes
 
 ## Usage Guidlines
 
@@ -21,11 +26,10 @@ There are three types of form buttons:
 
 [Spec PSD Doc Here]
 
-Can be an icon only, text or text and icon button.
 
 ## Markup
 
-      <button class="btn-primary" type="button">Action</button>
+    <button class="btn-primary" type="button">Action</button>
 
 ## CSS
 
@@ -94,4 +98,7 @@ http://access.aol.com/dhtml-style-guide-working-group/#button
  - Can have an icon
 
 ## Implementations
+
+- Link to Soho XI Code
+- ExtJS Version 
 
