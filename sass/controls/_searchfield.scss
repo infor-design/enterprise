@@ -12,7 +12,7 @@
     top: 8px;
     width: 32px;
 
-    &:not(.close) {
+    &:not(.close):not(.icon-error) {
       height: 14px;
       left: 0;
       pointer-events: none;
@@ -24,6 +24,12 @@
       height: 14px;
       right: 0;
       top: 11px;
+    }
+
+    &.icon-error {
+      fill: $error-color;
+      left: auto;
+      right: 20px;
     }
   }
 
