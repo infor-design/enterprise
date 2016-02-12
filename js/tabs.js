@@ -1085,11 +1085,11 @@
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
         // Otherwise, focus the first item in the list.
         if (startingHref) {
-          menu.find('a[href="' + startingHref + '"]').focus();
+          self.popupmenu.highlight(menu.find('a[href="' + startingHref + '"]'));
         } else if (self.tablist.children('.is-selected').length > 0) {
-          menu.find('a[href="' + self.tablist.children('.is-selected').children('a').attr('href') + '"]').focus();
+          self.popupmenu.highlight(menu.find('a[href="' + self.tablist.children('.is-selected').children('a').attr('href') + '"]'));
         } else {
-          menu.find('li:first-child > a').focus();
+          self.popupmenu.highlight(menu.find('li:first-child > a'));
         }
 
         // Overrides a similar method in the popupmenu code that controls escaping of this menu when
