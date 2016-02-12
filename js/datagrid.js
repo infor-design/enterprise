@@ -661,9 +661,14 @@ $.fn.datagrid = function(options) {
     },
 
     initFixedHeader: function () {
+      var self = this;
 
-      if (this.element.hasClass('datagrid-contained')) {
+      if (self.element.hasClass('datagrid-contained')) {
         this.fixHeader();
+
+        setTimeout(function () {
+          $('th.is-sortable:first', self.element).trigger('click');
+        }, 400);
       }
 
     },
@@ -683,8 +688,8 @@ $.fn.datagrid = function(options) {
       this.clone.insertBefore(this.element.closest('.datagrid-wrapper'));
       this.clone.wrap('<div class="datagrid-scrollable-header"></div>');
 
-      this.fixedHeader = true;
-      this.syncFixedHeader();
+      // this.fixedHeader = true;
+      // this.syncFixedHeader();
 
       this.headerRow.addClass('audible');
 
@@ -727,43 +732,18 @@ $.fn.datagrid = function(options) {
     },
 
     syncFixedHeader: function () {
+      var self = this;
+      self.headerRow.find('th').each(function (index) {
+        var div = self.table.closest('.datagrid-container').get(0),
+          scrollbarWidth = div.offsetWidth - div.clientWidth,
+          th = $(this),
+          w = th.width();
 
-      if (!this.fixedHeader) {
-        return;
-      }
-
-      var self = this,
-        firstRow = this.tableBody.find('tr:first'),
-        total = 0,
-        rowClone = firstRow.clone();
-
-      this.clone.find('tbody').append(rowClone);
-
-      rowClone.find('td').each(function (i) {
-        var actualCol = self.headerRow.find('th').eq(i),
-          newCol = self.clone.find('th').eq(i),
-          colWidth = actualCol.outerWidth(),
-          rowCell = firstRow.find('td').eq(i),
-          width = self.visibleColumns()[i].width;
-
-          if (width) {
-            //if (width.toString().indexOf('%') > -1) {
-              colWidth = width;
-           // }
-          } else {
-            colWidth = rowCell.outerWidth();
-          }
-
-          actualCol.css('width', colWidth);
-          newCol.css('width', colWidth);
-          $(this).css('width', colWidth);
-          rowCell.css('width', colWidth);
-          total += colWidth;
+        w += th.is(':last-child') ? scrollbarWidth : 0;
+        self.clone.find('th').eq(index).width(w);
       });
 
-      this.clone.css('width', total);
-      this.table.css('width', total);
-      rowClone.remove();
+      self.clone.width(self.table.width());
     },
 
     //Delete a Specific Row
@@ -811,7 +791,7 @@ $.fn.datagrid = function(options) {
       }
 
       this.syncSelectedUI();
-      this.syncFixedHeader();
+      // this.syncFixedHeader();
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -1214,6 +1194,7 @@ $.fn.datagrid = function(options) {
 
         self.dragging = true;
         self.setColumnWidth(id, ui.left - offset.left - 6 + self.element.scrollLeft());
+        self.syncFixedHeader();
       })
       .on('dragend.datagrid', function () {
         self.dragging = false;
@@ -2348,6 +2329,7 @@ $.fn.datagrid = function(options) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
 
+      this.syncFixedHeader();
       this.element.trigger('sorted', [this.sortColumn]);
     },
 
