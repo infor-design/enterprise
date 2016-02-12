@@ -696,7 +696,14 @@
 
         if (self.settings.autoFocus) {
           setTimeout(function () {
-            self.highlight(self.menu.children('li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first().find('a'));
+            var excludes = ':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
+              selection = self.menu.children(excludes).find('.is-selected').children('a');
+
+            if (!selection.length) {
+              selection = self.menu.children(excludes).first().children('a');
+            }
+
+            self.highlight(selection);
             self.element.trigger('afteropen', [self.menu]);
           }, 1);
         }
