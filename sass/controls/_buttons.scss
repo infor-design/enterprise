@@ -343,7 +343,7 @@ a.btn-menu {
   width: 2px;
 
   &.is-animation {
-    @include css3(animation, ripple-animation 700s);
+    @include css3(animation, ripple-animation 1s);
   }
 
   .ripple-circle {
@@ -353,11 +353,11 @@ a.btn-menu {
 
 @include keyframes(ripple-animation) {
   0% {
-    opacity: .1;
+    opacity: .5;
   }
 
   100% {
-    @include css3(transform, scale(2));
+    @include css3(transform, scale(50));
     opacity: 0;
   }
 }
