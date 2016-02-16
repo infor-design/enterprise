@@ -1,0 +1,64 @@
+
+<div class="row">
+    <div class="full column center" style="height: 110px">
+      <div id="bullet-example1" class="chart-container">
+      </div>
+       <div id="bullet-example2" class="chart-container">
+      </div>
+    </div>
+</div>
+
+<script>
+  //Example 1
+  var dataset1 = [{
+      data: [
+        {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150, 225, 300, 400, 600], 'measures': [220,270], 'markers': [250], url: 'http://someplace.com',
+          tooltip: ['<b>Poor</b> 150', '<b>Ok</b> 270', '<b>Good</b> 300', '<b>Excellent</b> 400', '<b>Revenue</b> 600']}
+      ],
+      barColors: ['#C0EDE3', '#8ED1C6', '#69ADA3', '#448D83', '#206B62'], //http://107.170.15.202:4000/controls/colors
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+  // $('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
+
+  $('#bullet-example1').chart({type: 'bullet', dataset: dataset1, tooltip: 'Tooltip by attribute'});
+
+  // $('#bullet-example1').chart({type: 'bullet', dataset: dataset1,
+  //   tooltip: function(response) {
+  //     //Ajax Call or async op
+  //     setTimeout(function () {
+  //       response('<strong>Tooltips Provide <br> Interesting Information</strong>');
+  //     }, 400);
+  //   }
+  // });
+
+
+
+
+   //Example 2
+   var dataset2 = [{
+      data: [
+        {'title': 'Profit', 'subtitle': '%', 'ranges': [20,25,30], 'measures': [21,23], 'markers': [26]}
+      ],
+      barColors: ['#ADD8EB', '#69B5DD', '#368AC0'], //http://107.170.15.202:4000/controls/colors
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+   // $('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
+
+   // $('#bullet-example2').chart({type: 'bullet', dataset: dataset2, tooltip: 'Tooltip by attribute Exp2'});
+
+   $('#bullet-example2').chart({type: 'bullet', dataset: dataset2,
+    tooltip: function(response) {
+      //Ajax Call or async op
+      setTimeout(function () {
+        response('<strong>Tooltips Provide Exp2 <br> Interesting Information</strong>');
+      }, 400);
+    }
+  });
+
+
+</script>
+
