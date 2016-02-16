@@ -1002,7 +1002,7 @@ $.fn.datagrid = function(options) {
               ' aria-describedby="' + self.uniqueID(self.gridCount, '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
-             (cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
+             //(cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
              (self.settings.columnGroups ? 'headers = "' + self.uniqueID(self.gridCount, '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
              '><div class="datagrid-cell-wrapper">';
 
@@ -1017,7 +1017,6 @@ $.fn.datagrid = function(options) {
         }
 
         rowHtml += '</tr>';
-
 
         if (settings.rowTemplate) {
           var tmpl = settings.rowTemplate,
