@@ -666,9 +666,10 @@ $.fn.datagrid = function(options) {
       if (self.element.hasClass('datagrid-contained')) {
         this.fixHeader();
 
-        setTimeout(function () {
-          $('th.is-sortable:first', self.element).trigger('click');
-        }, 400);
+        //setTimeout(function () {
+        //  $('th.is-sortable:first', self.element).trigger('click');
+        //}, 400);
+        this.syncFixedHeader();
       }
 
     },
@@ -688,7 +689,7 @@ $.fn.datagrid = function(options) {
       this.clone.insertBefore(this.element.closest('.datagrid-wrapper'));
       this.clone.wrap('<div class="datagrid-scrollable-header"></div>');
 
-      // this.fixedHeader = true;
+      this.fixedHeader = true;
       // this.syncFixedHeader();
 
       this.headerRow.addClass('audible');
@@ -732,6 +733,10 @@ $.fn.datagrid = function(options) {
     },
 
     syncFixedHeader: function () {
+      if (!this.fixedHeader) {
+        return;
+      }
+
       var self = this;
       self.headerRow.find('th').each(function (index) {
         var div = self.table.closest('.datagrid-container').get(0),

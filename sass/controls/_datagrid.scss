@@ -301,6 +301,7 @@ $datagrid-header-height: 40px;
     }
 
     .hyperlink {
+      @include font-size(14);
       color: $hyperlink-color;
       overflow: hidden;
       text-overflow: ellipsis;
