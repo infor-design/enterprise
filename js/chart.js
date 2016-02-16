@@ -1091,6 +1091,12 @@ this.elementTransform = function(options) {
 
   // Sparkline Chart
   this.Sparkline = function(chartData, options) {
+    var tooltipIntervalMedianRange,
+      tooltipIntervalDots,
+      tooltipDataCacheMedianRange = [],
+      tooltipDataCacheDots = [],
+      tooltipData = charts.tooltip;
+
     // calculate max and min values in the NLWest data
     var max=0, min=0, len=0, i,
       dimensions = this.calculateAspectRatioFit({
@@ -1143,18 +1149,45 @@ this.elementTransform = function(options) {
         .attr('width', maxWidth)
         .attr('height', bot)
         .style('fill', '#d8d8d8')
-        .on('mouseenter', function() {
+        .on('mouseenter', function(d, i) {
           var rect = this.getBoundingClientRect(),
-          content = '<p>' + (chartData[0].name ? chartData[0].name +'<br> ' : '') +
+            content = '<p>' + (chartData[0].name ? chartData[0].name +'<br> ' : '') +
             Locale.translate('Median') + ': <b>'+ median +'</b><br>'+
             Locale.translate('Range') +': <b>'+ range +'</b>'+
             (options.isPeakDot ? '<br>'+Locale.translate('Peak') +': <b>'+ max +'</b>' : '') +'</p>',
-          size = charts.getTooltipSize(content),
-          x = rect.left + ((rect.width - size.width)/2),
-          y = rect.top - size.height - 5; // 5: extra padding
-          charts.showTooltip(x, y, content, 'top');
+            show = function() {
+              var size = charts.getTooltipSize(content),
+                x = rect.left + ((rect.width - size.width)/2),
+                y = rect.top - size.height - 5; // 5: extra padding
+
+              if(content !== '') {
+                charts.showTooltip(x, y, content, 'top');
+              }
+            };
+
+          if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCacheMedianRange[i]) {
+            content = '';
+            var runInterval = true;
+            tooltipIntervalMedianRange = setInterval(function() {
+              if(runInterval) {
+                runInterval = false;
+                tooltipData(function (data) {
+                  content = tooltipDataCacheMedianRange[i] = data;
+                });
+              }
+              if(content !== '') {
+                clearInterval(tooltipIntervalMedianRange);
+                show();
+              }
+            }, 10);
+          } else {
+            tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
+            content = tooltipDataCacheMedianRange[i] || tooltipData || chartData[0].tooltip || content || '';
+            show();
+          }
         })
         .on('mouseleave', function() {
+          clearInterval(tooltipIntervalMedianRange);
           charts.hideTooltip();
         });
     }
@@ -1203,15 +1236,42 @@ this.elementTransform = function(options) {
               ((options.isMinMax && max === d) ? Locale.translate('Highest') + ': ' :
                (options.isMinMax && min === d) ? Locale.translate('Lowest') + ': ' :
                (options.isPeakDot && max === d) ? Locale.translate('Peak') + ': ' : '') : '') + '<b>' + d  + '</b></p>',
-            size = charts.getTooltipSize(content),
-            x = rect.left - (size.width /2) + 6,
-            y = rect.top - size.height - 8;
+            show = function() {
+              var size = charts.getTooltipSize(content),
+                x = rect.left - (size.width /2) + 6,
+                y = rect.top - size.height - 8;
 
-          charts.showTooltip(x, y, content, 'top');
+              if(content !== '') {
+                charts.showTooltip(x, y, content, 'top');
+              }
+            };
+
+          if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCacheDots[i]) {
+            content = '';
+            var runInterval = true;
+            tooltipIntervalDots = setInterval(function() {
+              if(runInterval) {
+                runInterval = false;
+                tooltipData(function (data) {
+                  content = tooltipDataCacheDots[i] = data;
+                });
+              }
+              if(content !== '') {
+                clearInterval(tooltipIntervalDots);
+                show();
+              }
+            }, 10);
+          } else {
+            tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
+            content = tooltipDataCacheDots[i] || tooltipData || chartData[0].tooltip || content || '';
+            show();
+          }
+
           d3.select(this).attr('r', (options.isMinMax && max === d ||
             options.isMinMax && min === d) ? (dotsize+2) : (dotsize+1));
         })
         .on('mouseleave', function(d) {
+          clearInterval(tooltipIntervalDots);
           charts.hideTooltip();
           d3.select(this).attr('r', (options.isMinMax && max === d ||
             options.isMinMax && min === d) ? (dotsize+1) : dotsize);
@@ -1640,6 +1700,10 @@ this.elementTransform = function(options) {
   this.Line = function(chartData, options, isArea) {
     $(container).addClass('line-chart');
 
+    var tooltipInterval,
+      tooltipDataCache = [],
+      tooltipData = charts.tooltip;
+
     //Append the SVG in the parent area.
     var dataset = chartData,
       hideDots = (options.hideDots),
@@ -1764,18 +1828,44 @@ this.elementTransform = function(options) {
           .style('stroke', '#ffffff')
           .style('stroke-width', 2)
           .style('fill', charts.colors(i))
-          .on('mouseenter.chart', function(d) {
-            var rect = d3.select(this)[0][0].getBoundingClientRect() ,
-              content = '<p><b>' + d.name + ' </b> ' + d.value + '</p>',
-              size = charts.getTooltipSize(content),
-              x = rect.x - (size.width /2) + 6,
-              y = rect.y - size.height - 18 + $(window).scrollTop();
+          .on('mouseenter.chart', function(d2) {
+            var rect = this.getBoundingClientRect(),
+              content = '<p><b>' + d2.name + ' </b> ' + d2.value + '</p>',
+              show = function() {
+              var size = charts.getTooltipSize(content),
+                x = rect.left - (size.width /2) + 6,
+                y = rect.top - size.height - 18;
 
-            charts.showTooltip(x, y, content, 'top');
+              if(content !== '') {
+                charts.showTooltip(x, y, content, 'top');
+              }
+            };
+
+            if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+              content = '';
+              var runInterval = true;
+              tooltipInterval = setInterval(function() {
+                if(runInterval) {
+                  runInterval = false;
+                  tooltipData(function (data) {
+                    content = tooltipDataCache[i] = data;
+                  });
+                }
+                if(content !== '') {
+                  clearInterval(tooltipInterval);
+                  show();
+                }
+              }, 10);
+            } else {
+              tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
+              content = tooltipDataCache[i] || tooltipData || d2.tooltip || d.tooltip || content || '';
+              show();
+            }
 
             //Circle associated with hovered point
             d3.select(this).attr('r', 7);
           }).on('mouseleave.chart', function() {
+            clearInterval(tooltipInterval);
             charts.hideTooltip();
             d3.select(this).attr('r', 5);
           }).on('click.chart', function(d) {
@@ -1800,6 +1890,10 @@ this.elementTransform = function(options) {
 
   this.Bullet = function(chartData) {
     $(container).addClass('bullet-chart');
+
+    var tooltipInterval,
+      tooltipDataCache = [],
+      tooltipData = charts.tooltip;
 
     //Append the SVG in the parent area.
     var dataset = chartData,
@@ -1865,8 +1959,6 @@ this.elementTransform = function(options) {
       var range = g.selectAll('rect.range')
           .data(ranges);
 
-      var tooltipInterval;
-
       range.enter().append('rect')
           .attr('class', function(d, i) { return 'range s' + i; })
           .attr('data-idx', i)
@@ -1885,29 +1977,53 @@ this.elementTransform = function(options) {
 
             var bar = d3.select(this),
               data = chartData[0].data[bar.attr('data-idx')],
-              rect = d3.select(this)[0][0].getBoundingClientRect(),
+              rect = this.getBoundingClientRect(),
               next = d3.select(this.nextSibling),
-              content = '<p>' + d + '</p>',
-              size = charts.getTooltipSize(content),
-              x = 0,
-              y = rect.top - size.height + $(window).scrollTop() - 5,
               w = d3.select(this).attr('width'),
-              nextWidth = next.attr('width');
+              nextWidth = next.attr('width'),
+              content = '<p>' + d + '</p>',
 
-            if (nextWidth && next.classed('range')) {
-              var sliceW = (w - nextWidth) / 2;
-              x = (rect.left + (w - sliceW) - (size.width/2));
-            } else {
-              x = rect.left + (rect.width/2) - (size.width/2);
-            }
+              show = function() {
+              var size = charts.getTooltipSize(content),
+                x = 0,
+                y = rect.top - size.height + $(window).scrollTop() - 5;
+
+              if (nextWidth && next.classed('range')) {
+                var sliceW = (w - nextWidth) / 2;
+                x = (rect.left + (w - sliceW) - (size.width/2));
+              } else {
+                x = rect.left + (rect.width/2) - (size.width/2);
+              }
+
+              if(content !== '') {
+                charts.showTooltip(x, y, content, 'top');
+              }
+            };
 
             if (data.tooltip && data.tooltip[i]) {
               content = data.tooltip[data.tooltip.length - i -1];
             }
 
-            tooltipInterval = setTimeout(function() {
-              charts.showTooltip(x, y, content, 'top');
-            }, 300);
+            if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+              content = '';
+              var runInterval = true;
+              tooltipInterval = setInterval(function() {
+                if(runInterval) {
+                  runInterval = false;
+                  tooltipData(function (data) {
+                    content = tooltipDataCache[i] = data;
+                  });
+                }
+                if(content !== '') {
+                  clearInterval(tooltipInterval);
+                  show();
+                }
+              }, 10);
+            } else {
+              tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
+              content = tooltipDataCache[i] || tooltipData || content || '';
+              show();
+            }
 
           })
           .on('mouseleave', function() {

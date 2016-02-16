@@ -1,0 +1,50 @@
+<style>
+  .sparkline {
+    width: 285px;
+  }
+  .test-sparkline-wrap {
+    margin-top: 40px;
+  }
+  .test-sparkline-wrap hr {
+    display: block;
+    float: left;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    padding: 0;
+    width: 255px;
+  }
+</style>
+
+<div class="test-sparkline-wrap">
+  <div class="row">
+    <div class="four columns">
+      <hr>
+      <div id="sparkline-chart-example" class="sparkline"></div>
+      <hr>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    var sparkData = [{
+        data: [25, 20, 61, 28, 10, 30, 50, 35, 13, 27],
+        name: 'Inventory',
+        tooltip: 'Tooltip by Data <br> Component A <br> Information'
+    }];
+
+  // $('#sparkline-chart-example').chart({type: 'sparkline-medianrange-n-peak', dataset: sparkData3});
+
+  // $('#sparkline-chart-example').chart({type: 'sparkline-medianrange-n-peak', dataset: sparkData3, tooltip: 'Tooltip by attribute'});
+
+  $('#sparkline-chart-example').chart({type: 'sparkline-medianrange-n-peak', dataset: sparkData,
+    tooltip: function(response) {
+      //Ajax Call or async op
+      setTimeout(function () {
+        response('Tooltips Provide <br> Interesting Information');
+      }, 400);
+    }
+  });
+</script>
