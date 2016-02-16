@@ -608,7 +608,7 @@ this.Pie = function(initialData, isDonut, options) {
     var total = d3.sum(chartData, function(d){ return d.value; });
 
     chartData = chartData.map(function (d) {
-      return { elm:d, name:d.name, value:d.value, percent:d3.round(100*(d.value/total)) };
+      return { elm: d, name: d.name, color: d.color, value: d.value, percent:d3.round(100*(d.value/total)) };
     });
 
     var svg = d3.select(container).append('svg'),
@@ -738,7 +738,7 @@ this.Pie = function(initialData, isDonut, options) {
         clearInterval(tooltipInterval);
         charts.hideTooltip();
       })
-      .style('fill', function(d, i) { return charts.chartColor(i, 'pie', d.data); })
+      .style('fill', function(d, i) {return charts.chartColor(i, 'pie', d.data); })
       .transition().duration(750)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
@@ -1003,7 +1003,7 @@ this.Pie = function(initialData, isDonut, options) {
     //Get the Legend Series'
     var series = chartData.map(function (d) {
       var name = d.name +' ('+ d.percent +'%)';
-      return {name:name, display:'twocolumn'};
+      return {name:name, display:'twocolumn', color: d.color};
     });
 
     // Add Legends

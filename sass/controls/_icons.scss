@@ -20,13 +20,16 @@
 .icon-confirm,
 .icon-alert,
 .icon-info,
+.icon-in-progress,
+svg.icon-dirty,
+.icon-new,
 .icon-pending {
   fill: $alert-red;
   height: 16px;
   position: relative;
   top: 10px;
   vertical-align: top;
-  width: 20px;
+  width: 16px;
 }
 
 .field {
@@ -199,6 +202,22 @@ svg.icon-logo {
   &:hover span {
     color: transparent;
   }
+}
+
+svg.icon-dirty {
+  fill: $dirty-icon-fill;
+  height: 12px;
+  stroke: $dirty-icon-fill;
+  top: 7px;
+  width: 12px;
+}
+
+.icon-in-progress {
+  fill: $amethyst07;
+}
+
+.icon-new {
+  fill: $amber07;
 }
 
 // Psuedo-element Icons

@@ -1,6 +1,15 @@
 // SoHo XI Angular Directives
 (function () {
 
+  var button = function () {
+      return {
+        replace: true,
+        link: function(scope, elem) {
+          elem.button();
+        }
+      };
+  };
+
   var chart = function () {
       return {
         replace: true,
@@ -211,6 +220,7 @@
   };
 
   angular.module('sohoxi-angular')
+      .directive('button', button)
       .directive('chart', chart)
       .directive('datagrid', datagrid)
       .directive('datepicker', datepicker)

@@ -9,13 +9,13 @@
   color: $hyperlink-color;
   cursor: pointer;
   line-height: 22px;
-  padding: 5px 5px 4px;
+  padding-bottom: 1px;
   text-decoration: none;
   white-space: nowrap;
 
-  &:active:not([disabled]):not(:focus),
-  &:hover:not([disabled]):not(:focus) {
-    text-decoration: underline;
+  &:active:not([disabled]),
+  &:hover:not([disabled]) {
+    border-bottom-color: $hyperlink-color;
   }
 
   &:focus:not([disabled])::after {
@@ -30,12 +30,13 @@
     color: $hyperlink-visited-color;
 
     &:focus {
-      border-color: $hyperlink-visited-color;
+      outline: 1px solid $hyperlink-visited-color;
     }
   }
 
   &:focus {
-    border-color: $hyperlink-color;
+    outline: 1px solid $hyperlink-color;
+    outline-offset: 4px;
   }
 
   // Disabled
@@ -51,7 +52,7 @@
     }
 
     &:focus {
-      border-color: $disabled-color;
+      outline: 1px solid $disabled-color;
     }
   }
 
