@@ -1359,6 +1359,7 @@ this.elementTransform = function(options) {
       var yScale = d3.scale.linear()
         .domain([0,
           d3.max(datasetStacked, function(d) {
+
             return d3.max(d, function(d) {
               return d.y0 + d.y;
             });
@@ -1414,7 +1415,7 @@ this.elementTransform = function(options) {
 
     x0.domain(isStacked ? xAxisValues : names);
     x1.domain(xAxisValues).rangeRoundBands([0, (isSingular||isStacked) ? width : x0.rangeBand()]);
-    y.domain([0, d3.max(isStacked ? maxesStacked : maxes)]).nice();
+    y.domain([charts.settings.minValue ? charts.settings.minValue : 0, d3.max(isStacked ? maxesStacked : maxes)]).nice();
 
     if (!isSingular || (isSingular && !isStacked)) {
       svg.append('g')

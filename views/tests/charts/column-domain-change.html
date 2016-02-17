@@ -1,0 +1,43 @@
+<div class="row top-padding">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Up Time in %</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+    var dataset = [{
+            data: [{
+                name: 'Server A',
+                value: 99
+            }, {
+                name: 'Server B',
+                value: 100
+            }, {
+                name: 'Server C',
+                value: 98
+            }, {
+                name: 'Server D',
+                value: 97
+            }, {
+                name: 'Server E',
+                value: 96
+            }, {
+                name: 'Server F',
+                value: 95
+            }, {
+                name: 'Server G',
+                value: 94
+            }]
+          }];
+
+    $('#column-bar-example').chart({type: 'column', dataset: dataset, minValue: 90});
+
+</script>
