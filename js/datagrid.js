@@ -199,6 +199,19 @@ window.Formatters = {
     return '<span class="trigger">' + formattedValue + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-dropdown"/></svg>';
   },
 
+  Favorite: function (row, cell, value, col) {
+    var isChecked;
+
+    // Use isChecked function if exists
+    if (col.isChecked) {
+      isChecked = col.isChecked(value);
+    } else {
+      isChecked = (value == undefined ? false : value == true); // jshint ignore:line
+    }
+
+    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-star-filled"/></svg></span>';
+  },
+
   // TODOs
   // Select (Drop Down)
   // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
@@ -547,17 +560,22 @@ $.fn.datagrid = function(options) {
 
       //Init from Table
       if (this.settings.dataset === 'table') {
-        self.table = $(this.element).addClass('datagrid'+ (!this.settings.isList ? ' is-readonly' : ''));
+        self.table = $(this.element).addClass('datagrid');
 
-        if (this.element.closest('.datagrid-wrapper').length === 0) {
+        var wrapper = $(this.element).closest('.datagrid-wrapper');
+
+        if (wrapper.length === 0) {
           this.element.wrap('<div class="datagrid-wrapper"><div class="datagrid-container"></div></div>');
         }
         self.settings.dataset = self.htmlToDataset();
         self.container = this.element.closest('.datagrid-wrapper');
       } else {
-        self.table = $('<table role="grid"></table>').addClass('datagrid'+ (this.settings.isList ? ' is-readonly' : ''));
+        self.table = $('<table role="grid"></table>').addClass('datagrid');
         self.container = self.element.addClass('datagrid-container');
       }
+
+      $(this.element).closest('.datagrid-wrapper').addClass(this.settings.isList ? ' is-readonly' : '');
+      self.table.addClass(this.settings.isList ? ' is-readonly' : '');
 
       self.table.empty();
       self.renderHeader();

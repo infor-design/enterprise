@@ -5,8 +5,12 @@ $datagrid-header-height: 40px;
 
 .datagrid-wrapper {
   border: 1px solid $datagrid-border-color;
-  position: relative;
   min-width: 100%;
+  position: relative;
+
+  &.is-readonly {
+    border: 0;
+  }
 }
 
 //The scrollable header
@@ -208,6 +212,7 @@ $datagrid-header-height: 40px;
         fill: $white;
       }
     }
+
   }
 
   //Grouped Headers
@@ -352,6 +357,11 @@ $datagrid-header-height: 40px;
       padding: 0 20px;
       width: 100%;
     }
+
+    .icon-favorite {
+      position: relative;
+      top: 3px;
+    }
   }
 
   td {
@@ -491,6 +501,7 @@ $datagrid-header-height: 40px;
 
     th {
       background-color: $datagrid-readonly-header-bg-color;
+      border-left-color: transparent;
 
       .datagrid-header-text {
         color: $datagrid-readonly-header-color;
@@ -517,6 +528,10 @@ $datagrid-header-height: 40px;
     tr td {
       border-left: 1px solid transparent;
       border-right: 1px solid transparent;
+    }
+
+    thead {
+      border-bottom: 1px solid $datagrid-readonly-header-border-color;
     }
   }
 }
