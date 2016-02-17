@@ -200,7 +200,7 @@
       }
 
       //PM
-      ret = ret.replace(' a', ' '+ (hours > 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+      ret = ret.replace(' a', ' '+ (hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
 
       //Day of Week
       ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
@@ -729,11 +729,12 @@
 
   };
 
-if (!window.Locale.cultureInHead()) {
-  //setTimeout(function() {
-    window.Locale.set('en-US');
-  //}, 10);
-}
+  if (!window.Locale.cultureInHead()) {
+    //setTimeout(function() {
+      window.Locale.set('en-US');
+    //}, 10);
+  }
+
   $(function() {
 
     // ICONS: Right to Left Direction
@@ -744,7 +745,6 @@ if (!window.Locale.cultureInHead()) {
     }, 300);
 
   });
-
 
 /* start-amd-strip-block */
 }));
