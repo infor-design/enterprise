@@ -15,15 +15,8 @@
 
   &:active:not([disabled]),
   &:hover:not([disabled]) {
-    border-bottom-color: $hyperlink-color;
-  }
-
-  &:focus:not([disabled])::after {
-    background-color: $hyperlink-color;
-    content: '';
-    height: 1px;
-    position: absolute;
-    width: inherit;
+    border-bottom-color: $hyperlink-hover-color;
+    color: $hyperlink-hover-color;
   }
 
   &.show-visited:visited {
@@ -32,14 +25,17 @@
     &:focus {
       outline: 1px solid $hyperlink-visited-color;
     }
+
+    &:hover {
+      border-bottom-color: $hyperlink-disabled-color;
+    }
   }
 
   &:focus {
-    outline: 1px solid $hyperlink-color;
+    outline: 1px solid $hyperlink-focus-border-color;
     outline-offset: 4px;
   }
 
-  // Disabled
   &[disabled] {
     color: $hyperlink-disabled-color;
 
@@ -56,37 +52,45 @@
     }
   }
 
-  //Back - on the breadcrumb page
   &.back {
     @include font-size(12);
     color: $hyperlink-color;
+    display: inline-block;
     margin-left: -10px;
 
     .icon {
       fill: $hyperlink-color;
       height: 24px;
-      left: 3px;
-      top: 8px;
+      left: 0;
+      top: 4px;
       width: 24px;
     }
 
     span {
       border-bottom: 1px solid transparent;
+      margin-right: 7px;
+      position: relative;
+      top: -3.5px;
     }
 
     &:active:not([disabled]),
     &:focus:not([disabled]),
     &:hover:not([disabled]) {
       border-bottom: 1px solid transparent;
+      outline-offset: 0;
 
       span {
-        border-bottom: 1px solid $hyperlink-color;
+        border-bottom: 1px solid $hyperlink-hover-color;
       }
+    }
+
+    &:focus {
+      outline-offset: 0;
     }
   }
 }
 
-// Links Stacked - as on the home page
+// Links Stacked - as on the controls index page
 .link-list {
   margin-bottom: 40px;
 
@@ -115,16 +119,16 @@
   }
 }
 
-//Inline text shuold be 14px to match content
+//Inline text should be 14px to match content
 p .hyperlink {
   @include font-size(14);
 }
 
 //Right To Left Styles
 html[dir='rtl'] {
-  .hyperlink.back .icon {
-    left: 0;
-    right: 3px;
+  .hyperlink.back span {
+    margin-left: 7px;
+    margin-right: 0;
   }
 }
 

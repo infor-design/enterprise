@@ -27,8 +27,10 @@ $disabled-color: $graphite04;
 
 //The hyperlink Style
 $hyperlink-color: $primary-color;
+$hyperlink-focus-border-color: $primary-color;
 $hyperlink-visited-color: $amethyst06;
 $hyperlink-disabled-color: $disabled-color;
+$hyperlink-hover-color: $primary-color;
 
 //Selection Color
 $selected-bg-color: #dcecf2;
@@ -348,7 +350,8 @@ $contextual-panel-searchfield-border-color: $graphite03;
 
 //BreadCrumb
 $breadcrumb-color: $graphite06;
-$breadcrumb-hover-color: $primary-color;
+$breadcrumb-hover-color: $graphite06;
+$breadcrumb-disabled-color: $disabled-color;
 
 // Rating (Stars)
 $rating-bg-color: $amber06;

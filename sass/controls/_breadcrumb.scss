@@ -22,8 +22,9 @@
     &.current {
       @include font-size(12);
       color: $breadcrumb-color;
-      //Removed in the design font-weight: bold;
+      font-weight: bold;
     }
+
   }
 
   .hyperlink {
@@ -54,8 +55,13 @@
     }
 
     &.current {
-      //font-weight: bold;
+      font-weight: bold;
     }
+
+    &[disabled] {
+      color: $breadcrumb-disabled-color;
+    }
+
   }
 }
 

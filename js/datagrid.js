@@ -1293,7 +1293,7 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.dataset[row];
 
-        if (col.click && e.button ===0) {
+        if (col.click && e.button === 0) {
           col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
         }
 

@@ -22,9 +22,6 @@ $panel-border-color: $graphite06;
 $primary-color: $azure09;
 $inverse-color: #ffffff;
 
-//The hyperlink Style
-$hyperlink-color: $azure09;
-
 // Text Color
 $font-color-extrahighcontrast: $graphite10;
 $font-color-highcontrast: $graphite10;
@@ -32,6 +29,13 @@ $font-color: $graphite09;
 $font-color-lowcontrast: $graphite06;
 $label-color: $graphite09;
 $disabled-color: $graphite05;
+
+//The hyperlink Style
+$hyperlink-color: $azure09;
+$hyperlink-focus-border-color: $azure09;
+$hyperlink-visited-color: $amethyst10;
+$hyperlink-disabled-color: $disabled-color;
+$hyperlink-hover-color: $azure07;
 
 // Alert Colors
 $alert-info: $azure09;
@@ -317,7 +321,9 @@ $contextual-panel-bg: $graphite07;
 $contextual-panel-color: $white;
 
 //BreadCrumb
-$breadcrumb-color: $font-color-highcontrast;
+$breadcrumb-color: $graphite09;
+$breadcrumb-hover-color: $graphite09;
+$breadcrumb-disabled-color: $disabled-color;
 
 // Rating (Stars)
 $rating-bg-color: $amber06;
@@ -445,34 +451,9 @@ $swaplist-border-color-hover: $white;
 $swaplist-text-color: $font-color-highcontrast;
 $swaplist-title-text-color: $graphite02;
 
-
 //================================================== //
-// Core Controls
+// Special Control Overrides
 @import 'controls';
-
-//================================================== //
-// Other Overrides
-.hyperlink {
-  border-bottom: 1px solid $hyperlink-color;
-
-  &[disabled] {
-    border-bottom: 1px solid transparent;
-  }
-
-  &:focus {
-    outline: 1px dotted $hyperlink-color;
-    outline-offset: 1px;
-  }
-
-  &.back {
-    border-bottom: 1px solid transparent;
-    padding-right: 15px;
-
-    span {
-      border-bottom: 1px solid $hyperlink-color;
-    }
-  }
-}
 
 //Swaplist
 .swaplist {
@@ -486,3 +467,19 @@ input:not(:focus):not(:disabled):hover,
 textarea:not(:focus):not(:disabled):hover {
   box-shadow: 0 0 0 1px $black;
 }
+
+//Add a line on links..
+.hyperlink {
+  border-bottom-color: $hyperlink-color;
+
+  &[disabled] {
+    border-bottom-color: $hyperlink-disabled-color;
+  }
+}
+
+//But not these
+.breadcrumb .hyperlink,
+.hyperlink.back {
+  border-bottom-color: transparent;
+}
+

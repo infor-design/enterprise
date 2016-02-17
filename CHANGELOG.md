@@ -1,16 +1,18 @@
 # 4.1.1 - Patch Release
-Release Date: Jan 26, 2015
+Release Date: TBD
 
-* Bullet Chart
+* New - Splitter Control
 
 ## Breaking Changes
 * 2016-02-09 - Mask Control - Due to the change in how the options are defined for the Mask Control, the "pattern" definiton no longer resides on the `data-mask` attribute.  However, the `data-mask` attribute is still necessary in order for _initialize.js_ to properly invoke a mask on an input field.  This attribute has become a boolean as a result.  Providing `data-mask` on an input element creates a mask, and not providing it will do nothing.
 * 2016-02-09 - Mask Control - Making the move to normalize this Control against the others by setting things up with a `data-options` attribute instead of unqiue HTML5 `data-*` attributes.  In the next version these will no longer work.  Please update your code accordingly.
 
 ## Ui Changes
-* 2016-01-18 -
+* 2016-02-16 - Changed Hyperlink, Focus state and colors. Refined all 3 themes.
+* 2016-02-16 - Changed Breadcrumb, Focus state and colors. Refined all 3 themes.
+* 2016-02-16 - Action Button, changed some state colors. Refined all 3 themes.
 
-[Jira Release Notes 4.1.0](http://jira.infor.com/secure/ReleaseNote.jspa?version=24959&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin)
+[Jira Release Notes 4.1.1](http://jira.infor.com/secure/ReleaseNote.jspa?version=24959&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin)
 
 
 # 4.1.0 - Minor  Release

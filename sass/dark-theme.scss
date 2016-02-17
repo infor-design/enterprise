@@ -33,6 +33,13 @@ $font-color-lowcontrast: $slate03;
 $label-color: $slate03;
 $disabled-color: $slate04;
 
+//The hyperlink Style
+$hyperlink-color: $azure04;
+$hyperlink-focus-border-color: $azure06;
+$hyperlink-visited-color: $amethyst03;
+$hyperlink-disabled-color: $disabled-color;
+$hyperlink-hover-color: $azure04;
+
 // Rules
 $hr-top-color: $slate09;
 $hr-bottom-color: transparent;
@@ -322,7 +329,9 @@ $contextual-panel-bg: $slate09;
 $contextual-panel-color: $slate02;
 
 //BreadCrumb
-$breadcrumb-color: $slate02;
+$breadcrumb-color: $slate03;
+$breadcrumb-hover-color: $slate03;
+$breadcrumb-disabled-color: $disabled-color;
 
 // Rating (Stars)
 $rating-bg-color: $amber04;
