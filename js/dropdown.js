@@ -665,10 +665,11 @@
           input = this.searchInput;
         }
 
-        input.focus();
-        if (input[0].readOnly === true) {
+        if (input.prop('readonly')) {
           return;
         }
+
+        input.focus();
 
         if (input[0].setSelectionRange) {
           input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
@@ -753,8 +754,8 @@
         }
 
         this.searchInput.val(!this.settings.multiple ? current.find('a').text() : this.input.val());
-        this.activate(true); // Focus the Search Input
         this.handleSearchEvents();
+        this.activate(true); // Focus the Search Input
         this.element.trigger('listopened');
 
         // iOS-specific keypress event that listens for when you click the "done" button
