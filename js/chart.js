@@ -192,6 +192,11 @@ window.Chart = function(container) {
 
   //Show Tooltip
   this.showTooltip = function(x, y, content, arrow) {
+    //Simple Collision of left side
+    if (x < 0) {
+      x = 2;
+    }
+
     this.tooltip.css({'left': x + 'px', 'top': y + 'px'})
       .find('.tooltip-content').html(content);
 
@@ -698,7 +703,7 @@ this.Pie = function(initialData, isDonut, options) {
           show = function() {
             size = charts.getTooltipSize(content);
             x -= size.width/2;
-            y -= size.height;
+            y -= size.height/2;
 
             if (content !== '') {
               charts.showTooltip(x, y, content, 'top');
@@ -709,6 +714,13 @@ this.Pie = function(initialData, isDonut, options) {
         t = d3.transform(d3.select(circles[0][i]).attr('transform'));
         tx = t.translate[0] + (t.translate[0] > 0 ? 10 * -1: 10 * 1);
         ty = t.translate[1] + (t.translate[1] > 0 ? 10 * -1: 10 * 1);
+
+        //Adjustments
+        ty += (t.translate[0] > 0 && t.translate[1] > 0 ? -32 : 0);
+        tx += (t.translate[1] > 0 && t.translate[0] < 0 ? 17 : 0);
+        ty += (t.translate[1] < 0 && t.translate[0] < 0 ? -17 : 0);
+        ty += (t.translate[0] < 0 && t.translate[1] > 0 ? -24 : 0);
+
         x = tx + offset.left + dims.center.x;
         y = ty + offset.top + dims.center.y;
 
