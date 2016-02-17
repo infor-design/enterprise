@@ -1293,8 +1293,18 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.dataset[row];
 
-        if (col.click && e.button ===0) {
+        function handleClick() {
+          if (e.type === 'mouseup' && e.button !== 0) {
+            return;
+          }
+
+          // TODO: if (e.type === 'touchstart') {} ?
+
           col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
+        }
+
+        if (col.click && typeof col.click === 'function') {
+          handleClick();
         }
 
         if (col.menuId) {
