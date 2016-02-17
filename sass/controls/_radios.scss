@@ -15,17 +15,18 @@
   line-height: 21px;
   margin-bottom: 6px;
   margin-top: 4px;
-  padding-left: 35px;
+  padding-left: 30px;
   position: relative;
 }
 
 .inline .radio ~ .label-text:before,
 .radio + label:before {
+  background-color: $radio-bg-color;
   border: 1px solid $radio-border-color;
   border-radius: 50%;
   content: '';
   height: 18px;
-  margin-left: -31px;
+  margin-left: -29px;
   margin-top: -1px;
   position: absolute;
   width: 18px;
@@ -50,7 +51,7 @@
   border-radius: 50%;
   content: '';
   height: 6px;
-  left: 9px;
+  left: 6px;
   position: absolute;
   top: 4px;
   transition: all .2s ease 0s;

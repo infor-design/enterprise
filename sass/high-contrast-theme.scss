@@ -217,7 +217,7 @@ $cardlist-actions-color: $graphite10;
 // Checkboxes
 $checkbox-color: $primary-color;
 $checkbox-arrow-color: #ffffff;
-$checkbox-border-color: $graphite04;
+$checkbox-border-color: $graphite06;
 $checkbox-bg-color: #ffffff;
 $checkbox-disabled-font-color: $disabled-color;
 $checkbox-disabled-border-color: $input-disabled-border-color;
@@ -245,8 +245,9 @@ $editor-btn-color: $graphite04;  //Was #999999  in design
 $editor-middle-border-color: $graphite03;
 
 // Radio Buttons
+$radio-bg-color: $white;
 $radio-border-color: $graphite06;
-$radio-hover-border-color: $graphite09;
+$radio-hover-border-color: $black;
 $radio-selected-color: $primary-color;
 $radio-selected-bg-color: $white;
 $radio-disabled-border-color: $graphite04;

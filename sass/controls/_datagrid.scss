@@ -659,14 +659,15 @@ td.datagrid-trigger-cell {
   }
 
   .icon {
-    fill: $graphite06;
+    fill: $trigger-icon-fill-color;
+    left: 2px;
     top: 5px;
     visibility: hidden;
   }
 
   .icon-calendar {
     height: 16px;
-    left: 3px;
+    left: 2px;
     top: 3px;
     width: 19px;
   }
@@ -793,7 +794,7 @@ td.datagrid-trigger-cell {
   svg {
     fill: $graphite10;
     margin-top: 6px;
-    right: 13px;
+    right: 0;
   }
 
   .icon.search {
