@@ -729,7 +729,9 @@ this.Pie = function(initialData, isDonut, options) {
         } else {
           tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
           content = tooltipDataCache[i] || tooltipData || d.data.tooltip || d.data.elm.tooltip || '';
-          content = content.replace('%percent%', d3.format('0.0%')((d.value/100)));
+          content = content.replace('{{percent}}', d.data.percent + '%');
+          content = content.replace('{{value}}', d.value);
+          content = content.replace('%percent%', d.data.percent + '%');
           content = content.replace('%value%', d.value);
           show();
         }
