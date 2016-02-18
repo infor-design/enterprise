@@ -2,18 +2,47 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> controls/svg}}
 
-  <div class="page-container no-scroll">
-    {{> includes/header}}
+  <div class="page-container no-scroll builder">
 
-    <!-- BEGIN Actual Layout Markup -->
-    <div class="page-container no-scroll builder">
+    <div class="sidebar scrollable" role="complementary">
+      <header class="header azure07">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Patterns</h1>
+          </div>
 
-      <div class="sidebar scrollable" role="complementary">
-        <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
-      </div>
+          <div class="buttonset">
+            <input class="searchfield" placeholder="Search">
+          </div>
 
-      <div id="maincontent" class="main scrollable builder-pane" role="main">
+        </div>
+      </header>
 
+      <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+    </div>
+
+    <div id="maincontent" class="main no-scroll builder-pane" role="main">
+      <header class="header azure07">
+        <div class="toolbar">
+          <div class="title">
+
+            <button class="btn-icon list-detail-back-button go-back" type="button">
+              <span class="audible">Show navigation</span>
+              <span class="icon app-header">
+                <span class="one"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+              </span>
+            </button>
+
+            <h1>Builder</h1>
+          </div>
+
+          {{> includes/header-actionbutton}}
+        </div>
+      </header>
+
+      <div class="page-container scrollable builder-pane">
         <div class="builder-header subheader is-personalizable">
           <div class="toolbar no-actions-button">
             <div class="title">
@@ -87,7 +116,6 @@
         <!-- .builder-content -->
 
       </div>
-      <!-- #maincontent.main.scrollable.builder-pane -->
 
     </div>
 
