@@ -101,6 +101,10 @@
 
 }
 
+.list-detail-back-button {
+  display: none;
+}
+
 // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(phone) {
 
@@ -135,4 +139,14 @@
       }
     }
   }
+
+  .list-detail-back-button {
+    display: inline-block;
+  }
+
+  // Remove excess left-margin in this scenario
+  .header .toolbar .title .list-detail-back-button + h1 {
+    margin-left: 0;
+  }
+
 }

@@ -377,7 +377,7 @@
         // Selection View Click/Touch
         if (this.settings.selectable) {
           this.element.addClass('is-selectable');
-          var trigger = $('.application-menu-trigger').find('.app-header'),
+          var trigger = $('.list-detail-back-button').find('.app-header'),
             pattern = $(this.element).closest('.list-detail, .builder');
 
           trigger.parent().onTouchClick('listview').on('click.listview', function (e) {
