@@ -2,10 +2,10 @@
 //================================================== //
 
 .modal.about {
-  @include css3(transform, translate(-50%, 50%));
+  @include css3(transform, translate3d(-50%, 50%, 0) scale(1.0, 1.0));
 
   &.is-visible {
-    @include css3(transform, translate(-50%, -50%));
+    @include css3(transform, translate3d(-50%, -50%, 0) scale(1.0, 1.0));
   }
 
   .close-container {
