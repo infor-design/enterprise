@@ -27,7 +27,7 @@
     // Settings and Options
     var pluginName = 'personalize',
         defaults = {
-          startingColor: '#2578A9' // Azure 07
+          startingColor: '#414247'
         },
         settings = $.extend({}, defaults, options);
 
