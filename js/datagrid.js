@@ -379,7 +379,13 @@ window.Editors = {
         this.input.val(value);
       }
 
-      return this.input.val();
+      var selected = this.select.find(':selected'),
+        val = selected.attr('value');
+
+      if (!val) {
+        val = selected.text();
+      }
+      return val;
     };
 
     this.focus = function () {
