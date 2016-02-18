@@ -53,8 +53,8 @@
 
         this.element.on('updated.' + pluginName, function() {
           self.updated();
-        }).on('personalizecolors.' + pluginName, function(e, newColor) {
-          self.setNewColorScheme(newColor);
+        }).on('personalizecolors.' + pluginName, function(e, newColor, noAnimate) {
+          self.setNewColorScheme(newColor, noAnimate);
         }).on('changetheme.' + pluginName, function(e, newTheme) {
           self.setNewTheme(newTheme);
         });
