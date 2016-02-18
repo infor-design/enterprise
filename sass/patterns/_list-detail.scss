@@ -6,6 +6,11 @@
   font-size: 0;
   height: 100%;
 
+  .main,
+  .sidebar {
+    position: relative;
+  }
+
   .main {
     background-color: $panel-bg-color;
     border-left: 0;
