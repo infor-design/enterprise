@@ -27,7 +27,7 @@
     // Settings and Options
     var pluginName = 'personalize',
         defaults = {
-          propertyName: 'defaultValue'
+          startingColor: '#2578A9' // Azure 07
         },
         settings = $.extend({}, defaults, options);
 
@@ -41,6 +41,8 @@
     // Plugin Methods
     Personalize.prototype = {
       init: function() {
+        this.setNewColorScheme(this.settings.startingColor, true);
+
         return this
           .handleEvents();
       },
@@ -75,7 +77,7 @@
 
       // Changes all personalizable elements inside this element to match the personalization scheme provided.
       // @param {String} hex: The original Hexadecimal base color.
-      setNewColorScheme: function(hex) {
+      setNewColorScheme: function(hex, noAnimate) {
         // If an event sends a blank string through instead of a hex,
         // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
         if (hex && hex !== '') {
@@ -85,7 +87,7 @@
         var self = this,
           colors = {
             'header': hex !== '' ? hex : '',
-            'subheader': hex !== '' ? this.getLuminousColorShade(hex, -0.2) : ''
+            'subheader': hex !== '' ? this.getLuminousColorShade(hex, 0.2) : ''
           },
           mappings = [
             ['.header.is-personalizable', 'background-color', colors.header],
@@ -99,7 +101,16 @@
             elems.add(self.element);
           }
 
+          function changeIt(method) {
+            if (noAnimate) {
+              elems[method + 'Class']('no-transition');
+            }
+          }
+
+          changeIt('add');
           elems.css(prop, color);
+          elems.height(); // Forces repaint
+          changeIt('remove');
         }
 
         for (var i = 0; i < mappings.length; i++) {
