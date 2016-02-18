@@ -67,20 +67,48 @@
 
       // Handles the resize
       handleResize: function(e, args) {
-        //Find the right parents and left and right side
-        var splitter = $(e.target),
-          rightSide = splitter.parent();
+        var splitter = $(e.target);
 
-        if (rightSide.is('.content')) {
-          rightSide = rightSide.parent();
+        //Resize the panel to the Left
+        var resizeLeft = function (splitter, leftArg) {
+          //Find the right parents and left and right side
+          var rightSide = splitter.parent();
+
+          if (rightSide.is('.content')) {
+            rightSide = rightSide.parent();
+          }
+
+          var leftSide = rightSide.prev(),
+            left = leftSide.parent().outerWidth() - leftArg;
+
+          //Adjust Left and Right Side
+          rightSide.css('width', (left + 'px'));
+          leftSide.css('width', ('calc(100% - ' + left + 'px)'));
+       };
+
+        //Resize the panel to the Right
+        var resizeRight = function (splitter, leftArg) {
+          //Find the right parents and left and right side
+          var leftSide = splitter.parent();
+
+          if (leftSide.is('.content')) {
+            leftSide = leftSide.parent();
+          }
+
+          var rightSide = leftSide.next(),
+            w = leftSide.outerWidth() + leftArg;
+
+          //Adjust Left and Right Side
+          leftSide.css('width', (w + 'px'));
+          rightSide.css('width', ('calc(100% - ' + w + 'px)'));
+
+        };
+
+        if (splitter.is('.splitter-right')) {
+          resizeRight(splitter, args.left);
+        } else {
+          resizeLeft(splitter, args.left);
         }
-
-        var leftSide = rightSide.prev(),
-          left = leftSide.parent().outerWidth() - args.left;
-
-        //Adjust Left and Right Side
-        rightSide.css('width', (left + 'px'));
-        leftSide.css('width', ('calc(100% - ' + left + 'px)'));
 
         //Reset the Width
         splitter.css('left', '');

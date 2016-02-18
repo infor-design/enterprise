@@ -35,6 +35,11 @@ $splitter-box-shadow-color: rgba(54, 138, 192, .75);
     position: absolute;
     top: 50%;
   }
+
+  //Other Layouts
+  &.splitter-right {
+    margin-left: 229px;
+  }
 }
 
 @include respond-to(phone) {

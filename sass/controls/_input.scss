@@ -276,7 +276,7 @@ label,
 .label {
 
   &.required {
-    &:after:not(.inline) {
+    &::after:not(.inline) {
       @include required-indicator();
     }
 
@@ -305,9 +305,9 @@ label,
 }
 
 :-ms-input-placeholder {
+  @include font-size(14);
   color: $input-placeholder-color;
   font-weight: lighter;
-  @include font-size(14);
   line-height: 16px;
   opacity: 1;
 }
