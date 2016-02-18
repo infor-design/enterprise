@@ -93,8 +93,12 @@ $header-height: 60px;
       color: $header-text-color;
       text-overflow: clip;
 
-      > *:first-child {
+      > h1 {
         margin-left: 1.7rem;
+      }
+
+      > button:first-child {
+        margin-left: .7rem;
       }
 
       .btn-menu {

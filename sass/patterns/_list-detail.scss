@@ -6,6 +6,11 @@
   font-size: 0;
   height: 100%;
 
+  .main,
+  .sidebar {
+    position: relative;
+  }
+
   .main {
     background-color: $panel-bg-color;
     border-left: 0;
@@ -101,6 +106,10 @@
 
 }
 
+.list-detail-back-button {
+  display: none;
+}
+
 // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(phone) {
 
@@ -135,4 +144,14 @@
       }
     }
   }
+
+  .list-detail-back-button {
+    display: inline-block;
+  }
+
+  // Remove excess left-margin in this scenario
+  .header .toolbar .title .list-detail-back-button + h1 {
+    margin-left: 0;
+  }
+
 }

@@ -27,6 +27,15 @@
       <header class="header azure07">
         <div class="toolbar">
           <div class="title">
+            <button class="btn-icon list-detail-back-button go-back" type="button">
+              <span class="audible">Show navigation</span>
+              <span class="icon app-header">
+                <span class="one"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+              </span>
+            </button>
+
             <h1>Auto Suite - PRD </h1>
           </div>
 
@@ -79,3 +88,11 @@
   });
 </script>
 
+<!-- Change Colors -->
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $(this).personalize({
+      startingColor: '#2578A9' // Azure07
+    });
+  });
+</script>

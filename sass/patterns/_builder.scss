@@ -3,7 +3,8 @@
 // NOTE:  Duplicates some CSS from the List/Detail pattern in 'controls/_layouts.scss', could be more DRY
 
 // has similar properties to a "scrollable" .page-container
-.page-container.builder {
+.builder {
+  font-size: 0;
 
   .back {
     margin-left: 23px;
@@ -20,20 +21,31 @@
   .sidebar {
     display: inline-block;
     height: 100%;
+    position: relative;
     vertical-align: top;
   }
 
   .sidebar {
+    border-right: 0;
     width: 250px;
 
     // remove the Listview's default BG color when used inside a builder sidebar
     .listview {
       background-color: transparent;
+      border-right: 1px solid $panel-border-color;
+    }
+
+    .header {
+      border-right: 1px solid $header-border-color;
+
+      .toolbar {
+        padding-right: 5px;
+      }
     }
   }
 
   .main {
-    width: calc(100% - 253px);
+    width: calc(100% - 250px);
   }
 
   .l-pull-right.listview-micro {
