@@ -1,8 +1,6 @@
 // Splitter
 //========================================================
 
-$splitter-box-shadow-color: rgba(54, 138, 192, .75);
-
 .splitter {
   @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94));
   background-color: inherit;
@@ -14,10 +12,10 @@ $splitter-box-shadow-color: rgba(54, 138, 192, .75);
   &:hover,
   &:active,
   &.is-dragging {
-    background-color: $graphite02;
+    background-color: $splitter-active-bg-color;
 
     &::after {
-      color: $graphite10;
+      color: $splitter-active-grip-bg-color;
     }
   }
 
@@ -26,7 +24,7 @@ $splitter-box-shadow-color: rgba(54, 138, 192, .75);
   }
 
   &::after {
-    color: $graphite06;
+    color: $splitter-grip-bg-color;
     content: '⁞';
     display: block;
     font-size: 28px;
@@ -38,10 +36,9 @@ $splitter-box-shadow-color: rgba(54, 138, 192, .75);
 
   //Other Layouts
   &.splitter-right {
-    //margin-left: 229px;
 
     &.is-dragging {
-      box-shadow: 2px 0px 3px 0px rgba(54, 138, 192, 0.75);
+      box-shadow: 2px 0 3px 0 $splitter-box-shadow-color;
     }
   }
 }

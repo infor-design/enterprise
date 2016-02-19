@@ -459,6 +459,12 @@ $header-breadcrumb-color: $graphite03;
 $header-breadcrumb-alt-bg-color: $inverse-color;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
 
+// Splitter
+$splitter-grip-bg-color: $slate03;
+$splitter-active-bg-color: $slate07;
+$splitter-active-grip-bg-color: $white;
+$splitter-box-shadow-color: rgba(54, 138, 192, .75);
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

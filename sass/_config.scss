@@ -493,6 +493,12 @@ $header-breadcrumb-color: $graphite03;
 $header-breadcrumb-alt-bg-color: $inverse-color;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
 
+// Splitter
+$splitter-grip-bg-color: $graphite06;
+$splitter-active-bg-color: $graphite02;
+$splitter-active-grip-bg-color: $graphite10;
+$splitter-box-shadow-color: rgba(54, 138, 192, .75);
+
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
 $breakpoint-slim: 400px;
