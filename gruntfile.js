@@ -73,6 +73,7 @@ module.exports = function(grunt) {
             'temp/amd/flyingfocus.js',
             'temp/amd/form.js',
             'temp/amd/fileupload.js',
+            'temp/amd/fileuploadadvance.js',
             'temp/amd/header.js',
             'temp/amd/hierarchy.js',
             'temp/amd/homepage.js',

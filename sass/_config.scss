@@ -201,6 +201,24 @@ $datepicker-disabled-bg-color: $graphite01;
 // Color Picker
 $colorpicker-initial-bg-color: $graphite03;
 
+// Fileupload
+$fileupload-primary-color: #1a1a1a;
+$fileupload-secondary-color: $graphite04;
+$fileupload-hover-color: #383838;
+$fileupload-completed-color: #4fb521;
+$fileupload-completed-border-color: #a1d889;
+$fileupload-error-color: $alert01;
+$fileupload-error-hover-color: darken($alert01, 15%);
+$fileupload-error-border-color: $alert02;
+$fileupload-border-color: $graphite03;
+$fileupload-droparea-color: $graphite03;
+$fileupload-droparea-hover-color: $graphite03;
+$fileupload-droparea-hover-border-color: $primary-color;
+$fileupload-droparea-hover-bg-color: #d6f2fe;
+$fileupload-status-color: $white;
+$fileupload-cancel-bg-color: $graphite04;
+$fileupload-cancel-hover-bg-color: darken($graphite04, 15%);
+
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-button-color: transparent;

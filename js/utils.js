@@ -302,24 +302,24 @@
       speed = 10,
       counter = 0,
       cancel = function() {
-        self.trigger('cancel');
+        self.triggerHandler('cancel');
         clearInterval(interval);
         counter = 0;
       },
       pause = function() {
-        self.trigger('pause');
+        self.triggerHandler('pause');
         clearInterval(interval);
       },
       resume = function() {
-        self.trigger('resume');
+        self.triggerHandler('resume');
         update();
       },
       update = function() {
         interval = setInterval(function() {
           counter += speed;
-          self.trigger('update', [{'counter': counter}]);
+          self.triggerHandler('update', [{'counter': counter}]);
           if (counter > delay) {
-            self.trigger('timeout');
+            self.triggerHandler('timeout');
             callback.apply(arguments);
             clearInterval(interval);
             counter = 0;
