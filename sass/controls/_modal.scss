@@ -3,7 +3,10 @@
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal {
+  backface-visibility: hidden;
   border-radius: 2px;
+  filter: blur(0);
+  -webkit-filter: blur(0);
   -webkit-font-smoothing: antialiased;
   height: auto;
   left: 50%;
@@ -15,7 +18,7 @@
   position: fixed;
   top: 50%;
   // Ignoring the mixin and doing manual CSS3 vendor-prefixing here because this is complicated
-  @include css3(transform, translate(-50%, -50%) scale(.9));
+  @include css3(transform, translate3d(-50%, -50%, 0) scale(.9, .9));
   -moz-transition: opacity .2s, -moz-transform .2s;
   -ms-transition: opacity .2s, -ms-transform .2s;
   -o-transition: opacity .2s, -o-transform .2s;
@@ -26,7 +29,7 @@
 
   &.is-visible {
     opacity: 1;
-    @include css3(transform, translate(-50%, -50%) scale(1));
+    @include css3(transform, translate3d(-50%, -50%, 0) scale(1.0, 1.0));
   }
 
   .field {
