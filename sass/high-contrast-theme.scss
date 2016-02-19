@@ -183,6 +183,18 @@ $datepicker-disabled-bg-color: $graphite02;
 // Color Picker
 $colorpicker-initial-bg-color: $graphite06;
 
+// Fileupload
+$fileupload-border-color: $graphite05;
+$fileupload-droparea-color: $graphite05;
+$fileupload-secondary-color: $graphite06;
+$fileupload-error-border-color: $alert01;
+$fileupload-completed-color: $emerald09;
+$fileupload-completed-border-color: $emerald07;
+$fileupload-droparea-hover-color: $graphite05;
+$fileupload-droparea-hover-bg-color: $azure02;
+$fileupload-cancel-bg-color: $graphite05;
+$fileupload-cancel-hover-bg-color: darken($graphite05, 15%);
+
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
 $spinbox-bg-color: $graphite03;
