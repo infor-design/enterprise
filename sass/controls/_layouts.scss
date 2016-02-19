@@ -374,7 +374,6 @@ body.no-scroll {
     @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
-  &.has-breadcrumb,
   &.has-tabs {
     height: 94px;
 
@@ -385,6 +384,7 @@ body.no-scroll {
     }
   }
 
+  &.has-breadcrumb,
   &.has-alternate-tabs {
     height: 105px;
 

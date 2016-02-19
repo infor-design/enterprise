@@ -2,7 +2,7 @@
 //================================================== //
 
 .modal.contextual-action-panel {
-  min-width: 70%;
+  //min-width: 70%;
   @include css3(transform, translate3d(-50%, 50%, 0) scale(1.0, 1.0));
   @include css3(transition-timing-function, cubic-bezier(.17, .04, .03, .94));
 
