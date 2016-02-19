@@ -689,10 +689,6 @@ $.fn.datagrid = function(options) {
 
       if (self.element.hasClass('datagrid-contained')) {
         this.fixHeader();
-
-        //setTimeout(function () {
-        //  $('th.is-sortable:first', self.element).trigger('click');
-        //}, 400);
         this.syncFixedHeader();
       }
 
@@ -723,7 +719,15 @@ $.fn.datagrid = function(options) {
         diff = (next.length ===0 ? 0 : next.outerHeight()) + (prev.length ===0 ? 0 : prev.outerHeight()),
         outerHeight = 'calc(100% - '+diff+ 'px)';
 
-      this.wrapper.parent('.contained').css('height', outerHeight);
+      var container = this.wrapper.parent('.contained'),
+        isInline = container.prop('style')[$.camelCase('height')];
+
+      //Container has a fixed height
+      if (isInline) {
+        outerHeight = container.css('height');
+      } else {
+        container.css('height', outerHeight);
+      }
       this.wrapper.find('.datagrid-container').css({'height': '100%', 'overflow': 'auto'});
 
       //Next if exist and the pager toolbar height
@@ -732,6 +736,10 @@ $.fn.datagrid = function(options) {
 
       if (this.wrapper.parent().is('.pane')) {
         innerHeight = 144;
+      }
+
+      if (isInline) {
+        innerHeight = 88; //header and toolbar - TODO add check
       }
 
       this.wrapper.css('height', 'calc(100% - '+ (innerHeight)+ 'px)');
