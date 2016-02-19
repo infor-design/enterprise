@@ -276,7 +276,7 @@ label,
 .label {
 
   &.required {
-    &::after:not(.inline) {
+    &:not(.inline):after {
       @include required-indicator();
     }
 

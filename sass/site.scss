@@ -1501,6 +1501,7 @@ pre[class*="language-"] {
   @include font-size(16);
   font-family: 'Source Code Pro', monospace;
   line-height: normal;
+  max-width: 550px;
   padding: 40px 20px 40px 20px;
   text-align: left;
   white-space: pre;
