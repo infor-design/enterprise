@@ -38,7 +38,11 @@ $splitter-box-shadow-color: rgba(54, 138, 192, .75);
 
   //Other Layouts
   &.splitter-right {
-    margin-left: 229px;
+    //margin-left: 229px;
+
+    &.is-dragging {
+      box-shadow: 2px 0px 3px 0px rgba(54, 138, 192, 0.75);
+    }
   }
 }
 
