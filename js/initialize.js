@@ -218,6 +218,8 @@
 
           ['fileupload'],
 
+          ['fileuploadadvance', '.fileupload-advance'],
+
           ['about'],
 
           ['contextualactionpanel', '.contextual-action-panel-trigger'],

@@ -22,12 +22,14 @@
     // Settings and Options
     var pluginName = 'progress',
         defaults = {
+          animationLength: 1000
         },
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
       this.element = $(element);
+      this.settings = settings;
       this.init();
     }
 
@@ -54,7 +56,7 @@
 
       update: function (value) {
         var perc = this.element.attr('data-value'),
-          animationLength = 1000;
+          animationLength = this.settings.animationLength;
 
         if (value) {
           perc = value;
