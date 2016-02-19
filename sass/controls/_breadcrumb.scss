@@ -44,9 +44,12 @@
     }
 
     &:focus {
-      border-bottom: 1px solid $breadcrumb-hover-color;
       border-radius: 2px;
       color: $breadcrumb-hover-color;
+
+      &:hover {
+        border-bottom: 1px solid $breadcrumb-hover-color;
+      }
     }
 
     &:active {
