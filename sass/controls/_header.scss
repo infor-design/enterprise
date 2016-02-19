@@ -491,31 +491,34 @@ $header-height: 60px;
     padding: 1px 20px 0;
 
     ol {
-      padding: 18px 0;
+      padding: 0;
     }
 
     .hyperlink {
-      color: $header-text-color;
+      color: $header-breadcrumb-color;
 
-      &:active,
-      &:hover,
-      &:focus {
-        border-bottom: 1px solid $header-text-color;
-        color: $header-text-color;
+      &:active:not([disabled]),
+      &:hover:not([disabled]),
+      &:focus:not([disabled]) {
+        color: $header-breadcrumb-color;
+      }
+
+      &:hover:not([disabled]) {
+        border-bottom: 1px solid $header-breadcrumb-color;
       }
     }
 
     li {
-      color: $header-text-color;
+      color: $header-breadcrumb-color;
 
       &:after {
-        color: $header-text-color;
+        color: $header-breadcrumb-color;
       }
     }
 
     &.alternate {
-      background-color: $inverse-color;
-      border-bottom: 1px solid $font-color-highcontrast;
+      background-color: $header-breadcrumb-alt-bg-color;
+      border-bottom: 1px solid $header-breadcrumb-alt-color;
 
       &:hidden {
         border-bottom: 0;
@@ -526,19 +529,20 @@ $header-height: 60px;
       }
 
       .hyperlink {
-        color: $font-color-highcontrast;
+        color: $header-breadcrumb-alt-color;
 
-        &:active,
-        &:hover {
-          border-bottom: 1px solid $font-color-highcontrast;
+        &:hover:not([disabled]) {
+          border-bottom: 1px solid $header-breadcrumb-alt-color;
+          color: $header-breadcrumb-alt-color;
         }
+
       }
 
       li {
-        color: $font-color-highcontrast;
+        color: $header-breadcrumb-alt-color;
 
         &:after {
-          color: $font-color-highcontrast;
+          color: $header-breadcrumb-alt-color;
         }
       }
     }

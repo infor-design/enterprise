@@ -454,6 +454,11 @@ $header-tab-alt-normal-color: $graphite06;
 $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $primary-color;
 
+// Header Breadcrumb
+$header-breadcrumb-color: $graphite03;
+$header-breadcrumb-alt-bg-color: $inverse-color;
+$header-breadcrumb-alt-color: $font-color-highcontrast;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;
