@@ -21,7 +21,6 @@
 
   .card-header,
   .widget-header {
-
     border-bottom: 1px solid $cardlist-border-color;
     height: 50px;
     line-height: 50px;
@@ -39,8 +38,8 @@
         -webkit-font-smoothing: antialiased;
         font-weight: 100;
         margin: 0;
-        text-rendering: optimizeLegibility !important;
         padding-top: 8px;
+        text-rendering: optimizeLegibility !important;
       }
 
       //Prevent FOUC
@@ -92,8 +91,8 @@
       &.is-selected,
       &.is-selected:focus,
       &.is-selected:hover {
-        color: $listview-toolbar-button-text-selected-color;
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $listview-toolbar-button-text-selected-color;
+        color: $listview-toolbar-button-text-selected-color;
 
         span {
           color: $listview-toolbar-button-text-selected-color;
@@ -150,6 +149,65 @@
     border-top: 1px solid $cardlist-border-color;
     min-height: 50px;
   }
+
+  // Empty State Containers can have variable height
+  &.is-empty {
+    min-height: 0;
+
+    .card-content,
+    .widget-content {
+      height: auto;
+      min-height: 0;
+    }
+  }
+}
+
+// Empty-State Widgets/Cards
+.widget-empty-icon,
+.card-empty-icon,
+.widget-empty-title,
+.card-empty-title,
+.widget-empty-info,
+.card-empty-info,
+.widget-empty-actions,
+.card-empty-actions {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-weight: normal;
+  line-height: normal;
+  text-align: center;
+  text-rendering: optimizeLegibility !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+
+.card-empty-icon,
+.widget-empty-icon {
+  padding: 40px 0;
+}
+
+.card-empty-title,
+.widget-empty-title {
+  @include font-size(16);
+  padding: 0 0 20px;
+
+  &:first-child {
+    padding: 30px 0 20px;
+  }
+}
+
+.card-empty-info,
+.widget-empty-info {
+  @include font-size(14);
+  padding: 0 20px 40px;
+
+  &:last-child {
+    padding: 0 20px 30px;
+  }
+}
+
+.card-empty-actions,
+.widget-empty-actions {
+  padding: 0 0 40px;
 }
 
 // Different Widget Heights and Widths
