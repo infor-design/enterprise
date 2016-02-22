@@ -718,5 +718,19 @@ var express = require('express'),
     res.end(JSON.stringify(data));
   });
 
+  app.get('/api/companies', function(req, res) {
+    var companies = [
+      { id: 1, companyName: 'Alexandar Gravel & Stone', phone: '414-821-0697', location: 'Terrencefort, TX', contact: 'Lida Snyder', customerSince: '04/25/2016', favorite: true },
+      { id: 2, companyName: 'Briar Valley Gravel', phone: '702-389-9973', location: 'Davontemouth, UT', contact: 'Bull Cunningham', customerSince: '05/02/2016'  },
+      { id: 3, companyName: 'Riverhead Building Supply', phone: '929-769-3984', location: 'Hermistonhaven, AZ', contact: 'Johnny Fields', customerSince: '08/28/2016', favorite: true  },
+      { id: 4, companyName: 'Gravel Corp', phone: '299-166-7016', location: 'North Beau, NV', contact: 'Nina Mendez', customerSince: '01/25/2015'  },
+      { id: 5, companyName: 'United Construction', phone: '299-166-7016', location: 'New Abdul, TX', contact: 'Paul Strayer', customerSince: '04/21/2016' },
+      { id: 6, companyName: 'Gravel, Gravel, Gravel', phone: '299-166-7067', location: 'Smithsville, UT', contact: 'John Nasmith', customerSince: '06/25/2016'  },
+      { id: 7, companyName: 'Stone Gravel Supply Company', phone: '202-504-5299', location: 'Ryesmith, AK', contact: 'Spring Adams', customerSince: '07/25/2015' },
+   ];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(companies));
+  });
 
 module.exports = app;

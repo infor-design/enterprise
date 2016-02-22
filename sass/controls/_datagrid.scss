@@ -533,6 +533,10 @@ $datagrid-header-height: 40px;
     thead {
       border-bottom: 1px solid $datagrid-readonly-header-border-color;
     }
+
+    tr:hover:not(.datagrid-expandable-row) td {
+      background-color: $datagrid-readonly-row-hover-color;
+    }
   }
 }
 

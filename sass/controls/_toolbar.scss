@@ -123,7 +123,7 @@ $toolbar-buttonset-height: 44px;
   margin-bottom: 5px;
 
   .title {
-    color: $font-color;
+    color: $font-color-highcontrast;
     @include antialiased();
     @include font-size(16);
 
