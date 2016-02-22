@@ -1,0 +1,55 @@
+
+<div class="two-column fixed" role="main">
+
+  <div class="demo-column-content sidebar">
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+    <div class="splitter splitter-right"></div>
+  </div>
+
+  <div class="demo-column-content main" role="main">
+    <div class="content">
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var sampleData;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+        "id": "node3",
+        "text": "Node 2.1"
+      }, {
+        "id": "node4",
+        "text": "Node 2.2",
+        "children": [{
+          "id": "node5",
+          "text": "Node 2.2.1",
+          "icon": "icon-tree-chart",
+          "children": [{
+            "id": "node6",
+            "text": "Node 2.2.1.1",
+            "icon": "icon-tree-chart"
+          }]
+        }]
+      }]
+  }];
+  /* jshint ignore:end */
+
+  $('#json-tree').tree({dataset: sampleData});
+</script>
+
