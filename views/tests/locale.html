@@ -17,21 +17,11 @@
           //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:5}));
           //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:4}));
 
-          append(Locale.formatNumber('12345', {minimumFractionDigits:2}));
+          append(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'}));
+          append(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'}));
 
-          append(Locale.formatNumber(12345, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
-
-           append(Locale.formatNumber(12345.1, {style:"decimal", minimumFractionDigits:2, maximumFractionDigits: 4}));
-
-           append(Locale.formatNumber(12345.12, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
-
-          append(Locale.formatNumber(12345.123, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
-
-           append(Locale.formatNumber(12345.1234, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
-
-
-           append(Locale.formatNumber(12345.12345, {style:"decimal", minimumFractionDigits: 2, maximumFractionDigits: 4}));
-
+          append(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'}));
+          append(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'}));
 
         }, 300);
       }
