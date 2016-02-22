@@ -1296,6 +1296,11 @@ $.fn.datagrid = function(options) {
       if (row instanceof jQuery) {
         rowNode = row;
       }
+
+      if (cell === -1) {
+        return undefined;
+      }
+
       return rowNode.find('td[role="gridcell"]').eq(cell);
     },
 
