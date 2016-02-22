@@ -19,9 +19,8 @@
 
   //TODO: - Context Menus
   //      - Ajax
-  //      - Building Nodes
   //      - Search
-  //      - Expand / All Collapse All
+  //      - Expand / All Collapse All - Needs test page
   $.fn.tree = function(options) {
     var pluginName = 'tree',
       defaults = {
@@ -41,7 +40,6 @@
         this.initTree();
         this.handleKeys();
         this.setupEvents();
-        this.setupHeight();
         this.loadData(this.settings.dataset);
       },
 
@@ -109,14 +107,15 @@
 
         a.append('<span class="tree-text">' + text + '</span>');
 
+        if (a.is('[class^="icon"]')) {
+          a.find('use').attr('xlink:href','#'+ a.attr('class'));
+        }
+
         if (subNode.is('ul')) {
           subNode.attr('role', 'group').parent().addClass('folder');
           a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
         }
 
-        if (a.is('[class^="icon"]')) {
-          a.find('use').attr('xlink:href','#'+ a.attr('class'));
-        }
       },
 
       //Expand all Parents
@@ -171,19 +170,6 @@
         var self = this;
         self.element.on('updated.tree', function () {
           self.initTree();
-        });
-      },
-
-      //TODO: Refactor to use animateOpen and animateClosed
-      setupHeight: function() {
-        $('ul[role="group"]', this.element).each(function() {
-          var g = $(this);
-
-          if (g.hasClass('is-open')) {
-            g.css('height', 'auto');
-          } else {
-            g.css('height', 0);
-          }
         });
       },
 
@@ -396,13 +382,16 @@
         }
 
         if (location instanceof jQuery) {
-          this.element.after(location.parent('li'));
+          location.append(li);
         }
 
-        // Support ParentId in JSON
+        // Support ParentId in JSON Like jsTree
         if (node.parent) {
           //TODO
         }
+
+        //Add Children
+        this.addChildren(node, li);
 
         this.decorateNode(a);
 
@@ -410,8 +399,28 @@
           this.setSelectedNode(a, node.focus);
         }
 
-        //TODO: Add Children
+        return li;
+      },
 
+      //Recurse and add all children
+      addChildren: function (node, li) {
+
+        var self = this;
+        if (!node.children) {
+          return;
+        }
+
+        var ul = $('<ul></ul>').appendTo(li);
+        ul.addClass(node.open ? 'is-open' : '');
+
+        for (var i = 0; i < node.children.length; i++) {
+          var elem = node.children[i];
+          var newLi = self.addNode(elem, ul);
+
+          if (elem.children) {
+            self.addChildren(elem, newLi);
+          }
+        }
       },
 
       removeNode: function () {

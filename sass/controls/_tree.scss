@@ -160,6 +160,11 @@
 
 }
 
+.sidebar .tree {
+  margin: 20px;
+  float: left;
+}
+
 //RTL Tree
 html[dir='rtl'] {
   .tree {
