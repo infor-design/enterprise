@@ -37,7 +37,6 @@ input.multiselect {
   border-color: $input-border-color;
   color: $dropdown-color;
   cursor: pointer;
-  display: block;
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   @include css3(touch-callout, none);
