@@ -417,7 +417,9 @@ define([
     'should handle AM/PM': function() {
       Locale.set('en-US');
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'})).to.equal('15/3/2016 12:30:36 PM');
-      expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'})).to.equal('15/3/2016 0:30:36 AM');
+      expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'})).to.equal('15/3/2016 12:30:36 AM');
+      expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 12:30:36');
+      expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 0:30:36');
     },
 
     'should handle minimumFractionDigits': function() {

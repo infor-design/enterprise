@@ -186,12 +186,12 @@
 
       //Time
       var showDayPeriods = ret.indexOf(' a') > -1;
-      //PM
-      ret = ret.replace(' a', ' '+ (hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
 
       if (showDayPeriods && hours === 0) {
-        hours = 12;
+        ret = ret.replace('hh', 12);
+        ret = ret.replace('h', 12);
       }
+
       ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('HH', hours);
@@ -205,6 +205,9 @@
         ret = ret.replace('MM', this.pad(month+1, 2));  //number padded
         ret = ret.replace('M', month+1);                //number unpadded
       }
+
+      //PM
+      ret = ret.replace(' a', ' '+ (hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
 
       //Day of Week
       ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
