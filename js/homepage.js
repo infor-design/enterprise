@@ -33,10 +33,6 @@
         },
         settings = $.extend({}, defaults, options);
 
-    //Custom Easing Function
-    $.easing.blockslide = function (x, t, b, c, d) {
-      return c * Math.sqrt(1 - (t=t/d-1)*t) + b;
-    };
 
     // Plugin Constructor
     function Homepage(element) {
@@ -303,7 +299,27 @@
           pos = {left: left, top: top};
 
           if (animate) {
-            block.elem.animate(pos, self.settings.timeout, self.settings.easing);
+            if (self.supportsTransitions()) {
+              if (self.settings.easing === 'blockslide') {
+                var cubicBezier = [0.09, 0.11, 0.24, 0.91];
+                pos['-webkit-transition'] = 'all 1s cubic-bezier('+ cubicBezier +')';
+                pos['-moz-transition'] = 'all 1s cubic-bezier('+ cubicBezier +')';
+                pos.transition = 'all 1s cubic-bezier('+ cubicBezier +')';
+                block.elem.css(pos);
+              }
+            }
+            
+            // IE-9
+            else if (!self.supportsTransitions()) {
+              if (self.settings.easing === 'blockslide') {
+                block.elem.animate(pos, self.settings.timeout);
+              }
+            }
+
+            // Other easing effects ie (linear, swing)
+            else {
+              block.elem.animate(pos, self.settings.timeout, self.settings.easing);
+            }
           }
           else {
             block.elem.css(pos);
@@ -312,6 +328,26 @@
           // Mark all spots as unavailable for this block, as we just used this one
           self.fitBlock(available.row, available.col, block);
         }
+      },
+
+      supportsTransitions: function () {
+        var s = document.createElement('p').style,
+          p = 'transition';
+
+        if (typeof s[p] === 'string') {
+          return true;
+        }
+
+        // Tests for vendor specific prop
+        var v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
+        p = p.charAt(0).toUpperCase() + p.substr(1);
+
+        for (var i = 0, l = v.length; i < l; i++) {
+          if (typeof s[v[i] + p] === 'string') {
+            return true;
+          }
+        }
+        return false;
       },
 
       detachEvents: function () {
