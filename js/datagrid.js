@@ -1298,7 +1298,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (cell === -1) {
-        return undefined;
+        return $();
       }
 
       return rowNode.find('td[role="gridcell"]').eq(cell);
