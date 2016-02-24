@@ -78,6 +78,10 @@
           box-shadow: 15px 0 0 $swaplist-icon-color-hover,
           0 18px 0 $swaplist-icon-color-hover, 15px 18px 0 $swaplist-icon-color-hover;
         }
+
+        .icon {
+          fill: $swaplist-icon-color-hover;
+        }
       }
 
       &:focus:not(.hide-focus):not(.is-disabled) {
@@ -102,6 +106,10 @@
     }
     p {
       color: $swaplist-text-color;
+    }
+
+    .is-disabled p {
+      color: $listview-disabled-color;
     }
   }
 
