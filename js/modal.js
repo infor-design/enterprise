@@ -81,7 +81,6 @@
       },
 
       appendContent: function () {
-        var fullContent = false;
 
         this.element = $(
           '<div class="modal">' +
@@ -95,7 +94,6 @@
 
         if ($(this.settings.content).is('.modal')) {
           this.element = $(this.settings.content);
-          fullContent = true;
         } else {
           this.element.find('.modal-body').append(this.settings.content);
         }
@@ -103,6 +101,10 @@
 
         if (this.settings.cssClass) {
           this.element.addClass(this.settings.cssClass);
+        }
+
+        if (this.settings.title) {
+          this.element.find('.modal-title').text(this.settings.title);
         }
 
         this.addButtons(this.settings.buttons);
@@ -195,6 +197,10 @@
         }
 
         btnWidth = 100/buttons.length;
+
+        if (buttons) {
+          buttonset.empty();
+        }
 
         $.each(buttons, function (name, props) {
           var btn = $('<button type="button"></button>');
