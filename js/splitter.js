@@ -56,7 +56,13 @@
           self.splitTo(args.left);
         });
 
-        //move to left
+        //Restore from local storage
+        if (localStorage) {
+          var w = localStorage[this.uniqueId()];
+          this.splitTo(parseInt(w));
+        }
+
+        //move handle to left
         if (this.element.is('.splitter-right')) {
           this.orgLeft = this.element.parent().outerWidth();
 
@@ -120,6 +126,16 @@
         rightSide.css('width', ('calc(100% - ' + w + 'px)'));
       },
 
+      //Preferably use the id, but if none that make one based on the url and count
+      uniqueId: function () {
+
+        if (this.element.attr('id')) {
+          return this.element.attr('id');
+        }
+
+        return (window.location.pathname.split('/').pop()) + '-splitter-' + $('.splitter').length;
+      },
+
       splitTo: function (w) {
         var splitter = this.element;
 
@@ -127,6 +143,13 @@
           this.resizeRight(splitter, w);
         } else {
           this.resizeLeft(splitter, w);
+        }
+
+        this.element.trigger('split', [w]);
+
+        //Save to local storage
+        if (localStorage) {
+          localStorage[this.uniqueId()] = w;
         }
       },
 

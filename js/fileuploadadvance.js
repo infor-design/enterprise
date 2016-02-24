@@ -25,7 +25,7 @@
         defaults = {
           isStandalone: true, // on page -or- on modal [for some visual style only]
           standaloneClass: 'standalone', // css class if on page
-          allowedTypes: 'svg', // restrict file types(ie. 'jpg|png|gif') ['*' all types]
+          allowedTypes: '*', // restrict file types(ie. 'jpg|png|gif') ['*' all types]
           maxFilesInProcess: 999999, // max files can be upload
           maxFileSize: -1, // max file size in bytes, -1 for unlimited
           fileName: 'myfile', // variable name to read from server
