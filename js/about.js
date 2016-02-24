@@ -50,6 +50,7 @@
       },
 
       setup: function() {
+        this.isBody = $(this.element).is('body');
         var appName = this.element.attr('data-appname');
         this.settings.appName = appName !== undefined ? appName.toString() : this.settings.appName;
 
@@ -127,7 +128,7 @@
         $('.modal-body', this.modal)[0].tabIndex = 0;
 
         this.modal.appendTo('body');
-        this.modal.modal();
+        this.modal.modal({trigger: this.isBody ? 'immediate' : 'click'});
         return this;
       },
 
@@ -143,7 +144,7 @@
           self.close();
         });
 
-        this.modal.data('modal').element.on('beforeOpen.about', function() {
+        this.modal.data('modal').element.on('beforeopen.about', function() {
           self.modal.find('.modal-body').scrollTop(0);
         });
 
@@ -189,6 +190,10 @@
 
       close: function() {
         this.modal.data('modal').close();
+        if (this.isBody) {
+          this.destroy();
+          alert();
+        }
       },
 
       // Teardown - Remove added markup and events

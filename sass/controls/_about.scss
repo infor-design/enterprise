@@ -15,8 +15,10 @@
     top: 20px;
   }
 
-  .modal-content {
+  &.modal {
     max-width: 640px;
+    min-width: 300px;
+    width: calc(100% - 40px);
   }
 
   .modal-header {
