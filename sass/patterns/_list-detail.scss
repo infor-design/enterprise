@@ -39,14 +39,6 @@
         border-right: 1px solid $azure09;
       }
 
-      + .listview {
-        height: calc(100% - 70px);
-
-        &.paginated {
-          height: calc(100% - 108px); // size of pagination bar = 38px
-        }
-      }
-
       .title {
         width: calc(100% - 41px);
       }
