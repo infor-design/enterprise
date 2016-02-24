@@ -45,6 +45,7 @@
 
       init: function() {
         this.settings = settings;
+        this.isTransitionsSupports = this.supportsTransitions();
         this.attachEvents();
 
         //Initial Sizing
@@ -299,26 +300,23 @@
           pos = {left: left, top: top};
 
           if (animate) {
-            if (self.supportsTransitions()) {
-              if (self.settings.easing === 'blockslide') {
-                var cubicBezier = [0.09, 0.11, 0.24, 0.91];
-                pos['-webkit-transition'] = 'all 1s cubic-bezier('+ cubicBezier +')';
-                pos['-moz-transition'] = 'all 1s cubic-bezier('+ cubicBezier +')';
-                pos.transition = 'all 1s cubic-bezier('+ cubicBezier +')';
+            var easing = self.settings.easing,
+              blockslide = [0.09, 0.11, 0.24, 0.91];
+
+            if (easing === 'blockslide') {
+              if (self.isTransitionsSupports) {
+                self.applyCubicBezier(block.elem, blockslide);
                 block.elem.css(pos);
               }
-            }
-            
-            // IE-9
-            else if (!self.supportsTransitions()) {
-              if (self.settings.easing === 'blockslide') {
+              // IE-9
+              else {
                 block.elem.animate(pos, self.settings.timeout);
               }
             }
 
             // Other easing effects ie (linear, swing)
             else {
-              block.elem.animate(pos, self.settings.timeout, self.settings.easing);
+              block.elem.animate(pos, self.settings.timeout, easing);
             }
           }
           else {
@@ -328,6 +326,16 @@
           // Mark all spots as unavailable for this block, as we just used this one
           self.fitBlock(available.row, available.col, block);
         }
+      },
+
+      applyCubicBezier: function (el, cubicBezier) {
+        el.css({
+          '-webkit-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
+          '-moz-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
+          '-ms-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
+          '-o-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
+          'transition': 'all 1s cubic-bezier('+ cubicBezier +')'
+        });
       },
 
       supportsTransitions: function () {
