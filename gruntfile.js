@@ -55,6 +55,7 @@ module.exports = function(grunt) {
             'temp/amd/utils.js',
             'temp/amd/animations.js',
             'temp/amd/locale.js',
+            'temp/amd/listfilter.js',
             'temp/amd/about.js',
             'temp/amd/accordion.js',
             'temp/amd/applicationmenu.js',
