@@ -469,11 +469,11 @@ $splitter-active-grip-bg-color: $black;
 $splitter-box-shadow-color: rgba(37, 120, 169, .75);
 
 //Swaplist
-$swaplist-icon-color: $graphite02;
-$swaplist-icon-color-hover: $white;
-$swaplist-border-color-hover: $white;
+$swaplist-icon-color: $graphite05;;
+$swaplist-icon-color-hover: $font-color-highcontrast;
+$swaplist-border-color-hover: $font-color-highcontrast;
 $swaplist-text-color: $font-color-highcontrast;
-$swaplist-title-text-color: $graphite02;
+$swaplist-title-text-color: $font-color-highcontrast;
 
 //================================================== //
 // Special Control Overrides
