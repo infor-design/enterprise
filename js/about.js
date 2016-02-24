@@ -192,7 +192,6 @@
         this.modal.data('modal').close();
         if (this.isBody) {
           this.destroy();
-          alert();
         }
       },
 
