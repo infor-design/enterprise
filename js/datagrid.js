@@ -571,6 +571,11 @@ $.fn.datagrid = function(options) {
         this.element.css('max-width', w);
         $('.modal').css('overflow','hidden').find('.modal-body').css('overflow-x','hidden');
       }
+
+      //initialize row height by a setting
+      if (settings.rowHeight !== 'normal') {
+        this.element.find('table').addClass(settings.rowHeight + '-rowheight');
+      }
     },
 
     //Render the Header and Rows
@@ -987,7 +992,7 @@ $.fn.datagrid = function(options) {
         var isEven = (i % 2 === 0);
 
         rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row'+
-                  (settings.rowHeight !== 'normal' ? ' ' + settings.rowHeight + '-rowheight"' : '') +
+                  (settings.rowHeight !== 'normal' ? ' ' + settings.rowHeight + '-rowheight' : '') +
                   (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                   (!settings.cellNavigation ? ' is-clickable' : '' ) +
                    '"' + '>';
