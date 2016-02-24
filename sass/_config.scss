@@ -202,22 +202,22 @@ $datepicker-disabled-bg-color: $graphite01;
 $colorpicker-initial-bg-color: $graphite03;
 
 // Fileupload
-$fileupload-primary-color: #1a1a1a;
-$fileupload-secondary-color: $graphite04;
-$fileupload-hover-color: #383838;
-$fileupload-completed-color: #4fb521;
-$fileupload-completed-border-color: #a1d889;
+$fileupload-primary-color: $graphite10;
+$fileupload-secondary-color: $graphite06;
+$fileupload-hover-color: $graphite10;
+$fileupload-completed-color: $emerald08;
+$fileupload-completed-border-color: $emerald08;
 $fileupload-error-color: $alert01;
 $fileupload-error-hover-color: darken($alert01, 15%);
 $fileupload-error-border-color: $alert02;
-$fileupload-border-color: $graphite03;
-$fileupload-droparea-color: $graphite03;
-$fileupload-droparea-hover-color: $graphite03;
+$fileupload-border-color: $graphite05;
+$fileupload-droparea-color: $graphite05;
+$fileupload-droparea-hover-color: $graphite05;
 $fileupload-droparea-hover-border-color: $primary-color;
-$fileupload-droparea-hover-bg-color: #d6f2fe;
+$fileupload-droparea-hover-bg-color: rgba(200, 233, 244, .30);
 $fileupload-status-color: $white;
-$fileupload-cancel-bg-color: $graphite04;
-$fileupload-cancel-hover-bg-color: darken($graphite04, 15%);
+$fileupload-cancel-bg-color: $graphite06;
+$fileupload-cancel-hover-bg-color: $graphite10;
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;

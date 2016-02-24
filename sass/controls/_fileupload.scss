@@ -56,7 +56,6 @@ label.fileupload {
     }
   }
 
-
 }
 
 .field-fileupload {
@@ -106,13 +105,12 @@ html[dir='rtl'] {
 
 }
 
-// File Upload Advance
+// File Upload Advanced
 //================================================== //
 .fileupload-wrapper {
   min-width: 335px;
 
   &.standalone {
-    border: 1px solid $fileupload-border-color;
     padding: 25px 20px;
   }
 
@@ -162,6 +160,7 @@ html[dir='rtl'] {
       }
 
       p {
+        color: $fileupload-primary-color;
         padding-top: 5px;
       }
 
@@ -191,6 +190,7 @@ html[dir='rtl'] {
       .description,
       .size {
         @include font-size(14);
+        color: $fileupload-secondary-color;
         height: 34px;
         line-height: 34px;
         overflow: hidden;
@@ -204,7 +204,7 @@ html[dir='rtl'] {
         border-radius: 50%;
         float: left;
         height: 16px;
-        margin: 10px 5px 0 10px;
+        margin: 8px 10px 0 10px;
         width: 16px;
 
         .btn-icon {
@@ -238,6 +238,7 @@ html[dir='rtl'] {
       .size {
         color: $fileupload-secondary-color;
         margin-right: 42px;
+        line-height: 36px;
         max-width: 75px;
         text-transform: uppercase;
       }
@@ -316,6 +317,10 @@ html[dir='rtl'] {
         width: calc(100% - 33px);
       }
     }
+  }
+
+  em {
+    font-style: normal;
   }
 
   @include respond-to(phone) {

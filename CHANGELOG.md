@@ -3,6 +3,7 @@ Release Date: TBD
 
 * New - Splitter Control
 * New - File Upload Control
+* New - Empty States Widget Design
 
 ## Breaking Changes
 * 2016-02-09 - Mask Control - Due to the change in how the options are defined for the Mask Control, the "pattern" definiton no longer resides on the `data-mask` attribute.  However, the `data-mask` attribute is still necessary in order for _initialize.js_ to properly invoke a mask on an input field.  This attribute has become a boolean as a result.  Providing `data-mask` on an input element creates a mask, and not providing it will do nothing.
