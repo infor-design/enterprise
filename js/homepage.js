@@ -69,8 +69,8 @@
       // Return [x and y] where we can fit this block
       getAvailability: function(block) {
         var i, j, n, l, cols, innerCheck,
-          self = this, 
-          rows = self.rowsAndCols.length, 
+          self = this,
+          rows = self.rowsAndCols.length,
           smallest = {},
           abort = false;
 
@@ -118,8 +118,8 @@
       // Make all spots as unavailable, depends on block's width and height
       // Soon we used this block
       fitBlock: function(r, c, block) {
-        var i, j, l, l2, 
-          self = this, 
+        var i, j, l, l2,
+          self = this,
           addRow = true;
 
         block.x = c;
@@ -157,7 +157,7 @@
         // Check if reach to end of columns then assign flag[addRow]
         for (i = 0, l = self.rowsAndCols[r].length; i < l; i++) {
           if(self.rowsAndCols[r][i]) {
-            addRow = false;                 
+            addRow = false;
           }
         }
 
@@ -186,7 +186,7 @@
         // Max sized columns brings to top
         for (var i=0, j=0, w=0, l=self.blocks.length; i<l; i++) {
           if (self.settings.columns > 1) {
-            if (self.blocks[i].w >= self.settings.columns && i) {            
+            if (self.blocks[i].w >= self.settings.columns && i) {
               self.arrayIndexMove(self.blocks, i, j);
             }
             w += self.blocks[i].w;
@@ -261,7 +261,7 @@
           bp = bpPhone;
         }
 
-        self.element.find('.content').css('margin-left', '-' + (bp/2) + 'px');
+        self.element.find('> .content').css('margin-left', '-' + (bp/2) + 'px');
 
         this.setBlocks(); //setup blocks
         this.initRowsAndCols(); //setup colums
@@ -282,7 +282,7 @@
 
             if (self.settings.columns === 1) {
               block.elem.addClass('to-single');
-            } 
+            }
             else if (self.settings.columns === 2) {
               block.elem.addClass('to-double');
             }

@@ -100,7 +100,7 @@
 
 }
 
-@media (min-width: $breakpoint-phone-to-tablet) {
+@mixin mobile-timeline() {
   .timeline {
     &:before {
       bottom: 44px;
@@ -132,6 +132,15 @@
   }
 }
 
+@media (min-width: $breakpoint-phone-to-tablet) {
+  @include mobile-timeline();
+}
+
+.card .timeline,
+.widget .timeline {
+  margin-left: 20px;
+  margin-top: 20px;
+}
 
 //RTL Styles
 html[dir='rtl'] {
