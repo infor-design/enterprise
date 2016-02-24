@@ -212,14 +212,13 @@ window.Formatters = {
     return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-star-filled"/></svg></span>';
   },
 
-  // TODOs
-  // Select (Drop Down)
+  // Possible future Formatters
   // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
+  // Tree
   // Multi Select
+  // Lookup
   // Re Order - Drag Indicator
   // Sparkline
-  // Lookup
-  // Tree
   // Progress Indicator (n of 100%)
   // Process Indicator
   // Currency
@@ -344,10 +343,12 @@ window.Editors = {
     this.init();
   },
 
-  Dropdown: function(row, cell, value, container, column, event) {
+  Dropdown: function(row, cell, value, container, column, event, grid) {
 
     this.name = 'dropdown';
     this.originalValue = value;
+    this.useValue = true; //use the data set value not cell value
+    this.cell = grid.activeCell;
 
     this.init = function () {
       //Uses formatter
@@ -375,8 +376,19 @@ window.Editors = {
     };
 
     this.val = function (value) {
+      var self = this;
+
       if (value) {
         this.input.val(value);
+
+        this.select.find('option').each(function () {
+          var opt = $(this);
+
+          if (opt.attr('value') === value) {
+            opt.attr('selected', 'true');
+            self.input.val(opt.text());
+          }
+        });
       }
 
       var selected = this.select.find(':selected'),
@@ -385,6 +397,7 @@ window.Editors = {
       if (!val) {
         val = selected.text();
       }
+
       return val;
     };
 
@@ -403,12 +416,12 @@ window.Editors = {
       }
 
       this.select.on('listclosed', function () {
-        self.input.trigger('focusout');
-
-        setTimeout(function () {
-          container.parent().trigger('focus');
-        }, 2);
-
+          if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
+           self.input.trigger('focusout');
+           container.parent().trigger('focus');
+          } else {
+            grid.commitCellEdit(self.input);
+          }
       });
 
     };
@@ -720,7 +733,7 @@ $.fn.datagrid = function(options) {
         outerHeight = 'calc(100% - '+diff+ 'px)';
 
       var container = this.wrapper.parent('.contained'),
-        isInline = container.prop('style')[$.camelCase('height')];
+        isInline = container.prop('style') && container.prop('style')[$.camelCase('height')];
 
       //Container has a fixed height
       if (isInline) {
@@ -1384,6 +1397,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
+
       });
 
       body.off('dblclick.datagrid').on('dblclick.datagrid', 'tr', function (e) {
@@ -1457,23 +1471,14 @@ $.fn.datagrid = function(options) {
 
       // Implement Editing Commit Functionality
       body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea', function () {
-        var elem = $(this);
+        //Popups are open
+        if ($('#calendar-popup').is(':visible')) {
+          return;
+        }
 
-        setTimeout(function () {
-          var focus = $(':focus');
-
-          //some targets we ignore and do not clear/commit tet
-          if (focus.is('.dropdown-search')) {
-            return;
-          }
-
-          if (focus.closest('.calendar').length === 1) {
-            return;
-          }
-
-          self.commitCellEdit(elem);
-
-        }, elem.is('.datepicker') ? 200 : 1);
+        if (self.editor && self.editor.input) {
+          self.commitCellEdit(self.editor.input);
+        }
 
       });
     },
@@ -2137,7 +2142,6 @@ $.fn.datagrid = function(options) {
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
-
       if (!this.settings.editable) {
         return;
       }
@@ -2176,7 +2180,11 @@ $.fn.datagrid = function(options) {
       //Editor.init
       cellParent.addClass('is-editing');
       cellNode.empty();
-      this.editor = new col.editor(row, cell, cellValue, cellNode, col, event);
+      this.editor = new col.editor(row, cell, cellValue, cellNode, col, event, this);
+
+      if (this.editor.useValue) {
+        cellValue = this.fieldValue(this.settings.dataset[row], col.field);
+      }
       this.editor.val(cellValue);
       this.editor.focus();
     },
