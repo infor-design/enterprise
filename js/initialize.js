@@ -390,7 +390,11 @@
         matchedItems('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
       });
 
-      self.trigger('initialized');
+      // NOTE: use of .triggerHandler() here causes event listeners for "initialized" to fire, but prevents the
+      // "initialized" event from bubbling up the DOM.  It should be possible to initialize just the contents
+      // of an element on the page without causing the entire page to re-initialize.
+      self.triggerHandler('initialized');
+
       //Placeholder attribute in browsers that do not handle it
       $.fn.placeholderPolyfill();
 
