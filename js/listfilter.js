@@ -19,6 +19,7 @@
 /* end-amd-strip-block */
 
   var defaults = {
+      caseSensitive: false, // Set to true if searches ARE case sensitive
       filterMode: 'startsWith', // see "filterModes" var for possible values
       highlightMatchedText: false, // inserts markup that appears to highlight text
       highlightCallback: null // if defined, will execute this code for highlighting text instead of the built-in highlighting code
@@ -60,8 +61,13 @@
         return false;
       }
 
-      // Check incoming list
+      // Check incoming list type
       if (!isArray(list) && !(list instanceof jQuery)) {
+        return false;
+      }
+
+      // Search term must exist and must not be nothing
+      if (!term || typeof term !== 'string' || !term.length) {
         return false;
       }
 
@@ -69,6 +75,12 @@
         items = [],
         isJQuery = false;
 
+      // make search term lowercase if the search is not case-senstive
+      if (!this.settings.caseSensitive) {
+        term = term.toLowerCase();
+      }
+
+      // If it's not an array, build an array of the incoming object(s) for iterating through
       if (!isArray(list)) {
         if (list instanceof jQuery || typeof list === 'object') {
           list = $.makeArray(list);
@@ -109,6 +121,8 @@
 
         if (match) {
 
+          // TODO: Figure out if we want to do this in the filtering logic, or in each control
+          /*
           // Highlight the search term in this result if the current settings allow for it
           if (self.settings.highlightMatchedText) {
             var cb = self.settings.highlightCallback;
@@ -129,9 +143,10 @@
             if (isString) {
               item = text;
             } else {
-              $(item).html(text);
+              $(item).clone().html(text);
             }
           }
+          */
 
           items.push(item);
         }

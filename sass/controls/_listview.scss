@@ -127,6 +127,12 @@
     }
   }
 
+  i {
+    color: $font-color-extrahighcontrast;
+    font-style: normal;
+    font-weight: bold;
+  }
+
   .days,
   .hours {
     @include font-size(24);
@@ -444,7 +450,21 @@
   }
 }
 
-//Search Toolbar on List view
+// Contextual Toolbar Positioning
+.contextual-toolbar {
+  + .listview {
+    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
+    height: calc(100% - 50px);
+  }
+
+  &.is-hidden {
+    + .listview {
+      height: 100%;
+    }
+  }
+}
+
+// Search Toolbar on Listview
 .listview-search {
 
   .searchfield-wrapper {
@@ -463,6 +483,19 @@
     padding-left: 50px !important;
     padding-top: 10px;
     width: 100%;
+  }
+
+  // Modify the height of the content inside of listview cards
+  + .contextual-toolbar {
+    + .listview {
+      height: calc(100% - 90px);
+    }
+
+    &.is-hidden {
+      + .listview {
+        height: calc(100% - 40px);
+      }
+    }
   }
 }
 

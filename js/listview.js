@@ -99,8 +99,7 @@
           }
 
           this.listfilter = new ListFilter({
-            filterMode: 'contains',
-            highlightMatchedText: true
+            filterMode: 'contains'
           });
         }
 
@@ -451,11 +450,8 @@
 
         // For use with Searchfield
         if (this.settings.searchable) {
-          this.searchfield.on('keydown.searchable-listview', function(e) {
-            var list = self.element.find('li, tbody > tr'),
-              term = $(this).val();
-
-            self.listfilter.filter(list, term);
+          this.searchfield.on('contents-checked.searchable-listview', function(e) {
+            self.handleSearch(e, $(this));
           });
         }
 
@@ -494,6 +490,41 @@
         if (this.element.data('pager')) {
           this.element.data('pager').renderBar();
         }
+      },
+
+      // For instances of Listview that are paired with a Searchfield
+      // NOTE: Search functionality is called from "js/listfilter.js"
+      handleSearch: function(e, searchfield) {
+        var list = this.element.find('li, tbody > tr'),
+            term = searchfield.val(),
+            results;
+
+        this.resetSearch(list);
+
+        if (term && term.length) {
+          results = this.listfilter.filter(list, term);
+        }
+
+        if (!results || !results.length) {
+          return;
+        }
+
+        var exp = new RegExp('(' + term + ')', 'gi');
+
+        list.not(results).addClass('hidden');
+        list.filter(results).each(function() {
+          // TODO: Need to figure out how to wrap text contents without wrapping the text of HTML attributes.
+          // This code doesn't work so well in Listviews that have lots of sub elements.
+          $(this).html( $(this).html().replace(exp, '<i>$1</i>') );
+          //var contents = $(this).html().match(/(<[^>]*>)/g);
+          //contents.replace(exp, '<i>$1</i>');
+        });
+      },
+
+      resetSearch: function(list) {
+        list.removeClass('hidden').each(function() {
+          $(this).find('i').contents().unwrap();
+        });
       },
 
       // Fix: for vertical-align to icons and buttons
