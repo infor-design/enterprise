@@ -108,7 +108,7 @@
           // Search the global variable space for a dataset variable name, if provided.
           if (typeof this.settings.dataset === 'string') {
             var dataset = window[this.settings.dataset];
-            if (dataset.length) {
+            if (dataset && dataset.length) {
               this.settings.dataset = dataset;
             }
           }
