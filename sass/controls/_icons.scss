@@ -337,6 +337,7 @@ svg.icon-dirty {
 
   span:not(.audible) {
     @include app-drawer-box();
+    padding: 0 !important;
     position: absolute;
   }
 

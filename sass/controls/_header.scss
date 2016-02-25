@@ -450,12 +450,14 @@ $header-height: 60px;
     }
   }
 
-  .title .app-header {
+  .app-header {
     height: 32px;
     width: 32px;
 
-    &.icon > span {
-      background-color: $header-text-color;
+    &.icon {
+      > span {
+        background-color: $header-icon-color;
+      }
     }
   }
 
@@ -550,9 +552,39 @@ $header-height: 60px;
   }
 }
 
+// Title Button Styles for these three elements
+.header,
+.subheader,
+.masthead {
+  .toolbar {
+    [class^="btn"] {
+      .app-header,
+      .app-drawer {
+        &.icon {
+          > span {
+            background-color: $header-text-color;
+            opacity: .7;
+          }
+        }
+      }
 
+      &:focus,
+      &:hover:not([disabled]),
+      &:active:not([disabled]) {
+        .app-drawer,
+        .app-header {
+          &.icon {
+            > span {
+              background-color: $header-icon-color;
+              opacity: 1;
+            }
+          }
+        }
+      }
 
-
+    }
+  }
+}
 
 
 //Hide text behind an ellipsis when on smaller breaks
