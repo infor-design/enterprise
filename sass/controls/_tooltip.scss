@@ -201,9 +201,8 @@
   &.alternate {
     background-color: $graphite01;
     border: 1px solid $popover-separator-color;
-    box-shadow: none;
     max-width: inherit;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 
     .tooltip-title {
       background-color: $white;
@@ -214,10 +213,9 @@
 
     .modal-buttonset {
       background-color: $white;
-      border: 1px solid $popover-separator-color;
-      margin: 15px 0 0 -22px;
+      margin: 20px 0 0 -20px;
       position: absolute;
-      width: calc(100% + 2px);
+      width: calc(100% - 2px);
     }
 
     &.popover .arrow:after {

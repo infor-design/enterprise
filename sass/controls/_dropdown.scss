@@ -183,12 +183,32 @@ input.multiselect {
       outline: none;
     }
 
+    &.is-selected {
+      background-color: $dropdown-selected-bg-color;
+
+      a {
+        color: $inverse-color;
+      }
+    }
+
     &.is-focused {
       background-color: $popupmenu-hover-color;
 
       &::before {
         @include checkbox-checked-before-style;
         border-color: $inverse-color;
+      }
+
+      a {
+        color: $popupmenu-color;
+      }
+
+      &.is-selected {
+        background-color: $dropdown-selected-bg-color;
+
+        a {
+          color: $inverse-color;
+        }
       }
     }
 
@@ -352,7 +372,7 @@ input.multiselect {
 }
 
 .dropdown-search {
-  background-color: $body-bg-color;
+  // background-color: $body-bg-color;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-color;
   border-radius: 0;

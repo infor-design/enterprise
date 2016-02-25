@@ -244,7 +244,7 @@
         }
         timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('TimeHours') + '</label>'));
         timeParts.append(hourSelect);
-        timeParts.append($('<span class="label">&nbsp;:&nbsp;</span>'));
+        timeParts.append($('<span class="label colons">:</span>'));
 
         var minuteCounter = 0;
         minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
@@ -264,7 +264,7 @@
 
         periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
         if (!this.show24Hours) {
-          timeParts.append($('<span class="label">&nbsp;&nbsp;&nbsp;</span>'));
+          timeParts.append($('<span class="label colons"></span>'));
           var localeDays = Locale.calendar().dayPeriods,
             localeCount = 0,
             regexDay = new RegExp(initValues.period, 'i'),
@@ -467,6 +467,8 @@
           self.closeTimePopup();
         }
 
+        this.element.addClass('is-active');
+
         // Build a different Time Popup based on settings
         if (self.mode === 'range') {
           self.buildRangePopup();
@@ -501,6 +503,7 @@
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
         $('#timepicker-popup').remove();
+        this.element.removeClass('is-active');
       },
 
       toggleTimePopup: function() {

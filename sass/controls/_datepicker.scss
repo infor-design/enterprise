@@ -8,11 +8,11 @@
   + .tooltip-description + .icon {
     cursor: pointer;
     fill: $trigger-icon-fill-color;
-    height: 16px;
-    margin-left: -24px;
+    height: 18px;
+    margin-left: -27px;
     margin-top: 9px;
     position: absolute;
-    width: 16px;
+    width: 18px;
     z-index: 1;
 
     &:hover {
@@ -28,7 +28,7 @@
     border-color: $input-focus-border-color;
 
     + .icon {
-      fill: $trigger-active-color;
+      fill: $datepicker-icon-active-color;
     }
   }
 
@@ -41,9 +41,11 @@
   }
 
   &:disabled {
+    border-color: $datepicker-disabled-border-color;
+
     + .icon {
       cursor: default;
-      fill: $input-disabled-border-color;
+      fill: $datepicker-disabled-icon-color;
     }
   }
 
@@ -68,7 +70,7 @@
   min-width: 297px;
   text-align: center;
   vertical-align: middle;
-  width: auto;
+  width: 100%;
 
   tr {
     text-align: center;
@@ -77,8 +79,8 @@
   // Header
   thead {
     th {
+      @include rem(font-size, 1.4rem);
       color: $datepicker-day-color;
-      @include rem(font-size, 1.2rem);
       margin: 20px;
       text-transform: uppercase;
       width: 35px;
@@ -87,11 +89,11 @@
 
   // Cells / Days
   td {
+    @include rem(font-size, 1.4rem);
     border: 1px solid transparent;
     border-radius: 50%;
     color: $datepicker-day-color;
     cursor: pointer;
-    @include rem(font-size, 1.2rem);
     height: 35px;
     padding: 10px;
     transition: .2s background-color ease;
@@ -138,6 +140,7 @@
     &.is-disabled:active {
       @include unselectable;
       background-color: $datepicker-disabled-bg-color;
+      color: $datepicker-disabled-color;
       cursor: default;
     }
 
@@ -152,9 +155,13 @@
     }
 
     &:focus {
-      border-color: $datepicker-selected-bg-color;
+      border-color: $datepicker-focus-border-color;
       outline: none;
       -moz-outline-style: none;
+    }
+
+    &:focus:not(.is-selected) {
+      box-shadow: 0 0 0 2px $popover-bg-color inset;
     }
 
     &:active {
@@ -227,8 +234,8 @@
 
   .month,
   .year {
-    @include font-size(20);
-    color: $font-color-highcontrast;
+    @include font-size(18);
+    color: $datepicker-month-year-color;
     text-transform: capitalize;
   }
 }
@@ -236,6 +243,7 @@
 // Popup Adjustments
 #calendar-popup {
   border-radius: 2px;
+  max-width: inherit;
 
   .arrow {
     left: 132px;
