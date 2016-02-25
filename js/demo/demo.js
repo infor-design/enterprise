@@ -123,6 +123,15 @@ $(function($) {
       $(this).data('mode', mode);
     });
 
+    $('#icon-app-drawer').click(function() {
+      $(this).toggleClass('active');
+    });
+
+    // in the Masthead
+    $('#application-switcher').click(function() {
+      $(this).children('.app-drawer').toggleClass('active');
+    });
+
     //----------------------------------------------------------
     //  Examples: Accordion
     //----------------------------------------------------------

@@ -317,6 +317,111 @@ svg.icon-dirty {
 
 }
 
+@mixin app-drawer-box() {
+  display: inline-block;
+  background-color: $icon-color;
+  border-radius: 2px;
+  height: 4px;
+  width: 4px;
+  @include css3(transform-origin, 50% 50% 0);
+  @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s,
+    left 300ms cubic-bezier(.17, .04, .03, .94),
+    top 300ms cubic-bezier(.17, .04, .03, .94),
+    height 300ms cubic-bezier(.17, .04, .03, .94),
+    width 300ms cubic-bezier(.17, .04, .03, .94));
+}
+
+// This icon is presumably 18px x 18px - The dimensions defined reflect this
+.icon.app-drawer {
+  position: relative;
+
+  span:not(.audible) {
+    @include app-drawer-box();
+    position: absolute;
+  }
+
+  .one {
+    left: 9px;
+    top: 7px;
+  }
+
+  .two {
+    left: 15px;
+    top: 7px;
+  }
+
+  .three {
+    left: 21px;
+    top: 7px;
+  }
+
+  .four {
+    left: 9px;
+    top: 13px;
+  }
+
+  .five {
+    left: 15px;
+    top: 13px;
+  }
+
+  .six {
+    left: 21px;
+    top: 13px;
+  }
+
+  .seven {
+    left: 9px;
+    top: 19px;
+  }
+
+  .eight {
+    left: 15px;
+    top: 19px;
+  }
+
+  .nine {
+    left: 21px;
+    top: 19px;
+  }
+
+  &.active {
+
+    .one,
+    .three,
+    .four,
+    .five,
+    .six,
+    .seven,
+    .nine {
+      height: 0;
+      left: 16px;
+      top: 14px;
+      width: 0;
+    }
+
+    .two {
+      height: 2px;
+      left: 8px;
+      top: 14px;
+      width: 18px;
+      @include css3(transform-origin, 50% 50% 0);
+      @include css3(transform, rotate(45deg));
+    }
+
+    .eight {
+      height: 18px;
+      left: 16px;
+      top: 6px;
+      width: 2px;
+      @include css3(transform-origin, 50% 50% 0);
+      @include css3(transform, rotate(45deg));
+    }
+
+  }
+
+}
+
 // Caps Lock
 .icon-capslock {
   display: inline;
