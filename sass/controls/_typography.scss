@@ -116,6 +116,7 @@ label,
   display: block;
   line-height: 13px;
   margin-bottom: 5px;
+  min-height: 13px; //prevents need to use &nbsp;
 }
 
 .is-disabled.label,
