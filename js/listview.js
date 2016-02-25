@@ -32,10 +32,11 @@
         description: null,  //Audible Label (or use parent title)
         paging: false, // If true, activates paging
         pagesize: 10, // If paging is activated, sets the number of listview items available per page
+        searchable: false, // If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
         selectable: 'single', //false, 'single' or 'multiple'
         selectOnFocus: true, //true or false
         source: null, // External function that can be used to provide a datasource
-     },
+      },
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -88,10 +89,34 @@
         this.element.attr({ 'role' : 'listbox',
           'aria-label' : this.settings.description || card.find('.card-title, .widget-title').text()
         });
+
+        // Associate with an existing searchfield, if applicable
+        if (this.settings.searchable) {
+          this.searchfield = this.element.parent().find('.searchfield, .autocomplete');
+
+          if (!this.searchfield.length) {
+            // TODO: Create Searchfield somehow
+          }
+
+          this.listfilter = new ListFilter({
+            filterMode: 'contains',
+            highlightMatchedText: true
+          });
+        }
+
+        if (this.settings.dataset) {
+          // Search the global variable space for a dataset variable name, if provided.
+          if (typeof this.settings.dataset === 'string') {
+            var dataset = window[this.settings.dataset];
+            if (dataset.length) {
+              this.settings.dataset = dataset;
+            }
+          }
+        }
       },
 
       getTotals: function(dataset) {
-        var totals = {count: dataset.length},
+        var totals = { count: dataset.length },
           property;
 
         if (!dataset[0]) {
@@ -421,6 +446,16 @@
           this.element.on('change.selectable-listview', '.listview-checkbox input', function (e) {
            $(this).parent().trigger('click');
            e.stopPropagation();
+          });
+        }
+
+        // For use with Searchfield
+        if (this.settings.searchable) {
+          this.searchfield.on('keydown.searchable-listview', function(e) {
+            var list = self.element.find('li, tbody > tr'),
+              term = $(this).val();
+
+            self.listfilter.filter(list, term);
           });
         }
 

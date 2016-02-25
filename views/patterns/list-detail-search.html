@@ -19,7 +19,7 @@
         <input class="searchfield" placeholder="Search Tasks" name="list-detail-sidebar-search" id="list-detail-sidebar-search">
       </div>
 
-      <div class="paginated listview scrollable" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks" data-pagesize="10"></div>
+      <div class="paginated listview scrollable" id="task-listview" data-options="{ template: 'task-tmpl', dataset: 'demoTasks', pageSize: 10 }"></div>
     </div>
 
     <div class="main no-scroll" role="main">
@@ -36,7 +36,7 @@
               </span>
             </button>
 
-            <h1>Auto Suite - PRD </h1>
+            <h1>Auto Suite - PRD</h1>
           </div>
 
           {{> includes/header-actionbutton}}
@@ -44,9 +44,7 @@
       </header>
 
       <div class="page-container scrollable">
-        <div class="content" style="height: 1000px;">
-
-        </div>
+        <div class="content" style="height: 1000px;"></div>
       </div>
 
     </div>
