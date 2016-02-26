@@ -8,14 +8,26 @@
   + .tooltip-description + .icon {
     cursor: pointer;
     fill: $trigger-icon-fill-color;
-    height: 17px;
+    height: 18px;
     margin-left: -32px;
     margin-top: 9px;
     position: absolute;
     @include css3(user-select, none);
 
     &:hover {
-      fill: $primary-color;
+      fill: $trigger-hover-color;
+    }
+
+    &:active {
+      fill: $trigger-active-color;
+    }
+  }
+
+  &.is-active {
+    border-color: $input-focus-border-color;
+
+    + .icon {
+      fill: $trigger-active-color;
     }
   }
 
@@ -28,9 +40,11 @@
   }
 
   &:disabled {
+    border-color: $timepicker-disabled-border-color;
+
     + .icon {
       cursor: default;
-      fill: $input-disabled-border-color;
+      fill: $timepicker-disabled-icon-color;
     }
   }
 }
@@ -53,6 +67,12 @@
     > label {
       width: 72px;
     }
+
+    .colons {
+      @include rem(font-size, 1.4rem);
+      font-weight: bold;
+      min-width: 18px;
+    }
   }
 
   .dropdown-wrapper {
@@ -61,10 +81,9 @@
 
   .dropdown {
     display: inline-block;
-    width: 72px;
+    width: 65px;
 
     + .icon {
-      background-color: $popupmenu-bg-color;
       height: 31px;
       right: 10px;
       top: 1px;

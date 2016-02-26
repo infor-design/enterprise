@@ -423,6 +423,40 @@ svg.icon-dirty {
 
 }
 
+
+// Check Mark Ticks
+.icon {
+  &.checkmark,
+  &.checkmark-selected {
+    border: 2px solid $icon-color;
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+
+    &:after {
+      @include css3(transform, scaleX(-1) rotate(135deg));
+      border-color: $icon-color $icon-color $icon-color transparent;
+      border-style: solid;
+      border-width: 2px 2px 0 0;
+      content: '';
+      height: 12px;
+      left: 7px;
+      margin-top: 3px;
+      position: absolute;
+      width: 5px;    
+    }
+  }
+
+  &.checkmark-selected {
+    background-color: $primary-color;
+    border-color: $primary-color;
+
+    &:after {
+      border-color: $inverse-color $inverse-color $inverse-color transparent;
+    }
+  }
+}
+
 // Caps Lock
 .icon-capslock {
   display: inline;

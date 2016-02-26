@@ -41,11 +41,17 @@ $hr-bottom-color: $white;
 
 // Popovers
 $popover-bg-color: $white;
-$popover-border-color: transparent;
+$popover-border-color: $graphite03;
 $popover-arrow-border-color: $graphite03;
 $popover-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
 $popover-color: $font-color;
 $popover-separator-color: $graphite03;
+$popover-alternate-color: $graphite10;
+$popover-alternate-subheader-color: $graphite06;
+$popover-alternate-bg-color: $graphite01;
+$popover-alternate-arrow-color: $graphite01;
+$popover-alternate-title-bg-color: $white;
+$popover-alternate-table-header: $graphite01;
 
 // Tooltips
 $tooltip-bg-color: $slate08;
@@ -192,13 +198,24 @@ $dropdown-selected-bg-color: $primary-color;
 $dropdown-selected-color: $white;
 
 //Date Picker
-$datepicker-alternate-month-color: $graphite04;
-$datepicker-day-color: $font-color-highcontrast;
+$datepicker-icon-active-color: $trigger-active-color;
+$datepicker-month-year-color: $graphite10;
+$datepicker-alternate-month-color: $graphite03;
+$datepicker-day-color: $graphite06;
+$datepicker-focus-border-color: $azure06;
 $datepicker-selected-bg-color: $azure06;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $graphite10;
 $datepicker-hover-bg-color: $graphite02;
-$datepicker-disabled-bg-color: $graphite01;
+$datepicker-disabled-icon-color: $graphite04;
+$datepicker-disabled-border-color: $graphite03;
+$datepicker-disabled-bg-color: rgba($graphite01, .7);
+$datepicker-disabled-color: $graphite03;
+
+//Time Picker
+$timepicker-disabled-icon-color: $graphite04;
+$timepicker-disabled-border-color: $graphite03;
+$timepicker-disabled-color: $graphite03;
 
 // Color Picker
 $colorpicker-initial-bg-color: $graphite03;
