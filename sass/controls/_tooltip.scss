@@ -199,37 +199,37 @@
   }
 
   &.alternate {
-    background-color: $graphite01;
+    background-color: $popover-alternate-bg-color;
     border: 1px solid $popover-separator-color;
     max-width: inherit;
     padding-bottom: 50px;
 
     .tooltip-title {
-      background-color: $white;
-      color: $graphite10;
+      background-color: $popover-alternate-title-bg-color;
+      color: $popover-alternate-color;
       font-size: 1.8rem;
       padding: 15px 5px 15px 15px;
     }
 
     .modal-buttonset {
-      background-color: $white;
+      background-color: $popover-alternate-title-bg-color;
       margin: 20px 0 0 -20px;
       position: absolute;
       width: calc(100% - 2px);
     }
 
     &.popover .arrow:after {
-      border-right-color: $graphite01;
+      border-right-color: $popover-alternate-arrow-color;
     }
 
     th {
-      color: $graphite06;
+      color: $popover-alternate-subheader-color;
       font-size: 1.2rem;
     }
 
     td,
     p {
-      color: $graphite10;
+      color: $popover-alternate-color;
       font-size: 1.4rem;
     }
   }
