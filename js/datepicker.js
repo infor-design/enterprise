@@ -319,7 +319,7 @@
         this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
 
         this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'offset', offset: {top: 20, left: Locale.isRTL() ? -150 : 147}, width: '200',
+            placement: 'offset', offset: {top: 23, left: Locale.isRTL() ? -150 : 147},
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();

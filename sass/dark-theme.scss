@@ -45,10 +45,10 @@ $hr-top-color: $slate09;
 $hr-bottom-color: transparent;
 
 // Popovers
-$popover-bg-color: $slate06;
-$popover-border-color: $slate09;
+$popover-bg-color: $slate07;
+$popover-border-color: $slate05;
 $popover-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
-$popover-arrow-border-color: $slate09;
+$popover-arrow-border-color: $slate05;
 $popover-color: $font-color;
 $popover-separator-color: $slate05;
 
@@ -168,13 +168,23 @@ $dropdown-menu-separator-color: $slate03;
 $dropdown-group-label-color: $slate03;
 
 // Date Picker
-$datepicker-alternate-month-color: $slate05;
+$datepicker-month-year-color: $inverse-color;
+$datepicker-alternate-month-color: $slate04;
 $datepicker-day-color: $slate03;
+$datepicker-focus-border-color: $primary-color;
 $datepicker-selected-bg-color: $primary-color;
 $datepicker-selected-color: $inverse-color;
 $datepicker-today-color: $inverse-color;
-$datepicker-hover-bg-color: $slate05;
-$datepicker-disabled-bg-color: $slate07;
+$datepicker-hover-bg-color: $slate06;
+$datepicker-disabled-icon-color: $slate05;
+$datepicker-disabled-border-color: $slate05;
+$datepicker-disabled-bg-color: rgba($slate06, .5);
+$datepicker-disabled-color: $slate04;
+
+//Time Picker
+$timepicker-disabled-icon-color: $slate05;
+$timepicker-disabled-border-color: $slate05;
+$timepicker-disabled-color: $slate04;
 
 // Color Picker
 $colorpicker-initial-bg-color: $slate04;
