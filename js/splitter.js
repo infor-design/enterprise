@@ -70,7 +70,7 @@
             this.orgLeft = this.element.parent().parent().outerWidth();
           }
 
-          this.orgLeft -= 20;
+          this.orgLeft -= 21;
 
           this.element.css('left', this.orgLeft + 'px');
         }

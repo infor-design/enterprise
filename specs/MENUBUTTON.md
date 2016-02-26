@@ -29,6 +29,10 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_buttons.
 
 http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_popupmenu.scss
 
+## Dependencies
+
+Popupmenu, Button
+
 ## States
 
 **disabled** – The button is dimmed to .7 opacity and cannot be pressed, or the menu is dimmed to .7 opacity and cannot be clicked or activated with the keyboard. It can be focused with teh keyboard however, this is so screen readers can read it's disabled state.

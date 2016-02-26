@@ -6,8 +6,9 @@
   border: 1px solid $input-focus-border-color;
   border-radius: 0 0 3px 3px;
   border-top: 1px solid $dropdown-menu-separator-color;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
   line-height: 30px;
-  margin-top: -11px;
+  margin-top: -21px;
   overflow: auto;
 
   li {
@@ -15,7 +16,8 @@
 
     &.is-selected,
     &:hover {
-      background-color: $popupmenu-hover-color;
+      background-color: $dropdown-selected-bg-color;
+      color: $dropdown-selected-color;
     }
   }
 
@@ -39,6 +41,14 @@
   a:before,
   a:after {
     display: none;
+  }
+
+  .is-selected i {
+    color: $dropdown-selected-color;
+  }
+
+  li:hover i {
+    color: $dropdown-selected-color;
   }
 }
 

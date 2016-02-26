@@ -160,9 +160,11 @@
 
 }
 
+//Tree Detail Pattern
 .sidebar .tree {
-  margin: 20px;
   float: left;
+  margin: 20px;
+  min-width: 200px;
 }
 
 //RTL Tree

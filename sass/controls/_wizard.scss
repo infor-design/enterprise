@@ -254,6 +254,8 @@ $header-wizard-active-color: $white;
 
         &:focus::before {
           height: 32px;
+          left: -5px;
+          top: -5px;
           width: 32px;
         }
       }

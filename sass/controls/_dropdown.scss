@@ -184,11 +184,23 @@ input.multiselect {
     }
 
     &.is-focused {
-      background-color: $popupmenu-hover-color;
+      background-color: $dropdown-selected-bg-color;
+
+      a {
+        color: $dropdown-selected-color;
+      }
 
       &::before {
         @include checkbox-checked-before-style;
         border-color: $inverse-color;
+      }
+    }
+
+    &.is-selected {
+      background-color: $dropdown-selected-bg-color;
+
+      a {
+        color: $dropdown-selected-color;
       }
     }
 

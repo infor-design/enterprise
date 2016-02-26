@@ -1,9 +1,12 @@
 // Masthead
 //================================================== //
 
-$masthead-button-text-color: $slate03;
-$masthead-button-text-hover-color: $white;
-$masthead-button-text-focus-color: $white;
+$masthead-bg-color: $slate07;
+$masthead-border-color: $slate08;
+$masthead-text-color: $slate03;
+$masthead-button-color: $slate04;
+$masthead-button-hover-color: $white;
+$masthead-button-focus-color: $white;
 
 .masthead {
   background-color: $masthead-bg-color;
@@ -14,39 +17,40 @@ $masthead-button-text-focus-color: $white;
 
   #logo-homepage {
     border-radius: 0;
-    height: 34px;
+    height: 32px;
+    margin-right: 0;
     padding: 0;
-    width: 34px;
+    width: 32px;
 
     > .icon {
-      height: 32px;
-      width: 34px;
+      height: 30px;
+      width: 30px;
     }
 
     .ripple-effect {
-      background-color: #f00;
+      background-color: transparent;
     }
   }
 
   [class^="btn"],
   .btn {
     height: 32px;
-    min-width: 30px;
-    padding: 0 6px;
+    min-width: 32px;
+    padding: 0;
   }
 
   .toolbar-searchfield-wrapper {
-    > .icon {
-      top: 9px;
-    }
 
     > .icon:not(.close) {
-      height: 15px;
+      height: 18px;
+      fill: $masthead-button-color;
+      top: 8px;
+      opacity: 1;
     }
 
     &.has-focus:not(.active) {
       > .icon {
-        color: $masthead-button-text-hover-color;
+        color: $masthead-button-hover-color;
       }
     }
   }
@@ -64,7 +68,7 @@ $masthead-button-text-focus-color: $white;
       padding: 0;
 
       > *:first-child {
-        margin-left: 1.7rem;
+        margin-left: 10px;
       }
     }
 
@@ -83,51 +87,57 @@ $masthead-button-text-focus-color: $white;
     [class^="btn"],
     .btn {
       .ripple-effect {
-        background-color: $masthead-button-text-hover-color;
+        background-color: transparent;
       }
 
       span {
-        color: $masthead-button-text-color;
+        color: $masthead-text-color;
       }
 
       .icon {
-        fill: $masthead-button-text-color;
+        fill: $masthead-button-color;
+      }
+
+      .icon.app-drawer {
+        left: -6px;
+        position: relative !important;
+        top: -6px;
       }
 
       &:hover:not([disabled]) {
-        color: $masthead-button-text-hover-color;
+        color: $masthead-button-hover-color;
 
         span {
-          color: $masthead-button-text-hover-color;
+          color: $masthead-button-hover-color;
         }
 
         .icon {
-          fill: $masthead-button-text-hover-color;
+          fill: $masthead-button-hover-color;
         }
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-text-focus-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-focus-color;
 
         span {
-          color: $masthead-button-text-focus-color;
+          color: $masthead-button-focus-color;
         }
 
         .icon {
-          fill: $masthead-button-text-focus-color;
+          fill: $masthead-button-focus-color;
         }
       }
 
       &.is-selected {
         &:focus:not(.hide-focus) {
-          color: $masthead-button-text-focus-color;
+          color: $masthead-button-focus-color;
 
           span {
-            color: $masthead-button-text-focus-color;
+            color: $masthead-button-focus-color;
           }
 
           .icon {
-            fill: $masthead-button-text-focus-color;
+            fill: $masthead-button-focus-color;
           }
         }
       }
@@ -142,10 +152,10 @@ $masthead-button-text-focus-color: $white;
 }
 
 .masthead-appname {
-  color: $header-text-color;
+  @include font-size(12);
+  color: $masthead-text-color;
   display: inline-block;
   font-weight: bold;
-  @include font-size(12);
   line-height: 38px;
   margin: 0;
   vertical-align: top;

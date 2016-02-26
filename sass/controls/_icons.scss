@@ -320,15 +320,15 @@ svg.icon-dirty {
 @mixin app-drawer-box() {
   display: inline-block;
   background-color: $icon-color;
-  border-radius: 2px;
+  border-radius: 1px;
   height: 4px;
   width: 4px;
   @include css3(transform-origin, 50% 50% 0);
-  @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s,
-    left 300ms cubic-bezier(.17, .04, .03, .94),
-    top 300ms cubic-bezier(.17, .04, .03, .94),
-    height 300ms cubic-bezier(.17, .04, .03, .94),
-    width 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(transform 350ms cubic-bezier(.17, .04, .03, .94) 0s,
+    left 350ms cubic-bezier(.17, .04, .03, .94),
+    top 350ms cubic-bezier(.17, .04, .03, .94),
+    height 350ms cubic-bezier(.17, .04, .03, .94),
+    width 350ms cubic-bezier(.17, .04, .03, .94));
 }
 
 // This icon is presumably 18px x 18px - The dimensions defined reflect this
@@ -525,3 +525,8 @@ html[dir='rtl'] {
   fill: $white;
 }
 
+.space-icons {
+  svg {
+    margin-right: 20px;
+  }
+}

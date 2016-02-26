@@ -591,6 +591,7 @@
               next = $(options[selectedIndex - 1]);
               this.highlightOption(next);
               next.parent().find('.is-focused').removeClass('is-focused');
+              next.parent().find('.is-selected').removeClass('is-selected');
               next.addClass('is-focused');
             }
 
@@ -608,6 +609,7 @@
               next = $(options[selectedIndex + 1]);
               this.highlightOption(next);
               next.parent().find('.is-focused').removeClass('is-focused');
+              next.parent().find('.is-selected').removeClass('is-selected');
               next.addClass('is-focused');
             }
 
@@ -810,14 +812,11 @@
             self.closeList();
           })
           .on('mouseenter.list', 'li', function() {
-            var target = $(this),
-              opts = self.listUl.children();
+            var target = $(this);
 
-            opts.removeClass('is-focused');
             if (target.is('.separator, .group-label')) {
               return;
             }
-            target.addClass('is-focused');
           });
 
         // Is the jQuery Element a component of the current Dropdown list?

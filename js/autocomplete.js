@@ -236,7 +236,7 @@
             selected = self.list.find('.is-selected');
             if (selected.length) {
               self.noSelect = true;
-              selected.removeClass('is-selected');
+              selected.removeClass('is-selected is-focused');
               selected.next(excludes).addClass('is-selected').find('a').focus();
               e.preventDefault();
               e.stopPropagation();
@@ -248,7 +248,7 @@
             selected = self.list.find('.is-selected');
             if (selected.length) {
               self.noSelect = true;
-              selected.removeClass('is-selected');
+              selected.removeClass('is-selected is-focused');
               selected.prev(excludes).addClass('is-selected').find('a').focus();
               e.preventDefault();
               e.stopPropagation();

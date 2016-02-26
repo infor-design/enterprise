@@ -35,6 +35,10 @@ Live Example - In all Themes
 
 http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_buttons.scss
 
+## Dependencies
+
+Utils
+
 ## States
 
 **disabled** – The button is dimmed via color change cannot be pressed. The cursor should not change when hovering.

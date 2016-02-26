@@ -146,7 +146,7 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['views/controls/svg-empty.html'], dest: 'dist/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['views/controls/svg-patterns.html'], dest: 'dist/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/*.js'], dest: 'dist/js/all/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['public/stylesheets/*-theme.css'], dest: 'dist/css/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['public/stylesheets/*-theme.*'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['public/stylesheets/css-only.css'], dest: 'dist/css/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
@@ -258,8 +258,8 @@ module.exports = function(grunt) {
     'concat',
     'clean',
     'uglify',
-    'copy:main',
     'cssmin',
+    'copy:main',
     'usebanner',
     'compress'
   ]);

@@ -53,13 +53,13 @@ $popover-color: $font-color;
 $popover-separator-color: $slate05;
 
 //Progress
-$progress-border-color: $graphite05;
+$progress-border-color: $slate05;
 
 // Tooltips
-$tooltip-bg-color: $graphite01;
-$tooltip-border-color: $graphite01;
+$tooltip-bg-color: $slate01;
+$tooltip-border-color: $slate01;
 $tooltip-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
-$tooltip-color: $graphite10;
+$tooltip-color: $slate10;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-color: $white;
 
@@ -148,8 +148,8 @@ $listview-selected-text-color: $white;
 $listview-header-bg-color: $slate06;
 $listview-header-color: $white;
 
-$listview-toolbar-button-text-color: $graphite03;
-$listview-toolbar-button-icon-color: $graphite03;
+$listview-toolbar-button-text-color: $slate03;
+$listview-toolbar-button-icon-color: $slate03;
 $listview-toolbar-button-text-hover-color: $white;
 $listview-toolbar-button-icon-hover-color: $white;
 $listview-toolbar-button-text-selected-color: $primary-color;
@@ -200,13 +200,13 @@ $skip-link-bg-color: $slate06;
 $skip-link-color: $white;
 
 //Swaplist
-$swaplist-bg-color-hover: $graphite09;
-$swaplist-border-color-card: $graphite10;
-$swaplist-icon-color: $graphite02;
+$swaplist-bg-color-hover: $slate09;
+$swaplist-border-color-card: $slate10;
+$swaplist-icon-color: $slate02;
 $swaplist-icon-color-hover: $white;
 $swaplist-border-color-hover: $white;
-$swaplist-title-text-color: $graphite01;
-$swaplist-text-color: $graphite01;
+$swaplist-title-text-color: $slate01;
+$swaplist-text-color: $slate01;
 
 //Mast Head
 $masthead-bg-color: $header-bg-color;
@@ -304,10 +304,10 @@ $accordion-border-color: $slate09;
 $accordion-pane-bg-color: $slate09;
 $accordion-pane-alternate-bg-color: $slate08;
 
-$accordion-text-color: $graphite02;
+$accordion-text-color: $slate02;
 $accordion-text-active-color: $white;
 
-$accordion-icon-color: $graphite02;
+$accordion-icon-color: $slate02;
 $accordion-icon-hover-color: $white;
 
 $accordion-focused-text-color: $primary-color;
@@ -345,7 +345,7 @@ $breadcrumb-disabled-color: $disabled-color;
 
 // Rating (Stars)
 $rating-bg-color: $amber04;
-$rating-border-color: $graphite04;
+$rating-border-color: $slate04;
 $rating-hover-color: $primary-color;
 
 // Tabs
@@ -356,7 +356,7 @@ $tab-hover-color: $font-color-extrahighcontrast;
 //Charts
 $chart-line-color: $slate03;
 $chart-font-color: $slate01;
-$chart-font-color-inverse: $graphite06;
+$chart-font-color-inverse: $slate06;
 
 // DataGrid
 $datagrid-border-color: $slate05;
@@ -425,12 +425,12 @@ $searchfield-context-bg: $slate08;
 $searchfield-context-alt-bg: $slate10;
 $searchfield-context-border-color: $slate09;
 $searchfield-context-boxshadow-color: $slate09;
-$searchfield-context-icon-color: $graphite06;
+$searchfield-context-icon-color: $slate06;
 $searchfield-context-text-color: $font-color;
 
 $searchfield-card-bg-color: $slate08;
 $searchfield-card-border-color: $slate09;
-$searchfield-card-icon-color: $graphite06;
+$searchfield-card-icon-color: $slate06;
 $searchfield-card-text-color: $font-color;
 
 $searchfield-header-bg-color: $slate08;
@@ -455,17 +455,17 @@ $about-text-border-color: $slate08;
 $about-text-hover-border-color: $slate09;
 
 // Header Tabs
-$header-tabcontainer-border-color: $graphite09;
-$header-tab-normal-color: $graphite03;
+$header-tabcontainer-border-color: $slate09;
+$header-tab-normal-color: $slate03;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
-$header-tab-alt-bg-color: $graphite10;
-$header-tab-alt-normal-color: $graphite06;
+$header-tab-alt-bg-color: $slate10;
+$header-tab-alt-normal-color: $slate06;
 $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $primary-color;
 
 // Header Breadcrumb
-$header-breadcrumb-color: $graphite03;
+$header-breadcrumb-color: $slate03;
 $header-breadcrumb-alt-bg-color: $inverse-color;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
 
