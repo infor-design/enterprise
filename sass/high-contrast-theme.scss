@@ -183,11 +183,14 @@ $datepicker-disabled-border-color: $graphite04;
 $datepicker-disabled-bg-color: $graphite02;
 $datepicker-disabled-color: $graphite04;
 
-
-
 .calendar-table .is-today {
   text-decoration: underline;
 }
+
+//Time Picker
+$timepicker-disabled-border-color: $graphite04;
+$timepicker-disabled-color: $graphite04;
+
 
 // Color Picker
 $colorpicker-initial-bg-color: $graphite06;
