@@ -113,6 +113,11 @@
 
         //Down Arrow opens the dialog in this field
         this.element.on('keyup.lookup', function (e) {
+          //If autocomplete open dont open list
+          if ($('#autocomplete-list').length > 0) {
+            return;
+          }
+
           if (e.which === 40) {
             self.openDialog(e);
           }
@@ -179,7 +184,7 @@
         var self = this,
           content = '<hr><div id="'+lookupGridId+'"></div>',
           labelText = (self.isInlineLabel ? self.inlineLabelText : $('label[for="'+self.element.attr('id')+'"]')).text();
-        
+
         labelText += ' ' + Locale.translate('Lookup');
 
         if (this.settings.title) {
@@ -346,7 +351,10 @@
             selectedRows.push(i);
           }
         }
-        this.grid.selectedRows(selectedRows);
+
+        if (this.grid) {
+          this.grid.selectedRows(selectedRows);
+        }
       },
 
       //Get the selected rows and return them to the UI

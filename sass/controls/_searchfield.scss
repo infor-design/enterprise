@@ -13,10 +13,10 @@
     width: 32px;
 
     &:not(.close):not(.icon-error) {
-      height: 18px;
-      left: 0;
+      height: 17px;
+      left: 9px;
       pointer-events: none;
-      top: 10px;
+      top: 9px;
     }
 
     &.close {
