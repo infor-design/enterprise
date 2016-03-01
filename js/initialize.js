@@ -218,7 +218,7 @@
 
           ['fileupload'],
 
-          ['fileuploadadvance', '.fileupload-advance'],
+          ['fileuploadadvanced', '.fileupload-advanced'],
 
           ['about'],
 
