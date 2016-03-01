@@ -17,16 +17,16 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  $.fn.fileuploadadvance = function(options) {
+  $.fn.fileuploadadvanced = function(options) {
     'use strict';
 
     // Settings and Options
-    var pluginName = 'fileuploadadvance',
+    var pluginName = 'fileuploadadvanced',
         defaults = {
           isStandalone: true, // on page -or- on modal [for some visual style only]
           standaloneClass: 'standalone', // css class if on page
           allowedTypes: '*', // restrict file types(ie. 'jpg|png|gif') ['*' all types]
-          maxFilesInProcess: 999999, // max files can be upload
+          maxFilesInProcess: 99999, // max files can be upload
           maxFileSize: -1, // max file size in bytes, -1 for unlimited
           fileName: 'myfile', // variable name to read from server
 
@@ -37,9 +37,9 @@
           textBtnRemove: 'Remove from server this file',
 
           // Error strings
-          errorAllowedTypes: '<em>Error</em>: File type is not allowed',
-          errorMaxFileSize: '<em>Error</em>: Exceeded file size',
-          errorMaxFilesInProcess: '<em>Error</em>: Exceeded maximum files allowed'
+          errorAllowedTypes: '<em>'+ Locale.translate('Error') +'</em>: '+ Locale.translate('ErrorAllowedTypes'),
+          errorMaxFileSize: '<em>'+ Locale.translate('Error') +'</em>: '+ Locale.translate('ErrorMaxFileSize'),
+          errorMaxFilesInProcess: '<em>'+ Locale.translate('Error') +'</em>: '+ Locale.translate('ErrorMaxFilesInProcess')
         },
         settings = $.extend({}, defaults, options);
 
@@ -84,7 +84,7 @@
         self.dropArea
 
         // Drag enter
-        .on('dragenter.fileuploadadvance', function (e) {
+        .on('dragenter.fileuploadadvanced', function (e) {
           self.element.triggerHandler('filesdragenter');
           e.stopPropagation();
           e.preventDefault();
@@ -92,13 +92,13 @@
         })
 
         // Drag over
-        .on('dragover.fileuploadadvance', function (e) {
+        .on('dragover.fileuploadadvanced', function (e) {
           e.stopPropagation();
           e.preventDefault();
         })
 
         // Drop
-        .on('drop.fileuploadadvance', function (e) {
+        .on('drop.fileuploadadvanced', function (e) {
           var files = e.originalEvent.dataTransfer.files;
           e.preventDefault();
 
@@ -120,7 +120,7 @@
 
         // If the files are dropped outside the div, files will open in the browser window.
         // To avoid this prevent 'drop' event on document.
-        $(document).on('dragenter.fileuploadadvance dragover.fileuploadadvance drop.fileuploadadvance', function (e) {
+        $(document).on('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced', function (e) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -202,7 +202,7 @@
 
           // Set abort action
           setAbort = function(jqxhr) {
-            btnCancel.on('click.fileuploadadvance', function() {
+            btnCancel.on('click.fileuploadadvanced', function() {
               self.element.triggerHandler('fileaborted', [file]);
               jqxhr.abort();
               container.remove();
@@ -229,7 +229,7 @@
               '</button>');
 
             // Set "Remove from server" button action
-            $('.action', rightSide).button().on('click.fileuploadadvance', function() {
+            $('.action', rightSide).button().on('click.fileuploadadvanced', function() {
               container.remove();
 
               // TODO: server call for removing data
@@ -351,7 +351,7 @@
             '</div>');
         }
 
-        $('.action', container).button().on('click.fileuploadadvance', function() {
+        $('.action', container).button().on('click.fileuploadadvanced', function() {
           container.remove();
         });
 
@@ -391,9 +391,9 @@
 
       // Teardown
       destroy: function() {
-        this.dropArea.off('dragenter.fileuploadadvance dragover.fileuploadadvance drop.fileuploadadvance');
-        $(document).off('dragenter.fileuploadadvance dragover.fileuploadadvance drop.fileuploadadvance');
-        $('.action', this.element).off('click.fileuploadadvance');
+        this.dropArea.off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
+        $(document).off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
+        $('.action', this.element).off('click.fileuploadadvanced');
         $('.fileupload-wrapper', this.element).remove();
 
         $.removeData(this.element[0], pluginName);
