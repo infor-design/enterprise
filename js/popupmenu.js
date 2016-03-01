@@ -558,7 +558,7 @@
         }
 
         if (this.element.is('.autocomplete')) {
-          wrapper.css({ 'top': target.offset().top + target.outerHeight(true) });
+          wrapper.css({ 'top': this.element.offset().top + target.outerHeight() });
         }
 
       },
