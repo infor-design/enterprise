@@ -87,7 +87,7 @@ input.multiselect {
     pointer-events: none;
     position: absolute;
     right: 6px;
-    top: 2px;
+    top: 1px;
     width: 18px;
   }
 
@@ -183,14 +183,6 @@ input.multiselect {
       outline: none;
     }
 
-    &.is-selected {
-      background-color: $dropdown-selected-bg-color;
-
-      a {
-        color: $inverse-color;
-      }
-    }
-
     &.is-focused {
       background-color: $dropdown-selected-bg-color;
 
@@ -203,24 +195,12 @@ input.multiselect {
         border-color: $inverse-color;
       }
 
-      a {
-        color: $popupmenu-color;
-      }
-
       &.is-selected {
         background-color: $dropdown-selected-bg-color;
 
         a {
           color: $inverse-color;
         }
-      }
-    }
-
-    &.is-selected {
-      background-color: $dropdown-selected-bg-color;
-
-      a {
-        color: $dropdown-selected-color;
       }
     }
 
@@ -263,6 +243,12 @@ input.multiselect {
           color: #b6b6b6;
         }
       }
+
+      &.is-focused {
+        i {
+          color: $inverse-color;
+        }
+      }
     }
 
   }
@@ -287,9 +273,8 @@ input.multiselect {
     }
 
     li.is-focused,
-    li.is-selected.is-focused,
     li:hover:not(.group-label) {
-      //background-color: $popupmenu-hover-color;
+      background-color: $popupmenu-hover-color;
 
       > a {
         color: $font-color-highcontrast;
@@ -379,12 +364,10 @@ input.multiselect {
       }
     }
   }
-
-
 }
 
 .dropdown-search {
-  // background-color: $body-bg-color;
+  background-color: $body-bg-color;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-color;
   border-radius: 0;
