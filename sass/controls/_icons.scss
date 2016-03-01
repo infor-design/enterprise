@@ -23,7 +23,8 @@
 .icon-in-progress,
 svg.icon-dirty,
 .icon-new,
-.icon-pending {
+.icon-pending,
+.icon-empty-circle {
   fill: $alert-red;
   height: 16px;
   position: relative;
@@ -63,6 +64,10 @@ svg.icon-dirty,
 
 .icon-confirm {
   fill: $confirm-icon-fill;
+}
+
+.icon-empty-circle {
+  fill: $icon-color;
 }
 
 .icon-alert {
