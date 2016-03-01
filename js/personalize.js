@@ -27,7 +27,7 @@
     // Settings and Options
     var pluginName = 'personalize',
         defaults = {
-          startingColor: '#414247'
+          startingColor: ''
         },
         settings = $.extend({}, defaults, options);
 
