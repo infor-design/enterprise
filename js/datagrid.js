@@ -500,7 +500,7 @@ $.fn.datagrid = function(options) {
         rowHeight: 'normal', //(short, medium or normal)
         selectable: false, //false, 'single' or 'multiple'
         clickToSelect: true,
-        toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keyword: true, filter: true, rowHeight: true, views: true}
+        toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
         //Paging Options
         paging: false,
         pagesize: 25,
@@ -1496,8 +1496,8 @@ $.fn.datagrid = function(options) {
       }
 
       //Allow menu to be added manully
-      if (this.element.parent().prev().is('.toolbar')) {
-        toolbar = this.element.parent().prev();
+      if (this.element.parent().parent().find('.toolbar:not(.contextual-toolbar)').length === 1) {
+        toolbar = this.element.parent().parent().find('.toolbar:not(.contextual-toolbar)');
       } else {
         toolbar = $('<div class="toolbar" role="toolbar"></div>');
 

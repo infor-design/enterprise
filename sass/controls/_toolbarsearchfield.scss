@@ -135,6 +135,10 @@ $toolbarsearchfield-empty-width: 34px;
       }
 
       .icon {
+        &:not(.close) {
+          left: 0px;
+        }
+
         &.close {
           fill: rgba($searchfield-text-color, 1);
         }

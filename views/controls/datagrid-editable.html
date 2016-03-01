@@ -9,6 +9,8 @@
       </div>
 
       <div class="buttonset">
+        <label class="audible" for="searchfield-01">Keyword Search</label>
+        <input id="searchfield-01" name="searchfield-01" class="searchfield" />
 
         <button class="btn" type="button" id="add-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -84,7 +86,7 @@
           editable: true,
           clickToSelect: false,
           selectable: 'multiple',
-          toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+          toolbar: {keywordFilter: true, results: true}
         }).on('cellchange', function (e, args) {
           console.log(e, args);
         }).on('rowadd', function (e, args) {
