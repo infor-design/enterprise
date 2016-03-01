@@ -226,7 +226,11 @@ html[dir='rtl'] {
         }
 
         &:hover {
-          background-color: $fileupload-cancel-hover-bg-color
+          background-color: $fileupload-cancel-hover-bg-color;
+
+          .icon {
+            fill: $fileupload-status-hover-color;
+          }
         }
       }
 
@@ -278,6 +282,10 @@ html[dir='rtl'] {
 
         &:hover {
           background-color: $fileupload-completed-color;
+
+          .icon {
+            fill: $fileupload-status-color;
+          }
         }
       }
 
@@ -299,6 +307,10 @@ html[dir='rtl'] {
 
         &:hover {
           background-color: $fileupload-error-hover-color;
+
+          .icon {
+            fill: $fileupload-status-color;
+          }
         }
       }
 
@@ -314,7 +326,7 @@ html[dir='rtl'] {
         @include font-size(14);
         display: inline-block;
         padding: 10px 10px 10px 0;
-        width: calc(100% - 33px);
+        width: calc(100% - 36px);
       }
     }
   }
