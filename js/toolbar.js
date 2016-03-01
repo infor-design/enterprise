@@ -144,6 +144,8 @@
           }
           if (item.is(':disabled')) {
             popupLi.addClass('is-disabled');
+          } else {
+            popupLi.removeClass('is-disabled');
           }
 
           a.text(self.getItemText(item));
@@ -243,7 +245,7 @@
             trigger: 'click',
             menu: this.moreMenu
           })).on('beforeopen', function() {
-            //Refresh Text
+            //Refresh Text and Disabled
             self.moreMenu.find('a').each(function () {
               var a = $(this),
                 item = $(this).data('originalButton'),
@@ -251,7 +253,17 @@
 
               if (item) {
                 a.find('span').text(text.trim());
+
+                if (item.is(':disabled')) {
+                  a.closest('li').addClass('is-disabled');
+                  a.attr('disabled', 'disabled');
+                } else {
+                  a.closest('li').removeClass('is-disabled');
+                  a.removeAttr('disabled');
+                }
               }
+
+
             });
           });
         }
