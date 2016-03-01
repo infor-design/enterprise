@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Accordion Test: Expands all on Initialization</h2>
+    <p>It should be possible to expand all accordion rows.</p>
+    <p>This test applies a CSS class of "is-expanded" to headers and allowOnePane is set inline</p>
+    <p></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div id="nested-accordion" data-options="{allowOnePane: false}" class="accordion alternate">
+      <div class="accordion-header is-expanded">
+        <a href="#"><span>Item 1</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>Property #1</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Property #2</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Property #3</span></a>
+        </div>
+      </div>
+
+      <div class="accordion-header is-expanded">
+        <a href="#"><span>Item 2</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>Property #1</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Property #2</span></a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
