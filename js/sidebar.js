@@ -47,7 +47,7 @@
         }
 
         this.sectionList = $('.section-tracker');
-        this.sections = $('.editorial > .main > .content').find('h2, h3');
+        this.sections = $('.editorial > .main > .content').find('h2'); //,h3
 
         //Handle Scrolling events
         var scrollDiv = $(this.element).closest('.scrollable'),
@@ -56,16 +56,20 @@
         if (self.sectionList) {
           var efficientScroll = $.fn.debounce(function() {
 
-            self.sectionList.find('.is-active').removeClass('is-active');
+            var lastActive = self.sectionList.find('.is-active').removeClass('is-active');
             self.sections.each(function () {
               if (self.isOnScreen(this)) {
                 var tag = $('a[href="#' + this.id + '"]');
 
                 tag.addClass('is-active');
                 tag.parent().prev().find('a').removeClass('is-active');
+                return false;
               }
             });
 
+            if (self.sectionList.find('.is-active').length === 0) {
+              lastActive.addClass('is-active');
+            }
           }, 10);
           container.on('scroll.sidebarMenu', efficientScroll);
         }

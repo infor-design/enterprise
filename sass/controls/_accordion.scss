@@ -414,8 +414,8 @@
     }
   }
 
-  &:not(.is-focused):not(:active):hover,
-  &.child-selected:not(.is-focused) {
+  &:not('.is-selected'):not(.is-focused):not(:active):hover,
+  &:not('.is-selected').child-selected:not(.is-focused) {
     > a {
       color: $accordion-text-active-color;
     }
