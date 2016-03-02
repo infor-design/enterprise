@@ -183,7 +183,7 @@
       createModal: function () {
         var self = this,
           content = '<hr><div id="'+lookupGridId+'"></div>',
-          labelText = (self.isInlineLabel ? self.inlineLabelText : $('label[for="'+self.element.attr('id')+'"]')).text();
+          labelText = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+self.element.attr('id')+'"]').contents().get(0).nodeValue;
 
         labelText += ' ' + Locale.translate('Lookup');
 
