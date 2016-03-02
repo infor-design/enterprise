@@ -590,8 +590,9 @@
             if (selectedIndex > 0) {
               next = $(options[selectedIndex - 1]);
               this.highlightOption(next);
+              // NOTE: Do not also remove the ".is-selected" class here!  It's not the same as ".is-focused"!
+              // Talk to ed.coyle@infor.com if you need to know why.
               next.parent().find('.is-focused').removeClass('is-focused');
-              next.parent().find('.is-selected').removeClass('is-selected');
               next.addClass('is-focused');
             }
 
@@ -608,8 +609,9 @@
             if (selectedIndex < options.length - 1) {
               next = $(options[selectedIndex + 1]);
               this.highlightOption(next);
+              // NOTE: Do not also remove the ".is-selected" class here!  It's not the same as ".is-focused"!
+              // Talk to ed.coyle@infor.com if you need to know why.
               next.parent().find('.is-focused').removeClass('is-focused');
-              next.parent().find('.is-selected').removeClass('is-selected');
               next.addClass('is-focused');
             }
 
@@ -667,16 +669,18 @@
           input = this.searchInput;
         }
 
-        if (input.prop('readonly')) {
+        if (input.hasClass('is-readonly') || input.prop('readonly') === true) {
           return;
         }
-
-        input.focus();
 
         if (input[0].setSelectionRange) {
           input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
         } else {
           input[0].select();
+        }
+
+        if (document.activeElement !== input[0]) {
+          input[0].focus();
         }
       },
 
@@ -972,7 +976,7 @@
         }
       },
 
-      //Close list and detch events
+      //Close list and detach events
       closeList: function() {
 
         if (this.touchmove) {
@@ -992,6 +996,8 @@
         $(window).off('resize.dropdown');
 
         this.element.trigger('listclosed');
+
+        this.input.focus();
       },
 
       //Set option into view
@@ -1311,7 +1317,7 @@
         }
 
         // update "readonly" prop
-        if (this.element.prop('readonly')) {
+        if (this.element.prop('readonly') === true) {
           this.readonly();
         } else {
           this.input.removeClass('is-readonly');
