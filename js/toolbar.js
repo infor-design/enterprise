@@ -238,33 +238,34 @@
 
         if (popupMenuInstance) {
           this.more.trigger('updated');
+          popupMenuInstance.element.on('beforeopen', refreshTextAndDisabled);
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
 
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          })).on('beforeopen', function() {
-            //Refresh Text and Disabled
-            self.moreMenu.find('a').each(function () {
-              var a = $(this),
+          })).on('beforeopen', refreshTextAndDisabled);
+        }
+
+        //Refresh Text and Disabled
+        function refreshTextAndDisabled() {
+          self.moreMenu.find('a').each(function () {
+            var a = $(this),
                 item = $(this).data('originalButton'),
                 text = self.getItemText(item);
 
-              if (item) {
-                a.find('span').text(text.trim());
+            if (item) {
+              a.find('span').text(text.trim());
 
-                if (item.is(':disabled')) {
-                  a.closest('li').addClass('is-disabled');
-                  a.attr('disabled', 'disabled');
-                } else {
-                  a.closest('li').removeClass('is-disabled');
-                  a.removeAttr('disabled');
-                }
+              if (item.is(':disabled')) {
+                a.closest('li').addClass('is-disabled');
+                a.attr('disabled', 'disabled');
+              } else {
+                a.closest('li').removeClass('is-disabled');
+                a.removeAttr('disabled');
               }
-
-
-            });
+            }
           });
         }
 
