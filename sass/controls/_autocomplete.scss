@@ -6,7 +6,7 @@
   border: 1px solid $input-focus-border-color;
   border-radius: 0 0 3px 3px;
   border-top: 1px solid $dropdown-menu-separator-color;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
+  box-shadow: $dropdown-box-shadow;
   line-height: 30px;
   margin-top: -1px;
   overflow: auto;

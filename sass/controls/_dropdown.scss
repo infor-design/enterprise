@@ -9,6 +9,7 @@ select.multiselect {
 }
 
 .dropdown-wrapper {
+
   display: inline-block;
   margin-bottom: 20px;
   max-width: 100%;
@@ -137,6 +138,7 @@ input.multiselect {
   }
 
   ul {
+    box-shadow: $dropdown-box-shadow;
     color: $popupmenu-color;
     @include font-size(14);
     height: auto;

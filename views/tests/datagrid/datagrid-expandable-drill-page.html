@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
     <div id="datagrid">
     </div>
@@ -30,7 +30,7 @@
       //Define Columns for the Grid.
 
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Expander});
-      columns.push({ id: 'drilldown', name: '', field: '', width: 65, formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
+      columns.push({ id: 'drilldown', name: '', field: '', width: 65, formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, hidden: true, align: 'center'});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
@@ -56,7 +56,13 @@
       });
 
       grid.on('expandrow', function (e, args) {
-        console.log('expandrow', e, args);
+        var container = $(args.detail).find('.datagrid-row-detail-padding');
+
+        //container.empty();  //Not needed if no template
+        setTimeout(function () {
+          container.append('<p> This is a new thing</p>');
+        }, 1000);
+
       });
 
       grid.on('collapserow', function (e, args) {
