@@ -59,39 +59,39 @@
 <script type="text/javascript">
   $('body').on('initialized', function() {
     $('#disable').onTouchClick('test').on('click.test', function() {
-      $('#states-test').disable();
       $(this).prop('disabled', true);
       $('#enable').prop('disabled', false);
+      $('#states-test').disable().trigger('updated');
     });
 
     $('#enable').onTouchClick('test').on('click.test', function() {
-      $('#states-test').enable();
       $(this).prop('disabled', true);
       $('#disable').prop('disabled', false);
+      $('#states-test').enable().trigger('updated');
     });
 
     $('#readonly-on').onTouchClick('test').on('click.test', function() {
-      $('#states-test').prop('readonly', true);
       $(this).prop('disabled', true);
       $('#readonly-off').prop('disabled', false);
+      $('#states-test').prop('readonly', true).trigger('updated');
     });
 
     $('#readonly-off').onTouchClick('test').on('click.test', function() {
-      $('#states-test').prop('readonly', false);
       $(this).prop('disabled', true);
       $('#readonly-on').prop('disabled', false);
+      $('#states-test').prop('readonly', false).trigger('updated');
     });
 
     $('#destroy').onTouchClick('test').on('click.test', function() {
-      $('#states-test').data('dropdown').destroy();
       $(this).prop('disabled', true);
       $('#invoke').prop('disabled', false);
+      $('#states-test').data('dropdown').destroy();
     });
 
     $('#invoke').onTouchClick('test').on('click.test', function() {
-      $('#states-test').dropdown();
       $(this).prop('disabled', true);
       $('#destroy').prop('disabled', false);
+      $('#states-test').dropdown();
     });
   });
 </script>

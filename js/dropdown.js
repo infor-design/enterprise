@@ -58,42 +58,63 @@
 
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
+
+        // Grab a reference to the original label, if it exists
         this.orgLabel = orgId !== undefined ? $('label[for="' + orgId + '"]') :
           (this.element.prev('label, .label').length ? this.element.prev('label, .label') :
             (this.isInlineLabel ? this.element.parent() : $()));
 
-        this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.isInlineLabel ? this.inlineLabel : this.element);
+        // Build the wrapper if it doesn't exist
+        var baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
+        this.wrapper = baseElement.next('.dropdown-wrapper');
+        if (!this.wrapper.length) {
+          this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
+        }
 
-        this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
-        this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({
-                       'role': 'combobox',
-                       'aria-autocomplete': 'list',
-                       'aria-controls': 'dropdown-list',
-                       'aria-readonly': 'true',
-                       'aria-expanded': 'false',
-                       'aria-describedby' : (orgId ? id : name + prefix) + '-instructions',
-                       'id': (orgId ? id : name + prefix)
-                     });
+        // Build sub-elements if they don't exist
+        this.label = $('label[for="'+ orgId +'-shdo"]');
+        if (!this.label.length) {
+          this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
+        }
 
-        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
+        this.input = $('input#'+ orgId + '-shdo');
+        if (!this.input.length) {
+          this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({
+            'role': 'combobox',
+            'aria-autocomplete': 'list',
+            'aria-controls': 'dropdown-list',
+            'aria-readonly': 'true',
+            'aria-expanded': 'false',
+            'aria-describedby' : (orgId ? id : name + prefix) + '-instructions',
+            'id': (orgId ? id : name + prefix)
+          });
+        }
 
-        if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
-          this.wrapper.append(this.input, this.trigger, this.icon);
+        // Place the elements depending on the configuration
+        if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length === 1) {
+          this.wrapper.append(this.input, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
           if (this.isInlineLabel) {
             this.wrapper
-                .append($('<label></label>')
-                  .attr('for', name + prefix)
-                  .html(this.label.find('.label-text').html())
-                );
+              .append($('<label></label>')
+                .attr('for', name + prefix)
+                .html(this.label.find('.label-text').html())
+              );
           }
           else {
             this.element.after(this.label);
           }
-          this.wrapper.append(this.input, this.trigger, this.icon);
+          this.wrapper.append(this.input, this.trigger);
         } else {
-          this.wrapper.append(this.input, this.trigger, this.icon);
+          this.wrapper.append(this.input, this.trigger);
+        }
+
+        // Check for and add the icon
+        this.icon = this.wrapper.find('.icon');
+        if (!this.icon.length) {
+          this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
+          this.wrapper.append(this.icon);
         }
 
         if (this.orgLabel.length) {
@@ -137,7 +158,10 @@
         this.setInitial();
         this.setWidth();
         this.orgLabel.hide();
-        this.handleEvents();
+
+        this.element.triggerHandler('rendered');
+
+        return this.handleEvents();
       },
 
       // Used for preventing menus from popping open/closed when they shouldn't.
@@ -1346,7 +1370,7 @@
       },
 
       readonly: function() {
-        this.input.addClass('is-readonly');
+        this.input.addClass('is-readonly').prop('readonly', true);
         this.closeList();
       },
 
@@ -1365,7 +1389,7 @@
         if (this.element.prop('readonly') === true) {
           this.readonly();
         } else {
-          this.input.removeClass('is-readonly');
+          this.input.removeClass('is-readonly').prop('readonly', false);
         }
 
         // update "disabled" prop
@@ -1375,13 +1399,15 @@
         this.updateList();
         this.setValue();
 
+        this.element.trigger('has-updated');
+
         return this;
       },
 
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.closeList();
-        this.input.prev('label').remove();
+        this.label.remove();
         this.input.off().remove();
         this.icon.remove();
         this.wrapper.remove();
