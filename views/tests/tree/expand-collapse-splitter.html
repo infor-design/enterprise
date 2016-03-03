@@ -2,8 +2,22 @@
 <div class="two-column fixed" role="main">
 
   <div class="sidebar scrollable">
+
+    <header class="header sub-header is-personalizable">
+      <div class="toolbar">
+
+        <div class="buttonset">
+          <button class="btn" id="expand-collapes" type="button">Expand All</button>button>
+        </div>
+
+      </div>
+    </header>
+
     <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
     </ul>
+
+    <button class="btn" id="expand-collapes" type="button">Expand All</button>button>
+
     <div class="splitter splitter-right"></div>
   </div>
 
@@ -51,5 +65,12 @@
   /* jshint ignore:end */
 
   $('#json-tree').tree({dataset: sampleData});
+
+  //Expand Collapse
+  var isExpanded = false;
+  $('#expand-collapes').on('click', function () {
+    alert(isExpanded);
+    isExpanded = !isExpanded;
+  });
 </script>
 
