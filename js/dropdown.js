@@ -58,42 +58,63 @@
 
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
+
+        // Grab a reference to the original label, if it exists
         this.orgLabel = orgId !== undefined ? $('label[for="' + orgId + '"]') :
           (this.element.prev('label, .label').length ? this.element.prev('label, .label') :
             (this.isInlineLabel ? this.element.parent() : $()));
 
-        this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(this.isInlineLabel ? this.inlineLabel : this.element);
+        // Build the wrapper if it doesn't exist
+        var baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
+        this.wrapper = baseElement.next('.dropdown-wrapper');
+        if (!this.wrapper.length) {
+          this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
+        }
 
-        this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
-        this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({
-                       'role': 'combobox',
-                       'aria-autocomplete': 'list',
-                       'aria-controls': 'dropdown-list',
-                       'aria-readonly': 'true',
-                       'aria-expanded': 'false',
-                       'aria-describedby' : (orgId ? id : name + prefix) + '-instructions',
-                       'id': (orgId ? id : name + prefix)
-                     });
+        // Build sub-elements if they don't exist
+        this.label = $('label[for="'+ orgId +'-shdo"]');
+        if (!this.label.length) {
+          this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
+        }
 
-        this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
+        this.input = $('input#'+ orgId + '-shdo');
+        if (!this.input.length) {
+          this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({
+            'role': 'combobox',
+            'aria-autocomplete': 'list',
+            'aria-controls': 'dropdown-list',
+            'aria-readonly': 'true',
+            'aria-expanded': 'false',
+            'aria-describedby' : (orgId ? id : name + prefix) + '-instructions',
+            'id': (orgId ? id : name + prefix)
+          });
+        }
 
-        if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length ===1) {
-          this.wrapper.append(this.input, this.trigger, this.icon);
+        // Place the elements depending on the configuration
+        if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length === 1) {
+          this.wrapper.append(this.input, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
           if (this.isInlineLabel) {
             this.wrapper
-                .append($('<label></label>')
-                  .attr('for', name + prefix)
-                  .html(this.label.find('.label-text').html())
-                );
+              .append($('<label></label>')
+                .attr('for', name + prefix)
+                .html(this.label.find('.label-text').html())
+              );
           }
           else {
             this.element.after(this.label);
           }
-          this.wrapper.append(this.input, this.trigger, this.icon);
+          this.wrapper.append(this.input, this.trigger);
         } else {
-          this.wrapper.append(this.input, this.trigger, this.icon);
+          this.wrapper.append(this.input, this.trigger);
+        }
+
+        // Check for and add the icon
+        this.icon = this.wrapper.find('.icon');
+        if (!this.icon.length) {
+          this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
+          this.wrapper.append(this.icon);
         }
 
         if (this.orgLabel.length) {
@@ -137,7 +158,27 @@
         this.setInitial();
         this.setWidth();
         this.orgLabel.hide();
-        this.handleEvents();
+
+        this.element.triggerHandler('rendered');
+
+        return this.handleEvents();
+      },
+
+      // Used for preventing menus from popping open/closed when they shouldn't.
+      // Gets around the need for timeouts everywhere
+      inputTimer: function() {
+        if (this.inputTimeout) {
+          return false;
+        }
+
+        var self = this;
+
+        this.inputTimeout = setTimeout(function inputTimeout(){
+          clearTimeout(self.inputTimeout);
+          self.inputTimeout = null;
+        }, 100);
+
+        return true;
       },
 
       // Set Field Width
@@ -706,6 +747,10 @@
       open: function() {
         var self = this;
 
+        if (!this.inputTimer()) {
+          return;
+        }
+
         if (this.element.is(':disabled') || this.input.hasClass('is-readonly')) {
           return;
         }
@@ -733,8 +778,10 @@
           current = current.eq(0);
         }
 
+        // Persist the "short" input field
+        var isShort = (this.element.closest('.field-short').length === 1);
+
         this.input.attr('aria-expanded', 'true');
-        //this.input.attr('aria-activedescendant', current.attr('id'));
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones
@@ -773,47 +820,54 @@
           });
         }
 
-        // Persist the "short" input field
-        var isShort = (this.element.closest('.field-short').length === 1);
+        function listItemClickHandler(e, target) {
+          var val = target.attr('data-val'),
+            cur = self.element.find('option[value="'+ val +'"]');
+          //Try matching the option's text if 'cur' comes back empty.
+          //Supports options that don't have a 'value' attribute.
+          if (cur.length === 0) {
+            cur = self.element.find('option').filter(function() {
+              return target.text() === val;
+            });
+          }
+
+          //Select the clicked item
+          if (cur.is(':disabled')) {
+            return;
+          }
+          self.selectOption(cur);
+          if (self.settings.closeOnSelect) {
+            self.closeList();
+            self.activate();
+          } else {
+            self.activate(true);
+          }
+        }
+
+        function anchorClickHandler(e, target) {
+          // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
+          e.preventDefault();
+          e.stopPropagation();
+          target.parent().trigger('click');
+          return false;
+        }
+
+        function triggerButtonClickHandler() {
+          self.closeList();
+        }
 
         self.list
           .removeClass('dropdown-tall')
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
-          .on('click.list', 'li', function () {
-            var val = $(this).attr('data-val'),
-              cur = self.element.find('option[value="'+ val +'"]');
-            //Try matching the option's text if 'cur' comes back empty.
-            //Supports options that don't have a 'value' attribute.
-            if (cur.length === 0) {
-              cur = self.element.find('option').filter(function() {
-                return $(this).text() === val;
-              });
+          .on('click.list', 'li', function (e) {
+            var target = $(e.target);
+            if (target.is('li')) {
+              return listItemClickHandler(e, target);
             }
-
-            //Select the clicked item
-            if (cur.is(':disabled')) {
-              return;
+            if (target.is('a')) {
+              return anchorClickHandler(e, target);
             }
-            self.selectOption(cur);
-            if (self.settings.closeOnSelect) {
-              self.closeList();
-              self.activate();
-            } else {
-              self.activate(true);
-            }
-          })
-          .onTouchClick('list', 'li > a')
-          .on('click.list', 'li > a', function(e) {
-            // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
-            e.preventDefault();
-            e.stopPropagation();
-            $(e.target).parent().trigger('click');
-            return false;
-          })
-          .onTouchClick('list', '.trigger, svg')
-          .on('click.list', '.trigger, svg', function() {
-            self.closeList();
           })
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
@@ -822,6 +876,18 @@
               return;
             }
           });
+
+        // Some close events are on a timer to prevent immediate list close
+        setTimeout(function delayedListCloseEvents() {
+          self.list
+            .on('click.list', 'li', function(e) {
+              var target = $(e.target);
+
+              if (target.is('.trigger, svg')) {
+                return triggerButtonClickHandler();
+              }
+          });
+        }, 100);
 
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
@@ -978,6 +1044,9 @@
 
       //Close list and detach events
       closeList: function() {
+        if (!this.inputTimer()) {
+          return;
+        }
 
         if (this.touchmove) {
           this.touchmove = false;
@@ -1301,7 +1370,7 @@
       },
 
       readonly: function() {
-        this.input.addClass('is-readonly');
+        this.input.addClass('is-readonly').prop('readonly', true);
         this.closeList();
       },
 
@@ -1320,7 +1389,7 @@
         if (this.element.prop('readonly') === true) {
           this.readonly();
         } else {
-          this.input.removeClass('is-readonly');
+          this.input.removeClass('is-readonly').prop('readonly', false);
         }
 
         // update "disabled" prop
@@ -1330,13 +1399,15 @@
         this.updateList();
         this.setValue();
 
+        this.element.trigger('has-updated');
+
         return this;
       },
 
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.closeList();
-        this.input.prev('label').remove();
+        this.label.remove();
         this.input.off().remove();
         this.icon.remove();
         this.wrapper.remove();
