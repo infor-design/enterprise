@@ -4,6 +4,11 @@
 .datepicker {
   width: 150px;
 
+  &.datetime {
+    width: auto;
+    padding-right: 30px;
+  }
+
   + .icon,
   + .tooltip-description + .icon {
     cursor: pointer;

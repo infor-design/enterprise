@@ -23,6 +23,10 @@
     // Settings and Options
     var pluginName = 'datepicker',
         defaults = {
+          isTimepicker: false,
+          forceHourMode: undefined, // Can be used to force timepicker to use only 12-hour or 24-hour display modes. Defaults to whatever the current Globalize locale requires if left undefined.
+          timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
+          
           dateFormat: 'yyyy-MM-dd', //Default is iso8601 format
           /*  disable:
           **    dates: 'M/d/yyyy' or
@@ -252,26 +256,42 @@
 
       // Add masking with the mask function
       mask: function () {
-        var dateFormat = Locale.calendar().dateFormat,
-            sep = dateFormat.separator;
+        var dateFormat = Locale.calendar().dateFormat;
+        this.settings.dateFormat = (typeof Locale === 'object' ? dateFormat.short : this.settings.dateFormat);
 
-        this.settings.dateFormat = (typeof Locale === 'object' ?
-                              dateFormat.short :
-                              this.settings.dateFormat);
+        this.timeFormat = this.element.attr('data-time-format') !== undefined ? this.element.attr('data-time-format') : Locale.calendar().timeFormat;
+
+        this.show24Hours = parseInt(this.element.attr('data-force-hour-mode')) === 24 ? true :
+          parseInt(settings.forceHourMode) === 24 ? true : (this.timeFormat.match('HH') || []).length > 0;
+
+        this.pattern = dateFormat.short + (this.settings.isTimepicker ? (this.show24Hours ? ' HH:mm' : ' h:mm a') : '');
+
 
         if (this.element.data('mask')) {
           this.element.data('mask').destroy();
         }
 
-        var mask = '##/##/####'.replace(new RegExp('/', 'g'), sep),
-          validation = 'date availableDate',
-          events = '{"date": "blur ", "availableDate": "blur "}',
+        var validation = 'date availableDate',
+          events = {'date': 'blur', 'availableDate': 'blur'},
           customValidation = this.element.attr('data-validate'),
-          customEvents = this.element.attr('data-validation-events');
+          customEvents = this.element.attr('data-validation-events'),
+
+          mask = '##/##/#### ##:## am',
+          separator = {
+            '/' : dateFormat.separator,
+            ':' : dateFormat.timeSeparator
+          },
+          re = new RegExp('\\/|:','g');
+
+        // '##/##/#### ##:## am' -or- ##/##/#### ##:##' -or- ##/##/####'
+        mask = (this.settings.isTimepicker ? (this.show24Hours ? mask.substr(0, 16) : mask) : mask.substr(0, 10))
+              .replace(re, function(matched) {
+                return separator[matched];
+              });
 
         if (customValidation === 'required' && !customEvents) {
           validation = customValidation + ' ' + validation;
-          events = '{"required": "change blur", "date": "blur ", "availableDate": "blur "}';
+          $.extend(events, {'required': 'change blur'});
         }
 
         this.element
@@ -315,11 +335,19 @@
         this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year"> 2015</span><button class="btn-icon prev" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-left"></use></svg><span>'+ Locale.translate('PreviousMonth') +'</span></button><button class="btn-icon next" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-right"></use></svg><span>'+ Locale.translate('NextMonth') +'</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alternate">26</td> <td class="alternate">27</td> <td class="alternate">28</td> <td class="alternate">29</td> <td class="alternate" >30</td> <td class="alternate">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alternate">1</td> </tr> <tr> <td class="alternate">2</td> <td class="alternate">3</td> <td class="alternate">4</td> <td class="alternate">5</td> <td class="alternate">6</td> <td class="alternate">7</td> <td class="alternate">8</td> </tr> </tbody>').appendTo(this.table);
+        this.timepickerInput = $(this.settings.timepickerMarkup);
         this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
-        this.calendar = $('<div class="calendar"></div').append(this.header, this.table, this.footer);
+
+        this.calendar = $('<div class="calendar"></div')
+          .append(
+            this.header,
+            this.table,
+            (this.settings.isTimepicker ? this.timepickerInput : ''),
+            this.footer
+          );
 
         this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'offset', offset: {top: 23, left: Locale.isRTL() ? -150 : 147},
+            placement: 'offset', offset: {top: 23, left: Locale.isRTL() ? -157 : 152},
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
@@ -338,12 +366,47 @@
         $('.calendar-footer a', this.calendar).button();
 
         // Show Month
-        var currentVal = Locale.parseDate(this.element.val());
+        var currentVal = Locale.parseDate(this.element.val(), 
+          this.settings.isTimepicker ? Locale.calendar().dateFormat.datetime : null),
+          elementDate = new Date(this.element.val());
 
-        this.currentDate = (currentVal ? currentVal : new Date());
+        this.currentDate = currentVal || new Date();
         this.currentMonth = this.currentDate.getMonth();
         this.currentYear = this.currentDate.getFullYear();
         this.currentDay = this.currentDate.getDate();
+
+        // Set timepicker
+        if (this.settings.isTimepicker) {
+          elementDate = elementDate.getDate() ? elementDate : new Date();
+
+          // Wait for timepicker
+          setTimeout(function() {
+            var timepickerInput = $('.timepicker', this.calendar);
+
+            self.timepickerControl = timepickerInput.data('timepicker');
+            self.time = self.getTimeString(elementDate, self.show24Hours);
+            self.timepickerInput.css({'margin': '10px 0 25px'}).find('.timepicker').val(self.time);
+            self.timepickerControl.toggleTimePopup();
+
+            // Wait for timepicker popup
+            setTimeout(function() {
+              var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''}),
+                position = timepickerInput.offset();
+
+              position.top -= timepickerPopup.height()/2 - 2;
+              position.left -= ((timepickerPopup.width() - timepickerInput.width())/2) - 30;
+
+              timepickerPopup.css(position);
+              self.timepickerInput.css({'visibility': 'hidden'});
+
+              $('.arrow, .modal-buttonset', timepickerPopup).hide();
+              $('.time-parts', timepickerPopup).css({'padding': 0});
+
+            }, 1);
+
+          }, 1);
+        }
+
 
         this.todayDate = new Date();
         this.todayMonth = this.todayDate.getMonth();
@@ -414,11 +477,7 @@
 
         // Change Month Events
         this.header.off('click.datepicker').on('click.datepicker', 'button', function () {
-          if ($(this).hasClass('next')) {
-            self.showMonth(self.currentMonth + 1, self.currentYear);
-          } else {
-            self.showMonth(self.currentMonth - 1, self.currentYear);
-          }
+          self.showMonth(self.currentMonth + ($(this).hasClass('next') ? 1 : -1), self.currentYear);
         });
 
         setTimeout(function() {
@@ -427,8 +486,14 @@
 
       },
 
-      // Open the calendar in a popup
+      // Close the calendar in a popup
       closeCalendar: function () {
+
+        // Close timepicker
+        if (this.settings.isTimepicker && this.timepickerInput.is(':visible')) {
+          this.timepickerControl.closeTimePopup();
+        }
+
         this.popup.hide();
         this.element.removeClass('is-active');
         this.popup.remove();
@@ -601,16 +666,45 @@
         if (dateTd.hasClass('is-disabled')) {
           dateTd.attr({'tabindex': 0}).focus();
         } else {
-          input.val(Locale.formatDate(date)).trigger('change');
+          if (this.settings.isTimepicker) {
+            date = this.setTime(date);
+          }
+          input.val(Locale.formatDate(date, {pattern: this.pattern})).trigger('change');
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
           dateTd.addClass('is-selected').attr({'aria-selected': true, 'tabindex': 0}).focus();
         }
       },
 
-      //Helper Function
+      // Helper Function
       setValue: function(date) {
         this.currentDate = date;
-        this.element.val(Locale.formatDate(date));
+        this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
+      },
+
+      // Set time
+      setTime: function(date) {
+        var hours = $('#timepicker-hours').val(),
+          minutes = $('#timepicker-minutes').val(),
+          period = $('#timepicker-period');
+
+        hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
+        hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
+
+        date.setHours(hours, minutes, 0);
+        return date;
+      },
+
+      // Get Time String 
+      getTimeString: function (date, isHours24) {
+        var twodigit = function (number) {
+            return (number < 10 ? '0' : '') + number;
+          },
+          d = (date || new Date()),
+          h = d.getHours(),
+          h12 = (h % 12 || 12) + ':' + twodigit(d.getMinutes()) + ' ' + (h < 12 ? 'AM' : 'PM'),
+          h24 = h + ':' + twodigit(d.getMinutes());
+
+        return isHours24 ? h24 : h12;
       }
     };
 
