@@ -236,18 +236,6 @@
           }
         });
 
-        if (popupMenuInstance) {
-          this.more.trigger('updated');
-          popupMenuInstance.element.on('beforeopen', refreshTextAndDisabled);
-        } else {
-          var actionButtonOpts = $.fn.parseOptions(this.more[0]);
-
-          this.more.popupmenu($.extend({}, actionButtonOpts, {
-            trigger: 'click',
-            menu: this.moreMenu
-          })).on('beforeopen', refreshTextAndDisabled);
-        }
-
         //Refresh Text and Disabled
         function refreshTextAndDisabled() {
           self.moreMenu.find('a').each(function () {
@@ -268,6 +256,19 @@
             }
           });
         }
+
+        if (popupMenuInstance) {
+          this.more.trigger('updated');
+          popupMenuInstance.element.on('beforeopen', refreshTextAndDisabled);
+        } else {
+          var actionButtonOpts = $.fn.parseOptions(this.more[0]);
+
+          this.more.popupmenu($.extend({}, actionButtonOpts, {
+            trigger: 'click',
+            menu: this.moreMenu
+          })).on('beforeopen', refreshTextAndDisabled);
+        }
+
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.
         function setActiveToolbarItem() {
