@@ -140,6 +140,23 @@
         this.handleEvents();
       },
 
+      // Used for preventing menus from popping open/closed when they shouldn't.
+      // Gets around the need for timeouts everywhere
+      inputTimer: function() {
+        if (this.inputTimeout) {
+          return false;
+        }
+
+        var self = this;
+
+        this.inputTimeout = setTimeout(function inputTimeout(){
+          clearTimeout(self.inputTimeout);
+          self.inputTimeout = null;
+        }, 100);
+
+        return true;
+      },
+
       // Set Field Width
       setWidth: function() {
         var style = this.element[0].style,
@@ -706,6 +723,10 @@
       open: function() {
         var self = this;
 
+        if (!this.inputTimer()) {
+          return;
+        }
+
         if (this.element.is(':disabled') || this.input.hasClass('is-readonly')) {
           return;
         }
@@ -733,8 +754,10 @@
           current = current.eq(0);
         }
 
+        // Persist the "short" input field
+        var isShort = (this.element.closest('.field-short').length === 1);
+
         this.input.attr('aria-expanded', 'true');
-        //this.input.attr('aria-activedescendant', current.attr('id'));
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones
@@ -773,47 +796,54 @@
           });
         }
 
-        // Persist the "short" input field
-        var isShort = (this.element.closest('.field-short').length === 1);
+        function listItemClickHandler(e, target) {
+          var val = target.attr('data-val'),
+            cur = self.element.find('option[value="'+ val +'"]');
+          //Try matching the option's text if 'cur' comes back empty.
+          //Supports options that don't have a 'value' attribute.
+          if (cur.length === 0) {
+            cur = self.element.find('option').filter(function() {
+              return target.text() === val;
+            });
+          }
+
+          //Select the clicked item
+          if (cur.is(':disabled')) {
+            return;
+          }
+          self.selectOption(cur);
+          if (self.settings.closeOnSelect) {
+            self.closeList();
+            self.activate();
+          } else {
+            self.activate(true);
+          }
+        }
+
+        function anchorClickHandler(e, target) {
+          // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
+          e.preventDefault();
+          e.stopPropagation();
+          target.parent().trigger('click');
+          return false;
+        }
+
+        function triggerButtonClickHandler() {
+          self.closeList();
+        }
 
         self.list
           .removeClass('dropdown-tall')
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
-          .on('click.list', 'li', function () {
-            var val = $(this).attr('data-val'),
-              cur = self.element.find('option[value="'+ val +'"]');
-            //Try matching the option's text if 'cur' comes back empty.
-            //Supports options that don't have a 'value' attribute.
-            if (cur.length === 0) {
-              cur = self.element.find('option').filter(function() {
-                return $(this).text() === val;
-              });
+          .on('click.list', 'li', function (e) {
+            var target = $(e.target);
+            if (target.is('li')) {
+              return listItemClickHandler(e, target);
             }
-
-            //Select the clicked item
-            if (cur.is(':disabled')) {
-              return;
+            if (target.is('a')) {
+              return anchorClickHandler(e, target);
             }
-            self.selectOption(cur);
-            if (self.settings.closeOnSelect) {
-              self.closeList();
-              self.activate();
-            } else {
-              self.activate(true);
-            }
-          })
-          .onTouchClick('list', 'li > a')
-          .on('click.list', 'li > a', function(e) {
-            // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
-            e.preventDefault();
-            e.stopPropagation();
-            $(e.target).parent().trigger('click');
-            return false;
-          })
-          .onTouchClick('list', '.trigger, svg')
-          .on('click.list', '.trigger, svg', function() {
-            self.closeList();
           })
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
@@ -822,6 +852,18 @@
               return;
             }
           });
+
+        // Some close events are on a timer to prevent immediate list close
+        setTimeout(function delayedListCloseEvents() {
+          self.list
+            .on('click.list', 'li', function(e) {
+              var target = $(e.target);
+
+              if (target.is('.trigger, svg')) {
+                return triggerButtonClickHandler();
+              }
+          });
+        }, 100);
 
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
@@ -978,6 +1020,9 @@
 
       //Close list and detach events
       closeList: function() {
+        if (!this.inputTimer()) {
+          return;
+        }
 
         if (this.touchmove) {
           this.touchmove = false;
