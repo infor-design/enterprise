@@ -330,6 +330,22 @@
     return { event: this, cancel: cancel, pause: pause, resume: resume };
   };
 
+  //Functions For Sanitising and Escaping Html
+  $.escapeHTML = function(value) {
+    var newValue = value;
+    if (typeof value === 'string') {
+      newValue = newValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    return newValue;
+  };
+
+  $.unescapeHTML = function(value) {
+    var newValue = value;
+    if (typeof value === 'string') {
+      newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    }
+    return newValue;
+  };
 
 /* start-amd-strip-block */
 }));

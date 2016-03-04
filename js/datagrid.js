@@ -962,7 +962,10 @@ $.fn.datagrid = function(options) {
           return (o ? o[x] : '');
         }, obj);
       }
-      return (obj[field] ? obj[field] : '');
+
+      var value = (obj[field] ? obj[field] : '');
+      value = $.escapeHTML(value);
+      return value;
     },
 
     //Render the Rows
@@ -2203,6 +2206,7 @@ $.fn.datagrid = function(options) {
 
       //Editor.getValue
       newValue = this.editor.val();
+      newValue = $.escapeHTML(newValue);
 
       //Format Cell again
       cellNode = input.closest('td').removeClass('is-editing');
