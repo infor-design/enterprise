@@ -176,6 +176,28 @@
 
   }
 
+  &.is-timepicker {
+    td {
+      &.is-selected,
+      &.is-selected:hover {
+        border-width: 0;
+        box-shadow: 0 0 0 2px $popover-bg-color inset;
+
+        &.is-selected:hover {
+          border-width: 1px;
+        }
+      }
+
+      &:focus {
+        border-color: $datepicker-focus-border-color;
+        border-width: 1px;
+        box-shadow: 0 0 0 2px $popover-bg-color inset;
+        outline: none;
+        -moz-outline-style: none;
+      }
+    }
+  }
+
   .calendar-table {
     margin: 17px auto 0;
     padding: 0 10px;
