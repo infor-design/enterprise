@@ -9,7 +9,6 @@ select.multiselect {
 }
 
 .dropdown-wrapper {
-
   display: inline-block;
   margin-bottom: 20px;
   max-width: 100%;
@@ -455,7 +454,6 @@ input.multiselect {
 
 // Shorter Drop Down Lists
 .dropdown-list.dropdown-short {
-
   input {
     @include font-size(12);
     padding: 5px 32px 5px 5px;
@@ -479,8 +477,8 @@ input.multiselect {
   &.multiple {
     li {
       &::before {
-        top: 4px;
         margin-left: 0;
+        top: 4px;
       }
 
       &::after {
@@ -506,7 +504,6 @@ input.multiselect {
       }
     }
   }
-
 }
 
 
@@ -570,6 +567,21 @@ html[dir='rtl'] {
     .icon-pending {
       left: 50px;
       right: auto;
+    }
+  }
+
+}
+
+@include respond-to(phablet) {
+
+  .dropdown-list {
+    height: calc(100% - 20px);
+    max-height: none;
+    width: calc(100% - 20px);
+
+    ul {
+      height: 100%;
+      max-height: calc(100% - 34px);
     }
   }
 
