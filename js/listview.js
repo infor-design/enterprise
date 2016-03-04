@@ -32,10 +32,11 @@
         description: null,  //Audible Label (or use parent title)
         paging: false, // If true, activates paging
         pagesize: 10, // If paging is activated, sets the number of listview items available per page
+        searchable: false, // If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
         selectable: 'single', //false, 'single' or 'multiple'
         selectOnFocus: true, //true or false
         source: null, // External function that can be used to provide a datasource
-     },
+      },
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -88,10 +89,33 @@
         this.element.attr({ 'role' : 'listbox',
           'aria-label' : this.settings.description || card.find('.card-title, .widget-title').text()
         });
+
+        // Associate with an existing searchfield, if applicable
+        if (this.settings.searchable) {
+          this.searchfield = this.element.parent().find('.searchfield, .autocomplete');
+
+          if (!this.searchfield.length) {
+            // TODO: Create Searchfield somehow
+          }
+
+          this.listfilter = new ListFilter({
+            filterMode: 'contains'
+          });
+        }
+
+        if (this.settings.dataset) {
+          // Search the global variable space for a dataset variable name, if provided.
+          if (typeof this.settings.dataset === 'string') {
+            var dataset = window[this.settings.dataset];
+            if (dataset && dataset.length) {
+              this.settings.dataset = dataset;
+            }
+          }
+        }
       },
 
       getTotals: function(dataset) {
-        var totals = {count: dataset.length},
+        var totals = { count: dataset.length },
           property;
 
         if (!dataset[0]) {
@@ -134,9 +158,7 @@
             source: self.settings.source
           });
 
-          if (pagerInfo) {
-            this.element.data('pager').updatePagingInfo(pagerInfo);
-          }
+          this.renderPager(pagerInfo);
         }
 
         // Add Aria
@@ -183,6 +205,20 @@
         this.element.on('updated', function () {
           self.refresh();
         });
+      },
+
+      renderPager: function(updatedPagerInfo) {
+        var api = this.element.data('pager');
+
+        if (!api) {
+          return;
+        }
+
+        if (updatedPagerInfo) {
+          api.updatePagingInfo(updatedPagerInfo);
+        }
+
+        api.renderBar();
       },
 
       // Get the Data Source. Can be an array, Object or Url
@@ -424,6 +460,13 @@
           });
         }
 
+        // For use with Searchfield
+        if (this.settings.searchable) {
+          this.searchfield.on('contents-checked.searchable-listview', function(e) {
+            self.handleSearch(e, $(this));
+          });
+        }
+
         //If used with a Pager Control, listen for the end of the page and scroll the Listview to the top
         if (this.element.data('pager')) {
           this.element.on('afterpaging.listview', function() {
@@ -459,6 +502,37 @@
         if (this.element.data('pager')) {
           this.element.data('pager').renderBar();
         }
+      },
+
+      // For instances of Listview that are paired with a Searchfield
+      // NOTE: Search functionality is called from "js/listfilter.js"
+      handleSearch: function(e, searchfield) {
+        var list = this.element.find('li, tbody > tr'),
+            term = searchfield.val(),
+            results;
+
+        this.resetSearch(list);
+
+        if (term && term.length) {
+          results = this.listfilter.filter(list, term);
+        }
+
+        if (!results || !results.length) {
+          return;
+        }
+
+        list.not(results).addClass('hidden');
+        list.filter(results).each(function() {
+          $(this).highlight(term);
+        });
+
+        this.renderPager();
+      },
+
+      resetSearch: function(list) {
+        list.removeClass('hidden').each(function() {
+          $(this).unhighlight();
+        });
       },
 
       // Fix: for vertical-align to icons and buttons

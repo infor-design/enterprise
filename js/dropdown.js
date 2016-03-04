@@ -823,11 +823,11 @@
         function listItemClickHandler(e, target) {
           var val = target.attr('data-val'),
             cur = self.element.find('option[value="'+ val +'"]');
-          //Try matching the option's text if 'cur' comes back empty.
+          //Try matching the option's text if 'cur' comes back empty or overpopulated.
           //Supports options that don't have a 'value' attribute.
-          if (cur.length === 0) {
+          if (cur.length === 0 || cur.length > 1) {
             cur = self.element.find('option').filter(function() {
-              return target.text() === val;
+              return $(this).text() === val;
             });
           }
 
@@ -974,9 +974,15 @@
       // Set size and positioning of the list
       position: function() {
         var isFixed = false, isAbs = false,
-          top = (this.input.offset().top);
+          top = (this.input.offset().top),
+          left = this.input.offset().left - $(window).scrollLeft();
 
-        this.list.css({'top': top, 'left': this.input.offset().left - $(window).scrollLeft()});
+        // If we're lower than the Phone Breakpoint, reset everything for full-screen
+        if ($(window).width() <= 610) {
+          top = 0;
+        }
+
+        this.list.css({'top': top, 'left': left});
 
         //Fixed and Absolute Positioning use cases
         this.input.parentsUntil('body').each(function () {
