@@ -40,6 +40,7 @@
 | Content Creator for LMS( Learning Management System ) |   | Vadim Liman | 3x |
 | Masterpiece |   | Tam Nav | 3x |
 | Mingle|  Is pulling SASS files into Mingle | Ravi Narayan <Ravi.Narayan@infor.com> | 4x |
+| Mingle Registry / IFS|  part of CE and OP| Ritesh Budarapu  | 4x |
 | MNT0386 - Cloud Enablement of SRS |   | Leo Peng | 3x |
 | Mongoose | Wizard, Editor Ect  and Demo Services| Paul Horne,  Lee Flaherty |4x |
 | MSCM (Mobile Supply Chain Management ) |   | Ferdinand Brian Verdejol, Larry Amisola |

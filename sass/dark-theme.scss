@@ -76,14 +76,14 @@ $badge-info-bg-color: $primary-color;
 
 // Popup Menu
 $popupmenu-color: $white;
-$popupmenu-arrow-color: $slate01;
-$popupmenu-heading-color: $slate01;
+$popupmenu-arrow-color: $slate03;
+$popupmenu-heading-color: $slate03;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
-$popupmenu-bg-color: $slate06;
-$popupmenu-border-color: $slate09;
+$popupmenu-bg-color: $slate07;
+$popupmenu-border-color: $slate05;
 $popupmenu-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
-$popupmenu-checked-color: $white;
-$popupmenu-hover-color: $slate05;
+$popupmenu-checked-color: $azure06;
+$popupmenu-hover-color: $slate06;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
@@ -142,6 +142,8 @@ $autocomplete-active-bg-color: $body-bg-color;
 $trigger-icon-fill-color: $slate03;
 $trigger-hover-color: $white;
 $trigger-active-color: $primary-color;
+$trigger-focus-color: $primary-color;
+$trigger-disabled-color: $slate04;
 
 //List View
 $listview-bg-color: $slate07;
@@ -170,7 +172,8 @@ $dropdown-filter-color: $font-color-extrahighcontrast;
 $dropdown-color: $input-color;
 $dropdown-search-color: $autocomplete-light-text;
 $dropdown-menu-border-color: $primary-color;
-$dropdown-menu-separator-color: $slate03;
+$dropdown-menu-separator-color: $slate04;
+$dropdown-menu-separator-border-color: $slate05;
 $dropdown-group-label-color: $slate03;
 $dropdown-box-shadow: 0 5px 5px rgba(0, 0, 0, .4);
 
