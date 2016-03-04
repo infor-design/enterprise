@@ -329,9 +329,16 @@ define([
             .findById('enable')
               .click()
               .end()
+            // Click the body to reset some stuff
+            .findByCssSelector('body')
+              .click()
+              .end()
+            .sleep(100)
+            // Click the states dropdown
             .findById('states-test-shdo')
               .click()
               .end()
+            .sleep(100)
             .findById('dropdown-list')
               .then(function(element) {
                   expect(element).to.exist;

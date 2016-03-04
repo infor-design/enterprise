@@ -120,6 +120,7 @@ define([
               .findById('in-form-shdo')
                 .click()
                 .end()
+              .sleep(100)
               .findById('list-option1') // Option 1
                 .click()
                 .end()
