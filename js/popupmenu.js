@@ -322,6 +322,7 @@
         });
 
         var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+
         //Select on Focus
         if (this.settings.mouseFocus) {
           this.menu.on('mouseenter.popupmenu', 'a', function () {
@@ -536,6 +537,9 @@
         if (this.element.hasClass('btn-menu')) {
           if (this.element.closest('.toolbar').length === 0) { // button is standalone
             //move the arrow - might need better logic here.
+            if (this.element.parent().is('.field')) {
+              return;
+            }
             wrapper.find('div.arrow').css('left', '25%');
           } else { // button exists inside toolbar
             wrapper.find('div.arrow').css({'left': '18px'});
@@ -876,6 +880,11 @@
         if (this.settings.trigger === 'immediate') {
           this.destroy();
         }
+
+        //if (this.element.is('button')) {
+          this.element.focus();
+        //}
+
       },
 
       teardown: function() {

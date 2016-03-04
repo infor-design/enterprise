@@ -43,7 +43,7 @@
           return;
         }
 
-        if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon')) {
+        if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon') && !this.element.hasClass('btn-actions')) {
           var ddIcon = this.element.children('.icon').filter(function() {
             return $(this).find('use').attr('xlink:href') === '#icon-dropdown';
           });
@@ -69,7 +69,7 @@
           });
         }
 
-        if (this.element.hasClass('btn-actions') && !this.element.data('tooltip')) {
+        if (!this.element.parent().is('.field') && this.element.hasClass('btn-actions') && !this.element.data('tooltip')) {
           this.element.attr('title', Locale.translate('More')).tooltip();
         }
 

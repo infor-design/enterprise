@@ -433,6 +433,34 @@ textarea.error:focus {
   width: 100%;
 }
 
+//Input Actions Button - controls/input-actions
+.field .btn-actions {
+  border-radius: 50%;
+  min-height: 30px;
+  min-width: 30px;
+  height: 30px;
+  position: relative;
+  top: 0;
+  width: 30px;
+
+  .icon {
+    height: 16px;
+    width: 16px;
+  }
+}
+
+.field textarea + .btn-actions {
+  position: absolute;
+  margin-left: 4px;
+  top: calc(50% - 14px);
+}
+
+@include respond-to(phone) {
+  .has-actions {
+    width: calc(100% - 40px);
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
   .field .checkbox-label,

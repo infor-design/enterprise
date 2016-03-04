@@ -39,8 +39,10 @@ svg.icon-dirty,
   .icon-alert,
   .icon-info,
   .icon-pending {
-    margin-right: -20px;
-    right: 30px;
+    margin-left: -28px;
+    margin-top: 9px;
+    position: absolute;
+    top: inherit;
   }
 
   label {
@@ -448,7 +450,7 @@ svg.icon-dirty {
       left: 7px;
       margin-top: 3px;
       position: absolute;
-      width: 5px;    
+      width: 5px;
     }
   }
 

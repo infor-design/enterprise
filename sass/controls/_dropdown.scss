@@ -21,7 +21,7 @@ select.multiselect {
   .icon-info,
   .icon-pending {
     position: absolute;
-    right: 50px;
+    right: 30px;
   }
 
   .badge {
@@ -169,7 +169,7 @@ input.multiselect {
 
     &.is-disabled {
       > a {
-        color: #b6b6b6;
+        color: $disabled-color;
       }
 
       &:hover,
