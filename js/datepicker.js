@@ -185,14 +185,14 @@
             self.insertDate(self.currentDate);
           }
 
-          //Alt+Page Up Selects Same Day Next Year
+          //Alt + Page Up Selects Same Day Next Year
           if (key === 33 && e.altKey && self.isOpen()) {
             handled = true;
             self.currentDate.setFullYear(self.currentDate.getFullYear() + 1);
             self.insertDate(self.currentDate);
           }
 
-          //Alt+Page Down Selects Same Day Prev Year
+          //Alt + Page Down Selects Same Day Prev Year
           if (key === 34 && e.altKey && self.isOpen()) {
             handled = true;
             self.currentDate.setFullYear(self.currentDate.getFullYear() - 1);
@@ -222,7 +222,7 @@
             if (self.isOpen()) {
               self.insertDate(self.currentDate, true);
             } else {
-              self.element.val(Locale.formatDate(self.currentDate)).trigger('change');
+              self.element.val(Locale.formatDate(self.currentDate, {pattern: self.pattern})).trigger('change');
             }
           }
 
@@ -235,8 +235,10 @@
 
           // Tab closes Date Picker and goes to next field
           if (key === 9 && self.isOpen()) {
-            self.element.focus();
-            self.closeCalendar();
+            if (!self.settings.isTimepicker) {
+              self.element.focus();
+              self.closeCalendar();
+            }
           }
 
           // Esc closes Date Picker and goes back to field
@@ -338,7 +340,7 @@
         this.timepickerInput = $(this.settings.timepickerMarkup);
         this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
 
-        this.calendar = $('<div class="calendar"></div')
+        this.calendar = $('<div class="calendar'+ (this.settings.isTimepicker ? ' is-timepicker' : '') +'"></div')
           .append(
             this.header,
             this.table,
@@ -402,8 +404,47 @@
               $('.arrow, .modal-buttonset', timepickerPopup).hide();
               $('.time-parts', timepickerPopup).css({'padding': 0});
 
-            }, 1);
+              if (self.isOpen()) {
+                var timepickerInputs = timepickerPopup.find('input.dropdown');
 
+                // Keydown Events
+                timepickerInputs.on('keydown.datepicker', function(e) {
+                  var key = e.keyCode || e.charCode || 0;
+
+                  // Press Esc on timpicker -or- Tab-out from AM/PM field on timpicker go back to selected date
+                  if (key === 27 || (key === 9 && this === timepickerInputs.last().get(0))) {
+                    self.calendar.find('.is-selected').focus();
+                    return false;
+                  }
+
+                  // Do nothing when pressing Spacebar
+                  if (key === 32) {
+                    return false;
+                  }
+                });
+                // Change the order were bound for execute (run this first {0})
+                self.changeEventOrder(timepickerInputs, 'keydown.timepicker', 0);
+
+                // On change time
+                self.timepickerControl.element.on('change.datepicker', function() {
+                  var t, fields, orgRoundToInterval = self.timepickerControl.roundToInterval;
+
+                  self.timepickerControl.roundToInterval = true;
+                  self.timepickerControl.roundMinutes();
+                  t = self.timepickerControl.getTimeFromField();
+                  self.timepickerControl.roundToInterval = orgRoundToInterval;
+                  fields = {
+                    '#timepicker-hours': t.hours,
+                    '#timepicker-minutes': t.minutes,
+                    '#timepicker-period': t.period
+                  };
+                  $.each(fields, function(key, val) {
+                    $(key, timepickerPopup).val(val).trigger('updated');
+                  });
+                });
+              }
+
+            }, 1);
           }, 1);
         }
 
@@ -488,7 +529,6 @@
 
       // Close the calendar in a popup
       closeCalendar: function () {
-
         // Close timepicker
         if (this.settings.isTimepicker && this.timepickerInput.is(':visible')) {
           this.timepickerControl.closeTimePopup();
@@ -646,7 +686,7 @@
       },
 
       // Put the date in the field and select on the calendar
-      insertDate: function (date) {
+      insertDate: function (date, isReset) {
         var input = this.element;
 
         // Make sure Calendar is showing that month
@@ -667,7 +707,13 @@
           dateTd.attr({'tabindex': 0}).focus();
         } else {
           if (this.settings.isTimepicker) {
-            date = this.setTime(date);
+            if (isReset) {
+              this.time = this.getTimeString(date, this.show24Hours);
+              this.timepickerInput.find('.timepicker').val(this.time).trigger('change');
+            }
+            else {
+              date = this.setTime(date);
+            }
           }
           input.val(Locale.formatDate(date, {pattern: this.pattern})).trigger('change');
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
@@ -705,7 +751,23 @@
           h24 = h + ':' + twodigit(d.getMinutes());
 
         return isHours24 ? h24 : h12;
+      },
+
+      // Change the order for execution jquery events were bound
+      // http://stackoverflow.com/questions/2360655/jquery-event-handlers-always-execute-in-order-they-were-bound-any-way-around-t
+      changeEventOrder: function (elements, names, newIndex) {
+        // Allow for multiple events.
+        $.each(names.split(' '), function (idx, name) {
+          elements.each(function () {
+            var handlers = $._data(this, 'events')[name.split('.')[0]];
+            // console.log(handlers);
+            // Validate requested position.
+            newIndex = Math.min(newIndex, handlers.length - 1);
+            handlers.splice(newIndex, 0, handlers.pop());
+          });
+        });
       }
+
     };
 
     // Initialize the plugin (Once)
