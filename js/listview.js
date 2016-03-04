@@ -158,9 +158,7 @@
             source: self.settings.source
           });
 
-          if (pagerInfo) {
-            this.element.data('pager').updatePagingInfo(pagerInfo);
-          }
+          this.renderPager(pagerInfo);
         }
 
         // Add Aria
@@ -207,6 +205,20 @@
         this.element.on('updated', function () {
           self.refresh();
         });
+      },
+
+      renderPager: function(updatedPagerInfo) {
+        var api = this.element.data('pager');
+
+        if (!api) {
+          return;
+        }
+
+        if (updatedPagerInfo) {
+          api.updatePagingInfo(updatedPagerInfo);
+        }
+
+        api.renderBar();
       },
 
       // Get the Data Source. Can be an array, Object or Url
@@ -513,6 +525,8 @@
         list.filter(results).each(function() {
           $(this).highlight(term);
         });
+
+        this.renderPager();
       },
 
       resetSearch: function(list) {
