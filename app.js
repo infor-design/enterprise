@@ -5,6 +5,7 @@ var express = require('express'),
   app = express(),
   path = require('path'),
   mmm = require('mmm'),
+  fs = require('fs'),
   http = require('http'),
   colors = require('colors'); // jshint ignore:line
 
@@ -105,6 +106,15 @@ var express = require('express'),
     res.render('tests/applicationmenu/' + end, appMenuOpts);
   });
 
+  function isDirectory(filePath) {
+    try {
+      return fs.statSync('./' + filePath).isDirectory();
+    }
+    catch(e) {
+      return false;
+    }
+  }
+
   //Tests Index Page and controls sub pages
   app.get('/tests/*', function(req, res) {
     var testOptions = {
@@ -112,8 +122,31 @@ var express = require('express'),
       subtitle: 'Tests',
       layout: 'tests/layout'
     };
-    var end = req.url.replace('/tests/','');
-    res.render('tests/' + end, testOptions);
+    var end = req.url.replace('/tests/',''),
+      destination = 'tests/' + end;
+    if (!isDirectory('views/' + destination)) {
+      res.render(destination, testOptions);
+    }
+    else {
+      fs.readdir('views/' + destination, function(err, paths) {
+        if (err) {
+          console.log(err);
+          res.render(err);
+        }
+        else {
+          res.render('listing', {
+            title: testOptions.title,
+            subtitle: 'Listing for ' + destination,
+            paths: paths.map(function (link) {
+              return {
+                text: link,
+                href: path.join('/', destination, link)
+              };
+            })
+          });
+        }
+      });
+    }
   });
 
   //Doc Page
