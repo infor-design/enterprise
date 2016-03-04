@@ -509,21 +509,15 @@
           return;
         }
 
-        var exp = new RegExp('(' + term + ')', 'gi');
-
         list.not(results).addClass('hidden');
         list.filter(results).each(function() {
-          // TODO: Need to figure out how to wrap text contents without wrapping the text of HTML attributes.
-          // This code doesn't work so well in Listviews that have lots of sub elements.
-          $(this).html( $(this).html().replace(exp, '<i>$1</i>') );
-          //var contents = $(this).html().match(/(<[^>]*>)/g);
-          //contents.replace(exp, '<i>$1</i>');
+          $(this).highlight(term);
         });
       },
 
       resetSearch: function(list) {
         list.removeClass('hidden').each(function() {
-          $(this).find('i').contents().unwrap();
+          $(this).unhighlight();
         });
       },
 

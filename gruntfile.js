@@ -77,6 +77,7 @@ module.exports = function(grunt) {
             'temp/amd/fileuploadadvanced.js',
             'temp/amd/header.js',
             'temp/amd/hierarchy.js',
+            'temp/amd/highlight.js',
             'temp/amd/homepage.js',
             'temp/amd/initialize.js',
             'temp/amd/lookup.js',
