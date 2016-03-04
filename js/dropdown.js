@@ -974,9 +974,15 @@
       // Set size and positioning of the list
       position: function() {
         var isFixed = false, isAbs = false,
-          top = (this.input.offset().top);
+          top = (this.input.offset().top),
+          left = this.input.offset().left - $(window).scrollLeft();
 
-        this.list.css({'top': top, 'left': this.input.offset().left - $(window).scrollLeft()});
+        // If we're lower than the Phone Breakpoint, reset everything for full-screen
+        if ($(window).width() <= 610) {
+          top = 0;
+        }
+
+        this.list.css({'top': top, 'left': left});
 
         //Fixed and Absolute Positioning use cases
         this.input.parentsUntil('body').each(function () {
