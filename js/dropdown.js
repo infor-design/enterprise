@@ -823,11 +823,11 @@
         function listItemClickHandler(e, target) {
           var val = target.attr('data-val'),
             cur = self.element.find('option[value="'+ val +'"]');
-          //Try matching the option's text if 'cur' comes back empty.
+          //Try matching the option's text if 'cur' comes back empty or overpopulated.
           //Supports options that don't have a 'value' attribute.
-          if (cur.length === 0) {
+          if (cur.length === 0 || cur.length > 1) {
             cur = self.element.find('option').filter(function() {
-              return target.text() === val;
+              return $(this).text() === val;
             });
           }
 

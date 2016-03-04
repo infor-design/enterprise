@@ -92,6 +92,19 @@ body.no-scroll {
 
     .listview {
       background-color: $body-bg-color;
+      height: calc(100% - 70px);
+
+      &.paginated {
+        height: calc(100% - 108px);
+      }
+    }
+
+    .listview-search + .listview {
+      height: calc(100% - 90px);
+
+      &.paginated {
+        height: calc(100% - 140px);
+      }
     }
   }
 

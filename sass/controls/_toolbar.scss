@@ -306,10 +306,6 @@ $toolbar-buttonset-height: 44px;
   &.is-hidden {
     height: 0;
     display: none;
-
-    + .listview {
-      height: 100%;
-    }
   }
 }
 

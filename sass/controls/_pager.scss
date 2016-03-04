@@ -250,6 +250,12 @@ li + .pager-count {
   }
 }
 
+// Adjacent to Listview (list/detail & builder)
+.listview + .pager-toolbar {
+  padding-top: 5px;
+}
+
+
 //RTL Styles
 html[dir='rtl'] {
   // Pager for Tables

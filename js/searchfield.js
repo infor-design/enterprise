@@ -61,7 +61,7 @@
         this.element.attr('autocomplete','off');
 
         this.wrapper = this.element.parent('.searchfield-wrapper');
-        if (!this.wrapper || !this.wrapper.length) {          
+        if (!this.wrapper || !this.wrapper.length) {
           if (this.isInlineLabel) {
             this.wrapper = this.inlineLabel.addClass('searchfield-wrapper');
           }
@@ -289,6 +289,8 @@
         } else {
           this.element.removeClass('empty');
         }
+
+        this.element.trigger('contents-checked');
       },
 
       clear: function() {
