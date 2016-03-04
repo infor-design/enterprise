@@ -963,7 +963,9 @@ $.fn.datagrid = function(options) {
         }, obj);
       }
 
-      var value = (obj[field] ? obj[field] : '');
+      var rawValue = obj[field],
+        value = (rawValue || rawValue === 0 ? rawValue : '');
+
       value = $.escapeHTML(value);
       return value;
     },
