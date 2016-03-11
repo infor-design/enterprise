@@ -186,6 +186,12 @@
         if (this.hasCategories()) {
           this.button.on('selected.searchfield deselected.searchfield', function(e, anchor, toggleMethod) {
             self.handleCategorySelection(e, anchor, toggleMethod);
+          }).on('focus.searchfield', function(e) {
+            self.handleCategoryFocus(e);
+          }).on('blur.searchfield', function(e) {
+            self.handleCategoryBlur(e);
+          }).on('close.searchfield', function(e) { // Popupmenu Close
+            self.handlePopupClose(e);
           });
         }
 
@@ -371,6 +377,18 @@
         }
 
         span.text(text);
+      },
+
+      handleCategoryFocus: function(e) {
+        this.wrapper.addClass('is-focused');
+      },
+
+      handleCategoryBlur: function(e) {
+        this.wrapper.removeClass('is-focused');
+      },
+
+      handlePopupClose: function(e) {
+        this.setAsActive();
       },
 
       checkContents: function() {

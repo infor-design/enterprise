@@ -60,7 +60,7 @@ button {
     font-size: inherit;
     font-weight: inherit;
 
-    + .icon {
+    &:not(:empty) + .icon {
       margin-left: 5px;
     }
 

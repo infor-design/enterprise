@@ -527,6 +527,13 @@
 
         wrapper.find('.arrow').removeAttr('style');
 
+        if (this.element.is('.searchfield-category-button')) {
+          wrapper.find('.arrow').css({
+            'right': 'auto',
+            'left': (this.element.width() / 2) + 'px'
+          });
+        }
+
         //Handle Case where menu is off the left
         if (wrapper.offset().left < 0) {
           wrapper.css({'left': this.element.offset().left});

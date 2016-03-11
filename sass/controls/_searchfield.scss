@@ -110,15 +110,28 @@
   &.is-hovered {
     .btn {
       border-color: $input-hover-border-color;
+      color: $input-hover-border-color;
+
+      .icon {
+        fill: $input-hover-border-color;
+      }
     }
 
     .searchfield {
       border-color: $input-hover-border-color;
     }
 
-    &.show-category {
+    &.show-category,
+    &.has-categories,
+    &.has-categories.show-category {
       .searchfield {
         border-color: $input-hover-border-color;
+      }
+    }
+
+    &.has-categories:not(.show-category) {
+      .searchfield {
+        border-left-color: transparent;
       }
     }
   }
@@ -126,10 +139,16 @@
   &.is-focused {
     .btn {
       border-color: $input-focus-border-color;
+      color: $input-focus-border-color;
+
+      .icon {
+        fill: $input-focus-border-color;
+      }
     }
 
     .searchfield {
       border-color: $input-focus-border-color;
+      border-left-color: transparent;
     }
 
     &.show-category,
@@ -139,15 +158,42 @@
         border-color: $input-focus-border-color;
       }
     }
+
+    &.has-categories:not(.show-category) {
+      .searchfield {
+        border-left-color: transparent;
+      }
+    }
   }
 
   // Buttons inside of searchfields
   .btn {
-    border-color: $input-border-color;
     background-color: transparent;
+    border-color: $input-border-color;
+    color: $font-color;
+    font-weight: normal;
     height: 100%;
     min-width: 0;
     padding: 0 0 0 10px;
+    text-transform: none;
+    @include css3(transition, border 300ms ease 0s); // Matches the one on inputs
+
+    .icon {
+      fill: $font-color;
+    }
+
+    // Disable default focus state
+    &:focus {
+      box-shadow: none;
+    }
+
+    &.is-open {
+      color: $input-focus-border-color;
+
+      .icon {
+        fill: $input-focus-border-color;
+      }
+    }
   }
 
   &.has-categories {
@@ -156,9 +202,9 @@
     }
 
     .btn {
-      border-bottom-right-radius: none;
-      border-right: none;
-      border-top-right-radius: none;
+      border-bottom-right-radius: 0;
+      border-right: 0;
+      border-top-right-radius: 0;
       height: 35px;
       margin: 0;
       position: relative;
@@ -170,8 +216,9 @@
 
     .searchfield {
       border-bottom-left-radius: 0;
-      border-left: none;
+      border-left: 1px solid transparent;
       border-top-left-radius: 0;
+      margin-left: -1px;
       padding-left: 10px;
     }
 
