@@ -61,17 +61,21 @@ button {
     font-weight: inherit;
 
     + .icon {
-      padding-left: 5px;
+      margin-left: 5px;
     }
 
     + * + .icon {
-      padding-left: 5px;
+      margin-left: 5px;
     }
 
     &.audible {
       + .icon {
         padding-left: 0;
       }
+    }
+
+    &:empty {
+      display: none;
     }
   }
 }

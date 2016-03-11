@@ -1,6 +1,25 @@
 // Search Field
 //================================================== //
 
+@mixin searchfield-text-style() {
+  color: $font-color;
+  font-weight: bold;
+  @include font-size(12);
+  text-transform: uppercase;
+}
+
+@mixin searchfield-text-style-hover() {
+  color: $primary-color;
+  font-weight: bold;
+  @include font-size(12);
+  text-transform: uppercase;
+}
+
+@mixin context-searchfield-boxshadow() {
+  border: 0;
+  box-shadow: 0 3px 5px 0 rgba($searchfield-context-boxshadow-color, .7);
+}
+
 .searchfield-wrapper {
   display: inline-block;
   margin-bottom: 20px;
@@ -10,7 +29,7 @@
     fill: $trigger-icon-fill-color;
     position: absolute;
     top: 8px;
-    width: 32px;
+    width: 18px;
 
     &:not(.close):not(.icon-error) {
       height: 17px;
@@ -55,57 +74,118 @@
       }
     }
   }
-}
 
-@mixin searchfield-text-style() {
-  color: $font-color;
-  font-weight: bold;
-  @include font-size(12);
-  text-transform: uppercase;
-}
-
-@mixin searchfield-text-style-hover() {
-  color: $primary-color;
-  font-weight: bold;
-  @include font-size(12);
-  text-transform: uppercase;
-}
-
-@mixin context-searchfield-boxshadow() {
-  border: 0;
-  box-shadow: 0 3px 5px 0 rgba($searchfield-context-boxshadow-color, .7);
-}
-
-// This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
-.searchfield-wrapper.context {
-  width: 100%;
-
-  > .searchfield {
-    background-color: $searchfield-context-bg;
-    border: 0;
-    border-bottom: 1px solid $searchfield-context-border-color;
-    padding-left: 32px;
+  // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
+  &.context {
     width: 100%;
 
-    &.is-open {
-      @include context-searchfield-boxshadow();
-    }
-  }
-
-  > .icon {
-    fill: $searchfield-context-icon-color;
-
-    &:not(.close) {
-      left: 0;
-      right: auto;
-    }
-  }
-
-  &.alternate {
     > .searchfield {
-      background-color: $searchfield-context-alt-bg;
+      background-color: $searchfield-context-bg;
+      border: 0;
+      border-bottom: 1px solid $searchfield-context-border-color;
+      padding-left: 32px;
+      width: 100%;
+
+      &.is-open {
+        @include context-searchfield-boxshadow();
+      }
+    }
+
+    > .icon {
+      fill: $searchfield-context-icon-color;
+
+      &:not(.close) {
+        left: 0;
+        right: auto;
+      }
+    }
+
+    &.alternate {
+      > .searchfield {
+        background-color: $searchfield-context-alt-bg;
+      }
     }
   }
+
+  &.is-hovered {
+    .btn {
+      border-color: $input-hover-border-color;
+    }
+
+    .searchfield {
+      border-color: $input-hover-border-color;
+    }
+
+    &.show-category {
+      .searchfield {
+        border-color: $input-hover-border-color;
+      }
+    }
+  }
+
+  &.is-focused {
+    .btn {
+      border-color: $input-focus-border-color;
+    }
+
+    .searchfield {
+      border-color: $input-focus-border-color;
+    }
+
+    &.show-category,
+    &.has-categories,
+    &.show-category.has-categories {
+      .searchfield {
+        border-color: $input-focus-border-color;
+      }
+    }
+  }
+
+  // Buttons inside of searchfields
+  .btn {
+    border-color: $input-border-color;
+    background-color: transparent;
+    height: 100%;
+    min-width: 0;
+    padding: 0 0 0 10px;
+  }
+
+  &.has-categories {
+    > * {
+      vertical-align: top;
+    }
+
+    .btn {
+      border-bottom-right-radius: none;
+      border-right: none;
+      border-top-right-radius: none;
+      height: 35px;
+      margin: 0;
+      position: relative;
+
+      .icon {
+        width: 14px;
+      }
+    }
+
+    .searchfield {
+      border-bottom-left-radius: 0;
+      border-left: none;
+      border-top-left-radius: 0;
+      padding-left: 10px;
+    }
+
+    &.show-category {
+      .btn {
+        padding-right: 10px;
+      }
+
+      .searchfield {
+        border-left: 1px solid $input-border-color;
+      }
+    }
+  }
+
 }
 
 .inline.searchfield-wrapper {
@@ -138,6 +218,15 @@
   }
 }
 
+.is-firefox {
+  .searchfield-wrapper {
+    &.has-categories {
+      .btn {
+        height: 34px;
+      }
+    }
+  }
+}
 
 //RTL Styles
 html[dir='rtl'] {

@@ -24,6 +24,8 @@
     var pluginName = 'searchfield',
         defaults = {
           allResultsCallback: undefined,
+          categories: undefined, // If defined as an array, displays a dropdown containing categories that can be used to filter results.
+          showCategoryText: false, // If true, will show any available categories that are selected to the left of the Dropdown field.
           source: undefined,
           template: undefined, // Template that can be passed
           clearable: false //Has an X to clear
@@ -48,6 +50,8 @@
       },
 
       build: function() {
+        var self = this;
+
         this.label = this.element.prev('label, .label');
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
@@ -86,12 +90,49 @@
         }
 
         // Add Icon
-        var icon = this.wrapper.find('.icon');
+        var icon = this.wrapper.find('.icon:not(.icon-dropdown)');
         if (!icon || !icon.length) {
           icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
         }
+
+        // Change icon to a trigger button if we're dealing with categories
+        if (this.hasCategories()) {
+          this.wrapper.addClass('has-categories');
+
+          this.button = icon.parent('.searchfield-category-button');
+          if (!this.button.length) {
+            this.button = icon.wrap('<button class="btn searchfield-category-button"></button>').parent();
+          }
+          icon = this.button;
+
+          if (this.settings.showCategoryText) {
+            this.wrapper.addClass('show-category');
+          }
+
+          var ddIcon = icon.find('.icon-dropdown');
+          if (!ddIcon.length) {
+            ddIcon = $('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>');
+          }
+          ddIcon.appendTo(icon);
+
+          this.list = this.wrapper.find('ul.popupmenu');
+          if (!this.list || !this.list.length) {
+            this.list = $('<ul class="popupmenu is-multiselectable has-icons"></ul>');
+          }
+          this.list.empty();
+
+          this.settings.categories.forEach(function(val) {
+            self.list.append('<li><a href="#">' + val + '</a></li>');
+          });
+          this.list.insertAfter(icon);
+
+          icon.popupmenu({
+            menu: this.list
+          });
+        }
+
         // Swap icon position to in-front if we have an "alternate" class.
-        if (this.wrapper.hasClass('context')) {
+        if (this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories') ) {
           icon.insertBefore(this.element);
         }
 
@@ -104,6 +145,10 @@
         this.checkContents();
 
         return this;
+      },
+
+      hasCategories: function() {
+        return this.settings.categories && $.isArray(this.settings.categories) && this.settings.categories.length > 0;
       },
 
       setupEvents: function() {
@@ -129,6 +174,18 @@
         if (this.settings.clearable) {
           this.xButton.onTouchClick('searchfield', '.searchfield').on('click.searchfield', function handleClear() {
             self.clear();
+          });
+        }
+
+        this.wrapper.on('mouseenter.searchfield', function(e) {
+          $(this).addClass('is-hovered');
+        }).on('mouseleave.searchfield', function(e) {
+          $(this).removeClass('is-hovered');
+        });
+
+        if (this.hasCategories()) {
+          this.button.on('selected.searchfield deselected.searchfield', function(e, anchor, toggleMethod) {
+            self.handleCategorySelection(e, anchor, toggleMethod);
           });
         }
 
@@ -221,6 +278,8 @@
           toolbar.addClass('searchfield-active');
         }
 
+        this.wrapper.addClass('is-focused');
+
         setTimeout(function() {
           function deactivate() {
             self.element.removeClass('active').blur();
@@ -248,6 +307,7 @@
 
       handleBlur: function() {
         this.recalculateParent();
+        this.wrapper.removeClass('is-focused');
         this.checkContents();
       },
 
@@ -280,6 +340,37 @@
         menu[altClassMethod]('alternate');
 
         return true;
+      },
+
+      handleCategorySelection: function(e, anchor, toggleMethod) {
+        if (!this.settings.showCategoryText) {
+          return;
+        }
+
+        var
+          text = '' + anchor.text().trim(),
+          button = this.wrapper.find('.btn'),
+          span = button.find('span');
+
+        if (!button || !button.length) {
+          return;
+        }
+
+        if (!span || !span.length) {
+          span = $('<span class="category"></span>').insertAfter(button.find('.icon').first());
+        }
+
+        span.empty();
+
+        if (toggleMethod === 'deselected') {
+          var item = this.list.find('.is-checked').first();
+          if (!item.length) {
+            return;
+          }
+          text = item.text().trim();
+        }
+
+        span.text(text);
       },
 
       checkContents: function() {
