@@ -251,8 +251,6 @@ window.Chart = function(container) {
     };
 
     $(container).addClass('chart-vertical-bar');
-    $(container).closest('.widget-content').addClass('l-center');
-    $(container).closest('.card-content').addClass('l-center');
 
     width =  parseInt($(container).parent().width()) - margins.left - margins.right;
     height =  parseInt($(container).parent().height()) - margins.top - margins.bottom - legendHeight;  //influences the bar width
@@ -1095,7 +1093,7 @@ this.elementTransform = function(options) {
 
     if (this.redrawOnResize) {
       $(window).on('resize.charts', resizeCharts);
-      $(container).off('resize').on('resize', resizeCharts);     
+      $(container).off('resize').on('resize', resizeCharts);
     }
   };
 
