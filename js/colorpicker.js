@@ -23,17 +23,28 @@
     // Settings and Options
     var pluginName = 'colorpicker',
         defaults = {
+
+          // Theme key: MUST match with theme file name (ie: [filename: 'grey-theme.css' -> 'grey-theme'])
+          // Use (,) commas to separate themes or single entry for border as: 
+          // colors[{label: 'Slate', number: '01', value: 'F0F0F0', border: 'grey-theme, high-contrast-theme'}]
+          // and assign which swatch theborder should apply ['all' or 'matched-only']
+          // themes: { 'high-contrast-theme': {'border': 'all'} }
+          themes: {
+            'grey-theme': {'border': 'matched-only'},
+            'dark-theme': {'border': 'matched-only'},
+            'high-contrast-theme': {'border': 'all'}
+          },
           colors: [
             {label: 'Slate', number: '10', value: '1a1a1a'},
             {label: 'Slate', number: '09', value: '292929'},
-            {label: 'Slate', number: '08', value: '383838'},
-            {label: 'Slate', number: '07', value: '454545'},
+            {label: 'Slate', number: '08', value: '383838', border: 'dark-theme'},
+            {label: 'Slate', number: '07', value: '454545', border: 'dark-theme'},
             {label: 'Slate', number: '06', value: '5C5C5C'},
             {label: 'Slate', number: '05', value: '737373'},
             {label: 'Slate', number: '04', value: '999999'},
             {label: 'Slate', number: '03', value: 'BDBDBD'},
             {label: 'Slate', number: '02', value: 'D8D8D8'},
-            {label: 'Slate', number: '01', value: 'F0F0F0'},
+            {label: 'Slate', number: '01', value: 'F0F0F0', border: 'grey-theme, high-contrast-theme'},
             {label: 'Amber', number: '10', value: 'D66221'},
             {label: 'Amber', number: '09', value: 'DE7223'},
             {label: 'Amber', number: '08', value: 'E68425'},
@@ -246,20 +257,35 @@
 
       // Refresh and Append the Color Menu
       updateColorMenu: function () {
-        var menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
-        for (var i = 0; i < settings.colors.length; i++) {
-          var li = $('<li></li>'),
-              a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
+        var menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
+          currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, ''),
+          isBorderAll = (settings.themes[currentTheme].border === 'all');
 
-          if (this.element.val().replace('#', '') === settings.colors[i].value) {
+        for (var i = 0, l = settings.colors.length; i < l; i++) {
+          var li = $('<li></li>'),
+            a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li),
+            text = Locale.translate(settings.colors[i].label) + (settings.colors[i].number || ''),
+            value = settings.colors[i].value,
+            isBorder = false,
+            regexp = new RegExp('\\b'+ currentTheme +'\\b');
+
+          // Set border to this swatch
+          if (isBorderAll || regexp.test(settings.colors[i].border)) {
+            isBorder = true;
+          }
+
+          if (this.element.val().replace('#', '') === value) {
             a.addClass('is-selected');
           }
 
-          a.attr('title', Locale.translate(settings.colors[i].label) + (settings.colors[i].number ? settings.colors[i].number : '') + ' #' + settings.colors[i].value );
-          a.find('.swatch').css('background-color', '#' + settings.colors[i].value);
-          a.data('label', Locale.translate(settings.colors[i].label) +  (settings.colors[i].number ? settings.colors[i].number : ''));
-          a.data('value', settings.colors[i].value);
-          a.tooltip();
+          a.find('.swatch')
+              .css('background-color', '#'+ value)
+              .addClass(isBorder ? 'is-border' : '').end()
+            .data('label', text)
+            .data('value', value)
+            .attr('title', text +' #'+ value)
+            .tooltip();
+
           menu.append(li);
         }
 
@@ -278,6 +304,22 @@
 
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      rgb2hex: function (rgb) {
+        if (rgb.search('rgb') === -1) {
+          return rgb;
+        }
+        else if (rgb === 'rgba(0, 0, 0, 0)') {
+          return 'transparent';
+        }
+        else {
+          var hex = function (x) {
+            return ('0' + parseInt(x).toString(16)).slice(-2);
+          };
+          rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+          return '#' + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+        }
       },
 
       // Teardown

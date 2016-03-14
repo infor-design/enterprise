@@ -20,7 +20,7 @@
 <script>
   var pieData = [{
     data: [{
-        name: 'Company Deductions',
+        name: 'Company Deductions Really Long Description',
         shortName: 'CD',
         value: 8,
         tooltip: 'Company Deductions {{percent}}',
@@ -51,6 +51,7 @@
   $('#pie-chart-example').chart({
     type: 'donut',
     dataset: pieData,
+    redrawOnResize: false,
     labels: {
       hideLabels: false
     }
