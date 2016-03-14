@@ -1,0 +1,22 @@
+{{> includes/head}}
+<body class="no-scroll">
+<a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+{{> controls/svg}}
+
+<div class="page-container no-scroll">
+  {{> includes/header}}
+  <section id="maincontent" class="page-container scrollable" role="main">
+    <div class="row">
+      <ul>
+        {{#paths}}
+          <li><a class="hyperlink" href="{{href}}">{{text}}</a></li>
+        {{/paths}}
+      </ul>
+    </div>
+  </section>
+</div>
+
+{{> includes/footer}}
+
+</body>
+</html>
