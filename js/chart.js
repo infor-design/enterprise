@@ -92,11 +92,17 @@ window.Chart = function(container) {
     }
 
     // Legend width
-    var width = 0;
+    var width = 0,
+      currentWidth,
+      widthPercent;
+
     for (i = 0; i < series.length; i++) {
-      width = (series[i].name && series[i].name.length > width) ? series[i].name.length : width;
+      currentWidth = series[i].name.length * 6;
+      width = (series[i].name && currentWidth > width) ? currentWidth : width;
     }
-    width += 180;
+
+    width += 55;
+    widthPercent = width / $(container).width() * 100;
 
     for (i = 0; i < series.length; i++) {
       if (!series[i].name) {
@@ -129,7 +135,7 @@ window.Chart = function(container) {
 
       if (series[i].display && series[i].display==='twocolumn') {
         legend.css({'margin':'2em auto auto', 'border-top':'1px solid #ccc', 'padding-top':'1em'});
-        if($(container).width() < 525) {
+        if(widthPercent > 45) {
           seriesLine.css({'float':'none', 'display':'block', 'margin':'0 auto', 'width':width});
         } else {
           seriesLine.css({'float':'none', 'display':'inline-block', 'width': '45%'});
@@ -1087,9 +1093,10 @@ this.elementTransform = function(options) {
       }, 100);
     }
 
-    $(window).on('resize.charts', resizeCharts);
-    $(container).off('resize').on('resize', resizeCharts);
-
+    if (this.redrawOnResize) {
+      $(window).on('resize.charts', resizeCharts);
+      $(container).off('resize').on('resize', resizeCharts);     
+    }
   };
 
   // Donut Chart - Same as Pie but inner radius
@@ -2164,6 +2171,11 @@ this.elementTransform = function(options) {
   };
 
   this.initChartType = function (options) {
+    this.redrawOnResize = true; //default
+
+    if (options.redrawOnResize !== undefined) {
+      this.redrawOnResize = options.redrawOnResize;
+    }
     if (options.format) {
       this.format = options.format;
     }

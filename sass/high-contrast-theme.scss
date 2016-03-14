@@ -195,6 +195,7 @@ $timepicker-disabled-color: $graphite04;
 
 // Color Picker
 $colorpicker-initial-bg-color: $graphite06;
+$colorpicker-swatch-border-color: $graphite06;
 
 // Fileupload
 $fileupload-border-color: $graphite05;
@@ -501,7 +502,7 @@ $swaplist-title-text-color: $font-color-highcontrast;
 }
 
 //Input has double border
-input:not(:focus):not(:disabled):hover,
+input:not(:focus):not(:disabled):hover:not(.colorpicker):hover,
 textarea:not(:focus):not(:disabled):hover {
   box-shadow: 0 0 0 1px $black;
 }

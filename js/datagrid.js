@@ -666,40 +666,39 @@ $.fn.datagrid = function(options) {
       return dataset;
     },
 
-    //Add a Row
+    // Add a Row
     addRow: function (data, location) {
       var self = this,
-        row = 0, cell = 0;
+        isTop = false,
+        row = 0,
+        cell = 0,
+        args,
+        rowNode;
 
-      location = (!location ? 'top' : location);
-
-      if (location === 'top') {
-        //Add to array
-        this.settings.dataset.unshift(data);
-
-        //Add to ui
-        this.renderRows();
-
-        setTimeout(function () {
-          self.setActiveCell(row, cell);
-        }, 10);
+      if (!location || location === 'top') {
+        location = 'top';
+        isTop = true;
       }
 
-      if (location === 'bottom') {
-        //Add to array
-        this.settings.dataset.push(data);
+      // Add to array
+      self.settings.dataset[isTop ? 'unshift' : 'push'](data);
 
-        //Add to ui
-        this.renderRows();
+      // Add to ui
+      self.renderRows();
 
-        setTimeout(function () {
-          row = self.settings.dataset.length -1;
-          self.setActiveCell(row, 0);
-        }, 10);
-      }
+      // Sync with others
+      self.syncSelectedUI();
+      self.updateSelected();
 
-      var rowNode = this.tableBody.find('tr').eq(row);
-      self.element.trigger('addrow', {row: row, cell: cell, target: rowNode, value: data, oldValue: []});
+      // Set active and fire handler
+      setTimeout(function () {
+        row = isTop ? row : self.settings.dataset.length - 1;
+        self.setActiveCell(row, cell);
+
+        rowNode = self.tableBody.find('tr').eq(row);
+        args = {row: row, cell: cell, target: rowNode, value: data, oldValue: []};
+        self.element.triggerHandler('addrow', args);
+      }, 10);
     },
 
     initFixedHeader: function () {
@@ -795,6 +794,8 @@ $.fn.datagrid = function(options) {
           w = th.width();
 
         w += th.is(':last-child') ? scrollbarWidth : 0;
+
+        th.width(w);
         self.clone.find('th').eq(index).width(w);
       });
 
@@ -821,8 +822,8 @@ $.fn.datagrid = function(options) {
 
       for (var i = selectedRows.length-1; i >= 0; i--) {
         self.removeRow(selectedRows[i].idx, true);
+        this.updateSelected();
       }
-
       this.syncSelectedUI();
     },
 
@@ -1438,7 +1439,9 @@ $.fn.datagrid = function(options) {
         }
 
         var isClone = self.currentHeader.closest('.datagrid-clone').length,
-          leftEdge = parseInt(self.currentHeader.position().left),
+          headerDetail = self.currentHeader.closest('.header-detail'),
+          extraMargin = headerDetail.length ? parseInt(headerDetail.css('margin-left'), 10) : 0,
+          leftEdge = parseInt(self.currentHeader.position().left) - (extraMargin || 0),
           rightEdge = leftEdge + self.currentHeader.outerWidth(),
           alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX),
           leftPos = 0;
