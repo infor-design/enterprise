@@ -228,7 +228,7 @@
           this.inputWrapper.detach().prependTo(this.toolbarParent.children('.buttonset'));
         }
 
-        self.inputWrapper.removeClass('active');
+        self.inputWrapper.removeClass('active').removeClass('has-focus');
 
         if (this.fastActivate || this.settings.collapsible === false) {
           deactivateCallback();

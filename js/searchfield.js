@@ -284,7 +284,10 @@
           toolbar.addClass('searchfield-active');
         }
 
-        this.wrapper.addClass('is-focused');
+        // if Toolbar Searchfield, allow that control to handle adding this class
+        if (!this.wrapper.is('.toolbar-searchfield-wrapper')) {
+          this.wrapper.addClass('has-focus');
+        }
 
         setTimeout(function() {
           function deactivate() {
@@ -313,7 +316,11 @@
 
       handleBlur: function() {
         this.recalculateParent();
-        this.wrapper.removeClass('is-focused');
+
+        if (!this.wrapper.is('.toolbar-searchfield-wrapper')) {
+          this.wrapper.removeClass('has-focus');
+        }
+
         this.checkContents();
       },
 
@@ -380,11 +387,21 @@
       },
 
       handleCategoryFocus: function(e) {
-        this.wrapper.addClass('is-focused');
+        // if Toolbar Searchfield, allow that control to handle adding this class
+        if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
+          return;
+        }
+
+        this.wrapper.addClass('has-focus');
       },
 
       handleCategoryBlur: function(e) {
-        this.wrapper.removeClass('is-focused');
+        // if Toolbar Searchfield, allow that control to handle adding this class
+        if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
+          return;
+        }
+
+        this.wrapper.removeClass('has-focus');
       },
 
       handlePopupClose: function(e) {

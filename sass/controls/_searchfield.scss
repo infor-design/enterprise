@@ -136,13 +136,17 @@
     }
   }
 
-  &.is-focused {
+  &.has-focus {
     .btn {
       border-color: $input-focus-border-color;
-      color: $input-focus-border-color;
 
-      .icon {
-        fill: $input-focus-border-color;
+      &:focus,
+      &:active {
+        color: $input-focus-border-color;
+
+        .icon {
+          fill: $input-focus-border-color;
+        }
       }
     }
 

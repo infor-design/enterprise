@@ -67,12 +67,20 @@ $toolbarsearchfield-empty-width: 34px;
     &:not(.close) {
       height: 18px;
       top: 8px;
-      @include transition(height 300ms cubic-bezier(.17, .04, .03, .94), top 300ms cubic-bezier(.17, .04, .03, .94));
+      @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
+        top 300ms cubic-bezier(.17, .04, .03, .94),
+        left 300ms cubic-bezier(.17, .04, .03, .94));
     }
   }
 
   .inline ~ .icon {
     top: 11px;
+  }
+
+  &.is-hovered {
+    .searchfield {
+      border-bottom-color: rgba($searchfield-border-color, 0);
+    }
   }
 
   &.active {
@@ -98,8 +106,13 @@ $toolbarsearchfield-empty-width: 34px;
     }
 
     .icon {
+      &:not(.close) {
+        left: 8px;
+      }
+
       &.close {
         fill: rgba($searchfield-text-color, 0);
+        right: 5px;
         @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
       }
     }
@@ -135,10 +148,6 @@ $toolbarsearchfield-empty-width: 34px;
       }
 
       .icon {
-        &:not(.close) {
-          left: 0px;
-        }
-
         &.close {
           fill: rgba($searchfield-text-color, 1);
         }
