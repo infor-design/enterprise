@@ -46,15 +46,22 @@
       init: function() {
         var orgId = this.element.attr('id'),
           prefix = '-shdo',
-          name = this.element.attr('name'),
-          id = orgId + prefix, //The Shadow Input Element. We use the dropdown to serialize.
-          cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
-            this.element.is('.dropdown-sm') ? 'dropdown input-sm' :
-            this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
+          name = this.element.attr('name');
 
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
         this.isInlineLabel = this.element.parent().is('.inline');
+
+        if (orgId === undefined) {
+          orgId = this.element.uniqueId('dropdown');
+          this.element.attr('id', orgId);
+          this.element.parent().find('label').first().attr('for', orgId);
+        }
+
+        var id = orgId + prefix, //The Shadow Input Element. We use the dropdown to serialize.
+          cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
+            this.element.is('.dropdown-sm') ? 'dropdown input-sm' :
+            this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
 
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();

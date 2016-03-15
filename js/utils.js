@@ -39,6 +39,20 @@
       }).length;
   }
 
+  //Get a unique ID
+  $.fn.uniqueId = function(className, prefix, suffix) {
+    if ($(this).attr('id')) {
+      return;
+    }
+
+    prefix = (!prefix ? '' : prefix + '-');
+    suffix = (!suffix ? '' : '-' + suffix);
+    className = (!className ? $(this).attr('class') : className);
+
+    var cnt = $('.' + className).length;
+    return prefix + className + cnt + suffix;
+  };
+
   // Check for CSS Property Support in a cross browser way
   $.fn.cssPropSupport = function(prop) {
     'use strict';
