@@ -752,7 +752,7 @@ $.fn.datagrid = function(options) {
       innerHeight += (next.length === 0 ? 0 : parseInt(next.outerHeight()));
 
       if (this.wrapper.parent().is('.pane')) {
-        innerHeight = 144;
+        innerHeight = 146;
       }
 
       if (isInline) {

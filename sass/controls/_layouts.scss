@@ -374,6 +374,10 @@ body.no-scroll {
   &.top-padding {
     padding-top: 20px;
   }
+
+  > .row:first-child {
+    padding-top: 20px;
+  }
 }
 
 .header {

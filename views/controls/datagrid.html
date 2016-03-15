@@ -27,7 +27,9 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 500});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {
+          console.log(e, args);
+      }});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
