@@ -31,7 +31,7 @@ window.Chart = function(container) {
   this.colors = d3.scale.ordinal().range(colorRange);
 
   this.chartColor = function(i, chartType, data) {
-    var specColor = data.color;
+    var specColor = (data && data.color ? data.color : null);
 
     //error, alert, alertYellow, good, neutral or hex
     if (specColor && specColor ==='error' ) {
@@ -1446,7 +1446,7 @@ this.elementTransform = function(options) {
       });
     }
 
-    var barMaxWidth = 25, bars;
+    var barMaxWidth = 35, bars;
 
     // Add the bars - done different depending on if grouped or singlular
     if (isSingular) {
@@ -1483,7 +1483,7 @@ this.elementTransform = function(options) {
           .append('g')
           .attr('class', 'g')
           .style('fill', function(d, i) {
-            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
+            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), (isStacked ? datasetStacked[i] : dataArray[i]));
           })
           .attr('transform', function(d) {
             return 'translate(' + x0(isStacked ? xAxisValues[0] : d.name) + ',0)';
@@ -1495,7 +1495,8 @@ this.elementTransform = function(options) {
           .append('rect')
             .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
             .attr('x', function(d, i) {
-              return isStacked ? xScale(i) : (x1(d.name) + (x1.rangeBand() - barMaxWidth)/2);
+              var width = Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]);
+              return isStacked ? xScale(i) : (x1.rangeBand()/2 + ((width + 2) * i) - (dataArray[0].values.length === 1 || dataArray[0].values.length === 5 || dataArray[0].values.length === 4  ? (width/2) : 0) );//' * (dataArray[0].values.length/2)) );
             })
             .attr('y', function() {return height;})
             .attr('height', function() {return 0;});
@@ -1506,7 +1507,7 @@ this.elementTransform = function(options) {
       }
 
       //Style the bars and add interactivity
-      if(!isStacked) {
+      if (!isStacked) {
         bars.style('fill', function(d, i) {
           return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
         }).attr('mask', function (d, i) {
