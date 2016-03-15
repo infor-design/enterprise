@@ -146,7 +146,6 @@ input,
 textarea {
   @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
   @include antialiased();
-
   -webkit-appearance: none;
   background-color: $input-bg-color;
   border: 1px solid $input-border-color;
