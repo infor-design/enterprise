@@ -867,7 +867,7 @@
         });
       },
 
-      close: function (isCancelled) {
+      close: function (isCancelled, noFocus) {
         if (!isCancelled || isCancelled === undefined) {
           isCancelled = false;
         }
@@ -879,26 +879,22 @@
 
         this.menu.find('.is-focused').removeClass('is-focused');
 
-        this.element.on('close.popupmenu', function (e) {
-          $(this).off('close.popupmenu');
-          e.stopPropagation();
-        }); //do not propapagate events to parent
-
         // Close all events
         $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
-        this.element.removeClass('is-open').trigger('close', [isCancelled]);
+        this.element.removeClass('is-open').triggerHandler('close', [isCancelled]);
         this.detach();
 
         if (this.settings.trigger === 'immediate') {
           this.destroy();
         }
 
-        //if (this.element.is('button')) {
-          this.element.focus();
-        //}
+        if (noFocus) {
+          return;
+        }
 
+        this.element.focus();
       },
 
       teardown: function() {

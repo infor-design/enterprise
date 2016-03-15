@@ -405,7 +405,7 @@
       },
 
       handlePopupClose: function(e) {
-        this.setAsActive();
+        return this.setAsActive();
       },
 
       checkContents: function() {

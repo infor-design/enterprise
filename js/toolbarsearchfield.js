@@ -77,6 +77,10 @@
         this.inputWrapper = this.input.parent('.searchfield-wrapper');
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
 
+        if (sfSettings.categories) {
+          this.button = this.inputWrapper.find('.searchfield-category-button');
+        }
+
         // Add/remove the collapsible setting
         var collapsibleMethod = this.settings.collapsible ? 'removeClass' : 'addClass';
         this.inputWrapper[collapsibleMethod]('non-collapsible');
@@ -90,11 +94,17 @@
       handleEvents: function() {
         var self = this;
 
-        this.input.on('mousedown.toolbarsearchfield', function() {
+        this.inputWrapper.on('mousedown.toolbarsearchfield', function() {
           self.fastActivate = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
         });
+
+        if (this.button && this.button.length) {
+          this.button.on('beforeopen.toolbarsearchfield', function(e, menu) {
+            return self.handlePopupBeforeOpen(e, menu);
+          });
+        }
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).on('keydown.toolbarsearchfield-' + this.id, function(e) {
@@ -147,8 +157,17 @@
       handleOutsideClick: function(e) {
         var target = $(e.target);
 
+        // Don't close if we're focused on an element inside the wrapper
         if ($.contains(this.inputWrapper[0], e.target) || target.is(this.element) || target.is(this.inputWrapper)) {
           return;
+        }
+
+        // Don't close if a category is being selected from a category menu
+        if (this.button && this.button.length) {
+          var menu = this.button.data('popupmenu').menu;
+          if (menu.has(target).length) {
+            return;
+          }
         }
 
         $(document).offTouchClick('toolbarsearchfield-' + this.id).off('click.toolbarsearchfield-' + this.id);
@@ -168,6 +187,19 @@
         if (wasInputTheTarget && (key === 37 || key === 38 || key === 39 || key === 40)) {
           return this.handleFakeBlur();
         }
+      },
+
+      handlePopupBeforeOpen: function(e, menu) {
+        if (!menu) {
+          return false;
+        }
+
+        if (!this.inputWrapper.is('.is-open')) {
+          this.input.focus();
+          return false;
+        }
+
+        return true;
       },
 
       activate: function() {
@@ -221,6 +253,10 @@
         function deactivateCallback() {
           self.inputWrapper.removeClass('is-open');
           self.fastActivate = false;
+
+          if (self.button && self.button.length && self.button.is('.is-open')) {
+            self.button.data('popupmenu').close(false, true);
+          }
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
@@ -266,7 +302,7 @@
 
       // Tears down events, properties, etc. and resets the control to "factory" state
       teardown: function() {
-        this.input.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield');
+        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield');
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).off('keydown.toolbarsearchfield-' + this.id);

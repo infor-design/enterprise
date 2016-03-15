@@ -121,17 +121,15 @@
       border-color: $input-hover-border-color;
     }
 
-    &.show-category,
-    &.has-categories,
-    &.has-categories.show-category {
-      .searchfield {
-        border-color: $input-hover-border-color;
-      }
-    }
-
-    &.has-categories:not(.show-category) {
+    &.has-categories {
       .searchfield {
         border-left-color: transparent;
+      }
+
+      &.show-category {
+        .searchfield {
+          border-left-color: $input-hover-border-color;
+        }
       }
     }
   }
@@ -155,17 +153,15 @@
       border-left-color: transparent;
     }
 
-    &.show-category,
-    &.has-categories,
-    &.show-category.has-categories {
-      .searchfield {
-        border-color: $input-focus-border-color;
-      }
-    }
-
-    &.has-categories:not(.show-category) {
+    &.has-categories {
       .searchfield {
         border-left-color: transparent;
+      }
+
+      &.show-category {
+        .searchfield {
+          border-left-color: $input-focus-border-color;
+        }
       }
     }
   }
@@ -173,17 +169,31 @@
   // Buttons inside of searchfields
   .btn {
     background-color: transparent;
+    border-bottom-right-radius: 0;
     border-color: $input-border-color;
+    border-top-right-radius: 0;
+    border-right: 0;
     color: $font-color;
     font-weight: normal;
-    height: 100%;
+    height: 35px;
+    margin: 0;
     min-width: 0;
     padding: 0 0 0 10px;
+    position: relative;
     text-transform: none;
     @include css3(transition, border 300ms ease 0s); // Matches the one on inputs
 
+    + .searchfield {
+      border-bottom-left-radius: 0;
+      border-left: 1px solid transparent;
+      border-top-left-radius: 0;
+      margin-left: -1px;
+      padding-left: 10px;
+    }
+
     .icon {
       fill: $font-color;
+      width: 14px;
     }
 
     // Disable default focus state
@@ -203,27 +213,6 @@
   &.has-categories {
     > * {
       vertical-align: top;
-    }
-
-    .btn {
-      border-bottom-right-radius: 0;
-      border-right: 0;
-      border-top-right-radius: 0;
-      height: 35px;
-      margin: 0;
-      position: relative;
-
-      .icon {
-        width: 14px;
-      }
-    }
-
-    .searchfield {
-      border-bottom-left-radius: 0;
-      border-left: 1px solid transparent;
-      border-top-left-radius: 0;
-      margin-left: -1px;
-      padding-left: 10px;
     }
 
     &.show-category {
