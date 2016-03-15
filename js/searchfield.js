@@ -375,13 +375,18 @@
 
         span.empty();
 
-        if (toggleMethod === 'deselected') {
-          var item = this.list.find('.is-checked').first();
+        //if (toggleMethod === 'deselected') {
+          var item = this.list.find('.is-checked');
           if (!item.length) {
             return;
           }
-          text = item.text().trim();
-        }
+
+          if (item.length > 1) {
+            text = item.length + ' ' + Locale.translate('Selected');
+          } else {
+            text = item.text().trim();
+          }
+        //}
 
         span.text(text);
       },
