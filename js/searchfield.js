@@ -177,9 +177,9 @@
           });
         }
 
-        this.wrapper.on('mouseenter.searchfield', function(e) {
+        this.wrapper.on('mouseenter.searchfield', function() {
           $(this).addClass('is-hovered');
-        }).on('mouseleave.searchfield', function(e) {
+        }).on('mouseleave.searchfield', function() {
           $(this).removeClass('is-hovered');
         });
 
@@ -386,7 +386,7 @@
         span.text(text);
       },
 
-      handleCategoryFocus: function(e) {
+      handleCategoryFocus: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
         if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
           return;
@@ -395,7 +395,7 @@
         this.wrapper.addClass('has-focus');
       },
 
-      handleCategoryBlur: function(e) {
+      handleCategoryBlur: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
         if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
           return;
@@ -404,7 +404,7 @@
         this.wrapper.removeClass('has-focus');
       },
 
-      handlePopupClose: function(e) {
+      handlePopupClose: function() {
         return this.setAsActive();
       },
 
