@@ -3,9 +3,10 @@
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal {
+  backface-visibility: hidden;
   border-radius: 2px;
+  -webkit-filter: blur(0);
   filter: none;
-  -webkit-filter: none;
   -webkit-font-smoothing: subpixel-antialiased;
   height: auto;
   left: 50%;

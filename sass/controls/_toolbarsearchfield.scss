@@ -5,11 +5,14 @@ $toolbarsearchfield-max-width: 225px;
 $toolbarsearchfield-filled-out-width: 100px;
 $toolbarsearchfield-empty-width: 34px;
 
+$toolbarsearchfield-category-empty-width: 54px;
+
 .toolbar-searchfield-wrapper {
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0 !important;
   overflow: hidden;
+  white-space: nowrap;
   width: $toolbarsearchfield-empty-width;
 
   @include transition(width 300ms cubic-bezier(.17, .04, .03, .94),
@@ -23,8 +26,7 @@ $toolbarsearchfield-empty-width: 34px;
   .searchfield {
     @include antialiased();
     background-color: rgba(0, 0, 0, 0);
-    border: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0);
+    border: 1px solid rgba(0, 0, 0, 0);
     box-shadow: none !important;
     color: $searchfield-text-color;
     @include font-size(12);
@@ -67,12 +69,44 @@ $toolbarsearchfield-empty-width: 34px;
     &:not(.close) {
       height: 18px;
       top: 8px;
-      @include transition(height 300ms cubic-bezier(.17, .04, .03, .94), top 300ms cubic-bezier(.17, .04, .03, .94));
+      @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
+        top 300ms cubic-bezier(.17, .04, .03, .94),
+        left 300ms cubic-bezier(.17, .04, .03, .94));
     }
   }
 
   .inline ~ .icon {
     top: 11px;
+  }
+
+  .btn {
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+  }
+
+  &.is-hovered {
+    .searchfield {
+      border-color: transparent;
+      border-bottom-color: rgba($searchfield-border-color, 0);
+    }
+
+    .btn {
+      border-color: transparent;
+      border-bottom-color: rgba($searchfield-border-color, 0);
+    }
+
+    &.active {
+      .searchfield {
+        border-bottom-color: rgba($searchfield-border-color, 1);
+      }
+
+      .btn {
+        border-bottom-color: rgba($searchfield-border-color, 1);
+      }
+    }
   }
 
   &.active {
@@ -98,10 +132,20 @@ $toolbarsearchfield-empty-width: 34px;
     }
 
     .icon {
+      &:not(.close) {
+        left: 8px;
+      }
+
       &.close {
         fill: rgba($searchfield-text-color, 0);
+        right: 5px;
         @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
       }
+    }
+
+    .btn {
+      background-color: rgba($searchfield-bg-color, 1);
+      border-bottom-color: rgba($searchfield-border-color, 1);
     }
 
     // Once the field is open, color and font size change to match other Searchfields.
@@ -135,10 +179,6 @@ $toolbarsearchfield-empty-width: 34px;
       }
 
       .icon {
-        &:not(.close) {
-          left: 0px;
-        }
-
         &.close {
           fill: rgba($searchfield-text-color, 1);
         }
@@ -168,6 +208,16 @@ $toolbarsearchfield-empty-width: 34px;
       .inline ~ .icon {
         top: 15px;
       }
+
+      .searchfield {
+        border-color: transparent;
+        border-bottom-color: rgba($searchfield-border-color, 1);
+      }
+
+      .btn {
+        border-color: transparent;
+        border-bottom-color: rgba($searchfield-border-color, 1);
+      }
     }
   }
 
@@ -178,6 +228,34 @@ $toolbarsearchfield-empty-width: 34px;
       width: $toolbarsearchfield-max-width;
     }
   }
+
+  &.has-categories {
+    width: $toolbarsearchfield-category-empty-width;
+
+    &.active {
+      width: $toolbarsearchfield-max-width;
+    }
+
+    &.has-text {
+      width: $toolbarsearchfield-filled-out-width;
+
+      &.active {
+        width: $toolbarsearchfield-max-width;
+      }
+    }
+
+    .searchfield {
+      border: 1px solid transparent;
+      padding-right: 0;
+      width: calc(100% - 39px);
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      height: 34px;
+    }
+  }
+
 }
 
 .azure07 .active input {
