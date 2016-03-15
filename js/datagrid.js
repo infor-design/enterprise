@@ -1418,12 +1418,13 @@ $.fn.datagrid = function(options) {
       //Handle Context Menu Option
       body.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tr', function (e) {
         self.triggerRowEvent('contextmenu', e, (self.settings.menuId ? true : false));
+        e.preventDefault();
 
         if (self.settings.menuId) {
-          e.preventDefault();
           $(e.currentTarget).popupmenu({menuId: self.settings.menuId, eventObj: e, trigger: 'immediate'});
-          return false;
         }
+
+        return false;
       });
 
       // Move the drag handle to the end or start of the column
