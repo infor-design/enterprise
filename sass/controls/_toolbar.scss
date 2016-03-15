@@ -178,6 +178,10 @@ $toolbar-buttonset-height: 44px;
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-active-color;
         color: $tertiary-btn-active-color;
 
+        &.searchfield-category-button {
+          box-shadow: none;
+        }
+
         &:active {
           background-color: transparent !important;
           box-shadow: none;

@@ -133,6 +133,7 @@
             this.settings.menu === 'colorpicker-menu' ||
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
+            this.element.is('.searchfield-category-button') ||
             (containerClass.indexOf('more') >= 0 && this.element.is(':not(.tab-more)')) ||
             containerClass.indexOf('btn-group') >= 0)) {
          var arrow = $('<div class="arrow"></div>'),
@@ -273,7 +274,8 @@
           .on('click.popupmenu', 'a', function (e) {
 
           var anchor = $(this),
-            href = anchor.attr('href');
+            href = anchor.attr('href'),
+            selectionResult = [anchor];
 
           if (anchor.attr('disabled') || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
             //Do not close parent items of submenus on click
@@ -291,11 +293,11 @@
           }
 
           if (self.menu.hasClass('is-selectable') || self.menu.hasClass('is-multiselectable')) {
-            self.select(anchor);
+            selectionResult = self.select(anchor);
           }
 
           // Trigger a selected event containing the anchor that was selected
-          self.element.trigger('selected', [anchor]);
+          self.element.trigger('selected', selectionResult);
 
           // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
           if (self.menu.hasClass('is-multiselectable')) {
@@ -524,6 +526,13 @@
         }
 
         wrapper.find('.arrow').removeAttr('style');
+
+        if (this.element.is('.searchfield-category-button')) {
+          wrapper.find('.arrow').css({
+            'right': 'auto',
+            'left': (this.element.width() / 2) + 'px'
+          });
+        }
 
         //Handle Case where menu is off the left
         if (wrapper.offset().left < 0) {
@@ -804,7 +813,8 @@
       select: function(anchor) {
         var single = this.menu.is('.is-selectable'),
           multiple = this.menu.is('.is-multiselectable'),
-          parent = anchor.parent();
+          parent = anchor.parent(),
+          returnObj = [anchor, 'selected'];
 
         if (!single && !multiple) {
           return;
@@ -813,14 +823,18 @@
         // If the menu is "selectable", place the checkmark where it's supposed to go.
         if (single) {
           parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
-          return parent.addClass('is-checked');
+          parent.addClass('is-checked');
+          return returnObj;
         }
 
         if (multiple) {
           if (parent.hasClass('is-checked')) {
-            return parent.removeClass('is-checked');
+            returnObj[1] = 'deselected';
+            parent.removeClass('is-checked');
+            return returnObj;
           }
-          return parent.addClass('is-checked');
+          parent.addClass('is-checked');
+          return returnObj;
         }
       },
 
@@ -853,7 +867,7 @@
         });
       },
 
-      close: function (isCancelled) {
+      close: function (isCancelled, noFocus) {
         if (!isCancelled || isCancelled === undefined) {
           isCancelled = false;
         }
@@ -865,26 +879,22 @@
 
         this.menu.find('.is-focused').removeClass('is-focused');
 
-        this.element.on('close.popupmenu', function (e) {
-          $(this).off('close.popupmenu');
-          e.stopPropagation();
-        }); //do not propapagate events to parent
-
         // Close all events
         $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
-        this.element.removeClass('is-open').trigger('close', [isCancelled]);
+        this.element.removeClass('is-open').triggerHandler('close', [isCancelled]);
         this.detach();
 
         if (this.settings.trigger === 'immediate') {
           this.destroy();
         }
 
-        //if (this.element.is('button')) {
-          this.element.focus();
-        //}
+        if (noFocus) {
+          return;
+        }
 
+        this.element.focus();
       },
 
       teardown: function() {

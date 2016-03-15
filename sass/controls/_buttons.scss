@@ -60,18 +60,22 @@ button {
     font-size: inherit;
     font-weight: inherit;
 
-    + .icon {
-      padding-left: 5px;
+    &:not(:empty) + .icon {
+      margin-left: 5px;
     }
 
     + * + .icon {
-      padding-left: 5px;
+      margin-left: 5px;
     }
 
     &.audible {
       + .icon {
         padding-left: 0;
       }
+    }
+
+    &:empty {
+      display: none;
     }
   }
 }
