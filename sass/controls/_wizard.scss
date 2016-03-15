@@ -16,13 +16,13 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
 
   .bar {
     background-color: $wizard-bar-bg;
-    height: 4px;
+    height: 3px;
     position: relative;
   }
 
   .completed-range {
     background-color: $wizard-active-color;
-    height: 4px;
+    height: 3px;
     left: 0;
     position: absolute;
     top: 0;
@@ -35,7 +35,7 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
     border-radius: ($wizard-tick-size/2);
     display: inline-block;
     height: $wizard-tick-size;
-    margin-left: -4px;
+    margin-left: -3px;
     margin-top: -($wizard-tick-size/2) + ($wizard-tick-border-width/2);
     position: absolute;
     width: $wizard-tick-size;
@@ -125,7 +125,7 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
 }
 
 // Styles used by the Header Wizard Control
-$header-wizard-bar: $slate08;
+$header-wizard-bar: $azure09;
 $header-wizard-active-color: $white;
 
 .header {
@@ -163,7 +163,7 @@ $header-wizard-active-color: $white;
       }
 
       .label {
-        color: $font-color-lowcontrast;
+        color: $azure09;
         top: $wizard-tick-size * 2;
       }
 
@@ -312,7 +312,7 @@ html[dir='rtl'] {
 
     .tick {
       margin-left: inherit;
-      margin-right: -4px;
+      margin-right: -3px;
 
       // Border for incomplete or non-current ticks
       &::after {
