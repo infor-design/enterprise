@@ -355,7 +355,7 @@
         return true;
       },
 
-      handleCategorySelection: function(e, anchor, toggleMethod) {
+      handleCategorySelection: function(e, anchor) {
         if (!this.settings.showCategoryText) {
           return;
         }
