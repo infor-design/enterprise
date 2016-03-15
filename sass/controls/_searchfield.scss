@@ -77,12 +77,16 @@
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
   &.context {
+    overflow: hidden;
+    white-space: nowrap;
     width: 100%;
 
     > .searchfield {
       background-color: $searchfield-context-bg;
-      border: 0;
       border-bottom: 1px solid $searchfield-context-border-color;
+      border-left: 1px solid $searchfield-context-border-color;
+      border-right: 0;
+      border-top: 0;
       padding-left: 32px;
       width: 100%;
 
@@ -98,13 +102,67 @@
         left: 0;
         right: auto;
       }
+
+      &.close {
+        right: 6px;
+      }
+    }
+
+    .btn {
+      background-color: $searchfield-context-bg;
+      border: 0;
+      border-bottom: 1px solid $searchfield-context-border-color;
+      height: 34px;
+
+      + .searchfield {
+        margin-left: 0;
+      }
     }
 
     &.alternate {
       > .searchfield {
         background-color: $searchfield-context-alt-bg;
       }
+
+      .btn {
+        background-color: $searchfield-context-alt-bg;
+      }
     }
+
+    &.has-categories {
+      > .searchfield {
+        width: calc(100% - 39px);
+      }
+
+      &.has-focus,
+      &.show-category.has-focus {
+        .searchfield {
+          border-left-color: $searchfield-context-border-color;
+        }
+      }
+    }
+
+    &.is-hovered {
+      .btn {
+        border-color: $input-hover-border-color;
+        color: $input-hover-border-color;
+
+        .icon {
+          fill: $input-hover-border-color;
+        }
+      }
+    }
+
+    &.has-focus {
+      .btn {
+        border-color: $searchfield-context-border-color;
+      }
+
+      .searchfield {
+        border-color: $searchfield-context-border-color;
+      }
+    }
+
   }
 
   &.is-hovered {
