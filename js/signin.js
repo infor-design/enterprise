@@ -43,54 +43,49 @@
         var self = this,
           cssIcon = $('<svg class="icon icon-capslock" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-capslock"/></svg>');
 
-          // Disable default [caps lock on] popup in IE
-          document.msCapsLockWarningOff = true;
+        // Disable default [caps lock on] popup in IE
+        document.msCapsLockWarningOff = true;
 
-          this.element
-          .on('keypress.signin', '[type="password"]', function (e) {
-            var field = $(this),
-              fieldParent = field.parent('.field'),
-              iconCapslock = $('.icon-capslock', fieldParent);
+        this.element
+        .on('keypress.signin', '[type="password"]', function (e) {
+          var field = $(this),
+            fieldParent = field.parent('.field'),
+            iconCapslock = $('.icon-capslock', fieldParent);
 
-            if (self.isCapslock(e) && !field.hasClass('error')) {
-              if(!iconCapslock.length) {
+          if (self.isCapslock(e) && !field.hasClass('error')) {
+            if(!iconCapslock.length) {
+              fieldParent.append(cssIcon);
+              $('body').toast({audibleOnly: true, message: Locale.translate('CapsLockOn')});
+            }
+          } else {
+            iconCapslock.remove();
+          }
+
+        })
+        .on('blur.signin change.signin', '[type="password"]', function () {
+          var field = $(this),
+            fieldParent = field.closest('.field'),
+            iconCapslock = $('.icon-capslock', fieldParent);
+
+          // Wait for error class to be added
+          setTimeout(function() {
+            if (iconCapslock && iconCapslock.length) {
+              if (field.hasClass('error')) {
+                iconCapslock.remove();
+              } else {
                 fieldParent.append(cssIcon);
-                $('body').toast({audibleOnly: true, message: Locale.translate('CapsLockOn')});
               }
-            } else {
-              iconCapslock.remove();
             }
+          }, 150);
 
-          })
-          .on('blur.signin change.signin', '[type="password"]', function () {
-            var field = $(this),
-              fieldParent = field.closest('.field'),
-              iconCapslock = $('.icon-capslock', fieldParent);
-
-            // Wait for error class to be added
-            setTimeout(function() {
-              if (iconCapslock && iconCapslock.length) {
-                if (field.hasClass('error')) {
-                  iconCapslock.remove();
-                } else {
-                  fieldParent.append(cssIcon);
-                }
-              }
-            }, 150);
-
-          });
-
-          this.element.
-            on('blur.signin change.signin keypress.signin', 'input', function () {
-            var confirmPassword = $('#confirm-password');
-            if (confirmPassword.length && ((!(confirmPassword.val()).length) || (confirmPassword.hasClass('error')))) {
-              return false;
-            }
+        })
+        .on('blur.signin change.signin keypress.signin', 'input', function () {
+          if (!$(this).is('#confirm-password')) {
             $('#username').val($('#username-display').val());
             $('#password').val($('#password-display').val());
             $('#new-password').val($('#new-password-display').val());
-
-          });
+          }
+        });
       },
 
       isCapslock: function(e) {
