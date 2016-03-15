@@ -322,6 +322,10 @@ label,
   color: $error-color;
 }
 
+input.error {
+  padding-right: 30px;
+}
+
 input.error,
 textarea.error,
 .editor.error {

@@ -729,6 +729,7 @@
 
       enableSubmit: {
         check: function (value, field) {
+          console.log('enableSubmit');
           var submit = field.closest('.signin').find('button[type="submit"]'),
             ok = ((value.length) && (self.rules.email.check(value) || self.rules.passwordConfirm.check(value, field)));
 
@@ -758,6 +759,7 @@
 
       passwordReq: {
         check: function (value) {
+          console.log('passwordReq');
           this.message = Locale.translate('PasswordValidation');
           /* Must be at least 10 characters which contain at least
           ** one lowercase letter,
@@ -772,6 +774,7 @@
 
       passwordConfirm: {
         check: function (value, field) {
+          console.log('passwordConfirm');
           this.message = Locale.translate('PasswordConfirmValidation');
           var passwordValue = $('input[type="password"]:not('+ field.attr('id') +')', field.closest('.signin')).eq(0).val(),
             check = ((value === passwordValue) && (self.rules.passwordReq.check(passwordValue)));
