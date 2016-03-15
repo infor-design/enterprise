@@ -2424,22 +2424,26 @@ $.fn.datagrid = function(options) {
     sortFunction: function(id, ascending) {
       var key,
       primer = function(a) {
-          a = (a === undefined || a === null ? '' : a);
-          if (typeof a === 'string') {
-            a = a.toUpperCase();
 
-            if (!isNaN(parseFloat(a))) {
-              a = parseFloat(a);
-            }
+        a = (a === undefined || a === null ? '' : a);
+        if (typeof a === 'string') {
+          a = a.toUpperCase();
+
+          var isNumber = /^\d+$/.test(a);
+          if (isNumber && !isNaN(parseFloat(a))) {
+            a = parseFloat(a);
           }
-          return a;
-        };
+        }
+
+        return a;
+      };
 
       key = function(x) { return primer(x[id]); };
       ascending = !ascending ? -1 : 1;
 
       return function (a, b) {
-         return a = key(a), b = key(b), ascending * ((a > b) - (b > a));
+
+        return a = key(a), b = key(b), ascending * ((a > b) - (b > a));
       };
     },
 
