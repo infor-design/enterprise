@@ -27,7 +27,7 @@
           widgetWidth: 360,
           widgetHeight: 370,
           animate: true,
-          timeout: 400,
+          timeout: 100,
           columns: 3,
           easing: 'blockslide'
         },
@@ -330,11 +330,11 @@
 
       applyCubicBezier: function (el, cubicBezier) {
         el.css({
-          '-webkit-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
-          '-moz-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
-          '-ms-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
-          '-o-transition': 'all 1s cubic-bezier('+ cubicBezier +')',
-          'transition': 'all 1s cubic-bezier('+ cubicBezier +')'
+          '-webkit-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
+          '-moz-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
+          '-ms-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
+          '-o-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
+          'transition': 'all .3s cubic-bezier('+ cubicBezier +')'
         });
       },
 

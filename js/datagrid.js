@@ -2272,6 +2272,8 @@ $.fn.datagrid = function(options) {
 
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
 
+      coercedVal = $.unescapeHTML(coercedVal);
+
       if (col.field && coercedVal !== oldVal) {
         if (col.field.indexOf('.') > -1 ) {
           var parts = col.field.split('.');

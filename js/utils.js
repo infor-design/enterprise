@@ -348,6 +348,7 @@
   $.escapeHTML = function(value) {
     var newValue = value;
     if (typeof value === 'string') {
+      newValue = newValue.replace(/&/g, '&amp;');
       newValue = newValue.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
     return newValue;
@@ -357,6 +358,7 @@
     var newValue = value;
     if (typeof value === 'string') {
       newValue = newValue.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+      newValue = newValue.replace(/&amp;/g, '&');
     }
     return newValue;
   };
