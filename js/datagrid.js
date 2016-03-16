@@ -1586,10 +1586,11 @@ $.fn.datagrid = function(options) {
         toolbar.toolbar();
       }
 
-      toolbar.find('.searchfield').on('keypress.datagrid', function (e) {
-        if (e.keyCode === 13) {
+      toolbar.find('.searchfield').on('keypress.datagrid change.datagrid', function (e) {
+        if (e.keyCode === 13 || e.type==='change') {
           self.keywordSearch($(this).val());
         }
+
       });
 
       this.toolbar = toolbar;
