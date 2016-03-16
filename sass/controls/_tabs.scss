@@ -36,8 +36,14 @@
   width: 100%;
 }
 
+.tab-container {
+  font-size: 0;
+  position: relative;
+}
+
 .tab-list {
   list-style: none outside none;
+  overflow: hidden;
 }
 
 // Styles specific to any tabs used in SoHo Xi
@@ -202,7 +208,6 @@
 // Can change the way the contents are styled based on classes
 .tab-container:not(.vertical) {
   margin-bottom: 20px;
-  position: relative;
 
   .tab {
     border-radius: 2px 2px 0 0;
@@ -369,9 +374,6 @@
   // Tab Headers aka Notches
   // Ref: http://bradsknutson.com/blog/css-sliding-underline/
   .tab-list {
-    border-bottom: 1px solid $tab-border-color;
-    height: 34px;
-    overflow: hidden;
     padding: 0;
     width: 100%;
 
@@ -421,10 +423,6 @@
 
     .animated-bar {
       top: 59px;
-    }
-
-    .tab-list {
-      height: 62px;
     }
 
     .tab-more {

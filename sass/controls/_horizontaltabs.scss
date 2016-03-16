@@ -3,4 +3,18 @@
 
 .tab-container.horizontal {
 
+  .tab-list {
+    border-bottom: 1px solid $tab-border-color;
+    height: 34px;
+  }
+
+  // Displays the Big Numbers over top of each title
+  &.has-counts {
+
+    .tab-list {
+      height: 62px;
+    }
+
+  }
+
 }
