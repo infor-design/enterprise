@@ -1,0 +1,67 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main">
+
+   <div class="row">
+      <div class="twelve columns">
+         <h1>
+            Multiselect
+         </h1>
+         <h4>
+            This is meant to test updating a 2nd multiselect list when a multiselect control value is changed
+         </h4>
+         <h4>
+            Change 'States' and see if the list closes properly when you click away. As you change 'States' the list of towns is changing (empty or original list).
+         </h4>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="twelve columns">
+         <br/><br/>
+
+         <div class="field">
+            <label for="states-multi" class="label">States (Max 10)</label>
+            <select multiple id="states-multi" name="states-multi" data-maxselected="10" class="multiselect">
+               <option value="AL">Alabama</option>
+               <option value="AK" selected>Alaska</option>
+               <option value="AZ">Arizona</option>
+               <option value="AR">Arkansas</option>
+               <option value="CA">California</option>
+               <option value="CO">Colorado</option>
+            </select>
+         </div>
+
+         <div class="field">
+            <label for="towns-multi-optgroup" class="label">Towns (Max 5)</label>
+            <select multiple data-maxselected="5" id="towns-multi-optgroup" name="towns-multi-optgroup" class="multiselect">
+               <option>Bordentown</option>
+               <option>Burlington Township</option>
+               <option selected>Cinnaminson</option>
+               <option>Delran</option>
+               <option>Evesham</option>
+               <option>Moorestown</option>
+               <option>Mount Laurel</option>
+               <option>Palmyra</option>
+            </select>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      var townMultiselect = $('#towns-multi-optgroup');
+      var townOptions = townMultiselect.children();
+
+      // Test updating 2nd multiselect when first multiselect changes
+      $('#states-multi').on('change', function () {
+         if (townMultiselect.children().length) {
+            townMultiselect.empty();
+         } else {
+            townMultiselect.append(townOptions);
+         }
+
+         townMultiselect.trigger('updated');
+      });
+
+   </script>
+
+</div>

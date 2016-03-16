@@ -60,7 +60,7 @@ button {
     font-size: inherit;
     font-weight: inherit;
 
-    &:not(:empty) + .icon {
+    &:not(:empty) + .icon:not(.app-header) {
       margin-left: 5px;
     }
 
@@ -333,6 +333,7 @@ a.btn-menu {
 .btn-icon {
   .icon.app-header {
     left: 0;
+    margin-left: 0;
     position: relative;
     top: 2px;
   }

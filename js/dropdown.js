@@ -1057,6 +1057,10 @@
 
       //Close list and detach events
       closeList: function() {
+        if (!this.list.is(':visible')) {
+          return;
+        }
+
         if (!this.inputTimer()) {
           return;
         }
@@ -1073,10 +1077,11 @@
         this.listUl.find('li').show();
         this.input.removeClass('is-open').attr('aria-expanded', 'false');
         this.searchInput.removeAttr('aria-activedescendant');
+
         $(document).offTouchClick('dropdown')
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
-        $(window).off('resize.dropdown');
 
+        $(window).off('resize.dropdown');
         this.element.trigger('listclosed');
 
         this.input.focus();
