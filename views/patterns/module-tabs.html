@@ -1,0 +1,79 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> controls/svg}}
+
+  <!-- Masthead -->
+  {{> includes/masthead}}
+
+  <!-- Module Tabs -->
+  <header class="header tab-container module-tabs">
+    <button class="btn application-menu-trigger">
+      <span class="icon app-header" focusable="false" aria-hidden="true" role="presentation">
+        <span class="one"></span>
+        <span class="two"></span>
+        <span class="three"></span>
+      </span>
+      <span>Menu</span>
+    </button>
+    <ul class="tab-list">
+      <li class="tab"><a href="#search">Search</a></li>
+      <li class="tab is-selected"><a href="#order-entry">Order Entry</a></li>
+      <li class="tab"><a href="#order-123456">Order 123456</a></li>
+    </ul>
+  </header>
+
+  <!-- Page Container -->
+  <div class="page-container no-scroll">
+
+    <!-- Tab Panels -->
+    <div id="search" class="tab-panel no-scroll" style="display: none;">
+      <h2>Search</h2>
+    </div>
+
+    <div id="order-entry" class="tab-panel no-scroll">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>
+              <span class="head">Order Entry</span><br>
+              <span class="subheader" style="font-size: smaller;">Advanced Line Entry</span>
+            </h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable no-scroll">
+
+        <div class="expandable-area is-expanded">
+          <div class="expandable-header">
+            <a class="title"><span>Basic</span></a>
+          </div>
+          <div class="expandable-pane">
+            <div class="content">
+              TODO: Write Content
+            </div>
+          </div>
+        </div>
+
+        <div class="expandable-area is-expanded">
+          <div class="expandable-header">
+            <a class="title"><span>Extended</span></a>
+          </div>
+          <div class="expandable-pane">
+            <div class="content">
+              TODO: Write Content
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="order-123456" class="tab-panel" style="display: none;">
+      <h2>Order 123456</h2>
+    </div>
+
+  </div>
+
+</body>

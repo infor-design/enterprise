@@ -533,27 +533,16 @@
   }
 }
 
-/*
-#tab-container-popupmenu li.is-selected {
-  background-color: $tab-selected-color;
-
-  > a {
-    color: $inverse-color;
-
-    &:before {  //Removes default check icon
-      display: none;
-    }
-  }
-}
-*/
-
 .popupmenu .icon.icon-error {
   height: 14px;
   left: auto !important;
   width: 14px;
 }
 
-
+@import './horizontaltabs';
+@import './verticaltabs';
+@import './headertabs';
+@import './moduletabs';
 
 //RTL Styles
 html[dir='rtl'] {

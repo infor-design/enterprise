@@ -25,6 +25,7 @@
           containerElement: null,
           tabCounts: false,
         },
+        tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
@@ -89,6 +90,17 @@
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
+        }
+
+        // Add a default tabs class of "horizontal" if it doesn't already exist
+        var noClass = true;
+        tabContainerTypes.forEach(function tabTypeIterator(val, i) {
+          if (self.container.hasClass(tabContainerTypes[i])) {
+            noClass = false;
+          }
+        });
+        if (noClass) {
+          self.container.addClass('horizontal');
         }
 
         // Build Tab Counts

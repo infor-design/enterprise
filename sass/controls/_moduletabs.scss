@@ -1,0 +1,21 @@
+// Module Tabs
+//================================================== //
+
+.tab-container.module-tabs {
+  font-size: 0;
+  white-space: nowrap;
+
+  .btn {
+    @include font-size(12);
+  }
+
+  .tab-list {
+    @include font-size(12);
+    width: calc(100% - 103px);
+  }
+
+  .tab {
+
+  }
+
+}
