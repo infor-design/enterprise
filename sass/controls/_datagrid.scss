@@ -2,6 +2,8 @@
 //================================================== //
 
 $datagrid-header-height: 40px;
+$datagrid-header-medium-height: 30px;
+$datagrid-header-short-height: 32px;
 
 .datagrid-wrapper {
   border: 1px solid $datagrid-border-color;
@@ -76,8 +78,8 @@ $datagrid-header-height: 40px;
 
   //Row Height Feature
   &.medium-rowheight tr td {
-    height: 40px;
-    line-height: 40px;
+    height: $datagrid-header-height;
+    line-height: $datagrid-header-height;
 
     .datagrid-row-heading {
       margin-top: 25px;
@@ -97,7 +99,7 @@ $datagrid-header-height: 40px;
     //Resize the headers too
     .datagrid-column-wrapper,
     th {
-      height: 30px;
+      height: $datagrid-header-medium-height;
     }
 
     .sort-indicator {
@@ -106,11 +108,11 @@ $datagrid-header-height: 40px;
   }
 
   &.short-rowheight tr td {
-    height: 32px;
-    line-height: 32px;
+    height: $datagrid-header-short-height;
+    line-height: $datagrid-header-short-height;
 
     span {
-      line-height: 32px;
+      line-height: $datagrid-header-short-height;
     }
 
     .badge {
@@ -869,5 +871,118 @@ html[dir='rtl'] {
     }
   }
 
+}
+
+// Sort styles
+//====================================================
+.is-draggable-columns {
+  th {
+    .handle,
+    .is-draggable-target {
+      display: none;
+      height: $datagrid-header-height;
+      font-size: 2em;
+      margin: 0;
+      padding: 4px 0 0 5px;
+      position: absolute;
+      top: 0;
+      width: 20px;
+
+      &.is-draggable-target {
+        background-color: rgba($datagrid-header-color, 0.2);
+        border-right: 1px solid $datagrid-header-border-color;
+
+        &.is-over {
+          display: inline-block;
+        }
+      }
+
+      &.handle {
+        color: $datagrid-sort-icon-color;
+        cursor: move;
+        width: 18px;
+        z-index: 1;
+
+        &:hover {
+          color: $datagrid-header-color;
+        }
+      }
+    }
+
+    &.is-dragging {
+      opacity: 0.5;
+    }
+
+    &.is-dragging-clone {
+      max-width: 125px;
+      position: absolute;
+
+      .datagrid-header-text {
+        @include ellipsis();
+      }
+    }
+
+    &:hover,
+    &.is-dragging,
+    &.is-dragging-clone {
+      .handle {
+        display: inline-block;
+      }
+    }
+  }
+
+  .short-rowheight {
+    th {
+      .handle,
+      .is-draggable-target {
+        font-size: 1.5em;
+        height: $datagrid-header-short-height;
+        padding: 1px 0 0 5px;
+        width: 14px;
+      }
+    }
+  }
+
+  .medium-rowheight {
+    th {
+      .handle,
+      .is-draggable-target {
+        font-size: 1.6em;
+        height: $datagrid-header-medium-height;
+        padding: 3px 0 0 5px;
+        width: 16px;
+      }
+    }
+  }
+
+}
+
+// Firefox on Mac only
+.is-mac.is-firefox {
+  .is-draggable-columns {
+
+    th {
+      .handle {
+        padding: 8px 0 0 5px;
+      }
+    }
+
+    .short-rowheight {
+      th {
+        .handle {
+          padding: 3px 0 0 5px;
+        }
+      }
+    }
+
+    .medium-rowheight {
+      th {
+        .handle {
+          padding: 5px 0 0 5px;
+        }
+      }
+    }
+
+  }
 }
 

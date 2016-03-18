@@ -19,6 +19,7 @@
     // Settings and Options
     var pluginName = 'sort',
         defaults = {
+          itemsSelector: null,
           connectWith: false,
           placeholderCssClass: 'sort-placeholder'
         },
@@ -44,8 +45,15 @@
       handleEvents: function() {
         var self = this,
           index, isHandle,
+          status = {},
           items = self.element.children().not('[data-sort-exclude="true"]'),
           placeholder = $('<' + (/^(ul|ol)$/i.test(self.element[0].tagName) ? 'li' : 'div') +'>');
+
+
+        if (settings.itemsSelector) {
+          items = $(settings.itemsSelector, self.element).not('[data-sort-exclude="true"]');
+          placeholder = $('<'+ items.first()[0].tagName +' />');
+        }
 
         self.dragStart = 'dragstart.sort touchstart.sort gesturestart.sort';
         self.dragEnd = 'dragend.sort touchend.sort touchcancel.sort gestureend.sort';
@@ -86,8 +94,13 @@
               return false;
             }
             isHandle = false;
+            self.dragging = $(this);
 
-            index = (self.dragging = $(this)).addClass('sort-dragging').index();
+            index = self.dragging.addClass('sort-dragging').index();
+
+            $.extend(status, {start: self.dragging, startIndex: index});
+            self.element.triggerHandler('beforesort', status);
+
             var dt = e.originalEvent.dataTransfer;
             dt.effectAllowed = 'move';
             dt.setData('Text', 'dummy');
@@ -103,15 +116,16 @@
             self.placeholders.detach();
 
             if (index !== self.dragging.index()) {
-              self.dragging.parent().trigger('sortupdate', {item: self.dragging});
+              $.extend(status, {end: self.dragging, endIndex: self.dragging.index()});
+              self.element.triggerHandler('sortupdate', status);
             }
             self.dragging = null;
           })
 
           // While dragging -----------------------------------------------------------------------
           .on(self.dragWhileDragging, function(e) {
-            var overItem = this;
-
+            var overItem = this,
+              overIndex;
             e.preventDefault();
             
             if(e.type==='drop') {
@@ -130,12 +144,22 @@
               e.originalEvent.dataTransfer.dropEffect = 'move';
             }
 
-            if (items.is(overItem)) {
+            if (items.is(overItem) && placeholder.index() !== overItem.index()) {
               self.dragging.hide();
 
-              overItem[placeholder.index() < overItem.index() ? 'after' : 'before'](placeholder);
+              if (placeholder.index() < (overItem.index())) {
+                placeholder.insertAfter(overItem);
+                overIndex = overItem.index();
+              }
+              else {
+                placeholder.insertBefore(overItem);
+                overIndex = placeholder.index();
+              }
 
-              // Fix: IE-11 on windows-10 svg wss disappering
+              $.extend(status, {over: overItem, overIndex: overIndex});
+              self.element.triggerHandler('draggingsort', status);
+
+              // Fix: IE-11 on windows-10 svg was disappering
               var svg = $('svg', overItem);
               if(self.isIE11 && svg.length) {
                 overItem.html(overItem.html());

@@ -494,6 +494,7 @@ $.fn.datagrid = function(options) {
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
+        columnsReorder: false, // Makes columns to be re-order by drag and drop
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -521,7 +522,7 @@ $.fn.datagrid = function(options) {
 
     init: function(){
       var self = this;
-
+      this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
       this.settings = settings;
       this.initSettings();
       this.appendToolbar();
@@ -950,7 +951,160 @@ $.fn.datagrid = function(options) {
         clone.css({'position': 'absolute', top: '30px', 'background-color': '#5c5c5c', 'height': '48px'});
       });*/
 
+      if (self.settings.columnsReorder) {
+        self.createDraggableColumns();
+      }
     },
+//-------------------------------------------------
+    // Create draggable columns
+    createDraggableColumns: function () {
+      var self = this,
+        headers = self.headerNodes();
+
+      headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');        
+      self.element.addClass('is-draggable-columns');
+
+      // Initialize Drag api
+      $('.handle', headers).each(function() {
+        var handle = $(this),
+          hader = handle.parent();
+
+        handle.on('mousedown.datagrid', function(e) {
+          e.preventDefault();
+
+          hader.drag({clone: true, cloneAppentTo: headers.first().parent()})
+
+            // Drag start =======================================
+            .on('dragstart.datagrid', function (e, pos, clone) {
+              var index;
+
+              clone.removeAttr('id').addClass('is-dragging-clone').css({left: pos.left, top: pos.top});
+              $('.is-draggable-target', clone).remove();
+
+              self.setdraggableColumnsTargets();
+              index = self.getColumnIndex(pos);
+              self.draggableStatus.startIndex = index;
+            })
+
+            // While dragging ===================================
+            .on('drag.datagrid', function (e, pos) {
+              var i, l, target,
+                index = self.getColumnIndex(pos);
+
+              if (index !== -1) {
+                for (i=0, l=self.draggableColumnsTargets.length; i<l; i++) {
+                  target = self.draggableColumnsTargets[i];
+                  target.el[(target.index === index && target.index !== self.draggableStatus.startIndex) ?
+                    'addClass' : 'removeClass']('is-over');
+                }
+              }
+              else {
+                $('.is-draggable-target', headers).removeClass('is-over');
+              }
+
+            })
+
+            // Drag end =========================================
+            .on('dragend.datagrid', function (e, pos) {
+              var index = self.getColumnIndex(pos),
+               dragApi = hader.data('drag'),
+               tempArray = [],
+               i, l, indexFrom, indexTo;
+
+              // Unbind drag from header
+              if (dragApi && dragApi.destroy) {
+                dragApi.destroy();
+              }
+
+              self.draggableStatus.endIndex = index;
+              $('.is-draggable-target', headers).removeClass('is-over');
+
+              if (self.draggableStatus.endIndex !== -1) {
+                if (self.draggableStatus.startIndex !== self.draggableStatus.endIndex) {
+                  // =========================
+                  // BEGIN: Swap columns here
+                  // =========================
+                  // console.log(self.draggableStatus);
+
+                  for (i=0, l=self.settings.columns.length; i < l; i++) {
+                    if (!('hidden' in self.settings.columns[i])) {
+                      tempArray.push(i);
+                    }
+                  }
+                  // console.log(tempArray);
+                  indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
+                  indexTo = tempArray[self.draggableStatus.endIndex] || 0;
+
+                  self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
+                  // console.log(self.settings.columns);
+                  // =======================
+                  // END: Swap columns here
+                  // =======================
+                }
+                else {
+                  // No need to swap here since same target area, where drag started
+                  // console.log('Dropped in same target area, where drag started');
+                }
+              }
+              else {
+                // console.log('Did not droped in target area');
+              }
+
+            });
+        });
+      });
+    },
+
+    // Set draggable columns target
+    setdraggableColumnsTargets: function () {
+      var self = this,
+        headers = self.headerNodes(),
+        target, pos, extra;
+
+      self.draggableColumnsTargets = [];
+      self.draggableStatus = {};
+
+      $('.is-draggable-target', headers).each(function (index) {
+        target = headers.eq(index);
+        pos = target.position();
+        // Extra space around, if dropped item bit off from drop area
+        extra = 20;
+
+        self.draggableColumnsTargets.push({
+          el: $(this),
+          index: index,
+          pos: pos,
+          width: target.outerWidth(),
+          height: target.outerHeight(),
+          dropArea: {
+            x1: pos.left - extra, x2: pos.left + target.outerWidth() + extra,
+            y1: pos.top - extra, y2: pos.top + target.outerHeight() + extra
+          }
+        });
+      });
+    },
+
+    // Get column index
+    getColumnIndex: function (pos) {
+      var self = this,
+        index = -1,
+        target, i, l;
+
+      for (i=0, l=self.draggableColumnsTargets.length; i<l; i++) {
+        target = self.draggableColumnsTargets[i];
+        if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
+            pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
+          index = target.index;
+        }
+      }
+      return index;
+    },
+
+    // Move an array element position
+    arrayIndexMove: function(arr, from, to) {
+      arr.splice(to, 0, arr.splice(from, 1)[0]);
+    },
+//-------------------------------------------------
 
     //Return Value from the Object handling dotted notation
     fieldValue: function (obj, field) {
@@ -1428,44 +1582,46 @@ $.fn.datagrid = function(options) {
       });
 
       // Move the drag handle to the end or start of the column
-      this.headerRow.add((this.clone ? this.clone.find('thead') : [])).off('mousemove.datagrid touchstart.datagrid touchmove.datagrid').on('mousemove.datagrid touchstart.datagrid touchmove.datagrid', 'th', function (e) {
-        if (self.dragging) {
-          return;
-        }
+      this.headerRow
+        .add((this.clone ? this.clone.find('thead') : []))
+        .off('mousemove.datagrid touchstart.datagrid touchmove.datagrid')
+        .on('mousemove.datagrid touchstart.datagrid touchmove.datagrid', 'th', function (e) {
+          if (self.dragging) {
+            return;
+          }
 
-        self.currentHeader = $(e.target).closest('th');
+          self.currentHeader = $(e.target).closest('th');
 
-        if (!self.currentHeader.hasClass('is-resizable')) {
-          return;
-        }
+          if (!self.currentHeader.hasClass('is-resizable')) {
+            return;
+          }
 
-        var isClone = self.currentHeader.closest('.datagrid-clone').length,
-          headerDetail = self.currentHeader.closest('.header-detail'),
-          extraMargin = headerDetail.length ? parseInt(headerDetail.css('margin-left'), 10) : 0,
-          leftEdge = parseInt(self.currentHeader.position().left) - (extraMargin || 0),
-          rightEdge = leftEdge + self.currentHeader.outerWidth(),
-          alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX),
-          leftPos = 0;
+          var isClone = self.currentHeader.closest('.datagrid-clone').length,
+            headerDetail = self.currentHeader.closest('.header-detail'),
+            extraMargin = headerDetail.length ? parseInt(headerDetail.css('margin-left'), 10) : 0,
+            leftEdge = parseInt(self.currentHeader.position().left) - (extraMargin || 0),
+            rightEdge = leftEdge + self.currentHeader.outerWidth(),
+            alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX),
+            leftPos = 0;
 
-        //TODO: Test Touch support - may need handles on each column
-        leftPos = (alignToLeft ? (rightEdge - 6): (leftEdge - 6));
+          //TODO: Test Touch support - may need handles on each column
+          leftPos = (alignToLeft ? (rightEdge - 6): (leftEdge - 6));
 
-        if (self.currentHeader.index() === 0 && !alignToLeft) {
-          leftPos = '-999';
-        }
+          if (self.currentHeader.index() === 0 && !alignToLeft) {
+            leftPos = '-999';
+          }
 
-        if (!alignToLeft) {
-           self.currentHeader = self.currentHeader.prev();
-        }
+          if (!alignToLeft) {
+             self.currentHeader = self.currentHeader.prev();
+          }
 
-        if (!self.currentHeader.hasClass('is-resizable')) {
-          return;
-        }
+          if (!self.currentHeader.hasClass('is-resizable')) {
+            return;
+          }
 
-        self.resizeHandle.css('left', leftPos + 'px');
-        self.resizeHandle.css('top', (isClone ? '-40px' : 'auto'));
-
-      });
+          self.resizeHandle.css('left', leftPos + 'px');
+          self.resizeHandle.css('top', (isClone ? '-40px' : 'auto'));
+        });
 
       // Handle Clicking Header Checkbox
       this
@@ -2428,7 +2584,6 @@ $.fn.datagrid = function(options) {
     sortFunction: function(id, ascending) {
       var key,
       primer = function(a) {
-
         a = (a === undefined || a === null ? '' : a);
         if (typeof a === 'string') {
           a = a.toUpperCase();
@@ -2438,7 +2593,6 @@ $.fn.datagrid = function(options) {
             a = parseFloat(a);
           }
         }
-
         return a;
       };
 
@@ -2446,7 +2600,6 @@ $.fn.datagrid = function(options) {
       ascending = !ascending ? -1 : 1;
 
       return function (a, b) {
-
         return a = key(a), b = key(b), ascending * ((a > b) - (b > a));
       };
     },
