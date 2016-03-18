@@ -778,7 +778,7 @@
 
         // Sanitize
         tabId = '' + tabId.replace(/#/g, '');
-        options.name = options.name ? options.name.toString() : '';
+        options.name = options.name ? options.name.toString() : '&nbsp;';
         options.isDismissible = options.isDismissible ? options.isDismissible === true : false;
         options.isDropdown = options.isDropdown ? options.isDropdown === true : false;
 
