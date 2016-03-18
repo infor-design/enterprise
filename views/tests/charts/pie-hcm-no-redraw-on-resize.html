@@ -1,6 +1,6 @@
 
 <div class="row top-padding">
-  <div class="two-thirds column">
+  <div class="six columns">
 
       <div class="widget auto-height">
         <div class="widget-header">
@@ -51,6 +51,7 @@
   $('#pie-chart-example').chart({
     type: 'donut',
     dataset: pieData,
+    redrawOnResize: false,
     labels: {
       hideLabels: false
     }
