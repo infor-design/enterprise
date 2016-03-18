@@ -139,7 +139,7 @@
           totals = {};
 
         // Render "mustache" Template
-        if (Tmpl && dataset && this.settings.template) {
+        if (typeof Tmpl === 'object' && dataset && this.settings.template) {
 
           if (this.settings.template.indexOf('{{#totals}}') > -1) {
             totals = this.getTotals(dataset);
