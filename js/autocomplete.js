@@ -326,7 +326,7 @@
               });
             }
 
-          }, self.settings.delay); //no pref for this lets keep it simple.
+          }, self.settings.delay);
 
         }).on('focus.autocomplete', function () {
           if (self.noSelect) {

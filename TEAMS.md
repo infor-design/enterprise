@@ -24,13 +24,15 @@
 | Home Pages  | Typescript, Angular  - 4.0 | Fredrik Eriksson | 4x |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> | 4x |
 | Infinium SHCM  |   | Joe Bockskopf | 3x |
-| Ion Desk  | Silverlight Conversion / Hybrid / Maybe use Vaadin GWT | Massimo Capoccia| 4x || Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato | 3x |
+| ION Desk  | Silverlight Conversion / Hybrid / Maybe use Vaadin GWT | Massimo Capoccia| 4x || Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato | 3x |
 | ION Factory R&D | Context Apps for ION/Ming.le |  Ramesh Chinnapangu Ramesh.Chinnapangu@infor.com, Raghavendar Gangishetty raghu@infor.com | 4x |
 | Infor BI Modeling | Hasn’t been released yet. Doing a quick assessment on required changes for Xi, no dedicated Xi release plan yet. The application is part of the SOA Farm and based on BI Farm Architecture http://bit.ly/1OL2mvx.  The client is implemented as a Plugin for BI Dashboards. | Guido Buecker <Guido.Buecker@infor.com> | 4x |
 | Infor Enroute 911  | Actively working on converting  | James Coonce | 3x to 4x |
 | Infor Hospitality in France  | POS  (France) | Bruno Martinot | 3x to 4x |
 | Infor Mobility Framework | HTML5 , React | Oskar Eriksson |
-| Infor Supplier Exchange | Using some widget styling and Charts | James Wang/George Matthews |
+|Infor SCE Administration Console | Using some widget styling and Charts | James Wang/George Matthews |
+ 4x |
+| Infor Supplier Exchange | Replacing Fat client Java Swing UI | John Sipher |
  4x |
 | Landmark  | Jetty Server Servlet | Phillip Patton, Andrew Lipensky | 4x |
 | Lawson S3  |   | Andy Buboltz | 4x |

@@ -331,76 +331,13 @@
         this.processStringAgainstMask(newValue, e);
       },
 
-      // Replacement for String.fromCharCode() that takes meta keys into account when determining which
-      // character key was pressed.
-      toChar: function(e) {
-        var key = e.which,
-          character = '',
-          toAscii = {
-            '188': '44',
-            //'109': '45', // changes "m" to "-" when using keypress
-            '190': '46',
-            '191': '47',
-            '192': '96',
-            '220': '92',
-            '222': '39',
-            '221': '93',
-            '219': '91',
-            '173': '45',
-            '187': '61', //IE Key codes
-            '186': '59', //IE Key codes
-            '189': '45'  //IE Key codes
-          },
-          shiftUps = {
-            '96': '~',
-            '49': '!',
-            '50': '@',
-            '51': '#',
-            '52': '$',
-            '53': '%',
-            '54': '^',
-            '55': '&',
-            '56': '*',
-            '57': '(',
-            '48': ')',
-            '45': '_',
-            '61': '+',
-            '91': '{',
-            '93': '}',
-            '92': '|',
-            '59': ':',
-            '37': '%',
-            '38': '&',
-            '39': '\"',
-            '44': '<',
-            '46': '>',
-            '47': '?'
-          };
-
-        // Normalize weird keycodes
-        if (toAscii.hasOwnProperty(key)) {
-          key = toAscii[key];
-        }
-
-        // Convert Keycode to Character String
-        if (!e.shiftKey && (key >= 65 && key <= 90)) {
-          character = String.fromCharCode(key + 32);
-        } else if (e.shiftKey && shiftUps.hasOwnProperty(key)) { // User was pressing Shift + any key
-          character = shiftUps[key];
-        } else {
-          character = String.fromCharCode(key);
-        }
-
-        return character;
-      },
-
       // The catch-all event for handling keyboard events within this input field. Grabs information about the keys
       // being pressed, event type, matching pattern characters, and determines what to do with them.
       handleKeyEvents: function(self, e) {
         var evt = e || window.event,
           eventType = evt.originalEvent.type,
           key = e.which,
-          typedChar = self.toChar(e);
+          typedChar = $.actualChar(e);
 
         // set the original value if it doesn't exist.
         if (!self.initValue) {

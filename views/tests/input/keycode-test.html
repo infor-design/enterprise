@@ -46,7 +46,7 @@
         <label class="radio-label" for="trans-fromcharcode">Use <em>String.prototype.fromCharCode()</em></label>
         <br>
         <input type="radio" id="trans-tochar" name="trans" class="radio " value="toChar" />
-        <label class="radio-label" for="trans-tochar">Use SoHo Xi's <em>Mask.prototype.toChar()</em></label>
+        <label class="radio-label" for="trans-tochar">Use SoHo Xi's <em>$.actualChar()</em></label>
     </fieldset>
 
     <!-- used for getting the mask API -->
@@ -86,7 +86,7 @@
         lines = $('#key-console').find('.demo-line'),
         type = e.originalEvent.type;
 
-      key = settings.translationMethod === 'fromCharCode' ? String.fromCharCode(keycode) : $('#hidden-mask').data('mask').toChar(e);
+      key = settings.translationMethod === 'fromCharCode' ? String.fromCharCode(keycode) : $.actualChar(e);
 
       if (lines.length > 17) {
         lines.first().remove();

@@ -6,8 +6,6 @@
     <p>The dropdown control on this page has its options created by loading from an external source with an AJAX request.
     </p>
 
-    <p></p>
-
   </div>
 </div>
 
@@ -26,13 +24,10 @@
   $('body').on('initialized', function() {
 
     $('#ajax-test').dropdown({
-      source: function (response) {
-        //TODO: Add Term Back
-        //function (term, response
+      source: function (response, term) {
         //$.getJSON('/api/states?term='+term, function(data) {
         $.getJSON('/api/states', function(data, term) {
           console.log(data, term);
-          //Structure the data with val, label syntax is done on the server
           response(data);
         });
       }

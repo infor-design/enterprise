@@ -30,7 +30,8 @@
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
           source: undefined,  //A function that can do an ajax call.
-          empty: false //Initialize Empty Value
+          empty: false, //Initialize Empty Value
+          delay: 300 //Typing Buffer Delay
         },
         settings = $.extend({}, defaults, options);
 
@@ -316,7 +317,7 @@
           text = this.getOptionText(opts);
 
         if (this.settings.empty && opts.length === 0) {
-          //initially empty
+          //Kly empty
           return;
         }
 
@@ -370,6 +371,7 @@
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
           self.ignoreKeys($(this), e);
+          self.handleAutoComplete(e);
         }).on('mouseup.dropdown', function(e) {
           if (e.button === 2) {
             return;
@@ -443,7 +445,7 @@
             return;
           }
 
-          if (self.settings.noSearch === false) {
+          if (self.settings.noSearch === false && !self.settings.source) {
             clearTimeout(timer);
             timer = setTimeout(function () {
               if (searchInput.val() === '') {
@@ -453,6 +455,8 @@
               }
             }, 100);
           }
+        }).on('keypress.dropdown', function (e) {
+          self.handleAutoComplete(e);
         });
 
       },
@@ -691,14 +695,45 @@
           return false;
         }
 
-        if (!self.isOpen() && !self.isControl(key)) {
+        self.initialFilter = false;
+
+        if (!self.isOpen() && !self.isControl(key) && !this.settings.source) {
+          //Make this into Auto Complete
+          self.initialFilter = true;
+          self.filterTerm = $.actualChar(e);
+          self.searchInput.val($.actualChar(e));
           self.toggleList();
-          self.searchInput.val('');
         }
 
         this.searchKeyMode = true;
         self.searchInput.attr('aria-activedescendant', '');
         return true;
+      },
+
+      timer: null,
+      filterTerm: '',
+
+      handleAutoComplete: function(e) {
+        var self = this;
+        clearTimeout(this.timer);
+
+        if (!self.settings.source) {
+          return;
+        }
+
+        self.initialFilter = true;
+        self.filterTerm += $.actualChar(e);
+
+        this.timer = setTimeout(function () {
+          if (!self.isOpen()) {
+            self.searchInput.val(self.filterTerm);
+            self.toggleList();
+          } else {
+            self.callSource(function () {
+              self.filterList(self.searchInput.val().toLowerCase());
+            });
+          }
+        }, self.settings.delay);
       },
 
       isControl: function(keycode) {
@@ -762,15 +797,10 @@
           return;
         }
 
-        if (self.element.find('option').length === 0) {
-          if (!self.callSource(function () {
-            self.updateList();
-            self.openList();
-          })) {
-            self.updateList();
-            this.openList();
-          }
-        } else {
+        if (!self.callSource(function () {
+          self.updateList();
+          self.openList();
+        })) {
           self.updateList();
           this.openList();
         }
@@ -804,6 +834,14 @@
 
         this.position();
 
+        if (this.initialFilter) {
+          setTimeout(function () {
+            self.searchInput.val(self.filterTerm);
+            self.filterList(self.searchInput.val());
+          }, 0);
+          this.initialFilter = false;
+        }
+
         var noScroll = this.settings.multiple;
         this.highlightOption(current, noScroll);
         if (this.settings.multiple && this.listUl.find('.is-selected').length > 0) {
@@ -813,7 +851,10 @@
           }, 0);
         }
 
-        this.searchInput.val(!this.settings.multiple ? current.find('a').text() : this.input.val());
+        if (!this.settings.multiple) {
+          this.searchInput.val(current.find('a').text());
+        }
+
         this.handleSearchEvents();
         this.activate(true); // Focus the Search Input
         this.element.trigger('listopened');
@@ -1069,7 +1110,8 @@
           this.touchmove = false;
         }
 
-        this.searchInput.off('keydown.dropdown keypress.dropdown');
+        this.filterTerm = '';
+        this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
         this.list.hide().remove();
         this.list.offTouchClick('list')
@@ -1283,11 +1325,12 @@
 
       // Execute the source ajax option
       callSource: function(callback) {
-        var self = this;
+        var self = this, searchTerm = '';
 
         if (this.settings.source) {
-          var searchTerm = self.input.val(),
-            sourceType = typeof this.settings.source,
+          searchTerm = self.searchInput.val();
+
+          var sourceType = typeof this.settings.source,
             response = function (data) {
             //to do - no results back do not open.
             var list = '',
@@ -1329,12 +1372,11 @@
 
           //TODO: show indicator when we have it
           self.input.addClass('is-busy');
-          self.element
-              .trigger('requeststart');
+          self.element.trigger('requeststart');
 
           if (sourceType === 'function') {
             // Call the 'source' setting as a function with the done callback.
-            this.settings.source(response);
+            this.settings.source(response, searchTerm);
           } else if (sourceType === 'object') {
             // Use the 'source' setting as pre-existing data.
             // Sanitize accordingly.
@@ -1351,6 +1393,7 @@
               response([]);
             });
           }
+
           return true;
         }
         return false;
