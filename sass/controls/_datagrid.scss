@@ -886,11 +886,11 @@ html[dir='rtl'] {
       padding: 4px 0 0 5px;
       position: absolute;
       top: 0;
-      width: 20px;
 
       &.is-draggable-target {
         background-color: rgba($datagrid-header-color, 0.2);
         border-right: 1px solid $datagrid-header-border-color;
+        width: 2px;
 
         &.is-over {
           display: inline-block;
@@ -929,6 +929,12 @@ html[dir='rtl'] {
         display: inline-block;
       }
     }
+
+    &.is-dragging-clone {
+      .sort-indicator {
+        opacity: 0;
+      }
+    }    
   }
 
   .short-rowheight {
