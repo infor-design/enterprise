@@ -337,6 +337,16 @@ a.btn-menu {
     position: relative;
     top: 2px;
   }
+
+  &.has-content {
+    .icon {
+      fill: $azure06;
+    }
+
+    &:hover .icon {
+      fill: $azure08;
+    }
+  }
 }
 
 // Ripple Effect
