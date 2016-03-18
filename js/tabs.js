@@ -60,6 +60,11 @@
         this.setOverflow();
 
         // Focus the bar on the first element, but don't animate it on page load.
+
+        if (!this.hasAdvancedFocusStates()) {
+          return this;
+        }
+
         this.animatedBar.addClass('no-transition');
         this.positionFocusState(selected);
         this.focusBar(undefined, function() {
@@ -67,6 +72,8 @@
             self.animatedBar.removeClass('no-transition');
           }, 0);
         });
+
+        return this;
       },
 
       setup: function() {
@@ -95,12 +102,16 @@
         // Add a default tabs class of "horizontal" if it doesn't already exist
         var noClass = true;
         tabContainerTypes.forEach(function tabTypeIterator(val, i) {
-          if (self.container.hasClass(tabContainerTypes[i])) {
+          if (self.element.hasClass(tabContainerTypes[i])) {
             noClass = false;
           }
         });
         if (noClass) {
-          self.container.addClass('horizontal');
+          if (this.element.closest('.header').length) {
+            self.element.addClass('header-tabs');
+          } else {
+            self.element.addClass('horizontal');
+          }
         }
 
         // Build Tab Counts
@@ -109,21 +120,23 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.tablist = self.element.children('.tab-list')
+        self.tablist = self.element.find('.tab-list')
           .attr({
             'class': 'tab-list',
             'role': 'tablist',
             'aria-multiselectable': 'false'
           });
 
-        self.focusState = self.container.children('.tab-focus-indicator');
-        if (!self.focusState.length) {
-          self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
-        }
+        if (this.hasAdvancedFocusStates()) {
+          self.focusState = self.container.children('.tab-focus-indicator');
+          if (!self.focusState.length) {
+            self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
+          }
 
-        self.animatedBar = self.container.children('.animated-bar');
-        if (!self.animatedBar.length) {
-          self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+          self.animatedBar = self.container.children('.animated-bar');
+          if (!self.animatedBar.length) {
+            self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+          }
         }
 
         // Add the markup for the "More" button if it doesn't exist.
@@ -134,6 +147,15 @@
           button.append('<svg class="icon icon-more" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
           self.tablist.after(button);
           self.moreButton = button;
+        }
+
+        // Add the application menu Module Tab, if applicable
+        if (self.isModuleTabs()) {
+          var appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
+            '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
+            '<span>Menu</span>' +
+            '</a></tab>');
+          this.tablist.prepend(appMenuTrigger);
         }
 
         //for each item in the tabsList...
@@ -263,7 +285,8 @@
             return false;
           }
 
-          self.focusState.removeClass('is-visible');
+          self.hideFocusState();
+
           if (!tab.is(':focus')) {
             tab.children('a').data('focused-by-click', true);
           }
@@ -361,6 +384,11 @@
           return false;
         }
 
+        var appMenuResult = this.handleAppMenuTabKeydown(e);
+        if (!appMenuResult) {
+          return;
+        }
+
         var nonVisibleExcludes = ':not(.separator):not(:hidden)',
           a = li.children('a');
 
@@ -373,11 +401,14 @@
         }
 
         this.activate(a.attr('href'));
+
         if (this.popupmenu) {
           this.popupmenu.close();
         }
 
-        this.focusState.removeClass('is-visible');
+        if (this.hasAdvancedFocusStates()) {
+          this.focusState.removeClass('is-visible');
+        }
 
         // NOTE: If we switch the focusing-operations back to how they used to be (blue bar moving around with the focus state)
         // remove the below three lines and uncomment all the commented-out "this.focusBar()" directives.
@@ -402,7 +433,8 @@
         } else {
           this.buildPopupMenu();
         }
-        this.focusState.removeClass('is-visible');
+
+        this.hideFocusState();
       },
 
       handleTabFocus: function(e, a) {
@@ -439,8 +471,10 @@
           focusedByKeyboard = (dataFocusedClick && dataFocusedClick === false);
         $.removeData(this.moreButton[0], 'focused-by-click');
 
-        this.focusState.removeClass('is-visible');
-        this.positionFocusState(this.moreButton, focusedByKeyboard);
+        if (this.hasAdvancedFocusStates()) {
+          this.focusState.removeClass('is-visible');
+          this.positionFocusState(this.moreButton, focusedByKeyboard);
+        }
       },
 
       handleTabKeyDown: function(e) {
@@ -453,10 +487,21 @@
           return;
         }
 
-        var passableKeys = [8, 13];
+        var passableKeys = [8, 13, 32];
 
-        if ((e.which < 32 && $.inArray(e.which, passableKeys) === -1) || e.which > 46) {
+        function isPassableKey() {
+          return $.inArray(e.which, passableKeys) > -1;
+        }
+
+        if ((e.which < 32 && !isPassableKey()) || e.which > 46) {
           return;
+        }
+
+        if (isPassableKey()) {
+          var appMenuResult = this.handleAppMenuTabKeydown(e);
+          if (!appMenuResult) {
+            return;
+          }
         }
 
         var self = this,
@@ -502,7 +547,7 @@
             }
             return;
           case 13: // Enter
-            self.focusState.removeClass('is-visible');
+            self.hideFocusState();
             return;
           case 32: // Spacebar
             if (currentLi.hasClass('has-popupmenu')) {
@@ -511,7 +556,7 @@
             }
             self.activate(currentA.attr('href'));
             checkAngularClick();
-            self.focusState.removeClass('is-visible');
+            self.hideFocusState();
             return;
           case 38:
             e.preventDefault(); // jshint ignore:line
@@ -539,7 +584,9 @@
         }
 
         var a = targetLi.children('a').focus();
-        self.positionFocusState(a, true);
+        if (self.hasAdvancedFocusStates()) {
+          self.positionFocusState(a, true);
+        }
       },
 
       handleDismissibleTabKeydown: function(e) {
@@ -558,6 +605,32 @@
           e.preventDefault();
           this.closeDismissibleTab(tab.children('a').attr('href'));
         }
+      },
+
+      handleAppMenuTabKeydown: function(e) {
+        var target = $(e.target),
+          li = target.parent();
+
+        if (!li.is('.application-menu-trigger')) {
+          return true;
+        }
+
+        // If the tab is an application-menu trigger, open the app menu
+        // Used by Module Tabs
+        var menu = $('#application-menu');
+        if (!menu.length) {
+          return false;
+        }
+
+        e.preventDefault();
+
+        if (menu.hasClass('is-open')) {
+          menu.trigger('close-applicationmenu');
+          return false;
+        }
+
+        menu.trigger('open-applicationmenu');
+        return false;
       },
 
       handleMoreButtonKeydown: function(e) {
@@ -603,6 +676,14 @@
           e.preventDefault();
           return this.activate(a.attr('href'));
         }
+      },
+
+      hasAdvancedFocusStates: function() {
+        return !this.element.hasClass('module-tabs') && !this.element.hasClass('vertical-tabs');
+      },
+
+      isModuleTabs: function() {
+        return this.element.hasClass('module-tabs');
       },
 
       activate: function(href) {
@@ -953,6 +1034,10 @@
       setOverflow: function () {
         var self = this;
 
+        if (this.isModuleTabs()) {
+          this.adjustModuleTabs();
+        }
+
         if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
           self.element.addClass('has-more-button');
         } else {
@@ -960,6 +1045,35 @@
         }
         self.setMoreActive();
 
+      },
+
+      adjustModuleTabs: function() {
+        var self = this,
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
+          appTrigger = this.tablist.find('.application-menu-trigger'),
+          hasAppTrigger = appTrigger.length > 0,
+          tabContainerW = this.tablist.outerWidth(),
+          defaultTabSize = 120,
+          visibleTabSize = 120;
+
+        // Remove overflowed tabs
+        sizeableTabs.removeAttr('style').each(function() {
+          if (self.isTabOverflowed($(this))) {
+            sizeableTabs = sizeableTabs.not($(this));
+          }
+        });
+
+        // Math explanation:
+        // Width of tab container - possible applcation menu trigger
+        // Divided by number of visible tabs (doesn't include app menu trigger which shouldn't change size)
+        // Minus one (for the left-side border of each tab)
+        visibleTabSize = ((tabContainerW - (hasAppTrigger ? appTrigger.outerWidth() : 0)) / sizeableTabs.length) - 1;
+
+        if (visibleTabSize < defaultTabSize) {
+          visibleTabSize = defaultTabSize;
+        }
+
+        sizeableTabs.width(visibleTabSize);
       },
 
       //Selects a Tab
@@ -1012,7 +1126,7 @@
               $(item).prev().clone().appendTo(menuHtml);
             }
             if ($(item).is(':not(.separator)')) {
-              popupLi = $(item).clone().removeClass('tab is-selected');
+              popupLi = $(item).clone().removeClass('tab is-selected').removeAttr('style');
               popupLi.find('.icon').remove(); // NOTE: Remove this to show the close icon in overflow menu
               popupLi
                 .appendTo(menuHtml);
@@ -1088,7 +1202,7 @@
 
         function handleDestroy() {
           menu.off();
-          self.focusState.removeClass('is-visible');
+          self.hideFocusState();
           $('#tab-container-popupmenu').remove();
         }
 
@@ -1192,6 +1306,10 @@
       },
 
       focusBar: function(li, callback) {
+        if (!this.hasAdvancedFocusStates()) {
+          return;
+        }
+
         var self = this,
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
@@ -1245,6 +1363,10 @@
       },
 
       defocusBar: function() {
+        if (!this.hasAdvancedFocusStates()) {
+          return;
+        }
+
         var self = this,
           left = Locale.isRTL() ? 0 : (self.animatedBar.position().left+(self.animatedBar.outerWidth()/2));
 
@@ -1256,7 +1378,17 @@
         }, 350);
       },
 
+      hideFocusState: function() {
+        if (this.hasAdvancedFocusStates()) {
+          this.focusState.removeClass('is-visible');
+        }
+      },
+
       positionFocusState: function(target, unhide) {
+        if (!this.hasAdvancedFocusStates()) {
+          return;
+        }
+
         var self = this;
         target = target !== undefined ? $(target) :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
@@ -1325,6 +1457,10 @@
       checkFocusedElements: function() {
         var self = this,
           focusableItems = self.tablist;
+
+        if (!this.hasAdvancedFocusStates()) {
+          return;
+        }
 
         if (focusableItems.find('.is-focused').length === 0 && !self.moreButton.hasClass('is-focused') && !self.moreButton.hasClass('popup-is-open')) {
           self.focusState.removeClass('is-visible');

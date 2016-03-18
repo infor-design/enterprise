@@ -2,20 +2,191 @@
 //================================================== //
 
 .tab-container.module-tabs {
+  background-color: $module-tabs-bg-color;
+  border-bottom: 1px solid $module-tabs-y-border-color;
+  border-top: 1px solid $module-tabs-y-border-color;
   font-size: 0;
-  white-space: nowrap;
+  height: 36px;
+  overflow: hidden;
+
+  // Acts as a spacer that causes the toolbar items to vertically align.
+  &::before {
+    @include vertical-alignment-spacer;
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
   .btn {
+    background-color: $module-tabs-bg-color;
+    border: 0;
+    color: $module-tabs-inactive-text-color;
     @include font-size(12);
+    min-width: 0;
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .icon {
+    fill: $module-tabs-inactive-text-color;
+
+    &.app-header {
+      left: -6px;
+      position: relative;
+      top: -5px;
+
+      span:not(.audible) {
+        background-color: $module-tabs-inactive-text-color;
+      }
+    }
+  }
+
+  .tab-list-container {
+    width: calc(100% - 1px);
   }
 
   .tab-list {
-    @include font-size(12);
-    width: calc(100% - 103px)
+    height: 34px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .separator {
+    display: none !important;
   }
 
   .tab {
+    @include font-size(12);
+    min-width: 120px;
+    text-align: center;
+    @include css3(transition, background-color .25s ease);
 
+    &:not(:first-child) {
+      border-left: 1px solid $module-tabs-x-border-color;
+    }
+
+    &:before {
+      display: none !important;
+    }
+
+    &:after {
+      display: none !important;
+    }
+
+    a {
+      color: $module-tabs-inactive-text-color;
+      display: block;
+      @include font-size(12);
+      font-weight: bold;
+      margin: 0 auto;
+      padding: 10px;
+
+      > * {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      > span:not(.icon) {
+        font-weight: bold;
+        margin-left: 5px;
+      }
+    }
+
+    &.is-selected {
+      background-color: $module-tabs-active-bg-color;
+
+      a {
+        color: $module-tabs-active-text-color;
+      }
+    }
+
+    &:hover,
+    &.is-focused {
+      background-color: $module-tabs-hover-bg-color;
+
+      a {
+        color: $module-tabs-hover-text-color;
+      }
+    }
+
+    &.dismissible {
+      .icon {
+        height: 14px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        @include css3(transform, translateY(-50%));
+      }
+
+      a {
+        padding: 10px 32px 10px 0;
+      }
+    }
+
+    &.application-menu-trigger {
+      a {
+        padding: 9px 10px 7px;
+      }
+    }
+  }
+
+  .tab-more {
+    border-left: 1px solid $module-tabs-x-border-color;
+    color: $module-tabs-inactive-text-color;
+    @include font-size(12);
+    font-weight: bold;
+    padding: 8px 10px;
+    text-align: center;
+    width: 120px;
+
+    .icon {
+      fill: $module-tabs-inactive-text-color;
+    }
+
+    span {
+      color: inherit;
+      font-weight: bold;
+    }
+
+    &.is-selected {
+      background-color: $module-tabs-active-bg-color;
+      color: $module-tabs-active-text-color;
+
+      .icon {
+        fill: $module-tabs-active-text-color;
+      }
+    }
+
+    &:hover,
+    &.is-focused,
+    &.is-open {
+      background-color: $module-tabs-hover-bg-color;
+      color: $module-tabs-hover-text-color;
+
+      .icon {
+        fill: $module-tabs-hover-text-color;
+      }
+    }
+  }
+
+  // Change state when the spillover button is necessary
+  &.has-more-button {
+    .tab-list-container {
+      width: calc(100% - 120px);
+    }
+
+    .tab-more {
+      visibility: visible;
+    }
   }
 
 }

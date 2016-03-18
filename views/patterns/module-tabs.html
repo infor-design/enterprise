@@ -7,28 +7,62 @@
   {{> includes/masthead}}
 
   <!-- Module Tabs -->
-  <header class="header tab-container module-tabs">
-    <button class="btn application-menu-trigger">
-      <span class="icon app-header" focusable="false" aria-hidden="true" role="presentation">
-        <span class="one"></span>
-        <span class="two"></span>
-        <span class="three"></span>
-      </span>
-      <span>Menu</span>
-    </button>
-    <ul class="tab-list">
-      <li class="tab"><a href="#search">Search</a></li>
-      <li class="tab is-selected"><a href="#order-entry">Order Entry</a></li>
-      <li class="tab"><a href="#order-123456">Order 123456</a></li>
-    </ul>
-  </header>
+  <section id="module-tabs-example" class="tab-container module-tabs" data-options="{ containerElement: '#module-tabs-container' }">
+    <div class="tab-list-container">
+      <ul class="tab-list">
+        <li class="tab"><a href="#module-tabs-controls">New Tab Builder</a></li>
+        <li class="tab is-selected dismissible"><a href="#order-entry">Order Entry</a></li>
+        <li class="tab dismissible"><a href="#order-123456">Order 123456</a></li>
+      </ul>
+    </div>
+  </section>
+
+  {{> includes/applicationmenu}}
 
   <!-- Page Container -->
-  <div class="page-container no-scroll">
+  <div id="module-tabs-container" class="page-container no-scroll">
 
     <!-- Tab Panels -->
-    <div id="search" class="tab-panel no-scroll" style="display: none;">
-      <h2>Search</h2>
+    <div id="module-tabs-controls" class="tab-panel no-scroll" style="display: none;">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Module Tabs Controls</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+
+        <div class="row">
+          <div class="twelve columns">
+
+            <form id="add-tab" action="#" method="post">
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label for="create-tab-name">Tab Name:</label>
+                    <input id="create-tab-name" name="create-tab-name" />
+                  </div>
+
+                  <div class="field">
+                    <label for="create-tab-content">Content:</label>
+                    <textarea id="create-tab-content" name="create-tab-content"></textarea>
+                  </div>
+
+                  <div class="field">
+                    <button id="reset" class="btn-tertiary" type="reset"><span>Clear</span></button>
+                    <button id="submit" class="btn-primary" type="submit"><span>Create New Tab</span></button>
+                  </div>
+                </div>
+                <div class="six columns"></div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <div id="order-entry" class="tab-panel no-scroll">
@@ -43,7 +77,7 @@
           <div class="buttonset"></div>
         </div>
       </header>
-      <div class="page-container scrollable no-scroll">
+      <div class="page-container scrollable">
 
         <div class="expandable-area is-expanded">
           <div class="expandable-header">
@@ -71,9 +105,71 @@
     </div>
 
     <div id="order-123456" class="tab-panel" style="display: none;">
-      <h2>Order 123456</h2>
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Order #123456</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This is Order #123456</p>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
+
+  <script type="text/javascript">
+    function makeId(name) {
+      var stringName = name.toLowerCase().split(' ').join('-');
+
+      var existing = $('[id^="'+ stringName +'"]');
+      if (!existing.length) {
+        return stringName + '-0';
+      }
+
+      return stringName + '-' + existing.length;
+    }
+
+    function wrapInPageMarkup(name, content) {
+      return '<header class="header is-personalizable">' +
+        '<div class="toolbar">' +
+          '<div class="title">' +
+            '<h1>' + name + '</h1>' +
+          '</div>' +
+          '<div class="buttonset"></div>' +
+        '</div>' +
+      '</header>' +
+      '<div class="page-container scrollable"><div class="row"><div class="twelve columns">' + content + '</div></div></div>';
+    }
+
+    $('body').on('initialized', function() {
+      var tabsAPI = $('#module-tabs-example').data('tabs');
+
+      $('#add-tab').on('submit', function(e) {
+        e.preventDefault();
+
+        var name = '' + $('#create-tab-name').val(),
+          content = '' + $('#create-tab-content').val();
+
+        // Wrap the content in a page-wrapper and header
+        content = wrapInPageMarkup(name, content);
+
+        var id = makeId(name);
+        tabsAPI.add(id, {
+          name: name,
+          content: content,
+          isDismissible: true
+        });
+
+        console.log('new ID: ' + id);
+      });
+    });
+  </script>
 
 </body>

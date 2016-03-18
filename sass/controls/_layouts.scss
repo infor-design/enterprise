@@ -493,6 +493,20 @@ body.no-scroll {
     margin-top: 98px;
   }
 
+  + .module-tabs + .page-container,
+  + .module-tabs + .application-menu + .page-container {
+    height: calc(100% - 74px);
+    margin-top: 74px;
+  }
+
+}
+
+.module-tabs {
+  + .page-container,
+  + .application-menu + .page-container {
+    height: calc(100% - 74px);
+    margin-top: 74px;
+  }
 }
 
 // Editorial Pattern
