@@ -28,6 +28,10 @@
       html.addClass('is-safari');
     }
 
+    if (navigator.userAgent.indexOf('Mac OS X') !== -1) {
+      html.addClass('is-mac');
+    }
+
     if (navigator.userAgent.indexOf('Firefox') > 0) {
       html.addClass('is-firefox');
     }
