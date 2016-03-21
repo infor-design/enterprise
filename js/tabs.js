@@ -1009,6 +1009,38 @@
         return this.anchors.filter('[href="#'+ visible.first().attr('id') +'"]');
       },
 
+      getVisibleTabs: function() {
+        var self = this,
+          tabHash = $();
+
+        this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled)')
+          .each(function tabOverflowIterator() {
+            var tab = $(this);
+
+            if (!self.isTabOverflowed(tab)) {
+              tabHash = tabHash.add(tab);
+            }
+          });
+
+        return tabHash;
+      },
+
+      getOverflowTabs: function() {
+        var self = this,
+          tabHash = $();
+
+        this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled)')
+          .each(function tabOverflowIterator() {
+            var tab = $(this);
+
+            if (self.isTabOverflowed(tab)) {
+              tabHash = tabHash.add(tab);
+            }
+          });
+
+        return tabHash;
+      },
+
       // Takes a tab ID and returns a jquery object containing the previous available tab
       findPreviousAvailableTab: function(tabId) {
         var tab = this.getTabFromId(tabId),
@@ -1074,6 +1106,21 @@
         }
 
         sizeableTabs.width(visibleTabSize);
+
+        this.adjustSpilloverNumber();
+      },
+
+      adjustSpilloverNumber: function() {
+        var countDiv = this.moreButton.find('.count'),
+          overflowedTabs = this.getOverflowTabs();
+
+        if (!countDiv.length) {
+          this.moreButton.children('span').first().prepend($('<span class="count"></span>'));
+        }
+
+        countDiv.text('' + overflowedTabs.length + ' ');
+
+        return;
       },
 
       //Selects a Tab

@@ -747,6 +747,36 @@ var express = require('express'),
     res.end(JSON.stringify(cartItems));
   });
 
+  app.get('/api/garbage', function(req, res) {
+    var amount = 25,
+      text = '',
+      garbageWords = ['garbage', 'junk', 'nonsense', 'trash', 'rubbish', 'debris', 'detritus', 'filth', 'waste', 'scrap', 'sewage', 'slop', 'sweepings', 'bits and pieces', 'odds and ends', 'rubble', 'clippings', 'muck'];
+
+    function done(content) {
+      res.setHeader('Content-Type', 'text/plain');
+      res.end(JSON.stringify(content));
+    }
+
+    if (req && req.query && req.query.size) {
+      amount = req.query.size;
+    }
+
+    // Get a random word from the GarbageWords array
+    var word = '';
+    for (var i = 0; i < amount; i++) {
+      word = garbageWords[Math.floor(Math.random() * garbageWords.length)];
+
+      if (!text.length) {
+        word = word.charAt(0).toUpperCase() + word.substr(1);
+      } else {
+        text += ' ';
+      }
+      text += word;
+    }
+
+    done(text);
+  });
+
   app.get('/api/deployments', function(req, res) {
     var cartItems = [
       { id: 1, success: true, name: 'AutoSuite - PRD', date: '01-13-2015'},

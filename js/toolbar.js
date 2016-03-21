@@ -645,8 +645,9 @@
 
         this.element[method]('has-more-button');
 
-        if (method === 'removeClass') {
-          this.more.data('popupmenu').close();
+        var popupAPI = this.more.data('popupmenu');
+        if (method === 'removeClass' && popupAPI) {
+          popupAPI.close();
         }
       },
 
