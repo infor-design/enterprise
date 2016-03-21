@@ -25,14 +25,22 @@
         defaults = {
 
           // Theme key: MUST match with theme file name (ie: [filename: 'grey-theme.css' -> 'grey-theme'])
+
+          // BORDERS
           // Use (,) commas to separate themes or single entry for border as: 
           // colors[{label: 'Slate', number: '01', value: 'F0F0F0', border: 'grey-theme, high-contrast-theme'}]
           // and assign which swatch theborder should apply ['all' or 'matched-only']
           // themes: { 'high-contrast-theme': {'border': 'all'} }
+          
+          // CHECKMARKS
+          // checkmark: {'one': [1, 2], 'two': [3, 10]}
+          // will add class as "checkmark-{key}", where current colors number is in range [{value[0]} to {value[1]}]
+          // will add class "checkmark-one", where current colors number is in range [1 to 3]
+          // and will add class "checkmark-two", where current colors number is in range [3 to 10]
           themes: {
-            'grey-theme': {'border': 'matched-only'},
-            'dark-theme': {'border': 'matched-only'},
-            'high-contrast-theme': {'border': 'all'}
+            'grey-theme': {'border': 'matched-only', checkmark: {'one': [1, 2], 'two': [3, 10]} },
+            'dark-theme': {'border': 'matched-only', checkmark: {'one': [1, 2], 'two': [3, 10]} },
+            'high-contrast-theme': {'border': 'all', checkmark: {'one': [1, 3], 'two': [4, 10]} }
           },
           colors: [
             {label: 'Slate', number: '10', value: '1a1a1a'},
@@ -105,7 +113,7 @@
             {label: 'Azure', number: '03', value: '8DC9E6'},
             {label: 'Azure', number: '02', value: 'ADD8EB'},
             {label: 'Azure', number: '01', value: 'CBEBF4'}
-          ]
+          ],
         },
         settings = $.extend({}, defaults, options);
 
@@ -259,11 +267,15 @@
       updateColorMenu: function () {
         var menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
           currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, ''),
-          isBorderAll = (settings.themes[currentTheme].border === 'all');
+          isBorderAll = (settings.themes[currentTheme].border === 'all'),
+          checkmark = settings.themes[currentTheme].checkmark,
+          checkmarkClass = '';
 
         for (var i = 0, l = settings.colors.length; i < l; i++) {
           var li = $('<li></li>'),
             a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li),
+            number = settings.colors[i].number,
+            num = parseInt(number, 10),
             text = Locale.translate(settings.colors[i].label) + (settings.colors[i].number || ''),
             value = settings.colors[i].value,
             isBorder = false,
@@ -275,7 +287,18 @@
           }
 
           if (this.element.val().replace('#', '') === value) {
-            a.addClass('is-selected');
+            // Set checkmark color class
+            if (checkmark) {
+              $.each(checkmark, function(k, v) {
+                // checkmark: {'one': [1, 2], 'two': [3, 10]}
+                // will add class "checkmark-one", where current colors number is in range [1 to 3]
+                // and will add class "checkmark-two", where current colors number is in range [3 to 10]
+                if ((num >= v[0]) && (num <= v[1])) {
+                  checkmarkClass = ' checkmark-'+ k;
+                }
+              });
+            }
+            a.addClass('is-selected'+ checkmarkClass);
           }
 
           a.find('.swatch')
