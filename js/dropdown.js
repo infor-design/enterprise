@@ -840,6 +840,9 @@
             self.filterList(self.searchInput.val());
           }, 0);
           this.initialFilter = false;
+        } else {
+          // Change the values of both inputs and swap out the active descendant
+          this.searchInput.val(this.input.val());
         }
 
         var noScroll = this.settings.multiple;
