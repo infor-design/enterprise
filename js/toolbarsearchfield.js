@@ -61,6 +61,10 @@
 
         // If inside a toolbar, make sure to append it to the root toolbar element.
         this.toolbarParent = this.element.parents('.toolbar');
+        var moduleTabs = this.toolbarParent.closest('.module-tabs');
+        if (moduleTabs.length) {
+          this.toolbarParent = moduleTabs;
+        }
 
         // Setup ARIA
         var label = this.element.attr('placeholder') || this.element.prev('label, .label').text().trim();
@@ -261,7 +265,7 @@
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
         if (this.inputWrapper.parent().is(this.toolbarParent)) {
-          this.inputWrapper.detach().prependTo(this.toolbarParent.children('.buttonset'));
+          this.inputWrapper.detach().prependTo(this.toolbarParent.find('.buttonset'));
         }
 
         self.inputWrapper.removeClass('active').removeClass('has-focus');

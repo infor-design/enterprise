@@ -72,9 +72,11 @@
           this.activate(selected.children('a').attr('href'));
         }
 
-        this.setOverflow();
+        if (this.isModuleTabs() && this.element.children('.toolbar').length) {
+          this.element.addClass('has-toolbar');
+        }
 
-        // Focus the bar on the first element, but don't animate it on page load.
+        this.setOverflow();
 
         if (!this.hasAdvancedFocusStates()) {
           return this;
@@ -158,7 +160,7 @@
         self.moreButton = self.tablist.next('.tab-more');
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
-          button.append( $('<span>').text(Locale.translate('More')));
+          button.append( $('<span class="more-text">').text(Locale.translate('More')));
           button.append('<svg class="icon icon-more" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
           self.tablist.after(button);
           self.moreButton = button;
@@ -1051,7 +1053,7 @@
         var self = this,
           tabHash = $();
 
-        this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled)')
+        this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled):not(.application-menu-trigger)')
           .each(function tabOverflowIterator() {
             var tab = $(this);
 
@@ -1067,7 +1069,7 @@
         var self = this,
           tabHash = $();
 
-        this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled)')
+        this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled):not(.application-menu-trigger)')
           .each(function tabOverflowIterator() {
             var tab = $(this);
 
@@ -1149,11 +1151,20 @@
       },
 
       adjustSpilloverNumber: function() {
-        var countDiv = this.moreButton.find('.count'),
+         var moreDiv = this.moreButton.find('.more-text'),
+          tabs = this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled):not(.application-menu-trigger)'),
           overflowedTabs = this.getOverflowTabs();
 
+        if (tabs.length <= overflowedTabs.length) {
+          moreDiv.text('' + Locale.translate('Tabs'));
+        } else {
+          moreDiv.text('' + Locale.translate('More'));
+        }
+
+        var countDiv = this.moreButton.find('.count');
         if (!countDiv.length) {
-          this.moreButton.children('span').first().prepend($('<span class="count"></span>'));
+          countDiv = $('<span class="count"></span>');
+          this.moreButton.children('span').first().prepend(countDiv);
         }
 
         countDiv.text('' + overflowedTabs.length + ' ');

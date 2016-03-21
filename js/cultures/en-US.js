@@ -261,6 +261,7 @@
       'SortUp': {id: 'SortUp', value: 'Sort Up', comment: 'Sort Up tooltip'},
       'Subscript': {id: 'Subscript', value: 'Subscript', comment: 'Turn on and off Subscript text in text editor (like word)'},
       'Superscript': {id: 'Superscript', value: 'Superscript', comment: 'Turn on and off Superscript text in text editor (like word)'},
+      'Tabs': {id: 'Tabs', value: 'Tabs...', comment: 'Used in the Tabs Control\'s more menu, preceeded by a number that describes how many tabs are in the spillover menu'},
       'Tack': {id: 'Tack', value: 'Pin', comment: 'Pin an object'},
       'Tall': {id: 'Tall', value: 'Tall', comment: 'Describes a Taller Row Height in a grid/list'},
       'Timer': {id: 'Timer', value: 'Timer', comment: 'Timer tooltip'},

@@ -51,6 +51,7 @@
   }
 
   .tab-list-container {
+    position: relative;
     width: calc(100% - 1px);
   }
 
@@ -58,6 +59,17 @@
     height: 34px;
     overflow: hidden;
     width: 100%;
+  }
+
+  &.has-toolbar {
+    .tab-list-container {
+      width: calc(70% - 1px); // 1px vertical centerer
+
+      + .toolbar {
+        border-left: 1px solid $module-tabs-x-border-color;
+        width: calc(30% - 1px); // 1px border
+      }
+    }
   }
 
   .separator {
@@ -182,10 +194,116 @@
     }
   }
 
+  .toolbar {
+    margin-bottom: 0;
+    overflow: hidden;
+
+    .buttonset {
+      height: 34px;
+      text-align: right;
+
+      > * {
+        margin: 0 5px 0 0;
+      }
+    }
+
+    .more {
+      height: 34px;
+    }
+
+    [class^="btn"] {
+      border-color: $module-tabs-inactive-text-color;
+      color: $module-tabs-inactive-text-color;
+      height: 32px;
+      margin-top: 1px;
+
+      .ripple-effect {
+        background-color: $module-tabs-active-text-color;
+      }
+
+      .icon {
+        fill: $module-tabs-inactive-text-color;
+      }
+
+      &:hover {
+        color: $module-tabs-hover-text-color;
+
+        .icon {
+          fill: $module-tabs-hover-text-color;
+        }
+      }
+
+      &:focus,
+      &.is-selected:focus {
+        color: $module-tabs-active-text-color;
+
+        .icon {
+          fill: $module-tabs-active-text-color;
+        }
+
+        &:not(.hide-focus) {
+          border-color: transparent;
+          box-shadow: 0 0 0 2px transparent,
+            0 0 0 1px $module-tabs-hover-text-color;
+        }
+      }
+    }
+
+    .btn-actions {
+      min-height: 32px;
+      min-width: 32px;
+      width: 32px;
+    }
+  }
+
+  .toolbar-searchfield-wrapper {
+    .icon:not(.error) {
+      fill: $module-tabs-inactive-text-color;
+    }
+
+    .searchfield {
+      background-color: rgba($searchfield-moduletabs-bg-color, 0);
+      border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
+      border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
+      color: $module-tabs-inactive-text-color;
+    }
+
+    &.active {
+      .searchfield {
+        background-color: rgba($searchfield-moduletabs-bg-color, 1);
+        border-bottom-color: rgba($searchfield-moduletabs-border-color, 1);
+      }
+    }
+
+    &.has-focus {
+      .searchfield {
+        color: $module-tabs-active-text-color;
+      }
+
+      .icon:not(.error) {
+        fill: $module-tabs-active-text-color;
+      }
+    }
+  }
+
+  > .toolbar-searchfield-wrapper.active {
+    width: 100%;
+  }
+
   // Change state when the spillover button is necessary
   &.has-more-button {
     .tab-list-container {
-      width: calc(100% - 120px);
+      width: calc(100% - 121px);
+    }
+
+    &.has-toolbar {
+      .tab-list-container {
+        width: calc(70% - 1px);
+      }
+
+      .tab-list {
+        width: calc(100% - 121px);
+      }
     }
 
     .tab-more {
