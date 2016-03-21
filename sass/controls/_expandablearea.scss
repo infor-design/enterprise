@@ -92,6 +92,13 @@
     }
   }
 
+  //Do not show the header on the first one
+  &:first-child {
+    .expandable-header {
+      border-top-color: transparent;
+    }
+  }
+
   //Icon on the header
   .title {
     .icon {

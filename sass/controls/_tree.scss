@@ -26,10 +26,10 @@
     svg {
       @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
       fill: $tree-icon-color;
-      height: 16px;
+      height: 15px;
       margin: 0 9px 0 0;
       top: 2px;
-      width: 16px;
+      width: 15px;
     }
 
     //Ignore Visited Color Change
@@ -41,24 +41,20 @@
     &:focus {
       border: 1px solid $tree-selected-color;
       border-radius: 2px;
-      color: $tree-selected-color;
+      color: $tree-link-color;
 
       svg {
-        fill: $tree-selected-color;
+        fill: $tree-icon-color;
       }
     }
 
     //Hover State
     &:hover {
       border: 1px solid transparent;
-      color: $tree-selected-color;
+      color: $tree-hover-color;
 
       svg {
-        fill: $tree-selected-color;
-      }
-
-      .tree-text {
-        border-bottom-color: $tree-selected-color;
+        fill: $tree-hover-color;
       }
     }
 
@@ -69,7 +65,7 @@
       border-radius: 5px;
 
       .tree-text {
-        border-bottom-color: $tree-selected-color;
+        border-bottom-color: transparent;
       }
     }
 
@@ -114,10 +110,15 @@
     // Selected State
     &.is-selected {
       > a {
+        border-color: transparent;
         color: $tree-selected-color;
 
-        svg {
+      svg {
           fill: $tree-selected-color;
+        }
+
+        .tree-text {
+          border-color: transparent;
         }
       }
     }

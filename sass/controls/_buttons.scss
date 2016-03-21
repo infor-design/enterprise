@@ -74,7 +74,8 @@ button {
       }
     }
 
-    &:empty:not(.icon):not(.one):not(.two):not(.three) {
+    &:empty:not(.icon):not(.one):not(.two):not(.three):not(.four)
+    :not(.five):not(.six):not(.seven):not(.eight):not(.nine) {
       display: none;
     }
   }

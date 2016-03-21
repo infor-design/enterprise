@@ -23,6 +23,7 @@ $font-color-highcontrast: $graphite08;
 $font-color: $graphite06;
 $font-color-lowcontrast: $graphite04;
 $label-color: $graphite06;
+$label-disabled-color: $graphite04;
 $disabled-color: $graphite04;
 
 //The hyperlink Style
@@ -447,11 +448,12 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $primary-color;
-$tree-active-bg-color: #cae2ed;
+$tree-active-bg-color: #d7e8f2;
 $tree-icon-color: $graphite06;
-$tree-link-color: $font-color-extrahighcontrast;
+$tree-link-color: $graphite06;
 $tree-folder-link-color: $font-color-extrahighcontrast;
 $tree-disabled-color: $graphite04;
+$tree-hover-color: $graphite10;
 
 //Progress
 $progress-bg-color: transparent;

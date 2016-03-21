@@ -35,6 +35,11 @@
     outline-offset: 4px;
   }
 
+  &:active {
+    outline: none;
+    outline-offset: 4px;
+  }
+
   &[disabled] {
     color: $hyperlink-disabled-color;
 

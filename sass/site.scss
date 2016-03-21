@@ -28,7 +28,7 @@ body {
 // Header Adjustments
 .header {
 
-  background-color: $slate07;
+  background-color: $amethyst07;
 
   h1 {
     line-height: 40px;
@@ -158,33 +158,6 @@ body {
     }
   }
 
-  .breadcrumb {
-
-    li:after {
-      color: $graphite08;
-    }
-
-    a {
-      border-bottom: 1px solid transparent;
-      color: $graphite08 !important;
-      @include font-size(12);
-      line-height: 17px !important;
-
-      &:after {
-        content: none;
-      }
-
-      &:focus {
-        border-bottom: 1px solid $graphite08 !important;
-        outline: none;
-      }
-
-      &:hover {
-        border-bottom: 1px solid $graphite08 !important;
-      }
-    }
-  }
-
   .tag {
     background-color: $code-color-alt;
   }
@@ -205,7 +178,6 @@ body {
   }
 }
 
-
 .site-hero.component .row {
   max-width: $site-maxwidth !important;
 }
@@ -216,7 +188,6 @@ body {
     padding-bottom: 50px;
   }
 }
-
 
 .home.menubar {
   background-color: #f5f5f5;
@@ -472,15 +443,6 @@ body {
     }
   }
 
-  .site-hero.components {
-    h2 {
-      margin-bottom: -10px;
-      @include font-size(35);
-      padding-top: 25px;
-      margin-left: 10px;
-    }
-  }
-
   .site-intro {
 
     .one-third.column {
@@ -527,11 +489,6 @@ body {
 }
 
 @include respond-to(phablet) {
-  .site-hero.components {
-    h2 {
-      padding-top: 0;
-    }
-  }
 
   .component.site-hero h1 {
     margin: 10px 0 0;
@@ -607,16 +564,9 @@ body {
 
 @include respond-to(phablet) {
 
-  .components .blockgrid {
-    padding: 0 20px;
-    text-align: center;
-  }
-
-
   .site-footer nav {
     margin: 0 30px;
   }
-
 
   .site-footer nav li {
     display: block;
@@ -805,15 +755,21 @@ body {
 
   ul,
   ol {
-    color: $graphite06;
-    @include font-size(16);
-    margin-bottom: 25px;
-    margin-left: 20px;
     @include antialiased();
-    line-height: 28px;
-    list-style: initial;
-    list-style-type: disc;
-    list-style-position: unset;
+    @include font-size(16);
+    color: $graphite06;
+    line-height: 26px;
+    list-style: none;
+    margin-bottom: 25px;
+    margin-left: 25px;
+
+    li::before {
+      content: "●";
+      font-size: 10px;
+      left: -10px;
+      position: relative;
+      vertical-align: middle;
+    }
   }
 
   ol {
@@ -1033,23 +989,37 @@ div.light-bgrnd {
   background-color: $inverse-color;
 }
 
+//Components Pages
 .component {
+
+  //Components Header
+  .header {
+    background-color: $amethyst07;
+
+    .application-menu-trigger .icon {
+      margin-left: 0;
+    }
+  }
+
   background-color: $inverse-color;
 
   &.site-hero {
-    background-color: $inverse-color;
-    height: 150px !important;
+    background-color: $amethyst07;
+    height: 115px;
+    margin-top: 0;
 
     h1,
     h2 {
-      color: $graphite06 !important;
-      margin: 55px 0 0;
+      color: $white;
+      font-size: 4.3rem;
+      margin: 10px 0 0;
     }
 
     .timestamp {
-      color: $graphite04;
+      color: $white;
       margin-top: 5px;
       position: static !important;
+      font-weight: lighter;
     }
   }
 
@@ -1067,12 +1037,11 @@ div.light-bgrnd {
 
   hr {
     border-top: 1px solid #d8d8d8;
-    margin-bottom: 40px;
-    margin-top: 40px;
+    margin-bottom: 42px;
+    margin-top: 42px;
   }
 
   b {
-    color: 000000;
     font-weight: bold;
   }
 
@@ -1104,7 +1073,7 @@ div.light-bgrnd {
 // Link Style in Case Forgotten
 .editorial.component > .main > .content {
 
-  a:not(.tag):not(.btn-primary):not(.card):not(.asset-item) {
+  a:not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink) {
     border-bottom: 1px solid transparent;
     color: $hyperlink-color;
     cursor: pointer;
@@ -1133,32 +1102,29 @@ div.light-bgrnd {
 
 }
 
-// Controls Category Pages
-//==================================================//
-.components {
+//Links with icons
+.download-link {
+  float: right;
 
-  &.site-hero {
-    padding-top: 0;
-  }
+  .hyperlink {
+    display: inline;
 
-  h2 {
-    margin-top: 25px;
-    text-align: left;
-  }
+    .icon {
+      fill: $azure06;
+    }
 
-  p {
-    text-align: left;
-  }
-
-  .blockgrid {
-    margin-bottom: 40px;
-    margin-left: -10px;
-    margin-top: 40px;
-    padding-right: 0;
-    text-align: left;
+    span {
+      @include font-size(12);
+      font-weight: bold;
+      padding-left: 7px;
+      position: relative;
+      text-transform: uppercase;
+      top: -4px;
+    }
   }
 }
 
+// Controls Detail Pages
 .page-container.component {
   background-color: $body-bg-color;
   transform: none;
@@ -1212,13 +1178,17 @@ div.light-bgrnd {
 
   h2 {
     @include font-size(28);
+    @include antialiased();
     color: $graphite08;
+    display: inline-block;
+    font-weight: lighter;
     padding-bottom: 5px;
   }
 
   h3 {
     color: $graphite08;
     @include font-size(18);
+    @include antialiased();
     margin-bottom: 10px !important;
     margin-left: 0px;
     margin-top: 20px;
@@ -1228,7 +1198,7 @@ div.light-bgrnd {
   p {
     color: $graphite06;
     @include font-size(16);
-    line-height: 24px;
+    line-height: 26px;
 
     + p {
       margin-top: 0;
@@ -1237,6 +1207,10 @@ div.light-bgrnd {
     + h2 {
       padding-top: 20px;
     }
+
+    + ul {
+      margin-top: -15px;
+    }
   }
 
   pre + h2 {
@@ -1244,27 +1218,7 @@ div.light-bgrnd {
   }
 
   p:empty {
-    border: 1px dotted #999;
-  }
-
-  ol,
-  ul {
-    color: $graphite06;
-    @include font-size(16);
-    @include antialiased();
-    line-height: 24px;
-    list-style: initial;
-    list-style-type: disc;
-    list-style-position: unset;
-    margin: 0 0 20px 30px;
-
-    li {
-      margin-bottom: 10px;
-    }
-
-    + h2 {
-      padding-top: 20px;
-    }
+    border: 1px dotted #999999;
   }
 
   .example {
@@ -1340,13 +1294,13 @@ div.light-bgrnd {
 }
 
 .example-section {
-  background-color: #ffffff;
-  border-bottom: 1px solid #d2d2d2;
-  padding: 10px 0 0px;
+  background-color: $white;
+  border-bottom: 1px solid $graphite03;
 
-  .row {
+ .row {
     max-width: $site-maxwidth;
     padding: 0 30px;
+    margin-bottom: 28px;
 
     &.expanded {
       max-width: 1280px !important;
@@ -1407,19 +1361,6 @@ div.light-bgrnd {
   .row {
     padding-right: 0;
   }
-}
-
-// Component Group Adjustments
-//==================================================//
-
-.component-group.editorial {
-  .content {
-    display: block !important;
-    float: none !important;
-    margin: 0 0 0 -15px !important;
-    max-width: $site-maxwidth !important;
-  }
-
 }
 
 // Search Results
@@ -1502,31 +1443,18 @@ div.light-bgrnd {
 
 }
 
-@include respond-to(tabletdown) {
-
-  .component-group.editorial .content {
-    margin: 0 auto !important;
-    max-width: 100% !important;
-  }
-
-  .card-list {
-    max-width: 645px !important
-  }
-}
-
-
 // Syntax High Lighting
 //==================================================//
 
 code[class*="language-"],
 pre[class*="language-"] {
-  color: #ffffff;
-  direction: ltr;
   @include font-size(16);
+  color: $white;
+  direction: ltr;
   font-family: 'Source Code Pro', monospace;
   line-height: normal;
   max-width: 550px;
-  padding: 40px 20px 40px 20px;
+  padding: 40px 20px;
   text-align: left;
   white-space: pre;
   word-break: normal;
@@ -1669,4 +1597,18 @@ pre[class*='language-'] {
     background-color: $amber08 !important
   }
 
+}
+
+//Example Tag above the Example on component details
+.code-tag {
+  @include font-size(12);
+  background-color: $graphite03;
+  border-radius: 2px;
+  color: $graphite08;
+  display: inline-block;
+  height: 22px;
+  line-height: 23px;
+  margin: 20px 0 40px;
+  padding: 0 10px;
+  text-transform: uppercase;
 }

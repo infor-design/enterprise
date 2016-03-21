@@ -34,6 +34,8 @@
  4x |
 | Infor Supplier Exchange | Replacing Fat client Java Swing UI | John Sipher |
  4x |
+ | IPA | Using D3 component example and some controls |  Christopher Fried, Keith Knud |
+ 4x |
 | Landmark  | Jetty Server Servlet | Phillip Patton, Andrew Lipensky | 4x |
 | Lawson S3  |   | Andy Buboltz | 4x |
 | LBI |   | Steve Stahl, Rommel Dollison | 3x |
