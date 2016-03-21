@@ -95,7 +95,7 @@ button {
   color: $primary-btn-color;
 
   .icon {
-    fill: $btn-color;
+    fill: $primary-btn-color;
   }
 
   &:hover {
@@ -403,6 +403,11 @@ a.btn-menu {
 
     > .icon:not(.icon-dropdown) {
       height: 14px;
+
+      + span:not(.audible) {
+        display: inline-block;
+        padding: 1px 4px 0 0;
+      }
     }
   }
 

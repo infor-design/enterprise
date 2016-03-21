@@ -466,6 +466,14 @@ input.multiselect {
     text-indent: 5px;
   }
 
+  &.is-ontop {
+    margin-top: 10px;
+    
+    ul {
+      box-shadow: $dropdown-box-shadow-top;
+    }
+  }
+
   > .icon,
   > .icon.search {
     height: 24px;
