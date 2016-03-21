@@ -16,6 +16,15 @@ body {
   background-color: $inverse-color !important;
 }
 
+//Application Nav Adjustments
+#application-menu {
+  .icon-sohoxi {
+    height: 22px;
+    top: 11px;
+    width: 115px;
+  }
+}
+
 // Header Adjustments
 .header {
 

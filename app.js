@@ -153,7 +153,7 @@ var express = require('express'),
   var docOpts = {
     title: 'Infor SoHo XI',
     subtitle: '',
-    layout: null,
+    layout: 'docs/layout',
     enableLiveReload: true
   };
 

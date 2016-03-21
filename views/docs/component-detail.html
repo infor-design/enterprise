@@ -20,8 +20,12 @@
 </head>
 <body class="no-scroll">
 
-  {{> includes/header-openlarge}}
+  {{> controls/svg}}
+  {{> controls/svg-extended}}
+  {{> docs/applicationmenu}}
+
   <div class="page-container scrollable no-transform">
+    {{> docs/header}}
     <div class="site-hero component">
       <div class="row">
         <div class="full column">
@@ -247,8 +251,6 @@
       </div>
     </div>
 
-    {{> controls/svg}}
-    {{> docs/svg}}
     {{> docs/footer}}
   </div>
 

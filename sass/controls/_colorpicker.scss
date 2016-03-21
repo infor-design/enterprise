@@ -47,11 +47,11 @@
 
   .icon {
     fill: $trigger-icon-fill-color;
-    height: 17px;
-    left: 8px;
+    height: 16px;
+    left: 9px;
     position: relative;
     top: 9px;
-    width: 17px;
+    width: 16px;
 
     &:hover {
       fill: $trigger-hover-color;
@@ -111,6 +111,9 @@
 }
 
 .popupmenu.colorpicker {
+  background-color: $colorpicker-popup-bg-color;
+  border-color: $colorpicker-popup-border-color;
+
   margin-left: -33px;
   max-width: 352px;
   min-height: 50px;
@@ -179,7 +182,7 @@
 
     &.is-border {
       border: 1px solid $colorpicker-swatch-border-color;
-    }    
+    }
   }
 
   + .arrow {
