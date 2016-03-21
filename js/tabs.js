@@ -22,8 +22,10 @@
     // Tab Settings and Options
     var pluginName = 'tabs',
         defaults = {
-          containerElement: null,
-          tabCounts: false,
+          containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
+          changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
+          hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
+          tabCounts: false, // If true, Displays a modifiable count above each tab.
         },
         tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
         settings = $.extend({}, defaults, options);
@@ -49,11 +51,24 @@
           tabs = this.tablist.children('li' + excludes),
           selected = this.tablist.children('li.is-selected' + excludes);
 
-        // If there are tabs present, activate the first one
         if (tabs.length) {
+
+          // If the hashChange setting is on, change the selected tab to the one referenced by the hash
+          if (this.settings.changeTabOnHashChange) {
+            var hash = window.location.hash;
+            if (hash && hash.length) {
+              var matchingTabs = tabs.find('a[href="'+ hash +'"]');
+              if (matchingTabs.length) {
+                selected = matchingTabs.first().parent();
+              }
+            }
+          }
+
+          // If there are tabs present, activate the first one
           if (!selected.length) {
             selected = tabs.first();
           }
+
           this.activate(selected.children('a').attr('href'));
         }
 
@@ -400,7 +415,9 @@
           return;
         }
 
-        this.activate(a.attr('href'));
+        var href = a.attr('href');
+        this.activate(href);
+        this.changeHash(href);
 
         if (this.popupmenu) {
           this.popupmenu.close();
@@ -731,6 +748,27 @@
           $('#validation-tooltip').hide();
           $('#tooltip').hide();
         }, 100);
+      },
+
+      changeHash: function(href) {
+        if (!this.settings.changeTabOnHashChange) {
+          return;
+        }
+
+        if (!href) {
+          href = '';
+        }
+
+        href.replace(/#/g, '');
+
+        var cb = this.settings.hashChangeCallback;
+        if (cb && typeof cb === 'function') {
+          cb(href);
+        } else {
+          window.location.hash = href;
+        }
+
+        this.element.triggerHandler('hash-change', [href]);
       },
 
       updateAria: function(a) {
@@ -1125,10 +1163,13 @@
 
       //Selects a Tab
       select: function (href) {
-        var anchor = this.anchors.filter('[href="#' + href.replace(/#/g, '') + '"]');
+        var modHref = href.replace(/#/g, ''),
+          anchor = this.anchors.filter('[href="#' + modHref + '"]');
         this.positionFocusState(undefined, false);
         this.focusBar(anchor.parent());
         this.activate(anchor.attr('href'));
+        this.changeHash(modHref);
+
         anchor.focus();
       },
 
