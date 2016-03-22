@@ -472,11 +472,9 @@
           this.buildPopupMenu(a.attr('href'));
           this.moreButton.addClass('is-focused');
           this.positionFocusState(this.moreButton);
-          //this.focusBar(this.moreButton);
         } else {
           li.addClass('is-focused');
           this.positionFocusState(a, focusedByKeyboard);
-          //this.focusBar(li);
         }
       },
 
@@ -571,6 +569,7 @@
           self.focusBar();
           checkAngularClick();
           self.hideFocusState();
+          currentA[0].focus();
         }
 
         switch(e.which) {

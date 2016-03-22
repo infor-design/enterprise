@@ -103,6 +103,8 @@
           self.fastActivate = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
+        }).on('deactivate.toolbarsearchfield', function() {
+          self.deactivate();
         });
 
         if (this.button && this.button.length) {
@@ -227,7 +229,7 @@
         this.handleDeactivationEvents();
 
         function activateCallback() {
-          self.inputWrapper.addClass('is-open');
+          self.inputWrapper.addClass('is-open').trigger('activated');
           self.input.focus(); // for iOS
         }
 
@@ -264,6 +266,7 @@
           }
 
           self.toolbarParent.trigger('recalculateButtons');
+          self.inputWrapper.trigger('deactivated');
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.

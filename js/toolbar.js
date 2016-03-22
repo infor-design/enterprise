@@ -527,10 +527,15 @@
         this.items.attr('tabindex', '-1').removeClass('is-selected');
         this.more.attr('tabindex', '-1').removeClass('is-selected');
 
+        // Return out of this if we're clicking the currently-active item
+        if (activeButton[0] === this.activeButton[0]) {
+          return;
+        }
+
         // Menu Button
         if (activeButton.is('a')) {
           this.activeButton = activeButton.parents('.popupmenu').last().prev('button').attr('tabindex', '0');
-          this.activeButton.focus();
+          this.activeButton[0].focus();
           return;
         }
 
@@ -553,7 +558,7 @@
         }
 
         if (!noFocus) {
-          this.activeButton.focus();
+          this.activeButton[0].focus();
         }
       },
 
@@ -646,8 +651,25 @@
         this.element[method]('has-more-button');
 
         var popupAPI = this.more.data('popupmenu');
-        if (method === 'removeClass' && popupAPI) {
+        if (method === 'removeClass') {
+          if (!popupAPI) {
+            return;
+          }
+
           popupAPI.close();
+
+          var menuItems = popupAPI.menu.find('li:not(.separator)').children('a'),
+            shouldFocus = false;
+
+          menuItems.add(this.more).each(function() {
+            if (document.activeElement === this) {
+              shouldFocus = true;
+            }
+          });
+
+          if (shouldFocus) {
+            this.getLastVisibleButton()[0].focus();
+          }
         }
       },
 
@@ -655,7 +677,7 @@
         // Set up an aria-label as per AOL guidelines
         // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
         if (!this.element.attr('aria-label')) {
-          var isHeader = (this.element.closest('header.header').length ===1),
+          var isHeader = (this.element.closest('.header').length ===1),
             id = this.element.attr('id') || '',
             title = this.element.children('.title'),
             prevLabel = this.element.prev('label'),
