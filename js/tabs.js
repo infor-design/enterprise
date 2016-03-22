@@ -281,16 +281,16 @@
         self.tablist
           .onTouchClick('tabs', '> li')
           .on('click.tabs', '> li', function(e) {
-            self.handleTabClick(e, $(this));
+            return self.handleTabClick(e, $(this));
           })
           .on('click.tabs touchend.tabs touchcancel.tabs', 'a', routeAnchorClick)
           .on('click.tabs touchend.tabs touchcancel.tabs', '.icon', handleIconClick)
           .on('focus.tabs', 'a', function(e) {
-            self.handleTabFocus(e, $(this));
+            return self.handleTabFocus(e, $(this));
           })
           .on('blur.tabs', 'a', handleTabBlur)
           .on('keydown.tabs', 'a', function(e) {
-            self.handleTabKeyDown(e);
+            return self.handleTabKeyDown(e);
           });
 
         // Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
@@ -558,6 +558,17 @@
           }
         }
 
+        function activate() {
+          if (currentLi.hasClass('has-popupmenu')) {
+            currentLi.data('popupmenu').open();
+            return;
+          }
+          self.activate(currentA.attr('href'));
+          self.focusBar();
+          checkAngularClick();
+          self.hideFocusState();
+        }
+
         switch(e.which) {
           case 8:
             if (e.altKey && currentLi.is('.dismissible')) {
@@ -566,17 +577,11 @@
             }
             return;
           case 13: // Enter
-            self.hideFocusState();
-            return;
+            activate();
+            return false;
           case 32: // Spacebar
-            if (currentLi.hasClass('has-popupmenu')) {
-              currentLi.data('popupmenu').open();
-              return;
-            }
-            self.activate(currentA.attr('href'));
-            checkAngularClick();
-            self.hideFocusState();
-            return;
+            activate();
+            return false;
           case 38:
             e.preventDefault(); // jshint ignore:line
           case 37:
