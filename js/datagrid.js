@@ -2489,6 +2489,8 @@ $.fn.datagrid = function(options) {
       headers.eq(cell).addClass('is-active');
 
       this.activeCell.isFocused = true;
+
+      self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
     },
 
     expandRow: function(row) {
