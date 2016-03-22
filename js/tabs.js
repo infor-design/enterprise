@@ -563,7 +563,11 @@
             currentLi.data('popupmenu').open();
             return;
           }
-          self.activate(currentA.attr('href'));
+
+          var href = currentA.attr('href');
+
+          self.activate(href);
+          self.changeHash(href);
           self.focusBar();
           checkAngularClick();
           self.hideFocusState();
