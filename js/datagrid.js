@@ -757,7 +757,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (isInline) {
-        innerHeight = 88; //header and toolbar - TODO add check
+        innerHeight = 18; //header and toolbar - TODO add check
       }
 
       this.wrapper.css('height', 'calc(100% - '+ (innerHeight)+ 'px)');
@@ -961,7 +961,7 @@ $.fn.datagrid = function(options) {
       var self = this,
         headers = self.headerNodes();
 
-      headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');        
+      headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');
       self.element.addClass('is-draggable-columns');
 
       // Initialize Drag api
