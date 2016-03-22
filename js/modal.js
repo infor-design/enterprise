@@ -68,7 +68,8 @@
 
         //ensure is appended to body for new dom tree
         if (this.settings.content) {
-          this.settings.trigger = 'immediate';
+
+          this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
           this.appendContent();
           setTimeout(function () {
             self.open();
@@ -94,9 +95,11 @@
 
         if ($(this.settings.content).is('.modal')) {
           this.element = $(this.settings.content);
-        } else {
+        } else if (this.settings.content && this.settings.content.length > 0) {
           this.element.find('.modal-body').append(this.settings.content);
+          this.settings.content.show();
         }
+
         this.element.appendTo('body');
 
         if (this.settings.cssClass) {

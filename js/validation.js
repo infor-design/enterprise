@@ -26,6 +26,7 @@
   Validator.prototype = {
 
     init: function() {
+
       this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
       this.isPlaceholderSupport = !!('placeholder' in document.createElement('input'));//placeholder native support is-exists
 
@@ -77,6 +78,7 @@
           }
         }
       }
+
       return validations;
     },
 
@@ -115,6 +117,7 @@
         events = self.extractEvents(events);
 
         field.on(events, function (e) {
+
           //Skip on Tab
           if (e.type === 'keyup' && e.keyCode === 9) {
             return;
