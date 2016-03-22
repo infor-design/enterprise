@@ -61,6 +61,11 @@
 
         // If inside a toolbar, make sure to append it to the root toolbar element.
         this.toolbarParent = this.element.parents('.toolbar');
+        this.containmentParent = this.toolbarParent;
+        var moduleTabs = this.containmentParent.closest('.module-tabs');
+        if (moduleTabs.length) {
+          this.containmentParent = moduleTabs;
+        }
 
         // Setup ARIA
         var label = this.element.attr('placeholder') || this.element.prev('label, .label').text().trim();
@@ -98,6 +103,8 @@
           self.fastActivate = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
+        }).on('deactivate.toolbarsearchfield', function() {
+          self.deactivate();
         });
 
         if (this.button && this.button.length) {
@@ -215,14 +222,14 @@
 
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (this.shouldBeFullWidth()) {
-          this.inputWrapper.detach().prependTo(this.toolbarParent);
+          this.inputWrapper.detach().prependTo(this.containmentParent);
         }
 
         this.inputWrapper.addClass('active');
         this.handleDeactivationEvents();
 
         function activateCallback() {
-          self.inputWrapper.addClass('is-open');
+          self.inputWrapper.addClass('is-open').trigger('activated');
           self.input.focus(); // for iOS
         }
 
@@ -257,11 +264,14 @@
           if (self.button && self.button.length && self.button.is('.is-open')) {
             self.button.data('popupmenu').close(false, true);
           }
+
+          self.toolbarParent.trigger('recalculateButtons');
+          self.inputWrapper.trigger('deactivated');
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
-        if (this.inputWrapper.parent().is(this.toolbarParent)) {
-          this.inputWrapper.detach().prependTo(this.toolbarParent.children('.buttonset'));
+        if (this.inputWrapper.parent().is(this.containmentParent)) {
+          this.inputWrapper.detach().prependTo(this.containmentParent.find('.buttonset'));
         }
 
         self.inputWrapper.removeClass('active').removeClass('has-focus');

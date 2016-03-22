@@ -69,9 +69,15 @@
         this.modifyTriggers(this.settings.triggers, false, true);
 
         this.scrollTarget = this.menu.parents('.header');
-        if (this.menu.prevAll('.masthead').length > 0) {
-          this.scrollTarget = this.menu.prevAll('.masthead');
+        var masthead = this.menu.prevAll('.masthead'),
+          moduleTabs = this.menu.prevAll('.module-tabs');
+
+        if (masthead.length > 0) {
+          this.scrollTarget = masthead;
           this.menu.addClass('short');
+        }
+        if (moduleTabs.length > 0) {
+          this.scrollTarget = moduleTabs;
         }
 
         this.accordion = this.menu.find('.accordion');
@@ -88,8 +94,10 @@
         this.originalParent = this.menu.parent();
         if (this.originalParent[0] !== $('body')[0]) {
           var target = $('body').children('.svg-icons .svg-icons-extended'),
-            masthead = $('body').children('.masthead'),
             mainHeader = $('body').children('.header').first();
+
+          masthead = $('body').children('.masthead');
+
           if (masthead && masthead.length) {
             target = masthead;
           }
@@ -205,6 +213,10 @@
 
         if (this.scrollTarget.prev().is('.masthead')) {
           offset += this.scrollTarget.prev().height();
+        }
+
+        if (this.scrollTarget.is('.module-tabs')) {
+          offset = offset + 3;
         }
 
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));

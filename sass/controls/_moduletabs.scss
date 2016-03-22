@@ -1,0 +1,348 @@
+// Module Tabs
+//================================================== //
+
+.tab-container.module-tabs {
+  background-color: $module-tabs-bg-color;
+  border-bottom: 1px solid $module-tabs-y-border-color;
+  border-top: 1px solid $module-tabs-y-border-color;
+  font-size: 0;
+  height: 36px;
+  overflow: hidden;
+
+  // Acts as a spacer that causes the toolbar items to vertically align.
+  &::before {
+    @include vertical-alignment-spacer;
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  [class^="btn"] {
+    background-color: $module-tabs-bg-color;
+    border: 0;
+    color: $module-tabs-inactive-text-color;
+    @include font-size(12);
+    min-width: 0;
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .icon {
+      fill: $module-tabs-inactive-text-color;
+    }
+
+    span {
+      color: inherit;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .icon {
+    fill: $module-tabs-inactive-text-color;
+
+    &.app-header {
+      left: -6px;
+      position: relative;
+      top: -5px;
+
+      span:not(.audible) {
+        background-color: $module-tabs-inactive-text-color;
+      }
+    }
+  }
+
+  .tab-list-container {
+    position: relative;
+    width: calc(100% - 1px);
+  }
+
+  .tab-list {
+    height: 34px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  &.has-toolbar {
+    .tab-list-container {
+      width: calc(70% - 1px); // 1px vertical centerer
+
+      + .toolbar {
+        border-left: 1px solid $module-tabs-x-border-color;
+        width: calc(30% - 1px); // 1px border
+      }
+    }
+  }
+
+  .separator {
+    display: none !important;
+  }
+
+  .tab {
+    @include font-size(12);
+    min-width: 120px;
+    text-align: center;
+    @include css3(transition, background-color .25s ease);
+
+    &:not(:first-child) {
+      border-left: 1px solid $module-tabs-x-border-color;
+    }
+
+    &:before {
+      display: none !important;
+    }
+
+    &:after {
+      display: none !important;
+    }
+
+    a {
+      color: $module-tabs-inactive-text-color;
+      display: block;
+      @include font-size(12);
+      font-weight: bold;
+      margin: 0 auto;
+      overflow: hidden;
+      padding: 10px;
+      text-overflow: ellipsis;
+      max-width: 80%;
+      white-space: nowrap;
+
+      > * {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      > span:not(.icon) {
+        font-weight: bold;
+        margin-left: 5px;
+      }
+    }
+
+    &.is-selected {
+      background-color: $module-tabs-active-bg-color;
+
+      a {
+        color: $module-tabs-active-text-color;
+      }
+    }
+
+    &:hover,
+    &.is-focused {
+      background-color: $module-tabs-hover-bg-color;
+
+      a {
+        color: $module-tabs-hover-text-color;
+      }
+    }
+
+    &.dismissible {
+      .icon {
+        height: 14px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        @include css3(transform, translateY(-50%));
+      }
+
+      a {
+        padding: 10px 32px 10px 0;
+      }
+    }
+
+    &.application-menu-trigger {
+      a {
+        padding: 9px 10px 7px;
+      }
+    }
+  }
+
+  .tab-more {
+    border-left: 1px solid $module-tabs-x-border-color;
+    color: $module-tabs-inactive-text-color;
+    @include font-size(12);
+    font-weight: bold;
+    padding: 8px 10px;
+    text-align: center;
+    width: 120px;
+
+    .icon {
+      fill: $module-tabs-inactive-text-color;
+    }
+
+    span {
+      color: inherit;
+      font-weight: bold;
+    }
+
+    &.is-selected {
+      background-color: $module-tabs-active-bg-color;
+      color: $module-tabs-active-text-color;
+
+      .icon {
+        fill: $module-tabs-active-text-color;
+      }
+    }
+
+    &:hover,
+    &.is-focused,
+    &.is-open {
+      background-color: $module-tabs-hover-bg-color;
+      color: $module-tabs-hover-text-color;
+
+      .icon {
+        fill: $module-tabs-hover-text-color;
+      }
+    }
+  }
+
+  .toolbar {
+    margin-bottom: 0;
+    overflow: hidden;
+
+    .buttonset {
+      height: 34px;
+      text-align: right;
+
+      > * {
+        margin: 0 5px 0 0;
+      }
+    }
+
+    .more {
+      height: 34px;
+    }
+
+    [class^="btn"],
+    .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
+      color: $module-tabs-inactive-text-color;
+      height: 32px;
+      margin-top: 1px;
+
+      &:not(.btn-menu) {
+        border-color: $module-tabs-inactive-text-color;
+      }
+
+      .ripple-effect {
+        background-color: $module-tabs-active-text-color;
+      }
+
+      .icon {
+        fill: $module-tabs-inactive-text-color;
+      }
+
+      span {
+        color: inherit;
+      }
+
+      &:hover {
+        color: $module-tabs-hover-text-color;
+
+        .icon {
+          fill: $module-tabs-hover-text-color;
+        }
+      }
+
+      &:focus,
+      &.is-selected:focus {
+        color: $module-tabs-active-text-color;
+
+        .icon {
+          fill: $module-tabs-active-text-color;
+        }
+
+        &:not(.hide-focus) {
+          border-color: transparent;
+          box-shadow: 0 0 0 2px transparent,
+            0 0 0 1px $module-tabs-hover-text-color;
+        }
+      }
+
+      &.is-open {
+        span {
+          color: inherit;
+        }
+
+        .icon {
+          fill: $module-tabs-active-text-color;
+        }
+      }
+    }
+
+    .btn-actions {
+      min-height: 32px;
+      min-width: 32px;
+      width: 32px;
+    }
+  }
+
+  .toolbar-searchfield-wrapper {
+    .icon:not(.error) {
+      fill: $module-tabs-inactive-text-color;
+    }
+
+    .searchfield {
+      background-color: rgba($searchfield-moduletabs-bg-color, 0);
+      border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
+      border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
+      color: $module-tabs-inactive-text-color;
+    }
+
+    &.active {
+      .searchfield {
+        background-color: rgba($searchfield-moduletabs-bg-color, 1);
+        border-bottom-color: rgba($searchfield-moduletabs-border-color, 1);
+      }
+    }
+
+    &.has-focus {
+      .searchfield {
+        color: $module-tabs-active-text-color;
+      }
+
+      .icon:not(.error) {
+        fill: $module-tabs-active-text-color;
+      }
+    }
+  }
+
+  > .toolbar-searchfield-wrapper.active {
+    width: 100%;
+  }
+
+  // Change state when the spillover button is necessary
+  &.has-more-button {
+    .tab-list {
+      width: calc(100% - 121px);
+    }
+
+    &.has-toolbar {
+      .tab-list-container {
+        width: calc(70% - 1px);
+      }
+    }
+
+    .tab-more {
+      visibility: visible;
+    }
+  }
+
+}
+
+@include respond-to(phone) {
+  .tab-container.module-tabs {
+    .tab.application-menu-trigger {
+      min-width: 0;
+
+      a > span:not(.icon):not(.audible) {
+        width: 0;
+      }
+    }
+  }
+}
