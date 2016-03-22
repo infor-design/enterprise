@@ -19,7 +19,7 @@
     vertical-align: middle;
   }
 
-  .btn {
+  [class^="btn"] {
     background-color: $module-tabs-bg-color;
     border: 0;
     color: $module-tabs-inactive-text-color;
@@ -29,6 +29,14 @@
     > * {
       display: inline-block;
       vertical-align: middle;
+    }
+
+    .icon {
+      fill: $module-tabs-inactive-text-color;
+    }
+
+    span {
+      color: inherit;
     }
 
     &:focus {
@@ -211,11 +219,15 @@
       height: 34px;
     }
 
-    [class^="btn"] {
-      border-color: $module-tabs-inactive-text-color;
+    [class^="btn"],
+    .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
       color: $module-tabs-inactive-text-color;
       height: 32px;
       margin-top: 1px;
+
+      &:not(.btn-menu) {
+        border-color: $module-tabs-inactive-text-color;
+      }
 
       .ripple-effect {
         background-color: $module-tabs-active-text-color;
@@ -223,6 +235,10 @@
 
       .icon {
         fill: $module-tabs-inactive-text-color;
+      }
+
+      span {
+        color: inherit;
       }
 
       &:hover {
@@ -245,6 +261,16 @@
           border-color: transparent;
           box-shadow: 0 0 0 2px transparent,
             0 0 0 1px $module-tabs-hover-text-color;
+        }
+      }
+
+      &.is-open {
+        span {
+          color: inherit;
+        }
+
+        .icon {
+          fill: $module-tabs-active-text-color;
         }
       }
     }
@@ -292,17 +318,13 @@
 
   // Change state when the spillover button is necessary
   &.has-more-button {
-    .tab-list-container {
+    .tab-list {
       width: calc(100% - 121px);
     }
 
     &.has-toolbar {
       .tab-list-container {
         width: calc(70% - 1px);
-      }
-
-      .tab-list {
-        width: calc(100% - 121px);
       }
     }
 
@@ -311,4 +333,16 @@
     }
   }
 
+}
+
+@include respond-to(phone) {
+  .tab-container.module-tabs {
+    .tab.application-menu-trigger {
+      min-width: 0;
+
+      a > span:not(.icon):not(.audible) {
+        width: 0;
+      }
+    }
+  }
 }

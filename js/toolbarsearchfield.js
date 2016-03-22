@@ -61,9 +61,10 @@
 
         // If inside a toolbar, make sure to append it to the root toolbar element.
         this.toolbarParent = this.element.parents('.toolbar');
-        var moduleTabs = this.toolbarParent.closest('.module-tabs');
+        this.containmentParent = this.toolbarParent;
+        var moduleTabs = this.containmentParent.closest('.module-tabs');
         if (moduleTabs.length) {
-          this.toolbarParent = moduleTabs;
+          this.containmentParent = moduleTabs;
         }
 
         // Setup ARIA
@@ -219,7 +220,7 @@
 
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (this.shouldBeFullWidth()) {
-          this.inputWrapper.detach().prependTo(this.toolbarParent);
+          this.inputWrapper.detach().prependTo(this.containmentParent);
         }
 
         this.inputWrapper.addClass('active');
@@ -261,11 +262,13 @@
           if (self.button && self.button.length && self.button.is('.is-open')) {
             self.button.data('popupmenu').close(false, true);
           }
+
+          self.toolbarParent.trigger('recalculateButtons');
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
-        if (this.inputWrapper.parent().is(this.toolbarParent)) {
-          this.inputWrapper.detach().prependTo(this.toolbarParent.find('.buttonset'));
+        if (this.inputWrapper.parent().is(this.containmentParent)) {
+          this.inputWrapper.detach().prependTo(this.containmentParent.find('.buttonset'));
         }
 
         self.inputWrapper.removeClass('active').removeClass('has-focus');

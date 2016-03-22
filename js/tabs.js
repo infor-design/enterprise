@@ -1128,25 +1128,35 @@
           defaultTabSize = 120,
           visibleTabSize = 120;
 
+        sizeableTabs.add(this.moreButton).removeAttr('style');
+
         // Remove overflowed tabs
-        sizeableTabs.removeAttr('style').each(function() {
+        sizeableTabs.each(function() {
           if (self.isTabOverflowed($(this))) {
             sizeableTabs = sizeableTabs.not($(this));
           }
         });
 
+        // Resize the more button to fit the entire space if no tabs can show
+        // Math:  +121 is the padding of the <ul class="tab-list"> element
+        if (!sizeableTabs.length) {
+          visibleTabSize = ((tabContainerW - (hasAppTrigger ? appTrigger.outerWidth() : 0) + 101));
+          this.moreButton.width(visibleTabSize);
+          this.adjustSpilloverNumber();
+          return;
+        }
+
         // Math explanation:
         // Width of tab container - possible applcation menu trigger
         // Divided by number of visible tabs (doesn't include app menu trigger which shouldn't change size)
         // Minus one (for the left-side border of each tab)
-        visibleTabSize = ((tabContainerW - (hasAppTrigger ? appTrigger.outerWidth() : 0)) / sizeableTabs.length) - 1;
+        visibleTabSize = ((tabContainerW - (hasAppTrigger ? appTrigger.outerWidth() : 0)) / sizeableTabs.length - 1);
 
         if (visibleTabSize < defaultTabSize) {
           visibleTabSize = defaultTabSize;
         }
 
         sizeableTabs.width(visibleTabSize);
-
         this.adjustSpilloverNumber();
       },
 
