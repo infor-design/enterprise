@@ -287,7 +287,7 @@
             }
           });
 
-          if (settings.isError && !self.element.is(':visible')) {
+          if (settings.isError && !self.element.is(':visible') && !self.element.is('.dropdown')) {
             self.hide();
           }
 
@@ -408,22 +408,26 @@
 
         // secondary check on bottom/top placements to see if the tooltip width is long enough
         // to bleed off the edge of the page.
-        var o = self.tooltip.offset(),
-          arrow = self.tooltip.find('.arrow'),
-          arrowPosLeft = 0,
+        var o, arrow, arrowPosLeft, delta;
+
+        function setCurrentTooltipPos() {
+          o = self.tooltip.offset();
+          arrow = self.tooltip.find('.arrow');
+          arrowPosLeft = 0;
           delta = 0;
+        }
 
         function offLeftEdgeCondition() {
+          setCurrentTooltipPos();
           return o.left - scrollable.deltaWidth <= 0;
         }
 
         function offRightEdgeCondition() {
+          setCurrentTooltipPos();
           return o.left - scrollable.deltaWidth + self.tooltip.outerWidth() >= winW;
         }
 
-        if (settings.placement === 'bottom' ||
-            settings.placement === 'top' ) {
-
+        if (/offset|bottom|top/i.test(settings.placement)) {
           // Check for bleeding off the left edge
           if (offLeftEdgeCondition()) {
             delta = (0 - (o.left - scrollable.deltaWidth) + 1) * -1;
@@ -442,16 +446,18 @@
           if (offRightEdgeCondition()) {
             // need to explicitly set a width on the popover for this to work, otherwise popover contents will wrap
             // and cause it to grow wider:
-            var tooltipWidth = self.tooltip.outerWidth();
-            self.tooltip.css('width', tooltipWidth);
+            var top,
+              el = self.activeElement,
+              tooltipWidth = self.tooltip.outerWidth() -10;
 
-            delta = (winW - (o.left - scrollable.deltaWidth + tooltipWidth) - 1) * -1;
-            self.tooltip.css('left', o.left - delta);
+            self.tooltip.css('width', tooltipWidth);
+            delta = (winW - (o.left - scrollable.deltaWidth + tooltipWidth +7) - 1) * -1;
+            top = (el.offset().top - el.outerHeight() - (self.tooltip.outerHeight()/2) -3) + scrollable.offsetTop;
+            self.tooltip.css({'left': o.left - delta, 'top': top});
             arrowPosLeft = parseInt(arrow.css('left'), 10);
             arrow.css('left', arrowPosLeft + delta);
 
             // Check again.  If it's still bleeding off the edge, swap it to a left-placed Tooltip.
-            o = self.tooltip.offset();
             if (offRightEdgeCondition()) {
               arrow.removeAttr('style');
               self.tooltip.removeClass('top bottom').addClass('left');
@@ -488,9 +494,14 @@
           extraOffset = -15;
         }
 
-        if (settings.isError) {
-          extraOffset = 2;
+        if (settings.isError && !this.activeElement.is('.timepicker')) {
+          extraOffset = (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) ? 7 : 2;
           lessTop = 2;
+
+          if (this.activeElement.is('.editor')) {
+            extraOffset = -6;
+            lessTop = this.activeElement.outerHeight() - 32;
+          }
         }
 
         var left = o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth;
