@@ -21,6 +21,12 @@
     &:active {
       fill: $trigger-active-color;
     }
+
+  }
+
+  ~ .icon-error {
+    margin-left: -51px;
+    right: auto !important;
   }
 
   &.is-active {
