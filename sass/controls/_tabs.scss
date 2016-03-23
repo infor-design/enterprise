@@ -280,8 +280,7 @@
       color: $tab-text-color;
       @include font-size(14);
       font-weight: normal;
-      line-height: 16px;
-      padding: 7px 11px 10px;
+      //line-height: 16px;
       text-decoration: none;
 
       > * {
