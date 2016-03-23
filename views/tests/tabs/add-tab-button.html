@@ -23,7 +23,8 @@
       </ul>
       <div id="tab1" class="tab-panel">
         <h2>New Tab Settings</h2>
-        <p>These settings will be filled into the Tab during the "before-tab-added" event.</p>
+
+        <p>These settings will be filled into the Tab during the "before-tab-added" event.  If you leave the title and/or content fields blank, the Add Tab button will insert its normal defaults (this is what will happen when using the control normaly).</p>
 
         <div class="field">
           <label for="tab-name">Tab Name</label>
@@ -102,6 +103,11 @@
       if (formIndex > tabsLength) {
         formIndex = tabsLength;
       }
+
+      body.toast({
+        'title': '<span style="font-weight: bold; color: #aa3333">before-tab-added</span> Event was utilized!',
+        'message': 'Content from the "New Tab Settings" Tab was used to generate your New Tab!'
+      });
 
       return {
         newId: id,
