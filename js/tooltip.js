@@ -503,7 +503,7 @@
             extraOffset = -5;
             lessTop = this.activeElement.outerHeight() - 32;
           }
-          if (this.activeElement.is('.textarea')) {
+          if (this.activeElement.is('textarea')) {
             lessTop = this.activeElement.outerHeight() - 22;
           }
           if (this.activeElement.is('input.dropdown')) {
