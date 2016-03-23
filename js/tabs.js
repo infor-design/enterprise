@@ -566,7 +566,7 @@
 
           self.activate(href);
           self.changeHash(href);
-          self.focusBar();
+          self.focusBar(currentLi);
           checkAngularClick();
           self.hideFocusState();
           currentA[0].focus();
@@ -1533,6 +1533,9 @@
         if (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a')) {
           width = width + 22;
         }
+
+        // NOTE:  Uncomment this to get the old "more" tab sizing back
+        /*
         if (target.is('.tab-more')) {
           if (this.settings.tabCounts) {
             height = height - 4;
@@ -1544,6 +1547,7 @@
             pos.top = pos.top + 5;
           }
         }
+        */
 
         left = pos.left - offset.left;
         top = pos.top - offset.top;

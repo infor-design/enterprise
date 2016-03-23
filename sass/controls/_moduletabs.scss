@@ -85,6 +85,7 @@
   }
 
   .tab {
+    color: $module-tabs-inactive-text-color;
     @include font-size(12);
     min-width: 120px;
     text-align: center;
@@ -103,7 +104,6 @@
     }
 
     a {
-      color: $module-tabs-inactive-text-color;
       display: block;
       @include font-size(12);
       font-weight: bold;
@@ -127,19 +127,13 @@
 
     &.is-selected {
       background-color: $module-tabs-active-bg-color;
-
-      a {
-        color: $module-tabs-active-text-color;
-      }
+      color: $module-tabs-active-text-color;
     }
 
     &:hover,
     &.is-focused {
       background-color: $module-tabs-hover-bg-color;
-
-      a {
-        color: $module-tabs-hover-text-color;
-      }
+      color: $module-tabs-hover-text-color;
     }
 
     &.dismissible {
@@ -177,7 +171,6 @@
     }
 
     span {
-      color: inherit;
       font-weight: bold;
     }
 
