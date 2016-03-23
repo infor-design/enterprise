@@ -570,7 +570,7 @@
         }
 
         //close tooltips
-        $('#validation-errors, #tooltip').addClass('is-hidden');
+        $('#validation-errors, #tooltip, #validation-tooltip').addClass('is-hidden');
 
         // remove the event that changed this page's skip-link functionality in the open event.
         $('.skip-link').off('focus.modal');
