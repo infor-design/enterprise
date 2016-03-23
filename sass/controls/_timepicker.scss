@@ -131,12 +131,11 @@ html[dir='rtl'] {
     }
 
     + .icon + .icon-error {
-      left: 50px;
       right: auto;
     }
 
     + .audible + .icon + .icon-error {
-      left: 55px;
+      margin-right: -48px;
       right: auto;
     }
   }

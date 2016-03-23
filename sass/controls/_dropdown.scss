@@ -528,7 +528,7 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: -33px;
       left: 6px;
-      right: auto;
+      right: auto !important;
     }
   }
 
@@ -553,13 +553,19 @@ html[dir='rtl'] {
       }
     }
 
-    > .icon {
+    >.icon {
       margin-left: inherit;
       margin-right: -26px;
 
       &.search {
         margin-left: inherit;
         margin-right: -26px;
+      }
+    }
+
+    >.trigger {
+      .icon {
+        margin-right: -20px;
       }
     }
   }
@@ -574,7 +580,7 @@ html[dir='rtl'] {
     .icon-alert,
     .icon-info,
     .icon-pending {
-      left: 50px;
+      left: 21px;
       right: auto;
     }
   }

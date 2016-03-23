@@ -36,8 +36,20 @@
   width: 100%;
 }
 
+.tab-container {
+  font-size: 0;
+  position: relative;
+
+  &.has-more-button {
+    .tab-more {
+      visibility: visible;
+    }
+  }
+}
+
 .tab-list {
   list-style: none outside none;
+  overflow: hidden;
 }
 
 // Styles specific to any tabs used in SoHo Xi
@@ -136,18 +148,13 @@
 
 .page-container  > .tab-panel {
   height: 100%;
-  margin-top: 0;
+  padding-top: 0;
 }
 
 // More Button
 .tab-more {
-  background-color: transparent;
-  color: $tab-text-color;
   cursor: pointer;
   display: inline-block;
-  @include font-size(14);
-  max-width: 102px;
-  padding: 6px 0 10px 14px;
   position: absolute;
   right: 0;
   top: 0;
@@ -158,40 +165,6 @@
     outline: none;
   }
 
-  &:hover {
-    color: $tab-hover-color;
-
-    .icon:not(.is-error):not(.icon-error) {
-      fill: $tab-hover-color;
-    }
-  }
-
-  .icon {
-    fill: $tab-text-color;
-    height: 16px;
-    margin: 0;
-    vertical-align: middle;
-    width: 32px;
-  }
-
-  &.popup-is-open,
-  &.is-selected {
-    span {
-      color: $tab-selected-color;
-      text-decoration: none;
-    }
-
-    .icon:not(.is-error):not(.icon-error) {
-      fill: $tab-selected-color;
-    }
-  }
-
-  &.popup-is-open {
-    span {
-      text-decoration: none;
-    }
-  }
-
   // Position Elements in menu
   > * {
     vertical-align: middle;
@@ -200,9 +173,9 @@
 
 // Tab Container
 // Can change the way the contents are styled based on classes
-.tab-container:not(.vertical) {
+.tab-container.horizontal,
+.tab-container.header-tabs {
   margin-bottom: 20px;
-  position: relative;
 
   .tab {
     border-radius: 2px 2px 0 0;
@@ -366,12 +339,51 @@
     }
   }
 
+  .tab-more {
+    background-color: transparent;
+    color: $tab-text-color;
+    @include font-size(14);
+    max-width: 102px;
+    padding: 6px 0 10px 14px;
+
+    .icon {
+      fill: $tab-text-color;
+      height: 16px;
+      margin: 0;
+      vertical-align: middle;
+      width: 32px;
+    }
+
+    &:hover {
+      color: $tab-hover-color;
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $tab-hover-color;
+      }
+    }
+
+    &.popup-is-open,
+    &.is-selected {
+      span {
+        color: $tab-selected-color;
+        text-decoration: none;
+      }
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $tab-selected-color;
+      }
+    }
+
+    &.popup-is-open {
+      span {
+        text-decoration: none;
+      }
+    }
+  }
+
   // Tab Headers aka Notches
   // Ref: http://bradsknutson.com/blog/css-sliding-underline/
   .tab-list {
-    border-bottom: 1px solid $tab-border-color;
-    height: 34px;
-    overflow: hidden;
     padding: 0;
     width: 100%;
 
@@ -409,22 +421,14 @@
     }
   }
 
-  &.has-more-button > .tab-list {
+  &.has-more-button .tab-list {
     padding-right: 102px;
-  }
-
-  &.has-more-button > .tab-more {
-    visibility: visible;
   }
 
   &.has-counts {
 
     .animated-bar {
       top: 59px;
-    }
-
-    .tab-list {
-      height: 62px;
     }
 
     .tab-more {
@@ -533,27 +537,16 @@
   }
 }
 
-/*
-#tab-container-popupmenu li.is-selected {
-  background-color: $tab-selected-color;
-
-  > a {
-    color: $inverse-color;
-
-    &:before {  //Removes default check icon
-      display: none;
-    }
-  }
-}
-*/
-
 .popupmenu .icon.icon-error {
   height: 14px;
   left: auto !important;
   width: 14px;
 }
 
-
+@import './horizontaltabs';
+@import './verticaltabs';
+@import './headertabs';
+@import './moduletabs';
 
 //RTL Styles
 html[dir='rtl'] {

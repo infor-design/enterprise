@@ -155,7 +155,7 @@ textarea {
   display: inline-block;
   @include font-size(14);
   max-width: 100%;
-  padding: 9px 10px 8px;
+  padding: 8px 10px;
   resize: none;
   text-align: left;
   width: 300px;
@@ -488,5 +488,17 @@ html[dir='rtl'] {
   // Mask Control Adjustment Classes
   .is-number-mask {
     text-align: left;
+  }
+
+  [data-mask-mode="number"].spinbox {
+    text-align: center;
+  }
+}
+
+// Firefox on Mac
+.is-mac.is-firefox {
+  input,
+  textarea {
+    padding: 9px 10px 8px;
   }
 }

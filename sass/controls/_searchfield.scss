@@ -133,13 +133,6 @@
       > .searchfield {
         width: calc(100% - 39px);
       }
-
-      &.has-focus,
-      &.show-category.has-focus {
-        .searchfield {
-          border-left-color: $searchfield-context-border-color;
-        }
-      }
     }
 
     &.is-hovered {
@@ -208,7 +201,6 @@
 
     .searchfield {
       border-color: $input-focus-border-color;
-      border-left-color: transparent;
     }
 
     &.has-categories {
@@ -229,8 +221,8 @@
     background-color: transparent;
     border-bottom-right-radius: 0;
     border-color: $input-border-color;
-    border-top-right-radius: 0;
     border-right: 0;
+    border-top-right-radius: 0;
     color: $font-color;
     font-weight: normal;
     height: 35px;
