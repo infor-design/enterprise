@@ -133,7 +133,11 @@
               return;
             }
 
-            self.validate(field, field.closest('.modal-engaged').length === 1 ? false : true, e);
+            if (field.closest('.modal-engaged').length && !field.closest('.modal-body').length) {
+              return;
+            }
+
+            self.validate(field, true, e);
           }, 300);
         });
       });
