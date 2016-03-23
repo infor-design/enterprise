@@ -30,7 +30,8 @@
         content: null, //Ability to pass in dialog html content
         cssClass: null,  //Append a css class to top level
         autoFocus: true,
-        id: null  //Optionally tag a dialog with an id
+        id: null,  //Optionally tag a dialog with an id
+        frameHeight: 180 //Extra Height
       },
       settings = $.extend({}, defaults, options);
 
@@ -102,7 +103,10 @@
           this.element = $(this.settings.content);
         } else if (this.settings.content && this.settings.content.length > 0) {
           this.element.find('.modal-body').append(this.settings.content);
-          this.settings.content.show();
+
+          if (this.settings.content instanceof jQuery){
+            this.settings.content.show();
+          }
         }
 
         this.element.appendTo('body');
@@ -463,11 +467,9 @@
 
       resize: function() {
         var bodyHeight = $('.modal-body', this.element).height(),
-          calcHeight = ($(window).height()* 0.9)-180; //90% -(180 :extra elements-height)
+          calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight; //90% -(180 :extra elements-height)
 
         $('.modal-body-wrapper', this.element).css('max-height', bodyHeight > calcHeight ? calcHeight : '');
-
-        return;
       },
 
       isOpen: function() {

@@ -8,6 +8,7 @@
 | Automotive Exchange  | Evaluate with AngularJS and GWT | Tien Hanh Pham, Michael Lenz | 3x moving to 4x |
 | BI | React - New App |  Andrej Hazucha <Andrej.Hazucha@infor.com> | 4x |
 | Business Vault |    Justin Timbers   |   A JSF based Single Page App implement with jQuery | 3.1 moving to 4x (new App) |
+| Business innovations |    Gowtham.Govindaraj@infor.com   | Employee Recognition System using Mongoose | 4x |
 | Care Assignments |   | Michael Welborn | 3x |
 | Certification Manager |   |    Syedur Islam | 3x |
 | Certpoint LMS  |   | Blessed Dianne Valencia | 3x moving to 4x |
