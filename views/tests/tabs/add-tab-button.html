@@ -17,40 +17,41 @@
 
     <div id="add-capable-tabs" class="tab-container" data-options="{ addTabButton: true }">
       <ul class="tab-list">
-        <li><a href="#tab1">Tab #1</a></li>
-        <li><a href="#tab2">Tab #2</a></li>
-        <li><a href="#tab3">pppppp</a></li>
-        <li><a href="#tab4">Tab #4</a></li>
-        <li><a href="#tab5">Tab #5</a></li>
-        <li><a href="#tab6">Tab #6</a></li>
+        <li clas="tab"><a href="#tab1">New Tab Settings</a></li>
+        <li class="tab dismissible"><a href="#tab2">Tab #2</a></li>
+        <li class="tab dismissible"><a href="#tab3">Tab #3</a></li>
       </ul>
       <div id="tab1" class="tab-panel">
-        <h2>Tab #1</h2>
-        <p>Relationships seize transition feeds design B2C customized infrastructures e-commerce implement expedite monetize incentivize compelling. Plug-and-play networkeffects intuitive holistic visionary user-contributed recontextualize interactive enable B2B standards-compliant; evolve technologies platforms engage. Engage; orchestrate integrate 24/7 killer portals e-enable.</p>
+        <h2>New Tab Settings</h2>
+        <p>These settings will be filled into the Tab during the "before-tab-added" event.</p>
+
+        <div class="field">
+          <label for="tab-name">Tab Name</label>
+          <input id="tab-name" />
+        </div>
+
+        <div class="field">
+          <label for="tab-content">Tab Content</label>
+          <textarea id="tab-content"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="tab-index">Tab Index</label>
+          <input id="tab-index" />
+        </div>
+
+        <div class="field">
+          <input id="dismissible" type="checkbox" class="checkbox" checked>
+          <label for="dismissible" class="checkbox-label">Dismissible</label>
+        </div>
       </div>
       <div id="tab2" class="tab-panel">
         <h2>Tab #2</h2>
-        <p style="font-size: larger; font-weight: bold;">
-          YOU FOUND ME!
-        </p>
-      </div>
-      <div id="tab3" class="tab-panel">
-        <h2>pppppp</h2>
-        <p>Relationships benchmark niches best-of-breed innovate integrate plug-and-play life-hacks enhance user-centred; social seamless, B2C; mission-critical global. Revolutionary harness next-generation users--supply-chains, turn-key rich paradigms, bandwidth vertical; Cluetrain customized reinvent visualize, benchmark A-list, "networking, deliver ubiquitous transform mesh 24/365 platforms."</p>
-      </div>
-      <div id="tab4" class="tab-panel">
-        <h2>Tab #4</h2>
         <p>Extend distributed; content. Widgets tag, dynamic interactive reintermediate cross-media, synthesize. Eyeballs empower networkeffects innovate user-centric infomediaries portals drive scalable brand integrateAJAX-enabled users deliver networks platforms empower productize.</p>
       </div>
-      <div id="tab5" class="tab-panel">
-        <h2>Tab #5</h2>
-        <p style="font-size: larger; font-weight: bold;">
-          YOU FOUND ME!
-        </p>
-      </div>
-      <div id="tab6" class="tab-panel">
-        <h2>Tab #6</h2>
-        <p>Communities revolutionize out-of-the-box e-tailers bleeding-edge disintermediate reinvent, 24/7 convergence empower paradigms disintermediate frictionless viral impactful leading-edge, data-driven user-centric ecologies.</p>
+      <div id="tab3" class="tab-panel">
+        <h2>Tab #3</h2>
+        <p>Relationships benchmark niches best-of-breed innovate integrate plug-and-play life-hacks enhance user-centred; social seamless, B2C; mission-critical global. Revolutionary harness next-generation users--supply-chains, turn-key rich paradigms, bandwidth vertical; Cluetrain customized reinvent visualize, benchmark A-list, "networking, deliver ubiquitous transform mesh 24/365 platforms."</p>
       </div>
     </div>
 
@@ -59,7 +60,24 @@
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
-    var body = $(this);
+    var body = $(this),
+      tabsAPI = $('#add-capable-tabs').data('tabs');
+
+    function makeId(name) {
+      if (!name) {
+        console.warn('No name for a new tab was provided.')
+        name = '';
+      }
+
+      var stringName = name.toLowerCase().split(' ').join('-');
+
+      var existing = $('[id^="'+ stringName +'"]');
+      if (!existing.length) {
+        return stringName + '-0';
+      }
+
+      return stringName + '-' + existing.length;
+    }
 
     $('#add-capable-tabs').on('tab-added.test', function(e, anchor) {
       var href = anchor.attr('href').replace(/#/g, '');
@@ -68,6 +86,32 @@
         'title': 'New Tab Added!',
         'message': 'A new tab with the id <b>' + href + '</b> was added to the tabset!'
       });
+    }).on('before-tab-added.test', function(e, tabId, tabSettings, tabIndex) {
+
+      var formName = $('#tab-name').val(),
+        formContent = $('#tab-content').val(),
+        formIndex = Number($('#tab-index').val()),
+        formIsDismissible = $('#dismissible').prop('checked')
+        id = makeId(formName)
+        tabsLength = tabsAPI.tablist.children('li:not(.separator)').length - 1;
+
+      if (!formName || !formName.length || !formContent || !formContent.length) {
+        return;
+      }
+
+      if (formIndex > tabsLength) {
+        formIndex = tabsLength;
+      }
+
+      return {
+        newId: id,
+        settings: {
+          name: formName,
+          content: formContent,
+          isDismissible: formIsDismissible
+        },
+        newIndex: formIndex
+      };
     });
   });
 </script>
