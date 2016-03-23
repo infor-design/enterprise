@@ -11,7 +11,7 @@
 
 // Form Background Color
 $body-bg-color:  $graphite03;
-$header-bg-color: $slate09;
+$header-bg-color: $azure09;
 $header-border-color: $slate10;
 $header-icon-color: #eff0f4;
 $header-disabled-color: $graphite05;
@@ -472,10 +472,10 @@ $header-tabcontainer-border-color: $graphite04;
 $header-tab-normal-color: $graphite01;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
-$header-tab-alt-bg-color: $white;
-$header-tab-alt-normal-color: $graphite10;
-$header-tab-alt-hover-color: $font-color-highcontrast;
-$header-tab-alt-selected-color: $primary-color;
+$header-tab-alt-bg-color: $slate10;
+$header-tab-alt-normal-color: $inverse-color;
+$header-tab-alt-hover-color: $inverse-color;
+$header-tab-alt-selected-color: $inverse-color;
 
 // Header Breadcrumb
 $header-breadcrumb-color: $graphite01;
