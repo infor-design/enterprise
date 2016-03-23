@@ -110,7 +110,7 @@ input.multiselect {
     input.dropdown,
     input.multiselect {
       + .icon {
-        top: 22px;
+        // top: 22px;
       }
     }
   }
@@ -418,12 +418,19 @@ input.multiselect {
     padding: 5px 18px 5px 5px;
   }
 
-  input.dropdown + .icon,
-  input.multiselect + .icon {
-    height: 30px;
-    right: 4px;
-    top: -2px;
-    width: 16px;
+  input.dropdown,
+  input.multiselect {
+    + .icon {
+      height: 30px;
+      right: 4px;
+      top: -2px;
+      width: 16px;
+    }
+
+    ~ .icon-error {
+      margin-left: -38px;
+      right: auto;
+    }
   }
 
   .dropdown-wrapper {
@@ -582,6 +589,16 @@ html[dir='rtl'] {
     .icon-pending {
       left: 21px;
       right: auto;
+    }
+  }
+
+  .field-short {
+    input.dropdown,
+    input.multiselect {
+      ~ .icon-error {
+        margin-left: inherit;
+        margin-right: -38px !important;
+      }
     }
   }
 

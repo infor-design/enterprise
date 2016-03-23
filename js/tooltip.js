@@ -471,6 +471,7 @@
 
       placeBelowOffset: function(scrollable) {
        var o = this.activeElement.offset(),
+          isShortField = !!(this.activeElement.closest('.field-short').length),
           extraOffset = (this.element.parent().find('.icon').length > 1 ? -12 : 4),
           extraWidth = 10,
           lessTop = 0;
@@ -496,7 +497,8 @@
 
         // Errors
         if (settings.isError) {
-          extraOffset = (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) ? 7 : 1;
+          extraOffset = (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) ?
+             7 : (isShortField ? (Locale.isRTL() ? -10 : 4) : 1);
           lessTop = 2;
 
           if (this.activeElement.is('.editor')) {
@@ -507,13 +509,19 @@
             lessTop = this.activeElement.outerHeight() - 22;
           }
           if (this.activeElement.is('input.dropdown')) {
-            extraOffset = 10;
+            if (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) {
+              extraWidth = -20;
+              extraOffset = 10;
+            } else {
+              extraWidth = 10;
+              extraOffset = (isShortField ? (Locale.isRTL() ? 10 : -10) : -20);
+            }
           }
           if (this.activeElement.is('.spinbox')) {
             extraOffset =  Locale.isRTL() ? -5 : 4;
           }
           if (this.activeElement.is('.timepicker')) {
-            extraOffset = Locale.isRTL() ? 18 : -23;
+            extraOffset = Locale.isRTL() ? (isShortField ? 5 : 18) : (isShortField ? -9 : -23);
           }
         }
 
