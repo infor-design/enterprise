@@ -112,7 +112,7 @@
       background-color: $searchfield-context-bg;
       border: 0;
       border-bottom: 1px solid $searchfield-context-border-color;
-      height: 34px;
+      height: 33px;
 
       + .searchfield {
         margin-left: 0;
@@ -225,7 +225,7 @@
     border-top-right-radius: 0;
     color: $font-color;
     font-weight: normal;
-    height: 35px;
+    height: 34px;
     margin: 0;
     min-width: 0;
     padding: 0 0 0 10px;
@@ -304,16 +304,6 @@
 
     &:-ms-input-placeholder {
       color: transparent !important;
-    }
-  }
-}
-
-.is-firefox {
-  .searchfield-wrapper {
-    &.has-categories {
-      .btn {
-        height: 34px;
-      }
     }
   }
 }
