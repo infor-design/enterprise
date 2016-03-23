@@ -29,7 +29,8 @@
         isAlert: false, //Adds alertdialog role
         content: null, //Ability to pass in dialog html content
         cssClass: null,  //Append a css class to top level
-        autoFocus: true
+        autoFocus: true,
+        id: null  //Optionally tag a dialog with an id
       },
       settings = $.extend({}, defaults, options);
 
@@ -92,6 +93,10 @@
               '</div>'+
             '</div>'+
           '</div>');
+
+        if (this.settings.id) {
+          this.element.attr('id', this.settings.id);
+        }
 
         if ($(this.settings.content).is('.modal')) {
           this.element = $(this.settings.content);
@@ -292,7 +297,7 @@
           this.oldActive = $(':focus');  //Save and restore focus for A11Y
         }
 
-         elemCanOpen = this.element.triggerHandler('beforeopen');
+        elemCanOpen = this.element.triggerHandler('beforeopen');
 
         self.isCancelled = false;
 

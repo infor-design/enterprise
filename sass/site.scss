@@ -4,16 +4,13 @@
 @import 'mixins';
 @import 'config';
 
-// Home Page
-//==================================================//
-
 $site-maxwidth: 980px;  //320x3 + two 30px gutters
 $vision-color: $azure05;
 $code-color: $emerald06;
 $code-color-alt: $emerald08;
 
 body {
-  background-color: $inverse-color !important;
+  background-color: $inverse-color;
 }
 
 //Application Nav Adjustments
@@ -40,6 +37,7 @@ body {
 
 }
 
+// Search
 .search-detail {
   background-color: $white;
   border-bottom: 1px solid $graphite02;
@@ -167,314 +165,14 @@ body {
   }
 }
 
-.site-hero.home .row {
-  height: 310px;
-  line-height: 310px;
 
-  h1 {
-    left: 50px;
-    position: relative;
-    top: -20px;
-  }
-}
-
-.site-hero.component .row {
-  max-width: $site-maxwidth !important;
-}
-
-.site-home {
-  .editorial {
-    border-top: 1px solid #d8d8d8;
-    padding-bottom: 50px;
-  }
-}
-
-.home.menubar {
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #d8d8d8;
-  height: 135px;
-  padding: 0 30px;
-  width: 100%;
-
-  .left,
-  .right {
-    float: left;
-    text-align: center;
-    width: 50%;
-
-    span {
-      color: $graphite09;
-      display: block;
-      @include font-size(18);
-      padding-bottom: 10px;
-      padding-top: 37px;
-    }
-  }
-
-  .btn-primary {
-    margin-bottom: 25px;
-    line-height: 35px;
-    width: 200px;
-  }
-
-}
-
-.site-intro {
-  h1 {
-    color: $graphite06;
-    @include font-size(36);
-    @include antialiased();
-    margin: 70px 60px 45px;
-    line-height: 45px;
-    text-align: center;
-
-    span {
-      font-weight: normal;
-      @include font-size(36);
-    }
-  }
-
-  .one-third {
-    padding-top: 10px;
-    text-align: center;
-
-    .site-intro-user .icon {
-      background-image: url('../assets/site/UserCentered.svg');
-      background-repeat: no-repeat;
-      background-size: 100% auto;
-      height: 100px;
-      width: 100px;
-    }
-
-    .site-intro-mobile .icon {
-      background-image: url('../assets/site/MobileInMind.svg');
-      background-repeat: no-repeat;
-      background-size: 100% auto;
-      height: 100px;
-      width: 100px;
-    }
-
-    .site-intro-accessible .icon {
-      background-image: url('../assets/site/Accessible.svg');
-      background-repeat: no-repeat;
-      background-size: 100% auto;
-      height: 100px;
-      width: 100px;
-    }
-
-    h2 {
-      border-top: 1px solid #d8d8d8;
-      color: $graphite08;
-      @include font-size(18);
-      margin-top: 10px;
-      font-weight: bold;
-      line-height: 45px;
-      padding-top: 20px;
-      text-align: left;
-    }
-
-    .hyperlink {
-      float: left;
-      margin-bottom: 65px;
-      text-transform: uppercase;
-    }
-
-    p {
-      text-align: left;
-    }
-  }
-}
-
-.site-text-section {
-  background-color: $body-bg-color;
-  padding: 20px 0;
-  text-align: center;
-
-  > div {
-    max-width: $site-maxwidth;
-  }
-
-  h2 {
-    color: $graphite08;
-    @include font-size(28);
-    font-weight: lighter;
-    line-height: 40px;
-  }
-
-  pre[class*="language-"] {
-    left: 10%;
-    width: calc(100% - 20%);
-  }
-
-  p {
-    @include font-size(16);
-    line-height: 25px;
-    margin: 25px 0 30px;
-    padding: 0 10%;
-    text-align: center;
-  }
-
-  img {
-    margin-bottom: 75px;
-  }
-
-  a,
-  ul {
-    @include font-size(16);
-  }
-
-  ul {
-    list-style: initial;
-    list-style-type: disc;
-    list-style-position: unset;
-    margin-left: 20px;
-
-    li {
-    margin-bottom: 5px;
-    }
-  }
-}
-
-.site-text-section.component {
-  p,
-  ul,
-  h2 {
-    padding: 0;
-    text-align: left;
-  }
-
-  h2 {
-    padding: 40px 0 0;
-  }
-}
-
-.site-component.card {
-  background-color: #ffffff;
-  display: inline-block;
-  height: 75px;
-  margin-left: 20px;
-  min-height: 0;
-  padding: 0;
-  text-align: left;
-  text-decoration: none;
-  width: 280px;
-
-  .title-wrapper {
-    display: inline-block;
-    height: 75px;
-    pointer-events: none;
-    position: relative;
-    width: 150px;
-  }
-
-  .img-wrapper {
-    display: inline;
-    height: 50px;
-    margin: 12px 5px 12px 15px;
-    width: 50px;
-    pointer-events: none;
-    position: relative;
-    left: -1px;
-    top: -13px;
-  }
-
-  img {
-    height: 25px;
-    margin: 13px 12px;
-    width: 25px;
-  }
-
-  .title {
-    color: $graphite07;
-    @include font-size(18);
-    display: table;
-    height: 75px;
-    position: absolute;
-    width: 200px;
-
-    span {
-      display: table-cell;
-      line-height: 20px;
-      padding-right: 20px;
-      vertical-align: middle;
-    }
-  }
-
-  &:focus {
-    border-color: $input-focus-border-color;
-    box-shadow: 0 0 5px rgba(8, 150, 233, .2);
-  }
-}
-
-.kitchen-sink {
-  p {
-    margin-left: 0px !important;
-    text-align: center !important;
-  }
-
-  .btn-primary {
-    display: inline-block;
-    left: 40px;
-    position: relative;
-    line-height: 35px;
-    top: 10px;
-  }
-
-}
-
-@include respond-to(tablet) {
-
-  .articles-columns {
-    max-width: 670px !important;
-  }
-
-
-}
+// Home Page
+//==================================================//
 
 @include respond-to(tabletdown) {
   .site-hero .hero-content {
     max-width: 425px;
     width: 100%;
-  }
-
-  .site-hero.home {
-    h1 {
-      @include font-size(40);
-    }
-  }
-
-  .site-intro {
-
-    .one-third.column {
-      width: 100%;
-    }
-
-    h2 {
-      border-top: 1px solid transparent !important;
-      padding-top: 10px;
-      line-height: 24px !important;
-    }
-
-    p,
-    .hyperlink {
-      margin-left: 120px;
-    }
-
-    .icon {
-      float: left;
-    }
-
-    .site-intro-user,
-    .site-intro-accessible,
-    .site-intro-mobile {
-      border-bottom: 1px solid #d8d8d8;
-      padding-bottom: 50px;
-    }
-
-    .icon {
-      margin-right: 20px;
-    }
-
   }
 
   .layouts-example .one-half.column {
@@ -489,15 +187,6 @@ body {
 }
 
 @include respond-to(phablet) {
-
-  .component.site-hero h1 {
-    margin: 10px 0 0;
-  }
-
-  .site-hero.component h1 {
-    margin: 10px 0px 0 !important;
-    @include font-size(40);
-  }
 
   .site-component.card {
     width: calc(100% - 40px);
@@ -515,6 +204,12 @@ body {
     max-width: 400px !important;
   }
 
+}
+
+@include respond-to(tablet) {
+  .articles-columns {
+    max-width: 670px !important;
+  }
 }
 
 // Footer
@@ -884,10 +579,6 @@ body {
 
 }
 
-.no-margin {
-  margin-top: 0 !important;
-}
-
 code.snippet {
   background-color: #ebebeb;
   color: $graphite07;
@@ -902,73 +593,12 @@ code.snippet {
 
 @include respond-to(tabletdown) {
 
-  .site-category-box {
-    display: block;
-
-    .site-category-header,
-    .site-category-content {
-      display: inline-block;
-      width: 100%;
-    }
-
-    h3 {
-      padding: 50px 0 !important;
-      text-align: center !important;
-    }
-  }
-
-  .home.menubar {
-    height: 300px;
-
-    .left,
-    .right {
-      display: block;
-      width: 100%;
-    }
-
-    .left {
-      border-bottom: 1px solid #d8d8d8;
-    }
-  }
-
-  .kitchen-sink {
-    padding: 20px 0 0 0 !important;
-
-    a {
-      display: block !important;
-      left: 0 !important;
-      margin: 0 auto !important;
-      width: 100px !important;
-    }
-  }
-
-  .site-category-section {
-    height: auto;
-
-  }
-
   .site-hero {
     .timestamp {
       @include font-size(12);
     }
   }
 
-}
-
-@include respond-to(phone) {
-  .site-category-section {
-    display: block;
-    width: 100% !important;
-  }
-
-}
-
-.sidebar-nav a {
-  display: block;
-  max-width: 235px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 // Guide/Controls Pages
@@ -991,17 +621,16 @@ div.light-bgrnd {
 
 //Components Pages
 .component {
+  background-color: $inverse-color;
 
   //Components Header
   .header {
     background-color: $amethyst07;
 
     .application-menu-trigger .icon {
-      margin-left: 0;
+      margin-left: 0 !important;
     }
   }
-
-  background-color: $inverse-color;
 
   &.site-hero {
     background-color: $amethyst07;
@@ -1065,13 +694,17 @@ div.light-bgrnd {
 
 }
 
+.site-hero.component .row {
+  max-width: $site-maxwidth !important;
+}
+
 .ie9 .site-hero.component {
   height: auto !important;
   padding-top: 30px;
 }
 
-// Link Style in Case Forgotten
-.editorial.component > .main > .content {
+// Add Link Style in Case Forgotten
+.editorial .content {
 
   a:not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink) {
     border-bottom: 1px solid transparent;
@@ -1104,7 +737,7 @@ div.light-bgrnd {
 
 //Links with icons
 .download-link {
-  float: right;
+  display: inline-block;
 
   .hyperlink {
     display: inline;
@@ -1260,6 +893,14 @@ div.light-bgrnd {
 
 }
 
+.sidebar-nav a {
+  display: block;
+  max-width: 235px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .code {
   background-color: $graphite02;
   border: 1px solid #d2d2d2;
@@ -1355,12 +996,18 @@ div.light-bgrnd {
   }
 }
 
-.site-categories {
-  padding-bottom: 80px;
-
-  .row {
-    padding-right: 0;
-  }
+//Example Tag above the Example on component details
+.code-tag {
+  @include font-size(12);
+  background-color: $graphite03;
+  border-radius: 2px;
+  color: $graphite08;
+  display: inline-block;
+  height: 22px;
+  line-height: 23px;
+  margin: 20px 0 40px;
+  padding: 0 10px;
+  text-transform: uppercase;
 }
 
 // Search Results
@@ -1599,16 +1246,3 @@ pre[class*='language-'] {
 
 }
 
-//Example Tag above the Example on component details
-.code-tag {
-  @include font-size(12);
-  background-color: $graphite03;
-  border-radius: 2px;
-  color: $graphite08;
-  display: inline-block;
-  height: 22px;
-  line-height: 23px;
-  margin: 20px 0 40px;
-  padding: 0 10px;
-  text-transform: uppercase;
-}

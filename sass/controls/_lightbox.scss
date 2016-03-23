@@ -1,0 +1,62 @@
+// Lightbox
+//================================================== //
+
+.lightbox-container {
+  text-align: center;
+}
+
+.lightbox {
+  display: inline-block;
+  margin: 20px;
+  position: relative;
+  text-decoration: none;
+
+  .lightbox-overlay {
+    @include transition(background-color 400ms ease);
+    @include font-size(16);
+    color: $white;
+    font-weight: bold;
+    height: calc(100% - 38px);
+    opacity: 0;
+    padding-top: calc(50% - 16px);
+    position: absolute;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  $lightbox-overlay-bg-color: rgba(26, 26, 26, .85);
+
+  &:hover .lightbox-overlay {
+    background-color: $lightbox-overlay-bg-color;
+    opacity: 1;
+  }
+
+  img {
+    border: 1px solid $panel-border-color;
+  }
+
+  .lightbox-caption {
+    @include font-size(18);
+    color: $font-color-extrahighcontrast;
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+  }
+}
+
+.lightbox-modal {
+
+  .modal-content {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+  }
+
+  .modal-body-wrapper {
+    padding: 0;
+  }
+
+  .modal-header {
+    padding: 0;
+  }
+}

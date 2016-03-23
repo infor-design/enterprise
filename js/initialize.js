@@ -173,6 +173,9 @@
           //Rating
           ['rating'],
 
+          //Light Box
+          ['lightbox'],
+
           //Progress
           ['progress', '.progress-bar'],
 
