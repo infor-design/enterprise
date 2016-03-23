@@ -494,13 +494,26 @@
           extraOffset = -15;
         }
 
-        if (settings.isError && !this.activeElement.is('.timepicker')) {
-          extraOffset = (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) ? 7 : 2;
+        // Errors
+        if (settings.isError) {
+          extraOffset = (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) ? 7 : 1;
           lessTop = 2;
 
           if (this.activeElement.is('.editor')) {
-            extraOffset = -6;
+            extraOffset = -5;
             lessTop = this.activeElement.outerHeight() - 32;
+          }
+          if (this.activeElement.is('.textarea')) {
+            lessTop = this.activeElement.outerHeight() - 22;
+          }
+          if (this.activeElement.is('input.dropdown')) {
+            extraOffset = 10;
+          }
+          if (this.activeElement.is('.spinbox')) {
+            extraOffset =  Locale.isRTL() ? -5 : 4;
+          }
+          if (this.activeElement.is('.timepicker')) {
+            extraOffset = Locale.isRTL() ? 18 : -23;
           }
         }
 

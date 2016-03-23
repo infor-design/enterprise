@@ -516,4 +516,10 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .popup-footer {
+    button {
+      margin-left: inherit;
+    }
+  }
 }

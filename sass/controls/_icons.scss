@@ -43,6 +43,14 @@ svg.icon-dirty,
     top: inherit;
   }
 
+  .icon-error,
+  .icon-confirm {
+    height: 14px;
+    margin-left: -27px;
+    margin-top: 10px;
+    width: 18px;
+  }
+
   label {
     .icon-error,
     .icon-confirm,
@@ -503,6 +511,14 @@ html[dir='rtl'] {
       right: auto;
     }
 
+    .icon-error,
+    .icon-confirm {
+      left: auto;
+      margin-left: inherit;
+      margin-right: -30px;
+      right: auto;
+    }
+
     .lookup-wrapper {
       .icon-error,
       .icon-confirm {
@@ -536,9 +552,33 @@ html[dir='rtl'] {
   .icon-dirty:not(.dirty-checkbox) {
     @include css3(border-radius, 2px 0 0);
     border-color: $dirty-icon-fill $dirty-icon-fill transparent transparent;
+    left: auto;
     margin: 1px 1px 0 0;
   }
 
+}
+
+
+// Firefox on Mac
+.is-mac.is-firefox {
+  .field {
+    .icon-error,
+    .icon-confirm {
+      margin-left: -26px;
+      width: 17px;
+    }
+  }
+}
+
+// ie9, ie11
+.ie9,
+.ie11 {
+  .field {
+    .icon-error,
+    .icon-confirm {
+      margin-left: -30px;
+    }
+  }
 }
 
 // Empty State Widget Icons

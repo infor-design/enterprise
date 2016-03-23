@@ -305,6 +305,12 @@ html[dir='rtl'] {
     right: 8px;
   }
 
+  .field-short {
+    .dirty-checkbox {
+      right: 12px;
+    }
+  }
+
 }
 
 // Short Fields
