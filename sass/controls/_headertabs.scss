@@ -2,5 +2,222 @@
 //================================================== //
 
 .tab-container.header-tabs {
+  margin-bottom: 0;
+  margin-top: -12px;
+  padding: 1px 20px 0;
 
+  .tab {
+    font-weight: bold;
+
+    &:before {
+      background-color: rgba($header-tab-normal-color, 0);
+      bottom: 0;
+    }
+
+    a {
+      color: $header-tab-normal-color;
+      line-height: 12px;
+      padding: 15px 11px 13px;
+    }
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:hover:not(.is-disabled) {
+      color: $header-tab-hover-color;
+
+      &:before {
+        background-color: rgba($header-tab-hover-color, 1);
+      }
+
+      a {
+        color: $header-tab-hover-color;
+      }
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $header-tab-hover-color;
+      }
+    }
+
+    &.is-selected:not(.is-disabled) {
+      &:before {
+        background-color: rgba($header-tab-hover-color, 1);
+      }
+
+      a {
+        color: $header-tab-hover-color;
+      }
+
+      &:hover {
+        &:before {
+          background-color: rgba($header-tab-hover-color, 1);
+        }
+
+        a {
+          color: $header-tab-hover-color;
+        }
+      }
+    }
+
+    &.dismissible {
+      .icon {
+        fill: $white;
+        opacity: .6;
+      }
+
+      &:hover {
+        .icon:not(.is-error):not(.icon-error) {
+          fill: $white !important;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .animated-bar {
+    background-color: $header-tab-hover-color;
+    margin-top: 8px;
+  }
+
+  .tab-focus-indicator.is-visible {
+    border-color: $header-tab-hover-color;
+  }
+
+  .tab-list {
+    border-bottom: 0;
+    height: 40px;
+  }
+
+  .tab-more {
+    color: $header-tab-normal-color;
+    padding: 10px 0 12px 14px;
+    right: 20px;
+
+    span {
+      color: inherit;
+    }
+
+    .icon {
+      fill: $header-tab-normal-color;
+    }
+
+    &:hover {
+      color: $header-tab-hover-color;
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $header-tab-hover-color;
+      }
+    }
+
+    &.is-open,
+    &.is-selected {
+      color: $header-tab-selected-color;
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $header-tab-selected-color;
+      }
+    }
+
+  }
+
+// Alternate Header-Tab Backgrounds (Page Context)
+//=================================================
+
+  &.alternate {
+    background-color: $header-tab-alt-bg-color;
+    border-bottom: 1px solid $header-tabcontainer-border-color;
+    margin-top: -5px;
+
+    .tab {
+      &:before {
+        background-color: rgba($header-tab-alt-normal-color, 0);
+      }
+
+      a { // has 12px line height;
+        color: $header-tab-alt-normal-color;
+        padding: 16px 11px 15px;
+      }
+
+      &:hover:not(.is-disabled) {
+        color: $header-tab-alt-hover-color;
+
+        &:before {
+          background-color: rgba($header-tab-alt-hover-color, 1);
+        }
+
+        a {
+          color: $header-tab-alt-hover-color;
+        }
+      }
+
+      &.is-selected:not(.is-disabled) {
+        &:before {
+          background-color: rgba($header-tab-alt-hover-color, 1);
+        }
+
+        a {
+          color: $header-tab-alt-selected-color;
+        }
+
+        .icon:not(.is-error):not(.icon-error) {
+          fill: $header-tab-alt-selected-color;
+        }
+
+        &:hover {
+          &:before {
+            background-color: rgba($header-tab-alt-selected-color, 1);
+          }
+
+          a {
+            color: $header-tab-alt-selected-color;
+          }
+
+          .icon:not(.is-error):not(.icon-error) {
+            fill: $header-tab-alt-selected-color;
+          }
+        }
+      }
+    }
+
+    .tab-list {
+      height: 43px; // Reset to 43
+    }
+
+    .animated-bar {
+      background-color: rgba($header-tab-alt-hover-color, 1);
+      margin-top: 0;
+      top: 42px;
+    }
+
+    .tab-focus-indicator.is-visible {
+      border-color: $header-tab-alt-selected-color;
+    }
+
+    .tab-more {
+      color: $header-tab-alt-normal-color;
+      padding: 13px 0 14px 14px;
+
+      .icon {
+        fill: $header-tab-alt-normal-color;
+      }
+
+      &:hover {
+        color: $header-tab-alt-hover-color;
+
+        .icon:not(.is-error):not(.icon-error) {
+          fill: $header-tab-alt-hover-color;
+        }
+      }
+
+      &.is-selected,
+      &.is-open {
+        color: $header-tab-alt-selected-color;
+
+        .icon:not(.is-error):not(.icon-error) {
+          fill: $header-tab-alt-selected-color;
+        }
+      }
+    }
+  }
 }
