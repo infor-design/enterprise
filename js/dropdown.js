@@ -376,6 +376,7 @@
           if (e.button === 2) {
             return;
           }
+
           self.toggleList();
         }).on('touchend.dropdown touchcancel.dropdown', function(e) {
           e.stopPropagation();
@@ -456,6 +457,7 @@
             }, 100);
           }
         }).on('keypress.dropdown', function (e) {
+          self.isFiltering = true;
           self.handleAutoComplete(e);
         });
 
@@ -700,6 +702,7 @@
         if (!self.isOpen() && !self.isControl(key) && !this.settings.source) {
           //Make this into Auto Complete
           self.initialFilter = true;
+          self.isFiltering = true;
           self.filterTerm = $.actualChar(e);
           self.searchInput.val($.actualChar(e));
           self.toggleList();
@@ -1333,6 +1336,11 @@
         if (this.settings.source) {
           searchTerm = self.searchInput.val();
 
+          if (!this.isFiltering) {
+            searchTerm = '';
+          }
+          this.isFiltering = false;
+
           var sourceType = typeof this.settings.source,
             response = function (data) {
             //to do - no results back do not open.
@@ -1345,7 +1353,7 @@
               if (option !== null && option !== undefined) {
                 list += '<option' + (option.id === undefined ? '' : ' id="' + option.id.replace('"', '\'') + '"') +
                         (option.value !== undefined ? ' value="' + option.value.replace('"', '\'') + '"' : isString ? ' value="' + option.replace('"', '\'') + '"' : '') +
-                        (option.value === val ? ' is-selected ' : '') +
+                        (option.value === val || option.selected ? ' is-selected ' : '') +
                         '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : isString ? option : '') + '</option>';
               }
             }

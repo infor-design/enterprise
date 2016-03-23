@@ -169,6 +169,51 @@ body {
 // Home Page
 //==================================================//
 
+// Footer
+//==================================================//
+
+.site-footer {
+  background-color: #e3e3e3;
+  border-top: 1px solid #ffffff;
+  clear: both;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+
+  .full.column {
+    margin-left: -20px;
+    text-align: left;
+  }
+
+  .row {
+    margin-bottom: 0;
+  }
+
+  nav {
+
+    ul {
+      margin: 0;
+      padding: 0;
+      text-align: left;
+    }
+
+    li {
+      display: inline-block;
+      margin: 30px 30px 25px;
+    }
+  }
+
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+
+}
+
+// Media Queries
+//==================================================//
+
 @include respond-to(tabletdown) {
   .site-hero .hero-content {
     max-width: 425px;
@@ -212,51 +257,6 @@ body {
   }
 }
 
-// Footer
-//==================================================//
-
-.site-footer {
-  background-color: #e3e3e3;
-  border-top: 1px solid #ffffff;
-  clear: both;
-  position: relative;
-  text-align: center;
-  z-index: 1;
-
-  .full.column {
-    margin-left: -20px;
-    text-align: left;
-  }
-
-  .row {
-    margin-bottom: 0;
-  }
-
-  nav {
-
-    ul {
-      margin: 0;
-      padding: 0;
-      text-align: left;
-    }
-
-    li {
-      display: inline-block;
-      margin: 30px 30px 25px;
-    }
-  }
-
-  &::after {
-    clear: both;
-    content: '';
-    display: table;
-  }
-
-}
-
-// Media Queries - For Main Page
-//==================================================//
-
 @include respond-to(phablet) {
 
   .site-footer nav {
@@ -271,7 +271,6 @@ body {
   .site-footer ul {
     text-align: center;
   }
-
 
 }
 
