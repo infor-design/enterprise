@@ -7,6 +7,7 @@
   padding: 1px 20px 0;
 
   .tab {
+    color: $header-tab-normal-color;
     font-weight: bold;
 
     &:before {
@@ -15,7 +16,6 @@
     }
 
     a {
-      color: $header-tab-normal-color;
       line-height: 12px;
       padding: 15px 11px 13px;
     }
@@ -31,31 +31,23 @@
         background-color: rgba($header-tab-hover-color, 1);
       }
 
-      a {
-        color: $header-tab-hover-color;
-      }
-
       .icon:not(.is-error):not(.icon-error) {
         fill: $header-tab-hover-color;
       }
     }
 
     &.is-selected:not(.is-disabled) {
+      color: $header-tab-hover-color;
+
       &:before {
         background-color: rgba($header-tab-hover-color, 1);
       }
 
-      a {
-        color: $header-tab-hover-color;
-      }
-
       &:hover {
+        color: $header-tab-hover-color;
+
         &:before {
           background-color: rgba($header-tab-hover-color, 1);
-        }
-
-        a {
-          color: $header-tab-hover-color;
         }
       }
     }
@@ -91,7 +83,7 @@
 
   .tab-more {
     color: $header-tab-normal-color;
-    padding: 10px 0 12px 14px;
+    padding: 12px 0 12px 14px;
     right: 20px;
 
     span {
@@ -130,12 +122,13 @@
     margin-top: -5px;
 
     .tab {
+      color: $header-tab-alt-normal-color;
+
       &:before {
         background-color: rgba($header-tab-alt-normal-color, 0);
       }
 
       a { // has 12px line height;
-        color: $header-tab-alt-normal-color;
         padding: 16px 11px 15px;
       }
 
@@ -145,37 +138,17 @@
         &:before {
           background-color: rgba($header-tab-alt-hover-color, 1);
         }
-
-        a {
-          color: $header-tab-alt-hover-color;
-        }
       }
 
       &.is-selected:not(.is-disabled) {
-        &:before {
-          background-color: rgba($header-tab-alt-hover-color, 1);
-        }
+        color: $header-tab-alt-selected-color;
 
-        a {
-          color: $header-tab-alt-selected-color;
+        &:before {
+          background-color: rgba($header-tab-alt-selected-color, 1);
         }
 
         .icon:not(.is-error):not(.icon-error) {
           fill: $header-tab-alt-selected-color;
-        }
-
-        &:hover {
-          &:before {
-            background-color: rgba($header-tab-alt-selected-color, 1);
-          }
-
-          a {
-            color: $header-tab-alt-selected-color;
-          }
-
-          .icon:not(.is-error):not(.icon-error) {
-            fill: $header-tab-alt-selected-color;
-          }
         }
       }
     }
@@ -185,7 +158,7 @@
     }
 
     .animated-bar {
-      background-color: rgba($header-tab-alt-hover-color, 1);
+      background-color: rgba($header-tab-alt-selected-color, 1);
       margin-top: 0;
       top: 42px;
     }

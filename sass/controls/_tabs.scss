@@ -65,11 +65,16 @@
   }
 
   > a {
+    color: inherit;
     display: inline-block;
     text-decoration: none;
 
     * {
       pointer-events: none;
+    }
+
+    span {
+      color: inherit;
     }
   }
 
@@ -171,15 +176,12 @@
   }
 }
 
-// Tab Container
-// Can change the way the contents are styled based on classes
+// Common styles between Horizontal and Header tabs
 .tab-container.horizontal,
 .tab-container.header-tabs {
-  margin-bottom: 20px;
 
   .tab {
     border-radius: 2px 2px 0 0;
-    color: $tab-text-color;
     padding: 0;
     @include css3(transition, background-color .25s ease);
 
@@ -189,18 +191,6 @@
 
     &:before {
       @include tab-after-off;
-    }
-
-    &:not(.is-disabled):not(.is-selected):hover {
-      color: $tab-hover-color;
-
-      a {
-        color: $tab-hover-color;
-      }
-
-      .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-hover-color;
-      }
     }
 
     &:not(.separator):hover {
@@ -221,22 +211,16 @@
     }
 
     &.is-disabled {
-      color: $disabled-color;
+      color: $disabled-color !important;
 
-      > a,
-      &:hover > a,
-      &.is-selected > a,
-      .count {
-        color: $disabled-color !important;
-        cursor: default;
+      &:before {
+        content: none !important;
       }
 
-      &:hover {
+      a,
+      &:hover a,
+      &.is-selected a {
         cursor: default;
-
-        &::before {
-          content: none !important;
-        }
       }
     }
 
@@ -276,20 +260,19 @@
     }
 
     a {
+      color: inherit;
       @include antialiased();
-      color: $tab-text-color;
       @include font-size(14);
       font-weight: normal;
-      //line-height: 16px;
       text-decoration: none;
 
       > * {
         line-height: 1.14;
       }
-    }
 
-    .icon {
-      fill: $tab-text-color;
+      span {
+        color: inherit;
+      }
     }
 
     .count {
@@ -305,78 +288,18 @@
       top: 7px;
       width: 16px;
     }
-
-    &.is-selected {
-
-      .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-selected-color;
-      }
-
-      a {
-        color: $tab-selected-color;
-
-        > .count {
-          color: $tab-selected-color;
-        }
-
-        &:hover {
-          color: $tab-selected-color;
-
-          > .count {
-            color: $tab-selected-color;
-          }
-        }
-      }
-
-      &:hover {
-        background: rgba($tab-hover-color, 0);
-      }
-
-      &:hover:not(.is-disabled):before {
-        background: $primary-color;
-      }
-    }
   }
 
   .tab-more {
     background-color: transparent;
-    color: $tab-text-color;
     @include font-size(14);
     max-width: 102px;
-    padding: 6px 0 10px 14px;
 
     .icon {
-      fill: $tab-text-color;
       height: 16px;
       margin: 0;
       vertical-align: middle;
       width: 32px;
-    }
-
-    &:hover {
-      color: $tab-hover-color;
-
-      .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-hover-color;
-      }
-    }
-
-    &.popup-is-open,
-    &.is-selected {
-      span {
-        color: $tab-selected-color;
-        text-decoration: none;
-      }
-
-      .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-selected-color;
-      }
-    }
-
-    &.popup-is-open {
-      span {
-        text-decoration: none;
-      }
     }
   }
 
@@ -422,29 +345,6 @@
 
   &.has-more-button .tab-list {
     padding-right: 102px;
-  }
-
-  &.has-counts {
-
-    .animated-bar {
-      top: 59px;
-    }
-
-    .tab-more {
-      padding: 22px 0 22px 14px;
-    }
-
-    .tab {
-      &.dismissible {
-        .icon {
-          position: static;
-        }
-      }
-    }
-  }
-
-  .animated-bar {
-    top: 31px;
   }
 
   // Entire tab control disabled state
@@ -503,36 +403,6 @@
       }
     }
 
-  }
-}
-
-// IE-specific padding for tab-list
-//
-.ie {
-  .tab {
-    padding: 6px;
-  }
-
-  .tab-more {
-    padding: 5px 14px 4px;
-  }
-
-  .tab-container.has-counts {
-    .animated-bar {
-      top: 71px;
-    }
-
-    .tab-list {
-      height: 74px !important;
-    }
-
-    .tab {
-      padding: 7px 6px 8px;
-    }
-
-    .tab-more {
-      padding: 16px 14px 15px;
-    }
   }
 }
 
