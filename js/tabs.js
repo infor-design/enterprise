@@ -22,6 +22,7 @@
     // Tab Settings and Options
     var pluginName = 'tabs',
         defaults = {
+          addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
@@ -173,6 +174,15 @@
             '<span>Menu</span>' +
             '</a></tab>');
           this.tablist.prepend(appMenuTrigger);
+        }
+
+        if (self.settings.addTabButton) {
+          this.addTabButton = $('<li class="tab add-tab-button"><a href="#">' +
+            '+ ' +
+            '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
+            '</a></tab>');
+
+          this.tablist.append(this.addTabButton);
         }
 
         //for each item in the tabsList...
@@ -382,6 +392,10 @@
         }).on('activated.tabs', function(e) {
           // Stop propagation of the activate event from going higher up into the DOM tree
           e.stopPropagation();
+        }).on('add.tabs', function(e, newTabId, newTabOptions, newTabIndex) {
+          self.add(newTabId, newTabOptions, newTabIndex);
+        }).on('remove.tabs', function(e, tabId) {
+          self.remove(tabId);
         });
 
         // Check to see if we need to add/remove the more button on resize
@@ -412,18 +426,27 @@
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
         li.addClass('is-selected');
 
+        if (this.popupmenu) {
+          this.popupmenu.close();
+        }
+
         // Don't activate a dropdown tab.  Clicking triggers the Popupmenu Control attached.
         if (li.is('.has-popupmenu')) {
           return;
         }
 
         var href = a.attr('href');
+
+        if (li.is('.add-tab-button')) {
+          this.handleAddButton();
+          li = li.prev();
+          a = li.children('a');
+          href = a.attr('href');
+          this.element.trigger('tab-added', [a]);
+        }
+
         this.activate(href);
         this.changeHash(href);
-
-        if (this.popupmenu) {
-          this.popupmenu.close();
-        }
 
         if (this.hasAdvancedFocusStates()) {
           this.focusState.removeClass('is-visible');
@@ -564,6 +587,14 @@
 
           var href = currentA.attr('href');
 
+          if (currentLi.is('.add-tab-button')) {
+            self.handleAddButton();
+            currentLi = currentLi.prev();
+            currentA = currentLi.children('a');
+            href = currentA.attr('href');
+            self.element.trigger('tab-added', [currentA]);
+          }
+
           self.activate(href);
           self.changeHash(href);
           self.focusBar(currentLi);
@@ -703,6 +734,54 @@
           e.preventDefault();
           return this.activate(a.attr('href'));
         }
+      },
+
+      handleAddButton: function() {
+        function makeId() {
+          var stringName = 'new-tab',
+            existing = $('[id^="'+ stringName +'"]');
+
+          if (!existing.length) {
+            return stringName + '-0';
+          }
+          return stringName + '-' + existing.length;
+        }
+
+        function makeName(id) {
+          var nameParts = id.toString().split('-');
+          nameParts.forEach(function(val, i) {
+            nameParts[i] = val.charAt(0).toUpperCase() + val.slice(1);
+          });
+
+          return nameParts.join(' ');
+        }
+
+        var newIndex = this.tablist.find('.addTabButton').index(),
+          newId = makeId(),
+          newName = makeName(newId),
+          settings = {
+            name: newName,
+            content: '&nbsp;',
+            isDismissible: true
+          };
+
+        // Allow the opportunity to pass in external settings for the new tab control
+        var externalSettings = this.element.triggerHandler('before-tab-added', [newId, settings, newIndex]);
+        if (!externalSettings) {
+          return this.add(newId, settings, newIndex);
+        }
+
+        if (externalSettings.newId) {
+          newId = externalSettings.newId;
+        }
+        if (externalSettings.settings) {
+          settings = externalSettings.settings;
+        }
+        if (externalSettings.newIndex) {
+          newIndex = externalSettings.newIndex;
+        }
+
+        return this.add(newId, settings, newIndex);
       },
 
       hasAdvancedFocusStates: function() {
@@ -847,12 +926,14 @@
               sourceString = $(sourceString).clone();
               break;
           }
+          return sourceString;
         }
+
         if (options.content) {
-          getObjectFromSelector(options.content);
+          options.content = getObjectFromSelector(options.content);
         }
         if (options.dropdown) {
-          getObjectFromSelector(options.dropdown);
+          options.dropdown = getObjectFromSelector(options.dropdown);
         }
 
         // Build
@@ -1194,6 +1275,7 @@
       select: function (href) {
         var modHref = href.replace(/#/g, ''),
           anchor = this.anchors.filter('[href="#' + modHref + '"]');
+
         this.positionFocusState(undefined, false);
         this.focusBar(anchor.parent());
         this.activate(anchor.attr('href'));
@@ -1296,7 +1378,16 @@
           var href = anchor.attr('href'),
             id = href.substr(1, href.length),
             tab = self.getTabFromId(id) || $(),
-            a = tab ? tab.children('a') : $();
+            a = tab ? tab.children('a') : $(),
+            originalTab = anchor.data('original-tab').parent();
+
+          if (originalTab.is('.add-tab-button')) {
+            self.handleAddButton();
+            originalTab = originalTab.prev();
+            a = originalTab.children('a');
+            href = a.attr('href');
+            self.element.trigger('tab-added', [a]);
+          }
 
           self.activate(href);
 
@@ -1754,6 +1845,12 @@
           });
           popup.destroy();
         }
+
+        if (this.addTabButton.length) {
+          this.addTabButton.off().remove();
+          this.addTabButton = undefined;
+        }
+
         this.moreButton.off().remove();
         this.moreButton = undefined;
         this.focusState.remove();

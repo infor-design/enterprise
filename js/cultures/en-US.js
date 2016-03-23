@@ -69,6 +69,7 @@
       'AboutText': {id: 'AboutText', value: 'Copyright &copy; {0} Infor. All rights reserved. The word and design marks set forth herein are trademarks and/or registered trademarks of Infor and/or its affiliates and subsidiaries. All rights reserved. All other trademarks listed herein are the property of their respective owners'},
       'Actions': {id: 'Actions', value: 'Actions', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'Add', comment: 'Add'},
+      'AddNewTab': {id: 'AddNewTab', value: 'Add New Tab', comment: 'Attached to a button that adds new tabs'},
       'AdvancedFilter': {id: 'AdvancedFilter', value: 'Create Advanced Filter', comment: 'In a data grid active an advanced filtering feature'},
       'Alert': {id: 'Alert', value: 'Alert', comment: 'Alert'},
       'AllResults': {id: 'AllResults', value: 'All Results For', comment: 'Search Results Text'},
