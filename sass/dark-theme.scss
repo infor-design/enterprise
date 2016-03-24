@@ -412,11 +412,11 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
 $tree-selected-color: $primary-color;
-$tree-active-bg-color: $slate04;
+$tree-active-bg-color: #3e586c;
 $tree-icon-color: $slate03;
-$tree-link-color: $font-color-extrahighcontrast;
-$tree-folder-link-color: $font-color-extrahighcontrast;
+$tree-link-color: $slate03;
 $tree-disabled-color: $slate05;
+$tree-hover-color: $white;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $slate04;
