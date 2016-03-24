@@ -115,7 +115,7 @@
           $('body').data('modal').close();
         });
 
-        this.previousButton = $('<button class="btn-icon btn-previous" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon close"><use xlink:href="#icon-previous-page"/></svg><span class="audible">'+
+        this.previousButton = $('<button class="btn-previous" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-left-arrow"/></svg><span class="audible">'+
             Locale.translate('Previous') + '</span></button>');
 
         this.lightBox.find('.modal-body-wrapper').before(this.previousButton);
@@ -124,7 +124,7 @@
            self.loadSiblingImage('previous');
         });
 
-        this.nextButton = $('<button class="btn-icon btn-next" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon close"><use xlink:href="#icon-next-page"/></svg><span class="audible">'+
+        this.nextButton = $('<button class="btn-next" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-right-arrow"/></svg><span class="audible">'+
             Locale.translate('Next') + '</span></button>');
 
         this.lightBox.find('.modal-body-wrapper').before(this.nextButton);

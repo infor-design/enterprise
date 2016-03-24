@@ -15,6 +15,10 @@
   }
 }
 
+span.alert-green {
+  color: #50773e;
+}
+
 // Palette Shapes
 .palette-column {
   @include font-size(14);
@@ -69,11 +73,19 @@
   background-color: $white;
 }
 
-span.alert-green {
-  color: #50773e;
-}
 
 //RTL Styles
 html[dir='rtl'] {
+  .palette-column {
 
+    .palette-label {
+      text-align: right;
+    }
+
+    .palette-number {
+      float: right;
+      margin-left: 0;
+      margin-right: 15px;
+    }
+  }
 }

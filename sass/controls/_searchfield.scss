@@ -280,6 +280,10 @@
 
 }
 
+.is-mac.is-firefox .searchfield {
+  padding: 8px 10px 8px 34px;
+}
+
 .inline.searchfield-wrapper {
   > .icon:not(.icon-error) {
     top: 30px;

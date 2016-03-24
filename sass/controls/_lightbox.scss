@@ -81,19 +81,18 @@
   .btn-icon {
     border-radius: 50%;
     float: right;
-    height: 24px;
+    height: 32px;
     margin-left: -35px;
-    margin-top: 2px;
-    max-height: 34px;
-    max-width: 34px;
-    min-height: 34px;
-    min-width: 34px;
-    width: 34px;
+    max-height: 32px;
+    max-width: 32px;
+    min-height: 32px;
+    min-width: 32px;
+    width: 24px;
 
     .icon {
-      fill: $slate02;
-      height: 24px;
-      width: 24px;
+      fill: $graphite04;
+      height: 22px;
+      width: 22px;
     }
 
     &:hover .icon {
@@ -110,16 +109,28 @@
   .btn-next,
   .btn-previous {
     background-color: $graphite10;
-    border: 1px solid transparent;
+    border: 1px solid $slate02;
+    border-radius: 50%;
+    height: 32px;
     left: 20px;
     margin: -30px 0 0;
+    min-width: 32px;
     position: absolute;
     top: 50%;
+    width: 32px;
 
     .icon {
-      fill: $white;
-      height: 32px;
-      width: 32px;
+      fill: $graphite04;
+      height: 18px;
+      width: 18px;
+    }
+
+    &:hover {
+      border: 1px solid $white;
+
+      .icon {
+        fill: $white;
+      }
     }
   }
 
@@ -128,8 +139,7 @@
     right: 25px;
 
     .icon {
-      fill: $white;
-      margin-left: 3px;
+      margin-left: 2px;
     }
   }
 }
