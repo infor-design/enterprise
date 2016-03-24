@@ -51,16 +51,6 @@ svg.icon-dirty,
     width: 18px;
   }
 
-  label {
-    .icon-error,
-    .icon-confirm,
-    .icon-alert,
-    .icon-info,
-    .icon-pending {
-      top: 15px;
-    }
-  }
-
   .lookup-wrapper {
     .icon-error,
     .icon-confirm {
@@ -170,6 +160,7 @@ svg.icon-logo {
       top: 1px;
 
       &.is-checked {
+        left: auto;
         top: 0;
       }
     }

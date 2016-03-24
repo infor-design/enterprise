@@ -48,7 +48,8 @@
     &.icon-error {
       fill: $error-color;
       left: auto;
-      right: 20px;
+      right: auto;
+      top: auto;
     }
   }
 
@@ -71,6 +72,7 @@
     &:not(.empty) {
       + .icon + .icon.close {
         display: inline-block;
+        right: 5px;
       }
     }
   }
@@ -279,7 +281,7 @@
 }
 
 .inline.searchfield-wrapper {
-  > .icon {
+  > .icon:not(.icon-error) {
     top: 30px;
   }
 }
