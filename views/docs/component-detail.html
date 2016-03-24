@@ -38,6 +38,30 @@
 
           </div>
         </div>
+
+        <div class="full-width">
+            <div class="toolbar">
+
+              <div class="title">&nbsp;</div>
+
+              <div class="buttonset">
+                <button class="btn-icon">
+                 <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                     <use xlink:href="#icon-left-arrow"/>
+                 </svg>
+                 <span>Next Component</span>
+                </button>
+
+                <button class="btn-icon">
+                   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                       <use xlink:href="#icon-right-arrow"/>
+                   </svg>
+                   <span>Previous Component</span>
+                </button>
+              </div>
+            </div>
+        </div>
+
       </div>
 
       <div class="example-section" role="main">
@@ -130,60 +154,92 @@
                </svg><span>Download Visual Assets</span></a>
               </div>
 
-              <p>dynamically generated specs 3 Dynamically generated visual specs (padding, etc.). See the <a href="#">Other Related page</a> for more information.
+              <div class="lightbox-container">
 
-              </p>
+                <a href="#" class="lightbox" data-options="{image: '/images/hyperlink_lt_ui.png'}">
+                  <span class="lightbox-overlay">Quick view</span>
+                  <img class="lightbox-image" alt="Theme Specs" src="/images/hyperlink_lt_ui_thumb.png">
+                  <span class="lightbox-caption">Light UI</span>
+                </a>
+
+                <a href="#" class="lightbox" data-options="{image: '/images/hyperlink_dk_ui.png'}">
+                  <span class="lightbox-overlay">Quick view</span>
+                  <img class="lightbox-image" alt="Theme Specs" src="/images/hyperlink_dk_ui_thumb.png">
+                  <span class="lightbox-caption">Dark UI</span>
+                </a>
+
+                <a href="#" class="lightbox" data-options="{image: '/images/hyperlink_hc_ui.png'}">
+                  <span class="lightbox-overlay">Quick view</span>
+                  <img class="lightbox-image" alt="Theme Specs" src="/images/hyperlink_hc_ui_thumb.png">
+                  <span class="lightbox-caption">High Contrast UI</span>
+                </a>
+
+              </div>
+
+              <hr>
+              <h2>Implementation</h2>
+              <p>UA Hyperlink uses a standard anchor tag element and styles it with pure css. No JS is needed for this component. Use normal attributes and events of a standard anchor tag. Note that the disabled attribute is NOT valid html so should not be used, however it's included for backwards compatibility and some use cases. Normally a disabled link would be a label/text.</p>
+
+              <pre><code class="language-markup">&lt;p class="prism">&lt;/p></code></pre>
+
+              <pre><code class="language-css">p { color: red;}</code></pre>
+
+              <pre><code class="language-javascript">var test = 'hello';</code></pre>
+
+              <hr>
+              <h2>API Details</h2>
+              <p>The control is initialized through the page initializer $('body').initialize('en-US'); or manually with $('.tabs').tabs();</p>
+
+              <p>The Tabs Control implements the following API methods that can be utilized by accessing the data object on its base element: $('.tabs').data('tabs').method();</p>
 
               <table class="listview-table show-header">
                 <thead>
                   <tr>
-                    <th>Characteristic</th>
-                    <th><span class="audible">Value</span></th>
+                    <th>Method</th>
+                    <th>Argument</th>
+                    <th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Thing</td>
-                    <td>3px</td>
+                    <td>add()</td>
+                    <td><i>string</i> tabId,
+                      <i>object</i> options,
+                      <i>integer</i> atIndex
+                    </td>
+                    <td>Creates a new tab and tab panel with content, optionally at a specified index in the tab order. The tabId string must match an existing tab's href attribute, or no action will take place. In the options object, the following properties may be used:
+                    <ul>
+                      <li><b>string name:</b> The Name of the Tab/Panel. Displayed inside the text of the Tab
+                      </li>
+                      <li><b>boolean isDismissible:</b> If true, creates a dismissible tab.</li>
+                    </ul>
                   </tr>
                   <tr>
-                    <td>Thing</td>
-                    <td>50px</td>
+                    <td>remove()</td>
+                    <td><i>string</i> tabId</td>
+                    <td>Completely removes an existing tab and tab panel from the control. The tabId string must match an existing tab's href attribute, or no action will take place</td>
                  </tr>
                 </tbody>
               </table>
 
-              <hr>
-              <h2>Implementation</h2>
-              <p>Technical details of this component</p>
-              <p>Actual .html from HTML control</p>
-              <pre><code class="language-markup">&lt;p class="prism">&lt;/p></code></pre>
 
-              <p>Actual .css from HTML control</p>
-              <pre><code class="language-css">p { color: red;}</code></pre>
-
-              <p>Actual .js from HTML control</p>
-              <pre><code class="language-javascript">var test = 'hello';</code></pre>
+              <h2>Behavior Guidelines</h2>
+              <ul>
+                <li>The link shows a border underneath on hover with a ease animation</li>
+                <li>Links may be underlined we do this in the</li>
+              </ul>
 
               <hr>
-              <h2>API Information</h2>
-              <p>More Technical details of this component</p>
-
-              <h3>Behavior Guidelines</h3>
-              <p>Details around behavior and interaction.</p>
-
-              <h3>Implementation Guidelines</h3>
-              <p>How to technically implement the HTML control.</p>
-
-              <h3>Implementation Guidelines</h3>
-              <p>How to technically implement the HTML control.</p>
-
-              <h3>States & Variations</h3>
-              <p>Supported states (hover, focus, etc.).</p>
+              <h2>Keyboard Shortcuts</h2>
+              <ul>
+                  <li><b>Tab</b> moves focus to the Link. A second tab moves focus to the next focusable item.</li>
+                  <li><b>Space</b> or <b>Enter</b> executes the link.</li>
+                  <li><b>Shift + F10</b> is used to bring up an associated popup menu</li>
+              </ul>
 
               <hr>
               <h2>Accessibility Guidelines</h2>
-              <p>TSection 508 & related information.</p>
+              <p>Section 508 & related information.</p>
 
               <hr>
               <h2>Asset List</h2>
@@ -206,7 +262,7 @@
               <div class="section-tracker">
               </div>
 
-              <h3>Categories/Topics</h3>
+              <h3>Related Components</h3>
               <div class="tag-list">
                 <a href="#" class="tag graphite02">Responsive Design</a>
                 <a href="#" class="tag graphite02">Mobile First</a>
@@ -220,9 +276,34 @@
         </div>
       </div>
 
+      <div class="component-navbar">
+
+        <div class="row">
+          <div class="full column">
+
+            <a class="component-previous">
+              <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                <use xlink:href="#icon-left-arrow"/>
+              </svg>
+              <span>Previous</span>
+              <span class="component-name">Accordion</span>
+            </a>
+
+            <a class="component-next">
+              <span>Next</span>
+              <span class="component-name">Buttons</span>
+              <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+                <use xlink:href="#icon-right-arrow"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
       {{> docs/footer}}
 
     </div>
+
   </div>
 
 </body>

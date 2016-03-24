@@ -521,14 +521,14 @@ body.no-scroll {
   .main {
     height: auto;
     margin: 0 auto;
-    max-width: 1080px;//$breakpoint-wide-tablet;
+    max-width: 1080px;
     width: 100%;
 
     .content {
       display: inline-block;
       margin-top: 48px;
-      max-width: calc(100% - 265px);
-      min-width: 300px;
+      max-width: calc(100% - 240px);
+      min-width: 260px;
       padding: 0 30px;
 
       h3,
@@ -553,12 +553,12 @@ body.no-scroll {
     height: auto;
     margin-right: 30px;
     min-height: 100px;
-    width: 225px;
+    width: 210px;
 
     .content {
       height: auto;
       padding: 0 30px 30px;
-      width: 225px;
+      width: 150px;
     }
 
     h3 {

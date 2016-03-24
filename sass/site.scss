@@ -35,6 +35,29 @@ body {
     padding-top: 0 !important;
   }
 
+  //Hide Elements on Scroll Down
+  &.is-scrolled-down {
+    + .page-container .site-hero {
+      h1,
+      .timestamp {
+        display: none;
+      }
+    }
+
+    + .page-container .full-width {
+      display: none;
+    }
+
+    h1 {
+      display: inline-block;
+    }
+  }
+
+  //Hide Elements until Scroll Down
+  h1 {
+    display: none;
+  }
+
 }
 
 // Search
@@ -173,16 +196,27 @@ body {
 //==================================================//
 
 .site-footer {
-  background-color: #e3e3e3;
-  border-top: 1px solid #ffffff;
+  background-color: $amethyst09;
   clear: both;
+  color: $white;
+  font-weight: bold;
+  height: 80px;
   position: relative;
   text-align: center;
   z-index: 1;
 
-  .full.column {
-    margin-left: -20px;
-    text-align: left;
+  a {
+    color: $white;
+    font-weight: bold;
+
+    &:hover {
+      border-bottom-color: $white !important;
+      color: $white !important;
+    }
+
+    &:focus {
+      outline: 1px solid $white !important;
+    }
   }
 
   .row {
@@ -199,7 +233,22 @@ body {
 
     li {
       display: inline-block;
-      margin: 30px 30px 25px;
+      margin: 30px 30px 0 0;
+    }
+  }
+
+  .version-no {
+    color: $amethyst05;
+    display: block;
+    float: right;
+    font-size: 19px;
+    position: relative;
+    top: -17px;
+    vertical-align: top;
+
+    b {
+      color: $amethyst05;
+      font-weight: bold;
     }
   }
 
@@ -210,6 +259,59 @@ body {
   }
 
 }
+
+// Move next and Previous
+//==================================================//
+
+.component-navbar {
+  background-color: $amethyst07;
+  height: 100px;
+
+  a {
+    color: $white;
+    cursor: pointer;
+    opacity: .7;
+    position: relative;
+    top: 32px;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    > span {
+      @include font-size(14);
+      display: block;
+    }
+
+    .component-name {
+      @include font-size(22);
+      @include antialiased();
+    }
+  }
+
+  .component-next {
+    float: right;
+    left: -38px;
+    margin-top: -35px;
+    vertical-align: top;
+
+    .icon {
+      float: right;
+      left: 38px;
+      margin-right: 0;
+      top: -35px;
+    }
+  }
+
+  .icon {
+    display: block;
+    fill: $white;
+    float: left;
+    margin-right: 20px;
+    top: 38px;
+  }
+}
+
 
 // Media Queries
 //==================================================//
@@ -274,12 +376,6 @@ body {
 
 }
 
-@include respond-to(tablet) {
-  .site-footer .full.column {
-    margin-left: 0;
-  }
-}
-
 // articles Page
 //==================================================//
 .row {
@@ -342,7 +438,6 @@ body {
     vertical-align: top;
   }
 }
-
 
 .editorial {
   min-height: calc(100% - 78px);
@@ -643,6 +738,33 @@ div.light-bgrnd {
       margin: 10px 0 0;
     }
 
+    //Associated Toolbar.
+    .full-width {
+      position: absolute;
+      top: -10px;
+
+      button {
+        &:hover .icon {
+          fill: $white;
+        }
+      }
+    }
+
+    .site-hero-nav-buttons {
+      float: right;
+    }
+
+    .btn-icon {
+      .icon {
+        fill: $white;
+        opacity: .7;
+      }
+
+      &:hover .icon {
+        opacity: 1;
+      }
+    }
+
     .timestamp {
       color: $white;
       margin-top: 5px;
@@ -705,7 +827,7 @@ div.light-bgrnd {
 // Add Link Style in Case Forgotten
 .editorial .content {
 
-  a:not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink) {
+  a:not(.lightbox):not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink) {
     border-bottom: 1px solid transparent;
     color: $hyperlink-color;
     cursor: pointer;
@@ -774,13 +896,14 @@ div.light-bgrnd {
   .sidebar-nav {
 
     .content {
-      max-height: calc(100% - 150px);
+      max-height: calc(100% - 310px);
       overflow: auto;
     }
 
     h3 {
       padding: 0;
       margin: 0;
+      width: 100%;
     }
 
     .tag-list,
@@ -817,6 +940,10 @@ div.light-bgrnd {
     padding-bottom: 5px;
   }
 
+  .lightbox-container {
+    text-align: left;
+  }
+
   h3 {
     color: $graphite08;
     @include font-size(18);
@@ -828,8 +955,8 @@ div.light-bgrnd {
   }
 
   p {
-    color: $graphite06;
     @include font-size(16);
+    color: $graphite06;
     line-height: 26px;
 
     + p {
@@ -858,31 +985,50 @@ div.light-bgrnd {
   }
 
   .listview-table {
-    margin-top: 20px;
-  }
+    background-color: $white;
+    margin-bottom: 35px;
+    margin-top: 35px;
 
-  .listview-table tr,
-  .listview-table td {
-    color: $graphite06;
-    @include font-size(16);
-    line-height: 1.5em;
-    padding: 15px 0;
-  }
-
-  .listview-table tr {
-    border-bottom: 1px solid $graphite02;
-
-    &:last-child {
-      border-bottom: none;
+    &.show-header th {
+      background-color: $graphite04;
+      border-right: 1px solid $graphite03;
+      color: $white;
+      display: table-cell;
+      @include font-size(12);
+      font-weight: bold;
+      padding: 10px 25px;
+      text-align: left;
     }
   }
 
-  .listview-table.show-header th {
+  .listview-table tr {
     color: $graphite06;
-    display: table-cell;
-    @include font-size(18);
-    padding: 10px 80px 10px 0;
-    text-align: left;
+    @include font-size(14);
+    line-height: 1.5em;
+    padding: 15px 0;
+
+    td:first-child {
+      font-weight: bold;
+    }
+
+    td {
+      color: $graphite06;
+      @include antialiased();
+      line-height: 24px;
+      vertical-align: top;
+    }
+
+    ul {
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      li {
+        @include antialiased();
+        @include font-size(14);
+        color: $graphite06;
+        font-weight: lighter;
+      }
+    }
   }
 
   .listview-table tr:hover,
@@ -1116,13 +1262,14 @@ pre[class*="language-"] {
 // Code blocks
 pre[class*="language-"] {
   margin: .5em 0;
-  overflow: hidden;
+  overflow: visible;
   padding: 20px;
 }
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
   background: $graphite06;
+  margin: 50px 0 60px 0;
 }
 
 // Inline code
@@ -1139,7 +1286,7 @@ pre[class*="language-"] {
 }
 
 .token.punctuation {
-  color: #ffffff;
+  color: $white;
 }
 
 .namespace {
@@ -1152,7 +1299,7 @@ pre[class*="language-"] {
 .token.symbol,
 .token.deleted {
   background-color: transparent;
-  color: #ffffff;
+  color: $white;
   margin: 0;
   padding: 0;
 }
@@ -1167,7 +1314,7 @@ pre[class*="language-"] {
 
 .token.boolean,
 .token.number {
-  color: #ffffff;
+  color: $white;
 }
 
 .token.selector,
@@ -1176,7 +1323,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-  color: #ffffff;
+  color: $white;
 }
 
 .token.operator,
@@ -1185,7 +1332,7 @@ pre[class*="language-"] {
 .language-css .token.string,
 .style .token.string,
 .token.variable {
-  color: #ffffff;
+  color: $white;
 }
 
 .token.atrule,
@@ -1220,28 +1367,20 @@ pre[class*='language-'] {
   }
 
   > code[data-language]::before {
-    background-color: $amethyst06;
-    border-radius: 1px;
-    color: $inverse-color;
+    @include font-size(12);
+    background-color: $graphite03;
+    border-radius: 2px 2px 0 0;
+    color: $graphite08;
     content: attr(data-language);
     display: inline-block;
-    font-family: helvetica,arial;
-    @include font-size(11);
-    line-height: normal;
-    padding: 10px;
+    font-family: Helvetica, Arial;
+    height: 22px;
+    line-height: 23px;
+    padding: 0 10px;
     position: absolute;
     right: 0;
     text-transform: uppercase;
-    top: 0;
+    top: -22px;
   }
-
-  .language-markup:before {
-    background-color: $azure06 !important
-  }
-
-  .language-css:before {
-    background-color: $amber08 !important
-  }
-
 }
 

@@ -31,7 +31,8 @@
           usePopupmenu: false, // If true, changes the Header Title into a popupmenu that can change the current page
           tabs: null, // If defined as an array of Tab objects, displays a series of tabs that represent application sections
           wizardTicks: null, // If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
-          useAlternate: false // If true, use alternate background/text color for sub-navigation areas
+          useAlternate: false, // If true, use alternate background/text color for sub-navigation areas
+          addScrollClass: false //If true a class will be added as the page scrolls up and down to the header for manipulation. Eg: Docs Page.
         },
         settings = $.extend({}, defaults, options);
 
@@ -111,6 +112,27 @@
 
         if (this.settings.usePopupmenu) {
           this.buildPopupmenu();
+        }
+
+        //Add a Scrolling Class to manipulate the header
+        if (this.settings.addScrollClass) {
+          var self =$(this.element),
+            scrollDiv = $(this.element).next('.scrollable'),
+            container = (scrollDiv.length === 1 ? scrollDiv : $(window)),
+            scrollThreshold = this.settings.scrollThreshold ? this.settings.scrollThreshold : 15;
+
+          container.on('scroll.header', function () {
+            if (this.scrollTop > scrollThreshold) {
+              self.addClass('is-scrolled-down');
+            } else {
+              self.removeClass('is-scrolled-down');
+            }
+
+          });
+
+          if (container.scrollTop() > scrollThreshold ) {
+            self.addClass('is-scrolled-down');
+          }
         }
 
         return this;
