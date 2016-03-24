@@ -409,6 +409,15 @@ textarea.error:focus {
     vertical-align: top;
     width: 150px;
   }
+
+  .icon-error,
+  .icon-confirm {
+    height: 14px;
+    margin-left: -27px;
+    margin-top: 6px;
+    top: auto;
+    width: 18px;
+  }  
 }
 
 // Field Sizes
@@ -492,6 +501,18 @@ html[dir='rtl'] {
 
   [data-mask-mode="number"].spinbox {
     text-align: center;
+  }
+
+  .field-short {
+    .icon-error,
+    .icon-confirm {
+      height: 14px;
+      margin-left: inherit;
+      margin-right: -22px;
+      margin-top: 6px;
+      top: auto;
+      width: 18px;
+    }  
   }
 }
 

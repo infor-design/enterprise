@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Test: Add Tab Button</h2>
+
+    <p><a class="hyperlink" href="http://jira/browse/HFC-2986" target="_blank">Related JIRA Ticket</a>.</p>
+
+    <p>Activating Tabs with the "addTabButton" option set to true causes an extra tab at the end of the stack to exist.  This can add a new empty tab and panel to the list.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="add-capable-tabs" class="tab-container" data-options="{ addTabButton: true }">
+      <ul class="tab-list">
+        <li clas="tab"><a href="#tab1">New Tab Settings</a></li>
+        <li class="tab dismissible"><a href="#tab2">Tab #2</a></li>
+        <li class="tab dismissible"><a href="#tab3">Tab #3</a></li>
+      </ul>
+      <div id="tab1" class="tab-panel">
+        <h2>New Tab Settings</h2>
+
+        <p>These settings will be filled into the Tab during the "before-tab-added" event.  If you leave the title and/or content fields blank, the Add Tab button will insert its normal defaults (this is what will happen when using the control normaly).</p>
+
+        <div class="field">
+          <label for="tab-name">Tab Name</label>
+          <input id="tab-name" />
+        </div>
+
+        <div class="field">
+          <label for="tab-content">Tab Content</label>
+          <textarea id="tab-content"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="tab-index">Tab Index</label>
+          <input id="tab-index" />
+        </div>
+
+        <div class="field">
+          <input id="dismissible" type="checkbox" class="checkbox" checked>
+          <label for="dismissible" class="checkbox-label">Dismissible</label>
+        </div>
+      </div>
+      <div id="tab2" class="tab-panel">
+        <h2>Tab #2</h2>
+        <p>Extend distributed; content. Widgets tag, dynamic interactive reintermediate cross-media, synthesize. Eyeballs empower networkeffects innovate user-centric infomediaries portals drive scalable brand integrateAJAX-enabled users deliver networks platforms empower productize.</p>
+      </div>
+      <div id="tab3" class="tab-panel">
+        <h2>Tab #3</h2>
+        <p>Relationships benchmark niches best-of-breed innovate integrate plug-and-play life-hacks enhance user-centred; social seamless, B2C; mission-critical global. Revolutionary harness next-generation users--supply-chains, turn-key rich paradigms, bandwidth vertical; Cluetrain customized reinvent visualize, benchmark A-list, "networking, deliver ubiquitous transform mesh 24/365 platforms."</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var body = $(this),
+      tabsAPI = $('#add-capable-tabs').data('tabs');
+
+    function makeId(name) {
+      if (!name) {
+        console.warn('No name for a new tab was provided.')
+        name = '';
+      }
+
+      var stringName = name.toLowerCase().split(' ').join('-');
+
+      var existing = $('[id^="'+ stringName +'"]');
+      if (!existing.length) {
+        return stringName + '-0';
+      }
+
+      return stringName + '-' + existing.length;
+    }
+
+    $('#add-capable-tabs').on('tab-added.test', function(e, anchor) {
+      var href = anchor.attr('href').replace(/#/g, '');
+
+      body.toast({
+        'title': 'New Tab Added!',
+        'message': 'A new tab with the id <b>' + href + '</b> was added to the tabset!'
+      });
+    }).on('before-tab-added.test', function(e, tabId, tabSettings, tabIndex) {
+
+      var formName = $('#tab-name').val(),
+        formContent = $('#tab-content').val(),
+        formIndex = Number($('#tab-index').val()),
+        formIsDismissible = $('#dismissible').prop('checked')
+        id = makeId(formName)
+        tabsLength = tabsAPI.tablist.children('li:not(.separator)').length - 1;
+
+      if (!formName || !formName.length || !formContent || !formContent.length) {
+        return;
+      }
+
+      if (formIndex > tabsLength) {
+        formIndex = tabsLength;
+      }
+
+      body.toast({
+        'title': '<span style="font-weight: bold; color: #aa3333">before-tab-added</span> Event was utilized!',
+        'message': 'Content from the "New Tab Settings" Tab was used to generate your New Tab!'
+      });
+
+      return {
+        newId: id,
+        settings: {
+          name: formName,
+          content: formContent,
+          isDismissible: formIsDismissible
+        },
+        newIndex: formIndex
+      };
+    });
+  });
+</script>

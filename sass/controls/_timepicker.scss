@@ -118,6 +118,11 @@
       margin-left: -24px;
       margin-top: 6px;
     }
+
+    ~ .icon-error {
+      margin-left: -40px;
+    }
+
   }
 }
 
@@ -160,7 +165,11 @@ html[dir='rtl'] {
         margin-left: inherit;
         margin-right: -21px;
       }
+
+      ~ .icon-error {
+        margin-left: inherit;
+        margin-right: -38px !important;
+      }
     }
   }
-
 }

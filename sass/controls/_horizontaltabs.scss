@@ -2,10 +2,79 @@
 //================================================== //
 
 .tab-container.horizontal {
+  margin-bottom: 20px;
 
   .tab-list {
     border-bottom: 1px solid $tab-border-color;
-    height: 34px;
+    height: 50px;
+  }
+
+  .tab {
+    color: $tab-text-color;
+
+    a {
+      line-height: 12px;
+      padding: 19px 11px 18px;
+    }
+
+    &:hover:not(.is-disabled) {
+      color: $tab-hover-color;
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $tab-hover-color;
+      }
+    }
+
+    &.is-selected {
+      color: $tab-selected-color;
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $tab-selected-color;
+      }
+    }
+
+  }
+
+  .icon {
+    fill: $tab-text-color;
+  }
+
+  .tab-more {
+    background-color: transparent;
+    color: $tab-text-color;
+    @include font-size(14);
+    line-height: 12px;
+    max-width: 102px;
+    padding: 17px 0 16px 11px;
+
+    .icon {
+      fill: $tab-text-color;
+    }
+
+    &:hover {
+      color: $tab-hover-color;
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $tab-hover-color;
+      }
+    }
+
+    &.is-open,
+    &.is-selected {
+      color: $tab-selected-color;
+
+      span {
+        text-decoration: none;
+      }
+
+      .icon:not(.is-error):not(.icon-error) {
+        fill: $tab-selected-color;
+      }
+    }
+  }
+
+  .animated-bar {
+    top: 47px;
   }
 
   // Displays the Big Numbers over top of each title
@@ -13,6 +82,26 @@
 
     .tab-list {
       height: 62px;
+    }
+
+    .tab {
+      a {
+        padding: 11px 11px 10px;
+      }
+
+      &.dismissible {
+        .icon {
+          position: static;
+        }
+      }
+    }
+
+    .animated-bar {
+      top: 59px;
+    }
+
+    .tab-more {
+      padding: 22px 0 22px 14px;
     }
 
   }
