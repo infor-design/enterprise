@@ -87,7 +87,7 @@
 
             //Safari only
             if (self.isSafari) {
-              content.css({position:'absolute', top:container.scrollTop()});
+              content.css({position:'absolute', top: container.scrollTop()});
             }
           } else {
             sidebar.removeClass('is-sticky');
@@ -116,12 +116,17 @@
             e.stopPropagation();
             e.preventDefault();
             $(this).trigger('click');
-          }).on('click.sidebar', function () {
+          }).on('click.sidebar', function (e) {
             var a = $(this);
 
             a.parent().parent().find('.is-active').removeClass('is-active');
             a.addClass('is-active');
 
+            container.animate({
+              scrollTop: $(a.attr('href')).position().top - 30
+            }, 150);
+
+            e.preventDefault();
           });
 
         }

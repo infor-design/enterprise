@@ -213,6 +213,11 @@ body {
 
 .ks-example {
   margin: 40px 0;
+
+  .twelve.columns {
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 .ks-component {

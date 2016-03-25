@@ -6,3 +6,4 @@ Deepak Verma <deepak.verma@infor.com>
 Phillip Patton <phillip.patton@infor.com>
 Aliya Robinson <Aliya.Robinson@infor.com>
 Aaron Pikkarainen <Aaron.Pikkarainen@infor.com>
+Jake Harrington <jake.harrington@infor.com>
