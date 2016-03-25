@@ -123,13 +123,6 @@ body {
 
   }
 
-  &.components {
-    .hero-img {
-      background-image: url('/assets/site/ComponentLegoAmethyst.jpg');
-    }
-
-  }
-
   img {
     height: auto;
     margin-top: -7px;
@@ -188,6 +181,45 @@ body {
   }
 }
 
+// Kitchen Sink Page Fixes
+//==================================================//
+.component.ks {
+  .main > .content h2 {
+    width: 79%;
+  }
+
+  .btn-menu {
+    color: $azure06 !important;
+
+    .icon {
+      fill: $azure06 !important;
+    }
+
+    &:hover,
+    &.is-open {
+      color: $azure08  !important;
+
+      .icon {
+        fill: $azure08 !important;
+      }
+    }
+  }
+
+  .copy-code {
+    display: none;
+  }
+
+}
+
+.ks-example {
+  margin: 40px 0;
+}
+
+.ks-component {
+  .btn-menu {
+    float: right;
+  }
+}
 
 // Home Page
 //==================================================//
@@ -713,11 +745,11 @@ div.light-bgrnd {
   background-color: $inverse-color;
 }
 
-//Components Pages
+//Component Detail Pages
 .component {
   background-color: $inverse-color;
 
-  //Components Header
+  //Component Header
   .header {
     background-color: $amethyst07;
 
@@ -891,6 +923,15 @@ div.light-bgrnd {
   .content {
     background-color: $body-bg-color;
     margin-bottom: 35px;
+  }
+
+  .hyperlink.forward {
+    @include font-size(12);
+    display: inline-block;
+  }
+
+  .main > .content {
+    width: 100%;
   }
 
   .sidebar-nav {

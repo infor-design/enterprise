@@ -10,251 +10,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Style Sheets -->
-  <link rel="stylesheet" href="/stylesheets/site.css" type="text/css">
   <link rel="stylesheet" id="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+  <link rel="stylesheet" href="/stylesheets/site.css" type="text/css">
 
   <!-- jQuery and Plugin Code-->
-  <script src="/js/jquery-3.0.0-beta1.min.js"></script>
+  <script src="/js/jquery-3.0.0-beta1.js"></script>
   <script src="/js/sohoxi.js"></script>
 
 </head>
 <body class="no-scroll">
 
- {{> includes/header-openlarge}}
-  <div class="page-container scrollable ">
+  {{> controls/svg}}
+  {{> controls/svg-extended}}
+  {{> docs/applicationmenu}}
 
-    <section class="site-hero components">
-      <div class="hero-img" role="presentation"></div>
-      <div class="row">
-        <div class="hero-content column">
-          <h2>Introducing the Soho Xi Component Library
-          </h2>
-          <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpi</span>
-        </div>
-      </div>
-    </section>
+  <div class="page-container scrollable no-transform component">
+    {{> docs/header}}
+    <div class="page-container scrollable">
 
-    <section role="main" id="maincontent" class="site-text-section light-bgrnd component" >
-      <div class="row">
-        <div class="full column">
-          <h2>Soho Xi Components</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut hendrerit quis turpis sit amet pharetra. Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. </p>
-          <p>
-          Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. Nunc sodales posuere urna eu lacinia. Ut vehicula blandit velit at laoreet. In vitae aliquam mauris, at placerat enim. Nam quis velit a ante iaculis</p>
-        </div>
-      </div>
-    </section>
+      <div class="site-hero component">
+        <div class="row">
+          <div class="full column">
 
-    <section role="main" class="site-text-section dark-bgrnd component" >
-      <div class="row">
-        <div class="full column">
-          <h2>Component Categories</h2>
-          <p>Mauris eget blandit odio. Nam vel quam vestibulum, scelerisque nulla ut, sagittis tortor. Nunc sodales</p>
+            <h1>Components</h1>
+            <small class="timestamp">Updated January 20th, 2015</small>
+
+          </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="full column">
-          <h3>User Input</h3>
+      <div class="editorial component ks">
+        <div id="maincontent" class="main" role="main">
+          <div class="content">
+
+              <div class="ks-component">
+
+                <h2>Context Menu</h2>
+                <button type="button" class="btn-menu">
+                  <span>Downloads</span>
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-dropdown"></use>
+                  </svg>
+                </button>
+                <ul class="popupmenu has-icons">
+                  <li><a href="#" id="specs">Get Design Specs</a></li>
+                  <li><a href="#" id="copy">Copy Example Code to Clipboard</a></li>
+                </ul>
+                <div class="copy-code">
+                <div class="field">
+                  <label for="input-menu">Label</label>
+                  <input type="text" data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu">
+                </div>
+                </div>
+
+                <a class="hyperlink forward" href="#">Go To <span class="audible">Context Menu</span> Page</a>
+
+                <div class="ks-example">
+                  {{> controls/popupmenu}}
+                </div>
+
+                <hr>
+              </div>
+
+              <div class="ks-component">
+
+                <h2>Toolbar</h2>
+                <button type="button" class="btn-menu">
+                  <span>Downloads</span>
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-dropdown"></use>
+                  </svg>
+                </button>
+                <ul class="popupmenu has-icons">
+                  <li><a href="#" id="specs">Get Design Specs</a></li>
+                  <li><a href="#" id="copy">Copy Example Code to Clipboard</a></li>
+                </ul>
+                <div class="copy-code">
+(function() {
+  var s = document.createElement('script');
+  s.id = 'some-id';
+  s.type = 'text/javascript';
+  document.body.appendChild(s);
+})();
+                </div>
+
+                <a class="hyperlink forward" href="#">Go To <span class="audible">Context Menu</span> Page</a>
+
+                <div class="ks-example">
+                  {{> controls/toolbar}}
+                </div>
+
+                <hr>
+              </div>
+
+          </div>
+
+          <div class="sidebar-nav" role="complementary">
+            <div class="content">
+
+              <h3>Menu</h3>
+              <div class="section-tracker">
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="row card-list">
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field longer and stuff</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field longer and stuff</span>
-              </span>
-            </span>
-          </a>
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-      </div>
-
-      <div class="row">
-        <div class="full column">
-          <h3>Section Two</h3>
-        </div>
-      </div>
-
-      <div class="row card-list">
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field longer and stuff</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-
-      </div>
-
-      <div class="row">
-        <div class="full column">
-          <h3>Section Three</h3>
-        </div>
-      </div>
-
-      <div class="row card-list">
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field longer and stuff</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field</span>
-              </span>
-            </span>
-          </a>
-
-          <a href="#" class="site-component card">
-            <div class="img-wrapper">
-              <img src="/assets/site/component-icons/carousel.svg" alt="Some Image"/>
-            </div>
-            <span class="title-wrapper">
-              <span class="title">
-                <span>Text Input Field longer and stuff</span>
-              </span>
-            </span>
-          </a>
-      </div>
-
-    </section>
-
-    <div role="main" class="site-text-section kitchen-sink component" >
-      <div class="row">
-        <div class="full column">
-          <p>Alternatively, you can check out our <i>‘Kitchen Sink’</i> to view lorem ipsum <a href="http://usmvvwdev53:4000/" target="_blank" class="btn-primary">Go</a></p>
-
-        </div>
-      </div>
+      {{> docs/footer}}
     </div>
-
-
-    {{> controls/svg}}
-    {{> docs/svg}}
-    {{> docs/footer}}
   </div>
+
+  <script>
+    $('.btn-menu').on('selected', function (e, args) {
+      var cmd = $(args).attr('id');
+      if (cmd === 'copy') {
+        var elem = $(e.currentTarget).parent().find('.copy-code');
+        if (elem && elem.length > 0) {
+          var str = elem.html();
+          var result = $.copyToClipboard(str);
+          //Message???
+        }
+      }
+
+      //Trigger a zip download
+      if (cmd === 'specs') {
+
+        window.location.href = 'http://usmvvwdev53/assets/specimages/021016_Hyperlinks_Desktop.zip';
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
