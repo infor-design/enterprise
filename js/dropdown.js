@@ -208,11 +208,17 @@
       // Update List Values
       updateList: function() {
         var self = this,
+          isOpen = self.list && self.list.is(':visible'),
           upTopOpts = 0;
+
         //Keep a list generated and append as needed
-        self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
-        self.listUl = $('<ul role="listbox"></ul>').appendTo(self.list);
-        self.list.prepend('<span class="trigger"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></span>');
+        if (isOpen) {
+          self.listUl.empty();
+        } else {
+          self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
+          self.listUl = $('<ul role="listbox"></ul>').appendTo(self.list);
+          self.list.prepend('<span class="trigger"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></span>');
+        }
 
         function setOptions(option, listOption) {
           //Add a data-val attribute that matches the original option value
@@ -306,9 +312,11 @@
         });
 
         //Add Input Element and
-        this.searchInput = $('<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">');
-        this.list.prepend(this.searchInput);
-        this.searchInput.before('<label for="dropdown-search" class="audible">Search</label>');
+        if (!isOpen) {
+          this.searchInput = $('<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">');
+          this.list.prepend(this.searchInput);
+          this.searchInput.before('<label for="dropdown-search" class="audible">Search</label>');
+        }
       },
 
       // Set the value based on selected options
@@ -1374,7 +1382,9 @@
                 buildOption(data[i]);
               }
             }
+
             self.element.append(list);
+            self.updateList();
             self.input.removeClass('is-busy');
             self.element.trigger('requestend', [searchTerm, data]);
             callback();

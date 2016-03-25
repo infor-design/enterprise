@@ -29,6 +29,10 @@
     $('#ajax-test').multiselect({
       source: function (response, term) {
         console.log('Searching for term:' + term);
+        if (term === '') {
+          response([]);
+          return;
+        }
 
         $.getJSON('/api/states' + (term ? '?term='+term : '') , function(data) {
           //Structure the data with val, label syntax. In this example its down on the server
@@ -36,7 +40,6 @@
           //Fake two selected since we dont have persistence
           //data[0].selected = true;
           //data[1].selected = true;
-
           response(data);
         });
       }
