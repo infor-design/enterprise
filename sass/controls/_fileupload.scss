@@ -24,15 +24,16 @@ label.fileupload {
       left: -55px;
     }
 
-    &:hover {
-      svg {
-        fill: $trigger-hover-color;
+    &.trigger {
+      .icon {
+        fill: $trigger-icon-fill-color;
       }
-    }
 
-    svg {
-      height: 16px;
-      width: 16px;
+      &:hover {
+        .icon {
+          fill: $trigger-hover-color;
+        }
+      }
     }
   }
 

@@ -25,6 +25,7 @@
         defaults = {
           allResultsCallback: undefined,
           categories: undefined, // If defined as an array, displays a dropdown containing categories that can be used to filter results.
+          categoryMultiselect: false, // If true, creates a multiselectable Categories list
           showCategoryText: false, // If true, will show any available categories that are selected to the left of the Dropdown field.
           source: undefined,
           template: undefined, // Template that can be passed
@@ -117,8 +118,18 @@
 
           this.list = this.wrapper.find('ul.popupmenu');
           if (!this.list || !this.list.length) {
-            this.list = $('<ul class="popupmenu is-multiselectable has-icons"></ul>');
+            this.list = $('<ul class="popupmenu has-icons"></ul>');
           }
+
+          // Handle Single vs Multi-Selectable Lists
+          var categoryListType = this.settings.categoryMultiselect ? 'is-multiselectable' : 'is-selectable';
+          this.list.addClass(categoryListType);
+          var removeListType = 'is-selectable';
+          if (!this.settings.categoryMultiselect) {
+            removeListType = 'is-multiselectable';
+          }
+          this.list.removeClass(removeListType);
+
           this.list.empty();
 
           this.settings.categories.forEach(function(val) {

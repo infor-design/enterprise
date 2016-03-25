@@ -28,7 +28,7 @@ $font-color-highcontrast: $graphite10;
 $font-color: $graphite09;
 $font-color-lowcontrast: $graphite06;
 $label-color: $graphite09;
-$label-disabled-color: $graphite09;
+$label-disabled-color: $graphite05;
 $disabled-color: $graphite05;
 
 //The hyperlink Style
@@ -42,7 +42,7 @@ $hyperlink-hover-color: $azure07;
 $alert-info: $azure09;
 $alert-green: #80ce4d;
 $alert-yellow: #ffd726;
-$alert-red: #ad4242;
+$alert-red: $ruby09;
 
 // Rules
 $hr-top-color: $graphite03;
@@ -125,7 +125,7 @@ $input-readonly-color: $black;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
-$dirty-icon-fill: #ffd726;
+$dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $azure08;
 
