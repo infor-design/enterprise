@@ -237,6 +237,241 @@ body {
 // Home Page
 //==================================================//
 
+$site-topframe-bg-color: $azure10;
+$site-topframe-links-bg-color: #0b152a;
+
+.page-container.site-home {
+
+  /*
+  [class^="btn"] {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  */
+
+  .btn-primary {
+    background-color: transparent;
+    border-color: $inverse-color;
+    color: $inverse-color;
+
+    .icon {
+      fill: $inverse-color;
+    }
+
+    &:focus {
+      border-color: $inverse-color;
+      box-shadow: 0 0 0 2px transparent, 0 0 0 3px $inverse-color;
+    }
+  }
+
+  .site-footer {
+    background-color: $graphite08;
+  }
+}
+
+.top-frame {
+  background-color: rgba($azure10, 1);
+  background-image: url('/images/site/header_marquee_200percent.jpg');
+  background-size: cover;
+  color: $inverse-color;
+  padding: 1rem 1rem 0;
+
+  .columns > h1 {
+    margin-top: 0;
+  }
+
+  h1 {
+    color: inherit;
+    @include font-size(36);
+    font-weight: normal;
+
+    span {
+      display: block;
+    }
+
+    .smaller {
+      margin-top: 2rem;
+      @include font-size(18);
+    }
+  }
+
+  h2 {
+    color: #bdbdbd;
+    font-weight: bold;
+  }
+
+  .header-grid {
+    margin-bottom: 3rem;
+    max-width: 640px !important;
+
+    &:first-of-type {
+      margin-top: 6rem;
+
+      .columns {
+        > * {
+          vertical-align: middle;
+        }
+      }
+    }
+
+    .columns:last-child {
+      margin-bottom: 0;
+      text-align: center;
+
+      > *:first-child {
+        margin-top: 4rem;
+      }
+    }
+  }
+
+  .links-grid {
+    background-color: rgba( $site-topframe-links-bg-color, .9 );
+    margin-bottom: 0;
+    max-width: 960px !important;
+    padding-bottom: 3rem;
+
+    .columns {
+      text-align: center;
+    }
+  }
+
+  .link-icon {
+    margin: 4rem 0 2rem;
+    max-height: 96px;
+  }
+
+  .header {
+    background-color: transparent;
+  }
+
+  // Setup specific sizing in the top frame
+  > .side-by-side-layout {
+    display: block;
+    margin: 0 auto;
+    max-width: 600px;
+
+    h1 {
+      max-width: calc(100% - 155px);
+    }
+  }
+
+}
+
+$pageslice-visualize-bg-color: #fb5652;
+$pageslice-mobiletools-bg-color: #f0f0f0;
+$pageslice-articles-bg-color: #7d397a;
+$pageslice-download-bg-color: #33b554;
+
+.page-slice {
+  min-height: 500px;
+  overflow: hidden;
+  position: relative;
+
+  h1 {
+    @include font-size(36);
+    font-weight: bold;
+    color: inherit;
+  }
+
+  .background-image {
+    position: absolute;
+    z-index: 0;
+  }
+
+  .row {
+    z-index: 2;
+
+    .column.description,
+    .columns.description {
+      margin-top: 10rem;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.visualize {
+    background-color: $pageslice-visualize-bg-color;
+    background-image: url('/images/site/dot_patt_20x20px.png');
+    color: $inverse-color;
+
+    .background-image {
+      height: 100%;
+      left: 0;
+      min-width: 50%;
+    }
+  }
+
+  &.mobile-tools {
+    .background-image {
+      background: $pageslice-mobiletools-bg-color url('/images/site/hp_graphic_phone_w_bg.png') center right no-repeat;
+      background-size: cover;
+      bottom: 0;
+      height: 100%;
+      right: 0;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background-color: transparent;
+      border-color: $font-color;
+      color: $font-color;
+
+      .icon {
+        fill: $font-color;
+      }
+
+      &:focus {
+        border-color: $font-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 3px $font-color;
+      }
+    }
+  }
+
+  &.articles {
+    background-color: $pageslice-articles-bg-color;
+    color: $inverse-color;
+
+    .background-image {
+      background: url('/images/site/hp_graphic_articles.png') right center no-repeat;
+      background-size: fit;
+      height: 100%;
+      min-width: 50%;
+    }
+  }
+
+  &.download {
+    background-color: $pageslice-download-bg-color;
+    color: $inverse-color;
+
+    .background-image {
+      height: 100%;
+      min-width: 50%;
+      right: 0;
+    }
+  }
+
+}
+
+@include respond-to(phone) {
+  .top-frame {
+    h1 {
+      @include font-size(28);
+
+      .smaller {
+        @include font-size(14);
+      }
+    }
+  }
+
+  .page-slice {
+    h1 {
+      @include font-size(28);
+    }
+  }
+}
+
 // Footer
 //==================================================//
 

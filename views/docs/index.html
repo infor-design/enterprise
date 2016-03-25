@@ -31,18 +31,144 @@
   -->
 </head>
 <body class="no-scroll">
-
   {{> controls/svg}}
   {{> controls/svg-extended}}
+  {{> docs/svg-frontpage}}
   {{> docs/applicationmenu}}
 
-  <div class="page-container scrollable no-transform component">
-    {{> docs/header}}
+  <div class="page-container scrollable no-transform site-home">
+    <section class="top-frame">
+      {{> docs/header}}
 
-    <div class="page-container scrollable">
+      <div class="row header-grid">
+        <div class="eight columns">
+          <h1>
+            <span>The Foundation of Infor Product Experience</span>
+            <span class="smaller">User Tested. User Driven.</span>
+          </h1>
+        </div>
+        <div class="four columns">
+          <button class="btn-primary">
+            <span>Get Started</span>
+            <span aria-hidden="true" role="presentation">&nbsp;&raquo;</span>
+          </button>
+        </div>
+      </div>
 
-    </div>
-    {{> docs/search-results-modal}}
+      <div class="row links-grid">
+        <div class="four columns">
+          <img class="link-icon" src="/images/site/hp_icon_components.svg"/>
+          <h2>Components</h2>
+          <p>Donec hendrerit libero eu ornare dictum. Aenean luctus risus quis ex ultrices, vitae convallis ante rutrum morbi cursus enim erat.</p>
+          <p>
+            <a href="#" class="hyperlink forward">View Components</a>
+          </p>
+        </div>
+
+        <div class="four columns">
+          <img class="link-icon" src="/images/site/hp_icon_styling.svg"/>
+          <h2>Styling</h2>
+          <p>Donec hendrerit libero eu ornare dictum. Aenean luctus risus quis ex ultrices, vitae convallis ante rutrum morbi cursus enim erat.</p>
+          <p>
+            <a href="#" class="hyperlink forward">View Styling Basics</a>
+          </p>
+        </div>
+
+        <div class="four columns">
+          <img class="link-icon" src="/images/site/hp_icon_layouts.svg"/>
+          <h2>Layouts</h2>
+          <p>Donec hendrerit libero eu ornare dictum. Aenean luctus risus quis ex ultrices, vitae convallis ante rutrum morbi cursus enim erat.</p>
+          <p>
+            <a href="#" class="hyperlink forward">View Example Layouts</a>
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="page-slice visualize">
+      <div class="row">
+        <div class="six columns">
+          <img src="/images/site/hp_graphic_chart.png">
+        </div>
+        <div class="six columns description">
+          <h1>Visualize Your Data</h1>
+          <p class="subheader">
+            Get all the guidelines you need to best visualize your data.  Chart types, colors, all in a single resource.
+          </p>
+          <button class="btn-primary">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-download"></use>
+            </svg>
+            <span>Download PDF</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-slice mobile-tools">
+      <div class="background-image" aria-hidden="true" role="presentation">&nbsp;</div>
+
+      <div class="row">
+        <div class="six columns description">
+          <h1>Native Mobile Tools</h1>
+          <p class="subheader">
+            Duis at ligula tristique, pellentesque nibh eu, commodo lorem. Pellentesque quis sodales nunc, non iaculis nisi.
+          </p>
+          <button class="btn-primary">
+            <span>View Guidelines</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-right-arrow"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="six columns">&nbsp;</div>
+      </div>
+    </section>
+
+    <section class="page-slice articles">
+      <div class="background-image" aria-hidden="true" role="presentation">&nbsp;</div>
+
+      <div class="row">
+        <div class="six columns">&nbsp;</div>
+        <div class="six columns description">
+          <h1>Articles</h1>
+          <p class="subheader">
+            Duis at ligula tristique, pellentesque nibh eu, commodo lorem. Pellentesque quis sodales nunc, non iaculis nisi.
+          </p>
+          <button class="btn-primary">
+            <span>View Articles</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-right-arrow"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-slice download">
+      <svg class="background-image">
+        <use xlink:href="#download-bg-graphic"></use>
+      </svg>
+
+      <div class="row">
+        <div class="six columns description">
+          <h1>Downloads</h1>
+          <p class="subheader">
+            Duis at ligula tristique, pellentesque nibh eu, commodo lorem. Pellentesque quis sodales nunc, non iaculis nisi.
+          </p>
+          <button class="btn-primary">
+            <span>View Articles</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-right-arrow"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="six columns">&nbsp;</div>
+      </div>
+    </section>
+
     {{> docs/footer}}
+    {{> docs/search-results-modal}}
   </div>
 </body>
