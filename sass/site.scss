@@ -358,6 +358,7 @@ $site-topframe-links-bg-color: #0b152a;
 }
 
 $pageslice-visualize-bg-color: #fb5652;
+$pageslice-visualize-darker-bg-color: #d74341;
 $pageslice-mobiletools-bg-color: #f0f0f0;
 $pageslice-articles-bg-color: #7d397a;
 $pageslice-download-bg-color: #33b554;
@@ -379,6 +380,7 @@ $pageslice-download-bg-color: #33b554;
   }
 
   .row {
+    position: relative;
     z-index: 2;
 
     .column.description,
@@ -405,11 +407,9 @@ $pageslice-download-bg-color: #33b554;
 
   &.mobile-tools {
     .background-image {
-      background: $pageslice-mobiletools-bg-color url('/images/site/hp_graphic_phone_w_bg.png') center right no-repeat;
-      background-size: cover;
+      background: $pageslice-mobiletools-bg-color url('/images/site/hp_graphic_phone_w_bg.png') no-repeat scroll center left / cover;
       bottom: 0;
       height: 100%;
-      right: 0;
       width: 100%;
     }
 
@@ -466,8 +466,54 @@ $pageslice-download-bg-color: #33b554;
   }
 
   .page-slice {
+    min-height: 200px;
+
     h1 {
       @include font-size(28);
+    }
+
+    .background-image {
+
+    }
+
+    .columns.description {
+      margin-bottom: 2rem;
+    }
+
+    &.visualize {
+      .background-image {
+        background-color: $pageslice-visualize-darker-bg-color;
+        height: 100px;
+        overflow: hidden;
+        width: 100%;
+
+        > * {
+          display: block;
+          margin: 10px auto 0;
+          max-height: 128px;
+        }
+      }
+    }
+
+    &.mobile-tools {
+      .background-image {
+        height: 100px;
+        bottom: 0;
+      }
+
+      .columns.description {
+        margin-top: 2rem;
+        margin-bottom: 120px;
+      }
+    }
+
+    &.articles {
+      .background-image {
+        background-size: 200%;
+        background-position: center center;
+        height: 100px;
+        width: 100%;
+      }
     }
   }
 }
