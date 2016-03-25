@@ -24,10 +24,10 @@
   {{> controls/svg-extended}}
   {{> docs/applicationmenu}}
 
-  <div class="page-container scrollable no-transform component">
+  <div class="page-container scrollable no-transform ">
     {{> docs/header}}
 
-    <div class="page-container scrollable">
+    <div class="page-container scrollable component">
 
       <div class="site-hero component">
         <div class="row">
@@ -45,19 +45,19 @@
               <div class="title">&nbsp;</div>
 
               <div class="buttonset">
-                <button class="btn-icon">
+                <a href="#" class="btn-icon hide-focus">
                  <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
                      <use xlink:href="#icon-left-arrow"/>
                  </svg>
-                 <span>Next Component</span>
-                </button>
+                 <span class="audible">Next Component</span>
+                </a>
 
-                <button class="btn-icon">
+                <a href="#" class="btn-icon hide-focus">
                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
                        <use xlink:href="#icon-right-arrow"/>
                    </svg>
-                   <span>Previous Component</span>
-                </button>
+                   <span class="audible">Previous Component</span>
+                </a>
               </div>
             </div>
         </div>

@@ -51,10 +51,18 @@ body {
     h1 {
       display: inline-block;
     }
+
+    a {
+      display: inline-block;
+    }
   }
 
   //Hide Elements until Scroll Down
   h1 {
+    display: none;
+  }
+
+  a {
     display: none;
   }
 
@@ -167,7 +175,7 @@ body {
     text-decoration: none;
     width: auto;
 
-    &:after {
+    &:not(.btn-icon):after {
       content: ' ›';
     }
   }
@@ -793,12 +801,16 @@ div.light-bgrnd {
 
     .btn-icon {
       .icon {
-        fill: $white;
+        fill: $white !important;
         opacity: .7;
       }
 
       &:hover .icon {
-        opacity: 1;
+        opacity: 1 !important;
+      }
+
+      &:focus:not(.hide-focus) {
+         box-shadow: 0 0 0 2px transparent, 0 0 0 1px #ffffff !important;
       }
     }
 
