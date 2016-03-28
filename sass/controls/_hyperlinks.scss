@@ -95,9 +95,10 @@
     }
   }
 
-  &.forward::after {
-    content: '>';
-    padding-left: 5px;
+  svg {
+    fill: $hyperlink-color;
+    left: -6px;
+    top: 5px;
   }
 
 }

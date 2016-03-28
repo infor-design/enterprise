@@ -47,7 +47,7 @@
         }
 
         this.sectionList = $('.section-tracker');
-        this.sections = $('.editorial > .main > .content').find('h2'); //,h3
+        this.sections = $('.editorial > .main > .content > h2'); //,h3
 
         //Handle Scrolling events
         var scrollDiv = $(this.element).closest('.scrollable'),

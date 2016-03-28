@@ -27,6 +27,10 @@ body {
 
   background-color: $amethyst07;
 
+  &.azure07 {
+    background-color: $azure07;
+  }
+
   h1 {
     line-height: 40px;
   }
@@ -98,6 +102,10 @@ body {
   height: 350px;
   overflow: hidden;
   position: relative;
+
+  &.azure07 {
+    background-color: $azure07 !important;
+  }
 
   .hero-content {
     max-width: 450px;
@@ -191,36 +199,24 @@ body {
 
 // Kitchen Sink Page Fixes
 //==================================================//
-.component.ks {
-  .main > .content h2 {
-    width: 79%;
-  }
+.ks-component {
 
-  .btn-menu {
-    color: $azure06 !important;
-
-    .icon {
-      fill: $azure06 !important;
-    }
-
-    &:hover,
-    &.is-open {
-      color: $azure08  !important;
-
-      .icon {
-        fill: $azure08 !important;
-      }
-    }
-  }
-
-  .copy-code {
+  > .copy-code {
     display: none;
   }
 
 }
 
+.component.ks {
+  .content > h2 {
+    width: 79%;
+  }
+}
+
 .ks-example {
+  display: inline-block;
   margin: 40px 0;
+  width: 100%;
 
   .twelve.columns {
     margin-left: 0;
@@ -231,6 +227,13 @@ body {
 .ks-component {
   .btn-menu {
     float: right;
+    margin-top: -46px;
+  }
+
+  .goto-page {
+    font-size: 1.2rem !important;
+    position: relative;
+    top: -9px;
   }
 }
 
@@ -266,12 +269,20 @@ $site-topframe-links-bg-color: #0b152a;
 
   .site-footer {
     background-color: $graphite08;
+
+    .version-no {
+      color: $graphite02;
+
+      b {
+        color: $graphite02;
+      }
+    }
   }
 }
 
 .top-frame {
   background-color: rgba($azure10, 1);
-  background-image: url('/images/site/header_marquee_200percent.jpg');
+  background-image: url('/assets/site/header_marquee_200percent.jpg');
   background-size: cover;
   color: $inverse-color;
   padding: 1rem 1rem 0;
@@ -395,7 +406,7 @@ $pageslice-download-bg-color: #33b554;
 
   &.visualize {
     background-color: $pageslice-visualize-bg-color;
-    background-image: url('/images/site/dot_patt_20x20px.png');
+    background-image: url('/assets/site/dot_patt_20x20px.png');
     color: $inverse-color;
 
     .background-image {
@@ -407,7 +418,7 @@ $pageslice-download-bg-color: #33b554;
 
   &.mobile-tools {
     .background-image {
-      background: $pageslice-mobiletools-bg-color url('/images/site/hp_graphic_phone_w_bg.png') no-repeat scroll center left / cover;
+      background: $pageslice-mobiletools-bg-color url('/assets/site/hp_graphic_phone_w_bg.png') no-repeat scroll center left / cover;
       bottom: 0;
       height: 100%;
       width: 100%;
@@ -434,7 +445,7 @@ $pageslice-download-bg-color: #33b554;
     color: $inverse-color;
 
     .background-image {
-      background: url('/images/site/hp_graphic_articles.png') right center no-repeat;
+      background: url('/assets/site/hp_graphic_articles.png') right center no-repeat;
       background-size: fit;
       height: 100%;
       min-width: 50%;
@@ -578,6 +589,19 @@ $pageslice-download-bg-color: #33b554;
     }
   }
 
+  //Getting Started Page
+  &.azure07 {
+    background-color: $azure09 !important;
+
+    .version-no {
+      color: $azure02 !important;
+
+      b {
+        color: $azure02 !important;
+      }
+    }
+  }
+
   &::after {
     clear: both;
     content: '';
@@ -593,12 +617,17 @@ $pageslice-download-bg-color: #33b554;
   background-color: $amethyst07;
   height: 100px;
 
+  &.azure07 {
+    background-color: $azure07 !important;
+  }
+
   a {
     color: $white;
     cursor: pointer;
     opacity: .7;
     position: relative;
     top: 32px;
+    text-decoration: none;
 
     &:hover {
       opacity: 1;
@@ -618,7 +647,7 @@ $pageslice-download-bg-color: #33b554;
   .component-next {
     float: right;
     left: -38px;
-    margin-top: -35px;
+    margin-top: 0;
     vertical-align: top;
 
     .icon {
@@ -627,6 +656,10 @@ $pageslice-download-bg-color: #33b554;
       margin-right: 0;
       top: -35px;
     }
+  }
+
+  .component-previous + .component-next {
+    margin-top: -33px;
   }
 
   .icon {
@@ -709,6 +742,17 @@ $pageslice-download-bg-color: #33b554;
 }
 
 .articles {
+
+  .header,
+  .site-footer {
+    background-color: $amber07;
+
+    .version-no,
+    .version-no b {
+      color: $amber02;
+    }
+  }
+
   .editorial {
     background-color: $body-bg-color;
 
@@ -818,7 +862,7 @@ $pageslice-download-bg-color: #33b554;
     }
   }
 
-  h2 {
+  > h2 {
     color: $graphite08;
     @include font-size(24);
 
@@ -829,16 +873,12 @@ $pageslice-download-bg-color: #33b554;
     }
   }
 
-  img + h2 {
+  > img + h2 {
     padding-top: 40px;
   }
 
-  h3 {
+  > h3 {
     margin: 30px 0;
-  }
-
-  h1 {
-    @include font-size(40);
   }
 
   .byline {
@@ -846,25 +886,25 @@ $pageslice-download-bg-color: #33b554;
     @include font-size(18);
   }
 
-  blockquote {
+  > blockquote {
     color: $azure08;
     @include font-size(16);
     margin-bottom: 25px;
     text-align: center;
   }
 
-  p {
+  > p {
     color: $graphite06;
     @include font-size(16);
     line-height: 26px;
     margin: 15px 0;
   }
 
-  p:first-child {
-    margin-top: 40px;
+  > p:first-child {
+    margin-top: 20px;
   }
 
-  small + img + p {
+  > small + img + p {
     padding-top: 25px;
   }
 
@@ -889,9 +929,14 @@ $pageslice-download-bg-color: #33b554;
 
   ol {
     list-style-type: decimal;
+
+    li::before {
+      content: '';
+      display: none;
+    }
   }
 
-  a.hyperlink {
+  > p a.hyperlink {
     @include font-size(16);
   }
 
@@ -1116,7 +1161,7 @@ div.light-bgrnd {
   }
 
   hr {
-    border-top: 1px solid #d8d8d8;
+    border-top: 1px solid $graphite03;
     margin-bottom: 42px;
     margin-top: 42px;
   }
@@ -1129,7 +1174,7 @@ div.light-bgrnd {
     background-color: $body-bg-color;
   }
 
-  h3 {
+  .content > h3 {
     color: $graphite07;
     @include font-size(24);
     @include antialiased();
@@ -1270,7 +1315,7 @@ div.light-bgrnd {
     top: 50px;
   }
 
-  h2 {
+  .content > h2 {
     @include font-size(28);
     @include antialiased();
     color: $graphite08;
@@ -1283,7 +1328,7 @@ div.light-bgrnd {
     text-align: left;
   }
 
-  h3 {
+  .content > h3 {
     color: $graphite08;
     @include font-size(18);
     @include antialiased();
@@ -1293,7 +1338,7 @@ div.light-bgrnd {
     text-align: left;
   }
 
-  p {
+  .content > p {
     @include font-size(16);
     color: $graphite06;
     line-height: 26px;
@@ -1309,6 +1354,10 @@ div.light-bgrnd {
     + ul {
       margin-top: -15px;
     }
+  }
+
+  .content > p a {
+    @include font-size(16);
   }
 
   pre + h2 {
@@ -1442,13 +1491,13 @@ div.light-bgrnd {
   border-radius: 3px;
   cursor: pointer;
   height: 85px;
+  margin: 40px 25px 0 0px !important;
   text-decoration: none;
-  margin: 20px 60px 60px 0 !important;
   width: 85px !important;
 
   img {
     height: 22px;
-    margin-left: 30px;
+    margin-left: 0px;
     margin-top: 20px;
     text-align: center;
   }
@@ -1525,6 +1574,30 @@ div.light-bgrnd {
   }
 }
 
+// Styling Page
+//==================================================//
+.styling {
+  .header {
+    background-color: $slate07;
+  }
+
+  .site-footer {
+    background-color: $slate09 !important;
+
+    .version-no {
+      color: $slate02 !important;
+
+      b {
+        color: $slate02 !important;
+      }
+    }
+  }
+
+  .site-hero {
+    background-color: $slate07;
+  }
+}
+
 // 404 Page
 //==================================================//
 
@@ -1534,20 +1607,20 @@ div.light-bgrnd {
   position: relative;
 
   .hero-error {
-    background-image: url('/assets/site/error-bg-404.jpg');
-    background-position: center center;
+    background-image: url("/assets/site/error-bg-404.jpg");
+    background-position: center top;
     background-repeat: no-repeat;
     display: block;
-    height: 900px;
+    height: 100%;
     width: auto;
   }
 
   .content {
-    margin: 120px 0;
+    margin: -192px 0 120px;
     padding: 100px 50px;
     position: absolute;
     text-align: center;
-    top: 10px;
+    top: 50%;
     vertical-align: middle;
     width: 100%;
 

@@ -531,8 +531,8 @@ body.no-scroll {
       min-width: 260px;
       padding: 0 30px;
 
-      h3,
-      h2 {
+      > h3,
+      > h2 {
         margin-bottom: 10px;
         padding-bottom: 10px;
         width: 68%;
@@ -540,7 +540,7 @@ body.no-scroll {
 
     }
 
-    p {
+    > p {
       margin-bottom: 25px;
     }
 
@@ -559,23 +559,23 @@ body.no-scroll {
       height: auto;
       padding: 0 30px 30px;
       width: 150px;
-    }
 
-    h3 {
-      border-bottom: 1px solid  $graphite03;
-      clear: both;
-      color: $graphite06;
-      @include font-size(18);
-      margin-bottom: 15px !important;
-      padding-bottom: 15px !important;
-      padding-top: 30px;
+      > h3 {
+        border-bottom: 1px solid  $graphite03;
+        clear: both;
+        color: $graphite06;
+        @include font-size(18);
+        margin-bottom: 15px !important;
+        padding-bottom: 15px !important;
+        padding-top: 30px;
 
-      &:not(:first-child) {
-        margin-top: 35px;
+        &:not(:first-child) {
+          margin-top: 35px;
+        }
       }
     }
 
-    .tags {
+    > .tags {
       background-color: $graphite01;
     }
   }

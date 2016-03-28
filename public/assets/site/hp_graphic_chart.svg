@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 465 530" style="enable-background:new 0 0 465 530;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#E92C30;}
+	.st1{fill:none;stroke:#871719;stroke-width:25;stroke-miterlimit:10;}
+	.st2{fill:#871719;}
+	.st3{clip-path:url(#XMLID_61_);}
+	.st4{fill:none;stroke:#871719;stroke-width:39;stroke-miterlimit:10;}
+</style>
+<rect id="XMLID_95_" x="315.8" y="16.8" class="st0" width="129.5" height="511.6"/>
+<rect id="XMLID_2987_" x="156.8" y="173.1" class="st0" width="129.5" height="355.3"/>
+<rect id="XMLID_2988_" y="211.5" class="st0" width="129.5" height="316.8"/>
+<rect id="XMLID_2979_" x="183.4" y="156.1" class="st1" width="108.5" height="358.2"/>
+<rect id="XMLID_2911_" x="25.3" y="185.6" class="st1" width="108.5" height="328.7"/>
+<g id="XMLID_191_">
+	<path id="XMLID_2916_" class="st2" d="M134.2,185.6H25.7v328.7h33.6v-47.5h41.2v47.5h33.6V185.6z M100.6,442.6H59.3v-64.2h41.2
+		V442.6z M100.6,354.2H59.3v-64.2h41.2V354.2z M100.6,265.9H59.3v-64.2h41.2V265.9z"/>
+</g>
+<g id="XMLID_2919_">
+	<defs>
+		<rect id="XMLID_2920_" x="341.5" y="13.3" width="108.5" height="500.9"/>
+	</defs>
+	<clipPath id="XMLID_61_">
+		<use xlink:href="#XMLID_2920_"  style="overflow:visible;"/>
+	</clipPath>
+	<g id="XMLID_2893_" class="st3">
+		<line id="XMLID_2_" class="st4" x1="268.6" y1="153.8" x2="492" y2="-18.8"/>
+		<line id="XMLID_7_" class="st4" x1="271.7" y1="222.6" x2="495" y2="49.9"/>
+		<line id="XMLID_6_" class="st4" x1="274.7" y1="291.4" x2="498.1" y2="118.7"/>
+		<line id="XMLID_5_" class="st4" x1="277.8" y1="360.1" x2="501.2" y2="187.5"/>
+		<line id="XMLID_4_" class="st4" x1="280.9" y1="428.9" x2="504.2" y2="256.3"/>
+		<line id="XMLID_3_" class="st4" x1="283.9" y1="497.7" x2="507.3" y2="325"/>
+		<line id="XMLID_1_" class="st4" x1="287" y1="566.5" x2="510.4" y2="393.8"/>
+	</g>
+</g>
+<rect id="XMLID_2908_" x="341.5" y="13.3" class="st1" width="108.5" height="500.9"/>
+<rect id="XMLID_2948_" x="183.4" y="101.6" class="st1" width="108.5" height="6.9"/>
+<rect id="XMLID_2922_" x="222.7" y="201.7" class="st2" width="29.9" height="312.5"/>
+</svg>
