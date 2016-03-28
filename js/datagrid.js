@@ -182,7 +182,7 @@ window.Formatters = {
 
   Button: function (row, cell, value, col) {
     var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString());
-    return '<button type="button" class="btn ' + (col.cssClass ? col.cssClass : '') + '">' + text + '</span>';
+    return '<button type="button" class="btn row-btn ' + (col.cssClass ? col.cssClass : '') + '">' + text + '</span>';
   },
 
   Dropdown: function (row, cell, value, col) {
