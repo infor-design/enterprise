@@ -31,6 +31,14 @@ body {
     background-color: $azure07;
   }
 
+  &.turquoise07 {
+    background-color: $turquoise07;
+  }
+
+  &.emerald06 {
+    background-color: $emerald06;
+  }
+
   h1 {
     line-height: 40px;
   }
@@ -105,6 +113,14 @@ body {
 
   &.azure07 {
     background-color: $azure07 !important;
+  }
+
+  &.turquoise07 {
+    background-color: $turquoise07 !important;
+  }
+
+  &.emerald06 {
+    background-color: $emerald06 !important;
   }
 
   .hero-content {
@@ -602,6 +618,30 @@ $pageslice-download-bg-color: #33b554;
     }
   }
 
+  &.turquoise07 {
+    background-color: $turquoise07 !important;
+
+    .version-no {
+      color: $turquoise02 !important;
+
+      b {
+        color: $turquoise02 !important;
+      }
+    }
+  }
+
+  &.emerald06 {
+    background-color: $emerald07 !important;
+
+    .version-no {
+      color: $emerald02 !important;
+
+      b {
+        color: $emerald02 !important;
+      }
+    }
+  }
+
   &::after {
     clear: both;
     content: '';
@@ -621,6 +661,14 @@ $pageslice-download-bg-color: #33b554;
     background-color: $azure07 !important;
   }
 
+  &.turquoise07 {
+    background-color: $turquoise07 !important;
+  }
+
+  &.emerald06 {
+    background-color: $emerald06 !important;
+  }
+
   a {
     color: $white;
     cursor: pointer;
@@ -636,6 +684,7 @@ $pageslice-download-bg-color: #33b554;
     > span {
       @include font-size(14);
       display: block;
+      opacity: inherit;
     }
 
     .component-name {
@@ -667,7 +716,7 @@ $pageslice-download-bg-color: #33b554;
     fill: $white;
     float: left;
     margin-right: 20px;
-    top: 38px;
+    top: 11px;
   }
 }
 
@@ -908,8 +957,8 @@ $pageslice-download-bg-color: #33b554;
     padding-top: 25px;
   }
 
-  ul,
-  ol {
+  .content > ul,
+  .content > ol {
     @include antialiased();
     @include font-size(16);
     color: $graphite06;
@@ -1338,7 +1387,8 @@ div.light-bgrnd {
     text-align: left;
   }
 
-  .content > p {
+  .content > p,
+  .content .snippet-text > p {
     @include font-size(16);
     color: $graphite06;
     line-height: 26px;
@@ -1352,7 +1402,7 @@ div.light-bgrnd {
     }
 
     + ul {
-      margin-top: -15px;
+      margin-top: 15px;
     }
   }
 
