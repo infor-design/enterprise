@@ -159,7 +159,7 @@ window.Formatters = {
   Badge: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
 
-    return '<span class="' + ranges.classes +'">' + value +' <span class="audible">'+ ranges.text+ '</span></span>';
+    return '<span class="badge ' + ranges.classes +'">' + value +' <span class="audible">'+ ranges.text+ '</span></span>';
   },
 
   // Tags (low priority)
@@ -2594,11 +2594,13 @@ $.fn.datagrid = function(options) {
           if (isNumber && !isNaN(parseFloat(a))) {
             a = parseFloat(a);
           }
+
         }
         return a;
       };
 
       key = function(x) { return primer(x[id]); };
+
       ascending = !ascending ? -1 : 1;
 
       return function (a, b) {
