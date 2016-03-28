@@ -487,32 +487,88 @@ $pageslice-download-link-border-color: #3dcd65;
       right: 0;
     }
 
+    .download-link-row {
+      margin-top: 13rem;
+    }
+
     .download-link {
       background-color: rgba($pageslice-download-link-bg-color, .9);
       border: 1px solid $pageslice-download-link-border-color;
+      border-radius: 2px;
       color: #ffffff;
+      height: 128px;
+      padding: 1rem;
+      position: relative;
+      text-decoration: none;
+      width: 128px;
 
-      > .icon {
+      .icon {
         fill: #ffffff;
+        height: 32px;
+        margin-bottom: 1rem;
+        width: 32px;
       }
 
-      > .overlay {
+      .overlay {
+        @include css3(transition, background-color 300ms cubic-bezier(.17, .04, .03, .94));
         background-color: rgba($slate10, 0);
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1;
       }
 
-      &:hover {
+      .overlay-container {
+        @include font-size(12);
+        font-weight: bold;
+        position: relative;
+        text-align: center;
+        text-transform: uppercase;
+        top: 50%;
+        @include css3(transform, translateY(-50%));
+
+        .icon {
+          fill: #ffffff;
+          margin-bottom: .5rem;
+          width: 18px;
+        }
+
+        span {
+          font-weight: inherit;
+        }
+      }
+
+      > .content {
+        position: relative;
+      }
+
+      &:not(:first-child) {
+        margin-left: 1rem;
+      }
+
+      &:hover,
+      &:focus {
         > .overlay {
           background-color: rgba($slate10, .9);
+          opacity: 1;
+          visibility: visible;
         }
       }
     }
 
-    .download-text-small {
+    [class^="download-text-"] {
+      display: block;
+    }
 
+    .download-text-small {
+      margin-top: 1rem;
+      @include font-size(14);
     }
 
     .download-text-large {
-
+      @include font-size(28);
     }
   }
 
@@ -566,18 +622,39 @@ $pageslice-download-link-border-color: #3dcd65;
       }
 
       .columns.description {
-        margin-top: 2rem;
         margin-bottom: 120px;
+        margin-top: 2rem;
       }
     }
 
     &.articles {
       .background-image {
-        background-size: 200%;
         background-position: center center;
+        background-size: 200%;
         height: 100px;
         width: 100%;
       }
+    }
+
+    &.download {
+
+      .columns.description {
+        margin-top: 2rem;
+      }
+
+      .download-link-row {
+        margin-top: 0;
+      }
+
+      .download-link {
+        display: block;
+        margin: 0 auto 1rem;
+
+        &:not(:first-child) {
+          margin-left: auto;
+        }
+      }
+
     }
   }
 }
