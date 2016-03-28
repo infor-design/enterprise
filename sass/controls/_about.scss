@@ -10,23 +10,23 @@
 
   .close-container {
     position: absolute;
-    right: 20px;
+    right: 8px;
     text-align: right;
-    top: 20px;
+    top: 8px;
   }
 
   &.modal {
-    max-width: 640px;
+    max-width: 576px;
     min-width: 300px;
     width: calc(100% - 40px);
   }
 
   .modal-header {
-    margin: 3em 0;
+    margin: 2em 0;
     text-align: center;
 
     h1 {
-      color: $font-color-extrahighcontrast;
+      color: $about-header-color;
       margin: 0;
       padding: 0;
       text-align: center;
@@ -35,9 +35,9 @@
 
   .modal-body {
     border: 1px solid $about-text-border-color;
-    border-radius: 3px;
-    margin-bottom: 30px;
-    max-height: 300px;
+    border-radius: 2px;
+    margin: 0 10px 30px;
+    max-height: 199px;
     outline: medium none;
     overflow-y: scroll;
 
@@ -55,18 +55,18 @@
   .additional-content {
     @include font-size(14);
     @include antialiased();
-    color: $font-color;
+    color: $about-text-color;
     line-height: normal;
   }
 
   .about-logo {
     height: 72px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     width: 72px;
   }
 
   p {
-    color: $font-color;
+    color: $about-text-color;
     margin-top: 0;
     padding: 10px;
 

@@ -4,7 +4,6 @@
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal {
   backface-visibility: hidden;
-  border-radius: 2px;
   -webkit-filter: blur(0);
   filter: none;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -32,6 +31,11 @@
     textarea {
       margin-bottom: 10px;
       width: 300px;
+
+      &.input-lg {
+        width: 400px;
+        min-height: inherit;
+      }
     }
   }
 
@@ -66,17 +70,18 @@
 }
 
 .modal-engaged .overlay {
-  opacity: .30;
+  opacity: .70;
   visibility: visible;
 }
 
 .modal-header {
-  padding: 20px 20px 0 20px;
+  padding: 15px 20px 2px 20px;
 }
 
 .modal-content {
   background: $modal-bg-color;
   border: 1px solid $modal-border-color;
+  border-radius: 2px;
   box-shadow: $modal-box-shadow;
   color: $font-color;
   margin: 5px;
@@ -91,7 +96,7 @@
   // Messages/Content
   h1 {
     @include font-size(18);
-    color: $modal-color;
+    color: $modal-primary-color;
     font-weight: normal;
     -webkit-margin-after: 0;
     text-align: left;
@@ -117,6 +122,18 @@
     }
   }
 
+  h2 {
+    @include font-size(16);
+    color: $modal-primary-color;
+    font-weight: normal;
+    -webkit-margin-after: 0;
+    text-align: left;
+
+    + p {
+      margin: 15px 0;
+    }
+  }
+
   .modal-body-wrapper {
     overflow: auto;
     padding: 20px;
@@ -131,11 +148,16 @@
 
   .message {
     color: $modal-color;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     line-height: 20px;
     max-width: 369px;
     padding: 15px 0 25px;
     text-align: left;
+  }
+
+  .alert-text {
+    display: inline-block;
+    margin-bottom: 10px;
   }
 
   p + p {

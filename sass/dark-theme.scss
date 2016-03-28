@@ -470,15 +470,21 @@ $image-border-color: $slate04;
 
 //Toast
 $toast-bg-color: $slate07;
-$toast-border-color: $slate09;
+$toast-border-color: $slate05;
+$toast-header-color: $white;
+$toast-text-color: $white;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
+
 
 //Builder Pattern
 $builder-header-bg-color: $slate08;
 
 //About
-$about-text-border-color: $slate08;
-$about-text-hover-border-color: $slate09;
+$about-header-color: $white;
+$about-text-color: $white;
+$about-text-border-color: $slate05;
+$about-text-hover-border-color: $slate03;
+
 
 // Header Tabs
 $header-tabcontainer-border-color: $slate09;

@@ -28,26 +28,28 @@
 }
 
 .toast {
-  @include font-size(12);
+  @include font-size(14);
   background-color: $toast-bg-color;
   border: 1px solid $toast-border-color;
+  border-radius: 2px;
   box-shadow: $toast-shadow;
+  color: $toast-text-color;
   margin: 0 0 5px;
   overflow: hidden;
-  padding: 10px 30px 10px 10px;
+  padding: 15px 30px 15px 10px;
   position: relative;
   width: auto;
 
   .toast-title {
-    color: $font-color-highcontrast;
+    color: $toast-header-color;
     display: block;
     font-weight: bold;
-    margin: 5px 0 5px;
+    margin: 5px 0;
   }
 
   .toast-message {
     display: block;
-    margin-bottom: 5px;
+    margin: 5px 0;
     padding-right: 5px;
   }
 
@@ -60,21 +62,13 @@
     cursor: pointer;
     height: 20px;
     position: absolute;
-    right: -5px;
-    top: 3px;
+    right: 0;
+    top: 6px;
     width: 20px;
 
-    &:hover,
-    &:active {
-      svg.icon {
-        fill: $primary-color;
-      }
-    }
-
     svg.icon {
-      fill: $font-color-highcontrast;
-      height: 14px;
-      width: 14px;
+      height: 12px;
+      width: 12px;
     }
   }
 }
