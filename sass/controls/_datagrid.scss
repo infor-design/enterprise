@@ -351,6 +351,10 @@ $datagrid-header-short-height: 32px;
       }
     }
 
+    .row-btn {
+      line-height: normal;
+    }
+
     .datagrid-cell-wrapper {
       border: 1px solid transparent;
       display: block;
