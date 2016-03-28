@@ -164,6 +164,8 @@ $listview-toolbar-button-icon-hover-color: $white;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 
+$listview-searchresult-full-witdh-bg-color: $slate08;
+
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-bg-color: $primary-color;
@@ -321,6 +323,9 @@ $modal-btn-primary-color: $azure04;
 $modal-btn-primary-hover-color: $azure05;
 $modal-btn-disabled-color: $white;
 $modal-btn-disabled-opacity: .3;
+$modal-primary-color: $white;
+$modal-secondary-color: $slate03;
+
 
 // Accordion
 $accordion-bg-color: $slate08;
