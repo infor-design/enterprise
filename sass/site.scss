@@ -373,6 +373,8 @@ $pageslice-visualize-darker-bg-color: #d74341;
 $pageslice-mobiletools-bg-color: #f0f0f0;
 $pageslice-articles-bg-color: #7d397a;
 $pageslice-download-bg-color: #33b554;
+$pageslice-download-link-bg-color: #19c74d;
+$pageslice-download-link-border-color: #3dcd65;
 
 .page-slice {
   min-height: 500px;
@@ -413,12 +415,19 @@ $pageslice-download-bg-color: #33b554;
       height: 100%;
       left: 0;
       min-width: 50%;
+      text-align: right;
+
+      > * {
+        padding-right: 20px;
+      }
     }
   }
 
   &.mobile-tools {
     .background-image {
-      background: $pageslice-mobiletools-bg-color url('/assets/site/hp_graphic_phone_w_bg.png') no-repeat scroll center left / cover;
+      background: $pageslice-mobiletools-bg-color url('/assets/site/hp_graphic_phone_w_bg.png') no-repeat;
+      background-position: calc(100% + 400px) 0;
+      background-size: auto 100%;
       bottom: 0;
       height: 100%;
       width: 100%;
@@ -461,6 +470,34 @@ $pageslice-download-bg-color: #33b554;
       min-width: 50%;
       right: 0;
     }
+
+    .download-link {
+      background-color: rgba($pageslice-download-link-bg-color, .9);
+      border: 1px solid $pageslice-download-link-border-color;
+      color: #ffffff;
+
+      > .icon {
+        fill: #ffffff;
+      }
+
+      > .overlay {
+        background-color: rgba($slate10, 0);
+      }
+
+      &:hover {
+        > .overlay {
+          background-color: rgba($slate10, .9);
+        }
+      }
+    }
+
+    .download-text-small {
+
+    }
+
+    .download-text-large {
+
+    }
   }
 
 }
@@ -483,10 +520,6 @@ $pageslice-download-bg-color: #33b554;
       @include font-size(28);
     }
 
-    .background-image {
-
-    }
-
     .columns.description {
       margin-bottom: 2rem;
     }
@@ -502,14 +535,18 @@ $pageslice-download-bg-color: #33b554;
           display: block;
           margin: 10px auto 0;
           max-height: 128px;
+          padding-right: 0;
         }
       }
     }
 
     &.mobile-tools {
       .background-image {
-        height: 100px;
+        background-position: center center;
+        background-size: contain;
         bottom: 0;
+        height: 100px;
+        right: auto;
       }
 
       .columns.description {
@@ -537,7 +574,7 @@ $pageslice-download-bg-color: #33b554;
   clear: both;
   color: $white;
   font-weight: bold;
-  height: 80px;
+  min-height: 80px;
   position: relative;
   text-align: center;
   z-index: 1;
@@ -720,13 +757,15 @@ $pageslice-download-bg-color: #33b554;
 
 @include respond-to(phablet) {
 
+  /*
   .site-footer nav {
     margin: 0 30px;
   }
+  */
 
   .site-footer nav li {
     display: block;
-    margin: 30px 10px 25px;
+    margin: 30px 0 25px;
   }
 
   .site-footer ul {
