@@ -17,14 +17,19 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  $.fn.sidebar = function() {
+  $.fn.sidebar = function(options) {
     'use strict';
 
     // Settings and Options
-    var pluginName = 'sidebar';
+    var pluginName = 'sidebar',
+      defaults = {
+        isSticky: true
+      },
+      settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Sidebar(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -33,125 +38,178 @@
     Sidebar.prototype = {
 
       init: function() {
-        this.handleEvents();
-        this.isSafari = $('html').is('.is-safari');
-      },
-
-      handleEvents: function() {
-        var self = this,
-          header = $('.header').first(),
-          sidebar = $('.sidebar-nav');
-
-        if (sidebar.attr('data-is-sticky') === 'false') {
-          return;
+        if (!this.settings.isSticky) {
+          return this;
         }
 
+        this.build();
+        this.handleEvents();
+        this.isSafari = $('html').is('.is-safari');
+
+        return this;
+      },
+
+      build: function() {
+        var self = this;
+
+        this.closestHeader = $('.header').first();
         this.sectionList = $('.section-tracker');
         this.sections = $('.editorial > .main > .content > h2'); //,h3
 
-        //Handle Scrolling events
-        var scrollDiv = $(this.element).closest('.scrollable'),
-          container = (scrollDiv.length === 1 ? scrollDiv : $(window));
+        //append the links for the heading elements
+        this.sections.each(function (i) {
+          var item = $(this),
+            id = 'heading' + i,
+            link = $('<div><a href="#' + id + '" class="hyperlink' + (i === 0 ? ' is-active' : '') + '">' + item.text() + '</a></div>');
 
-        if (self.sectionList) {
-          var efficientScroll = $.fn.debounce(function() {
+          item.attr('id', id);
+          self.sectionList.append(link);
+        });
+        this.anchors = this.sectionList.find('a');
 
-            var lastActive = self.sectionList.find('.is-active').removeClass('is-active');
-            self.sections.each(function () {
-              if (self.isOnScreen(this)) {
-                var tag = $('a[href="#' + this.id + '"]');
-
-                tag.addClass('is-active');
-                tag.parent().prev().find('a').removeClass('is-active');
-                return false;
-              }
-            });
-
-            if (self.sectionList.find('.is-active').length === 0) {
-              lastActive.addClass('is-active');
-            }
-          }, 10);
-          container.on('scroll.sidebarMenu', efficientScroll);
+        this.editorialContainer = this.element.closest('.editorial');
+        this.pageContainer = this.element.closest('.page-container');
+        if (!this.pageContainer.length) {
+          this.pageContainer = $(window);
         }
 
-        container.on('scroll.sidebar', function () {
-          if (!sidebar.is(':visible')) {
-            return;
-          }
+        return this;
+      },
 
-          var offsetScrollTop = sidebar.offset().top - 30,
-            content = $('.content', sidebar);
+      handleEvents: function() {
+        var self = this;
 
-          if (header.offset().top + header.outerHeight() > offsetScrollTop) {
-            sidebar.addClass('is-sticky');
-
-            //Safari only
-            if (self.isSafari) {
-              content.css({position:'absolute', top: container.scrollTop()});
-            }
-          } else {
-            sidebar.removeClass('is-sticky');
-
-            //Safari only
-            if (self.isSafari) {
-              content.css({position:'', top:''});
-            }
-          }
-
+        this.anchors.onTouchClick('sidebar').on('click.sidebar', function (e) {
+          self.handleAnchorClick(e);
         });
 
-        if (this.sectionList) {
+        this.pageContainer.on('scroll.sidebar', function(e) {
+          self.handleScroll(e);
+          self.adjustCurrentNavItem();
+        });
 
-          //append the links for the heading elements
-          this.sections.each(function (i) {
-            var item = $(this),
-              id = 'heading'+i,
-              link = $('<div><a href="#' + id + '" class="hyperlink' + (i === 0 ? ' is-active' : '') + '">' + item.text() + '</a></div>');
+        return this;
+      },
 
-            item.attr('id', id);
-            self.sectionList.append(link);
-          });
+      handleScroll: function(e) {
+        var editorialContainerOffset = this.editorialContainer.position(),
+          sidebarOffset = this.element.position(),
+          sidebarBottomBoundary = sidebarOffset.top + this.element.outerHeight(true),
+          containerTopBoundary = editorialContainerOffset.top,
+          containerBottomBoundary = editorialContainerOffset.top + this.editorialContainer.outerHeight(true),
+          scrollTop = this.pageContainer.scrollTop(),
+          windowH = $(window).height();
 
-          this.sectionList.find('a').on('touchcancel.sidebar touchend.sidebar', function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            $(this).trigger('click');
-          }).on('click.sidebar', function (e) {
-            var a = $(this);
+        // Conditions
+        var conditionAffixTop = scrollTop < containerTopBoundary,
+          conditionScrollWithBody = scrollTop >= containerTopBoundary && scrollTop <= sidebarBottomBoundary + containerBottomBoundary,
+          conditionAffixBottom = scrollTop > (containerBottomBoundary - windowH),
+          add = '', remove = '',
+          top;
 
-            a.parent().parent().find('.is-active').removeClass('is-active');
-            a.addClass('is-active');
-
-            container.animate({
-              scrollTop: $(a.attr('href')).position().top - 30
-            }, 150);
-
-            e.preventDefault();
-          });
-
+        if (conditionAffixTop) {
+          add = 'affix-top';
+          remove = 'affix-bottom affix';
         }
+        if (conditionScrollWithBody) {
+          add = 'affix';
+          remove = 'affix-bottom affix-top';
+          top = (scrollTop - containerTopBoundary) + 'px';
+        }
+        if (conditionAffixBottom) {
+          add = 'affix-bottom';
+          remove = 'affix affix-top';
+          top = (scrollTop - containerTopBoundary) - (windowH - (containerBottomBoundary - scrollTop)) + 'px';
+        }
+
+        this.element.removeClass(remove);
+        if (!this.element.hasClass(add)) {
+          this.element.addClass(add);
+        }
+
+        if (top) {
+          this.element.css({
+            top: top
+          });
+        }
+
+        return;
+      },
+
+      adjustCurrentNavItem: function() {
+        var self = this,
+          lastActive = this.sectionList.find('.is-active').removeClass('is-active');
+
+        if (lastActive.length && lastActive.is($(document.activeElement))) {
+          lastActive[0].blur();
+        }
+
+        this.sections.each(function () {
+          var s = this;
+
+          if (self.isOnScreen(s)) {
+            var tag = $('a[href="#' + s.id + '"]');
+            tag.addClass('is-active');
+            tag.parent().prev().find('a').removeClass('is-active');
+            //return false;
+          }
+        });
+
+        if (this.sectionList.find('.is-active').length === 0) {
+          lastActive.addClass('is-active');
+        }
+        return;
+      },
+
+      handleAnchorClick: function(e) {
+        var a = $(e.target);
+
+        a.parent().parent().find('.is-active').removeClass('is-active');
+        a.addClass('is-active');
+
+        this.pageContainer.animate({
+          scrollTop: $(a.attr('href')).position().top - 30
+        }, 150);
+
+        e.preventDefault();
+        return;
       },
 
       isOnScreen: function (element) {
-        var bounds = element.getBoundingClientRect();
-        return bounds.top < window.innerHeight && bounds.bottom > 0;
+        var el = $(element),
+          pos = el.offset(),
+          h = el.outerHeight(true),
+          realBottom = pos.top + h;
+
+        return pos.top < window.innerHeight && realBottom > 0;
+      },
+
+      updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      teardown: function() {
+        this.container.off('scroll.sidebar').off('scroll.sidebarMenu');
+        this.anchors.offTouchClick('sidebar').off('click.sidebar');
+        return this;
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], pluginName);
-        var scrollDiv = $(this.element).closest('.scrollable'),
-          container = (scrollDiv.length ===1 ? scrollDiv : $(window));
-
-        container.off('scroll.sidebar').off('scroll.sidebarMenu');
-        this.tracker.offf('touchcancel.sidebar touchend.sidebar click.sidebar');
       }
     };
 
     // Initialize the plugin just once
     return this.each(function() {
       var instance = $.data(this, pluginName);
-      if (!instance) {
+      if (instance) {
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
+      } else {
         instance = $.data(this, pluginName, new Sidebar(this));
       }
     });

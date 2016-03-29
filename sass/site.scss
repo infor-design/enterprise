@@ -371,17 +371,6 @@ $site-topframe-links-bg-color: #0b152a;
     background-color: transparent;
   }
 
-  // Setup specific sizing in the top frame
-  > .side-by-side-layout {
-    display: block;
-    margin: 0 auto;
-    max-width: 600px;
-
-    h1 {
-      max-width: calc(100% - 155px);
-    }
-  }
-
 }
 
 $pageslice-visualize-bg-color: #fb5652;
@@ -1451,11 +1440,14 @@ div.light-bgrnd {
   transform: none;
 }
 
+@import 'site/sidebar';
+
 .editorial.component {
-  background-color: $body-bg-color;
+  background-color: transparent;
+  padding-bottom: 70px;
 
   .content {
-    background-color: $body-bg-color;
+    background-color: transparent;//$body-bg-color;
     margin-bottom: 35px;
   }
 
@@ -1466,44 +1458,6 @@ div.light-bgrnd {
 
   .main > .content {
     width: 100%;
-  }
-
-  .sidebar-nav {
-
-    .content {
-      max-height: calc(100% - 310px);
-      overflow: auto;
-    }
-
-    h3 {
-      padding: 0;
-      margin: 0;
-      width: 100%;
-    }
-
-    .tag-list,
-    .link-list {
-      padding-bottom: 10px;
-      margin-left: 8px;
-
-      .timestamp {
-        position: static;
-      }
-    }
-
-    a.tag:hover {
-      background-color: $graphite03;
-    }
-
-    a:not(.tag) {
-      display: inline-block;
-      @include font-size(14);
-      line-height: 20px;
-    }
-  }
-
-  .is-sticky .content {
-    top: 50px;
   }
 
   .content > h2 {
@@ -1635,14 +1589,6 @@ div.light-bgrnd {
     background-color: transparent !important;
   }
 
-}
-
-.sidebar-nav a {
-  display: block;
-  max-width: 235px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .code {
