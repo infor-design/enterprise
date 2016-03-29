@@ -52,9 +52,26 @@
         var self = this;
 
         //Set the height
-        this.element.drag({axis: this.settings.axis, containment: 'document'}).on('drag.splitter', function (e, args) {
-          self.splitTo(args.left);
-        });
+        this.element.drag({axis: this.settings.axis, containment: 'document'})
+          .on('dragstart.splitter', function () {
+            var overlay = $('<div class="overlay"></div>'),
+              iframes = $('iframe');
+
+            if (iframes.length > 0) {
+              iframes.each(function() {
+                var frame = $(this);
+                frame.before(overlay);
+                overlay.css({height: '100%', width: (frame.parent().css('width')) - 40 + 'px', opacity: 0, visibility: 'visible'});
+              });
+            }
+          })
+          .on('dragend.splitter', function () {
+            $('.overlay').remove();
+          })
+          .on('drag.splitter', function (e, args) {
+            self.splitTo(args.left);
+          });
+
 
         //Restore from local storage
         if (localStorage) {

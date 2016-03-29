@@ -393,7 +393,7 @@ $pageslice-download-link-bg-color: #19c74d;
 $pageslice-download-link-border-color: #3dcd65;
 
 .page-slice {
-  min-height: 500px;
+  min-height: 550px;
   overflow: hidden;
   position: relative;
 
@@ -833,11 +833,11 @@ $pageslice-download-link-border-color: #3dcd65;
     top: 11px;
   }
 
-  .is-firefox .component-previous .icon {
-    top: 38px;
-  }
 }
 
+.is-firefox .component-previous .icon {
+  top: 38px;
+}
 
 // Media Queries
 //==================================================//
