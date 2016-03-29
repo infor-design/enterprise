@@ -218,6 +218,9 @@
           //Time Picker
           ['timepicker'],
 
+          //Tag
+          ['tag'],
+
           //Busy Indicator
           ['busyindicator','.busy, .busy-xs, .busy-sm'],
 
