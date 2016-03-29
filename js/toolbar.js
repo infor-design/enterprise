@@ -36,7 +36,6 @@
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
-      alert(settings.maxVisibleButtons)
     }
 
     // Plugin Methods
