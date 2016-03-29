@@ -562,6 +562,10 @@
         if (typeof li === 'number') {
           li = $(this.element.children()[0]).children().eq(li);
         }
+        // Un-select selected item
+        if (li.is('.is-selected')) {
+          this.select(li);
+        }
         li.remove();
       },
 
@@ -569,6 +573,23 @@
       clear: function () {
         var root = $(this.element.children()[0]);
         root.empty();
+      },
+
+      // Remove all selected
+      removeAllSelected: function () {
+        var self = this;
+        $.each(this.selectedItems, function(index, selected) {
+          self.remove(selected);
+        });
+      },
+
+      // Clear all selected
+      clearAllSelected: function () {
+        var self = this;
+        $.each(this.selectedItems, function(index, selected) {
+          // Un-select selected item
+          self.select(selected);
+        });
       },
 
       // Initialize sortlist
@@ -643,6 +664,16 @@
         return function (a, b) {
            return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
         };
+      },
+
+      // Un-select selected item
+      unselect: function (li) {
+        if (typeof li === 'number') {
+          li = $(this.element.children()[0]).children().eq(li);
+        }
+        if (li.is('.is-selected')) {
+          this.select(li);
+        }
       },
 
       // Handle Selecting the List Element

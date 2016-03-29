@@ -170,6 +170,8 @@ $listview-toolbar-button-icon-hover-color: $primary-color;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 
+$listview-searchresult-full-witdh-bg-color: $graphite01;
+
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-bg-color: $primary-color;
@@ -335,10 +337,9 @@ $slider-disabled-color: $graphite01;
 
 //Modal
 $modal-bg-color: $white;
-$modal-border-color: $white;
-$modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+$modal-border-color: $graphite03;
+$modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
 $modal-btn-color: $graphite06;
-$modal-color: $graphite06;
 $modal-btn-border-color: $graphite03;
 $modal-btn-hover-color: $graphite08;
 $modal-btn-primary-color: $primary-color;
@@ -346,6 +347,9 @@ $modal-btn-primary-hover-color: $azure07;
 $modal-btn-primary-disabled-color: $azure07;
 $modal-btn-disabled-color: $graphite06;
 $modal-btn-disabled-opacity: .5;
+$modal-color: $graphite06;
+$modal-primary-color: $graphite10;
+$modal-secondary-color: $graphite06;
 
 // Accordion
 $accordion-bg-color: $graphite01;
@@ -516,14 +520,18 @@ $image-border-color: $graphite02;
 //Toast
 $toast-bg-color: $white;
 $toast-border-color: $graphite03;
+$toast-header-color: $graphite10;
+$toast-text-color: $graphite06;
 $toast-shadow: none; //0 0 5px rgba(0, 0, 0, .2);
 
 //Builder Pattern
 $builder-header-bg-color: $slate06;
 
 //About
-$about-text-border-color: $graphite02;
-$about-text-hover-border-color: $graphite04;
+$about-header-color: $graphite10;
+$about-text-color: $graphite10;
+$about-text-border-color: $graphite03;
+$about-text-hover-border-color: $graphite07;
 
 // Header Tabs
 $header-tabcontainer-border-color: $graphite02;

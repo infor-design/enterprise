@@ -164,6 +164,8 @@ $listview-toolbar-button-icon-hover-color: $white;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 
+$listview-searchresult-full-witdh-bg-color: $slate08;
+
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-bg-color: $primary-color;
@@ -321,6 +323,9 @@ $modal-btn-primary-color: $azure04;
 $modal-btn-primary-hover-color: $azure05;
 $modal-btn-disabled-color: $white;
 $modal-btn-disabled-opacity: .3;
+$modal-primary-color: $white;
+$modal-secondary-color: $slate03;
+
 
 // Accordion
 $accordion-bg-color: $slate08;
@@ -470,15 +475,21 @@ $image-border-color: $slate04;
 
 //Toast
 $toast-bg-color: $slate07;
-$toast-border-color: $slate09;
+$toast-border-color: $slate05;
+$toast-header-color: $white;
+$toast-text-color: $white;
 $toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
+
 
 //Builder Pattern
 $builder-header-bg-color: $slate08;
 
 //About
-$about-text-border-color: $slate08;
-$about-text-hover-border-color: $slate09;
+$about-header-color: $white;
+$about-text-color: $white;
+$about-text-border-color: $slate05;
+$about-text-hover-border-color: $slate03;
+
 
 // Header Tabs
 $header-tabcontainer-border-color: $slate09;
