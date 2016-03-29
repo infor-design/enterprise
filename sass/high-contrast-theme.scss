@@ -66,9 +66,26 @@ $tooltip-error-border-color:  $alert-red;
 $tooltip-error-color: $white;
 
 // Badges
+$badge-neutral-color: $black;
 $badge-neutral-bg-color: $graphite04;
-$badge-neutral-color: $font-color-extrahighcontrast;
+$badge-neutral-hover-bg-color: $graphite05;
+$badge-secondary-color: $black;
+$badge-secondary-bg-color: $graphite02;
+$badge-secondary-border-color: $graphite06;
+$badge-error-color: $white;
+$badge-alert-color: $black;
+$badge-good-color: $white;
+$badge-info-color: $white;
 $badge-info-bg-color: $primary-color;
+$badge-neutral-icon-color: $graphite09;
+$badge-neutral-hover-icon-color: $graphite06;
+$badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
+
+.tag,
+.badge {
+  font-weight: bold !important;
+}
+
 
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;

@@ -17,38 +17,95 @@
   text-decoration: none;
   vertical-align: middle;
 
+  &.secondary {
+    border: 1px solid $badge-secondary-border-color;
+    background-color: $badge-secondary-bg-color;
+    color: $badge-secondary-color;
+    line-height: 21px;
+  }
+
   &.error {
     background-color: $error-color;
-    color: $white;
+    color: $badge-error-color;
   }
 
   &.alert {
     background-color: $alert-yellow;
-    color: $font-color-highcontrast;
+    color: $badge-alert-color;
   }
 
   &.neutral {
     background-color: $badge-neutral-bg-color;
-    color: $font-color-highcontrast;
+    color: $badge-neutral-color;
   }
 
   &.good {
     background-color: $alert-green;
-    color: $white;
+    color: $badge-good-color;
   }
 
   &.info {
     background-color: $badge-info-bg-color;
-    color: $white;
+    color: $badge-info-color;
   }
 
   &.graphite03,
   &.graphite02 {
-    color: $font-color-highcontrast;
+    color: $badge-neutral-color;
   }
 
   &.round {
     padding: 0 8px;
+  }
+
+  &.is-clickable {
+    background-color: $badge-neutral-bg-color;
+    border: 1px solid transparent;
+    cursor: pointer;
+    line-height: 21px;
+
+    &:hover {
+      background-color: $badge-neutral-hover-bg-color;
+    }
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: $badge-focus-transparent-shadow;
+      outline: none;
+      -moz-outline-style: none;
+    }
+  }
+
+  &.is-dismissable {
+    background-color: $badge-neutral-bg-color;
+    border: 1px solid transparent;
+    cursor: default;
+    line-height: 21px;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: $badge-focus-transparent-shadow;
+      outline: none;
+      -moz-outline-style: none;
+    }
+
+    .dismissable-btn {
+      cursor: pointer;
+      padding-left: 4px;
+
+      .icon {
+        fill: $badge-neutral-icon-color;
+        height: 10px;
+        width: 10px;
+      }
+
+      &:hover {
+        .icon {
+          fill: $badge-neutral-hover-icon-color;
+        }
+      }
+
+    }
   }
 }
 
@@ -57,14 +114,15 @@
   &.pending {
     min-height: 22px;
     position: relative;
+    min-width: 22px;
 
     // Clock circle
     &:before {
       border: .15em solid #ffffff;
       border-radius: 55%;
       content: '';
-      height: 58%;
-      left: .22em;
+      height: 60%;
+      left: .27em;
       position: absolute;
       top: .25em;
       width: 60%;
@@ -78,7 +136,7 @@
       height: 24%;
       left: .75em;
       position: absolute;
-      top: .5em;
+      top: .55em;
       width: 19.5%;
     }
 
