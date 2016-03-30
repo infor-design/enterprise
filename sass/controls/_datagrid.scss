@@ -173,6 +173,10 @@ $datagrid-header-short-height: 32px;
     overflow: hidden;
     text-align: left;
 
+    &:first-child {
+      border-left-color: $datagrid-header-bg-color;
+    }
+
     .datagrid-header-text {
       @include font-size(12);
       color: $datagrid-header-color;
@@ -892,9 +896,28 @@ html[dir='rtl'] {
       top: 0;
 
       &.is-draggable-target {
-        background-color: rgba($datagrid-header-color, 0.2);
-        border-right: 1px solid $datagrid-header-border-color;
-        width: 2px;
+
+        &:before,
+        &:after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          left: -6px;
+        }
+
+        &:before {
+          border-top: 5px solid $datagrid-header-hover-color;
+          top: -9px;
+        }
+
+        &:after {
+          border-bottom: 5px solid $datagrid-header-hover-color;
+          bottom: -9px;
+        }
 
         &.is-over {
           display: inline-block;
