@@ -6,7 +6,6 @@
   float: right;
   height: auto;
   margin-right: 30px;
-  //margin-top: 48px;
   min-height: 100px;
   width: 210px;
 
@@ -77,13 +76,6 @@
   &.affix,
   &.affix-bottom {
     position: relative;
-
-    /*
-    .content {
-      top: 50px;
-    }
-    */
-
   }
 
 }
