@@ -99,8 +99,7 @@
           containerTopBoundary = editorialContainerOffset.top,
           containerBottomBoundary = editorialContainerOffset.top + this.editorialContainer.outerHeight(true),
           distanceBetweenEditorialContainerAndBottom = this.pageContainer[0].scrollHeight - containerBottomBoundary,
-          scrollTop = this.pageContainer.scrollTop(),
-          windowH = $(window).height();
+          scrollTop = this.pageContainer.scrollTop();
 
         // Conditions
         var conditionAffixTop = scrollTop < containerTopBoundary,
