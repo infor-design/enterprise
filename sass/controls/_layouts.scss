@@ -524,11 +524,10 @@ body.no-scroll {
     max-width: 1080px;
     width: 100%;
 
-    .content {
+    > .content {
       display: inline-block;
       margin-top: 48px;
       max-width: calc(100% - 240px);
-      min-width: 260px;
       padding: 0 30px;
 
       > h3,
@@ -544,40 +543,6 @@ body.no-scroll {
       margin-bottom: 25px;
     }
 
-  }
-
-  // Sticky Way Points Sidebar Nav
-  .sidebar-nav {
-    display: inline-block;
-    float: right;
-    height: auto;
-    margin-right: 30px;
-    min-height: 100px;
-    width: 210px;
-
-    .content {
-      height: auto;
-      padding: 0 30px 30px;
-      width: 150px;
-
-      > h3 {
-        border-bottom: 1px solid  $graphite03;
-        clear: both;
-        color: $graphite06;
-        @include font-size(18);
-        margin-bottom: 15px !important;
-        padding-bottom: 15px !important;
-        padding-top: 30px;
-
-        &:not(:first-child) {
-          margin-top: 35px;
-        }
-      }
-    }
-
-    > .tags {
-      background-color: $graphite01;
-    }
   }
 
   .tag-list .tag {
