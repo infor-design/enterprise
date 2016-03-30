@@ -83,6 +83,18 @@ var express = require('express'),
     res.render('tests/distribution/' + end, amdOptions);
   });
 
+  app.get('/tests/signin/*', function (req, res) {
+    var amdOptions = {
+        title: 'SoHo XI',
+        subtitle: 'Sign In',
+        layout: 'tests/layout-noheader',
+      };
+    var end = req.url.replace('/tests/signin/','');
+    res.render('tests/signin/' + end, amdOptions);
+    console.log('x');
+  });
+
+
   app.get('/tests/applicationmenu/*', function(req, res) {
     function path() {
       var url = req.url.toString();

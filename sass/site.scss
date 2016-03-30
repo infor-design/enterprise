@@ -309,7 +309,8 @@ $site-topframe-links-bg-color: #0b152a;
 
   h1 {
     color: inherit;
-    @include font-size(36);
+    @include font-size(50);
+    line-height: 60px;
     font-weight: normal;
 
     span {
@@ -317,8 +318,8 @@ $site-topframe-links-bg-color: #0b152a;
     }
 
     .smaller {
-      margin-top: 2rem;
-      @include font-size(18);
+      margin-top: 1.2rem;
+      @include font-size(24);
     }
   }
 
@@ -329,10 +330,10 @@ $site-topframe-links-bg-color: #0b152a;
 
   .header-grid {
     margin-bottom: 3rem;
-    max-width: 640px !important;
+    max-width: 1020px !important;
 
     &:first-of-type {
-      margin-top: 6rem;
+      margin-top: 50px;
 
       .columns {
         > * {
@@ -354,11 +355,15 @@ $site-topframe-links-bg-color: #0b152a;
   .links-grid {
     background-color: rgba( $site-topframe-links-bg-color, .9 );
     margin-bottom: 0;
-    max-width: 960px !important;
-    padding-bottom: 3rem;
+    max-width: 1020px !important;
+    padding-bottom: 70px;
 
     .columns {
       text-align: center;
+    }
+
+    h2 + p {
+      margin: 30px 0;
     }
   }
 
@@ -369,6 +374,10 @@ $site-topframe-links-bg-color: #0b152a;
 
   .header {
     background-color: transparent;
+
+    h1 {
+      display: inline-block;
+    }
   }
 
 }
