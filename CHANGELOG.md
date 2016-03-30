@@ -5,12 +5,13 @@ Release Date: April 4th
 * New - Lightbox
 
 ## Breaking Changes
-* 2016-02-23 - 
+* 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
 ## Ui Changes
 * 2016-02-23 - Changed File Upload States. Refined all 3 themes.
+* 2016-03-30 - Minor changes to the progress indicator
 
-[Jira Release Notes 4.1.1](http://jira.infor.com/secure/ReleaseNote.jspa?version=25271&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|ae7ebfcb3629c91a9735d7831cc311b96f69495d|lin)
+[Jira Release Notes 4.2](http://jira.infor.com/secure/ReleaseNote.jspa?version=25271&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|ae7ebfcb3629c91a9735d7831cc311b96f69495d|lin)
 
 # 4.1.1 - Patch Release
 Release Date: March 18th, 2016

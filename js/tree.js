@@ -141,7 +141,9 @@
         if (focus) {
           node.focus();
         }
-        this.element.trigger('selected', [node]);
+
+        var jsonData = node.data('json-data') ? node.data('json-data') : [];
+        this.element.trigger('selected', {node: node, data: jsonData});
       },
 
       //Animate open/closed the node
@@ -399,6 +401,7 @@
           this.setSelectedNode(a, node.focus);
         }
 
+        a.data('json-data', node);
         return li;
       },
 
