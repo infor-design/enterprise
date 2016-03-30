@@ -92,17 +92,20 @@
       },
 
       handleScroll: function() {
+        this.element.removeAttr('style');
+
         var editorialContainerOffset = this.editorialContainer.position(),
           sidebarHeight = this.element.outerHeight(true),
           containerTopBoundary = editorialContainerOffset.top,
           containerBottomBoundary = editorialContainerOffset.top + this.editorialContainer.outerHeight(true),
+          distanceBetweenEditorialContainerAndBottom = this.pageContainer[0].scrollHeight - containerBottomBoundary,
           scrollTop = this.pageContainer.scrollTop(),
           windowH = $(window).height();
 
         // Conditions
         var conditionAffixTop = scrollTop < containerTopBoundary,
           conditionScrollWithBody = scrollTop >= containerTopBoundary && scrollTop + sidebarHeight <= containerBottomBoundary,
-          conditionAffixBottom = scrollTop > (containerBottomBoundary - windowH),
+          conditionAffixBottom = scrollTop + sidebarHeight > (containerBottomBoundary),
           add = '', remove = '',
           top;
 
@@ -113,11 +116,11 @@
         if (conditionScrollWithBody) {
           add = 'affix';
           remove = 'affix-bottom affix-top';
-          top = (scrollTop - containerTopBoundary) + 'px';
         }
         if (conditionAffixBottom) {
           add = 'affix-bottom';
           remove = 'affix affix-top';
+          top = containerBottomBoundary - sidebarHeight - (distanceBetweenEditorialContainerAndBottom * 1.7) + 'px';
         }
 
         this.element.removeClass(remove);
