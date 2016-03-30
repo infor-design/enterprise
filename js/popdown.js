@@ -292,7 +292,12 @@
         if (adjustX) {
           // Adjust the X position based on the deltas
           this.popdown.css({ 'left': po.left + (XoffsetFromTrigger * -1) });
-          this.arrow.css({ 'left': /*to.left + t.outerWidth(true)/2*/ this.popdown.outerWidth(true)/2 });
+
+          var popdownRect = this.popdown[0].getBoundingClientRect(),
+            triggerRect = t[0].getBoundingClientRect(),
+            deltaRightEdge = popdownRect.right - triggerRect.right + 10;
+
+          this.arrow.css({ 'left': 'auto', 'right': deltaRightEdge + 'px' });
 
           // Get the newly set values
           po = this.popdown.offset();
