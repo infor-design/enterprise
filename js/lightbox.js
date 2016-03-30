@@ -55,7 +55,7 @@
       handleEvents: function() {
         var self = this;
 
-        this.element.onTouchClick(pluginName).on('click.lightbox' + pluginName, function() {
+        this.element.onTouchClick(pluginName).on('click.' + pluginName, function() {
           self.showImage();
         });
 
@@ -65,7 +65,7 @@
       // Show Image Fill Size
       showImage: function() {
 
-        if (!this.settings.image) {
+        if (!this.settings.image && !this.settings.image.length) {
           return;
         }
 
@@ -78,26 +78,27 @@
           buttons: [],
           id: 'lightbox-modal',
           frameHeight: 0
-        }).on('open', function() {
+        })
+        .on('open', function() {
           $('.overlay').css('opacity', '.7');
-        }).on('afterclose', function () {
+        })
+        .on('afterclose', function () {
           $('#lightbox-modal').remove();
         });
 
         //Do Ui Customizations
         this.lightBox = $('#lightbox-modal');
-        this.lightBox.addClass('lightbox-modal');
-        this.lightBox.find('.modal-buttonset').remove();
-        this.lightBox.find('.modal-header').remove();
+        this.lightBox.addClass('lightbox-modal').find('.modal-buttonset, .modal-header').remove();
 
         setTimeout(function () {
+          var modalApi = $('body').data('modal');
 
-          $('.overlay').css('opacity', '.65').onTouchClick(pluginName).on('click.' + pluginName, function () {
-            $('body').data('modal').close();
+          modalApi.extraHeight = 0;
+          modalApi.resize();
+
+          $('.overlay').onTouchClick(pluginName).on('click.' + pluginName, function () {
+            modalApi.close();
           });
-
-          $('body').data('modal').extraHeight = 0;
-
         } ,100);
 
         //Add Buttons
@@ -108,26 +109,26 @@
       addButtons: function () {
         var self = this,
           closeButton = $('<button class="btn-icon" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon close"><use xlink:href="#icon-close"/></svg><span class="audible">'+
-            Locale.translate('Close') + '</span></button>');
+            Locale.translate('Close') +'</span></button>');
 
-        this.lightBox.find('.modal-body-wrapper').before(closeButton);
+        this.previousButton = $('<button class="btn-previous" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-left-arrow"/></svg><span class="audible">'+
+            Locale.translate('Previous') +'</span></button>');
+
+        this.nextButton = $('<button class="btn-next" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-right-arrow"/></svg><span class="audible">'+
+            Locale.translate('Next') +'</span></button>');
+
+
+        this.lightBox.find('.modal-body-wrapper')
+          .before(closeButton, this.previousButton, this.nextButton);
+
         closeButton.onTouchClick(pluginName).on('click.' + pluginName, function () {
           $('body').data('modal').close();
         });
-
-        this.previousButton = $('<button class="btn-previous" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-left-arrow"/></svg><span class="audible">'+
-            Locale.translate('Previous') + '</span></button>');
-
-        this.lightBox.find('.modal-body-wrapper').before(this.previousButton);
 
         this.previousButton.onTouchClick(pluginName).on('click.' + pluginName, function () {
            self.loadSiblingImage('previous');
         });
 
-        this.nextButton = $('<button class="btn-next" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-right-arrow"/></svg><span class="audible">'+
-            Locale.translate('Next') + '</span></button>');
-
-        this.lightBox.find('.modal-body-wrapper').before(this.nextButton);
         this.nextButton.onTouchClick(pluginName).on('click.' + pluginName, function () {
           self.loadSiblingImage('next');
         });
@@ -144,7 +145,7 @@
         img.src = path;
         img.id = 'lightbox-full';
 
-        if (box.length > 0) {
+        if (box.length) {
           box.css('opacity', '0');
 
           setTimeout(function () {
@@ -161,26 +162,17 @@
         var next = this.currentElement.next(),
           prev = this.currentElement.prev();
 
-        if (next && next.length > 0) {
-          this.nextButton.show();
-        } else {
-          this.nextButton.hide();
-        }
-
-        if (prev && prev.length > 0) {
-          this.previousButton.show();
-        } else {
-          this.previousButton.hide();
-        }
+        this.nextButton[next && next.length ? 'show' : 'hide']();
+        this.previousButton[prev && prev.length ? 'show' : 'hide']();
       },
 
       loadSiblingImage: function (direction) {
-        var elem = (direction === 'next' ? this.currentElement.next() : this.currentElement.prev()),
-          imagePath = elem && elem.length > 0 ? elem.data('lightbox').settings : '';
+        var currentElement = (direction === 'next' ? this.currentElement.next('.lightbox') : this.currentElement.prev('.lightbox')),
+          currentSettings = currentElement && currentElement.length ? currentElement.data('lightbox').settings : '';
 
-        if (imagePath) {
-          this.loadImage(imagePath.image);
-          this.currentElement = elem;
+        if (currentSettings && currentSettings.image && currentSettings.image.length) {
+          this.loadImage(currentSettings.image);
+          this.currentElement = currentElement;
         }
 
         this.refreshButtons();
