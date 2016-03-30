@@ -22,6 +22,7 @@
   //NOTE: Just this part will show up in SoHo Xi Builds.
 
   $.fn.popdown = function(options) {
+
     'use strict';
 
     // Settings and Options
@@ -231,19 +232,19 @@
 
       position: function() {
         var parent = {
-            offset: {
-              left: 0,
-              top: 0
-            },
-            scrollDistance: {
-              left: 0,
-              top: 0
-            }
+          offset: {
+            left: 0,
+            top: 0
           },
-          winH = window.innerHeight + $(document).scrollTop(),
-          // subtract 2 from the window width to account for the tooltips
-          // resizing themselves to fit within the CSS overflow boundary.
-          winW = (window.innerWidth - 2) + $(document).scrollLeft();
+          scrollDistance: {
+            left: 0,
+            top: 0
+          }
+        },
+        winH = window.innerHeight + $(document).scrollTop(),
+        // subtract 2 from the window width to account for the tooltips
+        // resizing themselves to fit within the CSS overflow boundary.
+        winW = (window.innerWidth - 2) + $(document).scrollLeft();
 
         // Reset adjustments to panel and arrow
         this.popdown.removeAttr('style');
@@ -269,7 +270,8 @@
 
         // Place the popdown below to start
         this.popdown.addClass('bottom').css({ 'left': to.left,
-                           'top': to.top + t.outerHeight(true) + arrowHeight });
+                           'top': to.top /*+ t.outerHeight(true) + arrowHeight */ });
+
         this.arrow.css({ 'left': t.outerWidth(true)/2,
                          'top': 0 - arrowHeight });
 
@@ -290,7 +292,12 @@
         if (adjustX) {
           // Adjust the X position based on the deltas
           this.popdown.css({ 'left': po.left + (XoffsetFromTrigger * -1) });
-          this.arrow.css({ 'left': parseInt(this.arrow.css('left')) - (XoffsetFromTrigger * -1) });
+
+          var popdownRect = this.popdown[0].getBoundingClientRect(),
+            triggerRect = t[0].getBoundingClientRect(),
+            deltaRightEdge = popdownRect.right - triggerRect.right + 10;
+
+          this.arrow.css({ 'left': 'auto', 'right': deltaRightEdge + 'px' });
 
           // Get the newly set values
           po = this.popdown.offset();
