@@ -1,10 +1,64 @@
 
 <div class="row">
   <div class="twelve columns">
-
     <span class="tag">#Tagged</span>
-    <span class="error tag"><span class="audible">Error</span>Delayed</span>
-    <span class="good tag">Open Order</span>
-    <span class="alert tag"><span class="audible">Alert</span>Help Order</span>
+    <span class="tag secondary">#Tagged</span>
+    <span class="tag error"><span class="audible">Error</span>Delayed</span>
+    <span class="tag good">Open Order</span>
+    <span class="tag alert"><span class="audible">Alert</span>Help Order</span>
+
+    <hr class="fieldset-hr">
   </div>
 </div>
+
+
+<div class="row">
+
+  <div class="two columns">
+    <h2 class="fieldset-title">Clickable</h2>
+    <a href="#" id="example-clickable" class="tag is-clickable">#Tagged</a>
+  </div>
+
+  <div class="two columns">
+    <h2 class="fieldset-title">Dismissable</h2>
+    <a href="#" id="example-dismissable" class="tag is-dismissable">#Tagged</a>
+  </div>
+
+  <div class="five columns">
+    <div class="card">
+      <div class="card-header">
+        <p style="font-size: 1.6rem; font-weight: bold;">Status</p>
+      </div>
+      <div class="card-content" id="output" style="padding: 13px 20px;">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<script>
+  var tempID,
+    output = $('#output'),
+    msg = function(str) {
+      return '<span style="display: block; font-size: 1.4rem; margin-bottom: 0.5rem;">'+ str +'</span>';
+    };
+
+  $('.is-dismissable')
+    // Before Remove
+    .on('beforetagremove', function(e, arg) {
+      tempID = arg.element.attr('id');
+      output.prepend(msg('Before Remove: '+ tempID));
+      arg.event.preventDefault();
+    })
+    // After Remove: Need to check on parent, because tag is removed at this point
+    .parent().on('aftertagremove', function() {
+      output.prepend(msg('After Remove: '+ tempID));
+    });
+
+    $('.is-clickable').on('click', function(e) {
+      output.prepend(msg('Tag Clicked: '+ this.id));
+      e.preventDefault();
+    });
+</script>
