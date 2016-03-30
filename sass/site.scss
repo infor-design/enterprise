@@ -786,9 +786,11 @@ $pageslice-download-link-border-color: #3dcd65;
   a {
     color: $white;
     cursor: pointer;
+    display: inline-block;
     opacity: .7;
     position: relative;
-    top: 32px;
+    margin: 0 !important;
+    top: 0;
     text-decoration: none;
 
     &:hover {
@@ -811,7 +813,8 @@ $pageslice-download-link-border-color: #3dcd65;
     float: right;
     left: -38px;
     margin-top: 0;
-    vertical-align: top;
+    top: 2px;
+    vertical-align: middle;
 
     .icon {
       float: right;
@@ -819,25 +822,37 @@ $pageslice-download-link-border-color: #3dcd65;
       margin-right: 0;
       top: -35px;
     }
+
+    span:nth-child(2) {
+      top: 3px;
+    }
   }
 
-  .component-previous + .component-next {
-    margin-top: -33px;
+  .component-previous {
+    span {
+      left: 30px;
+      position: relative;
+      width: 190px
+    }
+ }
+
+  .buttonset,
+  .toolbar {
+    height: 75px;
+    overflow: visible;
+    top: 32px;
   }
 
   .icon {
     display: block;
     fill: $white;
     float: left;
-    margin-right: 20px;
+    margin-right: 5px;
     top: 11px;
   }
 
 }
 
-.is-firefox .component-previous .icon {
-  top: 38px;
-}
 
 // Media Queries
 //==================================================//
