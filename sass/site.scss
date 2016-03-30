@@ -1069,6 +1069,10 @@ $pageslice-download-link-border-color: #3dcd65;
     margin: 15px 0;
   }
 
+  .content > ul .hyperlink {
+    @include font-size(16);
+  }
+
   > p:first-child {
     margin-top: 20px;
   }
@@ -1335,6 +1339,10 @@ div.light-bgrnd {
     margin-top: 42px;
   }
 
+  hr:last-child {
+    display: none;
+  }
+
   b {
     font-weight: bold;
   }
@@ -1430,7 +1438,6 @@ div.light-bgrnd {
 
 .editorial.component {
   background-color: $body-bg-color;
-  padding-bottom: 70px;
 
   .content {
     background-color: $body-bg-color;
@@ -1523,6 +1530,25 @@ div.light-bgrnd {
 
     + ul {
       margin-top: 15px;
+    }
+  }
+
+  .content .snippet-text ol {
+    @include font-size(16);
+    line-height: 26px;
+    margin-left: 20px;
+    margin-top: 20px;
+
+    ol {
+      line-height: 26px;
+      list-style-type: lower-alpha;
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      padding-left: 5px;
     }
   }
 

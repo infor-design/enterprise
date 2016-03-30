@@ -263,10 +263,17 @@ $checkbox-label-color: $input-color;
 // Switch
 $switch-checked-color: $primary-color;
 $switch-checked-bg-color: $azure06;
-$switch-unchecked-color: $graphite08;
-$switch-unchecked-bar-color: $graphite08;
-$switch-disabled-color: $input-disabled-border-color;
+$switch-unchecked-bg-color: $white;
+$switch-unchecked-bar-color: $graphite07;
+$switch-unchecked-border-color: $graphite06;
+$switch-unchecked-color: $slate05;
+$switch-unchecked-pressed-bg-color: $slate04;
+$switch-disabled-bg-color: $graphite02;
+$switch-disabled-border-color: $graphite04;
+$switch-disabled-color: $graphite04;
 $switch-disabled-label-color: $disabled-color;
+$switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $primary-color;
+$switch-hover-box-shadow: 0 2px 5px rgba(0,0,0,.3);
 
 // Editor
 $editor-bg-color: $input-bg-color;
@@ -408,6 +415,11 @@ $tree-icon-color: $graphite08;
 $tree-link-color: $graphite08;
 $tree-disabled-color: $graphite05;
 $tree-hover-color: $graphite06;
+
+//Progress
+$progress-bg-color: $graphite01;
+$progress-border-color: $graphite06;
+$progress-bar-bg-color: $azure09;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $graphite01;

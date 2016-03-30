@@ -50,7 +50,6 @@
         this.hasTrigger = false;
         this.isAnimating = false;
         this.triggers = $();
-
         this.menu = this.element;
 
         var openOnLarge = this.element.attr('data-open-on-large');
@@ -160,6 +159,9 @@
           $('.page-container').addClass('no-transition');
         }
         this.testWidth();
+
+        this.menu.removeClass('no-transition');
+        $('.page-container').removeClass('no-transition');
 
         return this;
       },

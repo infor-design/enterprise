@@ -43,7 +43,8 @@ label,
 p,
 small,
 span,
-ul {
+ul,
+ol {
   @include antialiased();
   font-weight: normal;
   line-height: normal;

@@ -4,12 +4,14 @@
 .switch {
   clear: both;
   display: block;
-  margin: 20px 0;
+  margin: 12px 0;
 
   // Text Label
   label {
+    @include font-size(14);
+    color: $font-color-extrahighcontrast;
     display: inline-block;
-    text-indent: 60px;
+    text-indent: 42px;
   }
 
   //Invisible Input
@@ -25,19 +27,25 @@
     ~ label {
       @include no-select();
       cursor: pointer;
-      line-height: 17px;
+      line-height: 15px;
       position: relative;
+
+      &:hover {
+        &::after {
+          box-shadow: $switch-hover-box-shadow;
+        }
+      }
     }
 
     // ::before is the bar
     ~ .label-text:before,
     ~ label:before {
       background-color: $switch-unchecked-bar-color;
-      border-radius: 2px;
-      height: 5px;
+      border-radius: 4px;
+      height: 4px;
       left: 0;
-      top: 5px;
-      width: 44px;
+      top: 4px;
+      width: 31px;
     }
 
     ~ .label-text:before,
@@ -56,11 +64,10 @@
       background-color: $switch-unchecked-bg-color;
       border: 1px solid $switch-unchecked-border-color;
       border-radius: 50%;
-      box-shadow: 0 0 0 0 rgba($switch-checked-bg-color, 0);
-      height: 18px;
+      height: 16px;
       left: 0;
       top: -3px;
-      width: 18px;
+      width: 16px;
     }
   }
 
@@ -75,7 +82,7 @@
   input:checked ~ label:after {
     background: $switch-checked-color;
     border-color: $switch-checked-color;
-    left: 29px;
+    left: 14px;
   }
 
   // Active State
@@ -84,7 +91,7 @@
   input:not(:disabled):active ~ label:after,
   input:not(:disabled):focus ~ label:after {
     background-color: $switch-unchecked-pressed-bg-color;
-    box-shadow: 0 0 0 10px rgba($switch-checked-color, .2);
+    box-shadow: $switch-focus-box-shadow;
   }
 
   input:not(:disabled):checked:active ~ .label-text:after,
@@ -99,6 +106,12 @@
   input:disabled ~ label {
     color: $switch-disabled-label-color;
     cursor: default;
+
+    &:hover {
+      &::after {
+        box-shadow: none;
+      }
+    }
   }
 
   input:disabled ~ .label-text:before,
@@ -108,7 +121,7 @@
 
   input:disabled ~ .label-text:after,
   input:disabled ~ label:after {
-    background-color: $switch-disabled-color;
+    background-color: $switch-disabled-bg-color;
     border-color: $switch-disabled-border-color;
   }
 
@@ -118,7 +131,6 @@
 .modal-body-wrapper .switch:last-child {
   margin-bottom: 0;
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

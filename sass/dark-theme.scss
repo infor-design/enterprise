@@ -32,7 +32,7 @@ $font-color: $slate02;
 $font-color-lowcontrast: $slate03;
 $label-color: $slate03;
 $label-disabled-color: $slate04;
-$disabled-color: $slate04;
+$disabled-color: $slate05;
 
 //The hyperlink Style
 $hyperlink-color: $azure04;
@@ -60,7 +60,9 @@ $popover-alternate-title-bg-color: $slate06;
 $popover-alternate-table-header: inherit;
 
 //Progress
-$progress-border-color: $slate05;
+$progress-bg-color: transparent;
+$progress-border-color: $slate04;
+$progress-bar-bg-color: $azure06;
 
 // Tooltips
 $tooltip-bg-color: $slate01;
@@ -272,13 +274,18 @@ $checkbox-label-color: $input-color;
 
 // Switch
 $switch-checked-color: $primary-color;
-$switch-checked-bg-color: $azure04;
-$switch-unchecked-color: $slate03;
+$switch-checked-bg-color: $azure03;
+$switch-unchecked-bg-color: $slate05;
 $switch-unchecked-bar-color: $slate03;
-$switch-unchecked-pressed-bg-color: #3e4f5e;
-$switch-disabled-color: $input-disabled-border-color;
-$switch-disabled-border-color: $slate07;
+$switch-unchecked-border-color: $slate06;
+$switch-unchecked-color: $slate05;
+$switch-unchecked-pressed-bg-color: $slate04;
+$switch-disabled-border-color: $slate06;
+$switch-disabled-bg-color: $slate06;
+$switch-disabled-color: $slate07;
 $switch-disabled-label-color: $disabled-color;
+$switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $primary-color;
+$switch-hover-box-shadow: 0 2px 5px rgba(0,0,0,.4);
 
 // Editor
 $editor-bg-color: transparent;

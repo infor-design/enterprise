@@ -66,7 +66,7 @@
         // keep track of how many popupmenus there are with an ID.
         // Used for managing events that are bound to $(document)
         if (!this.id) {
-          this.id = (parseInt($('.toolbar, .formatter-toolbar').length, 10)+1);
+          this.id = (parseInt($('.toolbar, .formatter-toolbar').index(this.element), 10));
         }
 
         // Check for a "title" element.  This element is optional.

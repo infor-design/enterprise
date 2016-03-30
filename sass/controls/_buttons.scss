@@ -60,7 +60,7 @@ button {
     font-size: inherit;
     font-weight: inherit;
 
-    &:not(:empty) + .icon:not(.app-header) {
+    > &:not(:empty) + .icon:not(.app-header) {
       margin-left: 5px;
     }
 
