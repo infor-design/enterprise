@@ -91,10 +91,9 @@
         return this;
       },
 
-      handleScroll: function(e) {
+      handleScroll: function() {
         var editorialContainerOffset = this.editorialContainer.position(),
-          sidebarOffset = this.element.position(),
-          sidebarBottomBoundary = sidebarOffset.top + this.element.outerHeight(true),
+          sidebarHeight = this.element.outerHeight(true),
           containerTopBoundary = editorialContainerOffset.top,
           containerBottomBoundary = editorialContainerOffset.top + this.editorialContainer.outerHeight(true),
           scrollTop = this.pageContainer.scrollTop(),
@@ -102,7 +101,7 @@
 
         // Conditions
         var conditionAffixTop = scrollTop < containerTopBoundary,
-          conditionScrollWithBody = scrollTop >= containerTopBoundary && scrollTop <= sidebarBottomBoundary + containerBottomBoundary,
+          conditionScrollWithBody = scrollTop >= containerTopBoundary && scrollTop + sidebarHeight <= containerBottomBoundary,
           conditionAffixBottom = scrollTop > (containerBottomBoundary - windowH),
           add = '', remove = '',
           top;
@@ -119,7 +118,6 @@
         if (conditionAffixBottom) {
           add = 'affix-bottom';
           remove = 'affix affix-top';
-          top = (scrollTop - containerTopBoundary) - (windowH - (containerBottomBoundary - scrollTop)) + 'px';
         }
 
         this.element.removeClass(remove);
