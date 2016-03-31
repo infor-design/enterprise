@@ -56,9 +56,6 @@
 
       // Add markup to the control
       build: function() {
-
-        // Calculated modal height
-        this.calcHeight = ($(window).height()* 0.9) - 100; //90% -(100 :extra elements-height);
         return this;
       },
 
@@ -180,7 +177,7 @@
           self.busyindicator
             .scrollTop(0)
             .css({
-              'max-height': self.calcHeight,
+              'max-height': self.getCalcHeight(),
               'overflow': 'hidden'
             })
             .trigger('start');
@@ -207,10 +204,16 @@
         };
       },
 
+      // Calculated modal height
+      getCalcHeight: function() {
+        return ($(window).height()* 0.9) - 100; //90% -(100 :extra elements-height);
+      },
+
       // Resize 
       resize: function() {
-        var bodyHeight = $('.modal-body').height();
-        $('.modal-body-wrapper').css('max-height', bodyHeight > this.calcHeight ? this.calcHeight : '');
+        var bodyHeight = $('.modal-body').height(),
+          calcHeight = this.getCalcHeight();
+        $('.modal-body-wrapper').css('max-height', bodyHeight > calcHeight ? calcHeight : '');
       },
 
       // Show/Hide next/previous buttons
