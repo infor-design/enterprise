@@ -143,6 +143,15 @@
     });
   });
 
+  /**
+  * Fix: Radio buttons was not selecting when click and than use arrow keys on Firefox
+  */
+  $(function () {
+    $('input:radio').on('click.radios', function() {
+      this.focus();
+    });
+  });
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
