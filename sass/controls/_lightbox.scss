@@ -89,6 +89,7 @@
     min-height: 32px;
     min-width: 32px;
     width: 24px;
+    z-index: 1001;
 
     .icon {
       fill: $graphite04;
@@ -113,13 +114,13 @@
     border: 1px solid $graphite04;
     border-radius: 50%;
     height: 32px;
-    left: 20px;
+    left: -15px;
     margin: -30px 0 0;
     min-width: 32px;
     position: absolute;
     top: 50%;
     width: 32px;
-    z-index: 1;
+    z-index: 1001;
 
     .icon {
       fill: $graphite04;
@@ -138,7 +139,7 @@
 
   .btn-next {
     left: initial;
-    right: 25px;
+    right: -15px;
 
     .icon {
       margin-left: 2px;
