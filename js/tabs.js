@@ -233,9 +233,14 @@
 
           if (href !== undefined && href !== '#') {
             var panel = $(href);
+
+            if (!panel.length) {
+              return;
+            }
+
             a.data('panel-link', panel);
             panel.data('tab-link', a);
-            self.panels = self.panels.add($(href));
+            self.panels = self.panels.add(panel);
           }
 
           // If dropdown tab, add the contents of the dropdown
@@ -318,10 +323,7 @@
           }
 
           self.hideFocusState();
-
-          if (!tab.is(':focus')) {
-            tab.children('a').data('focused-by-click', true);
-          }
+          tab.children('a').data('focused-by-click', true);
         }
         self.tablist.on('mousedown.tabs', '> li', addClickFocusData);
         self.moreButton.on('mousedown.tabs', addClickFocusData);
@@ -344,7 +346,14 @@
           li.on('selected.tabs', function(e, anchor) {
             var href = $(anchor).attr('href');
             self.activate(href);
+
+            if (self.hasAdvancedFocusStates()) {
+              self.positionFocusState(a);
+              self.focusBar(li);
+            }
+
             a.focus();
+            return false;
           });
         }
 
@@ -428,6 +437,8 @@
         var nonVisibleExcludes = ':not(.separator):not(:hidden)',
           a = li.children('a');
 
+        a.data('focused-by-click', true);
+
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
         li.addClass('is-selected');
 
@@ -437,6 +448,8 @@
 
         // Don't activate a dropdown tab.  Clicking triggers the Popupmenu Control attached.
         if (li.is('.has-popupmenu')) {
+          this.positionFocusState(a);
+          this.focusBar(li);
           return;
         }
 
@@ -470,6 +483,8 @@
           e.stopPropagation();
           return false;
         }
+
+        this.moreButton.data('focused-by-click', true);
 
         if (!(this.container.hasClass('has-more-button'))) {
           e.stopPropagation();
@@ -514,6 +529,7 @@
 
         var dataFocusedClick = this.moreButton.data('focused-by-click'),
           focusedByKeyboard = (dataFocusedClick && dataFocusedClick === false);
+
         $.removeData(this.moreButton[0], 'focused-by-click');
 
         if (this.hasAdvancedFocusStates()) {
@@ -1379,7 +1395,10 @@
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
-        //self.focusBar(self.moreButton);
+
+        if (self.hasAdvancedFocusStates()) {
+          self.positionFocusState(self.moreButton);
+        }
 
         function closeMenu() {
           $(this).off('close.tabs selected.tabs');
@@ -1861,7 +1880,7 @@
           popup.destroy();
         }
 
-        if (this.addTabButton.length) {
+        if (this.addTabButton && this.addTabButton.length) {
           this.addTabButton.off().remove();
           this.addTabButton = undefined;
         }
