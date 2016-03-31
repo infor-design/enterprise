@@ -34,8 +34,8 @@
           // after you reach the last element, first element will be displayed (and vice versa).
           loop: true,
 
-          // If set to false will loads fresh image each time, not from cache
-          cache: true
+          // If set to false will loads fresh image each time
+          cache: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -56,6 +56,9 @@
 
       // Add markup to the control
       build: function() {
+
+        // Calculated modal height
+        this.calcHeight = ($(window).height()* 0.9) - 100; //90% -(100 :extra elements-height);
         return this;
       },
 
@@ -65,6 +68,10 @@
 
         this.element.onTouchClick(pluginName).on('click.' + pluginName, function() {
           self.showImage();
+        });
+
+        $(window).on('resize.'+ pluginName, function() {
+          self.resize();
         });
 
         return this;
@@ -106,7 +113,7 @@
           self.busyindicator = $('.modal-body-wrapper').addClass('busy').busyindicator();
 
           modalApi.extraHeight = 0;
-          modalApi.resize();
+          $(window).off('resize.modal-' + modalApi.id);
 
           $('.overlay').onTouchClick(pluginName).on('click.' + pluginName, function () {
             modalApi.close();
@@ -129,8 +136,9 @@
         this.nextButton = $('<button class="btn-next" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-right-arrow"/></svg><span class="audible">'+
             Locale.translate('Next') +'</span></button>');
 
-        this.lightBox.find('.modal-body-wrapper')
-            .before(closeButton, this.previousButton, this.nextButton);
+        this.lightBox
+          .css('overflow', 'visible')
+          .find('.modal-content').before(closeButton, this.previousButton, this.nextButton);
 
         closeButton.onTouchClick(pluginName).on('click.' + pluginName, function () {
           $('body').data('modal').close();
@@ -155,6 +163,11 @@
           box = $('#lightbox-full'),
           img = new Image();
 
+        if (self.loadingInProcess) {
+          return;
+        }
+        self.loadingInProcess = true;
+
         // Will loads fresh image each time, if set to false
         if (!this.settings.cache) {
           path += '?t=' + Math.random() + new Date().getTime();
@@ -167,7 +180,7 @@
           self.busyindicator
             .scrollTop(0)
             .css({
-              'max-height': $(window).height()* 0.9, // max-height: 90%
+              'max-height': self.calcHeight,
               'overflow': 'hidden'
             })
             .trigger('start');
@@ -186,11 +199,18 @@
         }
 
         img.onload = function () {
-          $('body').data('modal').resize();
+          self.resize();
           setTimeout(function () {
             self.busyindicator.css({'overflow': ''}).trigger('complete');
+            self.loadingInProcess = false;
           }, 120);
-        };        
+        };
+      },
+
+      // Resize 
+      resize: function() {
+        var bodyHeight = $('.modal-body').height();
+        $('.modal-body-wrapper').css('max-height', bodyHeight > this.calcHeight ? this.calcHeight : '');
       },
 
       // Show/Hide next/previous buttons
@@ -207,6 +227,12 @@
 
       // Set next/previous buttons
       loadSiblingImage: function (direction) {
+
+        // Avoid fire multiple clicks on next/previous buttons
+        if (this.loadingInProcess) {
+          return;
+        }
+
         var self = this,
           boxes = $('.lightbox'),
           index = 0,
