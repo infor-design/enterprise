@@ -108,10 +108,10 @@
       @include font-size(12);
       font-weight: bold;
       margin: 0 auto;
+      max-width: 80%;
       overflow: hidden;
       padding: 10px;
       text-overflow: ellipsis;
-      max-width: 80%;
       white-space: nowrap;
 
       > * {
@@ -154,6 +154,17 @@
       a {
         padding: 9px 10px 7px;
       }
+    }
+  }
+
+  .add-tab-button {
+    min-width: 44px;
+
+    a {
+      @include font-size(24);
+      font-weight: normal;
+      padding-bottom: 5px;
+      padding-top: 1px;
     }
   }
 

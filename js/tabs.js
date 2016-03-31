@@ -138,7 +138,12 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.tablist = self.element.find('.tab-list')
+        self.tablist = self.element.children('.tab-list');
+        if (!self.tablist.length) {
+          self.tablist = self.element.children('.tab-list-container').children('.tab-list');
+        }
+
+        self.tablist
           .attr({
             'class': 'tab-list',
             'role': 'tablist',
@@ -1210,36 +1215,46 @@
 
       adjustModuleTabs: function() {
         var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(.add-tab-button)'),
           appTrigger = this.tablist.find('.application-menu-trigger'),
           hasAppTrigger = appTrigger.length > 0,
+          addButton = this.tablist.find('.add-tab-button'),
+          hasAddButton = addButton.length > 0,
           tabContainerW = this.tablist.outerWidth(),
           defaultTabSize = 120,
-          visibleTabSize = 120;
+          visibleTabSize = 120,
+          appTriggerSize = (hasAppTrigger ? appTrigger.outerWidth() : 0),
+          addButtonSize = (hasAddButton ? addButton.outerWidth(true) : 0);
 
         sizeableTabs.add(this.moreButton).removeAttr('style');
 
         // Remove overflowed tabs
         sizeableTabs.each(function() {
-          if (self.isTabOverflowed($(this))) {
-            sizeableTabs = sizeableTabs.not($(this));
+          var t = $(this);
+
+          if (self.isTabOverflowed(t)) {
+            sizeableTabs = sizeableTabs.not(t);
           }
         });
 
         // Resize the more button to fit the entire space if no tabs can show
-        // Math:  +121 is the padding of the <ul class="tab-list"> element
+        // Math: +101 is the padding of the <ul class="tab-list"> element
         if (!sizeableTabs.length) {
-          visibleTabSize = ((tabContainerW - (hasAppTrigger ? appTrigger.outerWidth() : 0) + 101));
+          visibleTabSize = (tabContainerW - appTriggerSize + 101);
           this.moreButton.width(visibleTabSize);
           this.adjustSpilloverNumber();
           return;
+        }
+
+        if (self.isTabOverflowed(addButton)) {
+          addButtonSize = 0;
         }
 
         // Math explanation:
         // Width of tab container - possible applcation menu trigger
         // Divided by number of visible tabs (doesn't include app menu trigger which shouldn't change size)
         // Minus one (for the left-side border of each tab)
-        visibleTabSize = ((tabContainerW - (hasAppTrigger ? appTrigger.outerWidth() : 0)) / sizeableTabs.length - 1);
+        visibleTabSize = ((tabContainerW - (appTriggerSize + addButtonSize)) / sizeableTabs.length - 1);
 
         if (visibleTabSize < defaultTabSize) {
           visibleTabSize = defaultTabSize;
