@@ -51,12 +51,12 @@
 
 
     <div id="modal-search-project" style="display: none;">
-      <div class="field">
+      <div class="field no-full-width">
       <label for="searchfield" class="audible">Search</label>
-      <input id="searchfield" name="searchfield" class="searchfield input-lg" />
+      <input id="searchfield" name="searchfield" class="searchfield input-lg" placeholder="Search" />
     </div>
     
-      <div class="listview searchresult-full-witdh" id="search-listview">
+      <div class="listview" id="search-listview">
         <ul>
           <li><a href="#">Cloverleaf Demo Environment</a></li>
           <li><a href="#">NICU Lab Results</a></li>
@@ -83,14 +83,23 @@
 
 <script>
 var modals = {
-  'add-comment': { title: 'Add a Comment', content: $('#modal-add-comment') }, 
-  'add-context': { title: 'Add Context', content: $('#modal-add-context') },
-  'search-project': { title: 'Search for a Project', content: $('#modal-search-project') }
+    'add-comment': {
+      'title': 'Add a Comment',
+      'content': $('#modal-add-comment')
+    }, 
+    'add-context': {
+      'title': 'Add Context',
+      'content': $('#modal-add-context')
+    },
+    'search-project': { 
+      'title': 'Search for a Project', 
+      'content': $('#modal-search-project'), 
+      'cssClass': 'searchresult-full-witdh'
+    }
   },
+
   setModal = function (opt) {
-    $('body').modal({
-      title: opt.title,
-      content: opt.content,
+    opt = $.extend({
       buttons: [{
         text: 'Cancel',
         click: function(e, modal) {
@@ -104,7 +113,9 @@ var modals = {
         validate: false,
         isDefault: true
       }]
-    });    
+    }, opt);
+
+    $('body').modal(opt);
   };
 
   $('#add-comment, #add-context, #search-project').on('click', function () {
