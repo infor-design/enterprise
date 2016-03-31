@@ -73,7 +73,11 @@
     }
   }
 
-  &.affix,
+  &.affix {
+    position: fixed;
+    top: 48px;
+  }
+
   &.affix-bottom {
     position: relative;
   }

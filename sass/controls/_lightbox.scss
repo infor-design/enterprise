@@ -119,6 +119,7 @@
     position: absolute;
     top: 50%;
     width: 32px;
+    z-index: 1;
 
     .icon {
       fill: $graphite04;
