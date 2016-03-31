@@ -138,7 +138,12 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.tablist = self.element.find('.tab-list')
+        self.tablist = self.element.children('.tab-list');
+        if (!self.tablist.length) {
+          self.tablist = self.element.children('.tab-list-container').children('.tab-list');
+        }
+
+        self.tablist
           .attr({
             'class': 'tab-list',
             'role': 'tablist',
