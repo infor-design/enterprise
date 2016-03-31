@@ -35,7 +35,7 @@
           loop: true,
 
           // If set to false will loads fresh image each time
-          cache: false
+          cache: true
         },
         settings = $.extend({}, defaults, options);
 
