@@ -1861,7 +1861,7 @@
           popup.destroy();
         }
 
-        if (this.addTabButton.length) {
+        if (this.addTabButton && this.addTabButton.length) {
           this.addTabButton.off().remove();
           this.addTabButton = undefined;
         }
