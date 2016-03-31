@@ -8,8 +8,8 @@
   border-radius: 2px;
   color: $hyperlink-color;
   cursor: pointer;
-  line-height: 22px;
-  padding-bottom: 1px;
+  line-height: 16px;
+  padding-top: 2px;
   text-decoration: none;
   white-space: nowrap;
 
@@ -30,14 +30,14 @@
     }
   }
 
-  &:focus {
+  &:focus:not(.hide-focus) {
     outline: 1px solid $hyperlink-focus-border-color;
-    outline-offset: 4px;
+    outline-offset: 3px;
   }
 
   &:active {
     outline: none;
-    outline-offset: 4px;
+    outline-offset: 3px;
   }
 
   &[disabled] {

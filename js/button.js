@@ -95,6 +95,11 @@
 
           element.addClass('hide-focus');
 
+          //Just do hide-focus
+          if (element.is('a')) {
+            return;
+          }
+
           if (self.isTouch) {
             // Make sure the user is using only one finger and then get the touch position relative to the ripple wrapper
             e = e.originalEvent;
@@ -127,7 +132,7 @@
           removeHideFocus(this);
         });
 
-        if (this.element.is('a, span')) {
+        if (this.element.not('.hyperlink').is('a, span')) {
           this.element.on('mouseup.button touchend.button touchcancel.button', function() {
             removeHideFocus(this);
           });

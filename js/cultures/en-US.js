@@ -105,6 +105,7 @@
       'Collapse': {id: 'Collapse', value: 'Collapse', comment: 'Collapse / close a tree/submenu'},
       'CollapseAppTray': {id: 'CollapseAppTray', value: 'Collapse App Tray', comment: 'Collapse App Tray tooltip'},
       'Columns': {id: 'Columns', value: 'Columns', comment: 'Columns tooltip'},
+      'Component': {id: 'Component', value: 'Component', comment: 'As in a UI component - building block.'},
       'Compose': {id: 'Compose', value: 'Compose', comment: 'Compose tooltip'},
       'Completed': {id: 'Completed', value: 'Completed', comment: 'Text For a Completed Status'},
       'Confirm': {id: 'Confirm', value: 'Confirm', comment: 'Confirm tooltip'},

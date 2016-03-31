@@ -24,10 +24,10 @@
   {{> controls/svg-extended}}
   {{> docs/applicationmenu}}
 
-  <div class="page-container scrollable no-transform ">
+  <div class="page-container scrollable no-transform no-transition">
     {{> docs/header}}
 
-    <div class="page-container scrollable component">
+    <div class="page-container scrollable no-transform no-transition component">
 
       <div class="site-hero component">
         <div class="row">
@@ -178,7 +178,8 @@
               <hr>
               <h2>Implementation</h2>
               <p>UA Hyperlink uses a standard anchor tag element and styles it with pure css. No JS is needed for this component. Use normal attributes and events of a standard anchor tag. Note that the disabled attribute is NOT valid html so should not be used, however it's included for backwards compatibility and some use cases.
-              <a class="hyperlink">Sometimes a link is needed</a> Normally a disabled link would be a label/text.</p>
+              <a class="hyperlink">Sometimes a link is needed</a> Normally a disabled link would be a label/text.  <a href="#"> Sometimes a class is forgotten</a>
+              </p>
 
               <pre><code class="language-markup">&lt;p class="prism">&lt;/p></code></pre>
 
@@ -290,7 +291,7 @@
                     <use xlink:href="#icon-left-arrow"/>
                   </svg>
                   <span>Previous</span>
-                  <span class="component-name">Accordion</span>
+                  <span class="component-name">Page Layout Templates</span>
                 </a>
 
                 <a class="component-next">

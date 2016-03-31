@@ -272,6 +272,7 @@ $site-topframe-links-bg-color: #0b152a;
     background-color: transparent;
     border-color: $inverse-color;
     color: $inverse-color;
+    margin-top: 10px;
 
     .icon {
       fill: $inverse-color;
@@ -326,6 +327,11 @@ $site-topframe-links-bg-color: #0b152a;
   h2 {
     color: #bdbdbd;
     font-weight: bold;
+    margin-bottom: 25px;
+  }
+
+  p {
+    @include font-size(16);
   }
 
   .header-grid {
@@ -347,7 +353,7 @@ $site-topframe-links-bg-color: #0b152a;
       text-align: center;
 
       > *:first-child {
-        margin-top: 4rem;
+        margin-top: 7rem;
       }
     }
   }
@@ -363,12 +369,13 @@ $site-topframe-links-bg-color: #0b152a;
     }
 
     h2 + p {
-      margin: 30px 0;
+      margin: auto;
+      width: 250px;
     }
   }
 
   .link-icon {
-    margin: 4rem 0 2rem;
+    margin: 7.5rem 0 2.5rem;
     max-height: 96px;
   }
 
@@ -377,6 +384,12 @@ $site-topframe-links-bg-color: #0b152a;
 
     h1 {
       display: inline-block;
+    }
+
+    .icon-sohoxi {
+      top: 20px;
+      vertical-align: top;
+      width: 117px;
     }
   }
 
@@ -396,9 +409,14 @@ $pageslice-download-link-border-color: #3dcd65;
   position: relative;
 
   h1 {
-    @include font-size(36);
-    font-weight: bold;
+    @include font-size(48);
     color: inherit;
+    font-weight: bold;
+    line-height: 50px;
+  }
+
+  p {
+    @include font-size(16);
   }
 
   .background-image {
@@ -412,7 +430,7 @@ $pageslice-download-link-border-color: #3dcd65;
 
     .column.description,
     .columns.description {
-      margin-top: 10rem;
+      margin-top: 13rem;
     }
 
     &:last-child {
@@ -430,14 +448,24 @@ $pageslice-download-link-border-color: #3dcd65;
       left: 0;
       min-width: 50%;
       text-align: right;
+      top: 75px;
 
       > * {
-        padding-right: 20px;
+        padding-right: 60px;
       }
+    }
+
+    p {
+      @include font-size(16);
     }
   }
 
   &.mobile-tools {
+
+    &.page-slice {
+      margin-top: 50px;
+    }
+
     .background-image {
       background: $pageslice-mobiletools-bg-color url('/assets/site/hp_graphic_phone_w_bg.png') no-repeat;
       background-position: calc(100% + 400px) 0;
@@ -486,22 +514,23 @@ $pageslice-download-link-border-color: #3dcd65;
     }
 
     .download-link-row {
-      margin-top: 13rem;
+      margin-top: 16rem;
     }
 
     .download-link {
       background-color: rgba($pageslice-download-link-bg-color, .9);
       border: 1px solid $pageslice-download-link-border-color;
       border-radius: 2px;
-      color: #ffffff;
-      height: 128px;
-      padding: 1rem;
+      color: $white;
+      height: 150px;
+      margin-right: 10px;
+      padding: 1.5rem;
       position: relative;
       text-decoration: none;
-      width: 128px;
+      width: 150px;
 
       .icon {
-        fill: #ffffff;
+        fill: $white;
         height: 32px;
         margin-bottom: 1rem;
         width: 32px;
@@ -612,10 +641,10 @@ $pageslice-download-link-border-color: #3dcd65;
 
     &.mobile-tools {
       .background-image {
-        background-position: center center;
+        background-position: right center;
         background-size: contain;
         bottom: 0;
-        height: 100px;
+        height: 175px;
         right: auto;
       }
 
@@ -632,6 +661,10 @@ $pageslice-download-link-border-color: #3dcd65;
         height: 100px;
         width: 100%;
       }
+
+      .btn-primary {
+        margin-bottom: 40px;
+      }
     }
 
     &.download {
@@ -646,7 +679,9 @@ $pageslice-download-link-border-color: #3dcd65;
 
       .download-link {
         display: block;
-        margin: 0 auto 1rem;
+        height: 175px;
+        margin: 0 auto 4rem;
+        width: 180px;
 
         &:not(:first-child) {
           margin-left: auto;
@@ -828,9 +863,13 @@ $pageslice-download-link-border-color: #3dcd65;
 
   .component-previous {
     span {
-      left: 30px;
+      left: 10px;
       position: relative;
-      width: 190px
+    }
+
+    span:last-child {
+      float: left;
+      left: 36px;
     }
  }
 
@@ -1389,10 +1428,10 @@ div.light-bgrnd {
   padding-top: 30px;
 }
 
-// Add Link Style in Case Forgotten
 .editorial .content {
 
-  a:not(.lightbox):not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink) {
+  //A class may be forgotten
+  > p > a:not(.lightbox):not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink) {
     border-bottom: 1px solid transparent;
     color: $hyperlink-color;
     cursor: pointer;

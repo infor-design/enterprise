@@ -1,8 +1,65 @@
 <style type="text/css">
   body {
-    background-image: url("/images/TP-Signin.jpeg");
+    background-image: url("/images/signin.jpg");
     background-size: cover;
   }
+
+  input {
+    background-color: rgba(255,255,255, .3);
+  }
+
+  img {
+    margin-bottom: 35px;
+  }
+
+  @media (max-width: 1279px) {
+    body {
+      background-size: initial;
+    }
+  }
+
+  .btn-primary {
+    background-color: #603951;
+    border-color: #603951;
+  }
+
+  .btn-primary:hover {
+    background-color: #3E102C;
+    border-color: #3E102C;
+  }
+
+  .hyperlink {
+    color: #603951;
+  }
+
+  .hyperlink:hover:not([disabled]) {
+    color: #3E102C;
+    border-color: #3E102C;
+  }
+
+  .hyperlink:focus:not(.hide-focus) {
+    outline: 1px solid #603951;
+    outline-offset: 4px;
+  }
+
+  .powered-by {
+    color: #818080;
+    display: block;
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 13px;
+  }
+
+  .powered-by .icon-logo {
+    display: inline;
+    height: 30px;
+    left: 10px;
+    margin: 0;
+    top: 11px;
+    width: 30px;
+  }
+
+
 </style>
 
 <body>
@@ -10,11 +67,7 @@
 <div class="wrapper">
   <section class="signin" role="main">
 
-      <svg viewBox="0 0 34 34" class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation" aria-label="Infor Logo">
-        <use xlink:href="#icon-logo"></use>
-      </svg>
-
-      <h1>Application Name</h1>
+      <img src = "/images/signin-logo.png" alt="Name"/>
 
       <div class="field">
         <label for="username-display">Email</label>
@@ -25,18 +78,13 @@
         <label for="password-display">Password</label>
         <input type="password" id="password-display" data-validate="required">
       </div>
-      <div class="field">
-        <label for="states"class="label">Server</label>
-        <select id="states"name="states"class="dropdown">
-          <option value="N">NL</option>
-          <option value="U">US</option>
-          <option value="E">EU</option>
-          <option value="c">China</option>
-        </select>
-      </div>
       <form id="signin" data-validate-on="submit" autocomplete="off">
           <button class="btn-primary" type="submit">Sign in</button>
           <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
+
+          <span class="powered-by">Powered By <svg viewBox="0 0 34 34" class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation" aria-label="Infor Logo">
+            <use xlink:href="#icon-logo"></use>
+          </svg></span>
 
           <label for="username" class="audible">Username</label>
           <input type="hidden" name="username" id="username" >
