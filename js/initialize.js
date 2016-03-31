@@ -102,13 +102,19 @@
 
           if ($.fn[plugin]) {
             matchedItems(selector).each(function () {
-              if ($(this).is(noinitExcludes) && selector !=='[data-trackdirty="true"]') {
+              var elem = $(this);
+
+              if (elem.is(noinitExcludes) && selector !=='[data-trackdirty="true"]') {
+                return;
+              }
+
+              if (elem.parents().hasClass('no-init')) {
                 return;
               }
 
               // Don't invoke elements inside of "container" controls that need to invoke their internal
               // items in a specific order.
-              if ($(this).parents('.toolbar').length) {
+              if (elem.parents('.toolbar').length) {
                 return;
               }
 

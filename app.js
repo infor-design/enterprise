@@ -91,7 +91,6 @@ var express = require('express'),
       };
     var end = req.url.replace('/tests/signin/','');
     res.render('tests/signin/' + end, amdOptions);
-    console.log('x');
   });
 
 

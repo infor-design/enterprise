@@ -823,6 +823,7 @@ $pageslice-download-link-border-color: #3dcd65;
     opacity: .7;
     position: relative;
     margin: 0 !important;
+    min-width: 90px;
     top: 0;
     text-decoration: none;
 
@@ -869,7 +870,6 @@ $pageslice-download-link-border-color: #3dcd65;
 
     span:last-child {
       float: left;
-      left: 36px;
     }
  }
 
@@ -1150,9 +1150,32 @@ $pageslice-download-link-border-color: #3dcd65;
       position: relative;
       vertical-align: middle;
     }
+
+    li > ol,
+    li > ul {
+      line-height: 26px;
+      margin-left: 20px;
+      margin-top: 10px;
+
+      ul,
+      li {
+        line-height: 26px;
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+
+    li > ol {
+      list-style-type: decimal;
+
+      li:before {
+        content: '';
+      }
+    }
   }
 
-  ol {
+  .content > ol {
     list-style-type: decimal;
 
     li::before {
@@ -1165,7 +1188,7 @@ $pageslice-download-link-border-color: #3dcd65;
     @include font-size(16);
   }
 
-  li {
+  .content > li {
     margin-bottom: 10px;
   }
 
@@ -1638,13 +1661,13 @@ div.light-bgrnd {
 }
 
 .code {
+  @include font-size(16);
   background-color: $graphite06;
   border: 1px solid #d2d2d2;
   border-radius: 3px;
   color: $white;
   font-family: 'Source Code Pro', monospace;
-  font-size: inherit;
-  padding: 1px 9px;
+  padding: 20px;
 }
 
 .code.snippet {

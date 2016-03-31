@@ -61,25 +61,26 @@
     color: $hyperlink-color;
     display: inline-block;
     margin-left: -10px;
+    padding: 2px 0 0;
 
     .icon {
       fill: $hyperlink-color;
-      height: 24px;
-      left: 0;
-      top: 4px;
-      width: 24px;
+      height: 22px;
+      left: 1px;
+      top: 1px;
+      width: 22px;
     }
 
     span {
       border-bottom: 1px solid transparent;
       margin-right: 7px;
       position: relative;
-      top: -3.5px;
+      top: -5.5px;
     }
 
     &:active:not([disabled]),
     &:focus:not([disabled]),
-    &:hover:not([disabled]) {
+    &:hover:not([disabled]):not(.no-focus) {
       border-bottom: 1px solid transparent;
       outline-offset: 0;
     }
