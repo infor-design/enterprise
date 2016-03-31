@@ -3,10 +3,9 @@
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal {
-  backface-visibility: hidden;
-  -webkit-filter: blur(0);
-  filter: none;
-  -webkit-font-smoothing: subpixel-antialiased;
+  backface-visibility: hidden; // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
+  -webkit-filter: blur(0.000001px); // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
+  filter: blur(0.000001px);  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
   height: auto;
   left: 50%;
   max-height: 90%;
@@ -17,14 +16,14 @@
   position: fixed;
   top: 50%;
   // Ignoring the mixin and doing manual CSS3 vendor-prefixing here because this is complicated
-  @include css3(transform, translate3d(-50%, -50%, 0) scale(.9, .9));
+  @include css3(transform, translate(-50%, -50%) scale(.9, .9));
   @include css3(transition, opacity .2s, transform .2s);
   width: auto;
   z-index: 1001;
 
   &.is-visible {
     opacity: 1;
-    @include css3(transform, translate3d(-50%, -50%, 0) scale(1.0, 1.0) translateZ(0) scale(1.0, 1.0));
+    @include css3(transform, translate(-50%, -50%) scale(1, 1));
   }
 
   .field {
