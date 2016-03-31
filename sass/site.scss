@@ -1638,9 +1638,11 @@ div.light-bgrnd {
 }
 
 .code {
-  background-color: $graphite02;
+  background-color: $graphite06;
   border: 1px solid #d2d2d2;
   border-radius: 3px;
+  color: $white;
+  font-family: 'Source Code Pro', monospace;
   font-size: inherit;
   padding: 1px 9px;
 }
