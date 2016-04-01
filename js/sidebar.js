@@ -137,6 +137,10 @@
       },
 
       adjustCurrentNavItem: function() {
+        if (this.dontAdjustWhileScrolling) {
+          return;
+        }
+
         var self = this,
           lastActive = this.sectionList.find('.is-active').removeClass('is-active');
 
@@ -162,14 +166,21 @@
       },
 
       handleAnchorClick: function(e) {
-        var a = $(e.target);
-
+        var self = this,
+          a = $(e.target);
         a.parent().parent().find('.is-active').removeClass('is-active');
-        a.addClass('is-active');
+
+        this.dontAdjustWhileScrolling = true;
 
         this.pageContainer.animate({
           scrollTop: $(a.attr('href')).position().top - 30
-        }, 150);
+        }, {
+          duration: 150,
+          done: function() {
+            self.dontAdjustWhileScrolling = false;
+            a.addClass('is-active');
+          }
+        });
 
         e.preventDefault();
         return;
