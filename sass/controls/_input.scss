@@ -417,7 +417,7 @@ textarea.error:focus {
     margin-top: 6px;
     top: auto;
     width: 18px;
-  }  
+  }
 }
 
 // Field Sizes
@@ -512,14 +512,15 @@ html[dir='rtl'] {
       margin-top: 6px;
       top: auto;
       width: 18px;
-    }  
+    }
   }
 }
 
 // Firefox on Mac
 .is-mac.is-firefox {
-  input,
+  input:not(.spinbox),
   textarea {
     padding: 9px 10px 8px;
   }
 }
+

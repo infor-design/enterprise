@@ -10,6 +10,7 @@ Release Date: April 4th
 ## Ui Changes
 * 2016-02-23 - Changed File Upload States. Refined all 3 themes.
 * 2016-03-30 - Minor changes to the progress indicator
+* 2016-03-31 - Hide Focus Support Added to Links. Note that many links will benefit from adding class hide-focus.
 
 [Jira Release Notes 4.2](http://jira.infor.com/secure/ReleaseNote.jspa?version=25271&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|ae7ebfcb3629c91a9735d7831cc311b96f69495d|lin)
 

@@ -870,8 +870,12 @@ $pageslice-download-link-border-color: #3dcd65;
 
   .component-previous {
     span {
-      left: 10px;
+      clear: both;
+      float: left;
+      left: 34px;
       position: relative;
+      top: -15px;
+      vertical-align: top;
     }
 
     span:last-child {
@@ -972,11 +976,11 @@ $pageslice-download-link-border-color: #3dcd65;
 
   .header,
   .site-footer {
-    background-color: $amber07;
+    background-color: $amber09;
 
     .version-no,
     .version-no b {
-      color: $amber02;
+      color: $amber05;
     }
   }
 
@@ -985,6 +989,19 @@ $pageslice-download-link-border-color: #3dcd65;
 
     .hero {
       height: auto !important;
+    }
+
+    .copy {
+      > p {
+        @include font-size(16);
+        line-height: 26px;
+        margin-top: 10px;
+      }
+
+      a {
+        @include font-size(16);
+        margin-top: 10px;
+      }
     }
   }
 
@@ -1006,6 +1023,18 @@ $pageslice-download-link-border-color: #3dcd65;
     max-width: $site-maxwidth;
   }
 
+}
+
+//Style Footer Like Articles (Landing)
+.article {
+  .site-footer {
+    background-color: $amber09;
+
+    .version-no,
+    .version-no b {
+      color: $amber05;
+    }
+  }
 }
 
 .articles-columns {
@@ -1224,12 +1253,12 @@ $pageslice-download-link-border-color: #3dcd65;
     }
 
     p {
-      @include font-size(14);
+      @include font-size(16);
       margin-bottom: 0 !important;
       padding: 20px;
-      padding-bottom: 10px;
+      padding-bottom: 20px;
       padding-top: 0;
-      line-height: 22px;
+      line-height: 26px;
     }
 
     img {
@@ -1270,7 +1299,7 @@ $pageslice-download-link-border-color: #3dcd65;
   }
 
   .article {
-    margin-bottom: 80px;
+    margin-bottom: 30px;
 
     h1 {
       color: $graphite06;
@@ -1278,6 +1307,16 @@ $pageslice-download-link-border-color: #3dcd65;
       font-weight: lighter;
       @include antialiased();
     }
+
+    &.content {
+      max-width: 100%;
+    }
+
+    p {
+       @include font-size(16);
+       line-height: 26px;
+    }
+
   }
 
   &.detail {
@@ -1460,7 +1499,9 @@ div.light-bgrnd {
 .editorial .content {
 
   //A class may be forgotten
-  > p > a:not(.lightbox):not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink) {
+  > p > a:not(.lightbox):not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink),
+  .snippet-text a,
+  .article a {
     border-bottom: 1px solid transparent;
     color: $hyperlink-color;
     cursor: pointer;
@@ -1519,7 +1560,7 @@ div.light-bgrnd {
 
 .editorial.component {
   background-color: transparent;
-  padding-bottom: 70px;
+  padding-bottom: 10px;
 
   .content {
     background-color: transparent;
@@ -1667,6 +1708,7 @@ div.light-bgrnd {
 }
 
 .code {
+  @include antialiased();
   @include font-size(16);
   background-color: $graphite06;
   border: 1px solid #d2d2d2;
@@ -1722,12 +1764,13 @@ div.light-bgrnd {
 
 .asset-item {
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: 3px !important;
   cursor: pointer;
-  height: 85px;
-  margin: 40px 25px 0 0px !important;
+  height: auto;
+  margin: 40px 25px 0 0 !important;
+  padding-bottom: 20px;
   text-decoration: none;
-  width: 85px !important;
+  width: 108px !important;
 
   img {
     height: 22px;
