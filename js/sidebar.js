@@ -58,11 +58,11 @@
 
         //append the links for the heading elements
         this.sections.each(function (i) {
-          var item = $(this),
+          var item = $(this).clone().children().remove().end(),
             id = 'heading' + i,
             link = $('<div><a href="#' + id + '" class="hyperlink' + (i === 0 ? ' is-active' : '') + '">' + item.text() + '</a></div>');
 
-          item.attr('id', id);
+          $(this).attr('id', id);
           self.sectionList.append(link);
         });
         this.anchors = this.sectionList.find('a');

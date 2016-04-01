@@ -246,11 +246,14 @@ body {
     margin-top: -46px;
   }
 
-  .goto-page {
-    font-size: 1.2rem !important;
-    position: relative;
-    top: -9px;
-  }
+}
+
+.hyperlink.goto-page {
+  font-size: 1.2rem !important;
+  left: 12px;
+  position: relative;
+  top: -5px;
+  font-weight: normal;
 }
 
 // Home Page
@@ -1536,6 +1539,7 @@ div.light-bgrnd {
 
   .hyperlink {
     display: inline;
+    outline-offset: 4px;
 
     .icon {
       fill: $azure06;
@@ -1547,7 +1551,7 @@ div.light-bgrnd {
       padding-left: 7px;
       position: relative;
       text-transform: uppercase;
-      top: -4px;
+      top: 1px;
     }
   }
 }
