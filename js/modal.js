@@ -392,7 +392,7 @@
         $(this.element).on('keypress.modal', function (e) {
           var target = $(e.target);
 
-          if (target.is('textarea') || target.is(':button') || target.is('.dropdown') || target.closest('.tab-list').length) {
+          if (target.is('.searchfield') || target.is('textarea') || target.is(':button') || target.is('.dropdown') || target.closest('.tab-list').length) {
             return;
           }
 

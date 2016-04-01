@@ -6,8 +6,7 @@
     <button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
     <button class="btn-secondary" type="button" id="search-project">Search for a Project</button>
 
-
-    <!-- add-comment -->
+    <!-- "Comment" Example -->
     <div id="modal-add-comment" style="display: none;">
 
         <small class="alert-text">Escalated (2X)</small>
@@ -21,9 +20,7 @@
 
     </div>
 
-
-    
-    <!-- add-context -->
+    <!-- "Context" Example -->
     <div id="modal-add-context" style="display: none;">
 
         <div class="field">
@@ -46,16 +43,15 @@
          <label for="context-desc">Description</label>
          <textarea id="context-desc" name="context-desc" class="textarea-lg" placeholder="Example: A description goes here."></textarea>
         </div>
-
     </div>
 
-
+    <!-- "Search" Example -->
     <div id="modal-search-project" style="display: none;">
       <div class="field no-full-width">
-      <label for="searchfield" class="audible">Search</label>
-      <input id="searchfield" name="searchfield" class="searchfield input-lg" placeholder="Search" />
-    </div>
-    
+        <label for="searchfield" class="audible">Search</label>
+        <input id="searchfield" name="searchfield" class="searchfield input-lg" placeholder="Search" />
+      </div>
+
       <div class="listview" id="search-listview">
         <ul>
           <li><a href="#">Cloverleaf Demo Environment</a></li>
@@ -72,8 +68,6 @@
       </div>
     </div>
 
-
-
   </div>
 </div>
 
@@ -86,14 +80,14 @@ var modals = {
     'add-comment': {
       'title': 'Add a Comment',
       'content': $('#modal-add-comment')
-    }, 
+    },
     'add-context': {
       'title': 'Add Context',
       'content': $('#modal-add-context')
     },
-    'search-project': { 
-      'title': 'Search for a Project', 
-      'content': $('#modal-search-project'), 
+    'search-project': {
+      'title': 'Search for a Project',
+      'content': $('#modal-search-project'),
       'cssClass': 'searchresult-full-witdh'
     }
   },

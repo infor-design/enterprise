@@ -269,13 +269,19 @@ $site-topframe-links-bg-color: #0b152a;
   */
 
   .btn-primary {
+    @include css3(opacity 300ms cubic-bezier(.17, .04, .03, .94));
     background-color: transparent;
     border-color: $inverse-color;
     color: $inverse-color;
     margin-top: 10px;
+    opacity: .7;
 
     .icon {
       fill: $inverse-color;
+    }
+
+    &:hover {
+      opacity: 1;
     }
 
     &:focus {
