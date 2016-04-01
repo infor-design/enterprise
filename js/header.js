@@ -81,7 +81,8 @@
 
         // Build toolbar if it doesn't exist
         if (!this.toolbarElem.data('toolbar')) {
-          this.toolbarElem.toolbar();
+          var opts = $.fn.parseOptions(this.toolbarElem);
+          this.toolbarElem.toolbar(opts);
         }
         this.toolbar = this.toolbarElem.data('toolbar');
 

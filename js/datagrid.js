@@ -1739,7 +1739,8 @@ $.fn.datagrid = function(options) {
       });
 
       if (!toolbar.data('toolbar')) {
-        toolbar.toolbar();
+        var opts = $.fn.parseOptions(toolbar);
+        toolbar.toolbar(opts);
       }
 
       toolbar.find('.searchfield').on('keypress.datagrid change.datagrid', function (e) {
