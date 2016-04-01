@@ -151,7 +151,7 @@
             var tag = $('a[href="#' + s.id + '"]');
             tag.addClass('is-active');
             tag.parent().prev().find('a').removeClass('is-active');
-            //return false;
+            return false;
           }
         });
 
