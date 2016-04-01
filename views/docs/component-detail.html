@@ -19,7 +19,6 @@
 
 </head>
 <body class="no-scroll">
-
   {{> controls/svg}}
   {{> controls/svg-extended}}
   {{> docs/applicationmenu}}
@@ -33,8 +32,8 @@
         <div class="row">
           <div class="full column">
 
-            <h1>Dropdown List</h1>
-            <small class="timestamp">Updated January 20th, 2015</small>
+            <h1>Accordion</h1>
+            <small class="timestamp">Updated April 1, 2016</small>
 
           </div>
         </div>
@@ -68,62 +67,101 @@
            <div class="example">
              <span class="code-tag">Live Example</span>
              <div class="example-content">
-                <div class="field">
-                  <label for="states" class="label">States</label>
-                  <select id="states" name="states" class="dropdown">
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO" disabled>Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District Of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                  </select>
+
+              <div class="accordion" data-demo-set-links="true">
+                <div class="accordion-header">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-user"></use>
+                  </svg>
+                  <a href="#"><span>Personal</span></a>
                 </div>
+                <div class="accordion-pane">
+                  <div class="accordion-header">
+                    <a href="#"><span>Item 1</span></a>
+                  </div>
+                  <div class="accordion-header">
+                    <a href="#"><span>Item 2</span></a>
+                  </div>
+                </div>
+
+                <div class="accordion-header">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-roles"></use>
+                  </svg>
+                  <a href="#"><span>Position</span></a>
+                </div>
+                <div class="accordion-pane">
+                  <div class="accordion-header">
+                    <a href="#"><span>Item 1</span></a>
+                  </div>
+                  <div class="accordion-header">
+                    <a href="#"><span>Item 2</span></a>
+                  </div>
+                </div>
+
+                <div class="accordion-header">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-export-spreadsheet"></use>
+                  </svg>
+                  <a href="#"><span>Financials</span></a>
+                </div>
+                <div class="accordion-pane">
+                  <div class="accordion-header">
+                    <a href="#"><span>Item 1</span></a>
+                  </div>
+                  <div class="accordion-header">
+                    <a href="#"><span>Item 2</span></a>
+                  </div>
+                </div>
+
+                <div class="accordion-header">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-url"></use>
+                  </svg>
+                  <a href="#"><span>Learning</span></a>
+                </div>
+                <div class="accordion-pane">
+                  <div class="accordion-header">
+                    <a href="#"><span>Education</span></a>
+                  </div>
+                  <div class="accordion-pane">
+                    <div class="accordion-header">
+                      <a href="#"><span>Undergraduate</span></a>
+                    </div>
+                    <div class="accordion-header">
+                      <a href="#"><span>Graduate</span></a>
+                    </div>
+                  </div>
+
+                  <div class="accordion-header">
+                    <a href="#"><span>Skills</span></a>
+                  </div>
+                  <div class="accordion-pane">
+                    <div class="accordion-content">
+                      <p>Need some content here</p>
+                    </div>
+                  </div>
+
+                  <div class="accordion-header">
+                    <a href="#"><span>Certifications</span></a>
+                  </div>
+                  <div class="accordion-pane">
+                    <div class="accordion-content">
+                      <p>Need some content here</p>
+                    </div>
+                  </div>
+
+                  <div class="accordion-header">
+                    <a href="#"><span>Compliance Training</span></a>
+                  </div>
+                  <div class="accordion-pane">
+                    <div class="accordion-content">
+                      <p>Need some content here</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               </div>
             </div>
         </div>

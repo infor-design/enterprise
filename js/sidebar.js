@@ -95,7 +95,7 @@
         this.element.removeAttr('style');
 
         var editorialContainerOffset = this.editorialContainer.position(),
-          sidebarHeight = this.element.outerHeight(true),
+          sidebarHeight = this.element.outerHeight(),
           containerTopBoundary = editorialContainerOffset.top,
           containerBottomBoundary = editorialContainerOffset.top + this.editorialContainer.outerHeight(true),
           distanceBetweenEditorialContainerAndBottom = this.pageContainer[0].scrollHeight - containerBottomBoundary,
@@ -119,7 +119,7 @@
         if (conditionAffixBottom) {
           add = 'affix-bottom';
           remove = 'affix affix-top';
-          top = containerBottomBoundary - sidebarHeight - (distanceBetweenEditorialContainerAndBottom * 1.7) + 'px';
+          top = (this.pageContainer[0].scrollHeight - editorialContainerOffset.top - distanceBetweenEditorialContainerAndBottom - sidebarHeight) + 'px';
         }
 
         this.element.removeClass(remove);
