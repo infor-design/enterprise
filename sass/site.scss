@@ -620,8 +620,18 @@ $pageslice-download-link-border-color: #3dcd65;
     }
   }
 
-  .editorial.component .lightbox-container {
-    text-align: center !important;
+  .editorial.component {
+    .content > h2 {
+      width: auto !important;
+    }
+
+    .lightbox-container {
+      text-align: center !important;
+    }
+
+    .download-link {
+      display: block !important;
+    }
   }
 
   .component-navbar {
@@ -631,7 +641,7 @@ $pageslice-download-link-border-color: #3dcd65;
       display: block !important;
 
       &.component-next {
-        margin-top: 60px !important;
+        top: 35px;
       }
     }
   }
@@ -985,10 +995,10 @@ $pageslice-download-link-border-color: #3dcd65;
 
 @include respond-to(tabletdown) {
   .header .toolbar .title {
-    // width: 58%;
+    width: 58%;
 
     + .buttonset {
-      // width: calc(42% - 1px);
+      width: calc(42% - 1px);
     }
   }
 
