@@ -632,6 +632,16 @@ $pageslice-download-link-border-color: #3dcd65;
     .download-link {
       display: block !important;
     }
+
+    &.ks {
+
+      .btn-menu,
+      h2 .hyperlink {
+        display: block;
+        float: none;
+        margin: 0 auto;
+      }
+    }
   }
 
   .component-navbar {
