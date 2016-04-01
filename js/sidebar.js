@@ -38,10 +38,6 @@
     Sidebar.prototype = {
 
       init: function() {
-        if (!this.settings.isSticky) {
-          return this;
-        }
-
         this.build();
         this.handleEvents();
         this.isSafari = $('html').is('.is-safari');
@@ -82,6 +78,10 @@
         this.anchors.onTouchClick('sidebar').on('click.sidebar', function (e) {
           self.handleAnchorClick(e);
         });
+
+        if (!this.settings.isSticky) {
+          return this;
+        }
 
         this.pageContainer.on('scroll.sidebar', function(e) {
           self.handleScroll(e);
