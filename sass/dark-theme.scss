@@ -139,7 +139,7 @@ $input-disabled-border-color: $slate05;
 $input-disabled-color: $disabled-color;
 $input-focus-border-color: $primary-color;
 $input-hover-border-color: $slate02;
-$input-placeholder-color: $disabled-color;
+$input-placeholder-color: $slate04;
 $input-readonly-border-color: $input-border-color;
 $input-readonly-bg-color: $slate06;
 $input-readonly-color: $white;
@@ -179,6 +179,7 @@ $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 
 $listview-searchresult-full-witdh-bg-color: $slate08;
+$listview-searchresult-full-witdh-hover-color: $slate06;
 
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
