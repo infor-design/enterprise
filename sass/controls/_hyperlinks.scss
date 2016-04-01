@@ -99,9 +99,10 @@
   svg {
     fill: $hyperlink-color;
     height: 18px;
-    left: -6px;
-    margin-right: -13px;
-    top: 5px;
+    left: -1px;
+    top: -1px;
+    vertical-align: middle;
+    display: inline;
   }
 
 }

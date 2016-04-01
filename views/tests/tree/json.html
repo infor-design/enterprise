@@ -44,6 +44,11 @@
   }];
   /* jshint ignore:end */
 
-  $('#json-tree').tree({dataset: sampleData});
+  //Can refer to the data set here
+  var elem = $('#json-tree').tree({dataset: sampleData}),
+    api = elem.data('tree');
+
+  console.log(api.settings.dataset);
+
 </script>
 

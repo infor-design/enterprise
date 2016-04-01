@@ -41,6 +41,7 @@
         this.handleKeys();
         this.setupEvents();
         this.loadData(this.settings.dataset);
+        this.treeData();
       },
 
       //Init Tree from ul, li, a markup structure in DOM
@@ -355,6 +356,22 @@
         }
       },
 
+      //Generate a JSON version of the tree
+      treeData: function () {
+        /*if (this.settings.dataset) {
+          return;
+        }
+
+        var json = [];
+
+        this.element.find('li').each(function () {
+          var elem = $(this);
+          json.push({node: elem, id: elem.attr('id')});
+        });
+
+        this.settings.dataset = json;*/
+      },
+
       addNode: function (node, location) {
         var li = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(li);
@@ -389,7 +406,12 @@
 
         // Support ParentId in JSON Like jsTree
         if (node.parent) {
-          //TODO Maybe...Needed?
+          /*
+          if (typeof node.parent === 'string') {
+            li = this.element.find('#'+node.parent).parent();
+            this.addChildren(node, li);
+          }
+          */
         }
 
         //Add Children
@@ -407,7 +429,6 @@
 
       //Recurse and add all children
       addChildren: function (node, li) {
-
         var self = this;
         if (!node.children) {
           return;

@@ -384,8 +384,14 @@ $site-topframe-links-bg-color: #0b152a;
   }
 
   .link-icon {
+    cursor: pointer;
     margin: 7.5rem 0 2.5rem;
     max-height: 96px;
+    @include css3(transition, transform 300ms cubic-bezier(.17, .04, .03, .94));
+
+    &:hover {
+      @include css3(transform, scale(1.1));
+    }
   }
 
   .header {
@@ -980,11 +986,11 @@ $pageslice-download-link-border-color: #3dcd65;
 
   .header,
   .site-footer {
-    background-color: $amber09;
+    background-color: $amber08;
 
     .version-no,
     .version-no b {
-      color: $amber05;
+      color: $amber06;
     }
   }
 
@@ -1037,6 +1043,38 @@ $pageslice-download-link-border-color: #3dcd65;
     .version-no,
     .version-no b {
       color: $amber05;
+    }
+  }
+
+  > ul,
+  > ol {
+    @include antialiased();
+    @include font-size(16);
+    color: $graphite06;
+    line-height: 26px;
+    list-style: none;
+    margin-left: 25px;
+    margin-top: 15px;
+
+    li {
+      line-height: 26px;
+      margin-bottom: 5px;
+
+      &::before {
+        content: "●";
+        font-size: 10px;
+        left: -10px;
+
+        position: relative;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  ol {
+    list-style: decimal;
+    li::before {
+      content: '';
     }
   }
 }
@@ -1398,6 +1436,10 @@ div.light-bgrnd {
     background-color: $amethyst07;
     height: 115px;
     margin-top: 0;
+
+    &.upgrade-guide {
+      height: 160px;
+    }
 
     h1,
     h2 {
