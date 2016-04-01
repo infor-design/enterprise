@@ -276,7 +276,10 @@ $site-topframe-links-bg-color: #0b152a;
     background-color: transparent;
     border-color: $inverse-color;
     color: $inverse-color;
+    @include font-size(14);
+    height: 44px;
     margin-top: 10px;
+    min-width: 230px;
     opacity: .7;
 
     .icon {
@@ -362,7 +365,7 @@ $site-topframe-links-bg-color: #0b152a;
       text-align: center;
 
       > *:first-child {
-        margin-top: 7rem;
+        margin-top: 10.5rem;
       }
     }
   }
