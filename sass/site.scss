@@ -1539,7 +1539,9 @@ div.light-bgrnd {
 
   .hyperlink {
     display: inline;
-    outline-offset: 4px;
+    outline-offset: 4px !important;
+    padding-bottom: 6px;
+    padding-top: 5px;
 
     .icon {
       fill: $azure06;
@@ -1552,6 +1554,14 @@ div.light-bgrnd {
       position: relative;
       text-transform: uppercase;
       top: 1px;
+    }
+
+    &:hover {
+      padding-bottom: 7px;
+    }
+
+    &:focus:not(.hide-focus) {
+      outline-offset: 6px;
     }
   }
 }
