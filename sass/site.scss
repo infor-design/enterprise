@@ -1558,7 +1558,7 @@ div.light-bgrnd {
   background-color: $inverse-color;
 
   //Component Header
-  .header {
+  > .header {
     background-color: $amethyst07;
 
     .application-menu-trigger .icon {
