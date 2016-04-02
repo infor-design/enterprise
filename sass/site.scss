@@ -545,6 +545,7 @@ $pageslice-download-link-border-color: #3dcd65;
       padding: 1.5rem;
       position: relative;
       text-decoration: none;
+      vertical-align: top;
       width: 150px;
 
       .icon {
@@ -605,6 +606,11 @@ $pageslice-download-link-border-color: #3dcd65;
 
     [class^="download-text-"] {
       display: block;
+    }
+
+    .icon-code {
+      height: 32px !important;
+      width: 24px !important;
     }
 
     .download-text-small {
@@ -1065,11 +1071,11 @@ $pageslice-download-link-border-color: #3dcd65;
 
 @include respond-to(phablet) {
 
-  
+
   .site-footer nav {
     margin: 30px 0 0 0;
   }
-  
+
 
   .site-footer nav li {
     display: block;
