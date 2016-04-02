@@ -279,8 +279,14 @@ $site-topframe-links-bg-color: #0b152a;
     @include font-size(14);
     height: 44px;
     margin-top: 10px;
-    min-width: 230px;
+    line-height: 43px;
+    min-width: 210px;
     opacity: .7;
+    text-align: center;
+
+    span {
+      line-height: inherit;
+    }
 
     .icon {
       fill: $inverse-color;
@@ -395,6 +401,10 @@ $site-topframe-links-bg-color: #0b152a;
     &:hover {
       @include css3(transform, scale(1.1));
     }
+  }
+
+  .toolbar {
+    overflow: hidden !important;
   }
 
   .header {
@@ -609,7 +619,12 @@ $pageslice-download-link-border-color: #3dcd65;
     }
 
     .icon-code {
-      height: 32px !important;
+      height: 24px !important;
+      width: 24px !important;
+    }
+
+    .icon-icons {
+      height: 24px !important;
       width: 24px !important;
     }
 

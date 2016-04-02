@@ -196,6 +196,7 @@
       'Minutes': {id: 'Minutes', value: 'Minutes', comment: 'the minutes portion of a time'},
       'Minimize': {id: 'Minimize', value: 'Minimize', comment: 'Minimize tooltip'},
       'Minus': {id: 'Minus', value: 'Minus', comment: 'Minus tooltip'},
+      'Mobile': {id: 'Mobile', value: 'Mobile', comment: 'Indicates a mobile device (phone tablet ect)'},
       'More': {id: 'More', value: 'More...', comment: 'Text Indicating More Buttons or form content'},
       'MoreActions': {id: 'MoreActions', value: 'More Actions', comment: 'Text on the More Actions button indictating hidden functions'},
       'MsgDirty': {id: 'MsgDirty', value: ', Modified', comment: 'for modified form fields'},
