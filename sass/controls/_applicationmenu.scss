@@ -571,7 +571,7 @@
 }
 
 @include respond-to(tabletdown) {
-  .application-menu{
+  .application-menu {
     &.no-transition.is-open {
       display: none !important;
 

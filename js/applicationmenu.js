@@ -160,8 +160,11 @@
         }
         this.testWidth();
 
-        this.menu.removeClass('no-transition');
-        $('.page-container').removeClass('no-transition');
+        //Remove after initial transition
+        setTimeout(function() {
+          self.menu.removeClass('no-transition');
+          $('.page-container').removeClass('no-transition');
+        }, 800);
 
         return this;
       },
