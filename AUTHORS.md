@@ -7,3 +7,5 @@ Phillip Patton <phillip.patton@infor.com>
 Aliya Robinson <Aliya.Robinson@infor.com>
 Aaron Pikkarainen <Aaron.Pikkarainen@infor.com>
 Jake Harrington <jake.harrington@infor.com>
+James Mintzer <james.mintzer@infor.com>
+

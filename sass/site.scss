@@ -254,6 +254,11 @@ body {
   position: relative;
   top: -5px;
   font-weight: normal;
+
+  svg {
+    left: -6px;
+    margin-right: -10px;
+  }
 }
 
 // Home Page
@@ -1128,6 +1133,19 @@ $pageslice-download-link-border-color: #3dcd65;
     }
   }
 
+  &.header {
+    background-color: $amber08;
+
+    h1 {
+      display: inline-block;
+    }
+  }
+
+  &.site-hero {
+    background-color: $amber08 !important;
+    height: 162px !important;
+  }
+
   .editorial {
     background-color: $body-bg-color;
 
@@ -1345,7 +1363,8 @@ $pageslice-download-link-border-color: #3dcd65;
   }
 
   .content > ul,
-  .content > ol {
+  .content > ol,
+  .content .snippet-text ul {
     @include antialiased();
     @include font-size(16);
     color: $graphite06;
@@ -1681,7 +1700,8 @@ div.light-bgrnd {
   //A class may be forgotten
   > p > a:not(.lightbox):not(.tag):not(.btn-primary):not(.card):not(.asset-item):not(.hyperlink),
   .snippet-text a,
-  .article a {
+  .article a,
+  > ul > li > a {
     border-bottom: 1px solid transparent;
     color: $hyperlink-color;
     cursor: pointer;

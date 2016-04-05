@@ -59,6 +59,7 @@
           this.element.parent().find('label').first().attr('for', orgId);
         }
 
+
         var id = orgId + prefix, //The Shadow Input Element. We use the dropdown to serialize.
           cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
             this.element.is('.dropdown-sm') ? 'dropdown input-sm' :

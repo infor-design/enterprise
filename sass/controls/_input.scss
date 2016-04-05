@@ -518,7 +518,7 @@ html[dir='rtl'] {
 
 // Firefox on Mac
 .is-mac.is-firefox {
-  input:not(.spinbox),
+  input:not(.spinbox):not(.searchfield),
   textarea {
     padding: 9px 10px 8px;
   }

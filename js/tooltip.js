@@ -119,6 +119,9 @@
                 setTimeout(function() {
                   self.hide();
                 }, delay);
+            })
+            .on('updated.tooltip', function() {
+               self.content = self.element.attr('title');
             });
         }
 

@@ -445,6 +445,22 @@ body.no-scroll {
 
 }
 
+//Header on Side Panels - fx: tests/tree/expand-collapse-splitter
+.panel-header {
+  background-color: $panel-header-bg-color;
+  height: 60px;
+  line-height: 60px;
+
+  .title {
+    @include font-size(16);
+    padding-left: 20px;
+  }
+
+  + .splitter {
+    height: calc(100% - 60px);
+  }
+}
+
 .masthead {
   + .header.is-sticky {
 

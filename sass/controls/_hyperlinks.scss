@@ -97,12 +97,13 @@
   }
 
   svg {
+    display: inline;
     fill: $hyperlink-color;
     height: 18px;
     left: -1px;
+    margin-right: -5px;
     top: -1px;
     vertical-align: middle;
-    display: inline;
   }
 
 }

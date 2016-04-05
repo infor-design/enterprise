@@ -20,7 +20,6 @@
   //TODO: - Context Menus
   //      - Ajax
   //      - Search
-  //      - Expand / All Collapse All - Needs test page
   $.fn.tree = function(options) {
     var pluginName = 'tree',
       defaults = {
@@ -122,13 +121,22 @@
       //Expand all Parents
       expandAll: function() {
         var nodes = this.element.find('ul[role=group]');
-        nodes.addClass('is-open');
+        nodes.each(function () {
+          var node = $(this);
+          node.addClass('is-open');
+          node.prev('a').find('svg use').attr('xlink:href', '#icon-open-folder');
+
+        });
       },
 
       //Collapse all Parents
       collapseAll: function () {
         var nodes = this.element.find('ul[role=group]');
-        nodes.removeClass('is-open');
+        nodes.each(function () {
+          var node = $(this);
+          node.removeClass('is-open');
+          node.prev('a').find('svg use').attr('xlink:href', '#icon-closed-folder');
+        });
       },
 
       //Set a node as the selected on
@@ -358,18 +366,19 @@
 
       //Generate a JSON version of the tree
       treeData: function () {
-        /*if (this.settings.dataset) {
+        if (this.settings.dataset) {
           return;
         }
 
         var json = [];
 
         this.element.find('li').each(function () {
-          var elem = $(this);
-          json.push({node: elem, id: elem.attr('id')});
+          var elem = $(this),
+            tag = elem.find('a:first');
+          json.push({node: tag, id: tag.attr('id')});
         });
 
-        this.settings.dataset = json;*/
+        this.settings.dataset = json;
       },
 
       addNode: function (node, location) {

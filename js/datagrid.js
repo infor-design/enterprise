@@ -214,6 +214,7 @@ window.Formatters = {
 
   // Possible future Formatters
   // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
+  // Image?
   // Tree
   // Multi Select
   // Lookup

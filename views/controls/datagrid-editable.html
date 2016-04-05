@@ -76,7 +76,7 @@
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 125});
         columns.push({ id: 'action', name: 'Action', field: 'action', width: 125, align: 'center', formatter: Formatters.Dropdown, editor: Editors.Dropdown,
-          options: [{id: 'oh', label: 'On Hold', value: 'oh'}, {id: 'sh', label: 'Shipped', value: 'sh'} , {id: 'ac', label: 'Action', value: 'ac'}]
+          options: [{id: 'oh1', label: 'On Hold', value: 'oh'}, {id: 'sh1', label: 'Shipped', value: 'sh'} , {id: 'ac1', label: 'Action', value: 'ac'}]
           });
 
         //Init and get the api for the grid
@@ -103,6 +103,7 @@
   //Add Code for Add and icon-delete
   $('#add-btn').on('click', function () {
     gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product'});
+    console.log(gridApi.settings.dataset[1])
   });
 
   //Add Code for Add and icon-delete
