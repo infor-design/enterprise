@@ -53,9 +53,8 @@
         this.inlineLabelText = this.inlineLabel.find('.label-text');
         this.isInlineLabel = this.element.parent().is('.inline');
 
-        if (orgId === undefined) {
-          orgId = this.element.uniqueId('dropdown');
-          this.element.attr('id', orgId);
+        if (!orgId) {
+          orgId = this.element.uniqueId().attr('id');
           this.element.parent().find('label').first().attr('for', orgId);
         }
 

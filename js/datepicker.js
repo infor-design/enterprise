@@ -65,6 +65,12 @@
 
       //Add any markup
       build: function() {
+        
+        // Add "is-disabled" css class to closest ".field" if element is disabled
+        if (this.element.is(':disabled')) {
+          this.element.closest('.field').addClass('is-disabled');
+        }
+
         //Append a Button
         this.trigger = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
                          '<use xlink:href="#icon-calendar"/>' +
@@ -300,7 +306,7 @@
           .attr({
             'data-mask': mask,
             'data-validate': validation,
-            'data-validation-events': events,
+            'data-validation-events': JSON.stringify(events),
             'data-mask-mode': 'date'
           }).mask().validate();
 
@@ -349,7 +355,7 @@
           );
 
         this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'offset', offset: {top: 23, left: Locale.isRTL() ? -157 : 152},
+            placement: 'offset', offset: {top: 23, left: Locale.isRTL() ? -163 : 162},
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
@@ -678,7 +684,7 @@
             exYear = (month === 11) ? year + 1 : year;
 
             self.setDisable(th, exYear, exMonth, exDay);
-            th.addClass('alternate next-month').text(nextMonthDayCnt);
+            th.addClass('alternate next-month').html('<span aria-hidden="true">' + nextMonthDayCnt + '</span>');
             nextMonthDayCnt++;
           }
 

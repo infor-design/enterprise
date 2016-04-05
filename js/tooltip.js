@@ -523,7 +523,7 @@
           if (this.activeElement.is('.spinbox')) {
             extraOffset =  Locale.isRTL() ? -5 : 4;
           }
-          if (this.activeElement.is('.timepicker')) {
+          if (this.activeElement.is('.datepicker') || this.activeElement.is('.timepicker')) {
             extraOffset = Locale.isRTL() ? (isShortField ? 5 : 18) : (isShortField ? -9 : -23);
           }
         }

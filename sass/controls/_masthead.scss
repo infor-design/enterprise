@@ -39,6 +39,16 @@ $masthead-button-focus-color: $white;
     padding: 0;
   }
 
+  .btn-icon,
+  .btn-actions,
+  .btn-close {
+    border-radius: 16px;
+    height: 32px;
+    min-height: 32px;
+    min-width: 32px;
+    width: 32px;
+  }
+
   .toolbar-searchfield-wrapper {
 
     > .icon:not(.close) {

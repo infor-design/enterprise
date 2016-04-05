@@ -229,7 +229,7 @@ $datepicker-today-color: $graphite10;
 $datepicker-hover-bg-color: $graphite02;
 $datepicker-disabled-icon-color: $graphite04;
 $datepicker-disabled-border-color: $graphite03;
-$datepicker-disabled-bg-color: rgba($graphite01, .7);
+$datepicker-disabled-bg-color: $graphite01;
 $datepicker-disabled-color: $graphite03;
 
 //Time Picker
@@ -323,11 +323,16 @@ $switch-hover-box-shadow: 0 2px 5px rgba(0,0,0,.3);;
 // Editor
 $editor-bg-color: transparent;
 $editor-border-color: $input-border-color;
+$editor-hover-border-color: $input-hover-border-color;
 $editor-focus-border-color: $input-focus-border-color;
+$editor-line-number-color: $graphite04;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: #ededed;
-$editor-btn-color: $graphite05;  //Was #999999  in design
-$editor-middle-border-color: $graphite02;
+$editor-toolbar-bg-color: $graphite02;
+$editor-middle-border-color: $graphite04;
+$editor-btn-color: $graphite06;
+$editor-btn-hover-color: $graphite10;
+$editor-btn-active-color: $primary-color;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color;
 
 // Radio Buttons
 $radio-bg-color: transparent;
@@ -530,6 +535,8 @@ $searchfield-header-icon-color: $header-icon-color;
 
 $searchfield-moduletabs-bg-color: $slate09;
 $searchfield-moduletabs-border-color: $slate10;
+$searchfield-moduletabs-disabled-bg-color: $slate07;
+$searchfield-moduletabs-disabled-border-color: $slate08;
 
 //Image Border Color
 $image-border-color: $graphite02;
@@ -575,6 +582,10 @@ $module-tabs-hover-bg-color: $slate10;
 $module-tabs-inactive-text-color: $slate03;
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
+$module-tabs-disabled-bg-color: $slate06;
+$module-tabs-disabled-x-border-color: $slate04;
+$module-tabs-disabled-y-border-color: $slate07;
+$module-tabs-disabled-text-color: $slate04;
 
 // Splitter
 $splitter-grip-bg-color: $graphite06;

@@ -14,8 +14,8 @@
     cursor: pointer;
     fill: $trigger-icon-fill-color;
     height: 18px;
-    margin-left: -27px;
-    margin-top: 9px;
+    margin-left: -29px;
+    margin-top: 8px;
     position: absolute;
     width: 18px;
     z-index: 1;
@@ -37,12 +37,19 @@
     }
   }
 
+  &.error,
+  &.error:hover {
+    ~ .icon {
+      fill: $alert-red !important;
+    }
+  }
+
   + .icon + .icon-error {
-    right: 50px;
+    margin-left: -50px;
   }
 
   + .audible + .icon + .icon-error {
-    right: 50px;
+    margin-left: -50px;
   }
 
   &:disabled {
@@ -94,25 +101,27 @@
 
   // Cells / Days
   td {
-    @include rem(font-size, 1.4rem);
     border: 1px solid transparent;
     border-radius: 50%;
-    color: $datepicker-day-color;
-    cursor: pointer;
-    height: 35px;
-    padding: 10px;
-    transition: .2s background-color ease;
-    width: 35px;
+    height: 40px;
+    width: 39px;
 
     span {
-      line-height: normal;
-      width: auto;
+      @include rem(font-size, 1.4rem);
+      border-radius: 50%;
+      color: $datepicker-day-color;
+      cursor: pointer;
+      display: block;
+      height: 36px;
+      line-height: 36px;
+      margin-left: 1px;
+      transition: .2s background-color ease;
+      width: 36px;
+
     }
 
     //Other month color
     &.alternate {
-      color: $datepicker-alternate-month-color;
-
       span {
         color: $datepicker-alternate-month-color;
       }
@@ -122,8 +131,8 @@
     &.is-today,
     &.is-today:focus {
       //border-color: $datepicker-today-color;
-      color: $datepicker-today-color;
-      font-weight: bold;
+      // color: $datepicker-today-color;
+      // font-weight: bold;
 
       span {
         color: $datepicker-today-color;
@@ -137,39 +146,45 @@
     }
 
     //Selected
-    &:hover {
+    &:hover span {
       background-color: $datepicker-hover-bg-color;
     }
 
     &.is-disabled,
     &.is-disabled:active {
       @include unselectable;
-      background-color: $datepicker-disabled-bg-color;
-      color: $datepicker-disabled-color;
-      cursor: default;
+
+      span {
+        background-color: $datepicker-disabled-bg-color;
+        color: $datepicker-disabled-color;
+        cursor: default;
+      }
     }
 
     &.is-selected,
     &.is-selected:hover {
-      background-color: $datepicker-selected-bg-color;
-      color: $datepicker-selected-color;
+      // color: $datepicker-selected-color;
 
       span {
+        background-color: $datepicker-selected-bg-color;
         color: $datepicker-selected-color;
       }
     }
 
     &:focus {
-      border-color: $datepicker-focus-border-color;
       outline: none;
       -moz-outline-style: none;
+
+      &:not(.is-selected) {
+        border-color: $datepicker-focus-border-color;
+      }
     }
 
-    &:focus:not(.is-selected) {
-      box-shadow: 0 0 0 2px $popover-bg-color inset;
-    }
+    // &:focus:not(.is-selected) {
+    //   box-shadow: 0 0 0 2px $popover-bg-color inset;
+    // }
 
-    &:active {
+    &:active span {
       background-color: $datepicker-selected-bg-color;
       color: $datepicker-selected-color;
     }
@@ -178,25 +193,33 @@
 
   &.is-timepicker {
     td {
-      &.is-selected,
-      &.is-selected:hover {
-        border-width: 0;
-        box-shadow: 0 0 0 2px $popover-bg-color inset;
-
-        &.is-selected:hover {
-          border-width: 1px;
-        }
-      }
-
       &:focus {
         border-color: $datepicker-focus-border-color;
-        border-width: 1px;
-        box-shadow: 0 0 0 2px $popover-bg-color inset;
-        outline: none;
-        -moz-outline-style: none;
       }
     }
   }
+
+  // &.is-timepicker {
+  //   td {
+  //     &.is-selected,
+  //     &.is-selected:hover {
+  //       border-width: 0;
+  //       box-shadow: 0 0 0 2px $popover-bg-color inset;
+
+  //       &.is-selected:hover {
+  //         border-width: 1px;
+  //       }
+  //     }
+
+  //     &:focus {
+  //       border-color: $datepicker-focus-border-color;
+  //       border-width: 1px;
+  //       box-shadow: 0 0 0 2px $popover-bg-color inset;
+  //       outline: none;
+  //       -moz-outline-style: none;
+  //     }
+  //   }
+  // }
 
   .calendar-table {
     margin: 17px auto 0;
@@ -213,11 +236,11 @@
 // Header Area of Calendar
 .calendar-header {
   border-bottom: 1px solid $popover-separator-color;
-  height: 48px;
-  line-height: 52px;
+  height: 49px;
+  line-height: 50px;
   position: relative;
   text-align: left;
-  text-indent: 25px;
+  text-indent: 18px;
 
   button {
     background-color: $popover-bg-color;
@@ -225,36 +248,27 @@
     border-radius: 50%;
     color: transparent;
     cursor: pointer;
-    display: block;
-    right: 37px;
-    line-height: 1;
-    margin-top: 11px;
+    display: inline-block;
+    height: 30px;
+    margin: 0;
+    min-width: 30px;
+    min-height: 30px;
     position: absolute;
-    top: 3px;
+    top: 8px;
     transition: border-color .3s ease;
+    width: 30px;
+
+    .icon {
+      height: 24px;
+      width: 24px;
+    }
 
     &.prev {
-      margin: 4px 5px 0 0;
-
-      svg {
-        height: 24px;
-        width: 24px;
-        left: 0;
-        top: 0;
-      }
+      right: 44px;
     }
 
     &.next {
-      left: auto;
-      margin: 4px 0 0 5px;
-      right: 11px;
-
-      svg {
-        height: 24px;
-        width: 24px;
-        left: 0;
-        top: 0;
-      }
+      right: 8px;
     }
 
   }
@@ -306,13 +320,13 @@ html[dir='rtl'] {
     }
 
     + .icon + .icon-error {
-      left: 50px;
-      right: auto;
+      margin-left: inherit;
+      margin-right: -50px;
     }
 
     + .audible + .icon + .icon-error {
-      left: 50px;
-      right: auto;
+      margin-left: inherit;
+      margin-right: -50px;
     }
   }
 
@@ -344,6 +358,15 @@ html[dir='rtl'] {
         }
       }
 
+    }
+  }
+
+  .calendar {
+    td {
+        span {
+        margin-left: inherit;
+        margin-right: 1px;
+      }    
     }
   }
 
