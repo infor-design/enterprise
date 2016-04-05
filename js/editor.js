@@ -499,8 +499,8 @@
             'separator': '<div class="separator"></div>',
             'anchor': '<button type="button" class="btn" title="'+ Locale.translate('InsertAnchor') + '" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
             'image': '<button type="button" class="btn" title="'+ Locale.translate('InsertImage') + '" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
-            'header1': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH3') + '" + data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-            'header2': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH4') + '" + data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+            'header1': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH3') + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+            'header2': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH4') + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
             'quote': '<button type="button" class="btn" title="'+ Locale.translate('Blockquote') + '" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
             'orderedlist': '<button type="button" class="btn" title="'+ Locale.translate('OrderedList') + '" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
             'unorderedlist': '<button type="button" class="btn" title="'+ Locale.translate('UnorderedList') + '" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
@@ -1059,7 +1059,8 @@
 
       bindWindowActions: function () {
         var self = this,
-            currentElement = self.getCurrentElement();
+          editorContainer = this.element.closest('.editor-container'),
+          currentElement = self.getCurrentElement();
 
         self.element
         // Work around for Firefox with using keys was not focusing on first child in editor
@@ -1089,6 +1090,14 @@
             helper.add(target).remove();
           }
         });
+
+        editorContainer
+          .on('focus.editor', '.editor, .editor-source', function () {
+            editorContainer.addClass('is-active');
+          })
+          .on('blur.editor', '.editor, .editor-source', function() {
+            editorContainer.removeClass('is-active');
+          });
 
         //Attach Label
         var label = this.element.prevAll('.label');
@@ -1208,6 +1217,7 @@
               break;
           }
         }
+
       },
 
       insertImage: function (url) {

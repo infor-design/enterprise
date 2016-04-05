@@ -297,11 +297,17 @@ $switch-hover-box-shadow: 0 2px 5px rgba(0,0,0,.3);
 // Editor
 $editor-bg-color: $input-bg-color;
 $editor-border-color: $input-border-color;
+$editor-hover-border-color: $input-hover-border-color;
 $editor-focus-border-color: $input-focus-border-color;
+$editor-line-number-color: $graphite05;
 $editor-color: $input-color;
-$editor-toolbar-bg-color: $white;
-$editor-btn-color: $graphite04;  //Was #999999  in design
-$editor-middle-border-color: $graphite03;
+$editor-toolbar-bg-color: $graphite02;
+$editor-middle-border-color: $graphite06;
+$editor-btn-color: $graphite09;
+$editor-btn-hover-color: $graphite05;
+$editor-btn-active-color: $primary-color;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color;
+
 
 // Radio Buttons
 $radio-bg-color: $white;
