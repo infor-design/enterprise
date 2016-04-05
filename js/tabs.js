@@ -1621,6 +1621,7 @@
           paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
           paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
           width = target.children('a').width() + (paddingLeft*2);
+
           // Dirty hack
           if (target.is(':first-child, :last-child')) {
             width = width - 1;
@@ -1633,16 +1634,9 @@
           paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 20;
           width += 20;
         }
-        if (target.is('.tab-more')) {
-          //width -= 22;
-        }
 
         var left = Locale.isRTL() ?
           (paddingRight + target.position().left) : (target.position().left);
-
-        // Round the math results
-        //width = Math.round(width);
-        //left = Math.round(left);
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
@@ -1783,9 +1777,8 @@
           tabs = this.tablist.children('li:not(.separator)');
 
         tabs.each(function() {
-          var li = $(this),
-            a = li.children('a'),
-            panel = $(a.attr('href'));
+          var li = $(this);
+          var a = li.children('a');
 
           if (li.is('.is-disabled') || a.prop('disabled') === true) {
             self.disabledElems.push({
@@ -1797,6 +1790,12 @@
 
           li.addClass('is-disabled');
           a.prop('disabled', true);
+
+          if (li.is('.application-menu-trigger') || li.is('.add-tab-button')) {
+            return;
+          }
+
+          var panel = $(a.attr('href'));
           panel.addClass('is-disabled');
           panel.find('*').each(function() {
             var t = $(this);
@@ -1818,6 +1817,10 @@
           });
         });
 
+        if (this.isModuleTabs()) {
+          this.element.children('.toolbar').disable();
+        }
+
         this.updateAria($());
       },
 
@@ -1828,12 +1831,17 @@
           tabs = this.tablist.children('li:not(.separator)');
 
         tabs.each(function() {
-          var li = $(this),
-            a = li.children('a'),
-            panel = $(a.attr('href'));
+          var li = $(this);
+          var a = li.children('a');
 
           li.removeClass('is-disabled');
           a.prop('disabled', false);
+
+          if (li.is('.application-menu-trigger') || li.is('.add-tab-button')) {
+            return;
+          }
+
+          var panel = $(a.attr('href'));
           panel.removeClass('is-disabled');
           panel.find('*').each(function() {
             var t = $(this);
@@ -1862,6 +1870,10 @@
             attrTarget.prop('disabled', obj.originalDisabled);
           });
         });
+
+        if (this.isModuleTabs()) {
+          this.element.children('.toolbar').enable();
+        }
 
         this.disabledElems = [];
 
