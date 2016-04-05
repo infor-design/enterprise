@@ -40,7 +40,7 @@
 
   // Customize the formatter toolbar if it's inside an editor
   .formatter-toolbar {
-    border-bottom: 1px solid $editor-middle-border-color;
+    // border-bottom: 1px solid $editor-middle-border-color;
     margin-bottom: 0;
     z-index: 20;
 
@@ -51,15 +51,15 @@
 }
 
 .editor {
+  @include font-size(14);
+  @include rem(line-height, 2.2rem);
   background-color: $editor-bg-color;
-  border: 1px solid $editor-border-color;
+  border: 1px solid;
+  border-color: transparent $editor-border-color $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
-  border-top: 1px solid transparent;
   color: $editor-color;
   display: block;
   float: left;
-  @include font-size(14);
-  @include rem(line-height, 2.2rem);
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -72,7 +72,7 @@
   //States
   &:focus,
   &.is-active {
-    border: 1px solid $editor-focus-border-color;
+    // border: 1px solid $editor-focus-border-color;
   }
 
   &.is-disabled {
@@ -155,6 +155,8 @@
   border-radius: 2px 2px 0 0;
 
   .buttonset {
+    height: 32px;
+
     [class^="btn"] {
       margin-right: 6px;
 
@@ -178,12 +180,12 @@
     background-color: $editor-toolbar-bg-color;
     border: 1px solid transparent;
     color: $editor-btn-color;
-    min-width: 34px;
+    height: 20px;
+    min-width: 20px;
     padding: 0 !important; //overrides some media queries
 
     span:not(.audible) {
       display: inline-block;
-      padding: 0 10px;
 
       &:not(:last-child) {
         padding-right: 0;
@@ -195,7 +197,9 @@
     }
 
     .icon {
-      width: 32px;
+      margin: -5px 0 -3px 0;
+      padding: 0;
+      width: 20px;
 
       + span:not(.audible) {
         padding: 0;
@@ -208,16 +212,11 @@
 
     > .icon {
       fill: $editor-btn-color;
-      height: 22px;
-      left: 0;
-      top: 5px;
     }
 
     .html-icon {
-      height: 20px;
-      margin-left: -30px;
-      margin-right: 5px;
-      width: 89px;
+     margin: 0 0 0 -35px;
+     width: 92px;
     }
 
     &.btn-actions > .icon {
@@ -228,29 +227,31 @@
       color: $font-color;
     }
 
+    &:focus:not(.hide-focus),
     &.is-active {
-      color: $primary-color;
+      box-shadow: $editor-btn-active-box-shadow;
+      color: $editor-btn-active-color;
 
       span {
-        color: $primary-color;
+        color: $editor-btn-active-color;
       }
 
-      svg {
-        fill: $primary-color;
+      .icon {
+        fill: $editor-btn-active-color;
       }
     }
 
     &:hover {
       background-color: transparent;
       border: 1px solid transparent;
-      color: $primary-color;
+      color: $editor-btn-hover-color;
 
       .icon {
-        fill: $primary-color;
+        fill: $editor-btn-hover-color;
       }
 
       span {
-        color: $primary-color;
+        color: $editor-btn-hover-color;
       }
     }
 
@@ -258,12 +259,30 @@
 
   [data-element='h3'] .icon,
   [data-element='h4'] .icon {
-    padding-right: 3px;
-    width: 35px;
+    margin: -5px 2px -3px -3px;
+    width: 27px;
   }
 
-  [data-action="visual"] span {
-    @include font-size(16);
+  [data-action='justifyLeft'] .icon,
+  [data-action='justifyCenter'] .icon,
+  [data-action='justifyRight'] .icon,
+  [data-element='img'] .icon,
+  [data-element='u'] .icon {
+    height: 18px !important;
+    margin: 2px 0 0 0;
+  }
+
+  [data-action="source"] {
+    width: 60px;
+  }
+
+  [data-action="visual"] {
+    // width: 65px;
+
+    span {
+      @include font-size(16);
+      // margin: 0 0 0 -3px;
+    }
   }
 
   .icon {
@@ -273,8 +292,8 @@
 
   .separator {
     background-color: #b6b6b6;
-    height: 20px;
-    margin: 5px 15px 0;
+    height: 18px;
+    margin: 1px 10px;
 
     + [class^="btn"] {
       margin-left: 5px;
@@ -290,9 +309,10 @@
 // Dialog Styling
 
 .editor-source {
-  border: 1px solid $editor-border-color;
-  border-radius: 0 0 2px 2px;
   @include font-size(14);
+  border: 1px solid;
+  border-color: transparent $editor-border-color $editor-border-color $editor-border-color;
+  border-radius: 0 0 2px 2px;
   height: 320px;
   margin: 0 0 10px;
   min-height: 88px;
@@ -302,11 +322,11 @@
   width: 100%;
 
   textarea {
+    @include font-size(14);
     background-color: $editor-bg-color;
     border: 0;
     color: $editor-color;
-    @include font-size(16);
-    font-weight: 100;
+    font-weight: normal;
     height: 100%;
     line-height: 2.4rem;
     outline: none;
@@ -318,10 +338,6 @@
     &.is-focused {
       box-shadow: none;
     }
-  }
-
-  &.is-focused {
-    border: 1px solid $editor-focus-border-color;
   }
 
   > * {
@@ -348,7 +364,7 @@
     }
 
     span {
-      color: #999999;
+      color: $editor-line-number-color;
     }
   }
 }
@@ -387,5 +403,39 @@ html[dir='rtl'] {
     .icon-error {
       left: 7px;
     }
+  }
+}
+
+
+.editor-container {
+  &:hover {
+    .toolbar.formatter-toolbar {
+      border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color $editor-hover-border-color;
+    }
+
+    .editor,
+    .editor-source {
+      border-color: transparent $editor-hover-border-color $editor-hover-border-color $editor-hover-border-color;
+    }
+  }
+
+  &.is-active,
+  &.is-active:hover {
+    .toolbar.formatter-toolbar {
+      border-color: $editor-focus-border-color $editor-focus-border-color $editor-border-color $editor-focus-border-color;
+    }
+
+    .editor,
+    .editor-source {
+      border-color: transparent $editor-focus-border-color $editor-focus-border-color $editor-focus-border-color;
+    }
+  }
+}
+
+.popupmenu .icon {
+  fill: $editor-btn-color;
+
+  &.html-icon {
+    // display: none;
   }
 }
