@@ -1117,8 +1117,10 @@
           if (!this.tablist.children('li:not(.separator)').length) {
             this.positionFocusState();
             this.defocusBar();
+            return this;
           }
-          return this;
+
+          prevLi = this.tablist.children('li:not(.separator)').first();
         }
 
         var a = prevLi.children('a');
