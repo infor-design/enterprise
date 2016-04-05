@@ -213,6 +213,10 @@
         var name = '' + $('#create-tab-name').val(),
           content = '' + $('#create-tab-content').val();
 
+        if (!name || !name.length) {
+          name = 'New Tab';
+        }
+
         // Do different things depending on the checkbox
         if ($('#use-garbage').prop('checked')) {
           var title = $.get('/api/garbage?size=1'),
