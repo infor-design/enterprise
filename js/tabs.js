@@ -23,6 +23,7 @@
     var pluginName = 'tabs',
         defaults = {
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
+          addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
@@ -456,9 +457,8 @@
         var href = a.attr('href');
 
         if (li.is('.add-tab-button')) {
-          this.handleAddButton();
-          li = li.prev();
-          a = li.children('a');
+          a = this.handleAddButton();
+          li = a.parent();
           href = a.attr('href');
           this.element.trigger('tab-added', [a]);
         }
@@ -609,9 +609,8 @@
           var href = currentA.attr('href');
 
           if (currentLi.is('.add-tab-button')) {
-            self.handleAddButton();
-            currentLi = currentLi.prev();
-            currentA = currentLi.children('a');
+            currentA = self.handleAddButton();
+            currentLi = currentA.parent();
             href = currentA.attr('href');
             self.element.trigger('tab-added', [currentA]);
           }
@@ -758,6 +757,12 @@
       },
 
       handleAddButton: function() {
+        var cb = this.settings.addTabButtonCallback;
+        if (cb && typeof cb === 'function') {
+          var newTabId = cb();
+          return this.anchors.filter('[href="#'+ newTabId +'"]');;
+        }
+
         function makeId() {
           var stringName = 'new-tab',
             existing = $('[id^="'+ stringName +'"]');
@@ -777,7 +782,7 @@
           return nameParts.join(' ');
         }
 
-        var newIndex = this.tablist.find('.addTabButton').index(),
+        var newIndex = this.tablist.find('.add-tab-button').index() - 1,
           newId = makeId(),
           newName = makeName(newId),
           settings = {
@@ -786,10 +791,15 @@
             isDismissible: true
           };
 
+        if (newIndex < 0) {
+          newIndex = this.tablist.find('li:not(.separator)').length;
+        }
+
         // Allow the opportunity to pass in external settings for the new tab control
         var externalSettings = this.element.triggerHandler('before-tab-added', [newId, settings, newIndex]);
         if (!externalSettings) {
-          return this.add(newId, settings, newIndex);
+          this.add(newId, settings, newIndex);
+          return this.anchors.filter('[href="#'+ newId +'"]');;
         }
 
         if (externalSettings.newId) {
@@ -802,7 +812,8 @@
           newIndex = externalSettings.newIndex;
         }
 
-        return this.add(newId, settings, newIndex);
+        this.add(newId, settings, newIndex);
+        return this.anchors.filter('[href="#'+ newId +'"]');
       },
 
       hasAdvancedFocusStates: function() {
@@ -978,23 +989,62 @@
           // TODO: Need to implement the passing of Dropdown Tab menus into this method.
         }
 
-        // Insert markup at the very end, or at the specified index.
-        if (atIndex === undefined || isNaN(atIndex)) {
-          this.tablist.append(tabHeaderMarkup);
-          this.container.append(tabContentMarkup);
-        } else {
-          var tabs = this.tablist.children('li'),
-            insertBefore = tabs.eq(atIndex).length > 0,
-            targetIndex = insertBefore ? atIndex : tabs.length - 1;
+        function insertIntoTabset(self, targetIndex) {
+          var method,
+            tabs = self.tablist.children('li'),
+            panels = self.container.children().filter('.tab-panel'),
+            finalTabIndex = tabs.length - 1,
+            finalPanelIndex = panels.length - 1,
+            hasAddTabButton = self.settings.addTabButton;
 
-          if (!insertBefore) {
-            tabHeaderMarkup.insertAfter(tabs.eq(targetIndex));
-            tabContentMarkup.insertAfter(this.container.children().filter('.tab-panel').eq(targetIndex));
-          } else {
-            tabHeaderMarkup.insertBefore(tabs.eq(targetIndex));
-            tabContentMarkup.insertBefore(this.container.children().filter('.tab-panel').eq(targetIndex));
+          // If no tabs are present in the tabset, simply just append to the end
+          if (!tabs.length) {
+            tabHeaderMarkup.appendTo(self.tablist);
+            tabContentMarkup.appendTo(self.container);
+            return;
           }
+
+          // NOTE: Cannot simply do !targetIndex here because zero is a valid index
+          if (targetIndex === undefined || targetIndex === null || isNaN(targetIndex)) {
+            method = 'insertAfter';
+
+            if (hasAddTabButton) {
+              method = 'insertBefore';
+              finalTabIndex = finalTabIndex - 1;
+            }
+
+            // Prevents a -1 Tab Index on insertion into an empty tabset
+            if (finalTabIndex < 0) {
+              finalTabIndex = 0;
+            }
+
+            tabHeaderMarkup[method](tabs.eq(finalTabIndex));
+            tabContentMarkup[method](panels.eq(finalPanelIndex));
+            return;
+          }
+
+          var conditionInsertTabBefore = tabs.eq(targetIndex).length > 0,
+            conditionInsertPanelBefore = panels.eq(targetIndex).length > 0;
+
+          finalTabIndex = conditionInsertTabBefore ? targetIndex : finalTabIndex,
+          finalPanelIndex = conditionInsertPanelBefore ? targetIndex : finalPanelIndex;
+
+          var method = 'insertAfter';
+          if (!conditionInsertTabBefore) {
+            method = 'insertBefore';
+          }
+
+          // Prevents a -1 Tab Index on insertion into an empty tabset
+          if (finalTabIndex < 0) {
+            finalTabIndex = 0;
+          }
+
+          tabHeaderMarkup[method](tabs.eq(finalTabIndex));
+          tabContentMarkup[method](panels.eq(finalPanelIndex));
+          return;
         }
+
+        insertIntoTabset(this, atIndex);
 
         // Add each new part to their respective collections.
         this.panels = this.panels.add(tabContentMarkup);
@@ -1067,8 +1117,10 @@
           if (!this.tablist.children('li:not(.separator)').length) {
             this.positionFocusState();
             this.defocusBar();
+            return this;
           }
-          return this;
+
+          prevLi = this.tablist.children('li:not(.separator)').first();
         }
 
         var a = prevLi.children('a');
@@ -1416,9 +1468,8 @@
             originalTab = anchor.data('original-tab').parent();
 
           if (originalTab.is('.add-tab-button')) {
-            self.handleAddButton();
-            originalTab = originalTab.prev();
-            a = originalTab.children('a');
+            a = self.handleAddButton();
+            originalTab = a.parent();
             href = a.attr('href');
             self.element.trigger('tab-added', [a]);
           }
@@ -1570,6 +1621,7 @@
           paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
           paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
           width = target.children('a').width() + (paddingLeft*2);
+
           // Dirty hack
           if (target.is(':first-child, :last-child')) {
             width = width - 1;
@@ -1582,16 +1634,9 @@
           paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 20;
           width += 20;
         }
-        if (target.is('.tab-more')) {
-          //width -= 22;
-        }
 
         var left = Locale.isRTL() ?
           (paddingRight + target.position().left) : (target.position().left);
-
-        // Round the math results
-        //width = Math.round(width);
-        //left = Math.round(left);
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
@@ -1732,9 +1777,8 @@
           tabs = this.tablist.children('li:not(.separator)');
 
         tabs.each(function() {
-          var li = $(this),
-            a = li.children('a'),
-            panel = $(a.attr('href'));
+          var li = $(this);
+          var a = li.children('a');
 
           if (li.is('.is-disabled') || a.prop('disabled') === true) {
             self.disabledElems.push({
@@ -1746,6 +1790,12 @@
 
           li.addClass('is-disabled');
           a.prop('disabled', true);
+
+          if (li.is('.application-menu-trigger') || li.is('.add-tab-button')) {
+            return;
+          }
+
+          var panel = $(a.attr('href'));
           panel.addClass('is-disabled');
           panel.find('*').each(function() {
             var t = $(this);
@@ -1767,6 +1817,10 @@
           });
         });
 
+        if (this.isModuleTabs()) {
+          this.element.children('.toolbar').disable();
+        }
+
         this.updateAria($());
       },
 
@@ -1777,12 +1831,17 @@
           tabs = this.tablist.children('li:not(.separator)');
 
         tabs.each(function() {
-          var li = $(this),
-            a = li.children('a'),
-            panel = $(a.attr('href'));
+          var li = $(this);
+          var a = li.children('a');
 
           li.removeClass('is-disabled');
           a.prop('disabled', false);
+
+          if (li.is('.application-menu-trigger') || li.is('.add-tab-button')) {
+            return;
+          }
+
+          var panel = $(a.attr('href'));
           panel.removeClass('is-disabled');
           panel.find('*').each(function() {
             var t = $(this);
@@ -1811,6 +1870,10 @@
             attrTarget.prop('disabled', obj.originalDisabled);
           });
         });
+
+        if (this.isModuleTabs()) {
+          this.element.children('.toolbar').enable();
+        }
 
         this.disabledElems = [];
 

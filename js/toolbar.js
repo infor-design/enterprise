@@ -701,13 +701,13 @@
 
       enable: function() {
         this.element.prop('disabled', false);
-        this.buttons.prop('disabled', false);
+        this.items.prop('disabled', false);
         this.more.prop('disabled', false);
       },
 
       disable: function() {
         this.element.prop('disabled', true);
-        this.buttons.prop('disabled', true);
+        this.items.prop('disabled', true);
         this.more.prop('disabled', true).data('popupmenu').close();
       },
 

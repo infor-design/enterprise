@@ -534,6 +534,8 @@ $searchfield-header-icon-color: $header-icon-color;
 
 $searchfield-moduletabs-bg-color: $slate09;
 $searchfield-moduletabs-border-color: $slate10;
+$searchfield-moduletabs-disabled-bg-color: $slate07;
+$searchfield-moduletabs-disabled-border-color: $slate08;
 
 //Image Border Color
 $image-border-color: $graphite02;
@@ -579,6 +581,10 @@ $module-tabs-hover-bg-color: $slate10;
 $module-tabs-inactive-text-color: $slate03;
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
+$module-tabs-disabled-bg-color: $slate06;
+$module-tabs-disabled-x-border-color: $slate04;
+$module-tabs-disabled-y-border-color: $slate07;
+$module-tabs-disabled-text-color: $slate04;
 
 // Splitter
 $splitter-grip-bg-color: $graphite06;

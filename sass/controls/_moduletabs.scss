@@ -136,6 +136,27 @@
       color: $module-tabs-hover-text-color;
     }
 
+    // Individual Tab Disable
+    &.is-disabled {
+      background-color: $module-tabs-disabled-bg-color;
+      color: $module-tabs-disabled-text-color;
+
+      &:not(:first-child) {
+        border-left: 1px solid $module-tabs-disabled-x-border-color;
+      }
+
+      &.is-selected {
+        background-color: $module-tabs-disabled-bg-color;
+        color: $module-tabs-disabled-text-color;
+      }
+
+      &:hover,
+      &.is-focused {
+        background-color: $module-tabs-disabled-bg-color;
+        color: $module-tabs-disabled-text-color;
+      }
+    }
+
     &.dismissible {
       .icon {
         height: 14px;
@@ -337,6 +358,167 @@
     }
   }
 
+  // Entire Control is Disabled
+  &.is-disabled {
+    background-color: $module-tabs-disabled-bg-color;
+    border-bottom: 1px solid $module-tabs-disabled-y-border-color;
+    border-top: 1px solid $module-tabs-disabled-y-border-color;
+
+    [class^="btn"] {
+      background-color: $module-tabs-disabled-bg-color;
+      color: $module-tabs-disabled-text-color;
+
+      .icon {
+        fill: $module-tabs-disabled-text-color;
+      }
+    }
+
+    .icon {
+      fill: $module-tabs-disabled-text-color;
+
+      &.app-header {
+        span:not(.audible) {
+          background-color: $module-tabs-disabled-text-color;
+        }
+      }
+    }
+
+    &.has-toolbar {
+      .tab-list-container {
+        + .toolbar {
+          border-left: 1px solid $module-tabs-disabled-x-border-color;
+        }
+      }
+    }
+
+    .tab {
+      color: $module-tabs-disabled-text-color;
+
+      &:not(:first-child) {
+        border-left: 1px solid $module-tabs-disabled-x-border-color;
+      }
+
+      &.is-selected {
+        background-color: $module-tabs-disabled-bg-color;
+        color: $module-tabs-disabled-text-color;
+      }
+
+      &:hover,
+      &.is-focused {
+        background-color: $module-tabs-disabled-bg-color;
+        color: $module-tabs-disabled-text-color;
+      }
+    }
+
+    .tab-more {
+      border-left: 1px solid $module-tabs-disabled-x-border-color;
+      color: $module-tabs-disabled-text-color;
+
+      .icon {
+        fill: $module-tabs-disabled-text-color;
+      }
+
+      &.is-selected {
+        background-color: $module-tabs-disabled-bg-color;
+        color: $module-tabs-disabled-text-color;
+
+        .icon {
+          fill: $module-tabs-disabled-text-color;
+        }
+      }
+
+      &:hover,
+      &.is-focused,
+      &.is-open {
+        background-color: $module-tabs-disabled-bg-color;
+        color: $module-tabs-disabled-text-color;
+
+        .icon {
+          fill: $module-tabs-disabled-text-color;
+        }
+      }
+    }
+
+    .toolbar {
+      [class^="btn"],
+      .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
+        color: $module-tabs-disabled-text-color;
+        cursor: default !important;
+
+        &:not(.btn-menu) {
+          border-color: $module-tabs-disabled-text-color;
+        }
+
+        .ripple-effect {
+          background-color: $module-tabs-disabled-text-color;
+        }
+
+        .icon {
+          fill: $module-tabs-disabled-text-color;
+        }
+
+        &:hover {
+          color: $module-tabs-disabled-text-color;
+
+          .icon {
+            fill: $module-tabs-disabled-text-color;
+          }
+        }
+
+        &:focus,
+        &.is-selected:focus {
+          color: $module-tabs-disabled-text-color;
+
+          .icon {
+            fill: $module-tabs-disabled-text-color;
+          }
+
+          &:not(.hide-focus) {
+            border-color: transparent;
+            box-shadow: 0 0 0 2px transparent,
+              0 0 0 1px $module-tabs-disabled-text-color;
+          }
+        }
+
+        &.is-open {
+          .icon {
+            fill: $module-tabs-disabled-text-color;
+          }
+        }
+      }
+    }
+
+    .toolbar-searchfield-wrapper {
+      .icon:not(.error) {
+        fill: $module-tabs-disabled-text-color;
+      }
+
+      .searchfield {
+        background-color: rgba($searchfield-moduletabs-disabled-bg-color, 0);
+        border-bottom-color: rgba($searchfield-moduletabs-disabled-bg-color, 0);
+        border-top-color: rgba($searchfield-moduletabs-disabled-bg-color, 0);
+        color: $module-tabs-disabled-text-color;
+      }
+
+      &.active {
+        .searchfield {
+          background-color: rgba($searchfield-moduletabs-disabled-bg-color, 1);
+          border-bottom-color: rgba($searchfield-moduletabs-disabled-border-color, 1);
+        }
+      }
+
+      &.has-focus {
+        .searchfield {
+          color: $module-tabs-disabled-text-color;
+        }
+
+        .icon:not(.error) {
+          fill: $module-tabs-disabled-text-color;
+        }
+      }
+    }
+
+  }
 }
 
 @include respond-to(phone) {
