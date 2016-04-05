@@ -53,11 +53,11 @@
         this.inlineLabelText = this.inlineLabel.find('.label-text');
         this.isInlineLabel = this.element.parent().is('.inline');
 
-        if (!orgId) {
-          orgId = this.element.uniqueId().attr('id');
+        if (orgId === undefined) {
+          orgId = this.element.uniqueId('dropdown');
+          this.element.attr('id', orgId);
           this.element.parent().find('label').first().attr('for', orgId);
         }
-
 
         var id = orgId + prefix, //The Shadow Input Element. We use the dropdown to serialize.
           cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
