@@ -760,7 +760,7 @@
         var cb = this.settings.addTabButtonCallback;
         if (cb && typeof cb === 'function') {
           var newTabId = cb();
-          return this.anchors.filter('[href="#'+ newTabId +'"]');;
+          return this.anchors.filter('[href="#'+ newTabId +'"]');
         }
 
         function makeId() {
@@ -799,7 +799,7 @@
         var externalSettings = this.element.triggerHandler('before-tab-added', [newId, settings, newIndex]);
         if (!externalSettings) {
           this.add(newId, settings, newIndex);
-          return this.anchors.filter('[href="#'+ newId +'"]');;
+          return this.anchors.filter('[href="#'+ newId +'"]');
         }
 
         if (externalSettings.newId) {
@@ -1026,10 +1026,10 @@
           var conditionInsertTabBefore = tabs.eq(targetIndex).length > 0,
             conditionInsertPanelBefore = panels.eq(targetIndex).length > 0;
 
-          finalTabIndex = conditionInsertTabBefore ? targetIndex : finalTabIndex,
+          finalTabIndex = conditionInsertTabBefore ? targetIndex : finalTabIndex;
           finalPanelIndex = conditionInsertPanelBefore ? targetIndex : finalPanelIndex;
 
-          var method = 'insertAfter';
+          method = 'insertAfter';
           if (!conditionInsertTabBefore) {
             method = 'insertBefore';
           }
