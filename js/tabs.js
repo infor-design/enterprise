@@ -1086,6 +1086,11 @@
           return false;
         }
 
+        var wasSelected = false;
+        if (targetLi.hasClass('is-selected')) {
+          wasSelected = true;
+        }
+
         // Remove these from the collections
         this.panels = this.panels.not(targetPanel);
         this.anchors = this.anchors.not(targetAnchor);
@@ -1120,6 +1125,10 @@
           }
 
           prevLi = this.tablist.children('li:not(.separator)').first();
+        }
+
+        if (!wasSelected) {
+          return;
         }
 
         var a = prevLi.children('a');
