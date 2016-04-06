@@ -93,7 +93,6 @@ var express = require('express'),
     res.render('tests/signin/' + end, amdOptions);
   });
 
-
   app.get('/tests/applicationmenu/*', function(req, res) {
     function path() {
       var url = req.url.toString();
@@ -102,6 +101,8 @@ var express = require('express'),
         return 'tests/applicationmenu/site/layout';
       } else if (url.match(/\/different-header-types/)) {
         return 'tests/applicationmenu/different-header-types/layout';
+      } else if (url.match(/\/lms/)) {
+        return 'tests/applicationmenu/lms/layout';
       } else if (url.match(/\/six-levels-with-icons/)) {
         return 'tests/applicationmenu/six-levels-with-icons/layout';
       }

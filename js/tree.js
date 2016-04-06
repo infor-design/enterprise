@@ -40,7 +40,7 @@
         this.handleKeys();
         this.setupEvents();
         this.loadData(this.settings.dataset);
-        this.treeData();
+        this.syncDataset();
       },
 
       //Init Tree from ul, li, a markup structure in DOM
@@ -365,7 +365,7 @@
       },
 
       //Generate a JSON version of the tree
-      treeData: function () {
+      syncDataset: function () {
         if (this.settings.dataset) {
           return;
         }
@@ -375,10 +375,17 @@
         this.element.find('li').each(function () {
           var elem = $(this),
             tag = elem.find('a:first');
-          json.push({node: tag, id: tag.attr('id')});
+          json.push({
+            node: tag,
+            id: tag.attr('id'),
+            text: tag.find('.tree-text').text(),
+            open: tag.hasClass('is-open')
+          });
+
         });
 
         this.settings.dataset = json;
+        console.log(json);
       },
 
       addNode: function (node, location) {
