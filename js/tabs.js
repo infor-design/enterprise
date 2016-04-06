@@ -993,9 +993,7 @@
           var method,
             tabs = self.tablist.children('li'),
             nonSpecialTabs = tabs.not('.application-menu-trigger, .add-tab-button'),
-            panels = self.container.children().filter('.tab-panel'),
-            finalIndex = tabs.length - 1,
-            hasAddTabButton = self.settings.addTabButton;
+            finalIndex = tabs.length - 1;
 
           if (!tabs.length) {
             tabHeaderMarkup.appendTo(self.tablist);
