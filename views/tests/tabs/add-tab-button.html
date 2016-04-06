@@ -115,8 +115,12 @@
         return;
       }
 
-      if (!formIndex || formIndex > tabsLength) {
+      if (formIndex === undefined || isNaN(formIndex) || formIndex > tabsLength) {
         formIndex = tabsLength;
+      }
+
+      if (formIndex < 0) {
+        formIndex = 0;
       }
 
       var settingsObj = {
