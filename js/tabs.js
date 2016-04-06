@@ -1017,6 +1017,9 @@
             if (finalTabIndex < 0) {
               finalTabIndex = 0;
             }
+            if (finalPanelIndex < 0) {
+              finalPanelIndex = 0;
+            }
 
             tabHeaderMarkup[method](tabs.eq(finalTabIndex));
             tabContentMarkup[method](panels.eq(finalPanelIndex));
@@ -1037,6 +1040,9 @@
           // Prevents a -1 Tab Index on insertion into an empty tabset
           if (finalTabIndex < 0) {
             finalTabIndex = 0;
+          }
+          if (finalPanelIndex < 0) {
+            finalPanelIndex = 0;
           }
 
           tabHeaderMarkup[method](tabs.eq(finalTabIndex));
