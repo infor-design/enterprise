@@ -1,31 +1,30 @@
 ﻿
 <div class="page-container top-padding scrollable" role="main">
 
- <script id="swaplist-tmpl" type="text/html">
-    <ul data-swap-handle=".handle">
-      {{#dataset}}
-      {{#text}}
-        <li
-        {{#value}}
-          data-value="{{value}}"
-        {{/value}}
-        {{#selected}}
-          selected="selected"
-        {{/selected}}
-        {{#disabled}}
-          class="is-disabled"
-        {{/disabled}}
-        >
-          <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
-          <div class="swaplist-item-content">
-            <p>{{text}}</p>
-          </div>
-        </li>
-      {{/text}}
-      {{/dataset}}
-    </ul>
- </script>
-
+  <script id="swaplist-tmpl" type="text/html">
+      <ul data-swap-handle=".handle">
+        {{#dataset}}
+        {{#text}}
+          <li
+          {{#value}}
+            data-value="{{value}}"
+          {{/value}}
+          {{#selected}}
+            selected="selected"
+          {{/selected}}
+          {{#disabled}}
+            class="is-disabled"
+          {{/disabled}}
+          >
+            <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+            <div class="swaplist-item-content">
+              <p>{{text}}</p>
+            </div>
+          </li>
+        {{/text}}
+        {{/dataset}}
+      </ul>
+  </script>
 
   <div class="row">
     <div class="columns six">
@@ -44,7 +43,7 @@
             </div>
           </div>
           <div class="card-content">
-            <div class="listview" data-tmpl="swaplist-tmpl" data-selectable="multiple" data-dataset="{}"></div>
+            <div class="listview" data-tmpl="swaplist-tmpl" data-selectable="multiple" ></div>
           </div>
         </div>
         <div class="card selected">
@@ -60,7 +59,7 @@
             </div>
           </div>
           <div class="card-content">
-            <div class="listview" data-tmpl="swaplist-tmpl" data-selectable="multiple" data-dataset="{}"></div>
+            <div class="listview" data-tmpl="swaplist-tmpl" data-selectable="multiple"></div>
           </div>
         </div>
       </div>
@@ -71,21 +70,24 @@
 </div>
 
 <script>
+
   // Initialize all SoHo Xi Controls and set the locale
   $(function () {
-    demoSwaplist = [];
-    demoSwaplist.push({id: 1, value: 'opt-1', text: 'Option A'});
-    demoSwaplist.push({id: 2, value: 'opt-2', text: 'Option B'});
-    demoSwaplist.push({id: 3, value: 'opt-3', text: 'Option C'});
-    demoSwaplist.push({id: 4, value: 'opt-4', text: 'Option D'});
-    demoSwaplist.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
-    demoSwaplist.push({id: 6, value: 'opt-6', text: 'Option F'});
-    demoSwaplist.push({id: 7, value: 'opt-7', text: 'Option G'/*, selected: true*/});
-    demoSwaplist.push({id: 8, value: 'opt-8', text: 'Option H'});
-    demoSwaplist.push({id: 9, value: 'opt-9', text: 'Option I'});
+    var available = [];
+    available.push({id: 1, value: 'opt-1', text: 'Option A'});
+    available.push({id: 2, value: 'opt-2', text: 'Option B'});
+    available.push({id: 3, value: 'opt-3', text: 'Option C'});
+    available.push({id: 4, value: 'opt-4', text: 'Option D'});
+    available.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
+    available.push({id: 6, value: 'opt-6', text: 'Option F'});
+    available.push({id: 7, value: 'opt-7', text: 'Option G'/*, selected: true*/});
+    available.push({id: 8, value: 'opt-8', text: 'Option H'});
+    available.push({id: 9, value: 'opt-9', text: 'Option I'});
 
+    var selected = [];
+    $('.listview').listview({available: available});
 
-    $('#example-swaplist-1').swaplist({selected: selectedData, available: availableData});
+    $('#example-swaplist-1').swaplist({available: available, selected: selected, templateId: ''});
   });
 </script>
 
