@@ -385,7 +385,7 @@
         });
 
         this.settings.dataset = json;
-        console.log(json);
+        //console.log(json);
       },
 
       addNode: function (node, location) {
