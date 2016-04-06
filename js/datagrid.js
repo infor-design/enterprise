@@ -1449,7 +1449,6 @@ $.fn.datagrid = function(options) {
         }
 
         self.toolbar.find('.datagrid-result-count').html(countText);
-
         self.toolbar.attr('aria-label',  self.toolbar.find('.title').text());
         self.toolbar.find('.datagrid-row-count').text(count);
       }

@@ -257,6 +257,10 @@
       pageCount: function(pages) {
         var self = this;
 
+        if (this.settings.indeterminate) {
+          return this.settings.pagesize;
+        }
+
         if (!pages && !this.settings.source) {
           return this._pageCount;
         }
