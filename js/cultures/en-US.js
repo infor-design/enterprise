@@ -132,6 +132,7 @@
       'EmailValidation': {id: 'EmailValidation', value: 'Email address not valid', comment: 'This the rule for email validation'},
       'Emerald': {id: 'Emerald', value: 'Emerald', comment: 'Color in our color pallette'},
       'Expand': {id: 'Expand', value: 'Expand', comment: 'Expand open a tree/submenu'},
+      'Expand1x': {id: 'Expand1x', value: 'Expand Times One', comment: 'Expands one time - on the app tray'},
       'ExpandAppTray': {id: 'ExpandAppTray', value: 'Expand App Tray', comment: 'ExpandAppTray tooltip'},
       'ExpandCollapse': {id: 'ExpandCollapse', value: 'Expand / Collapse', comment: 'Text to toggle a button in a container.'},
       'ExportAsSpreadsheet': {id: 'ExportAsSpreadsheet', value: 'Export as Spreadsheet', comment: 'Export as Spreadsheet tooltip'},

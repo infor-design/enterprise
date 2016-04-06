@@ -28,11 +28,7 @@
           'btnSelectedRight': '.btn-moveto-right',
           'numOfSelectionsClass': 'num-of-selections',
           'itemContentTempl': '',
-          'itemContentClass': 'swaplist-item-content',
-
-          'triggerAfterSwap': 'swapupdate',
-          'triggerBeforeSwap': 'beforeswap',
-          'triggerWhileDragging': 'draggingswap'
+          'itemContentClass': 'swaplist-item-content'
         },
         settings = $.extend({}, defaults, options);
 
@@ -83,7 +79,7 @@
           else if (container.is(settings.selected)) {
             if (actionButton.is(settings.btnSelectedLeft)) { // to Available
               self.moveElements(settings.selected, settings.available);
-            } 
+            }
             else if (actionButton.is(settings.btnSelectedRight)) { // to Full-Access
               self.moveElements(settings.selected, settings.fullAccess);
             }
@@ -97,7 +93,7 @@
           var container = $(this);
           e = e || window.event;
           if(e.keyCode === 77 && self.hasModifier(e)) { // Modifier + M
-            if(!container.is(settings.selected) || 
+            if(!container.is(settings.selected) ||
               (container.is(settings.selected) && self.selectedButtons.length === 1)) {
               container.find(self.actionButtons).trigger('click.swaplist');
             } else {
@@ -118,8 +114,8 @@
           // Left or Right arrow
           if((e.keyCode === 37 || e.keyCode === 39) && self.selectedButtons.length > 1) {
             index = self.selectedButtons.index(this);
-            move = e.keyCode === 37 ? 
-              (index > 0 ? index-1 : self.selectedButtons.length-1) : 
+            move = e.keyCode === 37 ?
+              (index > 0 ? index-1 : self.selectedButtons.length-1) :
               (index < self.selectedButtons.length-1 ? index+1 : 0);
             self.selectedButtons[move].focus();
           }
@@ -143,7 +139,7 @@
         // Dragstart - initiate dragging
         .on(self.dragStart, self.dragElements, function(e) {
           var orig, pos, posOwner, placeholderContainer,
-            target = $(e.target).closest('li'),            
+            target = $(e.target).closest('li'),
             isInSelection = false,
             list = $('.listview', target.closest('.card')).data('listview');
 
@@ -157,7 +153,7 @@
               if (target[0] === val[0]) {
                 isInSelection = true;
                 return false;
-              }             
+              }
             });
             if (!isInSelection) {
               list.select(target); // Make selected if dragged element was not selected
@@ -165,7 +161,7 @@
           }
 
           self.clearSelections(); // Clear selection before fill
-          self.element.triggerHandler(settings.triggerBeforeSwap, [selections.items]);
+          self.element.triggerHandler('beforeswap', [selections.items]);
 
           selections.owner = target.closest('.card');
           selections.dragged = target;
@@ -212,7 +208,7 @@
 
         // Dragenter - set that related/droptarget
         .on(self.dragEnterWhileDragging, self.dragElements, function(e) {
-          self.element.triggerHandler(settings.triggerWhileDragging, [selections.items]);
+          self.element.triggerHandler('draggingswap', [selections.items]);
           selections.related = e.target;
           $('ul, li', this.element).removeClass('over');
           $(e.target).closest('ul, li').addClass('over');
@@ -288,7 +284,7 @@
 
           if(self.isTouch) {
             self.containers.css({'z-index': ''});
-          }          
+          }
 
           selections.isHandle = null;
           $('[aria-grabbed="true"]', self.element).show();
@@ -304,24 +300,24 @@
         this.offset = null;
 
         this.containers = $(
-          this.settings.available +','+ 
-          this.settings.selected +','+ 
+          this.settings.available +','+
+          this.settings.selected +','+
           this.settings.fullAccess, this.element);
 
         this.actionButtons = $(
-          this.settings.btnAvailable +','+ 
-          this.settings.btnFullAccess +','+ 
-          this.settings.btnSelectedLeft +','+ 
+          this.settings.btnAvailable +','+
+          this.settings.btnFullAccess +','+
+          this.settings.btnSelectedLeft +','+
           this.settings.btnSelectedRight, this.element);
 
         this.selectedButtons = $(
-          this.settings.btnSelectedLeft +','+ 
+          this.settings.btnSelectedLeft +','+
           this.settings.btnSelectedRight, this.element);
 
         this.tabButtonsStr = ''+
-          this.settings.btnAvailable +' '+ 
-          this.settings.btnFullAccess +' '+ 
-          (this.selectedButtons.length > 1 ? 
+          this.settings.btnAvailable +' '+
+          this.settings.btnFullAccess +' '+
+          (this.selectedButtons.length > 1 ?
             this.settings.btnSelectedRight : this.settings.btnSelectedLeft);
 
         this.dragElements = 'ul, li:not(.is-disabled)';
@@ -373,9 +369,9 @@
         }
       },
 
-      // Move Elements 
+      // Move Elements
       moveElements: function(from, to) {
-        var ul, size, currentSize, 
+        var ul, size, currentSize,
           self = this, list;
 
         from = (typeof from !== 'string') ? from : $(from, self.element);
@@ -536,7 +532,7 @@
           size = items.length;
 
         items.each(function(i) {
-          $(this).attr({ 'aria-posinset': i+1, 'aria-setsize': size });          
+          $(this).attr({ 'aria-posinset': i+1, 'aria-setsize': size });
         });
       },
 
@@ -549,11 +545,11 @@
             list.select(self.selections.placeholder);
             self.selections.placeholder.focus();
           }
-          self.unselectElements(list);          
+          self.unselectElements(list);
           self.updateAttributes($('.listview', self.selections.owner));
           self.updateAttributes($('.listview', self.selections.droptarget));
           self.clearDropeffects();
-          self.element.triggerHandler(self.settings.triggerAfterSwap, [self.selections.items]);
+          self.element.triggerHandler('swapupdate', [self.selections.items]);
           self.clearSelections();
           self.items.removeClass('is-dragging is-dragging-touch');
         }, 100);
