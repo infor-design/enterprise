@@ -782,7 +782,7 @@
           return nameParts.join(' ');
         }
 
-        var newIndex = this.tablist.find('.add-tab-button').index() - 1,
+        var newIndex = this.tablist.children().index(this.addTabButton),
           newId = makeId(),
           newName = makeName(newId),
           settings = {
@@ -802,13 +802,13 @@
           return this.anchors.filter('[href="#'+ newId +'"]');
         }
 
-        if (externalSettings.newId) {
+        if (externalSettings.newId && externalSettings.newId.length && typeof externalSettings.newId === 'string') {
           newId = externalSettings.newId;
         }
-        if (externalSettings.settings) {
+        if (externalSettings.settings && typeof externalSettings.settings === 'object') {
           settings = externalSettings.settings;
         }
-        if (externalSettings.newIndex) {
+        if (!isNaN(externalSettings.newIndex)) {
           newIndex = externalSettings.newIndex;
         }
 
@@ -992,61 +992,52 @@
         function insertIntoTabset(self, targetIndex) {
           var method,
             tabs = self.tablist.children('li'),
-            panels = self.container.children().filter('.tab-panel'),
-            finalTabIndex = tabs.length - 1,
-            finalPanelIndex = panels.length - 1,
-            hasAddTabButton = self.settings.addTabButton;
+            nonSpecialTabs = tabs.not('.application-menu-trigger, .add-tab-button'),
+            finalIndex = tabs.length - 1;
 
-          // If no tabs are present in the tabset, simply just append to the end
           if (!tabs.length) {
             tabHeaderMarkup.appendTo(self.tablist);
             tabContentMarkup.appendTo(self.container);
             return;
           }
 
+          var addTabButton = tabs.filter('.add-tab-button'),
+            appMenuTrigger = tabs.filter('.application-menu-trigger');
+
           // NOTE: Cannot simply do !targetIndex here because zero is a valid index
           if (targetIndex === undefined || targetIndex === null || isNaN(targetIndex)) {
-            method = 'insertAfter';
-
-            if (hasAddTabButton) {
-              method = 'insertBefore';
-              finalTabIndex = finalTabIndex - 1;
-            }
-
-            // Prevents a -1 Tab Index on insertion into an empty tabset
-            if (finalTabIndex < 0) {
-              finalTabIndex = 0;
-            }
-            if (finalPanelIndex < 0) {
-              finalPanelIndex = 0;
-            }
-
-            tabHeaderMarkup[method](tabs.eq(finalTabIndex));
-            tabContentMarkup[method](panels.eq(finalPanelIndex));
-            return;
+            targetIndex = tabs.length;
           }
 
-          var conditionInsertTabBefore = tabs.eq(targetIndex).length > 0,
-            conditionInsertPanelBefore = panels.eq(targetIndex).length > 0;
+          function pastEndOfTabset(index) {
+            return index > tabs.length - 1;
+          }
 
-          finalTabIndex = conditionInsertTabBefore ? targetIndex : finalTabIndex;
-          finalPanelIndex = conditionInsertPanelBefore ? targetIndex : finalPanelIndex;
+          function atBeginningOfTabset(index) {
+            return index <= 0;
+          }
+
+          if (tabs.length > nonSpecialTabs.length) {
+            if (pastEndOfTabset(targetIndex) && addTabButton && addTabButton.length) {
+              targetIndex = targetIndex - 1;
+            }
+
+            if (atBeginningOfTabset(targetIndex) && appMenuTrigger && appMenuTrigger.length) {
+              targetIndex = targetIndex + 1;
+            }
+          }
+
+          var conditionInsertTabBefore = tabs.eq(targetIndex).length > 0;
+
+          finalIndex = conditionInsertTabBefore ? targetIndex : finalIndex;
 
           method = 'insertAfter';
-          if (!conditionInsertTabBefore) {
+          if (conditionInsertTabBefore) {
             method = 'insertBefore';
           }
 
-          // Prevents a -1 Tab Index on insertion into an empty tabset
-          if (finalTabIndex < 0) {
-            finalTabIndex = 0;
-          }
-          if (finalPanelIndex < 0) {
-            finalPanelIndex = 0;
-          }
-
-          tabHeaderMarkup[method](tabs.eq(finalTabIndex));
-          tabContentMarkup[method](panels.eq(finalPanelIndex));
+          tabHeaderMarkup[method](tabs.eq(finalIndex));
+          tabContentMarkup.appendTo(self.container);
           return;
         }
 
@@ -1093,6 +1084,11 @@
           return false;
         }
 
+        var wasSelected = false;
+        if (targetLi.hasClass('is-selected')) {
+          wasSelected = true;
+        }
+
         // Remove these from the collections
         this.panels = this.panels.not(targetPanel);
         this.anchors = this.anchors.not(targetAnchor);
@@ -1127,6 +1123,10 @@
           }
 
           prevLi = this.tablist.children('li:not(.separator)').first();
+        }
+
+        if (!wasSelected) {
+          return;
         }
 
         var a = prevLi.children('a');
