@@ -140,6 +140,10 @@ window.Formatters = {
     var ranges = col.ranges,
       classes = '', text='';
 
+    if (!ranges) {
+      return {};
+    }
+
     for (var i = 0; i < ranges.length; i++) {
       if (value >= ranges[i].min && value <= ranges[i].max) {
         classes = ranges[i].classes;
@@ -171,6 +175,12 @@ window.Formatters = {
   Alert: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
     return '<svg class="icon datagrid-alert-icon icon-' + ranges.classes +'" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-' + ranges.classes +'"/></svg><span class="datagrid-alert-text">' + (ranges.text === 'value' ? value : ranges.text) + '</span>';
+  },
+
+  Image: function (row, cell, value, col) {
+
+    return '<img class="datagrid-img"' + ' src="' + value +'" alt= "' + (col.alt ? col.alt : Locale.translate('Image')) +
+     '"' + (col.dimensions ? ' style="height:'+col.dimensions.height+';width:'+col.dimensions.height+'"' : '') + '/>';
   },
 
   Color: function (row, cell, value, col) {

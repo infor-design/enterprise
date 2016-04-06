@@ -159,6 +159,7 @@
       'Highest': {id: 'Highest', value: 'Highest', comment: 'Highest Four tooltip'},
       'Home': {id: 'Home', value: 'Home', comment: 'Home tooltip'},
       'HtmlView': {id: 'HtmlView', value: 'Html View', comment: 'Html View tooltip'},
+      'Image': {id: 'Image', value: 'Image', comment: 'Image of something'},
       'Import': {id: 'Import', value: 'Import', comment: 'Import tooltip'},
       'Info': {id: 'Info', value: 'Info', comment: 'Info tooltip'},
       'InsertAnchor': {id: 'InsertAnchor', value: 'Insert Anchor', comment: 'Insert Acnhor (link) in an editor'},
