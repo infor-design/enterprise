@@ -1,6 +1,9 @@
 ﻿
 <div class="page-container top-padding scrollable" role="main">
 
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
   <script id="swaplist-tmpl" type="text/html">
       <ul data-swap-handle=".handle">
         {{#dataset}}
@@ -43,7 +46,7 @@
             </div>
           </div>
           <div class="card-content">
-            <div class="listview" data-tmpl="swaplist-tmpl" data-selectable="multiple" ></div>
+            <div class="listview"></div>
           </div>
         </div>
         <div class="card selected">
@@ -59,7 +62,7 @@
             </div>
           </div>
           <div class="card-content">
-            <div class="listview" data-tmpl="swaplist-tmpl" data-selectable="multiple"></div>
+            <div class="listview"></div>
           </div>
         </div>
       </div>
@@ -73,21 +76,41 @@
 
   // Initialize all SoHo Xi Controls and set the locale
   $(function () {
-    var available = [];
-    available.push({id: 1, value: 'opt-1', text: 'Option A'});
-    available.push({id: 2, value: 'opt-2', text: 'Option B'});
-    available.push({id: 3, value: 'opt-3', text: 'Option C'});
-    available.push({id: 4, value: 'opt-4', text: 'Option D'});
-    available.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
-    available.push({id: 6, value: 'opt-6', text: 'Option F'});
-    available.push({id: 7, value: 'opt-7', text: 'Option G'/*, selected: true*/});
-    available.push({id: 8, value: 'opt-8', text: 'Option H'});
-    available.push({id: 9, value: 'opt-9', text: 'Option I'});
+    
+    // Single Dataset Example ======================================================
+    var dataset = [];
 
-    var selected = [];
-    $('.listview').listview({available: available});
+    dataset.push({id: 1, value: 'opt-1', text: 'Option A'});
+    dataset.push({id: 2, value: 'opt-2', text: 'Option B'});
+    dataset.push({id: 3, value: 'opt-3', text: 'Option C'});
+    dataset.push({id: 4, value: 'opt-4', text: 'Option D'});
+    dataset.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
+    dataset.push({id: 6, value: 'opt-6', text: 'Option F'});
+    dataset.push({id: 7, value: 'opt-7', text: 'Option G', selected: true});
+    dataset.push({id: 8, value: 'opt-8', text: 'Option H', selected: true});
+    dataset.push({id: 9, value: 'opt-9', text: 'Option I'});
 
-    $('#example-swaplist-1').swaplist({available: available, selected: selected, templateId: ''});
+    $('#example-swaplist-1').swaplist({dataset: dataset, template: $('#swaplist-tmpl').html()});
+
+
+    // Each individual Dataset Example ===========================================
+    // var available = [], selected = [];
+
+    // available.push({id: 1, value: 'opt-1', text: 'Option A'});
+    // available.push({id: 2, value: 'opt-2', text: 'Option B'});
+    // available.push({id: 3, value: 'opt-3', text: 'Option C'});
+    // available.push({id: 4, value: 'opt-4', text: 'Option D'});
+    // available.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
+    // available.push({id: 6, value: 'opt-6', text: 'Option F'});
+    // available.push({id: 7, value: 'opt-7', text: 'Option G'});
+    // available.push({id: 8, value: 'opt-8', text: 'Option H'});
+    // available.push({id: 9, value: 'opt-9', text: 'Option I'});
+
+    // selected.push({id: 10, value: 'opt-10', text: 'Option J'});
+    // selected.push({id: 11, value: 'opt-11', text: 'Option K'});
+
+    // $('#example-swaplist-1').swaplist({datasetAvailable: available, datasetSelected: selected, template: $('#swaplist-tmpl').html()});
+
   });
 </script>
 

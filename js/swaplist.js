@@ -19,16 +19,22 @@
     // Settings and Options
     var pluginName = 'swaplist',
         defaults = {
+          // Main containers
           'available': '.available',
-          'fullAccess': '.full-access',
           'selected': '.selected',
+          'additional': '.full-access',
+
+          // Action buttons
           'btnAvailable': '.btn-moveto-selected',
-          'btnFullAccess': '.btn-moveto-selected',
           'btnSelectedLeft': '.btn-moveto-left',
           'btnSelectedRight': '.btn-moveto-right',
-          'numOfSelectionsClass': 'num-of-selections',
-          'itemContentTempl': '',
-          'itemContentClass': 'swaplist-item-content'
+          'btnAdditional': '.btn-moveto-selected',
+
+          // Datasets
+          'dataset': null,
+          'datasetAvailable': null, // default will set "settings.dataset"
+          'datasetSelected': null, // default will set empty array "[]"
+          'datasetAdditional': null // default will set empty array "[]"
         },
         settings = $.extend({}, defaults, options);
 
@@ -45,6 +51,7 @@
       init: function() {
         var self = this;
         self.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        self.loadListview();
         self.setElements();
         self.isMultiSelectClass(self.settings.selected);
 
@@ -52,7 +59,7 @@
           self.makeDraggable();
           self.handleEvents();
           self.initSelected(self.settings.available);
-          self.initSelected(self.settings.fullAccess);
+          self.initSelected(self.settings.additional);
         }, 0);
       },
 
@@ -71,8 +78,8 @@
             self.moveElements(settings.available, settings.selected);
           }
 
-          else if (container.is(settings.fullAccess)) { // Move from Full-Access to Selected
-            self.moveElements(settings.fullAccess, settings.selected);
+          else if (container.is(settings.additional)) { // Move from Full-Access to Selected
+            self.moveElements(settings.additional, settings.selected);
           }
 
           // Move from Selected
@@ -81,7 +88,7 @@
               self.moveElements(settings.selected, settings.available);
             }
             else if (actionButton.is(settings.btnSelectedRight)) { // to Full-Access
-              self.moveElements(settings.selected, settings.fullAccess);
+              self.moveElements(settings.selected, settings.additional);
             }
           }
         });
@@ -195,7 +202,7 @@
             selections.placeholderTouch = selections.dragged.clone(true);
             selections.placeholderTouch.attr('id', 'sl-placeholder-touch').removeClass('is-selected').hide();
 
-            // Mobile view with three container(available, selected, fullAccess) prepend to parent
+            // Mobile view with three container(available, selected, additional) prepend to parent
             placeholderContainer = (self.element.is('.one-third') && self.isMaxWidth(766)) ? self.element.parent() : self.element;
             placeholderContainer.prepend('<ul id="sl-placeholder-container"></ul>');
 
@@ -240,7 +247,7 @@
             }
             self.draggTouchElement(e, selections.placeholderTouch);
 
-            self.element.triggerHandler(settings.triggerWhileDragging, [selections.items]);
+            self.element.triggerHandler('draggingswap', [selections.items]);
             selections.related = overItem;
             $('ul, li', this.element).removeClass('over');
             overItem.closest('ul, li').addClass('over');
@@ -295,6 +302,27 @@
       }, // END: Handle Events ---------------------------------------------------------------------
 
 
+      // Load listview 
+      loadListview: function() {
+        var self = this,
+          s = self.settings,
+          ds = {};
+
+        if(s.dataset || s.datasetAvailable || s.datasetSelected || s.datasetAdditional) {
+          ds[s.available] = s.datasetAvailable || s.dataset;
+          ds[s.selected] = s.datasetSelected || [];
+          ds[s.additional] = s.datasetAdditional || [];
+
+          $.each(ds, function(key, value) {
+            var lv = $(key +' .listview', self.element);
+            if (value && lv.length) {
+              lv.listview({ dataset: value, template: s.template, selectable: 'multiple' });
+            }
+          });
+        }
+      },
+
+
       // Set elements
       setElements: function() {
         this.offset = null;
@@ -302,11 +330,11 @@
         this.containers = $(
           this.settings.available +','+
           this.settings.selected +','+
-          this.settings.fullAccess, this.element);
+          this.settings.additional, this.element);
 
         this.actionButtons = $(
           this.settings.btnAvailable +','+
-          this.settings.btnFullAccess +','+
+          this.settings.btnAdditional +','+
           this.settings.btnSelectedLeft +','+
           this.settings.btnSelectedRight, this.element);
 
@@ -316,7 +344,7 @@
 
         this.tabButtonsStr = ''+
           this.settings.btnAvailable +' '+
-          this.settings.btnFullAccess +' '+
+          this.settings.btnAdditional +' '+
           (this.selectedButtons.length > 1 ?
             this.settings.btnSelectedRight : this.settings.btnSelectedLeft);
 
@@ -338,13 +366,13 @@
           'draggedIndex': null
         };
 
-        if (this.settings.itemContentTempl === '') {
-          this.settings.itemContentTempl = $('<div/>').html(
-            '<p>'+
-              '<span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+ Locale.translate('ItemsSelected')+
-            '</p>'
-          );
-        }
+        // Dragging time placeholder
+        this.settings.numOfSelectionsClass = 'num-of-selections';
+        this.settings.itemContentClass = 'swaplist-item-content';
+        this.settings.itemContentTempl = $(
+          '<div><p><span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+ 
+            Locale.translate('ItemsSelected') +'</p><div/>'
+        );
       },
 
       // When list is Empty force to add css class "is-muliselect"
@@ -366,6 +394,7 @@
             list.select($(this));// Select this item
           });
           this.moveElements(container, this.settings.selected);
+          $(this.settings.selected +' li:last-child', this.element).blur();
         }
       },
 
@@ -393,7 +422,7 @@
         self.unselectElements(list);
 
         if (self.selections.items.length) {
-          self.element.triggerHandler(self.settings.triggerBeforeSwap, [self.selections.items]);
+          self.element.triggerHandler('beforeswap', [self.selections.items]);
 
           ul = $('ul', to);
           currentSize = $('li', ul).length;
@@ -555,14 +584,25 @@
         }, 100);
       },
 
-      // Teardown
-      destroy: function() {
+      unbind: function() {
         this.actionButtons.off('click.swaplist');
         this.containers.off('keydown.swaplist');
         this.selectedButtons.off('keydown.swaplist');
         this.element.off(this.dragStart+' '+this.dragEnterWhileDragging +' '+this.dragOverWhileDragging +' '+this.dragEnd, this.dragElements);
-        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder').remove();
 
+        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder').remove();
+        return this;
+      },
+
+      updated: function() {
+        return this
+          .unbind()
+          .init();
+      },
+
+      // Teardown
+      destroy: function() {
+        this.unbind();
         $.removeData(this.element[0], pluginName);
       }
     };
