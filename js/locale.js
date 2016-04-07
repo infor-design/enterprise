@@ -54,6 +54,13 @@
 
         for (var i = 0; i < scripts.length; i++) {
           var src = scripts[i].src;
+
+          //remove from ? to end
+          var idx = src.indexOf('?');
+          if (src !== '' && idx > -1) {
+            src = src.substr(0, idx);
+          }
+
           if (scripts[i].id === 'sohoxi-script') {
             return src.substring(0, src.lastIndexOf('/')) + '/';
           }
@@ -64,6 +71,8 @@
           if (src.indexOf(partialPath) > -1) {
             this.culturesPath = src.replace(partialPath, '') + 'cultures/';
           }
+
+
         }
       }
       return this.culturesPath;

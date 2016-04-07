@@ -370,44 +370,54 @@
           return;
         }
 
-        var json = [];
+        var json = [],
+          self = this;
 
-        elem.find('li').each(function () {
+        elem.children('li').each(function () {
           var elem = $(this),
-            tag = elem.find('a:first'),
-            entry = {};
+            tag = elem.find('a:first');
 
-          entry = {
-            node: tag,
-            id: tag.attr('id'),
-            text: tag.find('.tree-text').text()
-          };
-
-          if (tag.hasClass('is-open')) {
-            entry.open = true;
-          }
-
-          if (tag.attr('href')) {
-            entry.href = tag.attr('href');
-          }
-
-          if (tag.parent().is('.is-selected')) {
-            entry.selected = true;
-          }
+          var entry = self.syncNode(tag);
 
           var ul = tag.next();
           if (ul.is('ul')) {
             entry.children = [];
-            ul.find('li').each(function () {
-              entry.children.push({});
+            ul.children('li').each(function () {
+              var tag2 = elem.find('a:first'),
+                entry2 = self.syncNode(tag2);
+              entry.children.push(entry2);
             });
           }
 
           json.push(entry);
-
+         // console.log(entry);
         });
 
         this.settings.dataset = json;
+      },
+
+      syncNode: function (tag) {
+        var entry = {};
+
+        entry = {
+          node: tag,
+          id: tag.attr('id'),
+          text: tag.find('.tree-text').text()
+        };
+
+        if (tag.hasClass('is-open')) {
+          entry.open = true;
+        }
+
+        if (tag.attr('href')) {
+          entry.href = tag.attr('href');
+        }
+
+        if (tag.parent().is('.is-selected')) {
+          entry.selected = true;
+        }
+
+        return entry;
       },
 
       addNode: function (node, location) {

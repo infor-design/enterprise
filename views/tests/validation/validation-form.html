@@ -51,8 +51,26 @@
         </div>
       </div>
 
-      <button type="submit" class="btn-primary">Submit</button>
+      <button type="submit" id = 'test1' class="btn-primary">Submit</button>
     </form>
 
+    <script>
+      $(function() {
+        $('#test').on('validated', function (e, isValid) {
+          if (isValid) {
+            // Do some stuff before it goes to postback/submit
+
+            //Manually post/submit or change window
+            //http://stackoverflow.com/questions/1200266/submit-a-form-using-jquery
+            window.location = 'http://www.google.com';
+            return;
+          }
+
+          // Do some stuff other than highlighting what's required and obviously cancel the submit.
+
+
+        });
+      });
+    </script>
   </div>
 </div>

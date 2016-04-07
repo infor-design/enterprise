@@ -180,7 +180,6 @@
         var submitHandler = function (e) {
           e.stopPropagation();
           e.preventDefault();
-
           self.validateForm(function (isValid) {
             self.element.off('submit.validate');
             self.element.trigger('validated', isValid);
@@ -189,7 +188,7 @@
           });
         };
 
-        this.element.on('submit.validate',submitHandler);
+        this.element.on('submit.validate', submitHandler);
       }
 
     },
