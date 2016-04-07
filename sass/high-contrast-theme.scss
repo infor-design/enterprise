@@ -86,7 +86,6 @@ $badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
   font-weight: bold !important;
 }
 
-
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-color-filtered-text: $font-color;
@@ -262,9 +261,8 @@ $expandable-area-border-color: $graphite03;
 // Cardlist
 $cardlist-bg-color: $graphite01;
 $cardlist-border-color: $graphite06;
-$cardlist-header-bg-color: $graphite01;
 $cardlist-header-color: $black;
-$cardlist-actions-color: $graphite10;
+$cardlist-actions-color: $graphite09;
 
 // Checkboxes
 $checkbox-color: $primary-color;

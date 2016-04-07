@@ -14,7 +14,6 @@
   .card-footer,
   .widget-header,
   .widget-footer {
-    background-color: $cardlist-header-bg-color;
     padding: 13px 20px;
     position: relative;
   }
@@ -33,7 +32,7 @@
       }
 
       .title {
-        @include font-size(18);
+        @include font-size(16);
         color: $cardlist-header-color;
         -webkit-font-smoothing: antialiased;
         font-weight: 100;
@@ -112,7 +111,7 @@
     }
 
     .btn-actions {
-      background-color: $cardlist-header-bg-color;
+      background-color: transparent;
 
       svg {
         fill: $cardlist-actions-color;
@@ -128,7 +127,7 @@
       margin: 0;
       padding: 0;
       position: absolute;
-      right: 18px;
+      right: 12px;
       top: 7px;
 
       svg {

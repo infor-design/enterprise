@@ -139,7 +139,7 @@
         });
       },
 
-      //Set a node as the selected on
+      //Set a node as the selected one
       setSelectedNode: function (node, focus) {
         if (node.length === 0) {
           return;
@@ -176,7 +176,7 @@
         }
       },
 
-      //Setup event handles
+      //Setup event handlers
       setupEvents: function () {
         var self = this;
         self.element.on('updated.tree', function () {
@@ -184,6 +184,7 @@
         });
       },
 
+      //Handle Keyboard Navigation
       handleKeys: function () {
 
         //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
@@ -349,7 +350,6 @@
           }
 
         });
-
       },
 
       //handle Loading JSON
@@ -364,7 +364,59 @@
         }
       },
 
-      //Generate a JSON version of the tree
+      //Functions to Handle Internal Data Store
+      addToDataset: function (node, location) {
+        if (location === 'bottom' && !node.parent) {
+          this.settings.dataset.push(node);
+        }
+
+        if (location === 'top' && !node.parent) {
+          this.settings.dataset.unshift(node);
+        }
+
+        if (node.parent) {
+          var elem = this.findById(node.parent);
+
+          if (!elem.children) {
+            elem.children = [];
+          }
+
+          if (location === 'bottom') {
+            elem.children.push(node);
+          } else {
+            elem.children.unshift(node);
+          }
+        }
+      },
+
+      findById: function (id, dataset) {
+        var result = null,
+          self = this;
+
+        if (!dataset) {
+          dataset = self.settings.dataset;
+        }
+
+        if (dataset instanceof Array) {
+          for (var i = 0; i < dataset.length; i++) {
+            result = self.findById(id, dataset[i]);
+            if (result) {
+              return result;
+            }
+          }
+        } else {
+            for (var prop in dataset) {
+              if (prop === 'id') {
+                if (dataset[prop] === id) {
+                  result = dataset;
+                  return result;
+                }
+              }
+            }
+        }
+        return result;
+      },
+
       syncDataset: function (elem) {
         if (this.settings.dataset) {
           return;
@@ -378,26 +430,16 @@
             tag = elem.find('a:first');
 
           var entry = self.syncNode(tag);
-
-          var ul = tag.next();
-          if (ul.is('ul')) {
-            entry.children = [];
-            ul.children('li').each(function () {
-              var tag2 = elem.find('a:first'),
-                entry2 = self.syncNode(tag2);
-              entry.children.push(entry2);
-            });
-          }
-
           json.push(entry);
-         // console.log(entry);
+
         });
 
         this.settings.dataset = json;
       },
 
       syncNode: function (tag) {
-        var entry = {};
+        var entry = {},
+          self = this;
 
         entry = {
           node: tag,
@@ -417,9 +459,28 @@
           entry.selected = true;
         }
 
+        //icon
+        var clazz =tag.attr('class');
+        if (clazz && clazz.indexOf('icon') > -1) {
+          entry.icon = tag.attr('class');
+        }
+
+        if (tag.next().is('ul')) {
+          var ul = tag.next();
+          entry.children = [];
+
+          ul.children('li').each(function () {
+            var elem = $(this),
+              tag = elem.find('a:first');
+
+            entry.children.push(self.syncNode(tag));
+          });
+        }
+
         return entry;
       },
 
+      // Node Construction Functions
       addNode: function (node, location) {
         var li = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(li);
@@ -440,30 +501,30 @@
         }
 
         //Handle Location
-        if (location === 'bottom') {
+        if (location === 'bottom' && !node.parent) {
           this.element.append(li);
         }
 
-        if (location === 'top') {
+        if (location === 'top' && !node.parent) {
           this.element.prepend(li);
         }
 
-        if (location instanceof jQuery) {
+        if (location instanceof jQuery && !node.parent) {
           location.append(li);
         }
 
+        this.addToDataset(node, location);
+
         // Support ParentId in JSON Like jsTree
         if (node.parent) {
-          /*
           if (typeof node.parent === 'string') {
             li = this.element.find('#'+node.parent).parent();
-            this.addChildren(node, li);
+            this.addAsChild(node, li);
           }
-          */
+        } else {
+          this.addChildNodes(node, li);
         }
 
-        //Add Children
-        this.addChildren(node, li);
 
         this.decorateNode(a);
 
@@ -475,8 +536,22 @@
         return li;
       },
 
-      //Recurse and add all children
-      addChildren: function (node, li) {
+      //Add a node to an exiting node, making it a folder if need be
+      addAsChild: function (node, li) {
+        var ul = li.find('ul').first();
+        if (ul.length === 0) {
+          ul = $('<ul></ul>').appendTo(li);
+          ul.addClass('folder');
+        }
+
+        ul.addClass(node.open ? 'is-open' : '');
+        this.decorateNode(li.find('a').first());
+
+        node.parent = '';
+        this.addNode(node, ul);
+      },
+
+      addChildNodes: function (node, li) {
         var self = this;
         if (!node.children) {
           return;
@@ -484,25 +559,27 @@
 
         var ul = $('<ul></ul>').appendTo(li);
         ul.addClass(node.open ? 'is-open' : '');
+        ul.addClass('folder');
 
         for (var i = 0; i < node.children.length; i++) {
           var elem = node.children[i];
           var newLi = self.addNode(elem, ul);
 
           if (elem.children) {
-            self.addChildren(elem, newLi);
+            self.addChildNodes(elem, newLi);
           }
         }
-      },
-
-      removeNode: function () {
-
       },
 
       editNode: function () {
 
       },
 
+      removeNode: function () {
+
+      },
+
+      // Plugin Related Functions
       destroy: function() {
         this.element.removeData(pluginName);
         this.element.off('updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();

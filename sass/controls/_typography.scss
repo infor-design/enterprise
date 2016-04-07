@@ -148,7 +148,7 @@ label.side,
 
 .widget-title,
 .card-title {
-  @include font-size(18);
+  @include font-size(16);
   color: $cardlist-header-color;
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2.2rem);

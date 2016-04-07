@@ -5,9 +5,9 @@
 
     <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree">
       <li>
-          <a href="#" id="home" class="tree-btn">Home</a>
+          <a href="#" id="home">Home</a>
       </li>
-      <li><a href="#" id="about" class="tree-btn">About Us</a></li>
+      <li><a href="#" id="about">About Us</a></li>
       <li class="is-open">
         <a href="#" id="public">Public Folders</a>
         <ul class="is-open root">
@@ -15,7 +15,7 @@
               <a href="#" id="leadership">Leadership</a>
               <ul class="is-open">
                 <li class="is-selected">
-                  <a href="#" id="managers">Managers</a>
+                  <a href="#" id="managers" class="icon-tree-image">Managers</a>
                 </li>
                 <li>
                   <a href="#" id="history">History</a>
@@ -44,5 +44,6 @@
   //Add Children to parent ID
   api.addNode({text: 'New Item 3', parent: 'new1'});
   api.addNode({text: 'New Item 4', parent: 'new1'});
+  console.log(api.settings.dataset);
 
 </script>

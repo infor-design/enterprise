@@ -8,6 +8,7 @@ Release Date: April 4th
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
 ## Ui Changes
+* 2016-03-07 - Changed Cards - Font size to 1.6 and Icon Color
 * 2016-02-23 - Changed File Upload States. Refined all 3 themes.
 * 2016-03-30 - Minor changes to the progress indicator
 * 2016-03-31 - Hide Focus Support Added to Links. Note that many links will benefit from adding class hide-focus.
