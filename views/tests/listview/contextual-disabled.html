@@ -36,8 +36,8 @@
       <div class="card-content">
         <div class="contextual-toolbar toolbar is-hidden">
           <div class="buttonset">
-            <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
-            <button class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
+            <button disabled class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
+            <button disabled class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
           </div>
         </div>
         <div class="listview" id="multiselect-listview" data-options="{ template: 'multiselect-tmpl', selectable: 'multiple', dataset: 'demoTasks' }"></div>
@@ -45,11 +45,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $('body').on('initialized', function() {
-    $('#multiselect-listview').on('selected', function (e, args) {
-     console.log(args);
-    });
-  });
-</script>
