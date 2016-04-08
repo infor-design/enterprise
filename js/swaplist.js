@@ -19,22 +19,21 @@
     // Settings and Options
     var pluginName = 'swaplist',
         defaults = {
+          // Datasets
+          'available': null,
+          'selected': null,
+          'additional': null,
+
           // Main containers
-          'available': '.available',
-          'selected': '.selected',
-          'additional': '.full-access',
+          'availableClass': '.available',
+          'selectedClass': '.selected',
+          'additionalClass': '.full-access',
 
           // Action buttons
-          'btnAvailable': '.btn-moveto-selected',
-          'btnSelectedLeft': '.btn-moveto-left',
-          'btnSelectedRight': '.btn-moveto-right',
-          'btnAdditional': '.btn-moveto-selected',
-
-          // Datasets
-          'dataset': null,
-          'datasetAvailable': null, // default will set "settings.dataset"
-          'datasetSelected': null, // default will set empty array "[]"
-          'datasetAdditional': null // default will set empty array "[]"
+          'availableBtn': '.btn-moveto-selected',
+          'selectedBtnLeft': '.btn-moveto-left',
+          'selectedBtnRight': '.btn-moveto-right',
+          'additionalBtn': '.btn-moveto-selected'
         },
         settings = $.extend({}, defaults, options);
 
@@ -53,13 +52,13 @@
         self.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         self.loadListview();
         self.setElements();
-        self.isMultiSelectClass(self.settings.selected);
+        self.isMultiSelectClass(self.settings.selectedClass);
 
         setTimeout(function() { // Wait for Listview availability
           self.makeDraggable();
           self.handleEvents();
-          self.initSelected(self.settings.available);
-          self.initSelected(self.settings.additional);
+          self.initSelected(self.settings.availableClass);
+          self.initSelected(self.settings.additionalClass);
         }, 0);
       },
 
@@ -74,21 +73,21 @@
           var actionButton = $(this),
             container = actionButton.closest('.card'); // Current list clicked from
 
-          if (container.is(settings.available)) { // Move from Available to Selected
-            self.moveElements(settings.available, settings.selected);
+          if (container.is(settings.availableClass)) { // Move from Available to Selected
+            self.moveElements(settings.availableClass, settings.selectedClass);
           }
 
-          else if (container.is(settings.additional)) { // Move from Full-Access to Selected
-            self.moveElements(settings.additional, settings.selected);
+          else if (container.is(settings.additionalClass)) { // Move from Additional to Selected
+            self.moveElements(settings.additionalClass, settings.selectedClass);
           }
 
           // Move from Selected
-          else if (container.is(settings.selected)) {
-            if (actionButton.is(settings.btnSelectedLeft)) { // to Available
-              self.moveElements(settings.selected, settings.available);
+          else if (container.is(settings.selectedClass)) {
+            if (actionButton.is(settings.selectedBtnLeft)) { // to Available
+              self.moveElements(settings.selectedClass, settings.availableClass);
             }
-            else if (actionButton.is(settings.btnSelectedRight)) { // to Full-Access
-              self.moveElements(settings.selected, settings.additional);
+            else if (actionButton.is(settings.selectedBtnRight)) { // to Additional
+              self.moveElements(settings.selectedClass, settings.additionalClass);
             }
           }
         });
@@ -100,8 +99,8 @@
           var container = $(this);
           e = e || window.event;
           if(e.keyCode === 77 && self.hasModifier(e)) { // Modifier + M
-            if(!container.is(settings.selected) ||
-              (container.is(settings.selected) && self.selectedButtons.length === 1)) {
+            if(!container.is(settings.selectedClass) ||
+              (container.is(settings.selectedClass) && self.selectedButtons.length === 1)) {
               container.find(self.actionButtons).trigger('click.swaplist');
             } else {
               self.selectedButtons.first().focus();
@@ -267,7 +266,6 @@
 
           $.each(selections.items, function(index, val) {
             val = $(val);
-            // val = $(val).removeAttr('aria-grabbed');
             if (currentSize && !$(selections.related).is('ul')) {
               var isLess = (related.index() < selections.draggedIndex),
                 el = isLess ? val : $(selections.items[(selections.items.length-1) - index]),
@@ -308,14 +306,14 @@
           s = self.settings,
           ds = {};
 
-        if(s.dataset || s.datasetAvailable || s.datasetSelected || s.datasetAdditional) {
-          ds[s.available] = s.datasetAvailable || s.dataset;
-          ds[s.selected] = s.datasetSelected || [];
-          ds[s.additional] = s.datasetAdditional || [];
+        if(s.available || s.selected || s.additional) {
+          ds[s.availableClass] = s.available || [];
+          ds[s.selectedClass] = s.selected || [];
+          ds[s.additionalClass] = s.additional || [];
 
           $.each(ds, function(key, value) {
             var lv = $(key +' .listview', self.element);
-            if (value && lv.length) {
+            if (lv.length) {
               lv.listview({ dataset: value, template: s.template, selectable: 'multiple' });
             }
           });
@@ -328,25 +326,25 @@
         this.offset = null;
 
         this.containers = $(
-          this.settings.available +','+
-          this.settings.selected +','+
-          this.settings.additional, this.element);
+          this.settings.availableClass +','+
+          this.settings.selectedClass +','+
+          this.settings.additionalClass, this.element);
 
         this.actionButtons = $(
-          this.settings.btnAvailable +','+
-          this.settings.btnAdditional +','+
-          this.settings.btnSelectedLeft +','+
-          this.settings.btnSelectedRight, this.element);
+          this.settings.availableBtn +','+
+          this.settings.additionalBtn +','+
+          this.settings.selectedBtnLeft +','+
+          this.settings.selectedBtnRight, this.element);
 
         this.selectedButtons = $(
-          this.settings.btnSelectedLeft +','+
-          this.settings.btnSelectedRight, this.element);
+          this.settings.selectedBtnLeft +','+
+          this.settings.selectedBtnRight, this.element);
 
         this.tabButtonsStr = ''+
-          this.settings.btnAvailable +' '+
-          this.settings.btnAdditional +' '+
+          this.settings.availableBtn +' '+
+          this.settings.additionalBtn +' '+
           (this.selectedButtons.length > 1 ?
-            this.settings.btnSelectedRight : this.settings.btnSelectedLeft);
+            this.settings.selectedBtnRight : this.settings.selectedBtnLeft);
 
         this.dragElements = 'ul, li:not(.is-disabled)';
         this.dragStart = 'dragstart.swaplist touchstart.swaplist gesturestart.swaplist';
@@ -393,8 +391,8 @@
             $(this).removeAttr('selected');
             list.select($(this));// Select this item
           });
-          this.moveElements(container, this.settings.selected);
-          $(this.settings.selected +' li:last-child', this.element).blur();
+          this.moveElements(container, this.settings.selectedClass);
+          $(this.settings.selectedClass +' li:last-child', this.element).blur();
         }
       },
 
@@ -430,7 +428,7 @@
 
           $.each(self.selections.items, function(index, val) {
             val = $(val);
-            val.attr({ 'aria-posinset': currentSize+index+1, 'aria-setsize': size });
+            val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size });
             ul.append(val);
             val.focus();
           });
