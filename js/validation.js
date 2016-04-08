@@ -434,6 +434,8 @@
           field.parent().find('.btn-actions').before(svg);
         } else if (field.parent().find('.data-description').length ===1) {
           field.parent().find('.data-description').before(svg);
+        } else if (field.parent().find('.field-info').length ===1) {
+          field.parent().find('.field-info').before(svg);
         } else if (field.is('textarea')) {
           field.after(svg);
         } else if (field.is('.dropdown, .multiselect')) {

@@ -20,6 +20,7 @@
 .icon-confirm,
 .icon-alert,
 .icon-info,
+.icon-info-field,
 .icon-in-progress,
 svg.icon-dirty,
 .icon-new,
@@ -29,6 +30,10 @@ svg.icon-dirty,
   position: relative;
   top: 10px;
   vertical-align: top;
+}
+
+.icon-info-field {
+  fill: $primary-color;
 }
 
 .field {

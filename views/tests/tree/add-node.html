@@ -42,8 +42,12 @@
   api.addNode({text: 'New Item 2'});
 
   //Add Children to parent ID
-  api.addNode({text: 'New Item 3', parent: 'new1'});
-  api.addNode({text: 'New Item 4', parent: 'new1'});
-  console.log(api.settings.dataset);
+  api.addNode({text: 'New Item 1.2', parent: 'new1'});
+  api.addNode({text: 'New Item 1.2', parent: 'new1', id: 'new12'});
+  api.addNode({text: 'New Item 1.2.1', parent: 'new12'});
+  api.addNode({text: 'New Item 1.2.2', icon: 'icon-tree-image', parent: 'new12'});
+
+  //Wrong id - adds to bottom
+  api.addNode({text: 'New Item 3', parent: 'xxx'});
 
 </script>

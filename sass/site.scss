@@ -1202,6 +1202,7 @@ $pageslice-download-link-border-color: #3dcd65;
   .site-footer {
     background-color: $amber08;
 
+
     .version-no,
     .version-no b {
       color: $amber06;
@@ -1212,6 +1213,10 @@ $pageslice-download-link-border-color: #3dcd65;
     background-color: $amber08;
 
     h1 {
+      display: inline-block;
+    }
+
+    a {
       display: inline-block;
     }
   }
@@ -1336,6 +1341,15 @@ $pageslice-download-link-border-color: #3dcd65;
 
 .editorial {
   min-height: calc(100% - 78px);
+
+  .content {
+    overflow: hidden;
+  }
+
+  table pre.code {
+    max-width: 600px;
+    overflow: scroll;
+  }
 
   .main {
     max-width: $site-maxwidth !important;
@@ -2220,7 +2234,7 @@ pre[class*="language-"] {
   direction: ltr;
   font-family: 'Source Code Pro', monospace;
   line-height: normal;
-  max-width: 550px;
+  max-width: 650px;
   padding: 40px 20px;
   text-align: left;
   white-space: pre;

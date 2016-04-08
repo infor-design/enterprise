@@ -236,7 +236,7 @@
 
             //bottom of a group..
             if (next.length === 0) {
-              next = target.closest('.folder').next().find('a:first');
+              next = target.parents('.folder').last().next().find('a:first');
             }
             self.setSelectedNode(next, true);
           }
@@ -366,16 +366,21 @@
 
       //Functions to Handle Internal Data Store
       addToDataset: function (node, location) {
-        if (location === 'bottom' && !node.parent) {
+        var elem;
+
+        if (node.parent) {
+          elem = this.findById(node.parent);
+        }
+
+        if (location === 'bottom' && !node.parent && !elem) {
           this.settings.dataset.push(node);
         }
 
-        if (location === 'top' && !node.parent) {
+        if (location === 'top' && !node.parent && !elem) {
           this.settings.dataset.unshift(node);
         }
 
-        if (node.parent) {
-          var elem = this.findById(node.parent);
+        if (node.parent && elem) {
 
           if (!elem.children) {
             elem.children = [];
@@ -387,34 +392,33 @@
             elem.children.unshift(node);
           }
         }
+
+        return ((node.parent && !elem) ? false : true);
       },
 
-      findById: function (id, dataset) {
-        var result = null,
+      findById: function (id, source) {
+        var key,
           self = this;
 
-        if (!dataset) {
-          dataset = self.settings.dataset;
+        if (!source) {
+          source = this.settings.dataset;
         }
 
-        if (dataset instanceof Array) {
-          for (var i = 0; i < dataset.length; i++) {
-            result = self.findById(id, dataset[i]);
-            if (result) {
-              return result;
+        for (key in source) {
+            var item = source[key];
+            if (item.id === id) {
+              return item;
             }
-          }
-        } else {
-            for (var prop in dataset) {
-              if (prop === 'id') {
-                if (dataset[prop] === id) {
-                  result = dataset;
-                  return result;
-                }
+
+            if (item.children) {
+              var subresult = self.findById(id, item.children);
+
+              if (subresult) {
+                return subresult;
               }
             }
         }
-        return result;
+        return null;
       },
 
       syncDataset: function (elem) {
@@ -501,22 +505,23 @@
         }
 
         //Handle Location
-        if (location === 'bottom' && !node.parent) {
+
+        var found = this.addToDataset(node, location);
+
+        if (location === 'bottom' && (!node.parent || !found)) {
           this.element.append(li);
         }
 
-        if (location === 'top' && !node.parent) {
+        if (location === 'top' && (!node.parent || !found)) {
           this.element.prepend(li);
         }
 
-        if (location instanceof jQuery && !node.parent) {
+        if (location instanceof jQuery && (!node.parent || !found)) {
           location.append(li);
         }
 
-        this.addToDataset(node, location);
-
         // Support ParentId in JSON Like jsTree
-        if (node.parent) {
+        if (node.parent && found) {
           if (typeof node.parent === 'string') {
             li = this.element.find('#'+node.parent).parent();
             this.addAsChild(node, li);

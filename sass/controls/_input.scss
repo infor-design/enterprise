@@ -445,6 +445,29 @@ textarea.error:focus {
   width: 100%;
 }
 
+//Info Field
+.field-info {
+  @include font-size(12);
+  display: block;
+  line-height: 1.2rem;
+  margin-top: -8px;
+  max-width: 300px;
+  min-height: 35px;
+
+  .icon-info-field {
+    display: inline-block;
+    top: -4px;
+  }
+
+  span {
+    display: inline-block;
+    line-height: 14px;
+    margin-bottom: 16px;
+    margin-top: -2px;
+    max-width: 267px;
+  }
+}
+
 //Input Actions Button - controls/input-actions
 .field .btn-actions {
   border-radius: 50%;
