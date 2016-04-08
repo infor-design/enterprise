@@ -121,7 +121,7 @@
             e.stopImmediatePropagation();
             $(e.target).click();
           }).on('click.applicationmenu', function() {
-            if (self.triggers.find('.icon.app-header').hasClass('go-back')) {
+            if ($(this).find('.icon.app-header').hasClass('go-back')) {
               return false;
             }
 
@@ -363,7 +363,7 @@
           changed = changed.add($(obj));
         });
 
-        this.triggers = !remove ? this.triggers.add(changed) : this.triggers.not(changed);
+        this.triggers = this.triggers[!remove ? 'add' : 'not'](changed);
 
         if (norebuild && norebuild === true) {
           return;
