@@ -1,22 +1,20 @@
-{{> includes/head}}
-<body class="no-scroll">
-<a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
-{{> controls/svg}}
+<div class="row">
+  <div class="six columns">
 
-<div class="page-container no-scroll">
-  {{> includes/header}}
-  <section id="maincontent" class="page-container scrollable" role="main">
-    <div class="row">
-      <ul>
-        {{#paths}}
-          <li><a class="hyperlink" href="{{href}}">{{text}}</a></li>
-        {{/paths}}
-      </ul>
-    </div>
-  </section>
+    <ul>
+      {{#paths}}
+        <li>
+          <a class="hyperlink" href="{{href}}">
+            {{#icon}}
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="{{icon}}"></use>
+              </svg>
+            {{/icon}}
+            <span>{{text}}</span>
+          </a>
+        </li>
+      {{/paths}}
+    </ul>
+
+  </div>
 </div>
-
-{{> includes/footer}}
-
-</body>
-</html>
