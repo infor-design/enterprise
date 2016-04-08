@@ -378,8 +378,8 @@
           $('.modal-search.modal').removeClass('is-visible');
           $('.modal-search.modal').hide();
           $('.overlay.modal-search').remove();
+          $('body').removeClass('modal-engaged');
         });
-
 
         matchedItems('[data-translate="text"]').each(function () {
           var obj = $(this);

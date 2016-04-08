@@ -39,15 +39,26 @@
   var api = elem.data('tree');
 
   api.addNode({text: 'New Item 1', id: 'new1'});
-  api.addNode({text: 'New Item 2'});
+  api.addNode({text: 'New Item 2', id: 'new2'});
 
   //Add Children to parent ID
   api.addNode({text: 'New Item 1.2', parent: 'new1'});
   api.addNode({text: 'New Item 1.2', parent: 'new1', id: 'new12'});
-  api.addNode({text: 'New Item 1.2.1', parent: 'new12'});
+  api.addNode({text: 'New Item 1.2.1', parent: 'new12', id: 'new121'});
   api.addNode({text: 'New Item 1.2.2', icon: 'icon-tree-image', parent: 'new12'});
 
   //Wrong id - adds to bottom
-  api.addNode({text: 'New Item 3', parent: 'xxx'});
+  api.addNode({text: 'New Item 3', parent: 'xxx', id: 'new3'});
+
+  //Add view jquery object
+  api.addNode({text: 'New Item 5', parent: $('#leadership'), id: 'new5'});
+
+  //Change node text
+  api.updateNode({text: 'Changed Item 1', icon: 'icon-tree-chart', id: 'new121'});
+
+  api.addNode({text: 'New Item 6', id: 'new6'});
+
+  api.removeNode({id: 'new6'});
+  api.removeNode($('#new6'));
 
 </script>

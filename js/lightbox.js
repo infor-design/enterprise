@@ -30,7 +30,7 @@
           // Image src
           image: '',
 
-          // If set to true, enables cyclic navigation. This means, if you click "next" 
+          // If set to true, enables cyclic navigation. This means, if you click "next"
           // after you reach the last element, first element will be displayed (and vice versa).
           loop: true,
 
@@ -96,7 +96,12 @@
           $('.overlay').css('opacity', '.7');
         })
         .on('afterclose', function () {
+          var modal = $(this);
+
           $('#lightbox-modal').remove();
+          $('.overlay').remove();
+          modal.data('modal').destroy();
+          modal.off('open').off('afterclose');
         });
 
         // Do Ui Customizations
@@ -209,7 +214,7 @@
         return ($(window).height()* 0.9) - 100; //90% -(100 :extra elements-height);
       },
 
-      // Resize 
+      // Resize
       resize: function() {
         var bodyHeight = $('.modal-body').height(),
           calcHeight = this.getCalcHeight();
@@ -251,7 +256,7 @@
         el = (direction === 'next') ?
           (boxes.eq(index < (boxes.length-1) ? (index+1) : 0)) :
           (boxes.eq(index > 0 ? (index-1) : (boxes.length-1)));
-        
+
         settings = el && el.length ? el.data('lightbox').settings : '';
 
         if (settings && settings.image && settings.image.length) {

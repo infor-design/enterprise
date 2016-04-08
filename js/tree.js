@@ -360,7 +360,7 @@
         }
 
         for (var i = 0; i < dataset.length; i++) {
-          self.addNode(dataset[i]);
+          self.addNode(dataset[i], 'bottom', false);
         }
       },
 
@@ -422,9 +422,6 @@
       },
 
       syncDataset: function (elem) {
-        if (this.settings.dataset) {
-          return;
-        }
 
         var json = [],
           self = this;
@@ -485,7 +482,7 @@
       },
 
       // Node Construction Functions
-      addNode: function (node, location) {
+      addNode: function (node, location, updateData) {
         var li = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(li);
 
@@ -505,8 +502,7 @@
         }
 
         //Handle Location
-
-        var found = this.addToDataset(node, location);
+        var found = updateData ? this.addToDataset(node, location) : true;
 
         if (location === 'bottom' && (!node.parent || !found)) {
           this.element.append(li);
@@ -521,15 +517,26 @@
         }
 
         // Support ParentId in JSON Like jsTree
-        if (node.parent && found) {
-          if (typeof node.parent === 'string') {
+        if (node.parent) {
+
+          if (found && typeof node.parent === 'string') {
             li = this.element.find('#'+node.parent).parent();
             this.addAsChild(node, li);
           }
+
+          if (node.parent && node.parent instanceof jQuery) {
+            li = node.parent;
+            if (node.parent.is('a')) {
+              li = node.parent.parent();
+            }
+            this.addAsChild(node, li);
+          }
+          node.node = li.find('ul li a').first();
+
         } else {
           this.addChildNodes(node, li);
+          node.node = li.children('a').first();
         }
-
 
         this.decorateNode(a);
 
@@ -553,7 +560,7 @@
         this.decorateNode(li.find('a').first());
 
         node.parent = '';
-        this.addNode(node, ul);
+        this.addNode(node, ul, true);
       },
 
       addChildNodes: function (node, li) {
@@ -568,7 +575,7 @@
 
         for (var i = 0; i < node.children.length; i++) {
           var elem = node.children[i];
-          var newLi = self.addNode(elem, ul);
+          var newLi = self.addNode(elem, ul, false);
 
           if (elem.children) {
             self.addChildNodes(elem, newLi);
@@ -576,12 +583,42 @@
         }
       },
 
-      editNode: function () {
+      //Update fx rename a node
+      updateNode: function (node) {
+
+        //Find the node in the dataset and ui and sync it
+        var elem = this.findById(node.id);
+        if (!elem) {
+          return;
+        }
+
+        if (node.text) {
+          elem.node.find('.tree-text').first().text(node.text);
+          elem.text = node.text;
+        }
+
+        if (node.icon) {
+          elem.node.find('use').first().attr('xlink:href','#'+ node.icon);
+          elem.icon = node.icon;
+        }
 
       },
 
-      removeNode: function () {
+      //Delete a node from the dataset or tree
+      removeNode: function (node) {
+        var elem = this.findById(node.id);
 
+        if (node instanceof jQuery) {
+          elem = node;
+          elem.parent().remove();
+        } else if (elem) {
+          elem.node.parent().remove();
+        }
+
+        if (!elem) {
+          return;
+        }
+        this.syncDataset(this.element);
       },
 
       // Plugin Related Functions

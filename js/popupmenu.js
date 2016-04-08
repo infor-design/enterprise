@@ -149,11 +149,10 @@
 
         // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
         if (containerClass !== undefined &&
-          (this.element.closest('.masthead').length > 0)) {
+          (this.element.closest('.masthead').not('.search-results .masthead').length > 0)) {
           this.menu.parent('.popupmenu-wrapper').addClass('alternate');
         }
 
-        //TODO: Follow up 'button expanded' in JAWS
         this.element.attr('aria-haspopup', true);
         this.element.attr('aria-controls', id);
 
