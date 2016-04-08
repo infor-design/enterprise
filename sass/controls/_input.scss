@@ -545,5 +545,9 @@ html[dir='rtl'] {
   textarea {
     padding: 9px 10px 8px;
   }
+
+  input.error:not(.spinbox):not(.searchfield) {
+    padding: 9px 32px 8px 10px;
+  }
 }
 
