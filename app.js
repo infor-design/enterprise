@@ -230,7 +230,6 @@ var express = require('express'),
   // =========================================
 
   var testOpts = {
-    title: 'SoHo XI',
     subtitle: 'Tests',
     layout: 'tests/layout'
   };
