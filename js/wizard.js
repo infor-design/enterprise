@@ -203,10 +203,11 @@
 
       //Select the nth tick
       select: function(n) {
-        this.ticks.find('.complete').removeClass('completed');
-        this.ticks.find('.current').removeClass('current');
-        this.ticks.eq(n).addClass('current');
-        this.ticks.filter('a:lt(' + n + ')').addClass('completed');
+        this.ticks
+          .removeClass('complete current')
+          .eq(n).addClass('current')
+          .prevAll('.tick').addClass('complete');
+
         this.updated();
       },
 
