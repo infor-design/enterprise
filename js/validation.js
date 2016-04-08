@@ -430,6 +430,10 @@
 
       if (loc.parent('.field').find('svg.icon-error').length === 0) {
 
+        if (field.parent().is('.editor-container')) {
+          field.parent().addClass('is-error');
+        }
+
         if (field.parent(':not(.editor-container)').find('.btn-actions').length ===1) {
           field.parent().find('.btn-actions').before(svg);
         } else if (field.parent().find('.data-description').length ===1) {
@@ -566,6 +570,10 @@
       //Remove error classes from pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect')) {
         field.data('dropdown').input.removeClass('error').removeAttr('placeholder');
+      }
+
+      if (field.parent().is('.editor-container')) {
+        field.parent().removeClass('is-error');
       }
     },
 
