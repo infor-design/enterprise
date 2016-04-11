@@ -463,10 +463,12 @@ $timeline-line-color: $slate04;
 $timeline-header-color: $primary-color;
 
 //Themable Variables in config.scss
-$wizard-active-color: $primary-color;
 $wizard-default-bg: $body-bg-color;
-$wizard-bar-bg: $slate06;
+$wizard-bar-bg: $slate04;
+$wizard-color: $slate03;
 $wizard-active-color: $primary-color;
+$wizard-active-text-color: $azure04;
+$wizard-focus-box-shadow: 0 0 0 1px $primary-color;
 
 //Themable Variables in config.scss
 $hierarchy-line-color: $slate04;

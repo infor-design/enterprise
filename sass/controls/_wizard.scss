@@ -5,9 +5,9 @@
 
 //Internal Variables
 $wizard-height: 164px;
-$wizard-tick-border-width: 4px;
-$wizard-tick-size: 18px;
-$wizard-focus-state-size: ($wizard-tick-size * 1.5);
+$wizard-tick-border-width: 2px;
+$wizard-tick-size: 14px;
+$wizard-current-state-size: ($wizard-tick-size * 1.3);
 
 .wizard-header {
   background-color: $wizard-default-bg;
@@ -16,13 +16,13 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
 
   .bar {
     background-color: $wizard-bar-bg;
-    height: 3px;
+    height: 2px;
     position: relative;
   }
 
   .completed-range {
     background-color: $wizard-active-color;
-    height: 3px;
+    height: 2px;
     left: 0;
     position: absolute;
     top: 0;
@@ -33,6 +33,7 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
   .tick {
     background-color: $wizard-default-bg;
     border-radius: ($wizard-tick-size/2);
+    color: $wizard-bar-bg;
     display: inline-block;
     height: $wizard-tick-size;
     margin-left: -3px;
@@ -73,24 +74,23 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
       width: 0;
     }
 
-    &:focus::before {
-      border: 1px solid rgba($wizard-active-color, 1);
-      border-radius: ($wizard-focus-state-size/2) + $wizard-tick-border-width;
-      height: $wizard-focus-state-size;
-      left: -.5em;
-      top: -.5em;
-      width: $wizard-focus-state-size;
-    }
-
     .label {
-      color: $font-color-lowcontrast;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      color: $wizard-color;
+      display: inline-block;
+      height: 24px;
+      line-height: 22px;
+      padding: 0 3px;
       position: absolute;
-      top: -($wizard-tick-size * 2);
+      top: ($wizard-tick-size * 2);
       white-space: nowrap;
     }
 
     &.current,
     &.complete {
+      color: $wizard-active-color;
+
       &::after {
         border: 0;
         left: $wizard-tick-border-width;
@@ -98,36 +98,60 @@ $wizard-focus-state-size: ($wizard-tick-size * 1.5);
       }
 
       .label {
-        top: -($wizard-tick-size * 2);
+        color: $wizard-active-text-color;
+        top: ($wizard-tick-size * 2);
       }
     }
 
     &.current {
       background-color: $wizard-active-color;
       border-radius: 50%;
-      color: $wizard-active-color;
+
+      &::before {
+        border: 1px solid rgba($wizard-active-color, 1);
+        border-radius: ($wizard-current-state-size/2) + $wizard-tick-border-width;
+        height: $wizard-current-state-size;
+        left: $wizard-tick-size - $wizard-current-state-size + ($wizard-tick-border-width/2);
+        top: $wizard-tick-size - $wizard-current-state-size + ($wizard-tick-border-width/2);
+        width: $wizard-current-state-size;
+      }
 
       .label {
-        color: $wizard-active-color;
         font-weight: bold;
       }
     }
 
     &.complete {
       background-color: $wizard-active-color;
-      color: $font-color;
+    }
+  }
+
+  a.tick {
+
+    &.current {
+      cursor: default;
 
       .label {
-        color: $font-color;
+        cursor: text;
       }
+    }
+
+    &:hover:not(.current):not([disabled]) .label:after {
+      border-bottom: 1px solid;
+      bottom: 1px;
+      content: '';
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+
+    &:focus:not([disabled]) .label {
+      box-shadow: $wizard-focus-box-shadow;
     }
   }
 }
 
 // Styles used by the Header Wizard Control
-$header-wizard-bar: $azure09;
-$header-wizard-active-color: $white;
-
 .header {
   .wizard {
     margin: 0 20px;
@@ -138,58 +162,46 @@ $header-wizard-active-color: $white;
     padding: (($wizard-height/8) - $wizard-tick-border-width) ($wizard-height/4) (($wizard-height/4) - $wizard-tick-border-width);
 
     .bar {
-      background-color: $header-wizard-bar;
+      background-color: $wizard-header-secondary-color;
     }
 
     .completed-range {
-      background-color: $header-wizard-active-color;
+      background-color: $wizard-header-color;
     }
 
     .tick {
       background-color: $header-bg-color;
 
       &::after {
-        border: $wizard-tick-border-width solid $header-wizard-bar;
-      }
-
-      &::before {
-        border: 1px solid rgba($header-wizard-active-color, 0);
-      }
-
-      &:focus {
-        &::before {
-          border: 1px solid rgba($header-wizard-active-color, 1);
-        }
+        border-color: $wizard-header-secondary-color;
       }
 
       .label {
-        color: $azure09;
-        top: $wizard-tick-size * 2;
+        color: $wizard-header-text-color;
       }
 
       &.current,
       &.complete {
-        &::after {
-          border: 0;
+        background-color: $wizard-header-color;
+
+        .label {
+          color: $wizard-header-color;
         }
       }
 
-      &.current {
-        background-color: $header-wizard-active-color;
-        color: $header-wizard-active-color;
+      &.current::before {
+        border-color: $wizard-header-color;
+      }
+    }
 
-        .label {
-          color: $header-wizard-active-color;
-        }
+    a.tick {
+
+      &:hover:not(.current):not([disabled]) .label {
+        color: $wizard-header-color;
       }
 
-      &.complete {
-        background-color: $header-wizard-active-color;
-        color: $header-wizard-active-color;
-
-        .label {
-          color: $header-wizard-active-color;
-        }
+      &:focus:not([disabled]) .label {
+        box-shadow: $wizard-header-focus-box-shadow;
       }
     }
   }
@@ -324,11 +336,6 @@ html[dir='rtl'] {
       &::before {
         left: auto;
         right: $wizard-tick-size / 2;
-      }
-
-      &:focus::before {
-        left: auto;
-        right: -.5em;
       }
 
       &.current,
