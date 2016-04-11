@@ -585,9 +585,15 @@
 
       //Update fx rename a node
       updateNode: function (node) {
-
         //Find the node in the dataset and ui and sync it
         var elem = this.findById(node.id);
+
+        //Passed in the node element
+        if (node.node) {
+          elem = {};
+          elem.node = node.node;
+        }
+
         if (!elem) {
           return;
         }
@@ -600,6 +606,10 @@
         if (node.icon) {
           elem.node.find('use').first().attr('xlink:href','#'+ node.icon);
           elem.icon = node.icon;
+        }
+
+        if (node.node) {
+          this.syncDataset(this.element);
         }
 
       },
