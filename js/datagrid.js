@@ -505,7 +505,7 @@ $.fn.datagrid = function(options) {
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
-        columnsReorder: false, // Makes columns to be re-order by drag and drop
+        reorder: false, // Makes columns to be re-order by drag and drop
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -593,6 +593,7 @@ $.fn.datagrid = function(options) {
     //Render the Header and Rows
     render: function () {
       var self = this;
+
 
       //Init from Table
       if (this.settings.dataset === 'table') {
@@ -906,7 +907,7 @@ $.fn.datagrid = function(options) {
     //Render the Header
     renderHeader: function() {
       var self = this,
-        headerRow = '<thead>';
+        headerRow = '';
 
       var colGroups = this.settings.columnGroups;
 
@@ -960,23 +961,24 @@ $.fn.datagrid = function(options) {
 
         headerRow += '</div></th>';
       }
-      headerRow += '</tr></thead>';
+      headerRow += '</tr>';
 
-      self.headerRow = $(headerRow);
-      self.table.append(self.headerRow);
+      if (self.headerRow === undefined) {
+        self.headerRow = $('<thead>' + headerRow + '</thead>');
+        self.table.append(self.headerRow);
+      } else {
+        self.headerRow.empty();
+        self.headerRow.append(headerRow);
+      }
+
       self.table.find('th[title]').tooltip();
       self.setColumnWidths();
 
-      //TODO: Drag Drop Columns Option
-      /*self.headerNodes().drag({clone: true, containment: 'parent'}).on('dragstart', function (e, pos, clone) {
-        clone.css({'position': 'absolute', top: '30px', 'background-color': '#5c5c5c', 'height': '48px'});
-      });*/
-
-      if (self.settings.columnsReorder) {
+      if (self.settings.reorder) {
         self.createDraggableColumns();
       }
     },
-//-------------------------------------------------
+
     // Create draggable columns
     createDraggableColumns: function () {
       var self = this,
@@ -1338,6 +1340,15 @@ $.fn.datagrid = function(options) {
         this.updateCellValue(idx, j, this.fieldValue(rowData, col.field));
       }
 
+    },
+
+    //given a new column set update the rows and reload
+    updateColumns: function(columns) {
+      this.settings.columns = columns;
+
+      this.renderHeader();
+      this.renderRows();
+      this.setColumnWidths();
     },
 
     // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
