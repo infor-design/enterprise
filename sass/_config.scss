@@ -500,10 +500,16 @@ $timeline-line-color: $graphite04;
 $timeline-header-color: $primary-color;
 
 //Wizard
-$wizard-active-color: $primary-color;
 $wizard-default-bg: $body-bg-color;
-$wizard-bar-bg: $graphite02;
+$wizard-bar-bg: $graphite04;
+$wizard-color: $graphite06;
 $wizard-active-color: $primary-color;
+$wizard-active-text-color: $primary-color;
+$wizard-focus-box-shadow: 0 0 0 1px $primary-color;
+$wizard-header-color: $white;
+$wizard-header-secondary-color: rgba($white, .4);
+$wizard-header-text-color: rgba($white, .5);
+$wizard-header-focus-box-shadow: 0 0 0 1px $white;
 
 //Hierarch
 $hierarchy-line-color: $graphite03;

@@ -35,7 +35,6 @@
   .icon-error {
     position: absolute;
     right: 15px;
-    top: 70px;
   }
 
   // Customize the formatter toolbar if it's inside an editor
@@ -442,6 +441,18 @@ html[dir='rtl'] {
     .editor,
     .editor-source {
       border-color: transparent $editor-focus-border-color $editor-focus-border-color $editor-focus-border-color;
+    }
+  }
+  
+  &.is-error,
+  &.is-error:hover {
+    .toolbar.formatter-toolbar {
+      border-color: $error-color $error-color $editor-border-color $error-color;
+    }
+
+    .editor,
+    .editor-source {
+      border-color: transparent $error-color $error-color $error-color;
     }
   }
 }

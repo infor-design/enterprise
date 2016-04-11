@@ -459,10 +459,13 @@ $timeline-line-color: $graphite05;
 $timeline-header-color: $azure09;
 
 //Wizard
-$wizard-active-color: $primary-color;
 $wizard-default-bg: $body-bg-color;
-$wizard-bar-bg: $graphite05;
+$wizard-bar-bg: $graphite06;
+$wizard-color: $graphite09;
 $wizard-active-color: $primary-color;
+$wizard-active-text-color: $primary-color;
+$wizard-focus-box-shadow: 0 0 0 1px $azure07;
+
 
 //Themable Variables in config.scss
 $hierarchy-line-color: $graphite03;
