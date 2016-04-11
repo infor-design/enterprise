@@ -125,7 +125,7 @@
 
           var field = $(this);
           setTimeout(function () {
-            if (field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
+            if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
               return;
             }
 
@@ -201,7 +201,12 @@
       self.inputs.each(function (e) {
         var field = $(this);
         if (field.attr('data-validate')) {
-          var dfds = self.validate($(this), false, e);
+
+          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation')) {
+            return true;
+          }
+
+          var dfds = self.validate(field, false, e);
           for (var i = 0; i < dfds.length; i++) {
             deferreds.push(dfds[i]);
           }
