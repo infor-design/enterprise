@@ -6,6 +6,7 @@ $datagrid-header-medium-height: 30px;
 $datagrid-header-short-height: 32px;
 
 .datagrid-wrapper {
+  background-color: transparent;
   border: 1px solid $datagrid-border-color;
   min-width: 100%;
   position: relative;
@@ -63,6 +64,7 @@ $datagrid-header-short-height: 32px;
 // Grid Styling
 .datagrid {
   @include font-size(14);
+  background-color: transparent;
   border: 0;
   border-collapse: collapse;
   //height: 100%;
@@ -681,7 +683,7 @@ td .btn-actions {
   &.is-partial:after {
     animation: none !important;
     @include  checkbox-partial-after-style;
-    margin-left: -3px;
+    margin-left: -2px;
     margin-top: -4px;
   }
 
@@ -742,8 +744,6 @@ td.datagrid-trigger-cell {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  left: -10px;
-  top: -2px;
   vertical-align: middle;
 
   span:not(.icon) {
@@ -752,7 +752,13 @@ td.datagrid-trigger-cell {
 
   + span {
     color: $datagrid-cell-color;
-    margin-left: -15px;
+  }
+
+  .icon.plus-minus::before,
+  .icon.plus-minus::after {
+    left: 10px;
+    top: 14px;
+    width: 14px;
   }
 
   &:hover {
@@ -784,7 +790,7 @@ td.datagrid-trigger-cell {
   }
 
   .datagrid-row-detail {
-    border-bottom: 1px solid #d8d8d8;
+    border-bottom: 1px solid $datagrid-border-color;
     height: 0;
     margin: -1px -20px 0;
     padding: 0 20px;

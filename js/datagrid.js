@@ -848,6 +848,17 @@ $.fn.datagrid = function(options) {
       this.settings.dataset = dataset;
       this.renderRows();
 
+      if (!pagerInfo) {
+        pagerInfo = {};
+      }
+
+      if (!pagerInfo.activePage) {
+        pagerInfo.activePage = 1;
+        pagerInfo.pagesize = this.settings.pagesize;
+        pagerInfo.total = -1;
+        pagerInfo.type = 'initial';
+      }
+
       //Update Paging and Clear Rows
       this.renderPager(pagerInfo);
       this.selectedRows([]);
@@ -859,7 +870,6 @@ $.fn.datagrid = function(options) {
       }
 
       this.syncSelectedUI();
-      // this.syncFixedHeader();
     },
 
     uniqueID: function (gridCount, suffix) {
@@ -1159,17 +1169,17 @@ $.fn.datagrid = function(options) {
 
       self.tableBody.empty();
 
-      for (var i = 0; i < settings.dataset.length; i++) {
+      for (var i = 0; i < self.settings.dataset.length; i++) {
         var isEven = (i % 2 === 0);
 
         rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row'+
-                  (settings.rowHeight !== 'normal' ? ' ' + settings.rowHeight + '-rowheight' : '') +
-                  (settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
-                  (!settings.cellNavigation ? ' is-clickable' : '' ) +
+                  (self.settings.rowHeight !== 'normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
+                  (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
+                  (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
                    '"' + '>';
 
-        for (var j = 0; j < settings.columns.length; j++) {
-          var col = settings.columns[j],
+        for (var j = 0; j < self.settings.columns.length; j++) {
+          var col = self.settings.columns[j],
               cssClass = '',
               formatter = (col.formatter ? col.formatter : self.defaultFormatter),
               formatted = '';
@@ -1179,9 +1189,9 @@ $.fn.datagrid = function(options) {
           }
 
           if (typeof formatter ==='string') {
-            formatted = window.Formatters[formatter](i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i], self).toString();
+            formatted = window.Formatters[formatter](i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), self.settings.columns[j], self.settings.dataset[i], self).toString();
           } else {
-            formatted = formatter(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), settings.columns[j], settings.dataset[i], self).toString();
+            formatted = formatter(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), self.settings.columns[j], self.settings.dataset[i], self).toString();
           }
 
           if (formatted.indexOf('<span class="is-readonly">') === 0) {
@@ -1208,7 +1218,7 @@ $.fn.datagrid = function(options) {
 
           //Run a function that helps check if editable
           if (col.isEditable && !col.readonly) {
-            var canEdit = col.isEditable(i, j, self.fieldValue(settings.dataset[i], settings.columns[j].field), col, this.settings.dataset[i]);
+            var canEdit = col.isEditable(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
 
             if (!canEdit) {
               cssClass += ' is-readonly ';
@@ -1228,7 +1238,7 @@ $.fn.datagrid = function(options) {
              '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
-            var canShow = col.contentVisible(i, j, settings.dataset[i], col);
+            var canShow = col.contentVisible(i, j, self.settings.dataset[i], col);
             if (!canShow) {
               formatted = '';
             }
@@ -1239,9 +1249,9 @@ $.fn.datagrid = function(options) {
 
         rowHtml += '</tr>';
 
-        if (settings.rowTemplate) {
-          var tmpl = settings.rowTemplate,
-            item = settings.dataset[i],
+        if (self.settings.rowTemplate) {
+          var tmpl = self.settings.rowTemplate,
+            item = self.settings.dataset[i],
             renderedTmpl = '';
 
           if (Tmpl && item) {
@@ -1272,8 +1282,8 @@ $.fn.datagrid = function(options) {
     setColumnWidths: function () {
       var total = 0, self = this;
 
-      for (var i = 0; i < settings.columns.length; i++) {
-        var column = settings.columns[i],
+      for (var i = 0; i < self.settings.columns.length; i++) {
+        var column = self.settings.columns[i],
           newWidth = 0;
 
         if (column.hidden) {
@@ -1895,16 +1905,16 @@ $.fn.datagrid = function(options) {
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox');
 
       //Sync the header checkbox
+      if (this._selectedRows.length > 0) {
+        headerCheckbox.addClass('is-checked is-partial');
+      }
+
       if (this._selectedRows.length === this.settings.dataset.length) {
         headerCheckbox.addClass('is-checked').removeClass('is-partial');
       }
 
       if (this._selectedRows.length === 0) {
         headerCheckbox.removeClass('is-checked').removeClass('is-partial');
-      }
-
-      if (this._selectedRows.length > 0) {
-        headerCheckbox.addClass('is-checked is-partial');
       }
 
       //Open or Close the Contextual Toolbar.
@@ -2182,14 +2192,6 @@ $.fn.datagrid = function(options) {
           }
         }
 
-        // if (key === 37 && !e.altKey && !self.editor) {
-        //   self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
-        // }
-
-        // if (key === 39 && !e.altKey && !self.editor) {
-        //   self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
-        // }
-
         //Up and Down to navigate by row.
         if (key === 38 && !e.altKey && !self.editor) {
           if (self.activeCell.row === 0) {
@@ -2418,7 +2420,7 @@ $.fn.datagrid = function(options) {
     },
 
     updateCellValue: function (row, cell, value) {
-      var rowNode = this.tableBody.find('tr').eq(row),
+      var rowNode = this.tableBody.find('tr[role="row"]').eq(row),
         cellNode = rowNode.find('td').eq(cell),
         col = this.columnSettings(cell),
         formatted = '',
@@ -2672,8 +2674,6 @@ $.fn.datagrid = function(options) {
         self.highlightSearchRows(self.filterExpr[0].value);
        }
 
-       //self.syncFixedHeader();
-
       });
 
       //Get First page on Sort Action
@@ -2705,6 +2705,7 @@ $.fn.datagrid = function(options) {
           this.pager.updatePagingInfo(pagingInfo);
         }
       }
+
       // Update selected and Sync header checkbox
       this.updateSelected();
       this.syncSelectedUI();
