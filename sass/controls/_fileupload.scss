@@ -4,29 +4,29 @@
 label.fileupload {
   display: inline-block;
   position: absolute;
-  left: 300px;
-  top: 12px;
+  left: 263px;
+  top: 18px;
 
   // Label
   span:not(.audible) {
     cursor: pointer;
     display: inline-block;
-    height: 32px;
-    left: -35px;
+    height: 34px;
     outline: 0;
     padding-top: 10px;
     position: relative;
     text-align: center;
-    top: 5px;
-    width: 34px;
+    width: 36px;
 
     @media (max-width: 374px) {
       left: -55px;
     }
 
     &.trigger {
+
       .icon {
         fill: $trigger-icon-fill-light-color;
+        top: -2px;
       }
 
       &:hover {
