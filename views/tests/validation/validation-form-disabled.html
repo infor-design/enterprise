@@ -45,17 +45,32 @@
           </select>
       </div>
 
-      <button type="submit" id = 'test1' class="btn-primary">Submit</button>
+      <button type="submit" id='submit-button' class="btn-primary">Submit</button>
+      <button type="button" id='change-button' class="btn-secondary">Change</button>
+      <button type="button" id='reset-button' class="btn-secondary">Reset</button>
+
     </form>
 
-    <script type="text/javascript">
+    <script>
       $(function() {
           $('#test').on('validated', function (e, isValid) {
               alert(isValid ? 'Form is Valid' : 'Form is not Valid');
            });
 
-          $('#credit-code2').attr('data-disable-validation', true);
-          //'disable-validation');
+          $('#reset-button').on('click', function () {
+              $('#test').resetForm();
+           });
+
+          $('#change-button').on('click', function () {
+              var field = $('#credit-code2');
+
+              if (field.attr('data-disable-validation') === 'true') {
+                field.removeAttr('data-disable-validation');
+              } else {
+                field.attr('data-disable-validation', 'true');
+              }
+
+           });
 
       });
     </script>
