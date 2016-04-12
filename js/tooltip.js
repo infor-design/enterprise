@@ -117,7 +117,7 @@
             .on('mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip', function() {
                 clearTimeout(timer);
                 setTimeout(function() {
-                  // self.hide();
+                  self.hide();
                 }, delay);
             })
             .on('updated.tooltip', function() {
