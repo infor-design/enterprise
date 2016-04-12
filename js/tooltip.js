@@ -117,7 +117,7 @@
             .on('mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip', function() {
                 clearTimeout(timer);
                 setTimeout(function() {
-                  self.hide();
+                  // self.hide();
                 }, delay);
             })
             .on('updated.tooltip', function() {
@@ -319,7 +319,8 @@
         var targetContainer = $('body');
 
         // adjust the tooltip if the element is being scrolled inside a scrollable DIV
-        this.scrollparent = this.element.parents('.page-container[class*="scrollable"]').first();
+        this.scrollparent = this.element.closest('.page-container.scrollable');
+        // this.scrollparent = this.element.parents('.page-container[class*="scrollable"]').first();
         if (this.scrollparent.length) {
           targetContainer = this.scrollparent;
         }
@@ -379,7 +380,7 @@
             if (Locale.isRTL()) {
               self.placeToLeft(scrollable);
               if (this.tooltip.offset().left - scrollable.deltaWidth <= 0) {
-                self.tooltip.removeClass('left').addClass('right');
+                self.tooltip.removeClass('right').addClass('left');
                 self.placeToRight(scrollable);
               }
             } else {
@@ -396,7 +397,7 @@
               self.placeToRight(scrollable);
               rightOffset = self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth();
               if (rightOffset >= winW) {
-                self.tooltip.removeClass('right').addClass('left');
+                self.tooltip.removeClass('left').addClass('right');
                 self.placeToLeft(scrollable);
               }
             } else {
@@ -411,12 +412,14 @@
 
         // secondary check on bottom/top placements to see if the tooltip width is long enough
         // to bleed off the edge of the page.
-        var o, arrow, arrowPosLeft, delta;
+        var o, arrow, arrowPosLeft, arrowPosTop, delta,
+          el = self.activeElement;
 
         function setCurrentTooltipPos() {
           o = self.tooltip.offset();
           arrow = self.tooltip.find('.arrow');
           arrowPosLeft = 0;
+          arrowPosTop = 0;
           delta = 0;
         }
 
@@ -430,13 +433,16 @@
           return o.left - scrollable.deltaWidth + self.tooltip.outerWidth() >= winW;
         }
 
+        function offTopEdgeCondition() {
+          setCurrentTooltipPos();
+          return o.top - scrollable.deltaHeight <= 0;
+        }
+
         if (/offset|bottom|top/i.test(settings.placement)) {
           // Check for bleeding off the left edge
           if (offLeftEdgeCondition()) {
             delta = (0 - (o.left - scrollable.deltaWidth) + 1) * -1;
             self.tooltip.css('left', o.left + delta);
-            arrowPosLeft = parseInt(arrow.css('left'), 10);
-            //arrow.css('left', arrowPosLeft - delta);
 
             // Check again.  If it's still bleeding off the left edge, swap it to a right-placed Tooltip.
             if (offLeftEdgeCondition()) {
@@ -450,15 +456,17 @@
             // need to explicitly set a width on the popover for this to work, otherwise popover contents will wrap
             // and cause it to grow wider:
             var top,
-              el = self.activeElement,
               tooltipWidth = self.tooltip.outerWidth() -10;
 
+            el = self.activeElement;
+
+            self.tooltip.removeClass('top bottom').addClass(Locale.isRTL() ? 'right' : 'left');
             self.tooltip.css('width', tooltipWidth);
             delta = (winW - (o.left - scrollable.deltaWidth + tooltipWidth +7) - 1) * -1;
             top = (el.offset().top - el.outerHeight() - (self.tooltip.outerHeight()/2) -3) + scrollable.offsetTop;
-            self.tooltip.css({'left': o.left - delta, 'top': top});
+            self.tooltip.css({'left': Locale.isRTL() ? (el.offset().left - self.tooltip.outerWidth() -7) : (o.left - delta), 'top': top});
             arrowPosLeft = parseInt(arrow.css('left'), 10);
-            arrow.css('left', arrowPosLeft + delta);
+            arrow.css('left', Locale.isRTL() ? 'auto' : (arrowPosLeft + delta));
 
             // Check again.  If it's still bleeding off the edge, swap it to a left-placed Tooltip.
             if (offRightEdgeCondition()) {
@@ -468,6 +476,30 @@
             }
           }
 
+        }
+
+        // If tooltip is hidden under header
+        // TODO: this is dirty fix, need to come-up with different approch
+        if (offTopEdgeCondition()) {
+          var headHtml = $('html'),
+            extra = {offsetTop: 0, paddingTop: 0};
+          if (headHtml.is('.is-firefox') || headHtml.is('.is-safari') || headHtml.is('.ie')) {
+            extra.offsetTop = 8;
+            extra.paddingTop = 8;
+          }
+          if (headHtml.is('.ie11') || headHtml.is('.ie9')) {
+            extra.offsetTop = 13;
+            extra.paddingTop = 15;
+          }
+          delta = (scrollable.deltaHeight - o.top - scrollable.offsetTop);
+          arrowPosTop = (self.tooltip.outerHeight()/2) - delta - (el.outerHeight()/2);
+
+          if ((o.top + scrollable.offsetTop - extra.offsetTop) < 0) {
+            delta -= scrollable.deltaHeight - extra.paddingTop;
+            arrowPosTop = arrowPosTop + (el.outerHeight()/2);
+          }
+          self.tooltip.css({'top': delta});
+          arrow.css('top', arrowPosTop);
         }
 
       },
@@ -517,7 +549,7 @@
               extraOffset = 10;
             } else {
               extraWidth = 10;
-              extraOffset = (isShortField ? (Locale.isRTL() ? 10 : -10) : -20);
+              extraOffset = (isShortField ? (Locale.isRTL() ? 10 : -10) : (Locale.isRTL() ? 10 : -20));
             }
           }
           if (this.activeElement.is('.spinbox')) {
