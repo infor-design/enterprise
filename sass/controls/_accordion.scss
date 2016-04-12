@@ -89,13 +89,13 @@
 
     .accordion-pane {
       .accordion-content {
-        padding-left: 55px;
+        padding-left: 36px;
       }
 
       // Level 2
       .accordion-header {
         > a {
-          padding-left: 55px;
+          padding-left: 36px;
         }
 
         > .icon,
@@ -103,6 +103,17 @@
           margin-left: 30px;
 
           + a {
+            padding-left: 0;
+            width: calc(100% - 56px);
+          }
+        }
+
+        &.list-item {
+          &::before {
+            padding-left: 37px;
+          }
+
+          a {
             padding-left: 0;
             width: calc(100% - 56px);
           }
@@ -129,6 +140,17 @@
               width: calc(100% - 76px);
             }
           }
+
+          &.list-item {
+            &::before {
+              padding-left: 56px;
+            }
+
+            a {
+              padding-left: 0;
+              width: calc(100% - 76px);
+            }
+          }
         }
 
         .accordion-pane {
@@ -149,6 +171,17 @@
               + a {
                 width: calc(100% - 95px);
                 padding-left: 0;
+              }
+            }
+
+            &.list-item {
+              &::before {
+                padding-left: 75px;
+              }
+
+              a {
+                padding-left: 0;
+                width: calc(100% - 95px);
               }
             }
           }
@@ -173,6 +206,17 @@
                   width: calc(100% - 114px);
                 }
               }
+
+              &.list-item {
+                &::before {
+                  padding-left: 94px;
+                }
+
+                a {
+                  padding-left: 0;
+                  width: calc(100% - 114px);
+                }
+              }
             }
 
             .accordion-pane {
@@ -191,6 +235,17 @@
                   margin-left: 106px;
 
                   + a {
+                    padding-left: 0;
+                    width: calc(100% - 134px);
+                  }
+                }
+
+                &.list-item {
+                  &::before {
+                    padding-left: 113px;
+                  }
+
+                  a {
                     padding-left: 0;
                     width: calc(100% - 134px);
                   }
@@ -564,6 +619,30 @@
       background-color: $accordion-disabled-pane-bg-color !important;
       border-bottom-color: $accordion-disabled-pane-bg-color !important;
     }
+
+    &.list-item {
+
+      &::before {
+        color: $accordion-icon-color;
+        content: '\25cf';
+        display: inline-block;
+        @include font-size(12);
+        padding: 10px 10px 10px 21px;
+        vertical-align: middle;
+      }
+
+      a {
+        padding-left: 1px;
+        vertical-align: middle;
+        width: calc(100% - 41px);
+      }
+
+      &.is-disabled {
+        > a {
+          color: $accordion-disabled-text-color;
+        }
+      }
+    }
   }
 
   // Level 2 Accordion Pane
@@ -585,6 +664,17 @@
         margin-left: 34px;
 
         + a {
+          padding-left: 0;
+          width: calc(100% - 59px);
+        }
+      }
+
+      &.list-item {
+        &::before {
+          padding-left: 41px;
+        }
+
+        a {
           padding-left: 0;
           width: calc(100% - 59px);
         }
@@ -614,6 +704,17 @@
             width: calc(100% - 78px);
           }
         }
+
+        &.list-item {
+          &::before {
+            padding-left: 60px;
+          }
+
+          a {
+            padding-left: 0;
+            width: calc(100% - 78px);
+          }
+        }
       }
 
       // Level 4 Accordion Pane
@@ -638,6 +739,17 @@
               width: calc(100% - 97px);
             }
           }
+
+          &.list-item {
+            &::before {
+              padding-left: 79px;
+            }
+
+            a {
+              padding-left: 0;
+              width: calc(100% - 97px);
+            }
+          }
         }
 
         // Level 5 Accordion Pane
@@ -658,6 +770,17 @@
               margin-left: 92px;
 
               + a {
+                padding-left: 0;
+                width: calc(100% - 117px);
+              }
+            }
+
+            &.list-item {
+              &::before {
+                padding-left: 99px;
+              }
+
+              a {
                 padding-left: 0;
                 width: calc(100% - 117px);
               }

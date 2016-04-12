@@ -62,10 +62,26 @@ var express = require('express'),
     next();
   };
 
+  // Simple Middleware for handling errors
+  var errorHandler = function(err, req, res, next) {
+    if (!err) {
+      return next();
+    }
+
+    console.error(err.stack);
+
+    if (res.headersSent) {
+      return next(err);
+    }
+
+    res.status(500).send('<h2>Internal Server Error</h2><p>' + err.stack +'</p>');
+  };
+
   // place optionHandler() first to augment all "res" objects with an "opts" object
   app.use(optionHandler);
   app.use(router);
   app.use(timestampLogger);
+  app.use(errorHandler);
 
   // Strips the ".html" from a file path and returns the target route name without it
   function stripHtml(routeParam) {
@@ -73,12 +89,35 @@ var express = require('express'),
     return noHtml;
   }
 
-  // Detects whether or not the specified path is a directory/folder
-  function isDirectory(filePath) {
-    try {
-      return fs.statSync('./views/' + filePath).isDirectory();
+  // Checks the target file path for its type (is it a file, a directory, etc)
+  // http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
+  function is(type, filePath) {
+    var types = ['file', 'folder'],
+      defaultType = types[0],
+      mappings = {
+        file: { methodName: 'isFile' },
+        directory: { methodName: 'isDirectory' }
+        // TODO: Add More (symbolic link, etc)
+      };
+
+    if (!type) {
+      console.warn('No type defined. Using the default type of "' + defaultType + '".');
+      type = defaultType;
     }
-    catch(e) {
+
+    if (!mappings[type]) {
+      console.error('Provided type "' + type + '" is not in the list of valid types.');
+      return false;
+    }
+
+    var targetPath = './views/' + filePath,
+      methodName = mappings[type].methodName;
+
+    try {
+      return fs.statSync(targetPath)[methodName]();
+    }
+    catch (e) {
+      console.info('File Path "' + targetPath + '" is not a ' + type + '.');
       return false;
     }
   }
@@ -104,12 +143,25 @@ var express = require('express'),
         dirs = [];
 
       // Strip out paths that aren't going to ever work
-      paths.forEach(function pathIterator(val, i) {
-        if (val === 'layout.html') {
+      paths.forEach(function pathIterator(val, vi) {
+        var excludes = [
+          /layout\.html/,
+          /\.DS_Store/
+        ],
+        match = false;
+
+        excludes.forEach(function(exclude, ei) {
+          if (val.match(exclude)) {
+            match = true;
+            return;
+          }
+        });
+
+        if (match) {
           return;
         }
 
-        realPaths.push(path);
+        realPaths.push(val);
       });
 
       // Map with links, add to
@@ -117,7 +169,7 @@ var express = require('express'),
         var href = path.join('/', directory, link),
           icon;
 
-        if (isDirectory(href)) {
+        if (is('directory', href)) {
           icon = '#icon-folder';
         }
 
@@ -130,7 +182,7 @@ var express = require('express'),
 
       var opts = extend({}, res.opts, {
         subtitle: 'Listing for ' + directory,
-        paths: paths.map(pathMapper)
+        paths: realPaths.map(pathMapper)
       });
 
       res.render('listing', opts);
@@ -236,47 +288,51 @@ var express = require('express'),
 
   function testsRouteHandler(req, res, next) {
     var opts = extend({}, res.opts, testOpts),
-      category = req.params.testCategory,
-      testPage = req.params.testPage,
-      path = req.url;
+      end = req.url.replace(/\/tests(\/)?/, '');
 
-    // A missing category means both no category and no test page.  Simply show the directory listing.
-    if (!category || !category.length) {
+    // remove query params for our checking
+    end = end.replace(/\?(.*)/, '');
+
+    if (!end || !end.length || end === '/') {
       getDirectoryListing('tests/', req, res, next);
       return;
     }
 
-    // Custom configurations for some test folders
-    if (category === 'applicationmenu') {
-      opts.layout = getApplicationMenuTestLayout(path);
+    var directory = 'tests/' + end;
+    if (hasTrailingSlash(directory)) {
+      if ( is('directory', directory) ) {
+        getDirectoryListing(directory, req, res, next);
+        return;
+      }
+
+      directory = directory.substr(0, directory.length - 1);
     }
-    if (category === 'distribution') {
+
+    // Custom configurations for some test folders
+    if (directory.match(/tests\/applicationmenu/)) {
+      opts.layout = getApplicationMenuTestLayout(directory);
+    }
+    if (directory.match(/tests\/distribution/)) {
       opts.amd = true;
       opts.layout = null; // No layout for this one on purpose.
       opts.subtitle = 'AMD Tests';
     }
-    if (category === 'signin') {
+    if (directory.match(/tests\/signin/)) {
       opts.layout = 'tests/layout-noheader';
     }
 
-    // A missing testpage with a category defined will either:
-    // - Show a directory listing if there is no test page associated with the current path
-    // - Show a test page
-    if (!testPage || !testPage.length) {
-      if (hasTrailingSlash(path)) {
-        if (isDirectory('tests/' + category + '/')) {
-          getDirectoryListing('tests/' + category + '/', req, res, next);
-          return;
-        }
+    // No trailing slash.  Check for an index file.  If no index file, do directory listing
+    if (is('directory', directory)) {
+      if (is('file', directory + '/index')) {
+        res.render(directory + '/index', opts);
+        return next();
       }
 
-      res.render('tests/' + category, opts);
-      next();
+      getDirectoryListing(directory, req, res, next);
       return;
     }
 
-    // if testpage and category are both defined, should be able to show a valid testpage
-    res.render('tests/' + category + '/' + testPage, opts);
+    res.render(directory, opts);
     next();
   }
 
@@ -285,23 +341,20 @@ var express = require('express'),
   function getApplicationMenuTestLayout(path) {
     var base = 'tests/applicationmenu/';
 
-    if (url.match(/\/site/)) {
+    if (path.match(/\/site/)) {
       return base + 'site/layout';
-    } else if (url.match(/\/different-header-types/)) {
+    } else if (path.match(/\/different-header-types/)) {
       return base + 'different-header-types/layout';
-    } else if (url.match(/\/lms/)) {
+    } else if (path.match(/\/lms/)) {
       return base + 'lms/layout';
-    } else if (url.match(/\/six-levels-with-icons/)) {
+    } else if (path.match(/\/six-levels-with-icons/)) {
       return base + 'six-levels-with-icons/layout';
     }
-    return base + '/six-levels/layout';
+    return base + 'six-levels/layout';
   }
 
   //Tests Index Page and controls sub pages
-  router.get('/tests/:testCategory/:testPage/', testsRouteHandler);
-  router.get('/tests/:testCategory/:testPage', testsRouteHandler);
-  router.get('/tests/:testCategory/', testsRouteHandler);
-  router.get('/tests/:testCategory', testsRouteHandler);
+  router.get('/tests*', testsRouteHandler);
   router.get('/tests', testsRouteHandler);
 
 
@@ -422,7 +475,7 @@ var express = require('express'),
     if (!example || !example.length) {
       if (hasTrailingSlash(path)) {
 
-        if (isDirectory('examples/' + folder + '/')) {
+        if (is('directory', 'examples/' + folder + '/')) {
           getDirectoryListing('examples/' + folder + '/', req, res, next);
           return;
         }
