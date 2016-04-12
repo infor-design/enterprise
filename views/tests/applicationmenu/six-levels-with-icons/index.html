@@ -19,12 +19,13 @@
   </div>
 </div>
 
-<!--
 <script type="text/javascript">
   $('#application-menu').on('selected.tests', function(e, target) {
     if (!e.defaultPrevented) {
-      alert('Link "'+ $(target).text().trim() +'" was clicked!');
+      $('body').toast({
+        'title': 'Application Menu Link Clicked',
+        'message': 'A link on the Application Menu titled <span style="font-weight: bold;">"' + $(target).text().trim() + '"</span> was clicked!'
+      });
     }
   });
 </script>
--->

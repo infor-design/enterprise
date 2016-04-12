@@ -238,6 +238,17 @@
   }
 }
 
+// Right-to-Left Styles
+html[dir='rtl'] {
+
+  .application-menu {
+    .branding {
+      padding: 1rem 1rem 0 0;
+    }
+  }
+
+}
+
 // On large + extra-large breakpoints, the .page-content element will shift to the left while the menu is open
 @media (min-width: $breakpoint-phone-to-tablet) {
   .application-menu {

@@ -347,11 +347,13 @@
       }
 
       &.plus-minus {
+        position: static;
+
         &::before,
         &::after {
           background-color: $accordion-icon-color;
-          left: .15em;
-          top: .68em;
+          left: 13px;
+          top: 17px;
           width: 12px;
         }
       }
@@ -603,13 +605,10 @@
       width: 20px;
 
       .icon.plus-minus {
-        left: -9px;
-        top: -4px;
-
         &::before,
         &::after {
-          left: .37em;
-          top: .85em;
+          left: 5px;
+          top: 14px;
           width: 10px;
         }
       }
@@ -807,11 +806,220 @@
 html[dir='rtl'] {
 
   .accordion {
-    // Reset the padding for various things when we have icons present
-    &.has-icons {
-      // Level 1
 
-      > .accordion-header {
+    // Level 1
+    .accordion-header {
+      -webkit-font-feature-settings: "ccmp" 0;
+
+      > a {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+
+      > .icon,
+      > [class^="btn"] {
+
+        + a {
+          padding-right: 0;
+        }
+      }
+    }
+
+    .accordion-pane {
+      .accordion-content {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+
+      // Level 2
+      .accordion-header {
+        > a {
+          padding-left: 0;
+          padding-right: 20px;
+        }
+
+        > .icon,
+        > [class^="btn"] {
+          margin-left: 3px;
+          margin-right: 14px;
+
+          + a {
+            padding-left: 0;
+            padding-right: 1px;
+          }
+        }
+
+        &.list-item {
+          &::before {
+            padding-left: 10px;
+            padding-right: 21px;
+          }
+
+          a {
+            padding-right: 1px;
+          }
+        }
+      }
+
+      .accordion-pane {
+        .accordion-content {
+          padding-left: 0;
+          padding-right: 40px;
+        }
+
+        // Level 3
+        .accordion-header {
+          > a {
+            padding-left: 0;
+            padding-right: 40px;
+          }
+
+          > .icon,
+          > [class^="btn"] {
+            margin-left: 3px;
+            margin-right: 34px;
+
+            + a {
+              padding-right: 0;
+            }
+          }
+
+          &.list-item {
+            &::before {
+              padding-left: 10px;
+              padding-right: 41px;
+            }
+
+            a {
+              padding-right: 1px;
+            }
+          }
+        }
+
+        .accordion-pane {
+          .accordion-content {
+            padding-left: 0;
+            padding-right: 59px;
+          }
+
+          // Level 4
+          .accordion-header {
+            > a {
+              padding-left: 0;
+              padding-right: 59px;
+            }
+
+            > .icon,
+            > [class^="btn"] {
+              margin-left: 3px;
+              margin-right: 53px;
+
+              + a {
+                padding-right: 0;
+              }
+            }
+
+            &.list-item {
+              &::before {
+                padding-left: 10px;
+                padding-right: 60px;
+              }
+
+              a {
+                padding-right: 1px;
+              }
+            }
+          }
+
+          .accordion-pane {
+            .accordion-content {
+              padding-left: 0;
+              padding-right: 78px;
+            }
+
+            // Level 5
+            .accordion-header {
+              > a {
+                padding-left: 0;
+                padding-right: 78px;
+              }
+
+              > .icon,
+              > [class^="btn"] {
+                margin-left: 3px;
+                margin-right: 72px;
+
+                + a {
+                  padding-right: 0;
+                }
+              }
+
+              &.list-item {
+                &::before {
+                  padding-left: 10px;
+                  padding-right: 79px;
+                }
+
+                a {
+                  padding-right: 1px;
+                }
+              }
+            }
+
+            .accordion-pane {
+              .accordion-content {
+                padding-left: 0;
+                padding-right: 78px;
+              }
+
+              // Level 6
+              .accordion-header {
+                > a {
+                  padding-left: 0;
+                  padding-right: 97px;
+                }
+
+                > .icon,
+                > [class^="btn"] {
+                  margin-left: 3px;
+                  margin-right: 92px;
+
+                  + a {
+                    padding-right: 0;
+                  }
+                }
+
+                &.list-item {
+                  &::before {
+                    padding-left: 10px;
+                    padding-right: 99px;
+                  }
+
+                  a {
+                    padding-right: 1px;
+                  }
+                }
+              }
+
+              .accordion-pane {
+                .accordion-content {
+                  padding-left: 0;
+                  padding-right: 116px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+
+
+
+    // Change padding/margin for headers based on icon existence
+    &.has-icons {
+      .accordion-header {
         > a {
           padding-right: 55px;
         }
@@ -827,20 +1035,33 @@ html[dir='rtl'] {
 
       .accordion-pane {
         .accordion-content {
-          padding-right: 55px;
+          padding-right: 36px;
         }
 
         // Level 2
         .accordion-header {
           > a {
-            padding-right: 55px;
+            padding-right: 36px;
           }
 
           > .icon,
           > [class^="btn"] {
-            margin-left: 14px;
+            margin-left: 3px;
+            margin-right: 30px;
 
             + a {
+              padding-left: 0;
+              padding-right: 1px;
+            }
+          }
+
+          &.list-item {
+            &::before {
+              padding-left: 10px;
+              padding-right: 37px;
+            }
+
+            a {
               padding-right: 0;
             }
           }
@@ -848,19 +1069,33 @@ html[dir='rtl'] {
 
         .accordion-pane {
           .accordion-content {
-            padding-right: 83px;
+            padding-right: 54px;
           }
 
           // Level 3
           .accordion-header {
             > a {
-              padding-right: 88px;
+              padding-right: 54px;
             }
 
             > .icon,
             > [class^="btn"] {
+              margin-left: 3px;
+              margin-right: 49px;
 
               + a {
+                padding-left: 0;
+                padding-right: 0;
+              }
+            }
+
+            &.list-item {
+              &::before {
+                padding-left: 10px;
+                padding-right: 56px;
+              }
+
+              a {
                 padding-right: 0;
               }
             }
@@ -868,19 +1103,33 @@ html[dir='rtl'] {
 
           .accordion-pane {
             .accordion-content {
-              padding-right: 120px;
+              padding-right: 74px;
             }
 
             // Level 4
             .accordion-header {
               > a {
-                padding-right: 120px;
+                padding-right: 74px;
               }
 
               > .icon,
               > [class^="btn"] {
+                margin-left: 3px;
+                margin-right: 68px;
 
                 + a {
+                  padding-left: 0;
+                  padding-right: 0;
+                }
+              }
+
+              &.list-item {
+                &::before {
+                  padding-left: 10px;
+                  padding-right: 75px;
+                }
+
+                a {
                   padding-right: 0;
                 }
               }
@@ -894,13 +1143,27 @@ html[dir='rtl'] {
               // Level 5
               .accordion-header {
                 > a {
-                  padding-right: 92px;
+                  padding-right: 93px;
                 }
 
                 > .icon,
                 > [class^="btn"] {
+                  margin-left: 3px;
+                  margin-right: 87px;
 
                   + a {
+                    padding-left: 0;
+                    padding-right: 0;
+                  }
+                }
+
+                &.list-item {
+                  &::before {
+                    padding-left: 10px;
+                    padding-right: 94px;
+                  }
+
+                  a {
                     padding-right: 0;
                   }
                 }
@@ -908,19 +1171,33 @@ html[dir='rtl'] {
 
               .accordion-pane {
                 .accordion-content {
-                  padding-right: 185px;
+                  padding-right: 112px;
                 }
 
                 // Level 6
                 .accordion-header {
                   > a {
-                    padding-right: 184px;
+                    padding-right: 112px;
                   }
 
                   > .icon,
                   > [class^="btn"] {
+                    margin-left: 3px;
+                    margin-right: 106px;
 
                     + a {
+                      padding-left: 0;
+                      padding-right: 0;
+                    }
+                  }
+
+                  &.list-item {
+                    &::before {
+                      padding-left: 10px;
+                      padding-right: 113px;
+                    }
+
+                    a {
                       padding-right: 0;
                     }
                   }
@@ -928,7 +1205,7 @@ html[dir='rtl'] {
 
                 .accordion-pane {
                   .accordion-content {
-                    padding-right: 216px;
+                    padding-right: 132px;
                   }
                 }
               }
@@ -939,26 +1216,4 @@ html[dir='rtl'] {
     }
   }
 
-  .accordion-header {
-    > a {
-      padding: 14px 20px 14px 0;
-    }
-
-    &.has-chevron {
-      // > [class^="btn"] {
-      //   padding: 0;
-      // }
-
-      // > a {
-      //   width: calc(100% - 55px);
-      // }
-
-      > .icon {
-        + a {
-          padding-right: initial;
-          // width: calc(100% - 109px);
-        }
-      }
-    }
-  }
 }
