@@ -110,12 +110,7 @@
           self.toggleTimePopup();
         });
 
-        this.element.on('focus.timepicker', function () {
-          self.mask();
-        });
-
         this.handleKeys();
-
         this.handleBlur();
 
         return this;
@@ -211,10 +206,27 @@
         }
         this.element.data('mask', undefined);
 
+        var mask = (this.show24Hours ? '##:##' : '##:## am'),
+          maskMode = 'time',
+          validation = 'time',
+          events = {'time': 'blur'},
+          customValidation = this.element.attr('data-validate'),
+          customEvents = this.element.attr('data-validation-events');
+
+        if (customValidation === 'required' && !customEvents) {
+          validation = customValidation + ' ' + validation;
+          $.extend(events, {'required': 'change blur'});
+        }
+
+        if (customEvents) {
+          events = customEvents;
+        }
+
         this.element
-          .attr('data-mask', (this.show24Hours ? '##:##' : '##:## am'))
-          .attr('data-mask-mode', 'time')
-          .attr('data-validate', 'time')
+          .attr('data-mask', mask)
+          .attr('data-mask-mode', maskMode)
+          .attr('data-validate', validation)
+          .attr('data-validation-events', JSON.stringify(events))
           .mask()
           .validate()
           .triggerHandler('updated');
