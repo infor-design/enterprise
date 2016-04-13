@@ -18,9 +18,9 @@
 
   .listview-heading {
     @include ellipsis();
-    @include font-size(16);
+    @include font-size(14);
     color: $font-color-extrahighcontrast;
-    font-weight: lighter;
+    font-weight: normal;
 
     &.hyperlink {
       color: $hyperlink-color;
@@ -41,14 +41,13 @@
   }
 
   .listview-subheading {
-    @include font-size(14);
-    color: $listview-color;
+    @include font-size(12);
+    color: $listview-secondary-color;
   }
 
   &.alternate-row {
     .listview-subheading {
       color: $listview-subhead-color;
-      margin-bottom: 5px;
     }
 
     .listview-text {
@@ -67,9 +66,10 @@
   }
 
   .listview-micro {
-    @include font-size(12);
-    color: $listview-color;
-    line-height: 18px;
+    @include font-size(10);
+    color: $listview-tertiary-color;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 
   .badge {
@@ -125,6 +125,15 @@
         display: inline-block;
       }
     }
+
+    p {
+      margin-bottom: 5px;
+      line-height: normal;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
   }
 
   i {
@@ -134,18 +143,10 @@
   }
 
   .days,
-  .hours {
-    @include font-size(24);
-    position: relative;
-    top: -3px;
-  }
-
+  .hours,
   .day-sign,
   .hour-sign {
-    @include font-size(16);
-    margin-right: 5px;
-    position: relative;
-    top: -3px;
+    @include font-size(20);
   }
 
   .dropdown-wrapper {
@@ -154,15 +155,15 @@
 
   .l-pull-right {
     position: relative;
-    top: -30px;
+    top: -29px;
 
     button {
       margin: 0 25px;
     }
 
     .icon-error {
-      left: -10px;
-      top: -1px;
+      left: -5px;
+      top: 2px;
     }
 
     &.listview-micro {
