@@ -36,6 +36,12 @@
           }
         }
       }
+
+      &.list-item {
+        &::before {
+          color: $accordion-disabled-text-color !important;
+        }
+      }
     }
 
     .accordion-pane {
@@ -339,6 +345,18 @@
         > [class^="btn"] {
           &:focus {
             border-color: $accordion-inverse-focus-state-color;
+          }
+        }
+
+        &.list-item {
+          &::before {
+            color: $accordion-inverse-text-color;
+          }
+
+          &.is-selected,
+          &.is-selected:hover,
+          &.is-focused.is-selected {
+            color: $accordion-selected-text-color;
           }
         }
 
