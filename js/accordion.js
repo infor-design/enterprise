@@ -187,19 +187,10 @@
           if (!self.originalSelection) {
             self.originalSelection = target;
           }
-          //$(this).addClass('is-focused');
 
           if (target.is(':not(.btn)')) {
             $(this).addClass('is-focused');
           }
-
-          /*
-          var selected = self.headers.filter('.is-selected');
-          if (selected.length && selected[0] !== this) {
-            selected.removeClass('is-selected');
-          }
-          */
-
         }).on('focusout.accordion', function() {
           if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
             $(this).removeClass('is-focused');

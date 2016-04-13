@@ -349,21 +349,37 @@ $modal-secondary-color: $graphite09;
 
 // Accordion
 $accordion-bg-color: $graphite01;
+$accordion-border-color: $graphite06;
+$accordion-toplevel-border-color: $slate04;
+$accordion-pane-bg-color: $graphite04;
+$accordion-text-color: $graphite09;
+$accordion-text-active-color: $black;
+$accordion-icon-color: $graphite09;
+$accordion-icon-hover-color: $black;
+$accordion-hover-border-color: $black;
+$accordion-hover-text-color: $graphite10;
+
+$accordion-panel-border-color: $graphite04;
+
 $accordion-alternate-bg-color: $white;
-$accordion-border-color: $graphite02;
-$accordion-pane-bg-color: $graphite02;
-$accordion-alternate-pane-bg-color: $graphite01;
+$accordion-alternate-border-color: $graphite04;
+$accordion-alternate-pane-bg-color: $graphite04;
 
-$accordion-text-color: $graphite08;
-$accordion-text-active-color: $graphite10;
-
-$accordion-icon-color: $graphite06;
-$accordion-icon-hover-color: $graphite06;
+$accordion-inverse-bg-color: $slate08;
+$accordion-inverse-pane-bg-color: $black;
+$accordion-inverse-border-color: $slate10;
+$accordion-inverse-border-hover-color: $white;
+$accordion-inverse-text-color: $slate03;
+$accordion-inverse-text-hover-color: $white;
+$accordion-inverse-focus-state-color: $white;
 
 $accordion-focused-text-color: $primary-color;
-$accordion-focused-pane-bg-color: $azure01;
+$accordion-focused-border-color: $primary-color;
+
 $accordion-selected-bg-color: $primary-color;
 $accordion-selected-text-color: $white;
+
+$accordion-highcontrast-text-decoration: underline;
 
 $accordion-disabled-bg-color: $graphite04;
 $accordion-disabled-border-color: $graphite07;

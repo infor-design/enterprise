@@ -247,9 +247,16 @@
   // Accordions that are styled as standalone "panels".
   &.panel {
     background-color: $accordion-bg-color;
-    border-color: $accordion-border-color;
+    border-color: $accordion-panel-border-color;
+    border-right-color: $accordion-toplevel-border-color;
 
     .accordion-header {
+      border-bottom-color: $accordion-panel-border-color;
+
+      &.is-focused {
+        border-bottom-color: $accordion-selected-bg-color;
+      }
+
       &:last-child {
         border-bottom-color: transparent;
       }
@@ -265,15 +272,27 @@
       }
     }
 
+    .accordion-content {
+      border-bottom-color: $accordion-panel-border-color;
+    }
+
     // Lighter-colored, "alternate" color scheme
     &.alternate {
       background-color: $accordion-alternate-bg-color;
+
+      .accordion-header {
+        border-bottom-color: $accordion-alternate-border-color;
+
+        &.is-focused {
+          border-bottom-color: $accordion-selected-bg-color;
+        }
+      }
 
       .accordion-pane {
         background-color: $accordion-alternate-pane-bg-color;
 
         .accordion-header {
-          border-bottom-color: $accordion-alternate-pane-bg-color;
+          border-bottom-color: $accordion-alternate-border-color;
 
           &:last-child {
             border-bottom-color: transparent;
@@ -283,12 +302,15 @@
             border-bottom-color: $accordion-focused-border-color;
           }
 
-          &.is-selected {
+          &.is-selected,
+          &.is-selected:hover,
+          &.is-focused.is-selected {
             border-bottom-color: $accordion-selected-bg-color;
           }
         }
 
         .accordion-content {
+          color: $accordion-text-color;
           border-bottom-color: $accordion-alternate-pane-bg-color;
         }
       }
@@ -297,6 +319,7 @@
     // Darker, "inverse" color scheme
     &.inverse {
       background-color: $accordion-inverse-bg-color;
+      border-right: $accordion-inverse-border-color;
 
       .accordion-header {
         border-bottom-color: $accordion-inverse-border-color;
@@ -313,11 +336,19 @@
           }
         }
 
+        > [class^="btn"] {
+          &:focus {
+            border-color: $accordion-inverse-focus-state-color;
+          }
+        }
+
         &.is-focused {
           border-bottom-color: $accordion-selected-bg-color;
         }
 
-        &.is-selected {
+        &.is-selected,
+        &.is-selected:hover,
+        &.is-focused.is-selected {
           color: $accordion-selected-text-color;
 
           .icon {
@@ -362,7 +393,9 @@
             border-bottom-color: $accordion-selected-bg-color;
           }
 
-          &.is-selected {
+          &.is-selected,
+          &.is-selected:hover,
+          &.is-focused.is-selected {
             color: $accordion-selected-text-color;
 
             .icon {
@@ -373,6 +406,7 @@
 
         .accordion-content {
           border-bottom-color: $accordion-inverse-pane-bg-color;
+          color: $accordion-inverse-text-color;
         }
       }
     }
@@ -403,27 +437,6 @@
       color: inherit;
     }
   }
-
-  /*
-  &:not(.is-selected) {
-    > a {
-      color: $accordion-text-color;
-    }
-
-    > [class^="btn"] {
-      .icon {
-        fill: $accordion-icon-color;
-
-        &.plus-minus {
-          &::before,
-          &::after {
-            background-color: $accordion-icon-color;
-          }
-        }
-      }
-    }
-  }
-  */
 
   a {
     color: inherit;
@@ -494,7 +507,7 @@
     }
 
     &:focus {
-      border-color: $primary-color;
+      border-color: $accordion-selected-bg-color;
       box-shadow: none;
 
       &:active {
@@ -543,6 +556,10 @@
   &:hover {
     color: $accordion-hover-text-color;
 
+    > a {
+      text-decoration: $accordion-highcontrast-text-decoration;
+    }
+
     .icon {
       fill: $accordion-hover-text-color;
 
@@ -560,7 +577,9 @@
     border-color: $accordion-focused-border-color;
   }
 
-  &.is-selected {
+  &.is-selected,
+  &.is-selected:hover,
+  &.is-focused.is-selected {
     background-color: $accordion-selected-bg-color;
     border-bottom-color: $accordion-selected-bg-color;
     color: $accordion-selected-text-color;
@@ -611,32 +630,6 @@
       }
     }
   }
-
-  /*
-  &:not('.is-selected'):not(.is-focused):not(:active):hover,
-  &:not('.is-selected').child-selected:not(.is-focused) {
-    > a {
-      color: $accordion-text-active-color;
-    }
-
-    > [class^="btn"] {
-      > .icon:not(.chevron) {
-        fill: $accordion-icon-hover-color;
-
-        &.plus-minus {
-          &::before,
-          &::after {
-            background-color: $accordion-icon-hover-color;
-          }
-        }
-      }
-    }
-
-    .icon:not(.chevron) {
-      fill: $accordion-icon-hover-color;
-    }
-  }
-  */
 
   &.is-disabled {
     background-color: $accordion-disabled-bg-color !important;
@@ -731,14 +724,14 @@
     }
 
     > [class^="btn"] {
-      height: 33px;
+      height: 31px;
       width: 20px;
 
       .icon.plus-minus {
         &::before,
         &::after {
           left: 5px;
-          top: 14px;
+          top: 13px;
           width: 10px;
         }
       }
@@ -776,7 +769,9 @@
       }
     }
 
-    &.is-selected {
+    &.is-selected,
+    &.is-selected:hover,
+    &.is-focused.is-selected {
       &.list-item {
         &::before {
           color: $accordion-selected-text-color;
@@ -1362,4 +1357,32 @@ html[dir='rtl'] {
     }
   }
 
+}
+
+// Dirty Hack because Firefox never lines things up right
+// These rules vertically "center" the plus-minus icon in
+.is-firefox {
+  .accordion-header {
+    > [class^="btn"] {
+      .icon.plus-minus {
+        &::before,
+        &::after {
+          top: 15px;
+        }
+      }
+    }
+  }
+
+  .accordion-pane {
+    .accordion-header {
+      > [class^="btn"] {
+        .icon.plus-minus {
+          &::before,
+          &::after {
+            top: 12px;
+          }
+        }
+      }
+    }
+  }
 }
