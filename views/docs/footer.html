@@ -27,8 +27,13 @@
 {{/enableLiveReload}}
 
 <script>
-  // Init All SoHo XI Controls Stuff on Document Ready
+  // Initialize all SoHo Xi Controls and set the locale
+  var initialLocale = 'en-US';
+  {{#locale}}
+  initialLocale = '{{locale}}';
+  {{/locale}}
+
   $(function() {
-    $('body').initialize('en-US');
+    $('body').initialize(initialLocale); //ar-EG to test RTL
   });
 </script>

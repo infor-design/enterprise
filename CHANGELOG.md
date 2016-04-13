@@ -8,10 +8,15 @@ Release Date: April 4th
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
 ## Ui Changes
+* 2016-04-13 - Accordion - The Accordion's default style is now an "in-page" design with less borders and configuration.  The original style is now known as a "panel" accordion.  If you wish to keep your accordion looking how it was previously, you must append a "panel" CSS class to your top-level ".accordion" element.
+* 2016-04-13 - Application Menu - The changes for the Accordion in this release affect the internal accordion used by the Application Menu.  If you use this control, make sure it receives the same markup change required by other "panel"-style Accordions.
 * 2016-03-07 - Changed Cards - Font size to 1.6 and Icon Color
 * 2016-02-23 - Changed File Upload States. Refined all 3 themes.
 * 2016-03-30 - Minor changes to the progress indicator
 * 2016-03-31 - Hide Focus Support Added to Links. Note that many links will benefit from adding class hide-focus.
+
+## Dev Server Changes
+* 2016-04-08 - The Xi Controls Dev Server has been upgraded to Express 4.x.  Some of its dependancies may have changed.  If you rely on our Dev Server for examples/testing, please stop the server, delete this project's _/node\_modules/_ folder, and rerun {{npm install}} and {{npm run install-test-deps}}.
 
 [Jira Release Notes 4.2](http://jira.infor.com/secure/ReleaseNote.jspa?version=25271&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|ae7ebfcb3629c91a9735d7831cc311b96f69495d|lin)
 

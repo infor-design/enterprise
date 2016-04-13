@@ -12,10 +12,13 @@
 
 <script>
   // Initialize all SoHo Xi Controls and set the locale
+  var initialLocale = 'en-US';
+  {{#locale}}
+  initialLocale = '{{locale}}';
+  {{/locale}}
+
   $(function() {
-
-   $('body').initialize('en-US'); //ar-EG to test RTL
-
+    $('body').initialize(initialLocale); //ar-EG to test RTL
   });
 </script>
 

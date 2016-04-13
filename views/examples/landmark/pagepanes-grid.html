@@ -1,158 +1,152 @@
-<body class="no-scroll">
-  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
-  {{> includes/masthead}}
+{{> includes/masthead}}
 
-  <div class="page-container scrollable">
-
-    <header class="header is-personalizable has-tabs">
-      <div class="toolbar">
-        <div class="title">
-          <h1>Landmark Page Pane Patterns</h1>
-        </div>
-
-        <div class="buttonset">
-          <button class="btn-icon header-search" type="button">
-            <span class="audible">Search</span>
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-search"></use>
-            </svg>
-          </button>
-        </div>
-        {{> includes/header-actionbutton}}
+<div class="page-container scrollable">
+  <header class="header is-personalizable has-tabs">
+    <div class="toolbar">
+      <div class="title">
+        <h1>Landmark Page Pane Patterns</h1>
       </div>
 
-      <div class="tab-container">
-        <ul class="tab-list">
-          <li class="tab"><a href="#header-tab1">Left/Right</a></li>
-          <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
-          <li class="tab"><a href="#header-tab3">Left Column</a></li>
-          <li class="tab"><a href="#header-tab4">Right Column</a></li>
-          <li class="tab"><a href="#header-tab5">Top Row</a></li>
-          <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
-          <li class="tab"><a href="#header-tab7">4 Panes</a></li>
-        </ul>
+      <div class="buttonset">
+        <button class="btn-icon header-search" type="button">
+          <span class="audible">Search</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-search"></use>
+          </svg>
+        </button>
       </div>
-    </header>
-
-    <div id="maincontent" class="page-container scrollable" role="main">
-      <div id="header-tab1" class="tab-panel">
-        <div class="page-container">
-          <section class="pane left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
-        </div>
-      </div>
-      <div id="header-tab2">
-        <div class="page-container">
-          <section class="pane top no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane bottom no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
-        </div>
-      </div>
-      <div id="header-tab3">
-        <div class="page-container">
-          <section class="pane left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
-        </div>
-      </div>
-      <div id="header-tab4">
-        <div class="page-container">
-          <section class="pane right no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
-        </div>
-      </div>
-      <div id="header-tab5">
-        <div class="page-container">
-          <section class="pane top no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
-        </div>
-      </div>
-      <div id="header-tab6">
-        <div class="page-container">
-          <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
-          <section class="pane bottom no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
-        </div>
-      </div>
-      <div id="header-tab7">
-        <div class="page-container">
-          <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
-          <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
-          <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
-          <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid4}}</section>
-        </div>
-      </div>
+      {{> includes/header-actionbutton}}
     </div>
 
+    <div class="tab-container">
+      <ul class="tab-list">
+        <li class="tab"><a href="#header-tab1">Left/Right</a></li>
+        <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
+        <li class="tab"><a href="#header-tab3">Left Column</a></li>
+        <li class="tab"><a href="#header-tab4">Right Column</a></li>
+        <li class="tab"><a href="#header-tab5">Top Row</a></li>
+        <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
+        <li class="tab"><a href="#header-tab7">4 Panes</a></li>
+      </ul>
     </div>
+  </header>
 
-  <script>
+  <div id="maincontent" class="page-container scrollable" role="main">
+    <div id="header-tab1" class="tab-panel">
+      <div class="page-container">
+        <section class="pane left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+        <section class="pane right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+      </div>
+    </div>
+    <div id="header-tab2" style="display: none;">
+      <div class="page-container">
+        <section class="pane top no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+        <section class="pane bottom no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+      </div>
+    </div>
+    <div id="header-tab3" style="display: none;">
+      <div class="page-container">
+        <section class="pane left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+        <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+        <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
+      </div>
+    </div>
+    <div id="header-tab4" style="display: none;">
+      <div class="page-container">
+        <section class="pane right no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+        <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+        <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
+      </div>
+    </div>
+    <div id="header-tab5" style="display: none;">
+      <div class="page-container">
+        <section class="pane top no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+        <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+        <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
+      </div>
+    </div>
+    <div id="header-tab6" style="display: none;">
+      <div class="page-container">
+        <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+        <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
+        <section class="pane bottom no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+      </div>
+    </div>
+    <div id="header-tab7" style="display: none;">
+      <div class="page-container">
+        <section class="pane top-left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>
+        <section class="pane top-right no-scroll">{{> examples/landmark/pagepanes-grid2}}</section>
+        <section class="pane bottom-left no-scroll">{{> examples/landmark/pagepanes-grid3}}</section>
+        <section class="pane bottom-right no-scroll">{{> examples/landmark/pagepanes-grid4}}</section>
+      </div>
+    </div>
+  </div>
+</div>
 
+<script>
+  function getColumns() {
+    var columns = [];
+    //Define Columns for the Grid.
 
-    function getColumns() {
-      var columns = [];
-      //Define Columns for the Grid.
-
-      columns.push({
-        id        : 'selectionCheckbox',
-        sortable  : false,
-        resizable : false,
-        width     : 50,
-        formatter : Formatters.SelectionCheckbox,
-        align     : 'center'
-      });
-
-
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      return columns;
-    }
-
-    function init() {
-      var gridPageSize = 10;
-
-      $('.datagrid-contained').datagrid({
-        columns: getColumns(),
-        selectable: 'single',
-        clickToSelect: true,
-        rowHeight: 'short', //(short, medium or tall)
-        paging: true,
-        pagesize: gridPageSize,
-        indeterminate: true,
-        source: function(req, response) {
-          var pageNum = req.activePage;
-          var pagesize = req.pagesize;
-
-          if (req.type === 'initial')
-          {
-            pageNum = 1;
-            pagesize = gridPageSize;
-          }
-
-          var url = '/api/compressors?pageNum='+ pageNum +'&pageSize='+ pagesize;
-
-          if (req.sortField){
-            url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
-          }
-
-          if (req.filterExpr && req.filterExpr[0]) {
-            url += '&filter=' + req.filterExpr[0].value;
-          }
-
-          $.getJSON(url, function(res) {
-            req.total = res.total;
-            response(res.data, req);  //Option 1, return paging info here.
-          });
-        }
-      });
-    }
-
-    $(function() {
-      init();
+    columns.push({
+      id        : 'selectionCheckbox',
+      sortable  : false,
+      resizable : false,
+      width     : 50,
+      formatter : Formatters.SelectionCheckbox,
+      align     : 'center'
     });
-  </script>
+
+
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+    columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+    return columns;
+  }
+
+  function init() {
+    var gridPageSize = 10;
+
+    $('.datagrid-contained').datagrid({
+      columns: getColumns(),
+      selectable: 'single',
+      clickToSelect: true,
+      rowHeight: 'short', //(short, medium or tall)
+      paging: true,
+      pagesize: gridPageSize,
+      indeterminate: true,
+      source: function(req, response) {
+        var pageNum = req.activePage;
+        var pagesize = req.pagesize;
+
+        if (req.type === 'initial')
+        {
+          pageNum = 1;
+          pagesize = gridPageSize;
+        }
+
+        var url = '/api/compressors?pageNum='+ pageNum +'&pageSize='+ pagesize;
+
+        if (req.sortField){
+          url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
+        }
+
+        if (req.filterExpr && req.filterExpr[0]) {
+          url += '&filter=' + req.filterExpr[0].value;
+        }
+
+        $.getJSON(url, function(res) {
+          req.total = res.total;
+          response(res.data, req);  //Option 1, return paging info here.
+        });
+      }
+    });
+  }
+
+  $(function() {
+    init();
+  });
+</script>

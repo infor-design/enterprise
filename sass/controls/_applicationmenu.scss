@@ -37,324 +37,43 @@
       width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
-  .panel {
-    padding-left: 49px;
-
-    > * {
-      vertical-align: middle;
-    }
-
-    &.logout {
-      .icon.avatar {
-        border-radius: 32px;
-        height: 64px;
-        width: 64px;
-      }
-
-      .content {
-        @include font-size(14);
-        padding-left: 1em;
-
-        > * {
-          display: block;
-          line-height: 1.5em;
-        }
-
-        > .name {
-          @include font-size(20);
-          line-height: 2em;
-        }
-      }
-
-      span {
-        display: inline-block;
-      }
-    }
-  }
-
   .accordion {
-    background-color: $app-accordion-header-bg-color;
-    border-bottom-color: $app-accordion-border-color;
-    border-right-color: $app-accordion-border-color;
-    color: $app-accordion-header-text-color;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
 
-    margin-bottom: calc(-2rem - 38px);
-    min-height: 100%;
+    .panel {
+      padding-left: 49px;
 
-    &::after {
-      content: '';
-      display: block;
-    }
-
-    .name {
-      color: #ffffff;
-    }
-
-    // Reset the padding for various things when we have icons present
-    &.has-icons {
-
-      // Level 1
-      .accordion-header {
-        > a {
-          padding-left: 63px;
-        }
-
-        > .icon,
-        > [class^="btn"] {
-
-          + a {
-            padding-left: 0;
-          }
-        }
+      > * {
+        vertical-align: middle;
       }
 
-      .accordion-pane {
-        .accordion-content {
-          padding-left: 63px;
+      &.logout {
+        .icon.avatar {
+          border-radius: 32px;
+          height: 64px;
+          width: 64px;
         }
 
-        // Level 2
-        .accordion-header {
-          > a {
-            padding-left: 63px;
+        .content {
+          @include font-size(14);
+          padding-left: 1em;
+
+          > * {
+            display: block;
+            line-height: 1.5em;
           }
 
-          > .icon,
-          > [class^="btn"] {
-
-            + a {
-              padding-left: 0;
-              width: calc(100% - 63px);
-            }
+          > .name {
+            @include font-size(20);
+            line-height: 2em;
           }
-        }
-
-        .accordion-pane {
-          .accordion-content {
-            padding-left: 97px;
-          }
-
-          // Level 3
-          .accordion-header {
-            > a {
-              padding-left: 97px;
-            }
-
-            > .icon,
-            > [class^="btn"] {
-              margin-left: 83px;
-
-              + a {
-                padding-left: 0;
-                width: calc(100% - 131px);
-              }
-            }
-          }
-
-          .accordion-pane {
-            .accordion-content {
-              padding-left: 129px;
-            }
-
-            // Level 4
-            .accordion-header {
-              > a {
-                padding-left: 129px;
-              }
-
-              > .icon,
-              > [class^="btn"] {
-                margin-left: 117px;
-
-                + a {
-                  padding-left: 0;
-                  width: calc(100% - 165px);
-                }
-              }
-            }
-
-            .accordion-pane {
-              .accordion-content {
-                padding-left: 164px;
-              }
-
-              // Level 5
-              .accordion-header {
-                > a {
-                  padding-left: 164px;
-                }
-
-                > .icon,
-                > [class^="btn"] {
-                  margin-left: 150px;
-
-                  + a {
-                    padding-left: 0;
-                    width: calc(100% - 198px);
-                  }
-                }
-              }
-
-              .accordion-pane {
-                .accordion-content {
-                  padding-left: 198px;
-                }
-
-                // Level 6
-                .accordion-header {
-                  > a {
-                    padding-left: 198px;
-                  }
-
-                  > .icon,
-                  > [class^="btn"] {
-                    margin-left: 184px;
-
-                    + a {
-                      padding-left: 0;
-                      width: calc(100% - 232px);
-                    }
-                  }
-                }
-
-                .accordion-pane {
-                  .accordion-content {
-                    padding-left: 198px;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-  }
-
-  .accordion-header {
-    border-bottom: 1px solid $app-accordion-border-color;
-    color: $app-accordion-header-text-color;
-
-    > a {
-      color: $app-accordion-header-text-color;
-    }
-
-    &:not(.is-focused):not(.is-selected) {
-      > [class^="btn"] {
-        .icon:not(.chevron) {
-          fill: $app-accordion-header-text-color;
-        }
-
-        .plus-minus {
-          &::before,
-          &::after {
-            background-color: $app-accordion-header-text-color;
-          }
-        }
-      }
-
-      // Dark Accordion has a weird chevron color for some reason
-      .icon.chevron {
-        fill: $app-accordion-chevron-color;
-      }
-    }
-
-    &:not(.is-focused) {
-      &:hover {
-        > a {
-          color: $app-accordion-header-text-active-color;
         }
 
         span {
-          color: $app-accordion-header-text-active-color;
+          display: inline-block;
         }
-
-        > [class^="btn"] {
-          .icon:not(.chevron) {
-            fill: $app-accordion-header-text-active-color;
-          }
-
-          .plus-minus {
-            &::before,
-            &::after {
-              background-color: $app-accordion-header-text-active-color;
-            }
-          }
-        }
-      }
-    }
-
-    &.is-focused,
-    &.is-selected {
-      border-bottom-color: $accordion-selected-bg-color;
-
-      > a {
-        color: $accordion-selected-text-color;
-      }
-
-      > [class^="btn"],
-      > .icon {
-        fill: $accordion-selected-text-color;
-
-        .plus-minus {
-          &::before,
-          &::after {
-            background-color: $accordion-selected-text-color;
-          }
-        }
-      }
-    }
-
-    &.has-chevron {
-      .icon + a {
-        width: calc(100% - 118px);
-      }
-    }
-
-    &:not(.is-focused):hover,
-    &.child-selected:not(.is-focused) {
-      > a {
-        color: $app-accordion-header-text-active-color;
-      }
-
-      > [class^="btn"] {
-        > .icon:not(.chevron) {
-          fill: $app-accordion-icon-hover-color;
-
-          &.plus-minus {
-            &::before,
-            &::after {
-              background-color: $app-accordion-icon-hover-color;
-            }
-          }
-        }
-      }
-
-      .icon:not(.chevron) {
-        fill: $app-accordion-icon-hover-color;
-      }
-    }
-
-    &.is-selected {
-      a {
-        color: $accordion-selected-text-color;
-      }
-    }
-
-  }
-
-  .accordion-pane {
-    background-color: $app-accordion-pane-bg-color;
-    border-bottom-color: $app-accordion-border-color;
-
-    .accordion-content {
-      border-bottom: $app-accordion-border-color;
-      color: $app-accordion-pane-text-color;
-    }
-
-    .accordion-header {
-      &:last-child {
-        border-bottom: 1px solid $app-accordion-border-color;
       }
     }
   }
@@ -374,7 +93,7 @@
   }
 
   .branding {
-    padding: 1rem 1rem 1rem 2.5rem;
+    padding: 1rem 0 0 1rem;
 
     .icon {
       height: 34px;
@@ -382,165 +101,14 @@
       width: 34px;
     }
   }
+}
 
-  // NOTE:
-  // These rules aren't merged in with the ones above for the sake of keeping the margin/padding/length information
-  // separate and legible, in the event we need to change it.  Similar code for accordion padding outside the app menu
-  // can be found in _accordion.scss
+// Right-to-Left Styles
+html[dir='rtl'] {
 
-  // Level 1 Header
-  .accordion-header {
-    > a {
-      padding-left: 26px;
-    }
-
-    > [class^="btn"]:not(:last-child) {
-      margin-left: 16px;
-    }
-
-    > .icon {
-      margin-left: 26px;
-    }
-
-    > [class^="btn"]:not(:last-child),
-    > .icon {
-      + a {
-        padding-left: 0;
-        width: calc(100% - 68px);
-      }
-    }
-  }
-
-  // Level 1 Pane
-  .accordion-pane {
-
-    .accordion-content {
-      padding-left: 26px;
-    }
-
-    // Level 2 Header
-    .accordion-header {
-      > a {
-        padding-left: 26px;
-      }
-
-      > [class^="btn"],
-      > .icon {
-        margin-left: 15px;
-
-        + a {
-          padding-left: 0;
-          width: calc(100% - 68px);
-        }
-      }
-    }
-
-    // Level 2 Pane
-    .accordion-pane {
-
-      .accordion-content {
-        padding-left: 63px;
-      }
-
-      // Level 3 Accordion Header
-      .accordion-header {
-        > a {
-          padding-left: 62px;
-        }
-
-        > [class^="btn"],
-        > .icon {
-          margin-left: 49px;
-
-          + a {
-            padding-left: 0;
-            width: calc(100% - 96px);
-          }
-        }
-
-      }
-
-      // Level 3 Accordion Pane
-      .accordion-pane {
-
-        .accordion-content {
-          padding-left: 96px;
-        }
-
-        // Level 4 Accordion Header
-        .accordion-header {
-          > a {
-            padding-left: 95px;
-          }
-
-          > [class^="btn"],
-          > .icon {
-            margin-left: 81px;
-
-            + a {
-              padding-left: 0;
-              width: calc(100% - 128px);
-            }
-          }
-        }
-
-        // Level 4 Accordion Pane
-        .accordion-pane {
-
-          .accordion-content {
-            padding-left: 128px;
-          }
-
-          // Level 5 Accordion Header
-          .accordion-header {
-            > a {
-              padding-left: 127px;
-            }
-
-            > [class^="btn"],
-            > .icon {
-              margin-left: 113px;
-
-              + a {
-                padding-left: 0;
-                width: calc(100% - 160px);
-              }
-            }
-          }
-
-          // Level 5 Accordion Pane
-          .accordion-pane {
-
-            .accordion-content {
-              padding-left: 159px;
-            }
-
-            // Level 6 Accordion Header
-            .accordion-header {
-              > a {
-                padding-left: 159px;
-              }
-
-              > [class^="btn"],
-              > .icon {
-                margin-left: 145px;
-
-                + a {
-                  padding-left: 0;
-                  width: calc(100% - 192px);
-                }
-              }
-            }
-
-            // Level 6 Accordion Pane
-            .accordion-pane {
-              .accordion-content {
-                padding-left: 192px;
-              }
-            }
-          }
-        }
-      }
+  .application-menu {
+    .branding {
+      padding: 1rem 1rem 0 0;
     }
   }
 
