@@ -570,7 +570,7 @@
   }
 }
 
-@include respond-to(tabletdown) {
+@include respond-to(phabletdown) {
   .application-menu {
     &.no-transition.is-open {
       display: none !important;
@@ -583,3 +583,4 @@
     }
   }
 }
+

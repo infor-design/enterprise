@@ -33,24 +33,16 @@
             columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
             columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
 
-            $('#datagrid').on('rendered', function () {
-                var rowContent = '<div>' +
-                    '<div class="field"><input id="my-box" type="checkbox" class="checkbox" /><label for="my-box" class="checkbox-label">My Box</label></div>' +
-                        '<div class="field"><label for="my-select" class="label">My Select</label><select id="my-box" class="dropdown"><option value="1">&nbsp;</option><option value="2">Second</option></select></div>' +
-                                '<fieldset class="radio-group"> <legend>Select delivery method</legend> <input type="radio" class="radio" name="delivery" id="delivery1" value="in" /> <label for="delivery1" class="radio-label">Dine in</label> <br> <input type="radio" checked class="radio" name="delivery" id="delivery2" value="out" /> <label for="delivery2" class="radio-label">Carry out</label> <br> <input type="radio" class="radio" name="delivery" id="delivery3" value="delivery" /> <label for="delivery3" class="radio-label">Delivery</label> </fieldset>' +
-                    '</div>';
-                $('.row-content').first().html(rowContent).initialize();
-            });
-
-            var rowTemplate = '<div class="row-content"></div>';
+            var rowTemplate = '<div class="field"><label class="inline inline-checkbox"><input type="checkbox" class="checkbox" checked><span class="label-text ">Checked</span></label></div><a href="#" class="hyperlink" onclick="alert()">A Link</a>';
 
             //Init and get the api for the grid
-            grid = $('#datagrid').datagrid({
+            $('#datagrid').datagrid({
                 columns: columns,
                 idProperty:'officeId',
                 dataset: data,
                 rowTemplate: rowTemplate
-            }).data('datagrid');
+            });
+
         });
 
     });

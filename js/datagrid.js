@@ -505,7 +505,7 @@ $.fn.datagrid = function(options) {
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
-        reorder: false, // Makes columns to be re-order by drag and drop
+        columnReorder: false, // Makes columns to be re-order by drag and drop
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -974,7 +974,7 @@ $.fn.datagrid = function(options) {
       self.table.find('th[title]').tooltip();
       self.setColumnWidths();
 
-      if (self.settings.reorder) {
+      if (self.settings.columnReorder) {
         self.createDraggableColumns();
       }
     },
@@ -1351,6 +1351,22 @@ $.fn.datagrid = function(options) {
       this.setColumnWidths();
     },
 
+    //Open Column Personalization Dialog
+    personalizeColumns: function () {
+
+      $('body').modal({
+        title: Locale.translate('PersonalizeColumns'),
+        content: '<div> Hello</div>',
+        buttons: [{
+            text: Locale.translate('Close'),
+            click: function(e, modal) {
+              modal.close();
+            }
+          }]
+      });
+
+    },
+
     // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
     setColumnWidth: function(id, width, reset) {
       var self = this,
@@ -1531,6 +1547,7 @@ $.fn.datagrid = function(options) {
       this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
         e.stopPropagation();
         e.preventDefault();
+
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
           cell = elem.index(),
@@ -1602,6 +1619,11 @@ $.fn.datagrid = function(options) {
 
       //Handle Context Menu Option
       body.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tr', function (e) {
+
+        if (!self.isSubscribedTo(e, 'contextmenu')) {
+          return;
+        }
+
         self.triggerRowEvent('contextmenu', e, (self.settings.menuId ? true : false));
         e.preventDefault();
 
@@ -1684,6 +1706,19 @@ $.fn.datagrid = function(options) {
       });
     },
 
+    //Check if the event is subscribed to
+    isSubscribedTo: function (e, eventName) {
+      var self = this;
+
+      for (var event in $._data(self.element[0]).events) {
+        if (event === eventName) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+
     appendToolbar: function () {
       var toolbar, title = '', more, self = this;
 
@@ -1730,7 +1765,7 @@ $.fn.datagrid = function(options) {
         var menu = $('<ul class="popupmenu has-icons"></ul>');
 
         if (settings.toolbar.personalize) {
-          menu.append('<li><a href="#">' + Locale.translate('PersonalizeColumns') + '</a></li>');
+          menu.append('<li><a href="#" data-opton="personalize-columns">' + Locale.translate('PersonalizeColumns') + '</a></li>');
         }
 
         if (settings.toolbar.advancedFilter) {
@@ -1763,6 +1798,10 @@ $.fn.datagrid = function(options) {
         var action = args.attr('data-option');
         if (action === 'row-short' || action === 'row-medium' || action === 'row-normal') {
           self.rowHeight(action.substr(4));
+        }
+
+        if (action === 'personalize-columns') {
+          self.personalizeColumns();
         }
 
         args.closest('ul').find('[data-option]').parent('.is-checked').removeClass('is-checked');

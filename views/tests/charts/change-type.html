@@ -43,17 +43,17 @@
 
 
 <script>
-  $('#change').click(function () {
-    var pieData = [{
-      data: [{
-          name: 'Component A',
-          value: 7.6
-      }, {
-          name: 'Component B',
-          value: 12.6
-      }],
-    centerLabel: 'Donut Chart'
-  }];
+    $('#change').click(function () {
+      var pieData = [{
+        data: [{
+            name: 'Component A',
+            value: 7.6
+        }, {
+            name: 'Component B',
+            value: 12.6
+        }],
+      centerLabel: 'Donut Chart'
+    }];
 
     $('#pie-chart-example').chart({type: 'donut', dataset: pieData})
   });

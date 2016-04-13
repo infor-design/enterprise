@@ -554,18 +554,6 @@ html[dir='rtl'] {
 
 }
 
-
-// Firefox on Mac
-.is-mac.is-firefox {
-  .field {
-    .icon-error,
-    .icon-confirm {
-      margin-left: -26px;
-      width: 17px;
-    }
-  }
-}
-
 // ie9, ie11
 .ie9,
 .ie11 {

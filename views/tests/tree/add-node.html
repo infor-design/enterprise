@@ -39,7 +39,23 @@
   var api = elem.data('tree');
 
   api.addNode({text: 'New Item 1', id: 'new1'});
-  api.addNode({text: 'New Item 2', id: 'new2'});
+  api.addNode({text: 'New Item 2', id: 'new2', "children": [{
+        "id": "node3",
+        "text": "Node 2.1"
+      }, {
+        "id": "node4",
+        "text": "Node 2.2",
+        "children": [{
+          "id": "node5",
+          "text": "Node 2.2.1",
+          "icon": "icon-tree-chart",
+          "children": [{
+            "id": "node6",
+            "text": "Node 2.2.1.1",
+            "icon": "icon-tree-chart"
+          }]
+        }]
+      }]});
 
   //Add Children to parent ID
   api.addNode({text: 'New Item 1.2', parent: 'new1'});

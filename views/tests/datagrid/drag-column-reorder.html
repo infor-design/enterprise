@@ -2,6 +2,36 @@
 <div class="row">
   <div class="twelve columns">
 
+    <div class="toolbar" role="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">(10 Results)</span>
+      </div>
+      <div class="buttonset">
+        <button class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Filter</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu has-icons is-selectable">
+          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li class="heading">Row Height</li>
+          <li><a data-option="row-short" href="#">Short</a></li>
+          <li ><a data-option="row-medium" href="#">Medium</a></li>
+          <li class="is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+        </ul>
+      </div>
+    </div>
     <div id="datagrid">
     </div>
 
@@ -27,9 +57,7 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 500});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {
-          console.log(e, args);
-      }});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
@@ -40,21 +68,11 @@
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
-        columnsReorder: true,
-        dataset: data
+        columnReorder: true,
+        dataset: data,
+        toolbar: {personalize: true, results: true}
       }).data('datagrid');
 
-      //TODO Test: You can focus on hidden columns
-      //grid.setSortColumn('activity');
-
-     // grid.setSortColumn('productId');
-
-      //setColumnWidth(id, width, reset: optional)
-      //grid.setColumnWidth('productId', '15%', true);
-      //grid.setColumnWidth('status', 150, true);
-      //grid.setColumnWidth('productName', '20%', true);
-      //grid.setColumnWidth('activity', '15%', true);
-    //});
  });
 </script>
 

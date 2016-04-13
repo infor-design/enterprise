@@ -297,7 +297,7 @@
         var self = this, messageArea,
           elemCanOpen = true;
 
-        if (!this.trigger) {
+        if (!this.trigger || this.trigger.length ===0) {
           this.oldActive = $(':focus');  //Save and restore focus for A11Y
         }
 

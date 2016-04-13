@@ -189,7 +189,12 @@
       },
 
       close: function() {
-        this.modal.data('modal').close();
+        var modalApi = this.modal.data('modal');
+
+        if (modalApi) {
+          modalApi.close();
+        }
+
         if (this.isBody) {
           this.destroy();
         }
@@ -197,9 +202,13 @@
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        var modal = this.modal.data('modal');
-        modal.element.off('beforeopen.about');
-        modal.destroy();
+        var modalApi = this.modal.data('modal');
+
+        if (modalApi) {
+          modalApi.element.off('beforeopen.about');
+          modalApi.destroy();
+        }
+
         this.buttons.off();
         this.element.off('open.about');
         $.removeData(this.element[0], pluginName);
