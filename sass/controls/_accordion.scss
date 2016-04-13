@@ -2,31 +2,11 @@
 //========================================================
 
 .accordion {
-  background-color: $accordion-bg-color;
-  border-right: 1px solid $accordion-border-color;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-bottom: 0;
   font-size: 0;
   overflow-y: visible;
-
-  &.alternate {
-    background-color: $accordion-alternate-bg-color;
-    border-bottom-color: $accordion-border-color;
-
-    .accordion-pane {
-      background-color: $accordion-pane-alternate-bg-color;
-
-      .accordion-header {
-        border-bottom-color: $accordion-pane-alternate-bg-color;
-
-        &:last-child {
-          border-bottom: 0;
-        }
-      }
-
-      .accordion-content {
-        border-bottom: 1px solid $accordion-pane-alternate-bg-color;
-      }
-    }
-  }
 
   &.is-disabled {
     background-color: $accordion-disabled-bg-color !important;
@@ -263,10 +243,68 @@
       }
     }
   }
+
+  // Accordions that are styled as standalone "panels".
+  &.panel {
+    background-color: $accordion-bg-color;
+    border-color: $accordion-border-color;
+
+    .accordion-header {
+      &:last-child {
+        border-bottom-color: transparent;
+      }
+    }
+
+    .accordion-pane {
+      background-color: $accordion-pane-bg-color;
+
+      &:last-child {
+        .accordion-content:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    // Lighter-colored, "alternate" color scheme
+    &.alternate {
+      background-color: $accordion-alternate-bg-color;
+
+      .accordion-pane {
+        background-color: $accordion-pane-alternate-bg-color;
+
+        .accordion-header {
+          border-bottom-color: $accordion-pane-alternate-bg-color;
+
+          &:last-child {
+            border-bottom-color: transparent;
+          }
+
+          &.is-focused {
+            border-bottom-color: $accordion-focused-border-color;
+          }
+
+          &.is-selected {
+            border-bottom-color: $accordion-selected-bg-color;
+          }
+        }
+
+        .accordion-content {
+          border-bottom: 1px solid $accordion-pane-alternate-bg-color;
+        }
+      }
+    }
+
+    // Darker, "inverse" color scheme
+    &.inverse {
+
+    }
+
+  }
 }
 
 .accordion-header {
-  border-bottom: 1px solid $accordion-border-color;
+  border: 1px solid transparent;
+  border-bottom-color: $accordion-border-color;
   cursor: pointer;
   font-size: 0;
   height: 46px;
@@ -279,6 +317,16 @@
     vertical-align: middle;
   }
 
+  // Set for accessibility
+  span {
+    color: inherit;
+
+    &.audible {
+      color: inherit;
+    }
+  }
+
+  /*
   &:not(.is-selected) {
     > a {
       color: $accordion-text-color;
@@ -297,24 +345,19 @@
       }
     }
   }
+  */
 
-  // Set for accessibility
-  span {
+  a {
     color: inherit;
-
-    &.audible {
-      color: #040404;
-    }
+    text-decoration: none;
+    text-overflow: ellipsis;
   }
 
   > a {
-    color: $accordion-text-color;
     display: inline-block;
     @include font-size(16);
     overflow: hidden;
-    padding: 14px 0 14px 20px;
-    text-decoration: none;
-    text-overflow: ellipsis;
+    padding: 13px 0 13px 20px;
     white-space: nowrap;
     width: calc(100% - 1px);
   }
@@ -322,7 +365,7 @@
   > [class^="btn"] {
     background-color: transparent;
     border-color: transparent;
-    height: 40px;
+    height: 38px;
     margin: 3px;
     min-width: 0;
     padding: 0 10px;
@@ -337,7 +380,6 @@
     }
 
     .icon {
-      fill: $accordion-icon-color;
       padding-left: 0;
       padding-right: 1px;
       position: relative;
@@ -373,6 +415,15 @@
       }
     }
 
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: none;
+
+      &:active {
+        background-color: $accordion-selected-bg-color;
+      }
+    }
+
     &:active {
       .icon {
         fill: $accordion-selected-text-color;
@@ -395,6 +446,7 @@
   }
 
   .icon {
+    fill: $accordion-icon-color;
     height: 16px;
     top: -2px;
     width: 18px;
@@ -409,18 +461,24 @@
     }
   }
 
+  // Hover state
+  &:hover {
+    color: $accordion-hover-text-color;
+
+    .icon {
+      fill: $accordion-hover-text-color;
+    }
+  }
+
   // Selected color scheme
-  &:active,
-  &.is-selected,
   &.is-focused {
+    border-color: $accordion-focused-border-color;
+  }
+
+  &.is-selected {
     background-color: $accordion-selected-bg-color;
     border-bottom-color: $accordion-selected-bg-color;
     color: $accordion-selected-text-color;
-
-    // Set for accessibility
-    span.audible {
-      color: $white;
-    }
 
     > a {
       color: $accordion-selected-text-color;
@@ -453,12 +511,6 @@
     }
   }
 
-  &.is-selected {
-    a {
-      color: $accordion-selected-text-color;
-    }
-  }
-
   &.has-chevron {
     > [class^="btn"] {
       padding: 0;
@@ -475,6 +527,7 @@
     }
   }
 
+  /*
   &:not('.is-selected'):not(.is-focused):not(:active):hover,
   &:not('.is-selected').child-selected:not(.is-focused) {
     > a {
@@ -498,6 +551,7 @@
       fill: $accordion-icon-hover-color;
     }
   }
+  */
 
   &.is-disabled {
     background-color: $accordion-disabled-bg-color !important;
@@ -553,8 +607,6 @@
 
 // Level 1 Accordion Pane
 .accordion-pane {
-  background-color: $accordion-pane-bg-color;
-  border-bottom: 1px solid $accordion-border-color;
   height: 0;
   overflow: hidden;
 
@@ -565,20 +617,13 @@
     padding-left: 20px;
   }
 
-  &:last-child {
-    .accordion-content:last-child,
-    .accordion-header:last-child {
-      border-bottom: 0;
-    }
-  }
-
   // These rules allow the accordion to expand
   // Level 2 Accordion Header
   .accordion-header {
     height: 39px;
 
     &:not(:first-child) {
-      border-top: 0;
+      border-top-color: transparent;
     }
 
     &:last-child {
@@ -614,11 +659,6 @@
       }
     }
 
-    &.is-disabled {
-      background-color: $accordion-disabled-pane-bg-color !important;
-      border-bottom-color: $accordion-disabled-pane-bg-color !important;
-    }
-
     &.list-item {
 
       &::before {
@@ -642,11 +682,32 @@
         }
       }
     }
+
+    &.is-focused {
+      border-color: $accordion-focused-border-color;
+
+      &:last-child {
+        border-bottom-color: $accordion-focused-border-color;
+      }
+    }
+
+    &.is-selected {
+      &.list-item {
+        &::before {
+          color: $accordion-selected-text-color;
+        }
+      }
+    }
+
+    &.is-disabled {
+      background-color: $accordion-disabled-pane-bg-color !important;
+      border-bottom-color: $accordion-disabled-pane-bg-color !important;
+    }
   }
 
   // Level 2 Accordion Pane
   .accordion-pane {
-    border-bottom: 0;
+    border-bottom-color: transparent;
 
     .accordion-content {
       padding-left: 40px;
