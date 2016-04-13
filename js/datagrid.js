@@ -1059,7 +1059,10 @@ $.fn.datagrid = function(options) {
                   indexTo = tempArray[self.draggableStatus.endIndex] || 0;
 
                   self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
-                  // console.log(self.settings.columns);
+                  //console.log(self.settings.columns);
+                  //Add me when done
+                  //http://demos.telerik.com/kendo-ui/grid/column-reordering
+                  //self.updateColumns(self.settings.columns);
                   // =======================
                   // END: Swap columns here
                   // =======================
