@@ -566,7 +566,7 @@ window.Chart = function(container) {
     return $(container);
   };
 
-this.Pie = function(initialData, isDonut, options) {
+  this.Pie = function(initialData, isDonut, options) {
     var defaults = {
       labels: {
         // true|false
@@ -1033,9 +1033,7 @@ this.Pie = function(initialData, isDonut, options) {
     return $(container);
   };
 
-
-
-this.elementTransform = function(options) {
+  this.elementTransform = function(options) {
     options.element.attr('transform', function () {
       var el = options.sameAs || this,
         t = d3.transform(d3.select(el).attr('transform')),
@@ -2266,7 +2264,7 @@ $.fn.chart = function(options) {
     setTimeout(function () {
       chartInst.initChartType(options);
       chartInst.handleResize();
-    }, 300);
+    }, instance ? 0 :300);
 
   });
 };
