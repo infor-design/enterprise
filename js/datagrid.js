@@ -1356,18 +1356,31 @@ $.fn.datagrid = function(options) {
 
     //Open Column Personalization Dialog
     personalizeColumns: function () {
+      var elems = ['Cloverleaf Demo Environmen', 'NICU Lab Results', 'ICU Labs'],
+        markup = '<div class="field no-full-width"><label for="searchfield" class="audible">Search</label><input id="searchfield" name="searchfield" class="searchfield input-lg" placeholder="Search" /></div>';
+        markup += '<div class="listview"><ul>';
 
-      $('body').modal({
-        title: Locale.translate('PersonalizeColumns'),
-        content: '<div> Hello</div>',
-        buttons: [{
-            text: Locale.translate('Close'),
-            click: function(e, modal) {
-              modal.close();
-            }
-          }]
-      });
+        for (var i = 0; i < elems.length; i++) {
+          markup += '<li><a href="#">' + elems[i] + '</li>';
+        }
+        markup += '</ul></div>';
 
+        $('body').modal({
+          title: Locale.translate('PersonalizeColumns'),
+          content: markup,
+          cssClass: 'searchresult-full-width',
+          buttons: [{
+              text: Locale.translate('Close'),
+              click: function(e, modal) {
+                modal.close();
+                $('body').off('open.datagrid');
+              }
+            }]
+        }).on('open.datagrid', function (e, modal) {
+          console.log(Locale.currentLocale.name);
+          modal.element.find('.searchfield').searchfield();
+          modal.element.find('.listview').listview();
+        });
     },
 
     // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)

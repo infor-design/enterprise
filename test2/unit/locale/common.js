@@ -448,7 +448,7 @@ define([
 
     'can round optionally': function() {
       expect(Locale.formatNumber('3.01999', {maximumFractionDigits: 2, round: true})).to.equal('3.02');
-      expect(Locale.formatNumber('4.1', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('4.1');
+      expect(Locale.formatNumber('4.1', {minimumFractionDigits: 0, maximumFractionDigits: 2})).to.equal('4.1');
     }
 
   });

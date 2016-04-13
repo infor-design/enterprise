@@ -340,7 +340,7 @@
             id = h1.attr('id');
 
           if (!id) {
-            id = this.element.attr('id') + '-title';
+            id = (this.element.attr('id') ? this.element.attr('id') : 'h1')  + '-title';
             h1.attr('id', id);
           }
 
@@ -413,7 +413,7 @@
         function focusElement() {
           var focusElem = self.element.find(':focusable').not('.modal-header .searchfield').first();
           self.keepFocus();
-          self.element.trigger('open');
+          self.element.trigger('open', [self]);
 
           if (focusElem.length === 0) {
             focusElem = self.element.find('.btn-modal-primary');

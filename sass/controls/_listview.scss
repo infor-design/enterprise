@@ -502,32 +502,34 @@
       }
     }
   }
+
 }
 
-.searchresult-full-witdh {
+//Full width - no padding
+.modal.full-width {
+  width: auto;
+
   .listview {
+
     border-top: 1px solid $modal-border-color;
     max-height: 170px;
 
     ul {
-      background-color: $listview-searchresult-full-witdh-bg-color;
+      background-color: $listview-full-width-bg-color;
     }
 
     li {
+      border-bottom-color: transparent;
       cursor: pointer;
       line-height: normal;
       padding: 0;
       position: static;
       white-space: nowrap;
 
-      border-bottom-color: transparent;
-      padding: 0;
-
       &:hover:not(.is-selected),
       &:focus:not(.is-selected) {
-        background-color: $listview-searchresult-full-witdh-hover-color;
+        background-color: $listview-full-width-hover-color;
       }
-
     }
 
     a {
@@ -561,8 +563,8 @@
         pointer-events: none;
       }
     }
-  }
 
+  }
 }
 
 // Tasks
