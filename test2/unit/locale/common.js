@@ -444,6 +444,11 @@ define([
       expect(Locale.formatNumber('12345', {minimumFractionDigits: 4})).to.equal('12,345.0000');
       expect(Locale.formatNumber('12345.1', {minimumFractionDigits: 5})).to.equal('12,345.10000');
 
+    },
+
+    'can round optionally': function() {
+      expect(Locale.formatNumber('3.01999', {maximumFractionDigits: 2, round: true})).to.equal('3.02');
+      expect(Locale.formatNumber('4.1', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('4.1');
     }
 
   });

@@ -516,7 +516,7 @@
         number = number * 100;
       }
 
-      var parts = this.truncateDecimals(number, maximumFractionDigits, minimumFractionDigits).split('.');
+      var parts = this.truncateDecimals(number, maximumFractionDigits, options && options.round).split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
       formattedNum = parts.join(decimal);
 
@@ -543,13 +543,29 @@
       return formattedNum;
     },
 
-    truncateDecimals: function (number, digits) {
+    decimalPlaces: function(number) {
+      var result= /^-?[0-9]+\.([0-9]+)$/.exec(number);
+      return result === null ? 0 : result[1].length;
+    },
+
+    truncateDecimals: function (number, digits, round) {
       var multiplier = Math.pow(10, digits),
         adjustedNum = number * multiplier,
         truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
 
+      //Round Decimals
+      var decimals = this.decimalPlaces(number);
+      if (round && decimals >= digits && adjustedNum > 0) {
+        truncatedNum = Math.ceil(adjustedNum);
+      }
+
+      if (round && decimals <= digits && decimals > 0) {
+        truncatedNum = Math.ceil(adjustedNum);
+      }
+
       return (truncatedNum / multiplier).toFixed(digits);
     },
+
 
     //Take a Formatted Number and return a real number
     parseNumber: function(input) {

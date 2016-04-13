@@ -16,6 +16,8 @@
           //Locale.set('de-DE');
           //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:5}));
           //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:4}));
+          append(Locale.formatNumber('3.01999', {maximumFractionDigits: 2}));
+          append(Locale.formatNumber('4.1', {minimumFractionDigits: 0, maximumFractionDigits: 2}));
 
           append(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'}));
           append(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'}));

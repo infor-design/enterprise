@@ -353,10 +353,10 @@
           this.label.attr('style', this.orgLabel.attr('style'));
         }
         if (this.element.is(':disabled')) {
-          this.input.attr('disabled','');
+          this.disable();
         }
         if (this.element.is('[readonly]')) {
-          this.input.addClass('is-readonly');
+          this.readonly();
         }
         if (this.isHidden) {
           this.input.hide().prev('label').hide();
