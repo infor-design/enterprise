@@ -1443,15 +1443,20 @@
       disable: function() {
         this.element.prop('disabled', true);
         this.input.prop('disabled', true);
+        this.element.prop('readonly', false);
+        this.input.prop('readonly', false).removeClass('is-readonly');
         this.closeList();
       },
 
       enable: function() {
         this.element.prop('disabled', false);
+        this.element.prop('readonly', false);
         this.input.prop('disabled', false).removeClass('is-readonly');
       },
 
       readonly: function() {
+        this.element.prop('disabled', false);
+        this.element.prop('readonly', true);
         this.input.addClass('is-readonly').prop('readonly', true);
         this.closeList();
       },
