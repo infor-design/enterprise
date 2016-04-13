@@ -80,6 +80,7 @@
         }
 
         this.accordion = this.menu.find('.accordion');
+        this.accordion.addClass('panel').addClass('inverse');
 
         // Check to make sure that the internal Accordion Control is invoked
         var accordion = this.accordion.data('accordion');

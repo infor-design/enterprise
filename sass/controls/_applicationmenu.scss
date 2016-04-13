@@ -37,178 +37,43 @@
       width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
-  .panel {
-    padding-left: 49px;
-
-    > * {
-      vertical-align: middle;
-    }
-
-    &.logout {
-      .icon.avatar {
-        border-radius: 32px;
-        height: 64px;
-        width: 64px;
-      }
-
-      .content {
-        @include font-size(14);
-        padding-left: 1em;
-
-        > * {
-          display: block;
-          line-height: 1.5em;
-        }
-
-        > .name {
-          @include font-size(20);
-          line-height: 2em;
-        }
-      }
-
-      span {
-        display: inline-block;
-      }
-    }
-  }
-
   .accordion {
-    background-color: $app-accordion-header-bg-color;
-    border-bottom-color: $app-accordion-border-color;
-    border-right-color: $app-accordion-border-color;
-    color: $app-accordion-header-text-color;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
 
-    margin-bottom: calc(-2rem - 38px);
-    min-height: 100%;
+    .panel {
+      padding-left: 49px;
 
-    &::after {
-      content: '';
-      display: block;
-    }
+      > * {
+        vertical-align: middle;
+      }
 
-    .name {
-      color: #ffffff;
-    }
-  }
-
-  .accordion-header {
-    border-bottom: 1px solid $app-accordion-border-color;
-    color: $app-accordion-header-text-color;
-
-    > a {
-      color: $app-accordion-header-text-color;
-    }
-
-    &:not(.is-focused):not(.is-selected) {
-      > [class^="btn"] {
-        .icon:not(.chevron) {
-          fill: $app-accordion-header-text-color;
+      &.logout {
+        .icon.avatar {
+          border-radius: 32px;
+          height: 64px;
+          width: 64px;
         }
 
-        .plus-minus {
-          &::before,
-          &::after {
-            background-color: $app-accordion-header-text-color;
+        .content {
+          @include font-size(14);
+          padding-left: 1em;
+
+          > * {
+            display: block;
+            line-height: 1.5em;
           }
-        }
-      }
 
-      // Dark Accordion has a weird chevron color for some reason
-      .icon.chevron {
-        fill: $app-accordion-chevron-color;
-      }
-    }
-
-    &:not(.is-focused) {
-      &:hover {
-        > a {
-          color: $app-accordion-header-text-active-color;
+          > .name {
+            @include font-size(20);
+            line-height: 2em;
+          }
         }
 
         span {
-          color: $app-accordion-header-text-active-color;
+          display: inline-block;
         }
-
-        > [class^="btn"] {
-          .icon:not(.chevron) {
-            fill: $app-accordion-header-text-active-color;
-          }
-
-          .plus-minus {
-            &::before,
-            &::after {
-              background-color: $app-accordion-header-text-active-color;
-            }
-          }
-        }
-      }
-    }
-
-    &.is-focused,
-    &.is-selected {
-      border-bottom-color: $accordion-selected-bg-color;
-
-      > a {
-        color: $accordion-selected-text-color;
-      }
-
-      > [class^="btn"],
-      > .icon {
-        fill: $accordion-selected-text-color;
-
-        .plus-minus {
-          &::before,
-          &::after {
-            background-color: $accordion-selected-text-color;
-          }
-        }
-      }
-    }
-
-    &:not(.is-focused):hover,
-    &.child-selected:not(.is-focused) {
-      > a {
-        color: $app-accordion-header-text-active-color;
-      }
-
-      > [class^="btn"] {
-        > .icon:not(.chevron) {
-          fill: $app-accordion-icon-hover-color;
-
-          &.plus-minus {
-            &::before,
-            &::after {
-              background-color: $app-accordion-icon-hover-color;
-            }
-          }
-        }
-      }
-
-      .icon:not(.chevron) {
-        fill: $app-accordion-icon-hover-color;
-      }
-    }
-
-    &.is-selected {
-      a {
-        color: $accordion-selected-text-color;
-      }
-    }
-
-  }
-
-  .accordion-pane {
-    background-color: $app-accordion-pane-bg-color;
-    border-bottom-color: $app-accordion-border-color;
-
-    .accordion-content {
-      border-bottom: $app-accordion-border-color;
-      color: $app-accordion-pane-text-color;
-    }
-
-    .accordion-header {
-      &:last-child {
-        border-bottom: 1px solid $app-accordion-border-color;
       }
     }
   }

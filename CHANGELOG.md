@@ -8,6 +8,8 @@ Release Date: April 4th
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
 ## Ui Changes
+* 2016-04-13 - Accordion - The Accordion's default style is now an "in-page" design with less borders and configuration.  The original style is now known as a "panel" accordion.  If you wish to keep your accordion looking how it was previously, you must append a "panel" CSS class to your top-level ".accordion" element.
+* 2016-04-13 - Application Menu - The changes for the Accordion in this release affect the internal accordion used by the Application Menu.  If you use this control, make sure it receives the same markup change required by other "panel"-style Accordions.
 * 2016-02-23 - Changed File Upload States. Refined all 3 themes.
 * 2016-03-30 - Minor changes to the progress indicator
 * 2016-03-31 - Hide Focus Support Added to Links. Note that many links will benefit from adding class hide-focus.
