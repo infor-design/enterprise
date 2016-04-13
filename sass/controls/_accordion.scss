@@ -270,10 +270,10 @@
       background-color: $accordion-alternate-bg-color;
 
       .accordion-pane {
-        background-color: $accordion-pane-alternate-bg-color;
+        background-color: $accordion-alternate-pane-bg-color;
 
         .accordion-header {
-          border-bottom-color: $accordion-pane-alternate-bg-color;
+          border-bottom-color: $accordion-alternate-pane-bg-color;
 
           &:last-child {
             border-bottom-color: transparent;
@@ -289,14 +289,92 @@
         }
 
         .accordion-content {
-          border-bottom: 1px solid $accordion-pane-alternate-bg-color;
+          border-bottom-color: $accordion-alternate-pane-bg-color;
         }
       }
     }
 
     // Darker, "inverse" color scheme
     &.inverse {
+      background-color: $accordion-inverse-bg-color;
 
+      .accordion-header {
+        border-bottom-color: $accordion-inverse-border-color;
+        color: $accordion-inverse-text-color;
+
+        .icon {
+          fill: $accordion-inverse-text-color;
+
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $accordion-inverse-text-color;
+            }
+          }
+        }
+
+        &.is-focused {
+          border-bottom-color: $accordion-selected-bg-color;
+        }
+
+        &.is-selected {
+          color: $accordion-selected-text-color;
+
+          .icon {
+            fill: $accordion-selected-text-color;
+
+            &.plus-minus {
+              &::before,
+              &::after {
+                background-color: $accordion-selected-text-color;
+              }
+            }
+          }
+        }
+
+        &:hover {
+          color: $accordion-inverse-text-hover-color;
+
+          .icon {
+            fill: $accordion-inverse-text-hover-color;
+
+            &.plus-minus {
+              &::before,
+              &::after {
+                background-color: $accordion-inverse-text-hover-color;
+              }
+            }
+          }
+        }
+      }
+
+      .accordion-pane {
+        background-color: $accordion-inverse-pane-bg-color;
+
+        .accordion-header {
+          border-bottom-color: $accordion-inverse-pane-bg-color;
+
+          &:last-child {
+            border-bottom-color: transparent;
+          }
+
+          &.is-focused {
+            border-bottom-color: $accordion-selected-bg-color;
+          }
+
+          &.is-selected {
+            color: $accordion-selected-text-color;
+
+            .icon {
+              fill: $accordion-selected-text-color;
+            }
+          }
+        }
+
+        .accordion-content {
+          border-bottom-color: $accordion-inverse-pane-bg-color;
+        }
+      }
     }
 
   }
@@ -467,6 +545,13 @@
 
     .icon {
       fill: $accordion-hover-text-color;
+
+      &.plus-minus {
+        &::before,
+        &::after {
+          background-color: $accordion-hover-text-color;
+        }
+      }
     }
   }
 

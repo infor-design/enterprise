@@ -381,12 +381,19 @@ $accordion-icon-color: $graphite06;
 $accordion-icon-hover-color: $graphite10;
 $accordion-text-color: $graphite06;
 $accordion-text-active-color: $graphite10;
-
-$accordion-alternate-bg-color: $white;
-$accordion-pane-alternate-bg-color: $graphite02;
-
 $accordion-hover-border-color: $graphite10;
 $accordion-hover-text-color: $graphite10;
+
+$accordion-alternate-bg-color: $white;
+$accordion-alternate-pane-bg-color: $graphite02;
+
+$accordion-inverse-bg-color: $graphite08;
+$accordion-inverse-pane-bg-color: $graphite09;
+$accordion-inverse-border-color: $graphite09;
+$accordion-inverse-border-hover-color: $white;
+$accordion-inverse-text-color: $slate03;
+$accordion-inverse-text-hover-color: $white;
+
 
 $accordion-focused-border-color: $primary-color;
 $accordion-focused-text-color: $primary-color;
