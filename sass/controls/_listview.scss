@@ -537,20 +537,6 @@
 
 }
 
-//Full width - no padding
-.modal.full-width {
-  width: auto;
-
-  .listview {
-    border-top: 1px solid $modal-border-color;
-    max-height: 220px;
-  }
-
-  .searchfield-wrapper {
-    min-width: 400px;
-  }
-}
-
 // Tasks
 @media (max-width: 768px) {
   .listview[aria-label='Tasks'] {
@@ -566,12 +552,6 @@
         left: 0;
         width: 15px;
       }
-    }
-  }
-
-  .modal.full-width {
-   .searchfield-wrapper {
-      min-width: 300px;
     }
   }
 }
