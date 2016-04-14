@@ -985,6 +985,7 @@ $.fn.datagrid = function(options) {
         headers = self.headerNodes();
 
       headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');
+      headers.last().append('<span class="is-draggable-target last"></span>');
       self.element.addClass('is-draggable-columns');
 
       // Initialize Drag api
@@ -1011,20 +1012,24 @@ $.fn.datagrid = function(options) {
 
             // While dragging ===================================
             .on('drag.datagrid', function (e, pos) {
-              var i, l, target,
+              var i, l, n, target,
                 index = self.getColumnIndex(pos);
+
+              $('.is-draggable-target', headers).removeClass('is-over');
 
               if (index !== -1) {
                 for (i=0, l=self.draggableColumnsTargets.length; i<l; i++) {
                   target = self.draggableColumnsTargets[i];
-                  target.el[(target.index === index && target.index !== self.draggableStatus.startIndex) ?
-                    'addClass' : 'removeClass']('is-over');
+                  n = i + 1;
+
+                  if (target.index === index && target.index !== self.draggableStatus.startIndex) {
+                    if (target.index > self.draggableStatus.startIndex && (n < l)) {
+                      target = self.draggableColumnsTargets[n];
+                    }
+                    target.el.addClass('is-over');
+                  }
                 }
               }
-              else {
-                $('.is-draggable-target', headers).removeClass('is-over');
-              }
-
             })
 
             // Drag end =========================================
@@ -1044,9 +1049,9 @@ $.fn.datagrid = function(options) {
 
               if (self.draggableStatus.endIndex !== -1) {
                 if (self.draggableStatus.startIndex !== self.draggableStatus.endIndex) {
-                  // =========================
-                  // BEGIN: Swap columns here
-                  // =========================
+                  // ====================
+                  // BEGIN: Swap columns
+                  // ====================
                   // console.log(self.draggableStatus);
 
                   for (i=0, l=self.settings.columns.length; i < l; i++) {
@@ -1055,17 +1060,15 @@ $.fn.datagrid = function(options) {
                     }
                   }
                   // console.log(tempArray);
+
                   indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
                   indexTo = tempArray[self.draggableStatus.endIndex] || 0;
 
                   self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
-                  //console.log(self.settings.columns);
-                  //Add me when done
-                  //http://demos.telerik.com/kendo-ui/grid/column-reordering
-                  //self.updateColumns(self.settings.columns);
-                  // =======================
-                  // END: Swap columns here
-                  // =======================
+                  self.updateColumns(self.settings.columns);
+                  // ==================
+                  // END: Swap columns
+                  // ==================
                 }
                 else {
                   // No need to swap here since same target area, where drag started
@@ -1090,15 +1093,16 @@ $.fn.datagrid = function(options) {
       self.draggableColumnsTargets = [];
       self.draggableStatus = {};
 
-      $('.is-draggable-target', headers).each(function (index) {
-        target = headers.eq(index);
+      $('.is-draggable-target', headers.not('.is-hidden')).each(function (index) {
+        var idx = ($(this).is('.last')) ? index - 1 : index; // Extra target for last header th
+        target = headers.eq(idx);
         pos = target.position();
         // Extra space around, if dropped item bit off from drop area
         extra = 20;
 
         self.draggableColumnsTargets.push({
           el: $(this),
-          index: index,
+          index: idx,
           pos: pos,
           width: target.outerWidth(),
           height: target.outerHeight(),
@@ -1116,7 +1120,7 @@ $.fn.datagrid = function(options) {
         index = -1,
         target, i, l;
 
-      for (i=0, l=self.draggableColumnsTargets.length; i<l; i++) {
+      for (i=0, l=self.draggableColumnsTargets.length-1; i<l; i++) {
         target = self.draggableColumnsTargets[i];
         if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
             pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
@@ -1130,7 +1134,6 @@ $.fn.datagrid = function(options) {
     arrayIndexMove: function(arr, from, to) {
       arr.splice(to, 0, arr.splice(from, 1)[0]);
     },
-//-------------------------------------------------
 
     //Return Value from the Object handling dotted notation
     fieldValue: function (obj, field) {

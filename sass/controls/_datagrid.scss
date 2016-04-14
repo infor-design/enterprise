@@ -931,6 +931,10 @@ html[dir='rtl'] {
           bottom: -9px;
         }
 
+        &.last {
+          right: 0;
+        }
+
         &.is-over {
           display: inline-block;
         }
