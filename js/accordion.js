@@ -162,7 +162,6 @@
         // Expand to the current accordion header if we find one that's selected
         if (!this.element.data('updating')) {
           var targetsToExpand = this.headers.filter('.is-selected, .is-expanded');
-          //targetsToExpand.removeClass('is-selected').removeClass('is-expanded');
 
           if (this.settings.allowOnePane) {
             targetsToExpand = targetsToExpand.first();

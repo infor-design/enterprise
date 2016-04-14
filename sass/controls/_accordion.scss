@@ -379,6 +379,12 @@
               }
             }
           }
+
+          > [class^="btn"] {
+            &:focus {
+              border-color: $accordion-selected-text-color;
+            }
+          }
         }
 
         &:hover {
@@ -437,7 +443,7 @@
   border-bottom-color: $accordion-border-color;
   cursor: pointer;
   font-size: 0;
-  height: 46px;
+  height: 45px;
   overflow: hidden;
   position: relative;
   -webkit-touch-callout: none;
@@ -458,13 +464,13 @@
 
   a {
     color: inherit;
+    @include font-size(14);
     text-decoration: none;
     text-overflow: ellipsis;
   }
 
   > a {
     display: inline-block;
-    @include font-size(16);
     overflow: hidden;
     padding: 13px 0 13px 20px;
     white-space: nowrap;
@@ -475,7 +481,7 @@
     background-color: transparent;
     border-color: transparent;
     height: 38px;
-    margin: 3px;
+    margin: 0 3px;
     min-width: 0;
     padding: 0 10px;
     width: 40px;
@@ -557,7 +563,7 @@
   .icon {
     fill: $accordion-icon-color;
     height: 16px;
-    top: -2px;
+    top: -1px;
     width: 18px;
   }
 
@@ -716,7 +722,7 @@
   // These rules allow the accordion to expand
   // Level 2 Accordion Header
   .accordion-header {
-    height: 39px;
+    height: 34px;
 
     &:not(:first-child) {
       border-top-color: transparent;
@@ -727,8 +733,7 @@
     }
 
     > a {
-      @include font-size(14);
-      padding: 10px 0 10px 20px;
+      padding: 8px 0 8px 20px;
     }
 
     > [class^="btn"],
@@ -736,13 +741,13 @@
       margin-left: 14px;
 
       + a {
-        padding: 10px 0 10px 1px;
+        padding: 8px 0 8px 1px;
         width: calc(100% - 41px);
       }
     }
 
     > [class^="btn"] {
-      height: 31px;
+      height: 30px;
       width: 20px;
 
       .icon.plus-minus {
@@ -762,7 +767,7 @@
         content: '\25cf';
         display: inline-block;
         @include font-size(12);
-        padding: 10px 10px 10px 21px;
+        padding: 8px 10px 8px 21px;
         vertical-align: middle;
       }
 
@@ -1374,7 +1379,6 @@ html[dir='rtl'] {
       }
     }
   }
-
 }
 
 // Dirty Hack because Firefox never lines things up right
