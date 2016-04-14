@@ -81,6 +81,7 @@
         }
 
         this.accordion = this.menu.find('.accordion');
+        this.accordion.addClass('panel').addClass('inverse');
 
         // Check to make sure that the internal Accordion Control is invoked
         var accordion = this.accordion.data('accordion');
@@ -122,7 +123,7 @@
             e.stopImmediatePropagation();
             $(e.target).click();
           }).on('click.applicationmenu', function() {
-            if (self.triggers.find('.icon.app-header').hasClass('go-back')) {
+            if ($(this).find('.icon.app-header').hasClass('go-back')) {
               return false;
             }
 
@@ -364,7 +365,7 @@
           changed = changed.add($(obj));
         });
 
-        this.triggers = !remove ? this.triggers.add(changed) : this.triggers.not(changed);
+        this.triggers = this.triggers[!remove ? 'add' : 'not'](changed);
 
         if (norebuild && norebuild === true) {
           return;
