@@ -194,6 +194,21 @@
     &.disabled > a:focus {
       box-shadow: none;
     }
+
+    // Selected
+    &.is-checked > a:before,
+    &.is-checked.is-selected > a:before {
+      @include css3(transform, rotate(45deg));
+      border-color: $popupmenu-checked-color $popupmenu-checked-color $popupmenu-checked-color transparent;
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      content: '';
+      height: 11px;
+      left: 17px;
+      margin-top: 7px;
+      position: absolute;
+      width: 5px;
+    }
   }
 
   a {
@@ -321,35 +336,14 @@
         padding-left: 25px;
       }
     }
-  }
 
-  &.is-selectable {
-    li {
-      // Selected
-      &.is-checked > a:before,
-      &.is-checked.is-selected > a:before {
-        border-color: $popupmenu-checked-color $popupmenu-checked-color $popupmenu-checked-color transparent;
-        border-style: solid;
-        border-width: 0 2px 2px 0;
-        content: '';
-        height: 11px;
-        left: 17px;
-        margin-top: 7px;
-        position: absolute;
-        @include css3(transform, rotate(45deg));
-        width: 5px;
-      }
-    }
-
-    &.popupmenu-short {
-      li {
-        &.is-checked,
-        &.is-checked.is-selected {
-          > a:before {
-            height: 11px;
-            left: 8px;
-            width: 5px;
-          }
+    i {
+      &.is-checked,
+      &.is-checked.is-selected {
+        > a:before {
+          height: 11px;
+          left: 8px;
+          width: 5px;
         }
       }
     }

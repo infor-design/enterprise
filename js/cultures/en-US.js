@@ -246,6 +246,7 @@
       'SaveCurrentView': {id: 'SaveCurrentView', value: 'Save Current View', comment: 'Datagrids contain view sets. This menu option saves them'},
       'SavedViews': {id: 'SavedViews', value: 'Saved Views', comment: 'Label for a list of Views'},
       'Search': {id: 'Search', value: 'Search', comment: 'Search tooltip'},
+      'SearchColumnName': {id: 'SearchColumnName', value: 'Search for a column name', comment: 'Search for a datagrid column by name'},
       'SearchFolder': {id: 'SearchFolder', value: 'Search in Folder', comment: 'Search Folder tooltip'},
       'SearchList': {id: 'SearchList', value: 'Search List', comment: 'Search List tooltip'},
       'Select': {id: 'Select', value: 'Select', comment: 'text describing a select action'},

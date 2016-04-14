@@ -505,7 +505,7 @@
   }
 
   .icon.close {
-    right: 15px !important;
+    right: 10px !important;
     top: 14px !important;
   }
 
@@ -533,6 +533,7 @@
 
   + .listview {
     height: calc(100% - 42px);
+
   }
 
 }

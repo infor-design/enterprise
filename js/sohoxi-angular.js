@@ -220,7 +220,7 @@
       };
   };
 
-  angular.module('sohoxi-angular')
+  angular.module('sohoxi-angular', [])
       .directive('button', button)
       .directive('chart', chart)
       .directive('datagrid', datagrid)

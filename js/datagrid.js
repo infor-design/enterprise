@@ -986,7 +986,7 @@ $.fn.datagrid = function(options) {
 
       headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');
       headers.last().append('<span class="is-draggable-target last"></span>');
-      self.element.addClass('is-draggable-columns');
+      self.element.addClass('has-draggable-columns');
 
       // Initialize Drag api
       $('.handle', headers).each(function() {
@@ -1360,18 +1360,18 @@ $.fn.datagrid = function(options) {
     //Open Column Personalization Dialog
     personalizeColumns: function () {
       var elems = ['Cloverleaf Demo Environmen', 'NICU Lab Results', 'ICU Labs'],
-        markup = '<div class="field no-full-width"><label for="searchfield" class="audible">Search</label><input id="searchfield" name="searchfield" class="searchfield input-lg" placeholder="Search" /></div>';
-        markup += '<div class="listview"><ul>';
+        markup = '<div class="listview-search alternate-bg" style="width: 400px"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="'+ Locale.translate('SearchColumnName') +'" name="searchfield" id="gridfilter"></div>';
+        markup += '<div class="listview alternate-bg datagrid-columns-dialog" id="search-listview"><ul>';
 
         for (var i = 0; i < elems.length; i++) {
-          markup += '<li><a href="#">' + elems[i] + '</li>';
+          markup += '<a href="#"> <label class="inline"><input type="checkbox" class="checkbox" checked><span class="label-text">' + elems[i] + '</span></label></a>';
         }
         markup += '</ul></div>';
 
         $('body').modal({
           title: Locale.translate('PersonalizeColumns'),
           content: markup,
-          cssClass: 'searchresult-full-width',
+          cssClass: 'full-width',
           buttons: [{
               text: Locale.translate('Close'),
               click: function(e, modal) {
@@ -1380,8 +1380,12 @@ $.fn.datagrid = function(options) {
               }
             }]
         }).on('open.datagrid', function (e, modal) {
-          modal.element.find('.searchfield').searchfield();
-          modal.element.find('.listview').listview();
+          modal.element.find('.searchfield').searchfield({clearable: true});
+          modal.element.find('.listview').listview({searchable: true});
+
+          modal.element.find('.checkbox').onTouchClick().on('click', function () {
+
+          });
         });
     },
 

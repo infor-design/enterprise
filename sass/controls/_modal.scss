@@ -54,9 +54,11 @@
   }
 
   &.full-width {
+    width: auto;
+
     .modal-content {
       .modal-body-wrapper {
-        padding: 20px 0 0;
+        padding: 5px 0 0;
       }
 
       .no-full-width {
@@ -80,15 +82,35 @@
       width: 400px;
 
       input {
-        border: 0;
-        border-top: 1px solid $fieldset-border-top-color;
+        border-color: $fieldset-border-top-color;
+        width: 400px;
       }
+    }
+  }
+
+  .alternate-bg {
+
+    &.listview {
+      li {
+        background-color: $listview-full-width-bg-color;
+        border-color: transparent;
+
+        &:hover {
+          background-color: $listview-full-width-hover-color;
+        }
+      }
+    }
+
+    &.listview-search input {
+      border-color: $listview-full-width-border-color;
+      border-left-color: transparent;
+      border-right-color: transparent;
     }
   }
 }
 
 .overlay {
-  background: #000000;
+  background: $black;
   height: 100%;
   left: 0;
   opacity: 0;
