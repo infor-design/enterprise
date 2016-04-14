@@ -61,7 +61,7 @@
     // Level 1
     > .accordion-header {
       > a {
-        padding-left: 55px;
+        padding-left: 54px;
       }
 
       > .icon,
@@ -75,7 +75,17 @@
 
     .accordion-pane {
       .accordion-content {
-        padding-left: 36px;
+        padding-left: 54px;
+      }
+
+      &.has-icons {
+        .accordion-header.no-icon > a {
+          padding-left: 54px;
+        }
+
+        .accordion-content {
+          padding-left: 54px;
+        }
       }
 
       // Level 2
@@ -111,6 +121,16 @@
           padding-left: 54px;
         }
 
+        &.has-icons {
+          .accordion-header.no-icon > a {
+            padding-left: 73px;
+          }
+
+          .accordion-content {
+            padding-left: 74px;
+          }
+        }
+
         // Level 3
         .accordion-header {
           > a {
@@ -142,6 +162,16 @@
         .accordion-pane {
           .accordion-content {
             padding-left: 74px;
+          }
+
+          &.has-icons {
+            .accordion-header.no-icon > a {
+              padding-left: 92px;
+            }
+
+            .accordion-content {
+              padding-left: 93px;
+            }
           }
 
           // Level 4
@@ -177,6 +207,16 @@
               padding-left: 93px;
             }
 
+            &.has-icons {
+              .accordion-header.no-icon > a {
+                padding-left: 111px;
+              }
+
+              .accordion-content {
+                padding-left: 112px;
+              }
+            }
+
             // Level 5
             .accordion-header {
               > a {
@@ -208,6 +248,16 @@
             .accordion-pane {
               .accordion-content {
                 padding-left: 112px;
+              }
+
+              &.has-icons {
+                .accordion-header.no-icon > a {
+                  padding-left: 131px;
+                }
+
+                .accordion-content {
+                  padding-left: 132px;
+                }
               }
 
               // Level 6
@@ -379,6 +429,12 @@
               }
             }
           }
+
+          > [class^="btn"] {
+            &:focus {
+              border-color: $accordion-selected-text-color;
+            }
+          }
         }
 
         &:hover {
@@ -437,7 +493,7 @@
   border-bottom-color: $accordion-border-color;
   cursor: pointer;
   font-size: 0;
-  height: 46px;
+  height: 45px;
   overflow: hidden;
   position: relative;
   -webkit-touch-callout: none;
@@ -458,13 +514,13 @@
 
   a {
     color: inherit;
+    @include font-size(14);
     text-decoration: none;
     text-overflow: ellipsis;
   }
 
   > a {
     display: inline-block;
-    @include font-size(16);
     overflow: hidden;
     padding: 13px 0 13px 20px;
     white-space: nowrap;
@@ -475,7 +531,7 @@
     background-color: transparent;
     border-color: transparent;
     height: 38px;
-    margin: 3px;
+    margin: 0 3px;
     min-width: 0;
     padding: 0 10px;
     width: 40px;
@@ -557,7 +613,7 @@
   .icon {
     fill: $accordion-icon-color;
     height: 16px;
-    top: -2px;
+    top: -1px;
     width: 18px;
   }
 
@@ -651,7 +707,6 @@
 
   &.is-disabled {
     background-color: $accordion-disabled-bg-color !important;
-    border-bottom-color: $accordion-disabled-border-color !important;
     color: $accordion-disabled-text-color !important;
     pointer-events: none;
 
@@ -713,10 +768,20 @@
     padding-left: 20px;
   }
 
+  &.has-icons {
+    .accordion-header.no-icon > a {
+      padding-left: 40px;
+    }
+
+    .accordion-content {
+      padding-left: 40px;
+    }
+  }
+
   // These rules allow the accordion to expand
   // Level 2 Accordion Header
   .accordion-header {
-    height: 39px;
+    height: 34px;
 
     &:not(:first-child) {
       border-top-color: transparent;
@@ -727,8 +792,7 @@
     }
 
     > a {
-      @include font-size(14);
-      padding: 10px 0 10px 20px;
+      padding: 8px 0 8px 20px;
     }
 
     > [class^="btn"],
@@ -736,13 +800,13 @@
       margin-left: 14px;
 
       + a {
-        padding: 10px 0 10px 1px;
+        padding: 8px 0 8px 1px;
         width: calc(100% - 41px);
       }
     }
 
     > [class^="btn"] {
-      height: 31px;
+      height: 30px;
       width: 20px;
 
       .icon.plus-minus {
@@ -762,7 +826,7 @@
         content: '\25cf';
         display: inline-block;
         @include font-size(12);
-        padding: 10px 10px 10px 21px;
+        padding: 8px 10px 8px 21px;
         vertical-align: middle;
       }
 
@@ -807,6 +871,16 @@
   .accordion-pane {
     border-bottom-color: transparent;
 
+    &.has-icons {
+      .accordion-header.no-icon > a {
+        padding-left: 59px;
+      }
+
+      .accordion-content {
+        padding-left: 59px;
+      }
+    }
+
     .accordion-content {
       padding-left: 40px;
     }
@@ -843,6 +917,16 @@
     // Level 3 Accordion Pane
     .accordion-pane {
 
+      &.has-icons {
+        .accordion-header.no-icon > a {
+          padding-left: 78px;
+        }
+
+        .accordion-content {
+          padding-left: 78px;
+        }
+      }
+
       .accordion-content {
         padding-left: 59px;
       }
@@ -878,6 +962,16 @@
       // Level 4 Accordion Pane
       .accordion-pane {
 
+        &.has-icons {
+          .accordion-header.no-icon > a {
+            padding-left: 97px;
+          }
+
+          .accordion-content {
+            padding-left: 97px;
+          }
+        }
+
         .accordion-content {
           padding-left: 78px;
         }
@@ -912,6 +1006,16 @@
 
         // Level 5 Accordion Pane
         .accordion-pane {
+
+          &.has-icons {
+            .accordion-header.no-icon > a {
+              padding-left: 116px;
+            }
+
+            .accordion-content {
+              padding-left: 116px;
+            }
+          }
 
           .accordion-content {
             padding-left: 97px;
@@ -990,6 +1094,20 @@ html[dir='rtl'] {
         padding-right: 20px;
       }
 
+      &.has-icons {
+        background-color: 'red';
+      }
+
+      &.has-icons {
+        .accordion-header.no-icon > a {
+          padding-right: 40px;
+        }
+
+        .accordion-content {
+          padding-right: 40px;
+        }
+      }
+
       // Level 2
       .accordion-header {
         > a {
@@ -1024,6 +1142,18 @@ html[dir='rtl'] {
         .accordion-content {
           padding-left: 0;
           padding-right: 40px;
+        }
+
+        &.has-icons {
+          .accordion-header.no-icon > a {
+            padding-left: 0;
+            padding-right: 59px;
+          }
+
+          .accordion-content {
+            padding-left: 0;
+            padding-right: 59px;
+          }
         }
 
         // Level 3
@@ -1061,6 +1191,18 @@ html[dir='rtl'] {
             padding-right: 59px;
           }
 
+          &.has-icons {
+            .accordion-header.no-icon > a {
+              padding-left: 0;
+              padding-right: 78px;
+            }
+
+            .accordion-content {
+              padding-left: 0;
+              padding-right: 78px;
+            }
+          }
+
           // Level 4
           .accordion-header {
             > a {
@@ -1096,6 +1238,18 @@ html[dir='rtl'] {
               padding-right: 78px;
             }
 
+            &.has-icons {
+              .accordion-header.no-icon > a {
+                padding-left: 0;
+                padding-right: 97px;
+              }
+
+              .accordion-content {
+                padding-left: 0;
+                padding-right: 97px;
+              }
+            }
+
             // Level 5
             .accordion-header {
               > a {
@@ -1129,6 +1283,18 @@ html[dir='rtl'] {
               .accordion-content {
                 padding-left: 0;
                 padding-right: 78px;
+              }
+
+              &.has-icons {
+                .accordion-header.no-icon > a {
+                  padding-left: 0;
+                  padding-right: 116px;
+                }
+
+                .accordion-content {
+                  padding-left: 0;
+                  padding-right: 116px;
+                }
               }
 
               // Level 6
@@ -1172,10 +1338,6 @@ html[dir='rtl'] {
       }
     }
 
-
-
-
-
     // Change padding/margin for headers based on icon existence
     &.has-icons {
       .accordion-header {
@@ -1195,6 +1357,16 @@ html[dir='rtl'] {
       .accordion-pane {
         .accordion-content {
           padding-right: 36px;
+        }
+
+        &.has-icons {
+          .accordion-header.no-icon > a {
+            padding-right: 55px;
+          }
+
+          .accordion-content {
+            padding-right: 55px;
+          }
         }
 
         // Level 2
@@ -1231,6 +1403,16 @@ html[dir='rtl'] {
             padding-right: 54px;
           }
 
+          &.has-icons {
+            .accordion-header.no-icon > a {
+              padding-right: 74px;
+            }
+
+            .accordion-content {
+              padding-right: 74px;
+            }
+          }
+
           // Level 3
           .accordion-header {
             > a {
@@ -1263,6 +1445,16 @@ html[dir='rtl'] {
           .accordion-pane {
             .accordion-content {
               padding-right: 74px;
+            }
+
+            &.has-icons {
+              .accordion-header.no-icon > a {
+                padding-right: 93px;
+              }
+
+              .accordion-content {
+                padding-right: 93px;
+              }
             }
 
             // Level 4
@@ -1299,6 +1491,16 @@ html[dir='rtl'] {
                 padding-right: 93px;
               }
 
+              &.has-icons {
+                .accordion-header.no-icon > a {
+                  padding-right: 112px;
+                }
+
+                .accordion-content {
+                  padding-right: 112px;
+                }
+              }
+
               // Level 5
               .accordion-header {
                 > a {
@@ -1331,6 +1533,16 @@ html[dir='rtl'] {
               .accordion-pane {
                 .accordion-content {
                   padding-right: 112px;
+                }
+
+                &.has-icons {
+                  .accordion-header.no-icon > a {
+                    padding-right: 132px;
+                  }
+
+                  .accordion-content {
+                    padding-right: 132px;
+                  }
                 }
 
                 // Level 6
@@ -1374,7 +1586,6 @@ html[dir='rtl'] {
       }
     }
   }
-
 }
 
 // Dirty Hack because Firefox never lines things up right

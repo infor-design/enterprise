@@ -369,13 +369,13 @@ $accordion-alternate-bg-color: $slate09;
 $accordion-alternate-border-color: $slate10;
 $accordion-alternate-pane-bg-color: $slate10;
 
-$accordion-inverse-bg-color: $graphite01;
-$accordion-inverse-pane-bg-color: $graphite02;
-$accordion-inverse-border-color: $graphite02;
-$accordion-inverse-border-hover-color: $graphite10;
-$accordion-inverse-text-color: $graphite06;
-$accordion-inverse-text-hover-color: $graphite10;
-$accordion-inverse-focus-state-color: $primary-color;
+$accordion-inverse-bg-color: $slate08;
+$accordion-inverse-pane-bg-color: $slate09;
+$accordion-inverse-border-color: $slate09;
+$accordion-inverse-border-hover-color: $white;
+$accordion-inverse-text-color: $slate02;
+$accordion-inverse-text-hover-color: $white;
+$accordion-inverse-focus-state-color: $white;
 
 $accordion-focused-text-color: $primary-color;
 $accordion-focused-border-color: $primary-color;
@@ -384,24 +384,14 @@ $accordion-selected-text-color: $white;
 
 $accordion-highcontrast-text-decoration: none;
 
-$accordion-disabled-bg-color: $slate08;
+$accordion-disabled-bg-color: transparent;
 $accordion-disabled-border-color: $slate08;
-$accordion-disabled-text-color: $slate06;
-$accordion-disabled-pane-bg-color: $slate08;
-$accordion-disabled-pane-text-color: $slate06;
+$accordion-disabled-text-color: $slate05;
+$accordion-disabled-pane-bg-color: transparent;
+$accordion-disabled-pane-text-color: $slate05;
 
 // Application Menu (extends Accoridon)
-$app-accordion-header-bg-color: $slate09;
-$app-accordion-border-color: $slate10;
-$app-accordion-pane-bg-color: $slate10;
-
-$app-accordion-header-text-color: $slate02;
-$app-accordion-header-text-active-color: $white;
-$app-accordion-pane-text-color: $slate03;
-
-$app-accordion-icon-color: $slate02;
-$app-accordion-icon-hover-color: $white;
-$app-accordion-chevron-color: $slate05;
+$application-menu-border-color: $slate10;
 
 // Contextual Action Panel
 $contextual-panel-bg: $slate09;
