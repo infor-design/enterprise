@@ -27,6 +27,14 @@ $datagrid-header-short-height: 32px;
 
     .datagrid {
       margin-top: -40px;
+
+      &.short-rowheight {
+        margin-top: -25px;
+      }
+
+      &.medium-rowheight {
+        margin-top: -30px;
+      }
     }
 
     thead {
@@ -163,6 +171,7 @@ $datagrid-header-short-height: 32px;
         margin-top: -1px;
       }
     }
+
   }
 
   // Table Headers

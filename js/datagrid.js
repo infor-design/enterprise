@@ -740,9 +740,8 @@ $.fn.datagrid = function(options) {
       this.clone.wrap('<div class="datagrid-scrollable-header"></div>');
 
       this.fixedHeader = true;
-      // this.syncFixedHeader();
-
       this.headerRow.addClass('audible');
+      this.rowHeight();
 
       var next = this.wrapper.parent().next(),
         prev = this.wrapper.parent().prev(),
@@ -1780,7 +1779,7 @@ $.fn.datagrid = function(options) {
 
         if (settings.toolbar.actions) {
           more = $('<div class="more"></div>').insertAfter(buttonSet);
-          more.append('<button class="btn-actions"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></use></svg><span class="audible">Grid Features</span></button>');
+          more.append('<button class="btn-actions" title="More" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></use></svg><span class="audible">Grid Features</span></button>');
           toolbar.addClass('has-more-button');
         }
 
@@ -1854,6 +1853,11 @@ $.fn.datagrid = function(options) {
       //TODO: Save in Grid Personalization
       this.table.removeClass('short-rowheight medium-rowheight normal-rowheight')
         .addClass(settings.rowHeight + '-rowheight');
+
+      if (this.clone) {
+        this.clone.removeClass('short-rowheight medium-rowheight normal-rowheight')
+        .addClass(settings.rowHeight + '-rowheight');
+      }
 
       return settings.rowHeight;
     },
