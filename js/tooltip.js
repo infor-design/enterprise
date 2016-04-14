@@ -161,7 +161,6 @@
       },
 
       setContent: function(content) {
-        console.log(this.element, content);
 
         var self = this,
           contentArea,

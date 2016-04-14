@@ -139,18 +139,17 @@ var express = require('express'),
         return next();
       }
 
-      var realPaths = [],
-        dirs = [];
+      var realPaths = [];
 
       // Strip out paths that aren't going to ever work
-      paths.forEach(function pathIterator(val, vi) {
+      paths.forEach(function pathIterator(val) {
         var excludes = [
           /layout\.html/,
           /\.DS_Store/
         ],
         match = false;
 
-        excludes.forEach(function(exclude, ei) {
+        excludes.forEach(function(exclude) {
           if (val.match(exclude)) {
             match = true;
             return;
@@ -177,7 +176,7 @@ var express = require('express'),
           icon: icon,
           href: href,
           text: link
-        }
+        };
       }
 
       var opts = extend({}, res.opts, {
@@ -286,6 +285,23 @@ var express = require('express'),
     layout: 'tests/layout'
   };
 
+  // Custom Application Menu Layout files.  Since the markup for the Application Menu lives higher up than the
+  // content filter lives on most templates, we have a special layout-changing system for Application Menu Tests.
+  function getApplicationMenuTestLayout(path) {
+    var base = 'tests/applicationmenu/';
+
+    if (path.match(/\/site/)) {
+      return base + 'site/layout';
+    } else if (path.match(/\/different-header-types/)) {
+      return base + 'different-header-types/layout';
+    } else if (path.match(/\/lms/)) {
+      return base + 'lms/layout';
+    } else if (path.match(/\/six-levels-with-icons/)) {
+      return base + 'six-levels-with-icons/layout';
+    }
+    return base + 'six-levels/layout';
+  }
+
   function testsRouteHandler(req, res, next) {
     var opts = extend({}, res.opts, testOpts),
       end = req.url.replace(/\/tests(\/)?/, '');
@@ -336,29 +352,9 @@ var express = require('express'),
     next();
   }
 
-  // Custom Application Menu Layout files.  Since the markup for the Application Menu lives higher up than the
-  // content filter lives on most templates, we have a special layout-changing system for Application Menu Tests.
-  function getApplicationMenuTestLayout(path) {
-    var base = 'tests/applicationmenu/';
-
-    if (path.match(/\/site/)) {
-      return base + 'site/layout';
-    } else if (path.match(/\/different-header-types/)) {
-      return base + 'different-header-types/layout';
-    } else if (path.match(/\/lms/)) {
-      return base + 'lms/layout';
-    } else if (path.match(/\/six-levels-with-icons/)) {
-      return base + 'six-levels-with-icons/layout';
-    }
-    return base + 'six-levels/layout';
-  }
-
   //Tests Index Page and controls sub pages
   router.get('/tests*', testsRouteHandler);
   router.get('/tests', testsRouteHandler);
-
-
-
 
   // =========================================
   // Docs Pages
@@ -395,24 +391,12 @@ var express = require('express'),
   router.get('/components/', docsComponentsRouteHandler);
   router.get('/components', docsComponentsRouteHandler);
 
-  function docsGalleryRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, docOpts);
-    res.render('docs/gallery', opts);
-    next();
-  }
-  router.get('/gallery/', docsComponentsRouteHandler);
-  router.get('/gallery', docsComponentsRouteHandler);
-
   router.get('/docs*', function(req, res) {
     var opts = extend({}, res.opts, docOpts),
       end = req.url.replace('/docs/','');
 
     res.render('docs/' + end, opts);
   });
-
-
-
-
 
   // =========================================
   // Layouts Pages

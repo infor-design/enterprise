@@ -1377,7 +1377,6 @@ $.fn.datagrid = function(options) {
               }
             }]
         }).on('open.datagrid', function (e, modal) {
-          console.log(Locale.currentLocale.name);
           modal.element.find('.searchfield').searchfield();
           modal.element.find('.listview').listview();
         });
