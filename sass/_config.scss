@@ -185,8 +185,9 @@ $listview-toolbar-button-icon-hover-color: $primary-color;
 $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 
-$listview-searchresult-full-witdh-bg-color: $graphite01;
-$listview-searchresult-full-witdh-hover-color: $graphite02;
+$listview-full-width-bg-color: $graphite01;
+$listview-full-width-hover-color: $graphite02;
+$listview-divider-color: $graphite03;
 
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
@@ -376,21 +377,36 @@ $modal-secondary-color: $graphite06;
 
 // Accordion
 $accordion-bg-color: $graphite01;
-$accordion-alternate-bg-color: $white;
 $accordion-border-color: $graphite02;
+$accordion-toplevel-border-color: $graphite03;
 $accordion-pane-bg-color: $graphite02;
-$accordion-pane-alternate-bg-color: $graphite01;
-
+$accordion-icon-color: $graphite06;
+$accordion-icon-hover-color: $graphite10;
 $accordion-text-color: $graphite06;
 $accordion-text-active-color: $graphite10;
+$accordion-hover-border-color: $graphite10;
+$accordion-hover-text-color: $graphite10;
 
-$accordion-icon-color: $graphite04;
-$accordion-icon-hover-color: $graphite06;
+$accordion-panel-border-color: $graphite02;
 
+$accordion-alternate-bg-color: $white;
+$accordion-alternate-border-color: $graphite02;
+$accordion-alternate-pane-bg-color: $graphite02;
+
+$accordion-inverse-bg-color: $slate08;
+$accordion-inverse-pane-bg-color: $slate09;
+$accordion-inverse-border-color: $slate09;
+$accordion-inverse-border-hover-color: $white;
+$accordion-inverse-text-color: $slate03;
+$accordion-inverse-text-hover-color: $white;
+$accordion-inverse-focus-state-color: $primary-color;
+
+$accordion-focused-border-color: $primary-color;
 $accordion-focused-text-color: $primary-color;
-$accordion-focused-pane-bg-color: $azure01;
 $accordion-selected-bg-color: $primary-color;
 $accordion-selected-text-color: $white;
+
+$accordion-highcontrast-text-decoration: none;
 
 $accordion-disabled-bg-color: $slate02;
 $accordion-disabled-border-color: $slate03;

@@ -12,7 +12,7 @@
   <!-- Style Sheets -->
   <link rel="stylesheet" id="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
 
-  <script src="/js/jquery-3.0.0-alpha1.js"></script>
+  <script src="/js/jquery-3.0.0-beta1.js"></script>
   <script src="/js/d3.min.js"></script>
   <script src="/js/sohoxi.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-debug.js"></script>
@@ -22,8 +22,9 @@
 <body>
   {{> controls/svg}}
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+
+  {{> includes/header}}
   <div id="maincontent" class="page-container top-padding" role="main">
-    {{> includes/header}}
     {{> content}}
   </div>
 </body>

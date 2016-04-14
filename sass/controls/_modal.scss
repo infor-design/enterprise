@@ -53,6 +53,21 @@
     padding: 0;
   }
 
+  &.full-width {
+    .modal-content {
+      .modal-body-wrapper {
+        padding: 20px 0 0;
+      }
+
+      .no-full-width {
+        padding: 0 20px;
+      }
+
+      .modal-buttonset {
+        margin-top: 0;
+      }
+    }
+  }
 }
 
 .overlay {
@@ -301,29 +316,3 @@ html[dir='rtl'] {
     }
   }
 }
-
-
-// Searchresult full witdh =============================
-.searchresult-full-witdh {
-
-  .modal-content {
-    .modal-body-wrapper {
-      padding: 20px 0 0;
-    }
-
-    .no-full-width {
-      padding: 0 20px;
-    }
-
-    .modal-buttonset {
-      margin-top: 0;
-    }
-  }
-
-}
-
-
-
-
-
-

@@ -2,6 +2,7 @@
 
 // set variables for environment
 var express = require('express'),
+  extend = require('extend'), // equivalent of $.extend()
   app = express(),
   path = require('path'),
   mmm = require('mmm'),
@@ -14,283 +15,558 @@ var express = require('express'),
   mmm.setEngine('hogan.js');
   app.engine('html', mmm.__express);
 
+  // Because you're the type of developer who cares about this sort of thing!
+  app.enable('strict routing');
+
   // instruct express to server up static assets
   app.use(express.static('public'));
 
-  var templateOpts = {
-    title: 'SoHo XI',
+  // Create the express router with the same settings as the app.
+  var router = express.Router({
+    'strict': true
+  });
+
+
+
+
+
+
+  // ===========================================
+  // Default Options / Custom Middleware
+  // ===========================================
+  var defaults = {
+    enableLiveReload: true,
     layout: 'layout',
-    enableLiveReload: true
+    locale: 'en-US',
+    title: 'SoHo XI',
   };
 
-  //Setup All Routes
+  // Option Handling - Custom Middleware
+  // Writes a set of default options the "req" object.  These options are always eventually passed to the HTML template.
+  // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
+  var optionHandler = function(req, res, next) {
+    res.opts = extend({}, defaults);
 
-  //Main Index - Kitchen Sink Page
-  app.get('/', function(req, res) {
-    res.render('index', templateOpts);
-  });
-
-  //Controls Index Page and controls sub pages
-  var controlOptions = {
-      title: 'SoHo XI',
-      subtitle: 'Style',
-      layout: 'controls/layout',
-      enableLiveReload: true
-    };
-
-  app.get('/controls/', function(req, res) {
-    controlOptions.subtitle = 'Full Index';
-    res.render('controls/index', controlOptions);
-  });
-
-  app.get('/controls', function(req, res) {
-    controlOptions.subtitle = 'Full Index';
-    res.render('controls/index', controlOptions);
-  });
-
-  app.get('/controls/masthead', function(req, res) {
-    controlOptions.layout = 'controls/masthead-layout';
-    res.render('controls/masthead', controlOptions);
-  });
-
-  app.get('/controls/*', function(req, res) {
-    var end = req.url.replace('/controls/','');
-    controlOptions.subtitle = end.charAt(0).toUpperCase() + end.slice(1).replace('-',' ');
-    controlOptions.subtitle = controlOptions.subtitle.replace('Contextualactionpanel', 'Contextual Action Panel');
-    controlOptions.layout = 'controls/layout';
-    res.render('controls/' + end, controlOptions);
-  });
-
-  //Patterns Index Page and controls sub pages
-  app.get('/patterns/*', function(req, res) {
-    var patternOptions = {
-      title: 'SoHo XI',
-      subtitle: 'Patterns',
-      layout: 'patterns/layout',
-      enableLiveReload: true
-    };
-    var end = req.url.replace('/patterns/','');
-    res.render('patterns/' + end, patternOptions);
-  });
-
-  app.get('/tests/distribution/*', function (req, res) {
-    var amdOptions = {
-        title: 'SoHo XI',
-        subtitle: 'AMD tests',
-        amd: true
-      };
-    var end = req.url.replace('/tests/distribution/','');
-    res.render('tests/distribution/' + end, amdOptions);
-  });
-
-  app.get('/tests/signin/*', function (req, res) {
-    var amdOptions = {
-        title: 'SoHo XI',
-        subtitle: 'Sign In',
-        layout: 'tests/layout-noheader',
-      };
-    var end = req.url.replace('/tests/signin/','');
-    res.render('tests/signin/' + end, amdOptions);
-  });
-
-  app.get('/tests/applicationmenu/*', function(req, res) {
-    function path() {
-      var url = req.url.toString();
-
-      if (url.match(/\/site/)) {
-        return 'tests/applicationmenu/site/layout';
-      } else if (url.match(/\/different-header-types/)) {
-        return 'tests/applicationmenu/different-header-types/layout';
-      } else if (url.match(/\/lms/)) {
-        return 'tests/applicationmenu/lms/layout';
-      } else if (url.match(/\/six-levels-with-icons/)) {
-        return 'tests/applicationmenu/six-levels-with-icons/layout';
-      }
-      return 'tests/applicationmenu/six-levels/layout';
+    // Change Locale (which also changes right-to-left text setting)
+    if (req.query.locale && req.query.locale.length > 0) {
+      res.opts.locale = req.query.locale;
+      console.log('Changing Route Parameter "locale" to be "' + res.opts.locale + '".');
     }
 
-    var appMenuOpts = {
-      title: 'SoHo XI',
-      subtitle: 'Tests',
-      layout: path()
-    };
-    var end = req.url.replace('/tests/applicationmenu/','');
-    res.render('tests/applicationmenu/' + end, appMenuOpts);
-  });
+    next();
+  };
 
-  function isDirectory(filePath) {
+  // Simple Middleware for logging some meta-data about the request to the console
+  var timestampLogger = function(req, res, next) {
+    console.log(Date.now() + ' - ' + req.method + ': ' + req.url);
+    next();
+  };
+
+  // Simple Middleware for handling errors
+  var errorHandler = function(err, req, res, next) {
+    if (!err) {
+      return next();
+    }
+
+    console.error(err.stack);
+
+    if (res.headersSent) {
+      return next(err);
+    }
+
+    res.status(500).send('<h2>Internal Server Error</h2><p>' + err.stack +'</p>');
+  };
+
+  // place optionHandler() first to augment all "res" objects with an "opts" object
+  app.use(optionHandler);
+  app.use(router);
+  app.use(timestampLogger);
+  app.use(errorHandler);
+
+  // Strips the ".html" from a file path and returns the target route name without it
+  function stripHtml(routeParam) {
+    var noHtml = routeParam.replace(/\.html/, '');
+    return noHtml;
+  }
+
+  // Checks the target file path for its type (is it a file, a directory, etc)
+  // http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
+  function is(type, filePath) {
+    var types = ['file', 'folder'],
+      defaultType = types[0],
+      mappings = {
+        file: { methodName: 'isFile' },
+        directory: { methodName: 'isDirectory' }
+        // TODO: Add More (symbolic link, etc)
+      };
+
+    if (!type) {
+      console.warn('No type defined. Using the default type of "' + defaultType + '".');
+      type = defaultType;
+    }
+
+    if (!mappings[type]) {
+      console.error('Provided type "' + type + '" is not in the list of valid types.');
+      return false;
+    }
+
+    var targetPath = './views/' + filePath,
+      methodName = mappings[type].methodName;
+
     try {
-      return fs.statSync('./' + filePath).isDirectory();
+      return fs.statSync(targetPath)[methodName]();
     }
-    catch(e) {
+    catch (e) {
+      console.info('File Path "' + targetPath + '" is not a ' + type + '.');
       return false;
     }
   }
 
-  //Tests Index Page and controls sub pages
-  app.get('/tests/*', function(req, res) {
-    var testOptions = {
-      title: 'SoHo XI',
-      subtitle: 'Tests',
-      layout: 'tests/layout'
-    };
-    var end = req.url.replace('/tests/',''),
-      destination = 'tests/' + end;
-    if (!isDirectory('views/' + destination)) {
-      res.render(destination, testOptions);
+  function hasTrailingSlash(path) {
+    if (!path || typeof path !== 'string') {
+      return false;
     }
-    else {
-      fs.readdir('views/' + destination, function(err, paths) {
-        if (err) {
-          console.log(err);
-          res.render(err);
+
+    return path.substr(path.length - 1) === '/';
+  }
+
+  // Returns a directory listing as page content with working links
+  function getDirectoryListing(directory, req, res, next) {
+    fs.readdir('./views/' + directory, function(err, paths) {
+      if (err) {
+        console.log(err);
+        res.render(err);
+        return next();
+      }
+
+      var realPaths = [];
+      // TODO: var dirs = [];  Separate paths from directories and place an icon next to them
+
+      // Strip out paths that aren't going to ever work
+      paths.forEach(function pathIterator(val) {
+        var excludes = [
+          /layout\.html/,
+          /\.DS_Store/
+        ],
+        match = false;
+
+        excludes.forEach(function(exclude) {
+          if (val.match(exclude)) {
+            match = true;
+            return;
+          }
+        });
+
+        if (match) {
+          return;
         }
-        else {
-          res.render('listing', {
-            title: testOptions.title,
-            subtitle: 'Listing for ' + destination,
-            paths: paths.map(function (link) {
-              return {
-                text: link,
-                href: path.join('/', destination, link)
-              };
-            })
-          });
-        }
+
+        realPaths.push(val);
       });
-    }
+
+      // Map with links, add to
+      function pathMapper(link) {
+        var href = path.join('/', directory, link),
+          icon;
+
+        if (is('directory', href)) {
+          icon = '#icon-folder';
+        }
+
+        return {
+          icon: icon,
+          href: href,
+          text: link
+        };
+      }
+
+      var opts = extend({}, res.opts, {
+        subtitle: 'Listing for ' + directory,
+        paths: realPaths.map(pathMapper)
+      });
+
+      res.render('listing', opts);
+      next();
+    });
+  }
+
+
+
+
+  // ======================================
+  //  Main Routing and Param Handling
+  // ======================================
+
+  router.get('/', function(req, res, next) {
+    res.render('index', res.opts);
+    next();
   });
 
-  //Doc Page
-  var docOpts = {
-    title: 'Infor SoHo XI',
-    subtitle: '',
-    layout: 'docs/layout',
-    enableLiveReload: true
-  };
-
-  app.get('/docs/', function(req, res) {
-    res.render('docs/index', docOpts);
-  });
-
-  app.get('/docs', function(req, res) {
-    res.render('docs/index', docOpts);
-  });
-
-  app.get('/vison', function(req, res) {
-    res.render('docs/vison', docOpts);
-  });
-
-  app.get('/gallery', function(req, res) {
-    res.render('docs/gallery', docOpts);
-  });
-
-  app.get('/components', function(req, res) {
-    res.render('docs/components', docOpts);
-  });
-
-  app.get('/docs*', function(req, res) {
-    var end = req.url.replace('/docs/','');
-    res.render('docs/' + end, docOpts);
-  });
-
-  app.get('/partials*', function(req, res) {
+  router.get('/partials*', function(req, res) {
     var end = req.url.replace('/partials/','');
-    res.render('partials/' + end, docOpts);
+    res.render('partials/' + end, res.opts);
   });
 
-  //Layouts Page
+
+
+
+  // ======================================
+  //  Controls Section
+  // ======================================
+
+  var controlOpts = {
+    'layout': 'controls/layout',
+    'subtitle': 'Style',
+  };
+
+  function defaultControlsRoute(req, res, next) {
+    var opts = extend({}, res.opts, controlOpts);
+    opts.subtitle = 'Full Index';
+
+    res.render('controls/index', opts);
+    next();
+  }
+
+  router.get('/controls/:control', function(req, res, next) {
+    var controlName = '',
+      opts = extend({}, res.opts, controlOpts);
+
+    if (!req.params.control) {
+      return defaultControlsRoute(req, res, next);
+    }
+
+    controlName = stripHtml(req.params.control);
+    opts.subtitle = controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-',' ');
+
+    // Specific Changes for certain controls
+    opts.subtitle = opts.subtitle.replace('Contextualactionpanel', 'Contextual Action Panel');
+    if (controlName.indexOf('masthead') !== -1) {
+      opts.layout = 'controls/masthead-layout';
+    }
+
+    res.render('controls/' + controlName, opts);
+    next();
+  });
+
+  router.get('/controls/', defaultControlsRoute);
+  router.get('/controls', defaultControlsRoute);
+
+
+
+
+  // ======================================
+  //  Patterns Section
+  // ======================================
+
+  router.get('/patterns*', function(req, res, next) {
+    var opts = extend({}, res.opts, {
+      layout: 'patterns/layout',
+      subtitle: 'Patterns'
+    }),
+      end = req.url.replace(/\/patterns(\/)?/g, '');
+
+    if (!end || !end.length || end === '/') {
+      getDirectoryListing('patterns/', req, res, next);
+      return;
+    }
+
+    res.render('patterns/' + end, opts);
+    next();
+  });
+
+
+
+
+  // =========================================
+  // Test Pages
+  // =========================================
+
+  var testOpts = {
+    subtitle: 'Tests',
+    layout: 'tests/layout'
+  };
+
+  // Custom Application Menu Layout files.  Since the markup for the Application Menu lives higher up than the
+  // content filter lives on most templates, we have a special layout-changing system for Application Menu Tests.
+  function getApplicationMenuTestLayout(path) {
+    var base = 'tests/applicationmenu/';
+
+    if (path.match(/\/site/)) {
+      return base + 'site/layout';
+    } else if (path.match(/\/different-header-types/)) {
+      return base + 'different-header-types/layout';
+    } else if (path.match(/\/lms/)) {
+      return base + 'lms/layout';
+    } else if (path.match(/\/six-levels-with-icons/)) {
+      return base + 'six-levels-with-icons/layout';
+    }
+    return base + 'six-levels/layout';
+  }
+
+  function testsRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, testOpts),
+      end = req.url.replace(/\/tests(\/)?/, '');
+
+    // remove query params for our checking
+    end = end.replace(/\?(.*)/, '');
+
+    if (!end || !end.length || end === '/') {
+      getDirectoryListing('tests/', req, res, next);
+      return;
+    }
+
+    var directory = 'tests/' + end;
+    if (hasTrailingSlash(directory)) {
+      if ( is('directory', directory) ) {
+        getDirectoryListing(directory, req, res, next);
+        return;
+      }
+
+      directory = directory.substr(0, directory.length - 1);
+    }
+
+    // Custom configurations for some test folders
+    if (directory.match(/tests\/applicationmenu/)) {
+      opts.layout = getApplicationMenuTestLayout(directory);
+    }
+    if (directory.match(/tests\/distribution/)) {
+      opts.amd = true;
+      opts.layout = null; // No layout for this one on purpose.
+      opts.subtitle = 'AMD Tests';
+    }
+    if (directory.match(/tests\/signin/)) {
+      opts.layout = 'tests/layout-noheader';
+    }
+
+    // No trailing slash.  Check for an index file.  If no index file, do directory listing
+    if (is('directory', directory)) {
+      if (is('file', directory + '/index')) {
+        res.render(directory + '/index', opts);
+        return next();
+      }
+
+      getDirectoryListing(directory, req, res, next);
+      return;
+    }
+
+    res.render(directory, opts);
+    next();
+  }
+
+  //Tests Index Page and controls sub pages
+  router.get('/tests*', testsRouteHandler);
+  router.get('/tests', testsRouteHandler);
+
+  // =========================================
+  // Docs Pages
+  // =========================================
+
+  var docOpts = {
+    layout: 'docs/layout',
+    subtitle: '',
+    title: 'Infor SoHo XI'
+  };
+
+  function docsBaseRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, docOpts),
+      section = req.params.section;
+
+    if (section && section.length) {
+      res.render('/docs/' + section, opts);
+      next();
+      return;
+    }
+
+    res.render('docs/index', opts);
+    next();
+  }
+  router.get('/docs/:section', docsBaseRouteHandler);
+  router.get('/docs/', docsBaseRouteHandler);
+  router.get('/docs', docsBaseRouteHandler);
+
+  function docsComponentsRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, docOpts);
+    res.render('docs/components', opts);
+    next();
+  }
+  router.get('/components/', docsComponentsRouteHandler);
+  router.get('/components', docsComponentsRouteHandler);
+
+  function docsGalleryRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, docOpts);
+    res.render('docs/gallery', opts);
+    next();
+  }
+  router.get('/gallery/', docsGalleryRouteHandler);
+  router.get('/gallery', docsGalleryRouteHandler);
+
+  router.get('/docs*', function(req, res) {
+    var opts = extend({}, res.opts, docOpts),
+      end = req.url.replace('/docs/','');
+
+    res.render('docs/' + end, opts);
+  });
+
+  // =========================================
+  // Layouts Pages
+  // =========================================
+
   var layoutOpts = {
-    title: 'SoHo XI',
     subtitle: 'Layouts',
-    layout: 'layouts/layout',
-    enableLiveReload: true
+    layout: 'layouts/layout'
   };
 
-  app.get('/layouts/', function(req, res) {
-    res.render('layouts/index', layoutOpts);
-  });
+  function defaultLayoutRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, layoutOpts);
+    res.render('layouts/index', opts);
+    next();
+  }
 
-  app.get('/layouts', function(req, res) {
-    res.render('layouts/index', layoutOpts);
-  });
+  function layoutRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, layoutOpts),
+      layout = req.params.layout;
 
-  app.get('/layouts*', function(req, res) {
-    var end = req.url.replace('/layouts/','');
-    res.render('layouts/' + end, layoutOpts);
-  });
+    if (!layout || !layout.length) {
+      return defaultLayoutRouteHandler(req, res, next);
+    }
 
-  //Examples Apps Pages
+    res.render('layouts/' + layout, opts);
+    next();
+  }
+
+  router.get('/layouts/:layout', layoutRouteHandler);
+  router.get('/layouts/', defaultLayoutRouteHandler);
+  router.get('/layouts', defaultLayoutRouteHandler);
+
+
+
+
+  // =========================================
+  // Examples Pages
+  // =========================================
+
   var exampleOpts = {
-    title: 'SoHo XI',
     subtitle: 'Examples',
-    layout: 'examples/layout',
-    enableLiveReload: true
+    layout: 'examples/layout'
   };
 
-  app.get('/examples/', function(req, res) {
-    res.render('controls/index', exampleOpts);
-  });
+  function exampleRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, exampleOpts),
+      folder = req.params.folder,
+      example = req.params.example,
+      path = req.url;
 
-  app.get('/examples', function(req, res) {
-    res.render('examples/index', exampleOpts);
-  });
+    // A missing category means both no category and no test page.  Simply show the directory listing.
+    if (!folder || !folder.length) {
+      getDirectoryListing('examples/', req, res, next);
+      return;
+    }
 
-  app.get('/examples*', function(req, res) {
-    var end = req.url.replace('/examples/','');
-    res.render('examples/' + end, exampleOpts);
-  });
+    // A missing testpage with a category defined will either:
+    // - Show a directory listing if there is no test page associated with the current path
+    // - Show a test page
+    if (!example || !example.length) {
+      if (hasTrailingSlash(path)) {
 
-  // Angular Support
+        if (is('directory', 'examples/' + folder + '/')) {
+          getDirectoryListing('examples/' + folder + '/', req, res, next);
+          return;
+        }
+
+      }
+
+      res.render('examples/' + folder, opts);
+      next();
+      return;
+    }
+
+    // if testpage and category are both defined, should be able to show a valid testpage
+    res.render('examples/' + folder + '/' + example, opts);
+    next();
+  }
+
+  router.get('/examples/:folder/:example', exampleRouteHandler);
+  router.get('/examples/:folder/', exampleRouteHandler);
+  router.get('/examples/:folder', exampleRouteHandler);
+  router.get('/examples/', exampleRouteHandler);
+  router.get('/examples', exampleRouteHandler);
+
+
+
+
+  // =========================================
+  // Angular Support Test Pages
+  // =========================================
+
   var angularOpts = {
-    title: 'SoHo XI',
     subtitle: 'Angular',
-    layout: 'angular/layout',
-    enableLiveReload: true
+    layout: 'angular/layout'
   };
 
-  app.get('/angular*', function(req, res) {
-    var end = req.url.replace('/angular/','');
-    res.render('angular/' + end, angularOpts);
+  router.get('/angular*', function(req, res, next) {
+    var opts = extend({}, res.opts, angularOpts),
+      end = req.url.replace(/\/angular(\/)?/, '');
+
+    if (!end || !end.length || end === '/') {
+      getDirectoryListing('angular/', req, res, next);
+      return;
+    }
+
+    res.render('angular/' + end, opts);
+    next();
   });
 
   // React Support
-  var angularOpts = {
-    title: 'SoHo XI',
+  var reactOpts = {
     subtitle: 'React',
-    layout: 'react/layout',
-    enableLiveReload: true
+    layout: 'react/layout'
   };
 
-  app.get('/react*', function(req, res) {
-    var end = req.url.replace('/react/','');
-    res.render('react/' + end, angularOpts);
+  router.get('/react*', function(req, res, next) {
+    var opts = extend({}, res.opts, reactOpts),
+      end = req.url.replace(/\/react(\/)?/, '');
+
+    if (!end || !end.length || end === '/') {
+      getDirectoryListing('react/', req, res, next);
+      return;
+    }
+
+    res.render('react/' + end, opts);
+    next();
   });
 
-  // Knockout Support
+
+
+
+  // =========================================
+  // Knockout Support Test Pages
+  // =========================================
+
   var knockoutOpts = {
-    title: 'SoHo XI',
     subtitle: 'Knockout',
-    layout: 'knockout/layout',
-    enableLiveReload: true
+    layout: 'knockout/layout'
   };
 
-  app.get('/knockout/', function(req, res) {
-    res.render('knockout/index', knockoutOpts);
+  router.get('/knockout*', function(req, res, next) {
+    var opts = extend({}, res.opts, knockoutOpts),
+      end = req.url.replace(/\/knockout(\/)?/g, '');
+
+    if (!end || !end.length || end === '/') {
+      getDirectoryListing('knockout/', req, res, next);
+      return;
+    }
+
+    res.render('knockout/' + end, opts);
+    next();
   });
 
-  app.get('/knockout', function(req, res) {
-    res.render('knockout/index', knockoutOpts);
-  });
-
-  app.get('/knockout*', function(req, res) {
-    var end = req.url.replace('/knockout/','');
-    res.render('knockout/' + end, knockoutOpts);
-  });
+  // =========================================
+  // Fake "API" Calls for use with AJAX-ready Controls
+  // =========================================
 
   //Sample Json call that returns States
   //Example Call: http://localhost:4000/api/states?term=al
-  app.get('/api/states', function(req, res) {
+  router.get('/api/states', function(req, res, next) {
     var states = [],
       allStates = [
       {value:'AL', label:'Alabama'},
@@ -357,6 +633,7 @@ var express = require('express'),
     function done() {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(states));
+      next();
     }
 
     if (!req || !req.query || !req.query.term) {
@@ -374,7 +651,7 @@ var express = require('express'),
   });
 
   // Sample People
-  app.get('/api/people', function(req, res) {
+  router.get('/api/people', function(req, res, next) {
     var people = [{ id: 1, rowHeight: 50, lastName:  'Asper', firstName:  'David',  title:  'Engineer', img: 'https://randomuser.me/api/portraits/med/men/10.jpg', status: 'Full time employee' , anniversary: '06/02/2012', score: 3, payRate: 90000, budgeted: 1200, budgetedHourly: 0.25, reccomended: '0-0%', percent: '0%', accepted: true, icon: 'pending'},
         { id: 2, lastName:  'Baxter', firstName:  'Michael',  title:  'System Architect', img: 'https://randomuser.me/api/portraits/med/men/11.jpg', status: 'Freelance, 3-6 months', anniversary: '06/02/2012', score: 2, payRate: 50000, budgeted: 1300, budgetedHourly: 0.25, reccomended: '10-20%', percent: '4.16%', accepted: false, icon: 'alert'},
         { id: 3, rowHeight: 100, lastName:  'Baxter', firstName:  'Steven',  title:  'Some Very Very Very Long Title That is too long but still should show.', img: 'https://randomuser.me/api/portraits/med/men/12.jpg', status: 'Full time employee', anniversary: '06/02/2012', score: 0, payRate: 60000, budgeted: 1100, budgetedHourly: 0.65, reccomended: '30-40%', percent: '10%', accepted: true, icon: 'info'},
@@ -391,10 +668,11 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(people));
+    next();
   });
 
   // Sample Product
-  app.get('/api/product', function(req, res) {
+  router.get('/api/product', function(req, res, next) {
     var products = [
     { id: 1, productId: 200129, productName: 'A Miscellaneous Gravel, Colored Ston...', inStock:  '22,000',  units: '300 lb.', unitPrice:  '18.00', thumb: '/images/multi.png', 'action': 'secondary' },
     { id: 2, productId: 300123, productName: 'B Gravel, Natural Stone', inStock:  '20,000',  units: '300 lb.',  unitPrice:  '10.00', thumb: '/images/natural.png', 'action': 'secondary' },
@@ -415,10 +693,11 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(products));
+    next();
   });
 
   // Sample Supplies
-  app.get('/api/supplies', function(req, res) {
+  router.get('/api/supplies', function(req, res, next) {
     var supplies = [
     { id: 1, count: 48, item: 'Acme Medical Supplies', owner:  'Elizebath L. Smith', role: 'Sales'},
     { id: 2, count: 73, item: 'Office Supplies, North Tower, 4th Floor', owner:  'Jason S. Montoya', role: 'Director'},
@@ -432,10 +711,11 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(supplies));
+    next();
   });
 
   // Sample Towns
-  app.get('/api/towns', function(req, res) {
+  router.get('/api/towns', function(req, res, next) {
     var towns = [
       {
         group: 'Burlington County',
@@ -477,10 +757,11 @@ var express = require('express'),
 
     res.setHeader('Content-type', 'application/json');
     res.end(JSON.stringify(towns));
+    next();
   });
 
   // Sample Tasks
-  app.get('/api/tasks', function(req, res) {
+  router.get('/api/tasks', function(req, res, next) {
     var tasks = [{ id: 1, escalated: 2, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order.', comments: 21, time: '7:04 AM'},
       { id: 2, escalated: 1, taskName: 'Quotes due to expire', desc: 'Update pending quotes and send out again to customers.', comments: 3, time: '12/13/14 7:04 AM'},
       { id: 3, escalated: 0, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '12/14/14'},
@@ -497,10 +778,11 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(tasks));
+    next();
   });
 
   //Sample Periods
-  app.get('/api/periods', function(req, res) {
+  router.get('/api/periods', function(req, res, next) {
     var tasks = [{ id: 1, city: 'London', location: 'Corporate FY15', alert: true, daysLeft: '3', hoursLeft: '23'},
      { id: 1, city: 'New York', location: 'Corporate FY15', alert: false, daysLeft: '25', hoursLeft: '11'},
      { id: 1, city: 'Vancouver', location: 'Corporate FY15', alert: false, daysLeft: '30', hoursLeft: '23'},
@@ -509,16 +791,18 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(tasks));
+    next();
   });
 
-  app.get('/api/nav-items', function(req, res) {
+  router.get('/api/nav-items', function(req, res, next) {
     res.render('tests/accordion/_ajax-results.html');
+    next();
   });
 
   // TODO: Make this work with XSS to return a copy of the SoHo Site Search Results for testing the Modal Search plugin.
   // Calls out to Craft CMS's search results page.
   // NOTE: Doesn't actually get rendered, just passed along.
-  app.post('/api/site-search', function(req, res) {
+  router.post('/api/site-search', function(req, res) {
     var opts = {
       host: 'usmvvwdev53',
       port: '80',
@@ -558,7 +842,7 @@ var express = require('express'),
 
   //Data Grid Paging Example
   // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productId&pageSize=100
-  app.get('/api/compressors', function(req, res) {
+  router.get('/api/compressors', function(req, res, next) {
 
     var products = [], productsAll = [],
       start = (req.query.pageNum -1) * req.query.pageSize,
@@ -623,9 +907,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({total: filteredTotal, data: products}));
+    next();
   });
 
-  app.get('/api/lookupInfo', function(req, res) {
+  router.get('/api/lookupInfo', function(req, res, next) {
     var columns = [],
       data = [];
 
@@ -651,10 +936,11 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(lookupInfo));
+    next();
   });
 
   // Used for Builder Pattern Example
-  app.get('/api/construction-orders', function(req, res) {
+  router.get('/api/construction-orders', function(req, res, next) {
     var companies = [
       { id: 1, orderId: '4231212-3', items: 0, companyName: 'John Smith Construction', total: '$0.00' },
       { id: 2, orderId: '1092212-3', items: 4, companyName: 'Top Grade Construction', total: '$10,000.00' },
@@ -668,9 +954,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(companies));
+    next();
   });
 
-  app.get('/api/construction-cart-items', function(req, res) {
+  router.get('/api/construction-cart-items', function(req, res, next) {
     var cartItems = [
       { id: 1, itemId: '#PMS0510', itemName: 'Masonry Bricks, Red Solid 6" Brick', itemPrice: '$12.00', quantifier: 'bag', quantity: '1,000', totalPrice: '$1,700.00' },
       { id: 2, itemId: '#PMS0640', itemName: 'Gravel, Gray Natural Stone', itemPrice: '$86.00', quantifier: 'stone', quantity: '19', totalPrice: '$1,634.00' },
@@ -684,9 +971,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(cartItems));
+    next();
   });
 
-  app.get('/api/orgstructure', function(req, res) {
+  router.get('/api/orgstructure', function(req, res, next) {
     var
       menPath = 'https://randomuser.me/api/portraits/med/men/',
       womenPath = 'https://randomuser.me/api/portraits/med/women/' ,
@@ -738,9 +1026,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(orgdata));
+    next();
   });
 
-  app.get('/api/servicerequests', function(req, res) {
+  router.get('/api/servicerequests', function(req, res, next) {
     var cartItems = [
       { id: 1, type: 'Data Refresh', favorite: true, datetime: new Date(2014, 12, 8), requestor: 'Grant Lindsey', deployment: 'AutoSuite-PRD', scheduled: null, status: 'Success'},
       { id: 2, type: 'Schedule Patch', datetime: new Date(2015, 12, 8), requestor: 'Wilson Shelton', deployment: 'AutoSuite-OD', scheduled: null, status: 'Success'},
@@ -757,9 +1046,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(cartItems));
+    next();
   });
 
-  app.get('/api/garbage', function(req, res) {
+  router.get('/api/garbage', function(req, res, next) {
     var amount = 25,
       text = '',
       garbageWords = ['garbage', 'junk', 'nonsense', 'trash', 'rubbish', 'debris', 'detritus', 'filth', 'waste', 'scrap', 'sewage', 'slop', 'sweepings', 'bits and pieces', 'odds and ends', 'rubble', 'clippings', 'muck'];
@@ -767,6 +1057,7 @@ var express = require('express'),
     function done(content) {
       res.setHeader('Content-Type', 'text/plain');
       res.end(JSON.stringify(content));
+      next();
     }
 
     if (req && req.query && req.query.size) {
@@ -789,7 +1080,7 @@ var express = require('express'),
     done(text);
   });
 
-  app.get('/api/deployments', function(req, res) {
+  router.get('/api/deployments', function(req, res, next) {
     var cartItems = [
       { id: 1, success: true, name: 'AutoSuite - PRD', date: '01-13-2015'},
       { id: 2, success: true, name: 'AutoSuite - TEST', date: '01-13-2015'},
@@ -800,9 +1091,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(cartItems));
+    next();
   });
 
-  app.get('/api/general/status-codes', function(req, res) {
+  router.get('/api/general/status-codes', function(req, res, next) {
     var statusCodes = [
       { id: 0, name: 'Archived', color: 'graphite03' },
       { id: 1, name: 'Inactive', color: 'graphite03' },
@@ -814,9 +1106,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(statusCodes));
+    next();
   });
 
-  app.get('/api/my-projects', function(req, res) {
+  router.get('/api/my-projects', function(req, res, next) {
     var data = [
       { id: 0, name: '8 Mile Resurfacing', client: 'City of Detroit', status: 4, totalBudget: 300000, spentBudget: 125000 },
       { id: 1, name: 'Bishop Park', client: 'City of Detroit', status: 5, totalBudget: 250000, spentBudget: 249000 },
@@ -846,9 +1139,10 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
+    next();
   });
 
-  app.get('/api/companies', function(req, res) {
+  router.get('/api/companies', function(req, res, next) {
     var companies = [
       { id: 1, companyName: 'Alexandar Gravel & Stone', phone: '414-821-0697', location: 'Terrencefort, TX', contact: 'Lida Snyder', customerSince: '04/25/2016', favorite: true },
       { id: 2, companyName: 'Briar Valley Gravel', phone: '702-389-9973', location: 'Davontemouth, UT', contact: 'Bull Cunningham', customerSince: '05/02/2016'  },
@@ -861,6 +1155,7 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(companies));
+    next();
   });
 
 module.exports = app;

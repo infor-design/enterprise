@@ -161,6 +161,7 @@
       },
 
       setContent: function(content) {
+
         var self = this,
           contentArea,
           specified = false,
