@@ -134,6 +134,18 @@
         margin-bottom: 0;
       }
     }
+
+    > a {
+      @include ellipsis();
+      @include font-size(14);
+      color: $font-color-extrahighcontrast;
+      font-weight: normal;
+      text-decoration: none;
+
+      &.hyperlink {
+        color: $hyperlink-color;
+      }
+    }
   }
 
   i {
@@ -346,6 +358,7 @@
 
   .highlight {
     background-color: transparent;
+    color: inherit;
     font-weight: bold;
   }
 }
@@ -497,6 +510,7 @@
   }
 
   input {
+    background-color: $listview-full-width-bg-color;
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     line-height: 16px;
@@ -517,6 +531,10 @@
     }
   }
 
+  + .listview {
+    height: calc(100% - 42px);
+  }
+
 }
 
 //Full width - no padding
@@ -524,81 +542,14 @@
   width: auto;
 
   .listview {
-
     border-top: 1px solid $modal-border-color;
-    max-height: 170px;
-
-    ul {
-      background-color: $listview-full-width-bg-color;
-    }
-
-    li {
-      border-bottom-color: transparent;
-      cursor: pointer;
-      line-height: normal;
-      padding: 0;
-      position: static;
-      white-space: nowrap;
-
-      &:hover:not(.is-selected),
-      &:focus:not(.is-selected) {
-        background-color: $listview-full-width-hover-color;
-      }
-    }
-
-    a {
-      @include antialiased();
-      @include font-size(14);
-      border: 1px solid transparent;
-      color: $popupmenu-color;
-      display: block;
-      line-height: 30px;
-      padding: 0 30px 0 20px;
-      position: relative;
-      text-decoration: none;
-      white-space: nowrap;
-
-      span {
-        color: inherit;
-        font-weight: inherit;
-        line-height: 33px;
-      }
-
-      small {
-        @include font-size(11);
-        display: block;
-        line-height: normal;
-        margin-bottom: 8px;
-        margin-top: -3px;
-      }
-
-      &[disabled] {
-        color: $disabled-color;
-        pointer-events: none;
-      }
-    }
-
+    max-height: 220px;
   }
 
   .searchfield-wrapper {
-    border-color: transparent;
-    background-color: $listview-full-width-bg-color;
-    margin-bottom: 0;
-    height: 40px;
-
-    input {
-      border: 1px solid transparent;
-      border-top: 1px solid $listview-divider-color;
-      height: 40px;
-      padding: 15px 13px 8px 36px;
-    }
-
-    .icon {
-      top: 12px !important;
-    }
+    min-width: 400px;
   }
 }
-
 
 // Tasks
 @media (max-width: 768px) {
@@ -615,6 +566,12 @@
         left: 0;
         width: 15px;
       }
+    }
+  }
+
+  .modal.full-width {
+   .searchfield-wrapper {
+      min-width: 300px;
     }
   }
 }
@@ -736,4 +693,21 @@ html[dir='rtl'] {
     }
   }
 
+  .listview-search {
+
+    input {
+      padding: 12px 40px 12px 10px !important;
+    }
+
+    .icon:not(.close) {
+      left: 0 !important;
+      right: 10px !important;
+    }
+
+    .icon.close {
+      right: initial !important;
+      left: 12px !important;
+    }
+
+  }
 }

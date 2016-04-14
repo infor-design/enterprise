@@ -92,6 +92,7 @@
           setTimeout(function () {
             api.setValue();
           },0);
+
         }
       };
   };

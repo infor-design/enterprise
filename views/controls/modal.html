@@ -47,12 +47,12 @@
 
     <!-- "Search" Example -->
     <div id="modal-search-project" style="display: none;">
-      <div class="field">
-        <label for="searchfield" class="audible">Search</label>
-        <input id="searchfield" name="searchfield" class="searchfield input-lg" placeholder="Search" />
+      <div class="listview-search">
+        <label class="audible" for="gridfilter">Search</label>
+        <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}">
       </div>
 
-      <div class="listview" id="search-listview">
+      <div class="listview" id="search-listview" data-options="{searchable: true}">
         <ul>
           <li><a href="#">Cloverleaf Demo Environment</a></li>
           <li><a href="#">NICU Lab Results</a></li>
@@ -85,7 +85,8 @@ var modals = {
     'search-project': {
       'title': 'Search for a Project',
       'content': $('#modal-search-project'),
-      'cssClass': 'full-width'
+      'cssClass': 'full-width',
+      searchable: true
     }
   },
 

@@ -68,6 +68,23 @@
       }
     }
   }
+
+  .listview-search {
+
+    + .listview {
+      max-height: 220px;
+      min-height: 220px;
+    }
+
+    .searchfield-wrapper {
+      width: 400px;
+
+      input {
+        border: 0;
+        border-top: 1px solid $fieldset-border-top-color;
+      }
+    }
+  }
 }
 
 .overlay {
@@ -269,6 +286,10 @@
 @include respond-to(phone) {
   &.message {
     width: 100%;
+  }
+
+  .searchfield-wrapper {
+    width: 400px;
   }
 }
 
