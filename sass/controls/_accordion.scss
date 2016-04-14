@@ -707,7 +707,6 @@
 
   &.is-disabled {
     background-color: $accordion-disabled-bg-color !important;
-    border-bottom-color: $accordion-disabled-border-color !important;
     color: $accordion-disabled-text-color !important;
     pointer-events: none;
 

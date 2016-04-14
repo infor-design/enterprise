@@ -384,11 +384,11 @@ $accordion-selected-text-color: $white;
 
 $accordion-highcontrast-text-decoration: none;
 
-$accordion-disabled-bg-color: $slate08;
+$accordion-disabled-bg-color: transparent;
 $accordion-disabled-border-color: $slate08;
-$accordion-disabled-text-color: $slate06;
-$accordion-disabled-pane-bg-color: $slate08;
-$accordion-disabled-pane-text-color: $slate06;
+$accordion-disabled-text-color: $slate05;
+$accordion-disabled-pane-bg-color: transparent;
+$accordion-disabled-pane-text-color: $slate05;
 
 // Application Menu (extends Accoridon)
 $application-menu-border-color: $slate10;
