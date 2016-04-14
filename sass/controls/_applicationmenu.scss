@@ -3,6 +3,7 @@
 
 .application-menu {
   background-color: $slate08;
+  border-right: 1px solid $application-menu-border-color;
   @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, 0));
   bottom: 0;
   color: #acadae;
@@ -41,6 +42,8 @@
     border-left: none !important;
     border-right: none !important;
     border-top: none !important;
+    margin-left: 1px;
+    width: calc(100% - 1px);
 
     .panel {
       padding-left: 49px;

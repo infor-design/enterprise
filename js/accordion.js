@@ -65,7 +65,20 @@
         // Accordion Headers that have an expandable pane need to have an expando-button added inside of them
         this.headers.each(function addExpander() {
           var header = $(this),
-            isTopLevel = header.parent().is('.accordion');
+            hasIcons = false,
+            containerPane = header.parent(),
+            isTopLevel = containerPane.is('.accordion');
+
+          function checkIfIcons() {
+            if (!hasIcons) {
+              header.addClass('no-icon');
+              return;
+            }
+
+            if (!isTopLevel) {
+              containerPane.addClass('has-icons');
+            }
+          }
 
           header.attr('role', 'presentation');
 
@@ -76,12 +89,20 @@
           outerIcon.addClass('icon').attr({'role': 'presentation', 'aria-hidden': 'true', 'focusable': 'false'});
           if (outerIcon.length) {
             headersHaveIcons = true;
+            hasIcons = true;
+          }
+
+          if (header.is('.list-item') || header.find('button, svg').length) {
+            hasIcons = true;
           }
 
           // Don't continue if there's no pane
           if (!header.next('.accordion-pane').length) {
+            checkIfIcons();
             return;
           }
+
+          hasIcons = true;
 
           var expander = header.children('.btn');
           if (!expander.length) {
@@ -133,6 +154,7 @@
           if (!self.settings.displayChevron && isTopLevel) {
             headersHaveIcons = true;
           }
+          checkIfIcons();
 
           // Add an Audible Description to the button
           var description = expander.children('.audible');
@@ -162,7 +184,6 @@
         // Expand to the current accordion header if we find one that's selected
         if (!this.element.data('updating')) {
           var targetsToExpand = this.headers.filter('.is-selected, .is-expanded');
-          //targetsToExpand.removeClass('is-selected').removeClass('is-expanded');
 
           if (this.settings.allowOnePane) {
             targetsToExpand = targetsToExpand.first();
