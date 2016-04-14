@@ -32,14 +32,7 @@
       <div class="card-content">
         <div class="listview-search">
           <label class="audible" for="gridfilter">Search</label>
-          <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter">
-        </div>
-
-        <div class="toolbar is-hidden contextual-toolbar">
-          <div class="buttonset">
-            <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
-            <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
-          </div>
+          <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}">
         </div>
 
         <div class="listview" id="search-listview" data-options="{template: 'search-tmpl', source: '/api/tasks', searchable: true}"></div>

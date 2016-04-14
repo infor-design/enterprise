@@ -23,7 +23,6 @@
     // template (as id or string)
     // Methods: add, remove (X), clear (X), destroy, refresh (rebind) (X), select (get or set) (X)
     // Events: rendered, add, select
-
     // Settings and Options
     var pluginName = 'listview',
       defaults = {
