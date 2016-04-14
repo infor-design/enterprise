@@ -325,7 +325,7 @@
           text = this.getOptionText(opts);
 
         if (this.settings.empty && opts.length === 0) {
-          //Kly empty
+          this.input.val('');
           return;
         }
 
