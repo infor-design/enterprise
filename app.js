@@ -140,6 +140,7 @@ var express = require('express'),
       }
 
       var realPaths = [];
+      // TODO: var dirs = [];  Separate paths from directories and place an icon next to them
 
       // Strip out paths that aren't going to ever work
       paths.forEach(function pathIterator(val) {
@@ -390,6 +391,14 @@ var express = require('express'),
   }
   router.get('/components/', docsComponentsRouteHandler);
   router.get('/components', docsComponentsRouteHandler);
+
+  function docsGalleryRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, docOpts);
+    res.render('docs/gallery', opts);
+    next();
+  }
+  router.get('/gallery/', docsGalleryRouteHandler);
+  router.get('/gallery', docsGalleryRouteHandler);
 
   router.get('/docs*', function(req, res) {
     var opts = extend({}, res.opts, docOpts),
