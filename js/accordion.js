@@ -182,16 +182,15 @@
         this.headers.onTouchClick('accordion').on('click.accordion', function(e) {
           self.handleHeaderClick(e, $(this));
         }).on('focusin.accordion', function(e) {
+          var target = $(e.target);
+
           if (!self.originalSelection) {
-            self.originalSelection = $(e.target);
-          }
-          $(this).addClass('is-focused');
-
-          var selected = self.headers.filter('.is-selected');
-          if (selected.length && selected[0] !== this) {
-            selected.removeClass('is-selected');
+            self.originalSelection = target;
           }
 
+          if (target.is(':not(.btn)')) {
+            $(this).addClass('is-focused');
+          }
         }).on('focusout.accordion', function() {
           if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
             $(this).removeClass('is-focused');
@@ -761,7 +760,7 @@
       // Governed by the property "this.originalSelection".
       // @param {Object} header - a jQuery Object containing an Accordion header.
       focusOriginalType: function(header) {
-        this.select(header.children('a'));
+        //this.select(header.children('a'));
 
         if (this.originalSelection.is('.btn') && header.children('.btn').length) {
           header.children('.btn').focus();
