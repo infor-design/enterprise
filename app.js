@@ -26,11 +26,6 @@ var express = require('express'),
     'strict': true
   });
 
-
-
-
-
-
   // ===========================================
   // Default Options / Custom Middleware
   // ===========================================
