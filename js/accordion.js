@@ -96,6 +96,11 @@
             hasIcons = true;
           }
 
+          // Enable/Disable
+          if (header.hasClass('is-disabled')) {
+            header.children('a, button').attr('tabindex', '-1');
+          }
+
           // Don't continue if there's no pane
           if (!header.next('.accordion-pane').length) {
             checkIfIcons();
