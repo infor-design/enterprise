@@ -75,9 +75,9 @@
               return;
             }
 
-            if (!isTopLevel) {
-              containerPane.addClass('has-icons');
-            }
+            //if (!isTopLevel) {
+            containerPane.addClass('has-icons');
+            //}
           }
 
           header.attr('role', 'presentation');
