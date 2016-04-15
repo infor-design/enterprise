@@ -689,7 +689,7 @@
         var target = $(e.target),
           li = target.parent();
 
-        if (!li.is('.application-menu-trigger')) {
+        if (!(li.is('.application-menu-trigger') || target.is('.application-menu-trigger'))) {
           return true;
         }
 
