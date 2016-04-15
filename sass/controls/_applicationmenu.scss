@@ -42,8 +42,16 @@
     border-left: none !important;
     border-right: none !important;
     border-top: none !important;
+    margin-bottom: calc(-2rem - 38px);
     margin-left: 1px;
+    min-height: 100%;
     width: calc(100% - 1px);
+
+    &::after {
+      clear: both;
+      content: '';
+      display: table;
+    }
 
     .panel {
       padding-left: 49px;

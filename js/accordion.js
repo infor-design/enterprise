@@ -75,9 +75,9 @@
               return;
             }
 
-            if (!isTopLevel) {
-              containerPane.addClass('has-icons');
-            }
+            //if (!isTopLevel) {
+            containerPane.addClass('has-icons');
+            //}
           }
 
           header.attr('role', 'presentation');
@@ -94,6 +94,11 @@
 
           if (header.is('.list-item') || header.find('button, svg').length) {
             hasIcons = true;
+          }
+
+          // Enable/Disable
+          if (header.hasClass('is-disabled')) {
+            header.children('a, button').attr('tabindex', '-1');
           }
 
           // Don't continue if there's no pane
