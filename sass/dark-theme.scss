@@ -150,6 +150,7 @@ $error-icon-fill: $alert-red;
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $primary-color;
+$selected-bg-color: rgba($primary-color, .3);
 
 // Autocomplete
 $autocomplete-light-text: $slate04;
@@ -164,10 +165,12 @@ $trigger-disabled-color: $slate04;
 //List View
 $listview-bg-color: $slate07;
 $listview-bg-color-alternate: $slate08;
+$listview-hover-bg-color: $slate06;
 $listview-border-color: $slate05;
 $listview-color: $inverse-color;
-$listview-disabled-color: $slate03;
-$selected-bg-color: #287cb2;
+$listview-secondary-color: $slate03;
+$listview-tertiary-color: $slate04;
+$listview-disabled-color: $slate04;
 $listview-selected-text-color: $white;
 $listview-header-bg-color: $slate06;
 $listview-header-color: $white;

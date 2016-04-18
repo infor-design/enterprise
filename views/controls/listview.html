@@ -193,10 +193,12 @@
             {{#escalated}}
               <small class="alert-text">Escalated ({{escalated}}X)</small>
             {{/escalated}}
-            <span class="listview-micro l-pull-right">{{time}}</span>
             <p class="listview-heading">{{taskName}}</p>
             <p class="listview-subheading">{{desc}}</p>
-            <p class="listview-micro">{{comments}} Comments</p>
+            <p class="listview-micro">
+              <span class="l-pull-left">{{comments}} Comments</span>
+              <span class="l-pull-right">{{time}}</span>
+            </p>
           </li>
         {{/dataset}}
       </ul>
@@ -238,13 +240,13 @@
       <ul>
         {{#dataset}}
           <li>
-            <span class="listview-micro l-pull-right bold">{{totalPrice}}</span>
             <p class="listview-heading">{{itemName}}</p>
             <p class="listview-subheading">{{itemId}}</p>
             <p class="listview-text">
               Item Price: {{itemPrice}}/{{quantifier}}<br>
               Quantity: {{quantity}}
             </p>
+            <p class="listview-micro l-pull-right">{{totalPrice}}</p>
           </li>
         {{/dataset}}
       </ul>

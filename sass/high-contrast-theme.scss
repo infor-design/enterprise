@@ -144,6 +144,7 @@ $error-icon-fill: $alert-red;
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $azure08;
+$selected-bg-color: rgba($azure07, .3);
 
 // Autocomplete
 $autocomplete-light-text: $graphite05;
@@ -157,8 +158,12 @@ $trigger-disabled-color: $graphite04;
 
 //List View
 $listview-bg-color: $inverse-color;
-$listview-border-color: $graphite03;
-$listview-color: $font-color-extrahighcontrast;
+$listview-bg-color-alternate: $graphite02;
+$listview-hover-bg-color: $graphite04;
+$listview-border-color: $graphite06;
+$listview-color: $black;
+$listview-secondary-color: $graphite09;
+$listview-tertiary-color: $graphite07;
 $listview-disabled-color: $disabled-color;
 $listview-selected-text-color: $font-color-extrahighcontrast;
 $listview-header-bg-color: $graphite04;
@@ -171,11 +176,14 @@ $listview-toolbar-button-text-hover-color: $white;
 $listview-toolbar-button-icon-hover-color: $white;
 $listview-toolbar-button-text-selected-color: $white;
 $listview-toolbar-button-icon-selected-color: $white;
-$listview-alt-bg-color: $graphite02;
 
 //Contextual Toolbar
-$contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-bg-color: $primary-color;
+$contextual-toolbar-color: $inverse-color;
+$contextual-toolbar-button-color: rgba($inverse-color, 1);
+$contextual-toolbar-button-hover-color: rgba($inverse-color, .7);
+$contextual-toolbar-button-disabled-color: rgba($inverse-color, .3);
+
 
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;

@@ -252,6 +252,7 @@ $toolbar-buttonset-height: 44px;
     height: calc(100% - 50px);
   }
 
+  // Updated changes from listview button and font sizes
   // Override Toolbar styles
   &.toolbar {
     height: 52px;
@@ -260,32 +261,42 @@ $toolbar-buttonset-height: 44px;
     padding-right: 13px;
 
     .title {
-      @include font-size(16);
+      @include font-size(14);
       color: $contextual-toolbar-color;
     }
 
-    [class^="btn"] {
-      color: $contextual-toolbar-color;
-      min-width: 0;
+    .buttonset {
+      height: 40px;
+    }
 
-      > span {
-        color: $contextual-toolbar-color;
-      }
+    [class^="btn"] {
+      color: $contextual-toolbar-button-color;
+      height: 30px;
+      margin-top: 5px;
+      min-width: 0;
+      padding: 0 10px;
 
       > .icon {
-        fill: $contextual-toolbar-color;
+        fill: $contextual-toolbar-button-color;
       }
 
       &:focus {
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
+
+        &:not(.hide-focus) {
+          color: $contextual-toolbar-color;
+
+          > .icon {
+            fill: $contextual-toolbar-color;
+          }
+        }      
       }
 
-      &:hover,
-      &:focus:not(.hide-focus) {
-        color: $contextual-toolbar-color !important;
+      &:hover {
+        color: $contextual-toolbar-button-hover-color;
 
         > .icon {
-          fill: $contextual-toolbar-color;
+          fill: $contextual-toolbar-button-hover-color;
         }
       }
 

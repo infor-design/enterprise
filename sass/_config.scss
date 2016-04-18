@@ -34,9 +34,6 @@ $hyperlink-visited-color: $amethyst06;
 $hyperlink-disabled-color: $disabled-color;
 $hyperlink-hover-color: $primary-color;
 
-//Selection Color
-$selected-bg-color: #dcecf2;
-
 // Rules
 $hr-top-color: $graphite03;
 $hr-bottom-color: $white;
@@ -149,10 +146,12 @@ $input-readonly-color: $graphite10;
 
 //States
 $error-color: $alert-red;
+$error-bg-color: rgba($alert-red, .1);
 $error-icon-fill: $alert-red;
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
 $info-icon-fill: $alert-info;
+$selected-bg-color: rgba($azure01, .7);
 
 // Autocomplete / Triggers
 $autocomplete-light-text: $graphite05;
@@ -166,9 +165,10 @@ $trigger-disabled-color: $graphite04;
 
 //List View
 $listview-bg-color: $inverse-color;
-$listview-bg-color-alternate: #f5f5f5;
+$listview-bg-color-alternate: $graphite01;
+$listview-hover-bg-color: $graphite02;
 $listview-border-color: $graphite03;
-$listview-color: $graphite06;
+$listview-color: $graphite10;
 $listview-secondary-color: $graphite06;
 $listview-tertiary-color: $graphite04;
 $listview-disabled-color: $input-disabled-color;
@@ -190,8 +190,11 @@ $listview-full-width-hover-color: $graphite02;
 $listview-full-width-border-color: $graphite03;
 
 //Contextual Toolbar
-$contextual-toolbar-color: $inverse-color;
 $contextual-toolbar-bg-color: $primary-color;
+$contextual-toolbar-color: $inverse-color;
+$contextual-toolbar-button-color: rgba($inverse-color, .7);
+$contextual-toolbar-button-hover-color: rgba($inverse-color, 1);
+$contextual-toolbar-button-disabled-color: rgba($inverse-color, .3);
 
 // Swaplist
 $swaplist-bg-color: $graphite01;
