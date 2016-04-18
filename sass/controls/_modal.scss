@@ -71,6 +71,19 @@
     }
   }
 
+  &.divider-top {
+    .modal-content {
+      .modal-header {
+        border-bottom: 1px solid $modal-border-color;
+        padding-bottom: 15px;
+      }
+      .modal-body-wrapper {
+        padding: 0;
+      }
+    }
+
+  }  
+
   .listview-search {
 
     + .listview {
@@ -331,14 +344,13 @@ html[dir='rtl'] {
     }
   }
   .modal-content {
-    padding: 30px 27px 0 0;
+    padding: 0;
 
     // Messages/Content
     h1 {
       margin-left: 25px;
       padding-left: 20px;
       margin-right: inherit;
-      padding-right: inherit;
       text-align: right;
 
       &.is-error {
@@ -355,6 +367,7 @@ html[dir='rtl'] {
       padding-left: 30px;
     }
 
+    h2,
     .message {
       text-align: right;
     }

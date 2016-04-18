@@ -16,10 +16,14 @@
     font-weight: bold;
   }
 
+  &:focus {
+    outline: none;
+  }
+
   .listview-heading {
     @include ellipsis();
     @include font-size(14);
-    color: $font-color-extrahighcontrast;
+    color: $listview-color;
     font-weight: normal;
 
     &.hyperlink {
@@ -46,10 +50,6 @@
   }
 
   &.alternate-row {
-    .listview-subheading {
-      color: $listview-subhead-color;
-    }
-
     .listview-text {
       color: $listview-selected-text-color;
     }
@@ -70,6 +70,20 @@
     color: $listview-tertiary-color;
     font-weight: bold;
     text-transform: uppercase;
+
+    &:after {
+      clear: both;
+      content: '';
+      display: inline-block;
+    }
+
+    .l-pull-right {
+      position: static;
+    }
+
+    &.l-pull-right {
+      top: -15px;
+    }
   }
 
   .badge {
@@ -88,9 +102,16 @@
   li {
     @include transition(background-color .15s ease 0s);
     border: 1px solid transparent;
-    border-bottom: 1px solid $listview-border-color;
     color: $listview-color;
     padding: 16px 20px 15px;
+
+    &:not(:first-of-type) {
+      border-top-color: $listview-border-color;
+    }
+
+    &:last-of-type {
+      border-bottom-color: $listview-border-color;
+    }
 
     &:after {
       clear: both;
@@ -101,12 +122,16 @@
 
     &:hover,
     &:focus {
-      background-color: $popupmenu-hover-color;
+      background-color: $listview-hover-bg-color;
       outline: none;
 
       &:focus {
         //@include css3(box-shadow, 0 0 1px 1px $primary-color inset);
-        border: 1px solid $primary-color;
+        border-color: $primary-color;
+
+        + li {
+          border-top-color: transparent;
+        }
       }
 
     }
@@ -138,7 +163,7 @@
     > a {
       @include ellipsis();
       @include font-size(14);
-      color: $font-color-extrahighcontrast;
+      color: $listview-color;
       font-weight: normal;
       text-decoration: none;
 
@@ -149,7 +174,7 @@
   }
 
   i {
-    color: $font-color-extrahighcontrast;
+    color: $listview-color;
     font-style: normal;
     font-weight: bold;
   }
@@ -159,6 +184,10 @@
   .day-sign,
   .hour-sign {
     @include font-size(20);
+
+    &:not(.error) {
+      color: $listview-secondary-color;
+    }
   }
 
   .dropdown-wrapper {
@@ -176,10 +205,6 @@
     .icon-error {
       left: -5px;
       top: 2px;
-    }
-
-    &.listview-micro {
-      top: 76px;
     }
   }
 
@@ -201,7 +226,7 @@
     float: left;
     height: 50px;
     margin-right: 20px;
-    margin-top: -3px;
+    margin-top: -7px;
     padding: 0;
     vertical-align: middle;
     width: 50px;
@@ -256,8 +281,10 @@
     cursor: default;
     -webkit-text-fill-color: $listview-disabled-color;
 
-    p {
+    * {
+      @include unselectable;
       color: $listview-disabled-color;
+      cursor: default;
       -webkit-text-fill-color: $listview-disabled-color;
     }
 
@@ -266,20 +293,25 @@
     }
   }
 
+  li.is-error {
+    background-color: $error-bg-color;
+    border-color: $error-color;
+
+    &:hover {
+      background-color: $error-bg-color;
+    }
+
+    + li {
+      border-top-color: transparent;
+    }
+  }
+
   li.is-selected,
   tr.is-selected {
-    background-color: $selected-bg-color; //bde7ff
+    background-color: $selected-bg-color;
 
     &:hover {
       background-color: $selected-bg-color;
-    }
-
-    p {
-      color: $listview-selected-text-color;
-    }
-
-    .listview-micro {
-      color: $listview-selected-text-color !important;
     }
   }
 
@@ -297,16 +329,19 @@
     }
   }
 
-  &.is-muliselect li:before {
-    @include checkbox-unchecked-before-style;
-    left: 14px;
-    margin-left: 0;
-    top: 18px;
-  }
 
   &.is-muliselect li {
-    padding-left: 43px;
+    padding-left: 45px;
     position: relative;
+
+    &:before {
+      @include checkbox-unchecked-before-style;
+      height: 14px;
+      left: 19px;
+      margin-left: 0;
+      top: 16px;
+      width: 14px;
+    }
 
     &.is-selected:before {
       @include checkbox-checked-before-style;
@@ -316,10 +351,19 @@
       @include checkbox-checked-after-style;
       @include css3(transform-origin, -11px top 0);
       @include checkbox-animation;
-      left: 20px;
+      height: 9px;
+      left: 24px;
       margin-top: 0;
-      top: 20px;
+      top: 17px;
     }
+
+    &:hover:not(.is-disabled):not(.is-selected):not(.is-error),
+    &:focus:not(.is-disabled):not(.is-selected):not(.is-error) {
+      &:before {
+        border-color: $listview-color;
+      }
+    }
+
   }
 
   &.tableview {
@@ -371,7 +415,7 @@
   td {
     @include font-size(14);
     @include transition(background-color .15s ease 0s);
-    color: $font-color-extrahighcontrast;
+    color: $listview-color;
     font-weight: lighter;
     padding: 13px 15px;
   }
@@ -661,7 +705,7 @@ html[dir='rtl'] {
 
       &.is-selected:after {
         left: auto;
-        right: 20px;
+        right: 19px;
       }
     }
   }
@@ -692,3 +736,4 @@ html[dir='rtl'] {
 
   }
 }
+

@@ -493,9 +493,12 @@
 
       // Handle Resize
       handleResize: function () {
-        var items;
-        items = $('li, tr', this.element);
-        $('.listview-heading', items.eq(0)).width($('.listview-heading', items.eq(1)).width());
+        var items = $('li .listview-heading, tr .listview-heading', this.element);
+
+        if (items.eq(1).width()) {
+          items.eq(0).width(items.eq(1).width());
+        }
+
         this.setChildIconsValign();
 
         if (this.element.data('pager')) {
@@ -709,8 +712,15 @@
         li.attr('aria-selected', !isChecked);
         this.element.trigger('selected', [this.selectedItems]);
 
-        var toolbar = this.element.closest('.card, .widget').find('.listview-toolbar, .contextual-toolbar'),
-          toolbarControl = toolbar.data('toolbar');
+        var toolbar, toolbarControl,
+          parent = this.element.closest('.card, .widget');
+
+        if (!parent.length) {
+          parent = this.element.parent();
+        }
+        toolbar = parent.find('.listview-toolbar, .contextual-toolbar');
+        
+        toolbarControl = toolbar.data('toolbar');
 
         if (self.selectedItems.length > 0) {
           if (toolbarControl) {
@@ -722,7 +732,8 @@
             self.element.addClass('is-toolbar-open');
             toolbar.trigger('recalculateButtons').removeClass('is-hidden');
           }).css('display', 'block');
-          toolbar.animateOpen({distance: 52});
+          // toolbar.animateOpen({distance: 52});
+          toolbar.animateOpen({distance: 40});
 
           var title = toolbar.find('.title, .selection-count');
           if (!title || !title.length) {

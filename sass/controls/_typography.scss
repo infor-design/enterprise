@@ -215,3 +215,17 @@ small,
   }
 }
 
+//RTL Styles
+html[dir='rtl'] {
+  
+  .alert-text {
+    padding-left: inherit;
+    padding-right: 15px;
+
+    &:before {
+      margin-left: inherit;
+      margin-right: -14px;
+    }
+  }
+
+}
