@@ -1044,3 +1044,29 @@ html[dir='rtl'] {
   }
 }
 
+//Columns Personalization
+.datagrid-columns-dialog {
+  .label-text {
+    @include font-size(14);
+  }
+
+  .label {
+    margin: 0;
+  }
+
+  li {
+    height: 32px;
+    padding: 5px 10px;
+
+    &:first-child {
+      margin-top: 5px;
+    }
+  }
+
+  .searchfield-wrapper,
+  .listview-search,
+  .searchfield-wrapper input {
+    width: 350px !important;
+  }
+
+}

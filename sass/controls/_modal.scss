@@ -91,8 +91,9 @@
   .alternate-bg {
 
     &.listview {
+      background-color: $listview-full-width-bg-color;
+
       li {
-        background-color: $listview-full-width-bg-color;
         border-color: transparent;
 
         &:hover {

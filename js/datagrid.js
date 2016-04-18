@@ -1005,14 +1005,14 @@ $.fn.datagrid = function(options) {
               $('.is-draggable-target', clone).remove();
 
               self.setdraggableColumnsTargets();
-              index = self.getColumnIndex(pos);
+              index = self.getTargetColumn(pos);
               self.draggableStatus.startIndex = index;
             })
 
             // While dragging ===================================
             .on('drag.datagrid', function (e, pos) {
               var i, l, n, target,
-                index = self.getColumnIndex(pos);
+                index = self.getTargetColumn(pos);
 
               $('.is-draggable-target', headers).removeClass('is-over');
 
@@ -1033,7 +1033,7 @@ $.fn.datagrid = function(options) {
 
             // Drag end =========================================
             .on('dragend.datagrid', function (e, pos) {
-              var index = self.getColumnIndex(pos),
+              var index = self.getTargetColumn(pos),
                dragApi = hader.data('drag'),
                tempArray = [],
                i, l, indexFrom, indexTo;
@@ -1114,7 +1114,7 @@ $.fn.datagrid = function(options) {
     },
 
     // Get column index
-    getColumnIndex: function (pos) {
+    getTargetColumn: function (pos) {
       var self = this,
         index = -1,
         target, i, l;
@@ -1358,19 +1358,19 @@ $.fn.datagrid = function(options) {
 
     //Open Column Personalization Dialog
     personalizeColumns: function () {
-      var elems = ['Cloverleaf Demo Environmen', 'NICU Lab Results', 'ICU Labs'],
-        markup = '<div class="listview-search alternate-bg" style="width: 400px"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="'+ Locale.translate('SearchColumnName') +'" name="searchfield" id="gridfilter"></div>';
-        markup += '<div class="listview alternate-bg datagrid-columns-dialog" id="search-listview"><ul>';
+      var markup = '<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="'+ Locale.translate('SearchColumnName') +'" name="searchfield" id="gridfilter"></div>';
+        markup += '<div class="listview alternate-bg" id="search-listview"><ul>';
 
-        for (var i = 0; i < elems.length; i++) {
-          markup += '<a href="#"> <label class="inline"><input type="checkbox" class="checkbox" checked><span class="label-text">' + elems[i] + '</span></label></a>';
+        for (var i = 0; i < this.settings.columns.length; i++) {
+          var col = this.settings.columns[i];
+          markup += '<li><a href="#"> <label class="inline"><input type="checkbox" class="checkbox" checked data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
         }
         markup += '</ul></div>';
 
         $('body').modal({
           title: Locale.translate('PersonalizeColumns'),
           content: markup,
-          cssClass: 'full-width',
+          cssClass: 'full-width datagrid-columns-dialog',
           buttons: [{
               text: Locale.translate('Close'),
               click: function(e, modal) {
@@ -1383,7 +1383,7 @@ $.fn.datagrid = function(options) {
           modal.element.find('.listview').listview({searchable: true});
 
           modal.element.find('.checkbox').onTouchClick().on('click', function () {
-
+            //console.log($(this).attr('data-column-id'));
           });
         });
     },
