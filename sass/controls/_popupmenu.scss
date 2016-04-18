@@ -175,7 +175,10 @@
 
   .heading {
     color: $popupmenu-heading-color;
+    @include font-size(12);
+    font-weight: bold;
     line-height: 25px;
+    padding: 0 10px;
     text-transform: uppercase;
   }
 
@@ -209,6 +212,12 @@
       position: absolute;
       width: 5px;
     }
+
+    &.is-checkable {
+      > a {
+        padding-left: 40px;
+      }
+    }
   }
 
   a {
@@ -218,7 +227,7 @@
     color: $popupmenu-color;
     display: block;
     line-height: 32px;
-    padding: 0 30px 0 20px;
+    padding: 0 30px 0 10px;
     position: relative;
     text-decoration: none;
     white-space: nowrap;

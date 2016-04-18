@@ -291,7 +291,7 @@
             e.preventDefault();
           }
 
-          if (self.menu.hasClass('is-selectable') || self.menu.hasClass('is-multiselectable')) {
+          if (self.isInSelectableSection(anchor) || self.menu.hasClass('is-selectable') || self.menu.hasClass('is-multiselectable')) {
             selectionResult = self.select(anchor);
           }
 
@@ -299,7 +299,7 @@
           self.element.trigger('selected', selectionResult);
 
           // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
-          if (self.menu.hasClass('is-multiselectable')) {
+          if (self.menu.hasClass('is-multiselectable') || self.isInMultiselectSection(anchor)) {
             return;
           }
 
@@ -809,24 +809,27 @@
         return anchor.focus();
       },
 
+      // adds/removes checkmarks that are in selectable groups inside the popupmenu
       select: function(anchor) {
-        var single = this.menu.is('.is-selectable'),
-          multiple = this.menu.is('.is-multiselectable'),
+        var singleMenu = this.menu.is('.is-selectable'),
+          multipleMenu = this.menu.is('.is-multiselectable'),
+          singleSection = this.isInSingleSelectSection(anchor),
+          multipleSection = this.isInMultiselectSection(anchor),
           parent = anchor.parent(),
           returnObj = [anchor, 'selected'];
 
-        if (!single && !multiple) {
+        if (!singleMenu && !multipleMenu && !singleSection && !multipleSection) {
           return;
         }
 
-        // If the menu is "selectable", place the checkmark where it's supposed to go.
-        if (single) {
+        // If the entire menu is "selectable", place the checkmark where it's supposed to go.
+        if (singleMenu || singleSection) {
           parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
           parent.addClass('is-checked');
           return returnObj;
         }
 
-        if (multiple) {
+        if (multipleMenu || multipleSection) {
           if (parent.hasClass('is-checked')) {
             returnObj[1] = 'deselected';
             parent.removeClass('is-checked');
@@ -843,6 +846,19 @@
         }
 
         return this.menu.children('.is-checked').children('a');
+      },
+
+      isInSelectableSection: function(anchor) {
+        var separator = anchor.parent().prevAll().filter('.separator').first();
+        return (separator.hasClass('multi-selectable-section') || separator.hasClass('single-selectable-section'));
+      },
+
+      isInSingleSelectSection: function(anchor) {
+        return anchor.parent().prevAll().filter('.separator').first().hasClass('single-selectable-section');
+      },
+
+      isInMultiselectSection: function(anchor) {
+        return anchor.parent().prevAll().filter('.separator').first().hasClass('multi-selectable-section');
       },
 
       detach: function () {
