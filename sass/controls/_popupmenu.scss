@@ -15,24 +15,24 @@
 
   &.top {
     .arrow {
-      border-top-color: $popover-arrow-border-color;
+      border-top-color: $popupmenu-arrow-color;
     }
 
     .arrow:after {
-      border-top-color: $popover-bg-color;
+      border-top-color: $popupmenu-bg-color;
     }
   }
 
   &.bottom {
     .arrow {
-      border-bottom-color: $popover-arrow-border-color;
+      border-bottom-color: $popupmenu-arrow-color;
       left: auto;
       right: 10px;
       top: -7px;
     }
 
     .arrow:after {
-      border-bottom-color: $popover-bg-color;
+      border-bottom-color: $popupmenu-bg-color;
       left: -8px;
       top: 1px;
     }
@@ -40,21 +40,21 @@
 
   &.right {
     .arrow {
-      border-right-color: $popover-arrow-border-color;
+      border-right-color: $popupmenu-arrow-color;
     }
 
     .arrow:after {
-      border-right-color: $popover-bg-color;
+      border-right-color: $popupmenu-bg-color;
     }
   }
 
   &.left {
     .arrow {
-      border-left-color: $popover-arrow-border-color;
+      border-left-color: $popupmenu-arrow-color;
     }
 
     .arrow:after {
-      border-left-color: $popover-bg-color;
+      border-left-color: $popupmenu-bg-color;
     }
   }
 
@@ -143,28 +143,21 @@
     height: 18px;
   }
 
-  &.has-icons a,
-   .heading {
-    padding: 0 35px;
-
-    .icon:not(.arrow) {
-      height: 16px;
-      margin-left: 8px;
-      margin-right: -13px;
-      margin-top: 1px;
-    }
-  }
-
   &.has-icons {
-    > li {
-      a {
-        padding-left: 40px;
-      }
+    a {
+      padding-left: 40px;
+    }
 
-      .icon {
-        left: 1px;
-        position: absolute;
-        top: 5.5px;
+    .icon {
+      left: 1px;
+      position: absolute;
+      top: 5.5px;
+
+      &:not(.arrow) {
+        height: 16px;
+        margin-left: 8px;
+        margin-right: -13px;
+        margin-top: 1px;
       }
     }
   }
@@ -207,15 +200,15 @@
       border-width: 0 2px 2px 0;
       content: '';
       height: 11px;
-      left: 17px;
+      left: 13px;
       margin-top: 7px;
       position: absolute;
       width: 5px;
     }
 
-    &.is-checkable {
+    &.is-selectable {
       > a {
-        padding-left: 40px;
+        padding-left: 35px;
       }
     }
   }
@@ -274,16 +267,23 @@
   }
 
   // Disabled
-  li.is-disabled a,
-  li.disabled a {
-    background-color: transparent;
-    color: $disabled-color;
+  li.is-disabled,
+  li.disabled {
     cursor: default;
-  }
 
-  li.is-disabled:hover,
-  li.disabled:hover {
-    background-color: transparent;
+    a {
+      background-color: transparent;
+      color: $disabled-color !important;
+      cursor: default;
+    }
+
+    .icon {
+      fill: $disabled-color !important;
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 
   .submenu {
@@ -315,7 +315,7 @@
         pointer-events: none;
         position: absolute;
         right: 8px;
-        top: 2px;
+        top: 3px;
         width: 16px;
         @include css3(transform, rotate(-90deg));
       }
@@ -361,6 +361,12 @@
   &.is-multiselectable {
     li {
       position: relative;
+
+      a {
+        &::before {
+          display: none;
+        }
+      }
 
       &::before,
       &.is-focused::before {
@@ -493,29 +499,54 @@
 html[dir='rtl'] {
 
   .popupmenu {
-    &.has-icons > li a {
-      padding-left: 30px;
-      padding-right: 40px;
+    a {
+      padding: 0 10px;
     }
 
-    &.is-selectable {
-      li {
-        &.is-checked > a:before,
-        &.is-checked.is-selected > a:before {
-          left: auto;
-          right: 13px;
+    &.has-icons {
+      > li a {
+        padding-left: 10px;
+        padding-right: 40px;
+      }
+
+      .icon {
+        left: auto;
+        right: 1px;
+
+        &:not(.arrow) {
+          margin-left: -13px;
+          margin-right: 8px;
         }
       }
     }
 
     .submenu > a {
       padding-left: 48px;
-      padding-right: 30px;
+      padding-right: 10px;
 
       > .icon.icon-dropdown {
         @include css3(transform, rotate(90deg));
         left: 8px;
         right: auto;
+        top: 5px;
+      }
+    }
+
+    li {
+
+      // Selected
+      &.is-checked > a:before,
+      &.is-checked.is-selected > a:before {
+        left: auto;
+        right: 13px;
+      }
+
+      // Selectable
+      &.is-selectable {
+        > a {
+          padding-left: 10px;
+          padding-right: 35px;
+        }
       }
     }
   }

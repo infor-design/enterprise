@@ -87,13 +87,15 @@ $badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
 }
 
 // Popup Menu
+$popupmenu-arrow-color: $font-color-extrahighcontrast;
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-color-filtered-text: $font-color;
 $popupmenu-bg-color: $white;
+$popupmenu-border-color: $graphite06;
 $popupmenu-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
 $popupmenu-heading-color: $graphite07;
-$popupmenu-checked-color: $font-color;
-$popupmenu-border-color: $graphite04;
+$popupmenu-hover-color: $graphite04;
+$popupmenu-checked-color: $azure09;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
