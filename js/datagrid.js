@@ -62,7 +62,10 @@ window.Formatters = {
   },
 
   Hyperlink: function(row, cell, value, col) {
-    return '<a href="' + (col.href ? col.href : '#') +'" tabindex="-1" role="presentation" class="hyperlink">' + value + '</a>';
+    var href = (col.href ? col.href : '#');
+    href = href.replace('{{value}}', value);
+
+    return '<a href="' + (col.href ? col.href : '#') +'" tabindex="-1" role="presentation" class="hyperlink">' + (col.text ? col.text : value) + '</a>';
   },
 
   Template: function(row, cell, value, col, item) {
