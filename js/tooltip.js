@@ -121,7 +121,7 @@
                 }, delay);
             })
             .on('updated.tooltip', function() {
-               self.content = self.element.attr('title');
+              self.updated();
             });
         }
 
@@ -161,6 +161,9 @@
       },
 
       setContent: function(content) {
+        if (!content || !content.length) {
+          return false;
+        }
 
         var self = this,
           contentArea,
@@ -615,7 +618,13 @@
         this.element.trigger('hide', [this.tooltip]);
       },
 
-      destroy: function() {
+      updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      teardown: function() {
         this.description.remove();
         this.descriptionId = undefined;
         this.element.removeAttr('aria-describedby').removeAttr('aria-haspopup');
@@ -624,6 +633,13 @@
         }
         this.element.removeData(pluginName);
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
+
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
+        $.removeData(this.element[0], pluginName);
       }
     };
 
