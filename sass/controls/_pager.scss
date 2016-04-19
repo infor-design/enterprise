@@ -158,7 +158,7 @@
     @include font-size(14);
     height: 30px;
     margin: 0 5px;
-    padding: 3px 0;
+    padding: 3px 0 !important;
     text-align: center;
     width: 30px;
   }
@@ -254,7 +254,6 @@ li + .pager-count {
 .listview + .pager-toolbar {
   padding-top: 5px;
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

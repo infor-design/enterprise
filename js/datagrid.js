@@ -1350,6 +1350,9 @@ $.fn.datagrid = function(options) {
       this.renderHeader();
       this.renderRows();
       this.setColumnWidths();
+
+      this.resetPager('updatecolumns');
+
     },
 
     //Hide a column
@@ -2658,9 +2661,8 @@ $.fn.datagrid = function(options) {
       settings.dataset.sort(sort);
 
       var wasFocused = this.activeCell.isFocused;
+      this.tableBody.addClass('is-loading');
       this.renderRows();
-      //this.syncFixedHeader();
-
       // Update selected and Sync header checkbox
       this.updateSelected();
       this.syncSelectedUI();
@@ -2670,6 +2672,8 @@ $.fn.datagrid = function(options) {
       }
 
       this.syncFixedHeader();
+      this.resetPager('sorted');
+      this.tableBody.removeClass('is-loading');
       this.element.trigger('sorted', [this.sortColumn]);
     },
 
@@ -2769,40 +2773,47 @@ $.fn.datagrid = function(options) {
 
       });
 
-      //Get First page on Sort Action
-      this.element.on('sorted', function () {
-        if (self.pager) {
-
-          if (!self.pager.pagingInfo) {
-            self.pager.pagingInfo = {};
-          }
-
-          self.pager.pagingInfo.type = 'sorted';
-          self.pager.pagingInfo.activePage = 1;
-          self.renderPager(self.pager.pagingInfo, 'sorted');
-        }
-      });
     },
 
     renderPager: function (pagingInfo) {
-      if (this.pager) {
-        if (pagingInfo) {
-          this.pager.activePage = pagingInfo.activePage;
-        }
-        this.pager.elements = this.pager.element.children();
-        this.pager.renderBar();
 
-        this.pager.renderPages((pagingInfo.type === 'sorted' ? false : true), 'initial');
+      if (!this.pager) {
+        return;
+      }
 
-        if (pagingInfo) {
-          this.pager.updatePagingInfo(pagingInfo);
-        }
+      if (pagingInfo) {
+        this.pager.activePage = pagingInfo.activePage;
+      }
+
+      this.pager.elements = this.pager.element.children();
+      this.pager.renderBar();
+
+      this.pager.renderPages((pagingInfo.type === 'sorted' ? false : true), 'initial');
+
+      if (pagingInfo) {
+        this.pager.updatePagingInfo(pagingInfo);
       }
 
       // Update selected and Sync header checkbox
       this.updateSelected();
       this.syncSelectedUI();
+    },
+
+    //Reset the pager to page 1
+    resetPager: function(type) {
+      if (!this.pager) {
+        return;
+      }
+
+      if (!this.pager.pagingInfo) {
+        this.pager.pagingInfo = {};
+      }
+
+      this.pager.pagingInfo.type = type;
+      this.pager.pagingInfo.activePage = 1;
+      this.renderPager(this.pager.pagingInfo, type);
     }
+
   };
 
   // Initialize the plugin (Once) or set settings

@@ -7,7 +7,6 @@ $datagrid-header-short-height: 32px;
 
 .datagrid-wrapper {
   background-color: transparent;
-  border: 1px solid $datagrid-border-color;
   min-width: 100%;
   position: relative;
 
@@ -397,9 +396,7 @@ $datagrid-header-short-height: 32px;
 
   td {
     background-color: $datagrid-cell-bg-color;
-    border-bottom: 1px solid $datagrid-cell-border-color;
-    border-color: $datagrid-cell-border-color;  //IE Bug
-    border-right: 1px solid $datagrid-cell-border-color;
+    border: 1px solid $datagrid-cell-border-color;
     color: $datagrid-data-color;
     height: 50px;
     line-height: 50px;
@@ -424,10 +421,6 @@ $datagrid-header-short-height: 32px;
         font-style: normal;
         font-weight: bold;
       }
-    }
-
-    &:last-child {
-      border-right: 1px solid $datagrid-cell-border-color;
     }
 
     //Readonly
@@ -518,6 +511,21 @@ $datagrid-header-short-height: 32px;
 
       &.exclamation {
         line-height: 44px;
+      }
+    }
+  }
+
+  tbody {
+    &.is-loading {
+      .datagrid-row {
+        display: none;
+
+        .datagrid-cell-wrapper,
+        .datagrid-cell-wrapper span,
+        .hyperlink {
+          color: transparent;
+          text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
       }
     }
   }
