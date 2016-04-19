@@ -386,61 +386,61 @@ body.no-scroll {
   + .site-hero,
   + .application-menu + .site-hero,
   + .svg-icons + .container {
-    margin-top: 60px;
+    margin-top: 50px;
   }
 
   + .page-container,
   + .application-menu + .page-container {
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
     margin-top: 60px;
     @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
   &.has-tabs {
-    height: 94px;
+    height: 84px;
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 94px);
-      margin-top: 94px;
+      height: calc(100% - 84px);
+      margin-top: 84px;
     }
   }
 
   &.has-breadcrumb,
   &.has-alternate-tabs {
-    height: 105px;
+    height: 95px;
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 105px);
-      margin-top: 105px;
+      height: calc(100% - 95px);
+      margin-top: 95px;
     }
   }
 
   // Alternate breadcrumb is taller than regular breadcrumb
   &.has-alternate-breadcrumb {
-    height: 120px;
+    height: 110px;
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 120px);
-      margin-top: 120px;
+      height: calc(100% - 110px);
+      margin-top: 110px;
     }
   }
 
   &.has-wizard {
-    height: 144px;
+    height: 134px;
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 144px);
-      margin-top: 144px;
+      height: calc(100% - 134px);
+      margin-top: 134px;
     }
   }
 
   ~ .masthead + .page-container {
-    height: calc(100% - 98px);
-    margin-top: 98px;
+    height: calc(100% - 88px);
+    margin-top: 88px;
   }
 
 }
@@ -448,8 +448,8 @@ body.no-scroll {
 //Header on Side Panels - fx: tests/tree/expand-collapse-splitter
 .panel-header {
   background-color: $panel-header-bg-color;
-  height: 60px;
-  line-height: 60px;
+  height: 50px;
+  line-height: 50px;
 
   .title {
     @include font-size(16);
@@ -457,7 +457,7 @@ body.no-scroll {
   }
 
   + .splitter {
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
   }
 }
 
@@ -468,30 +468,30 @@ body.no-scroll {
     + .site-hero,
     + .application-nav + .site-hero,
     + .svg-icons + .page-container {
-      margin-top: 135px;
+      margin-top: 125px;
     }
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 95px);
+      height: calc(100% - 85px);
     }
 
     &.has-breadcrumb ,
     &.has-tabs {
       + .page-container,
       + .application-menu + .page-container {
-        height: calc(100% - 133px);
-        margin-top: 133px;
+        height: calc(100% - 123px);
+        margin-top: 123px;
       }
     }
 
     &.has-wizard {
-      height: 179px;
+      height: 169px;
 
       + .page-container,
       + .application-menu + .page-container {
-        height: calc(100% - 179px);
-        margin-top: 179px;
+        height: calc(100% - 169px);
+        margin-top: 169px;
       }
     }
 
@@ -505,8 +505,8 @@ body.no-scroll {
 
   + .header + .page-container,
   + .header + .application-menu + .page-container {
-    height: calc(100% - 98px);
-    margin-top: 98px;
+    height: calc(100% - 88px);
+    margin-top: 88px;
   }
 
   + .module-tabs + .page-container,

@@ -27,7 +27,6 @@
     </div>
 
    <div class="buttonset">
-
       <button id="parameter-maintenance-save" class="btn" type="submit" title="Save the current record." disabled>
         <svg class="icon" focusable="false">
         <use xlink:href="#icon-save"></use>
@@ -45,11 +44,15 @@
     {{> includes/header-actionbutton}}
   </div>
 
+  <script language="text/javascript">
+    $('body').on('initialized', function() {
+      $('#parameter-maintenance-save').on('click', function (e) {
+        $('body').toast({
+          'title': 'Disabled Button Click',
+          'message': 'The button <span style="font-weight: bold;">' + $(e.target).text().trim() + '</span> is supposed to be disabled, and therefore should not have triggered this messsage.  Something\'s wrong.'
+        });
+      });
+    });
+  </script>
+
 </header>
-
-<script>
-
-$('#parameter-maintenance-save').on('click', function (){
-  alert('I am supposed to be disabled'); }
-);
-</script>
