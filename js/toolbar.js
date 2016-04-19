@@ -534,7 +534,7 @@
 
         // Menu Button
         if (activeButton.is('a')) {
-          this.activeButton = activeButton.parents('.popupmenu').last().prev('button').attr('tabindex', '0');
+          this.activeButton = this.more; //activeButton.parents('.popupmenu').last().prev('button').attr('tabindex', '0');
           this.activeButton[0].focus();
           return;
         }
