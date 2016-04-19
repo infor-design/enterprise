@@ -22,8 +22,8 @@
   z-index: 1001;
 
   &.is-visible {
-    opacity: 1;
     @include css3(transform, translate(-50%, -50%) scale(1, 1));
+    opacity: 1;
   }
 
   .field {
@@ -32,10 +32,14 @@
       width: 300px;
 
       &.input-lg {
-        width: 400px;
         min-height: inherit;
+        width: 400px;
       }
     }
+  }
+
+  &.full-width {
+    margin: 0;
   }
 
   .textarea-wordcount {
@@ -82,7 +86,7 @@
       }
     }
 
-  }  
+  }
 
   .listview-search {
 
@@ -92,11 +96,11 @@
     }
 
     .searchfield-wrapper {
-      width: 400px;
+      width: 360px;
 
       input {
         border-color: $fieldset-border-top-color;
-        width: 400px;
+        width: 360px;
       }
     }
   }
@@ -325,7 +329,11 @@
   }
 
   .searchfield-wrapper {
-    width: 400px;
+    width: 260px !important;
+
+    input {
+      width: 260px !important;
+    }
   }
 }
 

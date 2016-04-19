@@ -188,6 +188,10 @@ $datagrid-header-short-height: 32px;
       border-left-color: $datagrid-header-bg-color;
     }
 
+    &.is-hidden {
+      display: none;
+    }
+
     .datagrid-header-text {
       @include font-size(12);
       color: $datagrid-header-color;
@@ -408,6 +412,10 @@ $datagrid-header-short-height: 32px;
     &:focus .datagrid-cell-wrapper,
     &.is-focused .datagrid-cell-wrapper {
       border: 1px solid $primary-color;
+    }
+
+    &.is-hidden {
+      display: none;
     }
 
     //Keyword Search Results
@@ -909,33 +917,33 @@ html[dir='rtl'] {
     .handle,
     .is-draggable-target {
       display: none;
-      height: $datagrid-header-height;
       font-size: 2em;
+      height: $datagrid-header-height;
       margin: 0;
-      padding: 4px 0 0 5px;
+      padding: 8px 0 0 7px;
       position: absolute;
       top: 0;
 
       &.is-draggable-target {
 
-        &:before,
-        &:after {
-          content: '';
-          display: inline-block;
-          position: absolute;
-          width: 0;
-          height: 0;
+        &::before,
+        &::after {
           border-left: 5px solid transparent;
           border-right: 5px solid transparent;
+          content: '';
+          display: inline-block;
+          height: 0;
           left: -6px;
+          position: absolute;
+          width: 0;
         }
 
-        &:before {
+        &::before {
           border-top: 5px solid $datagrid-header-hover-color;
           top: -9px;
         }
 
-        &:after {
+        &::after {
           border-bottom: 5px solid $datagrid-header-hover-color;
           bottom: -9px;
         }

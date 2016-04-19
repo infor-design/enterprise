@@ -4,18 +4,19 @@
     <div class="twelve columns">
 
       <div class="toolbar" role="toolbar">
-      <div class="title">
-        Things
-        <span class="datagrid-result-count">(7 Results)</span>
-      </div>
-      <div class="buttonset">
+        <div class="title">
+          Things
+          <span class="datagrid-result-count">(7 Results)</span>
+        </div>
+        <div class="buttonset">
 
-        <button class="btn" id="update">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-refresh"></use>
-          </svg>
-          <span>Update</span>
-        </button>
+          <button class="btn" id="update">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-refresh"></use>
+            </svg>
+            <span>Update</span>
+          </button>
+        </div>
       </div>
 
       <div id="datagrid">
@@ -56,7 +57,10 @@
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
-        dataset: data
+        dataset: data,
+        paging: true,
+        pagesize: 3,
+        pagesizes: [3, 5, 10]
       }).data('datagrid');
 
       $('#update').on('click', function () {

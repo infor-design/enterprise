@@ -3,6 +3,7 @@
 */
 
 window.Formatters = {
+
   Text: function(row, cell, value) {
     return ((value === null || value === undefined || value === '') ? '' : value.toString());
   },
@@ -245,6 +246,7 @@ window.Formatters = {
 };
 
 window.Editors = {
+
   //Supports, Text, Numeric, Integer via mask
   Input: function(row, cell, value, container, column) {
 
@@ -417,8 +419,6 @@ window.Editors = {
 
     this.focus = function () {
       var self = this;
-
-      this.select.trigger('activate');
 
       //Check if isClick or cell touch and just open the list
       if (event.type === 'click') {
@@ -943,11 +943,7 @@ $.fn.datagrid = function(options) {
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === undefined ? false : ' l-'+ column.align +'-text');
 
-        if (column.hidden) {
-          continue;
-        }
-
-        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + '"' +
+        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + '"' +
          ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"' +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
@@ -1008,14 +1004,14 @@ $.fn.datagrid = function(options) {
               $('.is-draggable-target', clone).remove();
 
               self.setdraggableColumnsTargets();
-              index = self.getTargetColumn(pos);
+              index = self.targetColumn(pos);
               self.draggableStatus.startIndex = index;
             })
 
             // While dragging ===================================
             .on('drag.datagrid', function (e, pos) {
               var i, l, n, target,
-                index = self.getTargetColumn(pos);
+                index = self.targetColumn(pos);
 
               $('.is-draggable-target', headers).removeClass('is-over');
 
@@ -1036,7 +1032,7 @@ $.fn.datagrid = function(options) {
 
             // Drag end =========================================
             .on('dragend.datagrid', function (e, pos) {
-              var index = self.getTargetColumn(pos),
+              var index = self.targetColumn(pos),
                dragApi = hader.data('drag'),
                tempArray = [],
                i, l, indexFrom, indexTo;
@@ -1117,7 +1113,7 @@ $.fn.datagrid = function(options) {
     },
 
     // Get column index
-    getTargetColumn: function (pos) {
+    targetColumn: function (pos) {
       var self = this,
         index = -1,
         target, i, l;
@@ -1194,10 +1190,6 @@ $.fn.datagrid = function(options) {
               formatter = (col.formatter ? col.formatter : self.defaultFormatter),
               formatted = '';
 
-          if (col.hidden) {
-            continue;
-          }
-
           if (typeof formatter ==='string') {
             formatted = window.Formatters[formatter](i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), self.settings.columns[j], self.settings.dataset[i], self).toString();
           } else {
@@ -1224,19 +1216,20 @@ $.fn.datagrid = function(options) {
           // Add Column Css Classes
 
           //Add a readonly class if set on the column
-          cssClass += (col.readonly ? ' is-readonly ' : '');
+          cssClass += (col.readonly ? ' is-readonly' : '');
+          cssClass += (col.hidden ? ' is-hidden' : '');
 
           //Run a function that helps check if editable
           if (col.isEditable && !col.readonly) {
             var canEdit = col.isEditable(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
 
             if (!canEdit) {
-              cssClass += ' is-readonly ';
+              cssClass += ' is-readonly';
             }
           }
 
           cssClass += (col.cssClass ? col.cssClass : '');
-          cssClass += (col.focusable ? ' is-focusable ' : '');
+          cssClass += (col.focusable ? ' is-focusable' : '');
           var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
 
           rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
@@ -1357,6 +1350,22 @@ $.fn.datagrid = function(options) {
       this.renderHeader();
       this.renderRows();
       this.setColumnWidths();
+    },
+
+    //Hide a column
+    hideColumn: function(id) {
+      var idx = this.columnIdxById(id);
+      this.settings.columns[idx].hidden = true;
+      this.headerRow.find('th').eq(idx).addClass('is-hidden');
+      this.tableBody.find('td:nth-child('+ (idx+1) +')').addClass('is-hidden');
+    },
+
+    //Show a hidden column
+    showColumn: function(id) {
+      var idx = this.columnIdxById(id);
+      this.settings.columns[idx].hidden = false;
+      this.headerRow.find('th').eq(idx).removeClass('is-hidden');
+      this.tableBody.find('td:nth-child('+ (idx+1) +')').removeClass('is-hidden');
     },
 
     //Open Column Personalization Dialog
@@ -2493,6 +2502,11 @@ $.fn.datagrid = function(options) {
 
       if (typeof oldVal === 'number') {
         newVal = parseFloat(value);
+
+        // double check if newValue is NaN when value is true/false
+        if (isNaN(newVal)){
+          newVal = value;
+        }
       }
 
       return newVal;
