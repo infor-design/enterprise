@@ -7,7 +7,10 @@
 $body-bg-color:  $graphite01;
 $header-bg-color: $azure07;
 $header-border-color: $azure08;
-$header-icon-color: $white;
+$header-button-color: rgba($white, .7);
+$header-button-focus-color: rgba($white, 1);
+$header-button-hover-color: rgba($white, 1);
+$header-button-disabled-color: rgba($white, .3);
 $header-text-color: $white;
 $header-disabled-color: $slate05;
 $panel-bg-color: $white;
@@ -188,6 +191,10 @@ $listview-toolbar-button-icon-selected-color: $primary-color;
 $listview-full-width-bg-color: $graphite01;
 $listview-full-width-hover-color: $graphite02;
 $listview-full-width-border-color: $graphite03;
+
+// Toolbar
+$toolbar-standalone-bg-color: $graphite02;
+$toolbar-standalone-border-color: $graphite03;
 
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $primary-color;
@@ -546,7 +553,7 @@ $searchfield-header-bg-color: $slate08;
 $searchfield-header-border-color: $slate09;
 $searchfield-header-text-color: $white;
 $searchfield-header-placeholder-text-color: $slate03;
-$searchfield-header-icon-color: $header-icon-color;
+$searchfield-header-icon-color: $header-button-color;
 
 $searchfield-moduletabs-bg-color: $slate09;
 $searchfield-moduletabs-border-color: $slate10;

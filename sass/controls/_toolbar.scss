@@ -8,6 +8,7 @@ $toolbar-buttonset-height: 44px;
 .formatter-toolbar {
   overflow-x: hidden;
   overflow-y: visible;
+  padding: 0 1rem;
   position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -43,12 +44,6 @@ $toolbar-buttonset-height: 44px;
 
     > [class^="btn"] {
       min-width: 34px;
-
-      /*
-      .icon:not(.icon-dropdown) {
-        height: 22px;
-      }
-      */
     }
   }
 
@@ -115,6 +110,11 @@ $toolbar-buttonset-height: 44px;
     }
   }
 
+  // Standalone Toolbar simply has a background and border that surrounds its boundaries
+  &.standalone {
+    background-color: $toolbar-standalone-bg-color;
+    border-bottom: 1px solid $toolbar-standalone-border-color;
+  }
 }
 
 // Styles for regular toolbar only
@@ -138,10 +138,13 @@ $toolbar-buttonset-height: 44px;
   .btn {
     background-color: transparent;
     border: 1px solid transparent;
-    border-radius: 18px;
     box-shadow: none;
     color: $tertiary-btn-color;
     overflow: hidden;
+
+    &.btn-actions {
+      border-radius: 18px;
+    }
 
     .icon {
       fill: $tertiary-btn-color;
@@ -175,7 +178,7 @@ $toolbar-buttonset-height: 44px;
       }
 
       &:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $tertiary-btn-active-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color;
         color: $tertiary-btn-active-color;
 
         &.searchfield-category-button {
@@ -289,7 +292,7 @@ $toolbar-buttonset-height: 44px;
           > .icon {
             fill: $contextual-toolbar-color;
           }
-        }      
+        }
       }
 
       &:hover {
@@ -353,6 +356,7 @@ $toolbar-buttonset-height: 44px;
     // See respond-to(tabletdown) below.
     .btn-tertiary,
     .btn {
+      border-radius: 18px;
       min-width: 0;
       padding: 0;
       width: auto;

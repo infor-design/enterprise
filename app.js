@@ -329,6 +329,9 @@ var express = require('express'),
       opts.layout = null; // No layout for this one on purpose.
       opts.subtitle = 'AMD Tests';
     }
+    if (directory.match(/tests\/header/)) {
+      opts.layout = 'tests/header/layout';
+    }
     if (directory.match(/tests\/signin/)) {
       opts.layout = 'tests/layout-noheader';
     }
