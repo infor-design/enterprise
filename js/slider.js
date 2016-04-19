@@ -82,6 +82,12 @@
 
       buildSettings: function() {
         var self = this;
+        
+        // Add "is-disabled" css class to closest ".field" if element is disabled
+        if (this.element.is(':disabled')) {
+          this.element.closest('.field').addClass('is-disabled');
+        }
+
         if (!this.settings) {
           this.settings = {};
         }
@@ -774,11 +780,45 @@
       },
 
       getColorClosestToValue: function() {
-        var val = this.value()[0],
-          highestTickColor;
+        var currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, ''),
+          preColors = {
+            'grey-theme': {
+              'default'   : '#000000',
+              'very-poor' : '#a13030',
+              'poor'      : '#d66221',
+              'adequate'  : '#f2bc41',
+              'good'      : '#9cce7c',
+              'very-good' : '#76b051',
+              'superior'  : '#488421'
+            },
+            'dark-theme': {
+              'default'   : '#ffffff',
+              'very-poor' : '#a13030',
+              'poor'      : '#d66221',
+              'adequate'  : '#f2bc41',
+              'good'      : '#9cce7c',
+              'very-good' : '#76b051',
+              'superior'  : '#488421'
+            },
+            'high-contrast-theme': {
+              'default'   : '#000000',
+              'very-poor' : '#a13030',
+              'poor'      : '#d66221',
+              'adequate'  : '#e4882b',
+              'good'      : '#76b051',
+              'very-good' : '#56932e',
+              'superior'  : '#397514'
+            }
+          },
+          themeColors = preColors[currentTheme],
+          val = this.value()[0],
+          highestTickColor, c;
+
         for (var i = 0; i < this.ticks.length; i++) {
-          if (this.ticks[i].color && val >= this.ticks[i].value) {
-            highestTickColor = this.ticks[i].color;
+          c = this.ticks[i].color;
+          if (c && val >= this.ticks[i].value) {
+            highestTickColor = c;
+            highestTickColor = (c.indexOf('#') > -1) ? c : (themeColors[c] || themeColors.default);
           }
         }
 
