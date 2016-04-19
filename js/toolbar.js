@@ -156,7 +156,6 @@
           });
 
           if (icon.length) {
-            self.moreMenu.addClass('has-icons');
             a.html('<span>' + a.text() + '</span>');
             icon.clone().detach().prependTo(a);
           }
@@ -350,7 +349,7 @@
 
         this.more.on('keydown.toolbar', function(e) {
           self.handleKeys(e);
-        }).on('beforeOpen.toolbar', function() {
+        }).on('beforeopen.toolbar', function() {
           self.checkOverflowItems();
         }).on('selected.toolbar', function(e, anchor) {
           e.stopPropagation();
@@ -583,6 +582,8 @@
           return (i.data('action-button-link') && i.is(':not(.searchfield)'));
         }
 
+        var addIconClassToMenu = 'removeClass';
+
         this.buttonsetItems.filter(menuItemFilter).removeClass('is-overflowed').each(function() {
           var i = $(this),
             li = i.data('action-button-link').parent();
@@ -592,9 +593,16 @@
           } else {
             li.removeClass('hidden');
             i.addClass('is-overflowed');
+
+            if (i.find('.icon').length) {
+              addIconClassToMenu = 'addClass';
+            }
+
             visibleLis.push(li);
           }
         });
+
+        this.moreMenu[addIconClassToMenu]('has-icons');
 
         return {
           visible: visibleLis
@@ -626,6 +634,9 @@
       checkOverflowItems: function() {
         var items = this.adjustButtonVisibility();
 
+
+
+        // Focus the more menu if the current item is focused
         if (!$.contains(this.buttonset[0], document.activeElement)) {
           if (items.visible.length) {
             items.visible[items.visible.length - 1].focus();
