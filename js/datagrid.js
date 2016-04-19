@@ -1085,13 +1085,13 @@ $.fn.datagrid = function(options) {
     // Set draggable columns target
     setdraggableColumnsTargets: function () {
       var self = this,
-        headers = self.headerNodes(),
+        headers = self.headerNodes().not('.is-hidden'),
         target, pos, extra;
 
       self.draggableColumnsTargets = [];
       self.draggableStatus = {};
 
-      $('.is-draggable-target', headers.not('.is-hidden')).each(function (index) {
+      $('.is-draggable-target', headers).each(function (index) {
         var idx = ($(this).is('.last')) ? index - 1 : index; // Extra target for last header th
         target = headers.eq(idx);
         pos = target.position();
@@ -1407,7 +1407,6 @@ $.fn.datagrid = function(options) {
     setColumnWidth: function(id, width, reset) {
       var self = this,
         total = 0,
-        firstRows = self.firstRowNodes(),
         percent = parseFloat(width);
 
       if (!percent) {
@@ -1426,11 +1425,11 @@ $.fn.datagrid = function(options) {
         width = percent / 100 * self.element.width();
       }
 
-      self.headerNodes().each(function () {
+      self.headerNodes().not('.is-hidden').each(function () {
         var col = $(this);
 
         if (col.attr('data-column-id') === id) {
-          col.css('width', width, firstRows);
+          col.css('width', width);
           total += width;
 
         } else {

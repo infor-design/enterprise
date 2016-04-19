@@ -928,7 +928,7 @@ html[dir='rtl'] {
       font-size: 2em;
       height: $datagrid-header-height;
       margin: 0;
-      padding: 8px 0 0 7px;
+      padding: 4px 0 0 7px;
       position: absolute;
       top: 0;
 
@@ -1033,7 +1033,7 @@ html[dir='rtl'] {
 
 // Firefox on Mac only
 .is-mac.is-firefox {
-  .is-draggable-columns {
+  .has-draggable-columns {
 
     th {
       .handle {
