@@ -113,7 +113,7 @@
     .btn-actions {
       background-color: transparent;
 
-      svg {
+      .icon {
         fill: $cardlist-actions-color;
       }
 
@@ -130,7 +130,7 @@
       right: 12px;
       top: 7px;
 
-      svg {
+      .icon {
         top: -1px;
       }
     }
