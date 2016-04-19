@@ -71,11 +71,11 @@
 
 input.checkbox,
 span.checkbox > input {
-  left: 3px;
+  left: 0;
   opacity: 0;
   position: absolute;
-  top: 3px;
-  width: 18px;
+  top: 0;
+  width: 16px;
 }
 
 label.inline .checkbox ~ .label-text,
