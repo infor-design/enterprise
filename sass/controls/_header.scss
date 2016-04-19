@@ -40,7 +40,7 @@ $header-height: 50px;
 
   .page-title {
     @include font-size(15);
-    color: $header-icon-color;
+    color: $header-text-color;
     display: block;
 
     + .section-title {
@@ -131,55 +131,59 @@ $header-height: 50px;
     [class^="btn"] {
       background-color: transparent;
       border: 1px solid transparent;
-      color: $header-icon-color;
-      opacity: .7;
+      color: $header-button-color;
 
-      > .icon {
-        fill: $header-icon-color;
+      .icon {
+        fill: $header-button-color;
       }
 
       .audible {
-        color: $header-icon-color;
+        color: $header-text-color;
       }
 
-      &:focus,
       &:hover:not([disabled]),
       &:active:not([disabled]),
       &[aria-expanded="true"] {
-        color: $header-text-color;
+        color: $header-button-hover-color;
 
-        > .icon {
-          fill: $header-text-color;
+        .icon {
+          fill: $header-button-hover-color;
         }
+      }
 
-        opacity: 1;
+      &:focus {
+        color: $header-button-focus-color;
+
+        .icon {
+          fill: $header-button-focus-color;
+        }
       }
 
       &:focus:not(.hide-focus) {
-        border: 1px solid $header-text-color;
+        border: 1px solid $header-button-focus-color;
         box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent;
-        color: $header-text-color;
+        color: $header-button-focus-color;
 
         .icon {
-          fill: $header-text-color;
+          fill: $header-button-focus-color;
         }
       }
 
       &.is-selected {
         &:focus:not(.hide-focus) {
-          color: $header-text-color;
+          color: $header-button-focus-color;
 
           .icon {
-            fill: $header-text-color;
+            fill: $header-button-focus-color;
           }
         }
       }
 
       &[disabled] {
-        color: rgba($header-text-color, .3) !important;
+        color: $header-button-disabled-color !important;
 
         .icon {
-          fill: rgba($header-text-color, .3) !important;
+          fill: $header-button-disabled-color !important;
         }
 
         &:hover {
@@ -188,7 +192,7 @@ $header-height: 50px;
         }
       }
       .ripple-effect {
-        background-color: $header-icon-color;
+        background-color: $header-text-color;
       }
 
     }
@@ -200,7 +204,7 @@ $header-height: 50px;
 
     &.icon {
       > span {
-        background-color: $header-icon-color;
+        background-color: $header-button-color;
       }
     }
   }
@@ -212,19 +216,19 @@ $header-height: 50px;
   }
 
   .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
-    color: $header-text-color;
+    color: $header-button-color;
 
     .icon {
-      fill: $header-icon-color;
+      fill: $header-button-color;
     }
 
     &:focus:not(.hide-focus) {
       box-shadow: none;
-      color: $header-text-color;
+      color: $header-button-focus-color;
     }
 
     .ripple-effect {
-      background-color: $header-icon-color;
+      background-color: $header-button-color;
     }
   }
 
@@ -315,21 +319,29 @@ $header-height: 50px;
       .app-drawer {
         &.icon {
           > span {
-            background-color: $header-text-color;
-            opacity: .7;
+            background-color: $header-button-color;
           }
         }
       }
 
-      &:focus,
       &:hover:not([disabled]),
       &:active:not([disabled]) {
         .app-drawer,
         .app-header {
           &.icon {
             > span {
-              background-color: $header-icon-color;
-              opacity: 1;
+              background-color: $header-button-hover-color;
+            }
+          }
+        }
+      }
+
+      &:focus {
+        .app-drawer,
+        .app-header {
+          &.icon {
+            > span {
+              background-color: $header-button-focus-color;
             }
           }
         }
