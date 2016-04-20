@@ -95,7 +95,9 @@
             yPos = e.pageY - btnOffset.top,
             ripple = $('<svg class="ripple-effect" focusable="false" aria-hidden="true" role="presentation"><circle r="0" class="ripple-circle"></circle></svg>');
 
-          element.addClass('hide-focus');
+          // ".tick" - used in wizard
+          $('.tick, .hide-focus').removeClass('is-clicked is-focused');
+          element.addClass('hide-focus is-clicked');
 
           //Just do hide-focus
           if (element.is('a')) {
@@ -130,12 +132,17 @@
           }, 1000);
 
         })
+        .on('focus.button', function() {
+          $(this).addClass('is-focused');
+        })
         .on('focusout.button', function() {
+          $('.tick, .hide-focus').removeClass('is-clicked is-focused');
           removeHideFocus(this);
         });
 
-        if (this.element.not('.hyperlink').is('a, span')) {
+        if (this.element.not('.hyperlink, .tick').is('a, span')) {
           this.element.on('mouseup.button touchend.button touchcancel.button', function() {
+            $('.tick, .hide-focus').removeClass('is-clicked');
             removeHideFocus(this);
           });
         }

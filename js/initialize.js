@@ -195,7 +195,7 @@
           ['multiselect', 'select[multiple]:not(.dropdown), .multiselect:not([data-init])'],
 
           //Button with Effects
-          ['button', 'a.hide-focus, .btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
+          ['button', 'a.hide-focus, a.tick, .btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
 
           //Pager
           ['pager', '.paginated'],
