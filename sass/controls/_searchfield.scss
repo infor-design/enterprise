@@ -27,20 +27,19 @@
 
   > .icon {
     fill: $trigger-icon-fill-color;
+    height: 14px;
     position: absolute;
     top: 8px;
-    width: 18px;
+    //width: 18px;
 
     &:not(.close):not(.icon-error) {
-      height: 17px;
-      left: 9px;
+      left: 8px;
       pointer-events: none;
-      top: 9px;
+      top: 10px;
     }
 
     &.close {
       cursor: pointer;
-      height: 14px;
       right: 0;
       top: 11px;
     }
