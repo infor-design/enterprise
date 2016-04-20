@@ -137,6 +137,10 @@
           if (label.length) {
             label.css('left', '-' + (label.outerWidth()/2 - tick.outerWidth()/2) + 'px');
           }
+
+          if (tick.is('.is-disabled')) {
+            tick.attr('tabindex', '-1');
+          }
         });
       },
 
@@ -155,9 +159,12 @@
           active = active.parent();
         }
 
+        if (active.is('.is-disabled') || !active.is('a')) {
+          return;
+        }
+
         this.ticks
-          .removeClass('current')
-          .removeClass('complete')
+          .removeClass('current complete')
           .each(function() {
             if (active[0] === this) {
               activeSet = true;

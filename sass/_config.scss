@@ -521,13 +521,15 @@ $timeline-header-color: $primary-color;
 
 //Wizard
 $wizard-default-bg: $body-bg-color;
-$wizard-bar-bg: $graphite04;
+$wizard-bar-bg: $graphite03;
 $wizard-color: $graphite06;
+$wizard-disabled-color: $graphite04;
 $wizard-active-color: $primary-color;
 $wizard-active-text-color: $primary-color;
 $wizard-focus-box-shadow: 0 0 0 1px $primary-color;
 $wizard-header-color: $white;
 $wizard-header-secondary-color: rgba($white, .4);
+$wizard-header-disabled-color: rgba($white, .3);
 $wizard-header-text-color: rgba($white, .5);
 $wizard-header-focus-box-shadow: 0 0 0 1px $white;
 
