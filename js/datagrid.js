@@ -508,7 +508,8 @@ $.fn.datagrid = function(options) {
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
-        columnReorder: false, // Makes columns to be re-order by drag and drop
+        columnReorder: false, // Allow Column reorder
+        saveColumns: true, //Save Column Reorder and resize
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -539,7 +540,10 @@ $.fn.datagrid = function(options) {
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
       this.settings = settings;
       this.initSettings();
+      this.originalColumns = this.settings.columns;
+
       this.appendToolbar();
+      this.restoreColumns();
       this.render();
       this.initFixedHeader();
       this.createResizeHandle();
@@ -875,8 +879,8 @@ $.fn.datagrid = function(options) {
       this.syncSelectedUI();
     },
 
-    uniqueID: function (gridCount, suffix) {
-      return 'datagrid-' + gridCount + suffix;
+    uniqueId: function (suffix) {
+      return 'datagrid-' + this.gridCount + suffix;
     },
 
     visibleColumns: function () {
@@ -901,7 +905,7 @@ $.fn.datagrid = function(options) {
         total += colGroups[l].colspan;
 
         if (total >= idx) {
-          return this.uniqueID(this.gridCount, '-header-group-' + l);
+          return this.uniqueId('-header-group-' + l);
         }
       }
     },
@@ -909,22 +913,22 @@ $.fn.datagrid = function(options) {
     //Render the Header
     renderHeader: function() {
       var self = this,
-        headerRow = '';
+        headerRow = '', uniqueId;
 
       var colGroups = this.settings.columnGroups;
 
       if (colGroups) {
 
-        var total = 0,
-          uniqueID;
+        var total = 0;
 
         headerRow += '<tr role="row" class="datagrid-header-groups">';
 
         for (var k = 0; k < colGroups.length; k++) {
-          total += parseInt(colGroups[k].colspan);
-          uniqueID = self.uniqueID(self.gridCount, '-header-group-' + k);
 
-          headerRow += '<th colspan="' + colGroups[k].colspan + '" id="' + uniqueID + '"' + '><div class="datagrid-column-wrapper "><span class="datagrid-header-text">'+ colGroups[k].name +'</span></div></th>';
+          total += parseInt(colGroups[k].colspan);
+          uniqueId = self.uniqueId( '-header-group-' + k);
+
+          headerRow += '<th colspan="' + colGroups[k].colspan + '" id="' + uniqueId + '"' + '><div class="datagrid-column-wrapper "><span class="datagrid-header-text">'+ colGroups[k].name +'</span></div></th>';
         }
 
         if (total < this.visibleColumns().length) {
@@ -937,14 +941,14 @@ $.fn.datagrid = function(options) {
 
       for (var j = 0; j < this.settings.columns.length; j++) {
         var column = settings.columns[j],
-          uniqueId = self.uniqueID(self.gridCount, '-header-' + j),
+          id = self.uniqueId( '-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable),
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === undefined ? false : ' l-'+ column.align +'-text');
 
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + '"' +
-         ' id="' + uniqueId + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"' +
+         ' id="' + id + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"' +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
@@ -1064,9 +1068,6 @@ $.fn.datagrid = function(options) {
 
                   self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                   self.updateColumns(self.settings.columns);
-                  // ==================
-                  // END: Swap columns
-                  // ==================
                 }
                 else {
                   // No need to swap here since same target area, where drag started
@@ -1074,7 +1075,7 @@ $.fn.datagrid = function(options) {
                 }
               }
               else {
-                // console.log('Did not droped in target area');
+                //Did not drop in target area
               }
 
             });
@@ -1233,11 +1234,11 @@ $.fn.datagrid = function(options) {
           var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
 
           rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
-              ' aria-describedby="' + self.uniqueID(self.gridCount, '-header-' + j) + '"' +
+              ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
              //(cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
-             (self.settings.columnGroups ? 'headers = "' + self.uniqueID(self.gridCount, '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+             (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
              '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
@@ -1352,7 +1353,57 @@ $.fn.datagrid = function(options) {
       this.setColumnWidths();
 
       this.resetPager('updatecolumns');
+      this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
+      this.saveColumns();
+    },
 
+    saveColumns: function () {
+      //Save to local storage
+      if (localStorage) {
+        localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
+      }
+    },
+
+    //Restore the columns from a saved list or local storage
+    restoreColumns: function (cols) {
+      if (!localStorage) {
+        return;
+      }
+
+      if (cols) {
+        this.updateColumns(cols);
+        return;
+      }
+
+      //Done on load as apposed to passed in
+      var lsCols = localStorage[this.uniqueId('columns')];
+
+      if (!cols && lsCols) {
+        lsCols = JSON.parse(lsCols);
+        this.originalColumns = this.settings.columns;
+
+        //Map back the missing functions/objects
+        for (var i = 0; i < lsCols.length; i++) {
+          var orgCol = this.columnById(lsCols[i].id);
+          if (orgCol) {
+            orgCol = orgCol[0];
+            $.extend(lsCols[i], orgCol);
+          }
+        }
+
+        this.settings.columns = lsCols;
+        return;
+      }
+
+    },
+
+    resetColumns: function () {
+      localStorage.clear();
+      localStorage[this.uniqueId('columns')] = '';
+
+      if (this.originalColumns) {
+        this.updateColumns(this.originalColumns);
+      }
     },
 
     //Hide a column
@@ -1361,6 +1412,9 @@ $.fn.datagrid = function(options) {
       this.settings.columns[idx].hidden = true;
       this.headerRow.find('th').eq(idx).addClass('is-hidden');
       this.tableBody.find('td:nth-child('+ (idx+1) +')').addClass('is-hidden');
+
+      this.element.trigger('columnchange', [{type: 'hidecolumn', index: idx, columns: this.settings.columns}]);
+      this.saveColumns();
     },
 
     //Show a hidden column
@@ -1369,6 +1423,9 @@ $.fn.datagrid = function(options) {
       this.settings.columns[idx].hidden = false;
       this.headerRow.find('th').eq(idx).removeClass('is-hidden');
       this.tableBody.find('td:nth-child('+ (idx+1) +')').removeClass('is-hidden');
+
+      this.element.trigger('columnchange', [{type: 'showcolumn', index: idx, columns: this.settings.columns}]);
+      this.saveColumns();
     },
 
     //Open Column Personalization Dialog

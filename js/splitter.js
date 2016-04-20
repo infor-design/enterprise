@@ -150,7 +150,7 @@
           return this.element.attr('id');
         }
 
-        return (window.location.pathname.split('/').pop()) + '-splitter-' + $('.splitter').length;
+        return 'splitter-' + $('.splitter').length;
       },
 
       splitTo: function (w) {
