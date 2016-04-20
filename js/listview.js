@@ -519,7 +519,7 @@
           results = this.listfilter.filter(list, term);
         }
 
-        if (!results || !results.length) {
+        if (!results || !results.length && !term) {
           return;
         }
 
@@ -719,7 +719,7 @@
           parent = this.element.parent();
         }
         toolbar = parent.find('.listview-toolbar, .contextual-toolbar');
-        
+
         toolbarControl = toolbar.data('toolbar');
 
         if (self.selectedItems.length > 0) {

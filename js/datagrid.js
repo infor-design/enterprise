@@ -823,7 +823,6 @@ $.fn.datagrid = function(options) {
         rowData = this.settings.dataset[row];
 
       this.unselectRow(row, nosync);
-
       this.settings.dataset.splice(row, 1);
       this.renderRows();
       this.element.trigger('rowremove', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
@@ -840,6 +839,7 @@ $.fn.datagrid = function(options) {
         this.updateSelected();
       }
       this.syncSelectedUI();
+
     },
 
     //Method to Reload the data set
@@ -1373,12 +1373,15 @@ $.fn.datagrid = function(options) {
 
     //Open Column Personalization Dialog
     personalizeColumns: function () {
-      var markup = '<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="'+ Locale.translate('SearchColumnName') +'" name="searchfield" id="gridfilter"></div>';
+      var self = this,
+        markup = '<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="'+ Locale.translate('SearchColumnName') +'" name="searchfield" id="gridfilter"></div>';
+
         markup += '<div class="listview alternate-bg" id="search-listview"><ul>';
 
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i];
-          markup += '<li><a href="#"> <label class="inline"><input type="checkbox" class="checkbox" checked data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
+
+          markup += '<li><a href="#"> <label class="inline"><input type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
         }
         markup += '</ul></div>';
 
@@ -1398,7 +1401,16 @@ $.fn.datagrid = function(options) {
           modal.element.find('.listview').listview({searchable: true});
 
           modal.element.find('.checkbox').onTouchClick().on('click', function () {
-            //console.log($(this).attr('data-column-id'));
+            var chk = $(this),
+                id = chk.attr('data-column-id'),
+                isChecked = chk.prop('checked');
+
+            if (isChecked) {
+              self.showColumn(id);
+            } else {
+              self.hideColumn(id);
+            }
+
           });
         });
     },
@@ -1797,7 +1809,7 @@ $.fn.datagrid = function(options) {
           toolbar.addClass('has-more-button');
         }
 
-        var menu = $('<ul class="popupmenu has-icons"></ul>');
+        var menu = $('<ul class="popupmenu"></ul>');
 
         if (settings.toolbar.personalize) {
           menu.append('<li><a href="#" data-opton="personalize-columns">' + Locale.translate('PersonalizeColumns') + '</a></li>');
@@ -1815,11 +1827,11 @@ $.fn.datagrid = function(options) {
         }
 
         if (settings.toolbar.rowHeight) {
-          menu.append('<li class="separator"></li>' +
+          menu.append('<li class="separator single-selectable-section"></li>' +
             '<li class="heading">' + Locale.translate('RowHeight') + '</li>' +
-            '<li><a data-option="row-short">' + Locale.translate('Short') + '</a></li>' +
-            '<li><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
-            '<li class="is-checked"><a data-option="row-normal">' + Locale.translate('Normal') + '</a></li>');
+            '<li class="is-selectable"><a data-option="row-short">' + Locale.translate('Short') + '</a></li>' +
+            '<li class="is-selectable"><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
+            '<li class="is-selectable is-checked"><a data-option="row-normal">' + Locale.translate('Normal') + '</a></li>');
         }
 
         if (settings.toolbar.actions) {
@@ -2826,4 +2838,3 @@ $.fn.datagrid = function(options) {
   });
 
 };
-

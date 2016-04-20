@@ -214,6 +214,11 @@
               return;
             }
 
+            if (self.element.closest('.listview').length > 0) {
+              e.stopPropagation();
+              e.preventDefault();
+            }
+
             if (self.menu.hasClass('is-open')){
               self.close();
             } else {

@@ -202,6 +202,15 @@
       margin: 0 25px;
     }
 
+    .btn-actions {
+      margin: 3px -11px;
+
+      svg {
+        height: 18px;
+        width: 22px;
+      }
+    }
+
     .icon-error {
       left: -5px;
       top: 2px;
@@ -736,4 +745,3 @@ html[dir='rtl'] {
 
   }
 }
-
