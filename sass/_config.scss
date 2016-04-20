@@ -365,9 +365,12 @@ $pager-hover-color: $font-color-extrahighcontrast;
 $pager-disabled-color: $graphite02;
 
 //Slider
-$slider-bg-color: $graphite03;
+$slider-bg-color: $graphite04;
 $slider-active-bg-color: $primary-color;
-$slider-disabled-color: $graphite01;
+$slider-labels-color: $graphite06;
+$slider-disabled-color: $graphite03;
+$slider-disabled-labels-color: $graphite04;
+$slider-hover-shadow: 0 2px 5px 0 rgba($black, .2);
 
 //Modal
 $modal-bg-color: $white;

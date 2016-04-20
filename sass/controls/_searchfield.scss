@@ -16,7 +16,6 @@
 }
 
 @mixin context-searchfield-boxshadow() {
-  border: 0;
   box-shadow: 0 3px 5px 0 rgba($searchfield-context-boxshadow-color, .7);
 }
 
@@ -27,20 +26,18 @@
 
   > .icon {
     fill: $trigger-icon-fill-color;
+    height: 14px;
     position: absolute;
     top: 8px;
-    width: 18px;
 
     &:not(.close):not(.icon-error) {
-      height: 17px;
-      left: 9px;
+      left: 8px;
       pointer-events: none;
-      top: 9px;
+      top: 10px;
     }
 
     &.close {
       cursor: pointer;
-      height: 14px;
       right: 0;
       top: 11px;
     }
@@ -86,7 +83,7 @@
     > .searchfield {
       background-color: $searchfield-context-bg;
       border-bottom: 1px solid $searchfield-context-border-color;
-      border-left: 1px solid $searchfield-context-border-color;
+      border-left: 0;
       border-right: 0;
       border-top: 0;
       padding-left: 32px;
@@ -99,9 +96,10 @@
 
     > .icon {
       fill: $searchfield-context-icon-color;
+      top: 9px;
 
       &:not(.close) {
-        left: 0;
+        left: 6px;
         right: auto;
       }
 
@@ -292,6 +290,7 @@
 
 // Context Searchfield's Popupmenu has alternate styles
 .popupmenu.autocomplete.context {
+  border: 0;
   border-top: 1px solid $searchfield-context-border-color !important;
   @include context-searchfield-boxshadow();
 }
