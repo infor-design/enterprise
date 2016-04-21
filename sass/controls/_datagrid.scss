@@ -1060,6 +1060,19 @@ html[dir='rtl'] {
   }
 }
 
+//Contextual toolbar
+.datagrid-contextual-toolbar {
+  margin-right: 1px;
+
+  .buttonset {
+    height: 40px;
+  }
+
+  .title {
+    padding-top: 3px;
+  }
+}
+
 //Columns Personalization
 .datagrid-columns-dialog {
   .label-text {
