@@ -374,25 +374,26 @@
         this.updated();
       },
 
-      unbind: function() {
+      teardown: function() {
         this.accordion.off('blur.applicationmenu');
         this.menu.off('animateopencomplete animateclosedcomplete');
         $(window).off('scroll.applicationmenu');
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
+
+        this.accordion.data('accordion').destroy();
 
         return this;
       },
 
       updated: function() {
         return this
-          .unbind()
+          .teardown()
           .init();
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.unbind();
-        this.accordion.data('accordion').destroy();
+        this.teardown();
         this.menu
           .detach()
           .appendTo(this.originalParent)
