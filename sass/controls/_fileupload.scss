@@ -3,8 +3,8 @@
 
 label.fileupload {
   display: inline-block;
+  margin-left: -34px;
   position: absolute;
-  left: 263px;
   top: 18px;
 
   // Label
@@ -25,7 +25,7 @@ label.fileupload {
     &.trigger {
 
       .icon {
-        fill: $trigger-icon-fill-light-color;
+        fill: $trigger-icon-fill-color;
         top: -2px;
       }
 
@@ -33,6 +33,10 @@ label.fileupload {
         .icon {
           fill: $trigger-hover-color;
         }
+      }
+
+      &:active .icon {
+        fill: $trigger-active-color;
       }
     }
   }
@@ -76,19 +80,8 @@ label.fileupload {
 html[dir='rtl'] {
 
   label.fileupload {
-    left: auto;
-    right: 300px;
-
-    // Label
-    span:not(.audible) {
-      left: auto;
-      right: -35px;
-
-      @media (max-width: 374px) {
-        left: auto;
-        right: -55px;
-      }
-    }
+    margin-left: inherit;
+    margin-right: -34px;
 
     // Make this flow offscreen
     input[type="file"] {

@@ -21,10 +21,13 @@
 
   .modal-header {
     background-color: $contextual-panel-bg;
-    padding: 1em 2em;
+    border-bottom: 1px solid $contextual-panel-border-color;
+    height: 50px;
+    padding: 0;
   }
 
   .toolbar {
+    height: 50px;
     margin-bottom: 0;
 
     .title {
@@ -55,30 +58,9 @@
     padding: 2em;
   }
 
-  .icon {
-    fill: $contextual-panel-color;
-  }
-
-  button:hover .icon {
-    fill: $tertiary-btn-hover-color;
-  }
-
-  .buttonset [class^="btn"] {
-    background-color: transparent;
-    border: 1px solid transparent;
-
-    &:hover span {
-      color: $tertiary-btn-hover-color;
-    }
-  }
-
-  .title {
-    color: $contextual-panel-color;
-  }
-
   @include respond-to(phone) {
     .btn-close .icon {
-      width: 32px;
+      width: 16px;
     }
   }
 

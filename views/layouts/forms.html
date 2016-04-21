@@ -153,6 +153,68 @@
   <div class="row">
     <div class="twelve columns">
       <hr class="fieldset-hr">
+      <h1 class="fieldset-title">Another Example of Compound Fields</h1>
+    </div>
+  </div>
+
+  <form id="example-cf2-form">
+    <div class="row demo-grid">
+      <div class="full column">
+
+        <div class="compound-field">
+          <div class="field">
+            <label for="cf2-item-description">Item Description</label>
+            <input type="text" id="cf2-item-description" name="cf2-item-description" placeholder="Ex: Backpack">
+          </div>
+        </div>
+
+        <div class="compound-field">
+          <div class="field">
+            <label for="cf2-date" class="label">Select Date</label>
+            <input type="text" id="cf2-date" name="cf2-date" value="10/5/2015" placeholder="M / D / YYYY" class="datepicker">
+          </div>
+        </div>
+
+        <div class="compound-field">
+
+          <div class="field">
+            <label for="cf2-cost" class="required">Cost</label>
+            <input type="text" id="cf2-cost" name="cf2-cost" value="30" class="input-xs" aria-required="true" data-validate="required" data-mask="###.00" data-mask-mode="number" data-options="{showSymbol: 'currency'}">
+          </div>
+
+          <div class="field">
+            <label for="cf2-quantity" class="required">Quantity</label>
+            <input type="text" id="cf2-quantity" name="cf2-quantity" value="10" class="input-xs" aria-required="true" data-validate="required" data-mask-mode="number" data-mask="#####">
+          </div>
+
+        </div>
+
+        <div class="compound-field">
+          <div class="field">
+           <label for="cf2-textarea">Text Area &ndash; Resizable</label>
+           <textarea id="cf2-textarea" name="context-desc" placeholder="Type your notes here..." class="textarea resizable"></textarea>
+          </div>
+        </div>
+
+        <div class="compound-field">
+          <div class="field">
+            <label class="fileupload">
+              <span class="audible">File Upload</span>
+              <input type="file" name="cf2-file-upload" class="input-sm">
+            </label>
+          </div>
+        </div>
+
+        <button class="btn-primary" type="submit">Add to Request</button>
+
+      </div>
+
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="twelve columns">
+      <hr class="fieldset-hr">
       <h1 class="fieldset-title">Summary Fields</h1>
     </div>
   </div>
