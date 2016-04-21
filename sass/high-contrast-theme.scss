@@ -581,10 +581,10 @@ $swaplist-title-text-color: $font-color-highcontrast;
 }
 
 //Input has double border
-input:not(:focus):not(:disabled):hover:not(.colorpicker):hover,
-textarea:not(:focus):not(:disabled):hover {
-  box-shadow: 0 0 0 1px $black;
-}
+// input:not(:focus):not(:disabled):hover:not(.colorpicker):hover,
+// textarea:not(:focus):not(:disabled):hover {
+//   box-shadow: 0 0 0 1px $black;
+// }
 
 //Add a line on links..
 .hyperlink {
