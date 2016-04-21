@@ -46,9 +46,10 @@
 
         //append markup
         var id = elem.find('input').attr('name'),
+          elemClass = elem.find('input').attr('class'),
           instructions = Locale.translate('FileUpload'),
-          label = $('<label for="' + id+'-filename' + '">' +  elem.text() + ' <span class="audible">' + instructions + '</span></label>'),
-          shadowField = $('<input id="' + id+'-filename' + '" type="text">'),
+          label = $('<label for="'+ id +'-filename">'+ elem.text() +' <span class="audible">'+ instructions +'</span></label>'),
+          shadowField = $('<input id="'+ id +'-filename" class="'+ elemClass +'" type="text">'),
           svg = '<span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-folder"/></svg></span>';
 
         elem.before(label, shadowField);

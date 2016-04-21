@@ -15,8 +15,11 @@
   li {
     color: $popupmenu-color;
 
-    &.is-selected,
     &:hover {
+      background-color: $popupmenu-hover-color;
+    }
+
+    &.is-selected {
       background-color: $dropdown-selected-bg-color;
       color: $dropdown-selected-color;
     }
@@ -49,7 +52,7 @@
   }
 
   li:hover i {
-    color: $dropdown-selected-color;
+    // color: $dropdown-selected-color;
   }
 }
 
