@@ -190,6 +190,7 @@ $listview-full-width-hover-color: $slate06;
 // Toolbar
 $toolbar-standalone-bg-color: $slate06;
 $toolbar-standalone-border-color: $slate05;
+$toolbar-separator-color: $slate05;
 
 //Contextual Toolbar
 $contextual-toolbar-color: $inverse-color;
@@ -407,7 +408,8 @@ $accordion-disabled-pane-text-color: $slate05;
 $application-menu-border-color: $slate10;
 
 // Contextual Action Panel
-$contextual-panel-bg: $slate09;
+$contextual-panel-bg: $slate06;
+$contextual-panel-border-color: $slate05;
 $contextual-panel-color: $slate02;
 
 //BreadCrumb
