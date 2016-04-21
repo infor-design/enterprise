@@ -3,6 +3,8 @@ Release Date: April 4th
 
 * New - Module Tabs
 * New - Lightbox
+* New - Datagrid Column Reorder
+* New - Datagrid Personalization
 
 ## Breaking Changes
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}

@@ -38,15 +38,16 @@
           columns: columns,
           dataset: data,
           selectable: 'multiple',
-          toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, selectCount: true}
-        }).on('activecellchange', function (e, args) {
+          toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: false, actions: true, views: false, rowHeight: true, selectCount: true}
+        }).on('selected', function (e, args) {
           console.log(args);
         }).data('datagrid');
 
         // Set Rows as Selected
-        grid.selectedRows([0]);
+        //grid.selectedRows([0]);
+        grid.selectRow(0);
+
     });
   });
 
 </script>
-

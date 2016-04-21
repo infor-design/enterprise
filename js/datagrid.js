@@ -880,7 +880,7 @@ $.fn.datagrid = function(options) {
     },
 
     uniqueId: function (suffix) {
-      return 'datagrid-' + this.gridCount + suffix;
+      return (window.location.pathname.split('/').pop()) + '-datagrid-' + this.gridCount + suffix;
     },
 
     visibleColumns: function () {
@@ -1438,7 +1438,9 @@ $.fn.datagrid = function(options) {
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i];
 
-          markup += '<li><a href="#"> <label class="inline"><input type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
+          if (col.name) {
+            markup += '<li><a href="#"> <label class="inline"><input type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
+          }
         }
         markup += '</ul></div>';
 
@@ -1869,7 +1871,7 @@ $.fn.datagrid = function(options) {
         var menu = $('<ul class="popupmenu"></ul>');
 
         if (settings.toolbar.personalize) {
-          menu.append('<li><a href="#" data-opton="personalize-columns">' + Locale.translate('PersonalizeColumns') + '</a></li>');
+          menu.append('<li><a href="#" data-option="personalize-columns">' + Locale.translate('PersonalizeColumns') + '</a></li>');
         }
 
         if (settings.toolbar.advancedFilter) {
@@ -2049,6 +2051,8 @@ $.fn.datagrid = function(options) {
       }
       this.syncSelectedUI();
 
+      this.element.trigger('selected', [this._selectedRows]);
+
     },
 
     // Select rows between indexes
@@ -2115,7 +2119,6 @@ $.fn.datagrid = function(options) {
         this.selectRow(rowIndex);
       }
 
-      this.element.trigger('selected', [this._selectedRows]);
       this.displayCounts();
 
       return this._selectedRows;
@@ -2150,6 +2153,7 @@ $.fn.datagrid = function(options) {
       if (!nosync) {
         this.syncSelectedUI();
       }
+      this.element.trigger('selected', [this._selectedRows]);
 
     },
 
@@ -2192,7 +2196,6 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      this.element.trigger('selected', [this._selectedRows]);
       this.displayCounts();
 
       return this._selectedRows;
