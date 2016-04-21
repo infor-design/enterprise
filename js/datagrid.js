@@ -1384,10 +1384,18 @@ $.fn.datagrid = function(options) {
 
         //Map back the missing functions/objects
         for (var i = 0; i < lsCols.length; i++) {
-          var orgCol = this.columnById(lsCols[i].id);
+          var isHidden,
+            orgCol = this.columnById(lsCols[i].id);
+
           if (orgCol) {
             orgCol = orgCol[0];
+            isHidden = lsCols[i].hidden;
+
             $.extend(lsCols[i], orgCol);
+
+            if (isHidden !== undefined) {
+              lsCols[i].hidden = isHidden;
+            }
           }
         }
 
