@@ -70,14 +70,16 @@
             isTopLevel = containerPane.is('.accordion');
 
           function checkIfIcons() {
+            if (isTopLevel) {
+              return;
+            }
+
             if (!hasIcons) {
               header.addClass('no-icon');
               return;
             }
 
-            //if (!isTopLevel) {
             containerPane.addClass('has-icons');
-            //}
           }
 
           header.attr('role', 'presentation');
@@ -87,12 +89,11 @@
 
           var outerIcon = header.children('.icon, svg');
           outerIcon.addClass('icon').attr({'role': 'presentation', 'aria-hidden': 'true', 'focusable': 'false'});
-          if (outerIcon.length) {
+          if (isTopLevel && outerIcon.length) {
             headersHaveIcons = true;
-            hasIcons = true;
           }
 
-          if (header.is('.list-item') || header.find('button, svg').length) {
+          if (header.is('.list-item') || (!isTopLevel && header.find('button').length)) {
             hasIcons = true;
           }
 
