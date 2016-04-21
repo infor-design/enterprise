@@ -195,6 +195,7 @@ $listview-full-width-border-color: $graphite03;
 // Toolbar
 $toolbar-standalone-bg-color: $graphite02;
 $toolbar-standalone-border-color: $graphite03;
+$toolbar-separator-color: $graphite03;
 
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $primary-color;
@@ -432,8 +433,9 @@ $application-menu-width: 300px;
 $application-menu-border-color: $slate05;
 
 // Contextual Action Panel
-$contextual-panel-bg: #d8d8d8;
+$contextual-panel-bg: $graphite02;
 $contextual-panel-color: $graphite06;
+$contextual-panel-border-color: $graphite03;
 $contextual-panel-searchfield-bg-color: $body-bg-color;
 $contextual-panel-searchfield-border-color: $graphite03;
 

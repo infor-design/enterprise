@@ -185,6 +185,7 @@ $listview-toolbar-button-icon-selected-color: $white;
 // Toolbar
 $toolbar-standalone-bg-color: $graphite01;
 $toolbar-standalone-border-color: $graphite06;
+$toolbar-separator-color: $graphite06;
 
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $primary-color;
@@ -407,7 +408,8 @@ $accordion-disabled-pane-text-color: $graphite06;
 $application-menu-border-color: $slate04;
 
 // Contextual Action Panel
-$contextual-panel-bg: $graphite07;
+$contextual-panel-bg: $graphite03;
+$contextual-panel-border-color: $graphite05;
 $contextual-panel-color: $white;
 
 //BreadCrumb
