@@ -29,6 +29,7 @@
         defaults = {
           allowOnePane: true,
           displayChevron: true, // Displays a "Chevron" icon that sits off to the right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
+          rerouteOnLinkClick: true, // Can be set to false if routing is externally handled
           source: null
         },
         settings = $.extend({}, defaults, options);
@@ -288,6 +289,10 @@
         this.select(anchor);
 
         function followLink() {
+          if (!self.settings.rerouteOnLinkClick) {
+            return true;
+          }
+
           var href = anchor.attr('href');
           if (href && href !== '' && href !== '#') {
             window.location.href = href;
@@ -310,6 +315,7 @@
 
         // If the anchor's a real link, follow the link and die here
         if (followLink()) {
+          this.element.trigger('followlink', [anchor]);
           return true;
         }
 
