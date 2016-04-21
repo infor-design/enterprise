@@ -324,10 +324,6 @@
         self.triggerHandler('pause');
         clearInterval(interval);
       },
-      resume = function() {
-        self.triggerHandler('resume');
-        update();
-      },
       update = function() {
         interval = setInterval(function() {
           counter += speed;
@@ -339,8 +335,13 @@
             counter = 0;
           }
         }, speed);
+      },
+      resume = function() {
+        self.triggerHandler('resume');
+        update();
       };
-    update();
+      
+      update();
     return { event: this, cancel: cancel, pause: pause, resume: resume };
   };
 
