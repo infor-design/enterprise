@@ -288,7 +288,12 @@
         }
 
         if (this.settings.options) {
-          lookupGrid.on('selected.lookup', function () {
+          lookupGrid.on('selected.lookup', function (e, selectedRows) {
+
+            // Only proceed if a row is selected
+            if (!selectedRows || selectedRows.length === 0) {
+              return;
+            }
 
             if (self.settings.validator) {
               self.settings.validator(self.element, self.modal, self.grid);
