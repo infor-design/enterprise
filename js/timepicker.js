@@ -547,7 +547,12 @@
         }
 
         this.trigger.remove();
-        this.element.data('mask').destroy();
+
+        var mask = this.element.data('mask');
+        if (mask && typeof mask.destroy === 'function') {
+          mask.destroy();
+        }
+
         this.label.find('.audible').remove();
         if (this.origTimeFormat) {
           this.element.attr('data-time-format', this.originalTimeFormat);
