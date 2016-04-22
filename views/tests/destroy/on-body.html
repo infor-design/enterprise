@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Destroy Test:  Entire Body</h2>
+
+    <p><a class="hyperlink" href="http://jira/browse/HFC-3504" target="_blank">Related JIRA Ticket</a></p>
+
+    <p>Click the button below to destroy all controls on the <b>&lt;body&gt;</b> tag.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <button id="go-for-destroy" class="btn-primary">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-delete"></use>
+        </svg>
+        <span>Destroy all controls!</span>
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Controls Destroyed will list here:</h2>
+      </div>
+      <div id="results-panel" class="card-content" style="padding: 13px 20px;"></div>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var b = $(this);
+    function listToHtml(items) {
+      var html = '';
+
+      function getTextSelector(item) {
+        if (!item.length) {
+          return '';
+        }
+
+        var id = item.attr('id'),
+          className = item[0].className,
+          tagName = item[0].tagName;
+
+        if (tagName) {
+          tagName = tagName.toLowerCase();
+        }
+
+        return tagName + (id ? '#' + id : '') + (className ? '.' + className.split(' ').join('.') : '');
+      }
+
+      html += '<p>';
+      $.each(items, function(i, item) {
+        html += getTextSelector(item.elem) + ' <b>' + Object.getPrototypeOf(item.control) + '</b><br>';
+      });
+      html += '</p>';
+
+      return html;
+    }
+
+    b.on('destroyed', function(e, results) {
+      $('#results-panel').html(listToHtml(results));
+    });
+
+    $('#go-for-destroy').on('click.test', function() {
+      $('body').destroy();
+    });
+  });
+</script>
