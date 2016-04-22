@@ -27,11 +27,11 @@
           // Theme key: MUST match with theme file name (ie: [filename: 'grey-theme.css' -> 'grey-theme'])
 
           // BORDERS
-          // Use (,) commas to separate themes or single entry for border as: 
+          // Use (,) commas to separate themes or single entry for border as:
           // colors[{label: 'Slate', number: '01', value: 'F0F0F0', border: 'grey-theme, high-contrast-theme'}]
           // and assign which swatch theborder should apply ['all' or 'matched-only']
           // themes: { 'high-contrast-theme': {'border': 'all'} }
-          
+
           // CHECKMARKS
           // checkmark: {'one': [1, 2], 'two': [3, 10]}
           // will add class as "checkmark-{key}", where current colors number is in range [{value[0]} to {value[1]}]
@@ -349,7 +349,7 @@
       destroy: function() {
         this.swatch.remove();
         this.element.off('keypress.colorpicker');
-        this.swatch.on('click.colorpicker');
+        this.swatch.off('click.colorpicker');
         $.removeData(this.element[0], pluginName);
       }
     };
