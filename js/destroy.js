@@ -19,11 +19,7 @@
   /* end-amd-strip-block */
 
   $.fn.destroy = function() {
-    console.log('Global Destroy!');
-
     var self = $(this);
-
-
 
     function canCallDestroy(cb) {
       if (!cb) {
@@ -40,15 +36,19 @@
     }
 
     function destroyControls(elems) {
+      var destroyedControls = [];
+
       $.each(elems, function iterator(index, elem) {
         $.each($(elem).data(), function(index, control) {
           var isCb = canCallDestroy(control);
           if (isCb) {
             control.destroy();
-            console.log('element ' + control.pluginName + ' was destroyed');
+            destroyedControls.push({ elem: $(elem), control: control });
           }
         });
       });
+
+      self.trigger('destroyed', [destroyedControls]);
     }
 
     var DOMelements = self.find('*').add(self);
