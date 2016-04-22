@@ -70,7 +70,7 @@ $toolbar-buttonset-height: 44px;
   // Container for More Button
   .more {
     display: none;
-    text-align: right;
+    //text-align: right;
     width: 38px;
 
     > * {
@@ -78,10 +78,10 @@ $toolbar-buttonset-height: 44px;
     }
   }
 
-  .separator {
-    background-color: $toolbar-separator-color;
+  .buttonset > .separator {
+    background-color: $graphite03;
     display: inline-block;
-    height: 26px;
+    height: 20px;
     margin: 3px 16px 0;
     position: relative;
     top: 6px;
@@ -123,9 +123,9 @@ $toolbar-buttonset-height: 44px;
   margin-bottom: 5px;
 
   .title {
-    color: $font-color-highcontrast;
     @include antialiased();
     @include font-size(16);
+    color: $font-color-highcontrast;
 
     + .buttonset {
       text-align: right;
@@ -322,21 +322,8 @@ $toolbar-buttonset-height: 44px;
   }
 
   &.is-hidden {
-    height: 0;
     display: none;
-  }
-}
-
-.datagrid-contextual-toolbar {
-  margin-left: 2px;
-  margin-right: 1px;
-
-  .buttonset {
-    height: 40px;
-  }
-
-  .title {
-    padding-top: 3px;
+    height: 0;
   }
 }
 

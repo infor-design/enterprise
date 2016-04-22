@@ -282,6 +282,10 @@
   padding: 9px 10px 8px;
 }
 
+.is-mac.is-firefox .toolbar-searchfield-wrapper .searchfield {
+  padding: 9px 10px 8px 34px;
+}
+
 .inline.searchfield-wrapper {
   > .icon:not(.icon-error) {
     top: 30px;

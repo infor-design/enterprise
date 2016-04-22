@@ -1190,6 +1190,30 @@ $pageslice-download-link-border-color: #3dcd65;
   }
 }
 
+// Mobile Page
+//==================================================//
+
+.mobile {
+
+  &.header {
+    background-color: $turquoise07;
+
+    h1 {
+      display: inline-block;
+    }
+  }
+
+  .site-footer {
+    background-color: $turquoise07;
+
+    .version-no,
+    .version-no b {
+      color: $turquoise05;
+    }
+  }
+
+}
+
 // articles Page
 //==================================================//
 .row {
@@ -2372,4 +2396,3 @@ pre[class*='language-'] {
     top: -22px;
   }
 }
-

@@ -27,6 +27,7 @@
         trigger: 'click',  //click, rightClick, immediate ect
         autoFocus: true,
         mouseFocus: true,
+        attachToBody: false,
         beforeOpen: null, //Ajax callback for open event
         ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
         eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
@@ -101,8 +102,8 @@
         }
 
         // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
-        // to prevent containment issues.
-        if (this.menu.parent().not('body').length > 0) {
+        // to prevent containment issues. (Now a Preference)
+        if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
           this.originalParent = this.menu.parent();
           this.menu.detach().appendTo('body');
         }
@@ -653,8 +654,7 @@
               self.close();
             });
           }
-
-        }, 0);
+        }, 300);
 
         //Hide on iFrame Clicks - only works if on same domain
         $('iframe').each(function () {

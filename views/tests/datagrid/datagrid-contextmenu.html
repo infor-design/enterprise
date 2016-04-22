@@ -58,11 +58,10 @@
       $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data,
-        //menuId: 'grid-actions-menu' //NOTE: Commenting this out should produce one context menu event only
+        menuId: 'grid-actions-menu' //NOTE: Commenting this out should produce one context menu event only
       }).on('contextmenu', function (e, args) {
         console.log('contextmenu fired', args);
       });
     });
 
 </script>
-

@@ -117,7 +117,7 @@ window.Formatters = {
 
   Actions: function (row, cell, value, col) {
     //Render an Action Formatter
-    return '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="popupmenu-1">' +
+    return '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="'+ col.menuId +'">' +
           '<span class="audible">'+ col.title +'</span>' +
           '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
           '<use xlink:href="#icon-more"></svg></button>';
@@ -1685,6 +1685,10 @@ $.fn.datagrid = function(options) {
 
         if (col.menuId) {
           btn.popupmenu({menuId: col.menuId, trigger: 'immediate'});
+
+          if (col.selected) {
+            btn.on('selected.datagrid', col.selected);
+          }
         }
 
         if (btn.is('.datagrid-expand-btn')) {
@@ -1918,8 +1922,6 @@ $.fn.datagrid = function(options) {
           self.personalizeColumns();
         }
 
-        args.closest('ul').find('[data-option]').parent('.is-checked').removeClass('is-checked');
-        args.filter('[data-option]').parent().addClass('is-checked');
       });
 
       if (!toolbar.data('toolbar')) {

@@ -79,7 +79,7 @@ linters:
 
   NestingDepth:
     enabled: true
-    max_depth: 4
+    max_depth: 6
 
   PlaceholderInExtend:
     enabled: true

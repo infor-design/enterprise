@@ -209,7 +209,8 @@
 
             li.addClass('has-popupmenu').popupmenu({
               menu: dd,
-              trigger: 'click'
+              trigger: 'click',
+              attachToBody: true
             });
 
             a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
@@ -1448,6 +1449,7 @@
         // Invoke the popup menu on the button.
         self.moreButton.popupmenu({
           autoFocus: false,
+          attachToBody: true,
           menu: 'tab-container-popupmenu',
           trigger: 'immediate'
         });
