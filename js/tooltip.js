@@ -434,7 +434,7 @@
 
         function offRightEdgeCondition() {
           setCurrentTooltipPos();
-          return o.left - scrollable.deltaWidth + self.tooltip.outerWidth() >= winW;
+          return o.left - scrollable.deltaWidth + self.tooltip.outerWidth() - 10 >= winW;
         }
 
         function offTopEdgeCondition() {
