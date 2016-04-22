@@ -361,8 +361,19 @@ $datagrid-header-short-height: 32px;
       }
     }
 
+    // Fix: Not sure why, but ie9 need this to overwrite
+    // so the rule is more strict
+    // as ".datagrid tr .azure07.tag" insted of ".azure07.tag"
+    @each $name in $color-names {
+      $i: index($color-names, $name);
+      $color: nth($color-vars, $i);
+       .#{$name}.tag {
+        background: $color;
+      }
+    }
+
     .tag {
-      line-height: 26px;
+      // line-height: 26px;
 
       &[class*='azure'] {
         color: $white;
@@ -1057,6 +1068,10 @@ html[dir='rtl'] {
       }
     }
 
+  }
+
+  .datagrid tr .tag {
+    line-height: 24px;
   }
 }
 
