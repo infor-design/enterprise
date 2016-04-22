@@ -67,6 +67,7 @@ module.exports = function(grunt) {
             'temp/amd/contextualactionpanel.js',
             'temp/amd/datepicker.js',
             'temp/amd/datagrid.js',
+            'temp/amd/destroy.js',
             'temp/amd/dropdown.js',
             'temp/amd/drag.js',
             'temp/amd/editor.js',
