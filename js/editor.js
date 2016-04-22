@@ -1328,7 +1328,7 @@
           if (tooltip && typeof tooltip.destroy === 'function') {
             tooltip.destroy();
           }
-        })
+        });
 
         this.toolbar.off('click.editor mousedown.editor');
         this.toolbar.remove();

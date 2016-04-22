@@ -29,7 +29,7 @@
         return false;
       }
 
-      if (!cb.destroy || !(typeof cb.destroy === 'function')) {
+      if (!cb.destroy || typeof cb.destroy !== 'function') {
         return false;
       }
       return true;
