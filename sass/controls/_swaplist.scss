@@ -1,9 +1,8 @@
 // Swaplist
 //================================================== //
 @mixin is-dragging() {
-  @include css3(box-shadow, 0 0 5px 0 rgba($swaplist-shadow-color, .75));
   background-color: $swaplist-bg-color;
-  border: 1px solid $swaplist-bg-color;
+  border: 1px solid transparent;
   opacity: .4;
   padding: 9px 20px 8px;
 }
@@ -42,21 +41,25 @@
         background: $swaplist-icon-color; //border color
         content: '';
         display: inline-block;
-        left: 8px;
+        left: 9px;
         position: absolute;
-        top: 7px;
+        top: 8px;
       }
 
       &:after { //border left and right
-        box-shadow: 0 7px 0 $swaplist-icon-color, 0 14px 0 $swaplist-icon-color,
-        18px 0 0 $swaplist-icon-color, 18px 7px 0 $swaplist-icon-color, 18px 14px 0 $swaplist-icon-color;
+        box-shadow: 0 6px 0 $swaplist-icon-color,
+                    0 12px 0 $swaplist-icon-color,
+                    16px 0 0 $swaplist-icon-color,
+                    16px 6px 0 $swaplist-icon-color,
+                    16px 12px 0 $swaplist-icon-color;
         height: 5px;
         width: 2px;
       }
 
       &:before { //border top and bottom
-        box-shadow: 15px 0 0 $swaplist-icon-color,
-        0 18px 0 $swaplist-icon-color, 15px 18px 0 $swaplist-icon-color;
+        box-shadow: 13px 0 0 $swaplist-icon-color,
+                    0 16px 0 $swaplist-icon-color, 
+                    13px 16px 0 $swaplist-icon-color;
         height: 2px;
         width: 5px;
       }
@@ -70,17 +73,21 @@
         }
 
         &:after {
-          box-shadow: 0 7px 0 $swaplist-icon-color-hover, 0 14px 0 $swaplist-icon-color-hover,
-          18px 0 0 $swaplist-icon-color-hover, 18px 7px 0 $swaplist-icon-color-hover, 18px 14px 0 $swaplist-icon-color-hover;
+          box-shadow: 0 6px 0 $swaplist-icon-color-hover,
+                      0 12px 0 $swaplist-icon-color-hover,
+                      16px 0 0 $swaplist-icon-color-hover,
+                      16px 6px 0 $swaplist-icon-color-hover,
+                      16px 12px 0 $swaplist-icon-color-hover;
         }
 
         &:before {
-          box-shadow: 15px 0 0 $swaplist-icon-color-hover,
-          0 18px 0 $swaplist-icon-color-hover, 15px 18px 0 $swaplist-icon-color-hover;
+          box-shadow: 13px 0 0 $swaplist-icon-color-hover,
+                      0 16px 0 $swaplist-icon-color-hover,
+                      13px 16px 0 $swaplist-icon-color-hover;
         }
 
         .icon {
-          fill: $swaplist-icon-color-hover;
+          fill: $swaplist-icon-svg-color-hover;
         }
       }
 
@@ -89,9 +96,9 @@
       }
 
       .icon {
-        fill: $swaplist-icon-color;
+        fill: $swaplist-icon-svg-color;
         margin: 0 3px;
-        width: 12px;
+        width: 10px;
       }
     }
 
@@ -103,6 +110,7 @@
 
     .card-title {
       color: $swaplist-title-text-color;
+      font-weight: normal;
     }
     p {
       color: $swaplist-text-color;
@@ -164,15 +172,16 @@
   .handle {
     color: $swaplist-icon-color-hover;
     display: none;
-    font-size: 2.1em;
+    font-size: 2.5em;
     left: 6px;
     position: absolute;
-    top: 6px;
+    top: 3px;
   }
 
   .is-muliselect {
     ul {
       min-height: 100%;
+      padding: 5px 0;;
     }
 
     li {
@@ -198,6 +207,10 @@
           display: inline-block;
           color: $swaplist-text-color;
         }
+
+        &:focus {
+          border-color: $swaplist-border-color-focus;
+        }          
       }
 
       &.is-selected {
@@ -205,6 +218,7 @@
 
         p {
           color: $swaplist-text-color-selected;
+          font-weight: bold;
         }
 
         &:hover:not(.is-disabled),
@@ -215,6 +229,10 @@
             display: inline-block;
             color: $swaplist-text-color-selected;
           }
+
+          &:focus {
+            border-color: $swaplist-border-color-focus;
+          }          
         }
       }
 
@@ -238,7 +256,7 @@
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   .swaplist {
     .handle {
-      top: 5px;
+      top: 3px;
     }
   }
 }
@@ -309,10 +327,8 @@ html[dir='rtl'] {
       border-left-width: 1px;
       border-right-width: 0;
       float: right;
-      // width: 50%;
 
       &:first-child {
-        border-left-width: 0;
         border-right-width: 1px;
       }
 
