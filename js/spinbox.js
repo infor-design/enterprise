@@ -466,7 +466,10 @@
 
       // Teardown
       destroy: function() {
-        this.element.data('mask').destroy();
+        var mask = this.element.data('mask');
+        if (mask && typeof mask.destroy === 'function') {
+          mask.destroy();
+        }
 
         for (var button in this.buttons) {
           var buttonAPI = $(button).data('button');

@@ -1322,7 +1322,14 @@
           toolbarApi.destroy();
         }
 
-        this.toolbar.find('button').data('tooltip').destroy();
+        var tooltips = this.toolbar.find('button');
+        tooltips.each(function() {
+          var tooltip = $(this).data('tooltip');
+          if (tooltip && typeof tooltip.destroy === 'function') {
+            tooltip.destroy();
+          }
+        });
+
         this.toolbar.off('click.editor mousedown.editor');
         this.toolbar.remove();
         this.toolbar = undefined;

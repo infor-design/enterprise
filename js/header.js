@@ -578,7 +578,7 @@
           this.toolbarElem.removeClass('has-title-button');
         }
 
-        $.removeData(this[0], pluginName);
+        $.removeData(this.element[0], pluginName);
       }
     };
 

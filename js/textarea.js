@@ -30,13 +30,13 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Textarea(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    Textarea.prototype = {
 
       init: function() {
         this.element.addClass(this.element.is('.textarea-xs') ? 'input-xs' :
@@ -148,8 +148,12 @@
       // Teardown
       destroy: function() {
         $.removeData(this.element[0], pluginName);
-        this.printarea.remove();
-        this.counter.remove();
+        if (this.printarea && this.printarea.length) {
+          this.printarea.remove();
+        }
+        if (this.counter && this.counter.length) {
+          this.counter.remove();
+        }
         this.element.off('keyup.textarea');
       }
     };
@@ -160,7 +164,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Textarea(this, settings));
       }
     });
   };

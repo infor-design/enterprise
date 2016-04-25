@@ -210,13 +210,17 @@ $swaplist-bg-color-hover: $graphite02;
 $swaplist-bg-color-selected: $azure06;
 $swaplist-border-color: $graphite06;
 $swaplist-border-color-hover: $azure06;
+$swaplist-border-color-focus: $primary-color;
 $swaplist-border-color-card: $graphite03;
 $swaplist-icon-color: $graphite06;
-$swaplist-icon-color-hover: $azure06;
-$swaplist-shadow-color: #000000;
+$swaplist-icon-color-hover: $graphite10;
+$swaplist-icon-svg-color: $graphite10;
+$swaplist-icon-svg-color-hover: $black;
+$swaplist-shadow-color: $black;
 $swaplist-title-text-color: $graphite10;
 $swaplist-text-color: $graphite10;
 $swaplist-text-color-selected: $white;
+
 
 // Drop down
 $dropdown-filter-color: $font-color-extrahighcontrast;
