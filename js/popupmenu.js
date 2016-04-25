@@ -248,6 +248,7 @@
               self.open(e);
               e.stopPropagation();
             }
+            e.preventDefault();
           });
 
           //Add an Audible Label
@@ -811,7 +812,10 @@
         li.parent().children('li').removeClass('is-focused');
         li.addClass('is-focused');
 
-        return anchor.focus();
+        //Prevent chrome from scrolling - toolbar
+        anchor.focus();
+        li.closest('.header').scrollTop(0);
+
       },
 
       // adds/removes checkmarks that are in selectable groups inside the popupmenu

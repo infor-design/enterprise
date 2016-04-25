@@ -328,7 +328,7 @@
     width: 100%;
   }
 
-  .searchfield-wrapper {
+  .modal .searchfield-wrapper {
     width: 260px !important;
 
     input {
@@ -346,11 +346,13 @@
 //RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
-    margin: 5px 0 5px 0;
+    margin: 5px 0;
+
     button {
       margin-left: 0;
     }
   }
+
   .modal-content {
     padding: 0;
 

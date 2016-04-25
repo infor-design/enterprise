@@ -135,6 +135,7 @@
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   padding: 10px 0;
+  text-align: left;
 
   //Icon Positioning
   .icon,
@@ -214,6 +215,7 @@
   }
 
   a {
+    @include no-select();
     @include antialiased();
     @include font-size(14);
     border: 1px solid transparent;
@@ -499,6 +501,8 @@
 html[dir='rtl'] {
 
   .popupmenu {
+    text-align: right;
+
     a {
       padding: 0 10px;
     }

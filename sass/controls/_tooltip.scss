@@ -423,7 +423,7 @@ html[dir='rtl'] {
 
   .top {
     .arrow {
-      &:after {
+      &::after {
         left: auto;
         right: -8px;
       }
@@ -432,9 +432,9 @@ html[dir='rtl'] {
 
   .bottom {
     .arrow {
-      &:after {
+      &::after {
         left: auto;
-        right: -12px;
+        right: -8px;
       }
     }
 

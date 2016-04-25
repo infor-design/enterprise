@@ -152,26 +152,33 @@
   background-color: $editor-toolbar-bg-color;
   border: 1px solid $editor-border-color;
   border-radius: 2px 2px 0 0;
+  overflow-x: visible;
 
   .buttonset {
     height: 32px;
 
     [class^="btn"] {
-      // margin-right: 6px;
 
       &:first-child {
         margin-left: 16px;
       }
-
-      // > .icon {
-      //   height: 20px;
-      // }
     }
   }
 
   &.has-more-button {
     .buttonset {
       width: calc(100% - 50px);
+    }
+
+    .more {
+      margin-top: 0;
+
+      .btn-actions {
+        height: 22px;
+        margin-top: -1px;
+        min-height: 22px;
+        width: 25px;
+      }
     }
   }
 
@@ -236,6 +243,8 @@
     }
 
     &.btn-actions > .icon {
+      left: 2px;
+      position: relative;
       top: 1px;
     }
 
@@ -279,7 +288,7 @@
       margin-left: 4px;
       margin-right: 18px;
     }
-    
+
     &[data-action='justifyCenter'] {
       margin-right: 18px;
     }
@@ -443,7 +452,7 @@ html[dir='rtl'] {
       border-color: transparent $editor-focus-border-color $editor-focus-border-color $editor-focus-border-color;
     }
   }
-  
+
   &.is-error,
   &.is-error:hover {
     .toolbar.formatter-toolbar {
