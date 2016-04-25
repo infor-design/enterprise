@@ -134,6 +134,21 @@ input::-webkit-inner-spin-button {
   }
 }
 
+// Short Fields
+.field-short {
+  .spinbox-wrapper {
+    margin-bottom: 10px;
+  }
+
+  .spinbox {
+    margin-bottom: 0;
+  }
+
+  .spinbox-control {
+    padding: 4px 10px;
+  }
+}
+
 
 //RTL Styles
 html[dir='rtl'] {
