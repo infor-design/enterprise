@@ -560,8 +560,7 @@
             wrapper.find('div.arrow').css({'left': '18px'});
 
             if (this.element.closest('.buttonset').length > 0 ) {
-              wrapper.css({'left': (target.offset().left + target.outerWidth() + 5) - menuWidth});
-              wrapper.find('div.arrow').css({'left': 'auto', 'right': '16px'});
+              wrapper.find('div.arrow').css({'left': 'auto', 'right': '25px'});
             }
 
             if (wrapper.offset().left < 0) {

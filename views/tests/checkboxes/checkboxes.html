@@ -4,44 +4,44 @@
 
     <div id="cssOnly" class="field">
       <input type="checkbox" class="checkbox" id="starts-unchecked">
-      <label for="starts-unchecked" class="checkbox-label">Unchecked</label><br>
+      <label for="starts-unchecked" class="checkbox-label">Unchecked</label>
 
       <input type="checkbox" class="checkbox" id="starts-checked" checked>
-      <label for="starts-checked" class="checkbox-label" >Checked</label><br>
+      <label for="starts-checked" class="checkbox-label" >Checked</label>
 
       <input type="checkbox" class="checkbox is-dirty" id="checkbox-is-dirty" >
-      <label for="checkbox-is-dirty" class="checkbox-label" >Dirty</label><br>
+      <label for="checkbox-is-dirty" class="checkbox-label" >Dirty</label>
 
       <input type="checkbox" class="checkbox" id="starts-disabled" disabled>
-      <label for="starts-disabled" class="checkbox-label" >Disabled and Unchecked</label><br>
+      <label for="starts-disabled" class="checkbox-label" >Disabled and Unchecked</label>
 
       <input type="checkbox" class="checkbox" id="starts-disabled-checked" disabled checked>
-      <label for="starts-disabled-checked" class="checkbox-label">Disabled and Checked</label><br>
+      <label for="starts-disabled-checked" class="checkbox-label">Disabled and Checked</label>
 
       <input type="checkbox" class="checkbox is-partial" checked id="starts-partially-checked">
-      <label for="starts-partially-checked" class="checkbox-label" >Partial</label><br>
+      <label for="starts-partially-checked" class="checkbox-label" >Partial</label>
     </div>
 
     <!-- used in form serialization tests -->
-    <br>
-    <br>
+
+
     <hr class="fieldset-hr">
     <h2 class="fieldset-title">Form Serialization</h2>
     <div id="partOfForm" class="field">
       <form id="checkbox-serialization-test" action="#" method="POST">
         <input type="checkbox" class="checkbox" id="checkbox-serialized" name="checkbox-serialized" checked>
-        <label for="checkbox-serialized" class="checkbox-label">This checkbox will be serialized on form submit</label><br>
+        <label for="checkbox-serialized" class="checkbox-label">This checkbox will be serialized on form submit</label>
 
         <input type="checkbox" class="checkbox" id="checkbox-not-serialized">
-        <label for="checkbox-not-serialized" class="checkbox-label">This checkbox will NOT be serialized on form submit</label><br>
+        <label for="checkbox-not-serialized" class="checkbox-label">This checkbox will NOT be serialized on form submit</label>
 
         <button class="btn-primary" type="submit">Submit</button>
       </form>
     </div>
 
     <!-- Used in tooltip tests -->
-    <br>
-    <br>
+
+
 
     <hr class="fieldset-hr">
     <h2 class="fieldset-title">Has a tooltip</h2>
@@ -52,8 +52,8 @@
     </div>
 
     <!-- Used in ASP-style Checkbox tests -->
-    <br>
-    <br>
+
+
     <hr class="fieldset-hr">
     <h2 class="fieldset-title">ASP-Style Checkbox Support</h2>
 
@@ -68,6 +68,15 @@
         <input id="test1" type="checkbox"/>
         <label for="test1">Asp Checkbox</label>
       </span>
+    </div>
+
+    <hr class="fieldset-hr">
+    <h2 class="fieldset-title">WRAPPING</h2>
+
+    <div class="field">
+      <input name="checkbox-enable-ssl" class="checkbox" id="checkbox-enable-ssl" type="checkbox" value="true" data-val="true" checked>
+      <input name="checkbox-enable-ssl" type="hidden" value="false">
+      <label class="checkbox-label" id="asp-check" for="checkbox-enable-ssl">Can store up to about a gigabyte of text, even though controls on forms and reports can only display the first 64,000 characters. You can set Long Text fields to display Rich Text, which includes formatting like bold and underline.</label>
     </div>
 
     <script type="text/javascript">

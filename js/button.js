@@ -75,11 +75,7 @@
           });
         }
 
-        function removeHideFocus(self) {
-          setTimeout(function() {
-            $(self).removeClass('hide-focus');
-          }, 1);
-        }
+        this.element.hideFocus();
 
         this.element
         .on('touchstart.button click.button', function (e) {
@@ -95,14 +91,6 @@
             yPos = e.pageY - btnOffset.top,
             ripple = $('<svg class="ripple-effect" focusable="false" aria-hidden="true" role="presentation"><circle r="0" class="ripple-circle"></circle></svg>');
 
-          // ".tick" - used in wizard
-          $('.tick, .hide-focus').removeClass('is-clicked is-focused');
-          element.addClass('hide-focus is-clicked');
-
-          //Just do hide-focus
-          if (element.is('a')) {
-            return;
-          }
 
           if (self.isTouch) {
             // Make sure the user is using only one finger and then get the touch position relative to the ripple wrapper
@@ -131,21 +119,7 @@
             ripple.remove();
           }, 1000);
 
-        })
-        .on('focus.button', function() {
-          $(this).addClass('is-focused');
-        })
-        .on('focusout.button', function() {
-          $('.tick, .hide-focus').removeClass('is-clicked is-focused');
-          removeHideFocus(this);
         });
-
-        if (this.element.not('.hyperlink, .tick').is('a, span')) {
-          this.element.on('mouseup.button touchend.button touchcancel.button', function() {
-            $('.tick, .hide-focus').removeClass('is-clicked');
-            removeHideFocus(this);
-          });
-        }
       },
 
       // Browsers that don't support CSS-based animation can still show the animation

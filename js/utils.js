@@ -340,7 +340,7 @@
         self.triggerHandler('resume');
         update();
       };
-      
+
       update();
     return { event: this, cancel: cancel, pause: pause, resume: resume };
   };
@@ -392,6 +392,32 @@
       newValue = newValue.replace(/&amp;/g, '&');
     }
     return newValue;
+  };
+
+  //Hide Focus - Only show on key entry
+  $.fn.hideFocus = function() {
+    var element = $(this);
+
+    var isClick = false,
+      isFocused = false;
+
+    element.addClass('hide-focus').on('mousedown.hide-focus touchstart.hide-focus', function() {
+      isClick = true;
+      $(this).addClass('hide-focus');
+    }).on('focusin.hide-focus', function() {
+      var elem = $(this);
+
+      if (!isClick && !isFocused) {
+        elem.removeClass('hide-focus');
+      }
+      isClick = false;
+      isFocused = true;
+    }).on('focusout.hide-focus', function() {
+      $(this).addClass('hide-focus');
+      isClick = false;
+      isFocused = false;
+    });
+
   };
 
   // Replacement for String.fromCharCode() that takes meta keys into account when determining which

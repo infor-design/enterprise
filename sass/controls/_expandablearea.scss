@@ -1,40 +1,16 @@
-// Expandable Area (accordion like, single-paned content area)
+// Expandable Area
 //================================================== //
 
 .expandable-area {
 
+  //Header Area
   .expandable-header {
     border-top: 1px solid $expandable-area-border-color;
-    @include font-size(16);
+    padding-top: 28px;
     position: relative;
 
     > * {
       vertical-align: top;
-    }
-
-    > a {
-      cursor: pointer;
-      display: block;
-      padding: 15px 0 15px 5px;
-
-      > * {
-        vertical-align: middle;
-      }
-
-      > .icon.plus-minus {
-        border: 1px solid transparent;
-        @include font-size(10);
-        height: 30px;
-        margin-right: 1em;
-        margin-top: -4px;
-        width: 30px;
-
-        &::before,
-        &::after {
-          background-color: $font-color;
-        }
-      }
-
     }
 
     &[aria-expanded="true"] {
@@ -54,20 +30,11 @@
       &:focus {
         outline: none;
       }
-
-      > a > .icon.plus-minus {
-        border: 1px solid $primary-color;
-        border-radius: 2px;
-
-        &::before,
-        &::after {
-          background-color: $primary-color;
-        }
-      }
     }
 
   }
 
+  //Area that hides/shows
   .expandable-pane {
     @include font-size(14);
     font-weight: 100;
@@ -92,7 +59,13 @@
     }
   }
 
-  //Do not show the header on the first one
+  //Footer area with the link
+  .expandable-footer {
+    margin-bottom: 26px;
+    margin-top: 4px;
+  }
+
+  //Hide Border on the first
   &:first-child {
     .expandable-header {
       border-top-color: transparent;
@@ -101,12 +74,8 @@
 
   //Icon on the header
   .title {
-    .icon {
-      height: 16px;
-      right: -3.5px;
-      top: 0;
-      width: 16px;
-    }
+    @include font-size(16);
+    color: $expandable-area-title-color;
   }
 
 }

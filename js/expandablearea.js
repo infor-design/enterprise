@@ -50,6 +50,7 @@
         }
 
         this.header = this.element.children('.expandable-header');
+        this.footer = this.element.children('.expandable-footer');
         this.content = this.element.children('.expandable-pane');
         return this;
       },
@@ -57,20 +58,27 @@
       build: function() {
         var self = this,
           expanded = this.element.hasClass('is-expanded');
+
         this.header.attr({
           'aria-expanded': '' + expanded,
           'aria-controls': this.id + '-content',
-          'id': this.id + '-header',
-          'tabindex': '0'
+          'id': this.id + '-header'
         });
         this.content.attr({
           'id': this.id + '-content'
         });
 
-        this.expandedIcon = this.header.children('a').find('.icon.plus-minus');
-        if (!this.expandedIcon.length) {
-          this.expandedIcon = $('<span class="icon plus-minus"></span>').prependTo(this.header.children('a'));
+        //Add the link and footer if not there.
+        if (!this.footer.length) {
+          this.footer =  $('<div class="expandable-footer"></div>').appendTo(this.element);
         }
+
+        this.expander = this.footer.find('.expandable-expander');
+        if (!this.expander.length) {
+          this.expander = $('<a class="expandable-expander hyperlink"><span>Show More</span></a>').prependTo(this.footer);
+        }
+
+        this.expander.attr('href', '#').hideFocus();
 
         //Initialized in expanded mode.
         if (expanded) {
@@ -98,7 +106,7 @@
 
       handleEvents: function() {
         var self = this;
-        this.header.children('a').onTouchClick('expandablearea').on('click.expandablearea', function() {
+        this.expander.onTouchClick('expandablearea').on('click.expandablearea', function() {
           if (!self.isDisabled()) {
             self.toggleExpanded();
           }
@@ -157,7 +165,7 @@
         var self = this;
         this.element.addClass('is-expanded');
         this.header.attr('aria-expanded', 'true');
-        this.expandedIcon.addClass('active');
+        this.expander.addClass('active');
         this.content.css('display','block').one('animateopencomplete', function() {
           self.element.trigger('open-expandablearea');
         }).animateOpen();
@@ -165,11 +173,12 @@
 
       close: function() {
         var self = this;
-        this.expandedIcon.removeClass('active');
+        this.expander.removeClass('active');
         this.content.one('animateclosedcomplete', function() {
           self.element.removeClass('is-expanded');
           self.header.attr('aria-expanded', 'false');
           self.element.trigger('close-expandablearea');
+          self.content.css('display', 'none');
         }).animateClosed();
       },
 
@@ -188,8 +197,7 @@
         this.header
           .removeAttr('aria-controls')
           .removeAttr('aria-expanded')
-          .removeAttr('id')
-          .removeAttr('tabindex');
+          .removeAttr('id');
         this.content.removeAttr('id').removeClass('no-transition');
         $.removeData(this.element[0], pluginName);
       }

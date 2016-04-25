@@ -301,6 +301,7 @@ $fieldset-border-bottom-color: $inverse-color;
 
 // Expandable Area
 $expandable-area-border-color: $graphite02;
+$expandable-area-title-color: $graphite10;
 
 // Cardlist
 $cardlist-bg-color: $inverse-color;
@@ -335,7 +336,7 @@ $switch-disabled-bg-color: $graphite03;
 $switch-disabled-color: $graphite04;
 $switch-disabled-label-color: $graphite04;
 $switch-focus-box-shadow: 0 0 0 3px #cbdce6, 0 0 0 4px $primary-color;
-$switch-hover-box-shadow: 0 2px 5px rgba(0,0,0,.3);;
+$switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
 
 // Editor
 $editor-bg-color: transparent;
