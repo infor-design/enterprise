@@ -14,7 +14,7 @@
           <div class="tick current">
             <span class="label">Connection Protocol</span>
           </div>
-          <div class="tick is-disabled">
+          <div class="tick is-disabled" onclick="testDisabled(this);">
             <span class="label">Information Disabled</span>
           </div>
           <div class="tick">
@@ -44,7 +44,7 @@
           <a href="#" class="tick current">
             <span class="label">Connection Protocol</span>
           </a>
-          <a href="#" class="tick is-disabled">
+          <a href="#" class="tick is-disabled" onclick="testDisabled(this);">
             <span class="label">Information Disabled</span>
           </a>
           <a href="#" class="tick">
@@ -57,3 +57,9 @@
   </div>
 </div>
 
+<script>
+function testDisabled(el) {
+  var msg = $('<span> Clicked</span>').css('color', 'red');
+  $('.label', el).append(msg);
+}
+</script>

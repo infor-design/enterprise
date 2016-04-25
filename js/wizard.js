@@ -89,6 +89,7 @@
           self = this;
 
         this.ticks = this.bar.children('.tick');
+
         if (!this.ticks.length && settingTicks) {
 
           for (var i = 0; i < settingTicks.length; i++) {
@@ -103,6 +104,13 @@
           this.ticks = this.bar.children('.tick');
         }
         this.positionTicks();
+
+        $('.tick', self.element).each(function() {
+          var tick = $(this);
+          if (tick.hasClass('is-disabled')) {
+            tick.removeAttr('onclick ng-click');
+          }
+        });
 
         return this;
       },
@@ -147,7 +155,14 @@
       handleTickClick: function(e) {
         var self = this,
           active = $(e.target),
+          tick = active.is('.label') ? active.parent() : active,
           activeSet = false;
+
+        if (tick.is('.is-disabled') || !tick.is('a')) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
 
         var canNav = this.element.triggerHandler('beforeactivate', [active]);
 
@@ -157,10 +172,6 @@
 
         if (active.is('.label')) {
           active = active.parent();
-        }
-
-        if (active.is('.is-disabled') || !active.is('a')) {
-          return;
         }
 
         this.ticks
