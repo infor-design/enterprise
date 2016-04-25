@@ -1,0 +1,171 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Destroy Test:  Entire Body</h2>
+
+    <p><a class="hyperlink" href="http://jira/browse/HFC-3504" target="_blank">Related JIRA Ticket</a></p>
+
+    <p>Click the button below to destroy all controls on the <b>&lt;body&gt;</b> tag.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <button id="go-for-destroy" class="btn-primary">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-delete"></use>
+        </svg>
+        <span>Destroy all controls!</span>
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Controls Destroyed will list here:</h2>
+      </div>
+      <div id="results-panel" class="card-content" style="padding: 13px 20px;"></div>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div id="destroyable-controls-container">
+
+      <div id="inner-toolbar" class="toolbar">
+        <div class="buttonset">
+          <button id="button-one" class="btn">
+            <span>Button 1</span>
+          </button>
+
+          <button id="button-two" class="btn">
+            <span>Button 2</span>
+          </button>
+
+          <button id="button-three" class="btn">
+            <span>Button 3</span>
+          </button>
+
+          <button id="button-four" class="btn">
+            <span>Button 4</span>
+          </button>
+
+          <button id="button-five" class="btn">
+            <span>Button 5</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="inner-slider">Ticks &amp; Colors</label>
+        <input id="inner-slider" name="inner-slider" class="slider" type="range" min="0" max="5" value="2" step="1" data-ticks='[
+          {"value": 0, "description": "Very Poor", "color": "very-poor"},
+          {"value": 1, "description": "Poor", "color": "poor"},
+          {"value": 2, "description": "Adequate", "color": "adequate"},
+          {"value": 3, "description": "Good", "color": "good"},
+          {"value": 4, "description": "Very Good", "color": "very-good"},
+          {"value": 5, "description": "Superior", "color": "superior"}
+        ]'/>
+      </div>
+
+      <div id="inner-tabs" class="tab-container">
+        <ul class="tab-list">
+          <li class="tab"><a href="#tabs-normal-contracts">Contracts</a></li>
+          <li class="tab"><a href="#tabs-normal-opportunities">Opportunites</a></li>
+          <li class="tab is-selected"><a href="#tabs-normal-attachments">Attachments</a></li>
+          <li class="tab"><a href="#tabs-normal-contacts">Contacts</a></li>
+          <li class="tab"><a href="#tabs-normal-notes">Notes</a></li>
+        </ul>
+        <div id="tabs-normal-contracts" class="tab-panel">
+          <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.<p>
+        </div>
+        <div id="tabs-normal-opportunities" class="tab-panel" style="display: none;">
+          <p>Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage; ROI, unleash reinvent innovative podcasts citizen-media networking.<p>
+          <div class="field">
+            <label class="required" for="text-normal-opportunities">Text</label>
+            <input type="text" name="text-normal-opportunities" id="text-normal-opportunities" data-validate="required">
+          </div>
+          <div class="field">
+            <label class="required" for="tel-normal-opportunities">Telephone</label>
+            <input type="tel" name="tel-normal-opportunities" id="tel-normal-opportunities" data-validate="required" aria-required="true">
+          </div>
+        </div>
+        <div id="tabs-normal-attachments" class="tab-panel" style="display: none;">
+          <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
+        </div>
+        <div id="tabs-normal-contacts" class="tab-panel" style="display: none;">
+          <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!</p>
+          <br>
+          <div class="field">
+            <label class="required" for="text-normal-contacts">Text</label>
+            <input type="text" name="text-normal-contacts" id="text-normal-contacts" data-validate="required">
+          </div>
+          <div class="field">
+            <label class="required" for="tel-normal-contacts">Telephone</label>
+            <input type="tel" name="tel-normal-contacts" id="tel-normal-contacts" data-validate="required" aria-required="true">
+          </div>
+          <div class="field">
+            <label class="required" for="email-normal-contacts">Email</label>
+            <input type="email" name="email-normal-contacts" id="email-normal-contacts" autocomplete="off" data-validate="required email" aria-required="true">
+          </div>
+        </div>
+        <div id="tabs-normal-notes" class="tab-panel" style="display: none;">
+          <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          <div class="field">
+            <label class="required" for="name-normal-notes">Name</label>
+            <input type="text" name="name-normal-notes" id="name-normal-notes" data-validate="required" aria-required="true">
+          </div>
+          <div class="field">
+            <label for="message-normal-notes">Textarea</label>
+            <textarea name="message-normal-notes" id="message-normal-notes" autocomplete="off"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var b = $(this);
+    function listToHtml(items) {
+      var html = '';
+
+      function getTextSelector(item) {
+        if (!item.length) {
+          return '';
+        }
+
+        var id = item.attr('id'),
+          className = item[0].className,
+          tagName = item[0].tagName;
+
+        if (tagName) {
+          tagName = tagName.toLowerCase();
+        }
+
+        return tagName + (id ? '#' + id : '') + (className ? '.' + className.split(' ').join('.') : '');
+      }
+
+      html += '<p>';
+      $.each(items, function(i, item) {
+        html += getTextSelector(item.elem) + ' <b>' + Object.getPrototypeOf(item.control) + '</b><br>';
+      });
+      html += '</p>';
+
+      return html;
+    }
+
+    $('#destroyable-controls-container').on('destroyed', function(e, results) {
+      $('#results-panel').html(listToHtml(results));
+    });
+
+    $('#go-for-destroy').on('click.test', function() {
+      $('#destroyable-controls-container').destroy();
+    });
+  });
+</script>
