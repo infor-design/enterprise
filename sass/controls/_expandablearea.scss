@@ -56,8 +56,8 @@
         padding-left: 0;
       }
 
-      .dropdown-wrapper:last-child,
-      input:last-child {
+      .field:last-child .dropdown-wrapper:last-child,
+      .field:last-child input:last-child {
         margin-bottom: 0;
       }
     }
