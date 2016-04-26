@@ -83,7 +83,7 @@
         //Initialized in expanded mode.
         if (expanded) {
           this.content.addClass('no-transition');
-          this.element.one('open-expandablearea', function() {
+          this.element.one('afterexpand.expandable-area', function() {
             self.content.removeClass('no-transition');
           });
           this.open();
@@ -91,7 +91,7 @@
 
         if (!expanded) {
           this.content.addClass('no-transition');
-          this.element.one('close-expandablearea', function() {
+          this.element.one('aftercollapse.expandable-area', function() {
             self.content.removeClass('no-transition');
           });
           this.close();
@@ -162,22 +162,38 @@
       },
 
       open: function() {
-        var self = this;
+        var self = this,
+        canExpand = this.element.triggerHandler('beforeexpand', [this.element]);
+
+        if (canExpand === false) {
+          return;
+        }
+
         this.element.addClass('is-expanded');
         this.header.attr('aria-expanded', 'true');
         this.expander.addClass('active');
+        this.element.triggerHandler('expand', [this.element]);
+
         this.content.css('display','block').one('animateopencomplete', function() {
-          self.element.trigger('open-expandablearea');
+          self.element.triggerHandler('afterexpand', [self.element]);
         }).animateOpen();
       },
 
       close: function() {
-        var self = this;
+        var self = this,
+        canCollapse = this.element.triggerHandler('beforecollapse', [this.element]);
+
+        if (canCollapse === false) {
+          return;
+        }
+
         this.expander.removeClass('active');
+        this.element.triggerHandler('collapse', [this.element]);
+
         this.content.one('animateclosedcomplete', function() {
           self.element.removeClass('is-expanded');
           self.header.attr('aria-expanded', 'false');
-          self.element.trigger('close-expandablearea');
+          self.element.triggerHandler('aftercollapse', [self.element]);
           self.content.css('display', 'none');
         }).animateClosed();
       },

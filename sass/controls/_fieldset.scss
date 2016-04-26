@@ -3,11 +3,11 @@
 
 fieldset {
   > legend {
-    color: $font-color;
     @include font-size(16);
-    font-weight: normal;
     @include antialiased();
-    padding-bottom: 30px;
+    color: $fieldset-title-color;
+    font-weight: normal;
+    padding-bottom: 25px;
   }
 
   &[disabled] {
@@ -15,17 +15,26 @@ fieldset {
       color: $disabled-color;
     }
   }
+
+  .column:first-child {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .row:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .fieldset-title,
 .section-title {
-  color: $font-color;
-  @include font-size(16);
-  font-weight: normal;
   @include antialiased();
+  @include font-size(16);
+  color: $fieldset-title-color;
+  font-weight: normal;
   margin-bottom: 0;
-  padding-bottom: 30px;
-  padding-top: 20px;
+  padding-bottom: 25px;
+  padding-top: 15px;
 }
 
 .row fieldset:nth-child(n + 2),

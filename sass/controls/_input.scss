@@ -74,36 +74,6 @@
   margin-top: -10px;
 }
 
-// Report Style Fields
-.summary-form {
-
-  .field {
-    margin-bottom: 20px;
-    width: 100%;
-  }
-
-  .label {
-    display: table-cell;
-    @include font-size(14);
-    margin: 0 25px 0 0;
-    vertical-align: top;
-    width: 150px;
-  }
-
-  .data {
-    color: $font-color-highcontrast;
-    display: table-cell;
-    line-height: 1.3em;
-    margin-bottom: 20px;
-    @include font-size(14);
-  }
-
-  i {
-    color: $font-color;
-    font-style: normal;
-  }
-}
-
 .field {
   position: relative;
 
@@ -549,4 +519,3 @@ html[dir='rtl'] {
     padding: 9px 32px 8px 10px;
   }
 }
-

@@ -32,6 +32,12 @@
       }
     }
 
+    .icon {
+      height: 14px;
+      top: 1px;
+      width: 18px;
+    }
+
   }
 
   //Area that hides/shows
@@ -42,16 +48,22 @@
     overflow: hidden;
 
     > .content {
-      padding: 0 20px 15px 50px;
+      line-height: 25px;
+      padding: 25px 0 15px;
 
       .column:first-child {
         margin-left: 0;
         padding-left: 0;
       }
 
-      .column {
-        padding-left: 0;
+      .dropdown-wrapper:last-child,
+      input:last-child {
+        margin-bottom: 0;
       }
+    }
+
+    .row:last-child {
+      margin-bottom: 0;
     }
 
     .columns {

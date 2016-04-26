@@ -5,11 +5,14 @@ Release Date: April 4th
 * New - Lightbox
 * New - Datagrid Column Reorder
 * New - Datagrid Personalization
+* New - Expandable Area
 
 ## Breaking Changes
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
+* 2016-04-26 - Expandable Area - Event Renamed from open-expandablearea, close-expandablearea to expand, collapse.
 
 ## Ui Changes
+* 2016-04-26 - Expandable Area - Colors and font changed. Changed to not look like an accordion.
 * 2016-04-13 - Accordion - The Accordion's default style is now an "in-page" design with less borders and configuration.  The original style is now known as a "panel" accordion.  If you wish to keep your accordion looking how it was previously, you must append a "panel" CSS class to your top-level ".accordion" element.
 * 2016-04-13 - Application Menu - The changes for the Accordion in this release affect the internal accordion used by the Application Menu.  If you use this control, make sure it receives the same markup change required by other "panel"-style Accordions.
 * 2016-03-07 - Changed Cards - Font size to 1.6 and Icon Color

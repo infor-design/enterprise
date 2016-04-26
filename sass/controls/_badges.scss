@@ -18,8 +18,8 @@
   vertical-align: middle;
 
   &.secondary {
-    border: 1px solid $badge-secondary-border-color;
     background-color: $badge-secondary-bg-color;
+    border: 1px solid $badge-secondary-border-color;
     color: $badge-secondary-color;
     line-height: 21px;
   }
@@ -152,6 +152,7 @@
 
   &.checked {
     &::after {
+      @include css3(transform, scaleX(-1) rotate(135deg));
       border-color: $checkbox-arrow-color;
       border-style: solid;
       border-width: 2px 2px 0 0;
@@ -160,14 +161,13 @@
       left: 8px;
       margin-top: 4px;
       position: absolute;
-      @include css3(transform, scaleX(-1) rotate(135deg));
       width: 4px;
     }
   }
 
   &.exclamation {
     &::before {
-      color: #ffffff;
+      color: $inverse-color;
       content: '!';
       display: inline-block;
       font-size: 1.3em;

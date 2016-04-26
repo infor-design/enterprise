@@ -617,7 +617,7 @@ window.Chart = function(container) {
     var total = d3.sum(chartData, function(d){ return d.value; });
 
     chartData = chartData.map(function (d) {
-      return { elm: d, name: d.name, color: d.color, value: d.value, percent:d3.round(100*(d.value/total)) };
+      return { data: d, elm: d, name: d.name, color: d.color, value: d.value, percent:d3.round(100*(d.value/total)) };
     });
 
     var svg = d3.select(container).append('svg'),
@@ -744,7 +744,7 @@ window.Chart = function(container) {
           }, 10);
         } else {
           tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
-          content = tooltipDataCache[i] || tooltipData || d.data.tooltip || d.data.elm.tooltip || '';
+          content = tooltipDataCache[i] || tooltipData || d.data.tooltip || d.data.data.tooltip || '';
           content = content.replace('{{percent}}', d.data.percent + '%');
           content = content.replace('{{value}}', d.value);
           content = content.replace('%percent%', d.data.percent + '%');
