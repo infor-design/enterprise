@@ -277,7 +277,10 @@ window.Editors = {
     };
 
     this.destroy = function () {
-      this.input.remove();
+      var self = this;
+      setTimeout(function() {
+        self.input.remove();
+      }, 0);
     };
 
     this.init();
@@ -305,7 +308,10 @@ window.Editors = {
     };
 
     this.destroy = function () {
-      this.input.remove();
+      var self = this;
+      setTimeout(function() {
+        self.input.remove();
+      }, 0);      
     };
 
     this.init();
@@ -352,8 +358,11 @@ window.Editors = {
     };
 
     this.destroy = function () {
-      this.input.next('.checkbox-label').remove();
-      this.input.remove();
+      var self = this;
+      setTimeout(function() {
+        self.input.next('.checkbox-label').remove();
+        self.input.remove();
+      }, 0);
     };
 
     this.init();
@@ -491,7 +500,10 @@ window.Editors = {
     };
 
     this.destroy = function () {
-      this.input.remove();
+      var self = this;
+      setTimeout(function() {
+        self.input.remove();
+      }, 0);
     };
 
     this.init();

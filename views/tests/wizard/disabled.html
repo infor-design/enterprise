@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Wizard Test: Disabled</h2>
+
+    <p>This test demonstrates a Wizard containing a disabled state.  The disabled state has a click handler attached that should not run unless the currently-disabled tick is re-enabled.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="wizard">
+      <div class="wizard-header">
+        <div class="bar">
+          <div class="completed-range"></div>
+          <a href="#" class="tick current">
+            <span class="label">System Name</span>
+          </a>
+          <a href="#" class="tick">
+            <span class="label">Connection Protocol</span>
+          </a>
+          <a id="disabled" href="#" class="tick is-disabled">
+            <span class="label">Information (Disabled)</span>
+          </a>
+          <a href="#" class="tick">
+            <span class="label">Summary</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function testDisabled(el) {
+    var msg = $('<span> Clicked</span>').css('color', 'red');
+    $('.label', el).append(msg);
+  }
+
+  $('body').on('initialized', function() {
+    $('#disabled').on('click.test', function() {
+      testDisabled(this);
+
+      $('body').toast({
+        'title': 'Disabled Tick Clicked!',
+        'message': 'The disabled tick has been clicked.  This should not have fired unless you re-enabled the tick.'
+      });
+    });
+  });
+</script>

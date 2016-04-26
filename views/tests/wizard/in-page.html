@@ -1,8 +1,17 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Wizard Test - Non-clickable Ticks</h2>
+
+    <p>This test demonstrates the Wizard invoked with ticks that are not functional links.  Clicking on the ticks will not change the state of the wizard &ndash; this is only possible by using the Wizard's API.</p>
+
+    <p></p>
+
+  </div>
+</div>
 
 <div class="row">
   <div class="twelve columns">
-
-    <h2 class="fieldset-title" style="padding-bottom: 0;">Not Clickable Wizard</h2>
 
     <div class="wizard">
       <div class="wizard-header">
@@ -27,39 +36,15 @@
   </div>
 </div>
 
-
-<div class="row">
-  <div class="twelve columns">
-
-    <hr class="fieldset-hr">
-    <h2 class="fieldset-title" style="padding-bottom: 0;">Clickable Wizard</h2>
-
-    <div class="wizard">
-      <div class="wizard-header">
-        <div class="bar">
-          <div class="completed-range"></div>
-          <a href="#" class="tick complete">
-            <span class="label">System Name</span>
-          </a>
-          <a href="#" class="tick current">
-            <span class="label">Connection Protocol</span>
-          </a>
-          <a href="#" class="tick is-disabled" onclick="testDisabled(this);">
-            <span class="label">Information Disabled</span>
-          </a>
-          <a href="#" class="tick">
-            <span class="label">Summary</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <script>
-function testDisabled(el) {
-  var msg = $('<span> Clicked</span>').css('color', 'red');
-  $('.label', el).append(msg);
-}
+  $('body').on('initialized', function() {
+    $('#disabled').on('click.test', function() {
+      testDisabled(this);
+    });
+  });
+
+  function testDisabled(el) {
+    var msg = $('<span> Clicked</span>').css('color', 'red');
+    $('.label', el).append(msg);
+  }
 </script>
