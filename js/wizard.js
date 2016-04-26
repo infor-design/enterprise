@@ -78,7 +78,7 @@
         });
 
         this.ticks.onTouchClick('wizard').on('click.wizard', function(e) {
-          self.select(e, $(this));
+          self.activate(e, $(this));
         });
 
         return this;
@@ -177,9 +177,15 @@
         return this;
       },
 
-      // Selects one of the Wizard's ticks.
-      // Tick can either be a number (representing the tick's index) or a jQuery element reference to a tick
+      // Deprecating the "select()" method in favor of "activate()" to match the API of our other controls
+      // Temporarily adding functionality that reroutes this method to the new "activate" method.
       select: function(e, tick) {
+        return this.activate(e, tick);
+      },
+
+      // Activates one of the Wizard's ticks.
+      // Tick can either be a number (representing the tick's index) or a jQuery element reference to a tick
+      activate: function(e, tick) {
         if (!e && !tick) {
           return this;
         }
