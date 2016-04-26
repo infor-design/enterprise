@@ -459,7 +459,7 @@ $datagrid-header-short-height: 32px;
       input {
         border: 1px solid transparent;
         outline: none;
-        padding: 9px 0 8px;
+        padding: 9px 0 8px !important;
         width: 100%;
 
         &:focus {
