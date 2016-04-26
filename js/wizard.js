@@ -78,7 +78,7 @@
         });
 
         this.ticks.onTouchClick('wizard').on('click.wizard', function(e) {
-          self.handleTickClick(e);
+          self.select(e, $(this));
         });
 
         return this;
@@ -152,48 +152,6 @@
         });
       },
 
-      handleTickClick: function(e) {
-        var self = this,
-          active = $(e.target),
-          tick = active.is('.label') ? active.parent() : active,
-          activeSet = false;
-
-        if (tick.is('.is-disabled') || !tick.is('a')) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-
-        var canNav = this.element.triggerHandler('beforeactivate', [active]);
-
-        if (canNav === false) {
-          return;
-        }
-
-        if (active.is('.label')) {
-          active = active.parent();
-        }
-
-        this.ticks
-          .removeClass('current complete')
-          .each(function() {
-            if (active[0] === this) {
-              activeSet = true;
-              $(this).addClass('current');
-              return;
-            }
-
-            $(this).addClass(!activeSet ? 'complete' : '');
-          });
-
-        this.updateRange();
-        this.element.trigger('activated', [active]);
-
-        setTimeout(function () {
-          self.element.trigger('afteractivate', [active]);
-        }, 300);
-      },
-
       updateRange: function() {
         var currentTick = this.ticks.filter('.current').last(),
           widthPercentage = (100 * parseFloat(currentTick.css('left')) / parseFloat(currentTick.parent().css('width')));
@@ -211,7 +169,7 @@
         return this;
       },
 
-      unbind: function() {
+      teardown: function() {
         this.ticks.offTouchClick('wizard').off('click.wizard');
         this.element.off('updated.wizard');
 
@@ -219,19 +177,69 @@
         return this;
       },
 
-      //Select the nth tick
-      select: function(n) {
-        this.ticks
-          .removeClass('complete current')
-          .eq(n).addClass('current')
+      // Selects one of the Wizard's ticks.
+      // Tick can either be a number (representing the tick's index) or a jQuery element reference to a tick
+      select: function(e, tick) {
+        if (!e && !tick) {
+          return this;
+        }
+
+        var self = this;
+
+        function getTick() {
+          var target;
+
+          // Use the first variable as the tick definition or index if "e" is null, undefined, or not an event object.
+          // This is for backwards compatibility with this control's old select() method, which took an index as an argument.
+          if (e && (e === undefined || e === null || !e.type || !e.target) && !tick) {
+            tick = e;
+          }
+
+          if (!tick) {
+            target = $(e.target);
+            return target.is('.label') ? target.parent() : target;
+          }
+
+          if (typeof tick === 'number') {
+            return self.ticks.eq(tick);
+          }
+
+          return tick;
+        }
+
+        tick = getTick();
+
+        if (e && (tick.is('[disabled], .is-disabled') || !tick.is('a'))) {
+          e.preventDefault();
+          e.stopPropagation();
+          return this;
+        }
+
+        // Cancel selection by returning a 'beforeactivate' handler as 'false'
+        var canNav = this.element.triggerHandler('beforeactivate', [tick]);
+        if (canNav === false) {
+          return this;
+        }
+
+        var trueIndex = this.ticks.index(tick);
+        this.ticks.removeClass('complete current')
+          .eq(trueIndex).addClass('current')
           .prevAll('.tick').addClass('complete');
 
-        this.updated();
+        this.updateRange();
+        this.element.trigger('activated', [tick]);
+
+        // Timeout allows animation to finish
+        setTimeout(function () {
+          self.element.trigger('afteractivate', [tick]);
+        }, 300);
+
+        return this;
       },
 
       // Teardown - Remove added markup and events
       destroy: function() {
-        this.unbind();
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };

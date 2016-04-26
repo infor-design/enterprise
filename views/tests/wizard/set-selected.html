@@ -1,3 +1,17 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Wizard Test: Select Method</h2>
+
+    <p>This test uses the <em>select()</em> method on the Wizard Control to set the selected tick after a timeout completes.</p>
+
+    <p>Time Until Select Completes: <span id="time-display" style="font-weight: bold;">300</span></p>
+
+    <p></p>
+
+  </div>
+</div>
+
 
 <div class="row">
   <div class="twelve columns">
@@ -26,13 +40,31 @@
 </div>
 
 <script type="text/javascript">
-  $('#wiz1').on('selected', function () {
-    alert();
+  $('body').on('initialized', function() {
+    var wizard = $('#wiz1'),
+      api = wizard.data('wizard');
+
+    $('#wiz1').on('activated.test', function(e, tick) {
+      $('body').toast({
+        'title': 'Activated!',
+        'message': 'The tick with the label <span style="font-weight: bold;">' + tick.text().trim() + '</span> was activated!'
+      });
+    });
+
+    var counter = 300;
+    function countDown() {
+      counter = counter - 1;
+      $('#time-display').text(counter);
+
+      if (counter > 0) {
+        return window.requestAnimationFrame(countDown);
+      }
+
+      api.select(3);
+    }
+
+    // Start the countdown
+    $('#time-display').text(counter);
+    window.requestAnimationFrame(countDown);
   });
-
-  setTimeout(function () {
-    $('#wiz1').data('wizard').select(3);
-  }, 2000);
-
-
 </script>
