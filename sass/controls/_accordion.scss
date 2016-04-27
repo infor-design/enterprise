@@ -315,7 +315,7 @@
     .accordion-header {
       border-bottom-color: $accordion-panel-border-color;
 
-      &.is-focused {
+      &.is-focused:not(.hide-focus) {
         border-bottom-color: $accordion-selected-bg-color;
       }
 
@@ -326,6 +326,14 @@
 
     .accordion-pane {
       background-color: $accordion-pane-bg-color;
+
+      // Visible accordion panes force a border to show up on the next accordion header for visual separation
+      &.is-expanded {
+        + .accordion-header:not(.is-focused):not(.is-selected),
+        + .accordion-content {
+          border-top: 1px solid $accordion-alternate-border-color;
+        }
+      }
 
       &:last-child {
         .accordion-content:last-child {
@@ -345,7 +353,7 @@
       .accordion-header {
         border-bottom-color: $accordion-alternate-border-color;
 
-        &.is-focused {
+        &.is-focused:not(.hide-focus) {
           border-bottom-color: $accordion-selected-bg-color;
         }
       }
@@ -360,7 +368,7 @@
             border-bottom-color: transparent;
           }
 
-          &.is-focused {
+          &.is-focused:not(.hide-focus) {
             border-bottom-color: $accordion-focused-border-color;
           }
 
@@ -399,7 +407,7 @@
         }
 
         > [class^="btn"] {
-          &:focus {
+          &:focus:not(.hide-focus) {
             border-color: $accordion-inverse-focus-state-color;
           }
         }
@@ -416,7 +424,7 @@
           }
         }
 
-        &.is-focused {
+        &.is-focused:not(.hide-focus) {
           border-bottom-color: $accordion-selected-bg-color;
         }
 
@@ -437,7 +445,7 @@
           }
 
           > [class^="btn"] {
-            &:focus {
+            &:focus:not(.hide-focus) {
               border-color: $accordion-selected-text-color;
             }
           }
@@ -462,6 +470,14 @@
       .accordion-pane {
         background-color: $accordion-inverse-pane-bg-color;
 
+        // Visible accordion panes force a border to show up on the next accordion header for visual separation
+        &.is-expanded {
+          + .accordion-header:not(.is-focused):not(.is-selected),
+          + .accordion-content {
+            border-top: 1px solid $accordion-inverse-border-color;
+          }
+        }
+
         .accordion-header {
           border-bottom-color: $accordion-inverse-pane-bg-color;
 
@@ -469,7 +485,7 @@
             border-bottom-color: transparent;
           }
 
-          &.is-focused {
+          &.is-focused:not(.hide-focus) {
             border-bottom-color: $accordion-selected-bg-color;
           }
 
@@ -587,8 +603,11 @@
     }
 
     &:focus {
-      border-color: $accordion-selected-bg-color;
       box-shadow: none;
+
+      &:not(.hide-focus) {
+        border-color: $accordion-selected-bg-color;
+      }
 
       &:active {
         background-color: $accordion-selected-bg-color;
@@ -653,7 +672,7 @@
   }
 
   // Selected color scheme
-  &.is-focused {
+  &.is-focused:not(.hide-focus) {
     border-color: $accordion-focused-border-color;
   }
 
@@ -686,8 +705,11 @@
     }
 
     [class^="btn"]:focus {
-      border: 1px solid $accordion-selected-text-color;
       box-shadow: none;
+
+      &:not(.hide-focus) {
+        border: 1px solid $accordion-selected-text-color;
+      }
     }
 
     .accordion-header {
@@ -764,12 +786,32 @@
 
 // Level 1 Accordion Pane
 .accordion-pane {
-  padding: 5px 0;
   height: 0;
   overflow: hidden;
 
+  // First Accordion header/content has top margin
+  // Last Accordion header/content has bottom margin
+  // These margins aren't on the pane itself because doing so would prevent animation of the pane from working well
+  .accordion-header,
   .accordion-content {
-    border-bottom: 1px solid $accordion-border-color;
+    &:first-child {
+      margin-top: 5px;
+    }
+
+    &:last-child {
+      margin-bottom: 5px;
+    }
+  }
+
+  // Visible accordion panes force a border to show up on the next accordion header for visual separation
+  &.is-expanded {
+    + .accordion-header:not(.is-focused):not(.is-selected),
+    + .accordion-content {
+      border-top: 1px solid $accordion-border-color;
+    }
+  }
+
+  .accordion-content {
     color: $accordion-text-color;
     overflow-x: visible;
     padding-left: 20px;
@@ -850,7 +892,7 @@
       }
     }
 
-    &.is-focused {
+    &.is-focused:not(.hide-focus) {
       border-color: $accordion-focused-border-color;
 
       &:last-child {
