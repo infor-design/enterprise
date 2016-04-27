@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <link rel="stylesheet" href="/stylesheets/grey-theme.css" type="text/css">
+  <script src="/js/jquery-3.0.0-beta1.js"></script>
+  <script src="/js/sohoxi.js"></script>
+
+  <style>
+    body {
+      background-color: transparent !important;
+      height: 100%;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .contextual-action-panel.modal.is-visible {
+      left: 0;
+      position: absolute;
+      top: 0;
+      max-height: 100%;
+      transform: none;
+
+      min-width: 500px;
+      max-width: 500px;
+      width: 500px;
+      height: 600px;
+      min-height: 500px;
+      max-height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  {{> controls/svg}}
+
+  <div class="contextual-action-panel modal is-visible">
+    <div class="modal-content">
+       <div class="modal-header">
+         <div class="toolbar">
+            <div class="title">Company Information</div>
+            <div class="buttonset">
+               <button class="btn" type="button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-save"></use>
+                  </svg>
+                  <span>Save</span>
+               </button>
+               <div class="separator"></div>
+               <button name="close" class="btn-close" type="button">
+                  <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-close"></use>
+                  </svg>
+                  <span>Close</span>
+               </button>
+            </div>
+         </div>
+      </div>
+       <div class="modal-body-wrapper">
+         <div class="modal-body">
+           <div class="row">
+            <div class="six columns">
+
+               <div class="field">
+                  <label for="company-name">Company Name</label>
+                  <select id="company-name" name="company-name" class="dropdown">
+                     <option value=""></option>
+                     <option value="jawbone" selected>Jawbone, Inc.</option>
+                     <option value="infor">Infor</option>
+                  </select>
+               </div>
+
+            </div>
+            <div class="six columns">
+
+               <div class="field">
+                  <label for="ship-terms">Ship Terms</label>
+                  <select id="ship-terms" name="ship-terms" class="dropdown">
+                     <option value=""></option>
+                     <option value="default" selected>Default</option>
+                     <option value="alternate">Alternate</option>
+                  </select>
+               </div>
+
+               <button class="btn-secondary">Test</button>
+            </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+  </div>
+
+  <script>
+    $(function() {
+      $('.modal-content').initialize('en-US'); //Cannot initialize Body
+    });
+  </script>
+</body>
+</html>

@@ -185,9 +185,6 @@ var express = require('express'),
     });
   }
 
-
-
-
   // ======================================
   //  Main Routing and Param Handling
   // ======================================
@@ -198,11 +195,16 @@ var express = require('express'),
   });
 
   router.get('/partials*', function(req, res) {
-    var end = req.url.replace('/partials/','');
-    res.render('partials/' + end, res.opts);
+    var end = req.url.replace('/partials/',''),
+      partialsOpts = {
+        enableLiveReload: false,
+        layout: '',
+        locale: 'en-US',
+        title: '',
+      };
+      
+    res.render('partials/' + end, partialsOpts);
   });
-
-
 
 
   // ======================================

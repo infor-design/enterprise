@@ -6,7 +6,7 @@
          <h3>Contextual Action Panel (with full markup loaded via iframe)</h3>
          <h4>This is similar to how an expanded Ming.le context app would be shown</h4>
          <br/><br/>
-         
+
          <button class="btn-secondary" type="button" id="show">Show</button>
 
       </div>
@@ -14,7 +14,7 @@
 
    <script>
       $('#show').on('click', function () {
-         var content = '<iframe src="iframe-content.html" width="1000" height="600” frameborder="0"></iframe>';
+         var content = $('<iframe src="/partials/cap-example" style="width: 488px; height: 278px; overflow:hidden;"></iframe>');
 
          $('body').contextualactionpanel({
             title: null,

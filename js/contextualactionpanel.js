@@ -55,8 +55,7 @@
       },
 
       build: function() {
-        var self = this,
-          children;
+        var self = this;
 
         // Build the Content
         if (this.panel.length === 0) {
@@ -64,17 +63,45 @@
             this.settings.content.wrap('<div class="contextual-action-panel"></div>');
             this.panel = this.settings.content.parent();
             this.panel.addClass('modal').appendTo('body');
+
+            if (this.settings.content.is('iframe')) {
+              this.settings.content.ready(function () {
+                self.completeBuild();
+                self.settings.content.show();
+              });
+              return self;
+            }
             this.settings.content.show();
+
           } else {
             this.panel = $('<div class="contextual-action-panel">'+ this.settings.content +'</div>').appendTo('body');
             this.panel.addClass('modal').attr('id', this.settings.id);
           }
+
         }
+
+        this.completeBuild();
+        return this;
+      },
+
+      completeBuild: function() {
+        var self = this,
+          children,
+          isIframe = false,
+          contents;
 
         if (this.panel.find('.modal-content').length === 0) {
           children = this.panel.children();
-          children.wrapAll('<div class="modal-content"></div>').wrapAll('<div class="modal-body"></div>');
-          this.panel.addClass('modal');
+          if (children.is('iframe')) {
+            contents = children.contents();
+            this.toolbar = contents.find('.toolbar');
+            isIframe = true;
+          }
+
+          if (!isIframe) {
+            children.wrapAll('<div class="modal-content"></div>').wrapAll('<div class="modal-body"></div>');
+            this.panel.addClass('modal');
+          }
         }
 
         if (this.panel.find('.modal-header').length === 0) {
@@ -88,8 +115,8 @@
           if (!this.toolbar.length) {
             this.toolbar = $('<div class="toolbar"></div>');
           }
-          this.toolbar.appendTo(this.header);
 
+          this.toolbar.appendTo(this.header);
           var toolbarTitle = this.toolbar.find('.title');
           if (!toolbarTitle.length) {
             toolbarTitle = $('<div class="title">' + this.settings.title + '</div>');
@@ -104,7 +131,9 @@
         }
 
         // Move to the body element to break stacking context issues.
-        this.panel.detach().appendTo('body');
+        if (!isIframe) {
+          this.panel.detach().appendTo('body');
+        }
 
         this.element.attr('data-modal', this.settings.id);
         if (!this.panel.attr('id')) {
