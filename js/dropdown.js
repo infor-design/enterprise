@@ -391,8 +391,8 @@
           self.toggleList();
         });
 
-        self.element.on('activated.dropdown', function () {
-          self.activate();
+        self.element.on('activate.dropdown', function () {
+          self.label.trigger('click');
         }).on('updated.dropdown', function (e) {
           e.stopPropagation();
           self.updated();

@@ -202,7 +202,7 @@
           $(this).removeAttr('style');
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
-          self.element.trigger('activated', null);
+          self.element.trigger('activate', null);
         });
 
         // Update Tabs

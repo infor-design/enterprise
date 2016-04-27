@@ -41,6 +41,7 @@
         this.setupEvents();
         this.loadData(this.settings.dataset);
         this.syncDataset(this.element);
+        this.focusFirst();
       },
 
       //Init Tree from ul, li, a markup structure in DOM
@@ -53,6 +54,10 @@
 
           self.decorateNode(a);
         });
+      },
+
+      focusFirst: function () {
+        this.element.find('a:first').attr('tabindex', '0');
       },
 
       //From the LI, Read props and add stuff
@@ -72,10 +77,6 @@
             $('a', childSection).addClass('is-disabled').attr('aria-disabled','true');
             $('ul', a.parent()).addClass('is-disabled');
           }
-        }
-
-        if (a.index() === 0) {
-          a.attr('tabindex', '0');
         }
 
         //parentCount 'aria-level' to the node's level depth
@@ -514,7 +515,7 @@
         if (node.parent instanceof jQuery) {
           found = true;
         }
-        
+
         if (location instanceof jQuery && (!node.parent || !found) && !(node.parent instanceof jQuery)) {
           location.append(li);
           found = true;

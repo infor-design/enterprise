@@ -403,9 +403,9 @@
             self.positionFocusState();
           }
           self.checkFocusedElements();
-        }).on('updated.tabs', function() {
+        }).on('update.tabs', function() {
           self.updated();
-        }).on('activated.tabs', function(e) {
+        }).on('activate.tabs', function(e) {
           // Stop propagation of the activate event from going higher up into the DOM tree
           e.stopPropagation();
         }).on('add.tabs', function(e, newTabId, newTabOptions, newTabIndex) {
@@ -841,7 +841,7 @@
         }
 
         self.panels.hide();
-        self.element.trigger('activated', [a]);
+        self.element.trigger('activate', [a]);
 
         targetPanel.stop().fadeIn(250, function() {
           $('#tooltip').addClass('is-hidden');
@@ -1934,7 +1934,7 @@
           .removeAttr('aria-selected')
           .removeAttr('tabindex');
 
-        this.element.off('focusout.tabs updated.tabs activate.tabs');
+        this.element.off('focusout.tabs update.tabs activate.tabs');
         $(window).off('resize.tabs' + this.tabsIndex);
         this.tabsIndex = undefined;
 

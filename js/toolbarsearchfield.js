@@ -229,7 +229,7 @@
         this.handleDeactivationEvents();
 
         function activateCallback() {
-          self.inputWrapper.addClass('is-open').trigger('activated');
+          self.inputWrapper.addClass('is-open').trigger('activate');
           self.input.focus(); // for iOS
         }
 
@@ -266,7 +266,7 @@
           }
 
           self.toolbarParent.trigger('recalculateButtons');
-          self.inputWrapper.trigger('deactivated');
+          self.inputWrapper.trigger('deactivate');
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.

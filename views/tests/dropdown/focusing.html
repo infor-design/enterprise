@@ -1,0 +1,20 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="focusable" class="label">Updatable</label>
+      <select id="focusable" name="focusable" class="dropdown">
+        <option value="1" selected>Option One</option>
+        <option value="2">Option Two</option>
+        <option value="3">Option Three</option>
+      </select>
+  </div>
+  <button type="button" class="btn">Focus</button>
+</div>
+
+<script>
+    $('button').on('click', function () {
+      $('#focusable').trigger('activate');
+    });
+</script>
