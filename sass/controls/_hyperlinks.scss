@@ -112,6 +112,21 @@
 .link-list {
   margin-bottom: 40px;
 
+  li {
+    line-height: 25px;
+
+    svg {
+      left: 0;
+      margin-right: 2px;
+    }
+
+    a span {
+      position: relative;
+      text-transform: capitalize;
+      top: 2px;
+    }
+  }
+
   div {
     margin-bottom: 10px;
     padding-bottom: 5px;

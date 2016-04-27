@@ -141,6 +141,8 @@ var express = require('express'),
       paths.forEach(function pathIterator(val) {
         var excludes = [
           /layout\.html/,
+          /footer\.html/,
+          /layout-noheader\.html/,
           /\.DS_Store/
         ],
         match = false;
@@ -202,7 +204,7 @@ var express = require('express'),
         locale: 'en-US',
         title: '',
       };
-      
+
     res.render('partials/' + end, partialsOpts);
   });
 
