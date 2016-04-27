@@ -359,9 +359,12 @@
           return;
         }
 
+        self.loading = true;
         for (var i = 0; i < dataset.length; i++) {
-          self.addNode(dataset[i], 'bottom', false);
+          self.addNode(dataset[i], 'bottom');
         }
+        self.loading = false;
+
       },
 
       //Functions to Handle Internal Data Store
@@ -482,7 +485,7 @@
       },
 
       // Node Construction Functions
-      addNode: function (node, location, updateData) {
+      addNode: function (node, location) {
         var li = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(li);
 
@@ -497,12 +500,16 @@
           a.parent().addClass('is-open');
         }
 
+        if (node.disabled) {
+          a.addClass('is-disabled');
+        }
+
         if (node.icon) {
           a.addClass(node.icon);
         }
 
         //Handle Location
-        var found = updateData ? this.addToDataset(node, location) : true;
+        var found = this.loading ? true : this.addToDataset(node, location);
 
         if (location === 'bottom' && (!node.parent || !found)) {
           this.element.append(li);
@@ -560,7 +567,7 @@
         this.decorateNode(li.find('a').first());
 
         node.parent = '';
-        this.addNode(node, ul, true);
+        this.addNode(node, ul);
       },
 
       addChildNodes: function (node, li) {
@@ -575,7 +582,7 @@
 
         for (var i = 0; i < node.children.length; i++) {
           var elem = node.children[i];
-          var newLi = self.addNode(elem, ul, false);
+          var newLi = self.addNode(elem, ul);
 
           if (elem.children) {
             self.addChildNodes(elem, newLi);

@@ -311,6 +311,7 @@
       padding-right: 48px;
 
       > .icon.icon-dropdown {
+        @include css3(transform, rotate(-90deg));
         border-width: 0;
         height: 24px;
         left: auto;
@@ -319,7 +320,6 @@
         right: 8px;
         top: 3px;
         width: 16px;
-        @include css3(transform, rotate(-90deg));
       }
     }
   }
@@ -331,7 +331,7 @@
   // separator
   .separator {
     border-bottom: 1px solid $popupmenu-border-color;
-    margin: 10px 0;
+    margin: 5px 0;
   }
 
   // Short fields
