@@ -458,12 +458,15 @@ $sr-result-bottom-border-color: $hr-top-color;
 $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
-$tree-selected-color: $primary-color;
+$tree-selected-color: $black;
+$tree-selected-bg-color: $graphite04;
+$tree-focus-border-color: $azure07;
 $tree-active-bg-color: #8fa8b7;
-$tree-icon-color: $graphite08;
-$tree-link-color: $graphite08;
+$tree-icon-color: $graphite09;
+$tree-link-color: $graphite09;
 $tree-disabled-color: $graphite05;
-$tree-hover-color: $graphite06;
+$tree-hover-color: $black;
+$tree-hover-icon-color: $graphite06;
 
 //Progress
 $progress-bg-color: $graphite01;
@@ -604,3 +607,7 @@ $swaplist-title-text-color: $black;
   border-bottom-color: transparent;
 }
 
+// Tree - add a line
+.tree a:not(.is-disabled):hover .tree-text {
+  border-bottom: 1px solid;
+}
