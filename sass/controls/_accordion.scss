@@ -877,6 +877,7 @@
   // Level 2 Accordion Pane
   .accordion-pane {
     border-bottom-color: transparent;
+    margin: 0;
 
     &.has-icons {
       .accordion-header.no-icon > a {
