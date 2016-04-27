@@ -428,6 +428,11 @@
       Locale.set(locale).done(initAll);
     }
 
+    // Setup a global resize event trigger for controls to listen to
+    $(window).on('resize', function() {
+      $('body').triggerHandler('resize', [window]);
+    });
+
     return this;
   };
 
