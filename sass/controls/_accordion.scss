@@ -331,7 +331,7 @@
       &.is-expanded {
         + .accordion-header:not(.is-focused):not(.is-selected),
         + .accordion-content {
-          border-top: 1px solid $accordion-alternate-border-color;
+          border-top-color: $accordion-alternate-border-color;
         }
       }
 
@@ -474,7 +474,7 @@
         &.is-expanded {
           + .accordion-header:not(.is-focused):not(.is-selected),
           + .accordion-content {
-            border-top: 1px solid $accordion-inverse-border-color;
+            border-top-color: $accordion-inverse-border-color;
           }
         }
 
@@ -787,27 +787,17 @@
 // Level 1 Accordion Pane
 .accordion-pane {
   height: 0;
+  padding: 0;
   overflow: hidden;
-
-  // First Accordion header/content has top margin
-  // Last Accordion header/content has bottom margin
-  // These margins aren't on the pane itself because doing so would prevent animation of the pane from working well
-  .accordion-header,
-  .accordion-content {
-    &:first-child {
-      margin-top: 5px;
-    }
-
-    &:last-child {
-      margin-bottom: 5px;
-    }
-  }
+  @include transition(padding 300ms cubic-bezier(.17, .04, .03, .94));
 
   // Visible accordion panes force a border to show up on the next accordion header for visual separation
   &.is-expanded {
+    padding: 5px 0;
+
     + .accordion-header:not(.is-focused):not(.is-selected),
     + .accordion-content {
-      border-top: 1px solid $accordion-border-color;
+      border-top-color: $accordion-border-color;
     }
   }
 
@@ -837,7 +827,7 @@
     }
 
     &:last-child {
-      border-bottom: 1px solid $accordion-border-color;
+      border-bottom: 1px solid transparent;
     }
 
     > a {
@@ -918,8 +908,8 @@
 
   // Level 2 Accordion Pane
   .accordion-pane {
+    padding: 0;
     border-bottom-color: transparent;
-    margin: 0;
 
     &.has-icons {
       .accordion-header.no-icon > a {
