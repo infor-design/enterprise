@@ -193,7 +193,7 @@
         //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
         this.element.on('click.tree', 'a', function (e) {
           var target = $(this);
-          if(!target.hasClass('is-disabled')) {
+          if (!target.hasClass('is-disabled')) {
             self.setSelectedNode(target, true);
             self.toggleNode(target);
             e.stopPropagation();
@@ -619,6 +619,11 @@
         if (node.icon) {
           elem.node.find('use').first().attr('xlink:href','#'+ node.icon);
           elem.icon = node.icon;
+        }
+
+        if (node.disabled) {
+          elem.node.addClass('is-disabled');
+          elem.node.attr('aria-disabled','true');
         }
 
         if (node.node) {
