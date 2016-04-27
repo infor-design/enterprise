@@ -415,7 +415,7 @@
         });
 
         // Check to see if we need to add/remove the more button on resize
-        $(window).on('resize.tabs' + this.tabsIndex, function resizeTabs() {
+        $('body').on('resize.tabs' + this.tabsIndex, function resizeTabs() {
           self.setOverflow();
           self.positionFocusState();
           self.focusBar();
@@ -1935,7 +1935,7 @@
           .removeAttr('tabindex');
 
         this.element.off('focusout.tabs update.tabs activate.tabs');
-        $(window).off('resize.tabs' + this.tabsIndex);
+        $('body').off('resize.tabs' + this.tabsIndex);
         this.tabsIndex = undefined;
 
         if (this.moreButton.data('popupmenu')) {
