@@ -64,7 +64,7 @@
 @mixin checkbox-partial-after-style {
   border-width: 0 0 3px;
   margin-left: 1px;
-  margin-top: -2px;
+  top: -2px;
   @include css3(transform, none);
   width: 10px;
 }
