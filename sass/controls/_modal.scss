@@ -3,9 +3,12 @@
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal {
+  // Ignoring the mixin and doing manual CSS3 vendor-prefixing here because this is complicated
+  @include css3(transform, translate(-50%, -50%) scale(.9, .9));
+  @include css3(transition, opacity .2s, transform .2s);
   backface-visibility: hidden; // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
-  -webkit-filter: blur(0.000001px); // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
-  filter: blur(0.000001px);  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
+  -webkit-filter: blur(.000001px); // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
+  filter: blur(.000001px);  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
   height: auto;
   left: 50%;
   max-height: 90%;
@@ -15,9 +18,6 @@
   overflow: hidden;
   position: fixed;
   top: 50%;
-  // Ignoring the mixin and doing manual CSS3 vendor-prefixing here because this is complicated
-  @include css3(transform, translate(-50%, -50%) scale(.9, .9));
-  @include css3(transition, opacity .2s, transform .2s);
   width: auto;
   z-index: 1001;
 
@@ -36,6 +36,11 @@
         width: 400px;
       }
     }
+  }
+
+  .field:last-child input,
+  .field:last-child textarea {
+    margin-bottom: 10px;
   }
 
   &.full-width {
@@ -81,6 +86,7 @@
         border-bottom: 1px solid $modal-border-color;
         padding-bottom: 15px;
       }
+
       .modal-body-wrapper {
         padding: 0;
       }
@@ -181,10 +187,10 @@
     }
 
     &.is-error {
-      color: #e84f4f;
+      color: $error-color;
 
       .icon {
-        fill: #e84f4f;
+        fill: $error-color;
         margin-left: 5px;
         margin-right: 4px;
         top: auto;

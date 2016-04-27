@@ -511,16 +511,21 @@
         //Handle Location
         var found = this.loading ? true : this.addToDataset(node, location);
 
+        if (node.parent instanceof jQuery) {
+          found = true;
+        }
+        
+        if (location instanceof jQuery && (!node.parent || !found) && !(node.parent instanceof jQuery)) {
+          location.append(li);
+          found = true;
+        }
+
         if (location === 'bottom' && (!node.parent || !found)) {
           this.element.append(li);
         }
 
         if (location === 'top' && (!node.parent || !found)) {
           this.element.prepend(li);
-        }
-
-        if (location instanceof jQuery && (!node.parent || !found)) {
-          location.append(li);
         }
 
         // Support ParentId in JSON Like jsTree

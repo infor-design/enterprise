@@ -33,16 +33,16 @@ select.multiselect {
 
 input.dropdown,
 input.multiselect {
+  @include css3(touch-callout, none);
+  @include css3(user-select, none);
+  @include transition(background-color .2s ease);
   background-color: $input-bg-color;
   border-color: $input-border-color;
   color: $dropdown-color;
   cursor: pointer;
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
-  @include css3(touch-callout, none);
-  @include css3(user-select, none);
   text-overflow: ellipsis;
-  @include transition(background-color .2s ease);
   vertical-align: middle;
 
   &[disabled] {
@@ -390,6 +390,10 @@ input.multiselect {
   }
 }
 
+.modal-engaged .dropdown-search {
+  background-color: $modal-bg-color;
+}
+
 .is-ontop .dropdown-search {
   border-bottom: 0;
   border-top: 1px solid $dropdown-menu-separator-color;
@@ -475,7 +479,7 @@ input.multiselect {
 
   &.is-ontop {
     margin-top: 10px;
-    
+
     ul {
       box-shadow: $dropdown-box-shadow-top;
     }
