@@ -20,7 +20,7 @@
   bottom: 0;
   content: '';
   display: block;
-  height: 2px;
+  height: 3px;
   position: absolute;
   @include css3(transition, background-color .25s ease);
   width: 0;
@@ -99,7 +99,7 @@
   background-color: rgba($tab-selected-color, 0); //background: transparent;
   bottom: 0;
   display: inline-block;
-  height: 2px;
+  height: 3px;
   left: 0;
   position: absolute;
   @include transition(left .25s ease, width .25s ease);
@@ -291,17 +291,17 @@
 
     .icon-error {
       fill: $error-icon-fill;
-      height: 16px;
+      height: 14px;
       position: absolute;
       right: -10px;
-      top: 7px;
-      width: 16px;
+      top: 18px;
+      width: 18px;
     }
   }
 
   .tab-more {
-    background-color: transparent;
     @include font-size(14);
+    background-color: transparent;
     max-width: 102px;
 
     .icon {

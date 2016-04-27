@@ -14,7 +14,7 @@
 
     a {
       line-height: 12px;
-      padding: 19px 11px 18px;
+      padding: 20px 11px 18px;
     }
 
     &:hover:not(.is-disabled) {
@@ -35,7 +35,7 @@
 
   }
 
-  .icon {
+  .icon:not(.icon-error) {
     fill: $tab-text-color;
   }
 

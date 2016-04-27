@@ -1,0 +1,28 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main" initialize>
+
+   <div class="row top-padding">
+      <div class="twelve columns">
+
+         <h3>Contextual Action Panel (with full markup loaded via iframe)</h3>
+         <h4>This is similar to how an expanded Ming.le context app would be shown</h4>
+         <br/><br/>
+         
+         <button class="btn-secondary" type="button" id="show">Show</button>
+
+      </div>
+   </div>
+
+   <script>
+      $('#show').on('click', function () {
+         var content = '<iframe src="iframe-content.html" width="1000" height="600” frameborder="0"></iframe>';
+
+         $('body').contextualactionpanel({
+            title: null,
+            content: content,
+            trigger: 'immediate'
+         });
+
+      });
+   </script>
+
+</div>
