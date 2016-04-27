@@ -163,6 +163,7 @@
         }
 
         this.element.trigger('split', [w]);
+        $('body').triggerHandler('resize', [this]);
 
         //Save to local storage
         if (localStorage) {
