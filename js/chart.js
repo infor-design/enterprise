@@ -235,7 +235,7 @@ window.Chart = function(container) {
 
     var tooltipInterval,
       tooltipDataCache = [],
-      tooltipData = charts.tooltip;
+      tooltipData = charts.options.tooltip;
 
     var maxBarHeight = 30,
       legendHeight = 40,
@@ -256,7 +256,7 @@ window.Chart = function(container) {
     height =  parseInt($(container).parent().height()) - margins.top - margins.bottom - legendHeight;  //influences the bar width
 
     //Get the Legend Series'
-    series = dataset.map(function (d) {
+    series = dataset[0].data.map(function (d) {
       return {name: d.name, color: d.color, pattern: d.pattern};
     });
 
@@ -603,7 +603,7 @@ window.Chart = function(container) {
 
     var tooltipInterval,
       tooltipDataCache = [],
-      tooltipData = charts.tooltip;
+      tooltipData = charts.options.tooltip;
 
     charts.appendTooltip();
 
@@ -1112,7 +1112,7 @@ window.Chart = function(container) {
       tooltipIntervalDots,
       tooltipDataCacheMedianRange = [],
       tooltipDataCacheDots = [],
-      tooltipData = charts.tooltip;
+      tooltipData = charts.options.tooltip;
 
     // calculate max and min values in the NLWest data
     var max=0, min=0, len=0, i,
@@ -1316,7 +1316,7 @@ window.Chart = function(container) {
 
     var tooltipInterval,
       tooltipDataCache = [],
-      tooltipData = charts.tooltip;
+      tooltipData = charts.options.tooltip;
 
     var x0 = d3.scale.ordinal()
       .rangeRoundBands([0, width], 0.1);
@@ -1721,7 +1721,7 @@ window.Chart = function(container) {
 
     var tooltipInterval,
       tooltipDataCache = [],
-      tooltipData = charts.tooltip;
+      tooltipData = charts.options.tooltip;
 
     //Append the SVG in the parent area.
     var dataset = chartData,
@@ -1912,7 +1912,7 @@ window.Chart = function(container) {
 
     var tooltipInterval,
       tooltipDataCache = [],
-      tooltipData = charts.tooltip;
+      tooltipData = charts.options.tooltip;
 
     //Append the SVG in the parent area.
     var dataset = chartData,
@@ -2168,7 +2168,9 @@ window.Chart = function(container) {
   };
 
   this.initChartType = function (options) {
-    this.redrawOnResize = true; //default
+    //default
+    this.options = options;
+    this.redrawOnResize = true;
 
     if (options.redrawOnResize !== undefined) {
       this.redrawOnResize = options.redrawOnResize;
