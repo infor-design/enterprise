@@ -83,7 +83,7 @@
             containerPane.addClass('has-icons');
           }
 
-          header.attr('role', 'presentation');
+          header.attr('role', 'presentation').hideFocus();
 
           // For backwards compatibility:  If an icon is found inside an anchor, bring it up to the level of the header.
           header.children('a').find('svg').detach().insertBefore(header.children('a'));
@@ -123,6 +123,9 @@
             expander[method](header.children('a'));
             header.data('addedExpander', expander);
           }
+
+          // Hide Focus functionality
+          expander.hideFocus();
 
           // If Chevrons are turned off and an icon is present, it becomes the expander
           if (outerIcon.length && !self.settings.displayChevron) {
@@ -532,6 +535,7 @@
             }
           });
 
+          pane.addClass('is-expanded');
           self.element.trigger('expand', [a]);
 
           pane.one('animateopencomplete', function(e) {
@@ -568,6 +572,7 @@
           expander.children('.audible').text(Locale.translate('Expand'));
         }
 
+        pane.removeClass('is-expanded');
         a.attr('aria-expanded', 'false');
 
         pane.one('animateclosedcomplete', function(e) {
