@@ -462,12 +462,15 @@ $sr-result-bottom-border-color: $hr-top-color;
 $sr-masthead-item-color: $font-color-lowcontrast;
 
 // Tree
-$tree-selected-color: $primary-color;
+$tree-selected-color: $white;
+$tree-selected-bg-color: $slate06;
+$tree-focus-border-color: $primary-color;
 $tree-active-bg-color: #3e586c;
 $tree-icon-color: $slate03;
 $tree-link-color: $slate03;
 $tree-disabled-color: $slate05;
 $tree-hover-color: $white;
+$tree-hover-icon-color: $white;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $slate04;
@@ -569,4 +572,3 @@ $splitter-box-shadow-color: rgba(54, 138, 192, .75);
 //================================================== //
 // Core Controls
 @import 'controls';
-

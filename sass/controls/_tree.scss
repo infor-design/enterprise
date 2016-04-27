@@ -13,7 +13,7 @@
     border-radius: 2px;
     color: $tree-link-color;
     line-height: 29px;
-    padding: 10px 8px 5px 6px;
+    padding: 4px 5px;
     text-decoration: none;
 
     //Text in the tree items
@@ -40,7 +40,7 @@
 
     //Focus State
     &:focus {
-      border: 1px solid $tree-selected-color;
+      border: 1px solid $tree-focus-border-color;
       border-radius: 2px;
       color: $tree-link-color;
 
@@ -54,7 +54,7 @@
       color: $tree-hover-color;
 
       svg {
-        fill: $tree-hover-color;
+        fill: $tree-hover-icon-color;
       }
 
       .tree-text {
@@ -113,6 +113,7 @@
     // Selected State
     &.is-selected {
       > a {
+        background-color: $tree-selected-bg-color;
         color: $tree-selected-color;
 
         svg {
@@ -147,7 +148,7 @@
       margin-top: 8px;
     }
 
-    &.is-disabled:before {
+    &.is-disabled::before {
       opacity: .5;
     }
 
