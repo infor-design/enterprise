@@ -3,11 +3,11 @@
 
 .modal.contextual-action-panel {
   //min-width: 70%;
-  @include css3(transform, translate3d(-50%, 50%, 0) scale(1.0, 1.0));
+  @include css3(transform, translate3d(-50%, 50%, 0) scale(1, 1));
   @include css3(transition-timing-function, cubic-bezier(.17, .04, .03, .94));
 
   &.is-visible {
-    @include css3(transform, translate3d(-50%, -50%, 0) scale(1.0, 1.0));
+    @include css3(transform, translate3d(-50%, -50%, 0) scale(1, 1));
     @include css3(transition-timing-function, cubic-bezier(.94, .03, .04, .17));
   }
 
@@ -35,7 +35,10 @@
     }
 
     .separator {
-      margin: 3px 5px 0;
+      background-color: $contextual-panel-seperator-bg-color;
+      height: 30px;
+      margin: 2px 0 0;
+      top: 4px;
     }
 
     .toolbar-searchfield-wrapper.active {
@@ -55,13 +58,18 @@
   }
 
   .modal-body {
-    padding: 2em;
-  }
+    padding: 3rem 0;
 
-  @include respond-to(phone) {
-    .btn-close .icon {
-      width: 16px;
+    .field:last-child input,
+    .field:last-child textarea {
+      margin-bottom: 0;
     }
   }
 
+}
+
+@include respond-to(phone) {
+  .modal.contextual-action-panel .btn-close .icon {
+    width: 16px;
+  }
 }
