@@ -1,93 +1,96 @@
 <!-- <body> -->
   {{> includes/masthead}}
 
-  <section class="header">
-    <div class="toolbar">
-      <div class="title">
-        <button class="btn-icon application-menu-trigger" type="button">
-          <span class="icon app-header" focusable="false" aria-hidden="true">
-            <span class="one"></span>
-            <span class="two"></span>
-            <span class="three"></span>
-          </span>
-          <span class="audible">Back</span>
-        </button>
-        <h1>Open Orders</h1>
-      </div>
-
-      <div class="buttonset">
-        <button class="btn-tertiary" type="button">
-          <svg class="icon" focusable="false" aria-hidden="true">
-            <use xlink:href="#icon-add"></use>
-          </svg>
-          <span>New Order</span>
-        </button>
-      </div>
-
-      <div class="more">
-        <button class="btn-actions" type="button">
-          <svg class="icon" focusable="false" aria-hidden="true">
-            <use xlink:href="#icon-more"></use>
-          </svg>
-          <span class="audible">More Actions</span>
-        </button>
-        <ul class="popupmenu">
-          <li><a href="#">Action #1</a></li>
-          <li><a href="#">Action #2</a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
   {{> includes/applicationmenu}}
+  <div class="page-container no-scroll">
 
-  <div class="page-container builder">
-    <div class="sidebar scrollable" role="complementary">
-      <div class="listview" id="task-listview" data-tmpl="open-orders-tpl" data-dataset="demoBuilderItems"></div>
-    </div>
-    <div id="maincontent" class="main scrollable builder-pane">
-      <div class="builder-header subheader is-personalizable">
-        <div class="toolbar no-actions-button">
-          <div class="title">
-            <h2>
-              <span class="panel-title">John Smith Construction</span><br>
-              <span class="panel-subhead">Order #423121-3 | $250,000 Credit Approved</span>
-            </h2>
-          </div>
-          <div class="buttonset">
-            <button class="btn-tertiary" type="button">
-              <span>View Profile</span>
-            </button>
+    <section class="header">
+      <div class="toolbar">
+        <div class="title">
+          <button class="btn-icon application-menu-trigger" type="button">
+            <span class="icon app-header" focusable="false" aria-hidden="true">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+            <span class="audible">Back</span>
+          </button>
+          <h1>Open Orders</h1>
+        </div>
 
-            <button id="my-cart-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" type="button" data-popdown="builder-popdown-content">
-              <svg class="icon" focusable="false" aria-hidden="true">
-                <use xlink:href="#icon-cart"></use>
-              </svg>
-              <span>My Cart</span>
-            </button>
-          </div>
-          <div class="more"></div>
+        <div class="buttonset">
+          <button class="btn-tertiary" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true">
+              <use xlink:href="#icon-add"></use>
+            </svg>
+            <span>New Order</span>
+          </button>
+        </div>
+
+        <div class="more">
+          <button class="btn-actions" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Action #1</a></li>
+            <li><a href="#">Action #2</a></li>
+          </ul>
         </div>
       </div>
+    </section>
 
-      <div class="builder-content no-scroll">
-        <div class="builder-actions scrollable-y">
-          <div class="builder-actions-header">
-            <h3>Add Items to Order</h3>
-          </div>
-          <div class="builder-actions-content">
-            <div class="field">
-              <label for="inline-order-searchfield" class="audible">Results Search Filter</label>
-              <input id="inline-order-searchfield" name="inline-order-searchfield" class="searchfield context" />
+    <div class="page-container builder">
+      <div class="sidebar scrollable" role="complementary">
+        <div class="listview" id="task-listview" data-tmpl="open-orders-tpl" data-dataset="demoBuilderItems"></div>
+      </div>
+      <div id="maincontent" class="main scrollable builder-pane">
+        <div class="builder-header subheader is-personalizable">
+          <div class="toolbar no-actions-button">
+            <div class="title">
+              <h2>
+                <span class="panel-title">John Smith Construction</span><br>
+                <span class="panel-subhead">Order #423121-3 | $250,000 Credit Approved</span>
+              </h2>
             </div>
-          {{> examples/saleshub/_search-results-list}}
+            <div class="buttonset">
+              <button class="btn-tertiary" type="button">
+                <span>View Profile</span>
+              </button>
+
+              <button id="my-cart-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" type="button" data-popdown="builder-popdown-content">
+                <svg class="icon" focusable="false" aria-hidden="true">
+                  <use xlink:href="#icon-cart"></use>
+                </svg>
+                <span>My Cart</span>
+              </button>
+            </div>
+            <div class="more"></div>
           </div>
         </div>
-        <div class="builder-sidebar">
-          {{> examples/saleshub/_cart-contents}}
+
+        <div class="builder-content no-scroll">
+          <div class="builder-actions scrollable-y">
+            <div class="builder-actions-header">
+              <h3>Add Items to Order</h3>
+            </div>
+            <div class="builder-actions-content">
+              <div class="field">
+                <label for="inline-order-searchfield" class="audible">Results Search Filter</label>
+                <input id="inline-order-searchfield" name="inline-order-searchfield" class="searchfield context" />
+              </div>
+            {{> examples/saleshub/_search-results-list}}
+            </div>
+          </div>
+          <div class="builder-sidebar">
+            {{> examples/saleshub/_cart-contents}}
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- Popdown inside the builder header -->
