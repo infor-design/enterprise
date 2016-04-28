@@ -219,15 +219,8 @@
       // Detaches Popdown Element and places at the body tag root, or at the root of the nearest
       // scrollable parent.
       place: function() {
-        var targetContainer = $('body');
-
-        // adjust the tooltip if the element is being scrolled inside a scrollable DIV
-        this.scrollparent = this.trigger.closest('.page-container[class*="scrollable"]');
-        if (this.scrollparent.length) {
-          targetContainer = this.scrollparent;
-        }
-
-        this.popdown.detach().appendTo(targetContainer);
+        this.scrollparent = $('body');
+        this.popdown.detach().appendTo(this.scrollparent);
       },
 
       position: function() {
@@ -270,7 +263,7 @@
 
         // Place the popdown below to start
         this.popdown.addClass('bottom').css({ 'left': to.left,
-                           'top': to.top /*+ t.outerHeight(true) + arrowHeight */ });
+                           'top': to.top + t.outerHeight(true) + arrowHeight });
 
         this.arrow.css({ 'left': t.outerWidth(true)/2,
                          'top': 0 - arrowHeight });
