@@ -680,13 +680,13 @@ $pageslice-download-link-border-color: #3dcd65;
   }
 
   .component-navbar {
-    height: 180px !important;
-
     a {
-      display: block !important;
+      &.component-previous {
+        padding-bottom:0;
+      }
 
       &.component-next {
-        top: 35px;
+        padding-bottom: 30px;
       }
     }
   }
@@ -1021,7 +1021,12 @@ $pageslice-download-link-border-color: #3dcd65;
 
 .component-navbar {
   background-color: $amethyst07;
-  height: 100px;
+  height: auto;
+  min-height: 100px;
+
+  .row {
+    margin-bottom: 0;
+  }
 
   &.azure07 {
     background-color: $azure07 !important;
@@ -1035,12 +1040,18 @@ $pageslice-download-link-border-color: #3dcd65;
     background-color: $emerald06 !important;
   }
 
+  &.amber09 {
+    background-color: $amber09 !important;
+  }
+
   a {
     color: $white;
     cursor: pointer;
     display: inline-block;
     opacity: .7;
+    padding-bottom: 30px;
     position: relative;
+    max-width: 300px;
     margin: 0 !important;
     min-width: 90px;
     top: 0;
@@ -1098,7 +1109,8 @@ $pageslice-download-link-border-color: #3dcd65;
 
   .buttonset,
   .toolbar {
-    height: 75px;
+    height: auto;
+    min-height: 75px;
     overflow: visible;
     top: 32px;
   }

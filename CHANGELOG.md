@@ -8,8 +8,7 @@ Release Date: April 4th
 * New - Expandable Area
 
 ## Breaking Changes
-* 2016-04-27 - Dropdown, Vertical Tabs, Wizard  - Event Renamed from activated to active.
-* 2016-04-27 - Tabs,  - Event Renamed from updated to update.
+* 2016-04-27 - Dropdown, Vertical Tabs, Wizard, Tabs  - Event Renamed from activated to active.
 * 2016-04-27 - Searchfield  - Event Renamed from activated to active and deactivated to deactive
 * 2016-04-26 - Expandable Area - Event Renamed from open-expandablearea, close-expandablearea to expand, collapse
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}

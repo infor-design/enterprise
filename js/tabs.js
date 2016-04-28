@@ -403,7 +403,7 @@
             self.positionFocusState();
           }
           self.checkFocusedElements();
-        }).on('update.tabs', function() {
+        }).on('updated.tabs', function() {
           self.updated();
         }).on('activate.tabs', function(e) {
           // Stop propagation of the activate event from going higher up into the DOM tree
