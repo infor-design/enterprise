@@ -79,24 +79,45 @@
       </div>
     </div>
 
-    <div class="expandable-area is-expanded">
+    <div class="expandable-area">
       <div class="expandable-header">
         <a class="title">
-          <span>Two Column Expandable Area</span>
+          <span>Customer Information</span>
         </a>
+      </div>
+      <div class="expandable-visible-pane">
+        <div class="content">
+
+          <div class="compound-field">
+            <div class="field">
+              <label for="example-customer-name">Customer Name</label>
+              <input type="text" name="customer-name" id="example-customer-name">
+            </div>
+
+            <div class="field">
+              <label for="example-customer-location">Location</label>
+              <select id="example-customer-location" class="dropdown" name="example-customer-location">
+                <option value="TB">Tampa Bay</option>
+                <option value="VC">Vancouver</option>
+                <option value="TC">Turks and Caicos</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
       </div>
       <div class="expandable-pane">
         <div class="content">
 
             <div class="compound-field">
               <div class="field">
-                <label for="example-customer-name">Cusomer Name</label>
-                <input type="text" name="customer-name" id="example-customer-name">
+                <label for="example-customer-more">More Customer Details</label>
+                <input type="text" name="customer-more" id="example-customer-more">
               </div>
 
               <div class="field">
-                <label for="example-customer-location">Location</label>
-                <select id="example-customer-location" class="dropdown" name="example-customer-location">
+                <label for="example-customer-other">Other</label>
+                <select id="example-customer-other" class="dropdown" name="example-customer-other">
                   <option value="TB">Tampa Bay</option>
                   <option value="VC">Vancouver</option>
                   <option value="TC">Turks and Caicos</option>
