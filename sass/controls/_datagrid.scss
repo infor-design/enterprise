@@ -128,7 +128,7 @@ $datagrid-header-short-height: 32px;
       line-height: 22px;
       top: 0;
 
-      &:before {
+      &::before {
         margin-top: 0;
       }
     }
@@ -204,11 +204,11 @@ $datagrid-header-short-height: 32px;
     //Checkboxes
     .datagrid-checkbox {
 
-      &:before {
+      &::before {
         border: 1px solid $datagrid-header-checkbox-border-color;
       }
 
-      &.is-checked:before {
+      &.is-checked::before {
         border: 1px solid $checkbox-color;
       }
     }
@@ -357,7 +357,7 @@ $datagrid-header-short-height: 32px;
       top: 0;
 
       &.info .audible {
-        background-color: #767676;
+        background-color: $graphite05;
       }
     }
 
@@ -367,7 +367,8 @@ $datagrid-header-short-height: 32px;
     @each $name in $color-names {
       $i: index($color-names, $name);
       $color: nth($color-vars, $i);
-       .#{$name}.tag {
+
+      .#{$name}.tag {
         background: $color;
       }
     }
@@ -496,12 +497,14 @@ $datagrid-header-short-height: 32px;
       //Date Picker
       .datepicker {
         border: 0;
-        padding-left: 20px;
+        padding: 9px 20px 8px !important;
 
         + .icon {
+          height: 16px;
+          left: 4px;
           position: relative;
-          left: 1px;
           top: 3px;
+          width: 19px;
         }
       }
     }
@@ -535,7 +538,7 @@ $datagrid-header-short-height: 32px;
         .datagrid-cell-wrapper span,
         .hyperlink {
           color: transparent;
-          text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+          text-shadow: 0 0 5px rgba(0, 0, 0, .5);
         }
       }
     }
@@ -601,10 +604,10 @@ $datagrid-header-short-height: 32px;
   vertical-align: top;
 
   .icon {
+    @include transition(all 250ms ease);
     fill: $datagrid-sort-icon-color;
     height: 18px;
     opacity: 0;
-    @include transition(all 250ms ease);
     width: 18px;
   }
 
@@ -643,19 +646,19 @@ $datagrid-header-short-height: 32px;
 // Cell Template Styling
 .datagrid-row-heading {
   @include font-size(16);
-  color: $datagrid-cell-color;
   @include ellipsis();
+  color: $datagrid-cell-color;
 }
 
 .datagrid-row-subheading {
   @include font-size(14);
-  color: #666666;
+  color: $datagrid-cell-color;
   padding-top: 2px;
 }
 
 .datagrid-row-micro {
   @include font-size(12);
-  color: #666666;
+  color: $datagrid-cell-color;
   line-height: 2rem;
 }
 
@@ -694,16 +697,16 @@ td .btn-actions {
   position: relative;
   top: -14px;
 
-  &:before {
+  &::before {
     @include checkbox-unchecked-before-style;
     margin-left: 0;
   }
 
-  &.is-checked:before {
+  &.is-checked::before {
     @include checkbox-checked-before-style;
   }
 
-  &.is-checked:after {
+  &.is-checked::after {
     @include checkbox-checked-after-style;
     @include css3(transform-origin, -11px top 0);
     @include checkbox-animation;
@@ -716,9 +719,9 @@ td .btn-actions {
     animation: none !important;
   }
 
-  &.is-partial:after {
-    animation: none !important;
+  &.is-partial::after {
     @include  checkbox-partial-after-style;
+    animation: none !important;
     margin-left: -2px;
     margin-top: -4px;
   }
@@ -726,7 +729,7 @@ td .btn-actions {
 }
 
 //Datagrid Dropdown Formatter
-td.datagrid-trigger-cell {
+.datagrid-trigger-cell {
   &:not(.is-readonly) {
     cursor: pointer;
   }
@@ -772,7 +775,6 @@ td.datagrid-trigger-cell {
   }
 }
 
-
 .datagrid-checkbox-wrapper {
   position: relative;
 }
@@ -798,8 +800,8 @@ td.datagrid-trigger-cell {
   }
 
   &:hover {
-    .icon.plus-minus:before,
-    .icon.plus-minus:after {
+    .icon.plus-minus::before,
+    .icon.plus-minus::after {
       background-color: $tertiary-btn-hover-color;
     }
 
@@ -895,7 +897,7 @@ html[dir='rtl'] {
   }
 
   //Datagrid Dropdown Formatter
-  td.datagrid-trigger-cell {
+  .datagrid-trigger-cell {
     .icon-calendar {
       left: auto;
       right: 3px;
@@ -911,17 +913,17 @@ html[dir='rtl'] {
     left: auto;
     right: -10px;
 
-    &:before {
+    &::before {
       margin-left: inherit;
       margin-right: 0;
     }
 
-    &.is-checked:after {
+    &.is-checked::after {
       left: auto;
       right: 6px;
     }
 
-    &.is-partial:after {
+    &.is-partial::after {
       margin-left: inherit;
       margin-right: -3px;
     }
@@ -989,7 +991,7 @@ html[dir='rtl'] {
     }
 
     &.is-dragging {
-      opacity: 0.5;
+      opacity: .5;
     }
 
     &.is-dragging-clone {
@@ -999,6 +1001,10 @@ html[dir='rtl'] {
       .datagrid-header-text {
         @include ellipsis();
       }
+
+      .sort-indicator {
+        opacity: 0;
+      }
     }
 
     &:hover,
@@ -1006,12 +1012,6 @@ html[dir='rtl'] {
     &.is-dragging-clone {
       .handle {
         display: inline-block;
-      }
-    }
-
-    &.is-dragging-clone {
-      .sort-indicator {
-        opacity: 0;
       }
     }
   }

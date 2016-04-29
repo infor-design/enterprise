@@ -2541,9 +2541,39 @@ $.fn.datagrid = function(options) {
     //Current Cell Editor thats in Use
     editor: null,
 
+    isCellEditable: function(row, cell) {
+      if (!this.settings.editable) {
+        return false;
+      }
+
+      var col = this.columnSettings(cell);
+      if (col.readonly) {
+        return false;
+      }
+
+      //Check if cell is editable via hook function
+      var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
+        cellValue = (cellNode.text() ? cellNode.text() : this.fieldValue(this.settings.dataset[row], col.field));
+
+      if (col.isEditable) {
+        var canEdit = col.isEditable(row, cell, cellValue, col, this.settings.dataset[row]);
+
+        if (!canEdit) {
+          return false;
+        }
+      }
+
+      if (!col.editor) {
+        return false;
+      }
+
+      return true;
+    },
+
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
-      if (!this.settings.editable) {
+    
+      if (!this.isCellEditable(row, cell)) {
         return;
       }
 
@@ -2555,21 +2585,13 @@ $.fn.datagrid = function(options) {
         }
         return;
       }
+
       // Put the Cell into Focus Mode
       this.setActiveCell(row, cell);
 
       var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
         cellValue = (cellNode.text() ? cellNode.text() : this.fieldValue(this.settings.dataset[row], col.field));
-
-      //Check if cell is editable via hook function
-      if (col.isEditable) {
-        var canEdit = col.isEditable(row, cell, cellValue, col, this.settings.dataset[row]);
-
-        if (!canEdit) {
-          return false;
-        }
-      }
 
       if (cellParent.hasClass('is-editing')) {
         //Already in edit mode
