@@ -516,6 +516,10 @@ $.fn.datagrid = function(options) {
   // Settings and Options
   var pluginName = 'datagrid',
       defaults = {
+        // F2 - toggles actionableMode "true" and "false"
+        // If actionableMode is "true”, tab and shift tab behave like left and right arrow key,
+        // if the cell is editable it goes in and out of edit mode
+        actionableMode: false,
         cellNavigation: true,
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
@@ -1652,7 +1656,7 @@ $.fn.datagrid = function(options) {
         return $();
       }
 
-      return rowNode.find('td[role="gridcell"]').eq(cell);
+      return rowNode.find('td[role="gridcell"]:not(.is-hidden)').eq(cell);
     },
 
     // Attach All relevant events
@@ -2255,8 +2259,21 @@ $.fn.datagrid = function(options) {
         var th = $(this),
           key = e.which,
           index = th.index(),
-          length = $('th', this.header).length,
-          triggerEl, move;
+          tempArray = [],
+          length, triggerEl, move, i, l;
+
+          for (i=0, l=self.settings.columns.length; i < l; i++) {
+            if (!('hidden' in self.settings.columns[i])) {
+              tempArray.push(i);
+            }
+          }
+          length = tempArray.length-1;
+
+          for (i=0; i < length+1; i++) {
+            if (index === tempArray[i]) {
+              index = i;
+            }
+          }
 
         // Enter or Space
         if (key === 13 || key === 32) {
@@ -2270,30 +2287,28 @@ $.fn.datagrid = function(options) {
 
         //Press Home, End, Left and Right arrow to move to first, last, previous or next
         if (/35|36|37|39/i.test(key)) {
-          index++;
 
           //Home, End or Ctrl/Meta + Left/Right arrow to move to the first or last
           if (/35|36/i.test(key) || ((e.ctrlKey || e.metaKey) && /37|39/i.test(key))) {
             if (Locale.isRTL()) {
-              move = (key === 36 || ((e.ctrlKey || e.metaKey) && key === 37)) ? length : 1;
+              move = (key === 36 || ((e.ctrlKey || e.metaKey) && key === 37)) ? length : 0;
             } else {
-              move = (key === 35 || ((e.ctrlKey || e.metaKey) && key === 39)) ? length : 1;
+              move = (key === 35 || ((e.ctrlKey || e.metaKey) && key === 39)) ? length : 0;
             }
           }
 
           // Left and Right arrow
           else {
             if (Locale.isRTL()) {
-              move = key === 39 ? (index > 1 ? index-1 : length) : (index < length ? index+1 : 1);
+              move = key === 39 ? (index > 0 ? index-1 : length) : (index < length ? index+1 : 0);
             } else {
-              move = key === 37 ? (index > 1 ? index-1 : length) : (index < length ? index+1 : 1);
+              move = key === 37 ? (index > 0 ? index-1 : length) : (index < length ? index+1 : 0);
             }
           }
 
           // Makeing move
           th.removeAttr('tabindex').removeClass('is-active');
-          $('th:nth-child('+ move +')', this.header).attr('tabindex', '0').addClass('is-active').focus();
-
+          $('th', this.header).eq(tempArray[move]).attr('tabindex', '0').addClass('is-active').focus();
           e.preventDefault();
         }
 
@@ -2301,6 +2316,7 @@ $.fn.datagrid = function(options) {
         if (key === 40) {
           th.removeAttr('tabindex');
           self.setActiveCell(0, index);
+          e.preventDefault();
         }
 
       });
@@ -2325,15 +2341,13 @@ $.fn.datagrid = function(options) {
 
       //Handle Editing / Keyboard
       self.table.on('keydown.datagrid', 'td, input', function (e) {
-        var handled = false,
-          key = e.which;
+        var key = e.which,
+          handled = false;
 
-        //In edit mode tab leaves edit mode
-        if (self.editor && key === 9) {
-          self.commitCellEdit(self.editor.input);
+        // F2 - toggles actionableMode "true" and "false"
+        if (key === 113) {
+          self.settings.actionableMode = self.settings.actionableMode ? false : true;
           handled = true;
-          var active = self.activeCell;
-          self.setActiveCell(active.row, active.cell);
         }
 
         if (handled) {
@@ -2341,64 +2355,83 @@ $.fn.datagrid = function(options) {
           e.stopPropagation();
           return false;
         }
-
-        // Set Shift key held
-        if(e.shiftKey) {
-          self.shiftHeld = true;
-        }
-
-        // If multiSelect is enabled, press Control+A to toggle select all rows
-        if (isMultiple && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
-          if (!checkbox.hasClass('is-checked') || checkbox.hasClass('is-partial')) {
-            checkbox.removeClass('is-partial').addClass('is-checked').attr('aria-checked', 'true');
-            self.selectAllRows();
-          } else {
-            checkbox.removeClass('is-checked').attr('aria-checked', 'true');
-            self.selectedRows([]);
-          }
-          e.preventDefault();
-        }
-
       });
 
+      //TODO: Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
+      //Press PageUp or PageDown to open the previous or next page and set focus to the first row.
+      //Press Alt+PageUp or Alt+PageDown to open the first or last page and set focus to the first row.
+
       //Handle rest of the keyboard
-
       self.table.on('keydown.datagrid', 'td', function (e) {
-        var key = e.which, row,
-          handled = false;
+        var key = e.which,
+          handled = false,
+          tempArray = [],
+          isRTL = Locale.isRTL(),
+          row = self.activeCell.row,
+          cell = self.activeCell.cell,
+          lastRow, lastCell, i, l;
 
-        //Left and Right to navigate by cell.
-        if (/37|39/i.test(key) && !e.altKey && !self.editor) {
-          if ((key === 37 && !Locale.isRTL()) || (key === 39 && Locale.isRTL())) {
-            self.setActiveCell(self.activeCell.row, self.activeCell.cell-1);
-          } else {
-            self.setActiveCell(self.activeCell.row, self.activeCell.cell+1);
+        for (i=0, l=self.settings.columns.length; i < l; i++) {
+          if (!('hidden' in self.settings.columns[i])) {
+            tempArray.push(i);
           }
         }
 
-        //Up and Down to navigate by row.
-        if (key === 38 && !e.altKey && !self.editor) {
-          if (self.activeCell.row === 0) {
-            self.activeCell.node.removeAttr('tabindex');
-            $('th:nth-child('+ (self.activeCell.cell+1) +')', this.header).attr('tabindex', '0').focus();
+        lastCell = tempArray.length-1;
+        lastRow = self.activeCell.node.closest('tbody').find('tr:last').index();
+
+        //Tab, Left and Right arrow keys.
+        if (/9|37|39/i.test(key)) {
+          if (key === 9 && !self.settings.actionableMode) {
+            return;
           }
-          self.setActiveCell(self.activeCell.row-1, self.activeCell.cell);
-          handled = true;
+
+          if (key !== 9 && e.altKey) {
+            //[Alt + Left/Right arrow] to move to the first or last cell on the current row.
+            cell = ((key === 37 && !isRTL) || (key === 39 && isRTL)) ? 0 : lastCell;
+            self.setActiveCell(row, cell);
+          }
+          //Tab, Shift-tab, Left and Right arrow keys to navigate by cell.
+          else if (!self.advanceEditMode || (key === 9)) {
+            if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) ||
+                (isRTL && (key === 39 || key === 9))) {
+              cell--;
+            } else {
+              cell = (cell+1 > lastCell) ? lastCell : cell+1;
+            }
+            self.setActiveCell(row, cell);
+            handled = true;
+          }
         }
 
-        if (key === 40 && !e.altKey && !self.editor) {
-          self.setActiveCell(self.activeCell.row+1, self.activeCell.cell);
-          handled = true;
+        //Up arrow key
+        if (key === 38 && !self.editor) {
+          //Press [Control + Up] arrow to move to the first row on the first page.
+          if (e.altKey) {
+            self.setActiveCell(0, cell);
+          }
+          //Up arrow key to navigate by row.
+          else {
+            if (row === 0) {
+              self.activeCell.node.removeAttr('tabindex');
+              $('th', this.header).eq(tempArray[cell]).attr('tabindex', '0').focus();
+            }
+            self.setActiveCell(row-1, cell);
+            handled = true;
+          }
         }
 
-        //Press Control+Home or Control+End to move to the first row on the first page or the last row on the last page.
-        if (key === 38 && e.altKey && !self.editor) {
-          self.setActiveCell(0, self.activeCell.cell);
-        }
-
-        if (key === 40 && e.altKey && !self.editor) {
-          row = self.activeCell.node.closest('tbody').find('tr:last').index();
-          self.setActiveCell(row, self.activeCell.cell);
+        //Down arrow key
+        if (key === 40 && !self.editor) {
+          //Press [Control + Down] arrow to move to the last row on the last page.
+          if (e.altKey) {
+            self.setActiveCell(lastRow, cell);
+          }
+          //Down arrow key to navigate by row.
+          else {
+            self.setActiveCell(row+1, cell);
+            handled = true;
+          }
         }
 
         //Press Control+Spacebar to announce the current row when using a screen reader.
@@ -2417,26 +2450,14 @@ $.fn.datagrid = function(options) {
           handled = true;
         }
 
-        //TODO: Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
-        //Press PageUp or PageDown to open the previous or next page and set focus to the first row.
-        //Press Alt+PageUp or Alt+PageDown to open the first or last page and set focus to the first row.
-        if (key === 37 && e.altKey) {
-          self.setActiveCell(self.activeCell.row, 0);
-        }
-
-        if (key === 39 && e.altKey) {
-          row = self.activeCell.node.closest('tr');
-          self.setActiveCell(self.activeCell.row, row.find('td').last().index());
-        }
-
         //Press Home or End to move to the first or last cell on the current row.
         if (key === 36) {
-          self.setActiveCell(self.activeCell.row, 0);
+          self.setActiveCell(row, 0);
         }
 
         if (key === 35) {
-          var lastCell = self.activeCell.node.closest('tr').find('td:last').index();
-          self.setActiveCell(self.activeCell.row, lastCell);
+          // lastCell = self.activeCell.node.closest('tr').find('td:last').index();
+          self.setActiveCell(row, lastCell);
         }
 
         // For mode 'Selectable':
@@ -2464,10 +2485,10 @@ $.fn.datagrid = function(options) {
 
         }
 
-        //For Editable mode - press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
+        // For Editable mode - press Enter or Space to edit or toggle a cell, or click to activate using a mouse.
         if (self.settings.editable && key === 32) {
           if (!self.editor) {
-            self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
+            self.makeCellEditable(row, cell, e);
           }
         }
 
@@ -2477,23 +2498,35 @@ $.fn.datagrid = function(options) {
             return;
           }
 
-          e.preventDefault();
-          e.stopPropagation();
-
           if (self.editor) {
+            self.advanceEditMode = false;
             self.commitCellEdit(self.editor.input);
-            self.setActiveCell(self.activeCell.row, self.activeCell.cell);
+            self.setActiveCell(row, cell);
           } else {
-            self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
+            self.advanceEditMode = true;
+            self.makeCellEditable(row, cell, e);
           }
-          return;
+          handled = true;
         }
 
         //A printable character navigatable
-        if ([13, 32, 37, 38, 39, 9, 40].indexOf(key) === -1 && !e.ctrlKey && !e.metaKey && self.settings.editable) {
+        if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
+          !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
           if (!self.editor) {
-            self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
+            self.makeCellEditable(row, cell, e);
           }
+        }
+
+        // If multiSelect is enabled, press Control+A to toggle select all rows
+        if (isMultiple && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
+          if (!checkbox.hasClass('is-checked') || checkbox.hasClass('is-partial')) {
+            checkbox.removeClass('is-partial').addClass('is-checked').attr('aria-checked', 'true');
+            self.selectAllRows();
+          } else {
+            checkbox.removeClass('is-checked').attr('aria-checked', 'true');
+            self.selectedRows([]);
+          }
+          handled = true;
         }
 
         if (handled) {
