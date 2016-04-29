@@ -16,6 +16,7 @@ $header-disabled-color: $slate05;
 $panel-bg-color: $white;
 $panel-border-color: $graphite03;
 $panel-header-bg-color: $graphite02;
+$drop-shadow-depth: rgba(0, 0, 0, .2);
 
 // Base Colors
 $primary-color: $azure06;
@@ -45,7 +46,7 @@ $hr-bottom-color: $white;
 $popover-bg-color: $white;
 $popover-border-color: $graphite03;
 $popover-arrow-border-color: $graphite03;
-$popover-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popover-color: $font-color;
 $popover-separator-color: $graphite03;
 $popover-alternate-color: $graphite10;
@@ -58,7 +59,7 @@ $popover-alternate-table-header: $graphite01;
 // Tooltips
 $tooltip-bg-color: $slate08;
 $tooltip-border-color: $slate08;
-$tooltip-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+$tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
 $tooltip-color: $white;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-border-color:  $alert-red;
@@ -87,7 +88,7 @@ $popupmenu-heading-color: $graphite04;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $inverse-color;
 $popupmenu-border-color: $graphite03;
-$popupmenu-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+$popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $primary-color;
 $popupmenu-hover-color: $graphite02;
 $popupmenu-alternate-bg-color: $graphite08;
@@ -158,7 +159,7 @@ $selected-bg-color: rgba($azure01, .7);
 
 // Autocomplete / Triggers
 $autocomplete-light-text: $graphite05;
-$autocomplete-active-bg-color: $body-bg-color;
+$autocomplete-active-bg-color: transparent;
 $trigger-icon-fill-color: $graphite06;
 $trigger-icon-fill-light-color: $graphite05;
 $trigger-hover-color: $graphite10;
@@ -197,6 +198,9 @@ $toolbar-standalone-bg-color: $graphite02;
 $toolbar-standalone-border-color: $graphite03;
 $toolbar-separator-color: $graphite03;
 
+// Formatter Toolbar
+$formatter-toolbar-separator-color: $graphite04;
+
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $primary-color;
 $contextual-toolbar-color: $inverse-color;
@@ -233,8 +237,8 @@ $dropdown-menu-separator-border-color: $graphite03;
 $dropdown-group-label-color: $graphite05;
 $dropdown-selected-bg-color: $primary-color;
 $dropdown-selected-color: $white;
-$dropdown-box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
-$dropdown-box-shadow-top: 0 -5px 5px rgba(0, 0, 0, .2);
+$dropdown-box-shadow: 0 5px 5px $drop-shadow-depth;
+$dropdown-box-shadow-top: 0 -5px 5px $drop-shadow-depth;
 
 //Date Picker
 $datepicker-icon-active-color: $trigger-active-color;
@@ -383,7 +387,7 @@ $slider-hover-shadow: 0 2px 5px 0 rgba($black, .2);
 //Modal
 $modal-bg-color: $white;
 $modal-border-color: $graphite03;
-$modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+$modal-box-shadow: 0 2px 5px $drop-shadow-depth;
 $modal-btn-color: $graphite06;
 $modal-btn-border-color: $graphite03;
 $modal-btn-hover-color: $graphite08;
@@ -585,7 +589,7 @@ $toast-bg-color: $white;
 $toast-border-color: $graphite03;
 $toast-header-color: $graphite10;
 $toast-text-color: $graphite06;
-$toast-shadow: none; //0 0 5px rgba(0, 0, 0, .2);
+$toast-shadow: none; //0 0 5px $drop-shadow-depth;
 
 //Builder Pattern
 $builder-header-bg-color: $slate06;

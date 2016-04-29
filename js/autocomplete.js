@@ -141,10 +141,10 @@
 
             // Build the dataset that will be submitted to the template
             dataset.listItemId = 'ac-list-option' + i;
-            dataset.label = option.toLowerCase().indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
+            dataset.label = option.toLowerCase().indexOf(term)===0 ? option.substr(0,term.length) + '<i>' + option.substr(term.length)  + '</i>': option;
             var pos = option.toLowerCase().indexOf(term);
             if (pos > 0) {
-              dataset.label = option.substr(0, pos) + '<i>' + option.substr(pos, term.length) + '</i>' + option.substr(term.length + pos);
+              dataset.label = option.substr(0, pos) + option.substr(pos, term.length) + '<i>' + option.substr(term.length + pos)  + '</i>';
             }
             dataset.hasValue = !isString && items[i].value !== undefined;
 
@@ -230,7 +230,6 @@
         }).on('keydown.autocomplete', function(e) {
 
           var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
-
           //Down - select next
           if (e.keyCode === 40 && self.list && self.list.is(':visible')) {
             selected = self.list.find('.is-selected');

@@ -20,6 +20,7 @@ $header-button-disabled-color: rgba($white, .3);
 $header-disabled-color: $graphite05;
 $panel-bg-color: $graphite02;
 $panel-border-color: $graphite06;
+$drop-shadow-depth: rgba(0, 0, 0, .2);
 
 // Base Colors
 $primary-color: $azure09;
@@ -54,7 +55,7 @@ $hr-bottom-color: transparent;
 // Popovers
 $popover-bg-color: $graphite01;
 $popover-border-color: $graphite06;
-$popover-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popover-arrow-border-color: $graphite06;
 $popover-color: $font-color;
 $popover-separator-color: $graphite06;
@@ -62,7 +63,7 @@ $popover-separator-color: $graphite06;
 // Tooltips
 $tooltip-bg-color: $graphite08;
 $tooltip-border-color: $graphite08;
-$tooltip-box-shadow: 0 2px 5px rgba(0,0,0,.2);
+$tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
 $tooltip-color: $white;
 $tooltip-error-bg-color: $alert-red;
 $tooltip-error-border-color:  $alert-red;
@@ -95,7 +96,7 @@ $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-color-filtered-text: $font-color;
 $popupmenu-bg-color: $white;
 $popupmenu-border-color: $graphite06;
-$popupmenu-box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+$popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-heading-color: $graphite07;
 $popupmenu-hover-color: $graphite04;
 $popupmenu-checked-color: $azure09;
@@ -187,6 +188,9 @@ $toolbar-standalone-bg-color: $graphite01;
 $toolbar-standalone-border-color: $graphite06;
 $toolbar-separator-color: $graphite06;
 
+// Formatter Toolbar
+$formatter-toolbar-separator-color: $graphite06;
+
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $primary-color;
 $contextual-toolbar-color: $inverse-color;
@@ -204,7 +208,7 @@ $dropdown-menu-separator-color: $graphite07;
 $dropdown-menu-separator-border-color: $graphite06;
 $dropdown-group-label-color: $graphite05;
 $dropdown-selected-bg-color: $primary-color;
-$dropdown-box-shadow: 0 5px 5px rgba(0, 0, 0, .2);
+$dropdown-box-shadow: 0 5px 5px $drop-shadow-depth;
 
 // Date Picker
 $datepicker-month-year-color: $black;
@@ -307,7 +311,7 @@ $switch-disabled-border-color: $graphite04;
 $switch-disabled-color: $graphite04;
 $switch-disabled-label-color: $disabled-color;
 $switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $primary-color;
-$switch-hover-box-shadow: 0 2px 5px rgba(0,0,0,.3);
+$switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
 
 // Editor
 $editor-bg-color: $input-bg-color;
@@ -353,7 +357,7 @@ $slider-hover-shadow: 0 2px 5px 0 rgba($black, .3);
 //Modal
 $modal-bg-color: $graphite01;
 $modal-border-color: $graphite06;
-$modal-box-shadow: 0 2px 5px rgba(0, 0 ,0, .3);
+$modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
 $modal-btn-color: $graphite08;
 $modal-color: $graphite09;
 $modal-btn-border-color: $graphite06;
@@ -570,7 +574,7 @@ $splitter-box-shadow-color: rgba(37, 120, 169, .75);
 $swaplist-bg-color-hover: $graphite04;
 $swaplist-bg-color-selected: $primary-color;
 $swaplist-border-color-focus: $azure07;
-$swaplist-icon-color: $graphite05;;
+$swaplist-icon-color: $graphite05;
 $swaplist-icon-color-hover: $font-color-highcontrast;
 $swaplist-border-color-hover: $font-color-highcontrast;
 $swaplist-text-color: $black;

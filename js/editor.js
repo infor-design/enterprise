@@ -540,7 +540,7 @@
             'justifyCenter': this.getIcon('JustifyCenter', 'center-text'),
             'justifyRight': this.getIcon('JustifyRight', 'right-text-align'),
             'source': this.getIcon('ViewSource', 'html', 'html-icon'),
-            'visual': '<span aria-hidden="true"><b>&nbsp;VISUAL&nbsp;</b></span>'
+            'visual': this.getIcon('ViewSource', 'visual', 'visual-icon')
           };
 
         if (typeof buttonLabelType === 'object') {

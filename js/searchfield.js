@@ -444,7 +444,7 @@
 
         $('<li class="separator" role="presentation"></li>').appendTo(list);
         var more = $('<li role="presentation"></li>').appendTo(list);
-        this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' <i>' + val + '</i></span>').appendTo(more);
+        this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' "' + val + '"</span>').appendTo(more);
       },
 
       addNoneLink: function() {

@@ -8,12 +8,12 @@
     display: inline-block;
     list-style: none;
 
-    &:after {
+    &::after {
       content: '\002F';
       padding: 0 10px;
     }
 
-    &:last-child:after {
+    &:last-child::after {
       content: '';
       padding: 0;
     }
@@ -73,11 +73,11 @@ html[dir='rtl'] {
   .breadcrumb {
     li {
 
-      &:after {
+      &::after {
         content: '\005C';
       }
 
-      &:last-child:after {
+      &:last-child::after {
         content: '';
       }
     }

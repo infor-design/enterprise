@@ -311,7 +311,7 @@ window.Editors = {
       var self = this;
       setTimeout(function() {
         self.input.remove();
-      }, 0);      
+      }, 0);
     };
 
     this.init();

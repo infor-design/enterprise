@@ -68,27 +68,21 @@
   -webkit-text-fill-color: $editor-color;
   width: 100%;
 
-  //States
-  &:focus,
-  &.is-active {
-    // border: 1px solid $editor-focus-border-color;
-  }
-
   &.is-disabled {
     background-color: $input-disabled-bg-color;
     border: 1px solid $input-disabled-border-color;
     padding: 10px;
 
     > * {
-      color: #999999;
+      color: $disabled-color;
     }
   }
 
   // Element Style
   p {
     @include font-size(14);
-    color: $editor-color;
     @include rem(line-height, 2.2rem);
+    color: $editor-color;
     margin-bottom: 15px;
     -webkit-text-fill-color: $editor-color;
 
@@ -99,27 +93,27 @@
   }
 
   h3 {
-    color: $editor-color;
     @include font-size(24);
     @include rem(line-height, 2.4rem);
     @include rem(margin-bottom, 1.5rem);
     -webkit-text-fill-color: $editor-color;
+    color: $editor-color;
   }
 
   h4 {
-    color: $editor-color;
     @include font-size(18);
     @include rem(line-height, 1.8rem);
     @include rem(margin-bottom, 1.5rem);
     -webkit-text-fill-color: $editor-color;
+    color: $editor-color;
   }
 
   ul,
   ol {
-    color: $input-color;
     @include rem(line-height, 2.2rem);
     @include rem(margin-left, 2rem);
     @include font-size(14);
+    color: $input-color;
     list-style: disc;
     -webkit-text-fill-color: $input-color;
   }
@@ -228,6 +222,10 @@
       }
     }
 
+    &.is-active {
+      box-shadow: none;
+    }
+
     &:hover {
       background-color: transparent;
       border: 1px solid transparent;
@@ -250,6 +248,12 @@
 
     .html-icon {
       margin-left: -32px;
+      width: 85px;
+    }
+
+    .visual-icon {
+      margin-left: -12px;
+      margin-right: -11px;
       width: 85px;
     }
 

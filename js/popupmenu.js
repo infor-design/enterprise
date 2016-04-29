@@ -384,10 +384,11 @@
 
           focus = self.menu.find(':focus');
 
-          var isPicker = (self.settings.menu === 'colorpicker-menu');
+          var isPicker = (self.settings.menu === 'colorpicker-menu'),
+            isAutocomplete = self.element.is('.autocomplete');
 
           //Left Close Submenu
-          if (key === 37) {
+          if (key === 37 && !isAutocomplete) {
             e.preventDefault();
 
             if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
@@ -413,7 +414,7 @@
           }
 
           //Up a square
-          if ((isPicker && key === 38)) {
+          if (isPicker && key === 38) {
             e.preventDefault();
             if (focus.parent().prevAll(excludes).length > 0) {
               self.highlight($(focus.parent().prevAll(excludes)[9]).find('a'));
@@ -421,7 +422,7 @@
           }
 
           //Right Open Submenu
-          if (key === 39) {
+          if (key === 39  && !isAutocomplete) {
             e.preventDefault();
             if (focus.parent().hasClass('submenu')) {
               self.showSubmenu(focus.parent());
@@ -430,7 +431,7 @@
           }
 
           //Down
-          if ((!isPicker && key === 40) || (isPicker && key === 39)) {
+          if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
             e.preventDefault();
             //Go back to Top on the last one
             if (focus.parent().nextAll(excludes).length === 0) {

@@ -56,33 +56,29 @@
     }
   }
 
-  &.back {
+  &.back,
+  &.directional {
     @include font-size(12);
     color: $hyperlink-color;
     display: inline-block;
-    margin-left: -10px;
-    padding: 2px 0 0;
 
     .icon {
+      display: inline;
       fill: $hyperlink-color;
       height: 22px;
-      left: 1px;
-      top: 1px;
-      width: 22px;
-    }
-
-    span {
-      border-bottom: 1px solid transparent;
-      margin-right: 7px;
+      left: -5px;
+      margin-right: -11px;
       position: relative;
-      top: -5.5px;
+      top: -1px;
+      vertical-align: middle;
+      width: 22px;
     }
 
     &:active:not([disabled]),
     &:focus:not([disabled]),
     &:hover:not([disabled]):not(.no-focus) {
       border-bottom: 1px solid transparent;
-      outline-offset: 0;
+      outline: none;
     }
 
     &:hover:not([disabled]) {
@@ -91,21 +87,20 @@
       }
     }
 
-    &:focus {
-      outline-offset: 0;
+    &:focus:not(.hide-focus) span {
+      outline: 1px solid $hyperlink-focus-border-color;
+      outline-offset: 3px;
     }
   }
 
-  svg {
-    display: inline;
-    fill: $hyperlink-color;
-    height: 18px;
-    left: -6px;
-    margin-right: -13px;
-    top: -1px;
-    vertical-align: middle;
-  }
+  &.directional {
 
+    .icon {
+      left: -5px;
+      margin-right: -7px;
+      top: -1px;
+    }
+  }
 }
 
 // Links Stacked - as on the controls index page

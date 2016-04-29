@@ -6,12 +6,12 @@ $toolbar-buttonset-height: 44px;
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
+  @included no-select();
   overflow-x: hidden;
   overflow-y: visible;
   padding: 0 1rem;
   position: relative;
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
 
   // Acts as a spacer that causes the toolbar items to vertically align.
   &::before {
@@ -28,6 +28,16 @@ $toolbar-buttonset-height: 44px;
     overflow: hidden;
     padding-left: 1px;  //for the focus state
     width: 98%;
+
+    > .separator {
+      background-color: $formatter-toolbar-separator-color;
+      display: inline-block;
+      height: 20px;
+      margin: 3px 16px 0;
+      position: relative;
+      top: 6px;
+      width: 1px;
+    }
 
     > * {
       margin: 5px 5px 5px 0;
@@ -76,16 +86,6 @@ $toolbar-buttonset-height: 44px;
     > * {
       margin-right: 1px;
     }
-  }
-
-  .buttonset > .separator {
-    background-color: $graphite03;
-    display: inline-block;
-    height: 20px;
-    margin: 3px 16px 0;
-    position: relative;
-    top: 6px;
-    width: 1px;
   }
 
   &.has-more-button {
@@ -203,6 +203,7 @@ $toolbar-buttonset-height: 44px;
 
   // Add special coloring to toolbar buttons for ".is-selected" state
   [class^="btn"].is-selected:focus:not(.hide-focus) {
+    border: 1px solid transparent;
     color: $tertiary-btn-hover-color;
 
     .icon {
