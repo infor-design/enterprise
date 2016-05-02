@@ -136,13 +136,17 @@
           this.tablist.prepend(appMenuTrigger);
         }
 
-        if (self.settings.addTabButton) {
+        // Add Tab Button
+        if (self.settings.addTabButton && (!this.addTabButton || !this.addTabButton.length)) {
           this.addTabButton = $('<li class="tab add-tab-button"><a href="#">' +
             '+ ' +
             '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
             '</a></tab>');
 
           this.tablist.append(this.addTabButton);
+        }
+        if (!self.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
+          this.addTabButton.remove();
         }
 
         //for each item in the tabsList...
