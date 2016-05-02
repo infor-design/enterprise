@@ -527,8 +527,6 @@
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
-        var self = this;
-
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', 'icon') // needs to be 'attr' here because .addClass() doesn't work with SVG
           .children('use').attr('xlink:href', '#icon-dropdown');
@@ -548,8 +546,12 @@
         });
 
         //Adjust height / top position
-        if (self.list.hasClass('is-ontop')) {
-          self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+        if (this.list.hasClass('is-ontop')) {
+          this.list.css({'top': this.input.offset().top - this.list.height() + this.input.outerHeight() - 2});
+        }
+
+        if (this.settings.multiple) {
+          this.updateList();
         }
       },
 
@@ -1265,6 +1267,7 @@
           trimmed = '',
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
 
+
         if (this.settings.multiple) {
           // Working with a select multiple allows for the "de-selection" of items in the list
           if (!val) {
@@ -1327,6 +1330,14 @@
         // Fire the change event with the new value if the noTrigger flag isn't set
         if (!noTrigger) {
           this.element.val(val).trigger('change').trigger('selected', [option, isAdded]);
+        }
+
+        // If multiselect, reset the menu to the unfiltered mode
+        if (this.settings.multiple) {
+          if (this.list.hasClass('search-mode')) {
+            this.resetList();
+          }
+          this.activate(true);
         }
 
         this.setBadge(option);
