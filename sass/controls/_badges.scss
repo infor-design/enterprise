@@ -55,7 +55,9 @@
   }
 
   &.round {
-    padding: 0 8px;
+    padding: 0;
+    text-align: center;
+    width: 22px;
   }
 
   &.is-clickable {

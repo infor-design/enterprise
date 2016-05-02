@@ -404,7 +404,7 @@
   }
 }
 
-.editor-placeholder:after {
+.editor-placeholder::after {
   content: attr(data-placeholder) !important;
   font-weight: 100;
   @include font-size(14);
@@ -431,7 +431,6 @@ html[dir='rtl'] {
     }
   }
 }
-
 
 .editor-container {
   &:hover {
@@ -465,7 +464,7 @@ html[dir='rtl'] {
 
     .editor,
     .editor-source {
-      border-color: transparent $error-color $error-color $error-color;
+      border-color: transparent $error-color;
     }
   }
 }
@@ -473,7 +472,4 @@ html[dir='rtl'] {
 .popupmenu .icon {
   fill: $editor-btn-color;
 
-  &.html-icon {
-    // display: none;
-  }
 }

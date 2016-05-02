@@ -34,9 +34,8 @@
   border-radius: 2px;
   box-shadow: $toast-shadow;
   color: $toast-text-color;
-  margin: 0 0 5px;
   overflow: hidden;
-  padding: 15px 30px 15px 10px;
+  padding: 0 10px;
   position: relative;
   width: auto;
 
@@ -44,13 +43,14 @@
     color: $toast-header-color;
     display: block;
     font-weight: bold;
-    margin: 5px 0;
+    margin-top: 19px;
   }
 
   .toast-message {
     display: block;
-    margin: 5px 0;
-    padding-right: 5px;
+    margin-bottom: 19px;
+    margin-top: 8px;
+    padding-right: 10px;
   }
 
   &.audible {
@@ -62,31 +62,24 @@
     cursor: pointer;
     height: 20px;
     position: absolute;
-    right: 0;
-    top: 6px;
+    right: -2px;
+    top: 7px;
     width: 20px;
 
-    svg.icon {
-      height: 12px;
-      width: 12px;
+    .icon {
+      height: 14px;
+      width: 14px;
     }
   }
 }
 
-// Animation
-
+// Toast Animation
 .effect-scale {
-  -webkit-animation-duration: .25s;
-  animation-duration: .25s;
-  -webkit-animation-name: animScale;
-  animation-name: animScale;
+  @include animation(animScale .25s);
 }
 
 .effect-scale-hide {
-  -webkit-animation-duration: .25s;
-  animation-duration: .25s;
-  -webkit-animation-name: animScaleOut;
-  animation-name: animScaleOut;
+  @include animation(animScaleOut .25s);
   opacity: 0;
 }
 
@@ -119,7 +112,6 @@
   position: absolute;
   width: 100%;
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

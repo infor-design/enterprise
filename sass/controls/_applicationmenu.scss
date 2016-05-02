@@ -4,7 +4,6 @@
 .application-menu {
   background-color: $slate08;
   border-right: 1px solid $application-menu-border-color;
-  @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, 0));
   bottom: 0;
   color: #acadae;
   height: 100%;
@@ -132,7 +131,9 @@ html[dir='rtl'] {
     + .page-container {
       margin: 0 0 0 auto;
       width: 100%;
-      @include css3(transform, translateZ(0));
+      //Effects menu calculation
+      //@include css3(transform, translateZ(0));
+      @include css3(transform, none);
     }
 
     &.is-open {
@@ -162,4 +163,3 @@ html[dir='rtl'] {
     }
   }
 }
-
