@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Modal Test: Invoke on Body</h2>
+
+    <p>It should be possible to invoke a Modal control directly on the body tag.  This functionality is primarily meant for "temporary" modals that will instantly be destroyed when they are closed.  In this instance, Modals will have no "trigger" element.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button id="invoke-modal-on-body" class="btn-primary">
+        <span>Invoke a Modal Control on the Body</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#invoke-modal-on-body').on('click.test', function() {
+
+      $('body').modal({
+        'title': 'Invoked on the Body Tag',
+        'content': '<p>This modal was created out of thin air, and lives on the body tag.</p>',
+        'buttons': [{
+          text: 'Show API in the Console',
+          click: function(e, modal) {
+            if (console) {
+              console.dir($('body').data('modal'));
+            }
+          }
+        },
+        {
+          text: 'Close',
+          click: function(e, modal) {
+            modal.close();
+          },
+          isDefault: true
+        }]
+      });
+
+    });
+  });
+</script>
