@@ -883,6 +883,8 @@
         }
 
         function listItemClickHandler(e, target) {
+          e.stopPropagation();
+
           var val = target.attr('data-val'),
             cur = self.element.find('option[value="'+ val +'"]');
           //Try matching the option's text if 'cur' comes back empty or overpopulated.
@@ -923,13 +925,15 @@
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
           .on('click.list', 'li', function (e) {
-            var target = $(e.target);
-            if (target.is('li')) {
-              return listItemClickHandler(e, target);
+            var target = $(e.target),
+              ddOption = target.closest('li.dropdown-option');
+
+            if (ddOption.length) {
+              target = ddOption;
             }
-            if (target.is('a')) {
-              return anchorClickHandler(e, target);
-            }
+
+            e.preventDefault();
+            return listItemClickHandler(e, target);
           })
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
@@ -953,8 +957,11 @@
 
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
-          return target.is('.option-text') || target.is('.dropdown-option') || target.is('.dropdown') ||
-              target.is('.multiselect') || target.is('.group-label') || target.is('.dropdown-search') || self.touchmove === true;
+          return
+              target.closest('.dropdown, .multiselect').length > 0 || target.is('.dropdown, multiselect') ||
+              target.is('.option-text') || target.is('.dropdown-option') ||
+              target.is('.group-label') || target.is('.dropdown-search') ||
+              self.touchmove === true;
         }
 
         // Triggered when the user scrolls the page.
@@ -974,9 +981,12 @@
 
         function clickDocument(e) {
           if (touchPrevented || isDropdownElement($(e.target)) || $(e.target).is('svg')) {
+            e.preventDefault();
+
             touchPrevented = false;
             return;
           }
+
           self.closeList();
         }
 
@@ -1022,7 +1032,7 @@
           // In mobile environments, bind against an orientation change.
           // in desktop environments, bind against window.resize
           if (window.orientation === undefined) {
-            $(window).on('resize.dropdown', function() {
+            $('body').on('resize.dropdown', function() {
               if (document.activeElement !== self.searchInput[0]) {
                 self.closeList();
               }
