@@ -479,13 +479,15 @@
           term = '';
         }
 
-        self.list.addClass('search-mode');
-        self.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
+        this.list.addClass('search-mode');
+        this.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
           .children('use').attr('xlink:href', '#icon-search');
-        self.listUl.find('li').hide();
-        self.searchInput.removeAttr('aria-activedescendant');
+        this.listUl.find('li').hide();
+        this.searchInput.removeAttr('aria-activedescendant');
 
-        $.each(self.element[0].options, function () {
+        this.unhighlightOptions();
+
+        $.each(this.element[0].options, function () {
           //Filter List
           var opt = $(this),
             text = opt.text(),
@@ -500,7 +502,7 @@
           //Find List Item - Starts With
           if (containsTerm) {
             if (!selected) {
-              self.highlightOption(opt);
+              //self.highlightOption(opt);
               selected = true;
             }
 
@@ -512,10 +514,12 @@
         });
 
         // Set ARIA-activedescendant to the first search term
-        var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
+        /*
+        var topItem = this.listUl.find('.dropdown-option').not(':hidden').eq(0);
         if (topItem.length) {
-          self.highlightOption(topItem);
+          this.highlightOption(topItem);
         }
+        */
 
         term = '';
 
@@ -1226,6 +1230,20 @@
         }
 
         return;
+      },
+
+      unhighlightOptions: function(listOptions, noScroll) {
+        if (!listOptions || !listOptions.length) {
+          listOptions = this.list.find('.is-selected');
+        }
+
+        listOptions.removeClass('is-focused').attr({'tabindex': '-1'});
+
+        this.searchInput.removeAttr('aria-activedescendant');
+
+        if (!noScroll || noScroll === false || noScroll === undefined) {
+          this.scrollToOption(listOptions.first());
+        }
       },
 
       //Select an option and optionally trigger events
