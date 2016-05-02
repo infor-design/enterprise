@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-         abbreviated: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab']
+         abbreviated: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+         narrow: ['M', 'S', 'S', 'R', 'K', 'J', 'S']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

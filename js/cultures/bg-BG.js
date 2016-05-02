@@ -42,7 +42,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['неделя', 'понеделник', 'вторник', 'сряда', 'четвъртък', 'петък', 'събота'],
-         abbreviated: ['пн', 'вт', 'ср', 'чт', 'пт', 'сб']
+         abbreviated: ['пн', 'вт', 'ср', 'чт', 'пт', 'сб'],
+         narrow: ['н', 'п', 'в', 'с', 'ч', 'п', 'с']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

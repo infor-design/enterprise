@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'],
-         abbreviated: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb']
+         abbreviated: ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'],
+         narrow: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

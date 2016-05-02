@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-         abbreviated: ['일', '월', '화', '수', '목', '금', '토']
+         abbreviated: ['일', '월', '화', '수', '목', '금', '토'],
+         narrow: ['일', '월', '화', '수', '목', '금', '토']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

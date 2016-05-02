@@ -40,7 +40,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
-         abbreviated: ['Pa','Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct']
+         abbreviated: ['Pa','Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct'],
+         narrow: ['P', 'P', 'S', 'Ç', 'P', 'C', 'C']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

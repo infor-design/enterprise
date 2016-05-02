@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'],
-         abbreviated: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo']
+         abbreviated: ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'],
+         narrow: ['V', 'H', 'K', 'Sz', 'Cs', 'P', 'Sz']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

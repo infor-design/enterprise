@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['sekmadienis', 'pirmadienis', 'antradienis', 'trečiadienis', 'ketvirtadienis', 'penktadienis', 'šeštadienis'],
-         abbreviated: ['sk', 'pr', 'an', 'tr', 'kt', 'pn', 'št']
+         abbreviated: ['sk', 'pr', 'an', 'tr', 'kt', 'pn', 'št'],
+         narrow: ['S', 'P', 'A', 'T', 'K', 'P', 'Š']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

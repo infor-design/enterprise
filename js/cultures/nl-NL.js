@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
-         abbreviated: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za']
+         abbreviated: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'],
+         narrow: ['Z', 'M', 'D', 'W', 'D', 'V', 'Z']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

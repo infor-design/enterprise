@@ -2,10 +2,10 @@
 //================================================== //
 
 .radio {
+  left: 0;
   opacity: 0;
-  left: 0px;
   position: absolute;
-  width: 0px;
+  width: 0;
 }
 
 .inline .radio ~ .label-text,
@@ -19,8 +19,8 @@
   position: relative;
 }
 
-.inline .radio ~ .label-text:before,
-.radio + label:before {
+.inline .radio ~ .label-text::before,
+.radio + label::before {
   background-color: $radio-bg-color;
   border: 1px solid $radio-border-color;
   border-radius: 50%;
@@ -32,8 +32,8 @@
   width: 18px;
 }
 
-.inline .radio:hover ~ .label-text:before,
-.radio:hover + label:before {
+.inline .radio:hover ~ .label-text::before,
+.radio:hover + label::before {
   @include css3(transition, border-color 300ms ease);
   border-color: $radio-hover-border-color;
 }
@@ -44,8 +44,8 @@
   line-height: 20px;
 }
 
-.inline .radio ~ .label-text:after,
-.radio + label:after {
+.inline .radio ~ .label-text::after,
+.radio + label::after {
   background-color: $radio-selected-bg-color;
   border: 2px solid $radio-selected-bg-color;
   border-radius: 50%;
@@ -58,42 +58,42 @@
   width: 6px;
 }
 
-.inline .radio:checked ~ .label-text:before,
-.radio:checked + label:before {
+.inline .radio:checked ~ .label-text::before,
+.radio:checked + label::before {
   background-color: $radio-selected-color;
   border: 1px solid $radio-selected-color;
 }
 
 // checked mark aspect changes
-.inline .radio:not(:checked) ~ .label-text:after,
-.radio:not(:checked) + label:after {
+.inline .radio:not(:checked) ~ .label-text::after,
+.radio:not(:checked) + label::after {
   @include opacity(0);
   transform: scale(0);
 }
 
-.inline .radio:checked ~ .label-text:after,
-.radio:checked + label:after {
+.inline .radio:checked ~ .label-text::after,
+.radio:checked + label::after {
   @include opacity(1);
   transform: scale(1);
 }
 
 // disabled radio
-.inline .radio:disabled ~ .label-text:before,
-.radio:disabled + label:before {
+.inline .radio:disabled ~ .label-text::before,
+.radio:disabled + label::before {
   background-color: $radio-disabled-bg-color;
   border-color: $radio-disabled-border-color;
   cursor: default;
 }
 
-.inline .radio:disabled:checked ~ .label-text:before,
-.radio:disabled:checked + label:before {
+.inline .radio:disabled:checked ~ .label-text::before,
+.radio:disabled:checked + label::before {
   background-color: $radio-disabled-border-color;
   border-color: $radio-disabled-border-color;
   cursor: default;
 }
 
-.inline .radio:disabled:checked ~ .label-text:before,
-.radio:disabled:checked + label:after {
+.inline .radio:disabled:checked ~ .label-text::before,
+.radio:disabled:checked + label::after {
   background-color: $radio-disabled-select-bg-color;
   border: 2px solid $radio-disabled-select-bg-color;
 }
@@ -104,8 +104,8 @@
   cursor: default;
 }
 
-.inline .radio:focus ~ .label-text:before,
-.radio:focus + label:before {
+.inline .radio:not(.hide-focus):focus ~ .label-text::before,
+.radio:not(.hide-focus):focus + label::before {
   box-shadow: $radio-focus-shadow;
 }
 
@@ -193,7 +193,7 @@
       margin-left: 0;
       position: relative;
 
-      &:after {
+      &::after {
         border-right: 1px solid $graphite03;
         bottom: 15px;
         content: ' ';
@@ -233,7 +233,7 @@
       margin-right: inherit;
       position: static;
 
-      &:after {
+      &::after {
         display: none;
       }
     }
@@ -260,15 +260,15 @@ html[dir='rtl'] {
     padding-right: 36px;
   }
 
-  .inline .radio ~ .label-text:before,
-  .radio + label:before {
+  .inline .radio ~ .label-text::before,
+  .radio + label::before {
     margin-left: inherit;
     margin-right: -33px;
   }
 
 
-  .inline .radio ~ .label-text:after,
-  .radio + label:after {
+  .inline .radio ~ .label-text::after,
+  .radio + label::after {
     left: auto;
     right: .67em;
   }
@@ -283,7 +283,7 @@ html[dir='rtl'] {
         margin-left: inherit;
         margin-right: 0;
 
-        &:after {
+        &::after {
           left: 0;
           right: auto;
         }
@@ -329,8 +329,8 @@ html[dir='rtl'] {
     width: auto;
   }
 
-  .inline .radio ~ .label-text:after,
-  .radio + label:after {
+  .inline .radio ~ .label-text::after,
+  .radio + label::after {
     top: 9px;
   }
 

@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['יום ראשון','יום שני','יום שלישי','יום רביעי','יום חמישי','יום שישי','יום שבת'],
-         abbreviated: ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳']
+         abbreviated: ['יום א׳','יום ב׳', 'יום ג׳','יום ד׳', 'יום ה׳','יום ו׳','שבת'],
+         narrow: ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

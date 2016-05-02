@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['svētdiena', 'pirmdiena', 'otrdiena', 'trešdiena', 'ceturtdiena', 'piektdiena', 'sestdiena'],
-         abbreviated: ['Sv', 'Pr', 'Ot', 'Tr', 'Ce', 'Pk', 'Se']
+         abbreviated: ['Sv', 'Pr', 'Ot', 'Tr', 'Ce', 'Pk', 'Se'],
+         narrow: ['S', 'P', 'O', 'T', 'C', 'P', 'S']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

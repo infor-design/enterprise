@@ -516,7 +516,7 @@
         number = number * 100;
       }
 
-      var parts = this.truncateDecimals(number, maximumFractionDigits, options && options.round).split('.');
+      var parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
       formattedNum = parts.join(decimal);
 
@@ -548,22 +548,27 @@
       return result === null ? 0 : result[1].length;
     },
 
-    truncateDecimals: function (number, digits, round) {
-      var multiplier = Math.pow(10, digits),
+    truncateDecimals: function (number, minDigits, maxDigits, round) {
+      var multiplier = Math.pow(10, maxDigits),
         adjustedNum = number * multiplier,
         truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
 
       //Round Decimals
       var decimals = this.decimalPlaces(number);
-      if (round && decimals >= digits && adjustedNum > 0) {
+      if (round && decimals >= maxDigits && adjustedNum > 0) {
         truncatedNum = Math.ceil(adjustedNum);
       }
 
-      if (round && decimals <= digits && decimals > 0) {
+      if (round && decimals <= maxDigits && decimals > 0) {
         truncatedNum = Math.ceil(adjustedNum);
       }
 
-      return (truncatedNum / multiplier).toFixed(digits);
+      if (decimals <= maxDigits && decimals > 0) {
+        truncatedNum = Math.ceil(adjustedNum);
+        maxDigits = Math.max(decimals, minDigits);
+      }
+
+      return (truncatedNum / multiplier).toFixed(maxDigits);
     },
 
 
@@ -762,9 +767,7 @@
   };
 
   if (!window.Locale.cultureInHead()) {
-    //setTimeout(function() {
       window.Locale.set('en-US');
-    //}, 10);
   }
 
   $(function() {

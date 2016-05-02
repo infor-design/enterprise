@@ -136,14 +136,15 @@ input.multiselect {
   }
 
   ul {
+    @include font-size(14);
     box-shadow: $dropdown-box-shadow;
     color: $popupmenu-color;
-    @include font-size(14);
     height: auto;
     line-height: 32px;
     max-height: 260px;
     min-height: inherit;
     overflow: auto;
+    padding: 5px 0;
     position: relative;
     text-indent: 10px;
   }
@@ -222,10 +223,10 @@ input.multiselect {
   }
 
   a {
-    color: $popupmenu-color;
-    text-decoration: none;
     @include css3(touch-callout, none);
     @include css3(user-select, none);
+    color: $popupmenu-color;
+    text-decoration: none;
   }
 
   // Added to the dropdown list when doing a search
@@ -240,7 +241,7 @@ input.multiselect {
 
       &.is-disabled {
         a {
-          color: #b6b6b6;
+          color: $disabled-color;
         }
       }
 
@@ -260,16 +261,19 @@ input.multiselect {
     }
 
     li::before {
-      top: 6px;
       @include checkbox-unchecked-before-style;
+      margin-left: -28px;
+      top: 6px;
     }
 
     li.is-disabled::before {
       @include checkbox-unchecked-disabled-before-style;
+      margin-left: -28px;
     }
 
     li.is-focused::before {
       @include checkbox-unchecked-before-style;
+      margin-left: -28px;
     }
 
     li.is-focused,
@@ -287,8 +291,8 @@ input.multiselect {
 
     li.is-selected::after {
       @include checkbox-checked-after-style;
-      left: 21px;
-      margin-top: 8px;
+      left: 20px;
+      margin-top: -2px;
     }
 
     li.is-disabled.is-selected::before {
@@ -297,7 +301,7 @@ input.multiselect {
 
     li.is-disabled.is-selected::after {
       @include checkbox-checked-disabled-after-style;
-      left: 21px;
+      left: 20px;
       margin-top: 8px;
     }
 
@@ -352,16 +356,16 @@ input.multiselect {
     width: 26px;
 
     .icon {
+      @include css3(transform, rotate(180deg));
       background-color: rgba($white, 0);
       fill: $trigger-icon-fill-color;
       height: 32px;
-      @include css3(transform, rotate(180deg));
       width: 18px;
 
       &.search {
+        @include css3(transform, rotate(0deg));
         height: 18px;
         margin-top: 7px;
-        @include css3(transform, rotate(0deg));
         width: 16px;
       }
     }
@@ -369,7 +373,7 @@ input.multiselect {
 }
 
 .dropdown-search {
-  background-color: $body-bg-color;
+  background-color: transparent;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
@@ -536,9 +540,9 @@ html[dir='rtl'] {
 
     // Icon States
     + .icon {
+      left: 6px;
       margin-left: inherit;
       margin-right: -33px;
-      left: 6px;
       right: auto !important;
     }
   }

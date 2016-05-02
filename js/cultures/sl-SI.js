@@ -40,7 +40,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'],
-         abbreviated: ['ned', 'pon', 'tor', 'sre', 'čet', 'pet', 'sob']
+         abbreviated: ['ned', 'pon', 'tor', 'sre', 'čet', 'pet', 'sob'],
+         narrow: ['n', 'p', 't', 's', 'č', 'p', 's']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

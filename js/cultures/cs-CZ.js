@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'],
-         abbreviated: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so']
+         abbreviated: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'],
+         narrow: ['N', 'P', 'Ú', 'S', 'Č', 'P', 'S']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

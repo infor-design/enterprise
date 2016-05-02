@@ -40,7 +40,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
         wide: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-        abbreviated: ['週日','週一','週二','週三','週四','週五','週六']
+        abbreviated: ['週日','週一','週二','週三','週四','週五','週六'],
+        narrow: ['日', '一', '二', '三', '四', '五', '六']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

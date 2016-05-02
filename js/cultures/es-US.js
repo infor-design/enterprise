@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
         wide: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA']
+        abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
+        narrow: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

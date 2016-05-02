@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
         wide: ['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'],
-        abbreviated: ['र','सो','मं','बु','गु','शु','श']
+        abbreviated: ['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि'],
+        narrow: ['र', 'सो', 'मं', 'बु', 'गु', 'शु', 'श']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

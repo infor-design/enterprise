@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
       days: {
         wide: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-        abbreviated: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr','Sa']
+        abbreviated: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr','Sa'],
+        narrow: ['S', 'M', 'D', 'M', 'D', 'F', 'S']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
             //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated

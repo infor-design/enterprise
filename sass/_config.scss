@@ -204,7 +204,7 @@ $formatter-toolbar-separator-color: $graphite04;
 //Contextual Toolbar
 $contextual-toolbar-bg-color: $primary-color;
 $contextual-toolbar-color: $inverse-color;
-$contextual-toolbar-button-color: rgba($inverse-color, .7);
+$contextual-toolbar-button-color: rgba($inverse-color, .8);
 $contextual-toolbar-button-hover-color: rgba($inverse-color, 1);
 $contextual-toolbar-button-disabled-color: rgba($inverse-color, .3);
 $contextual-panel-seperator-bg-color: $graphite04;
@@ -536,7 +536,7 @@ $timeline-line-color: $graphite04;
 $timeline-header-color: $primary-color;
 
 //Wizard
-$wizard-default-bg: $body-bg-color;
+$wizard-default-bg: transparent;
 $wizard-bar-bg: $graphite03;
 $wizard-color: $graphite06;
 $wizard-disabled-color: $graphite04;

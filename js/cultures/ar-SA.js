@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'Saturday'],
-         abbreviated: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
+         abbreviated: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+         narrow: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

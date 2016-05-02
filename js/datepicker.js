@@ -26,7 +26,7 @@
           isTimepicker: false,
           forceHourMode: undefined, // Can be used to force timepicker to use only 12-hour or 24-hour display modes. Defaults to whatever the current Globalize locale requires if left undefined.
           timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
-          
+
           dateFormat: 'yyyy-MM-dd', //Default is iso8601 format
           /*  disable:
           **    dates: 'M/d/yyyy' or
@@ -65,7 +65,7 @@
 
       //Add any markup
       build: function() {
-        
+
         // Add "is-disabled" css class to closest ".field" if element is disabled
         if (this.element.is(':disabled')) {
           this.element.closest('.field').addClass('is-disabled');
@@ -374,7 +374,7 @@
         $('.calendar-footer a', this.calendar).button();
 
         // Show Month
-        var currentVal = Locale.parseDate(this.element.val(), 
+        var currentVal = Locale.parseDate(this.element.val(),
           this.settings.isTimepicker ? Locale.calendar().dateFormat.datetime : null),
           elementDate = new Date(this.element.val());
 
@@ -623,7 +623,7 @@
           this.header.find('.year').text(' ' + year);
         }
 
-        var days = Locale.calendar().days.abbreviated,
+        var days = Locale.calendar().days.narrow || Locale.calendar().days.narrow || Locale.calendar().days.abbreviated,
           monthName = Locale.calendar().months.wide[month];
 
         this.currentMonth = month;
@@ -689,6 +689,14 @@
           }
 
         });
+
+        //Hide 6th Row if all disabled
+        var row = this.days.find('tr').eq(5);
+        if (row.find('td.alternate').length === 7) {
+          row.hide();
+        } else {
+          row.show();
+        }
       },
 
       // Put the date in the field and select on the calendar
@@ -746,7 +754,7 @@
         return date;
       },
 
-      // Get Time String 
+      // Get Time String
       getTimeString: function (date, isHours24) {
         var twodigit = function (number) {
             return (number < 10 ? '0' : '') + number;

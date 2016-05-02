@@ -2,7 +2,7 @@ define([
   'intern!object',
   'intern/chai!expect',
   'jsdom',
-], function(registerSuite, expect, JSDOM) {
+], function(registerSuite, expect) {
 
   var jsdom = require('jsdom').jsdom;
   document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
@@ -310,7 +310,7 @@ define([
 
     'be possible to add translations': function() {
       Locale.set('en-US');
-      Locale.currentLocale.data.messages['CustomValue'] = {id: 'CustomValue', value: 'Added Custom Value'};
+      Locale.currentLocale.data.messages.CustomValue = {id: 'CustomValue', value: 'Added Custom Value'};
 
       expect(Locale.translate('CollapseAppTray')).to.equal('Collapse App Tray');
       expect(Locale.translate('CustomValue')).to.equal('Added Custom Value');
@@ -331,14 +331,14 @@ define([
       expect(Locale.formatNumber(0.0000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0.0000004');
 
       Locale.set('de-DE');
-      expect(Locale.formatNumber(12345.1)).to.equal('12.345,100');
+      expect(Locale.formatNumber(12345.1)).to.equal('12.345,10');
       expect(Locale.formatNumber(0.0000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0,0000004');
-      expect(Locale.formatNumber(0.000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0,0000040');
+      expect(Locale.formatNumber(0.000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0,000004');
 
       Locale.set('ar-EG');
-      expect(Locale.formatNumber(12345.1)).to.equal('12٬345٫100');
+      expect(Locale.formatNumber(12345.1)).to.equal('12٬345٫10');
       Locale.set('bg-BG');
-      expect(Locale.formatNumber(12345.1)).to.equal('12 345,100');
+      expect(Locale.formatNumber(12345.1)).to.equal('12 345,10');
 
     },
 

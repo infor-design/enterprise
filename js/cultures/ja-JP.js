@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'],
-         abbreviated: ['日','月','火','水','木','金','土']
+         abbreviated: ['日','月','火','水','木','金','土'],
+         narrow: ['日','月','火','水','木','金','土']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

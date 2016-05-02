@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['sunnuntaina', 'maanantaina', 'tiistaina', 'keskiviikkona', 'torstaina', 'perjantaina', 'lauantaina'],
-         abbreviated: ['su', 'ma', 'ti', 'ke', 'to', 'pe', 'la']
+         abbreviated: ['su', 'ma', 'ti', 'ke', 'to', 'pe', 'la'],
+         narrow: ['S', 'M', 'T', 'K', 'T', 'P', 'L']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

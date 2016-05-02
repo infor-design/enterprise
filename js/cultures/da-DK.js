@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
-         abbreviated: ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø']
+         abbreviated: ['sø', 'ma', 'ti', 'on', 'to', 'fr', 'lø'],
+         narrow: ['S', 'M', 'T', 'O', 'T', 'F', 'L']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'],
-         abbreviated: ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab']
+         abbreviated: ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab'],
+         narrow: ['D', 'L', 'M', 'M', 'G', 'V', 'S']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

@@ -40,7 +40,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
           wide: ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'],
-          abbreviated: ['CN','Hai','Ba','Tư','Năm','Sáu','Bảy']
+          abbreviated: ['CN','Hai','Ba','Tư','Năm','Sáu','Bảy'],
+          narrow: ['C', 'H', 'B', 'T', 'N', 'S', 'B']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

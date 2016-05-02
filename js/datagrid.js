@@ -2572,7 +2572,7 @@ $.fn.datagrid = function(options) {
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
-    
+
       if (!this.isCellEditable(row, cell)) {
         return;
       }
@@ -2713,7 +2713,7 @@ $.fn.datagrid = function(options) {
 
       //Support passing the td in
       if (row instanceof jQuery) {
-        cell = row.index();
+        cell = row.siblings(':visible').addBack().index(row);
         row = row.parent().attr('aria-rowindex') -1;
       }
 

@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'],
-         abbreviated: ['Κυ','Δε','Τρ','Τε','Πε','Πα','Σά']
+         abbreviated: ['Κυ','Δε','Τρ','Τε','Πε','Πα','Σά'],
+         narrow: ['Κ', 'Δ', 'Τ', 'Τ', 'Π', 'Π', 'Σ']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {

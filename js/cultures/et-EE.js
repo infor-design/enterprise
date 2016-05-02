@@ -41,7 +41,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['pühapäev', 'esmaspäev', 'teisipäev', 'kolmapäev', 'neljapäev', 'reede', 'laupäev'],
-         abbreviated: ['P', 'E', 'T', 'K', 'N', 'R', 'L']
+         abbreviated: ['P', 'E', 'T', 'K', 'N', 'R', 'L'],
+         narrow: ['P', 'E', 'T', 'K', 'N', 'R', 'L']
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
