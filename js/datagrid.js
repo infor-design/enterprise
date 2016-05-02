@@ -430,13 +430,15 @@ window.Editors = {
       var self = this;
 
       //Check if isClick or cell touch and just open the list
-      if (event.type === 'click') {
-        //Revert cell on selection
-        this.select.trigger('openlist');
-      } else {
-         //Keyboard
-         this.input.focus();
-      }
+      this.select.trigger('openlist');
+      // console.log(jQuery._data( this.select[0], 'events' ));
+      // if (event.type === 'click') {
+      //   //Revert cell on selection
+      //   this.select.trigger('openlist');
+      // } else {
+      //    //Keyboard
+      //    this.input.focus();
+      // }
 
       this.select.on('listclosed', function () {
           if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
@@ -445,6 +447,8 @@ window.Editors = {
           } else {
             grid.commitCellEdit(self.input);
           }
+
+          //self.select.data('dropdown').destroy();
       });
 
     };
@@ -1711,6 +1715,15 @@ $.fn.datagrid = function(options) {
           self.expandRow(rowNode.index()+1);
         }
 
+        if (self.isCellEditable(row, cell)) {
+          setTimeout(function() {
+            if (self.isContainTextfield(elem) && !$('.dropdown', elem).length) {
+              self.quickEditMode = true;
+            }
+          }, 0);
+
+        }
+
         return false;
       });
 
@@ -2256,8 +2269,8 @@ $.fn.datagrid = function(options) {
 
       // Handle header navigation
       self.table.on('keydown.datagrid', 'th', function (e) {
-        var th = $(this),
-          key = e.which,
+        var key = e.which || e.keyCode || e.charCode || 0,
+          th = $(this),
           index = th.index(),
           tempArray = [],
           length, triggerEl, move, i, l;
@@ -2286,7 +2299,7 @@ $.fn.datagrid = function(options) {
         }
 
         //Press Home, End, Left and Right arrow to move to first, last, previous or next
-        if (/35|36|37|39/i.test(key)) {
+        if ([35, 36, 37, 39].indexOf(key) !== -1) {
 
           //Home, End or Ctrl/Meta + Left/Right arrow to move to the first or last
           if (/35|36/i.test(key) || ((e.ctrlKey || e.metaKey) && /37|39/i.test(key))) {
@@ -2341,7 +2354,7 @@ $.fn.datagrid = function(options) {
 
       //Handle Editing / Keyboard
       self.table.on('keydown.datagrid', 'td, input', function (e) {
-        var key = e.which,
+        var key = e.which || e.keyCode || e.charCode || 0,
           handled = false;
 
         // F2 - toggles actionableMode "true" and "false"
@@ -2363,10 +2376,11 @@ $.fn.datagrid = function(options) {
 
       //Handle rest of the keyboard
       self.table.on('keydown.datagrid', 'td', function (e) {
-        var key = e.which,
+        var key = e.which || e.keyCode || e.charCode || 0,
           handled = false,
           tempArray = [],
           isRTL = Locale.isRTL(),
+          node = self.activeCell.node,
           row = self.activeCell.row,
           cell = self.activeCell.cell,
           lastRow, lastCell, i, l;
@@ -2378,10 +2392,10 @@ $.fn.datagrid = function(options) {
         }
 
         lastCell = tempArray.length-1;
-        lastRow = self.activeCell.node.closest('tbody').find('tr:last').index();
+        lastRow = node.closest('tbody').find('tr:last').index();
 
         //Tab, Left and Right arrow keys.
-        if (/9|37|39/i.test(key)) {
+        if ([9, 37, 39].indexOf(key) !== -1) {
           if (key === 9 && !self.settings.actionableMode) {
             return;
           }
@@ -2392,7 +2406,7 @@ $.fn.datagrid = function(options) {
             self.setActiveCell(row, cell);
           }
           //Tab, Shift-tab, Left and Right arrow keys to navigate by cell.
-          else if (!self.advanceEditMode || (key === 9)) {
+          else if (!self.quickEditMode || (key === 9)) {
             if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) ||
                 (isRTL && (key === 39 || key === 9))) {
               cell--;
@@ -2405,7 +2419,7 @@ $.fn.datagrid = function(options) {
         }
 
         //Up arrow key
-        if (key === 38 && !self.editor) {
+        if (key === 38 && !self.quickEditMode) {
           //Press [Control + Up] arrow to move to the first row on the first page.
           if (e.altKey) {
             self.setActiveCell(0, cell);
@@ -2413,7 +2427,7 @@ $.fn.datagrid = function(options) {
           //Up arrow key to navigate by row.
           else {
             if (row === 0) {
-              self.activeCell.node.removeAttr('tabindex');
+              node.removeAttr('tabindex');
               $('th', this.header).eq(tempArray[cell]).attr('tabindex', '0').focus();
             }
             self.setActiveCell(row-1, cell);
@@ -2422,22 +2436,22 @@ $.fn.datagrid = function(options) {
         }
 
         //Down arrow key
-        if (key === 40 && !self.editor) {
+        if (key === 40 && !self.quickEditMode) {
           //Press [Control + Down] arrow to move to the last row on the last page.
           if (e.altKey) {
             self.setActiveCell(lastRow, cell);
           }
           //Down arrow key to navigate by row.
           else {
-            self.setActiveCell(row+1, cell);
+            self.setActiveCell(((row+1 > lastRow) ? lastRow : row+1), cell);
             handled = true;
           }
         }
 
         //Press Control+Spacebar to announce the current row when using a screen reader.
-        if (key === 32 && e.ctrlKey && self.activeCell.node) {
+        if (key === 32 && e.ctrlKey && node) {
           var string = '';
-          row = self.activeCell.node.closest('tr');
+          row = node.closest('tr');
 
           row.children().each(function () {
             var cell = $(this);
@@ -2463,7 +2477,7 @@ $.fn.datagrid = function(options) {
         // For mode 'Selectable':
         // Press Space to toggle row selection, or click to activate using a mouse.
         if (key === 32 && !self.settings.editable) {
-          row = self.activeCell.node.closest('tr');
+          row = node.closest('tr');
 
           if ($(e.target).closest('.datagrid-row-detail').length === 1) {
             return;
@@ -2499,12 +2513,17 @@ $.fn.datagrid = function(options) {
           }
 
           if (self.editor) {
-            self.advanceEditMode = false;
+            self.quickEditMode = false;
             self.commitCellEdit(self.editor.input);
-            self.setActiveCell(row, cell);
+
+            var evt = $.Event('keydown.datagrid');
+            evt.keyCode = 40; // move down
+            node.trigger(evt);
           } else {
-            self.advanceEditMode = true;
             self.makeCellEditable(row, cell, e);
+            if (self.isContainTextfield(node) && !$('.dropdown', node).length) {
+              self.quickEditMode = true;
+            }
           }
           handled = true;
         }
@@ -2536,6 +2555,20 @@ $.fn.datagrid = function(options) {
         }
 
       });
+    },
+
+    isContainTextfield: function(container) {
+      var noTextTypes = ['image', 'button', 'submit', 'reset', 'checkbox', 'radio'],
+        selector = 'textarea, input',
+        l = noTextTypes.length, i;
+
+      selector += l ? ':not(' : '';
+      for(i = 0; i < l; i++) {
+        selector += '[type='+ noTextTypes[i] +'],';
+      }
+      selector = l ? (selector.slice(0, -1) + ')') : '';
+
+      return !!($(selector, container).length);
     },
 
     //Current Cell Editor thats in Use
