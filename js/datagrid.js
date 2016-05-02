@@ -523,7 +523,7 @@ $.fn.datagrid = function(options) {
         // F2 - toggles actionableMode "true" and "false"
         // If actionableMode is "true”, tab and shift tab behave like left and right arrow key,
         // if the cell is editable it goes in and out of edit mode
-        actionableMode: true,
+        actionableMode: false,
         cellNavigation: true,
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
