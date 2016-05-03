@@ -203,7 +203,7 @@
                   .find('use').attr('xlink:href', '#icon-closed-folder');
             }).animateClosed();
           } else {
-            next.addClass('is-open').one('animateopencomplete', function() {
+            next.addClass('is-open').css('height', 0).one('animateopencomplete', function() {
               node.closest('.folder').addClass('is-open').end()
                   .find('use').attr('xlink:href', '#icon-open-folder');
             }).animateOpen();

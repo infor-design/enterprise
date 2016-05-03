@@ -495,14 +495,14 @@ $datagrid-row-selected-color: rgba(200, 233, 244, .30);
 $datagrid-row-selected-color-dark: rgba(200, 233, 244, .45);
 $datagrid-row-hover-color: $graphite02;
 $datagrid-alternate-bg-color: #f5f5f5;
-$datagrid-alternate-row-hover-color: #graphite02;
-$datagrid-readonly-header-bg-color: $graphite02;
-$datagrid-readonly-header-border-color: $graphite03;
-$datagrid-readonly-header-color: $graphite06;
-$datagrid-readonly-header-hover-color: $graphite02;
-$datagrid-readonly-row-hover-color: transparent;
-$datagrid-readonly-sort-icon-color: $graphite03;
-$datagrid-readonly-sort-icon-hover-color: $graphite05;
+$datagrid-alternate-row-hover-color: $graphite02;
+$datagrid-list-header-bg-color: $graphite02;
+$datagrid-list-header-border-color: $graphite03;
+$datagrid-list-header-color: $graphite06;
+$datagrid-list-header-hover-color: $graphite02;
+$datagrid-list-row-hover-color: transparent;
+$datagrid-list-sort-icon-color: $graphite03;
+$datagrid-list-sort-icon-hover-color: $graphite05;
 $datagrid-header-focus-bg-color: $primary-color;
 
 // Search Results

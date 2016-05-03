@@ -628,8 +628,8 @@ $.fn.datagrid = function(options) {
         self.container = self.element.addClass('datagrid-container');
       }
 
-      $(this.element).closest('.datagrid-wrapper').addClass(this.settings.isList ? ' is-readonly' : '');
-      self.table.addClass(this.settings.isList ? ' is-readonly' : '');
+      $(this.element).closest('.datagrid-wrapper').addClass(this.settings.isList ? ' is-gridlist' : '');
+      self.table.addClass(this.settings.isList ? ' is-gridlist' : '');
 
       self.table.empty();
       self.renderHeader();
@@ -1236,6 +1236,15 @@ $.fn.datagrid = function(options) {
 
             if (!canEdit) {
               cssClass += ' is-readonly';
+            }
+          }
+
+          //Run a function that helps check if readonly
+          if (col.isReadonly && !col.readonly) {
+            var isReadonly = col.isReadonly(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
+
+            if (!isReadonly) {
+              isReadonly += ' is-readonly';
             }
           }
 

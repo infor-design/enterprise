@@ -172,7 +172,7 @@ var express = require('express'),
 
         return {
           icon: icon,
-          href: href,
+          href: href.replace('\\','/'),
           text: link
         };
       }
@@ -250,9 +250,6 @@ var express = require('express'),
   router.get('/controls/', defaultControlsRoute);
   router.get('/controls', defaultControlsRoute);
 
-
-
-
   // ======================================
   //  Patterns Section
   // ======================================
@@ -272,9 +269,6 @@ var express = require('express'),
     res.render('patterns/' + end, opts);
     next();
   });
-
-
-
 
   // =========================================
   // Test Pages
@@ -440,9 +434,6 @@ var express = require('express'),
   router.get('/layouts/', defaultLayoutRouteHandler);
   router.get('/layouts', defaultLayoutRouteHandler);
 
-
-
-
   // =========================================
   // Examples Pages
   // =========================================
@@ -493,9 +484,6 @@ var express = require('express'),
   router.get('/examples/', exampleRouteHandler);
   router.get('/examples', exampleRouteHandler);
 
-
-
-
   // =========================================
   // Angular Support Test Pages
   // =========================================
@@ -536,9 +524,6 @@ var express = require('express'),
     res.render('react/' + end, opts);
     next();
   });
-
-
-
 
   // =========================================
   // Knockout Support Test Pages

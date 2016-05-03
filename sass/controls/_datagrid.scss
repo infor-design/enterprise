@@ -1,7 +1,7 @@
 // Datagrid
 //================================================== //
 
-$datagrid-header-height: 40px;
+$datagrid-header-height: 39px;  //1px border in parent
 $datagrid-header-medium-height: 30px;
 $datagrid-header-short-height: 32px;
 
@@ -535,27 +535,27 @@ $datagrid-header-short-height: 32px;
   }
 
   //Readonly - List Datagrid
-  &.is-readonly {
+  &.is-gridlist {
 
     th {
-      background-color: $datagrid-readonly-header-bg-color;
+      background-color: $datagrid-list-header-bg-color;
       border-left-color: transparent;
 
       .datagrid-header-text {
-        color: $datagrid-readonly-header-color;
+        color: $datagrid-list-header-color;
       }
 
       &.is-sortable:hover {
-        background-color: $datagrid-readonly-header-hover-color;
+        background-color: $datagrid-list-header-hover-color;
       }
 
       .sort-indicator .icon {
-        fill: $datagrid-readonly-sort-icon-color;
+        fill: $datagrid-list-sort-icon-color;
       }
 
       &.is-sorted-asc .sort-asc .icon,
       &.is-sorted-desc .sort-desc .icon {
-        fill: $datagrid-readonly-sort-icon-hover-color;
+        fill: $datagrid-list-sort-icon-hover-color;
       }
     }
 
@@ -569,11 +569,11 @@ $datagrid-header-short-height: 32px;
     }
 
     thead {
-      border-bottom: 1px solid $datagrid-readonly-header-border-color;
+      border-bottom: 1px solid $datagrid-list-header-border-color;
     }
 
     tr:hover:not(.datagrid-expandable-row) td {
-      background-color: $datagrid-readonly-row-hover-color;
+      background-color: $datagrid-list-row-hover-color;
     }
   }
 }

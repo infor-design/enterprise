@@ -111,14 +111,27 @@
     line-height: 25px;
 
     svg {
+      fill: $primary-color;
+      height: 16px;
       left: 0;
       margin-right: 2px;
+      top: 4px;
+      width: 16px;
     }
 
     a span {
+      border: 1px solid transparent;
       position: relative;
       text-transform: capitalize;
       top: 2px;
+    }
+
+    a:hover:not([disabled]) {
+      border-bottom-color: transparent;
+
+      span {
+        border-bottom-color: $primary-color;
+      }
     }
   }
 
