@@ -479,13 +479,15 @@
           term = '';
         }
 
-        self.list.addClass('search-mode');
-        self.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
+        this.list.addClass('search-mode');
+        this.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
           .children('use').attr('xlink:href', '#icon-search');
-        self.listUl.find('li').hide();
-        self.searchInput.removeAttr('aria-activedescendant');
+        this.listUl.find('li').hide();
+        this.searchInput.removeAttr('aria-activedescendant');
 
-        $.each(self.element[0].options, function () {
+        this.unhighlightOptions();
+
+        $.each(this.element[0].options, function () {
           //Filter List
           var opt = $(this),
             text = opt.text(),
@@ -500,7 +502,7 @@
           //Find List Item - Starts With
           if (containsTerm) {
             if (!selected) {
-              self.highlightOption(opt);
+              //self.highlightOption(opt);
               selected = true;
             }
 
@@ -512,10 +514,12 @@
         });
 
         // Set ARIA-activedescendant to the first search term
-        var topItem = self.listUl.find('.dropdown-option').not(':hidden').eq(0);
+        /*
+        var topItem = this.listUl.find('.dropdown-option').not(':hidden').eq(0);
         if (topItem.length) {
-          self.highlightOption(topItem);
+          this.highlightOption(topItem);
         }
+        */
 
         term = '';
 
@@ -527,8 +531,6 @@
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
-        var self = this;
-
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', 'icon') // needs to be 'attr' here because .addClass() doesn't work with SVG
           .children('use').attr('xlink:href', '#icon-dropdown');
@@ -548,8 +550,12 @@
         });
 
         //Adjust height / top position
-        if (self.list.hasClass('is-ontop')) {
-          self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+        if (this.list.hasClass('is-ontop')) {
+          this.list.css({'top': this.input.offset().top - this.list.height() + this.input.outerHeight() - 2});
+        }
+
+        if (this.settings.multiple) {
+          this.updateList();
         }
       },
 
@@ -883,6 +889,8 @@
         }
 
         function listItemClickHandler(e, target) {
+          e.stopPropagation();
+
           var val = target.attr('data-val'),
             cur = self.element.find('option[value="'+ val +'"]');
           //Try matching the option's text if 'cur' comes back empty or overpopulated.
@@ -923,13 +931,15 @@
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
           .on('click.list', 'li', function (e) {
-            var target = $(e.target);
-            if (target.is('li')) {
-              return listItemClickHandler(e, target);
+            var target = $(e.target),
+              ddOption = target.closest('li.dropdown-option');
+
+            if (ddOption.length) {
+              target = ddOption;
             }
-            if (target.is('a')) {
-              return anchorClickHandler(e, target);
-            }
+
+            e.preventDefault();
+            return listItemClickHandler(e, target);
           })
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
@@ -953,8 +963,11 @@
 
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
-          return target.is('.option-text') || target.is('.dropdown-option') || target.is('.dropdown') ||
-              target.is('.multiselect') || target.is('.group-label') || target.is('.dropdown-search') || self.touchmove === true;
+          return
+              target.closest('.dropdown, .multiselect').length > 0 || target.is('.dropdown, multiselect') ||
+              target.is('.option-text') || target.is('.dropdown-option') ||
+              target.is('.group-label') || target.is('.dropdown-search') ||
+              self.touchmove === true;
         }
 
         // Triggered when the user scrolls the page.
@@ -974,9 +987,12 @@
 
         function clickDocument(e) {
           if (touchPrevented || isDropdownElement($(e.target)) || $(e.target).is('svg')) {
+            e.preventDefault();
+
             touchPrevented = false;
             return;
           }
+
           self.closeList();
         }
 
@@ -1022,7 +1038,7 @@
           // In mobile environments, bind against an orientation change.
           // in desktop environments, bind against window.resize
           if (window.orientation === undefined) {
-            $(window).on('resize.dropdown', function() {
+            $('body').on('resize.dropdown', function() {
               if (document.activeElement !== self.searchInput[0]) {
                 self.closeList();
               }
@@ -1216,6 +1232,20 @@
         return;
       },
 
+      unhighlightOptions: function(listOptions, noScroll) {
+        if (!listOptions || !listOptions.length) {
+          listOptions = this.list.find('.is-selected');
+        }
+
+        listOptions.removeClass('is-focused').attr({'tabindex': '-1'});
+
+        this.searchInput.removeAttr('aria-activedescendant');
+
+        if (!noScroll || noScroll === false || noScroll === undefined) {
+          this.scrollToOption(listOptions.first());
+        }
+      },
+
       //Select an option and optionally trigger events
       selectOption: function(option, noTrigger) {
 
@@ -1254,6 +1284,7 @@
           text = '',
           trimmed = '',
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
+
 
         if (this.settings.multiple) {
           // Working with a select multiple allows for the "de-selection" of items in the list
@@ -1317,6 +1348,14 @@
         // Fire the change event with the new value if the noTrigger flag isn't set
         if (!noTrigger) {
           this.element.val(val).trigger('change').trigger('selected', [option, isAdded]);
+        }
+
+        // If multiselect, reset the menu to the unfiltered mode
+        if (this.settings.multiple) {
+          if (this.list.hasClass('search-mode')) {
+            this.resetList();
+          }
+          this.activate(true);
         }
 
         this.setBadge(option);

@@ -292,7 +292,8 @@ input.multiselect {
     li.is-selected::after {
       @include checkbox-checked-after-style;
       left: 20px;
-      margin-top: -2px;
+      margin-top: 0;
+      top: 8px;
     }
 
     li.is-disabled.is-selected::before {
