@@ -1,7 +1,7 @@
 // Toolbars
 //================================================== */
 
-$toolbar-buttonset-height: 44px;
+$toolbar-buttonset-height: 40px;
 
 // See also Colors.scss
 .toolbar,
@@ -40,7 +40,7 @@ $toolbar-buttonset-height: 44px;
     }
 
     > * {
-      margin: 5px 5px 5px 0;
+      margin: 3px 5px 3px 0;
       vertical-align: top;
 
       &:last-child {
