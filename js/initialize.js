@@ -198,7 +198,7 @@
           ['button', '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split'],
 
           //Hide Focus
-          ['hideFocus', 'a.tick, a.hyperlink'],
+          ['hideFocus', 'a.hide-focus, a.tick, a.hyperlink'],
 
           //Pager
           ['pager', '.paginated'],

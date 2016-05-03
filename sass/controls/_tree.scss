@@ -39,7 +39,7 @@
     }
 
     //Focus State
-    &:focus {
+    &:not(.hide-focus):focus {
       border: 1px solid $tree-focus-border-color;
       border-radius: 2px;
       color: $tree-link-color;
@@ -113,7 +113,7 @@
     // Selected State
     &.is-selected {
       > a {
-        background-color: $tree-selected-bg-color;
+        // background-color: $tree-selected-bg-color;
         color: $tree-selected-color;
 
         svg {
@@ -163,6 +163,38 @@
     }
   }
 
+}
+
+.tree-container {
+  position: relative;
+  z-index: 1;
+
+  .focused-item-indicator,
+  .selected-item-indicator {
+    // border-radius: 2px;
+    height: 26px;
+    position: absolute;
+    top: -999999px;
+    width: 100%;
+    z-index: -1;
+
+    &.focused-item-indicator {
+      border: 1px solid $tree-focus-border-color;
+    }
+
+    &.selected-item-indicator {
+      background-color: $tree-selected-bg-color;
+    }
+  }
+}
+
+// Firefox on Mac only
+.is-mac.is-firefox {
+  .tree-container {
+    .selected-item-indicator {
+      margin-top: -2px;
+    }
+  }
 }
 
 //Tree Detail Pattern
