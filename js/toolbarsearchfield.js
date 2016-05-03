@@ -103,7 +103,7 @@
           self.fastActivate = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
-        }).on('deactivate.toolbarsearchfield', function() {
+        }).on('deactivated.toolbarsearchfield', function() {
           self.deactivate();
         });
 
