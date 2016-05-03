@@ -49,15 +49,29 @@
         var links = this.element.find('a'),
           self = this;
 
+        this.element.wrap('<div class="tree-container"></div>');
+        this.element.parent('.tree-container').prepend(
+          '<div class="selected-item-indicator"></div>' +
+          '<div class="focused-item-indicator"></div>'
+        );
+
+        this.container = this.element.closest('.tree-container');
+        this.focusedIndicator = $('.focused-item-indicator', this.container);
+        this.selectedIndicator = $('.selected-item-indicator', this.container);
+
         links.each(function() {
           var a = $(this);
-
           self.decorateNode(a);
         });
       },
 
       focusFirst: function () {
         this.element.find('a:first').attr('tabindex', '0');
+      },
+
+      //Set focus
+      setFocus: function (node) {
+        node.focus();
       },
 
       //From the LI, Read props and add stuff
@@ -117,6 +131,8 @@
           a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
         }
 
+        a.addClass('hide-focus');
+        a.hideFocus();
       },
 
       //Expand all Parents
@@ -153,7 +169,26 @@
         }
 
         var jsonData = node.data('json-data') ? node.data('json-data') : [];
+
+        var top = this.getAbsoluteOffsetFromGivenElement(node[0], this.container[0]).top;
+        if (this.selectedIndicator.length) {
+          this.selectedIndicator.css({top: top});
+        }
+
         this.element.trigger('selected', {node: node, data: jsonData});
+      },
+
+      // Finds the offset of el from relativeEl
+      // http://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
+      getAbsoluteOffsetFromGivenElement: function(el, relativeEl) {
+        var x = 0, y = 0;
+
+        while(el && el !== relativeEl && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+          x += el.offsetLeft - el.scrollLeft + el.clientLeft;
+          y += el.offsetTop - el.scrollTop + el.clientTop;
+          el = el.offsetParent;
+        }
+        return { top: y, left: x };
       },
 
       //Animate open/closed the node
@@ -201,17 +236,35 @@
           return false; //Prevent Click from Going to Top
         });
 
-        //on focus for first element is disabled
-        this.element.on('focus.tree', 'a', function() {
+        this.element
+        //Focus on "a" elements
+        .on('focus.tree', 'a', function() {
           var target = $(this);
-          // First element if disabled
-          if ((parseInt(target.attr('aria-level')) === 1) &&
-              (parseInt(target.attr('aria-posinset')) === 1) &&
-              (target.hasClass('is-disabled'))) {
+          if ((parseInt(target.attr('aria-level')) === 0) &&
+              (parseInt(target.attr('aria-posinset')) === 1)) {
 
-            var e = $.Event('keydown.tree');
+            // First element if disabled
+            if (target.hasClass('is-disabled')) {
+              var e = $.Event('keydown.tree');
               e.keyCode= 40; // move down
-            target.trigger(e);
+              target.trigger(e);
+              return;
+            }
+          }
+          // Incase we decide to have border around whole background on focus
+          // then we can make this block of code active
+          // and deactivate focus state border in css
+          // if (!target.is('.hide-focus')) {
+          //   var top = self.getAbsoluteOffsetFromGivenElement(this, self.container[0]).top;
+          //   if (self.focusedIndicator.length) {
+          //     self.focusedIndicator.css({top: top});
+          //   }
+          // }
+        })
+        //Blur on "a" elements
+        .on('blur.tree', 'a', function() {
+          if (self.focusedIndicator.length) {
+            self.focusedIndicator.css({top: ''});
           }
         });
 
@@ -237,9 +290,9 @@
 
             //bottom of a group..
             if (next.length === 0) {
-              next = target.parents('.folder').last().next().find('a:first');
+              next = target.closest('.folder').next().find('a:first');
             }
-            self.setSelectedNode(next, true);
+            self.setFocus(next);
           }
 
           //up arrow,
@@ -262,7 +315,7 @@
             if (prev.length === 0) {
               prev = target.closest('ul').prev('a');
             }
-            self.setSelectedNode(prev, true);
+            self.setFocus(prev);
           }
 
           //space
@@ -275,7 +328,7 @@
             if (Locale.isRTL()) {
               if (target.next().hasClass('is-open')) {
                 next = target.next().find('a:first');
-                self.setSelectedNode(next, true);
+                self.setFocus(next);
               } else {
                 self.toggleNode(target);
               }
@@ -284,7 +337,7 @@
                 self.toggleNode(target);
               } else {
                 next = target.closest('.folder').find('a:first');
-                self.setSelectedNode(next, true);
+                self.setFocus(next);
               }
             }
             e.stopPropagation();
@@ -298,12 +351,12 @@
                 self.toggleNode(target);
               } else {
                 next = target.closest('.folder').find('a:first');
-                self.setSelectedNode(next, true);
+                self.setFocus(next);
               }
             } else {
               if (target.next().hasClass('is-open')) {
                 next = target.next().find('a:first');
-                self.setSelectedNode(next, true);
+                self.setFocus(next);
               } else {
                 self.toggleNode(target);
               }
@@ -315,13 +368,13 @@
           //Home  (fn-right on mac)
           if (charCode === 36) {
             next = self.element.find('a:first:visible');
-            self.setSelectedNode(next, true);
+            self.setFocus(next);
           }
 
           //End (fn-right on mac)
           if (charCode === 35) {
             next = self.element.find('a:last:visible');
-            self.setSelectedNode(next, true);
+            self.setFocus(next);
           }
 
         });
@@ -344,7 +397,7 @@
                 term = String.fromCharCode(e.which).toLowerCase();
 
               if (first === term) {
-                self.setSelectedNode(node, true);
+                self.setFocus(node);
                 return false;
               }
             });
