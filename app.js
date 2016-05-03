@@ -170,11 +170,9 @@ var express = require('express'),
           icon = '#icon-folder';
         }
 
-        console.log(href.replace('\\', '/'));
-
         return {
           icon: icon,
-          href: href.replace('\\', '/'),
+          href: href.replace(/\\/g,'/'),
           text: link
         };
       }
