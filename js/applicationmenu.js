@@ -215,15 +215,11 @@
 
       adjustHeight: function() {
         var isSticky = this.scrollTarget.is('.is-sticky'),
-          totalHeight = this.scrollTarget.height(),
+          totalHeight = this.scrollTarget.outerHeight(true),
           offset = totalHeight - (!isSticky ? $(window).scrollTop() : 0);
 
         if (this.scrollTarget.prev().is('.masthead')) {
-          offset += this.scrollTarget.prev().height();
-        }
-
-        if (this.scrollTarget.is('.module-tabs')) {
-          offset = offset + 3;
+          offset += this.scrollTarget.prev().outerHeight(true);
         }
 
         this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
