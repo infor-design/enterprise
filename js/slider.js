@@ -82,7 +82,7 @@
 
       buildSettings: function() {
         var self = this;
-        
+
         // Add "is-disabled" css class to closest ".field" if element is disabled
         if (this.element.is(':disabled')) {
           this.element.closest('.field').addClass('is-disabled');
@@ -809,8 +809,15 @@
               'very-good' : '#56932e',
               'superior'  : '#397514'
             }
-          },
-          themeColors = preColors[currentTheme],
+          };
+
+        //remove from ? to end
+        var idx = currentTheme.indexOf('?');
+        if (currentTheme !== '' && idx > -1) {
+          currentTheme = currentTheme.substr(0, idx).replace('.css', '');
+        }
+
+        var themeColors = preColors[currentTheme],
           val = this.value()[0],
           highestTickColor, c;
 

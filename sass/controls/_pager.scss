@@ -13,42 +13,14 @@
     vertical-align: middle;
   }
 
-  a {
-    border: 1px solid transparent;
-    border-radius: 2px;
-    color: $pager-text-color;
-    cursor: pointer;
-    display: inline-block;
-    height: 32px;
-    margin: 0 4px;
-    padding: 6px;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    transition: all .2s ease;
-
-    // Disabled
-    &[disabled] {
-      cursor: default;
-
-      .icon {
-        fill: $pager-disabled-color;
-      }
-    }
-
-    .audible {
-      color: $graphite10;
-    }
-  }
-
-  li {
+  > li {
     cursor: pointer;
     display: inline-block;
     overflow: hidden;
     width: auto;
 
     &:hover {
-      a {
+      > a {
         border-bottom: 1px solid $pager-text-color;
 
         &[disabled] {
@@ -58,7 +30,7 @@
     }
 
     &.is-focused {
-      a {
+      > a {
         border: 1px solid $pager-text-color;
 
         &[disabled] {
@@ -68,7 +40,7 @@
 
       &.selected,
       &.selected:hover {
-        a {
+        > a {
           border-bottom: 1px solid $pager-text-color;
         }
       }
@@ -78,18 +50,46 @@
     &.pager-last,
     &.pager-first,
     &.pager-next {
-
       &:not(.is-focused):hover {
-        a {
+        > a {
           border-bottom: 1px solid transparent;
         }
       }
     }
 
-    &.selected a {
+    &.selected > a {
       color: $pager-selected-color;
       font-weight: bold;
     }
+
+    > a {
+      border: 1px solid transparent;
+      border-radius: 2px;
+      color: $pager-text-color;
+      cursor: pointer;
+      display: inline-block;
+      height: 32px;
+      margin: 0 4px;
+      padding: 6px;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      transition: all .2s ease;
+
+      // Disabled
+      &[disabled] {
+        cursor: default;
+
+        .icon {
+          fill: $pager-disabled-color;
+        }
+      }
+
+      .audible {
+        color: $graphite10;
+      }
+    }
+
   }
 
   li:not(.selected) a:hover:not([disabled]) svg {
@@ -180,7 +180,7 @@ li + .pager-count {
 
 //Special Styles for Datagrid
 .datagrid + .pager-toolbar {
-  li a {
+  > li > a {
     margin: 0;
     padding: 0;
     width: 28px;
@@ -189,7 +189,6 @@ li + .pager-count {
   .pager-prev {
     margin-right: 5px;
   }
-
 }
 
 .pager-pagesize {

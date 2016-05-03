@@ -116,7 +116,7 @@
 
   input:disabled ~ .label-text:before,
   input:disabled ~ label:before {
-    background-color: $switch-disabled-color;
+    background-color: $switch-disabled-bar-color;
   }
 
   input:disabled ~ .label-text:after,

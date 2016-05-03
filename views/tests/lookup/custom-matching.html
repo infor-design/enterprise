@@ -16,7 +16,7 @@
 
     <div class="field">
       <label for="lookup-field-disabled" class="label">Lookup Field (Disabled)</label>
-      <input id="lookup-field-disabled" class="lookup" disabled name="lookup-field-disabled" type="text" value="2241202">
+      <input id="lookup-field-disabled" class="lookup" disabled name="lookup-field-disabled" type="text">
     </div>
 
   </div>
@@ -46,7 +46,13 @@
 
     //Init and get the api for the grid
     grid = $('#product-lookup').lookup({
-        field: 'productId',
+        //field: 'productId',
+        field: function (row, field, grid) {
+          return row.productId + '|' + row.productName;
+        },
+        match: function (value, row, field, grid) {
+          return ((row.productId + '|' + row.productName) === value);
+        },
         options: {
           columns: columns,
           dataset: data,

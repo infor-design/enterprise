@@ -330,19 +330,22 @@ $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 $checkbox-label-color: $input-color;
 
 // Switch
+$focus-color: #cbdce6;
+$focus-shadow: rgba(0, 0, 0, .3);
+
 $switch-checked-color: $primary-color;
 $switch-checked-bg-color: $azure03;
-$switch-unchecked-bar-color: $graphite07;
-$switch-unchecked-border-color: $graphite06;
+$switch-unchecked-bar-color: $graphite04;
+$switch-unchecked-border-color: $graphite03;
 $switch-unchecked-bg-color: $white;
 $switch-unchecked-color: $font-color;
 $switch-unchecked-pressed-bg-color: $white;
 $switch-disabled-border-color: $graphite03;
-$switch-disabled-bg-color: $graphite03;
-$switch-disabled-color: $graphite04;
+$switch-disabled-bg-color: $graphite02;
+$switch-disabled-bar-color: $graphite03;
 $switch-disabled-label-color: $graphite04;
-$switch-focus-box-shadow: 0 0 0 3px #cbdce6, 0 0 0 4px $primary-color;
-$switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+$switch-focus-box-shadow: 0 0 0 3px $focus-color, 0 0 0 4px $primary-color;
+$switch-hover-box-shadow: 0 2px 5px $focus-shadow;
 
 // Editor
 $editor-bg-color: transparent;
@@ -491,6 +494,8 @@ $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: rgba(200, 233, 244, .30);
 $datagrid-row-selected-color-dark: rgba(200, 233, 244, .45);
 $datagrid-row-hover-color: $graphite02;
+$datagrid-alternate-bg-color: #f5f5f5;
+$datagrid-alternate-row-hover-color: #graphite02;
 $datagrid-readonly-header-bg-color: $graphite02;
 $datagrid-readonly-header-border-color: $graphite03;
 $datagrid-readonly-header-color: $graphite06;

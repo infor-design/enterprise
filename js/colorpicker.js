@@ -266,8 +266,15 @@
       // Refresh and Append the Color Menu
       updateColorMenu: function () {
         var menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
-          currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, ''),
-          isBorderAll = (settings.themes[currentTheme].border === 'all'),
+          currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, '');
+
+        //remove from ? to end
+        var idx = currentTheme.indexOf('?');
+        if (currentTheme !== '' && idx > -1) {
+          currentTheme = currentTheme.substr(0, idx).replace('.css', '');
+        }
+
+        var isBorderAll = (settings.themes[currentTheme].border === 'all'),
           checkmark = settings.themes[currentTheme].checkmark,
           checkmarkClass = '';
 

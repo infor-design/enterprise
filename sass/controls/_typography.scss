@@ -54,9 +54,9 @@ h1,
 h2,
 h3,
 h4 {
+  @include rem(margin-bottom, 1rem);
   color: $font-color-highcontrast;
   font-weight: lighter;
-  @include rem(margin-bottom, 1rem);
 
   .extra {
     color: $font-color-lowcontrast;
@@ -129,16 +129,15 @@ label.is-disabled,
 
 .data-description {
   @include font-size(14);
-  color: $input-color;
-  margin-left: 10px;
+  color: $font-color-extrahighcontrast;
+  margin-left: 6px;
 }
 
 label.side,
 .label.side {
+  @include font-size(14);
   color: $label-color;
   display: inline-block;
-  //float: left;
-  @include font-size(14);
   height: 100%;
   line-height: 1.5;
   min-width: 120px;
@@ -148,35 +147,35 @@ label.side,
 
 .widget-title,
 .card-title {
-  @include font-size(16);
-  color: $cardlist-header-color;
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2.2rem);
+  @include font-size(16);
+  color: $cardlist-header-color;
   margin-top: 2px;
 }
 
 .list-title {
   @include font-size(16);
-  color: $font-color-highcontrast;
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
+  color: $font-color-highcontrast;
 }
 
 small,
 .micro-text {
   @include font-size(12);
-  color: $font-color;
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 1.5rem);
+  color: $font-color;
 }
 
 .stamp-text,
 .alert-text {
   @include font-size(11);
-  color: $font-color-lowcontrast;
-  font-weight: bold; //Accessible
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
+  color: $font-color-lowcontrast;
+  font-weight: bold; //Accessible
   text-transform: uppercase;
 }
 
@@ -188,7 +187,7 @@ small,
   color: $alert-red;
   padding-left: 15px;
 
-  &:before {
+  &::before {
     background-color: $alert-red;
     border-radius: 50%;
     content: '';
@@ -204,10 +203,10 @@ small,
   // Used for showing groupings within a line of text.
   // Uses the '#text-arrow' SVG symbol.
   > .text-arrow {
+    @include transform(rotate(-90deg));
     fill: $font-color;
     height: .9rem;
     margin: 0 .6rem;
-    @include transform(rotate(-90deg));
 
     &.left {
       @include transform(rotate(90deg));
@@ -217,12 +216,12 @@ small,
 
 //RTL Styles
 html[dir='rtl'] {
-  
+
   .alert-text {
     padding-left: inherit;
     padding-right: 15px;
 
-    &:before {
+    &::before {
       margin-left: inherit;
       margin-right: -14px;
     }

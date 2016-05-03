@@ -431,14 +431,6 @@ window.Editors = {
 
       //Check if isClick or cell touch and just open the list
       this.select.trigger('openlist');
-      // console.log(jQuery._data( this.select[0], 'events' ));
-      // if (event.type === 'click') {
-      //   //Revert cell on selection
-      //   this.select.trigger('openlist');
-      // } else {
-      //    //Keyboard
-      //    this.input.focus();
-      // }
 
       this.select.on('listclosed', function () {
           if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
@@ -447,8 +439,6 @@ window.Editors = {
           } else {
             grid.commitCellEdit(self.input);
           }
-
-          //self.select.data('dropdown').destroy();
       });
 
     };

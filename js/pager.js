@@ -320,7 +320,7 @@
 
         //Add functionality to change page size.
         if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
-          var pageSize = $('<li class="pager-pagesize"><div class="btn-group"> <button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button>  </div></li>');
+          var pageSize = $('<li class="pager-pagesize"><button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button></li>');
           $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
           var menu = $('<ul class="popupmenu has-icons"></ul>');
 

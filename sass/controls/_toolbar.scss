@@ -125,7 +125,7 @@ $toolbar-buttonset-height: 44px;
   .title {
     @include antialiased();
     @include font-size(16);
-    color: $font-color-highcontrast;
+    color: $font-color-extrahighcontrast;
 
     + .buttonset {
       text-align: right;

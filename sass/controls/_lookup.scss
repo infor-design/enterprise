@@ -43,7 +43,7 @@
     cursor: pointer;
     display: inline-block;
     height: 34px;
-    margin-left: -33px;
+    margin-left: -35px;
     outline: none;
     position: absolute;
     width: 34px;
@@ -51,11 +51,11 @@
     .icon {
       background-color: inherit;
       fill: $trigger-icon-fill-color;
-      height: 20px;
+      height: 18px;
       pointer-events: none;
-      right: 2px;
+      right: -7px;
       top: 8px;
-      width: 32px;
+      width: 18px;
     }
 
     &:hover .icon {
@@ -105,9 +105,7 @@ html[dir="rtl"] {
     }
   }
 
-  input.lookup {
+  .lookup {
     padding-right: 18px;
   }
 }
-
-
