@@ -914,14 +914,6 @@
           }
         }
 
-        function anchorClickHandler(e, target) {
-          // if the link is clicked, prevent the regular event from triggering and click the <li> instead.
-          e.preventDefault();
-          e.stopPropagation();
-          target.parent().trigger('click');
-          return false;
-        }
-
         function triggerButtonClickHandler() {
           self.closeList();
         }
@@ -963,11 +955,10 @@
 
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
-          return
-              target.closest('.dropdown, .multiselect').length > 0 || target.is('.dropdown, multiselect') ||
-              target.is('.option-text') || target.is('.dropdown-option') ||
-              target.is('.group-label') || target.is('.dropdown-search') ||
-              self.touchmove === true;
+          return target.closest('.dropdown, .multiselect').length > 0 || target.is('.dropdown, multiselect') ||
+            target.is('.option-text') || target.is('.dropdown-option') ||
+            target.is('.group-label') || target.is('.dropdown-search') ||
+            self.touchmove === true;
         }
 
         // Triggered when the user scrolls the page.

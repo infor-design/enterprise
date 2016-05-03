@@ -257,7 +257,7 @@ input.multiselect {
   &.multiple {
 
     ul {
-      text-indent: 42px;
+      text-indent: 38px;
     }
 
     li::before {
@@ -268,12 +268,6 @@ input.multiselect {
 
     li.is-disabled::before {
       @include checkbox-unchecked-disabled-before-style;
-      margin-left: -28px;
-    }
-
-    li.is-focused::before {
-      @include checkbox-unchecked-before-style;
-      margin-left: -28px;
     }
 
     li.is-focused,
@@ -291,7 +285,7 @@ input.multiselect {
 
     li.is-selected::after {
       @include checkbox-checked-after-style;
-      left: 20px;
+      left: 16px;
       margin-top: 0;
       top: 8px;
     }
@@ -302,8 +296,6 @@ input.multiselect {
 
     li.is-disabled.is-selected::after {
       @include checkbox-checked-disabled-after-style;
-      left: 20px;
-      margin-top: 8px;
     }
 
     li.group-label,
