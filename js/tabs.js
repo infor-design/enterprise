@@ -43,60 +43,14 @@
     Tabs.prototype = {
 
       init: function(){
-        var self = this;
-        this
+        return this
           .setup()
           .build()
           .setupEvents();
-
-        var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
-          tabs = this.tablist.children('li' + excludes),
-          selected = this.tablist.children('li.is-selected' + excludes);
-
-        if (tabs.length) {
-
-          // If the hashChange setting is on, change the selected tab to the one referenced by the hash
-          if (this.settings.changeTabOnHashChange) {
-            var hash = window.location.hash;
-            if (hash && hash.length) {
-              var matchingTabs = tabs.find('a[href="'+ hash +'"]');
-              if (matchingTabs.length) {
-                selected = matchingTabs.first().parent();
-              }
-            }
-          }
-
-          // If there are tabs present, activate the first one
-          if (!selected.length) {
-            selected = tabs.first();
-          }
-
-          this.activate(selected.children('a').attr('href'));
-        }
-
-        if (this.isModuleTabs() && this.element.children('.toolbar').length) {
-          this.element.addClass('has-toolbar');
-        }
-
-        this.setOverflow();
-
-        if (!this.hasAdvancedFocusStates()) {
-          return this;
-        }
-
-        this.animatedBar.addClass('no-transition');
-        this.positionFocusState(selected);
-        this.focusBar(undefined, function() {
-          setTimeout(function() {
-            self.animatedBar.removeClass('no-transition');
-          }, 0);
-        });
-
-        return this;
       },
 
       setup: function() {
-        // Used by the window.resize event to correctly identify the tabs
+        // Used by the $(body).resize event to correctly identify the tabs container element
         this.tabsIndex = $('.tab-container').index(this.element);
         return this;
       },
@@ -182,13 +136,17 @@
           this.tablist.prepend(appMenuTrigger);
         }
 
-        if (self.settings.addTabButton) {
+        // Add Tab Button
+        if (self.settings.addTabButton && (!this.addTabButton || !this.addTabButton.length)) {
           this.addTabButton = $('<li class="tab add-tab-button"><a href="#">' +
             '+ ' +
             '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
             '</a></tab>');
 
           this.tablist.append(this.addTabButton);
+        }
+        if (!self.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
+          this.addTabButton.remove();
         }
 
         //for each item in the tabsList...
@@ -268,6 +226,48 @@
           .addClass('tab-panel')
           .attr({'role': 'tabpanel'}).hide()
           .find('h3:first').attr('tabindex', '0');
+
+        var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
+          tabs = this.tablist.children('li' + excludes),
+          selected = this.tablist.children('li.is-selected' + excludes);
+
+        if (tabs.length) {
+          // If the hashChange setting is on, change the selected tab to the one referenced by the hash
+          if (this.settings.changeTabOnHashChange) {
+            var hash = window.location.hash;
+            if (hash && hash.length) {
+              var matchingTabs = tabs.find('a[href="'+ hash +'"]');
+              if (matchingTabs.length) {
+                selected = matchingTabs.first().parent();
+              }
+            }
+          }
+
+          // If there are tabs present, activate the first one
+          if (!selected.length) {
+            selected = tabs.first();
+          }
+
+          this.activate(selected.children('a').attr('href'));
+        }
+
+        if (this.isModuleTabs() && this.element.children('.toolbar').length) {
+          this.element.addClass('has-toolbar');
+        }
+
+        this.setOverflow();
+
+        if (!this.hasAdvancedFocusStates()) {
+          return this;
+        }
+
+        this.animatedBar.addClass('no-transition');
+        this.positionFocusState(selected);
+        this.focusBar(undefined, function() {
+          setTimeout(function() {
+            self.animatedBar.removeClass('no-transition');
+          }, 0);
+        });
 
         return this;
       },
@@ -399,7 +399,6 @@
             noPopupMenusOpen = self.tablist.children('[aria-expanded="true"]').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
-            //self.focusBar(self.tablist.find('.is-selected').first());
             self.positionFocusState();
           }
           self.checkFocusedElements();
@@ -1700,32 +1699,9 @@
           height = parseInt(target.outerHeight()),
           left, top;
 
-        // Modifications on a specific basis
-        // NOTE:  Uncomment the first one if we have to change the state type back
-        /*
-        if (target.is('.tab:first-child > a')) {
-          pos.left = pos.left - 10;
-          width = width + 9;
-        }
-        */
         if (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a')) {
           width = width + 22;
         }
-
-        // NOTE:  Uncomment this to get the old "more" tab sizing back
-        /*
-        if (target.is('.tab-more')) {
-          if (this.settings.tabCounts) {
-            height = height - 4;
-            width = width + 11;
-            pos.top = pos.top + 2;
-          } else {
-            height = height - 10;
-            width = width + 11;
-            pos.top = pos.top + 5;
-          }
-        }
-        */
 
         left = pos.left - offset.left;
         top = pos.top - offset.top;
@@ -1771,7 +1747,9 @@
       },
 
       updated: function() {
-        this.teardown().init();
+        return this
+          .teardown()
+          .init();
       },
 
       disable: function() {
