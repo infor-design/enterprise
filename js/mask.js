@@ -200,6 +200,10 @@
           self.initValue = null;
         });
 
+        if (this.element.is(':hidden')) {
+          return this;
+        }
+
         // Test contents of the input field.  If there are characters, run them
         // against the mask and fill them in as necessary.
         var val = self.element.val();
@@ -208,6 +212,7 @@
           self.processStringAgainstMask(val);
         }
 
+        return this;
       },
 
       // Builds a fake element and gets the name of the event that will be used for "paste"
@@ -1126,6 +1131,10 @@
       // Takes an entire string of characters and runs each character against the processMask()
       // method until it's complete.
       processStringAgainstMask: function(string, originalEvent) {
+        if (this.element.is(':hidden')) {
+          return this;
+        }
+
         switch(this.settings.mode) {
           case 'number':
             var regex = /[^0-9.-]/g;
@@ -1148,6 +1157,8 @@
             }
             break;
         }
+
+        return this;
       },
 
       // Takes a character from the pattern string in Settings, gets the corresponding Regex string
