@@ -261,7 +261,7 @@
       //Overridable Function in which we create the grid on the current ui dialog.
       createGrid: function (grid) {
         var self = this,
-          lookupGrid = $('#' + lookupGridId);
+          lookupGrid = self.modal.element.find('#' + lookupGridId);
 
         if (grid) {
           lookupGrid = grid;
