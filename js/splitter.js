@@ -27,7 +27,8 @@
     // Settings and Options
     var pluginName = 'splitter',
         defaults = {
-          axis: 'x'
+          axis: 'x',
+          resize: 'immediate' //or end
         },
         settings = $.extend({}, defaults, options);
 
@@ -52,7 +53,7 @@
         var self = this;
 
         //Set the height
-        this.element.drag({axis: this.settings.axis, containment: 'document'})
+        this.element.drag({axis: this.settings.axis, containment: this.settings.axis === 'x' ? 'document' : 'parent'})
           .on('dragstart.splitter', function () {
             var overlay = $('<div class="overlay"></div>'),
               iframes = $('iframe');
@@ -65,13 +66,24 @@
               });
             }
           })
-          .on('dragend.splitter', function () {
+          .on('dragend.splitter', function (e, args) {
             $('.overlay').remove();
+
+            if (self.settings.resize === 'end') {
+              self.splitTo(self.settings.axis === 'x' ? args.left : args.top);
+            }
+
           })
           .on('drag.splitter', function (e, args) {
-            self.splitTo(args.left);
+            if (self.settings.resize === 'immediate') {
+              self.splitTo(self.settings.axis === 'x' ? args.left : args.top);
+            }
           });
 
+        //Horizontal Splitter
+        if (this.settings.axis === 'y') {
+          this.element.addClass('splitter-horizontal');
+        }
 
         //Restore from local storage
         if (localStorage) {
@@ -104,6 +116,26 @@
         });
 
         return this;
+      },
+
+      //Resize the panel vertically
+      resizeTop: function () {
+        //function (splitter, top) {
+        
+        //Find the top and bottom panels and set the height
+        //var topPanel = splitter.prev();
+          //bottomPanel = splitter.next();
+
+        //var offset = topPanel.offset().top,
+        //total = splitter.parent().height();
+
+        //console.log(offset, total, (total - top - offset));
+
+        //topPanel.css('height', top + 'px');
+        //bottomPanel.css('height', (total - top - offset) + 'px');
+
+        //Reset the Width
+        //splitter.css('left', '');
       },
 
       //Resize the panel to the Left
@@ -153,21 +185,23 @@
         return (window.location.pathname.split('/').pop()) + '-splitter-' + $('.splitter').length;
       },
 
-      splitTo: function (w) {
+      splitTo: function (split) {
         var splitter = this.element;
 
         if (splitter.is('.splitter-right')) {
-          this.resizeRight(splitter, w);
+          this.resizeRight(splitter, split);
+        } else if (splitter.is('.splitter-horizontal')) {
+          this.resizeTop(splitter, split);
         } else {
-          this.resizeLeft(splitter, w);
+          this.resizeLeft(splitter, split);
         }
 
-        this.element.trigger('split', [w]);
+        this.element.trigger('split', [split]);
         $('body').triggerHandler('resize', [this]);
 
         //Save to local storage
         if (localStorage) {
-          localStorage[this.uniqueId()] = w;
+          localStorage[this.uniqueId()] = split;
         }
       },
 

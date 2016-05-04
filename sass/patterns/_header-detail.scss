@@ -1,8 +1,6 @@
 // Form - List - Footer or Form - List Contained Pattern
 //================================================== //
 .header-detail {
-  margin: 30px;
-  width: calc(100% - 60px);
 
   &.contained,
   .contained {
@@ -10,8 +8,17 @@
   }
 
   .header {
-    background-color: transparent;
+    background-color: $panel-bg-color;
     display: initial;
-    height: auto;
+
+    .content {
+      background-color: $panel-bg-color;
+      padding: 30px;
+    }
+  }
+
+  .detail {
+    background-color: $body-bg-color;
+    border-bottom: 1px solid $panel-border-color;
   }
 }
