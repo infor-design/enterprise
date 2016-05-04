@@ -223,7 +223,7 @@ input[type="range"] {
   }
 
   // Focus Border
-  &::after {
+  &:not(.hide-focus)::after {
     border: 1px solid;
     border-color: inherit;
     border-radius: 50%;
@@ -251,8 +251,11 @@ input[type="range"] {
 
   &:focus,
   &:active {
-    border-color: $slider-active-bg-color;
     outline: 0;
+
+    &:not(.hide-focus) {
+      border-color: $slider-active-bg-color;
+    }
   }
 
   &:focus {
@@ -262,20 +265,9 @@ input[type="range"] {
     }
   }
 
-  &:active,
-  &.is-active {
-    &::after {
-      border: 0;
-    }
-  }
-
   &:hover,
   &.is-dragging {
-    @include css3(transition, none);    
-    -webkit-box-shadow: $slider-hover-shadow;
-    -moz-box-shadow: $slider-hover-shadow;
-    -o-box-shadow: $slider-hover-shadow;
-    -ms-box-shadow: $slider-hover-shadow;
+    @include css3(transition, none);
     box-shadow: $slider-hover-shadow;
   }
 }
