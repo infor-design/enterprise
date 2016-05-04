@@ -1716,7 +1716,7 @@ $.fn.datagrid = function(options) {
 
         if (self.isCellEditable(row, cell)) {
           setTimeout(function() {
-            if (self.isContainTextfield(elem) && !$('.dropdown', elem).length) {
+            if (self.isContainTextfield(elem) && self.notContainTextfield(elem)) {
               self.quickEditMode = true;
             }
           }, 0);
@@ -2520,7 +2520,7 @@ $.fn.datagrid = function(options) {
             node.trigger(evt);
           } else {
             self.makeCellEditable(row, cell, e);
-            if (self.isContainTextfield(node) && !$('.dropdown', node).length) {
+            if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
               self.quickEditMode = true;
             }
           }
@@ -2568,6 +2568,11 @@ $.fn.datagrid = function(options) {
       selector = l ? (selector.slice(0, -1) + ')') : '';
 
       return !!($(selector, container).length);
+    },
+
+    notContainTextfield: function(container) {
+      var selector = '.dropdown, .datepicker';
+      return !($(selector, container).length);
     },
 
     //Current Cell Editor thats in Use
