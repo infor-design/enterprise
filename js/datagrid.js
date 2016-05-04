@@ -890,7 +890,7 @@ $.fn.datagrid = function(options) {
     },
 
     uniqueId: function (suffix) {
-      return (window.location.pathname.split('/').pop()) + '-datagrid-' + this.gridCount + suffix;
+      return (window.location.pathname.split('/').pop().replace('.html', '')) + '-datagrid-' + this.gridCount + suffix;
     },
 
     visibleColumns: function () {
@@ -1240,17 +1240,19 @@ $.fn.datagrid = function(options) {
           }
 
           //Run a function that helps check if readonly
+          var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
+
           if (col.isReadonly && !col.readonly) {
             var isReadonly = col.isReadonly(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
 
-            if (!isReadonly) {
-              isReadonly += ' is-readonly';
+            if (isReadonly) {
+              cssClass += ' is-cell-readonly';
+              ariaReadonly = 'aria-readonly="true"';
             }
           }
 
           cssClass += (col.cssClass ? col.cssClass : '');
           cssClass += (col.focusable ? ' is-focusable' : '');
-          var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
 
           rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
               ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
@@ -1695,7 +1697,9 @@ $.fn.datagrid = function(options) {
           }
 
           // TODO: if (e.type === 'touchstart') {} ?
-          col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
+          if (!elem.hasClass('is-cell-readonly')) {
+            col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
+          }
         }
 
         if (col.click && typeof col.click === 'function') {

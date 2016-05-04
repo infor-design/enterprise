@@ -320,13 +320,6 @@ $datagrid-header-short-height: 32px;
       }
     }
 
-    .hyperlink {
-      @include font-size(14);
-      color: $hyperlink-color;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     .btn-icon span {
       color: transparent;
     }
@@ -423,6 +416,17 @@ $datagrid-header-short-height: 32px;
       display: none;
     }
 
+    .hyperlink {
+      @include font-size(14);
+      color: $hyperlink-color;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
     //Keyword Search Results
     .search-mode {
       i {
@@ -434,6 +438,19 @@ $datagrid-header-short-height: 32px;
     //Readonly
     &.is-readonly {
       background-color: $datagrid-cell-readonly-bg-color;
+    }
+
+    //Cell Contents but not outer cell is readonly
+    &.is-cell-readonly {
+      .hyperlink {
+        color: $hyperlink-disabled-color;
+
+        &:hover,
+        &:focus {
+          border-bottom: 0;
+          outline: none;
+        }
+      }
     }
 
     //Inline Editting

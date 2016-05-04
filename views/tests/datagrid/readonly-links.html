@@ -33,11 +33,13 @@
 
       var checkReadonly = function (row, cell, value, column, item) {
         if (item.quantity === 0) {
-          return false;
+          console.log(item, item.quantity)
+          return true;
         }
+
       };
 
-      columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink, isReadonly: checkReadonly, click: function (e, args) {alert('link was clicked');}});
+      columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink, isReadonly: checkReadonly, click: function (e, args) {console.log(e, args);}});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal});
