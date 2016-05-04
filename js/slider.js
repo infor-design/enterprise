@@ -74,7 +74,7 @@
     Slider.prototype = {
 
       init: function() {
-        this
+        return this
           .buildSettings()
           .addMarkup()
           .bindEvents();
@@ -280,7 +280,7 @@
             'aria-orientation' : (isVertical ? 'vertical' : 'horizontal'),
             'aria-valuemin' : self.settings.min,
             'aria-valuemax' : self.settings.max
-          });
+          }).hideFocus();
           handle.appendTo(self.wrapper);
         });
 
@@ -460,6 +460,8 @@
             targetOldVal = oldVals[0],
             targetHandle = self.handles[0];
 
+          targetHandle.addClass('hide-focus');
+
           function conversion() {
             if (isVertical) {
               var wh = self.wrapper.height();
@@ -538,6 +540,8 @@
 
         var key = e.which,
           handle = $(e.currentTarget);
+
+        handle.removeClass('hide-focus');
 
         // If the keycode got this far, it's an arrow key, Page Up, Page Down, HOME, or END.
         switch(key) {
@@ -834,6 +838,7 @@
 
       // External Facing Function to set the value
       // works as percent for now but need it on ticks
+      // NOTE:  Does not visually update the range.  Use setValue() to do both in one swoop.
       value: function(minVal, maxVal) {
         var self = this;
 
@@ -908,7 +913,7 @@
 
       // Externally-facing function that updates the current values and correctly animates the
       // range handles, if applicable.
-      refresh: function(lowVal, highVal) {
+      setValue: function(lowVal, highVal) {
         var newLowVal = lowVal || undefined,
           newHighVal = highVal || undefined,
           oldVals = this.value();
@@ -925,21 +930,34 @@
         return vals;
       },
 
+      // NOTE: refresh() has been deprecated in Xi Controls v4.2 - has been replaced with setValue().
+      // This method will be completely removed in v4.3 and v5.x.  Please update your code.
+      refresh: function(lowVal, highVal) {
+        return this.setValue(lowVal, highVal);
+      },
+
       // Settings and markup are complicated in the slider so we just destroy and re-invoke it
       // with fresh settings.
       updated: function() {
         this.element.removeAttr('value');
-        this.destroy();
-        this.init();
+        return this
+          .teardown()
+          .init();
       },
 
-      destroy: function() {
+      teardown: function() {
         var self = this;
         $.each(self.handles, function (i, handle) {
           handle.off('mousedown.slider click.slider blur.slider drag.slider keydown.slider keyup.slider dragstart dragend');
         });
         this.wrapper.off('click.slider touchend.slider touchcancel.slider').remove();
         this.element.attr('type', this.originalElement.type);
+
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], pluginName);
       }
     };
