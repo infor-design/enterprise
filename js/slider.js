@@ -280,7 +280,7 @@
             'aria-orientation' : (isVertical ? 'vertical' : 'horizontal'),
             'aria-valuemin' : self.settings.min,
             'aria-valuemax' : self.settings.max
-          });
+          }).hideFocus();
           handle.appendTo(self.wrapper);
         });
 
@@ -460,6 +460,8 @@
             targetOldVal = oldVals[0],
             targetHandle = self.handles[0];
 
+          targetHandle.addClass('hide-focus');
+
           function conversion() {
             if (isVertical) {
               var wh = self.wrapper.height();
@@ -538,6 +540,8 @@
 
         var key = e.which,
           handle = $(e.currentTarget);
+
+        handle.removeClass('hide-focus');
 
         // If the keycode got this far, it's an arrow key, Page Up, Page Down, HOME, or END.
         switch(key) {
