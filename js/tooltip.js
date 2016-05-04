@@ -416,7 +416,7 @@
 
         // secondary check on bottom/top placements to see if the tooltip width is long enough
         // to bleed off the edge of the page.
-        var o, arrow, arrowPosLeft, arrowPosTop, delta,
+        var o, arrow, arrowPosLeft, arrowPosTop, delta, headHtml, extra,
           el = self.activeElement;
 
         function setCurrentTooltipPos() {
@@ -442,68 +442,123 @@
           return o.top - scrollable.deltaHeight <= 0;
         }
 
-        if (/offset|bottom|top/i.test(settings.placement)) {
-          // Check for bleeding off the left edge
+        // Datepicker in editable datagrid
+        if (el.prev().is('.datepicker')) {
+          var thisEl = el.prev();
+
+          // Check for bleeding off the left edge.
           if (offLeftEdgeCondition()) {
-            delta = (0 - (o.left - scrollable.deltaWidth) + 1) * -1;
-            self.tooltip.css('left', o.left + delta);
+            arrow.removeAttr('style');
+            self.tooltip.removeClass('top bottom').addClass('right');
+            self.placeToRight(scrollable);
+            arrow.css('left', '-12px');
 
-            // Check again.  If it's still bleeding off the left edge, swap it to a right-placed Tooltip.
-            if (offLeftEdgeCondition()) {
-              self.tooltip.removeClass('top bottom').addClass('right');
-              self.placeToRight(scrollable);
-            }
+            setCurrentTooltipPos();
+            delta = thisEl.offset().left + thisEl.outerWidth() + 15;
+            self.tooltip.css('left', delta);
           }
-
           // Check for bleeding off the right edge.
           if (offRightEdgeCondition()) {
-            // need to explicitly set a width on the popover for this to work, otherwise popover contents will wrap
-            // and cause it to grow wider:
-            var top,
-              tooltipWidth = self.tooltip.outerWidth() -10;
+            arrow.removeAttr('style');
+            self.tooltip.removeClass('top bottom').addClass('left');
+            self.placeToLeft(scrollable);
+            arrow.css('left', 'auto');
 
-            el = self.activeElement;
-
-            self.tooltip.removeClass('top bottom').addClass(Locale.isRTL() ? 'right' : 'left');
-            self.tooltip.css('width', tooltipWidth);
-            delta = (winW - (o.left - scrollable.deltaWidth + tooltipWidth +7) - 1) * -1;
-            top = (el.offset().top - el.outerHeight() - (self.tooltip.outerHeight()/2) -3) + scrollable.offsetTop;
-            self.tooltip.css({'left': Locale.isRTL() ? (el.offset().left - self.tooltip.outerWidth() -7) : (o.left - delta), 'top': top});
-            arrowPosLeft = parseInt(arrow.css('left'), 10);
-            arrow.css('left', Locale.isRTL() ? 'auto' : (arrowPosLeft + delta));
-
-            // Check again.  If it's still bleeding off the edge, swap it to a left-placed Tooltip.
-            if (offRightEdgeCondition()) {
-              arrow.removeAttr('style');
-              self.tooltip.removeClass('top bottom').addClass('left');
-              self.placeToLeft(scrollable);
-            }
+            setCurrentTooltipPos();
+            delta = thisEl.offset().left - self.tooltip.outerWidth() - 15;
+            self.tooltip.css('left', delta);
           }
+
+          if (offTopEdgeCondition()) {
+            headHtml = $('html');
+            extra = {offsetTop: 0, paddingTop: 0};
+            if (headHtml.is('.is-firefox') || headHtml.is('.is-safari') || headHtml.is('.ie')) {
+              extra.offsetTop = 8;
+              extra.paddingTop = 8;
+            }
+            if (headHtml.is('.ie11') || headHtml.is('.ie9')) {
+              extra.offsetTop = 13;
+              extra.paddingTop = 15;
+            }
+            delta = (scrollable.deltaHeight - o.top - scrollable.offsetTop - 40);
+            arrowPosTop = (self.tooltip.outerHeight()/2) - delta - (el.outerHeight()/2 + 40);
+
+            if ((o.top + scrollable.offsetTop - extra.offsetTop) < 0) {
+              delta -= scrollable.deltaHeight - extra.paddingTop;
+              arrowPosTop = arrowPosTop + (el.outerHeight()/2);
+            }
+            self.tooltip.css({'top': delta});
+            arrow.css('top', arrowPosTop);
+          }
+
 
         }
 
-        // If tooltip is hidden under header
-        // TODO: this is dirty fix, need to come-up with different approch
-        if (offTopEdgeCondition()) {
-          var headHtml = $('html'),
-            extra = {offsetTop: 0, paddingTop: 0};
-          if (headHtml.is('.is-firefox') || headHtml.is('.is-safari') || headHtml.is('.ie')) {
-            extra.offsetTop = 8;
-            extra.paddingTop = 8;
-          }
-          if (headHtml.is('.ie11') || headHtml.is('.ie9')) {
-            extra.offsetTop = 13;
-            extra.paddingTop = 15;
-          }
-          delta = (scrollable.deltaHeight - o.top - scrollable.offsetTop);
-          arrowPosTop = (self.tooltip.outerHeight()/2) - delta - (el.outerHeight()/2);
+        // All other elements
+        else {
+          if (/offset|bottom|top/i.test(settings.placement)) {
+            // Check for bleeding off the left edge
+            if (offLeftEdgeCondition()) {
+              delta = (0 - (o.left - scrollable.deltaWidth) + 1) * -1;
+              self.tooltip.css('left', o.left + delta);
 
-          if ((o.top + scrollable.offsetTop - extra.offsetTop) < 0) {
-            delta -= scrollable.deltaHeight - extra.paddingTop;
-            arrowPosTop = arrowPosTop + (el.outerHeight()/2);
+              // Check again.  If it's still bleeding off the left edge, swap it to a right-placed Tooltip.
+              if (offLeftEdgeCondition()) {
+                self.tooltip.removeClass('top bottom').addClass('right');
+                self.placeToRight(scrollable);
+              }
+            }
+
+            // Check for bleeding off the right edge.
+            if (offRightEdgeCondition()) {
+              // need to explicitly set a width on the popover for this to work, otherwise popover contents will wrap
+              // and cause it to grow wider:
+              var top,
+                tooltipWidth = self.tooltip.outerWidth() -10;
+
+              el = self.activeElement;
+
+              self.tooltip.removeClass('top bottom').addClass(Locale.isRTL() ? 'right' : 'left');
+              self.tooltip.css('width', tooltipWidth);
+              delta = (winW - (o.left - scrollable.deltaWidth + tooltipWidth +7) - 1) * -1;
+              top = (el.offset().top - el.outerHeight() - (self.tooltip.outerHeight()/2) -3) + scrollable.offsetTop;
+              self.tooltip.css({'left': Locale.isRTL() ? (el.offset().left - self.tooltip.outerWidth() -7) : (o.left - delta), 'top': top});
+              arrowPosLeft = parseInt(arrow.css('left'), 10);
+              arrow.css('left', Locale.isRTL() ? 'auto' : (arrowPosLeft + delta));
+
+              // Check again.  If it's still bleeding off the edge, swap it to a left-placed Tooltip.
+              if (offRightEdgeCondition()) {
+                arrow.removeAttr('style');
+                self.tooltip.removeClass('top bottom').addClass('left');
+                self.placeToLeft(scrollable);
+              }
+            }
+
           }
-          self.tooltip.css({'top': delta});
-          arrow.css('top', arrowPosTop);
+
+          // If tooltip is hidden under header
+          // TODO: this is dirty fix, need to come-up with different approch
+          if (offTopEdgeCondition()) {
+            headHtml = $('html');
+            extra = {offsetTop: 0, paddingTop: 0};
+            if (headHtml.is('.is-firefox') || headHtml.is('.is-safari') || headHtml.is('.ie')) {
+              extra.offsetTop = 8;
+              extra.paddingTop = 8;
+            }
+            if (headHtml.is('.ie11') || headHtml.is('.ie9')) {
+              extra.offsetTop = 13;
+              extra.paddingTop = 15;
+            }
+            delta = (scrollable.deltaHeight - o.top - scrollable.offsetTop);
+            arrowPosTop = (self.tooltip.outerHeight()/2) - delta - (el.outerHeight()/2);
+
+            if ((o.top + scrollable.offsetTop - extra.offsetTop) < 0) {
+              delta -= scrollable.deltaHeight - extra.paddingTop;
+              arrowPosTop = arrowPosTop + (el.outerHeight()/2);
+            }
+            self.tooltip.css({'top': delta});
+            arrow.css('top', arrowPosTop);
+          }
         }
 
       },
