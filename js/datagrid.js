@@ -1360,7 +1360,7 @@ $.fn.datagrid = function(options) {
           continue;
         }
 
-        this.updateCellValue(idx, j, this.fieldValue(rowData, col.field));
+        this.updateCellNode(idx, j, this.fieldValue(rowData, col.field), true);
       }
 
     },
@@ -2672,7 +2672,7 @@ $.fn.datagrid = function(options) {
       this.editor = null;
 
       //Save the Cell Edit back to the data set
-      this.updateCellValue(cellNode.parent().index(), cellNode.index(), newValue);
+      this.updateCellNode(cellNode.parent().index(), cellNode.index(), newValue);
     },
 
     //Returns Column Settings from a cell
@@ -2704,7 +2704,17 @@ $.fn.datagrid = function(options) {
       return newVal;
     },
 
-    updateCellValue: function (row, cell, value) {
+    updateCell: function(row, cell, value) {
+      var col = this.columnSettings(cell);
+
+      if (!value) {
+        value = this.settings.dataset[row][col.field];
+      }
+
+      this.updateCellNode(row, cell, value, true);
+    },
+
+    updateCellNode: function (row, cell, value, noTrigger) {
       var rowNode = this.tableBody.find('tr[role="row"]').eq(row),
         cellNode = rowNode.find('td').eq(cell),
         col = this.columnSettings(cell),
@@ -2743,7 +2753,10 @@ $.fn.datagrid = function(options) {
         } else {
           this.settings.dataset[row][col.field] = coercedVal;
         }
-        this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
+
+        if (!noTrigger) {
+          this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
+        }
       }
     },
 
