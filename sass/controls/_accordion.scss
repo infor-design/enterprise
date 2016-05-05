@@ -552,6 +552,7 @@
   > [class^="btn"] {
     background-color: transparent;
     border-color: transparent;
+    color: $font-color-highcontrast;
     height: 38px;
     margin: 0 3px;
     min-width: 0;
@@ -701,6 +702,10 @@
             background-color: $accordion-selected-text-color;
           }
         }
+      }
+
+      .audible {
+        color: $white;
       }
     }
 

@@ -2,11 +2,6 @@
 //================================================== //
 
 .modal.about {
-  @include css3(transform, translate3d(-50%, 50%, 0) scale(.0, .0));
-
-  &.is-visible {
-    @include css3(transform, translate3d(-50%, -50%, 0) scale(.0, .0));
-  }
 
   .close-container {
     position: absolute;

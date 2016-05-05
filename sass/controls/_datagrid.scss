@@ -291,7 +291,7 @@ $datagrid-header-short-height: 32px;
       background-color: $datagrid-row-selected-color;
     }
 
-    &.is-selected td:not(.is-editing).is-readonly .datagrid-cell-wrapper {
+    &.is-selected .is-readonly:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color-dark;
 
       span {
@@ -399,17 +399,22 @@ $datagrid-header-short-height: 32px;
     background-color: $datagrid-cell-bg-color;
     border: 1px solid $datagrid-cell-border-color;
     color: $datagrid-data-color;
-    height: 50px;
     line-height: 50px;
+    min-height: 50px;
     outline: none;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     //Editing and Focus State
-    &:focus .datagrid-cell-wrapper,
-    &.is-focused .datagrid-cell-wrapper {
-      border: 1px solid $primary-color;
+    //&:focus .datagrid-cell-wrapper,
+    //&.is-focused .datagrid-cell-wrapper {
+    //  border: 1px solid $primary-color;
+    //}
+
+    &:focus ,
+    &.is-focused {
+      box-shadow: 0 0 0 1px $primary-color inset;
     }
 
     &.is-hidden {
@@ -646,12 +651,15 @@ $datagrid-header-short-height: 32px;
   @include font-size(16);
   @include ellipsis();
   color: $datagrid-cell-color;
+  line-height: 22px;
+  padding-top: 6px;
 }
 
 .datagrid-row-subheading {
   @include font-size(14);
   color: $datagrid-cell-color;
-  padding-top: 2px;
+  line-height: 22px;
+  margin-top: -4px;
 }
 
 .datagrid-row-micro {
@@ -678,11 +686,10 @@ td .btn-actions {
 .datagrid-textarea {
   display: block;
   height: inherit;
-  line-height: 2rem !important;
+  line-height: 22px;
   margin: 0 -20px;
   overflow: auto;
-  padding: 0 20px;
-  padding-top: 5px;
+  padding: 5px 20px;
   white-space: pre-line;
   word-wrap: break-word;
 }
