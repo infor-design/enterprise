@@ -40,6 +40,7 @@
           mustComplete: false,
           negative: false,
           number: false,
+          processOnInitialize: true, // If set to false, will not initialially mask the value of the input field.
           thousandsSeparator: false,
           showSymbol: undefined, // can be 'currency', 'percent'
         },
@@ -200,7 +201,8 @@
           self.initValue = null;
         });
 
-        if (this.element.is(':hidden')) {
+        // Don't continue if the field is hidden -OR- we disallow the masking of contents during initialization.
+        if (this.element.is(':hidden') || !this.settings.processOnInitialize) {
           return this;
         }
 
