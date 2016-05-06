@@ -7,6 +7,7 @@
   cursor: ew-resize;
   height: 100%;
   position: absolute;
+  z-index: 100;
   width: 20px;
 
   &:hover,
@@ -57,9 +58,8 @@
       font-size: 28px;
       left: 50%;
       margin-left: -10px;
-      margin-top: -15px;
       position: absolute;
-      top: 50%;
+      top: 30%;
     }
   }
 }

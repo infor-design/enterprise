@@ -51,6 +51,7 @@
       // Add markup to the control
       build: function() {
         var self = this;
+        var parentHeight = this.element.parent().height();
 
         //Set the height
         this.element.drag({axis: this.settings.axis, containment: this.settings.axis === 'x' ? 'document' : 'parent'})
@@ -70,13 +71,13 @@
             $('.overlay').remove();
 
             if (self.settings.resize === 'end') {
-              self.splitTo(self.settings.axis === 'x' ? args.left : args.top);
+              self.splitTo(self.settings.axis === 'x' ? args.left : args.top, parentHeight);
             }
 
           })
           .on('drag.splitter', function (e, args) {
             if (self.settings.resize === 'immediate') {
-              self.splitTo(self.settings.axis === 'x' ? args.left : args.top);
+              self.splitTo(self.settings.axis === 'x' ? args.left : args.top, parentHeight);
             }
           });
 
@@ -88,7 +89,7 @@
         //Restore from local storage
         if (localStorage) {
           var w = localStorage[this.uniqueId()];
-          this.splitTo(parseInt(w));
+          this.splitTo(parseInt(w), this.element.parent().height());
         }
 
         //move handle to left
@@ -119,23 +120,13 @@
       },
 
       //Resize the panel vertically
-      resizeTop: function () {
-        //function (splitter, top) {
-        
+      resizeTop: function (splitter, top, parentHeight) {
         //Find the top and bottom panels and set the height
-        //var topPanel = splitter.prev();
-          //bottomPanel = splitter.next();
+        var topPanel = splitter.prev(),
+          bottomPanel = splitter.next();
 
-        //var offset = topPanel.offset().top,
-        //total = splitter.parent().height();
-
-        //console.log(offset, total, (total - top - offset));
-
-        //topPanel.css('height', top + 'px');
-        //bottomPanel.css('height', (total - top - offset) + 'px');
-
-        //Reset the Width
-        //splitter.css('left', '');
+        topPanel.css('height', top + 'px');
+        bottomPanel.css('height', (parentHeight - top) + 'px');
       },
 
       //Resize the panel to the Left
@@ -185,13 +176,13 @@
         return (window.location.pathname.split('/').pop()) + '-splitter-' + $('.splitter').length;
       },
 
-      splitTo: function (split) {
+      splitTo: function (split, parentHeight) {
         var splitter = this.element;
 
         if (splitter.is('.splitter-right')) {
           this.resizeRight(splitter, split);
         } else if (splitter.is('.splitter-horizontal')) {
-          this.resizeTop(splitter, split);
+          this.resizeTop(splitter, split, parentHeight);
         } else {
           this.resizeLeft(splitter, split);
         }
