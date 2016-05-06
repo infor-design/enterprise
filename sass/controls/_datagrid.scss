@@ -2,8 +2,11 @@
 //================================================== //
 
 $datagrid-header-height: 39px;  //1px border in parent
-$datagrid-header-medium-height: 30px;
-$datagrid-header-short-height: 32px;
+
+$datagrid-medium-header-height: 30px;
+$datagrid-medium-row-height: 40px;
+$datagrid-short-header-height: 25px;
+$datagrid-short-row-height: 30px;
 
 .datagrid-wrapper {
   background-color: transparent;
@@ -88,8 +91,8 @@ $datagrid-header-short-height: 32px;
   //Row Height Feature
   &.medium-rowheight {
     tr td {
-      height: $datagrid-header-height;
-      line-height: $datagrid-header-height;
+      height: $datagrid-medium-row-height;
+      line-height: $datagrid-medium-row-height;
 
       .datagrid-row-heading {
         margin-top: 25px;
@@ -107,7 +110,7 @@ $datagrid-header-short-height: 32px;
     //Resize the headers too
     .datagrid-column-wrapper,
     th {
-      height: $datagrid-header-medium-height;
+      height: $datagrid-medium-header-height;
     }
 
     .sort-indicator {
@@ -118,11 +121,11 @@ $datagrid-header-short-height: 32px;
   &.short-rowheight {
 
     tr td {
-      height: $datagrid-header-short-height;
-      line-height: $datagrid-header-short-height;
+      height: $datagrid-short-row-height;
+      line-height: $datagrid-short-row-height;
 
       span {
-        line-height: $datagrid-header-short-height;
+        line-height: $datagrid-short-row-height;
       }
 
       .badge {
@@ -150,6 +153,14 @@ $datagrid-header-short-height: 32px;
     .datagrid-column-wrapper,
     th {
       height: 25px;
+    }
+
+    .datagrid-column-wrapper.l-right-text .datagrid-header-text {
+      margin-top: 6px;
+    }
+
+    .datagrid-header-text {
+      padding-top: 1px;
     }
 
     .sort-indicator {
@@ -1041,7 +1052,7 @@ html[dir='rtl'] {
       .handle,
       .is-draggable-target {
         font-size: 1.5em;
-        height: $datagrid-header-short-height;
+        height: $datagrid-short-header-height;
         padding: 1px 0 0 5px;
         width: 14px;
       }
@@ -1053,7 +1064,7 @@ html[dir='rtl'] {
       .handle,
       .is-draggable-target {
         font-size: 1.6em;
-        height: $datagrid-header-medium-height;
+        height: $datagrid-medium-header-height;
         padding: 3px 0 0 5px;
         width: 16px;
       }
