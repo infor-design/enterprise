@@ -70,6 +70,44 @@
   background-color: rgba($white, 0);
 }
 
+.lookup-modal {
+  .modal-body-wrapper {
+    background-color: inherit;
+    padding: 0 20px 10px;
+  }
+
+  .modal-buttonset {
+    background-color: inherit;
+  }
+
+  .modal-content {
+    margin: 0;
+  }
+
+  .toolbar {
+    padding: 0;
+  }
+
+  .modal-header {
+    padding: 20px 20px 0;
+  }
+
+  .title {
+    @include font-size(18);
+    @include antialiased();
+  }
+
+  tr.is-clickable {
+    cursor: pointer;
+
+    td:focus,
+    td.is-focused {
+      box-shadow: none;
+    }
+  }
+
+}
+
 //RTL Styles
 html[dir="rtl"] {
 

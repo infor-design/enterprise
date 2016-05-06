@@ -448,6 +448,7 @@ $datagrid-header-bg-color: $slate03;
 $datagrid-header-border-color: $slate06;
 $datagrid-header-hover-color: $slate02;
 $datagrid-header-active-color: $slate04;
+$datagrid-header-checkbox-border-color: $slate09;
 $datagrid-sort-icon-color: $slate04;
 $datagrid-sort-icon-sorted-color: $slate10;
 
@@ -460,6 +461,16 @@ $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: rgba(54, 138, 192, .30); //Or 8dc9e6
 $datagrid-row-selected-color-dark: rgba(54, 138, 192, .45); //#eaf8fe;
 $datagrid-row-hover-color: $slate06;
+$datagrid-header-focus-bg-color: $primary-color;
+$datagrid-alternate-bg-color: $slate07;
+$datagrid-alternate-row-hover-color: $slate06;
+$datagrid-list-header-bg-color: $slate09;
+$datagrid-list-header-border-color: $slate03;
+$datagrid-list-header-color: $slate03;
+$datagrid-list-header-hover-color: $slate09;
+$datagrid-list-row-hover-color: transparent;
+$datagrid-list-sort-icon-color: $slate04;
+$datagrid-list-sort-icon-hover-color: $slate01;
 $datagrid-header-focus-bg-color: $primary-color;
 
 // Search Results

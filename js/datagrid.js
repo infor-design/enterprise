@@ -475,7 +475,6 @@ window.Editors = {
       this.input.select().focus();
 
       //Check if isClick or cell touch and just open the list
-
       if (event.type === 'click') {
         this.input.parent().find('.icon').trigger('click');
         this.input.closest('td').addClass('is-focused');
@@ -1621,6 +1620,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.toolbar.find('.datagrid-result-count').html(countText);
+        self.toolbar.closest('.modal').find('.datagrid-result-count').html(countText);
         self.toolbar.attr('aria-label',  self.toolbar.find('.title').text());
         self.toolbar.find('.datagrid-row-count').text(count);
       }

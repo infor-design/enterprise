@@ -445,6 +445,10 @@ $datagrid-header-bg-color: $graphite08;
 $datagrid-header-border-color: $graphite06;
 $datagrid-header-hover-color: $graphite10;
 $datagrid-header-active-color: $graphite08;
+$datagrid-header-checkbox-border-color: $graphite05;
+$datagrid-sort-icon-color: $graphite04;
+$datagrid-sort-icon-sorted-color: $white;
+
 $datagrid-cell-color: $font-color;
 $datagrid-cell-bg-color: $graphite01;
 $datagrid-cell-readonly-bg-color: $graphite02;
@@ -454,7 +458,15 @@ $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: rgba(37, 120, 169, .20);
 $datagrid-row-selected-color-dark: rgba(37, 120, 169, .35);
 $datagrid-row-hover-color: $graphite04;
-
+$datagrid-alternate-bg-color: $graphite01;
+$datagrid-alternate-row-hover-color: $graphite04;
+$datagrid-list-header-bg-color: $graphite04;
+$datagrid-list-header-border-color: transparent;
+$datagrid-list-header-color: $graphite10;
+$datagrid-list-header-hover-color: $graphite04;
+$datagrid-list-row-hover-color: transparent;
+$datagrid-list-sort-icon-color: $graphite04;
+$datagrid-list-sort-icon-hover-color: $graphite06;
 $datagrid-header-focus-bg-color: $primary-color;
 
 // Search Results

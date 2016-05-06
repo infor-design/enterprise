@@ -182,10 +182,8 @@
       //Overidable function to create the modal dialog
       createModal: function () {
         var self = this,
-          content = '<hr><div id="'+lookupGridId+'"></div>',
+          content = '<div id="'+lookupGridId+'"></div>',
           labelText = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+self.element.attr('id')+'"]').contents().get(0).nodeValue;
-
-        labelText += ' ' + Locale.translate('Lookup');
 
         if (this.settings.title) {
           labelText = this.settings.title;
@@ -233,7 +231,8 @@
         $('body').modal({
           title: labelText,
           content: content,
-          buttons: buttons
+          buttons: buttons,
+          cssClass: 'lookup-modal'
         }).off('open').on('open', function () {
           self.createGrid();
           self.element.trigger('afteropen', [self.modal, self.grid]);
@@ -242,6 +241,9 @@
         });
 
         self.modal = $('body').data('modal');
+        if (!this.settings.title) {
+          self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count">(N Results)</span>');
+        }
 
         setTimeout(function () {
           //Placeholder attribute in browsers that do not handle it
@@ -260,13 +262,14 @@
 
       //Overridable Function in which we create the grid on the current ui dialog.
       createGrid: function (grid) {
-        var self = this,
-          lookupGrid = self.modal.element.find('#' + lookupGridId);
+        var self = this, lookupGrid;
 
         if (grid) {
           lookupGrid = grid;
           lookupGridId = grid.attr('id');
           self.settings.options = grid.data('datagrid').settings;
+        } else {
+          lookupGrid = self.modal.element.find('#' + lookupGridId);
         }
 
         if (self.settings.options) {
@@ -276,9 +279,18 @@
             lookupGrid.find('tr').addClass('is-clickable');
           }
 
-          lookupGrid.datagrid(self.settings.options);
+          self.settings.options.isList = true;
+
+          // Create grid (unless already exists from passed in grid)
+          if (!lookupGrid.data('datagrid')) {
+            lookupGrid.datagrid(self.settings.options);
+          }
         }
+
         self.grid = lookupGrid.data('datagrid');
+        if (!this.settings.title) {
+          self.modal.element.find('.title').html('&nbsp;');
+        }
 
         //Mark selected rows
         lookupGrid.off('selected.lookup');

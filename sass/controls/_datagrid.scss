@@ -460,7 +460,7 @@ $datagrid-header-short-height: 32px;
 
     //Inline Editting
     &.is-editing {
-      background-color: $panel-bg-color !important;
+      background-color: $panel-bg-color;
 
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
@@ -561,7 +561,7 @@ $datagrid-header-short-height: 32px;
 
     th {
       background-color: $datagrid-list-header-bg-color;
-      border-left-color: transparent;
+      border-left: 0;
 
       .datagrid-header-text {
         color: $datagrid-list-header-color;
@@ -579,22 +579,33 @@ $datagrid-header-short-height: 32px;
       &.is-sorted-desc .sort-desc .icon {
         fill: $datagrid-list-sort-icon-hover-color;
       }
+
+      .datagrid-checkbox {
+        &::before {
+          border: 1px solid $datagrid-list-header-checkbox-border-color;
+        }
+      }
     }
 
     td {
       background-color: transparent;
+      border-top: 0;
+
+      .is-readonly {
+        background-color: transparent;
+      }
     }
 
     tr td {
-      border-left: 1px solid transparent;
-      border-right: 1px solid transparent;
+      border-left: 0;
+      border-right: 0;
     }
 
     thead {
       border-bottom: 1px solid $datagrid-list-header-border-color;
     }
 
-    tr:hover:not(.datagrid-expandable-row) td {
+    tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
       background-color: $datagrid-list-row-hover-color;
     }
   }

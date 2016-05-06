@@ -495,7 +495,12 @@
                         'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
         } else {
           wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0) - xOffset,
-                        'top': target.offset().top + 10 - (wrapper.parent().length > 1 ? wrapper.parent().offset().top: 0) + target.outerHeight() });
+                        'top': target.offset().top + 10 + target.outerHeight() });
+        }
+
+        if (wrapper.closest('.modal').length > 0) {
+          wrapper.css('left', target.offset().left + 2 - xOffset - wrapper.closest('.modal').offset().left );
+          wrapper.css('top', target.offset().top + 10 + target.outerHeight() - wrapper.closest('.modal').offset().top);
         }
 
         //Handle Case where menu is off bottom
