@@ -113,6 +113,10 @@ $datagrid-short-row-height: 30px;
       height: $datagrid-medium-header-height;
     }
 
+    .datagrid-column-wrapper.l-right-text .datagrid-header-text {
+      margin-top: 9px;
+    }
+
     .sort-indicator {
       margin: 1px 0 0 4px;
     }
@@ -157,10 +161,6 @@ $datagrid-short-row-height: 30px;
 
     .datagrid-column-wrapper.l-right-text .datagrid-header-text {
       margin-top: 6px;
-    }
-
-    .datagrid-header-text {
-      padding-top: 1px;
     }
 
     .sort-indicator {
