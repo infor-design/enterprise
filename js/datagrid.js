@@ -1991,8 +1991,17 @@ $.fn.datagrid = function(options) {
 
     //Search a Term across all columns
     keywordSearch: function(term) {
-      this.tableBody.find('tr').removeClass('is-filtered').show();
+      this.tableBody.find('tr[role="row"]').removeClass('is-filtered').show();
       this.filterExpr = [];
+
+        this.tableBody.find('.datagrid-expandable-row').each(function () {
+          var row = $(this);
+          //Collapse All rows
+          row.prev().find('.datagrid-expand-btn').removeClass('is-expanded');
+          row.prev().find('.plus-minus').removeClass('active');
+          row.removeClass('is-expanded').css('display', '');
+          row.find('.datagrid-row-detail').css('height', '');
+        });
 
       this.tableBody.find('.search-mode').each(function () {
         var cell = $(this),
@@ -2023,7 +2032,7 @@ $.fn.datagrid = function(options) {
 
     highlightSearchRows: function (term) {
       // Move across all visible cells and rows, highlighting
-      this.tableBody.find('tr:visible').each(function () {
+      this.tableBody.find('tr').each(function () {
         var found = false,
           row = $(this);
 
@@ -2047,9 +2056,17 @@ $.fn.datagrid = function(options) {
           });
 
         // Hide non matching rows
+
         if (!found) {
           row.addClass('is-filtered').hide();
+        } else if (found && row.is('.datagrid-expandable-row')) {
+          row.prev().show();
+          row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
+          row.prev().find('.plus-minus').addClass('active');
+          row.addClass('is-expanded').css('display', 'table-row');
+          row.find('.datagrid-row-detail').css('height', 'auto');
         }
+
       });
     },
 

@@ -25,7 +25,7 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Expander});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander});
       columns.push({ id: 'drilldown', name: '', field: '', width: 60, formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
@@ -46,7 +46,8 @@
         columns: columns,
         idProperty:'officeId',
         dataset: data,
-        rowTemplate: rowTemplate
+        rowTemplate: rowTemplate,
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
       });
 
       grid.on('expandrow', function (e, args) {
@@ -62,4 +63,3 @@
 });
 
 </script>
-

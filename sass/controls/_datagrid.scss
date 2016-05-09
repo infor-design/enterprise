@@ -113,6 +113,10 @@ $datagrid-short-row-height: 30px;
       height: $datagrid-medium-header-height;
     }
 
+    .datagrid-drilldown {
+      top: -1px;
+    }
+
     .datagrid-column-wrapper.l-right-text .datagrid-header-text {
       margin-top: 9px;
     }
@@ -139,6 +143,18 @@ $datagrid-short-row-height: 30px;
         &::before {
           margin-top: 0;
         }
+      }
+
+      .datagrid-expand-btn {
+        top: -2px;
+
+        + span {
+          top: -3px;
+        }
+      }
+
+      .datagrid-drilldown {
+        top: -4px;
       }
 
       .datagrid-alert-icon {
@@ -695,9 +711,10 @@ $datagrid-short-row-height: 30px;
   border-radius: 0;
   margin: 0 auto;
 
-  svg {
+  .icon {
     fill: $graphite06;
-    width: 18px;
+    height: 20px;
+    width: 20px;
   }
 }
 
@@ -812,6 +829,8 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
+  margin-left: -10px;
+  top: 1px;
   vertical-align: middle;
 
   span:not(.icon) {
@@ -820,6 +839,8 @@ td .btn-actions {
 
   + span {
     color: $datagrid-cell-color;
+    margin-left: -5px;
+    position: relative;
   }
 
   .icon.plus-minus::before,
@@ -858,7 +879,6 @@ td .btn-actions {
   }
 
   .datagrid-row-detail {
-    border-bottom: 1px solid $datagrid-border-color;
     height: 0;
     margin: -1px -20px 0;
     padding: 0 20px;
