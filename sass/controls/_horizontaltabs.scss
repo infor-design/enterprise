@@ -39,10 +39,14 @@
     fill: $tab-text-color;
   }
 
+  .btn-primary .icon {
+    fill: $primary-btn-color;
+  }
+
   .tab-more {
+    @include font-size(14);
     background-color: transparent;
     color: $tab-text-color;
-    @include font-size(14);
     line-height: 12px;
     max-width: 102px;
     padding: 17px 0 16px 11px;
