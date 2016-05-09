@@ -1024,6 +1024,7 @@
 
         setTimeout(function() {
           var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+          parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
           parentScroll.on('scroll.dropdown', scrollDocument);
 
           // In mobile environments, bind against an orientation change.
