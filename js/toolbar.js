@@ -27,7 +27,7 @@
     // Settings and Options
     var pluginName = 'toolbar',
         defaults = {
-          maxVisibleButtons: 3 // Total amount of buttons that can be present, not including the More button
+          maxVisibleButtons: 3 // Total amount of buttons that can be present, including the More button
         },
         settings = $.extend({}, defaults, options);
 

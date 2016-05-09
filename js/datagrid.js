@@ -1904,10 +1904,12 @@ $.fn.datagrid = function(options) {
 
           if (!checkbox.hasClass('is-checked')) {
             checkbox.addClass('is-checked').attr('aria-checked', 'true');
+
             self.selectAllRows();
+
           } else {
             checkbox.removeClass('is-checked').attr('aria-checked', 'true');
-            self.selectedRows([]);
+            self.unSelectAllRows();
           }
         });
 
@@ -2149,7 +2151,16 @@ $.fn.datagrid = function(options) {
         rows.push(i);
       }
 
+      this.dontSyncUi = true;
       this.selectedRows(rows);
+      this.dontSyncUi = false;
+      this.syncSelectedUI();
+    },
+
+    unSelectAllRows: function () {
+      this.dontSyncUi = true;
+      this.selectedRows([]);
+      this.dontSyncUi = false;
       this.syncSelectedUI();
     },
 
@@ -2177,11 +2188,12 @@ $.fn.datagrid = function(options) {
         row.find('td').attr('aria-selected', 'true');
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
       }
+
       this.syncSelectedUI();
-
       this.element.trigger('selected', [this._selectedRows]);
-
     },
+
+    dontSyncUi: false,
 
     // Select rows between indexes
     selectRowsBetweenIndexes: function(indexes) {
@@ -2193,6 +2205,7 @@ $.fn.datagrid = function(options) {
 
     //Set ui elements based on selected rows
     syncSelectedUI: function () {
+
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox');
 
       //Sync the header checkbox
@@ -2209,7 +2222,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Open or Close the Contextual Toolbar.
-      if (this.contextualToolbar.length !== 1) {
+      if (this.contextualToolbar.length !== 1 || this.dontSyncUi) {
         return;
       }
 
@@ -2639,7 +2652,7 @@ $.fn.datagrid = function(options) {
             self.selectAllRows();
           } else {
             checkbox.removeClass('is-checked').attr('aria-checked', 'true');
-            self.selectedRows([]);
+            self.unSelectedRows([]);
           }
           handled = true;
         }

@@ -104,6 +104,10 @@
     td.is-focused {
       box-shadow: none;
     }
+
+    &:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
+      background-color: $datagrid-row-hover-color;
+    }
   }
 
 }

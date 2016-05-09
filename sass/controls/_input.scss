@@ -507,15 +507,3 @@ html[dir='rtl'] {
     }
   }
 }
-
-// Firefox on Mac
-.is-mac.is-firefox {
-  input:not(.spinbox):not(.searchfield),
-  textarea {
-    padding: 9px 10px 8px;
-  }
-
-  input.error:not(.spinbox):not(.searchfield) {
-    padding: 9px 32px 8px 10px;
-  }
-}
