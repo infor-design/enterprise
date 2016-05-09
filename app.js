@@ -261,6 +261,9 @@ var express = require('express'),
     }),
       end = req.url.replace(/\/patterns(\/)?/g, '');
 
+    // Don't capture any query params for the View Render
+    end = end.replace(/\?(.*)/, '');
+
     if (!end || !end.length || end === '/') {
       getDirectoryListing('patterns/', req, res, next);
       return;
