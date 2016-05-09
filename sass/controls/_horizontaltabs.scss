@@ -43,6 +43,10 @@
     fill: $primary-btn-color;
   }
 
+  .btn-secondary .icon {
+    fill: $btn-color;
+  }
+
   .tab-more {
     @include font-size(14);
     background-color: transparent;
