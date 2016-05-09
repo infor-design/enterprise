@@ -295,7 +295,10 @@
           available = self.getAvailability(block);
 
           // Set positions
-          left = (self.settings.widgetWidth + self.settings.gutterSize) * available.col;
+          var box = self.settings.widgetWidth + self.settings.gutterSize,
+            totalWidth = box * self.settings.columns;
+
+          left = Locale.isRTL() ? totalWidth - ((box * block.w) + (box * available.col)) : box * available.col;
           top = (self.settings.widgetHeight + self.settings.gutterSize) * available.row;
           pos = {left: left, top: top};
 
