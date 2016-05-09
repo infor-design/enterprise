@@ -144,7 +144,7 @@
           return;
         }
 
-        this.focusTimer = setTimeout(searchfieldActivationTimer, 300);
+        this.focusTimer = setTimeout(searchfieldActivationTimer, 0);
       },
 
       handleFakeBlur: function() {
@@ -158,7 +158,7 @@
           }
         }
 
-        this.focusTimer = setTimeout(searchfieldDeactivationTimer, 100);
+        this.focusTimer = setTimeout(searchfieldDeactivationTimer, 0);
       },
 
       handleOutsideClick: function(e) {
@@ -209,19 +209,117 @@
         return true;
       },
 
+      // Retrieves the distance between a left and right boundary.
+      // Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
+      getFillSize: function(leftBoundary, rightBoundary) {
+        var finalWidth = 225,
+          leftBoundaryNum = 0,
+          rightBoundaryNum = 0;
+
+        function sanitize(boundary) {
+          if (!boundary) {
+            return 0;
+          }
+
+          // Return out if the boundary is just a number
+          if (!isNaN(parseInt(boundary))) {
+            return parseInt(boundary);
+          }
+
+          if (boundary instanceof jQuery) {
+            if (!boundary.length) {
+              return;
+            }
+
+            if (boundary.is('.title')) {
+              boundary = boundary.next('.buttonset');
+            }
+
+            boundary = boundary[0];
+          }
+
+          return boundary;
+        }
+
+        function getEdgeFromBoundary(boundary, edge) {
+          if (!isNaN(boundary)) {
+            return (boundary === null || boundary === undefined) ? 0 : boundary;
+          }
+
+          if (!edge || typeof edge !== 'string') {
+            edge = 'left';
+          }
+
+          var edges = ['left', 'right'];
+          if ($.inArray(edge, edges) === -1) {
+            edge = edges[0];
+          }
+
+          var rect;
+
+          if (boundary instanceof HTMLElement || boundary instanceof SVGElement) {
+            rect = boundary.getBoundingClientRect();
+          }
+
+          return rect[edge];
+        }
+
+        leftBoundary = sanitize(leftBoundary);
+        rightBoundary = sanitize(rightBoundary);
+
+        function whichEdge() {
+          var e = 'left';
+          if (leftBoundary === rightBoundary || ($(rightBoundary).length && $(rightBoundary).is('.buttonset'))) {
+            e = 'right';
+          }
+
+          return e;
+        }
+
+        leftBoundaryNum = getEdgeFromBoundary(leftBoundary);
+        rightBoundaryNum = getEdgeFromBoundary(rightBoundary, whichEdge());
+
+        if (!leftBoundaryNum && !rightBoundaryNum) {
+          return finalWidth;
+        }
+
+        finalWidth = rightBoundaryNum - leftBoundaryNum;
+
+        return finalWidth;
+      },
+
+      setOpenWidth: function() {
+        var buttonset = this.element.parents('.toolbar').children('.buttonset'),
+          nextElem = this.inputWrapper.next();
+
+        // If small form factor, use the right edge of the
+        if (nextElem.is('.title')) {
+          nextElem = buttonset;
+        }
+
+        if (this.shouldBeFullWidth()) {
+          this.inputWrapper.css('width', '100%');
+          return;
+        }
+
+        var width = this.getFillSize( buttonset.offset().left + 10, this.inputWrapper.next() );
+        this.inputWrapper.css('width', width + 'px');
+      },
+
       activate: function() {
         if (this.inputWrapper.hasClass('active')) {
           return;
         }
 
-        var self = this;
+        var self = this,
+          notFullWidth = !this.shouldBeFullWidth();
 
         if (this.animationTimer) {
           clearTimeout(this.animationTimer);
         }
 
         // Places the input wrapper into the toolbar on smaller breakpoints
-        if (this.shouldBeFullWidth()) {
+        if (!notFullWidth) {
           this.inputWrapper.detach().prependTo(this.containmentParent);
         }
 
@@ -230,6 +328,9 @@
 
         function activateCallback() {
           self.inputWrapper.addClass('is-open').trigger('activate');
+
+          self.setOpenWidth();
+
           self.input.focus(); // for iOS
         }
 
@@ -241,12 +342,16 @@
         var header = this.inputWrapper.closest('.header'),
           headerWidth = header.width();
 
-        this.animationTimer = setTimeout(activateCallback, (header.length > 0 && headerWidth < 320) ? 0 : 300);
+        this.animationTimer = setTimeout(activateCallback, 0 /*(header.length > 0 && headerWidth < 320) ? 0 : 300*/);
       },
 
       deactivate: function() {
         var self = this,
           textMethod = 'removeClass';
+
+        function closeWidth() {
+          return self.inputWrapper.removeAttr('style');
+        }
 
         if (this.input.val().trim() !== '') {
           textMethod = 'addClass';
@@ -257,9 +362,12 @@
           clearTimeout(this.animationTimer);
         }
 
+
         function deactivateCallback() {
           self.inputWrapper.removeClass('is-open');
           self.fastActivate = false;
+
+          closeWidth();
 
           if (self.button && self.button.length && self.button.is('.is-open')) {
             self.button.data('popupmenu').close(false, true);
@@ -281,7 +389,7 @@
           return;
         }
 
-        this.animationTimer = setTimeout(deactivateCallback, 300);
+        this.animationTimer = setTimeout(deactivateCallback, 0);
       },
 
       shouldBeFullWidth: function() {

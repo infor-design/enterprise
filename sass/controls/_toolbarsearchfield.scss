@@ -110,7 +110,7 @@ $toolbarsearchfield-category-empty-width: 54px;
   }
 
   &.active {
-    width: $toolbarsearchfield-max-width;
+    //width: $toolbarsearchfield-max-width;
 
     // During the animation "out", the text goes transparent
     .searchfield {
@@ -285,19 +285,19 @@ $toolbarsearchfield-category-empty-width: 54px;
   position: absolute;
   right: 100%;
   top: 5px;
-  width: 100%;
+  //width: 100%;
   z-index: 10;
 
   &.active {
     right: 0;
-    width: 100%;
+    //width: 100%;
   }
 
   &.has-text {
-    width: 100%;
+    //width: 100%;
 
     &.active {
-      width: 100%;
+      //width: 100%;
     }
   }
 }
@@ -412,7 +412,7 @@ $toolbarsearchfield-category-empty-width: 54px;
 
   // Small adjustments for being the full-width toolbar searchfield
   .toolbar > .toolbar-searchfield-wrapper.active {
-    width: calc(100% - 40px);
+    //width: calc(100% - 40px);
 
     .searchfield {
       // Don't be semi-transparent in this mode, since it sits over top of other things
