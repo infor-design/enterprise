@@ -36,6 +36,15 @@ window.Formatters = {
     return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-calendar"><use xlink:href="#icon-calendar"/></svg>';
   },
 
+  Lookup: function(row, cell, value, col) {
+    var formatted = ((value === null || value === undefined) ? '' : value);
+
+    if (!col.editor) {
+      return formatted;
+    }
+    return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-search-list"><use xlink:href="#icon-search-list"/></svg>';
+  },
+
   Decimal:  function(row, cell, value, col) {
     var formatted;
 
@@ -501,6 +510,66 @@ window.Editors = {
 
     this.init();
 
+  },
+
+  Lookup: function(row, cell, value, container, column, event) {
+    this.name = 'lookup';
+    this.originalValue = value;
+
+    this.init = function () {
+      this.input = $('<input class="lookup" data-init="false" />').appendTo(container);
+      this.input.lookup(column.options || {});
+    };
+
+    this.val = function (value) {
+      return value ? this.input.val(value) : this.input.val();
+    };
+
+    this.focus = function () {
+      var self = this,
+        api = this.input.data('lookup'),
+        td = this.input.closest('td');
+
+      // Using keyboard
+      if (event.type === 'keydown') {
+        td.on('keydown.editorlookup', function (e) {
+          if (e.keyCode === 40) {
+            $(this).addClass('is-focused');
+            api.openDialog(e);
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+      }
+
+      //Check if isClick or cell touch and just open the list
+      if (event.type === 'click') {
+        api.openDialog(event);
+        td.addClass('is-focused');
+      }
+
+      // Update on change from lookup
+      this.input.on('change', function () {
+        td.removeClass('is-focused');
+
+        setTimeout(function () {
+          self.input.trigger('focusout');
+          container.parent().focus();
+        }, 1);
+
+      });
+    };
+
+    this.destroy = function () {
+      var self = this,
+        td = this.input.closest('td');
+      setTimeout(function() {
+        td.off('keydown.editorlookup');
+        self.input.remove();
+      }, 0);
+    };
+
+    this.init();
   }
 };
 
@@ -2386,6 +2455,7 @@ $.fn.datagrid = function(options) {
           node = self.activeCell.node,
           row = self.activeCell.row,
           cell = self.activeCell.cell,
+          isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell, i, l;
 
         for (i=0, l=self.settings.columns.length; i < l; i++) {
@@ -2479,7 +2549,8 @@ $.fn.datagrid = function(options) {
 
         // For mode 'Selectable':
         // Press Space to toggle row selection, or click to activate using a mouse.
-        if (key === 32 && !self.settings.editable) {
+        if (key === 32 && (!self.settings.editable || isSelectionCheckbox)) {
+          e.preventDefault();
           row = node.closest('tr');
 
           if ($(e.target).closest('.datagrid-row-detail').length === 1) {
@@ -2519,9 +2590,14 @@ $.fn.datagrid = function(options) {
             self.quickEditMode = false;
             self.commitCellEdit(self.editor.input);
 
-            var evt = $.Event('keydown.datagrid');
-            evt.keyCode = 40; // move down
-            node.trigger(evt);
+            if (self.settings.actionableMode) {
+              var evt = $.Event('keydown.datagrid');
+              evt.keyCode = 40; // move down
+              node.trigger(evt);
+            }
+            else {
+              self.setActiveCell(row, cell);
+            }
           } else {
             self.makeCellEditable(row, cell, e);
             if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
@@ -2575,7 +2651,7 @@ $.fn.datagrid = function(options) {
     },
 
     notContainTextfield: function(container) {
-      var selector = '.dropdown, .datepicker';
+      var selector = '.dropdown, .datepicker, .lookup';
       return !($(selector, container).length);
     },
 
