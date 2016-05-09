@@ -99,7 +99,9 @@
 
         setTimeout(function () {
           var el = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+ self.element.attr('id') + '"]');
-          el.append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
+          if(el.length) {
+            el.append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
+          }
         }, 500);
       },
 
@@ -183,7 +185,8 @@
       createModal: function () {
         var self = this,
           content = '<div id="'+lookupGridId+'"></div>',
-          labelText = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+self.element.attr('id')+'"]').contents().get(0).nodeValue;
+          thisLabel = $('label[for="'+self.element.attr('id')+'"]'),
+          labelText = self.isInlineLabel ? self.inlineLabelText : (thisLabel.length ? thisLabel.text() : '');
 
         if (this.settings.title) {
           labelText = this.settings.title;
