@@ -115,25 +115,25 @@
 
   &.pending {
     min-height: 22px;
-    position: relative;
     min-width: 22px;
+    position: relative;
 
     // Clock circle
-    &:before {
-      border: .15em solid #ffffff;
-      border-radius: 55%;
+    &::before {
+      border: 1px solid $white;
+      border-radius: 50%;
       content: '';
-      height: 60%;
-      left: .27em;
+      height: 14px;
+      left: 3px;
       position: absolute;
-      top: .25em;
-      width: 60%;
+      top: 3px;
+      width: 14px;
     }
 
     // Clock hands
-    &:after {
-      border-bottom: .15em solid #ffffff;
-      border-left: .1em solid #ffffff;
+    &::after {
+      border-bottom: 1px solid $white;
+      border-left: 1px solid $white;
       content: '';
       height: 24%;
       left: .75em;
@@ -142,7 +142,7 @@
       width: 19.5%;
     }
 
-    [class*='ie'] &:before {
+    [class*='ie'] &::before {
       left: 3px !important;
       top: 2.5px;
     }
