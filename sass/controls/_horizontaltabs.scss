@@ -7,6 +7,10 @@
   .tab-list {
     border-bottom: 1px solid $tab-border-color;
     height: 50px;
+
+    .icon:not(.icon-error) {
+      fill: $tab-text-color;
+    }
   }
 
   .tab {
@@ -33,18 +37,6 @@
       }
     }
 
-  }
-
-  .icon:not(.icon-error) {
-    fill: $tab-text-color;
-  }
-
-  .btn-primary .icon {
-    fill: $primary-btn-color;
-  }
-
-  .btn-secondary .icon {
-    fill: $btn-color;
   }
 
   .tab-more {
