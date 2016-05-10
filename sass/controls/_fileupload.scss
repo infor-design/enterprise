@@ -26,7 +26,8 @@ label.fileupload {
 
       .icon {
         fill: $trigger-icon-fill-color;
-        top: -2px;
+        height: 14px;
+        width: 14px;
       }
 
       &:hover {
@@ -131,13 +132,13 @@ html[dir='rtl'] {
       margin-bottom: 0;
     }
 
-    &:before,
-    &:after {
+    &::before,
+    &::after {
       content: ' ';
       display: table;
     }
 
-    &:after {
+    &::after {
       clear: both;
     }
 
@@ -198,7 +199,7 @@ html[dir='rtl'] {
         border-radius: 50%;
         float: left;
         height: 16px;
-        margin: 8px 10px 0 10px;
+        margin: 8px 10px 0;
         width: 16px;
 
         .btn-icon {
@@ -235,8 +236,8 @@ html[dir='rtl'] {
 
       .size {
         color: $fileupload-secondary-color;
-        margin-right: 42px;
         line-height: 36px;
+        margin-right: 42px;
         max-width: 75px;
         text-transform: uppercase;
       }
@@ -333,7 +334,7 @@ html[dir='rtl'] {
     min-width: inherit;
 
     &.standalone {
-      border: none;
+      border: 0;
       padding: 0;
     }
 
@@ -349,6 +350,3 @@ html[dir='rtl'] {
 
   }
 }
-
-
-
