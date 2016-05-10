@@ -68,9 +68,8 @@ The files can then be seen in the folder /node_modules/@infor/sohoxi/dist
 Run the following, where X.X.X is the version to update to
 
 ```bash
-npm install --save @infor/sohoxi@4.0.7
+npm install --save @infor/sohoxi@4.2.0
 ```
-
 
 # Running the Development Project
 

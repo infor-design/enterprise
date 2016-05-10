@@ -333,6 +333,7 @@
       },
 
       position: function () {
+
         var self = this,
           winH = window.innerHeight + $(document).scrollTop(),
           // subtract 2 from the window width to account for the tooltips
@@ -614,8 +615,13 @@
           if (this.activeElement.is('.spinbox')) {
             extraOffset =  Locale.isRTL() ? -5 : 4;
           }
+
           if (this.activeElement.is('.datepicker') || this.activeElement.is('.timepicker')) {
             extraOffset = Locale.isRTL() ? (isShortField ? 5 : 18) : (isShortField ? -9 : -23);
+          }
+
+          if (this.activeElement.is('.colorpicker')) {
+            extraOffset = 11;
           }
         }
 
