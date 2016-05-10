@@ -2820,7 +2820,7 @@ $.fn.datagrid = function(options) {
       this.updateCellNode(row, cell, value, true);
     },
 
-    updateCellNode: function (row, cell, value, noTrigger) {
+    updateCellNode: function (row, cell, value, fromApiCall) {
       var rowNode = this.tableBody.find('tr[role="row"]').eq(row),
         cellNode = rowNode.find('td').eq(cell),
         col = this.columnSettings(cell),
@@ -2828,10 +2828,17 @@ $.fn.datagrid = function(options) {
         formatter = (col.formatter ? col.formatter : this.defaultFormatter);
 
       var oldVal = (col.field ? this.settings.dataset[row][col.field] : ''),
+        coercedVal;
+
+      //Coerce/Serialize value if from cell edit
+      if (!fromApiCall) {
         coercedVal = this.coerceValue(value, oldVal, col, row, cell);
 
-      //coerced value may be coerced to empty string, null, or 0
-      if (coercedVal === undefined) {
+        //coerced value may be coerced to empty string, null, or 0
+        if (coercedVal === undefined) {
+          coercedVal = value;
+        }
+      } else {
         coercedVal = value;
       }
 
@@ -2860,7 +2867,7 @@ $.fn.datagrid = function(options) {
           this.settings.dataset[row][col.field] = coercedVal;
         }
 
-        if (!noTrigger) {
+        if (!fromApiCall) {
           this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
         }
       }
