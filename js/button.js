@@ -101,6 +101,10 @@
             }
           }
 
+          // Using keyboard to click
+          xPos = (xPos < 0) ? self.element.outerWidth()/2 : xPos;
+          yPos = (yPos < 0) ? self.element.outerHeight()/2 : yPos;
+
           $('svg.ripple-effect', element).remove();
           ripple.css({'left':xPos, 'top':yPos});
           element.prepend(ripple);
