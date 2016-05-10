@@ -1,0 +1,187 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+
+      <div class="buttonset">
+        <label class="audible" for="searchfield-01">Keyword Search</label>
+        <input id="searchfield-01" name="searchfield-01" class="searchfield" />
+
+        <button class="btn" type="button" id="add-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>Add</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn" type="button" id='remove-btn'>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid">
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+
+    Locale.set('en-US').done(function () {
+        var grid,
+          data = [],
+          columns = [],
+          states = [
+            'Alabama',
+            'Alaska',
+            'American Samoa',
+            'Arizona',
+            'Arkansas',
+            'California',
+            'Colorado',
+            'Connecticut',
+            'Delaware',
+            'District Of Columbia',
+            'Federated States Of Micronesia',
+            'Florida',
+            'Georgia',
+            'Guam',
+            'Hawaii',
+            'Idaho',
+            'Illinois',
+            'Indiana',
+            'Iowa',
+            'Kansas',
+            'Kentucky',
+            'Louisiana',
+            'Maine',
+            'Marshall Island Teritory',
+            'Maryland',
+            'Massachusetts',
+            'Michigan',
+            'Minnesota',
+            'Mississippi',
+            'Missouri',
+            'Montana',
+            'Nebraska',
+            'Nevada',
+            'New Hampshire',
+            'New Jersey',
+            'New Mexico',
+            'New York',
+            'North Carolina',
+            'North Dakota',
+            'Northern Mariana Island Teritory',
+            'Ohio',
+            'Oklahoma',
+            'Oregon',
+            'Palau',
+            'Pennsylvania',
+            'Puerto Rico',
+            'Rhode Island Teritory',
+            'South Carolina',
+            'South Dakota',
+            'Tennessee',
+            'Texas',
+            'Utah',
+            'Vermont',
+            'Virgin Island Teritory',
+            'Virginia',
+            'Washington',
+            'West Virginia',
+            'Wisconsin',
+            'Wyoming'
+          ],
+
+          autocompleteSource = function(request, response) {
+            var data = states,
+              matches = [];
+
+            for (var i=0; i < data.length; i++) {
+              if (data[i].toLowerCase().indexOf(request.toLowerCase()) != -1) {
+                matches.push(data[i]);
+              }
+            }
+            response(request, matches);
+          };
+
+        // Some Sample Data
+        data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  '<svg/onload=alert(1)>', quantity: 1, price: 210.99, status: 'OK', state:'California', orderDate:  new Date(2016, 2, 15, 12, 30, 36), portable: false, action: 'ac', description: 'Compressor comes with various air compressor accessories, to help you with a variety of projects. All fittings are with 1/4 NPT connectors. The kit has an air blow gun that can be used for cleaning'});
+        data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.991, status: '', state:'Oklahoma', orderDate: new Date(2016, 2, 15, 0, 30, 36), portable: false, action: 'oh', description: 'The kit has an air blow gun that can be used for cleaning'});
+        data.push({ id: 3, productId: 2342203, productName: 'Portable Compressor', activity:  'Inspect and Repair', portable: true, quantity: 1, price: 120.992, status: null, state:'Wisconsin', orderDate: new Date(2014, 6, 3), action: 'ac'});
+        data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', portable: true, quantity: 3, price: null, status: 'OK', state:'Michigan', orderDate: new Date(2015, 3, 3), action: 'ac', description: 'Compressor comes with with air tool kit'});
+        data.push({ id: 5, productId: 2542205, productName: 'De Wallt Compressor', activity:  'Inspect and Repair', portable: false, quantity: 4, price: 210.99, status: 'OK', state:'Northern Mariana Island Teritory', orderDate: new Date(2015, 5, 5), action: 'oh'});
+        data.push({ id: 6, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', portable: false, quantity: 41, price: 120.99, status: 'OK', state:'New York', orderDate: new Date(2014, 6, 9), action: 'oh'});
+        data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: new Date(2014, 6, 9), action: 'oh'});
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', width: 10, formatter: Formatters.Readonly});
+
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, editor: Editors.Input});
+
+
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125, align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
+            //For this fake logic just disable odd rows
+            return (row % 2 === 0);
+          }});
+        columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, align: 'center', formatter: Formatters.Alert, readonly: true, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
+        columns.push({ id: 'state', name: 'State', field: 'state', formatter: Formatters.Autocomplete, editor: Editors.Autocomplete, options: {'source': autocompleteSource} });
+        columns.push({ id: 'portable', name: 'Portable', field: 'portable', width: 60, align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 125});
+        columns.push({ id: 'action', name: 'Action', field: 'action', width: 125, align: 'center', formatter: Formatters.Dropdown, editor: Editors.Dropdown,
+          options: [{id: 'oh1', label: 'On Hold', value: 'oh'}, {id: 'sh1', label: 'Shipped', value: 'sh'} , {id: 'ac1', label: 'Action', value: 'ac'}]
+          });
+
+        //Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          editable: true,
+          clickToSelect: false,
+          selectable: 'multiple',
+          toolbar: {keywordFilter: true, results: true}
+        }).on('cellchange', function (e, args) {
+          console.log(e, args);
+        }).on('rowadd', function (e, args) {
+          console.log(e, args);
+        }).on('rowremove', function (e, args) {
+          console.log(e, args);
+        });
+
+        gridApi = $('#datagrid').data('datagrid');
+    });
+  });
+
+  var newId = 8;
+  //Add Code for Add and icon-delete
+  $('#add-btn').on('click', function () {
+    gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product'});
+    console.log(gridApi.settings.dataset[1])
+  });
+
+  //Add Code for Add and icon-delete
+  $('#remove-btn').on('click', function () {
+    gridApi.removeSelected();
+  });
+</script>

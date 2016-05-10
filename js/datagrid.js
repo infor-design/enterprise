@@ -36,6 +36,11 @@ window.Formatters = {
     return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-calendar"><use xlink:href="#icon-calendar"/></svg>';
   },
 
+  Autocomplete: function(row, cell, value) {
+    var formatted = ((value === null || value === undefined) ? '' : value);
+    return formatted;
+  },
+
   Lookup: function(row, cell, value, col) {
     var formatted = ((value === null || value === undefined) ? '' : value);
 
@@ -570,7 +575,36 @@ window.Editors = {
     };
 
     this.init();
+  },
+
+  Autocomplete: function(ow, cell, value, container, column, event, grid) {
+    this.name = 'autocomplete';
+    this.originalValue = value;
+
+    this.init = function () {
+      this.input = $('<input class="autocomplete" data-autocomplete="source" />').appendTo(container);
+      this.input.autocomplete(column.options);
+    };
+
+    this.val = function (value) {
+      return value ? this.input.val(value) : this.input.val();
+    };
+
+    this.focus = function () {
+      grid.quickEditMode = true;
+      this.input.select().focus();
+    };
+
+    this.destroy = function () {
+      var self = this;
+      setTimeout(function() {
+        grid.quickEditMode = false;
+        self.input.remove();
+      }, 0);
+    };
+    this.init();
   }
+
 };
 
 $.fn.datagrid = function(options) {
@@ -1912,7 +1946,7 @@ $.fn.datagrid = function(options) {
       // Implement Editing Commit Functionality
       body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea', function () {
         //Popups are open
-        if ($('#calendar-popup').is(':visible')) {
+        if ($('#calendar-popup, .autocomplete.popupmenu.is-open').is(':visible')) {
           return;
         }
 
@@ -2524,8 +2558,10 @@ $.fn.datagrid = function(options) {
           }
           //Down arrow key to navigate by row.
           else {
-            self.setActiveCell(((row+1 > lastRow) ? lastRow : row+1), cell);
-            handled = true;
+            // if ($('.autocomplete.popupmenu.is-open').is(':hidden')) {
+              self.setActiveCell(((row+1 > lastRow) ? lastRow : row+1), cell);
+              handled = true;
+            // }
           }
         }
 
