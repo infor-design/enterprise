@@ -53,7 +53,7 @@
       build: function() {
         // Used for managing events that are bound to $(document)
         if (!this.id) {
-          this.id = (parseInt($('.toolbar-searchfield').length, 10)+1).toString();
+          this.id = this.element.uniqueId('toolbar-searchfield');
         }
 
         // Build the searchfield element
@@ -114,7 +114,7 @@
         }
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
-        $(document).on('keydown.toolbarsearchfield-' + this.id, function(e) {
+        $(document).on('keydown.' + this.id, function(e) {
           self.handleOutsideKeydown(e);
         });
 
@@ -124,7 +124,7 @@
       handleDeactivationEvents: function() {
         var self = this;
 
-        $(document).onTouchClick('toolbarsearchfield-' + this.id).on('click.toolbarsearchfield-' + this.id, function(e) {
+        $(document).onTouchClick(this.id).on('click.' + this.id, function(e) {
           self.handleOutsideClick(e);
         });
       },
@@ -177,7 +177,7 @@
           }
         }
 
-        $(document).offTouchClick('toolbarsearchfield-' + this.id).off('click.toolbarsearchfield-' + this.id);
+        $(document).offTouchClick(this.id).off('click.' + this.id);
         this.deactivate();
       },
 
@@ -444,7 +444,7 @@
         this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield');
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
-        $(document).off('keydown.toolbarsearchfield-' + this.id);
+        $(document).off('keydown.' + this.id);
 
         return this;
       },

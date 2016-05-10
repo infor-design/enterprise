@@ -41,8 +41,10 @@
 
   //Get a unique ID
   $.fn.uniqueId = function(className, prefix, suffix) {
-    if ($(this).attr('id')) {
-      return;
+    var predefinedId = $(this).attr('id');
+
+    if (predefinedId && $('#' + predefinedId).length < 2) {
+      return predefinedId;
     }
 
     prefix = (!prefix ? '' : prefix + '-');
@@ -307,7 +309,7 @@
     if (!options) {
       options = {};
     }
-    
+
     return options;
   };
 
