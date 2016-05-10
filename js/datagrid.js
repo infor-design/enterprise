@@ -2027,6 +2027,11 @@ $.fn.datagrid = function(options) {
 
       if (!toolbar.data('toolbar')) {
         var opts = $.fn.parseOptions(toolbar);
+
+        if (settings.toolbar.fullWidth) {
+          opts.rightAligned = true;
+        }
+
         toolbar.toolbar(opts);
       }
 

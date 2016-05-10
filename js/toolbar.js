@@ -27,6 +27,7 @@
     // Settings and Options
     var pluginName = 'toolbar',
         defaults = {
+          rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
           maxVisibleButtons: 3 // Total amount of buttons that can be present, not including the More button
         },
         settings = $.extend({}, defaults, options);
@@ -82,6 +83,8 @@
             this.buttonset.prependTo(this.element);
           }
         }
+
+        this.buttonset[this.settings.rightAligned ? 'addClass' : 'removeClass']('right-aligned');
 
         // Add and invoke More Button, if it doesn't exist
         this.more = this.element.find('.btn-actions');

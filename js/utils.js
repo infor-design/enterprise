@@ -303,6 +303,11 @@
         }
       }
     }
+
+    if (!options) {
+      options = {};
+    }
+    
     return options;
   };
 

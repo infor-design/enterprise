@@ -55,6 +55,10 @@ $toolbar-buttonset-height: 40px;
     > [class^="btn"] {
       min-width: 34px;
     }
+
+    &.right-aligned {
+      text-align: right;
+    }
   }
 
   .title {

@@ -329,20 +329,6 @@
   }
 }
 
-@include respond-to(phone) {
-  &.message {
-    width: 100%;
-  }
-
-  .modal .searchfield-wrapper {
-    width: 260px !important;
-
-    input {
-      width: 260px !important;
-    }
-  }
-}
-
 &.is-firefox {
   .modal {
     filter: none;  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove

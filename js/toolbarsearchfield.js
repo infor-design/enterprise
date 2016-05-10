@@ -212,9 +212,10 @@
       // Retrieves the distance between a left and right boundary.
       // Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
       getFillSize: function(leftBoundary, rightBoundary) {
-        var finalWidth = 225,
+        var defaultWidth = 225,
           leftBoundaryNum = 0,
-          rightBoundaryNum = 0;
+          rightBoundaryNum = 0,
+          maxFillSize = 600;
 
         function sanitize(boundary) {
           if (!boundary) {
@@ -280,29 +281,48 @@
         rightBoundaryNum = getEdgeFromBoundary(rightBoundary, whichEdge());
 
         if (!leftBoundaryNum && !rightBoundaryNum) {
-          return finalWidth;
+          return defaultWidth;
         }
 
-        finalWidth = rightBoundaryNum - leftBoundaryNum;
+        var distance = rightBoundaryNum - leftBoundaryNum;
+        if (distance >= maxFillSize) {
+          return defaultWidth;
+        }
 
-        return finalWidth;
+        return distance;
       },
 
       setOpenWidth: function() {
         var buttonset = this.element.parents('.toolbar').children('.buttonset'),
-          nextElem = this.inputWrapper.next();
+          nextElem = this.inputWrapper.next(),
+          width;
 
-        // If small form factor, use the right edge of the
+        // If small form factor, use the right edge
         if (nextElem.is('.title')) {
           nextElem = buttonset;
         }
 
         if (this.shouldBeFullWidth()) {
-          this.inputWrapper.css('width', '100%');
+          width = '100%';
+
+          if (this.toolbarParent.closest('.header').length) {
+            width = 'calc(100% - 40px)';
+          }
+
+          this.inputWrapper.css('width', width);
           return;
         }
 
-        var width = this.getFillSize( buttonset.offset().left + 10, this.inputWrapper.next() );
+        // Figure out boundaries
+        var leftBoundary = buttonset.offset().left + 10;
+        var rightBoundary = this.inputWrapper.next();
+
+        // If the search input sits alone, just use the other side of the buttonset to measure
+        if (!rightBoundary.length) {
+          rightBoundary = buttonset.offset().left + buttonset.outerWidth(true);
+        }
+
+        width = this.getFillSize(leftBoundary, rightBoundary);
         this.inputWrapper.css('width', width + 'px');
       },
 
@@ -339,8 +359,8 @@
           return;
         }
 
-        var header = this.inputWrapper.closest('.header'),
-          headerWidth = header.width();
+        /*var header = this.inputWrapper.closest('.header'),
+          headerWidth = header.width();*/
 
         this.animationTimer = setTimeout(activateCallback, 0 /*(header.length > 0 && headerWidth < 320) ? 0 : 300*/);
       },
@@ -361,7 +381,6 @@
         if (this.animationTimer) {
           clearTimeout(this.animationTimer);
         }
-
 
         function deactivateCallback() {
           self.inputWrapper.removeClass('is-open');
