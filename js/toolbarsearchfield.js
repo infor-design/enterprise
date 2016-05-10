@@ -314,6 +314,8 @@
         }
 
         // Figure out boundaries
+        // +10 on the left boundary reduces the likelyhood that the toolbar pushes other elements
+        // into the spillover menu whenever the searchfield opens.
         var leftBoundary = buttonset.offset().left + 10;
         var rightBoundary = this.inputWrapper.next();
 
