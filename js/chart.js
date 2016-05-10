@@ -1074,7 +1074,8 @@ window.Chart = function(container) {
 
   //TODO: Test this with two charts on the page.
   this.handleResize = function () {
-    var timeout = null;
+    var timeout = null,
+      width = 0;
 
     //Handle Resize / Redraw
     function resizeCharts() {
@@ -1082,6 +1083,12 @@ window.Chart = function(container) {
       timeout = setTimeout(function () {
         var api = $(container).data('chart'),
             cont = $(container);
+
+        if (width === cont.width()) {
+          return;
+        }
+        
+        width = cont.width();
 
         if (!cont.is(':visible')) {
           return true;
