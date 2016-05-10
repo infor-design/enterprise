@@ -215,7 +215,7 @@
         var defaultWidth = 225,
           leftBoundaryNum = 0,
           rightBoundaryNum = 0,
-          maxFillSize = 600;
+          maxFillSize = 450;
 
         function sanitize(boundary) {
           if (!boundary) {
@@ -286,7 +286,7 @@
 
         var distance = rightBoundaryNum - leftBoundaryNum;
         if (distance >= maxFillSize) {
-          return defaultWidth;
+          return maxFillSize;
         }
 
         return distance;
