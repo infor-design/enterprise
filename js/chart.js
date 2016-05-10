@@ -277,8 +277,10 @@ window.Chart = function(container) {
     //Calculate max text width
     maxTextWidth = 0;
     dataset = dataset.map(function (group, i) {
-      if(!isStacked) {
-        maxTextWidth = (series[i].name.length > maxTextWidth ? series[i].name.length : maxTextWidth);
+      if (!isStacked) {
+        if (series[i]) {
+          maxTextWidth = (series[i].name.length > maxTextWidth ? series[i].name.length : maxTextWidth);
+        }
       }
       return group.map(function (d) {
         if(isStacked) {
@@ -432,7 +434,7 @@ window.Chart = function(container) {
         return 'url(#' + dataset[0][i].pattern + ')';
       }
 
-      if (series[d.index].pattern) {
+      if (series[d.index] && series[d.index].pattern) {
         return 'url(#' + series[d.index].pattern + ')';
       }
     })
