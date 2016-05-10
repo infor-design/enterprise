@@ -75,7 +75,7 @@ $datagrid-short-row-height: 30px;
 .datagrid {
   @include font-size(14);
   background-color: transparent;
-  border: 0;
+  border: 1px solid $datagrid-cell-border-color;
   border-collapse: collapse;
   //height: 100%;
   min-width: 100%;
@@ -204,8 +204,8 @@ $datagrid-short-row-height: 30px;
     overflow: hidden;
     text-align: left;
 
-    &:first-child {
-      border-left-color: $datagrid-header-bg-color;
+    &.hide-border + th {
+      border-left: 0;
     }
 
     &.is-hidden {
@@ -242,16 +242,18 @@ $datagrid-short-row-height: 30px;
     //Editing and Focus State
     &:focus {
       background-color: $datagrid-header-focus-bg-color;
-      color: $white;
+      box-shadow: 0 0 0 1px $datagrid-header-focus-border-color inset;
+      color: $datagrid-header-color;
+      outline: none;
 
       .icon {
-        fill: $slate03;
+        fill: $datagrid-sort-icon-color;
         opacity: 1;
       }
 
       &.is-sorted-asc .sort-asc .icon,
       &.is-sorted-desc .sort-desc .icon {
-        fill: $white;
+        fill: $datagrid-sort-icon-sorted-color;
       }
     }
 
@@ -424,7 +426,8 @@ $datagrid-short-row-height: 30px;
 
   td {
     background-color: $datagrid-cell-bg-color;
-    border: 1px solid $datagrid-cell-border-color;
+    border-bottom: 1px solid $datagrid-cell-border-color;
+    border-right: 1px solid $datagrid-cell-border-color;
     color: $datagrid-data-color;
     line-height: 50px;
     min-height: 50px;
@@ -438,6 +441,9 @@ $datagrid-short-row-height: 30px;
     //&.is-focused .datagrid-cell-wrapper {
     //  border: 1px solid $primary-color;
     //}
+    &.hide-border {
+      border-right: 0;
+    }
 
     &:focus ,
     &.is-focused {

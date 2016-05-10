@@ -1025,8 +1025,8 @@ $.fn.datagrid = function(options) {
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === undefined ? false : ' l-'+ column.align +'-text');
 
-        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + '"' +
-         ' id="' + id + '" data-column-id="'+ column.id + '" data-field="'+ column.field +'"' +
+        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isSelection ? ' hide-border': '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + '"' +
+         ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
@@ -1085,7 +1085,7 @@ $.fn.datagrid = function(options) {
               clone.removeAttr('id').addClass('is-dragging-clone').css({left: pos.left, top: pos.top});
               $('.is-draggable-target', clone).remove();
 
-              self.setdraggableColumnsTargets();
+              self.setDraggableColumnTargets();
               index = self.targetColumn(pos);
               self.draggableStatus.startIndex = index;
             })
@@ -1098,13 +1098,13 @@ $.fn.datagrid = function(options) {
               $('.is-draggable-target', headers).removeClass('is-over');
 
               if (index !== -1) {
-                for (i=0, l=self.draggableColumnsTargets.length; i<l; i++) {
-                  target = self.draggableColumnsTargets[i];
+                for (i=0, l=self.draggableColumnTargets.length; i<l; i++) {
+                  target = self.draggableColumnTargets[i];
                   n = i + 1;
 
                   if (target.index === index && target.index !== self.draggableStatus.startIndex) {
                     if (target.index > self.draggableStatus.startIndex && (n < l)) {
-                      target = self.draggableColumnsTargets[n];
+                      target = self.draggableColumnTargets[n];
                     }
                     target.el.addClass('is-over');
                   }
@@ -1129,17 +1129,13 @@ $.fn.datagrid = function(options) {
 
               if (self.draggableStatus.endIndex !== -1) {
                 if (self.draggableStatus.startIndex !== self.draggableStatus.endIndex) {
-                  // ====================
-                  // BEGIN: Swap columns
-                  // ====================
-                  // console.log(self.draggableStatus);
+                  // Start to Swap columns
 
                   for (i=0, l=self.settings.columns.length; i < l; i++) {
                     if (!('hidden' in self.settings.columns[i])) {
                       tempArray.push(i);
                     }
                   }
-                  // console.log(tempArray);
 
                   indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
                   indexTo = tempArray[self.draggableStatus.endIndex] || 0;
@@ -1149,7 +1145,6 @@ $.fn.datagrid = function(options) {
                 }
                 else {
                   // No need to swap here since same target area, where drag started
-                  // console.log('Dropped in same target area, where drag started');
                 }
               }
               else {
@@ -1162,12 +1157,12 @@ $.fn.datagrid = function(options) {
     },
 
     // Set draggable columns target
-    setdraggableColumnsTargets: function () {
+    setDraggableColumnTargets: function () {
       var self = this,
         headers = self.headerNodes().not('.is-hidden'),
         target, pos, extra;
 
-      self.draggableColumnsTargets = [];
+      self.draggableColumnTargets = [];
       self.draggableStatus = {};
 
       $('.is-draggable-target', headers).each(function (index) {
@@ -1177,7 +1172,7 @@ $.fn.datagrid = function(options) {
         // Extra space around, if dropped item bit off from drop area
         extra = 20;
 
-        self.draggableColumnsTargets.push({
+        self.draggableColumnTargets.push({
           el: $(this),
           index: idx,
           pos: pos,
@@ -1197,8 +1192,8 @@ $.fn.datagrid = function(options) {
         index = -1,
         target, i, l;
 
-      for (i=0, l=self.draggableColumnsTargets.length-1; i<l; i++) {
-        target = self.draggableColumnsTargets[i];
+      for (i=0, l=self.draggableColumnTargets.length-1; i<l; i++) {
+        target = self.draggableColumnTargets[i];
         if (pos.left > target.dropArea.x1 && pos.left < target.dropArea.x2 &&
             pos.top > target.dropArea.y1 && pos.top < target.dropArea.y2) {
           index = target.index;
@@ -1297,6 +1292,7 @@ $.fn.datagrid = function(options) {
           //Add a readonly class if set on the column
           cssClass += (col.readonly ? ' is-readonly' : '');
           cssClass += (col.hidden ? ' is-hidden' : '');
+          cssClass += (col.id === 'selectionCheckbox' ? ' hide-border':'');
 
           //Run a function that helps check if editable
           if (col.isEditable && !col.readonly) {
@@ -2370,25 +2366,12 @@ $.fn.datagrid = function(options) {
         checkbox = $('th .datagrid-checkbox', self.headerRow);
 
       // Handle header navigation
-      self.table.on('keydown.datagrid', 'th', function (e) {
+      self.table.on('keydown.datagrid', 'th:visible', function (e) {
         var key = e.which || e.keyCode || e.charCode || 0,
           th = $(this),
           index = th.index(),
-          tempArray = [],
-          length, triggerEl, move, i, l;
-
-          for (i=0, l=self.settings.columns.length; i < l; i++) {
-            if (!('hidden' in self.settings.columns[i])) {
-              tempArray.push(i);
-            }
-          }
-          length = tempArray.length-1;
-
-          for (i=0; i < length+1; i++) {
-            if (index === tempArray[i]) {
-              index = i;
-            }
-          }
+          length = self.visibleColumns().length,
+          triggerEl, move;
 
         // Enter or Space
         if (key === 13 || key === 32) {
@@ -2402,6 +2385,7 @@ $.fn.datagrid = function(options) {
 
         //Press Home, End, Left and Right arrow to move to first, last, previous or next
         if ([35, 36, 37, 39].indexOf(key) !== -1) {
+          move = index;
 
           //Home, End or Ctrl/Meta + Left/Right arrow to move to the first or last
           if (/35|36/i.test(key) || ((e.ctrlKey || e.metaKey) && /37|39/i.test(key))) {
@@ -2415,15 +2399,15 @@ $.fn.datagrid = function(options) {
           // Left and Right arrow
           else {
             if (Locale.isRTL()) {
-              move = key === 39 ? (index > 0 ? index-1 : length) : (index < length ? index+1 : 0);
+              move = key === 39 ? (index > 0 ? index-1 : length) : (index <= length ? index+1 : index);
             } else {
-              move = key === 37 ? (index > 0 ? index-1 : length) : (index < length ? index+1 : 0);
+              move = key === 37 ? (index > 0 ? index-1 : length) : (index <= length ? index+1 : index);
             }
           }
 
           // Makeing move
           th.removeAttr('tabindex').removeClass('is-active');
-          $('th', this.header).eq(tempArray[move]).attr('tabindex', '0').addClass('is-active').focus();
+          $('th', this.header).eq(move).attr('tabindex', '0').addClass('is-active').focus();
           e.preventDefault();
         }
 
@@ -2480,21 +2464,15 @@ $.fn.datagrid = function(options) {
       self.table.on('keydown.datagrid', 'td', function (e) {
         var key = e.which || e.keyCode || e.charCode || 0,
           handled = false,
-          tempArray = [],
           isRTL = Locale.isRTL(),
           node = self.activeCell.node,
           row = self.activeCell.row,
           cell = self.activeCell.cell,
+          visibleCols = self.visibleColumns(),
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
-          lastRow, lastCell, i, l;
+          lastRow, lastCell;
 
-        for (i=0, l=self.settings.columns.length; i < l; i++) {
-          if (!('hidden' in self.settings.columns[i])) {
-            tempArray.push(i);
-          }
-        }
-
-        lastCell = tempArray.length-1;
+        lastCell = visibleCols.length-1;
         lastRow = node.closest('tbody').find('tr:last').index();
 
         //Tab, Left and Right arrow keys.
@@ -2531,7 +2509,7 @@ $.fn.datagrid = function(options) {
           else {
             if (row === 0) {
               node.removeAttr('tabindex');
-              $('th', this.header).eq(tempArray[cell]).attr('tabindex', '0').focus();
+              $('th', this.header).eq(cell).attr('tabindex', '0').focus();
             }
             self.setActiveCell(row-1, cell);
             handled = true;

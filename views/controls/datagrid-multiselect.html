@@ -27,7 +27,7 @@
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
-        columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+        //columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
         columns.push({ id: 'status', name: 'Tag', field: 'price', width: 125, align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'azure07'}]});
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Integer});
