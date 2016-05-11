@@ -455,7 +455,6 @@
           field.parent().append(svg);
         } else {
           field.parent().append(svg);
-          // field.parent('.field').append(svg);
         }
 
         $('.icon-confirm', loc.parent('.field')).remove();

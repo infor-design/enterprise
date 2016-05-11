@@ -1,5 +1,5 @@
 # 4.2 - Patch Release
-Release Date: April 4th
+Release Date: May 11th
 
 * New - Module Tabs
 * New - Lightbox
@@ -8,6 +8,7 @@ Release Date: April 4th
 * New - Expandable Area
 
 ## Breaking Changes
+* 2016-05-11 - Checkboxes - Changed to display inline-block. This should not cause any issues unless you forgot to wrap your checkbox elements in a field element.
 * 2016-05-04 - Slider - changed the name of the _refresh()_ method to _setValue()_ so its clear that it sets the value.  _refresh()_ still exists and is marked as "deprecated" - will be removed in future releases.  Please update your code to use _setValue()_ instead of _refresh()_.
 * 2016-04-27 - Dropdown, Vertical Tabs, Wizard, Tabs  - Event Renamed from activated to active.
 * 2016-04-27 - Searchfield  - Event Renamed from activated to active and deactivated to deactive

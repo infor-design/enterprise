@@ -144,12 +144,12 @@ svg.icon-logo {
 
   &.dirty-checkbox {
     left: 3px;
-    top: -2px;
+    top: 1px;
 
     &.is-checked {
       border-width: 4px;
       left: 3px;
-      top: 0;
+      top: 3px;
       z-index: 2;
     }
   }
@@ -310,8 +310,8 @@ svg.icon-dirty {
 
   &.close {
     span.one {
-      top: 12.5px;
       @include css3(transform, rotate(45deg));
+      top: 12.5px;
     }
 
     span.two {
@@ -319,8 +319,8 @@ svg.icon-dirty {
     }
 
     span.three {
-      top: 12.5px;
       @include css3(transform, rotate(-45deg));
+      top: 12.5px;
     }
   }
 
@@ -341,12 +341,12 @@ svg.icon-dirty {
 }
 
 // This icon is presumably 18px x 18px - The dimensions defined reflect this
-.icon.app-drawer {
+.app-drawer {
   position: relative;
 
   span:not(.audible) {
     @include app-drawer-box();
-    padding: 0 !important;
+    padding: 0;
     position: absolute;
   }
 
@@ -411,21 +411,21 @@ svg.icon-dirty {
     }
 
     .two {
+      @include css3(transform-origin, 50% 50% 0);
+      @include css3(transform, rotate(45deg));
       height: 2px;
       left: 8px;
       top: 14px;
       width: 18px;
-      @include css3(transform-origin, 50% 50% 0);
-      @include css3(transform, rotate(45deg));
     }
 
     .eight {
+      @include css3(transform-origin, 50% 50% 0);
+      @include css3(transform, rotate(45deg));
       height: 18px;
       left: 16px;
       top: 6px;
       width: 2px;
-      @include css3(transform-origin, 50% 50% 0);
-      @include css3(transform, rotate(45deg));
     }
 
   }
@@ -442,7 +442,7 @@ svg.icon-dirty {
     height: 26px;
     width: 26px;
 
-    &:after {
+    &::after {
       @include css3(transform, scaleX(-1) rotate(135deg));
       border-color: $icon-color $icon-color $icon-color transparent;
       border-style: solid;
@@ -460,7 +460,7 @@ svg.icon-dirty {
     background-color: $primary-color;
     border-color: $primary-color;
 
-    &:after {
+    &::after {
       border-color: $inverse-color $inverse-color $inverse-color transparent;
     }
   }
@@ -486,10 +486,9 @@ svg.icon-dirty {
 }
 
 .icon-rtl-rotate {
-  // @include css3(transform, rotate(180deg));
-  -webkit-transform: scaleX(-1);
   -ms-filter: fliph;
   filter: fliph;
+  -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
 

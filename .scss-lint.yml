@@ -93,7 +93,7 @@ linters:
     extra_properties: []
 
   QualifyingElement:
-    enabled: true
+    enabled: false
     allow_with_attribute: true
     allow_with_class: true
     allow_with_id: false

@@ -43,9 +43,9 @@
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
-  color: $checkbox-label-color;
   @include font-size(14);
-  display: block;
+  color: $checkbox-label-color;
+  display: inline-block;
   margin-bottom: 10px;
   margin-left: -2px;
   margin-top: 3px;
@@ -91,9 +91,8 @@
 
     &::before,
     &::after {
-      // color: $input-placeholder-color;
-      display: inline-block;
       @include font-size(14);
+      display: inline-block;
       position: absolute;
       top: 27px;
     }
@@ -116,6 +115,7 @@ input,
 textarea {
   @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
   @include antialiased();
+  @include font-size(14);
   -webkit-appearance: none;
   background-color: $input-bg-color;
   border: 1px solid $input-border-color;
@@ -123,7 +123,6 @@ textarea {
   border-radius: 2px;
   color: $input-color;
   display: inline-block;
-  @include font-size(14);
   max-width: 100%;
   padding: 8px 10px;
   resize: none;
@@ -245,11 +244,11 @@ label,
 .label {
 
   &.required {
-    &:not(.inline):after {
+    &:not(.inline)::after {
       @include required-indicator();
     }
 
-    .label-text:after {
+    .label-text::after {
       @include required-indicator();
     }
   }
@@ -258,17 +257,17 @@ label,
 
 // Placeholder - Inline help
 ::-webkit-input-placeholder {
+  @include font-size(14);
   color: $input-placeholder-color;
   font-weight: lighter;
-  @include font-size(14);
   line-height: 16px;
   opacity: 1;
 }
 
 ::-moz-placeholder {
+  @include font-size(14);
   color: $input-placeholder-color;
   font-weight: lighter;
-  @include font-size(14);
   line-height: 16px;
   opacity: 1;
 }
@@ -480,8 +479,8 @@ html[dir='rtl'] {
   }
 
   // Required Indicator
-  label.required:after,
-  .label.required:after {
+  label.required::after,
+  .label.required::after {
     left: auto;
     right: 3px;
   }

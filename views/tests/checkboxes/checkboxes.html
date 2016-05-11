@@ -2,38 +2,51 @@
   <div class="twelve columns">
     <h2 class="fieldset-title">Checkbox Tests</h2>
 
-    <div id="cssOnly" class="field">
-      <input type="checkbox" class="checkbox" id="starts-unchecked">
-      <label for="starts-unchecked" class="checkbox-label">Unchecked</label>
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="starts-unchecked">
+        <label for="starts-unchecked" class="checkbox-label">Unchecked</label>
+      </div>
 
-      <input type="checkbox" class="checkbox" id="starts-checked" checked>
-      <label for="starts-checked" class="checkbox-label" >Checked</label>
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="starts-checked" checked>
+        <label for="starts-checked" class="checkbox-label" >Checked</label>
+      </div>
 
-      <input type="checkbox" class="checkbox is-dirty" id="checkbox-is-dirty" >
-      <label for="checkbox-is-dirty" class="checkbox-label" >Dirty</label>
+      <div class="field">
+        <input type="checkbox" class="checkbox is-dirty" id="checkbox-is-dirty" data-trackdirty="true">
+        <label for="checkbox-is-dirty" class="checkbox-label" >Dirty</label>
+      </div>
 
-      <input type="checkbox" class="checkbox" id="starts-disabled" disabled>
-      <label for="starts-disabled" class="checkbox-label" >Disabled and Unchecked</label>
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="starts-disabled" disabled>
+        <label for="starts-disabled" class="checkbox-label" >Disabled and Unchecked</label>
+      </div>
 
-      <input type="checkbox" class="checkbox" id="starts-disabled-checked" disabled checked>
-      <label for="starts-disabled-checked" class="checkbox-label">Disabled and Checked</label>
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="starts-disabled-checked" disabled checked>
+        <label for="starts-disabled-checked" class="checkbox-label">Disabled and Checked</label>
+      </div>
 
-      <input type="checkbox" class="checkbox is-partial" checked id="starts-partially-checked">
-      <label for="starts-partially-checked" class="checkbox-label" >Partial</label>
-    </div>
+      <div class="field">
+        <input type="checkbox" class="checkbox is-partial" checked id="starts-partially-checked">
+        <label for="starts-partially-checked" class="checkbox-label" >Partial</label>
+      </div>
 
     <!-- used in form serialization tests -->
-
 
     <hr class="fieldset-hr">
     <h2 class="fieldset-title">Form Serialization</h2>
     <div id="partOfForm" class="field">
       <form id="checkbox-serialization-test" action="#" method="POST">
-        <input type="checkbox" class="checkbox" id="checkbox-serialized" name="checkbox-serialized" checked>
-        <label for="checkbox-serialized" class="checkbox-label">This checkbox will be serialized on form submit</label>
-
-        <input type="checkbox" class="checkbox" id="checkbox-not-serialized">
-        <label for="checkbox-not-serialized" class="checkbox-label">This checkbox will NOT be serialized on form submit</label>
+        <div class="field">
+          <input type="checkbox" class="checkbox" id="checkbox-serialized" name="checkbox-serialized" checked>
+          <label for="checkbox-serialized" class="checkbox-label">This checkbox will be serialized on form submit</label>
+        </div>
+        
+        <div class="field">
+          <input type="checkbox" class="checkbox" id="checkbox-not-serialized">
+          <label for="checkbox-not-serialized" class="checkbox-label">This checkbox will NOT be serialized on form submit</label>
+        </div>
 
         <button class="btn-primary" type="submit">Submit</button>
       </form>
@@ -90,8 +103,7 @@
       $('#checkbox-has-tooltip + label').tooltip({
         content: function() {
           return 'This checkbox is ' + ($(this).prev().prop('checked') ? 'checked' : 'unchecked')
-        },
-        placement: 'right'
+        }
       });
     });
     </script>
