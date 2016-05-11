@@ -240,8 +240,16 @@ window.Formatters = {
     return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-star-filled"/></svg></span>';
   },
 
+  Status: function (row, cell, value, col, item) {
+
+    if (!item.rowStatus) {
+      return '<span>&nbsp;</span>';
+    }
+
+    return '<svg title="test" role="presentation" aria-hidden="true" focusable="false" class="icon icon-' + item.rowStatus.icon + ' datagrid-alert-icon"><use xlink:href="#icon-'+ item.rowStatus.icon + '"/></svg><span class="audible">' + item.rowStatus.text + '</span>';
+  },
+
   // Possible future Formatters
-  // Status Indicator - Error (Validation), Ok, Alert, New, Dirty (if submit)
   // Image?
   // Tree
   // Multi Select
@@ -811,6 +819,8 @@ $.fn.datagrid = function(options) {
         location = 'top';
         isTop = true;
       }
+      //Add row status
+      data.rowStatus = {icon: 'new', text: 'New', tooltip: 'New'};
 
       // Add to array
       self.settings.dataset[isTop ? 'unshift' : 'push'](data);
@@ -1356,6 +1366,7 @@ $.fn.datagrid = function(options) {
               ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
+             (col.id === 'rowStatus' && self.settings.dataset[i].rowStatus && self.settings.dataset[i].rowStatus.tooltip ? ' title="' + self.settings.dataset[i].rowStatus.tooltip + '"' : '') +
              //(cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
              (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
              '><div class="datagrid-cell-wrapper">';
@@ -2372,6 +2383,29 @@ $.fn.datagrid = function(options) {
       return this._selectedRows;
     },
 
+    //Set the row status
+    rowStatus: function(idx, status, tooltip) {
+      var rowStatus;
+
+      if (!status) {
+        delete this.settings.dataset[idx].rowStatus;
+        return;
+      }
+
+      this.settings.dataset[idx].rowStatus = {};
+      rowStatus = this.settings.dataset[idx].rowStatus;
+
+      rowStatus.icon = status;
+      status = status.charAt(0).toUpperCase() + status.slice(1);
+      status = status.replace('-progress', 'Progress');
+      rowStatus.text = Locale.translate(status);
+
+      tooltip = tooltip ? tooltip.charAt(0).toUpperCase() + tooltip.slice(1) : rowStatus.text;
+      rowStatus.tooltip = tooltip;
+
+      this.updateRow(idx);
+    },
+
     //Get the column object by id
     columnById: function(id) {
       return $.grep(this.settings.columns, function(e) { return e.id === id; });
@@ -2863,6 +2897,19 @@ $.fn.datagrid = function(options) {
       }
 
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
+
+      //Setup/Sync tooltip
+      if (cellNode.data('tooltip')){
+        cellNode.data('tooltip').destroy();
+      }
+
+      var rowData = this.settings.dataset[row];
+      if (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip) {
+        cellNode.attr('title', rowData.rowStatus.tooltip);
+        cellNode.tooltip({placement: 'right',
+          isErrorColor: rowData.rowStatus.icon === 'error'
+        });
+      }
 
       coercedVal = $.unescapeHTML(coercedVal);
 

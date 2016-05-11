@@ -32,6 +32,7 @@
         popover: null , //force it to be a popover (no content)
         closebutton: null, //Show X close button next to title in popover
         isError: false, //Add error classes
+        isErrorColor: false, //Add error color only not description
         tooltipElement: null, // ID selector for an alternate element to use to contain the tooltip classes
         keepOpen: false, // Forces the tooltip to stay open in situations where it would normally close.
         extraClass: null // Extra css class
@@ -263,7 +264,7 @@
         this.tooltip.removeAttr('style');
         this.tooltip.removeClass('bottom right left top offset is-error').addClass(settings.placement);
 
-        if (settings.isError) {
+        if (settings.isError || settings.isErrorColor) {
           this.tooltip.addClass('is-error');
         }
 

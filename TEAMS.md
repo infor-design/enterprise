@@ -11,7 +11,7 @@
 | Business Vault |    Justin Timbers   |   A JSF based Single Page App implement with jQuery | 3.1 moving to 4x (new App) |
 | Business innovations |    Gowtham.Govindaraj@infor.com   | Employee Recognition System using Mongoose | 4x |
 | Care Assignments |   | Michael Welborn | 3x |
-| CDAS application |   | Neha Vora <neha.vora@citiustech.com> | 3x |
+| CDAS application |   | Neha Vora <neha.vora@citiustech.com> | 3x moving to 4x |
 | Certification Manager |   |    Syedur Islam | 3x |
 | Certpoint LMS  |   | Blessed Dianne Valencia | 3x moving to 4x |
 | CPM Applications (4) |   | Rick Leedy, Mike Surel | 3x |
@@ -79,6 +79,3 @@
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  | 3x to 4x |
 | WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando | 4x|
 | Xtreme Support | ASP| Raj S. Joshi | 3x to 4x |
-
-
-

@@ -16,6 +16,8 @@ Release Date: May 11th
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
 ## Ui Changes
+* 2016-04-11 - Lookup Area - Removed secondary header, added search.
+* 2016-04-11 - Datagrid  - Some colors fx selection state changed. Themes added.
 * 2016-04-26 - Expandable Area - Colors and font changed. Changed to not look like an accordion.
 * 2016-04-13 - Accordion - The Accordion's default style is now an "in-page" design with less borders and configuration.  The original style is now known as a "panel" accordion.  If you wish to keep your accordion looking how it was previously, you must append a "panel" CSS class to your top-level ".accordion" element.
 * 2016-04-13 - Application Menu - The changes for the Accordion in this release affect the internal accordion used by the Application Menu.  If you use this control, make sure it receives the same markup change required by other "panel"-style Accordions.

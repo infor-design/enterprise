@@ -29,6 +29,11 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 }
 
 // Builds out vendor-prefixed keyframe definitions
+@mixin no-animation() {
+  animation: none !important;
+}
+
+// Builds out vendor-prefixed keyframe definitions
 @mixin keyframes($animation-name) {
   @-webkit-keyframes #{$animation-name} {@content;}
   @-moz-keyframes #{$animation-name} {@content;}
@@ -220,7 +225,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
-  outline-style:none;
+  outline-style: none;
 }
 
 // Vertical Alignment Spacer

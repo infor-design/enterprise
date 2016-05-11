@@ -242,9 +242,9 @@ $datagrid-short-row-height: 30px;
     //Editing and Focus State
     &:focus {
       background-color: $datagrid-header-focus-bg-color;
-      box-shadow: 0 0 0 1px $datagrid-header-focus-border-color inset;
       color: $datagrid-header-color;
-      outline: none;
+      outline: 1px solid $datagrid-header-focus-border-color;
+      outline-offset: -1px;
 
       .icon {
         fill: $datagrid-sort-icon-color;
@@ -307,7 +307,7 @@ $datagrid-short-row-height: 30px;
   tr {
 
     // Hover States
-    &:not(.datagrid-expandable-row):hover td {
+    &:not(.datagrid-expandable-row):hover td:not(.is-editing) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -364,7 +364,13 @@ $datagrid-short-row-height: 30px;
     .datagrid-alert-icon {
       display: inline-block;
       height: 20px;
-      top: 13px !important; //ios styles may override otherwise
+      top: 14px;
+
+      &.icon-dirty {
+        height: 16px;
+        top: 15px;
+        width: 16px;
+      }
     }
 
     .badge {
@@ -436,18 +442,15 @@ $datagrid-short-row-height: 30px;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    //Editing and Focus State
-    //&:focus .datagrid-cell-wrapper,
-    //&.is-focused .datagrid-cell-wrapper {
-    //  border: 1px solid $primary-color;
-    //}
     &.hide-border {
       border-right: 0;
     }
 
     &:focus ,
     &.is-focused {
-      box-shadow: 0 0 0 1px $primary-color inset;
+      .datagrid-cell-wrapper {
+        border: 1px solid $primary-color;
+      }
     }
 
     &.is-hidden {
@@ -548,7 +551,7 @@ $datagrid-short-row-height: 30px;
       //Date Picker
       .datepicker {
         border: 0;
-        padding: 9px 20px 8px !important;
+        padding: 9px 20px 8px;
 
         + .icon {
           height: 16px;
@@ -578,6 +581,7 @@ $datagrid-short-row-height: 30px;
         line-height: 44px;
       }
     }
+
   }
 
   // States
@@ -766,12 +770,12 @@ td .btn-actions {
   }
 
   &.is-partial {
-    animation: none !important;
+    @include no-animation();
   }
 
   &.is-partial::after {
     @include  checkbox-partial-after-style;
-    animation: none !important;
+    @include no-animation();
     margin-left: -2px;
     margin-top: -4px;
     top: 2px;
@@ -1164,10 +1168,8 @@ html[dir='rtl'] {
     }
   }
 
-  .searchfield-wrapper,
-  .listview-search,
-  .searchfield-wrapper input {
-    width: 350px !important;
+  .listview-search {
+    width: 360px;
   }
 
 }
