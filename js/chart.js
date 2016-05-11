@@ -121,7 +121,7 @@ window.Chart = function(container) {
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
       if (series[i].pattern) {
-        color.append('<svg width="12" height="12"><rect style="'+ hexColor +'" mask="url(#'+ series[i].pattern +')" height="12" width="12"/></svg>');
+        color.append('<svg width="12" height="12"><rect style="fill: '+ hexColor +'" mask="url(#'+ series[i].pattern +')" height="12" width="12" /></svg>');
       }
 
       if (series[i].percent) {
@@ -432,10 +432,6 @@ window.Chart = function(container) {
     .attr('mask', function (d, i) {
       if (dataset.length === 1 && dataset[0][i].pattern){
         return 'url(#' + dataset[0][i].pattern + ')';
-      }
-
-      if (series[d.index] && series[d.index].pattern) {
-        return 'url(#' + series[d.index].pattern + ')';
       }
     })
     .attr('x', function (d) {
@@ -956,6 +952,7 @@ window.Chart = function(container) {
               x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
 
             if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
+              x += chartData[i].percent < 10 ? x1 : Math.ceil(x1/3);
               label.attr('x', x);
 
               if (lb.isTwoline) {
@@ -1087,7 +1084,7 @@ window.Chart = function(container) {
         if (width === cont.width()) {
           return;
         }
-        
+
         width = cont.width();
 
         if (!cont.is(':visible')) {
