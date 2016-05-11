@@ -297,6 +297,10 @@
         }
 
         var distance = rightBoundaryNum - leftBoundaryNum;
+        if (distance <= defaultWidth) {
+          return defaultWidth;
+        }
+
         if (distance >= maxFillSize) {
           return maxFillSize;
         }

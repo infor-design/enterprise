@@ -56,6 +56,10 @@ $toolbarsearchfield-category-empty-width: 54px;
       @include font-size(12);
       font-weight: 700;
     }
+
+    &:empty {
+      padding-right: 0;
+    }
   }
 
   .icon {
@@ -72,13 +76,6 @@ $toolbarsearchfield-category-empty-width: 54px;
       @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
         top 300ms cubic-bezier(.17, .04, .03, .94),
         left 300ms cubic-bezier(.17, .04, .03, .94));
-    }
-  }
-
-  &.non-collapsible {
-    .icon:not(.close) {
-      height: 14px;
-      top: 10px;
     }
   }
 
@@ -116,8 +113,14 @@ $toolbarsearchfield-category-empty-width: 54px;
     }
   }
 
+  &.non-collapsible {
+    .icon:not(.close) {
+      height: 14px;
+      top: 10px;
+    }
+  }
+
   &.active {
-    //width: $toolbarsearchfield-max-width;
 
     // During the animation "out", the text goes transparent
     .searchfield {
@@ -161,6 +164,7 @@ $toolbarsearchfield-category-empty-width: 54px;
         color: $searchfield-text-color;
         @include font-size(14);
         font-weight: normal;
+        padding-right: 34px;
         text-transform: none;
 
         &::-webkit-input-placeholder {
