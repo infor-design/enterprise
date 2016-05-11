@@ -186,7 +186,7 @@
         var self = this,
           content = '<div id="'+lookupGridId+'"></div>',
           thisLabel = $('label[for="'+self.element.attr('id')+'"]'),
-          labelText = self.isInlineLabel ? self.inlineLabelText : (thisLabel.length ? thisLabel.text() : '');
+          labelText = self.isInlineLabel ? self.inlineLabelText : (thisLabel.length ? thisLabel.clone().find('span').remove().end().text() : '');
 
         if (this.settings.title) {
           labelText = this.settings.title;
@@ -287,6 +287,7 @@
           // Create grid (unless already exists from passed in grid)
           if (!lookupGrid.data('datagrid')) {
             lookupGrid.datagrid(self.settings.options);
+            lookupGrid.find('.datagrid-container').css('max-width', '');
           }
         }
 
