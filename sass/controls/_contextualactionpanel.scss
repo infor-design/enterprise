@@ -2,7 +2,6 @@
 //================================================== //
 
 .modal.contextual-action-panel {
-  //min-width: 70%;
   @include css3(transform, translate3d(-50%, 50%, 0) scale(1, 1));
   @include css3(transition-timing-function, cubic-bezier(.17, .04, .03, .94));
 
@@ -32,13 +31,14 @@
 
     .title {
       @include font-size(18);
+      padding-left: 8px;
     }
 
     .separator {
       background-color: $contextual-panel-seperator-bg-color;
-      height: 30px;
-      margin: 2px 0 0;
-      top: 4px;
+      height: 28px;
+      margin: 5px 0 0;
+      top: 1px;
     }
 
     .toolbar-searchfield-wrapper.active {

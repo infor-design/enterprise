@@ -541,7 +541,7 @@
 
   .searchfield-wrapper {
     background-color: $body-bg-color;
-    height: 42px;
+    height: 36px;
     margin-bottom: 0;
     width: 100%;
 
@@ -553,21 +553,21 @@
   }
 
   .icon:not(.close) {
-    left: 10px !important;
-    top: 12px !important;
+    left: 10px;
+    top: 10px;
   }
 
   .icon.close {
-    right: 10px !important;
-    top: 14px !important;
+    right: 10px;
+    top: 10px;
   }
 
-  input {
+  .searchfield {
     background-color: $listview-full-width-bg-color;
     border: 1px solid transparent;
     border-bottom-color: $listview-border-color;
     line-height: 16px;
-    padding: 12px 10px 12px 40px !important;
+    padding: 9px 10px 9px 40px;
     width: 100%;
   }
 
