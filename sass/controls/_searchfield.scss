@@ -24,20 +24,18 @@
   margin-bottom: 20px;
   position: relative;
 
-  > .icon {
+  .icon {
     fill: $trigger-icon-fill-color;
     height: 14px;
+    left: 8px;
+    pointer-events: none;
     position: absolute;
     top: 8px;
 
-    &:not(.close):not(.icon-error) {
-      left: 8px;
-      pointer-events: none;
-      top: 10px;
-    }
-
     &.close {
       cursor: pointer;
+      left: auto;
+      pointer-events: auto;
       right: 0;
       top: 11px;
     }
@@ -45,6 +43,7 @@
     &.icon-error {
       fill: $error-color;
       left: auto;
+      pointer-events: auto;
       right: auto;
       top: auto;
     }

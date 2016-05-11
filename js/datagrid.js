@@ -1968,7 +1968,16 @@ $.fn.datagrid = function(options) {
         var buttonSet = $('<div class="buttonset"></div>').appendTo(toolbar);
 
         if (settings.toolbar.keywordFilter) {
-          buttonSet.append('<label class="audible" for="gridfilter">'+ Locale.translate('Keyword') +'</label><input class="searchfield" name="searchfield" placeholder="' + Locale.translate('Keyword') + '" id="gridfilter">');
+          var labelMarkup = $('<label class="audible" for="gridfilter">'+ Locale.translate('Keyword') +'</label>'),
+            searchfieldMarkup = $('<input class="searchfield" name="searchfield" placeholder="' + Locale.translate('Keyword') + '" id="gridfilter">');
+
+          buttonSet.append(labelMarkup);
+
+          if (!settings.toolbar.collapsibleFilter) {
+            searchfieldMarkup.attr('data-options', '{ collapsible: false }');
+          }
+
+          buttonSet.append(searchfieldMarkup);
         }
 
         if (settings.toolbar.dateFilter) {
@@ -2022,7 +2031,6 @@ $.fn.datagrid = function(options) {
         if (action === 'personalize-columns') {
           self.personalizeColumns();
         }
-
       });
 
       if (!toolbar.data('toolbar')) {

@@ -92,6 +92,14 @@
 
         this.xButton = this.inputWrapper.children('.icon.close');
 
+        // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
+        if (!this.settings.collapsible) {
+          this.inputWrapper.addClass('no-transition').one('activate.' + this.id, function() {
+            $(this).removeClass('no-transition');
+          });
+          this.activate();
+        }
+
         return this;
       },
 
@@ -116,6 +124,10 @@
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).on('keydown.' + this.id, function(e) {
           self.handleOutsideKeydown(e);
+        });
+
+        $('body').on('resize.' + this.id, function() {
+          self.adjustOnBreakpoint();
         });
 
         return this;
@@ -328,6 +340,20 @@
         this.inputWrapper.css('width', width + 'px');
       },
 
+      adjustOnBreakpoint: function() {
+        var isFullWidth = this.shouldBeFullWidth();
+
+        this.deactivate();
+
+        if (isFullWidth && this.inputWrapper.attr('style')) {
+          this.inputWrapper.removeAttr('style');
+        }
+
+        if (!isFullWidth && !this.inputWrapper.attr('style')) {
+          this.setOpenWidth();
+        }
+      },
+
       activate: function() {
         if (this.inputWrapper.hasClass('active')) {
           return;
@@ -349,11 +375,11 @@
         this.handleDeactivationEvents();
 
         function activateCallback() {
-          self.inputWrapper.addClass('is-open').trigger('activate');
-
+          self.inputWrapper.addClass('is-open');
           self.setOpenWidth();
-
           self.input.focus(); // for iOS
+          self.toolbarParent.trigger('recalculateButtons');
+          self.inputWrapper.trigger('activate');
         }
 
         if (this.settings.collapsible === false && !this.shouldBeFullWidth()) {
@@ -361,10 +387,7 @@
           return;
         }
 
-        /*var header = this.inputWrapper.closest('.header'),
-          headerWidth = header.width();*/
-
-        this.animationTimer = setTimeout(activateCallback, 0 /*(header.length > 0 && headerWidth < 320) ? 0 : 300*/);
+        this.animationTimer = setTimeout(activateCallback, 0);
       },
 
       deactivate: function() {
@@ -372,7 +395,9 @@
           textMethod = 'removeClass';
 
         function closeWidth() {
-          return self.inputWrapper.removeAttr('style');
+          if (self.settings.collapsible) {
+            self.inputWrapper.removeAttr('style');
+          }
         }
 
         if (this.input.val().trim() !== '') {
@@ -445,6 +470,7 @@
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).off('keydown.' + this.id);
+        $('body').off('resize.' + this.id);
 
         return this;
       },
