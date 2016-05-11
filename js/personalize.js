@@ -152,12 +152,24 @@
           return;
         }
 
-        $('body').fadeOut('fast', function() {
-          var css = $('#stylesheet, #sohoxi-stylesheet'),
-            path = css.attr('href');
-            css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme +'.css');
+        var css = $('#stylesheet, #sohoxi-stylesheet'),
+          path = css.attr('href'),
+          pageOverlay = $('<div />').css({
+          'background': 'rgba(0, 0, 0, 1)',
+        	'display': 'block',
+          'height': '100%',
+        	'left': 0,
+        	'position': 'fixed',
+          'text-align': 'center',
+        	'top': 0,
+        	'width': '100%',
+          'z-index': '999'
+        });
 
-          $(this).fadeIn('fast');
+        $('body').append(pageOverlay);
+        css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme +'.css');
+        pageOverlay.fadeOut('fast', function() {
+          pageOverlay.remove();
         });
 
       },
