@@ -56,6 +56,10 @@ $toolbarsearchfield-category-empty-width: 54px;
       @include font-size(12);
       font-weight: 700;
     }
+
+    &:empty {
+      padding-right: 0;
+    }
   }
 
   .icon {
@@ -109,8 +113,14 @@ $toolbarsearchfield-category-empty-width: 54px;
     }
   }
 
+  &.non-collapsible {
+    .icon:not(.close) {
+      height: 14px;
+      top: 10px;
+    }
+  }
+
   &.active {
-    width: $toolbarsearchfield-max-width;
 
     // During the animation "out", the text goes transparent
     .searchfield {
@@ -154,6 +164,7 @@ $toolbarsearchfield-category-empty-width: 54px;
         color: $searchfield-text-color;
         @include font-size(14);
         font-weight: normal;
+        padding-right: 34px;
         text-transform: none;
 
         &::-webkit-input-placeholder {
@@ -210,13 +221,11 @@ $toolbarsearchfield-category-empty-width: 54px;
       }
 
       .searchfield {
-        border-color: transparent;
-        border-bottom-color: rgba($searchfield-border-color, 1);
+        border-color: transparent transparent rgba($searchfield-border-color, 1);
       }
 
       .btn {
-        border-color: transparent;
-        border-bottom-color: rgba($searchfield-border-color, 1);
+        border-color: transparent transparent rgba($searchfield-border-color, 1);
       }
     }
   }
@@ -285,19 +294,19 @@ $toolbarsearchfield-category-empty-width: 54px;
   position: absolute;
   right: 100%;
   top: 5px;
-  width: 100%;
+  //width: 100%;
   z-index: 10;
 
   &.active {
     right: 0;
-    width: 100%;
+    //width: 100%;
   }
 
   &.has-text {
-    width: 100%;
+    //width: 100%;
 
     &.active {
-      width: 100%;
+      //width: 100%;
     }
   }
 }
@@ -412,7 +421,7 @@ $toolbarsearchfield-category-empty-width: 54px;
 
   // Small adjustments for being the full-width toolbar searchfield
   .toolbar > .toolbar-searchfield-wrapper.active {
-    width: calc(100% - 40px);
+    //width: calc(100% - 40px);
 
     .searchfield {
       // Don't be semi-transparent in this mode, since it sits over top of other things
@@ -425,7 +434,7 @@ $toolbarsearchfield-category-empty-width: 54px;
 .header {
   .toolbar > .toolbar-searchfield-wrapper {
     left: 20px;
-    top: 8px;
+    top: 12px;
   }
 }
 

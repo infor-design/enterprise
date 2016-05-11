@@ -16,6 +16,12 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
     <div id="second" class="toolbar" role="toolbar">
       <div class="buttonset">
         <button id="second-1" class="btn" type="button"><span>First</span></button>
@@ -34,6 +40,7 @@
         <button id="second-14" class="btn" type="button"><span>Fourteenth</span></button>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -43,10 +50,9 @@
     <div id="menubuttons" class="toolbar" role="toolbar">
       <div class="buttonset">
         <button id="buttonset-1" class="btn" type="button"><span>Nothing</span></button>
-        <div class="overflow-break"></div>
-        <div class="btn-group">
+
           <button id="buttonset-2" class="btn-menu" type="button"><span>Fruits</span></button>
-          <ul class="popupmenu has-icons">
+          <ul class="popupmenu has-icons is-selectable">
             <li><a href="#">Apples</a></li>
             <li><a href="#">Oranges</a></li>
             <li><a href="#">Bananas</a></li>
@@ -55,10 +61,9 @@
             <li><a href="#">Grapes</a></li>
             <li><a href="#">Peaches</a></li>
           </ul>
-        </div>
-        <div class="btn-group">
+
           <button id="buttonset-3" class="btn-menu" type="button"><span>Coins</span></button>
-          <ul class="popupmenu has-icons">
+          <ul class="popupmenu has-icons is-selectable">
             <li><a href="#">Pennies</a></li>
             <li><a href="#">Nickels</a></li>
             <li><a href="#">Dimes</a></li>
@@ -66,10 +71,9 @@
             <li><a href="#">Half-Dollars</a></li>
             <li><a href="#">Sacagawea Dollars</a></li>
           </ul>
-        </div>
-        <div class="btn-group">
+
           <button id="buttonset-4" class="btn-menu" type="button"><span>Street Types</span></button>
-          <ul class="popupmenu has-icons">
+          <ul class="popupmenu has-icons is-selectable">
             <li><a href="#">Roads</a></li>
             <li><a href="#">Avenues</a></li>
             <li><a href="#">Streets</a></li>
@@ -79,7 +83,41 @@
             <li><a href="#">Tollways</a></li>
             <li><a href="#">Freeways</a></li>
           </ul>
-        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="searchable-toolbar" class="toolbar" role="toolbar" data-options="{ rightAligned: true }">
+      <div class="buttonset">
+        <label class="audible" for="toolbar-searchfield">Toolbar Searchfield</label>
+        <input class="searchfield" placeholder="keyword" id="toolbar-searchfield" name="toolbar-searchfield" data-options="{ collapsible: false }" />
+
+        <button id="btn-add-row" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>Add Row</span>
+        </button>
+
+        <button id="btn-date" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-calendar"></use>
+          </svg>
+          <span>Date</span>
+        </button>
+
+        <button id="btn-settings" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Settings</span>
+        </button>
       </div>
     </div>
 
