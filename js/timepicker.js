@@ -32,6 +32,7 @@
 
     // Plugin Constructor
     function TimePicker(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -538,8 +539,13 @@
         return this.element.prop('disabled');
       },
 
-      // Teardown
-      destroy: function() {
+      updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      teardown: function() {
         this.trigger.off('keydown.timepicker');
         this.element.off('focus.timepicker blur.timepicker keydown.timepicker');
         if (this.popup) {
@@ -554,6 +560,13 @@
         }
 
         this.label.find('.audible').remove();
+
+        return this;
+      },
+
+      // Teardown
+      destroy: function() {
+        this.teardown();
         if (this.origTimeFormat) {
           this.element.attr('data-time-format', this.originalTimeFormat);
         }
@@ -566,11 +579,10 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        settings = $.extend(instance.settings, settings, options);
-        instance.setup().build();
+        settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new TimePicker(this, settings));
-        instance.settings = settings;
       }
     });
   };
