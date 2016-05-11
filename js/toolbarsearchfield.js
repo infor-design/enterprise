@@ -345,15 +345,16 @@
       },
 
       adjustOnBreakpoint: function() {
-        var isFullWidth = this.shouldBeFullWidth();
+        var isFullWidth = this.shouldBeFullWidth(),
+          hasStyleAttr = this.inputWrapper.attr('style');
 
         this.deactivate();
 
-        if (isFullWidth && this.inputWrapper.attr('style')) {
+        if (isFullWidth && hasStyleAttr) {
           this.inputWrapper.removeAttr('style');
         }
 
-        if (!isFullWidth && !this.inputWrapper.attr('style')) {
+        if (!isFullWidth && !hasStyleAttr) {
           this.setOpenWidth();
         }
       },
@@ -399,7 +400,7 @@
           textMethod = 'removeClass';
 
         function closeWidth() {
-          if (self.settings.collapsible) {
+          if (self.settings.collapsible || self.shouldBeFullWidth()) {
             self.inputWrapper.removeAttr('style');
           }
         }
