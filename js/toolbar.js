@@ -27,7 +27,8 @@
     // Settings and Options
     var pluginName = 'toolbar',
         defaults = {
-          maxVisibleButtons: 3 // Total amount of buttons that can be present, including the More button
+          rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
+          maxVisibleButtons: 3 // Total amount of buttons that can be present, not including the More button
         },
         settings = $.extend({}, defaults, options);
 
@@ -82,6 +83,8 @@
             this.buttonset.prependTo(this.element);
           }
         }
+
+        this.buttonset[this.settings.rightAligned ? 'addClass' : 'removeClass']('right-aligned');
 
         // Add and invoke More Button, if it doesn't exist
         this.more = this.element.find('.btn-actions');
@@ -523,38 +526,42 @@
       },
 
       setActiveButton: function(activeButton, noFocus) {
-        this.items.attr('tabindex', '-1').removeClass('is-selected');
-        this.more.attr('tabindex', '-1').removeClass('is-selected');
-
         // Return out of this if we're clicking the currently-active item
         if (activeButton[0] === this.activeButton[0]) {
           return;
         }
 
-        // Menu Button
-        if (activeButton.is('a')) {
-          this.activeButton = this.more; //activeButton.parents('.popupmenu').last().prev('button').attr('tabindex', '0');
-          this.activeButton[0].focus();
-          return;
+        var self = this;
+
+        function getActiveButton() {
+          // Menu items simply set the "More Actions" button as active
+          if (activeButton.is('a')) {
+            return self.more;
+          }
+
+          // If it's the more button, hide the tooltip and set it as active
+          var tooltip = self.more.data('tooltip');
+          if (activeButton[0] === self.more[0]) {
+            if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
+              tooltip.hide();
+            }
+            return self.more;
+          }
+
+          // Overflowed items also set
+          if (self.isItemOverflowed(activeButton)) {
+            if (!activeButton.is('.searchfield')) {
+              return self.more;
+            }
+          }
+
+          return activeButton;
         }
 
-        // if the button that needs to be selected is overflowed, don't make it tabbable, but make
-        // the more button tabbable instead.
-        var tooltip = this.more.data('tooltip');
-        if (activeButton[0] !== this.more[0] && this.isItemOverflowed(activeButton)) {
-          // Don't activate the more button if we have a selected and active searchfield
-          if (!activeButton.is('.searchfield')) {
-            this.activeButton = this.more;
-          } else {
-            this.activeButton = activeButton;
-          }
-          this.activeButton.attr('tabindex', '0').addClass('is-selected');
-        } else {
-          this.activeButton = activeButton.addClass('is-selected').attr('tabindex', '0');
-          if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
-            tooltip.hide();
-          }
-        }
+        this.items.add(this.more).attr('tabindex', '-1').removeClass('is-selected');
+
+        this.activeButton = getActiveButton();
+        this.activeButton.addClass('is-selected').attr('tabindex', '0');
 
         if (!noFocus) {
           this.activeButton[0].focus();

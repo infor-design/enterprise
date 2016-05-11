@@ -320,10 +320,8 @@
                 self.modal.close();
               }, 100);
             }
-
           });
         }
-
       },
 
       //Given a field value, select the row
