@@ -10,11 +10,16 @@ $datagrid-short-row-height: 30px;
 
 .datagrid-wrapper {
   background-color: transparent;
+  border: 1px solid $datagrid-cell-border-color;
   min-width: 100%;
   position: relative;
 
   &.is-readonly {
     border: 0;
+  }
+
+  &.is-gridlist {
+    //border: 0;
   }
 }
 
@@ -75,7 +80,6 @@ $datagrid-short-row-height: 30px;
 .datagrid {
   @include font-size(14);
   background-color: transparent;
-  border: 1px solid $datagrid-cell-border-color;
   border-collapse: collapse;
   //height: 100%;
   min-width: 100%;
@@ -330,6 +334,10 @@ $datagrid-short-row-height: 30px;
 
     &.is-clickable {
       cursor: pointer;
+    }
+
+    &:last-child td {
+      border-bottom: 0;
     }
 
     .icon.plus-minus::before,
