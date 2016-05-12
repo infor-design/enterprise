@@ -19,7 +19,11 @@ $datagrid-short-row-height: 30px;
   }
 
   &.is-gridlist {
-    //border: 0;
+    border: 0;
+
+    tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) .is-readonly {
+      background-color: transparent;
+    }
   }
 }
 

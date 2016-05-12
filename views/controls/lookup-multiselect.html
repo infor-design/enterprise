@@ -41,7 +41,17 @@
           columns: columns,
           dataset: data,
           selectable: 'multiple', //multiple or single
-          toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: true, actions: true, views: true , rowHeight: true}
+          toolbar: {
+            results: true,
+            dateFilter: false,
+            keywordFilter: true,
+            advancedFilter: true,
+            actions: true,
+            views: true,
+            rowHeight: false,
+            collapsibleFilter: false,
+            fullWidth: true
+          }
         }
     });
 

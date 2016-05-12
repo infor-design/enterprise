@@ -287,7 +287,6 @@
           // Create grid (unless already exists from passed in grid)
           if (!lookupGrid.data('datagrid')) {
             lookupGrid.datagrid(self.settings.options);
-            lookupGrid.find('.datagrid-container').css('max-width', '');
           }
         }
 
@@ -323,6 +322,9 @@
             }
           });
         }
+
+        lookupGrid.css('max-width', '');
+
       },
 
       //Given a field value, select the row
