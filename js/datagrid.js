@@ -624,7 +624,7 @@ $.fn.datagrid = function(options) {
         // If actionableMode is "true”, tab and shift tab behave like left and right arrow key,
         // if the cell is editable it goes in and out of edit mode
         actionableMode: false,
-        cellNavigation: true,
+        cellNavigation: true, // If cellNavigation is "false”, will show border arround whole row on focus
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
@@ -1778,6 +1778,17 @@ $.fn.datagrid = function(options) {
     handleEvents: function() {
       var self = this,
         isMultiple = this.settings.selectable === 'multiple';
+
+      // Set Active class on rows
+      self.table
+        .on('focus.datagrid', 'tbody > tr', function () {
+          if (!self.settings.cellNavigation) {
+            $(this).addClass('is-active-row');
+          }
+        })
+        .on('blur.datagrid', 'tbody > tr', function () {
+          $('tbody > tr', self.table).removeClass('is-active-row');
+        });
 
       //Handle Sorting
       this.element.add(this.clone).off('touchcancel.datagrid touchend.datagrid').on('touchcancel.datagrid touchend.datagrid', 'th.is-sortable', function (e) {
