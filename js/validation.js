@@ -804,10 +804,11 @@
         check: function(value, field) {
           value = value.replace(/ /g, '');
           this.message = Locale.translate('InvalidTime');
-          var pattern = field && field.attr('data-time-format') !== undefined ? field.attr('data-time-format') : Locale.calendar().timeFormat,
+          var timepickerSettings = field && field.data('timepicker') ? field.data('timepicker').settings : {},
+            pattern = timepickerSettings && timepickerSettings.timeFormat ? timepickerSettings.timeFormat : Locale.calendar().timeFormat,
             is24Hour = (pattern.match('HH') || []).length > 0,
             maxHours = is24Hour ? 24 : 12,
-            colon = value.indexOf(':'),
+            colon = value.indexOf(Locale.calendar().dateFormat.timeSeparator),
             valueHours = 0,
             valueMins,
             valueM;

@@ -61,7 +61,7 @@
         }
 
         function sanitizeTimeFormat(value) {
-          if (!value || !value.match('h') || !value.match('HH') || !value.match('mm')) {
+          if (!value || (!value.match('h') && !value.match('HH')) || !value.match('mm')) {
             return defaults.timeFormat;
           }
 
