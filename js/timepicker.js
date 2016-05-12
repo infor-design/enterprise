@@ -82,31 +82,6 @@
         this.settings.mode = sanitizeMode(this.settings.mode);
         this.settings.roundToInterval = sanitizeRoundToInterval(this.settings.roundToInterval);
 
-        /*
-        // Figure out hour display settings
-        this.timeFormat = this.element.attr('data-time-format') !== undefined ? this.element.attr('data-time-format') : Locale.calendar().timeFormat;
-        this.show24Hours = this.element.attr('data-force-hour-mode') === '24' ? true :
-          settings.forceHourMode === '24' ? true :
-          (this.timeFormat.match('HH') || []).length > 0;
-
-        this.origTimeFormat = this.timeFormat;
-        this.timeFormat = this.show24Hours ? 'HH:mm' : 'h:mm a';
-        this.element.attr('data-time-format', this.timeFormat);
-
-        // Figure out minute intervals to display
-        var minInt = this.element.attr('data-minute-interval');
-        this.minuteInterval = minInt !== undefined && !isNaN(minInt) ? parseInt(minInt, 10) :
-          !isNaN(settings.minuteInterval) ? parseInt(settings.minuteInterval, 10) : 5;
-
-        var roundToInterval = this.element.attr('data-round-to-interval');
-        this.roundToInterval = roundToInterval !== undefined ? (roundToInterval === 'true') :
-          settings.roundToInterval ? settings.roundToInterval : false;
-
-        var modes = ['standard', 'range'],
-          mode = this.element.attr('data-time-mode');
-        this.mode = mode in modes ? mode : settings.mode in modes ? settings.mode : 'standard';
-        */
-
         return this;
       },
 
@@ -251,7 +226,6 @@
           this.element.data('mask').destroy();
         }
         this.element.data('mask', undefined);
-
 
         var timeSeparator = this.getTimeSeparator(),
           mask = '##' + timeSeparator + '##' + (!this.is24HourFormat() ? ' am' : ''),
@@ -460,7 +434,6 @@
           hours = 1,
           minutes = 0,
           period = Locale.translateDayPeriod('AM');
-          // period = 'AM';
 
         nums[0] = parseInt(nums[0].replace(/ /g, ''), 10);
         if (isNaN(nums[0])) {
@@ -502,7 +475,7 @@
           timeString = '' + hours + this.getTimeSeparator() + minutes;
 
         period = (!this.is24HourFormat() && period === '') ? $('#timepicker-period-shdo').val() : period;
-        timeString += ' ' + Locale.translateDayPeriod(period);
+        timeString += period ? ' ' + Locale.translateDayPeriod(period) : '';
 
         this.element.val(timeString)
           .trigger('change');
@@ -577,6 +550,29 @@
         }
       },
 
+      // Getter for retrieving the value of the timefield
+      // Optional parameter 'removePunctuation' that gets rid of all the value's punctatuion on return.
+      value: function(removePunctuation) {
+        var val = this.element.val();
+        if (!removePunctuation || removePunctuation === false) {
+          return val;
+        }
+
+        var timeSeparator = Locale.calendar().dateFormat.timeSeparator,
+          sepRegex = new RegExp(timeSeparator, 'g');
+
+        // Remove punctuation
+        val = val.replace(sepRegex, '');
+
+        // Add leading zero for times without a double digit hour
+        var parts = val.split(' ');
+        if (parts[0].length < 4) {
+          val = '0' + parts[0] + (parts[1] ? parts[1] : '');
+        }
+
+        return val;
+      },
+
       enable: function() {
         this.element.prop('disabled', false);
       },
@@ -617,7 +613,6 @@
       // Teardown
       destroy: function() {
         this.teardown();
-
         $.removeData(this.element[0], 'validate');
         $.removeData(this.element[0], pluginName);
       }
@@ -627,7 +622,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        settings = $.extend({}, instance.settings, options);
+        instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
         instance = $.data(this, pluginName, new TimePicker(this, settings));
