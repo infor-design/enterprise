@@ -3053,11 +3053,11 @@ $.fn.datagrid = function(options) {
       }
 
       this.sortColumn.sortId = id;
-      this.sortColumn.sortField = (this.columnIdxById(id)[0] ? this.columnIdxById(id)[0].field : '');
-
+      this.sortColumn.sortField = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
+  
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
-      sort = this.sortFunction(this.sortColumn.sortId, ascending);
+      sort = this.sortFunction(this.sortColumn.sortField, ascending);
       settings.dataset.sort(sort);
 
       var wasFocused = this.activeCell.isFocused;
@@ -3097,6 +3097,7 @@ $.fn.datagrid = function(options) {
       var key,
       primer = function(a) {
         a = (a === undefined || a === null ? '' : a);
+
         if (typeof a === 'string') {
           a = a.toUpperCase();
 
@@ -3114,6 +3115,8 @@ $.fn.datagrid = function(options) {
       ascending = !ascending ? -1 : 1;
 
       return function (a, b) {
+
+
         return a = key(a), b = key(b), ascending * ((a > b) - (b > a));
       };
     },

@@ -31,7 +31,7 @@
       columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
-      columns.push({ id: 'custom', name: 'Custom', field: 'quantity', formatter: myCustom, align: 'center'});
+      columns.push({ id: 'custom', name: 'Custom', field: 'quantity', formatter: myCustom});
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({
@@ -41,4 +41,3 @@
     });
 
 </script>
-
