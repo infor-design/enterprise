@@ -128,7 +128,7 @@
         }
 
         // Add the application menu Module Tab, if applicable
-        if (self.isModuleTabs()) {
+        if (self.isModuleTabs() && !this.tablist.find('.application-menu-trigger').length) {
           var appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
             '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
             '<span>Menu</span>' +
