@@ -334,6 +334,10 @@ $datagrid-short-row-height: 30px;
 
     &.is-clickable {
       cursor: pointer;
+
+      td:focus .datagrid-cell-wrapper {
+        border-color: transparent;
+      }
     }
 
     &:last-child td {

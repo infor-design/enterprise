@@ -76,6 +76,7 @@
           } else {
             this.panel = $('<div class="contextual-action-panel">'+ this.settings.content +'</div>').appendTo('body');
             this.panel.addClass('modal').attr('id', this.settings.id);
+            console.log(this.panel)
           }
 
         }
@@ -138,6 +139,7 @@
         this.element.attr('data-modal', this.settings.id);
         if (!this.panel.attr('id')) {
           this.panel.attr('id', this.settings.id);
+          console.log(this.panel);
         }
 
         this.panel.modal({

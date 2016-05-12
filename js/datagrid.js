@@ -1296,7 +1296,7 @@ $.fn.datagrid = function(options) {
       for (var i = 0; i < self.settings.dataset.length; i++) {
         var isEven = (i % 2 === 0);
 
-        rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row'+
+        rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row '+
                   (self.settings.rowHeight !== 'normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                   (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                   (!self.settings.cellNavigation ? ' is-clickable' : '' ) +

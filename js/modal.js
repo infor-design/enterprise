@@ -347,13 +347,14 @@
           var body = this.element.find('.modal-body'),
             descById = (this.element.attr('id') ? this.element.attr('id') : 'message') + '-text';
 
-          body.attr('id', descById);
           this.element.attr('aria-labeledby', id);
-          this.element.attr('aria-describedby', descById);
 
           //Contextual Action Panel Case - Has a toolbar
           if (this.element.find('.toolbar .title').length) {
             this.element.find('.toolbar .title').attr('id', descById);
+            this.element.attr('aria-describedby', descById);
+          } else {
+            body.attr('id', descById);
             this.element.attr('aria-describedby', descById);
           }
 
