@@ -1032,6 +1032,17 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    headerText: function (col) {
+      var text = col.name ? col.name : '';
+
+      if (!text && col.id === 'drilldown') {
+        text = Locale.translate('Drilldown');
+        return '<span class="audible">'+ text + '</span>';
+      }
+
+      return text;
+    },
+
     //Render the Header
     renderHeader: function() {
       var self = this,
@@ -1074,7 +1085,7 @@ $.fn.datagrid = function(options) {
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + (settings.columns[j].name ? settings.columns[j].name : '') + '</span>';
+         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
 
         if (isSelection) {
           headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
