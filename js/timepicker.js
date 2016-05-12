@@ -23,6 +23,7 @@
     // Settings and Options
     var pluginName = 'timepicker',
         defaults = {
+          timeFormat: Locale.calendar().timeFormat || 'h:mm a', // The time format
           minuteInterval: 5, // Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
           mode: 'standard', // options: 'standard', 'range',
           roundToInterval: false, // If a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
@@ -32,6 +33,7 @@
 
     // Plugin Constructor
     function TimePicker(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -48,28 +50,37 @@
 
       // Configure any settings for the Timepicker
       setup: function() {
-        // Figure out hour display settings
-        this.timeFormat = this.element.attr('data-time-format') !== undefined ? this.element.attr('data-time-format') : Locale.calendar().timeFormat;
-        this.show24Hours = this.element.attr('data-force-hour-mode') === '24' ? true :
-          settings.forceHourMode === '24' ? true :
-          (this.timeFormat.match('HH') || []).length > 0;
 
-        this.origTimeFormat = this.timeFormat;
-        this.timeFormat = this.show24Hours ? 'HH:mm' : 'h:mm a';
-        this.element.attr('data-time-format', this.timeFormat);
+        function sanitizeMinuteInterval(value) {
+          if (value === undefined || isNaN(value)) {
+            return defaults.minuteInterval;
+          }
 
-        // Figure out minute intervals to display
-        var minInt = this.element.attr('data-minute-interval');
-        this.minuteInterval = minInt !== undefined && !isNaN(minInt) ? parseInt(minInt, 10) :
-          !isNaN(settings.minuteInterval) ? parseInt(settings.minuteInterval, 10) : 5;
+          var intValue = parseInt(value, 10);
+          return intValue > 0 && intValue < 60 ? intValue : defaults.minuteInterval;
+        }
 
-        var roundToInterval = this.element.attr('data-round-to-interval');
-        this.roundToInterval = roundToInterval !== undefined ? (roundToInterval === 'true') :
-          settings.roundToInterval ? settings.roundToInterval : false;
+        function sanitizeTimeFormat(value) {
+          if (!value || (!value.match('h') && !value.match('HH')) || !value.match('mm')) {
+            return defaults.timeFormat;
+          }
 
-        var modes = ['standard', 'range'],
-          mode = this.element.attr('data-time-mode');
-        this.mode = mode in modes ? mode : settings.mode in modes ? settings.mode : 'standard';
+          return value;
+        }
+
+        function sanitizeRoundToInterval(value) {
+          return value === true;
+        }
+
+        function sanitizeMode(value) {
+          var modes = ['standard', 'range'];
+          return $.inArray(value, modes) > -1 ? value : defaults.mode;
+        }
+
+        this.settings.timeFormat = sanitizeTimeFormat(this.settings.timeFormat);
+        this.settings.minuteInterval = sanitizeMinuteInterval(this.settings.minuteInterval);
+        this.settings.mode = sanitizeMode(this.settings.mode);
+        this.settings.roundToInterval = sanitizeRoundToInterval(this.settings.roundToInterval);
 
         return this;
       },
@@ -145,7 +156,7 @@
       handleBlur: function() {
         var self = this;
 
-        self.element.on('blur.timepicker', function() {
+        this.element.on('blur.timepicker', function() {
           self.roundMinutes();
 
           // The action of closing the popup menu is set on a timer because technically there are no fields focused
@@ -158,21 +169,31 @@
         });
       },
 
+      is24HourFormat: function(value) {
+        if (!value) { value = this.settings.timeFormat; }
+        return (value.match('HH') || []).length > 0;
+      },
+
+      getTimeSeparator: function() {
+        return Locale.calendar().dateFormat.timeSeparator;
+      },
+
       roundMinutes: function() {
-        if (!this.roundToInterval) {
+        if (!this.settings.roundToInterval) {
           return;
         }
 
         // separate out the minutes value from the rest of the value.
         var val = this.element.val(),
-          parts = val ? val.split(':') : [],
-          interval = this.minuteInterval;
+          timeSeparator = this.getTimeSeparator(),
+          parts = val ? val.split(timeSeparator) : [],
+          interval = this.settings.minuteInterval;
 
         if (!parts[1]) {
           return;
         }
 
-        if (!this.show24Hours) {
+        if (!this.is24HourFormat(this.settings.timeFormat)) {
           var periodParts = parts[1].split(' ');
           parts[1] = periodParts[0];
           if (periodParts[1]) {
@@ -195,7 +216,7 @@
           parts[0] = (parseInt(parts[0]) + 1).toString();
         }
 
-        var newVal = parts[0] + ':' + parts[1] + ' ' + (parts[2] ? parts[2] : '');
+        var newVal = parts[0] + timeSeparator + parts[1] + ' ' + (parts[2] ? parts[2] : '');
         this.element.val(newVal);
       },
 
@@ -206,7 +227,8 @@
         }
         this.element.data('mask', undefined);
 
-        var mask = (this.show24Hours ? '##:##' : '##:## am'),
+        var timeSeparator = this.getTimeSeparator(),
+          mask = '##' + timeSeparator + '##' + (!this.is24HourFormat() ? ' am' : ''),
           maskMode = 'time',
           validation = 'time',
           events = {'time': 'blur'},
@@ -236,14 +258,16 @@
         var self = this,
           popupContent = $('<div class="timepicker-popup-content"></div>'),
           initValues = self.getTimeFromField(),
+          timeSeparator = this.getTimeSeparator(),
           hourSelect, minuteSelect, periodSelect,
           selected;
 
         var timeParts = $('<div class="time-parts"></div>').appendTo(popupContent);
 
         // Build the inner-picker HTML
-        var hourCounter = this.show24Hours ? 0 : 1,
-          maxHourCount = this.show24Hours ? 24 : 13;
+        var is24HourFormat = this.is24HourFormat(),
+          hourCounter = is24HourFormat ? 0 : 1,
+          maxHourCount = is24HourFormat ? 24 : 13;
         hourSelect = $('<select id="timepicker-hours" class="hours dropdown"></select>');
 
         while(hourCounter < maxHourCount) {
@@ -256,7 +280,7 @@
         }
         timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('TimeHours') + '</label>'));
         timeParts.append(hourSelect);
-        timeParts.append($('<span class="label colons">:</span>'));
+        timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
 
         var minuteCounter = 0;
         minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
@@ -269,14 +293,14 @@
             selected = ' selected';
           }
           minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
-          minuteCounter = minuteCounter + self.minuteInterval;
+          minuteCounter = minuteCounter + self.settings.minuteInterval;
         }
         timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('TimeMinutes') + '</label>'));
         timeParts.append(minuteSelect);
 
         periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
-        if (!this.show24Hours) {
-          timeParts.append($('<span class="label colons"></span>'));
+        if (!is24HourFormat) {
+          timeParts.append($('<span class="label colons">&nbsp;</span>'));
           var localeDays = Locale.calendar().dayPeriods,
             localeCount = 0,
             regexDay = new RegExp(initValues.period, 'i'),
@@ -319,12 +343,12 @@
           hourSelect.data('dropdown').input.val(initValues.hours);
           minuteSelect.val(initValues.minutes);
           minuteSelect.data('dropdown').input.val(initValues.minutes);
-          if (!self.show24Hours) {
+          if (!self.is24HourFormat()) {
             periodSelect.val(initValues.period);
             periodSelect.data('dropdown').input.val(initValues.period);
           }
 
-          tooltip.find('#timepicker-hours-shdo').focus();
+          $(this).find('#timepicker-hours-shdo').focus();
         });
 
         popupContent.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
@@ -405,11 +429,11 @@
 
       getTimeFromField: function() {
         var val = this.element.val(),
-          nums = val.split(':'),
+          timeSeparator = this.getTimeSeparator(),
+          nums = val.split(timeSeparator),
           hours = 1,
           minutes = 0,
           period = Locale.translateDayPeriod('AM');
-          // period = 'AM';
 
         nums[0] = parseInt(nums[0].replace(/ /g, ''), 10);
         if (isNaN(nums[0])) {
@@ -422,7 +446,7 @@
         if (nums[1]) {
           // remove leading whitespace
           nums[1] = nums[1].replace(/^\s+|\s+$/g,'');
-          if (!this.show24Hours) {
+          if (!this.is24HourFormat()) {
             nums[1] = nums[1].split(' ');
             minutes = parseInt(nums[1][0], 10);
             minutes = minutes < 10 ? '0' + minutes : '' + minutes;
@@ -448,10 +472,10 @@
         var hours = $('#timepicker-hours').val() || '',
           minutes = $('#timepicker-minutes').val() || '',
           period = ($('#timepicker-period').val() || '').toUpperCase(),
-          timeString = '' + hours + ':' + minutes;
+          timeString = '' + hours + this.getTimeSeparator() + minutes;
 
-        period = (!this.show24Hours && period === '') ? $('#timepicker-period-shdo').val() : period;
-        timeString += ' ' + Locale.translateDayPeriod(period);
+        period = (!this.is24HourFormat() && period === '') ? $('#timepicker-period-shdo').val() : period;
+        timeString += period ? ' ' + Locale.translateDayPeriod(period) : '';
 
         this.element.val(timeString)
           .trigger('change');
@@ -482,7 +506,7 @@
         this.element.addClass('is-active');
 
         // Build a different Time Popup based on settings
-        if (self.mode === 'range') {
+        if (self.settings.mode === 'range') {
           self.buildRangePopup();
           self.setupRangeEvents();
         } else {
@@ -502,10 +526,10 @@
 
       // This gets fired on the popover's "hide" event
       onPopupHide: function() {
-        if (settings.mode === 'standard') {
+        if (this.settings.mode === 'standard') {
           $('#timepicker-hours').data('dropdown').destroy();
           $('#timepicker-minutes').data('dropdown').destroy();
-          if (!this.show24Hours) {
+          if (!this.is24HourFormat()) {
             $('#timepicker-period').data('dropdown').destroy();
           }
           this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
@@ -526,6 +550,29 @@
         }
       },
 
+      // Getter for retrieving the value of the timefield
+      // Optional parameter 'removePunctuation' that gets rid of all the value's punctatuion on return.
+      value: function(removePunctuation) {
+        var val = this.element.val();
+        if (!removePunctuation || removePunctuation === false) {
+          return val;
+        }
+
+        var timeSeparator = Locale.calendar().dateFormat.timeSeparator,
+          sepRegex = new RegExp(timeSeparator, 'g');
+
+        // Remove punctuation
+        val = val.replace(sepRegex, '');
+
+        // Add leading zero for times without a double digit hour
+        var parts = val.split(' ');
+        if (parts[0].length < 4) {
+          val = '0' + parts[0] + (parts[1] ? parts[1] : '');
+        }
+
+        return val;
+      },
+
       enable: function() {
         this.element.prop('disabled', false);
       },
@@ -538,8 +585,13 @@
         return this.element.prop('disabled');
       },
 
-      // Teardown
-      destroy: function() {
+      updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      teardown: function() {
         this.trigger.off('keydown.timepicker');
         this.element.off('focus.timepicker blur.timepicker keydown.timepicker');
         if (this.popup) {
@@ -554,9 +606,13 @@
         }
 
         this.label.find('.audible').remove();
-        if (this.origTimeFormat) {
-          this.element.attr('data-time-format', this.originalTimeFormat);
-        }
+
+        return this;
+      },
+
+      // Teardown
+      destroy: function() {
+        this.teardown();
         $.removeData(this.element[0], 'validate');
         $.removeData(this.element[0], pluginName);
       }
@@ -566,11 +622,10 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        settings = $.extend(instance.settings, settings, options);
-        instance.setup().build();
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new TimePicker(this, settings));
-        instance.settings = settings;
       }
     });
   };

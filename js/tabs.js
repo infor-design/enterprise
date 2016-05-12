@@ -1936,10 +1936,13 @@
 
         this.moreButton.off().remove();
         this.moreButton = undefined;
-        this.focusState.remove();
-        this.focusState = undefined;
-        this.animatedBar.remove();
-        this.animatedBar = undefined;
+
+        if (this.hasAdvancedFocusStates()) {
+          this.focusState.remove();
+          this.focusState = undefined;
+          this.animatedBar.remove();
+          this.animatedBar = undefined;
+        }
 
         return this;
       },
