@@ -310,6 +310,15 @@ $datagrid-short-row-height: 30px;
   // Table Rows
   tr {
 
+    &.is-active-row {
+      outline: 1px solid $primary-color;
+      outline-offset: -1px;
+
+      td {
+        border-bottom-color: transparent;
+      }
+    }
+
     // Hover States
     &:not(.datagrid-expandable-row):hover td:not(.is-editing) {
       background-color: $datagrid-row-hover-color;
@@ -332,6 +341,7 @@ $datagrid-short-row-height: 30px;
       }
     }
 
+    &.is-active-row,
     &.is-clickable {
       cursor: pointer;
 
@@ -425,6 +435,7 @@ $datagrid-short-row-height: 30px;
       display: block;
       height: inherit;
       margin: 0;
+      min-height: 50px;
       overflow: hidden;
       padding: 0 20px;
       width: 100%;
