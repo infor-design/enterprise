@@ -535,7 +535,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="lookup" data-init="false" />').appendTo(container);
-      this.input.lookup(column.options || {});
+      this.input.lookup(column.editorOptions || {});
     };
 
     this.val = function (value) {
@@ -595,7 +595,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="autocomplete" data-autocomplete="source" />').appendTo(container);
-      this.input.autocomplete(column.options);
+      this.input.autocomplete(column.editorOptions);
     };
 
     this.val = function (value) {
