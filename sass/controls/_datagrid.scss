@@ -524,9 +524,13 @@ $datagrid-short-row-height: 30px;
     //Inline Editting
     &.is-editing {
       background-color: $panel-bg-color;
+      position: relative;
 
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
+        left: 0;
+        position: absolute;
+        top: 0;
       }
 
       .checkbox-label::before {
@@ -950,6 +954,10 @@ td .btn-actions {
   border-radius: 0 0 3px 3px;
   margin-left: -1px;
   margin-top: -1px;
+
+  &.is-editing {
+    margin-top: -2px;
+  }
 
   input {
     height: 48px;
