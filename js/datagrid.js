@@ -417,7 +417,11 @@ window.Editors = {
         }
       }
 
-      this.input.dropdown(column.editorOptions);
+      var editorOptions = column.editorOptions;
+      if (!editorOptions || (editorOptions && !editorOptions.cssClass)) {
+        editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
+      }
+      this.input.dropdown(editorOptions);
       this.input = this.input.parent().find('input');
 
     };
@@ -3065,7 +3069,7 @@ $.fn.datagrid = function(options) {
 
       this.sortColumn.sortId = id;
       this.sortColumn.sortField = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
-  
+
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
       sort = this.sortFunction(this.sortColumn.sortField, ascending);
