@@ -145,17 +145,12 @@ Guidelines for bug reports:
    latest `master` or look for [closed issues in the current milestone](http://jira.infor.com/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+HFC+AND+status+%3D+Resolved+ORDER+BY+priority+DESC&mode=hide).
 
 3. **Isolate the problem** &mdash; and create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/) and a live example. Examples of reduced test cases are:
-
-* Take an existing example and modify it to resemble the issue
-* Create an example using a tool like https://jsfiddle.net/ - the soho xi scripts can be upload on this site
-
-Spend a little time in recreating and isolating the issue and you might learn and discover the solution.
-
-Do not:
-
-* Send a video in place of a reduced test case
-* Send a link to your application
-
+  * Take an existing example and modify it to resemble the issue
+  * Create an example using a tool like https://jsfiddle.net/ - the soho xi scripts can be upload on this site
+  Spend a little time in recreating and isolating the issue and you might learn and discover the solution.
+  Do not:
+  * Send a video in place of a reduced test case
+  * Send a link to your application
 
 4. **Include a screencast if relevant** - Is your issue about a design or front end feature or bug? The most helpful thing in the world is if we can *see* what you're talking about.
 Use [LICEcap](http://www.cockos.com/licecap/) to quickly and easily record a short screencast (24fps) and save it as an animated gif! Embed it directly into your Jira issue.
