@@ -144,18 +144,23 @@ Guidelines for bug reports:
 2. **Check if the issue has been fixed** &mdash; try to reproduce it using the
    latest `master` or look for [closed issues in the current milestone](http://jira.infor.com/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+HFC+AND+status+%3D+Resolved+ORDER+BY+priority+DESC&mode=hide).
 
-3. **Isolate the problem** &mdash; and create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/) and a live example. Examples of reduced test cases are:
-  * Take an existing example and modify it to resemble the issue
-  * Create an example using a tool like https://jsfiddle.net/ - the soho xi scripts can be upload on this site
-  Spend a little time in recreating and isolating the issue and you might learn and discover the solution.
-  Do not:
-  * Send a video in place of a reduced test case
-  * Send a link to your application
+3. **Isolate the problem** &mdash; and create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/) and a live example.
 
-4. **Include a screencast if relevant** - Is your issue about a design or front end feature or bug? The most helpful thing in the world is if we can *see* what you're talking about.
-Use [LICEcap](http://www.cockos.com/licecap/) to quickly and easily record a short screencast (24fps) and save it as an animated gif! Embed it directly into your Jira issue.
+Examples of reduced test cases are:
 
-5. Use the Bug Report template below
+ - Take an existing example and modify it to resemble the issue, this is iudeal as we can include this in our init tests to avoid future breakages.
+ - Create an example using a tool like https://jsfiddle.net/ - the soho
+   xi scripts can be upload on this site
+ - Any Other runnable code.
+
+Spend a little time in recreating and isolating the issue and you might learn and discover the solution.
+
+  **Do not:**
+  - Send a video in place of a reduced test case
+  - Send a link to your application
+  - Just send an image of the source code
+
+4. Use the Bug Report template below
 
 A good bug report shouldn't leave others needing to chase you up for more information. Be sure to include the details of your environment.
 
@@ -198,7 +203,7 @@ Feature requests are welcome. Before you submit one be sure to have:
 
 Change requests cover both architectural and functional changes to how the controls work. If you have an idea for a new or different dependency, a refactor, or an improvement to a feature, etc  - please be sure to:
 
-1. **Use the Stash and Jira search** and check someone else didn't get there first
+1. **Use the Bitbucket and Jira search** and check someone else didn't get there first
 2. Take a moment to think about the best way to make a case for, and explain what you're thinking. Are you sure this shouldn't really be a [bug report](#bug-reports) or a [feature request](#feature-requests)? Is it really one idea or is it many? What's the context? What problem are you solving? Why is what you are suggesting better than what's already there? Does it fit with the Roadmap?
 
 
@@ -209,8 +214,8 @@ Pull requests are awesome. If you're looking to raise a PR for something which d
 
 If you'd like to submit a pull request you'll need to do the following:
 
-1. **Fork the SoHo Xi Controls project in Stash.** Navigate to our internal [Stash Git Repository](http://git.infor.com/projects/SOHO/repos/controls) (you may need to contact Tim McConechy to have you added to the Stash Users list).  On the left sidebar at the top, click the button under *Actions* that says *Fork Repository*.  On the screen that follows, make sure *Enable Fork Syncing* is checked, and click *Fork Repository* to create your own remote branch of the SoHo Xi Controls Project.
-2. **Clone the Repository on your machine.**  Get a local clone of your newly created remote repository. In Stash, click the *Repositories* dropdown on the top of the window, and find the link with Your Name along side the word *Controls*.  On the page that follows, click the *Clone* link in the left sidebar.  Using the URL provided to [Clone the Respository with Git](http://git-scm.com/docs/git-clone).
+1. **Fork the SoHo Xi Controls project in Bitbucket.** Navigate to our internal [Bitbucket Git Repository](http://git.infor.com/projects/SOHO/repos/controls) (you may need to contact Tim McConechy to have you added to the Bitbucket Users list).  On the left sidebar at the top, click the button under *Actions* that says *Fork Repository*.  On the screen that follows, make sure *Enable Fork Syncing* is checked, and click *Fork Repository* to create your own remote branch of the SoHo Xi Controls Project.
+2. **Clone the Repository on your machine.**  Get a local clone of your newly created remote repository. In Bitbucket, click the *Repositories* dropdown on the top of the window, and find the link with Your Name along side the word *Controls*.  On the page that follows, click the *Clone* link in the left sidebar.  Using the URL provided to [Clone the Respository with Git](http://git-scm.com/docs/git-clone).
 3. **Make your changes with the local copy of the code.**
 4. **Commit your changes locally.**  Use `git commit -am "[COMMIT MESSAGE]"` and type any related JIRA Ticket numbers into the message to have our build system automatically link your commits to those issues later (For Example "HFC-2105 - Created the project scaffolding needed for adding the SoHo Xi Action Button").  Repeat Steps 3 and 4 as many times as necessary to refine your code.  Please keep in mind our [coding standards](#coding-standards) as you perform these steps.
 
@@ -230,10 +235,10 @@ Fixed issue in the xyz control as per HFC-XXXX
   * `git pull`
   * `git rebase`
 You may need to merge some files.  Follow your Git client's directions on properly merging the files, and recommit the changes.
-6. **Push your changes to your remote repository.**  Use `git push` to push your changes out to your branch on the Stash repository.
-7. **Open a pull request.**  Using the Stash website, navigate back to the [Main SoHo Xi Controls repository](http://git.infor.com/projects/SOHO/repos/controls), and click the *Pull Requests* link on the left sidebar.  On the screen that follows, click the *Create a pull request* button. On the next screen, use the drop downs to select the Source/Destination repos (Yours and the Main repo, respectively). Review the files changed underneath, and click "Continue" when ready.  On the screen that follows, you'll be presented with a textbox containing a combination of all your commits for this pull.  Please organize the text accordingly, and list "Tim McConechy" as a reviewer before clicking "Submit".
+6. **Push your changes to your remote repository.**  Use `git push` to push your changes out to your branch on the Bitbucket repository.
+7. **Open a pull request.**  Using the Bitbucket website, navigate back to the [Main SoHo Xi Controls repository](http://git.infor.com/projects/SOHO/repos/controls), and click the *Pull Requests* link on the left sidebar.  On the screen that follows, click the *Create a pull request* button. On the next screen, use the drop downs to select the Source/Destination repos (Yours and the Main repo, respectively). Review the files changed underneath, and click "Continue" when ready.  On the screen that follows, you'll be presented with a textbox containing a combination of all your commits for this pull.  Please organize the text accordingly, and list "Tim McConechy" as a reviewer before clicking "Submit".
 
-See additional information here on how to submit a [pull request](https://confluence.atlassian.com/display/STASH/Using+pull+requests+in+Stash)
+See additional information here on how to submit a [pull request](https://confluence.atlassian.com/display/Bitbucket/Using+pull+requests+in+Bitbucket)
 
 <a name="testing"></a>
 ### Testing and Quality Assurance
