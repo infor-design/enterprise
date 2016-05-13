@@ -243,12 +243,15 @@
             }
           }
 
-          // If there are tabs present, activate the first one
+          // If there is no selected tab, try to find the first available tab (if there are any present)
           if (!selected.length) {
-            selected = tabs.first();
+            selected = tabs.not('.add-tab-button, .application-menu-trigger').first();
           }
 
-          this.activate(selected.children('a').attr('href'));
+          // If there are tabs present, activate the first one
+          if (selected.length) {
+            this.activate(selected.children('a').attr('href'));
+          }
         }
 
         if (this.isModuleTabs() && this.element.children('.toolbar').length) {
@@ -933,7 +936,7 @@
           options = {};
         }
 
-        var startFromZero = this.anchors.length === 0;
+        var startFromZero = this.tablist.find('li').not('.application-menu-trigger, .add-tab-button').length === 0;
 
         // Sanitize
         tabId = '' + tabId.replace(/#/g, '');
