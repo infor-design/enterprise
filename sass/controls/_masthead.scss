@@ -80,6 +80,10 @@ $masthead-button-focus-color: $white;
       > *:first-child {
         margin-left: 10px;
       }
+
+      > button + h1 {
+        margin-left: 10px;
+      }
     }
 
     .buttonset {
