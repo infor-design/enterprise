@@ -1,7 +1,7 @@
 define([
   'intern/dojo/node!../../../node_modules/colors',
-  'intern/dojo/node!../../../node_modules/intern/node_modules/istanbul/lib/collector',
-  'intern/dojo/node!../../../node_modules/intern/node_modules/istanbul/lib/report/text'
+  'intern/dojo/node!../../../node_modules/istanbul/lib/collector',
+  'intern/dojo/node!../../../node_modules/istanbul/lib/report/text'
 ], function(colors, Collector, Reporter) {
 
   // Constants
