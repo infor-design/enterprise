@@ -168,7 +168,8 @@
 
         $('body').append(pageOverlay);
         css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme +'.css');
-        pageOverlay.fadeOut('fast', function() {
+        pageOverlay.fadeOut('slow', function() {
+        // pageOverlay.fadeOut('fast', function() {
           pageOverlay.remove();
         });
 
