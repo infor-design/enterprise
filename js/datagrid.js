@@ -675,6 +675,7 @@ $.fn.datagrid = function(options) {
       this.initTableWidth();
       this.handleEvents();
       this.handleKeys();
+      this.setCellWrapperHeight();
 
       setTimeout(function () {
         self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
@@ -1452,6 +1453,12 @@ $.fn.datagrid = function(options) {
 
     },
 
+    //Set cell-wrapper height
+    setCellWrapperHeight: function () {
+      var wrapper = $('tbody .datagrid-cell-wrapper', this.table);
+      wrapper.height(wrapper.closest('td').outerHeight());
+    },
+
     //Returns all header nodes (not the groups)
     headerNodes: function () {
       return this.headerRow.find('tr:not(.datagrid-header-groups) th');
@@ -1991,6 +1998,10 @@ $.fn.datagrid = function(options) {
           self.commitCellEdit(self.editor.input);
         }
 
+      });
+
+      $(window).on('resize.datagrid', function() {
+        self.setCellWrapperHeight();
       });
     },
 
