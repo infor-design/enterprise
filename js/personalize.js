@@ -91,7 +91,7 @@
           },
           mappings = [
             ['.header.is-personalizable', 'background-color', colors.header],
-            ['.sub-header.is-personalizable', 'background-color', colors.subheader],
+            ['.subheader.is-personalizable', 'background-color', colors.subheader],
             ['.builder-header.is-personalizable', 'background-color', colors.subheader]
           ];
 
