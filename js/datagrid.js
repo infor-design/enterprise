@@ -1455,8 +1455,8 @@ $.fn.datagrid = function(options) {
 
     //Set cell-wrapper height
     setCellWrapperHeight: function () {
-      var wrapper = $('tbody .datagrid-cell-wrapper', this.table);
-      wrapper.height(wrapper.closest('td').outerHeight());
+      var cellWrapper = $('tbody .datagrid-cell-wrapper', this.table);
+      cellWrapper.css({'min-height': cellWrapper.closest('td').outerHeight()});
     },
 
     //Returns all header nodes (not the groups)
@@ -1998,10 +1998,6 @@ $.fn.datagrid = function(options) {
           self.commitCellEdit(self.editor.input);
         }
 
-      });
-
-      $(window).on('resize.datagrid', function() {
-        self.setCellWrapperHeight();
       });
     },
 
