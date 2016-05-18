@@ -6,8 +6,10 @@ Release Date: May 11th
 * New - Datagrid Column Reorder
 * New - Datagrid Personalization
 * New - Expandable Area
+* New - Error States
 
 ## Breaking Changes
+* 2016-05-11 - Validation Errors - The styling of the validation is now on the bottom of the fields without a tooltip.
 * 2016-05-11 - Checkboxes - Changed to display inline-block. This should not cause any issues unless you forgot to wrap your checkbox elements in a field element.
 * 2016-05-04 - Slider - changed the name of the _refresh()_ method to _setValue()_ so its clear that it sets the value.  _refresh()_ still exists and is marked as "deprecated" - will be removed in future releases.  Please update your code to use _setValue()_ instead of _refresh()_.
 * 2016-04-27 - Dropdown, Vertical Tabs, Wizard, Tabs  - Event Renamed from activated to active.
@@ -29,7 +31,7 @@ Release Date: May 11th
 ## Dev Server Changes
 * 2016-04-08 - The Xi Controls Dev Server has been upgraded to Express 4.x.  Some of its dependancies may have changed.  If you rely on our Dev Server for examples/testing, please stop the server, delete this project's _/node\_modules/_ folder, and rerun {{npm install}} and {{npm run install-test-deps}}.
 
-Jira Release Notes 
+Jira Release Notes
 http://bit.ly/1OCRwLD
 
 # 4.1.1 - Patch Release

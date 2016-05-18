@@ -90,7 +90,7 @@
     }
   }
 
-  .icon-error {
+  .editor[data-error-type='tooltip'] + .audible +  .icon-error {
     left: 100%;
     margin-left: -33px;
     position: absolute;
