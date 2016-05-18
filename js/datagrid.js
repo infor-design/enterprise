@@ -758,6 +758,9 @@ $.fn.datagrid = function(options) {
       self.setColumnWidths();
 
       self.wrapper = self.element.closest('.datagrid-wrapper');
+
+      self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
+      $(self.settings.buttonSelector, self.table).button();
     },
 
     htmlToDataset: function () {
@@ -1848,6 +1851,12 @@ $.fn.datagrid = function(options) {
             return;
           }
 
+          if (elem.hasClass('is-focusable')) {
+            if (!$(e.target).is(self.settings.buttonSelector)) {
+              return;
+            }
+          }
+
           // TODO: if (e.type === 'touchstart') {} ?
           if (!elem.hasClass('is-cell-readonly')) {
             col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
@@ -2591,6 +2600,8 @@ $.fn.datagrid = function(options) {
           node = self.activeCell.node,
           row = self.activeCell.row,
           cell = self.activeCell.cell,
+          col = self.columnSettings(cell),
+          item = self.settings.dataset[row],
           visibleCols = self.visibleColumns(),
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
@@ -2710,6 +2721,17 @@ $.fn.datagrid = function(options) {
         if (self.settings.editable && key === 32) {
           if (!self.editor) {
             self.makeCellEditable(row, cell, e);
+          }
+        }
+
+        // if column have click function to fire [ie. action button]
+        if (key === 13 && col.click && typeof col.click === 'function') {
+          if (node.hasClass('is-focusable')) {
+            if ($(e.target).is(self.settings.buttonSelector)) {
+              if (!node.hasClass('is-cell-readonly')) {
+                col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
+              }
+            }
           }
         }
 
