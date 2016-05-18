@@ -1094,9 +1094,13 @@
         editorContainer
           .on('focus.editor', '.editor, .editor-source', function () {
             editorContainer.addClass('is-active');
+            if ($(this).hasClass('error')) {
+              editorContainer.parent().find('.editor-toolbar').addClass('error');
+            }
           })
           .on('blur.editor', '.editor, .editor-source', function() {
             editorContainer.removeClass('is-active');
+            editorContainer.parent().find('.editor-toolbar').removeClass('error');
           });
 
         //Attach Label

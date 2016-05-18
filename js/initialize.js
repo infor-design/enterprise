@@ -414,8 +414,6 @@
       // of an element on the page without causing the entire page to re-initialize.
       self.triggerHandler('initialized');
 
-      //Placeholder attribute in browsers that do not handle it
-      $.fn.placeholderPolyfill();
 
       return returnObj;
     };

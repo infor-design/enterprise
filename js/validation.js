@@ -1,5 +1,5 @@
 /**
-* Validate Plugin
+* Validation Plugin
 */
 
 /* start-amd-strip-block */
@@ -361,7 +361,7 @@
               return;
             }
 
-            self.addError(field, rule.message, rule.inline, showTooltip);
+            self.addError(field, rule.message, field.attr('data-error-type') === 'tooltip' ? false: true, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
 
@@ -419,8 +419,7 @@
     },
 
     addError: function(field, message, inline, showTooltip) {
-      var self = this,
-        loc = this.getField(field).addClass('error'),
+      var loc = this.getField(field).addClass('error'),
          appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
 
       loc.data('data-errormessage', appendedMsg);
@@ -430,10 +429,20 @@
         $('body').toast({title: Locale.translate('Error'), audibleOnly: true, message: appendedMsg});
       }
 
-      //Append Error
-      var svg = $('<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"></use></svg>');
+      if (!inline) {
+        this.showTooltipError(field, message, showTooltip);
+        return;
+      }
 
-      if (loc.parent('.field').find('svg.icon-error').length === 0) {
+      this.showInlineError(field, message);
+    },
+
+    showErrorIcon: function(field) {
+
+      var loc = this.getField(field).addClass('error'),
+        svg = $('<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"></use></svg>');
+
+      if (loc.parent('.field, .field-short').find('svg.icon-error').length === 0) {
 
         if (field.parent().is('.editor-container')) {
           field.parent().addClass('is-error');
@@ -457,32 +466,18 @@
           field.parent().append(svg);
         }
 
-        $('.icon-confirm', loc.parent('.field')).remove();
+        $('.icon-confirm', loc.parent('.field, .field-short')).remove();
       }
+
+    },
+
+    showTooltipError: function(field, message, showTooltip) {
+      this.showErrorIcon(field);
 
       //Add error classes to pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect') && field.data('dropdown') !== undefined) {
         var input = field.data('dropdown').input;
-        input.addClass('error').attr('placeholder', message);
-      }
-
-      //setup tooltip with appendedMsg
-      if (inline) {
-
-        if (field.is('select')) {
-          field = field.parent().find('input');
-          if (field.val().length, field.val() === '\xa0') {
-            field.text('');
-          }
-        }
-        field.attr('data-placeholder', field.attr('placeholder'));
-        field.attr('placeholder', appendedMsg);
-
-        if (!self.isPlaceholderSupport) {
-          field.val('').placeholderPolyfill();
-        }
-
-        return;
+        input.addClass('error');
       }
 
       // Build Tooltip
@@ -506,39 +501,40 @@
         }
       });
 
-      svg.on('click.validate', function() {
-        field.data('tooltip').show();
-      });
-
-      var timeout;
-
-      svg.on('mouseenter.validate', function() {
-        timeout = setTimeout(function () {
-          field.data('tooltip').show();
-        }, 300);
-      });
-
-      svg.on('mouseleave.validate', function() {
-         field.data('tooltip').hide();
-         timeout = clearTimeout(timeout);
-      });
-
       if (showTooltip) {
         field.data('tooltip').show();
       }
     },
 
+    showInlineError: function (field, message) {
+      var loc = this.getField(field).addClass('error'),
+        markup = '<span class="error-message">' +
+          '<svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-error">' +
+          '<use xlink:href="#icon-error"/>' +
+          '</svg>' +
+          '<span class="audible">'+ Locale.translate('Error') +'</span>' +
+          '<span>' + message +'</span>' +
+          '</span>';
+
+      //Do not show message on open list
+      if ($('#dropdown-list').is(':visible')) {
+        return;
+      }
+
+      loc.closest('.field, .field-short').find('.formatter-toolbar').addClass('error');
+      loc.closest('.field, .field-short').append(markup);
+    },
+
     addPositive: function(field) {
       var svg = $('<svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-confirm"></use></svg>');
 
-      if(!$('.icon-confirm', field.parent('.field')).length) {
-        field.parent('.field').append(svg);
+      if (!$('.icon-confirm', field.parent('.field, .field-short')).length) {
+        field.parent('.field, .field-short').append(svg);
       }
     },
 
     removeError: function(field) {
-      var self = this,
-        loc = this.getField(field);
+      var loc = this.getField(field);
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass('error');
@@ -549,11 +545,13 @@
         field.next().next().removeClass('error'); // #shdo
         field.parent().find('.dropdown-wrapper > .icon-error').off('click.validate').remove(); // SVG Error Icon
       }
+
       field.next().next('.icon-error').remove();
       field.next('.inforCheckboxLabel').next('.icon-error').remove();
-      field.parent('.field').find('span.error').remove();
+      field.parent('.field, .field-short').find('span.error').remove();
       field.parent().find('.icon-error').remove();
       field.off('focus.validate focus.tooltip');
+
       if (field.data('tooltip')) {
         field.data('tooltip').destroy();
       }
@@ -565,10 +563,6 @@
       if (loc.attr('data-placeholder')) {
         loc.attr('placeholder',loc.attr('data-placeholder'));
         loc.removeAttr('data-placeholder');
-
-        if (!self.isPlaceholderSupport) {
-          loc.placeholderPolyfill();
-        }
       }
 
       //Remove error classes from pseudo-markup for certain controls
@@ -579,16 +573,21 @@
       if (field.parent().is('.editor-container')) {
         field.parent().removeClass('is-error');
       }
+
+      //Stuff for the inline error
+      field.closest('.field, .field-short').find('.error-message').remove();
+      field.parent('.field, .field-short').find('.formatter-toolbar').removeClass('error');
+
     },
 
     removePositive: function(field) {
-      $('.icon-confirm', field.parent('.field')).remove();
+      $('.icon-confirm', field.parent('.field, .field-short')).remove();
     }
   };
 
   //Add a Message to a Field
   $.fn.addError = function(options) {
-    var defaults = {message: '', showTooltip: false, inline: false},
+    var defaults = {message: '', showTooltip: false, inline: true},
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
@@ -609,10 +608,10 @@
   };
 
   $.fn.validate = function(options, args) {
-
     // Settings and Options
     var pluginName = 'validate',
       defaults = {
+        inline: true
       },
       settings = $.extend({}, defaults, options);
 
@@ -873,6 +872,7 @@
     $(this).find('.error').removeClass('error');
     $(this).find('.icon-error').remove();
     $(this).find('.icon-confirm').remove();
+    $(this).find('.error-message').remove();
 
     setTimeout(function () {
       $('#validation-errors').addClass('is-hidden');

@@ -1,6 +1,5 @@
 // User Input - TextBox, Textarea
 //================================================== //
-// rem font sizin
 
 // Required Indicator
 @mixin required-indicator() {
@@ -76,6 +75,29 @@
 
 .field {
   position: relative;
+
+  textarea + .btn-actions {
+    margin-left: 4px;
+    position: absolute;
+    top: calc(50% - 14px);
+  }
+
+  //Input Actions Button - controls/input-actions
+  .btn-actions {
+    border-radius: 50%;
+    height: 30px;
+    min-height: 30px;
+    min-width: 30px;
+    position: relative;
+    top: 0;
+    width: 30px;
+
+    .icon {
+      height: 16px;
+      margin-left: 0;
+      width: 16px;
+    }
+  }
 
   > .textarea-wordcount {
     color: $label-color;
@@ -187,10 +209,10 @@ textarea {
 }
 
 .textarea-wordcount {
-
-  display: block;
   @include font-size(10);
   @include rem(line-height, 2rem);
+
+  display: block;
   margin-top: -20px;
   min-height: auto;
   text-transform: uppercase;
@@ -217,6 +239,9 @@ textarea[disabled] + .textarea-wordcount {
 
 // Print Style Sheet
 @media print {
+  // Needed for printing
+  // scss-lint:disable ImportantRule
+
   textarea,
   .textarea-wordcount {
     display: none !important;
@@ -264,6 +289,7 @@ label,
   opacity: 1;
 }
 
+// scss-lint:disable VendorPrefix
 ::-moz-placeholder {
   @include font-size(14);
   color: $input-placeholder-color;
@@ -301,8 +327,9 @@ textarea.error {
 
 input.error:focus,
 textarea.error:focus {
+  // Needed for printing
+  // scss-lint:disable ImportantRule
   border-color: $error-color !important;
-  //box-shadow: 0 0 5px rgba(237, 28, 36, .2);
   color: $input-color !important;
 }
 
@@ -317,26 +344,8 @@ textarea.error:focus {
 }
 
 .error:-ms-input-placeholder {
-  color: #d5000e;
+  color: $error-color;
   opacity: 1;
-}
-
-.error-container {
-  border: 1px solid #d5000e;
-  left: 10px;
-  max-width: 0;
-  position: fixed;
-  top: 10px;
-
-  span {
-    background-color: #ffffff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
-    margin: 0 0 6px;
-    overflow: hidden;
-    padding: 10px 32px 10px 12px;
-    position: relative;
-    width: auto;
-  }
 }
 
 // Text Selection
@@ -386,6 +395,20 @@ textarea.error:focus {
     top: auto;
     width: 18px;
   }
+
+  .error-message {
+    span {
+      left: 150px;
+      margin-top: 3px;
+      position: relative;
+    }
+
+    .icon {
+      left: 155px;
+      top: 8px;
+    }
+  }
+
 }
 
 // Field Sizes
@@ -424,7 +447,9 @@ textarea.error:focus {
 
   .icon-info-field {
     display: inline-block;
+    height: 15px;
     top: -4px;
+    width: 15px;
   }
 
   span {
@@ -436,27 +461,43 @@ textarea.error:focus {
   }
 }
 
-//Input Actions Button - controls/input-actions
-.field .btn-actions {
-  border-radius: 50%;
-  min-height: 30px;
-  min-width: 30px;
-  height: 30px;
-  position: relative;
-  top: 0;
-  width: 30px;
+//Error Field
+.error-message {
+  @include font-size(12);
+  color: $error-color;
+  display: block;
+  line-height: 1.2rem;
+  margin-top: -15px;
+  max-width: 300px;
 
-  .icon {
-    height: 16px;
-    margin-left: 0 !important;
-    width: 16px;
+  .icon-error {
+    display: inline-block;
+    margin-left: initial;
+    margin-top: initial;
+    position: relative;
+    top: 0;
+    width: 14px;
+  }
+
+  span {
+    display: inline-block;
+    line-height: 15px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    margin-top: 1px;
+    max-width: 280px;
   }
 }
 
-.field textarea + .btn-actions {
-  position: absolute;
-  margin-left: 4px;
-  top: calc(50% - 14px);
+.dropdown-wrapper .icon + .error-message,
+.lookup-wrapper .icon + .error-message {
+  margin-bottom: -10px;
+  margin-top: 4px;
+
+  .icon-error {
+    position: relative;
+    right: initial;
+  }
 }
 
 @include respond-to(phone) {

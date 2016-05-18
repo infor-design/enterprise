@@ -1499,6 +1499,10 @@ $.fn.datagrid = function(options) {
     },
 
     saveColumns: function () {
+      if (!this.settings.saveColumns) {
+        return;
+      }
+
       //Save to local storage
       if (localStorage) {
         localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
@@ -3065,7 +3069,7 @@ $.fn.datagrid = function(options) {
 
       this.sortColumn.sortId = id;
       this.sortColumn.sortField = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
-  
+
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
       sort = this.sortFunction(this.sortColumn.sortField, ascending);

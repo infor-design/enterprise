@@ -395,14 +395,18 @@ $site-topframe-links-bg-color: #0b152a;
       margin: auto;
       width: 250px;
     }
+
+    .hyperlink {
+      @include font-size(16);
+      color: $azure04;
+    }
   }
 
   .link-icon {
+    @include css3(transition, transform 300ms cubic-bezier(.17, .04, .03, .94));
     cursor: pointer;
     margin: 7.5rem 0 2.5rem;
     max-height: 96px;
-    @include css3(transition, transform 300ms cubic-bezier(.17, .04, .03, .94));
-
     &:hover {
       @include css3(transform, scale(1.1));
     }

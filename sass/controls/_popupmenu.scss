@@ -467,7 +467,8 @@
       li {
         &.is-checked > a:before,
         &.is-checked.is-selected > a:before {
-          margin-top: 6px;
+          margin-left: -4px;
+          margin-top: 4px;
         }
       }
     }

@@ -32,11 +32,6 @@
     }
   }
 
-  .icon-error {
-    position: absolute;
-    right: 15px;
-  }
-
   // Customize the formatter toolbar if it's inside an editor
   .formatter-toolbar {
     // border-bottom: 1px solid $editor-middle-border-color;
@@ -47,6 +42,61 @@
       border-radius: 2px;
     }
   }
+
+  &:hover {
+    .toolbar.formatter-toolbar {
+      border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color;
+    }
+
+    .editor,
+    .editor-source {
+      border-color: transparent $editor-hover-border-color $editor-hover-border-color;
+    }
+  }
+
+  &.is-active,
+  &.is-active:hover {
+    .toolbar.formatter-toolbar {
+      border-left-color: $editor-focus-border-color;
+      border-right-color: $editor-focus-border-color;
+      border-top-color: $editor-focus-border-color;
+
+      &.error {
+        border-left-color: $error-color;
+        border-right-color: $error-color;
+        border-top-color: $error-color;
+      }
+    }
+
+    .editor,
+    .editor-source {
+      border-color: transparent $editor-focus-border-color $editor-focus-border-color;
+
+      &.error {
+        border-color: transparent $error-color $error-color;
+      }
+    }
+  }
+
+  &.is-error,
+  &.is-error:hover {
+    .toolbar.formatter-toolbar {
+      border-color: $error-color $error-color $editor-border-color;
+    }
+
+    .editor,
+    .editor-source {
+      border-color: transparent $error-color $error-color;
+    }
+  }
+
+  .icon-error {
+    left: 100%;
+    margin-left: -33px;
+    position: absolute;
+    top: 48px;
+  }
+
 }
 
 .editor {
@@ -54,11 +104,10 @@
   @include rem(line-height, 2.2rem);
   background-color: $editor-bg-color;
   border: 1px solid;
-  border-color: transparent $editor-border-color $editor-border-color $editor-border-color;
+  border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
   color: $editor-color;
   display: block;
-  float: left;
   height: 320px;
   margin-bottom: 20px;
   min-height: 128px;
@@ -96,7 +145,6 @@
     @include font-size(24);
     @include rem(line-height, 2.4rem);
     @include rem(margin-bottom, 1.5rem);
-    -webkit-text-fill-color: $editor-color;
     color: $editor-color;
   }
 
@@ -104,7 +152,6 @@
     @include font-size(18);
     @include rem(line-height, 1.8rem);
     @include rem(margin-bottom, 1.5rem);
-    -webkit-text-fill-color: $editor-color;
     color: $editor-color;
   }
 
@@ -115,7 +162,6 @@
     @include font-size(14);
     color: $input-color;
     list-style: disc;
-    -webkit-text-fill-color: $input-color;
   }
 
   ol {
@@ -337,7 +383,7 @@
 .editor-source {
   @include font-size(14);
   border: 1px solid;
-  border-color: transparent $editor-border-color $editor-border-color $editor-border-color;
+  border-color: transparent $editor-border-color $editor-border-color;
   border-radius: 0 0 2px 2px;
   height: 320px;
   margin: 0 0 10px;
@@ -400,14 +446,15 @@
   color: $input-placeholder-color;
 
   &.error {
+    border-color: $error-color;
     color: $error-color;
   }
 }
 
 .editor-placeholder::after {
-  content: attr(data-placeholder) !important;
-  font-weight: 100;
   @include font-size(14);
+  content: attr(data-placeholder);
+  font-weight: 100;
   left: 10px;
   margin-top: -38px;
   position: absolute;
@@ -428,43 +475,6 @@ html[dir='rtl'] {
   .editor-container {
     .icon-error {
       left: 7px;
-    }
-  }
-}
-
-.editor-container {
-  &:hover {
-    .toolbar.formatter-toolbar {
-      border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color $editor-hover-border-color;
-    }
-
-    .editor,
-    .editor-source {
-      border-color: transparent $editor-hover-border-color $editor-hover-border-color $editor-hover-border-color;
-    }
-  }
-
-  &.is-active,
-  &.is-active:hover {
-    .toolbar.formatter-toolbar {
-      border-color: $editor-focus-border-color $editor-focus-border-color $editor-border-color $editor-focus-border-color;
-    }
-
-    .editor,
-    .editor-source {
-      border-color: transparent $editor-focus-border-color $editor-focus-border-color $editor-focus-border-color;
-    }
-  }
-
-  &.is-error,
-  &.is-error:hover {
-    .toolbar.formatter-toolbar {
-      border-color: $error-color $error-color $editor-border-color $error-color;
-    }
-
-    .editor,
-    .editor-source {
-      border-color: transparent $error-color;
     }
   }
 }

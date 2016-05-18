@@ -135,6 +135,12 @@ input.multiselect {
     outline: 0;
   }
 
+  &.is-ontop {
+    ul {
+      box-shadow: $dropdown-box-shadow-top;
+    }
+  }
+
   ul {
     @include font-size(14);
     box-shadow: $dropdown-box-shadow;
@@ -393,7 +399,7 @@ input.multiselect {
 
 .is-ontop .dropdown-search {
   border-bottom: 0;
-  border-top: 1px solid $dropdown-menu-separator-color;
+  border-top: 1px solid $dropdown-menu-separator-border-color;
 }
 
 .dropdown.error {
@@ -404,10 +410,9 @@ input.multiselect {
   }
 }
 
-.dropdown.error:focus {
-  border-color: $error-color !important;
-  box-shadow: 0 0 5px rgba(237, 28, 36, .2);
-  color: $input-color !important;
+input.dropdown.error:focus {
+  border-color: $error-color;
+  color: $input-color;
 }
 
 //Shorter Field Size
@@ -476,10 +481,6 @@ input.multiselect {
 
   &.is-ontop {
     margin-top: 10px;
-
-    ul {
-      box-shadow: $dropdown-box-shadow-top;
-    }
   }
 
   > .icon,

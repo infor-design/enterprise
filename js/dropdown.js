@@ -93,7 +93,6 @@
             'aria-controls': 'dropdown-list',
             'aria-readonly': 'true',
             'aria-expanded': 'false',
-            'aria-describedby' : (orgId ? id : name + prefix) + '-instructions',
             'id': (orgId ? id : name + prefix)
           });
         }
@@ -826,7 +825,10 @@
       // Actually Show The List
       openList: function () {
         var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant +'"]') : this.list.find('.is-selected'),
-            self =  this;
+          self =  this,
+          touchPrevented = false,
+          threshold = 10,
+          pos;
 
         if (current.length > 0) {
           current = current.eq(0);
@@ -943,14 +945,9 @@
 
         // Some close events are on a timer to prevent immediate list close
         setTimeout(function delayedListCloseEvents() {
-          self.list
-            .on('click.list', 'li', function(e) {
-              var target = $(e.target);
-
-              if (target.is('.trigger, svg')) {
-                return triggerButtonClickHandler();
-              }
-          });
+          self.list.on('click.list', '.trigger, svg', function() {
+              triggerButtonClickHandler();
+            });
         }, 100);
 
         // Is the jQuery Element a component of the current Dropdown list?
@@ -972,9 +969,6 @@
 
         // Triggered when the user clicks anywhere in the document
         // Will not close the list if the clicked target is anywhere inside the dropdown list.
-        var touchPrevented = false,
-          threshold = 10,
-          pos;
 
         function clickDocument(e) {
           if (touchPrevented || isDropdownElement($(e.target)) || $(e.target).is('svg')) {

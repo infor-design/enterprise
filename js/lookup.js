@@ -248,11 +248,6 @@
           self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count">(N Results)</span>');
         }
 
-        setTimeout(function () {
-          //Placeholder attribute in browsers that do not handle it
-          $(self.modal).placeholderPolyfill();
-        }, 0);
-
         // Wait until search field available
         setTimeout(function () {
           $('.modal.is-visible .searchfield').on('keypress.lookup', function (e) {

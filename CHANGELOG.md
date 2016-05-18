@@ -1,4 +1,4 @@
-# 4.2 - Patch Release
+# 4.2 - Minor Release
 Release Date: May 11th
 
 * New - Module Tabs
@@ -29,7 +29,8 @@ Release Date: May 11th
 ## Dev Server Changes
 * 2016-04-08 - The Xi Controls Dev Server has been upgraded to Express 4.x.  Some of its dependancies may have changed.  If you rely on our Dev Server for examples/testing, please stop the server, delete this project's _/node\_modules/_ folder, and rerun {{npm install}} and {{npm run install-test-deps}}.
 
-[Jira Release Notes 4.2](http://jira.infor.com/secure/ReleaseNote.jspa?version=25271&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|ae7ebfcb3629c91a9735d7831cc311b96f69495d|lin)
+Jira Release Notes 
+http://bit.ly/1OCRwLD
 
 # 4.1.1 - Patch Release
 Release Date: March 18th, 2016
