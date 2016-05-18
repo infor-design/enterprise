@@ -532,6 +532,15 @@ $datagrid-short-row-height: 30px;
         top: 0;
       }
 
+      .lookup-wrapper {
+        padding-left: 20px;
+        width: 100%;
+
+        .trigger {
+          margin-left: -19px;
+        }
+      }
+
       .checkbox-label::before {
         margin-left: -25px;
       }

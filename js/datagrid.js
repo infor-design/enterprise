@@ -2945,19 +2945,12 @@ $.fn.datagrid = function(options) {
         coercedVal = value;
       }
 
-      if (typeof formatter ==='string') {
-        formatted = window.Formatters[formatter](row-1, cell, coercedVal, col, settings.dataset[row]).toString();
-      } else {
-        formatted = formatter(row-1, cell, coercedVal, col, settings.dataset[row]).toString();
-      }
-
-      cellNode.find('.datagrid-cell-wrapper').html(formatted);
-
       //Setup/Sync tooltip
       if (cellNode.data('tooltip')){
         cellNode.data('tooltip').destroy();
       }
 
+      //Update the value in the dataset
       var rowData = this.settings.dataset[row];
       if (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip) {
         cellNode.attr('title', rowData.rowStatus.tooltip);
@@ -2987,6 +2980,15 @@ $.fn.datagrid = function(options) {
           this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
         }
       }
+
+      //update cell value
+      if (typeof formatter ==='string') {
+        formatted = window.Formatters[formatter](row-1, cell, coercedVal, col, settings.dataset[row]).toString();
+      } else {
+        formatted = formatter(row, cell, coercedVal, col, settings.dataset[row]).toString();
+      }
+
+      cellNode.find('.datagrid-cell-wrapper').html(formatted);
     },
 
     // Update a specific Cell
