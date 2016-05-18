@@ -354,7 +354,13 @@
         i,
         value = self.value(field),
         placeholder = field.attr('placeholder'),
+
         manageResult = function (result, showTooltip) {
+          // Only remove if "false", not any other value ie.. undefined
+          if (rule.positive === false) {
+            self.removePositive(field);
+          }
+
           if (!result) {
             if (!self.isPlaceholderSupport && (value === placeholder) &&
                (rule.message !== Locale.translate('Required'))) {
@@ -364,15 +370,19 @@
             self.addError(field, rule.message, field.attr('data-error-type') === 'tooltip' ? false: true, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
-
-            if (rule.positive) {
-              self.removePositive(field);
-            }
-          } else if (errors.length === 0) {
+          }
+          else if (errors.length === 0) {
             self.removeError(field);
             dfd.resolve();
 
             if (rule.positive) {
+              // FIX: In Contextual Action Panel control not sure why but need to add error,
+              // otherwise "icon-confirm" get misaligned,
+              // so for this fix adding and then removing error here
+              self.addError(field, rule.message, rule.inline, showTooltip);
+              self.removeError(field);
+              dfd.resolve();
+
               self.addPositive(field);
             }
           }
@@ -763,7 +773,7 @@
 
       emailPositive: {
         check: function (value, field) {
-          if($.trim(value).length) {
+          if($.trim(value).length && !field.is('[readonly]')) {
             self.rules.emailPositive.positive = true;
             this.message = Locale.translate('EmailValidation');
             return self.rules.email.check(value, field);

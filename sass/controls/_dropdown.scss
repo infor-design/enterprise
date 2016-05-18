@@ -276,8 +276,9 @@ input.multiselect {
       @include checkbox-unchecked-disabled-before-style;
     }
 
-    li.is-focused,
-    li:hover:not(.group-label) {
+    li.is-focused {
+    // li.is-focused,
+    // li:hover:not(.group-label) {
       background-color: $popupmenu-hover-color;
 
       > a {
@@ -475,7 +476,7 @@ input.dropdown.error:focus {
 
   ul {
     @include font-size(12);
-    line-height: 25px;
+    // line-height: 25px;
     text-indent: 5px;
   }
 
@@ -491,17 +492,22 @@ input.dropdown.error:focus {
     width: 16px;
   }
 
+  .trigger .icon {
+    height: 24px;
+    right: -4px;
+  }
+
   // Multiple
   &.multiple {
     li {
       &::before {
         margin-left: 0;
-        top: 4px;
+        top: 8px;
       }
 
       &::after {
         left: 11px;
-        margin-top: 6px;
+        margin-top: 2px;
       }
 
       &.is-focused {
@@ -511,7 +517,7 @@ input.dropdown.error:focus {
 
         &::after {
           left: 11px;
-          margin-top: 6px;
+          margin-top: 2px;
         }
       }
 

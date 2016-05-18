@@ -38,6 +38,17 @@ $header-height: 60px;
     width: calc(100% - 60px);
   }
 
+  // Used for the popupmenu header pattern
+  [class^="btn"] {
+    > h1 {
+      width: auto;
+    }
+
+    .icon.icon-dropdown {
+      margin-left: 5px;
+    }
+  }
+
   .page-title {
     @include font-size(15);
     color: $header-text-color;

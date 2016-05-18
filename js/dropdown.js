@@ -25,6 +25,7 @@
     var pluginName = 'dropdown',
         defaults = {
           closeOnSelect: true, // When an option is selected, the list will close if set to "true".  List stays open if "false".
+          cssClass: null,  //Append a css class to dropdown-list
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
           moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
@@ -849,6 +850,10 @@
 
         if (this.isInGrid) {
           this.list.addClass('datagrid-dropdown-list');
+        }
+        var cssClass = this.settings.cssClass;
+        if (cssClass && typeof cssClass === 'string') {
+          this.list.addClass(cssClass);
         }
 
         this.position();

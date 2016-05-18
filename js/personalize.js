@@ -91,7 +91,7 @@
           },
           mappings = [
             ['.header.is-personalizable', 'background-color', colors.header],
-            ['.sub-header.is-personalizable', 'background-color', colors.subheader],
+            ['.subheader.is-personalizable', 'background-color', colors.subheader],
             ['.builder-header.is-personalizable', 'background-color', colors.subheader]
           ];
 
@@ -168,7 +168,8 @@
 
         $('body').append(pageOverlay);
         css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme +'.css');
-        pageOverlay.fadeOut('fast', function() {
+        pageOverlay.fadeOut('slow', function() {
+        // pageOverlay.fadeOut('fast', function() {
           pageOverlay.remove();
         });
 

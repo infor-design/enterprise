@@ -417,7 +417,11 @@ window.Editors = {
         }
       }
 
-      this.input.dropdown(column.editorOptions);
+      var editorOptions = column.editorOptions;
+      if (!editorOptions || (editorOptions && !editorOptions.cssClass)) {
+        editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
+      }
+      this.input.dropdown(editorOptions);
       this.input = this.input.parent().find('input');
 
     };
@@ -531,7 +535,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="lookup" data-init="false" />').appendTo(container);
-      this.input.lookup(column.options || {});
+      this.input.lookup(column.editorOptions || {});
     };
 
     this.val = function (value) {
@@ -591,7 +595,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="autocomplete" data-autocomplete="source" />').appendTo(container);
-      this.input.autocomplete(column.options);
+      this.input.autocomplete(column.editorOptions);
     };
 
     this.val = function (value) {
@@ -671,6 +675,7 @@ $.fn.datagrid = function(options) {
       this.initTableWidth();
       this.handleEvents();
       this.handleKeys();
+      this.setCellWrapperHeight();
 
       setTimeout(function () {
         self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
@@ -1446,6 +1451,12 @@ $.fn.datagrid = function(options) {
 
       this.table.css('width', total);
 
+    },
+
+    //Set cell-wrapper height
+    setCellWrapperHeight: function () {
+      var cellWrapper = $('tbody .datagrid-cell-wrapper', this.table);
+      cellWrapper.css({'min-height': cellWrapper.closest('td').outerHeight()});
     },
 
     //Returns all header nodes (not the groups)
