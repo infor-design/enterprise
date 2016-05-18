@@ -580,6 +580,21 @@ $header-breadcrumb-color: $slate01;
 $header-breadcrumb-alt-bg-color: $slate10;
 $header-breadcrumb-alt-color: $white;
 
+// Module Tabs
+$module-tabs-bg-color: $header-bg-color;
+$module-tabs-x-border-color: $slate08;
+$module-tabs-y-border-color: $header-border-color;
+$module-tabs-inactive-bg-color: $header-border-color;
+$module-tabs-active-bg-color: $slate06;
+$module-tabs-hover-bg-color: $slate06;
+$module-tabs-inactive-text-color: $slate01;
+$module-tabs-active-text-color: $white;
+$module-tabs-hover-text-color: $white;
+$module-tabs-disabled-bg-color: $slate06;
+$module-tabs-disabled-x-border-color: $slate04;
+$module-tabs-disabled-y-border-color: $slate07;
+$module-tabs-disabled-text-color: $slate04;
+
 // Splitter
 $splitter-grip-bg-color: $slate03;
 $splitter-active-bg-color: $slate07;

@@ -581,6 +581,21 @@ $header-breadcrumb-color: $white;
 $header-breadcrumb-alt-bg-color: $white;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
 
+// Module Tabs
+$module-tabs-bg-color: $azure09;
+$module-tabs-x-border-color: $azure05;
+$module-tabs-y-border-color: $azure10;
+$module-tabs-inactive-bg-color: $azure10;
+$module-tabs-active-bg-color: $azure06;
+$module-tabs-hover-bg-color: $azure06;
+$module-tabs-inactive-text-color: $azure01;
+$module-tabs-active-text-color: $white;
+$module-tabs-hover-text-color: $white;
+$module-tabs-disabled-bg-color: $azure06;
+$module-tabs-disabled-x-border-color: $azure04;
+$module-tabs-disabled-y-border-color: $azure07;
+$module-tabs-disabled-text-color: $azure04;
+
 // Splitter
 $splitter-grip-bg-color: $graphite09;
 $splitter-active-bg-color: $graphite04;
