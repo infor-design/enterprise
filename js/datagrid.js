@@ -2498,11 +2498,11 @@ $.fn.datagrid = function(options) {
         checkbox = $('th .datagrid-checkbox', self.headerRow);
 
       // Handle header navigation
-      self.table.on('keydown.datagrid', 'th:visible', function (e) {
+      self.table.on('keydown.datagrid', 'th', function (e) {
         var key = e.which || e.keyCode || e.charCode || 0,
           th = $(this),
-          index = th.index(),
-          length = self.visibleColumns().length,
+          index = th.siblings(':visible').addBack().index(th),
+          last = self.visibleColumns().length -1,
           triggerEl, move;
 
         // Enter or Space
@@ -2522,24 +2522,24 @@ $.fn.datagrid = function(options) {
           //Home, End or Ctrl/Meta + Left/Right arrow to move to the first or last
           if (/35|36/i.test(key) || ((e.ctrlKey || e.metaKey) && /37|39/i.test(key))) {
             if (Locale.isRTL()) {
-              move = (key === 36 || ((e.ctrlKey || e.metaKey) && key === 37)) ? length : 0;
+              move = (key === 36 || ((e.ctrlKey || e.metaKey) && key === 37)) ? last : 0;
             } else {
-              move = (key === 35 || ((e.ctrlKey || e.metaKey) && key === 39)) ? length : 0;
+              move = (key === 35 || ((e.ctrlKey || e.metaKey) && key === 39)) ? last : 0;
             }
           }
 
           // Left and Right arrow
           else {
             if (Locale.isRTL()) {
-              move = key === 39 ? (index > 0 ? index-1 : length) : (index <= length ? index+1 : index);
+              move = key === 39 ? (index > 0 ? index-1 : index) : (index < last ? index+1 : last);
             } else {
-              move = key === 37 ? (index > 0 ? index-1 : length) : (index <= length ? index+1 : index);
+              move = key === 37 ? (index > 0 ? index-1 : index) : (index < last ? index+1 : last);
             }
           }
 
           // Makeing move
           th.removeAttr('tabindex').removeClass('is-active');
-          $('th', this.header).eq(move).attr('tabindex', '0').addClass('is-active').focus();
+          $('th:not(.is-hidden)', this.header).eq(move).attr('tabindex', '0').addClass('is-active').focus();
           e.preventDefault();
         }
 
@@ -2643,7 +2643,7 @@ $.fn.datagrid = function(options) {
           else {
             if (row === 0) {
               node.removeAttr('tabindex');
-              $('th', this.header).eq(cell).attr('tabindex', '0').focus();
+              $('th:not(.is-hidden)', this.header).eq(cell).attr('tabindex', '0').focus();
             }
             self.setActiveCell(row-1, cell);
             handled = true;
