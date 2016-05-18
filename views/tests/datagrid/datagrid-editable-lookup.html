@@ -73,7 +73,13 @@
           lookupColumns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
           lookupOptions = {
-            field: 'productId',
+            // field: 'productId',
+            field: function (row, field, grid) {
+              return row.productId + '|' + row.productName;
+            },
+            match: function (value, row, field, grid) {
+              return ((row.productId + '|' + row.productName) === value);
+            },
             options: {
               columns: lookupColumns,
               dataset: lookupData,

@@ -41,12 +41,17 @@ window.Formatters = {
     return formatted;
   },
 
-  Lookup: function(row, cell, value, col) {
+  Lookup: function(row, cell, value, col, item) {
     var formatted = ((value === null || value === undefined) ? '' : value);
 
     if (!col.editor) {
       return formatted;
     }
+
+    if (col.editorOptions && typeof col.editorOptions.field === 'function') {
+      formatted = col.editorOptions.field(item, null, null);
+    }
+
     return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-search-list"><use xlink:href="#icon-search-list"/></svg>';
   },
 
@@ -535,7 +540,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="lookup" data-init="false" />').appendTo(container);
-      this.input.lookup(column.editorOptions || {});
+      this.input.lookup(column.editorOptions);
     };
 
     this.val = function (value) {
