@@ -155,6 +155,25 @@
       handleEvents: function () {
         var self = this;
 
+        // Set element to be focused after paging
+        self.element.on('afterpaging.pager', function () {
+          var isVisible = $('li[tabindex]:visible, td[tabindex]:visible', self.element);
+          if (!isVisible.length) {
+            $('li:visible:first, td:visible:first', self.element).attr('tabindex', '0');
+          }
+          // Fix: Firefox by default not allow keyboard focus on links
+          $('li a', this.pagerBar).each(function() {
+            var a = $(this),
+              li = a.closest('li');
+
+            if (!a.is('[disabled]')) {
+              li.attr('tabindex', '0').on('focus.pager', function() {
+                $('a', this).focus();
+              });
+            }
+          });
+        });
+
         //Adjust buttons on resize
         $(window).on('resize.pager', function () {
           self.renderBar();
@@ -189,24 +208,33 @@
           self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0), false, 'page');
 
           return false;
-        }).on('focus.pager', 'a', function() {
+        })
+        .on('focus.pager', 'a', function() {
           var li = $(this).parent('li');
           li.addClass('is-focused');
-        }).on('blur.pager', 'a', function() {
+        })
+        .on('blur.pager', 'a', function() {
           var li = $(this).parent('li');
           li.removeClass('is-focused');
         });
 
         //Toolbar functionality
-        this.pagerBar.find('a').on('keydown.pager', function (e) {
-          e = (e) ? e : window.event;
-          var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
-            btn = (charCode === 37) ? $('a', $(this).parent().prev()) : (charCode === 39) ? $('a', $(this).parent().next()) : false;
+        this.pagerBar.on('keydown.pager', 'a', function (e) {
+          e = e || window.event;
+          var key = e.which || e.keyCode || e.charCode || false,
+            parent = $(this).parent(),
+            btn = ((key === 37 || key === 9 && e.shiftKey) ? parent.prev() : (key === 39 ? parent.next() : $()));
 
-          if (!!btn) {
-            if(!btn.attr('disabled')) {
-              btn.focus();
-            }
+          if (key === 9 && e.shiftKey && parent.prev().is('.pager-prev, .pager-first, .pager-count') ||
+              key === 9 && e.shiftKey && parent.is('.pager-prev, .pager-first')) {
+            parent.removeAttr('tabindex');
+            setTimeout(function () {
+              parent.attr('tabindex', '0');
+            }, 0);
+          }
+          btn = $('a', btn).length ? btn : $(':text', btn);
+          if (btn.length && !btn.is('[disabled]')) {
+            btn.focus();
           }
         });
       },
@@ -379,22 +407,26 @@
         }
 
         //Refresh Disabled
-        var prev = pb.find('.pager-prev a'), next = pb.find('.pager-next a'),
-          first = pb.find('.pager-first a'), last = pb.find('.pager-last a');
+        var prev = pb.find('.pager-prev a'),
+          next = pb.find('.pager-next a'),
+          first = pb.find('.pager-first a'),
+          last = pb.find('.pager-last a'),
+          prevGroup = prev.add(first).add('.pager-prev').add('.pager-first'),
+          nextGroup = next.add(last).add('.pager-next').add('.pager-last');
 
-        prev.removeAttr('disabled');
-        next.removeAttr('disabled');
-        first.removeAttr('disabled');
-        last.removeAttr('disabled');
+        // Reset all
+        prevGroup.add(nextGroup).removeAttr('disabled tabIndex');
 
+        // First page
         if (this.activePage === 1) {
-          prev.attr('disabled','disabled');
-          first.attr('disabled','disabled');
+          prevGroup.attr({'disabled': 'disabled', 'tabIndex': -1});
+          nextGroup.attr({'tabIndex': 0});
         }
 
+        // Last page
         if (this.activePage === this.pageCount()) {
-          next.attr('disabled','disabled');
-          last.attr('disabled','disabled');
+          nextGroup.attr({'disabled': 'disabled', 'tabIndex': -1});
+          prevGroup.attr({'tabIndex': 0});
         }
 
         //Remove from the front until selected is visible and we have at least howMany showing
@@ -516,13 +548,24 @@
         }
 
         if (pagingInfo.firstPage) {
-          this.pagerBar.find('.pager-first a').attr('disabled', 'disabled');
-          this.pagerBar.find('.pager-prev a').attr('disabled', 'disabled');
+          // this.pagerBar.find('.pager-first a').attr('disabled', 'disabled');
+          // this.pagerBar.find('.pager-prev a').attr('disabled', 'disabled');
+          this.pagerBar.find('.pager-first a')
+            .attr({'disabled':'disabled', 'tabIndex': -1});
+
+          this.pagerBar.find('.pager-prev a')
+            .attr({'disabled':'disabled', 'tabIndex': -1});
         }
 
         if (pagingInfo.lastPage) {
-          this.pagerBar.find('.pager-next a').attr('disabled', 'disabled');
-          this.pagerBar.find('.pager-last a').attr('disabled', 'disabled');
+          // this.pagerBar.find('.pager-next a').attr('disabled', 'disabled');
+          // this.pagerBar.find('.pager-last a').attr('disabled', 'disabled');
+
+          this.pagerBar.find('.pager-next a')
+            .attr({'disabled':'disabled', 'tabIndex': -1});
+
+          this.pagerBar.find('.pager-last a')
+            .attr({'disabled':'disabled', 'tabIndex': -1});
         }
       },
 

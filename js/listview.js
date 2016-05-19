@@ -551,6 +551,10 @@
       },
 
       focus: function (item) {
+        if (item.is(':hidden')) {
+          return;
+        }
+        
         item.removeAttr('tabindex');
         item.attr('tabindex', 0).focus();
 
