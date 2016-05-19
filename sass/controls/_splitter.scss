@@ -1,14 +1,20 @@
 // Splitter
 //========================================================
 
+.splitter-container {
+  .content {
+    height: 100%;
+  }
+}
+
 .splitter {
   @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94));
   background-color: inherit;
   cursor: ew-resize;
   height: 100%;
   position: absolute;
-  z-index: 100;
   width: 20px;
+  z-index: 100;
 
   &:hover,
   &:active,

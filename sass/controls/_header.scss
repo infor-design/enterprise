@@ -6,12 +6,11 @@ $header-height: 60px;
 
 // Top Header
 .header {
+  @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94));
   background-color: $header-bg-color;
   display: block;
   height: $header-height;
   overflow: hidden;
-  @include transition(background-color 500ms ease 0s,
-    height 300ms cubic-bezier(.17, .04, .03, .94));
   width: 100%;
 
   .searchfield {
@@ -28,11 +27,11 @@ $header-height: 60px;
   }
 
   h1 {
+    @include font-size(20);
+    @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
     color: $header-text-color;
     display: inline-block;
     font-weight: normal;
-    @include font-size(20);
-    @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
     margin-bottom: 0;
     text-overflow: ellipsis;
     width: calc(100% - 60px);
@@ -55,9 +54,9 @@ $header-height: 60px;
     display: block;
 
     + .section-title {
+      @include font-size(20);
       color: $header-text-color;
       display: block;
-      @include font-size(20);
       padding: 0;
       text-transform: capitalize;
     }
@@ -75,8 +74,8 @@ $header-height: 60px;
   }
 
   .separator {
-    color: $header-text-color;
     @include font-size(22);
+    color: $header-text-color;
     padding: 0 4px 0 5px;
     position: relative;
     top: 1px;
@@ -272,7 +271,7 @@ $header-height: 60px;
     li {
       color: $header-breadcrumb-color;
 
-      &:after {
+      &::after {
         color: $header-breadcrumb-color;
       }
     }
@@ -311,7 +310,7 @@ $header-height: 60px;
       li {
         color: $header-breadcrumb-alt-color;
 
-        &:after {
+        &::after {
           color: $header-breadcrumb-alt-color;
         }
       }
@@ -406,8 +405,8 @@ $header-height: 60px;
 //RTL Styles
 html[dir='rtl'] {
   .header .toolbar {
-    padding-right: 0px;
     padding-left: 20px;
+    padding-right: 0;
   }
 
   .header .toolbar .title > *:first-child {

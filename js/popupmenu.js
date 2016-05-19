@@ -484,7 +484,7 @@
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight(),
-          xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 34 : 0;
+          xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 36 : 0;
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
@@ -556,25 +556,18 @@
         }
 
         if (this.element.hasClass('btn-menu')) {
-          if (this.element.closest('.toolbar').length === 0) { // button is standalone
-            //move the arrow - might need better logic here.
-            if (this.element.parent().is('.field')) {
-              return;
-            }
-            wrapper.find('div.arrow').css('left', '25%');
-          } else { // button exists inside toolbar
-            wrapper.find('div.arrow').css({'left': '18px'});
+          wrapper.find('div.arrow').css({'left': '20px'});
 
-            if (this.element.closest('.buttonset').length > 0 ) {
-              wrapper.find('div.arrow').css({'left': 'auto', 'right': '25px'});
-            }
-
-            if (wrapper.offset().left < 0) {
-              wrapper.css('left', '10px');
-              var arrowPos = this.element.outerWidth() + this.element.offset().left - 27;
-              wrapper.find('div.arrow').css('left', arrowPos);
-            }
+          if (this.element.closest('.buttonset').length > 0 ) {
+            wrapper.find('div.arrow').css({'left': this.element.width() -2 + 'px'});
           }
+
+          if (wrapper.offset().left < 0) {
+            wrapper.css('left', '10px');
+            var arrowPos = this.element.outerWidth() + this.element.offset().left - 27;
+            wrapper.find('div.arrow').css('left', arrowPos);
+          }
+
         }
 
         if (this.element.closest('.tab').length || this.element.closest('.tab-more').length) {
