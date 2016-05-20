@@ -4,23 +4,25 @@
 
 .modal.modal-search {
   background-color: transparent;
-  margin: 0 !important;
-  max-width: 100%;
-  overflow: scroll;
   height: 100%;
+  // scss-lint:disable ImportantRule
+  margin: 0 !important;
+  // scss-lint:enable ImportantRule
+  max-width: 100%;
+  overflow: auto;
   width: 100%;
   z-index: 10000;
 
   .modal-content {
     background-color: transparent;
-    border: none;
+    border: 0;
     box-shadow: none;
   }
 
 }
 
 .overlay.modal-search {
-  background-color: #ffffff;
+  background-color: $white;
   z-index: 10001;
 }
 
