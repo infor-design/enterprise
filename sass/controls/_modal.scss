@@ -38,7 +38,7 @@
     }
   }
 
-  .field:last-child input,
+  .field:last-child input:not(.spinbox),
   .field:last-child textarea {
     margin-bottom: 10px;
   }
