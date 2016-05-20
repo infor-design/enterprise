@@ -64,7 +64,7 @@ body {
       display: inline-block;
     }
 
-    a {
+    a.btn-icon {
       display: inline-block;
     }
   }
@@ -74,7 +74,7 @@ body {
     display: none;
   }
 
-  a {
+  a.btn-icon {
     display: none;
   }
 
@@ -587,15 +587,15 @@ $pageslice-download-link-border-color: #3dcd65;
 
       .overlay-container {
         @include font-size(12);
+        @include css3(transform, translateY(-50%));
         font-weight: bold;
         position: relative;
         text-align: center;
         text-transform: uppercase;
         top: 50%;
-        @include css3(transform, translateY(-50%));
 
         .icon {
-          fill: #ffffff;
+          fill: $white;
           margin-bottom: .5rem;
           width: 18px;
         }
@@ -1461,20 +1461,20 @@ $pageslice-download-link-border-color: #3dcd65;
   }
 
   .byline {
-    color: $graphite08;
     @include font-size(18);
+    color: $graphite08;
   }
 
   > blockquote {
-    color: $azure08;
     @include font-size(16);
+    color: $azure08;
     margin-bottom: 25px;
     text-align: center;
   }
 
   > p {
-    color: $graphite06;
     @include font-size(16);
+    color: $graphite06;
     line-height: 26px;
     margin: 15px 0;
   }

@@ -47,9 +47,11 @@
   margin-top: 30px;
 }
 
+// scss-lint:disable ImportantRule
 .no-scroll {
   overflow: hidden !important;
 }
+// scss-lint:enable ImportantRule
 
 body.no-scroll {
   height: 100%;
@@ -78,6 +80,10 @@ body.no-scroll {
     border-right: 1px solid $panel-border-color;
     height: 100%;
     width: calc(75%);
+
+    + .sidebar {
+      border-right: 0;
+    }
   }
 
   .sidebar {
@@ -281,7 +287,9 @@ body.no-scroll {
       .main,
       .sidebar {
         display: block;
+        // scss-lint:disable ImportantRule
         width: 100% !important; //Override Inline Css
+        // scss-lint:enable ImportantRule
       }
     }
 
@@ -391,9 +399,9 @@ body.no-scroll {
 
   + .page-container,
   + .application-menu + .page-container {
+    @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
     height: calc(100% - 60px);
     margin-top: 60px;
-    @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
   &.has-tabs {
@@ -528,7 +536,9 @@ body.no-scroll {
 // Editorial Pattern
 //==============================================================
 .no-transform {
+  // scss-lint:disable ImportantRule
   transform: none !important;
+ // scss-lint:disable ImportantRule
 }
 
 .editorial {
@@ -697,9 +707,9 @@ body.no-scroll {
 .scrollable.canvas,
 .scrollable-x.canvas,
 .scrollable-y.canvas {
-  -webkit-overflow-scrolling: touch;
   min-height: calc(100% - 60px);
   min-width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 //RTL Styles

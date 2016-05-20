@@ -207,7 +207,17 @@
         }
 
         if (settings.containment) {
-          this.container = (settings.containment === 'parent'? this.element.parent() : (settings.containment === 'window'? $(window) : $(document)));
+
+          if (settings.containment === 'parent') {
+            this.container = this.element.parent();
+          } else if (settings.containment === 'window') {
+            this.container = $(window);
+          } else if (settings.containment === 'container') {
+            this.container = this.element.closest('.page-container');
+          } else {
+            this.container = $(document);
+          }
+
           upperXLimit = this.container.width() - this.element.outerWidth();
           upperYLimit = this.container.height() - this.element.outerHeight();
 
@@ -219,8 +229,12 @@
             css.left = upperXLimit;
           }
 
-          if (css.top < 0) {
-            css.top = 0;
+          if (css.left > upperXLimit) {
+            css.left = upperXLimit;
+          }
+
+          if (settings.containment === 'container' && css.left <= 1) {
+            css.left = 1;
           }
 
           if (css.left < 0) {

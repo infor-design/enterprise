@@ -363,51 +363,33 @@ var express = require('express'),
   // Docs Pages
   // =========================================
 
-  var docOpts = {
-    layout: 'docs/layout',
-    subtitle: '',
-    title: 'Infor SoHo XI'
+  var layoutOpts = {
+    subtitle: 'Docs',
+    layout: 'docs/layout'
   };
 
-  function docsBaseRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, docOpts),
-      section = req.params.section;
-
-    if (section && section.length) {
-      res.render('/docs/' + section, opts);
-      next();
-      return;
-    }
-
+  function defaultDocsRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, layoutOpts);
     res.render('docs/index', opts);
     next();
   }
-  router.get('/docs/:section', docsBaseRouteHandler);
-  router.get('/docs/', docsBaseRouteHandler);
-  router.get('/docs', docsBaseRouteHandler);
 
-  function docsComponentsRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, docOpts);
-    res.render('docs/components', opts);
+  function docsRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, layoutOpts),
+      docs = req.params.docs;
+
+    if (!docs || !docs.length) {
+      return defaultDocsRouteHandler(req, res, next);
+    }
+
+    res.render('docs/' + docs, opts);
     next();
   }
-  router.get('/components/', docsComponentsRouteHandler);
-  router.get('/components', docsComponentsRouteHandler);
 
-  function docsGalleryRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, docOpts);
-    res.render('docs/gallery', opts);
-    next();
-  }
-  router.get('/gallery/', docsGalleryRouteHandler);
-  router.get('/gallery', docsGalleryRouteHandler);
+  router.get('/docs/:docs', docsRouteHandler);
+  router.get('/docs/', defaultDocsRouteHandler);
+  router.get('/docs', defaultDocsRouteHandler);
 
-  router.get('/docs*', function(req, res) {
-    var opts = extend({}, res.opts, docOpts),
-      end = req.url.replace('/docs/','');
-
-    res.render('docs/' + end, opts);
-  });
 
   // =========================================
   // Layouts Pages

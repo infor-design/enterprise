@@ -28,7 +28,8 @@
     var pluginName = 'splitter',
         defaults = {
           axis: 'x',
-          resize: 'immediate' //or end
+          resize: 'immediate',
+          containment: null //document or parent
         },
         settings = $.extend({}, defaults, options);
 
@@ -54,7 +55,9 @@
         var parentHeight = this.element.parent().height();
 
         //Set the height
-        this.element.drag({axis: this.settings.axis, containment: this.settings.axis === 'x' ? 'document' : 'parent'})
+        this.element.drag({axis: this.settings.axis,
+          containment: this.settings.containment ? this.settings.containment :
+          this.settings.axis === 'x' ? 'document' : 'parent'})
           .on('dragstart.splitter', function () {
             var overlay = $('<div class="overlay"></div>'),
               iframes = $('iframe');
@@ -85,6 +88,9 @@
         if (this.settings.axis === 'y') {
           this.element.addClass('splitter-horizontal');
         }
+
+        //Aria
+        this.element.attr({'aria-hidden': 'true', 'role': 'presentation'});
 
         //Restore from local storage
         if (localStorage) {
