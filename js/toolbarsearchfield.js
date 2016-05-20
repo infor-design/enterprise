@@ -384,7 +384,7 @@
           self.setOpenWidth();
           self.input.focus(); // for iOS
           self.toolbarParent.trigger('recalculateButtons');
-          self.inputWrapper.trigger('activate');
+          self.inputWrapper.triggerHandler('activate');
         }
 
         if (this.settings.collapsible === false && !this.shouldBeFullWidth()) {
