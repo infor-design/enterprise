@@ -191,6 +191,11 @@
           // Associated the current one
           var href = a.attr('href');
 
+          if (href.substr(0, 1) !== '#') {
+            //is an outbound Link
+            return;
+          }
+
           if (href !== undefined && href !== '#') {
             var panel = $(href);
 
@@ -280,6 +285,13 @@
 
         // Clicking the 'a' triggers the click on the 'li'
         function routeAnchorClick(e) {
+          var a = $(e.currentTarget);
+
+          if (a.attr('href').substr(0, 1) !== '#') {
+            //is an outbound Link
+            return;
+          }
+
           e.preventDefault();
         }
 
