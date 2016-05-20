@@ -641,11 +641,7 @@
 
         for (var i = 0; i < node.children.length; i++) {
           var elem = node.children[i];
-          var newLi = self.addNode(elem, ul);
-
-          if (elem.children) {
-            self.addChildNodes(elem, newLi);
-          }
+          self.addNode(elem, ul);
         }
       },
 

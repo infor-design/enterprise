@@ -900,7 +900,7 @@
     &.is-focused.is-selected {
       &.list-item {
         &::before {
-          color: $accordion-selected-text-color;
+          color: $accordion-selected-text-color !important;
         }
       }
     }
