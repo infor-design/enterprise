@@ -2003,22 +2003,12 @@ window.Chart = function(container) {
             var bar = d3.select(this),
               data = chartData[0].data[bar.attr('data-idx')],
               rect = this.getBoundingClientRect(),
-              next = d3.select(this.nextSibling),
-              w = d3.select(this).attr('width'),
-              nextWidth = next.attr('width'),
               content = '<p>' + d + '</p>',
 
               show = function() {
               var size = charts.getTooltipSize(content),
-                x = 0,
+                x = rect.left + rect.width - (size.width/2),
                 y = rect.top - size.height + $(window).scrollTop() - 5;
-
-              if (nextWidth && next.classed('range')) {
-                var sliceW = (w - nextWidth) / 2;
-                x = (rect.left + (w - sliceW) - (size.width/2));
-              } else {
-                x = rect.left + (rect.width/2) - (size.width/2);
-              }
 
               if(content !== '') {
                 charts.showTooltip(x, y, content, 'top');
