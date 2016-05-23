@@ -1,0 +1,12 @@
+// Card Deck Pattern
+//================================================== //
+
+.card-deck {
+  background-color: $body-bg-color;
+  padding-top: 20px;
+
+  //Remove grid padding on last row
+  .row:last-child {
+    margin-bottom: 0;
+  }
+}

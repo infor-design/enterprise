@@ -268,7 +268,7 @@
       // Add masking with the mask function
       mask: function () {
         var dateFormat = this.settings.dateFormat,
-        localeFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat.short) ? Locale.calendar().dateFormat.short : dateFormat);
+        localeFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat.short) ? Locale.calendar().dateFormat.short : null);
 
         dateFormat = ((dateFormat !== 'yyyy-MM-dd') ? dateFormat : (localeFormat || dateFormat));
 
