@@ -24,7 +24,8 @@
     border-right: 0;
     height: 100%;
 
-    .listview {
+    .listview,
+    .listview-search {
       border-right: 1px solid $panel-border-color;
     }
 

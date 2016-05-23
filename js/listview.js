@@ -209,7 +209,7 @@
       renderPager: function(updatedPagerInfo) {
         var api = this.element.data('pager');
 
-        if (!api) {
+        if (!api || !this.settings.pager) {
           return;
         }
 
@@ -554,7 +554,7 @@
         if (item.is(':hidden')) {
           return;
         }
-        
+
         item.removeAttr('tabindex');
         item.attr('tabindex', 0).focus();
 

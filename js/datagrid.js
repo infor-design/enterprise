@@ -2456,6 +2456,10 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      if (!this.settings.dataset[idx]) {
+        return;
+      }
+
       this.settings.dataset[idx].rowStatus = {};
       rowStatus = this.settings.dataset[idx].rowStatus;
 
@@ -3004,6 +3008,7 @@ $.fn.datagrid = function(options) {
       }
 
       //update cell value
+      coercedVal = $.escapeHTML(coercedVal);
       if (typeof formatter ==='string') {
         formatted = window.Formatters[formatter](row-1, cell, coercedVal, col, settings.dataset[row]).toString();
       } else {
@@ -3207,7 +3212,7 @@ $.fn.datagrid = function(options) {
 
     //Default formatter just plain text style
     defaultFormatter: function(row, cell, value) {
-      return ((value === null || value === undefined) ? '' : value);
+      return ((value === null || value === undefined || value === '') ? '' : value.toString());
     },
 
     //Handle Adding Paging

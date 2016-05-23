@@ -28,6 +28,9 @@
           timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
 
           dateFormat: 'yyyy-MM-dd', //Default is iso8601 format
+          separator: '-',
+          useLocale: true,  //use iso format always or use locale?
+
           /*  disable:
           **    dates: 'M/d/yyyy' or
           **      ['M/d/yyyy'] or
@@ -264,32 +267,29 @@
 
       // Add masking with the mask function
       mask: function () {
-        var dateFormat = Locale.calendar().dateFormat;
-        this.settings.dateFormat = (typeof Locale === 'object' ? dateFormat.short : this.settings.dateFormat);
+        var dateFormat = this.settings.dateFormat,
+        localeFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat.short) ? Locale.calendar().dateFormat.short : dateFormat);
+
+        dateFormat = ((dateFormat !== 'yyyy-MM-dd') ? dateFormat : (localeFormat || dateFormat));
 
         this.timeFormat = this.element.attr('data-time-format') !== undefined ? this.element.attr('data-time-format') : Locale.calendar().timeFormat;
 
         this.show24Hours = parseInt(this.element.attr('data-force-hour-mode')) === 24 ? true :
           parseInt(settings.forceHourMode) === 24 ? true : (this.timeFormat.match('HH') || []).length > 0;
 
-        this.pattern = dateFormat.short + (this.settings.isTimepicker ? (this.show24Hours ? ' HH:mm' : ' h:mm a') : '');
-
-
-        if (this.element.data('mask')) {
-          this.element.data('mask').destroy();
-        }
+        this.pattern = dateFormat + (this.settings.isTimepicker ? (this.show24Hours ? ' HH:mm' : ' h:mm a') : '');
+        this.separator = dateFormat.separator ? dateFormat.separator : this.settings.separator;
 
         var validation = 'date availableDate',
           events = {'date': 'blur', 'availableDate': 'blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
-
           mask = '##/##/#### ##:## am',
           separator = {
-            '/' : dateFormat.separator,
-            ':' : dateFormat.timeSeparator
+            '/' : separator || '/',
+            ':' : dateFormat.timeSeparator || ':'
           },
-          re = new RegExp('\\/|:','g');
+          re = new RegExp('\\'+separator+'|:','g');
 
         // '##/##/#### ##:## am' -or- ##/##/#### ##:##' -or- ##/##/####'
         mask = (this.settings.isTimepicker ? (this.show24Hours ? mask.substr(0, 16) : mask) : mask.substr(0, 10))
@@ -308,7 +308,7 @@
             'data-validate': validation,
             'data-validation-events': JSON.stringify(events),
             'data-mask-mode': 'date'
-          }).mask().validate();
+          }).mask().validate().trigger('updated');
 
         if (this.element.attr('placeholder') !== undefined) {
           this.element.attr('placeholder', this.settings.dateFormat);

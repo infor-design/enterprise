@@ -21,10 +21,12 @@
           name: 'Component A',
           value: 10.1,
           url: '/componentA',
+          id: 'ca',
           tooltip: 'Component A <b>{{percent}}</b>'
       }, {
           name: 'Component B',
           value: 12.2,
+          id: 'cb',
           tooltip: 'Component B <b>{{percent}}</b>'
       }, {
           name: 'Component C',
@@ -45,8 +47,8 @@
       }]
     }];
 
-  $('#pie-chart-example').chart({type: 'pie', dataset: pieData}).on('selected', function(e, args, data) {
-    console.log(data);
-    window.location = data.elm.url;
+  $('#pie-chart-example').chart({type: 'pie', dataset: pieData}).on('selected', function(e, elem, info) {
+    console.log(elem, info);
+    //window.location = data.elm.url;
   });
 </script>

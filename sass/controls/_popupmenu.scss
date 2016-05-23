@@ -134,7 +134,7 @@
   margin: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 10px 0;
+  padding: 5px 0;
   text-align: left;
 
   //Icon Positioning
@@ -272,7 +272,7 @@
   li.is-disabled,
   li.disabled {
     cursor: default;
-
+    // scss-lint:disable ImportantRule
     a {
       background-color: transparent;
       color: $disabled-color !important;
@@ -282,6 +282,7 @@
     .icon {
       fill: $disabled-color !important;
     }
+    // scss-lint:enable ImportantRule
 
     &:hover {
       background-color: transparent;
@@ -351,7 +352,7 @@
     i {
       &.is-checked,
       &.is-checked.is-selected {
-        > a:before {
+        > a::before {
           height: 11px;
           left: 8px;
           width: 5px;
@@ -465,8 +466,8 @@
   .popupmenu {
     &.is-selectable {
       li {
-        &.is-checked > a:before,
-        &.is-checked.is-selected > a:before {
+        &.is-checked > a::before,
+        &.is-checked.is-selected > a::before {
           margin-left: -4px;
           margin-top: 4px;
         }
@@ -540,8 +541,8 @@ html[dir='rtl'] {
     li {
 
       // Selected
-      &.is-checked > a:before,
-      &.is-checked.is-selected > a:before {
+      &.is-checked > a::before,
+      &.is-checked.is-selected > a::before {
         left: auto;
         right: 13px;
       }

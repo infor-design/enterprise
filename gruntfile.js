@@ -179,6 +179,9 @@ module.exports = function(grunt) {
 
     // Minify css
     cssmin: {
+      options: {
+        roundingPrecision: -1
+      },
       dist: {
         files: {
           'dist/css/high-contrast-theme.min.css': ['dist/css/high-contrast-theme.css'],

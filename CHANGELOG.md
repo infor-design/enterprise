@@ -9,6 +9,7 @@ Release Date: May 11th
 * New - Error States
 
 ## Breaking Changes
+* 2016-05-20 - New soho.infor.com pages - Added new pages: splitter, popover, pagination, swap list
 * 2016-05-11 - Validation Errors - The styling of the validation is now on the bottom of the fields without a tooltip.
 * 2016-05-11 - Checkboxes - Changed to display inline-block. This should not cause any issues unless you forgot to wrap your checkbox elements in a field element.
 * 2016-05-04 - Slider - changed the name of the _refresh()_ method to _setValue()_ so its clear that it sets the value.  _refresh()_ still exists and is marked as "deprecated" - will be removed in future releases.  Please update your code to use _setValue()_ instead of _refresh()_.

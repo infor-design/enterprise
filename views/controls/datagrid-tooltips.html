@@ -25,7 +25,7 @@
         data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, tooltip: 'This is the Product Id', headerTooltip: 'This is the header'});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, tooltip: '<img src="x"/>', headerTooltip: 'This is the header'});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink });
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
@@ -44,4 +44,3 @@
   });
 
 </script>
-
