@@ -1200,7 +1200,7 @@ $.fn.datagrid = function(options) {
                   // Start to Swap columns
 
                   for (i=0, l=self.settings.columns.length; i < l; i++) {
-                    if (!('hidden' in self.settings.columns[i])) {
+                    if (!self.settings.columns[i].hidden) {
                       tempArray.push(i);
                     }
                   }
