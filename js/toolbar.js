@@ -111,7 +111,13 @@
           .add(this.buttonset.find('.searchfield-wrapper').children('input'));
 
         // Invoke buttons
-        this.items.filter('button, input[type="button"]').button();
+        var buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
+        buttons.each(function() {
+          var buttonControl = $(this).data('button');
+          if (!buttonControl) {
+            $(this).button();
+          }
+        });
 
         // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.

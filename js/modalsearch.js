@@ -90,6 +90,11 @@
           self.searchInput.focus();
         }); // triggered by the Modal Control
 
+        // Moved from 'js/initialize.js'
+        this.modal.find('.close').on('click.modalsearch', function() {
+          self.modal.close();
+        });
+
         return this;
       },
 
