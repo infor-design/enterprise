@@ -766,12 +766,12 @@
 
   };
 
-  if (!window.Locale.cultureInHead()) {
-      window.Locale.set('en-US');
-  }
-
   $(function() {
 
+    if (!window.Locale.cultureInHead()) {
+      window.Locale.set('en-US');
+    }
+    
     // ICONS: Right to Left Direction
     setTimeout(function() {
       if (window.Locale.isRTL()) {
