@@ -689,11 +689,16 @@
 
       //date: Validate date, datetime (24hr or 12hr am/pm)
       date: {
-        check: function (value) {
+        check: function (value, field) {
           this.message = Locale.translate('InvalidDate');
-          var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime : Locale.calendar().dateFormat.short,
-            parsedDate = Locale.parseDate(value, dateFormat, true);
 
+          var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime: Locale.calendar().dateFormat.short;
+
+          if (field && field.data('datepicker')) {
+            dateFormat = field.data('datepicker').pattern;
+          }
+
+          var parsedDate = Locale.parseDate(value, dateFormat, true);
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },
         message: 'Invalid Date'

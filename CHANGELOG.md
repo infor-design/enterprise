@@ -7,10 +7,14 @@ Release Date: May 11th
 * New - Datagrid Personalization
 * New - Expandable Area
 * New - Error States
+* New - Swap List
+* New - Empty States
+* New - Bullet Chart
 
 ## Breaking Changes
-* 2016-05-20 - New soho.infor.com pages - Added new pages: splitter, popover, pagination, swap list
-* 2016-05-11 - Validation Errors - The styling of the validation is now on the bottom of the fields without a tooltip.
+* 2016-05-25 - Datepicker
+  - If a placeholder is provided it wont be overriden with the date format.
+  - isTimepicker changed to showTime - Option value
 * 2016-05-11 - Checkboxes - Changed to display inline-block. This should not cause any issues unless you forgot to wrap your checkbox elements in a field element.
 * 2016-05-04 - Slider - changed the name of the _refresh()_ method to _setValue()_ so its clear that it sets the value.  _refresh()_ still exists and is marked as "deprecated" - will be removed in future releases.  Please update your code to use _setValue()_ instead of _refresh()_.
 * 2016-04-27 - Dropdown, Vertical Tabs, Wizard, Tabs  - Event Renamed from activated to active.
@@ -19,6 +23,10 @@ Release Date: May 11th
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
 ## Ui Changes
+* 2016-05-20 - Tree - Major UX changes
+* 2016-05-20 - Toolbar - has version with background fill/border
+* 2016-05-20 - New soho.infor.com pages - Added new pages: splitter, popover, pagination, swap list
+* 2016-05-11 - Validation Errors - The styling of the validation is now on the bottom of the fields without a tooltip.
 * 2016-04-11 - Lookup Area - Removed secondary header, added search.
 * 2016-04-11 - Datagrid  - Some colors fx selection state changed. Themes added.
 * 2016-04-26 - Expandable Area - Colors and font changed. Changed to not look like an accordion.
