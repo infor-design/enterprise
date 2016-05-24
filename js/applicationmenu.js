@@ -138,6 +138,8 @@
         // Setup notification change events
         this.menu.on('notify.applicationmenu', function(e, anchor, value) {
           self.notify(anchor, value);
+        }).on('updated.applicationmenu', function() {
+          self.updated();
         });
 
         this.accordion.on('blur.applicationmenu', function() {
