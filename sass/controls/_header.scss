@@ -147,6 +147,10 @@ $header-height: 60px;
         fill: $header-button-color;
       }
 
+      &.is-open .icon {
+        fill: $header-button-hover-color !important;
+      }
+
       .audible {
         color: $header-text-color;
       }

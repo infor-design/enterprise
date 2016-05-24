@@ -91,7 +91,7 @@
         }); // triggered by the Modal Control
 
         // Moved from 'js/initialize.js'
-        this.modal.find('.close').on('click.modalsearch', function() {
+        this.modal.element.find('.close').on('click.modalsearch', function() {
           self.modal.close();
         });
 
