@@ -245,7 +245,9 @@
           self.handleKeys(e);
         });
 
-        this.element.on('updated.accordion', function() {
+        this.element.on('updated.accordion', function(e) {
+          // Don't propagate just in case this is contained by an Application Menu
+          e.stopPropagation();
           self.updated();
         });
 
