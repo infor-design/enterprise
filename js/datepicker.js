@@ -314,7 +314,7 @@
             'data-mask-mode': 'date'
           }).mask().validate();
 
-        if (!this.element.attr('placeholder')) {
+        if (!this.element.attr('placeholder') ||  this.element.attr('placeholder') === 'M / D / YYYY') {
           this.element.attr('placeholder', this.pattern);
         }
       },
