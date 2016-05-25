@@ -459,7 +459,7 @@
       }
 
       if (isDateTime) {
-        if (dateObj.a) {
+        if (dateObj.h) {
           dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
         }
         if (dateObj.ss !== undefined) {

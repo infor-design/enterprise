@@ -26,10 +26,7 @@
           showTime: false,
           forceHourMode: undefined, // Can be used to force timepicker to use only 12-hour or 24-hour display modes. Defaults to whatever the current Globalize locale requires if left undefined.
           timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
-
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
-          separator: '-',
-          timeFormat: 'locale', //or can be a specific format like 'HH:mm' iso8601 format
 
           /*  disable:
           **    dates: 'M/d/yyyy' or
@@ -269,38 +266,37 @@
         var localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat : null);
 
         if (this.settings.dateFormat === 'locale') {
+          this.show24Hours = parseInt(this.element.attr('data-force-hour-mode')) === 24 ? true :
+            parseInt(this.settings.forceHourMode) === 24 ? true : false;
           this.pattern = localeDateFormat.short + (this.settings.showTime ? (this.show24Hours ? ' HH:mm' : ' h:mm a') : '');
-          this.separator = localeDateFormat.separator;
-          this.timeFormat = Locale.calendar().timeFormat;
         } else {
           this.pattern = this.settings.dateFormat;
-          this.separator = settings.dateFormat.toLowerCase().replace(/[ymda]/g, '').substr(0,1);
-          this.timeFormat = this.settings.timeFormat;
         }
+
+        this.show24Hours = parseInt(this.element.attr('data-force-hour-mode')) === 24 ? true :
+          parseInt(this.settings.forceHourMode) === 24 ? true : (this.pattern.match('HH') || []).length > 0;
       },
 
       // Add masking with the mask function
       mask: function () {
         this.setFormat();
 
-        this.show24Hours = parseInt(this.element.attr('data-force-hour-mode')) === 24 ? true :
-          parseInt(settings.forceHourMode) === 24 ? true : (this.timeFormat.match('HH') || []).length > 0;
-
         var validation = 'date availableDate',
           events = {'date': 'blur', 'availableDate': 'blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
-          mask = this.pattern.toLowerCase().replace(/yyyy/g,'####');
-          mask = mask.replace(/mmm/g,'***');
-          mask = mask.replace(/mm/g,'##');
-          mask = mask.replace(/dd/g,'##');
-          mask = mask.replace(/[md]/g,'##');
-          mask = mask.replace(/[hh]/g,'##');
-          mask = mask.replace(/[a]/g,'am');
+          mask = this.pattern.toLowerCase()
+                   .replace(/yyyy/g,'####')
+                   .replace(/mmm/g,'***')
+                   .replace(/mm/g,'##')
+                   .replace(/dd/g,'##')
+                   .replace(/hh/g,'##')
+                   .replace(/[mdh]/g,'##')
+                   .replace(/[a]/g,'am');
 
         //TO DO - Time seperator
         // '##/##/#### ##:## am' -or- ##/##/#### ##:##' -or- ##/##/####'
-        mask = (this.settings.showTime ? (this.show24Hours ? mask.substr(0, 16) : mask) : mask.substr(0, 10));
+        mask = (this.settings.showTime ? (this.show24Hours ? mask.substr(0, 16) : mask) : mask);
 
         if (customValidation === 'required' && !customEvents) {
           validation = customValidation + ' ' + validation;
@@ -350,6 +346,10 @@
         this.days = $('<tbody> <tr> <td class="alternate">26</td> <td class="alternate">27</td> <td class="alternate">28</td> <td class="alternate">29</td> <td class="alternate" >30</td> <td class="alternate">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alternate">1</td> </tr> <tr> <td class="alternate">2</td> <td class="alternate">3</td> <td class="alternate">4</td> <td class="alternate">5</td> <td class="alternate">6</td> <td class="alternate">7</td> <td class="alternate">8</td> </tr> </tbody>').appendTo(this.table);
         this.timepickerInput = $(this.settings.timepickerMarkup);
         this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
+
+        if (this.show24Hours) {
+          $('.timepicker', this.timepickerInput).attr('data-force-hour-mode', 24);
+        }
 
         this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') +'"></div')
           .append(
@@ -537,7 +537,7 @@
       // Close the calendar in a popup
       closeCalendar: function () {
         // Close timepicker
-        if (this.settings.showTime && this.timepickerInput.is(':visible')) {
+        if (this.settings.showTime && this.timepickerControl.isOpen()) {
           this.timepickerControl.closeTimePopup();
         }
 
@@ -606,8 +606,8 @@
       showMonth: function (month, year) {
         var self = this;
 
-        var elementDate = this.currentDate.getDate() ? this.currentDate : new Date();
-        elementDate = this.currentDate.setHours(0,0,0,0);
+        var elementDate = this.currentDate.getDate() ?
+          this.currentDate : (new Date()).setHours(0,0,0,0);
 
         if (month === 12) {
           year ++;

@@ -77,7 +77,8 @@
           return $.inArray(value, modes) > -1 ? value : defaults.mode;
         }
 
-        this.settings.timeFormat = sanitizeTimeFormat(this.settings.timeFormat);
+        this.settings.forceHourMode = this.settings.forceHourMode || this.element.attr('data-force-hour-mode');
+        this.settings.timeFormat = sanitizeTimeFormat(parseInt(this.element.attr('data-force-hour-mode')) === 24 ? 'HH:mm' : this.settings.timeFormat);
         this.settings.minuteInterval = sanitizeMinuteInterval(this.settings.minuteInterval);
         this.settings.mode = sanitizeMode(this.settings.mode);
         this.settings.roundToInterval = sanitizeRoundToInterval(this.settings.roundToInterval);
