@@ -130,8 +130,26 @@
       color: $module-tabs-active-text-color;
     }
 
-    &:hover,
-    &.is-focused {
+    /*
+    // NOTE: Remove the comments in order to hide the X on anything but hover/focus.
+    // This creates weird visual padding on small tabs.
+    &.dismissible {
+      .icon {
+        @include transition(opacity .25s ease);
+        opacity: 0;
+      }
+
+      &:hover,
+      &.is-focused {
+        .icon {
+          opacity: 1;
+        }
+      }
+    }
+    */
+
+    &:hover/*,
+    &.is-focused*/ {
       background-color: $module-tabs-hover-bg-color;
       color: $module-tabs-hover-text-color;
     }
@@ -150,8 +168,8 @@
         color: $module-tabs-disabled-text-color;
       }
 
-      &:hover,
-      &.is-focused {
+      &:hover/*,
+      &.is-focused*/ {
         background-color: $module-tabs-disabled-bg-color;
         color: $module-tabs-disabled-text-color;
       }
@@ -189,6 +207,15 @@
     }
   }
 
+  .tab-focus-indicator {
+    border-radius: 0;
+    z-index: 10;
+
+    &.is-visible {
+      border-color: $white;
+    }
+  }
+
   .tab-more {
     border-left: 1px solid $module-tabs-x-border-color;
     color: $module-tabs-inactive-text-color;
@@ -216,7 +243,7 @@
     }
 
     &:hover,
-    &.is-focused,
+    //&.is-focused,
     &.is-open {
       background-color: $module-tabs-hover-bg-color;
       color: $module-tabs-hover-text-color;
@@ -518,6 +545,39 @@
       }
     }
 
+  }
+}
+
+.masthead + .tab-container.module-tabs {
+  border-top: 1px solid transparent;
+}
+
+// Firefox has weird padding on the Add Tabs Button and Application Menu Triggers without this bit of code
+.is-firefox {
+  .tab-container.module-tabs {
+    .tab {
+      a {
+        height: 34px;
+        padding: 11px 10px 9px;
+      }
+
+      &.dismissible a {
+        padding: 11px 32px 9px 0;
+      }
+    }
+
+    .add-tab-button {
+      a {
+        padding-top: 3px;
+      }
+    }
+
+    .application-menu-trigger {
+      a {
+        padding-bottom: 8px;
+        padding-top: 8px;
+      }
+    }
   }
 }
 

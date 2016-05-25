@@ -105,12 +105,14 @@
             'aria-multiselectable': 'false'
           });
 
-        if (this.hasAdvancedFocusStates()) {
+        if (this.hasSquareFocusState()) {
           self.focusState = self.container.children('.tab-focus-indicator');
           if (!self.focusState.length) {
             self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
           }
+        }
 
+        if (this.hasAnimatedBar()) {
           self.animatedBar = self.container.children('.animated-bar');
           if (!self.animatedBar.length) {
             self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
@@ -234,7 +236,8 @@
 
         var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
           tabs = this.tablist.children('li' + excludes),
-          selected = this.tablist.children('li.is-selected' + excludes);
+          selected = this.tablist.children('li.is-selected' + excludes),
+          selectedAnchor = selected.children('a');
 
         if (tabs.length) {
           // If the hashChange setting is on, change the selected tab to the one referenced by the hash
@@ -244,6 +247,7 @@
               var matchingTabs = tabs.find('a[href="'+ hash +'"]');
               if (matchingTabs.length) {
                 selected = matchingTabs.first().parent();
+                selectedAnchor = selected.children('a');
               }
             }
           }
@@ -251,11 +255,12 @@
           // If there is no selected tab, try to find the first available tab (if there are any present)
           if (!selected.length) {
             selected = tabs.not('.add-tab-button, .application-menu-trigger').first();
+            selectedAnchor = selected.children('a');
           }
 
           // If there are tabs present, activate the first one
           if (selected.length) {
-            this.activate(selected.children('a').attr('href'));
+            this.activate(selectedAnchor.attr('href'));
           }
         }
 
@@ -265,17 +270,18 @@
 
         this.setOverflow();
 
-        if (!this.hasAdvancedFocusStates()) {
-          return this;
+        if (this.hasSquareFocusState()) {
+          this.positionFocusState(selectedAnchor);
         }
 
-        this.animatedBar.addClass('no-transition');
-        this.positionFocusState(selected);
-        this.focusBar(undefined, function() {
-          setTimeout(function() {
-            self.animatedBar.removeClass('no-transition');
-          }, 0);
-        });
+        if (this.hasAnimatedBar()) {
+          this.animatedBar.addClass('no-transition');
+          this.focusBar(undefined, function() {
+            setTimeout(function() {
+              self.animatedBar.removeClass('no-transition');
+            }, 0);
+          });
+        }
 
         return this;
       },
@@ -364,8 +370,11 @@
             var href = $(anchor).attr('href');
             self.activate(href);
 
-            if (self.hasAdvancedFocusStates()) {
+            if (self.hasSquareFocusState()) {
               self.positionFocusState(a);
+            }
+
+            if (self.hasAnimatedBar()) {
               self.focusBar(li);
             }
 
@@ -481,15 +490,15 @@
         this.activate(href);
         this.changeHash(href);
 
-        if (this.hasAdvancedFocusStates()) {
+        if (this.hasSquareFocusState()) {
           this.focusState.removeClass('is-visible');
         }
 
-        // NOTE: If we switch the focusing-operations back to how they used to be (blue bar moving around with the focus state)
-        // remove the below three lines and uncomment all the commented-out "this.focusBar()" directives.
         a.focus();
-        this.positionFocusState(a);
+
+        // Hide these states
         this.focusBar(li);
+        this.positionFocusState(a);
       },
 
       handleMoreButtonClick: function(e) {
@@ -547,7 +556,7 @@
 
         $.removeData(this.moreButton[0], 'focused-by-click');
 
-        if (this.hasAdvancedFocusStates()) {
+        if (this.hasSquareFocusState()) {
           this.focusState.removeClass('is-visible');
           this.positionFocusState(this.moreButton, focusedByKeyboard);
         }
@@ -634,8 +643,8 @@
           self.changeHash(href);
           self.focusBar(currentLi);
           checkAngularClick();
-          self.hideFocusState();
           currentA[0].focus();
+          self.hideFocusState();
         }
 
         switch(e.which) {
@@ -677,7 +686,7 @@
         }
 
         var a = targetLi.children('a').focus();
-        if (self.hasAdvancedFocusStates()) {
+        if (self.hasSquareFocusState()) {
           self.positionFocusState(a, true);
         }
       },
@@ -716,6 +725,8 @@
         }
 
         e.preventDefault();
+
+        this.hideFocusState();
 
         if (menu.hasClass('is-open')) {
           menu.trigger('close-applicationmenu');
@@ -831,12 +842,20 @@
         return this.anchors.filter('[href="#'+ newId +'"]');
       },
 
-      hasAdvancedFocusStates: function() {
-        return !this.element.hasClass('module-tabs') && !this.element.hasClass('vertical-tabs');
+      hasAnimatedBar: function() {
+        return !this.isModuleTabs() && !this.isVerticalTabs();
+      },
+
+      hasSquareFocusState: function() {
+        return !this.isVerticalTabs();
       },
 
       isModuleTabs: function() {
         return this.element.hasClass('module-tabs');
+      },
+
+      isVerticalTabs: function() {
+        return this.element.hasClass('vertical-tabs');
       },
 
       activate: function(href) {
@@ -1470,7 +1489,7 @@
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
 
-        if (self.hasAdvancedFocusStates()) {
+        if (self.hasSquareFocusState()) {
           self.positionFocusState(self.moreButton);
         }
 
@@ -1621,7 +1640,7 @@
       },
 
       focusBar: function(li, callback) {
-        if (!this.hasAdvancedFocusStates()) {
+        if (!this.hasAnimatedBar()) {
           return;
         }
 
@@ -1672,7 +1691,7 @@
       },
 
       defocusBar: function() {
-        if (!this.hasAdvancedFocusStates()) {
+        if (!this.hasAnimatedBar()) {
           return;
         }
 
@@ -1688,15 +1707,28 @@
       },
 
       hideFocusState: function() {
-        if (this.hasAdvancedFocusStates()) {
+        if (this.hasSquareFocusState()) {
           this.focusState.removeClass('is-visible');
         }
       },
 
       positionFocusState: function(target, unhide) {
-        if (!this.hasAdvancedFocusStates()) {
+        if (!this.hasSquareFocusState()) {
           return;
         }
+
+        /*
+        function place(el, top, left, bottom, right, width, height) {
+          el.css({
+            left: left,
+            top: top,
+            right: left + width,
+            bottom: top + height,
+            width: width,
+            height: height
+          });
+        }
+        */
 
         var self = this;
         target = target !== undefined ? $(target) :
@@ -1714,7 +1746,7 @@
           height = parseInt(target.outerHeight()),
           left, top;
 
-        if (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a')) {
+        if (!this.isModuleTabs() && (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a'))) {
           width = width + 22;
         }
 
@@ -1728,11 +1760,21 @@
           top = top + 5;
         }
 
+        // Module Tabs get a slight modification
+        if (this.isModuleTabs()) {
+          width = parseInt(target.parent().outerWidth(true));
+          left = left - parseInt(target.css('margin-left'));
+
+          if (target.parent().is('.add-tab-button')) {
+            left = left - 1;
+          }
+        }
+
         this.focusState.css({
           left: left,
           top: top,
-          right: (pos.left - offset.left) + width,
-          bottom: (pos.top - offset.top) + height,
+          right: left + width,
+          bottom: top + height,
           width: width,
           height: height
         });
@@ -1748,15 +1790,11 @@
         var self = this,
           focusableItems = self.tablist;
 
-        if (!this.hasAdvancedFocusStates()) {
-          return;
-        }
-
-        if (focusableItems.find('.is-focused').length === 0 && !self.moreButton.hasClass('is-focused') && !self.moreButton.hasClass('popup-is-open')) {
+        if (this.hasSquareFocusState() && focusableItems.find('.is-focused').length === 0 && !self.moreButton.hasClass('is-focused') && !self.moreButton.hasClass('popup-is-open')) {
           self.focusState.removeClass('is-visible');
         }
 
-        if (focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
+        if (this.hasAnimatedBar() && focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
           self.defocusBar();
         }
       },
@@ -1952,9 +1990,12 @@
         this.moreButton.off().remove();
         this.moreButton = undefined;
 
-        if (this.hasAdvancedFocusStates()) {
+        if (this.hasSquareFocusState()) {
           this.focusState.remove();
           this.focusState = undefined;
+        }
+
+        if (this.hasAnimatedBar()) {
           this.animatedBar.remove();
           this.animatedBar = undefined;
         }

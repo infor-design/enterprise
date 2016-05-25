@@ -115,6 +115,7 @@
 // Isn't actually attached to each tab, but is a separate element that moves around
 // This helps break overflow issues and simplifies the CSS
 .tab-focus-indicator {
+  pointer-events: none;
   @include tab-outline;
 
   &.is-visible {
