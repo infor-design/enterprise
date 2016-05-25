@@ -295,9 +295,9 @@
 
 // Context Searchfield's Popupmenu has alternate styles
 .popupmenu.autocomplete.context {
+  @include context-searchfield-boxshadow();
   border: 0;
   border-top: 1px solid $searchfield-context-border-color !important;
-  @include context-searchfield-boxshadow();
 }
 
 @include respond-to(phablet) {

@@ -280,7 +280,7 @@
         dateFormat = 'd/M/yyyy';
       }
 
-      if (dateFormat.indexOf(' ') > 1 ) {
+      if (dateFormat.indexOf(' ') !== -1 ) {
         dateFormat = dateFormat.replace(/[\s:.]/g,'/');
         dateString = dateString.replace(/[\s:.]/g,'/');
       }
@@ -321,9 +321,17 @@
         dateStringParts = dateString.split('-');
       }
 
+      if (formatParts.length === 1) {
+        formatParts = dateFormat.split(' ');
+      }
+
+      if (dateStringParts.length === 1) {
+        dateStringParts = dateString.split(' ');
+      }
+
       // Check the incoming date string's parts to make sure the values are valid against the localized
       // Date pattern.
-      var month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM'),
+      var month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM'),
         year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
 
       for (var i = 0; i < dateStringParts.length; i++) {
@@ -358,6 +366,16 @@
             }
             dateObj.month = value-1;
             break;
+          case 'MMM':
+              var abrMonth = this.calendar().months.abbreviated;
+
+              for (var l = 0; l < abrMonth.length; l++) {
+                if (orgDatestring.indexOf(abrMonth[l]) > -1) {
+                  dateObj.month = l;
+                }
+              }
+
+              break;
           case 'MMMM':
             var textMonths = this.calendar().months.wide;
 
@@ -455,11 +473,11 @@
 
     },
 
-    getDatePart: function (formatParts, dateStringParts, filter1, filter2) {
+    getDatePart: function (formatParts, dateStringParts, filter1, filter2, filter3) {
       var ret = 0;
 
       $.each(dateStringParts, function(i) {
-        if (filter1 === formatParts[i] || filter2 === formatParts[i]) {
+        if (filter1 === formatParts[i] || filter2 === formatParts[i] || filter3 === formatParts[i]) {
           ret = dateStringParts[i];
         }
       });
@@ -771,7 +789,7 @@
     if (!window.Locale.cultureInHead()) {
       window.Locale.set('en-US');
     }
-    
+
     // ICONS: Right to Left Direction
     setTimeout(function() {
       if (window.Locale.isRTL()) {

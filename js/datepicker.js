@@ -291,6 +291,7 @@
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
           mask = this.pattern.toLowerCase().replace(/yyyy/g,'####');
+          mask = mask.replace(/mmm/g,'***');
           mask = mask.replace(/mm/g,'##');
           mask = mask.replace(/dd/g,'##');
           mask = mask.replace(/[md]/g,'##');
