@@ -114,10 +114,17 @@
     }
   }
 
+  &:last-child {
+    .expandable-footer {
+      border-bottom: 1px solid $expandable-area-border-color;
+    }
+  }
+
   //Icon on the header
   .title {
     @include font-size(16);
     color: $expandable-area-title-color;
+    padding-bottom: 28px;
   }
 
 }

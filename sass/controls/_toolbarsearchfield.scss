@@ -8,16 +8,13 @@ $toolbarsearchfield-empty-width: 34px;
 $toolbarsearchfield-category-empty-width: 54px;
 
 .toolbar-searchfield-wrapper {
+  @include transition(width 300ms cubic-bezier(.17, .04, .03, .94),left 300m cubic-bezier(.17, .04, .03, .94), right 300ms cubic-bezier(.17, .04, .03, .94));
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0 !important;
   overflow: hidden;
   white-space: nowrap;
   width: $toolbarsearchfield-empty-width;
-
-  @include transition(width 300ms cubic-bezier(.17, .04, .03, .94),
-    left 300ms cubic-bezier(.17, .04, .03, .94),
-    right 300ms cubic-bezier(.17, .04, .03, .94));
 
   > * {
     vertical-align: middle;
@@ -447,6 +444,7 @@ $toolbarsearchfield-category-empty-width: 54px;
     .searchfield {
       background-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
+      border-radius: 0;
       color: $searchfield-text-color;
       @include font-size(14);
       font-weight: normal;

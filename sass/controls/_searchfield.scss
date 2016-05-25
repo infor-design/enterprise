@@ -218,6 +218,7 @@
 
   // Buttons inside of searchfields
   .btn {
+    @include css3(transition, border 300ms ease 0s); // Matches the one on inputs
     background-color: transparent;
     border-bottom-right-radius: 0;
     border-color: $input-border-color;
@@ -231,7 +232,6 @@
     padding: 0 0 0 10px;
     position: relative;
     text-transform: none;
-    @include css3(transition, border 300ms ease 0s); // Matches the one on inputs
 
     + .searchfield {
       border-bottom-left-radius: 0;
@@ -276,6 +276,15 @@
     }
   }
 
+  //Call to action button
+  + .btn {
+    height: 30px;
+    left: 100%;
+    margin-left: 10px;
+    margin-top: 1px;
+    min-width: 0;
+    position: absolute;
+  }
 }
 
 .inline.searchfield-wrapper {
@@ -306,6 +315,12 @@
     &:-ms-input-placeholder {
       color: transparent !important;
     }
+  }
+}
+
+.is-firefox.is-mac {
+  .searchfield-wrapper .btn {
+    height: 33px;
   }
 }
 

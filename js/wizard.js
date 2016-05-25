@@ -112,6 +112,7 @@
           }
         });
 
+        this.element.find('.wizard-header').css('opacity', '1');
         return this;
       },
 
