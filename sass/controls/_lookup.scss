@@ -112,7 +112,22 @@
   }
 
   .toolbar-searchfield-wrapper.non-collapsible {
+    // scss-lint:disable ImportantRule
     width: 100% !important;
+    // scss-lint:enable ImportantRule
+
+    input {
+      background-color: $searchfield-lighter-bg-color;
+
+      // scss-lint:disable VendorPrefix
+      &::-webkit-input-placeholder,
+      &::-moz-placeholder,
+        &:-ms-input-placeholder {
+        color: $searchfield-lighter-text-color;
+      }
+      // scss-lint:disable VendorPrefix
+
+    }
   }
 
 }

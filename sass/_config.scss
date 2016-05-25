@@ -563,10 +563,12 @@ $wizard-header-focus-box-shadow: 0 0 0 1px $white;
 $hierarchy-line-color: $graphite03;
 
 //Searchfield Colors
-$searchfield-bg-color: $graphite01;
+$searchfield-bg-color: $graphite02;
 $searchfield-border-color: $graphite03;
 $searchfield-icon-color: $tertiary-btn-color;
-$searchfield-text-color: $graphite05;
+$searchfield-text-color: $tertiary-btn-color;
+$searchfield-lighter-bg-color: $graphite01;
+$searchfield-lighter-text-color: $graphite04;
 
 $searchfield-context-bg: $graphite01;
 $searchfield-context-alt-bg: $white;

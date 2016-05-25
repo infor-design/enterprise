@@ -439,6 +439,7 @@ $datagrid-short-row-height: 30px;
       display: block;
       height: inherit;
       margin: 0;
+      min-height: inherit;
       overflow: hidden;
       padding: 0 20px;
       width: 100%;
@@ -928,6 +929,7 @@ td .btn-actions {
   }
 
   .datagrid-row-detail {
+    border-bottom: 1px solid $datagrid-cell-border-color;
     height: 0;
     margin: -1px -20px 0;
     padding: 0 20px;

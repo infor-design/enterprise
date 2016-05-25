@@ -680,7 +680,6 @@ $.fn.datagrid = function(options) {
       this.initTableWidth();
       this.handleEvents();
       this.handleKeys();
-      this.setCellWrapperHeight();
 
       setTimeout(function () {
         self.element.trigger('rendered', [self.element, self.headerRow, self.pagerBar]);
@@ -1459,12 +1458,6 @@ $.fn.datagrid = function(options) {
 
       this.table.css('width', total);
 
-    },
-
-    //Set cell-wrapper height
-    setCellWrapperHeight: function () {
-      var cellWrapper = $('tbody .datagrid-cell-wrapper', this.table);
-      cellWrapper.css({'min-height': cellWrapper.closest('td').outerHeight()});
     },
 
     //Returns all header nodes (not the groups)
