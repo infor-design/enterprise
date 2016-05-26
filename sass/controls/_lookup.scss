@@ -132,6 +132,14 @@
 
 }
 
+.ie11 {
+  .lookup-modal .modal-body .toolbar .more {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+
 //RTL Styles
 html[dir="rtl"] {
 

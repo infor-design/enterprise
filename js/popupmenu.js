@@ -38,6 +38,7 @@
     function PopupMenu(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      this.isIe11 = $('html').is('.ie11');
       this.init();
     }
 
@@ -576,6 +577,15 @@
 
         if (this.element.is('.autocomplete')) {
           wrapper.css({ 'top': this.element.offset().top + target.outerHeight() });
+        }
+
+        // Fix: In lookup toolbar ie11 was not positioning, so need to use this hack
+        var lookupMoreBtn = $('.lookup-modal .modal-body .toolbar .more');
+        if (this.isIe11 && lookupMoreBtn.length) {
+          wrapper.css({
+            'left': lookupMoreBtn.offset().left - (wrapper.outerWidth() - lookupMoreBtn.outerWidth()),
+            'top': lookupMoreBtn.offset().top + lookupMoreBtn.outerHeight()
+          });
         }
 
       },
