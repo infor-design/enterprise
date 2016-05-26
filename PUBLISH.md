@@ -31,12 +31,21 @@ git tag 4.0.7
 npm publish
 ```
 
+# How To
+
+* Full grunt
+* npm publish --force
 * Update CHANGELOG.MD for breaking changes, and add a new section.
 * Send Email to team
 * Announce to Slack
 * Create new version in Jira
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
-* Comment in the analytics in footer.js - deploy to to http://107.170.15.202:4000
+* Comment in the analytics in footer.js
+* Deploy to to http://107.170.15.202:4000
+* Deploy to to soho.infor.com 
 * Create branch for major versions inside stash
 
+# Future
+* Make Build
+* Make Auto push on npm
