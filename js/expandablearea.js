@@ -75,7 +75,7 @@
 
         this.expander = this.footer.find('.expandable-expander');
         if (!this.expander.length) {
-          this.expander = $('<a class="expandable-expander hyperlink"><span data-translated="true">'+ Locale.translate('ShowMore') +'</span></a>').prependTo(this.footer);
+          this.expander = $('<a href="#" target="_self" class="expandable-expander hyperlink"><span data-translated="true">'+ Locale.translate('ShowMore') +'</span></a>').prependTo(this.footer);
         }
 
         this.expander.attr('href', '#').hideFocus();
@@ -174,7 +174,7 @@
         this.expander.addClass('active');
         this.element.triggerHandler('expand', [this.element]);
 
-        this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowLess'));
+        this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowLess') ? Locale.translate('ShowLess') : 'Show Less');
 
         this.content.css('display','block').one('animateopencomplete', function() {
           self.element.triggerHandler('afterexpand', [self.element]);
@@ -191,7 +191,7 @@
 
         this.expander.removeClass('active');
         this.element.triggerHandler('collapse', [this.element]);
-        this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowMore'));
+        this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowMore') ? Locale.translate('ShowMore') : 'Show More');
 
         this.content.one('animateclosedcomplete', function() {
           self.element.removeClass('is-expanded');
