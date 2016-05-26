@@ -110,7 +110,9 @@ $toolbar-buttonset-height: 40px;
     }
 
     .more {
+      // scss-lint:disable ImportantRule
       display: inline-block !important;
+      // scss-lint:enable ImportantRule
     }
   }
 
@@ -178,7 +180,9 @@ $toolbar-buttonset-height: 40px;
 
       // Prevents the normal .btn background color from fading in
       &:active {
+        // scss-lint:disable ImportantRule
         background-color: transparent !important;
+        // scss-lint:enable ImportantRule
       }
 
       &:not(.hide-focus) {
@@ -190,7 +194,9 @@ $toolbar-buttonset-height: 40px;
         }
 
         &:active {
+          // scss-lint:disable ImportantRule
           background-color: transparent !important;
+          // scss-lint:enable ImportantRule
           box-shadow: none;
         }
 
@@ -257,7 +263,9 @@ $toolbar-buttonset-height: 40px;
 .contextual-toolbar {
   background-color: $contextual-toolbar-bg-color;
   margin: 0;
+  // scss-lint:disable ImportantRule
   overflow: hidden !important;
+  // scss-lint:enable ImportantRule
   z-index: 20;
 
   + .listview {

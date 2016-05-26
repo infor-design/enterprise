@@ -1,5 +1,5 @@
 # 4.2 - Minor Release
-Release Date: May 11th
+Release Date: May 26th
 
 * New - Module Tabs
 * New - Lightbox
