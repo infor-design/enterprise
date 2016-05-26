@@ -117,6 +117,7 @@
   &:last-child {
     .expandable-footer {
       border-bottom: 1px solid $expandable-area-border-color;
+      padding-bottom: 26px;
     }
   }
 
@@ -124,7 +125,6 @@
   .title {
     @include font-size(16);
     color: $expandable-area-title-color;
-    padding-bottom: 28px;
   }
 
 }

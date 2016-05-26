@@ -134,12 +134,14 @@ button {
     opacity: $primary-btn-disabled-opacity;
 
     .icon {
-      fill: white;
+      fill: $white;
     }
   }
 
   .ripple-effect {
-    background-color: rgba(255, 255, 255, .7);
+    background-color: $white;
+    opacity: .7;
+    pointer-events: none;
   }
 }
 
@@ -220,7 +222,7 @@ a.btn-menu {
   }
 
   .ripple-effect {
-    background: #efefef;
+    background: $graphite02;
   }
 }
 
@@ -292,7 +294,9 @@ a.btn-menu {
     }
 
     .icon {
+      // scss-lint:disable ImportantRule
       fill: $tertiary-btn-open-color !important;
+      // scss-lint:enable ImportantRule
     }
   }
 }
