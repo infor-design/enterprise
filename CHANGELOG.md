@@ -1,4 +1,18 @@
-# 4.2 - Minor Release
+# 4.2.1 - Patch Release
+Release Date: TBD
+
+* New - ..
+
+## Breaking Changes
+* 2016-MM-DD - ....
+
+## Ui Changes
+* 2016-MM-DD - ....
+
+Jira Release Notes
+http://bit.ly/1P1jCAk
+
+# 4.2.0 - Minor Release
 Release Date: May 26th
 
 * New - Module Tabs
