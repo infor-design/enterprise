@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Mask Test: Copy/Paste</h2>
+
+    <p>It should be possible for the Mask Control to handle input that was pasted from another source and properly format that input according to the Mask pattern's rules.</p>
+
+    <p>To manually simulate the test script:
+      
+    <ol>
+      <li>Select the contents of the "Basic Input Field" on the right</li>
+      <li>Copy the text to the clipboard</li>
+      <li>Paste the contents of the clipboard into the "Phone Number" field</li>
+    </ol>
+
+    The mask should properly format the contents of the field.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="phone-number">Phone Number</label>
+      <input id="phone-number" name="phone-number" data-mask data-options="{ pattern: '(###) ###-####' }" placeholder="(###) ###-####" value="1234567890"/>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <form action="#">
+      <div class="field">
+        <label for="copypasta">Basic Input Field with Content</label>
+        <input id="copypasta" name="copypasta" value="x0x0x0x0x0"/>
+      </div>
+
+      <div class="field">
+        <button class="btn" type="reset">
+          <span>Reset</span>
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
