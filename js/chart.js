@@ -25,6 +25,7 @@ window.Chart = function(container) {
    '#8DC9E6', '#DE7223', '#317C73', '#EB9D9D', '#999999', '#44831F', '#C7B4DB',
    '#4EA0D1', '#6C4B81', '#AFDC91', '#69ADA3', '#DE7223', '#D8D8D8'];
 
+  this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   this.pieColors = d3.scale.ordinal().range(colorRange);
   this.greyColors = d3.scale.ordinal().range(['#737373', '#999999', '#bdbdbd', '#d8d8d8']);
   this.sparklineColors = d3.scale.ordinal().range(['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8']);
@@ -181,6 +182,11 @@ window.Chart = function(container) {
     this.tooltip = $('#svg-tooltip');
     if (this.tooltip.length === 0) {
       this.tooltip = $('<div id="svg-tooltip" class="tooltip right is-hidden"><div class="arrow"></div><div class="tooltip-content"><p><b>32</b> Element</p></div></div>').appendTo('body');
+      if (this.isTouch) {
+        this.tooltip.css({'pointer-events':'auto'}).on('touchend.svgtooltip', function () {
+          charts.hideTooltip();
+        });
+      }
     }
   };
 
