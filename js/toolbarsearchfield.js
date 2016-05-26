@@ -94,7 +94,7 @@
 
         // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
         if (!this.settings.collapsible) {
-          this.inputWrapper.addClass('no-transition').one('activate.' + this.id, function() {
+          this.inputWrapper.addClass('no-transition').one('activated.' + this.id, function() {
             $(this).removeClass('no-transition');
           });
           this.activate();
@@ -111,7 +111,7 @@
           self.fastActivate = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
-        }).on('deactivated.toolbarsearchfield', function() {
+        }).on('deactivate.toolbarsearchfield', function() {
           self.deactivate();
         });
 
@@ -384,7 +384,7 @@
           self.setOpenWidth();
           self.input.focus(); // for iOS
           self.toolbarParent.trigger('recalculateButtons');
-          self.inputWrapper.triggerHandler('activate');
+          self.inputWrapper.triggerHandler('activated');
         }
 
         if (this.settings.collapsible === false && !this.shouldBeFullWidth()) {
@@ -425,7 +425,7 @@
           }
 
           self.toolbarParent.trigger('recalculateButtons');
-          self.inputWrapper.trigger('deactivate');
+          self.inputWrapper.trigger('deactivated');
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
