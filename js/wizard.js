@@ -234,7 +234,7 @@
           .prevAll('.tick').addClass('complete');
 
         this.updateRange();
-        this.element.trigger('activate', [tick]);
+        this.element.trigger('activated', [tick]);
 
         // Timeout allows animation to finish
         setTimeout(function () {

@@ -31,8 +31,6 @@ Release Date: May 26th
   - isTimepicker changed to showTime - Option value
 * 2016-05-11 - Checkboxes - Changed to display inline-block. This should not cause any issues unless you forgot to wrap your checkbox elements in a field element.
 * 2016-05-04 - Slider - changed the name of the _refresh()_ method to _setValue()_ so its clear that it sets the value.  _refresh()_ still exists and is marked as "deprecated" - will be removed in future releases.  Please update your code to use _setValue()_ instead of _refresh()_.
-* 2016-04-27 - Dropdown, Vertical Tabs, Wizard, Tabs  - Event Renamed from activated to active.
-* 2016-04-27 - Searchfield  - Event Renamed from activated to active and deactivated to deactive
 * 2016-04-26 - Expandable Area - Event Renamed from open-expandablearea, close-expandablearea to expand, collapse
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
