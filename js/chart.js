@@ -256,7 +256,7 @@ window.Chart = function(container) {
     height =  parseInt($(container).parent().height()) - margins.top - margins.bottom - legendHeight;  //influences the bar width
 
     //Get the Legend Series'
-    series = dataset[0].data.map(function (d) {
+    series = dataset.map(function (d) {
       return {name: d.name, color: d.color, pattern: d.pattern};
     });
 
