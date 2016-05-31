@@ -106,8 +106,9 @@
 
       handleEvents: function() {
         var self = this;
-        this.expander.onTouchClick('expandablearea').on('click.expandablearea', function() {
+        this.expander.onTouchClick('expandablearea').on('click.expandablearea', function(e) {
           if (!self.isDisabled()) {
+            e.preventDefault();
             self.toggleExpanded();
           }
         });
