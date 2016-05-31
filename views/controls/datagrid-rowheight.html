@@ -24,8 +24,9 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink, href: 'http://www.google.com', click: function() {
-          window.location = 'http:\\www.google.com';
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink, click: function(e, args) {
+          console.log(e, args);
+          //window.location = 'http:\\www.google.com';
         }});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
@@ -45,4 +46,3 @@
  });
 
 </script>
-
