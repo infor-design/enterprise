@@ -101,6 +101,7 @@ $datagrid-short-row-height: 30px;
     tr td {
       height: $datagrid-medium-row-height;
       line-height: $datagrid-medium-row-height;
+      min-height: $datagrid-medium-row-height;
 
       .datagrid-row-heading {
         margin-top: 25px;
@@ -139,6 +140,7 @@ $datagrid-short-row-height: 30px;
     tr td {
       height: $datagrid-short-row-height;
       line-height: $datagrid-short-row-height;
+      min-height: $datagrid-short-row-height;
 
       span {
         line-height: $datagrid-short-row-height;
