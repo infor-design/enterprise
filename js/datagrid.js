@@ -1595,6 +1595,92 @@ $.fn.datagrid = function(options) {
       this.saveColumns();
     },
 
+    // Eexport To Excel
+    exportToExcel: function (fileName, worksheetName) {
+      var self = this,
+        template = ''+
+          '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">'+
+            '<head>'+
+              '<!--[if gte mso 9]>'+
+                '<xml>'+
+                  '<x:ExcelWorkbook>'+
+                    '<x:ExcelWorksheets>'+
+                      '<x:ExcelWorksheet>'+
+                        '<x:Name>{worksheet}</x:Name>'+
+                        '<x:WorksheetOptions>'+
+                          '<x:Panes></x:Panes>'+
+                          '<x:DisplayGridlines></x:DisplayGridlines>'+
+                        '</x:WorksheetOptions>'+
+                      '</x:ExcelWorksheet>'+
+                    '</x:ExcelWorksheets>'+
+                  '</x:ExcelWorkbook>'+
+                '</xml>'+
+              '<![endif]-->'+
+              '<meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>'+
+            '</head>'+
+            '<body>'+
+              '<table border="1px">{table}</table>'+
+            '</body>'+
+          '</html>',
+
+        cleanExtra = function(table) {
+          $('tr, th, td, div, span', table).each(function () {
+            var el = this,
+              elm = $(this);
+
+            if(elm.is('.is-hidden')) {
+              elm.remove();
+              return;
+            }
+
+            $('.is-hidden, .is-draggable-target, .handle, .sort-indicator', el).remove();
+            while(el.attributes.length > 0) {
+              el.removeAttribute(el.attributes[0].name);
+            }
+          });
+          return table;
+        },
+
+        base64 = function(s) {
+          if (window.btoa) {
+            return 'data:application/vnd.ms-excel;base64,' + window.btoa(unescape(encodeURIComponent(s)));
+          } else {
+            return 'data:application/vnd.ms-excel;,' + unescape(encodeURIComponent(s));
+          }
+        },
+
+        format = function(s, c) {
+          return s.replace(/{(\w+)}/g, function(m, p) {
+            return c[p];
+          });
+        },
+
+        table = cleanExtra(self.table.clone()),
+        ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() },
+        msie = window.navigator.userAgent.indexOf('MSIE');
+
+      fileName = (fileName ||
+        self.element.closest('.datagrid-container').attr('id') ||
+        'datagrid') +'.xls';
+
+      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        if (window.navigator.msSaveBlob) {
+          var blob = new Blob([format(template, ctx)], {
+            type: 'application/csv;charset=utf-8;'
+          });
+          navigator.msSaveBlob(blob, fileName);
+        }
+      }
+      else {
+        var link = document.createElement('a');
+        link.href = base64(format(template, ctx));
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    },
+
     //Open Column Personalization Dialog
     personalizeColumns: function () {
       var self = this,
@@ -2085,6 +2171,10 @@ $.fn.datagrid = function(options) {
           menu.append('<li><a href="#" data-option="personalize-columns">' + Locale.translate('PersonalizeColumns') + '</a></li>');
         }
 
+        if (settings.toolbar.exportToExcel) {
+          menu.append('<li><a href="#" data-option="export-to-excel">' + Locale.translate('ExportToExcel') + '</a></li>');
+        }
+
         if (settings.toolbar.advancedFilter) {
           menu.append('<li><a href="#">' + Locale.translate('AdvancedFilter') + '</a></li>');
         }
@@ -2119,6 +2209,9 @@ $.fn.datagrid = function(options) {
 
         if (action === 'personalize-columns') {
           self.personalizeColumns();
+        }
+        if (action === 'export-to-excel') {
+          self.exportToExcel();
         }
       });
 
