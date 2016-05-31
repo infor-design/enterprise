@@ -296,7 +296,8 @@
         indexes.sort(function(a, b) { return a-b; });
         for (var i = indexes[0]; i <= indexes[1]; i++) {
           var item = $('li, tbody tr', this.element).eq(i);
-          if(!item.is('.is-disabled, .is-selected')) {
+
+          if (!item.is('.is-disabled, .is-selected')) {
             this.select(item);
           }
         }
@@ -352,7 +353,7 @@
         });
 
         // Key Board
-        this.element.on('keydown.listview', 'li, tr', function (e) {
+        this.element.on('keypress.listview', 'li, tr', function (e) {
           var item = $(this),
             list = item.parent(),
             key = e.keyCode || e.charCode || 0,
@@ -551,7 +552,7 @@
       },
 
       focus: function (item) {
-        if (item.is(':hidden')) {
+        if (item.is(':hidden') || item.is('.is-disabled')) {
           return;
         }
 
