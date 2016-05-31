@@ -218,6 +218,7 @@
     }
 
     &.popover .arrow:after {
+      border-left-color: $popover-alternate-arrow-color;
       border-right-color: $popover-alternate-arrow-color;
     }
 
