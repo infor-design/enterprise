@@ -23,8 +23,8 @@
           <div class="tick current">
             <span class="label">Connection Protocol</span>
           </div>
-          <div class="tick is-disabled" onclick="testDisabled(this);">
-            <span class="label">Information Disabled</span>
+          <div class="tick">
+            <span class="label">Information</span>
           </div>
           <div class="tick">
             <span class="label">Summary</span>
@@ -35,16 +35,3 @@
 
   </div>
 </div>
-
-<script>
-  $('body').on('initialized', function() {
-    $('#disabled').on('click.test', function() {
-      testDisabled(this);
-    });
-  });
-
-  function testDisabled(el) {
-    var msg = $('<span> Clicked</span>').css('color', 'red');
-    $('.label', el).append(msg);
-  }
-</script>
