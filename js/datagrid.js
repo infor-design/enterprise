@@ -1922,6 +1922,11 @@ $.fn.datagrid = function(options) {
         self.setSortColumn($(this).attr('data-column-id'));
       });
 
+      //Prevent redirects
+      this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'a', function (e) {
+        e.preventDefault();
+      });
+
       //Handle Clicking Buttons and links in formatters
       this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
         e.stopPropagation();

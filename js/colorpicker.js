@@ -102,7 +102,7 @@
             {label: 'Amethyst', number: '04', value: 'B59ECA'},
             {label: 'Amethyst', number: '03', value: 'C7B4DB'},
             {label: 'Amethyst', number: '02', value: 'DACCEC'},
-            {label: 'Amethyst', number: '01', value: 'E9A0f7'},
+            {label: 'Amethyst', number: '01', value: 'EDE3FC'},
             {label: 'Azure', number: '10', value: '133C59'},
             {label: 'Azure', number: '09', value: '134D71'},
             {label: 'Azure', number: '08', value: '1D5F8A'},

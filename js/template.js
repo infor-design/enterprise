@@ -32,7 +32,7 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Template(element) {
+    function Template(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
