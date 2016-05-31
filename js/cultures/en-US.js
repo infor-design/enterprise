@@ -142,6 +142,7 @@
       'Equals': {id: 'Equals', value: 'Equals', comment: 'Equals in icons for filtering'},
       'ExitFullView': {id: 'ExitFullView', value: 'Exit Full View', comment: 'Exit Full View tooltip'},
       'Export': {id: 'Export', value: 'Export', comment: 'Export tooltip'},
+      'ExportToExcel': {id: 'ExportToExcel', value: 'Export To Excel', comment: 'Export To Excel menu option in datagrid'},
       'Favorite': {id: 'Favorite', value: 'Favorite', comment: 'A favorite item'},
       'FileUpload': {id: 'FileUpload', value: 'File Upload. Press Enter to Browse for a file', comment: 'Screen Reader instructions'},
       'Filter': {id: 'Filter', value: 'Filter', comment: 'Filter tooltip'},
