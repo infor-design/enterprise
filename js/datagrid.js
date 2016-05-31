@@ -408,9 +408,11 @@ window.Editors = {
       this.select = this.input;
 
       if (column.options) {
+        var html, opt;
+
         for (var i = 0; i < column.options.length; i++) {
-          var html = $('<option></<option>'),
-            opt = column.options[i];
+          html = $('<option></<option>');
+          opt = column.options[i];
 
           if (opt.selected || value === opt.value) {
             html.attr('selected', 'true');
