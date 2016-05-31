@@ -41,10 +41,11 @@ npm publish
 * Create new version in Jira
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
-* Comment in the analytics in footer.js
+* Comment in the analytics in footer.html
 * Deploy to to http://107.170.15.202:4000
-* Deploy to to soho.infor.com 
+* Deploy to to soho.infor.com
 * Create branch for major versions inside stash
+* Git Tag
 
 # Future
 * Make Build
