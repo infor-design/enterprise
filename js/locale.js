@@ -206,6 +206,7 @@
       ret = ret.replace('HH', hours);
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', this.pad(seconds, 2));
+      ret = ret.replace('SSS', this.pad(value.getMilliseconds(), 0));
 
       //months
       ret = ret.replace('MMMM', cal.months.wide[month]);  //full

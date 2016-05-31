@@ -35,7 +35,14 @@ npm publish
 ```bash
 npm info @infor/sohoxi dist-tags
 ```
+* Merge a fix to a branch
 
+```bash
+git checkout release/4.2.0
+git cherry-pick 802b102fda5420a0f714d9d0efa5eff635fe77d9 //from http://git.infor.com/projects/SOHO/repos/controls/commits
+git push
+git checkout master
+```
 
 # How To
 
