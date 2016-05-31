@@ -152,16 +152,9 @@
   }
 }
 
-// Set padding/height etc. when using Vertical Tabs directly inside a page container
-.page-container > .tab-container {
-  height: 100%;
-
-  .tab-list {
-    height: 100%;
-  }
-}
-
-.page-container  > .tab-panel {
+// Page containers that directly house '.tab-panel' elements will allow them to fill the height of the container
+// Used in vertical/header/module tabs.
+.page-container > .tab-panel {
   height: 100%;
   padding-top: 0;
 }

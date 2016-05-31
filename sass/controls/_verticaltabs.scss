@@ -115,11 +115,14 @@
 }
 
 // Set padding/height etc. when using Vertical Tabs directly inside a page container
-.page-container > .tab-container.vertical {
+// Also works for placing a set of vertical tabs directly inside of a higher-level '.tab-panel' element
+.page-container > .tab-container.vertical,
+.tab-panel > .tab-container.vertical {
   height: 100%;
+  overflow: auto;
 
   .tab-list {
-    height: 100%;
+    min-height: 100%;
   }
 }
 
