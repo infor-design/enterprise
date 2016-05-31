@@ -792,11 +792,9 @@
     }
 
     // ICONS: Right to Left Direction
-    setTimeout(function() {
-      if (window.Locale.isRTL()) {
-        window.Locale.flipIconsHorizontally();
-      }
-    }, 300);
+    if (window.Locale.isRTL()) {
+      window.Locale.flipIconsHorizontally();
+    }
 
   });
 

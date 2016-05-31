@@ -84,6 +84,14 @@ define([
       expect(Locale.formatDate(dt, {pattern: 'hhmmss'})).to.equal(h+m+s);
       expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal(h24+m+s);
       //expect(Locale.formatDate(dt, {date: 'timestamp'})).to.equal(h+m+s);
+
+    },
+
+    'should format millis': function() {
+      expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS a '})).to.equal('15/3/2016 12:30:36.142 PM');
+
+      expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS '})).to.equal('15/3/2016 12:30:36.142');
+
     },
 
     //Format some random date type cases
