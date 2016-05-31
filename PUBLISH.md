@@ -30,6 +30,12 @@ git tag 4.0.7
 ```bash
 npm publish
 ```
+* Check Published Tags
+
+```bash
+npm info @infor/sohoxi dist-tags
+```
+
 
 # How To
 
