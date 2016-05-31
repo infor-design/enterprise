@@ -151,7 +151,7 @@
           this.titleButton.prependTo(this.element.find('.title'));
 
           // Need to trigger an update on the toolbar control to make sure tabindexes and events are all firing on the button
-          this.toolbar.element.trigger('updated');
+          this.toolbar.element.triggerHandler('updated');
         }
 
         this.titleButton.find('.icon.app-header').addClass('go-back');
@@ -273,7 +273,7 @@
         this.titlePopup.button().popupmenu();
 
         // Update the Header toolbar to account for the new button
-        this.toolbarElem.trigger('updated');
+        this.toolbarElem.triggerHandler('updated');
       },
 
       handleEvents: function() {
@@ -441,7 +441,7 @@
           this.titleButton = $();
 
           // Need to trigger an update on the toolbar control to make sure tabindexes and events are all firing on the button
-          this.toolbar.element.trigger('updated');
+          this.toolbar.element.triggerHandler('updated');
         }
       },
 
@@ -555,7 +555,7 @@
         this.titlePopup = undefined;
         this.titlePopupMenu = undefined;
 
-        this.toolbarElem.trigger('updated');
+        this.toolbarElem.triggerHandler('updated');
       },
 
       // teardown events

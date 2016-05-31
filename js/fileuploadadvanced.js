@@ -197,7 +197,7 @@
         // Update progress-bar
         var setProgress = function(progress) {
             self.element.triggerHandler('fileprogress', [{file: file, 'progress': progress}]);
-            progressBar.attr('data-value', progress).trigger('updated.progress');
+            progressBar.attr('data-value', progress).triggerHandler('updated');
           },
 
           // Set abort action

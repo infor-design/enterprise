@@ -403,7 +403,7 @@
         //for form resets.
         self.element.closest('form').on('reset.dropdown', function() {
           setTimeout(function () {
-            self.element.trigger('updated');
+            self.element.triggerHandle('updated');
           }, 1);
         });
       },
@@ -566,7 +566,7 @@
 
         if (blank.length > 0) {
           blank[0].selected = true;
-          this.element.trigger('updated').trigger('change');
+          this.element.triggerHandler('updated').triggerHandler('change');
         }
 
       },

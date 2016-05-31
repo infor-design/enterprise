@@ -46,7 +46,7 @@ $(function () {
 
       //set the value
       if (opts.value) {
-        $(element).val(valueAccessor().value()).trigger('updated');
+        $(element).val(valueAccessor().value()).triggerHandler('updated');
       }
 
       //Setup events
@@ -82,7 +82,7 @@ $(function () {
         $(element).disable();
       }
 
-      $(element).val(ko.utils.unwrapObservable(opts.value)).trigger('updated');
+      $(element).val(ko.utils.unwrapObservable(opts.value)).triggerHandler('updated');
     },
 
     setData: function(elem, opts) {
@@ -98,7 +98,7 @@ $(function () {
           var opt = $('<option></option').attr('value', (opts.optionsValue ? data[i][opts.optionsValue] : data[i].key)).html((opts.optionsText ? data[i][opts.optionsText] : data[i].name));
           elem.append(opt);
         }
-        elem.trigger('updated');
+        elem.triggerHandler('updated');
       }
     }
   };
@@ -266,7 +266,7 @@ $(function () {
 
       //set the value
       if (opts.value) {
-        $(element).val(valueAccessor().value()).trigger('updated');
+        $(element).val(valueAccessor().value()).triggerHandler('updated');
       }
 
       //Setup events
@@ -302,7 +302,7 @@ $(function () {
         $(element).disable();
       }
 
-      $(element).val(ko.utils.unwrapObservable(opts.value)).trigger('updated');
+      $(element).val(ko.utils.unwrapObservable(opts.value)).triggerHandler('updated');
     },
 
     setData: function(elem, opts) {
@@ -319,7 +319,7 @@ $(function () {
           var opt = $('<option></option').attr('value', (opts.optionsValue ? data[i][opts.optionsValue] : data[i].key)).html((opts.optionsText ? data[i][opts.optionsText] : data[i].name));
           elem.append(opt);
         }
-        elem.trigger('updated');
+        elem.triggerHandler('updated');
       }
     }
   };

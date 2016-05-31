@@ -447,7 +447,7 @@
                     '#timepicker-period': t.period
                   };
                   $.each(fields, function(key, val) {
-                    $(key, timepickerPopup).val(val).trigger('updated');
+                    $(key, timepickerPopup).val(val).triggerHandler('updated');
                   });
                 });
               }

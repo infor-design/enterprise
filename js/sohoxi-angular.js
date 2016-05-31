@@ -173,14 +173,14 @@
 
           scope.$watch(modelMax, function(newValue, oldValue) {
             if (newValue !== oldValue) {
-              elem.attr('max', newValue).trigger('updated');
+              elem.attr('max', newValue).triggerHandler('updated');
               api.refresh(modelVal);
             }
           });
 
           scope.$watch(modelMin, function(newValue, oldValue) {
             if (newValue !== oldValue) {
-              elem.attr('min', newValue).trigger('updated');
+              elem.attr('min', newValue).triggerHandler('updated');
               api.refresh(modelVal);
             }
           });
