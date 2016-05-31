@@ -669,6 +669,8 @@ $.fn.datagrid = function(options) {
     init: function(){
       var self = this;
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
+      this.isIe = $('html').is('.ie');
+      this.isIe9 = $('html').is('.ie9');
       this.settings = settings;
       this.initSettings();
       this.originalColumns = this.settings.columns;
@@ -1656,15 +1658,21 @@ $.fn.datagrid = function(options) {
         },
 
         table = cleanExtra(self.table.clone()),
-        ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() },
-        msie = window.navigator.userAgent.indexOf('MSIE');
+        ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
 
       fileName = (fileName ||
         self.element.closest('.datagrid-container').attr('id') ||
         'datagrid') +'.xls';
 
-      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-        if (window.navigator.msSaveBlob) {
+      if (this.isIe) {
+        if (this.isIe9) {
+          var IEwindow = window.open();
+          IEwindow.document.write('sep=,\r\n' + format(template, ctx));
+          IEwindow.document.close();
+          IEwindow.document.execCommand('SaveAs', true, fileName);
+          IEwindow.close();
+        }
+        else if (window.navigator.msSaveBlob) {
           var blob = new Blob([format(template, ctx)], {
             type: 'application/csv;charset=utf-8;'
           });
