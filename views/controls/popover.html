@@ -1,33 +1,68 @@
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
+    <h2 class="title">Popover</h2>
+    <p>Placing the Popover control on left and right sides</p>
+  </div>
+</div>
 
-    <button class="btn-tertiary" data-popover="popover-contents-click" data-title="ABC Engine Company" data-trigger="click" type="button" data-closebutton="true" data-extra-class="alternate">Information Popver</button><br>
+<div class="row top-padding">
+  <div class="ten columns">
+    <button class="btn-tertiary" data-popover="popover-contents-click-left" data-title="ABC Engine Company" data-trigger="click" type="button" data-closebutton="true" data-extra-class="alternate">ABC Information Popover</button>
+  </div>
+  <div class="two columns">
+    <button class="btn-tertiary" data-popover="popover-contents-click-right" data-title="XYZ Engine Company" data-trigger="click" type="button" data-closebutton="true" data-extra-class="alternate">XYZ Information Popover</button>
+  </div>
+</div>
 
-    <div id="popover-contents-click" class="hidden">
-      <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
-      <div style="width: 315px; margin: 7px auto;">
-        <table role="grid" style="width: 210px" class="l-pull-left">
-          <thead>
-            <tr>
-              <th scope="col" role="columnheader">Quantity</th>
-              <th scope="col" role="columnheader">Unit Price</th>
-              <th scope="col" role="columnheader">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>50</td>
-              <td>$18.00</td>
-              <td><strong>$900.00</strong></td>
-            </tr>
-          </tbody>
-        </table>
-        <button class="btn-primary" type="button">Apply</button>
-      </div>
-      <div class="modal-buttonset">
-        <button type="button" class="btn-modal-primary">View more</button>
-      </div>
-    </div>
 
+<div id="popover-contents-click-left" class="hidden">
+  <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
+  <div style="width: 315px; margin: 7px auto;">
+    <table role="grid" style="width: 210px" class="l-pull-left">
+      <thead>
+        <tr>
+          <th scope="col" role="columnheader">Quantity</th>
+          <th scope="col" role="columnheader">Unit Price</th>
+          <th scope="col" role="columnheader">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>50</td>
+          <td>$18.00</td>
+          <td><strong>$900.00</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-primary" type="button">Apply</button>
+  </div>
+  <div class="modal-buttonset">
+    <button type="button" class="btn-modal-primary">View more</button>
+  </div>
+</div>
+
+<div id="popover-contents-click-right" class="hidden">
+  <p>Purchase <strong>3</strong> more to save <a href="#" class="hyperlink"><strong>$150</strong></a> total</p>
+  <div style="width: 315px; margin: 7px auto;">
+    <table role="grid" style="width: 210px" class="l-pull-left">
+      <thead>
+        <tr>
+          <th scope="col" role="columnheader">Quantity</th>
+          <th scope="col" role="columnheader">Unit Price</th>
+          <th scope="col" role="columnheader">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>50</td>
+          <td>$18.00</td>
+          <td><strong>$980.57</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-primary" type="button">Apply</button>
+  </div>
+  <div class="modal-buttonset">
+    <button type="button" class="btn-modal-primary">View more</button>
   </div>
 </div>
