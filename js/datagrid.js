@@ -3029,7 +3029,11 @@ $.fn.datagrid = function(options) {
       }
 
       if (typeof oldVal === 'number') {
-        newVal = parseFloat(value);
+        newVal = value;
+
+        if (typeof Locale !== undefined) {
+          newVal = Locale.formatNumber(newVal, (col.numberFormat ? col.numberFormat : null));
+        }
 
         // double check if newValue is NaN when value is true/false
         if (isNaN(newVal)){

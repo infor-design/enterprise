@@ -528,6 +528,10 @@
       }
 
       if (typeof number === 'string') {
+
+        if (decimal !== '.') {
+          number = number.replace(decimal, '.');
+        }
         number = parseFloat(number);
       }
 
@@ -542,6 +546,11 @@
       if (minimumFractionDigits === 0) { //Not default
         formattedNum = formattedNum.replace(/(\.[0-9]*?)0+$/, '$1'); // remove trailing zeros
         formattedNum = formattedNum.replace(/\.$/, '');              // remove trailing dot
+      }
+
+      if (minimumFractionDigits === 0 && decimal !== '.') { //Not default
+        formattedNum = formattedNum.replace(/(\,[0-9]*?)0+$/, '$1'); // remove trailing zeros
+        formattedNum = formattedNum.replace(/\,$/, '');              // remove trailing dot
       }
 
       if (minimumFractionDigits > 0) {
