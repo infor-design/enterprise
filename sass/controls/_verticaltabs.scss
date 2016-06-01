@@ -4,80 +4,81 @@
 .tab-container.vertical {
   background-color: $panel-bg-color;
   margin-top: 0;
+  min-height: 200px;
   position: relative;
 
-  .tab-list {
+  > .tab-list {
     background-color: $body-bg-color;
     border-right: 1px solid $graphite02;
     display: inline-block;
     vertical-align: top;
     width: 250px;
-  }
 
-  .tab {
-    width: 100%;
-
-    a {
-      @include antialiased();
-      color: $font-color;
-      @include font-size(14);
-      padding: 1em;
-      @include css3(user-select, none);
-      @include css3(touch-callout, none);
-    }
-
-    &:not(.is-disabled):not(.is-selected):hover {
-      color: $tab-hover-color;
+    > .tab {
+      width: 100%;
 
       a {
+        @include antialiased();
+        color: $font-color;
+        @include font-size(14);
+        padding: 1em;
+        @include css3(user-select, none);
+        @include css3(touch-callout, none);
+      }
+
+      &:not(.is-disabled):not(.is-selected):hover {
         color: $tab-hover-color;
-      }
 
-      .icon {
-        fill: $tab-hover-color;
-      }
-    }
+        a {
+          color: $tab-hover-color;
+        }
 
-    &.is-selected {
-      background-color: transparent;
-
-      a {
-        color: $azure06;
-      }
-    }
-
-    &.is-focused {
-      background-color: $graphite02;
-
-      a {
-        color: $font-color-highcontrast;
+        .icon {
+          fill: $tab-hover-color;
+        }
       }
 
       &.is-selected {
-        background-color: $azure06;
+        background-color: transparent;
 
         a {
-          color: $inverse-color;
+          color: $azure06;
         }
       }
-    }
 
-    &.is-disabled {
-      color: $disabled-color;
+      &.is-focused {
+        background-color: $graphite02;
 
-      > a,
-      &:hover > a,
-      &.is-selected > a,
-      .count {
-        color: $disabled-color !important;
-        cursor: default;
+        a {
+          color: $font-color-highcontrast;
+        }
+
+        &.is-selected {
+          background-color: $azure06;
+
+          a {
+            color: $inverse-color;
+          }
+        }
       }
 
-      &:hover {
-        cursor: default;
+      &.is-disabled {
+        color: $disabled-color;
 
-        &::before {
-          content: none !important;
+        > a,
+        &:hover > a,
+        &.is-selected > a,
+        .count {
+          color: $disabled-color !important;
+          cursor: default;
+        }
+
+        &:hover {
+          cursor: default;
+
+          &::before {
+            content: none !important;
+          }
         }
       }
     }

@@ -4,39 +4,38 @@
 .tab-container.horizontal {
   margin-bottom: 20px;
 
-  .tab-list {
+  > .tab-list {
     border-bottom: 1px solid $tab-border-color;
     height: 50px;
 
     .icon:not(.icon-error) {
       fill: $tab-text-color;
     }
-  }
 
-  .tab {
-    color: $tab-text-color;
+    > .tab {
+      color: $tab-text-color;
 
-    a {
-      line-height: 12px;
-      padding: 20px 11px 18px;
-    }
+      a {
+        line-height: 12px;
+        padding: 20px 11px 18px;
+      }
 
-    &:hover:not(.is-disabled) {
-      color: $tab-hover-color;
+      &:hover:not(.is-disabled) {
+        color: $tab-hover-color;
 
-      .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-hover-color;
+        .icon:not(.is-error):not(.icon-error) {
+          fill: $tab-hover-color;
+        }
+      }
+
+      &.is-selected {
+        color: $tab-selected-color;
+
+        .icon:not(.is-error):not(.icon-error) {
+          fill: $tab-selected-color;
+        }
       }
     }
-
-    &.is-selected {
-      color: $tab-selected-color;
-
-      .icon:not(.is-error):not(.icon-error) {
-        fill: $tab-selected-color;
-      }
-    }
-
   }
 
   .tab-more {

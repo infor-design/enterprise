@@ -183,116 +183,6 @@
 .tab-container.horizontal,
 .tab-container.header-tabs {
 
-  .tab {
-    border-radius: 2px 2px 0 0;
-    padding: 0;
-    @include css3(transition, background-color .25s ease);
-
-    &:not(.last-child) {
-      margin-right: 10px;
-    }
-
-    &:before {
-      @include tab-after-off;
-    }
-
-    &:not(.separator):hover {
-      &::before {
-        @include tab-after-hover;
-      }
-
-      &:first-child::before,
-      &:last-child::before {
-        width: calc(100% - 1px);
-      }
-    }
-
-    &.is-focused {
-      &:after {
-        @include tab-outline-focus;
-      }
-    }
-
-    &.is-disabled {
-      color: $disabled-color !important;
-
-      &:before {
-        content: none !important;
-      }
-
-      a,
-      &:hover a,
-      &.is-selected a {
-        cursor: default;
-      }
-    }
-
-    &.dismissible {
-      padding-right: 8px;
-
-      .icon {
-        height: 10px;
-        margin-left: -3px;
-        margin-top: -1px;
-        padding-right: 1px;
-        position: relative;
-        width: 14px;
-
-        &.icon-error {
-          height: 16px;
-          right: -9px;
-          top: -1px;
-          width: 16px;
-        }
-      }
-    }
-
-    &.has-popupmenu {
-      .icon {
-        height: 16px;
-        margin: 0 0 0 -10px;
-        width: 32px;
-      }
-
-      .icon-error {
-        height: 16px;
-        right: -5px;
-        top: 11px;
-        width: 16px;
-      }
-    }
-
-    a {
-      color: inherit;
-      @include antialiased();
-      @include font-size(14);
-      font-weight: normal;
-      text-decoration: none;
-
-      > * {
-        line-height: 1.14;
-      }
-
-      span {
-        color: inherit;
-      }
-    }
-
-    .count {
-      display: block;
-      font-size: 180%;
-    }
-
-    .icon-error {
-      fill: $error-icon-fill;
-      height: 14px;
-      position: absolute;
-      right: -10px;
-      top: 18px;
-      width: 18px;
-    }
-  }
-
   .tab-more {
     @include font-size(14);
     background-color: transparent;
@@ -311,6 +201,118 @@
   .tab-list {
     padding: 0;
     width: 100%;
+  }
+
+  > .tab-list {
+    > .tab {
+      border-radius: 2px 2px 0 0;
+      padding: 0;
+      @include css3(transition, background-color .25s ease);
+
+      &:not(.last-child) {
+        margin-right: 10px;
+      }
+
+      &:before {
+        @include tab-after-off;
+      }
+
+      &:not(.separator):hover {
+        &::before {
+          @include tab-after-hover;
+        }
+
+        &:first-child::before,
+        &:last-child::before {
+          width: calc(100% - 1px);
+        }
+      }
+
+      &.is-focused {
+        &:after {
+          @include tab-outline-focus;
+        }
+      }
+
+      &.is-disabled {
+        color: $disabled-color !important;
+
+        &:before {
+          content: none !important;
+        }
+
+        a,
+        &:hover a,
+        &.is-selected a {
+          cursor: default;
+        }
+      }
+
+      &.dismissible {
+        padding-right: 8px;
+
+        .icon {
+          height: 10px;
+          margin-left: -3px;
+          margin-top: -1px;
+          padding-right: 1px;
+          position: relative;
+          width: 14px;
+
+          &.icon-error {
+            height: 16px;
+            right: -9px;
+            top: -1px;
+            width: 16px;
+          }
+        }
+      }
+
+      &.has-popupmenu {
+        .icon {
+          height: 16px;
+          margin: 0 0 0 -10px;
+          width: 32px;
+        }
+
+        .icon-error {
+          height: 16px;
+          right: -5px;
+          top: 11px;
+          width: 16px;
+        }
+      }
+
+      a {
+        color: inherit;
+        @include antialiased();
+        @include font-size(14);
+        font-weight: normal;
+        text-decoration: none;
+
+        > * {
+          line-height: 1.14;
+        }
+
+        span {
+          color: inherit;
+        }
+      }
+
+      .count {
+        display: block;
+        font-size: 180%;
+      }
+
+      .icon-error {
+        fill: $error-icon-fill;
+        height: 14px;
+        position: absolute;
+        right: -10px;
+        top: 18px;
+        width: 18px;
+      }
+    }
 
     .separator {
       cursor: default;
