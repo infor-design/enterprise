@@ -1,0 +1,108 @@
+﻿
+<div class="page-container top-padding scrollable" role="main">
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+  <script id="swaplist-tmpl" type="text/html">
+      <ul data-swap-handle=".handle">
+        {{#dataset}}
+        {{#text}}
+          <li
+          {{#value}}
+            data-value="{{value}}"
+          {{/value}}
+          {{#selected}}
+            selected="selected"
+          {{/selected}}
+          {{#disabled}}
+            class="is-disabled"
+          {{/disabled}}
+          >
+            <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+            <div class="swaplist-item-content">
+              <p>{{text}}</p>
+            </div>
+          </li>
+        {{/text}}
+        {{/dataset}}
+      </ul>
+  </script>
+
+  <div class="row">
+    <div class="columns six">
+
+      <div class="swaplist" data-init="false" id="example-swaplist-1">
+        <div class="card available">
+          <div class="card-header">
+            <h2 class="card-title">Available</h2>
+            <div class="buttons">
+              <button class="btn btn-moveto-selected" type="button">
+                <span class="audible">Select</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-right-arrow"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="listview">
+              <ul data-swap-handle=".handle">
+                <li data-value="opt-1">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Option A</p>
+                  </div>
+                </li>
+                <li data-value="opt-2">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Option B</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card selected">
+          <div class="card-header">
+            <h2 class="card-title">Selected</h2>
+            <div class="buttons">
+              <button class="btn btn-moveto-left" type="button">
+                <span class="audible">Move to left</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-left-arrow"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="listview">
+              <ul data-swap-handle=".handle">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+  // Initialize all SoHo Xi Controls and set the locale
+  $(function () {
+
+
+    // Each individual Dataset Example ===========================================
+    var available = [], selected = [];
+
+    available.push({id: 1, value: 'opt-1', text: 'Option A'});
+    available.push({id: 2, value: 'opt-2', text: 'Option B'});
+
+    $('#example-swaplist-1').swaplist({available: available, selected: selected});
+
+  });
+</script>

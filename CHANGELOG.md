@@ -1,10 +1,10 @@
 # 4.2.1 - Patch Release
 Release Date: TBD
 
-* New - ..
+* New - Datagrid Export to XLS
 
 ## Breaking Changes
-* 2016-MM-DD - ....
+* 2016-06-01 - Wizard now longer has disabled style as this conflicts with "not completed" style. If a situation arises where a wizard tab cannot be clicked, use error messages to indicate.
 
 ## Ui Changes
 * 2016-MM-DD - ....
