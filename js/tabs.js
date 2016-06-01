@@ -70,6 +70,7 @@
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
+          this.container.addClass('tab-panel-container');
         }
 
         // Add a default tabs class of "horizontal" if it doesn't already exist

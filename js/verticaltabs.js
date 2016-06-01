@@ -54,6 +54,7 @@
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
+          this.container.addClass('tab-panel-container');
         }
 
         this.tablist = self.element.find('.tab-list');
@@ -488,10 +489,18 @@
         return this.element.closest('.tab-panel').length;
       },
 
+      isNestedInLayoutTabs: function() {
+        var nestedInModuleTabs = this.element.closest('.module-tabs').length,
+          nestedInHeaderTabs = this.element.closest('.header-tabs').length,
+          hasTabContainerClass = this.element.closest('.tab-panel-container').length;
+
+        return (nestedInModuleTabs > 0 || nestedInHeaderTabs > 0 || hasTabContainerClass > 0);
+      },
+
       handleResize: function() {
         // When tabs are full-size (part of a layout) CSS rules should handle this better
         // due to less strange sizing constraints.  JS resizing is necessary for nesting.
-        if (!this.isNested() || this.isHidden()) {
+        if (!this.isNested() || this.isNestedInLayoutTabs() || this.isHidden()) {
           return;
         }
 

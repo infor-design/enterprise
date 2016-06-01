@@ -1,85 +1,123 @@
 // Vertical Tabs
 //===================================================
 
+// The actual tab styles are abstracted out because there are several different configurations
+// for the Vertical Tabset that need to be written with child selectors in order not to conflict
+// if they are nested.
+@mixin vertical-tab-style {
+  > .tab {
+    width: 100%;
+
+    a {
+      @include antialiased();
+      color: $font-color;
+      @include font-size(14);
+      @include css3(user-select, none);
+      @include css3(touch-callout, none);
+    }
+
+    &:not(.is-disabled):not(.is-selected):hover {
+      color: $tab-hover-color;
+
+      a {
+        color: $tab-hover-color;
+      }
+
+      .icon {
+        fill: $tab-hover-color;
+      }
+    }
+
+    &.is-selected {
+      background-color: transparent;
+
+      a {
+        color: $azure06;
+      }
+    }
+
+    &.is-focused {
+      background-color: $graphite02;
+
+      a {
+        color: $font-color-highcontrast;
+      }
+
+      &.is-selected {
+        background-color: $azure06;
+
+        a {
+          color: $inverse-color;
+        }
+      }
+    }
+
+    &.is-disabled {
+      color: $disabled-color;
+
+      > a,
+      &:hover > a,
+      &.is-selected > a,
+      .count {
+        color: $disabled-color !important;
+        cursor: default;
+      }
+
+      &:hover {
+        cursor: default;
+
+        &::before {
+          content: none !important;
+        }
+      }
+    }
+  }
+}
+
+.tab-list-info {
+  @include antialiased();
+  color: $font-color-extrahighcontrast;
+  @include font-size(14);
+  padding: .7em 25px;
+}
+
 .tab-container.vertical {
   background-color: $panel-bg-color;
   margin-top: 0;
   min-height: 200px;
   position: relative;
 
-  > .tab-list {
+  > .tab-list,
+  > .tab-list-container {
     background-color: $body-bg-color;
     border-right: 1px solid $graphite02;
     display: inline-block;
     vertical-align: top;
     width: 250px;
+  }
+
+  // Use '.tab-list-container' to wrap the tab list when you have other elements inside of the sidebar
+  // of the vertical tabset (for example, optional title, optional button, etc).
+  > .tab-list-container {
+    > .tab-list {
+      padding-left: 25px;
+
+      @include vertical-tab-style;
+      > .tab {
+        a {
+          padding: 0.7em 1em;
+        }
+      }
+    }
+  }
+
+  // Normal configuration of the tabset can just have '.tab-list' directly inside the vertical tabs container.
+  > .tab-list {
+    @include vertical-tab-style;
 
     > .tab {
-      width: 100%;
-
       a {
-        @include antialiased();
-        color: $font-color;
-        @include font-size(14);
         padding: 1em;
-        @include css3(user-select, none);
-        @include css3(touch-callout, none);
-      }
-
-      &:not(.is-disabled):not(.is-selected):hover {
-        color: $tab-hover-color;
-
-        a {
-          color: $tab-hover-color;
-        }
-
-        .icon {
-          fill: $tab-hover-color;
-        }
-      }
-
-      &.is-selected {
-        background-color: transparent;
-
-        a {
-          color: $azure06;
-        }
-      }
-
-      &.is-focused {
-        background-color: $graphite02;
-
-        a {
-          color: $font-color-highcontrast;
-        }
-
-        &.is-selected {
-          background-color: $azure06;
-
-          a {
-            color: $inverse-color;
-          }
-        }
-      }
-
-      &.is-disabled {
-        color: $disabled-color;
-
-        > a,
-        &:hover > a,
-        &.is-selected > a,
-        .count {
-          color: $disabled-color !important;
-          cursor: default;
-        }
-
-        &:hover {
-          cursor: default;
-
-          &::before {
-            content: none !important;
-          }
-        }
       }
     }
   }
@@ -87,9 +125,13 @@
   // NOTE: It's possible for these tab panels not to be included within the .tab-container class.
   // If the panels are present inside the .tab-container, these styles will be necessary.
   .tab-panel {
-    display: inline-block;
     margin: 20px;
     vertical-align: top;
+  }
+
+  > .tab-panel,
+  > .tab-panel-container {
+    display: inline-block;
     width: calc(100% - 318px);
   }
 
@@ -122,7 +164,8 @@
   height: 100%;
   overflow: auto;
 
-  .tab-list {
+  .tab-list,
+  .tab-list-container {
     min-height: 100%;
   }
 }
