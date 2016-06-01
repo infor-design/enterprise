@@ -114,7 +114,7 @@
 
               // Don't invoke elements inside of "container" controls that need to invoke their internal
               // items in a specific order.
-              if (elem.parents('.toolbar').length) {
+              if (elem.parents('.toolbar').length && !elem.parents().hasClass('masthead')) {
                 return;
               }
 

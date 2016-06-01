@@ -1,34 +1,6 @@
 ﻿
 <div class="page-container top-padding scrollable" role="main">
 
-<!--This is only needed because it renders first on the server on the first one-->
-{{={{{ }}}=}}
-
-  <script id="swaplist-tmpl" type="text/html">
-      <ul data-swap-handle=".handle">
-        {{#dataset}}
-        {{#text}}
-          <li
-          {{#value}}
-            data-value="{{value}}"
-          {{/value}}
-          {{#selected}}
-            selected="selected"
-          {{/selected}}
-          {{#disabled}}
-            class="is-disabled"
-          {{/disabled}}
-          >
-            <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
-            <div class="swaplist-item-content">
-              <p>{{text}}</p>
-            </div>
-          </li>
-        {{/text}}
-        {{/dataset}}
-      </ul>
-  </script>
-
   <div class="row">
     <div class="columns six">
 
@@ -94,13 +66,6 @@
 
   // Initialize all SoHo Xi Controls and set the locale
   $(function () {
-
-
-    // Each individual Dataset Example ===========================================
-    var available = [], selected = [];
-
-    available.push({id: 1, value: 'opt-1', text: 'Option AA'});
-    available.push({id: 2, value: 'opt-2', text: 'Option BB'});
 
     $('#example-swaplist-1').swaplist({available: [], selected: []});
 
