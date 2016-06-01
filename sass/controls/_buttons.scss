@@ -480,3 +480,33 @@ html[dir='rtl'] {
     }
   }
 }
+
+//Special "Ghost" Secondary Border button-font-size
+.btn-secondary-border {
+  @include transition(all 300ms cubic-bezier(.17, .04, .03, .94));
+  border: 1px solid $secondary-border-btn-border-color;
+  border-radius: 2px;
+  color: $secondary-border-btn-color;
+
+  span {
+    padding: 0 26px;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $secondary-border-btn-hover-border-color;
+    color: $secondary-border-btn-hover-color;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $primary-color;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: .5;
+  }
+
+  .ripple-effect {
+    background-color: $secondary-border-btn-ripple-color;
+  }
+}
