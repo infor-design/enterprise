@@ -1502,8 +1502,12 @@ $.fn.datagrid = function(options) {
     },
 
     //given a new column set update the rows and reload
-    updateColumns: function(columns) {
+    updateColumns: function(columns, columnGroups) {
       this.settings.columns = columns;
+
+      if (columnGroups) {
+        this.settings.columnGroups = columnGroups;
+      }
 
       this.renderHeader();
       this.renderRows();
@@ -1527,7 +1531,7 @@ $.fn.datagrid = function(options) {
 
     //Restore the columns from a saved list or local storage
     restoreColumns: function (cols) {
-      if (!localStorage) {
+      if (!localStorage || !this.settings.saveColumns) {
         return;
       }
 
