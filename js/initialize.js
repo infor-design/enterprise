@@ -213,7 +213,7 @@
           ['spinbox'],
 
           //sort drag and drop
-          ['sort'],
+          ['arrange'],
 
           //Swap List
           ['swaplist'],

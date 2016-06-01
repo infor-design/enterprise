@@ -266,7 +266,7 @@
         }
 
         if (popupMenuInstance) {
-          this.more.triggerHander('updated');
+          this.more.triggerHandler('updated');
           popupMenuInstance.element.on('beforeopen', refreshTextAndDisabled);
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
