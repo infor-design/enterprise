@@ -1724,8 +1724,9 @@ $.fn.datagrid = function(options) {
           modal.element.find('.searchfield').searchfield({clearable: true});
           modal.element.find('.listview').listview({searchable: true});
 
-          modal.element.find('.checkbox').onTouchClick().on('click', function () {
-            var chk = $(this),
+          modal.element.find('a').onTouchClick().on('click', function () {
+            e.preventDefault();
+            var chk = $(this).find('.checkbox'),
                 id = chk.attr('data-column-id'),
                 isChecked = chk.prop('checked');
 

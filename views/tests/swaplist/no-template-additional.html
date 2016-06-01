@@ -1,0 +1,98 @@
+
+<div class="page-container top-padding scrollable" role="main">
+
+  <div class="row">
+    <div class="columns nine">
+
+      <div class="swaplist one-third" data-init="false" id="example-swaplist">
+        <div class="card available">
+          <div class="card-header">
+            <h2 class="card-title">Available</h2>
+            <div class="buttons">
+              <button class="btn btn-moveto-selected" type="button">
+                <span class="audible">Select</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-right-arrow"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="listview">
+              <ul data-swap-handle=".handle">
+                <li data-value="opt-1">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Option A</p>
+                  </div>
+                </li>
+                <li data-value="opt-2">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Option B</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card selected">
+          <div class="card-header">
+            <h2 class="card-title">Selected</h2>
+            <div class="buttons">
+              <button class="btn btn-moveto-left" type="button">
+                <span class="audible">Move to left</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-left-arrow"></use>
+                </svg>
+              </button>
+              <button class="btn btn-moveto-right" type="button">
+                <span class="audible">Move to right</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-right-arrow"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="listview">
+              <ul data-swap-handle=".handle">
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card full-access">
+          <div class="card-header">
+            <h2 class="card-title">Additional</h2>
+            <div class="buttons">
+              <button class="btn btn-moveto-selected" type="button">
+                <span class="audible">Select</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-left-arrow"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="listview">
+                <ul data-swap-handle=".handle">
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+  // Initialize all SoHo Xi Controls and set the locale
+  $(function () {
+
+    $('#example-swaplist').swaplist({available: [], selected: [], additional:[]});
+
+  });
+</script>
