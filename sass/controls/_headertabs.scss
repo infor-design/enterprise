@@ -6,62 +6,67 @@
   margin-top: -12px;
   padding: 1px 20px 0;
 
-  .tab {
-    color: $header-tab-normal-color;
-    font-weight: bold;
+  > .tab-list {
+    border-bottom: 0;
+    height: 40px;
 
-    &:before {
-      background-color: rgba($header-tab-normal-color, 0);
-      bottom: 0;
-    }
-
-    a {
-      line-height: 12px;
-      padding: 15px 11px 13px;
-    }
-
-    &:first-child {
-      padding-left: 0;
-    }
-
-    &:hover:not(.is-disabled) {
-      color: $header-tab-hover-color;
+    > .tab {
+      color: $header-tab-normal-color;
+      font-weight: bold;
 
       &:before {
-        background-color: rgba($header-tab-hover-color, 1);
+        background-color: rgba($header-tab-normal-color, 0);
+        bottom: 0;
       }
 
-      .icon:not(.is-error):not(.icon-error) {
-        fill: $header-tab-hover-color;
-      }
-    }
-
-    &.is-selected:not(.is-disabled) {
-      color: $header-tab-hover-color;
-
-      &:before {
-        background-color: rgba($header-tab-hover-color, 1);
+      a {
+        line-height: 12px;
+        padding: 15px 11px 13px;
       }
 
-      &:hover {
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:hover:not(.is-disabled) {
         color: $header-tab-hover-color;
 
         &:before {
           background-color: rgba($header-tab-hover-color, 1);
         }
-      }
-    }
 
-    &.dismissible {
-      .icon {
-        fill: $white;
-        opacity: .6;
-      }
-
-      &:hover {
         .icon:not(.is-error):not(.icon-error) {
-          fill: $white !important;
-          opacity: 1;
+          fill: $header-tab-hover-color;
+        }
+      }
+
+      &.is-selected:not(.is-disabled) {
+        color: $header-tab-hover-color;
+
+        &:before {
+          background-color: rgba($header-tab-hover-color, 1);
+        }
+
+        &:hover {
+          color: $header-tab-hover-color;
+
+          &:before {
+            background-color: rgba($header-tab-hover-color, 1);
+          }
+        }
+      }
+
+      &.dismissible {
+        .icon {
+          fill: $white;
+          opacity: .6;
+        }
+
+        &:hover {
+          .icon:not(.is-error):not(.icon-error) {
+            fill: $white !important;
+            opacity: 1;
+          }
         }
       }
     }
@@ -74,11 +79,6 @@
 
   .tab-focus-indicator.is-visible {
     border-color: $header-tab-hover-color;
-  }
-
-  .tab-list {
-    border-bottom: 0;
-    height: 40px;
   }
 
   .tab-more {

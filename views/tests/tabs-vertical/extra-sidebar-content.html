@@ -1,0 +1,109 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> controls/svg}}
+  {{> includes/applicationmenu}}
+
+  <!-- Page Container -->
+  <div class="page-container no-scroll">
+
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+          <h1>Vertical Tabs with Sidebar Content</h1>
+        </div>
+        <div class="buttonset"></div>
+      </div>
+    </header>
+
+    <div class="page-container no-scroll">
+
+      <!-- Vertical Tabs inside of a tab panel -->
+      <div id="tabs-vertical" class="vertical tab-container scrollable">
+
+        <div class="tab-list-container">
+
+          <div class="tab-list-info">
+            <h4>Configuration Categories</h4>
+            <p>
+              Here's some additional information about the below categories that you can use to make decisions.
+            </p>
+          </div>
+          <ul class="tab-list">
+            <li class="tab"><a href="#product-level">Product Level</a></li>
+            <li class="tab"><a href="#kpis">KPIs</a></li>
+            <li class="tab"><a href="#customer-unit-level">Customer Unit Level</a></li>
+            <li class="tab hidden"><a href="#hidden">Hidden</a></li>
+            <li class="tab is-selected"><a href="#excluded-date-ranges">Excluded Date Ranges</a></li>
+            <li class="tab"><a href="#exclusions-by-invoice-lines">Exclusions by Invoice Lines</a></li>
+            <li class="tab is-disabled"><a href="#exclusions-by-product-status">Exclusions by Product Status</a></li>
+            <li class="tab"><a href="#excluded-customers">Excluded Customers</a></li>
+            <li class="tab"><a href="#excluded-customer-ship-tos">Excluded Customer Ship-tos</a></li>
+            <li class="tab"><a href="#excluded-product-groups">Excluded Product Groups</a></li>
+            <li class="tab"><a href="#excluded-vendors">Excluded Vendors</a></li>
+          </ul>
+          <div class="tab-list-info">
+            <button id="action-run" class="btn-primary">
+              <span>Run</span>
+            </button>
+          </div>
+
+        </div>
+        <div class="tab-panel-container">
+          <div id="product-level" class="tab-panel">
+            <h3>Product Level</h3>
+            <div class="field">
+              <label for="product-level-type">Product Level Type</label>
+              <select id="product-level-type" class="dropdown">
+                <option selected>L1 Customer Unit - Product</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="kpis" class="tab-panel" style="display: none;">
+            <h3>KPIs</h3>
+          </div>
+
+          <div id="customer-unit-level" class="tab-panel" style="display: none;">
+            <h3>Customer Unit Level</h3>
+            <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
+          </div>
+          <div id="hidden" class="tab-panel" style="display: none;">
+            <h3>Hidden</h3>
+            <p>Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize! Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!"<p>
+          </div>
+          <div id="excluded-date-ranges" class="tab-panel" style="display: none;">
+            <h3>Excluded Date Ranges</h3>
+            <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          </div>
+          <div id="exclusions-by-invoice-lines" class="tab-panel" style="display: none;">
+            <h3>Exclusions by Invoice Lines</h3>
+            <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          </div>
+          <div id="exclusions-by-product-status" class="tab-panel" style="display: none;">
+            <h3>Exclusions by Product Status</h3>
+            <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          </div>
+          <div id="excluded-customers" class="tab-panel" style="display: none;">
+            <h3>Excluded Customers</h3>
+            <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          </div>
+          <div id="excluded-customer-ship-tos" class="tab-panel" style="display: none;">
+            <h3>Excluded Customer Ship-tos</h3>
+            <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          </div>
+          <div id="excluded-product-groups" class="tab-panel" style="display: none;">
+            <h3>Excluded Product Groups</h3>
+            <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          </div>
+          <div id="excluded-vendors" class="tab-panel" style="display: none;">
+            <h3>Excluded Vendors</h3>
+            <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>

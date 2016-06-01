@@ -339,6 +339,12 @@ var express = require('express'),
     if (directory.match(/tests\/tabs-module/)) {
       opts.layout = 'tests/tabs-module/layout';
     }
+    if (directory.match(/tests\/tabs-header/)) {
+      opts.layout = 'tests/tabs-header/layout';
+    }
+    if (directory.match(/tests\/tabs-vertical/)) {
+      opts.layout = 'tests/tabs-vertical/layout';
+    }
 
     // No trailing slash.  Check for an index file.  If no index file, do directory listing
     if (is('directory', directory)) {
