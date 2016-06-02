@@ -1367,7 +1367,7 @@ $.fn.datagrid = function(options) {
           //Add a readonly class if set on the column
           cssClass += (col.readonly ? ' is-readonly' : '');
           cssClass += (col.hidden ? ' is-hidden' : '');
-        
+
           //Run a function that helps check if editable
           if (col.isEditable && !col.readonly) {
             var canEdit = col.isEditable(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
@@ -3288,9 +3288,15 @@ $.fn.datagrid = function(options) {
       ascending = !ascending ? -1 : 1;
 
       return function (a, b) {
+        a = key(a);
+        b = key(b);
 
+        if (typeof a !== typeof b) {
+          a = a.toString().toLowerCase();
+          b = b.toString().toLowerCase();
+        }
 
-        return a = key(a), b = key(b), ascending * ((a > b) - (b > a));
+        return ascending * ((a > b) - (b > a));
       };
     },
 

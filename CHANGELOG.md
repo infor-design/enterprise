@@ -9,7 +9,7 @@ Release Date: TBD
 * 2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.
 
 ## Ui Changes
-* 2016-MM-DD - ....
+* 2016-06-02 - Design of Datagrid Changed to add back the column next to the selection checkboxes.
 
 Jira Release Notes
 http://bit.ly/1P1jCAk
