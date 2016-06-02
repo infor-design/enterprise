@@ -14,10 +14,10 @@
   border: 1px solid $checkbox-border-color;
   border-radius: 2px;
   content: '';
-  height: 16px;
-  margin-left: -27px;
+  height: 14px;
+  margin-left: -25px;
   position: absolute;
-  width: 16px;
+  width: 14px;
 }
 
 @mixin checkbox-unchecked-disabled-before-style {
@@ -42,9 +42,9 @@
   border-width: 2px 2px 0 0;
   content: '';
   height: 10px;
-  left: 8px;
+  left: 5px;
   position: absolute;
-  top: 10px;
+  top: 9px;
   width: 4px;
 }
 
@@ -62,9 +62,9 @@
 }
 
 @mixin checkbox-partial-after-style {
-  border-width: 0 0 3px;
+  border-width: 0 0 2px;
   margin-left: 1px;
-  top: -2px;
+  top: -3px;
   @include css3(transform, none);
   width: 10px;
 }
@@ -85,7 +85,7 @@ span.checkbox > label {
   @include no-select();
   cursor: pointer;
   display: inline-block;
-  padding-left: 32px;
+  padding-left: 28px;
   position: relative;
 }
 
@@ -113,12 +113,12 @@ span.checkbox > input:checked + label::after {
 // Adjustments for ASP style checkboxes
 input.checkbox:checked + input[type="hidden"] + label::after,
 span.checkbox > input:checked + label::after {
-  left: 11px;
+  left: 8px;
   margin-top: -8px;
 }
 
 span.checkbox > input:checked + label::after {
-  left: 11px;
+  left: 8px;
   margin-top: -8px;
 }
 
@@ -129,8 +129,8 @@ span.checkbox > input + label {
 .ie9 input.checkbox:checked + label::after,
 .ie9 input.checkbox:checked + input[type="hidden"] + label::after,
 .ie9 span.checkbox > input:checked + label::after {
-  left: 11px;
-  margin-top: 2px;
+  left: 8px;
+  margin-top: -8px;
 }
 
 label.inline .checkbox.partial:checked ~ .label-text::after,
@@ -143,7 +143,8 @@ span.checkbox.partial > input:checked + label::after {
 .ie9 input.checkbox.partial:checked + label::after,
 .ie9 input.checkbox.partial:checked + input[type="hidden"] + label::after,
 .ie9 span.checkbox.partial > input:checked + label::after {
-  left: 8px;
+  left: 5px;
+  margin-top: 0;
 }
 
 // Disabled State
@@ -196,7 +197,7 @@ span.checkbox > input:not(:checked):not(:disabled):hover + label::before {
 label.inline .checkbox ~ .label-text,
 .checkbox-label {
   display: inline-block;
-  line-height: 21px;
+  line-height: 17px;
 }
 
 @include keyframes(check) {
@@ -229,8 +230,7 @@ label.inline .checkbox:not(.partial):checked ~ .label-text::after,
 .checkbox-group-label {
   @include font-size(12);
   display: block;
-  line-height: 21px;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 // Print Support
