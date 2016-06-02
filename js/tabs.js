@@ -70,6 +70,7 @@
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
+          this.container.addClass('tab-panel-container');
         }
 
         // Add a default tabs class of "horizontal" if it doesn't already exist
@@ -876,10 +877,17 @@
         self.panels.hide();
         self.element.trigger('activated', [a]);
 
-        targetPanel.stop().fadeIn(250, function() {
-          $('#tooltip').addClass('is-hidden');
-          $('#dropdown-list, #multiselect-list').remove();
-          self.element.trigger('afteractivate', [a]);
+        targetPanel.stop().fadeIn({
+          duration: 250,
+          start: function() {
+            $('body').triggerHandler('resize');
+          },
+          complete: function() {
+            $('body').triggerHandler('resize');
+            $('#tooltip').addClass('is-hidden');
+            $('#dropdown-list, #multiselect-list').remove();
+            self.element.trigger('afteractivate', [a]);
+          }
         });
 
         // Update the currently-selected tab

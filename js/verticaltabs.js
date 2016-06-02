@@ -54,6 +54,7 @@
         var container = $(this.settings.containerElement);
         if (container.length) {
           this.container = container;
+          this.container.addClass('tab-panel-container');
         }
 
         this.tablist = self.element.find('.tab-list');
@@ -178,7 +179,6 @@
           'aria-selected': 'true',
           'tabindex': '0'
         }).parent().addClass('is-focused');
-
       },
 
       activate: function(href) {
@@ -190,7 +190,7 @@
           oldPanel = self.panels.filter(':visible');
 
         // Cancel Activation if an event's triggered
-        var isCancelled = self.element.trigger('beforeactivate', null);
+        var isCancelled = self.element.trigger('beforeactivate', [a]);
         if (!isCancelled) {
           return;
         }
@@ -198,11 +198,18 @@
         oldPanel.removeAttr('style').hide();
 
         // Animate the new panel
-        newPanel.show(0, function fadeInCallback() {
-          $(this).removeAttr('style');
-          $('#tooltip').addClass('is-hidden');
-          $('#dropdown-list, #multiselect-list').remove();
-          self.element.trigger('activated', null);
+        newPanel.stop().fadeIn({
+          duration: 250,
+          start: function() {
+            $('body').triggerHandler('resize');
+          },
+          complete: function() {
+            $('body').triggerHandler('resize');
+            $(this).removeAttr('style');
+            $('#tooltip').addClass('is-hidden');
+            $('#dropdown-list, #multiselect-list').remove();
+            self.element.trigger('activated', [a]);
+          }
         });
 
         // Update Tabs
@@ -248,11 +255,10 @@
           self.activate(anchor.attr('data-href'));
         });
 
-        /*
-        $(window).on('resize.verticaltabs', function windowResizeHandler() {
-          //self.moreMenuCheck();
+        $('body').on('resize.verticaltabs', function windowResizeHandler() {
+          self.handleResize();
         });
-        */
+        this.handleResize();
 
         return this;
       },
@@ -473,6 +479,32 @@
         }
 
         return target;
+      },
+
+      isHidden: function() {
+        return this.element.is(':hidden');
+      },
+
+      isNested: function() {
+        return this.element.closest('.tab-panel').length;
+      },
+
+      isNestedInLayoutTabs: function() {
+        var nestedInModuleTabs = this.element.closest('.module-tabs').length,
+          nestedInHeaderTabs = this.element.closest('.header-tabs').length,
+          hasTabContainerClass = this.element.closest('.tab-panel-container').length;
+
+        return (nestedInModuleTabs > 0 || nestedInHeaderTabs > 0 || hasTabContainerClass > 0);
+      },
+
+      handleResize: function() {
+        // When tabs are full-size (part of a layout) CSS rules should handle this better
+        // due to less strange sizing constraints.  JS resizing is necessary for nesting.
+        if (!this.isNested() || this.isNestedInLayoutTabs() || this.isHidden()) {
+          return;
+        }
+
+        this.tablist.css('height', this.element.outerHeight(true));
       },
 
       moreMenuCheck: function() {
