@@ -1704,7 +1704,7 @@ $.fn.datagrid = function(options) {
           var col = this.settings.columns[i];
 
           if (col.name) {
-            markup += '<li><a href="#"> <label class="inline"><input type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
+            markup += '<li><a href="#" target="_self"> <label class="inline"><input type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
           }
         }
         markup += '</ul></div>';
