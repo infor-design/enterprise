@@ -60,6 +60,10 @@
         title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + anchorId + '</span> triggered!',
         message: 'The "<b>'+ anchorName +'</b>" tab was clicked or triggered!'
       });
+    }).on('beforeactivated.test', function(e, anchor) {
+      console.log('x');
     });
+
+    console.log('y');
   });
 </script>

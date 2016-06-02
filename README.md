@@ -64,11 +64,28 @@ npm install --save @infor/sohoxi
 
 The files can then be seen in the folder /node_modules/@infor/sohoxi/dist
 
-### Updating
-Run the following, where X.X.X is the version to update to
+### Updating/Installing
 
+Run the following to get a latest and stable version.
+```bash
+npm install --save @infor/sohoxi@latest
+```
+
+Run the following to get a specific version.
 ```bash
 npm install --save @infor/sohoxi@4.2.0
+```
+
+Run the following to get the last nightly build
+
+```bash
+npm install --save @infor/sohoxi@nightly
+```
+
+Run the following to see the versions
+
+```bash
+npm info @infor/sohoxi dist-tags
 ```
 
 # Running the Development Project

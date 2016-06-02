@@ -29,6 +29,8 @@ git tag 4.0.7
 
 ```bash
 npm publish
+npm publish ./ --tag nightly
+
 ```
 * Check Published Tags
 
