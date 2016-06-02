@@ -375,7 +375,7 @@
 
       // Reliably gets all the pre-rendered elements in the container and returns them for use.
       getPageableElements: function() {
-        var elements = this.element.children();
+        var elements = this.element.children().not('.datagrid-expandable-row');
 
         // Adjust for cases where the root is a <ul>
         if (elements.is('ul')) {
@@ -507,14 +507,22 @@
 
           //Make an ajax call and wait
           self.element.trigger('paging', request);
-          var elements = self.getPageableElements(),
-            isExpandable = (self.settings.rowTemplate !== undefined);
+          var elements = self.getPageableElements();
 
           //Render page objects
           if (!self.settings.source) {
-            var rows = (isExpandable ? self.settings.pagesize * 2 : self.settings.pagesize);
+            var rows = self.settings.pagesize;
             elements.hide();
+
+            //collapse expanded rows
+            self.element.children().filter('.datagrid-expandable-row.is-expanded').removeClass('is-expanded').hide();
+            self.element.children().find('.datagrid-expand-btn').each(function () {
+              $(this).removeClass('.is-expanded');
+              $(this).find('.plus-minus').removeClass('active');
+            });
+
             expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ rows +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * rows) +'):gt('+ (((self.activePage-1) * rows) -1) +')');
+
             elements.filter(expr).show();
           } else {
             elements.show();
