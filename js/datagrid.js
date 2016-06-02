@@ -1100,7 +1100,7 @@ $.fn.datagrid = function(options) {
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === undefined ? false : ' l-'+ column.align +'-text');
 
-        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isSelection ? ' hide-border': '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + '"' +
+        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + '"' +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
@@ -1367,8 +1367,7 @@ $.fn.datagrid = function(options) {
           //Add a readonly class if set on the column
           cssClass += (col.readonly ? ' is-readonly' : '');
           cssClass += (col.hidden ? ' is-hidden' : '');
-          cssClass += (col.id === 'selectionCheckbox' ? ' hide-border':'');
-
+        
           //Run a function that helps check if editable
           if (col.isEditable && !col.readonly) {
             var canEdit = col.isEditable(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
