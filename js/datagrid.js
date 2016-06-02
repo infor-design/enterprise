@@ -986,6 +986,10 @@ $.fn.datagrid = function(options) {
 
     //Method to Reload the data set
     //TODO: Load specific page
+    updateDataset: function (dataset, pagerInfo) {
+      this.loadData(dataset, pagerInfo);
+    },
+
     loadData: function (dataset, pagerInfo) {
       var self = this;
 
