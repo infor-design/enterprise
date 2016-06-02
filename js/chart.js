@@ -1347,7 +1347,8 @@ window.Chart = function(container) {
             x: d.name,
             color: d.color,
             pattern: d.pattern,
-            parentName: d.name
+            parentName: d.name,
+            tooltip: d.tooltip
           })];
         });
       } else {
@@ -1358,7 +1359,8 @@ window.Chart = function(container) {
               x: o.name,
               color: o.color,
               pattern: o.pattern,
-              parentName: d.name
+              parentName: d.name,
+              tooltip: d.tooltip
             });
           });
         });
@@ -1446,13 +1448,13 @@ window.Chart = function(container) {
     //Make an Array of objects with name + array of all values
     var dataArray = [];
     chartData.forEach(function(d) {
-      dataArray.push({name: d.name, shortName: d.shortName, abbrName: d.abbrName, values: d.data});
+      dataArray.push({name: d.name, tooltip: d.tooltip, shortName: d.shortName, abbrName: d.abbrName, values: d.data});
     });
 
     if (isSingular) {
       dataArray = [];
       names = dataset[0].data.forEach(function (d) {
-        dataArray.push({name: d.name, shortName: d.shortName, abbrName: d.abbrName, value: d.value});
+        dataArray.push({name: d.name, tooltip: d.tooltip, shortName: d.shortName, abbrName: d.abbrName, value: d.value});
       });
     }
 
@@ -1525,9 +1527,7 @@ window.Chart = function(container) {
         });
       }
 
-      bars
-      // Mouseenter
-      .on('mouseenter', function(d, i) {
+      bars.on('mouseenter', function(d, i) {
         var x, y, j, l, size, isTooltipBottom,
           maxBarsForTopTooltip = 6,
           thisShape = this,
@@ -1539,10 +1539,9 @@ window.Chart = function(container) {
             size = charts.getTooltipSize(content);
             x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
 
-            if(isStacked) {
+            if (isStacked) {
               y = shape[0].getBoundingClientRect().top - size.height - 10;
-            }
-            else {
+            } else {
               y = ePageY-charts.tooltip.outerHeight() - 25;
               if (dataset.length > 1) {
                 x = thisShape.parentNode.getBoundingClientRect().left - (size.width /2) + (thisShape.parentNode.getBoundingClientRect().width/2);
@@ -1556,20 +1555,20 @@ window.Chart = function(container) {
                 }
               }
             }
-            if(content !== '') {
+
+            if (content !== '') {
               charts.showTooltip(x, y, content, isTooltipBottom ? 'bottom' : 'top');
             }
           };
 
         // Stacked
-        if(isStacked) {
+        if (isStacked) {
           if (isSingular) {
             content = '<p><b>'+ d[0].value +'</b> '+ d[0].name +'</p>';
-          }
-          else {
+          } else {
             content = '<div class="chart-swatch">';
             content += '<div class="swatch-caption"><b>'+ datasetStacked[0][i].name +'</b></div>';
-            for(j=datasetStacked.length-1,l=0; j>=l; j--) {
+            for (j=datasetStacked.length-1,l=0; j>=l; j--) {
               content += '<div class="swatch-row">';
               content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
               content += '<span>'+ datasetStacked[j][i].parentName +'</span><b>'+ datasetStacked[j][i].value +'</b></div>';
@@ -1585,8 +1584,7 @@ window.Chart = function(container) {
         else {
           if (dataset.length === 1) {
             content = '<p><b>'+ d.value + '</b> '+ d.name +'</p>';
-          }
-          else {
+          } else {
             content = '<div class="chart-swatch">';
             var data = d3.select(this.parentNode).datum().values;
 
@@ -1611,19 +1609,24 @@ window.Chart = function(container) {
           content = '';
           var runInterval = true;
           tooltipInterval = setInterval(function() {
-            if(runInterval) {
+            if (runInterval) {
               runInterval = false;
               tooltipData(function (data) {
                 content = tooltipDataCache[i] = data;
               });
             }
-            if(content !== '') {
+            if (content !== '') {
               clearInterval(tooltipInterval);
               show();
             }
           }, 10);
         } else {
-          content = tooltipDataCache[i] || tooltipData || d.tooltip || content || '';
+
+          content = tooltipDataCache[i] || tooltipData || content || '';
+          if (d.tooltip) {
+            var val = d.tooltip.replace('{{value}}', d.value);
+            content = '<p>' + val + '</p>';
+          }
           show(isTooltipBottom);
         }
 
