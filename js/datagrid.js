@@ -2463,9 +2463,11 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (isSingle && this._selectedRows[0]) {
-        this.unselectRow(this._selectedRows[0].idx);
+      if (isSingle && row.hasClass('is-selected')) {
+        this.unselectRow(rowIndex);
         this._selectedRows = [];
+        this.displayCounts();
+        return this._selectedRows;
       }
 
       if (row.hasClass('is-selected')) {

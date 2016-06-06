@@ -40,6 +40,11 @@
 
   <div class="one-half column">
     <div class="field">
+      <label for="alpha-field">Alphanumeric</label>
+      <input id="alpha-field" name="alpha-field" type="text" data-mask data-options="{ pattern: '***'}" />
+    </div>
+
+    <div class="field">
       <label for="decimal-field">Currency Field</label>
       <input id="decimal-field" name="decimal-field" type="text" inputmode="numeric" placeholder="0.00" data-mask data-options="{ pattern: '###.00', mode: 'number', showCurrency: true }" />
     </div>
