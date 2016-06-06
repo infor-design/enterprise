@@ -806,9 +806,8 @@ td .btn-actions {
     @include checkbox-checked-after-style;
     @include css3(transform-origin, -11px top 0);
     @include checkbox-animation;
-    left: 6px;
     margin-top: 0;
-    top: 2px;
+    top: 1px;
   }
 
   &.is-partial {
