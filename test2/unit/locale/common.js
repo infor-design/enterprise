@@ -186,6 +186,14 @@ define([
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
     },
 
+
+    'should parse dates with month zero': function() {
+      Locale.set('en-US');    //year, month, day
+      expect(Locale.parseDate('2016-01-01', 'yyyy-MM-dd').getTime()).to.equal(new Date(2016, 0, 1).getTime());
+      expect(Locale.parseDate('2016-01-03', 'yyyy-MM-dd').getTime()).to.equal(new Date(2016, 0, 3).getTime());
+      expect(Locale.parseDate('2016-01-31', 'yyyy-MM-dd').getTime()).to.equal(new Date(2016, 0, 31).getTime());
+    },
+
     'can format with no separator': function() {
       Locale.set('en-US');
       expect(Locale.parseDate('20151028', 'yyyyMMdd').getTime()).to.equal(new Date(2015, 9, 28).getTime());

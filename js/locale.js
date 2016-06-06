@@ -447,15 +447,15 @@
         return undefined;
       }
 
-      if (!dateObj.year && !isStrict) {
+      if (!dateObj.year && dateObj.year !== 0 && !isStrict) {
         dateObj.year = (new Date()).getFullYear();
       }
 
-      if (!dateObj.month && !isStrict) {
+      if (!dateObj.month && dateObj.month !== 0 && !isStrict) {
         dateObj.month = (new Date()).getMonth();
       }
 
-      if (!dateObj.day && !isStrict) {
+      if (!dateObj.day && dateObj.day !== 0 && !isStrict) {
         dateObj.day = 1;
       }
 

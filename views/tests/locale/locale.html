@@ -13,14 +13,18 @@
           output.append('<span>' + value + '</span><br>');
         };
         setTimeout(function () {
-          //Locale.set('de-DE');
-          //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:5}));
-          //append(Locale.formatNumber(123456.123456, {style:"decimal", maximumFractionDigits:4}));
-          //append(Locale.formatNumber('12345.12', {minimumFractionDigits:2 , maximumFractionDigits: 4}));
-          debugger;
-          append(Locale.formatNumber('12', {decimal: ',', minimumFractionDigits: 0, maximumFractionDigits: 2}));
+          var value = '2016-01-01';
+          var date = Locale.parseDate(value, 'yyyy-MM-dd');
+          append(date);
 
-          append(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS a '}));
+          var value = '2016-01-03';
+          var date = Locale.parseDate(value, 'yyyy-MM-dd');
+          append(date);
+
+          var value = '2016-01-31';
+          var date = Locale.parseDate(value, 'yyyy-MM-dd');
+          append(date);
+
 
         }, 300);
       }
