@@ -1,0 +1,53 @@
+<style>
+  .colored-cell {
+    margin-left: -20px;
+    margin-right: -40px;
+    padding-left: 20px;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="readonly-datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+    $('body').on('initialized', function () {
+     //Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      Formatters.customColors = function (row, cell, value, col, item) {
+        var strFormat = '<div class="colored-cell" style="background-color:' + item.backColor + '">' + value + '</div>';
+        return strFormat;
+      };
+
+      // Some Sample Data
+      data.push({ id: 1, agency: 'T200', status: 'Patrolling', timeExpired: false, backColor: '#FBE9BF'});
+      data.push({ id: 2, agency: 'PCP100', status: 'Escort Patrol', timeExpired: true});
+      data.push({ id: 3, agency: 'H102', status: 'Patrolling', timeExpired: true});
+      data.push({ id: 4, agency: 'TZ100', status: 'Patrolling', timeExpired: true});
+      data.push({ id: 5, agency: 'T200', status: 'Patrolling', timeExpired: false});
+      data.push({ id: 6, agency: 'T200', status: 'Patrolling', timeExpired: false, backColor: '#F4BCBC'});
+      data.push({ id: 7, agency: 'T200', status: 'Administrative Activity', timeExpired: false, backColor: '#F4BCBC'});
+      data.push({ id: 8, agency: 'T200', status: 'Administrative Activity', timeExpired: false});
+      data.push({ id: 9, agency: 'T200', status: 'Administrative Activity', timeExpired: false});
+      data.push({ id: 10, agency: 'T200', status: 'Administrative Activity', timeExpired: false});
+      data.push({ id: 11, agency: 'T200', status: 'Patrolling', timeExpired: false});
+      data.push({ id: 12, agency: 'T100', status: 'Patrolling', timeExpired: false});
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'agency', name: 'Agency', field: 'agency', width: 140, formatter: Formatters.customColors});
+      columns.push({ id: 'status', name: 'Status', field: 'status', width: 125});
+
+      //Init and get the api for the grid
+      $('#readonly-datagrid').datagrid({
+        columns: columns,
+        dataset: data
+      });
+    });
+
+</script>
