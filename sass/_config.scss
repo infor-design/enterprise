@@ -334,7 +334,8 @@ $checkbox-disabled-border-color: $graphite03;
 $checkbox-disabled-bg-color: transparent;
 $checkbox-disabled-select-bg-color: $graphite03;
 $checkbox-disabled-arrow-color: #f4f4f4;
-$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+$checkbox-focus-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $checkbox-color;
+// $checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
 $checkbox-label-color: $input-color;
 
 // Switch

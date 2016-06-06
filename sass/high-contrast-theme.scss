@@ -299,12 +299,13 @@ $checkbox-color: $primary-color;
 $checkbox-arrow-color: #ffffff;
 $checkbox-border-color: $graphite06;
 $checkbox-bg-color: #ffffff;
+$checkbox-hover-border-color: $black;
 $checkbox-disabled-font-color: $disabled-color;
 $checkbox-disabled-border-color: $input-disabled-border-color;
-$checkbox-disabled-bg-color: $input-readonly-bg-color;
+$checkbox-disabled-bg-color: transparent;
 $checkbox-disabled-select-bg-color: $input-readonly-bg-color;
 $checkbox-disabled-arrow-color: #f4f4f4;
-$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $azure07;
 $checkbox-label-color: $input-color;
 
 // Switch
@@ -345,8 +346,8 @@ $radio-selected-color: $primary-color;
 $radio-selected-bg-color: $white;
 $radio-disabled-border-color: $graphite04;
 $radio-disabled-bg-color: $body-bg-color;
-$radio-disabled-select-bg-color: $graphite03;
-$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+$radio-disabled-select-bg-color: $white;
+$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $azure07;
 
 // Pager
 $pager-text-color: $primary-color;
