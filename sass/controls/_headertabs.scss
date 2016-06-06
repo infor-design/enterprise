@@ -121,36 +121,40 @@
     border-bottom: 1px solid $header-tabcontainer-border-color;
     margin-top: -5px;
 
-    .tab {
-      color: $header-tab-alt-normal-color;
+    > .tab-list {
 
-      &:before {
-        background-color: rgba($header-tab-alt-normal-color, 0);
-      }
-
-      a { // has 12px line height;
-        padding: 16px 11px 15px;
-      }
-
-      &:hover:not(.is-disabled) {
-        color: $header-tab-alt-hover-color;
+      > .tab {
+        color: $header-tab-alt-normal-color;
 
         &:before {
-          background-color: rgba($header-tab-alt-hover-color, 1);
+          background-color: rgba($header-tab-alt-normal-color, 0);
+        }
+
+        a { // has 12px line height;
+          padding: 16px 11px 15px;
+        }
+
+        &:hover:not(.is-disabled) {
+          color: $header-tab-alt-hover-color;
+
+          &:before {
+            background-color: rgba($header-tab-alt-hover-color, 1);
+          }
+        }
+
+        &.is-selected:not(.is-disabled) {
+          color: $header-tab-alt-selected-color;
+
+          &:before {
+            background-color: rgba($header-tab-alt-selected-color, 1);
+          }
+
+          .icon:not(.is-error):not(.icon-error) {
+            fill: $header-tab-alt-selected-color;
+          }
         }
       }
 
-      &.is-selected:not(.is-disabled) {
-        color: $header-tab-alt-selected-color;
-
-        &:before {
-          background-color: rgba($header-tab-alt-selected-color, 1);
-        }
-
-        .icon:not(.is-error):not(.icon-error) {
-          fill: $header-tab-alt-selected-color;
-        }
-      }
     }
 
     .tab-list {

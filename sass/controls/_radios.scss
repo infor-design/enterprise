@@ -12,10 +12,10 @@
 .radio + label {
   @include font-size(14);
   cursor: pointer;
-  line-height: 21px;
+  line-height: 24px;
   margin-bottom: 6px;
-  margin-top: 4px;
-  padding-left: 30px;
+  outline: none;
+  padding-left: 26px;
   position: relative;
 }
 
@@ -25,11 +25,11 @@
   border: 1px solid $radio-border-color;
   border-radius: 50%;
   content: '';
-  height: 18px;
-  margin-left: -29px;
-  margin-top: -1px;
+  height: 14px;
+  margin-left: -25px;
+  margin-top: 4px;
   position: absolute;
-  width: 18px;
+  width: 14px;
 }
 
 .inline .radio:hover ~ .label-text::before,
@@ -50,12 +50,12 @@
   border: 2px solid $radio-selected-bg-color;
   border-radius: 50%;
   content: '';
-  height: 6px;
-  left: 6px;
+  height: 4px;
+  left: 5px;
   position: absolute;
-  top: 4px;
+  top: 8px;
   transition: all .2s ease 0s;
-  width: 6px;
+  width: 4px;
 }
 
 .inline .radio:checked ~ .label-text::before,
@@ -137,7 +137,7 @@
   legend {
     @include font-size(12);
     color: $label-color;
-    padding-bottom: 10px;
+    padding-bottom: 8px;
     padding-top: 0;
   }
 
@@ -270,7 +270,7 @@ html[dir='rtl'] {
   .inline .radio ~ .label-text::after,
   .radio + label::after {
     left: auto;
-    right: .67em;
+    right: .53em;
   }
 
   // Radio Section
