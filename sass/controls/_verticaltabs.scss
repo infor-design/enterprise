@@ -10,21 +10,25 @@
 
     a {
       @include antialiased();
-      color: $font-color;
+      color: $vertical-tab-text-color;
       @include font-size(14);
       @include css3(user-select, none);
       @include css3(touch-callout, none);
+
+      .icon {
+        fill: $vertical-tab-text-color;
+      }
     }
 
-    &:not(.is-disabled):not(.is-selected):hover {
-      color: $tab-hover-color;
+    &:hover {
+      color: $font-color-extrahighcontrast;
 
       a {
-        color: $tab-hover-color;
+        color: $font-color-extrahighcontrast;
       }
 
       .icon {
-        fill: $tab-hover-color;
+        fill: $font-color-extrahighcontrast;
       }
     }
 
@@ -33,6 +37,12 @@
 
       a {
         color: $azure06;
+      }
+
+      &:hover {
+        a {
+          color: $azure06;
+        }
       }
     }
 
@@ -78,7 +88,11 @@
   @include antialiased();
   color: $font-color-extrahighcontrast;
   @include font-size(14);
-  padding: .7em 25px;
+  padding: 10px 30px;
+
+  &:first-child {
+    padding-top: 30px;
+  }
 }
 
 .tab-container.vertical {
@@ -100,12 +114,11 @@
   // of the vertical tabset (for example, optional title, optional button, etc).
   > .tab-list-container {
     > .tab-list {
-      padding-left: 25px;
 
       @include vertical-tab-style;
       > .tab {
         a {
-          padding: 0.7em 1em;
+          padding: 10px 30px;
         }
       }
     }
@@ -117,7 +130,7 @@
 
     > .tab {
       a {
-        padding: 1em;
+        padding: 10px 30px;
       }
     }
   }
@@ -125,7 +138,7 @@
   // NOTE: It's possible for these tab panels not to be included within the .tab-container class.
   // If the panels are present inside the .tab-container, these styles will be necessary.
   .tab-panel {
-    margin: 20px;
+    margin: 30px 20px 20px;
     padding-top: 0;
     vertical-align: top;
   }
@@ -171,6 +184,7 @@
   }
 }
 
+/*
 // Tabs collapse into a dropdown on small form-factors
 @include respond-to(phone) {
   .tab-container.vertical {
@@ -194,3 +208,4 @@
     }
   }
 }
+*/
