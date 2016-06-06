@@ -324,7 +324,7 @@
 
         if (this.isTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
           var text = Locale.translate('PageOf');
-          text = text = text.replace('{0}', '<input data-mask="###" name="pager-pageno" value="' + this.activePage + '">');
+          text = text = text.replace('{0}', '<input name="pager-pageno" value="' + this.activePage + '">');
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : '-') + '</span>');
 
           $('<li class="pager-count"><label>'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
@@ -332,7 +332,7 @@
           //Setup interactivty with the numeric page input
           var lastValue = null;
 
-          this.pagerBar.find('.pager-count input').mask()
+          this.pagerBar.find('.pager-count input')
           .on('focus', function () {
             lastValue = $(this).val();
           }).on('blur', function () {
@@ -369,6 +369,9 @@
 
           $('[href="#25"]').parent().addClass('is-checked');
         }
+
+        var pattern = (''+ this._pageCount).replace(/\d/g, '#');
+        this.pagerBar.find('.pager-count input').attr('data-mask', pattern).mask();
 
         return this._pageCount;
       },
