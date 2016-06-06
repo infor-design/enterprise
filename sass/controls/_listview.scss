@@ -136,9 +136,33 @@
 
     }
 
-    &.error {
-      border-left: 3px solid $error-color !important;
+    &.error,
+    &.alert {
+      border-left-width: 3px;
+      border-left-style: solid;
       padding: 15px 20px 15px 17px;
+    }
+
+    &.error {
+      border-left-color: $error-color !important;
+
+      .days,
+      .hours,
+      .day-sign,
+      .hour-sign {
+        color: $error-color;
+      }
+    }
+
+    &.alert {
+      border-left-color: $alert-yellow !important;
+
+      .days,
+      .hours,
+      .day-sign,
+      .hour-sign {
+        color: $alert-yellow;
+      }
     }
 
     > .icon {
@@ -184,10 +208,7 @@
   .day-sign,
   .hour-sign {
     @include font-size(20);
-
-    &:not(.error) {
-      color: $listview-secondary-color;
-    }
+    color: $listview-secondary-color;
   }
 
   .dropdown-wrapper {
@@ -211,7 +232,8 @@
       }
     }
 
-    .icon-error {
+    .icon-error,
+    .icon {
       left: -5px;
       top: 2px;
     }
