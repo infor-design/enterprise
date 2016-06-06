@@ -253,11 +253,11 @@
           if (style.match(/height/)) {
             this.wrapper.css('height', this.element.css('height'));
           }
-          if (style.match('/min-width/')) {
+          if (style.match(/min-width/)) {
             this.wrapper.css('min-width', this.element.css('min-width'));
             style = style.replace('min-width', '');
           }
-          if (style.match('/width/')) {
+          if (style.match(/width/)) {
             this.wrapper.css('width', this.element.css('width'));
           }
         }
