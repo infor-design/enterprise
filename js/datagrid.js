@@ -1022,7 +1022,9 @@ $.fn.datagrid = function(options) {
     },
 
     uniqueId: function (suffix) {
-      return (window.location.pathname.split('/').pop().replace('.html', '')) + '-datagrid-' + this.gridCount + suffix;
+      var uniqueid = (window.location.pathname.split('/').pop().replace('.html', '')) + '-' + (this.element.attr('id') ? this.element.attr('id'): 'datagrid') + '-' + this.gridCount + suffix;
+      
+      return uniqueid;
     },
 
     visibleColumns: function () {

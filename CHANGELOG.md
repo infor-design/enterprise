@@ -10,6 +10,7 @@ Release Date: TBD
 
 ## Ui Changes
 * 2016-06-02 - Design of Datagrid Changed to add back the column next to the selection checkboxes.
+* 2016-06-02 - Design of radios/checkboxes changed to reduce size.
 
 Jira Release Notes
 http://bit.ly/1P1jCAk
