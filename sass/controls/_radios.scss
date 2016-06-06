@@ -134,6 +134,8 @@
 }
 
 .radio-group {
+  margin-bottom: 14px;
+
   legend {
     @include font-size(12);
     color: $label-color;
