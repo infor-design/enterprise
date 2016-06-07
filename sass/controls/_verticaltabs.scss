@@ -21,33 +21,28 @@
     }
 
     &:hover {
-      color: $font-color-extrahighcontrast;
-
-      a {
-        color: $font-color-extrahighcontrast;
-      }
-
-      .icon {
-        fill: $font-color-extrahighcontrast;
-      }
+      background-color: $vertical-tab-bg-hover-color;
     }
 
     &.is-selected {
-      background-color: transparent;
+      background-color: $vertical-tab-active-bg-color;
 
       a {
-        color: $azure06;
+        color: $vertical-tab-active-text-color;
       }
 
       &:hover {
+        background-color: $vertical-tab-active-bg-color;
+
         a {
-          color: $azure06;
+          color: $vertical-tab-active-text-color;
         }
       }
     }
 
+    /*
     &.is-focused {
-      background-color: $graphite02;
+      //background-color: $graphite02;
 
       a {
         color: $font-color-highcontrast;
@@ -61,6 +56,7 @@
         }
       }
     }
+    */
 
     &.is-disabled {
       color: $disabled-color;
@@ -169,6 +165,10 @@
     }
   }
 
+}
+
+.tab-focus-indicator {
+  border-radius: 0;
 }
 
 // Set padding/height etc. when using Vertical Tabs directly inside a page container

@@ -869,7 +869,7 @@
       },
 
       hasSquareFocusState: function() {
-        return !this.isVerticalTabs();
+        return true;
       },
 
       isModuleTabs: function() {
@@ -1837,7 +1837,8 @@
         top = pos.top - offset.top;
 
         // Header tabs get a slight modification
-        if (this.element.parent().is('.header, header')) {
+        var parentContainer = this.element.parent();
+        if (parentContainer.is('.header, header')) {
           left = left + parseInt(this.element.css('padding-left'));
           height = height - 4;
           top = top + 5;
@@ -1850,6 +1851,31 @@
 
           if (target.parent().is('.add-tab-button')) {
             left = left - 1;
+          }
+        }
+
+        // Vertical Tabs
+        function tablistInfoAdditionalHeight(jqObj) {
+          if (!jqObj || !(jqObj instanceof jQuery)) {
+            return 0;
+          }
+
+          var thisHeight = 0;
+
+          jqObj.each(function(i, el) {
+            thisHeight += $(el).outerHeight(true);
+          });
+
+          return thisHeight;
+        }
+
+
+        if (this.isVerticalTabs()) {
+          var tablistInfo = this.tablist.prevAll('.tab-list-info');
+          width = this.tablist.outerWidth(true);
+
+          if (parentContainer.is('.page-container')) {
+            top = top + (tablistInfo.length ? tablistInfoAdditionalHeight(tablistInfo) : 0);
           }
         }
 
