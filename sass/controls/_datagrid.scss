@@ -1201,13 +1201,17 @@ html[dir='rtl'] {
     @include font-size(14);
   }
 
+  label.inline .checkbox ~ .label-text {
+    line-height: 20px;
+  }
+
   .label {
     margin: 0;
   }
 
   li {
-    height: 32px;
-    padding: 5px 10px;
+    height: 30px;
+    padding: 5px 14px;
 
     &:first-child {
       margin-top: 5px;

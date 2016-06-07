@@ -1744,16 +1744,18 @@ $.fn.datagrid = function(options) {
           modal.element.find('.searchfield').searchfield({clearable: true});
           modal.element.find('.listview').listview({searchable: true});
 
-          modal.element.find('a').onTouchClick().on('click', function () {
-            e.preventDefault();
+          modal.element.find('a').offTouchClick().onTouchClick().off('click.personalize').on('click.personalize', function (e) {
+           e.preventDefault();
             var chk = $(this).find('.checkbox'),
                 id = chk.attr('data-column-id'),
                 isChecked = chk.prop('checked');
-
+            
             if (isChecked) {
               self.showColumn(id);
+              chk.prop('checked', false);
             } else {
               self.hideColumn(id);
+              chk.prop('checked', true);
             }
 
           });
