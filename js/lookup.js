@@ -286,7 +286,7 @@
         }
 
         self.grid = lookupGrid.data('datagrid');
-        if (!this.settings.title) {
+        if (!this.settings.title && self.modal) {
           self.modal.element.find('.title').html('&nbsp;');
         }
 
