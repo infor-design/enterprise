@@ -1,7 +1,10 @@
 # 4.2.1 - Patch Release
 Release Date: TBD
 
-* New - Datagrid Export to XLS
+##  Key New
+* Datagrid Export to XLS
+* Datagrid Icon Buttons
+* Datagrid Formatters for Class/ Content Visible
 
 ## Breaking Changes
 * 2016-06-01 - Wizard now longer has disabled style as this conflicts with "not completed" style. If a situation arises where a wizard tab cannot be clicked, use error messages to indicate.

@@ -214,8 +214,14 @@ window.Formatters = {
   },
 
   Button: function (row, cell, value, col) {
-    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString());
-    return '<button type="button" class="btn row-btn ' + (col.cssClass ? col.cssClass : '') + '">' + text + '</span>';
+    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
+      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + '  row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
+
+      if (col.icon) {
+        markup +='<svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-'+ col.icon + '"/>/svg>';
+      }
+      markup += '<span>' + text + '</span></button>';
+    return markup;
   },
 
   Dropdown: function (row, cell, value, col) {
@@ -1023,7 +1029,7 @@ $.fn.datagrid = function(options) {
 
     uniqueId: function (suffix) {
       var uniqueid = (window.location.pathname.split('/').pop().replace('.html', '')) + '-' + (this.element.attr('id') ? this.element.attr('id'): 'datagrid') + '-' + this.gridCount + suffix;
-      
+
       return uniqueid;
     },
 
@@ -1391,7 +1397,16 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          cssClass += (col.cssClass ? col.cssClass : '');
+
+          if (col.cssClass && typeof col.cssClass === 'string') {
+            //cssClass += ' ' + col.cssClass;
+          }
+
+          //Run a function that dynamically add a class
+          if (col.cssClass && typeof col.cssClass === 'function') {
+            cssClass += col.cssClass(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
+          }
+
           cssClass += (col.focusable ? ' is-focusable' : '');
 
           rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
