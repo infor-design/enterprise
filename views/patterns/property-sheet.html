@@ -24,7 +24,7 @@
       </div>
     </header>
 
-    <div class="page-container no-scroll">
+    <div id="maincontent" class="page-container no-scroll" role="main">
 
       <!-- Vertical Tabs inside of a tab panel -->
       <div id="tabs-vertical" class="vertical tab-container scrollable">
@@ -32,7 +32,7 @@
         <div class="tab-list-container">
 
           <div class="tab-list-info">
-            <h4>Configuration Categories</h4>
+            <h2>Configuration Categories</h2>
           </div>
           <ul class="tab-list">
             <li class="tab is-selected"><a href="#product-level">Product Level</a></li>
@@ -146,12 +146,12 @@
                 </select>
               </div>
               <div class="field">
-                <label for="kpi-net-sales-amount"></label>
-                <input class="input-sm" id="kpi-net-sales-amount" data-mask data-options="{ pattern: '#,###,###.00', number: true }" value="0.01"/>
+                <label for="kpi-unit-cost-amount"></label>
+                <input class="input-sm" id="kpi-unit-cost-amount" data-mask data-options="{ pattern: '#,###,###.00', number: true }" value="0.01"/>
               </div>
               <div class="field">
-                <label for="kpi-net-sales-weight">Weight</label>
-                <input id="kpi-net-sales-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
+                <label for="kpi-unit-cost-weight">Weight</label>
+                <input id="kpi-unit-cost-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
               </div>
             </div>
 
@@ -160,6 +160,8 @@
           <div id="customer-unit-level" class="tab-panel" style="display: none;">
             <h3>Customer Unit Level</h3>
             <fieldset class="radio-group">
+              <legend class="audible">Customer or Ship To.</legend>
+
               <input type="radio" class="radio" name="options" id="option1" value="option1" />
               <label for="option1" class="radio-label">Customer</label>
               <br>

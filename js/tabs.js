@@ -1869,7 +1869,8 @@
           return thisHeight;
         }
 
-
+        // Vertical Tabs need some manual adjustment when used directly inside a page container.
+        // Takes into account all the "information" sections possible in the tab list container.
         if (this.isVerticalTabs()) {
           var tablistInfo = this.tablist.prevAll('.tab-list-info');
           width = this.tablist.outerWidth(true);

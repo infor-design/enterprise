@@ -22,6 +22,10 @@
 
     &:hover {
       background-color: $vertical-tab-bg-hover-color;
+
+      a {
+        text-decoration: $vertical-tab-text-hover-decoration;
+      }
     }
 
     &.is-selected {
@@ -82,7 +86,7 @@
 
 .tab-list-info {
   @include antialiased();
-  color: $font-color-extrahighcontrast;
+  color: $vertical-tab-text-color;
   @include font-size(14);
   padding: 10px 30px;
 
@@ -92,15 +96,15 @@
 }
 
 .tab-container.vertical {
-  background-color: $panel-bg-color;
+  background-color: $vertical-tab-panel-bg-color;
   margin-top: 0;
   min-height: 200px;
   position: relative;
 
   > .tab-list,
   > .tab-list-container {
-    background-color: $body-bg-color;
-    border-right: 1px solid $graphite02;
+    background-color: $vertical-tab-sidebar-bg-color;
+    border-right: 1px solid $vertical-tab-sidebar-border-color;
     display: inline-block;
     vertical-align: top;
     width: 250px;
