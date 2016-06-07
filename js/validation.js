@@ -518,13 +518,13 @@
 
     showInlineError: function (field, message) {
       var loc = this.getField(field).addClass('error'),
-        markup = '<span class="error-message">' +
+        markup = '<div class="error-message">' +
           '<svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-error">' +
           '<use xlink:href="#icon-error"/>' +
           '</svg>' +
-          '<span class="audible">'+ Locale.translate('Error') +'</span>' +
-          '<span>' + message +'</span>' +
-          '</span>';
+          '<pre class="audible">'+ Locale.translate('Error') +'</pre>' +
+          '<p class="message-text">' + message +'</p>' +
+          '</div>';
 
       //Do not show message on open list
       if ($('#dropdown-list').is(':visible')) {

@@ -397,7 +397,7 @@ textarea.error:focus {
   }
 
   .error-message {
-    span {
+    .message-text {
       left: 150px;
       margin-top: 3px;
       position: relative;
@@ -408,7 +408,6 @@ textarea.error:focus {
       top: 8px;
     }
   }
-
 }
 
 // Field Sizes
@@ -438,54 +437,63 @@ textarea.error:focus {
 
 //Info Field
 .field-info {
+  $icon-width: 15px;
+
   @include font-size(12);
   display: block;
   line-height: 1.2rem;
+  position: relative;
   margin-top: -8px;
   max-width: 300px;
   min-height: 35px;
 
-  .icon-info-field {
-    display: inline-block;
+  .icon {
+    position: absolute;
     height: 15px;
-    top: -4px;
-    width: 15px;
+    left: 0;
+    top: 0;
+    width: $icon-width;
   }
 
-  span {
-    display: inline-block;
+  .message-text {
+    font-size: inherit;
     line-height: 14px;
     margin-bottom: 16px;
     margin-top: -2px;
     max-width: 267px;
+    padding-left: $icon-width + 5;
   }
 }
 
 //Error Field
 .error-message {
+  $icon-width: 14px;
+
   @include font-size(12);
   color: $error-color;
   display: block;
+  position: relative;
   line-height: 1.2rem;
   margin-top: -15px;
   max-width: 300px;
 
-  .icon-error {
-    display: inline-block;
+  .icon {
+    height: $icon-width;
+    left: 0;
     margin-left: initial;
     margin-top: initial;
-    position: relative;
+    position: absolute;
     top: 0;
-    width: 14px;
+    width: $icon-width;
   }
 
-  span {
-    display: inline-block;
+  .message-text {
+    font-size: inherit;
     line-height: 15px;
     margin-bottom: 15px;
-    margin-left: 5px;
     margin-top: 1px;
     max-width: 280px;
+    padding-left: $icon-width + 5;
   }
 }
 
