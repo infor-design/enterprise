@@ -1310,7 +1310,7 @@
 
         var tab = this.getTabFromId(tabId);
         tab.addClass('hidden');
-        this.activatePrevousTab(tabId);
+        this.activatePreviousTab(tabId);
         return this;
       },
 
