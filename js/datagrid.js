@@ -1749,7 +1749,7 @@ $.fn.datagrid = function(options) {
             var chk = $(this).find('.checkbox'),
                 id = chk.attr('data-column-id'),
                 isChecked = chk.prop('checked');
-            
+
             if (isChecked) {
               self.showColumn(id);
               chk.prop('checked', false);
@@ -2265,11 +2265,10 @@ $.fn.datagrid = function(options) {
         toolbar.toolbar(opts);
       }
 
-      toolbar.find('.searchfield').on('keypress.datagrid change.datagrid', function (e) {
+      toolbar.find('.searchfield').off('keypress.datagrid').on('keypress.datagrid', function (e) {
         if (e.keyCode === 13 || e.type==='change') {
           self.keywordSearch($(this).val());
         }
-
       });
 
       this.toolbar = toolbar;
@@ -2317,7 +2316,7 @@ $.fn.datagrid = function(options) {
         this.displayCounts();
 
         if (this.pager) {
-          this.pager.setActivePage(1, true);
+          this.resetPager('sorted');
         }
 
         return;
@@ -3370,7 +3369,7 @@ $.fn.datagrid = function(options) {
       pagerElem.on('afterpaging', function (e, args) {
        self.displayCounts(args.total);
 
-       if (self.filterExpr) {
+       if (self.filterExpr && self.filterExpr[0]) {
         self.highlightSearchRows(self.filterExpr[0].value);
        }
 
@@ -3390,7 +3389,6 @@ $.fn.datagrid = function(options) {
 
       this.pager.elements = this.pager.element.children();
       this.pager.renderBar();
-
       this.pager.renderPages((pagingInfo.type === 'sorted' ? false : true), 'initial');
 
       if (pagingInfo) {

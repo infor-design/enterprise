@@ -844,11 +844,11 @@ var express = require('express'),
           filteredOut = false;
         }
 
-        if ('Compressor'.toString().indexOf(term) > -1) {
+        if ('Compressor'.toString().toLowerCase().indexOf(term) > -1) {
           filteredOut = false;
          }
 
-        if ('Assemble Paint'.toString().indexOf(term) > -1) {
+        if ('Assemble Paint'.toString().toLowerCase().indexOf(term) > -1) {
           filteredOut = false;
         }
 

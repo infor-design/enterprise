@@ -455,7 +455,7 @@
 
       // Render Paged Items
       renderPages: function(uiOnly, op) {
-        var expr,
+      var expr,
           self = this,
           request = {
             activePage: self.activePage,
@@ -504,7 +504,6 @@
             if (api.filterExpr) {
                request.filterExpr = api.filterExpr;
             }
-
             self.settings.source(request, response);
           }
 
