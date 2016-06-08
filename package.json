@@ -5,7 +5,7 @@
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
   "license": "UNLICENSED",
-  "repository": "http://npm.infor.com:4873/",
+  "repository": "",
   "publishConfig": {
     "scope": "@infor",
     "registry": "http://npm.infor.com:4873/"
