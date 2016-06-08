@@ -495,6 +495,10 @@ textarea.error:focus {
     max-width: 280px;
     padding-left: $icon-width + 5;
   }
+
+  + .error-message {
+    margin-top: -10px;
+  }
 }
 
 .dropdown-wrapper .icon + .error-message,

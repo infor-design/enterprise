@@ -193,7 +193,8 @@
 
       //Animate open/closed the node
       toggleNode: function(node) {
-        var next = node.next();
+        var next = node.next(),
+          self = this;
 
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
@@ -203,13 +204,17 @@
                   .find('use').attr('xlink:href', '#icon-closed-folder');
             }).animateClosed();
           } else {
-            next.addClass('is-open').css('height', 0).one('animateopencomplete', function() {
-              node.closest('.folder').addClass('is-open').end()
-                  .find('use').attr('xlink:href', '#icon-open-folder');
-            }).animateOpen();
+            self.openNode(next, node);
           }
           node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
         }
+      },
+
+      openNode: function(next, node) {
+        next.addClass('is-open').css('height', 0).one('animateopencomplete', function() {
+          node.closest('.folder').addClass('is-open').end()
+              .find('use').attr('xlink:href', '#icon-open-folder');
+        }).animateOpen();
       },
 
       //Setup event handlers

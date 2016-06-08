@@ -5,6 +5,7 @@ Release Date: TBD
 * Datagrid Export to XLS
 * Datagrid Icon Buttons
 * Datagrid Formatters for Class/ Content Visible
+* Property Sheet pattern
 
 ## Breaking Changes
 * 2016-06-01 - Wizard now longer has disabled style as this conflicts with "not completed" style. If a situation arises where a wizard tab cannot be clicked, use error messages to indicate.
@@ -12,6 +13,7 @@ Release Date: TBD
 * 2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.
 
 ## Ui Changes
+* 2016-06-08 - Vertical Tabs - added 3 themes.
 * 2016-06-02 - Design of Datagrid Changed to add back the column next to the selection checkboxes.
 * 2016-06-02 - Design of radios/checkboxes changed to reduce size.
 
