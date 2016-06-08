@@ -1,4 +1,16 @@
 <div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Test: Select API</h2>
+
+    <p>There's a way to programmatically select tabs via the <em>select()</em> method on the Tabs API.  At the end of the countdown below, this test will automatically select the "Notes" Tab using this API.</p>
+
+    <p>Time Until Select Completes: <span id="time-display" style="font-weight: bold;">300</span></p>
+
+  </div>
+</div>
+
+<div class="row">
   <div class="twelve columns">
 
     <div id="tabs-normal" class="tab-container">
@@ -55,18 +67,34 @@
       </div>
     </div>
 
-
     <script type="text/javascript">
-      /*$('#tabs-normal').on('activated.demo', function(e, args) {
-        console.log(args);
-      });*/
+      $('body').on('initialized', function() {
+        var tabs = $('#tabs-normal'),
+          api = tabs.data('tabs'),
+          counter = 300;
 
-      //Later
-      setTimeout(function () {
-        $('#tabs-normal').tabs();
-        var api = $('#tabs-normal').data('tabs');
-        api.select('tabs-normal-notes');  //or with ;#
-      }, 1000);
+        tabs.on('activated.test', function(e, anchor) {
+          $('body').toast({
+            'title': 'Activated!',
+            'message': 'The Tab with the label <span style="font-weight: bold;">' + anchor.text().trim() + '</span> was activated!'
+          });
+        });
+
+        function countDown() {
+          counter = counter - 1;
+          $('#time-display').text(counter);
+
+          if (counter > 0) {
+            return window.requestAnimationFrame(countDown);
+          }
+
+          api.select('tabs-normal-notes');  //or with ;#
+        }
+
+        // Start the countdown
+        $('#time-display').text(counter);
+        window.requestAnimationFrame(countDown);
+      });
     </script>
 
   </div>

@@ -443,6 +443,19 @@ $tab-selected-color: $azure09;
 $tab-border-color: $graphite04;
 $tab-hover-color: $font-color-extrahighcontrast;
 
+// Vertical Tabs
+$vertical-tab-text-color: $font-color-extrahighcontrast;
+$vertical-tab-text-hover-color: $font-color-extrahighcontrast;
+$vertical-tab-text-hover-decoration: underline;
+$vertical-tab-bg-hover-color: $graphite04;
+$vertical-tab-focus-border-color: $primary-color;
+$vertical-tab-active-text-color: $white;
+$vertical-tab-active-bg-color: $primary-color;
+
+$vertical-tab-panel-bg-color: $panel-bg-color;
+$vertical-tab-sidebar-bg-color: $body-bg-color;
+$vertical-tab-sidebar-border-color: $graphite06;
+
 //Charts
 $chart-line-color: $graphite03;
 $chart-font-color: $font-color-extrahighcontrast;

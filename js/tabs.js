@@ -66,6 +66,7 @@
             this.container = this.element;
           }
         }
+
         // Setting containerElement overrides any changes to the tab panel container.
         var container = $(this.settings.containerElement);
         if (container.length) {
@@ -189,7 +190,8 @@
         // Build/manage tab panels
         function associateAnchorWithPanel() {
           var a = $(this),
-            popup = a.parent().data('popupmenu');
+            li = a.parent(),
+            popup = li.data('popupmenu');
 
           // Associated the current one
           var href = a.attr('href');
@@ -202,7 +204,7 @@
           if (href !== undefined && href !== '#') {
             var panel = $(href);
 
-            if (!panel.length) {
+            if (li.is(':not(.has-popupmenu)') && !panel.length) {
               return;
             }
 
@@ -239,6 +241,9 @@
           tabs = this.tablist.children('li' + excludes),
           selected = this.tablist.children('li.is-selected' + excludes),
           selectedAnchor = selected.children('a');
+
+        // Setup a hash for nested tab controls
+        self.nestedTabControls = self.panels.find('.tab-container');
 
         if (tabs.length) {
           // If the hashChange setting is on, change the selected tab to the one referenced by the hash
@@ -277,10 +282,8 @@
 
         if (this.hasAnimatedBar()) {
           this.animatedBar.addClass('no-transition');
-          this.focusBar(undefined, function() {
-            setTimeout(function() {
-              self.animatedBar.removeClass('no-transition');
-            }, 0);
+          this.focusBar(undefined, function transitionRemover() {
+            self.animatedBar.removeClass('no-transition');
           });
         }
 
@@ -322,7 +325,7 @@
 
         // Any events bound to individual tabs (li) and their anchors (a) are bound to the tablist
         // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
-        self.tablist
+        this.tablist
           .onTouchClick('tabs', '> li')
           .on('click.tabs', '> li', function(e) {
             return self.handleTabClick(e, $(this));
@@ -349,8 +352,8 @@
           self.hideFocusState();
           tab.children('a').data('focused-by-click', true);
         }
-        self.tablist.on('mousedown.tabs', '> li', addClickFocusData);
-        self.moreButton.on('mousedown.tabs', addClickFocusData);
+        this.tablist.on('mousedown.tabs', '> li', addClickFocusData);
+        this.moreButton.on('mousedown.tabs', addClickFocusData);
 
         // Setup events on Dropdown Tabs
         function dropdownTabEvents(i, tab) {
@@ -400,7 +403,7 @@
         dismissible.each(dismissibleTabEvents);
 
         // Setup the "more" function
-        self.moreButton
+        this.moreButton
           .onTouchClick('tabs')
           .on('click.tabs', function(e) {
             self.handleMoreButtonClick(e);
@@ -439,11 +442,10 @@
         });
 
         // Check to see if we need to add/remove the more button on resize
-        $('body').on('resize.tabs' + this.tabsIndex, function resizeTabs() {
-          self.setOverflow();
-          self.positionFocusState();
-          self.focusBar();
+        $('body').on('resize.tabs' + this.tabsIndex, function() {
+          self.handleResize();
         });
+        self.handleResize();
 
         return this;
       },
@@ -843,12 +845,34 @@
         return this.anchors.filter('[href="#'+ newId +'"]');
       },
 
+      handleResize: function() {
+        this.setOverflow();
+        this.positionFocusState();
+        this.focusBar();
+
+        this.handleVerticalTabResize();
+      },
+
+      handleVerticalTabResize: function() {
+        if (!this.isVerticalTabs()) {
+          return;
+        }
+
+        // When tabs are full-size (part of a layout) CSS rules should handle this better
+        // due to less strange sizing constraints.  JS resizing is necessary for nesting.
+        if (!this.isNested() || this.isNestedInLayoutTabs() || this.isHidden()) {
+          return;
+        }
+
+        this.tablist.css('height', this.element.outerHeight(true));
+      },
+
       hasAnimatedBar: function() {
         return !this.isModuleTabs() && !this.isVerticalTabs();
       },
 
       hasSquareFocusState: function() {
-        return !this.isVerticalTabs();
+        return true;
       },
 
       isModuleTabs: function() {
@@ -856,16 +880,90 @@
       },
 
       isVerticalTabs: function() {
-        return this.element.hasClass('vertical-tabs');
+        return this.element.hasClass('vertical');
+      },
+
+      isHidden: function() {
+        return this.element.is(':hidden');
+      },
+
+      isNested: function() {
+        return this.element.closest('.tab-panel').length;
+      },
+
+      isNestedInLayoutTabs: function() {
+        var nestedInModuleTabs = this.element.closest('.module-tabs').length,
+          nestedInHeaderTabs = this.element.closest('.header-tabs').length,
+          hasTabContainerClass = this.element.closest('.tab-panel-container').length;
+
+        return (nestedInModuleTabs > 0 || nestedInHeaderTabs > 0 || hasTabContainerClass > 0);
+      },
+
+      getAnchor: function(href) {
+        if (href.indexOf('#') === -1) {
+          href = '#' + href;
+        }
+        return this.anchors.filter('[href="' + href + '"]');
+      },
+
+      getPanel: function(href) {
+        return this.panels.filter('[id="' + href.replace(/#/g, '') + '"]');
+      },
+
+      getMenuItem: function(href) {
+        if (href.indexOf('#') === -1) {
+          href = '#' + href;
+        }
+        return this.moreMenu.children().children().filter('[data-href="'+ href +'"]').parent();
+      },
+
+      // Takes a tab ID and returns a jquery object containing the previous available tab
+      getPreviousTab: function(tabId) {
+        var tab = this.getAnchor(tabId).parent(),
+          filter = 'li:not(.separator):not(:hidden):not(.is-disabled)',
+          tabs = this.tablist.find(filter),
+          target = tabs.eq(tabs.index(tab) - 1);
+
+        while(target.length && !target.is(filter)) {
+          target = tabs.eq(tabs.index(target) - 1);
+        }
+
+        return target;
+      },
+
+      // Takes a tab ID and returns a jquery object containing the previous available tab
+      // If an optional target Tab (li) is provided, use this to perform activation events
+      activatePreviousTab: function(tabId, target) {
+        var tab = this.getAnchor(tabId).parent();
+
+        if (!target || !(target instanceof jQuery)) {
+          target = this.getPreviousTab(tabId);
+        }
+
+        if (!target.length) {
+          this.positionFocusState();
+          this.defocusBar();
+          return target;
+        }
+
+        var a = target.children('a');
+        if (tab.is('.is-selected')) {
+          this.activate(a.attr('href'));
+          a.focus();
+        }
+        this.positionFocusState(a);
+        this.focusBar(target);
+
+        return target;
       },
 
       activate: function(href) {
         var self = this,
-          a = this.anchors.filter('[href="' + href + '"]'),
+          a = self.getAnchor(href),
           targetTab, targetPanel, oldTab, oldPanel;
 
         targetTab = a.parent();
-        targetPanel = this.panels.filter('[id="'+ href.replace(/#/g, '') +'"]');
+        targetPanel = self.getPanel(href);
         oldTab = self.anchors.parents().filter('.is-selected');
         oldPanel = self.panels.filter(':visible');
 
@@ -877,17 +975,20 @@
         self.panels.hide();
         self.element.trigger('activated', [a]);
 
+        function fadeStart() {
+          self.resizeNestedTabs();
+        }
+
+        function fadeComplete() {
+          $('#tooltip').addClass('is-hidden');
+          $('#dropdown-list, #multiselect-list').remove();
+          self.element.trigger('afteractivate', [a]);
+        }
+
         targetPanel.stop().fadeIn({
           duration: 250,
-          start: function() {
-            $('body').triggerHandler('resize');
-          },
-          complete: function() {
-            $('body').triggerHandler('resize');
-            $('#tooltip').addClass('is-hidden');
-            $('#dropdown-list, #multiselect-list').remove();
-            self.element.trigger('afteractivate', [a]);
-          }
+          start: fadeStart,
+          complete: fadeComplete
         });
 
         // Update the currently-selected tab
@@ -963,6 +1064,17 @@
             });
           }
         }
+      },
+
+      resizeNestedTabs: function() {
+        this.nestedTabControls.each(function(i, container) {
+          var c = $(container),
+            api = c.data('tabs');
+
+          if (api && api.handleResize && typeof api.handleResize === 'function') {
+            api.handleResize();
+          }
+        });
       },
 
       // Adds a new tab into the list and properly binds events
@@ -1099,8 +1211,8 @@
 
         // If started from zero, position the focus state/bar and activate the tab
         if (startFromZero) {
-          this.positionFocusState();
-          this.focusBar(anchorMarkup.parent());
+          this.positionFocusState(anchorMarkup);
+          this.focusBar(tabHeaderMarkup);
           this.activate(anchorMarkup.attr('href'));
           anchorMarkup.focus();
         }
@@ -1109,16 +1221,19 @@
       },
 
       // Removes a tab from the list and cleans up properly
+      // NOTE: Does not take advantage of _activatePreviousTab()_ due to specific needs of selecting certain
+      // Tabs/Anchors at certain times.
       remove: function(tabId) {
         if (!tabId) {
           return this;
         }
         tabId = tabId.replace(/#/g, '');
 
-        var targetAnchor = this.anchors.filter('[href="#' + tabId + '"]'),
+        var targetAnchor = this.getAnchor(tabId),
           targetLi = targetAnchor.parent(),
-          targetPanel = this.panels.filter('#' + tabId),
+          targetPanel = this.getPanel(tabId),
           targetLiIndex = this.tablist.children('li').index(targetLi),
+          notATab = '.separator, .is-disabled, :hidden',
           prevLi = targetLi.prev();
 
         var canClose = this.element.triggerHandler('beforeclose', [targetLi]);
@@ -1129,6 +1244,8 @@
         var wasSelected = false;
         if (targetLi.hasClass('is-selected')) {
           wasSelected = true;
+        } else {
+          prevLi = this.tablist.children('li').not(notATab).filter('.is-selected');
         }
 
         // Remove these from the collections
@@ -1148,32 +1265,37 @@
 
         this.element.trigger('close', [targetLi]);
 
-        // If any tabs are left in the list, set the previous tab as the currently active one.
+        // If any tabs are left in the list, set the previous tab as the currently selected one.
         var count = targetLiIndex - 1;
         while (count > -1) {
           count = -1;
-          if (prevLi.is('.separator') || prevLi.is(':hidden') || prevLi.is('.is-disabled')) {
+          if (prevLi.is(notATab)) {
             prevLi = prevLi.prev();
             count = count - 1;
           }
         }
-        if (prevLi.length === 0) {
-          if (!this.tablist.children('li:not(.separator)').length) {
-            this.positionFocusState();
-            this.defocusBar();
-            return this;
-          }
 
-          prevLi = this.tablist.children('li:not(.separator)').first();
+        // If we find nothing, search for ANY available tab
+        if (!prevLi.length) {
+          prevLi = this.tablist.children('li').not(notATab).first();
         }
 
-        if (!wasSelected) {
-          return;
+        // If there's really nothing, kick on out and defocus everything.
+        if (!prevLi.length) {
+          this.positionFocusState();
+          this.defocusBar();
+
+          this.element.trigger('afterclose', [targetLi]);
+          return this;
         }
 
         var a = prevLi.children('a');
         this.positionFocusState(a);
-        this.activate(a.attr('href'));
+
+        if (wasSelected) {
+          this.activate(a.attr('href'));
+        }
+
         this.focusBar(prevLi);
         a.focus();
 
@@ -1199,8 +1321,12 @@
         if (!tabId) { return this; }
 
         var tab = this.getTabFromId(tabId);
+        if (tab.is('.is-selected')) {
+          this.activatePreviousTab(tabId);
+        }
         tab.addClass('hidden');
-        this.findPreviousAvailableTab(tabId);
+        this.focusBar();
+        this.positionFocusState();
         return this;
       },
 
@@ -1220,8 +1346,12 @@
         if (!tabId) { return this; }
 
         var tab = this.getTabFromId(tabId);
+        if (tab.is('.is-selected')) {
+          this.activatePreviousTab(tabId);
+        }
         tab.addClass('is-disabled');
-        this.findPreviousAvailableTab(tabId);
+        this.focusBar();
+        this.positionFocusState();
         return this;
       },
 
@@ -1289,28 +1419,6 @@
           });
 
         return tabHash;
-      },
-
-      // Takes a tab ID and returns a jquery object containing the previous available tab
-      findPreviousAvailableTab: function(tabId) {
-        var tab = this.getTabFromId(tabId),
-          filter = 'li:not(.separator):not(.hidden):not(.is-disabled)',
-          tabs = this.tablist.find(filter),
-          target = tabs.eq(tabs.index(tab) - 1);
-
-        while(target.length && !target.is(filter)) {
-          target = tabs.eq(tabs.index(target) - 1);
-        }
-
-        if (tab.is('.is-selected') && target.length) {
-          this.activate(target.children('a').attr('href'));
-          target.children('a').focus();
-        }
-
-        this.focusBar();
-        this.positionFocusState();
-
-        return target;
       },
 
       setOverflow: function () {
@@ -1405,7 +1513,7 @@
       //Selects a Tab
       select: function (href) {
         var modHref = href.replace(/#/g, ''),
-          anchor = this.anchors.filter('[href="#' + modHref + '"]');
+          anchor = this.getAnchor(modHref);
 
         this.positionFocusState(undefined, false);
         this.focusBar(anchor.parent());
@@ -1689,13 +1797,15 @@
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
-        this.animationTimeout = setTimeout(function() {
 
+
+        function animationTimeout(cb) {
           self.animatedBar.css({'left': left + 'px', 'width': width + 'px'});
-          if (callback && typeof callback === 'function') {
-            callback();
+          if (cb && typeof cb === 'function') {
+            cb();
           }
-        }, 0);
+        }
+        this.animationTimeout = setTimeout(animationTimeout.apply(this, [callback]), 0);
       },
 
       defocusBar: function() {
@@ -1725,19 +1835,6 @@
           return;
         }
 
-        /*
-        function place(el, top, left, bottom, right, width, height) {
-          el.css({
-            left: left,
-            top: top,
-            right: left + width,
-            bottom: top + height,
-            width: width,
-            height: height
-          });
-        }
-        */
-
         var self = this;
         target = target !== undefined ? $(target) :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
@@ -1762,7 +1859,8 @@
         top = pos.top - offset.top;
 
         // Header tabs get a slight modification
-        if (this.element.parent().is('.header, header')) {
+        var parentContainer = this.element.parent();
+        if (parentContainer.is('.header, header')) {
           left = left + parseInt(this.element.css('padding-left'));
           height = height - 4;
           top = top + 5;
@@ -1775,6 +1873,32 @@
 
           if (target.parent().is('.add-tab-button')) {
             left = left - 1;
+          }
+        }
+
+        // Vertical Tabs
+        function tablistInfoAdditionalHeight(jqObj) {
+          if (!jqObj || !(jqObj instanceof jQuery)) {
+            return 0;
+          }
+
+          var thisHeight = 0;
+
+          jqObj.each(function(i, el) {
+            thisHeight += $(el).outerHeight(true);
+          });
+
+          return thisHeight;
+        }
+
+        // Vertical Tabs need some manual adjustment when used directly inside a page container.
+        // Takes into account all the "information" sections possible in the tab list container.
+        if (this.isVerticalTabs()) {
+          var tablistInfo = this.tablist.prevAll('.tab-list-info');
+          width = this.tablist.outerWidth(true);
+
+          if (parentContainer.is('.page-container')) {
+            top = top + (tablistInfo.length ? tablistInfoAdditionalHeight(tablistInfo) : 0);
           }
         }
 
@@ -2028,6 +2152,9 @@
       }
     });
   };
+
+  // Deprecated the old Vertical Tabs code in favor of using the Tabs class.
+  $.fn.verticaltabs = $.fn.tabs;
 
 /* start-amd-strip-block */
 }));
