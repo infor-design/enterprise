@@ -5,9 +5,13 @@
   text-align: right;
 
   &.error {
-  	padding-right: 32px;
+    padding-right: 10px;
   }
-  
+
+  &[data-error-type="tooltip"].error {
+    padding-right: 32px;
+  }
+
   &.spinbox {
     text-align: center;
   }
