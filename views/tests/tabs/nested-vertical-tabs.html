@@ -49,13 +49,16 @@
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
-    $('#main-tabs-container').on('activated.test', function(e, anchor) {
-      var a = $(anchor);
+    function tabActivatedHandler(e, anchor) {
+      var a = $(anchor),
+        color = $(this).is('#main-tabs-container') ? '#aa1111' : '#1111aa';
 
       $('body').toast({
-        title: 'tab <span style="color: #aa1111; font-weight: bold;">' + a.attr('href') + '</span> triggered!',
+        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + a.attr('href') + '</span> triggered!',
         message: 'Tab with text "'+ a.text().trim() +'" was clicked or triggered!'
       });
-    });
+    }
+
+    $('#main-tabs-container, #vertical-container').on('activated.test', tabActivatedHandler);
   });
 </script>
