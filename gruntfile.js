@@ -252,6 +252,18 @@ module.exports = function(grunt) {
           {src: ['dist/**'], dest: 'dist/'}
         ]
       }
+    },
+
+    md2html: {
+      changelog: {
+        options: {
+          // Task-specific options go here.
+        },
+        files: [{
+          src: ['CHANGELOG.md'],
+          dest: 'docs/CHANGELOG.html'
+        }]
+      }
     }
 
   });
@@ -271,12 +283,13 @@ module.exports = function(grunt) {
     'cssmin',
     'copy:main',
     'usebanner',
-    'compress'
+    'compress',
+    'md2html'
   ]);
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
-    'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
+    'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner', 'md2html'
   ]);
 
 };

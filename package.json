@@ -46,6 +46,7 @@
     "grunt-contrib-uglify": "^0.8.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-git-revision": "0.0.1",
+    "grunt-md2html": "^0.3.1",
     "grunt-mocha-cli": "^1.14.0",
     "grunt-nodemon": "^0.4.2",
     "grunt-run": "^0.3.0",
