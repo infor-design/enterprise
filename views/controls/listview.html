@@ -63,31 +63,29 @@
       <ul>
         {{#dataset}}
           {{#alert}}
-            <li class="error">
+            <li class="{{alertClass}}">
+              <p class="listview-heading">{{city}}</p>
+              <p class="listview-subheading">{{location}}</p>
+              <div class="l-pull-right error">
+                  <svg class="icon icon-{{alertClass}}" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-{{alertClass}}"/>
+                  </svg>
+                  <span class="days">{{ daysLeft }}</span><span class="day-sign">d</span>
+                  <span class="hours">{{ hoursLeft }}</span><span class="hour-sign">h</span>
+              </div>
+            </li>
           {{/alert}}
           {{^alert}}
             <li>
-          {{/alert}}
-            <p class="listview-heading">{{city}}</p>
-            <p class="listview-subheading">{{location}}</p>
-            <div class="l-pull-right">
-              {{#alert}}
-                <svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-error"/>
-                </svg>
-               {{/alert}}
+              <p class="listview-heading">{{city}}</p>
+              <p class="listview-subheading">{{location}}</p>
 
-              {{#alert}}
-                <span class="days error">{{ daysLeft }}</span><span class="day-sign error">d</span>
-                <span class="hours error">{{ hoursLeft }}</span><span class="hour-sign error">h</span>
-              {{/alert}}
-              {{^alert}}
+              <div class="l-pull-right">
                 <span class="days">{{ daysLeft }}</span><span class="day-sign">d</span>
                 <span class="hours">{{ hoursLeft }}</span><span class="hour-sign">h</span>
-              {{/alert}}
-
-            </div>
-          </li>
+              </div>
+            </li>
+          {{/alert}}
         {{/dataset}}
       </ul>
     </script>
