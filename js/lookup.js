@@ -29,7 +29,6 @@
           buttons: [], //Pass dialog buttons or Cancel / Apply
           options: null,  //Options to pass to the data grid
           beforeShow: null, //Call back before the lookup is opened.
-          source: null, //TODO
           modalContent: null, //Custom modal markup
           editable: true, //Can the user type random text in the field
           typeahead: false, // Future TODO

@@ -281,7 +281,7 @@ window.Formatters = {
 window.Editors = {
 
   //Supports, Text, Numeric, Integer via mask
-  Input: function(row, cell, value, container, column) {
+  Input: function(row, cell, value, container, column, e, api, item) {
 
     this.name = 'input';
     this.originalValue = value;
@@ -293,7 +293,10 @@ window.Editors = {
         this.input.addClass('l-'+ column.align +'-text');
       }
 
-      if (column.mask) {
+      if (column.mask && typeof column.mask === 'function') {
+        var mask = column.mask(row, cell, value, column, item);
+        this.input.mask({pattern: mask});
+      } else if (column.mask) {
         this.input.mask({pattern: column.mask});
       }
     };
@@ -3008,7 +3011,7 @@ $.fn.datagrid = function(options) {
       //Editor.init
       cellParent.addClass('is-editing');
       cellNode.empty();
-      this.editor = new col.editor(row, cell, cellValue, cellNode, col, event, this);
+      this.editor = new col.editor(row, cell, cellValue, cellNode, col, event, this, this.settings.dataset[row]);
 
       if (this.editor.useValue) {
         cellValue = this.fieldValue(this.settings.dataset[row], col.field);
