@@ -190,7 +190,8 @@
         // Build/manage tab panels
         function associateAnchorWithPanel() {
           var a = $(this),
-            popup = a.parent().data('popupmenu');
+            li = a.parent(),
+            popup = li.data('popupmenu');
 
           // Associated the current one
           var href = a.attr('href');
@@ -203,7 +204,7 @@
           if (href !== undefined && href !== '#') {
             var panel = $(href);
 
-            if (!panel.length) {
+            if (li.is(':not(.has-popupmenu)') && !panel.length) {
               return;
             }
 
