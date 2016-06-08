@@ -3,7 +3,9 @@
 
     <h2>Tabs Test: Nested Tabs</h2>
 
-    <p>A <a class="hyperlink" href="http://jira/browse/HFC-3125" target="_blank">bug was reported</a> where a nested Tabs Control was having issues activating one of its tabs due to being hidden.  This test attempts to demonstrate Nested Tabs Controls working correctly.  <em>NOTE:</em>  The nested tabs don't show a Toast when they're activated because the "activate" event is stopped from bubbling once it reaches a ".tab-container" element.</p>
+    <p>A <a class="hyperlink" href="http://jira/browse/HFC-3125" target="_blank">bug was reported</a> where a nested Tabs Control was having issues activating one of its tabs due to being hidden.  This test attempts to demonstrate Nested Tabs Controls working correctly.  Clicking a "nested" tab shows a <span style="font-weight: bold; color: #1111aa;">blue</span> ID in the Toast, while clicking a top-level tab shows a <span style="font-weight: bold; color: #aa1111;">red</span> ID.</p>
+
+    <p><em>NOTE:</em>  The nested tabs don't show a Toast when they're activated because the "activate" event is stopped from bubbling once it reaches a ".tab-container" element.</p>
 
     <p></p>
 
@@ -49,13 +51,16 @@
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
-    $('#main-tabs-container').on('activated.test', function(e, anchor) {
-      var a = $(anchor);
+    function tabActivatedHandler(e, anchor) {
+      var a = $(anchor),
+        color = $(this).is('#main-tabs-container') ? '#aa1111' : '#1111aa';
 
       $('body').toast({
-        title: 'tab <span style="color: #aa1111; font-weight: bold;">' + a.attr('href') + '</span> triggered!',
+        title: 'tab <span style="color: '+ color +'; font-weight: bold;">' + a.attr('href') + '</span> triggered!',
         message: 'Tab with text "'+ a.text().trim() +'" was clicked or triggered!'
       });
-    });
+    }
+
+    $('#main-tabs-container, #nested-tabs-container').on('activated.test', tabActivatedHandler);
   });
 </script>

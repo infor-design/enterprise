@@ -116,6 +116,7 @@
 // This helps break overflow issues and simplifies the CSS
 .tab-focus-indicator {
   pointer-events: none;
+  z-index: 10;
   @include tab-outline;
 
   &.is-visible {

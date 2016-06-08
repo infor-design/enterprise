@@ -10,34 +10,43 @@
 
     a {
       @include antialiased();
-      color: $font-color;
+      color: $vertical-tab-text-color;
       @include font-size(14);
       @include css3(user-select, none);
       @include css3(touch-callout, none);
-    }
-
-    &:not(.is-disabled):not(.is-selected):hover {
-      color: $tab-hover-color;
-
-      a {
-        color: $tab-hover-color;
-      }
 
       .icon {
-        fill: $tab-hover-color;
+        fill: $vertical-tab-text-color;
+      }
+    }
+
+    &:hover {
+      background-color: $vertical-tab-bg-hover-color;
+
+      a {
+        text-decoration: $vertical-tab-text-hover-decoration;
       }
     }
 
     &.is-selected {
-      background-color: transparent;
+      background-color: $vertical-tab-active-bg-color;
 
       a {
-        color: $azure06;
+        color: $vertical-tab-active-text-color;
+      }
+
+      &:hover {
+        background-color: $vertical-tab-active-bg-color;
+
+        a {
+          color: $vertical-tab-active-text-color;
+        }
       }
     }
 
+    /*
     &.is-focused {
-      background-color: $graphite02;
+      //background-color: $graphite02;
 
       a {
         color: $font-color-highcontrast;
@@ -51,6 +60,7 @@
         }
       }
     }
+    */
 
     &.is-disabled {
       color: $disabled-color;
@@ -76,21 +86,25 @@
 
 .tab-list-info {
   @include antialiased();
-  color: $font-color-extrahighcontrast;
+  color: $vertical-tab-text-color;
   @include font-size(14);
-  padding: .7em 25px;
+  padding: 10px 30px;
+
+  &:first-child {
+    padding-top: 30px;
+  }
 }
 
 .tab-container.vertical {
-  background-color: $panel-bg-color;
+  background-color: $vertical-tab-panel-bg-color;
   margin-top: 0;
   min-height: 200px;
   position: relative;
 
   > .tab-list,
   > .tab-list-container {
-    background-color: $body-bg-color;
-    border-right: 1px solid $graphite02;
+    background-color: $vertical-tab-sidebar-bg-color;
+    border-right: 1px solid $vertical-tab-sidebar-border-color;
     display: inline-block;
     vertical-align: top;
     width: 250px;
@@ -100,12 +114,11 @@
   // of the vertical tabset (for example, optional title, optional button, etc).
   > .tab-list-container {
     > .tab-list {
-      padding-left: 25px;
 
       @include vertical-tab-style;
       > .tab {
         a {
-          padding: 0.7em 1em;
+          padding: 10px 30px;
         }
       }
     }
@@ -117,7 +130,7 @@
 
     > .tab {
       a {
-        padding: 1em;
+        padding: 10px 30px;
       }
     }
   }
@@ -125,7 +138,7 @@
   // NOTE: It's possible for these tab panels not to be included within the .tab-container class.
   // If the panels are present inside the .tab-container, these styles will be necessary.
   .tab-panel {
-    margin: 20px;
+    margin: 30px 20px 20px;
     padding-top: 0;
     vertical-align: top;
   }
@@ -158,6 +171,10 @@
 
 }
 
+.tab-focus-indicator {
+  border-radius: 0;
+}
+
 // Set padding/height etc. when using Vertical Tabs directly inside a page container
 // Also works for placing a set of vertical tabs directly inside of a higher-level '.tab-panel' element
 .page-container > .tab-container.vertical,
@@ -171,6 +188,7 @@
   }
 }
 
+/*
 // Tabs collapse into a dropdown on small form-factors
 @include respond-to(phone) {
   .tab-container.vertical {
@@ -194,3 +212,4 @@
     }
   }
 }
+*/
