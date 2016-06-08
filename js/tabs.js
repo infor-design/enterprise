@@ -66,6 +66,7 @@
             this.container = this.element;
           }
         }
+
         // Setting containerElement overrides any changes to the tab panel container.
         var container = $(this.settings.containerElement);
         if (container.length) {
@@ -240,6 +241,9 @@
           selected = this.tablist.children('li.is-selected' + excludes),
           selectedAnchor = selected.children('a');
 
+        // Setup a hash for nested tab controls
+        self.nestedTabControls = self.panels.find('.tab-container');
+
         if (tabs.length) {
           // If the hashChange setting is on, change the selected tab to the one referenced by the hash
           if (this.settings.changeTabOnHashChange) {
@@ -277,10 +281,8 @@
 
         if (this.hasAnimatedBar()) {
           this.animatedBar.addClass('no-transition');
-          this.focusBar(undefined, function() {
-            setTimeout(function() {
-              self.animatedBar.removeClass('no-transition');
-            }, 0);
+          this.focusBar(undefined, function transitionRemover() {
+            self.animatedBar.removeClass('no-transition');
           });
         }
 
@@ -917,7 +919,7 @@
       // Takes a tab ID and returns a jquery object containing the previous available tab
       getPreviousTab: function(tabId) {
         var tab = this.getAnchor(tabId).parent(),
-          filter = 'li:not(.separator):not(.hidden):not(.is-disabled)',
+          filter = 'li:not(.separator):not(:hidden):not(.is-disabled)',
           tabs = this.tablist.find(filter),
           target = tabs.eq(tabs.index(tab) - 1);
 
@@ -944,13 +946,12 @@
         }
 
         var a = target.children('a');
-        this.positionFocusState(a);
-        this.focusBar(target);
-
         if (tab.is('.is-selected')) {
           this.activate(a.attr('href'));
           a.focus();
         }
+        this.positionFocusState(a);
+        this.focusBar(target);
 
         return target;
       },
@@ -974,11 +975,10 @@
         self.element.trigger('activated', [a]);
 
         function fadeStart() {
-          $('body').triggerHandler('resize');
+          self.resizeNestedTabs();
         }
 
         function fadeComplete() {
-          $('body').triggerHandler('resize');
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
           self.element.trigger('afteractivate', [a]);
@@ -1063,6 +1063,17 @@
             });
           }
         }
+      },
+
+      resizeNestedTabs: function() {
+        this.nestedTabControls.each(function(i, container) {
+          var c = $(container),
+            api = c.data('tabs');
+
+          if (api && api.handleResize && typeof api.handleResize === 'function') {
+            api.handleResize();
+          }
+        });
       },
 
       // Adds a new tab into the list and properly binds events
@@ -1309,8 +1320,12 @@
         if (!tabId) { return this; }
 
         var tab = this.getTabFromId(tabId);
+        if (tab.is('.is-selected')) {
+          this.activatePreviousTab(tabId);
+        }
         tab.addClass('hidden');
-        this.activatePreviousTab(tabId);
+        this.focusBar();
+        this.positionFocusState();
         return this;
       },
 
@@ -1330,8 +1345,12 @@
         if (!tabId) { return this; }
 
         var tab = this.getTabFromId(tabId);
+        if (tab.is('.is-selected')) {
+          this.activatePreviousTab(tabId);
+        }
         tab.addClass('is-disabled');
-        this.activatePrevousTab(tabId);
+        this.focusBar();
+        this.positionFocusState();
         return this;
       },
 
@@ -1493,7 +1512,7 @@
       //Selects a Tab
       select: function (href) {
         var modHref = href.replace(/#/g, ''),
-          anchor = this.anchors.filter('[href="#' + modHref + '"]');
+          anchor = this.getAnchor(modHref);
 
         this.positionFocusState(undefined, false);
         this.focusBar(anchor.parent());
@@ -1777,13 +1796,15 @@
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
-        this.animationTimeout = setTimeout(function() {
 
+
+        function animationTimeout(cb) {
           self.animatedBar.css({'left': left + 'px', 'width': width + 'px'});
-          if (callback && typeof callback === 'function') {
-            callback();
+          if (cb && typeof cb === 'function') {
+            cb();
           }
-        }, 0);
+        }
+        this.animationTimeout = setTimeout(animationTimeout.apply(this, [callback]), 0);
       },
 
       defocusBar: function() {
