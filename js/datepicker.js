@@ -609,6 +609,10 @@
         var elementDate = this.currentDate.getDate() ?
           this.currentDate : (new Date()).setHours(0,0,0,0);
 
+        if (year.toString().length < 4) {
+          year = new Date().getFullYear();
+        }
+
         if (month === 12) {
           year ++;
           this.currentMonth = month = 0;
