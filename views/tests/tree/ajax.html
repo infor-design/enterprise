@@ -30,8 +30,21 @@
   /* jshint ignore:end */
 
   //Can refer to the data set here
-  $('#json-tree').tree({dataset: sampleData, expand: function (e, args) {
-    return nodes;
+  $('#json-tree').tree({dataset: sampleData, source: function (req, response) {
+    setTimeout(function () {
+      console.log(req);
+      
+      var nodes = [{
+        "id": "node2.1",
+        "text": "Node 2.1"
+      },{
+        "id": "node2.2",
+        "text": "Node 2.2"
+      }];
+
+      response(nodes);
+    }, 1000);
+
   }});
 
 

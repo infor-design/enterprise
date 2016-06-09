@@ -65,3 +65,4 @@ git checkout master
 # Future
 * Make Build
 * Make Auto push on npm
+* updated changelog-contents.html 

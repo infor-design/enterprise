@@ -203,10 +203,18 @@
               node.closest('.folder').removeClass('is-open').end()
                   .find('use').attr('xlink:href', '#icon-closed-folder');
             }).animateClosed();
+              node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
           } else {
+            if (self.settings.source) {
+//              var response = function (nodes) {
+//              };
+
+//              var args = {node: node, data: node.data('json-data')};
+//              self.settings.source(args, response);
+              return;
+            }
             self.openNode(next, node);
           }
-          node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
         }
       },
 
@@ -215,6 +223,7 @@
           node.closest('.folder').addClass('is-open').end()
               .find('use').attr('xlink:href', '#icon-open-folder');
         }).animateOpen();
+        node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
       },
 
       //Setup event handlers

@@ -1,19 +1,19 @@
-<h1 id="4-2-1-patch-release">4.2.1 - Patch Release</h1>
+<h2 id="4-2-1-patch-release">4.2.1 - Patch Release</h2>
 <p>Release Date: TBD</p>
-<h2 id="key-new">Key New</h2>
+<h3 id="key-new">Key New</h3>
 <ul>
 <li>Datagrid Export to XLS</li>
 <li>Datagrid Icon Buttons</li>
 <li>Datagrid Formatters for Class/ Content Visible</li>
 <li>Property Sheet pattern</li>
 </ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
+<h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
 <li>2016-06-01 - Wizard now longer has disabled style as this conflicts with &quot;not completed&quot; style. If a situation arises where a wizard tab cannot be clicked, use error messages to indicate.</li>
 <li>2016-06-01 - Updated to jQuery 3.0 rc1 (not really totally required/breaking)</li>
 <li>2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.</li>
 </ul>
-<h2 id="ui-changes">Ui Changes</h2>
+<h3 id="ui-changes">Ui Changes</h3>
 <ul>
 <li>2016-06-08 - Vertical Tabs - added 3 themes.</li>
 <li>2016-06-02 - Design of Datagrid Changed to add back the column next to the selection checkboxes.</li>
@@ -21,7 +21,7 @@
 </ul>
 <p>Jira Release Notes
 <a href="http://bit.ly/1P1jCAk">http://bit.ly/1P1jCAk</a></p>
-<h1 id="4-2-0-minor-release">4.2.0 - Minor Release</h1>
+<h2 id="4-2-0-minor-release">4.2.0 - Minor Release</h2>
 <p>Release Date: May 26th</p>
 <ul>
 <li>New - Module Tabs</li>
@@ -34,7 +34,7 @@
 <li>New - Empty States</li>
 <li>New - Bullet Chart</li>
 </ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
+<h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
 <li>2016-05-25 - Datepicker<ul>
 <li>If a placeholder is provided it wont be overriden with the date format.</li>
@@ -46,7 +46,7 @@
 <li>2016-04-26 - Expandable Area - Event Renamed from open-expandablearea, close-expandablearea to expand, collapse</li>
 <li>2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}</li>
 </ul>
-<h2 id="ui-changes">Ui Changes</h2>
+<h3 id="ui-changes">Ui Changes</h3>
 <ul>
 <li>2016-05-20 - Tree - Major UX changes</li>
 <li>2016-05-20 - Toolbar - has version with background fill/border</li>
@@ -62,13 +62,13 @@
 <li>2016-03-30 - Minor changes to the progress indicator</li>
 <li>2016-03-31 - Hide Focus Support Added to Links. Note that many links will benefit from adding class hide-focus.</li>
 </ul>
-<h2 id="dev-server-changes">Dev Server Changes</h2>
+<h3 id="dev-server-changes">Dev Server Changes</h3>
 <ul>
-<li>2016-04-08 - The Xi Controls Dev Server has been upgraded to Express 4.x.  Some of its dependancies may have changed.  If you rely on our Dev Server for examples/testing, please stop the server, delete this project&#39;s _/node_modules/_ folder, and rerun {{npm install}} and {{npm run install-test-deps}}.</li>
+<li>2016-04-08 - The Xi Controls Dev Server has been upgraded to Express 4.x.  Some of its dependancies may have changed.  If you rely on our Dev Server for examples/testing, please stop the server, delete this project&#39;s _/node_modules/_ folder, and rerun npm install and  npm run install-test-deps.</li>
 </ul>
 <p>Jira Release Notes
 <a href="http://bit.ly/1OCRwLD">http://bit.ly/1OCRwLD</a></p>
-<h1 id="4-1-1-patch-release">4.1.1 - Patch Release</h1>
+<h2 id="4-1-1-patch-release">4.1.1 - Patch Release</h2>
 <p>Release Date: March 18th, 2016</p>
 <ul>
 <li>New - Splitter Control</li>
@@ -76,41 +76,43 @@
 <li>New - Empty States Widget Design</li>
 <li>New - Lightbox</li>
 </ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
+<h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
 <li>2016-03-01 - Input Fields - Changed event in datagrid from rowremove, to removerow to match other events.</li>
 <li>2016-03-01 - Datagrid Control - Changed event in datagrid from rowremove, to removerow to match other events.</li>
 <li>2016-02-09 - Mask Control - Due to the change in how the options are defined for the Mask Control, the &quot;pattern&quot; definiton no longer resides on the <code>data-mask</code> attribute.  However, the <code>data-mask</code> attribute is still necessary in order for <em>initialize.js</em> to properly invoke a mask on an input field.  This attribute has become a boolean as a result.  Providing <code>data-mask</code> on an input element creates a mask, and not providing it will do nothing.</li>
 <li>2016-02-09 - Mask Control - Making the move to normalize this Control against the others by setting things up with a <code>data-options</code> attribute instead of unqiue HTML5 <code>data-*</code> attributes.  In the next version these will no longer work.  Please update your code accordingly.</li>
 </ul>
-<h2 id="ui-changes">Ui Changes</h2>
+<h3 id="ui-changes">Ui Changes</h3>
 <ul>
 <li>2016-02-16 - Changed Hyperlink, Focus state and colors. Refined all 3 themes.</li>
 <li>2016-02-16 - Changed Breadcrumb, Focus state and colors. Refined all 3 themes.</li>
 <li>2016-02-16 - Action Button, changed some state colors. Refined all 3 themes.</li>
 <li>2016-02-19 - Changed Slate and Graphite 10</li>
 </ul>
-<p><a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=24959&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin">Jira Release Notes 4.1.1</a></p>
-<h1 id="4-1-0-minor-release">4.1.0 - Minor  Release</h1>
+<p>Jira Release Notes
+<a href="http://bit.ly/1Upu6WS">http://bit.ly/1Upu6WS</a></p>
+<h2 id="4-1-0-minor-release">4.1.0 - Minor  Release</h2>
 <p>Release Date: Jan 26, 2015</p>
 <ul>
 <li>Bullet Chart</li>
 <li>Datagrid Contextual Toolbar</li>
 <li>Design Changes for V1.2 of Design Specs</li>
 </ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
+<h3 id="breaking-changes">Breaking Changes</h3>
 <p>See 4.0.7 Changes</p>
-<h2 id="ui-changes">Ui Changes</h2>
+<h3 id="ui-changes">Ui Changes</h3>
 <p>See 4.0.7 Changes</p>
-<p><a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=24959&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin">Jira Release Notes 4.1.0</a></p>
-<h1 id="4-0-7-patch-qa-release">4.0.7 - Patch QA Release</h1>
-<p>Release Date: TBD</p>
+<h3 id="release-notes">Release Notes</h3>
+<p><a href="http://bit.ly/25OnIQT">http://bit.ly/25OnIQT</a></p>
+<h2 id="4-0-7-patch-qa-release">4.0.7 - Patch QA Release</h2>
+<p>Release Date: 2016-01-18</p>
 <ul>
 <li>Bullet Chart</li>
 <li>Datagrid Editing</li>
 <li>Datagrid Contextual Toolbar</li>
 </ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
+<h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
 <li>2016-01-18 - Color Picker: the colors array should get colors in a 10xN grid.</li>
 <li>2016-01-18 - &quot;hyperlink back&quot; class now requires use of an SVG element.</li>
@@ -124,7 +126,7 @@
 <li>2015-12-07 - Dropdown/Multiselect, Tabs, Vertical Tabs, Wizard - changed the name of the &quot;activate&quot; event to &quot;activated&quot;, to prevent conflicts with the built-in &quot;activate&quot; event in Windows browsers (IE/Edge).  This issue is documented in HFC-3221.</li>
 <li>2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.</li>
 </ul>
-<h2 id="ui-changes">Ui Changes</h2>
+<h3 id="ui-changes">Ui Changes</h3>
 <ul>
 <li>2016-01-25 - Swap List - Changed fonts down a size, colors.</li>
 <li>2016-01-25 - Pager - Color Changes, Handle Changes, Pressed/Focus State</li>
@@ -151,59 +153,39 @@
 <li>2015-11-20 - We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange</li>
 </ul>
 <p><a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin">Jira Release Notes 4.0.7</a></p>
-<h1 id="4-0-6">4.0.6</h1>
+<h2 id="4-0-6-patch-release">4.0.6 - Patch Release</h2>
 <p>Release Date: 2015-11-16</p>
 <p>Patch QA Release</p>
-<h2 id="breaking-changes">Breaking Changes</h2>
+<h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
 <li>2015-11-16 All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on(&#39;beforeOpen&#39;) and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate</li>
 <li>bar-progress type chart was renamed to completion-chart</li>
 <li>List detail has new markup</li>
 </ul>
-<h2 id="ui-changes">Ui Changes</h2>
+<h3 id="ui-changes">Ui Changes</h3>
 <ul>
 <li>In the High Contrast themes all colors changed from slate to the graphite spectrum</li>
 <li>List detail has style changes</li>
 </ul>
 <p><a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=24229&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin">Jira Release Notes</a></p>
-<h1 id="4-0-5">4.0.5</h1>
+<h2 id="4-0-5-patch-release">4.0.5 - Patch Release</h2>
 <p>Patch QA Release.</p>
-<h2 id="new-features">New Features</h2>
+<h3 id="new-features">New Features</h3>
 <ul>
 <li>Accordion Refactoring (<a href="http://jira/browse/HFC-2886">HFC-2886</a>)</li>
 <li>Lookup</li>
 </ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
+<h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
-<li>Accordion Refactoring
-<strong> Some markup modifications are necessary to retain compatibility with all Accordion controls.  All current examples of Accordions in this repository have been updated to reflect the new Markup (and by proxy, all Application Menus as well).  Markup Changes include:
-*</strong> <code>&lt;div class=&quot;.accordion-pane&quot;&gt;&lt;/div&gt;</code> elements are no longer nested inside of <code>&lt;div class=&quot;.accordion-header&quot;&gt;&lt;/div&gt;</code> elements.  Place the Panes immediately following the Headers.
-<strong><em> All Accordion Headers that can expand and show content or subheaders will now contain a trigger button that performs this action.  In cases where the trigger isn&#39;t present, it will be created and placed correctly.  If the Accordion Header is at the top-level, the trigger will look like a &quot;chevron&quot; be placed immediately after the <code>&lt;a&gt;</code>.  If it&#39;s a sub-header, the trigger will be a (+/-) depending on its current state, and will be placed before the <code>&lt;a&gt;</code>.
-</em></strong> SVG elements containing icons are no longer placed inside of <code>&lt;a&gt;</code> elements.  Icons sit adjacent to the <code>&lt;a&gt;</code> elements either by themselves, or inside of trigger buttons.  The Accordion Control will move these icons to their proper locations automatically if they are found inside of <code>&lt;a&gt;</code> links.
-<em>*</em> In order to correctly space out content inside an accordion, a new element type, <code>&lt;div class=&quot;accordion-content&quot;&gt;&lt;/div&gt;</code> can be used inside accordion panes to separate the content from other accordion headers in a more semantic way.</li>
-<li>Datagrid sorting is now matched up via column id - where as before it was field. Should not cause any major issues as most of the time these values are the same , but this was done so that the same field can be used with different id&#39;s</li>
+<li>2015-??-?? Accordion Refactoring - Some markup modifications are necessary to retain compatibility with all Accordion controls.  All current examples of Accordions in this repository have been updated to reflect the new Markup (and by proxy, all Application Menus as well).  Markup Changes include:
+<code>&lt;div class=&quot;.accordion-pane&quot;&gt;&lt;/div&gt;</code> elements are no longer nested inside of <code>&lt;div class=&quot;.accordion-header&quot;&gt;&lt;/div&gt;</code> elements.  Place the Panes immediately following the Headers.
+All Accordion Headers that can expand and show content or subheaders will now contain a trigger button that performs this action.  In cases where the trigger isn&#39;t present, it will be created and placed correctly.  If the Accordion Header is at the top-level, the trigger will look like a &quot;chevron&quot; be placed immediately after the <code>&lt;a&gt;</code>.  If it&#39;s a sub-header, the trigger will be a (+/-) depending on its current state, and will be placed before the <code>&lt;a&gt;</code>.
+SVG elements containing icons are no longer placed inside of <code>&lt;a&gt;</code> elements.  Icons sit adjacent to the <code>&lt;a&gt;</code> elements either by themselves, or inside of trigger buttons.  The Accordion Control will move these icons to their proper locations automatically if they are found inside of <code>&lt;a&gt;</code> links.
+In order to correctly space out content inside an accordion, a new element type, <code>&lt;div class=&quot;accordion-content&quot;&gt;&lt;/div&gt;</code> can be used inside accordion panes to separate the content from other accordion headers in a more semantic way.</li>
+<li>2015-??-?? - Datagrid sorting is now matched up via column id - where as before it was field. Should not cause any major issues as most of the time these values are the same , but this was done so that the same field can be used with different id&#39;s</li>
 </ul>
-<h2 id="ui-changes">Ui Changes</h2>
+<h3 id="ui-changes">Ui Changes</h3>
 <ul>
 <li>The Accordion Control has been redesigned per a new specification (<a href="http://jira/browse/HFC-2927">HFC-2927</a>).</li>
 </ul>
 <p><a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=24079&amp;styleName=&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Cli">Jira Release Notes</a></p>
-<h1 id="4-0-4-patch-qa-release">4.0.4 - Patch QA Release</h1>
-<p>Release Date: TBD</p>
-<h2 id="breaking-changes">Breaking Changes</h2>
-<ul>
-<li>2015-11-16 Notes on this change</li>
-</ul>
-<h2 id="new-features">New Features</h2>
-<ul>
-<li>2015-11-16 Notes on this change</li>
-</ul>
-<h2 id="breaking-changes">Breaking Changes</h2>
-<ul>
-<li>2015-11-16 Notes on this change</li>
-</ul>
-<h2 id="ui-changes">Ui Changes</h2>
-<ul>
-<li>2015-11-16 Notes on this change</li>
-</ul>
-<p><a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=23807&amp;styleName=&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Clin">Jira Release Notes</a></p>
