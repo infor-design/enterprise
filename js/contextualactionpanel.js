@@ -60,8 +60,14 @@
         // Build the Content
         if (this.panel.length === 0) {
           if (this.settings.content  instanceof jQuery) {
-            this.settings.content.wrap('<div class="contextual-action-panel"></div>');
-            this.panel = this.settings.content.parent();
+
+            if (this.settings.content.is('.contextual-action-panel')) {
+              this.panel = this.settings.content;
+            } else {
+              this.settings.content.wrap('<div class="contextual-action-panel"></div>');
+              this.panel = this.settings.content.parent();
+            }
+
             this.panel.addClass('modal').appendTo('body');
 
             if (this.settings.content.is('iframe')) {
