@@ -3093,7 +3093,7 @@ $.fn.datagrid = function(options) {
         formatter = (col.formatter ? col.formatter : this.defaultFormatter);
 
       var oldVal = (col.field ? this.settings.dataset[row][col.field] : ''),
-        coercedVal;
+        coercedVal, escapedVal;
 
       //Coerce/Serialize value if from cell edit
       if (!fromApiCall) {
@@ -3137,21 +3137,21 @@ $.fn.datagrid = function(options) {
         } else {
           this.settings.dataset[row][col.field] = coercedVal;
         }
-
-        if (!fromApiCall) {
-          this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
-        }
       }
 
       //update cell value
-      coercedVal = $.escapeHTML(coercedVal);
+      escapedVal = $.escapeHTML(coercedVal);
       if (typeof formatter ==='string') {
-        formatted = window.Formatters[formatter](row-1, cell, coercedVal, col, settings.dataset[row]).toString();
+        formatted = window.Formatters[formatter](row-1, cell, escapedVal, col, settings.dataset[row]).toString();
       } else {
-        formatted = formatter(row, cell, coercedVal, col, settings.dataset[row]).toString();
+        formatted = formatter(row, cell, escapedVal, col, settings.dataset[row]).toString();
       }
 
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
+
+      if (coercedVal !== oldVal && !fromApiCall) {
+        this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
+      }
     },
 
     // Update a specific Cell
