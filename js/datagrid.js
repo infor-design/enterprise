@@ -353,8 +353,7 @@ window.Editors = {
     this.init();
   },
 
-  Checkbox: function(row, cell, value, container, column, e) {
-
+  Checkbox: function(row, cell, value, container, column, event, grid) {
     this.name = 'checkbox';
     this.originalValue = value;
 
@@ -381,9 +380,10 @@ window.Editors = {
         isChecked = value;
       }
 
-      if (e.type === 'click' || (e.type === 'keydown' && e.keyCode === 32)) {
+      if (event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) {
         //just toggle it
         isChecked = !isChecked;
+        grid.setNextActiveCell(event);
       }
 
       this.input.prop('checked', isChecked);
@@ -475,12 +475,13 @@ window.Editors = {
       this.select.trigger('openlist');
 
       this.select.on('listclosed', function () {
-          if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
-           self.input.trigger('focusout');
-           container.parent().trigger('focus');
-          } else {
-            grid.commitCellEdit(self.input);
-          }
+        if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
+         self.input.trigger('focusout');
+         container.parent().trigger('focus');
+        } else {
+          grid.commitCellEdit(self.input);
+        }
+        grid.setNextActiveCell(event);
       });
 
     };
@@ -492,8 +493,7 @@ window.Editors = {
     this.init();
   },
 
-  Date: function(row, cell, value, container, column, event) {
-
+  Date: function(row, cell, value, container, column, event, grid) {
     this.name = 'date';
     this.originalValue = value;
 
@@ -528,6 +528,7 @@ window.Editors = {
         setTimeout(function () {
           self.input.trigger('focusout');
           container.parent().focus();
+          grid.setNextActiveCell(event);
         }, 1);
 
       });
@@ -545,7 +546,7 @@ window.Editors = {
 
   },
 
-  Lookup: function(row, cell, value, container, column, event) {
+  Lookup: function(row, cell, value, container, column, event, grid) {
     this.name = 'lookup';
     this.originalValue = value;
 
@@ -588,6 +589,7 @@ window.Editors = {
         setTimeout(function () {
           self.input.trigger('focusout');
           container.parent().focus();
+          grid.setNextActiveCell(event);
         }, 1);
 
       });
@@ -2880,16 +2882,9 @@ $.fn.datagrid = function(options) {
           if (self.editor) {
             self.quickEditMode = false;
             self.commitCellEdit(self.editor.input);
-
-            if (self.settings.actionableMode) {
-              var evt = $.Event('keydown.datagrid');
-              evt.keyCode = 40; // move down
-              node.trigger(evt);
-            }
-            else {
-              self.setActiveCell(row, cell);
-            }
-          } else {
+            self.setNextActiveCell(e);
+          }
+          else {
             self.makeCellEditable(row, cell, e);
             if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
               self.quickEditMode = true;
@@ -2925,6 +2920,19 @@ $.fn.datagrid = function(options) {
         }
 
       });
+    },
+
+    setNextActiveCell: function (e) {
+      if (e.type === 'keydown') {
+        if (this.settings.actionableMode) {
+          var evt = $.Event('keydown.datagrid');
+          evt.keyCode = 40; // move down
+          this.activeCell.node.trigger(evt);
+        }
+        else {
+          this.setActiveCell(this.activeCell.row, this.activeCell.cell);
+        }
+      }
     },
 
     isContainTextfield: function(container) {
@@ -3018,6 +3026,7 @@ $.fn.datagrid = function(options) {
       }
       this.editor.val(cellValue);
       this.editor.focus();
+      this.element.triggerHandler('entereditmode');
     },
 
     commitCellEdit: function(input) {
@@ -3040,6 +3049,7 @@ $.fn.datagrid = function(options) {
 
       //Save the Cell Edit back to the data set
       this.updateCellNode(cellNode.parent().index(), cellNode.index(), newValue);
+      this.element.triggerHandler('exiteditmode');
     },
 
     //Returns Column Settings from a cell
