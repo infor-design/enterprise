@@ -8,4 +8,8 @@
   &.contained {
     height: inherit;
   }
+
+  &.no-padding {
+    margin: 0;
+  }
 }
