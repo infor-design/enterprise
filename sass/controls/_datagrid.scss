@@ -1102,6 +1102,7 @@ html[dir='rtl'] {
 
     &.is-dragging-clone {
       max-width: 125px;
+      min-width: 100px;
       position: absolute;
 
       .datagrid-header-text {
