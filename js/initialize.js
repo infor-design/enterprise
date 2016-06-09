@@ -60,8 +60,8 @@
     }
 
     // Activate the Base Tag fixer in the event that there's one present in the page.
-    if ($('base').length) {
-      window.baseTagFixer = new BaseTagFixer($('base').first().get(0));
+    if (window.BaseTagFixer && $('base').length) {
+      window.baseTagFixer = new window.BaseTagFixer($('base').first().get(0));
     }
 
     // Class-based detection for iOS
