@@ -411,17 +411,25 @@
       // "initialized" event from bubbling up the DOM.  It should be possible to initialize just the contents
       // of an element on the page without causing the entire page to re-initialize.
       self.triggerHandler('initialized');
-
-
       return returnObj;
     };
 
-    //Just initialize no local provided.
+    // If there's no Base Tag available, continue on with Initialization.
+    // Otherwise, wait for all the links to be changed first.
+    function baseTagHandler() {
+      if (!window.baseTagFixer) {
+        initAll();
+      } else {
+        window.baseTagFixer.set().done(initAll);
+      }
+    }
+
+    // If there's no Locale provided, continue to check for Base Tags.
     if (!locale) {
-      initAll();
+      baseTagHandler();
     } else {
       //Set Locale
-      Locale.set(locale).done(initAll);
+      Locale.set(locale).done(baseTagHandler);
     }
 
     // Setup a global resize event trigger for controls to listen to
