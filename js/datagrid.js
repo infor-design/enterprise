@@ -1753,8 +1753,6 @@ $.fn.datagrid = function(options) {
                 id = chk.attr('data-column-id'),
                 isChecked = chk.prop('checked');
 
-            console.log(chk, id, isChecked);
-
             if (!isChecked) {
               self.showColumn(id);
               chk.prop('checked', true);
