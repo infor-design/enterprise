@@ -59,6 +59,11 @@
       }
     }
 
+    // Activate the Base Tag fixer in the event that there's one present in the page.
+    if ($('base').length) {
+      window.baseTagFixer = new BaseTagFixer($('base').first().get(0));
+    }
+
     // Class-based detection for iOS
     // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
     if ((/iPhone|iPod|iPad/).test(ua)) {

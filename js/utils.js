@@ -491,6 +491,24 @@
 
   };
 
+  // Base Tag Fixer
+  // This class goes through various Xi Controls and changes their relative links to absolute links
+  // in the event that an HTML Base tag is present in the page.  This code is kicked off in the initializer.
+  function BaseTagFixer(element, options) {
+    this.element = $(element);
+    this.options = $.extend({}, options);
+    return this.init();
+  }
+
+  BaseTagFixer.prototype = {
+    init: function() {
+      return this;
+    }
+  };
+
+  window.BaseTagFixer = BaseTagFixer;
+
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
