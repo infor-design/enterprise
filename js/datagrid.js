@@ -1874,20 +1874,14 @@ $.fn.datagrid = function(options) {
         count = totals;
       }
 
+      var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
       if (self.toolbar) {
-        var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
-
-        if (self.settings.toolbar.selectCount) {
-          //TODO: This on the Contextual Toolbar
-          //countText += '<span class="datagrid-selected-count">  | '+ self._selectedRows.length + ' ' + Locale.translate('Selected') + ')</span>';
-        }
-
         self.toolbar.find('.datagrid-result-count').html(countText);
-        self.toolbar.closest('.modal').find('.datagrid-result-count').html(countText);
         self.toolbar.attr('aria-label',  self.toolbar.find('.title').text());
         self.toolbar.find('.datagrid-row-count').text(count);
       }
-
+      self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+      
       if (self.contextualToolbar) {
         self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
       }

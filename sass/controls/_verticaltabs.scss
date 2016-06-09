@@ -10,11 +10,11 @@
 
     a {
       @include antialiased();
-      color: $vertical-tab-text-color;
-      display: block;
       @include font-size(14);
       @include css3(user-select, none);
       @include css3(touch-callout, none);
+      color: $vertical-tab-text-color;
+      display: block;
 
       .icon {
         fill: $vertical-tab-text-color;
@@ -45,24 +45,6 @@
       }
     }
 
-    /*
-    &.is-focused {
-      //background-color: $graphite02;
-
-      a {
-        color: $font-color-highcontrast;
-      }
-
-      &.is-selected {
-        background-color: $azure06;
-
-        a {
-          color: $inverse-color;
-        }
-      }
-    }
-    */
-
     &.is-disabled {
       color: $disabled-color;
 
@@ -87,8 +69,8 @@
 
 .tab-list-info {
   @include antialiased();
-  color: $vertical-tab-text-color;
   @include font-size(14);
+  color: $vertical-tab-text-color;
   padding: 10px 30px;
 
   &:first-child {
@@ -139,7 +121,7 @@
   // NOTE: It's possible for these tab panels not to be included within the .tab-container class.
   // If the panels are present inside the .tab-container, these styles will be necessary.
   .tab-panel {
-    margin: 30px 20px 20px;
+    margin: 30px;
     padding-top: 0;
     vertical-align: top;
   }
@@ -157,8 +139,8 @@
   }
 
   .info {
-    display: none;
     @include font-size(16);
+    display: none;
     line-height: 32px;
     padding: 1em;
     position: relative;
@@ -188,29 +170,3 @@
     min-height: 100%;
   }
 }
-
-/*
-// Tabs collapse into a dropdown on small form-factors
-@include respond-to(phone) {
-  .tab-container.vertical {
-
-    .tab-panel {
-      display: block;
-      width: auto;
-    }
-
-    .tab-list {
-      display: none;
-    }
-
-    .info {
-      display: block;
-
-      .btn-ations {
-        right: 1.4em;
-        top: 1.4em;
-      }
-    }
-  }
-}
-*/
