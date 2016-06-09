@@ -283,7 +283,9 @@
         if (this.hasAnimatedBar()) {
           this.animatedBar.addClass('no-transition');
           this.focusBar(undefined, function transitionRemover() {
-            self.animatedBar.removeClass('no-transition');
+            setTimeout(function() {
+              self.animatedBar.removeClass('no-transition');
+            }, 0);
           });
         }
 
@@ -648,6 +650,11 @@
           checkAngularClick();
           currentA[0].focus();
           self.hideFocusState();
+
+          // In the event that the activated tab is a full link that should be followed,
+          // the keystroke events need to manually activate the link change.  Clicks are handled
+          // automatically by the browser.
+          self.handleOutboundLink(href);
         }
 
         switch(e.which) {
@@ -867,6 +874,19 @@
         this.tablist.css('height', this.element.outerHeight(true));
       },
 
+      // Changes the location in the browser address bar to force outbound links.
+      handleOutboundLink: function(href, useRelativePath) {
+        if (href.charAt(0) === '#') {
+          return false;
+        }
+
+        if (href.charAt(0) === '/' && (!useRelativePath || useRelativePath === false)) {
+          href = window.location.origin + href;
+        }
+
+        window.location = href;
+      },
+
       hasAnimatedBar: function() {
         return !this.isModuleTabs() && !this.isVerticalTabs();
       },
@@ -900,7 +920,7 @@
       },
 
       getAnchor: function(href) {
-        if (href.indexOf('#') === -1) {
+        if (href.indexOf('#') === -1 && href.charAt(0) !== '/') {
           href = '#' + href;
         }
         return this.anchors.filter('[href="' + href + '"]');

@@ -11,6 +11,7 @@
     a {
       @include antialiased();
       color: $vertical-tab-text-color;
+      display: block;
       @include font-size(14);
       @include css3(user-select, none);
       @include css3(touch-callout, none);
