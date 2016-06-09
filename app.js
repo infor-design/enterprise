@@ -325,6 +325,9 @@ var express = require('express'),
     if (directory.match(/tests\/applicationmenu/)) {
       opts.layout = getApplicationMenuTestLayout(directory);
     }
+    if (directory.match(/tests\/base-tag/)) {
+      opts.layout = 'tests/base-tag/layout';
+    }
     if (directory.match(/tests\/distribution/)) {
       opts.amd = true;
       opts.layout = null; // No layout for this one on purpose.
