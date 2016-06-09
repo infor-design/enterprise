@@ -23,15 +23,16 @@ http://bit.ly/1P1jCAk
 ## 4.2.0 - Minor Release
 Release Date: May 26th
 
-* New - Module Tabs
-* New - Lightbox
-* New - Datagrid Column Reorder
-* New - Datagrid Personalization
-* New - Expandable Area
-* New - Error States
-* New - Swap List
-* New - Empty States
-* New - Bullet Chart
+### Key New
+* Module Tabs
+* Lightbox
+* Datagrid Column Reorder
+* Datagrid Personalization
+* Expandable Area
+* Error States
+* Swap List
+* Empty States
+* Bullet Chart
 
 ### Breaking Changes
 * 2016-05-25 - Datepicker
@@ -66,10 +67,11 @@ http://bit.ly/1OCRwLD
 ## 4.1.1 - Patch Release
 Release Date: March 18th, 2016
 
-* New - Splitter Control
-* New - File Upload Control
-* New - Empty States Widget Design
-* New - Lightbox
+### Key New
+* Splitter Control
+* File Upload Control
+* Empty States Widget Design
+* Lightbox
 
 ### Breaking Changes
 * 2016-03-01 - Input Fields - Changed event in datagrid from rowremove, to removerow to match other events.
@@ -86,32 +88,13 @@ Release Date: March 18th, 2016
 Jira Release Notes
 http://bit.ly/1Upu6WS
 
-
-
 ## 4.1.0 - Minor  Release
-Release Date: Jan 26, 2015
+Release Date: 2016-01-26
 
+### Key New
 * Bullet Chart
 * Datagrid Contextual Toolbar
 * Design Changes for V1.2 of Design Specs
-
-### Breaking Changes
-
-See 4.0.7 Changes
-
-### Ui Changes
-See 4.0.7 Changes
-
-### Release Notes
-http://bit.ly/25OnIQT
-
-
-## 4.0.7 - Patch QA Release
-Release Date: 2016-01-18
-
-* Bullet Chart
-* Datagrid Editing
-* Datagrid Contextual Toolbar
 
 ### Breaking Changes
 
@@ -152,30 +135,27 @@ Release Date: 2016-01-18
 * 2015-12-09 - Datepicker - Style various styles and button positions on date picker
 * 2015-11-20 - We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange
 
-[Jira Release Notes 4.0.7](http://jira.infor.com/secure/ReleaseNote.jspa?version=24737&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|98895c37e1521edcf7f6dd012b2fd8daccf5b6fc|lin)
+Jira Release Notes
+http://bit.ly/1reEaKk
 
 ## 4.0.6 - Patch Release
 Release Date: 2015-11-16
 
-Patch QA Release
-
 ### Breaking Changes
-* 2015-11-16 All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
-* bar-progress type chart was renamed to completion-chart
-* List detail has new markup
+* 2015-11-16 - All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
+* 2015-11-16 - bar-progress type chart was renamed to completion-chart
+* 2015-11-16 - List detail has new markup
 
 ### Ui Changes
-* In the High Contrast themes all colors changed from slate to the graphite spectrum
-* List detail has style changes
+* 2015-11-16 - In the High Contrast themes all colors changed from slate to the graphite spectrum
+* 2015-11-16 - List detail has style changes
 
-[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24229&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX|dd7803af39297f33274f5a7b7cd17c27e235d9d2|lin)
-
+Jira Release Notes
+http://bit.ly/24CCurl
 
 ## 4.0.5 - Patch Release
 
-Patch QA Release.
-
-### New Features
+### Key New
 * Accordion Refactoring ([HFC-2886](http://jira/browse/HFC-2886))
 * Lookup
 
@@ -185,10 +165,11 @@ Patch QA Release.
  All Accordion Headers that can expand and show content or subheaders will now contain a trigger button that performs this action.  In cases where the trigger isn't present, it will be created and placed correctly.  If the Accordion Header is at the top-level, the trigger will look like a "chevron" be placed immediately after the `<a>`.  If it's a sub-header, the trigger will be a (+/-) depending on its current state, and will be placed before the `<a>`.
  SVG elements containing icons are no longer placed inside of `<a>` elements.  Icons sit adjacent to the `<a>` elements either by themselves, or inside of trigger buttons.  The Accordion Control will move these icons to their proper locations automatically if they are found inside of `<a>` links.
  In order to correctly space out content inside an accordion, a new element type, `<div class="accordion-content"></div>` can be used inside accordion panes to separate the content from other accordion headers in a more semantic way.
-* 2015-??-?? - Datagrid sorting is now matched up via column id - where as before it was field. Should not cause any major issues as most of the time these values are the same , but this was done so that the same field can be used with different id's
+* Datagrid sorting is now matched up via column id - where as before it was field. Should not cause any major issues as most of the time these values are the same , but this was done so that the same field can be used with different id's
 
 
 ### Ui Changes
 * The Accordion Control has been redesigned per a new specification ([HFC-2927](http://jira/browse/HFC-2927)).
 
-[Jira Release Notes](http://jira.infor.com/secure/ReleaseNote.jspa?version=24079&styleName=&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cd4fa9776810ba8b865710d777c0a664cc99196a2%7Cli)
+Jira Release Notes
+http://bit.ly/24CCyY9
