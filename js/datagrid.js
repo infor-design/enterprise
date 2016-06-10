@@ -84,7 +84,7 @@ window.Formatters = {
   Hyperlink: function(row, cell, value, col, item) {
     var colHref = (col.href ? col.href : '#');
 
-//Support for dynamic links based on content
+    //Support for dynamic links based on content
     if (col.href && typeof col.href === 'function') {
       colHref = col.href(row, cell, item, col);
     } else  {
@@ -1415,9 +1415,11 @@ $.fn.datagrid = function(options) {
             //cssClass += ' ' + col.cssClass;
           }
 
+          var cellValue = self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field);
+
           //Run a function that dynamically add a class
           if (col.cssClass && typeof col.cssClass === 'function') {
-            cssClass += col.cssClass(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
+            cssClass += col.cssClass(i, j, cellValue, col, self.settings.dataset[i]);
           }
 
           cssClass += (col.focusable ? ' is-focusable' : '');
@@ -1425,14 +1427,14 @@ $.fn.datagrid = function(options) {
           rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
               ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
-             (col.tooltip ? ' title="' + col.tooltip + '"' : '') +
+             (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
              (col.id === 'rowStatus' && self.settings.dataset[i].rowStatus && self.settings.dataset[i].rowStatus.tooltip ? ' title="' + self.settings.dataset[i].rowStatus.tooltip + '"' : '') +
              //(cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
              (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
              '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
-            var canShow = col.contentVisible(i, j, self.settings.dataset[i], col);
+            var canShow = col.contentVisible(i, j, cellValue, col);
             if (!canShow) {
               formatted = '';
             }

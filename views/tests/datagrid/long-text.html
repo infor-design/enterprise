@@ -33,15 +33,12 @@
       columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text });
       columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200 });
 
-      var rowTemplate = '<div class="row-content">Some content</div>';
-
-      //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
+      //Init the  grid
+      $('#datagrid').datagrid({
         columns: columns,
         selectable: 'multiple',
-        dataset: data,
-        rowTemplate: rowTemplate
-      }).data('datagrid');
+        dataset: data
+      });
 
     });
   });
