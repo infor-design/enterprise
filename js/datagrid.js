@@ -1885,7 +1885,7 @@ $.fn.datagrid = function(options) {
         self.toolbar.find('.datagrid-row-count').text(count);
       }
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
-      
+
       if (self.contextualToolbar) {
         self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
       }
@@ -2408,6 +2408,11 @@ $.fn.datagrid = function(options) {
       row = this.tableBody.find('tr[role="row"]').eq(idx);
       if (!row) {
         return;
+      }
+
+
+      if (this.settings.selectable === 'single' && this._selectedRows.length > 0) {
+        this.unselectRow(this._selectedRows[0].idx);
       }
 
       if (!row.hasClass('is-selected')) {
