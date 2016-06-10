@@ -900,7 +900,7 @@ window.Chart = function(container) {
               .attr('dy', '.35em')
               .style('text-anchor', 'middle')
               .attr('class', 'chart-donut-text')
-              .text(centerLabel);
+              .html(centerLabel);
           }
         }
       };

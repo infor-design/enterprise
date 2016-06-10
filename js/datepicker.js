@@ -27,7 +27,7 @@
           forceHourMode: undefined, // Can be used to force timepicker to use only 12-hour or 24-hour display modes. Defaults to whatever the current Globalize locale requires if left undefined.
           timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
-
+          placeholder: false,
           /*  disable:
           **    dates: 'M/d/yyyy' or
           **      ['M/d/yyyy'] or
@@ -311,7 +311,7 @@
             'data-mask-mode': 'date'
           }).mask().validate();
 
-        if (!this.element.attr('placeholder') ||  this.element.attr('placeholder') === 'M / D / YYYY') {
+        if (this.settings.placeholder && (!this.element.attr('placeholder') ||  this.element.attr('placeholder') === 'M / D / YYYY')) {
           this.element.attr('placeholder', this.pattern);
         }
       },
