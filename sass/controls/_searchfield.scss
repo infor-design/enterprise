@@ -277,11 +277,9 @@
   }
 
   //Call to action button
-  + .btn {
-    height: 30px;
-    left: 100%;
+  + .btn.go-button {
     margin-left: 10px;
-    margin-top: 1px;
+    margin-top: 0;
     min-width: 0;
     position: absolute;
   }
