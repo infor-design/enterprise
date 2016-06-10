@@ -81,11 +81,17 @@ window.Formatters = {
     return formatted;
   },
 
-  Hyperlink: function(row, cell, value, col) {
-    var href = (col.href ? col.href : '#');
-    href = href.replace('{{value}}', value);
+  Hyperlink: function(row, cell, value, col, item) {
+    var colHref = (col.href ? col.href : '#');
 
-    return '<a href="' + (col.href ? col.href : '#') +'" tabindex="-1" role="presentation" class="hyperlink">' + (col.text ? col.text : value) + '</a>';
+//Support for dynamic links based on content
+    if (col.href && typeof col.href === 'function') {
+      colHref = col.href(row, cell, item, col);
+    } else  {
+      colHref = colHref.replace('{{value}}', value);
+    }
+
+    return '<a href="' + colHref +'" tabindex="-1" role="presentation" class="hyperlink">' + (col.text ? col.text : value) + '</a>';
   },
 
   Template: function(row, cell, value, col, item) {
