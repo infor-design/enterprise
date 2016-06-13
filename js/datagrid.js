@@ -659,7 +659,7 @@ $.fn.datagrid = function(options) {
         columns: [],
         dataset: [],
         columnReorder: false, // Allow Column reorder
-        saveColumns: true, //Save Column Reorder and resize
+        saveColumns: false, //Save Column Reorder and resize
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -1164,6 +1164,10 @@ $.fn.datagrid = function(options) {
       headers.last().append('<span class="is-draggable-target last"></span>');
       self.element.addClass('has-draggable-columns');
 
+      self.element.on('scroll.datagrid', function() {
+        self.adjustDraggablePosition();
+      });
+
       // Initialize Drag api
       $('.handle', headers).each(function() {
         var handle = $(this),
@@ -1172,7 +1176,7 @@ $.fn.datagrid = function(options) {
         handle.on('mousedown.datagrid', function(e) {
           e.preventDefault();
 
-          hader.drag({clone: true, cloneAppentTo: headers.first().parent()})
+          hader.drag({clone: true, cloneAppentTo: headers.first().parent().parent()})
 
             // Drag start =======================================
             .on('dragstart.datagrid', function (e, pos, clone) {
@@ -1238,6 +1242,7 @@ $.fn.datagrid = function(options) {
 
                   self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                   self.updateColumns(self.settings.columns);
+                  self.adjustDraggablePosition();
                 }
                 else {
                   // No need to swap here since same target area, where drag started
@@ -1249,6 +1254,19 @@ $.fn.datagrid = function(options) {
 
             });
         });
+      });
+    },
+
+    // Adjust draggable position
+    adjustDraggablePosition: function () {
+      var self = this,
+        headers = self.headerNodes().not('.is-hidden');
+
+      headers.each(function() {
+        var header = $(this);
+        $('.is-draggable-target, .handle', header).css('left', header.position().left);
+        $('.is-draggable-target.last', header)
+          .css('left', header.position().left + header.outerWidth());
       });
     },
 
@@ -1759,7 +1777,7 @@ $.fn.datagrid = function(options) {
           modal.element.find('.searchfield').searchfield({clearable: true});
           modal.element.find('.listview').listview({searchable: true});
 
-          modal.element.find('a').offTouchClick().onTouchClick().off('click.personalize').on('click.personalize', function (e) {
+          modal.element.find('a:not(.remove-cols)').offTouchClick().onTouchClick().off('click.personalize').on('click.personalize', function (e) {
            e.preventDefault();
             var chk = $(this).find('.checkbox'),
                 id = chk.attr('data-column-id'),
@@ -1772,9 +1790,19 @@ $.fn.datagrid = function(options) {
               self.hideColumn(id);
               chk.prop('checked', false);
             }
-
+            self.updateColumnsAndTableWidth();
           });
         });
+    },
+
+    updateColumnsAndTableWidth: function() {
+      var self = this;
+      self.table.css({'width': ''});
+      self.headerNodes().not('.is-hidden').each(function () {
+        var header = $(this);
+        self.setColumnWidth(header.attr('data-column-id'), header.width());
+      });
+      self.adjustDraggablePosition();
     },
 
     // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
