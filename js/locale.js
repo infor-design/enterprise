@@ -109,7 +109,6 @@
       if (locale === 'in-ID') {
         locale = 'id-ID';
       }
-
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.setCurrentLocale(locale);
 
@@ -117,14 +116,13 @@
         $.ajax({
           url: this.getCulturesPath() + this.currentLocale.name + '.js',
           dataType: 'script',
-          success: function () {
-            self.setCurrentLocale(locale, self.cultures[locale]);
-            self.addCulture(locale, self.currentLocale.data);
-            self.dff.resolve(self.currentLocale.name);
-          },
           error: function () {
             self.dff.reject();
           }
+        }).done(function () {
+          self.setCurrentLocale(locale, self.cultures[locale]);
+          self.addCulture(locale, self.currentLocale.data);
+          self.dff.resolve(self.currentLocale.name);
         });
       }
 
@@ -152,6 +150,7 @@
 
     //Format a Date Object and return it parsed in the current locale
     formatDate: function(value, attribs) {
+
       //We will use http://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
       if (!attribs) {
         attribs = {date: 'short'};  //can be date, time, datetime or pattern

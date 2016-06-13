@@ -44,8 +44,7 @@
   var gridApi = null;
 
   $('body').one('initialized', function () {
-    Locale.set('sv-SE').done(function () {
-        var grid,
+         var grid,
           columns = [],
           data = [];
 
@@ -104,7 +103,7 @@
         gridApi.rowStatus(5, 'dirty');
         //gridApi.rowStatus(6, 'new', 'new');
         gridApi.rowStatus(6, 'error', 'This row has errors');
-    });
+
   });
 
   var newId = 8;

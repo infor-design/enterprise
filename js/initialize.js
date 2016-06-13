@@ -39,7 +39,6 @@
       init: function() {
         this
           .addBrowserClasses()
-          .handleBaseTag()
           .handleInit()
           .addGlobalResize();
       },
@@ -101,36 +100,25 @@
         return this;
       },
 
-      // Sets up a base tag fixer object or initialize if no base tag
-      handleBaseTag: function(self) {
+      //Initialize after setting the locale
+      handleInit: function () {
         if (window.BaseTagFixer && $('base').length) {
           window.baseTagFixer = new window.BaseTagFixer($('base').first().get(0));
         }
-
-        if (!window.baseTagFixer) {
-          this.initAll();
-        } else {
-          window.baseTagFixer.set().done(self.initAll);
-        }
-        return this;
-      },
-
-      handleInit: function () {
         var self = this;
 
-        // If there's no Locale provided, continue to check for Base Tags.
-        if (!this.settings.locale) {
-          self.handleBaseTag(self);
-        } else {
-          //Set Locale
-          Locale.set(this.settings.locale).done(function () {
-            self.handleBaseTag(self);
-          });
-        }
+        Locale.set(this.settings.locale).done(function () {
+          if (!window.baseTagFixer) {
+            self.initAll();
+          } else {
+            window.baseTagFixer.set().done(self.initAll);
+          }
+        });
         return this;
       },
 
       initAll : function () {
+
         //Iterate all objects we are initializing
         this.element.filter(':not(svg):not(use):not(.no-init)').each(function() {
           var elem = $(this),
@@ -462,6 +450,7 @@
         // "initialized" event from bubbling up the DOM.  It should be possible to initialize just the contents
         // of an element on the page without causing the entire page to re-initialize.
         this.element.triggerHandler('initialized');
+
         return this;
       },
 
