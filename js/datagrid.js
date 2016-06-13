@@ -659,7 +659,7 @@ $.fn.datagrid = function(options) {
         columns: [],
         dataset: [],
         columnReorder: false, // Allow Column reorder
-        saveColumns: false, //Save Column Reorder and resize
+        saveColumns: true, //Save Column Reorder and resize
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
