@@ -142,7 +142,6 @@
           var node = $(this);
           node.addClass('is-open');
           node.prev('a').find('svg use').attr('xlink:href', '#icon-open-folder');
-
         });
       },
 
@@ -168,7 +167,7 @@
           node.focus();
         }
 
-        var jsonData = node.data('json-data') ? node.data('json-data') : [];
+        var jsonData = node.data('jsonData') ? node.data('jsonData') : [];
 
         var top = this.getAbsoluteOffsetFromGivenElement(node[0], this.container[0]).top;
         if (this.selectedIndicator.length) {
@@ -198,19 +197,39 @@
 
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
+            node.closest('.folder').removeClass('is-open').end()
+              .find('use').attr('xlink:href', '#icon-closed-folder');
+
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
-              node.closest('.folder').removeClass('is-open').end()
-                  .find('use').attr('xlink:href', '#icon-closed-folder');
             }).animateClosed();
-              node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
-          } else {
-            if (self.settings.source) {
-//              var response = function (nodes) {
-//              };
 
-//              var args = {node: node, data: node.data('json-data')};
-//              self.settings.source(args, response);
+            node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
+          } else {
+            var nodeData = node.data('jsonData');
+
+            if (self.settings.source && nodeData.children.length === 0) {
+              var response = function (nodes) {
+                var id = nodeData.id,
+                elem = self.findById(id);
+
+                //Add DB and UI nodes
+                elem.children = nodes;
+                self.addChildNodes(elem, node.parent());
+                node.removeClass('is-loading');
+
+                //open
+                self.openNode(next, node);
+
+                //sync data on node
+                nodeData.children = nodes;
+                node.data('jsonData', nodeData);
+              };
+
+              var args = {node: node, data: node.data('jsonData')};
+              self.settings.source(args, response);
+              node.addClass('is-loading');
+
               return;
             }
             self.openNode(next, node);
@@ -219,10 +238,10 @@
       },
 
       openNode: function(next, node) {
-        next.addClass('is-open').css('height', 0).one('animateopencomplete', function() {
-          node.closest('.folder').addClass('is-open').end()
-              .find('use').attr('xlink:href', '#icon-open-folder');
-        }).animateOpen();
+        node.closest('.folder').addClass('is-open').end()
+            .find('use').attr('xlink:href', '#icon-open-folder');
+
+        next.addClass('is-open').css('height', 0).animateOpen();
         node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
       },
 
@@ -624,7 +643,7 @@
           this.setSelectedNode(a, node.focus);
         }
 
-        a.data('json-data', node);
+        a.data('jsonData', node);
         return li;
       },
 
@@ -649,9 +668,15 @@
           return;
         }
 
-        var ul = $('<ul></ul>').appendTo(li);
-        ul.addClass(node.open ? 'is-open' : '');
-        ul.addClass('folder');
+        var ul = li.find('ul.folder');
+
+        if (ul.length === 0) {
+          ul = $('<ul></ul>').appendTo(li);
+          ul.addClass(node.open ? 'is-open' : '');
+          ul.addClass('folder');
+        }
+
+        ul.empty();
 
         for (var i = 0; i < node.children.length; i++) {
           var elem = node.children[i];

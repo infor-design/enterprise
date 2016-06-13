@@ -173,6 +173,7 @@
       if (attribs.pattern) {
         pattern = attribs.pattern;
       }
+
       if (attribs.date) {
         pattern = cal.dateFormat[attribs.date];
       }
@@ -209,18 +210,23 @@
       ret = ret.replace('SSS', this.pad(value.getMilliseconds(), 0));
 
       //months
-      ret = ret.replace('MMMM', cal.months.wide[month]);  //full
-      ret = ret.replace('MMM', cal.months.abbreviated[month]);  //abreviation
+      ret = ret.replace('MMMM', cal ? cal.months.wide[month] : null);  //full
+      ret = ret.replace('MMM',  cal ? cal.months.abbreviated[month] : null);  //abreviation
       if (pattern.indexOf('MMM') === -1) {
         ret = ret.replace('MM', this.pad(month+1, 2));  //number padded
         ret = ret.replace('M', month+1);                //number unpadded
       }
 
       //PM
-      ret = ret.replace(' a', ' '+ (hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+      if (cal) {
+        ret = ret.replace(' a', ' '+ (hours >= 12 ? cal.dayPeriods[1] : cal.dayPeriods[0]));
+        ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
+      }
 
       //Day of Week
-      ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
+      if (cal) {
+        ret = ret.replace('EEEE', cal.days.wide[value.getDay()]);  //Day of Week
+      }
       ret = ret.replace('nnnn','ngày');
       ret = ret.replace('t1áng','tháng');
 
@@ -657,7 +663,13 @@
 
     // Short cut function to get numbers
     numbers: function() {
-      return this.currentLocale.data.numbers;
+      return this.currentLocale.data.numbers ? this.currentLocale.data.numbers : {
+          percentSign: '%',
+          percentFormat: '#,##0 %',
+          minusSign: '-',
+          decimal: '.',
+          group: ','
+        };
     },
 
     pad: function(n, width, z) {

@@ -7,7 +7,8 @@
   a {
     @include font-size(14);
     @include antialiased();
-    @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94));
+    @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94),
+      opacity 500ms cubic-bezier(.17, .04, .03, .94));
 
     border: 1px solid transparent;
     border-radius: 2px;
@@ -99,6 +100,10 @@
       }
     }
 
+    //Loading State
+    &.is-loading {
+      opacity: .5;
+    }
   }
 
   // List Elements

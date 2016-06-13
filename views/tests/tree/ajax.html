@@ -1,5 +1,15 @@
-
 <div class="row top-padding">
+  <div class="six columns">
+
+    <h2>Tree Control: Ajax</h2>
+
+    <p>This example shows how to use the source callback to load child nodes.
+       Clicking the node two to open should after a simulated delay, load a result with the children for this node </p>
+
+  </div>
+</div>
+
+<div class="row">
   <div class="twelve columns">
 
     <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
@@ -14,26 +24,29 @@
   /* jshint ignore:start */
   sampleData = [{
     "id": "node1",
-    "text": "Node One",
-    "open": false,
-    "selected": false,
-    "href": '/somelink/'
+    "text": "Node One"
   }, {
     "id": "node2",
     "text": "Node Two",
     "open": false,
-    "selected": true,
-    "focus": true,
+    "children": []
+  }];
+
+  sampleDataNoID = [{
+    "text": "Node One"
+  }, {
+    "text": "Node Two",
+    "open": false,
     "children": []
   }];
 
   /* jshint ignore:end */
 
   //Can refer to the data set here
-  $('#json-tree').tree({dataset: sampleData, source: function (req, response) {
+  $('#json-tree').tree({dataset: sampleDataNoID, source: function (req, response) {
     setTimeout(function () {
-      console.log(req);
-      
+      console.log(req, 'req');
+
       var nodes = [{
         "id": "node2.1",
         "text": "Node 2.1"
