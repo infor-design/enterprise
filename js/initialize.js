@@ -111,7 +111,9 @@
           if (!window.baseTagFixer) {
             self.initAll();
           } else {
-            window.baseTagFixer.set().done(self.initAll);
+            window.baseTagFixer.set().done(function() {
+              self.initAll();
+            });
           }
         });
         return this;
