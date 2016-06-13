@@ -102,9 +102,6 @@
 
       //Initialize after setting the locale
       handleInit: function () {
-        if (window.BaseTagFixer && $('base').length) {
-          window.baseTagFixer = new window.BaseTagFixer($('base').first().get(0));
-        }
         var self = this;
 
         Locale.set(this.settings.locale).done(function () {
