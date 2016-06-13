@@ -66,9 +66,7 @@
         this.element.append(
           '<div class="fileupload-wrapper '+ standaloneClass +'">' +
             '<div class="container drop-area">' +
-              '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-                '<use xlink:href="#icon-upload-adv"></use>' +
-              '</svg>' +
+              $.svgIconRaw('upload-adv') +
               '<p>'+ settings.textDropArea +'</p>' +
             '</div>' +
           '</div>');
@@ -169,9 +167,7 @@
               '<div class="file-row">' +
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
-                    '<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">' +
-                      '<use xlink:href="#icon-close"></use>' +
-                    '</svg>' +
+                    $.svgIconRaw({ cls: 'icon-close', icon: 'close'}) +
                     '<span>'+ settings.textBtnCancel +'</span>' +
                   '</button>' +
                 '</span>' +
@@ -214,17 +210,12 @@
             container.addClass('completed');
 
             // Add "Completed" icon
-            btnCancel.after(
-              '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-                '<use xlink:href="#icon-check"></use>' +
-              '</svg>');
+            btnCancel.after($.svgIconRaw('check'));
 
             // Add "Remove from server" button
             rightSide.append(
               '<button type="button" class="btn-icon action">' +
-                '<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">' +
-                ' <use xlink:href="#icon-close"></use>' +
-                '</svg>' +
+                $.svgIconRaw({ cls: 'icon-close', icon: 'close' }) +
                 '<span>'+ settings.textBtnRemove +'</span>' +
               '</button>');
 
@@ -318,9 +309,7 @@
               '<div class="file-row">' +
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
-                    '<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">' +
-                      '<use xlink:href="#icon-close"></use>' +
-                    '</svg>' +
+                    $.svgIconRaw({ cls: 'icon-close', icon: 'close' }) +
                     '<span>'+ settings.textBtnCloseError +'</span>' +
                   '</button>' +
                 '</span>' +
@@ -334,9 +323,7 @@
               '<div class="file-row">' +
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
-                    '<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">' +
-                      '<use xlink:href="#icon-close"></use>' +
-                    '</svg>' +
+                    $.svgIconRaw({ cls: 'icon-close', icon: 'close' }) +
                     '<span>'+ settings.textBtnCloseError +'</span>' +
                   '</button>' +
                 '</span>' +

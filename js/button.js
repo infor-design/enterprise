@@ -48,7 +48,7 @@
             return $(this).find('use').attr('xlink:href') === '#icon-dropdown';
           });
           if (!ddIcon.length) {
-            ddIcon = $('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>');
+            ddIcon = $.svgIcon({ icon: 'dropdown', cls: 'icon-dropdown'});
             this.element.append(ddIcon);
           }
           if (!ddIcon.hasClass('icon-dropdown')) {

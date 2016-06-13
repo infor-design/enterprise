@@ -119,7 +119,7 @@
         // Check for and add the icon
         this.icon = this.wrapper.find('.icon');
         if (!this.icon.length) {
-          this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
+          this.icon = $.svgIcon('dropdown');
           this.wrapper.append(this.icon);
         }
 
@@ -211,9 +211,7 @@
           // "Collapse" (up-arrow) icon by default.
           var isMobile = self.isMobile();
           self.list.prepend('<span class="trigger">' +
-            '<svg class="icon' + (isMobile ? ' close' : '') + '" focusable="false" aria-hidden="true" role="presentation">' +
-              '<use xlink:href="' + (isMobile ? '#icon-close' : '#icon-dropdown') + '">' +
-            '</svg>' +
+            (isMobile ? $.svgIconRaw({ cls: 'close', icon: 'close' }) : $.svgIconRaw('dropdown')) +
             '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +
           '</span>');
         }
@@ -488,7 +486,7 @@
 
         this.list.addClass('search-mode');
         this.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
-          .children('use').attr('xlink:href', '#icon-search');
+          .children('use').attr('xlink:href', $.getSvgIconLink('#icon-search'));
         this.listUl.find('li').hide();
         this.searchInput.removeAttr('aria-activedescendant');
 
@@ -540,7 +538,7 @@
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
         var cssClass = 'icon' + (this.isMobile() ? ' close' : ''),
-          icon = this.isMobile() ? '#icon-close' : '#icon-dropdown';
+          icon = $.getSvgIconLink(this.isMobile() ? '#icon-close' : '#icon-dropdown');
 
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG

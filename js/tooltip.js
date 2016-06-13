@@ -171,7 +171,7 @@
           contentArea,
           specified = false,
           closeBtnX = $('<button type="button" class="btn-icon l-pull-right"><span>Close</span></button>')
-                        .prepend('<svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg>')
+                        .prepend($.svgIconRaw({ cls: 'icon-close', icon: 'close' }))
                         .css({'margin-top':'-9px'})
                         .on('click', function() {
                           self.hide();
