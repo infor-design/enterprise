@@ -108,20 +108,13 @@
         var self = this;
 
         Locale.set(this.settings.locale).done(function () {
-          if (!window.baseTagFixer) {
-            self.initAll();
-          } else {
-            window.baseTagFixer.set().done(function() {
-              self.initAll();
-            });
-          }
+          self.initAll();
         });
         return this;
       },
 
       initAll : function () {
-
-        //Iterate all objects we are initializing
+        // Iterate all objects we are initializing
         this.element.filter(':not(svg):not(use):not(.no-init)').each(function() {
           var elem = $(this),
             noinitExcludes = '.no-init, [data-init]';

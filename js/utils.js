@@ -491,58 +491,6 @@
 
   };
 
-  // Base Tag Fixer
-  // This class goes through various Xi Controls and changes their relative links to absolute links
-  // in the event that an HTML Base tag is present in the page.  This code is kicked off in the initializer.
-  // Adapted from https://gist.github.com/leonderijke/c5cf7c5b2e424c0061d2
-  // and https://www.tjvantoll.com/2013/02/17/using-jquery-ui-tabs-with-the-base-tag/
-  function BaseTagFixer(element, options) {
-    this.element = $(element);
-    this.options = $.extend({}, options);
-    return this;
-  }
-
-  BaseTagFixer.prototype = {
-    map: [
-      {
-        selector: 'use[*|href]',
-        attribute: 'xlink:href'
-      },
-      {
-        selector: 'a[href]',
-        attribute: 'href'
-      }
-    ],
-
-    set: function() {
-      this.dff = $.Deferred();
-
-  		var baseUrl = window.location.href
-  			.replace(window.location.hash, '');
-
-  		function prepareForBaseTag(mapObject) {
-  			[].slice.call(document.querySelectorAll(mapObject.selector))
-  				.filter(function(element) {
-  					return (element.getAttribute(mapObject.attribute).indexOf('#') === 0);
-  				})
-  				.forEach(function(element) {
-  					element.setAttribute(mapObject.attribute, baseUrl + element.getAttribute(mapObject.attribute));
-  				});
-  		}
-
-  		for (var i = 0; i < this.map.length; i++) {
-  			prepareForBaseTag(this.map[i]);
-  		}
-
-      this.dff.resolve();
-
-      return this.dff.promise();
-    }
-  };
-
-  window.BaseTagFixer = BaseTagFixer;
-
-
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
