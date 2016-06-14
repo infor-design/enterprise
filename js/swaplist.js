@@ -300,7 +300,7 @@
       }, // END: Handle Events ---------------------------------------------------------------------
 
 
-      // Load listview 
+      // Load listview
       loadListview: function() {
         var self = this,
           s = self.settings,
@@ -368,7 +368,7 @@
         this.settings.numOfSelectionsClass = 'num-of-selections';
         this.settings.itemContentClass = 'swaplist-item-content';
         this.settings.itemContentTempl = $(
-          '<div><p><span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+ 
+          '<div><p><span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+
             Locale.translate('ItemsSelected') +'</p><div/>'
         );
       },
@@ -580,6 +580,12 @@
           self.clearSelections();
           self.items.removeClass('is-dragging is-dragging-touch');
         }, 100);
+      },
+
+      // Get items from provided container
+      getItems: function(container) {
+        container = (typeof container !== 'string') ? container : $(container, this.element);
+        return $('.listview li', container);
       },
 
       unbind: function() {

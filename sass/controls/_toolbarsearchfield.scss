@@ -120,7 +120,6 @@ $toolbarsearchfield-category-empty-width: 54px;
   }
 
   &.active {
-
     // During the animation "out", the text goes transparent
     .searchfield {
       background-color: rgba($searchfield-bg-color, 1);

@@ -229,16 +229,16 @@
             css.left = upperXLimit;
           }
 
-          if (css.left > upperXLimit) {
-            css.left = upperXLimit;
-          }
-
-          if (settings.containment === 'container' && css.left <= 1) {
-            css.left = 1;
+          if (css.top < 0) {
+            css.top = 0;
           }
 
           if (css.left < 0) {
             css.left = 0;
+          }
+
+          if (settings.containment === 'container' && css.left <= 1) {
+            css.left = 1;
           }
         }
 

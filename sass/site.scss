@@ -238,6 +238,10 @@ body {
     margin-left: 0;
     width: 100%;
   }
+
+  .icon {
+    top: 0 !important;
+  }
 }
 
 .ks-component {
@@ -654,7 +658,8 @@ $pageslice-download-link-border-color: #3dcd65;
     text-align: center;
 
     li,
-    td {
+    td,
+    .ks-example {
       text-align: left;
     }
   }
