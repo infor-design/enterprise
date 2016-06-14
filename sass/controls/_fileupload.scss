@@ -77,6 +77,13 @@ label.fileupload {
   background-color: rgba($white, 0);
 }
 
+// Safari Hack
+.is-safari {
+  label.fileupload {
+    position: static;
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
 
