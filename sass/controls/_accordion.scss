@@ -319,6 +319,53 @@
         border-bottom-color: $accordion-selected-bg-color;
       }
 
+      // Selected state only exists on Paneled accordions.
+      &.is-selected,
+      &.is-selected:hover,
+      &.is-focused.is-selected {
+        background-color: $accordion-selected-bg-color;
+        border-bottom-color: $accordion-selected-bg-color;
+        color: $accordion-selected-text-color;
+
+        > a {
+          color: $accordion-selected-text-color;
+        }
+
+        > .icon {
+          fill: $accordion-selected-text-color;
+        }
+
+        > [class^="btn"] {
+          .icon {
+            fill: $accordion-selected-text-color;
+
+            &.plus-minus {
+              &::before,
+              &::after {
+                background-color: $accordion-selected-text-color;
+              }
+            }
+          }
+
+          .audible {
+            color: $white;
+          }
+        }
+
+        [class^="btn"]:focus {
+          box-shadow: none;
+
+          &:not(.hide-focus) {
+            border: 1px solid $accordion-selected-text-color;
+          }
+        }
+
+        .accordion-header {
+          border-bottom-color: $accordion-selected-bg-color;
+        }
+      }
+
+
       &:last-child {
         border-bottom-color: transparent;
       }
@@ -675,51 +722,6 @@
   // Selected color scheme
   &.is-focused:not(.hide-focus) {
     border-color: $accordion-focused-border-color;
-  }
-
-  &.is-selected,
-  &.is-selected:hover,
-  &.is-focused.is-selected {
-    background-color: $accordion-selected-bg-color;
-    border-bottom-color: $accordion-selected-bg-color;
-    color: $accordion-selected-text-color;
-
-    > a {
-      color: $accordion-selected-text-color;
-    }
-
-    > .icon {
-      fill: $accordion-selected-text-color;
-    }
-
-    > [class^="btn"] {
-      .icon {
-        fill: $accordion-selected-text-color;
-
-        &.plus-minus {
-          &::before,
-          &::after {
-            background-color: $accordion-selected-text-color;
-          }
-        }
-      }
-
-      .audible {
-        color: $white;
-      }
-    }
-
-    [class^="btn"]:focus {
-      box-shadow: none;
-
-      &:not(.hide-focus) {
-        border: 1px solid $accordion-selected-text-color;
-      }
-    }
-
-    .accordion-header {
-      border-bottom-color: $accordion-selected-bg-color;
-    }
   }
 
   &.has-chevron {

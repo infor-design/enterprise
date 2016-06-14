@@ -309,6 +309,10 @@
       },
 
       setOpenWidth: function() {
+        this.inputWrapper.css('width', this.openWidth);
+      },
+
+      calculateOpenWidth: function() {
         var buttonset = this.element.parents('.toolbar').children('.buttonset'),
           nextElem = this.inputWrapper.next(),
           width;
@@ -325,7 +329,7 @@
             width = 'calc(100% - 40px)';
           }
 
-          this.inputWrapper.css('width', width);
+          this.openWidth = width;
           return;
         }
 
@@ -341,21 +345,23 @@
         }
 
         width = this.getFillSize(leftBoundary, rightBoundary);
-        this.inputWrapper.css('width', width + 'px');
+        this.openWidth = width + 'px';
+      },
+
+      isActive: function() {
+        return this.inputWrapper.hasClass('is-active');
       },
 
       adjustOnBreakpoint: function() {
         var isFullWidth = this.shouldBeFullWidth(),
           hasStyleAttr = this.inputWrapper.attr('style');
 
-        this.deactivate();
-
-        if (isFullWidth && hasStyleAttr) {
-          this.inputWrapper.removeAttr('style');
+        if (this.isActive()) {
+          this.deactivate();
         }
 
         if (!isFullWidth && !hasStyleAttr) {
-          this.setOpenWidth();
+          this.calculateOpenWidth();
         }
       },
 
@@ -381,6 +387,7 @@
 
         function activateCallback() {
           self.inputWrapper.addClass('is-open');
+          self.calculateOpenWidth();
           self.setOpenWidth();
           self.input.focus(); // for iOS
           self.toolbarParent.trigger('recalculateButtons');
