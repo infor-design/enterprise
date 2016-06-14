@@ -284,7 +284,7 @@ label,
 ::-webkit-input-placeholder {
   @include font-size(14);
   color: $input-placeholder-color;
-  font-weight: lighter;
+  font-weight: normal;
   line-height: 16px;
   opacity: 1;
 }
@@ -293,7 +293,7 @@ label,
 ::-moz-placeholder {
   @include font-size(14);
   color: $input-placeholder-color;
-  font-weight: lighter;
+  font-weight: normal;
   line-height: 16px;
   opacity: 1;
 }
@@ -301,7 +301,7 @@ label,
 :-ms-input-placeholder {
   @include font-size(14);
   color: $input-placeholder-color;
-  font-weight: lighter;
+  font-weight: normal;
   line-height: 16px;
   opacity: 1;
 }

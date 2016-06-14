@@ -8,8 +8,9 @@ Release Date: TBD
 * Property Sheet pattern
 
 ### Breaking Changes
+* 2016-06-14 - Changed font weight of placeholder text to normal (from lighter)
 * 2016-06-01 - Wizard now longer has disabled style as this conflicts with "not completed" style. If a situation arises where a wizard tab cannot be clicked, use error messages to indicate.
-* 2016-06-01 - Updated to jQuery 3.0 rc1 (not really totally required/breaking)
+* 2016-06-01 - Updated to jQuery 3.0 (not really totally required/breaking)
 * 2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.
 
 ### Ui Changes
