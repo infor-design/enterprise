@@ -71,7 +71,7 @@
 | S3 Worklist | Webpart (Black) | Jeremy Spring | 3x to 4x |
 | Sunsystems Transfer Desk | Alexander Taylor | MVC3 | 3x |
 | Supply Chain Execution | Anindhya Sharma | Reviewing | 3x |
-| SupplyWeb | Chad Paulinski | Reviewing | 3x |
+| SupplyWeb | Eric Andrews | Reviewing | 3x |
 | System Console | New app by S3 team  | Andy Buboltz | 4x |
 | System I |   | Richard Sankey | 3x |
 | SXE | Angular 1.0 - using XI directly - Huge app it will be another year. | Peter Cullen | 4x |

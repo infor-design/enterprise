@@ -25,9 +25,7 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, contentVisible: function (row, cell, data) {
-        return (data.action === 'On Hold');
-      }});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander});
       columns.push({ id: 'drilldown', name: '', field: '', width: 60, formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
