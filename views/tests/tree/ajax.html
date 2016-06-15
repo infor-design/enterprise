@@ -45,14 +45,14 @@
   //Can refer to the data set here
   $('#json-tree').tree({dataset: sampleDataNoID, source: function (req, response) {
     setTimeout(function () {
-      console.log(req, 'req');
 
       var nodes = [{
         "id": "node2.1",
         "text": "Node 2.1"
       },{
         "id": "node2.2",
-        "text": "Node 2.2"
+        "text": "Node 2.2",
+        "children": []
       }];
 
       response(nodes);
