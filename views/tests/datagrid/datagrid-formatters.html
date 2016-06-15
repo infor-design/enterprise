@@ -49,6 +49,7 @@
       columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'activity', name: 'Password', field: 'activity', formatter: Formatters.Password, inputType: 'password'});
       columns.push({ id: 'price1', name: 'Actual long Price', field: 'price', formatter: Formatters.Decimal});
       columns.push({ id: 'price2', name: 'Actual long Price', align: 'right', field: 'price', formatter: Formatters.Decimal});
 

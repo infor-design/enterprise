@@ -5,7 +5,13 @@
 window.Formatters = {
 
   Text: function(row, cell, value) {
-    return ((value === null || value === undefined || value === '') ? '' : value.toString());
+    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    return str;
+  },
+
+  Password: function(row, cell, value) {
+    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    return str.replace(/./g, '*');
   },
 
   Readonly: function(row, cell, value) {
@@ -293,7 +299,8 @@ window.Editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input type="text"/>').appendTo(container);
+      this.input = $('<input type="'+ (column.inputType ? column.inputType : 'text') +'"/>')
+        .appendTo(container);
 
       if (column.align) {
         this.input.addClass('l-'+ column.align +'-text');
