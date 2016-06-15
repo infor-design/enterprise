@@ -2482,7 +2482,8 @@ $.fn.datagrid = function(options) {
     //Set ui elements based on selected rows
     syncSelectedUI: function () {
 
-      var headerCheckbox = this.headerRow.find('.datagrid-checkbox');
+      var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
+        self = this;
 
       //Sync the header checkbox
       if (this._selectedRows.length > 0) {
@@ -2498,16 +2499,17 @@ $.fn.datagrid = function(options) {
       }
 
       //Open or Close the Contextual Toolbar.
-      if (this.contextualToolbar.length !== 1 || this.dontSyncUi) {
+      if (self.contextualToolbar.length !== 1 || self.dontSyncUi) {
         return;
       }
 
-      if (this._selectedRows.length === 0) {
-        this.contextualToolbar.animateClosed();
+      if (self._selectedRows.length === 0) {
+        self.contextualToolbar.animateClosed();
+
       }
 
-      if (this._selectedRows.length > 0) {
-        this.contextualToolbar.css('display', 'block').animateOpen();
+      if (self._selectedRows.length > 0 && self.contextualToolbar.height() === 0) {
+        self.contextualToolbar.css('display', 'block').animateOpen();
       }
 
     },

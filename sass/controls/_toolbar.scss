@@ -6,7 +6,7 @@ $toolbar-buttonset-height: 40px;
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
-  @included no-select();
+  @include no-select();
   overflow-x: hidden;
   overflow-y: visible;
   padding: 0 1rem;

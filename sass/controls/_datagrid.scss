@@ -1224,3 +1224,11 @@ html[dir='rtl'] {
   }
 
 }
+
+.ios .datagrid {
+  .icon-error,
+  .icon-confirm,
+  .icon-pending {
+    top: 14px !important;
+  }
+}
