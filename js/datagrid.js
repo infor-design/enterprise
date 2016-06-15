@@ -1995,8 +1995,6 @@ $.fn.datagrid = function(options) {
 
       //Handle Clicking Buttons and links in formatters
       this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
 
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
@@ -2048,7 +2046,6 @@ $.fn.datagrid = function(options) {
 
         }
 
-        return false;
       });
 
       var body = this.table.find('tbody');
