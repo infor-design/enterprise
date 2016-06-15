@@ -1,0 +1,60 @@
+
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="normal" class="label">Normal</label>
+      <input id="normal" data-init="false" class="lookup" name="normal" type="text">
+    </div>
+
+    <div class="field">
+      <label for="readonly" class="label">Normal</label>
+      <input id="readonly" class="lookup" readonly name="readonly" type="text">
+    </div>
+
+    <div class="field">
+      <label for="disabled" class="label">Disabled</label>
+      <input id="disabled" class="lookup" name="disabled" disabled type="text">
+    </div>
+
+    <div class="field">
+      <label for="required" class="label required">Required</label>
+      <input id="required" class="lookup" name="required" type="text" data-validate="required">
+    </div>
+
+    <div class="field">
+      <label for="dirty" class="label">Dirty Tracking</label>
+      <input id="dirty" data-init="false" class="lookup" name="dirty" type="text" data-trackdirty="true">
+    </div>
+
+    <div class="field">
+      <label for="validation" class="label">Validation</label>
+      <input id="validation" class="lookup" name="validation" type="text" data-validate="date">
+    </div>
+
+  </div>
+</div>
+
+<script>
+    var lookup;
+
+    //In this Test we have an Ajax call that returns the columns and lookup data
+    lookup = $('#normal, #dirty').lookup({
+        field: 'productId',
+        beforeShow: function (api, response) {
+          var url = '/api/lookupInfo';
+
+          $.getJSON(url, function(data) {
+            api.settings.options.columns = data[0].columns;
+            api.settings.options.dataset = data[0].dataset;
+            response();
+          });
+        },
+        options: {
+          selectable: 'single', //multiple or single
+          toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true , rowHeight: true}
+        }
+    });
+
+</script>
