@@ -1435,11 +1435,6 @@ $.fn.datagrid = function(options) {
             }
           }
 
-
-          if (col.cssClass && typeof col.cssClass === 'string') {
-            //cssClass += ' ' + col.cssClass;
-          }
-
           var cellValue = self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field);
 
           //Run a function that dynamically add a class
@@ -1459,7 +1454,7 @@ $.fn.datagrid = function(options) {
              '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
-            var canShow = col.contentVisible(i, j, cellValue, col);
+            var canShow = col.contentVisible(i, j, cellValue, col, self.settings.dataset[i]);
             if (!canShow) {
               formatted = '';
             }
@@ -3205,9 +3200,16 @@ $.fn.datagrid = function(options) {
       //update cell value
       escapedVal = $.escapeHTML(coercedVal);
       if (typeof formatter ==='string') {
-        formatted = window.Formatters[formatter](row-1, cell, escapedVal, col, settings.dataset[row]).toString();
+        formatted = window.Formatters[formatter](row, cell, escapedVal, col, settings.dataset[row]).toString();
       } else {
         formatted = formatter(row, cell, escapedVal, col, settings.dataset[row]).toString();
+      }
+
+      if (col.contentVisible) {
+        var canShow = col.contentVisible(row, cell, escapedVal, col, settings.dataset[row]);
+        if (!canShow) {
+          formatted = '';
+        }
       }
 
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
