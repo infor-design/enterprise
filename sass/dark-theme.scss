@@ -526,7 +526,7 @@ $timeline-line-color: $slate04;
 $timeline-header-color: $primary-color;
 
 //Themable Variables in config.scss
-$wizard-default-bg: transparent;
+$wizard-default-bg: $body-bg-color;
 $wizard-bar-bg: $slate04;
 $wizard-color: $slate03;
 $wizard-disabled-color: $slate04;
