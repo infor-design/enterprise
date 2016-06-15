@@ -3357,7 +3357,7 @@ $.fn.datagrid = function(options) {
 
     //Overridable function to conduct sorting
     sortFunction: function(id, ascending) {
-      var key,
+      var key, self = this,
       primer = function(a) {
         a = (a === undefined || a === null ? '' : a);
 
@@ -3373,7 +3373,7 @@ $.fn.datagrid = function(options) {
         return a;
       };
 
-      key = function(x) { return primer(x[id]); };
+      key = function(x) { return primer(self.fieldValue(x, id)); };
 
       ascending = !ascending ? -1 : 1;
 
