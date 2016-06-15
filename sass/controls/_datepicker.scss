@@ -69,12 +69,6 @@
   }
 }
 
-// IE Hack
-.ie9 .datepicker + .icon,
-.ie10 .datepicker + .icon {
-  background-color: rgba($white, 0);
-}
-
 .calendar {
   background-color: $popover-bg-color;
   display: inline-block;
@@ -366,7 +360,7 @@ html[dir='rtl'] {
         span {
         margin-left: inherit;
         margin-right: 1px;
-      }    
+      }
     }
   }
 
@@ -406,4 +400,27 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+
+// IE Hack
+.ie9,
+.ie10,
+.ie11 {
+
+  .datepicker + .icon {
+    background-color: rgba($white, 0);
+  }
+
+  .calendar-header {
+    line-height: normal;
+    padding-left: 18px;
+    text-indent: inherit;
+
+    .month,
+    .year {
+      line-height: 50px;
+    }
+  }
+
 }
