@@ -187,7 +187,7 @@
       // Activates one of the Wizard's ticks.
       // Tick can either be a number (representing the tick's index) or a jQuery element reference to a tick
       activate: function(e, tick) {
-        if (!e && !tick) {
+        if (e === undefined && !tick) {
           return this;
         }
 
@@ -198,11 +198,11 @@
 
           // Use the first variable as the tick definition or index if "e" is null, undefined, or not an event object.
           // This is for backwards compatibility with this control's old select() method, which took an index as an argument.
-          if (e && (e === undefined || e === null || !e.type || !e.target) && !tick) {
+          if (e !== undefined && (e === undefined || e === null || !e.type || !e.target) && !tick) {
             tick = e;
           }
 
-          if (!tick) {
+          if (tick === undefined) {
             target = $(e.target);
             return target.is('.label') ? target.parent() : target;
           }

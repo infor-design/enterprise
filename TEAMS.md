@@ -11,7 +11,7 @@
 | Business Vault |    Justin Timbers   |   A JSF based Single Page App implement with jQuery | 3.1 moving to 4x (new App) |
 | Business innovations |    Gowtham.Govindaraj@infor.com   | Employee Recognition System using Mongoose | 4x |
 | Care Assignments |   | Michael Welborn | 3x |
-| CDAS application |   | Neha Vora <neha.vora@citiustech.com> | 3x moving to 4x |
+| CDAS application |   | Neha Vora <neha.vora@citiustech.com>, Shyam Rajadhyax <shyam.rajadhyax@citiustech.com> |  4x |
 | Certification Manager |   |    Syedur Islam | 3x |
 | Certpoint LMS  |   | Blessed Dianne Valencia | 3x moving to 4x |
 | CPM Applications (4) |   | Rick Leedy, Mike Surel | 3x |
