@@ -438,21 +438,25 @@ textarea.error:focus {
 //Info Field
 .field-info {
   $icon-width: 15px;
-
   @include font-size(12);
   display: block;
   line-height: 1.2rem;
-  position: relative;
+  margin-bottom: 12px;
   margin-top: -8px;
   max-width: 300px;
   min-height: 35px;
+  position: relative;
 
   .icon {
-    position: absolute;
     height: 15px;
     left: 0;
+    position: absolute;
     top: 0;
     width: $icon-width;
+  }
+
+  .icon-info-field {
+    position: static;
   }
 
   .message-text {
