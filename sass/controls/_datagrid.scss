@@ -287,20 +287,9 @@ $datagrid-short-row-height: 30px;
     margin-left: 20px;
 
     &.l-right-text {
-      margin: 0;
-      width: 100%;
-
-      .datagrid-header-text {
-        float: right;
-        margin-top: 14px;
-        max-width: calc(100% - 30px);
-        padding-right: 20px;
-      }
-
-      .sort-indicator {
-        left: -5px;
-        position: relative;
-      }
+      direction: rtl;
+      margin-left: 0;
+      margin-right: 20px;
     }
   }
 
@@ -693,7 +682,7 @@ $datagrid-short-row-height: 30px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: 6px 0 0 4px;
+  margin: 6px 6px 0;
   vertical-align: top;
 
   .icon {
