@@ -665,7 +665,7 @@
           if (i >= leadDays && dayCnt <= thisMonthDays) {
             th.html('<span aria-hidden="true">' + dayCnt + '</span>');
 
-            if ((new Date(year, month, dayCnt)).setHours(0,0,0,0) === elementDate) {
+            if ((new Date(year, month, dayCnt)).setHours(0,0,0,0) === elementDate.setHours(0,0,0,0)) {
               th.addClass('is-selected').attr('aria-selected', 'true');
             }
 

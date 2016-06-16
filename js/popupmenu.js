@@ -556,7 +556,7 @@
           this.menu.css('overflow', 'hidden');
         }
 
-        if (this.element.hasClass('btn-menu')) {
+        if (this.element.hasClass('btn-menu') && !this.element.parent('.field')) {
           wrapper.find('div.arrow').css({'left': '20px'});
 
           if (this.element.closest('.buttonset').length > 0 ) {
@@ -569,6 +569,10 @@
             wrapper.find('div.arrow').css('left', arrowPos);
           }
 
+        }
+
+        if (this.element.parent('.field').length > 0) {
+          wrapper.find('div.arrow').css({'right': '13px'});
         }
 
         if (this.element.closest('.tab').length || this.element.closest('.tab-more').length) {

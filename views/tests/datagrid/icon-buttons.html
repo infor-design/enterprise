@@ -30,7 +30,7 @@
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'action', name: 'Active', field: 'action', width: 50, formatter: Formatters.Button, icon: 'reset', click: function (e, args) {console.log('Button was clicked', args);}
-      , contentVisible: function (row, cell, data) { return (data.status === 'OK');} });
+      , contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
 
       //Init and get the api for the grid
       grid = $('#readonly-datagrid').datagrid({
