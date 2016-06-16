@@ -407,6 +407,7 @@
               position.left -= ((timepickerPopup.width() - timepickerInput.width())/2) - 30;
 
               timepickerPopup.css(position);
+              
               self.timepickerInput.css({'visibility': 'hidden'});
 
               $('.arrow, .modal-buttonset', timepickerPopup).hide();
@@ -463,6 +464,7 @@
 
         this.showMonth(this.currentMonth, this.currentYear);
         this.popup = $('#calendar-popup');
+        this.popup.attr('role', 'dialog');
         this.originalDate = this.element.val();
 
         // Calendar Day Events
