@@ -764,7 +764,8 @@
 
       // Focus the Element
       activate: function (useSearchInput) {
-        var input = this.pseudoElem;
+        var self = this,
+          input = this.pseudoElem;
         if (useSearchInput) {
           input = this.searchInput;
         }
@@ -773,15 +774,23 @@
           return;
         }
 
-        if (input[0].setSelectionRange) {
-          input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
-        } else {
-          if (input[0].tagName === 'INPUT') { // using Search Input instead of Pseudo Div
-            input[0].select();
+        function selectText() {
+          if (self.isMobile()) {
+            return;
+          }
+
+          if (input[0].setSelectionRange) {
+            input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
+          } else {
+            if (input[0].tagName === 'INPUT') { // using Search Input instead of Pseudo Div
+              input[0].select();
+            }
           }
         }
 
-        if (document.activeElement !== input[0]) {
+        selectText();
+
+        if (/*!this.isMobile() && */document.activeElement !== input[0]) {
           input[0].focus();
         }
       },
@@ -837,6 +846,8 @@
           current = current.eq(0);
         }
 
+        $('head').triggerHandler('disable-zoom');
+
         // Persist the "short" input field
         var isShort = (this.element.closest('.field-short').length === 1);
 
@@ -889,7 +900,7 @@
         this.element.trigger('listopened');
 
         // iOS-specific keypress event that listens for when you click the "done" button
-        if ($('html').is('.ios, .android')) {
+        if (this.isMobile()) {
           self.searchInput.on('keypress.dropdown', function(e) {
             if (e.which === 13) {
               self.closeList();
@@ -897,7 +908,15 @@
           });
         }
 
-        function listItemClickHandler(e, target) {
+        function listItemClickHandler(e) {
+          var target = $(e.target),
+            ddOption = target.closest('li.dropdown-option');
+
+          if (ddOption.length) {
+            target = ddOption;
+          }
+
+          e.preventDefault();
           e.stopPropagation();
 
           var val = target.attr('data-val'),
@@ -912,15 +931,20 @@
 
           //Select the clicked item
           if (cur.is(':disabled')) {
-            return;
+            return false;
           }
           self.selectOption(cur);
+
           if (self.settings.closeOnSelect) {
             self.closeList();
-            self.activate();
-          } else {
-            self.activate(true);
           }
+
+          if (self.isMobile()) {
+            return true;
+          }
+
+          self.activate(!self.settings.closeOnSelect);
+          return true;
         }
 
         function triggerButtonClickHandler() {
@@ -931,17 +955,8 @@
           .removeClass('dropdown-tall')
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
-          .on('click.list', 'li', function (e) {
-            var target = $(e.target),
-              ddOption = target.closest('li.dropdown-option');
-
-            if (ddOption.length) {
-              target = ddOption;
-            }
-
-            e.preventDefault();
-            return listItemClickHandler(e, target);
-          })
+          .on('click.list', '.trigger, svg', triggerButtonClickHandler)
+          .on('click.list', 'li', listItemClickHandler)
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
 
@@ -950,11 +965,11 @@
             }
           });
 
-        // Some close events are on a timer to prevent immediate list close
+        // Some list-closing events are on a timer to prevent immediate list close
+        // There would be several things to check with a setTimeout, so this is done with a CSS
+        // class to keep things a bit cleaner
         setTimeout(function delayedListCloseEvents() {
-          self.list.on('click.list', '.trigger, svg', function() {
-              triggerButtonClickHandler();
-            });
+          self.list.addClass('is-closable');
         }, 100);
 
         // Is the jQuery Element a component of the current Dropdown list?
@@ -1023,23 +1038,21 @@
           .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
           .on('click.dropdown', clickDocument);
 
-        setTimeout(function() {
-          var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
-          parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
-          parentScroll.on('scroll.dropdown', scrollDocument);
+        var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+        parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
+        parentScroll.on('scroll.dropdown', scrollDocument);
 
-          // In mobile environments, bind against an orientation change.
-          // in desktop environments, bind against window.resize
-          if (window.orientation === undefined) {
-            $('body').on('resize.dropdown', function() {
-              if (document.activeElement !== self.searchInput[0]) {
-                self.closeList();
-              }
-            });
-          }
+        // In mobile environments, bind against an orientation change.
+        // in desktop environments, bind against window.resize
+        if (window.orientation === undefined) {
+          $('body').on('resize.dropdown', function() {
+            if (document.activeElement !== self.searchInput[0]) {
+              self.closeList();
+            }
+          });
+        }
 
-        }, 100);
-
+        $('head').triggerHandler('enable-zoom');
       },
 
       // Set size and positioning of the list
@@ -1121,7 +1134,7 @@
 
       //Close list and detach events
       closeList: function() {
-        if (!this.list.is(':visible')) {
+        if (!this.list.is(':visible') || !this.isListClosable()) {
           return;
         }
 
@@ -1471,6 +1484,14 @@
         if (!self.callSource(doSetting)) {
           doSetting();
         }
+      },
+
+      isMobile: function() {
+        return $('html').is('.ios, .android');
+      },
+
+      isListClosable: function() {
+        return this.list.hasClass('is-closable');
       },
 
       disable: function() {

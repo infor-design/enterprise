@@ -41,7 +41,6 @@
           .addBrowserClasses()
           .handleInit()
           .addGlobalResize();
-          //.addMobileZoom();
       },
 
       // Global Classes for browser, version and device as needed.
@@ -456,37 +455,11 @@
 
       // Setup a global resize event trigger for controls to listen to
       addGlobalResize: function() {
-
         $(window).on('resize', function() {
           $('body').triggerHandler('resize', [window]);
         });
 
         return this;
-      },
-
-      addMobileZoom: function() {
-        var head = $('head');
-
-        function zoomDisable() {
-          head.find('meta[name=viewport]').remove();
-          head.prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />');
-        }
-
-        function zoomEnable() {
-          head.find('meta[name=viewport]').remove();
-          head.prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />');
-        }
-
-        // if the device is an iProduct, apply the fix whenever the users touches an input
-        if (navigator.userAgent.length && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          // define as many target fields as your like
-          $('input')
-            .on('touchstart.zoomdisabler', function() {
-              zoomDisable();
-            }).on('touchend.zoomdisabler', function() {
-              setTimeout(zoomEnable, 500);
-            });
-        }
       }
 
     };

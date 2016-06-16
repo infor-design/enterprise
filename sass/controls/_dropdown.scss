@@ -31,10 +31,9 @@ select.multiselect {
   }
 }
 
-input.dropdown,
 div.dropdown,
-input.multiselect,
 div.multiselect {
+  @include input-style();
   @include css3(touch-callout, none);
   @include css3(user-select, none);
   @include transition(background-color .2s ease);

@@ -101,7 +101,6 @@
 
       // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
       enableZoom: function() {
-        console.log('enable zoom');
         this.viewport.remove();
 
         this.viewport = $('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />');
@@ -110,7 +109,6 @@
 
       // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
       disableZoom: function() {
-        console.log('disable zoom');
         this.viewport.remove();
 
         this.viewport = $('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />');
