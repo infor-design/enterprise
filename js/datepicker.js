@@ -403,11 +403,11 @@
               var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''}),
                 position = timepickerInput.offset();
 
-              position.top -= timepickerPopup.height()/2 - 2;
+              position.top -= timepickerPopup.parent().is('body') ? 0 : timepickerPopup.height()/2 - 2;
               position.left -= ((timepickerPopup.width() - timepickerInput.width())/2) - 30;
 
               timepickerPopup.css(position);
-              
+
               self.timepickerInput.css({'visibility': 'hidden'});
 
               $('.arrow, .modal-buttonset', timepickerPopup).hide();
@@ -666,8 +666,10 @@
 
           if (i >= leadDays && dayCnt <= thisMonthDays) {
             th.html('<span aria-hidden="true">' + dayCnt + '</span>');
+            var tHours = elementDate.getHours(),
+              tMinutes = elementDate.getMinutes();
 
-            if ((new Date(year, month, dayCnt)).setHours(0,0,0,0) === elementDate.setHours(0,0,0,0)) {
+            if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, 0,0) === elementDate.setHours(tHours, tMinutes, 0,0)) {
               th.addClass('is-selected').attr('aria-selected', 'true');
             }
 
