@@ -86,9 +86,9 @@
           this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
         }
 
-        this.input = $('input#'+ orgId + '-shdo');
-        if (!this.input.length) {
-          this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({
+        this.pseudoElem = $('div#'+ orgId + '-shdo');
+        if (!this.pseudoElem.length) {
+          this.pseudoElem = $('<div class="'+ cssClass +'" tabindex="0"/>').attr({
             'role': 'combobox',
             'aria-autocomplete': 'list',
             'aria-controls': 'dropdown-list',
@@ -100,7 +100,7 @@
 
         // Place the elements depending on the configuration
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length === 1) {
-          this.wrapper.append(this.input, this.trigger);
+          this.wrapper.append(this.pseudoElem, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
           if (this.isInlineLabel) {
@@ -113,9 +113,9 @@
           else {
             this.element.after(this.label);
           }
-          this.wrapper.append(this.input, this.trigger);
+          this.wrapper.append(this.pseudoElem, this.trigger);
         } else {
-          this.wrapper.append(this.input, this.trigger);
+          this.wrapper.append(this.pseudoElem, this.trigger);
         }
 
         // Check for and add the icon
@@ -157,7 +157,7 @@
         for (var i = 0; i < sizingStrings.length; i++) {
           s = sizingStrings[i];
           if (classString.match(s)) {
-            this.input.addClass('dropdown' + s);
+            this.pseudoElem.addClass('dropdown' + s);
           }
         }
 
@@ -195,10 +195,10 @@
           labelStyle = (this.orgLabel[0] === undefined ? null : this.orgLabel[0].style);
 
         if (style.width) {
-          this.input.width(style.width);
+          this.pseudoElem.width(style.width);
         }
         if (style.position === 'absolute') {
-          this.input.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
+          this.pseudoElem.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
         }
         if (labelStyle && labelStyle.position === 'absolute') {
           this.label.css({position: 'absolute', left: labelStyle.left, top: labelStyle.top, bottom: labelStyle.bottom, right: labelStyle.right});
@@ -325,14 +325,14 @@
           text = this.getOptionText(opts);
 
         if (this.settings.empty && opts.length === 0) {
-          this.input.val('');
+          this.pseudoElem.text('');
           return;
         }
 
         //Set initial values for the edit box
-        this.input.val(text);
+        this.pseudoElem.text(text);
         if (this.element.attr('maxlength')) {
-           this.input.val(text.substr(0, this.element.attr('maxlength')));
+           this.pseudoElem.text(text.substr(0, this.element.attr('maxlength')));
         }
 
         this.setBadge(opts);
@@ -359,13 +359,13 @@
           this.readonly();
         }
         if (this.isHidden) {
-          this.input.hide().prev('label').hide();
-          this.input.next('svg').hide();
+          this.pseudoElem.hide().prev('label').hide();
+          this.pseudoElem.next('svg').hide();
         }
 
         //TODO: Empty Selection
         if (this.element.attr('placeholder')) {
-          this.input.attr('placeholder', this.element.attr('placeholder'));
+          this.pseudoElem.attr('placeholder', this.element.attr('placeholder'));
           this.element.removeAttr('placeholder');
         }
       },
@@ -374,7 +374,7 @@
       handleEvents: function() {
         var self = this;
 
-        this.input.on('keydown.dropdown', function(e) {
+        this.pseudoElem.on('keydown.dropdown', function(e) {
           self.ignoreKeys($(this), e);
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
@@ -525,7 +525,7 @@
 
         //Adjust height / top position
         if (self.list.hasClass('is-ontop')) {
-          self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+          self.list.css({'top': self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2});
         }
       },
 
@@ -551,7 +551,7 @@
 
         //Adjust height / top position
         if (this.list.hasClass('is-ontop')) {
-          this.list.css({'top': this.input.offset().top - this.list.height() + this.input.outerHeight() - 2});
+          this.list.css({'top': this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2});
         }
 
         if (this.settings.multiple) {
@@ -764,19 +764,21 @@
 
       // Focus the Element
       activate: function (useSearchInput) {
-        var input = this.input;
+        var input = this.pseudoElem;
         if (useSearchInput) {
           input = this.searchInput;
         }
 
-        if (input.hasClass('is-readonly') || input.prop('readonly') === true) {
+        if (useSearchInput && (input.hasClass('is-readonly') || input.prop('readonly') === true)) {
           return;
         }
 
         if (input[0].setSelectionRange) {
           input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
         } else {
-          input[0].select();
+          if (input[0].tagName === 'INPUT') { // using Search Input instead of Pseudo Div
+            input[0].select();
+          }
         }
 
         if (document.activeElement !== input[0]) {
@@ -810,7 +812,7 @@
           return;
         }
 
-        if (this.element.is(':disabled') || this.input.hasClass('is-readonly')) {
+        if (this.element.is(':disabled') || this.pseudoElem.hasClass('is-readonly')) {
           return;
         }
 
@@ -838,7 +840,7 @@
         // Persist the "short" input field
         var isShort = (this.element.closest('.field-short').length === 1);
 
-        this.input.attr('aria-expanded', 'true');
+        this.pseudoElem.attr('aria-expanded', 'true');
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones
@@ -846,7 +848,7 @@
         this.list.appendTo('body').show();
 
         //In a grid cell
-        this.isInGrid = this.input.closest('.datagrid-row').length === 1;
+        this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
 
         if (this.isInGrid) {
           this.list.addClass('datagrid-dropdown-list');
@@ -866,7 +868,7 @@
           this.initialFilter = false;
         } else {
           // Change the values of both inputs and swap out the active descendant
-          this.searchInput.val(this.input.val());
+          this.searchInput.val(this.pseudoElem.val());
         }
 
         var noScroll = this.settings.multiple;
@@ -1043,8 +1045,8 @@
       // Set size and positioning of the list
       position: function() {
         var isFixed = false, isAbs = false,
-          top = (this.input.offset().top),
-          left = this.input.offset().left - $(window).scrollLeft();
+          top = (this.pseudoElem.offset().top),
+          left = this.pseudoElem.offset().left - $(window).scrollLeft();
 
         // If we're lower than the Phone Breakpoint, reset everything for full-screen
         if ($(window).width() <= 610) {
@@ -1054,7 +1056,7 @@
         this.list.css({'top': top, 'left': left});
 
         //Fixed and Absolute Positioning use cases
-        this.input.parentsUntil('body').each(function () {
+        this.pseudoElem.parentsUntil('body').each(function () {
           if ($(this).css('position') === 'fixed') {
             isFixed = true;
             return;
@@ -1065,19 +1067,19 @@
           this.list.css('position', 'fixed');
         }
 
-        if (this.input.parent('.field').css('position') === 'absolute') {
+        if (this.pseudoElem.parent('.field').css('position') === 'absolute') {
           isAbs = true;
-          this.list.css({'top': this.input.parent('.field').offset().top + this.input.prev('label').height() , 'left': this.input.parent('.field').offset().left});
+          this.list.css({'top': this.pseudoElem.parent('.field').offset().top + this.pseudoElem.prev('label').height() , 'left': this.pseudoElem.parent('.field').offset().left});
         }
 
         this.list.removeClass('is-ontop');
 
         //Flow up if not enough room on bottom
         var roomTop = top,
-          roomBottom = $(window).height() - top - this.input.outerHeight();
+          roomBottom = $(window).height() - top - this.pseudoElem.outerHeight();
 
         if (roomTop > roomBottom && top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
-          this.list.css({'top': top - this.list.outerHeight() + this.input.outerHeight()});
+          this.list.css({'top': top - this.list.outerHeight() + this.pseudoElem.outerHeight()});
           this.list.addClass('is-ontop');
           this.listUl.prependTo(this.list);
         }
@@ -1097,8 +1099,8 @@
         }
 
         //let grow or to field size.
-        this.list.find('input').outerWidth(this.input.outerWidth()-2);
-        if (this.list.width() > this.input.outerWidth()) {
+        this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-2);
+        if (this.list.width() > this.pseudoElem.outerWidth()) {
            this.list.css('width', '');
            this.list.css({'width': this.list.outerWidth() + 35});
            this.list.find('input').css({'width': this.list.outerWidth() + 35});
@@ -1109,10 +1111,10 @@
             this.list.width(maxWidth - 20);
            }
         } else {
-          this.list.width(this.input.outerWidth()-2);
+          this.list.width(this.pseudoElem.outerWidth()-2);
 
           if (this.isInGrid) {
-            this.list.width(this.input.outerWidth());
+            this.list.width(this.pseudoElem.outerWidth());
           }
         }
       },
@@ -1138,7 +1140,7 @@
         this.list.offTouchClick('list')
           .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list');
         this.listUl.find('li').show();
-        this.input.removeClass('is-open').attr('aria-expanded', 'false');
+        this.pseudoElem.removeClass('is-open').attr('aria-expanded', 'false');
         this.searchInput.removeAttr('aria-activedescendant');
 
         $(document).offTouchClick('dropdown')
@@ -1147,7 +1149,8 @@
         $(window).off('resize.dropdown');
         this.element.trigger('listclosed');
 
-        this.input.focus();
+        this.activate();
+        //this.pseudoElem.focus();
       },
 
       //Set option into view
@@ -1212,7 +1215,7 @@
           listOption.addClass('is-focused').attr({'tabindex': '0'});
 
           // Set activedescendent for new option
-          //this.input.attr('aria-activedescendant', listOption.attr('id'));
+          //this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
           this.searchInput.attr('aria-activedescendant', listOption.children('a').attr('id'));
 
           if (!noScroll || noScroll === false || noScroll === undefined) {
@@ -1271,7 +1274,7 @@
 
         var code = option.val(),
           val = this.element.val(),
-          oldText = this.input.val(),
+          oldText = this.pseudoElem.text(),
           text = '',
           trimmed = '',
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
@@ -1327,12 +1330,12 @@
         }
 
         // Change the values of both inputs and swap out the active descendant
-        this.input.val(text);
+        this.pseudoElem.text(text);
         this.searchInput.val(text);
 
         if (this.element.attr('maxlength')) {
           trimmed = text.substr(0, this.element.attr('maxlength'));
-          this.input.val(trimmed);
+          this.pseudoElem.text(trimmed);
           this.searchInput.val(trimmed);
         }
 
@@ -1415,14 +1418,14 @@
 
             self.element.append(list);
             self.updateList();
-            self.input.removeClass('is-busy');
+            self.pseudoElem.removeClass('is-busy');
             self.element.trigger('requestend', [searchTerm, data]);
             callback();
             return;
           };
 
           //TODO: show indicator when we have it
-          self.input.addClass('is-busy');
+          self.pseudoElem.addClass('is-busy');
           self.element.trigger('requeststart');
 
           if (sourceType === 'function') {
@@ -1472,22 +1475,23 @@
 
       disable: function() {
         this.element.prop('disabled', true);
-        this.input.prop('disabled', true);
+        //this.pseudoElem.prop('disabled', true);
+        this.pseudoElem.addClass('is-disabled');
         this.element.prop('readonly', false);
-        this.input.prop('readonly', false).removeClass('is-readonly');
+        this.pseudoElem/*.prop('readonly', false)*/.removeClass('is-readonly');
         this.closeList();
       },
 
       enable: function() {
         this.element.prop('disabled', false);
         this.element.prop('readonly', false);
-        this.input.prop('disabled', false).removeClass('is-readonly');
+        this.pseudoElem/*.prop('disabled', false)*/.removeClass('is-disabled').removeClass('is-readonly');
       },
 
       readonly: function() {
         this.element.prop('disabled', false);
         this.element.prop('readonly', true);
-        this.input.addClass('is-readonly').prop('readonly', true);
+        this.pseudoElem.removeClass('is-disabled').addClass('is-readonly')/*.prop('readonly', true)*/;
         this.closeList();
       },
 
@@ -1506,11 +1510,11 @@
         if (this.element.prop('readonly') === true) {
           this.readonly();
         } else {
-          this.input.removeClass('is-readonly').prop('readonly', false);
+          this.pseudoElem.removeClass('is-readonly')/*.prop('readonly', false)*/;
         }
 
         // update "disabled" prop
-        this.input.prop('disabled', this.element.prop('disabled'));
+        this.pseudoElem[ this.element.prop('disabled') ? 'addClass' : 'removeClass' ]('is-disabled');
 
         // update the list and set a new value, if applicable
         this.updateList();
@@ -1525,7 +1529,7 @@
         $.removeData(this.element[0], pluginName);
         this.closeList();
         this.label.remove();
-        this.input.off().remove();
+        this.pseudoElem.off().remove();
         this.icon.remove();
         this.wrapper.remove();
         this.element.removeAttr('style');

@@ -41,6 +41,7 @@
           .addBrowserClasses()
           .handleInit()
           .addGlobalResize();
+          //.addMobileZoom();
       },
 
       // Global Classes for browser, version and device as needed.
@@ -48,17 +49,17 @@
         var ua = navigator.userAgent || navigator.vendor || window.opera,
           html = $('html'); // User-agent string
 
-        if (navigator.userAgent.indexOf('Safari')  !== -1 &&
-            navigator.userAgent.indexOf('Chrome')  === -1 &&
-            navigator.userAgent.indexOf('Android') === -1) {
+        if (ua.indexOf('Safari')  !== -1 &&
+            ua.indexOf('Chrome')  === -1 &&
+            ua.indexOf('Android') === -1) {
           html.addClass('is-safari');
         }
 
-        if (navigator.userAgent.indexOf('Mac OS X') !== -1) {
+        if (ua.indexOf('Mac OS X') !== -1) {
           html.addClass('is-mac');
         }
 
-        if (navigator.userAgent.indexOf('Firefox') > 0) {
+        if (ua.indexOf('Firefox') > 0) {
           html.addClass('is-firefox');
         }
 
@@ -169,6 +170,13 @@
                 $(fields, siblings).attr('disabled','disabled');
               }
             });
+          }
+
+          // Mobile Zoom Control
+          // Needs manual invokation because the rest of initialization is scoped to the
+          // calling element, which is the <body> tag.
+          if ($.fn.zoom) {
+            $('head').zoom();
           }
 
           // Application Menu
@@ -454,6 +462,31 @@
         });
 
         return this;
+      },
+
+      addMobileZoom: function() {
+        var head = $('head');
+
+        function zoomDisable() {
+          head.find('meta[name=viewport]').remove();
+          head.prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />');
+        }
+
+        function zoomEnable() {
+          head.find('meta[name=viewport]').remove();
+          head.prepend('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />');
+        }
+
+        // if the device is an iProduct, apply the fix whenever the users touches an input
+        if (navigator.userAgent.length && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          // define as many target fields as your like
+          $('input')
+            .on('touchstart.zoomdisabler', function() {
+              zoomDisable();
+            }).on('touchend.zoomdisabler', function() {
+              setTimeout(zoomEnable, 500);
+            });
+        }
       }
 
     };

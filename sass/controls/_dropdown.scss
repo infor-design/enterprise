@@ -32,7 +32,9 @@ select.multiselect {
 }
 
 input.dropdown,
-input.multiselect {
+div.dropdown,
+input.multiselect,
+div.multiselect {
   @include css3(touch-callout, none);
   @include css3(user-select, none);
   @include transition(background-color .2s ease);
