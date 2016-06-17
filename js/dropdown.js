@@ -129,6 +129,13 @@
           this.label.attr('class', this.orgLabel.attr('class'));
         }
 
+        // Pass disabled/readonly from the original element, if applicable
+        var disabled = this.element.prop('disabled');
+        this.pseudoElem[disabled ? 'addClass' : 'removeClass']('is-disabled').prop('disabled', disabled);
+
+        var readonly = this.element.prop('readonly');
+        this.pseudoElem[readonly ? 'addClass' : 'removeClass']('is-readonly').prop('readonly', readonly);
+
         // Setup the incoming options that can be set as properties/attributes
         if (this.element.prop('multiple') && !this.settings.multiple) {
           this.settings.multiple = true;
@@ -389,6 +396,7 @@
         }).on('touchend.dropdown touchcancel.dropdown', function(e) {
           e.stopPropagation();
           self.toggleList();
+          e.preventDefault();
         });
 
         self.element.on('activated.dropdown', function () {
@@ -821,7 +829,7 @@
           return;
         }
 
-        if (this.element.is(':disabled') || this.pseudoElem.hasClass('is-readonly')) {
+        if (this.element.is(':disabled') || this.pseudoElem.hasClass('is-disabled') || this.pseudoElem.hasClass('is-readonly')) {
           return;
         }
 
@@ -955,7 +963,7 @@
           .removeClass('dropdown-tall')
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
-          .on('click.list', '.trigger, svg', triggerButtonClickHandler)
+          //.on('click.list', '.trigger, svg', triggerButtonClickHandler)
           .on('click.list', 'li', listItemClickHandler)
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
@@ -1009,7 +1017,7 @@
             y: e.originalEvent.touches[0].pageY
           };
 
-          $(document).on('touchmove.dropdown', function touchMoveCallback(e) {
+          $(document).one('touchmove.dropdown', function touchMoveCallback(e) {
             var newPos = {
               x: e.originalEvent.touches[0].pageX,
               y: e.originalEvent.touches[0].pageY
@@ -1022,11 +1030,12 @@
           });
         }
 
-        function touchEndCallback() {
+        function touchEndCallback(e) {
           $(document).off('touchmove.dropdown');
           if (touchPrevented) {
             return false;
           }
+          e.preventDefault();
           $(document).triggerHandler('click.dropdown');
         }
 
@@ -1150,13 +1159,15 @@
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
         this.list.hide().remove();
-        this.list.offTouchClick('list')
+        this.list
+          //.offTouchClick('list')
           .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list');
         this.listUl.find('li').show();
         this.pseudoElem.removeClass('is-open').attr('aria-expanded', 'false');
         this.searchInput.removeAttr('aria-activedescendant');
 
-        $(document).offTouchClick('dropdown')
+        $(document)
+          //.offTouchClick('dropdown')
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
         $(window).off('resize.dropdown');
@@ -1495,24 +1506,37 @@
       },
 
       disable: function() {
-        this.element.prop('disabled', true);
-        //this.pseudoElem.prop('disabled', true);
-        this.pseudoElem.addClass('is-disabled');
-        this.element.prop('readonly', false);
-        this.pseudoElem/*.prop('readonly', false)*/.removeClass('is-readonly');
+        this.element
+          .prop('disabled', true)
+          .prop('readonly', false);
+        this.pseudoElem
+          .addClass('is-disabled')
+          .removeClass('is-readonly')
+          .prop('readonly', false)
+          .prop('disabled', true);
         this.closeList();
       },
 
       enable: function() {
-        this.element.prop('disabled', false);
-        this.element.prop('readonly', false);
-        this.pseudoElem/*.prop('disabled', false)*/.removeClass('is-disabled').removeClass('is-readonly');
+        this.element
+          .prop('disabled', false)
+          .prop('readonly', false);
+        this.pseudoElem
+          .prop('disabled', false)
+          .prop('readonly', false)
+          .removeClass('is-disabled')
+          .removeClass('is-readonly');
       },
 
       readonly: function() {
-        this.element.prop('disabled', false);
-        this.element.prop('readonly', true);
-        this.pseudoElem.removeClass('is-disabled').addClass('is-readonly')/*.prop('readonly', true)*/;
+        this.element
+          .prop('disabled', false)
+          .prop('readonly', true);
+        this.pseudoElem
+          .removeClass('is-disabled')
+          .addClass('is-readonly')
+          .prop('disabled', false)
+          .prop('readonly', true);
         this.closeList();
       },
 

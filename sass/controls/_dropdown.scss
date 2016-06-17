@@ -41,16 +41,24 @@ div.multiselect {
   border-color: $input-border-color;
   color: $dropdown-color;
   cursor: pointer;
+  overflow: hidden;
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   text-overflow: ellipsis;
   vertical-align: middle;
+  white-space: nowrap;
 
-  &[disabled] {
+  &:empty {
+    min-height: 34px;
+  }
+
+  &[disabled],
+  &.is-disabled {
     background-color: $input-disabled-bg-color;
     border-color: $input-disabled-border-color;
     color: $input-disabled-color;
     cursor: default;
+    pointer-events: none;
     -webkit-text-fill-color: $input-disabled-color;
 
     + .icon {
@@ -60,7 +68,7 @@ div.multiselect {
     }
   }
 
-  &:active:not([disabled]):not(.is-readonly) {
+  &:active:not([disabled]):not(.is-disabled):not(.is-readonly) {
     border-color: $trigger-active-color;
 
     + .icon {
@@ -68,7 +76,7 @@ div.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-readonly) {
+  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly) {
     border-color: $trigger-hover-color;
 
     + .icon {
@@ -120,6 +128,7 @@ div.multiselect {
 
 // The List
 .dropdown-list {
+  @include unselectable();
   background-color: $popupmenu-bg-color;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
