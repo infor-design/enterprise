@@ -668,6 +668,7 @@ $.fn.datagrid = function(options) {
         columnReorder: false, // Allow Column reorder
         saveColumns: true, //Save Column Reorder and resize
         editable: false,
+        filterable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
         rowHeight: 'normal', //(short, medium or normal)
@@ -1160,6 +1161,32 @@ $.fn.datagrid = function(options) {
       if (self.settings.columnReorder) {
         self.createDraggableColumns();
       }
+
+      this.renderFilterRow();
+
+    },
+
+    renderFilterRow: function () {
+      var self = this;
+
+      if (!this.settings.filterable) {
+        return;
+      }
+
+      for (var j = 0; j < this.settings.columns.length; j++) {
+        if (this.settings.columns[j].filterType) {
+          var col = this.settings.columns[j],
+            id = self.uniqueId( '-header-' + j),
+            header = this.headerRow.find('#'+id),
+            filterId = self.uniqueId( '-header-filter-' + j),
+            filterMarkup = '<div class="datagrid-filter-wrapper"><label class="audible" for="'+ filterId +'">' +
+              col.name + '</label><input type="text" id="'+ filterId +'"/></div>';
+
+          header.find('.datagrid-column-wrapper').after(filterMarkup);
+        }
+      }
+
+      this.headerRow.addClass('is-filterable');
     },
 
     // Create draggable columns
@@ -1780,7 +1807,7 @@ $.fn.datagrid = function(options) {
           modal.element.find('.listview').listview({searchable: true});
 
           modal.element.find('a:not(.remove-cols)').offTouchClick().onTouchClick().off('click.personalize').on('click.personalize', function (e) {
-           e.preventDefault();
+            e.preventDefault();
             var chk = $(this).find('.checkbox'),
                 id = chk.attr('data-column-id'),
                 isChecked = chk.prop('checked');

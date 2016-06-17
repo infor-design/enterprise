@@ -303,6 +303,33 @@ $datagrid-short-row-height: 30px;
     }
   }
 
+  //Datagrid filterrow
+  .is-filterable {
+    th {
+      height: 59px;
+
+      .datagrid-column-wrapper {
+        position: relative;
+        top: -11px;
+      }
+    }
+
+    .datagrid-filter-wrapper {
+      display: block;
+      position: absolute;
+      top: 30px;
+      width: inherit;
+
+      input {
+        border-color: $slate04;
+        color: $white;
+        padding: 4px 0px 1px 5px;
+        height: 20px;
+        width: inherit;
+      }
+    }
+  }
+
   // Table Rows
   tr {
 
@@ -1215,6 +1242,7 @@ html[dir='rtl'] {
 
 }
 
+//Ios Hack
 .ios .datagrid {
   .icon-error,
   .icon-confirm,

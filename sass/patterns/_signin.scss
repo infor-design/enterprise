@@ -18,9 +18,14 @@
     text-align: left;
   }
 
+  .checkbox-label {
+    float: left;
+    top: -6px;
+  }
+
   h1 {
     @include font-size(24);
-    color: #454545;
+    color: $graphite07;
     margin-bottom: 30px;
     margin-top: -20px;
     padding: 0;
