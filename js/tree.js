@@ -18,7 +18,6 @@
 /* end-amd-strip-block */
 
   //TODO: - Context Menus
-  //      - Ajax
   //      - Search
   $.fn.tree = function(options) {
     var pluginName = 'tree',
@@ -200,8 +199,11 @@
             node.closest('.folder').removeClass('is-open').end()
               .find('use').attr('xlink:href', '#icon-closed-folder');
 
+            self.isAnimating = true;
+
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
+              self.isAnimating = false;
             }).animateClosed();
 
             node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
@@ -238,10 +240,16 @@
       },
 
       openNode: function(next, node) {
+        var self = this;
+
         node.closest('.folder').addClass('is-open').end()
             .find('use').attr('xlink:href', '#icon-open-folder');
 
-        next.addClass('is-open').css('height', 0).animateOpen();
+        self.isAnimating = true;
+
+        next.one('animateopencomplete', function() {
+          self.isAnimating = false;
+        }).addClass('is-open').css('height', 0).animateOpen();
         node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
       },
 
@@ -303,9 +311,14 @@
 
         //Handle Up/Down Arrow Keys and Space
         this.element.on('keydown.tree', 'a', function (e) {
+
           var charCode = e.charCode || e.keyCode,
               target = $(this),
               next, prev;
+
+          if (self.isAnimating) {
+            return;
+          }
 
           //down arrow
           if (charCode === 40) {
@@ -392,7 +405,9 @@
                 self.setFocus(next);
               } else {
                 self.toggleNode(target);
+                self.setFocus(target);
               }
+
             }
             e.stopPropagation();
             return false;
