@@ -200,6 +200,8 @@
               .find('use').attr('xlink:href', '#icon-closed-folder');
 
             self.isAnimating = true;
+            node.find('.is-selected').removeClass('is-selected');
+            this.element.parent().find('.selected-item-indicator').css('top', '');
 
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
