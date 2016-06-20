@@ -75,6 +75,12 @@ input.multiselect {
     }
   }
 
+  &.is-open {
+    + .icon {
+      display: none;
+    }
+  }
+
   // Icon States
   + .icon {
     background-color: inherit;
@@ -119,7 +125,7 @@ input.multiselect {
 
 // The List
 .dropdown-list {
-  background-color: $popupmenu-bg-color;
+  background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
   max-height: 300px;
@@ -143,6 +149,7 @@ input.multiselect {
 
   ul {
     @include font-size(14);
+    background-color: $popupmenu-bg-color;
     box-shadow: $dropdown-box-shadow;
     color: $popupmenu-color;
     height: auto;

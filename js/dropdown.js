@@ -839,6 +839,7 @@
         var isShort = (this.element.closest('.field-short').length === 1);
 
         this.input.attr('aria-expanded', 'true');
+        this.input.addClass('is-open');
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones

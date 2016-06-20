@@ -316,16 +316,17 @@ $datagrid-short-row-height: 30px;
 
     .datagrid-filter-wrapper {
       display: block;
-      position: absolute;
-      top: 30px;
-      width: inherit;
+      max-width: calc(100% - 20px);
+      position: relative;
+      top: -11px;
+      width: calc(100% - 20px);
 
       input {
         border-color: $slate04;
         color: $white;
-        padding: 4px 0px 1px 5px;
         height: 20px;
-        width: inherit;
+        padding: 4px 0 1px 5px;
+        width: 100%;
       }
     }
   }

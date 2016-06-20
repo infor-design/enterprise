@@ -1180,7 +1180,7 @@ $.fn.datagrid = function(options) {
             header = this.headerRow.find('#'+id),
             filterId = self.uniqueId( '-header-filter-' + j),
             filterMarkup = '<div class="datagrid-filter-wrapper"><label class="audible" for="'+ filterId +'">' +
-              col.name + '</label><input type="text" id="'+ filterId +'"/></div>';
+              col.name + '</label><input placeholder="Search" type="text" id="'+ filterId +'"/></div>';
 
           header.find('.datagrid-column-wrapper').after(filterMarkup);
         }
@@ -2011,7 +2011,11 @@ $.fn.datagrid = function(options) {
         e.stopPropagation();
         e.preventDefault();
         $(this).trigger('click.datagrid');
-      }).off('click.datagrid').on('click.datagrid', 'th.is-sortable', function () {
+      }).off('click.datagrid').on('click.datagrid', 'th.is-sortable', function (e) {
+        if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
+          return;
+        }
+
         self.setSortColumn($(this).attr('data-column-id'));
       });
 
