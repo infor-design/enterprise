@@ -15,6 +15,7 @@ Release Date: TBD
 * 2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.
 
 ### Ui Changes
+* 2016-06-20 - Changed background color of drop down to transparent (to match designs)
 * 2016-06-08 - Vertical Tabs - added 3 themes.
 * 2016-06-02 - Design of Datagrid Changed to add back the column next to the selection checkboxes.
 * 2016-06-02 - Design of radios/checkboxes changed to reduce size.
