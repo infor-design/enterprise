@@ -235,7 +235,16 @@
         } else {
           self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
           self.listUl = $('<ul role="listbox"></ul>').appendTo(self.list);
-          self.list.prepend('<span class="trigger"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></span>');
+
+          // "Close (X)" icon on Mobile.
+          // "Collapse" (up-arrow) icon by default.
+          var isMobile = self.isMobile();
+          self.list.prepend('<span class="trigger">' +
+            '<svg class="icon' + (isMobile ? ' close' : '') + '" focusable="false" aria-hidden="true" role="presentation">' +
+              '<use xlink:href="' + (isMobile ? '#icon-close' : '#icon-dropdown') + '">' +
+            '</svg>' +
+            '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +
+          '</span>');
         }
 
         function setOptions(option, listOption) {
@@ -328,6 +337,10 @@
 
           setOptions(option, listOption);
         });
+
+        // Add the class that switches the UI view to the enlarged "mobile" view in some
+        // form factors and operating systems.
+        self.list[self.isMobile() ? 'addClass' : 'removeClass']('mobile');
 
         //Add Input Element and
         if (!isOpen) {
@@ -550,9 +563,13 @@
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
+        var cssClass = 'icon' + (this.isMobile() ? ' close' : ''),
+          icon = this.isMobile() ? '#icon-close' : '#icon-dropdown';
+
+
         this.list.removeClass('search-mode');
-        this.list.find('.icon').attr('class', 'icon') // needs to be 'attr' here because .addClass() doesn't work with SVG
-          .children('use').attr('xlink:href', '#icon-dropdown');
+        this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
+          .children('use').attr('xlink:href', icon);
 
         function stripHtml(obj) {
           if (!obj[0]) {
@@ -1009,7 +1026,8 @@
         // Will not close the list if the clicked target is anywhere inside the dropdown list.
 
         function clickDocument(e) {
-          if (touchPrevented || isDropdownElement($(e.target)) || $(e.target).is('svg')) {
+          var target = $(e.target);
+          if (touchPrevented || (isDropdownElement(target) && !target.is('.icon'))) {
             e.preventDefault();
 
             touchPrevented = false;
@@ -1043,18 +1061,12 @@
         function touchEndCallback(e) {
           $(document).off('touchmove.dropdown');
           e.preventDefault();
+
           if (touchPrevented) {
             return false;
           }
 
-          var newE = $.Event({
-            currentTarget: e.currentTarget,
-            type: 'click',
-            target: e.target
-          });
-
-          // Build a click event that uses the same "e.target" as the touch event
-          $(document).triggerHandler('click.dropdown', newE);
+          clickDocument(e);
         }
 
         // Need to detect whether or not scrolling is happening on a touch-capable device
