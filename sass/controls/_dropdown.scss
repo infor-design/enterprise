@@ -278,8 +278,8 @@ div.multiselect {
 
     li::before {
       @include checkbox-unchecked-before-style;
-      margin-left: -28px;
-      top: 6px;
+      margin-left: -27px;
+      top: 8px;
     }
 
     li.is-disabled::before {
@@ -304,7 +304,7 @@ div.multiselect {
       @include checkbox-checked-after-style;
       left: 16px;
       margin-top: 0;
-      top: 8px;
+      top: 9px;
     }
 
     li.is-disabled.is-selected::before {
@@ -536,6 +536,19 @@ input.dropdown.error:focus {
         padding-left: 18px;
         padding-top: 1px;
       }
+    }
+  }
+}
+
+// Firefox needs a nudge on the list items
+.is-firefox {
+  .dropdown-list.multiple li {
+    &::before {
+      top: 7px;
+    }
+
+    &.is-selected::after {
+      top: 8px;
     }
   }
 }

@@ -88,7 +88,7 @@
 
         this.pseudoElem = $('div#'+ orgId + '-shdo');
         if (!this.pseudoElem.length) {
-          this.pseudoElem = $('<div class="'+ cssClass +'" tabindex="0"/>').attr({
+          this.pseudoElem = $('<div class="'+ cssClass +'">').attr({
             'role': 'combobox',
             'aria-autocomplete': 'list',
             'aria-controls': 'dropdown-list',
@@ -97,6 +97,24 @@
             'id': (orgId ? id : name + prefix)
           });
         }
+
+        // Pass disabled/readonly from the original element, if applicable
+        // "disabled" is a stronger setting than "readonly" - should take precedent.
+        function handleStates(self) {
+          var disabled = self.element.prop('disabled'),
+            readonly = self.element.prop('readonly');
+
+          if (disabled) {
+            return self.disable();
+          }
+
+          if (readonly) {
+            return self.readonly();
+          }
+
+          return self.enable();
+        }
+        handleStates(this);
 
         // Place the elements depending on the configuration
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length === 1) {
@@ -128,13 +146,6 @@
         if (this.orgLabel.length) {
           this.label.attr('class', this.orgLabel.attr('class'));
         }
-
-        // Pass disabled/readonly from the original element, if applicable
-        var disabled = this.element.prop('disabled');
-        this.pseudoElem[disabled ? 'addClass' : 'removeClass']('is-disabled').prop('disabled', disabled);
-
-        var readonly = this.element.prop('readonly');
-        this.pseudoElem[readonly ? 'addClass' : 'removeClass']('is-readonly').prop('readonly', readonly);
 
         // Setup the incoming options that can be set as properties/attributes
         if (this.element.prop('multiple') && !this.settings.multiple) {
@@ -955,15 +966,10 @@
           return true;
         }
 
-        function triggerButtonClickHandler() {
-          self.closeList();
-        }
-
         self.list
           .removeClass('dropdown-tall')
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
-          //.on('click.list', '.trigger, svg', triggerButtonClickHandler)
           .on('click.list', 'li', listItemClickHandler)
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
@@ -982,10 +988,12 @@
 
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
-          return target.closest('.dropdown, .multiselect').length > 0 || target.is('.dropdown, multiselect') ||
+          return target.closest('.dropdown, .multiselect').length > 0 ||
+            target.closest('.dropdown-list').length > 0 ||
+            self.touchmove === true; /*target.is('.dropdown, multiselect') /||
             target.is('.option-text') || target.is('.dropdown-option') ||
-            target.is('.group-label') || target.is('.dropdown-search') ||
-            self.touchmove === true;
+            target.is('.group-label') || target.is('.dropdown-search')  ||
+            self.touchmove === true;*/
         }
 
         // Triggered when the user scrolls the page.
@@ -1012,12 +1020,14 @@
         }
 
         function touchStartCallback(e) {
+          touchPrevented = false;
+
           pos = {
             x: e.originalEvent.touches[0].pageX,
             y: e.originalEvent.touches[0].pageY
           };
 
-          $(document).one('touchmove.dropdown', function touchMoveCallback(e) {
+          $(document).on('touchmove.dropdown', function touchMoveCallback(e) {
             var newPos = {
               x: e.originalEvent.touches[0].pageX,
               y: e.originalEvent.touches[0].pageY
@@ -1032,11 +1042,19 @@
 
         function touchEndCallback(e) {
           $(document).off('touchmove.dropdown');
+          e.preventDefault();
           if (touchPrevented) {
             return false;
           }
-          e.preventDefault();
-          $(document).triggerHandler('click.dropdown');
+
+          var newE = $.Event({
+            currentTarget: e.currentTarget,
+            type: 'click',
+            target: e.target
+          });
+
+          // Build a click event that uses the same "e.target" as the touch event
+          $(document).triggerHandler('click.dropdown', newE);
         }
 
         // Need to detect whether or not scrolling is happening on a touch-capable device
@@ -1143,7 +1161,7 @@
 
       //Close list and detach events
       closeList: function() {
-        if (!this.list.is(':visible') || !this.isListClosable()) {
+        if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
           return;
         }
 
@@ -1509,9 +1527,15 @@
         this.element
           .prop('disabled', true)
           .prop('readonly', false);
+
+        if (this.pseudoElem.is($(document.activeElement))) {
+          this.pseudoElem.blur();
+        }
+
         this.pseudoElem
           .addClass('is-disabled')
           .removeClass('is-readonly')
+          .attr('tabindex', '-1')
           .prop('readonly', false)
           .prop('disabled', true);
         this.closeList();
@@ -1524,6 +1548,7 @@
         this.pseudoElem
           .prop('disabled', false)
           .prop('readonly', false)
+          .attr('tabindex', '0')
           .removeClass('is-disabled')
           .removeClass('is-readonly');
       },
@@ -1535,6 +1560,7 @@
         this.pseudoElem
           .removeClass('is-disabled')
           .addClass('is-readonly')
+          .attr('tabindex', '0')
           .prop('disabled', false)
           .prop('readonly', true);
         this.closeList();
