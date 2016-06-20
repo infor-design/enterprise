@@ -134,12 +134,8 @@ div.multiselect {
 
 // The List
 .dropdown-list {
-<<<<<<< HEAD
-  background-color: transparent;
-=======
   @include unselectable();
-  background-color: $popupmenu-bg-color;
->>>>>>> feature/dropdown-usability-fixes
+  background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
   max-height: 300px;
