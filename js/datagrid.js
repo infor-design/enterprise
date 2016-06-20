@@ -1276,7 +1276,6 @@ $.fn.datagrid = function(options) {
 
                   self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                   self.updateColumns(self.settings.columns);
-                  self.adjustDraggablePosition();
                 }
                 else {
                   // No need to swap here since same target area, where drag started
@@ -1527,23 +1526,17 @@ $.fn.datagrid = function(options) {
 
       for (var i = 0; i < self.settings.columns.length; i++) {
         var column = self.settings.columns[i],
-          newWidth = 0;
+          header = self.headerNodes().eq(i);
 
         if (column.hidden) {
           continue;
         }
-
-        if (column.width) {
-          newWidth = column.width;
-        } else {
-          newWidth = self.headerNodes().eq(i).outerWidth();
-        }
-
-        total+= newWidth;
+        total+= column.width || header.outerWidth();
+        $('.is-draggable-target, .handle', header).css('left', header.position().left);
+        $('.is-draggable-target.last', header)
+          .css('left', header.position().left + header.outerWidth());
       }
-
       this.table.css('width', total);
-
     },
 
     //Returns all header nodes (not the groups)
@@ -1786,7 +1779,7 @@ $.fn.datagrid = function(options) {
           var col = this.settings.columns[i];
 
           if (col.name) {
-            markup += '<li><a href="#" target="_self"> <label class="inline"><input type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id ? col.id : i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
+            markup += '<li><a href="#" target="_self"> <label class="inline"><input type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
           }
         }
         markup += '</ul></div>';
@@ -1802,15 +1795,19 @@ $.fn.datagrid = function(options) {
                 $('body').off('open.datagrid');
               }
             }]
+        }).on('beforeopen.datagrid', function () {
+          self.isColumnsChanged = false;
         }).on('open.datagrid', function (e, modal) {
           modal.element.find('.searchfield').searchfield({clearable: true});
           modal.element.find('.listview').listview({searchable: true});
 
-          modal.element.find('a:not(.remove-cols)').offTouchClick().onTouchClick().off('click.personalize').on('click.personalize', function (e) {
+          modal.element.find('a').offTouchClick().onTouchClick().off('click.personalize').on('click.personalize', function (e) {
             e.preventDefault();
             var chk = $(this).find('.checkbox'),
                 id = chk.attr('data-column-id'),
                 isChecked = chk.prop('checked');
+
+            self.isColumnsChanged = true;
 
             if (!isChecked) {
               self.showColumn(id);
@@ -1819,8 +1816,12 @@ $.fn.datagrid = function(options) {
               self.hideColumn(id);
               chk.prop('checked', false);
             }
-            self.updateColumnsAndTableWidth();
           });
+        }).on('close.datagrid', function () {
+          if (self.isColumnsChanged) {
+            self.updateColumnsAndTableWidth();
+          }
+          self.isColumnsChanged = false;
         });
     },
 
