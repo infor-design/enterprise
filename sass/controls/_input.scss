@@ -1,6 +1,66 @@
 // User Input - TextBox, Textarea
 //================================================== //
 
+@mixin input-style() {
+  @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
+  @include antialiased();
+  @include font-size(14);
+  -webkit-appearance: none;
+  background-color: $input-bg-color;
+  border: 1px solid $input-border-color;
+  border-collapse: separate;
+  border-radius: 2px;
+  color: $input-color;
+  display: inline-block;
+  max-width: 100%;
+  padding: 8px 10px;
+  resize: none;
+  text-align: left;
+  width: 300px;
+
+  &:hover {
+    border-color: $input-hover-border-color;
+  }
+
+  &[disabled] {
+    background-color: $input-disabled-bg-color;
+    border: solid 1px $input-disabled-border-color;
+    color: $input-disabled-color;
+    -webkit-text-fill-color: $input-disabled-color;
+  }
+
+  &[readonly] {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    color: $input-readonly-color;
+    -webkit-text-fill-color: $input-readonly-color;
+  }
+
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+
+    &.error {
+      color: $error-color;
+    }
+  }
+
+  &:focus {
+    @include focus-state();
+  }
+
+  &.error {
+    border-color: $error-color;
+
+    &:focus {
+      // Needed for printing
+      // scss-lint:disable ImportantRule
+      border-color: $error-color !important;
+      color: $input-color !important;
+    }
+  }
+}
+
 // Required Indicator
 @mixin required-indicator() {
   @include font-size(18);
@@ -135,56 +195,7 @@
 // Input Style
 input,
 textarea {
-  @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
-  @include antialiased();
-  @include font-size(14);
-  -webkit-appearance: none;
-  background-color: $input-bg-color;
-  border: 1px solid $input-border-color;
-  border-collapse: separate;
-  border-radius: 2px;
-  color: $input-color;
-  display: inline-block;
-  max-width: 100%;
-  padding: 8px 10px;
-  resize: none;
-  text-align: left;
-  width: 300px;
-}
-
-input:hover,
-textarea:hover {
-  border-color: $input-hover-border-color;
-}
-
-input[disabled],
-textarea[disabled] {
-  background-color: $input-disabled-bg-color;
-  border: solid 1px $input-disabled-border-color;
-  color: $input-disabled-color;
-  -webkit-text-fill-color: $input-disabled-color;
-}
-
-input[readonly],
-textarea[readonly] {
-  background-color: $input-readonly-bg-color;
-  border-color: $input-readonly-border-color;
-  color: $input-readonly-color;
-  -webkit-text-fill-color: $input-readonly-color;
-}
-
-input.is-placeholder,
-textarea.is-placeholder {
-  color: $input-placeholder-color;
-
-  &.error {
-    color: $error-color;
-  }
-}
-
-input:focus,
-textarea:focus {
-  @include focus-state();
+  @include input-style();
 }
 
 // Text Area
@@ -318,19 +329,6 @@ label,
 
 input.error {
   padding-right: 30px;
-}
-
-input.error,
-textarea.error {
-  border-color: $error-color;
-}
-
-input.error:focus,
-textarea.error:focus {
-  // Needed for printing
-  // scss-lint:disable ImportantRule
-  border-color: $error-color !important;
-  color: $input-color !important;
 }
 
 .error::-webkit-input-placeholder {
