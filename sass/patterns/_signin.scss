@@ -59,6 +59,12 @@
     width: 90px;
   }
 
+  .error-message {
+    .message-text {
+      text-align: left;
+    }
+  }
+
 }
 
 .ios .signin .icon-error,
