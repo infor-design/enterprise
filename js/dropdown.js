@@ -86,9 +86,9 @@
           this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
         }
 
-        this.input = $('input#'+ orgId + '-shdo');
-        if (!this.input.length) {
-          this.input = $('<input type="text" readonly class="'+ cssClass +'" tabindex="0"/>').attr({
+        this.pseudoElem = $('div#'+ orgId + '-shdo');
+        if (!this.pseudoElem.length) {
+          this.pseudoElem = $('<div class="'+ cssClass +'">').attr({
             'role': 'combobox',
             'aria-autocomplete': 'list',
             'aria-controls': 'dropdown-list',
@@ -98,9 +98,27 @@
           });
         }
 
+        // Pass disabled/readonly from the original element, if applicable
+        // "disabled" is a stronger setting than "readonly" - should take precedent.
+        function handleStates(self) {
+          var disabled = self.element.prop('disabled'),
+            readonly = self.element.prop('readonly');
+
+          if (disabled) {
+            return self.disable();
+          }
+
+          if (readonly) {
+            return self.readonly();
+          }
+
+          return self.enable();
+        }
+        handleStates(this);
+
         // Place the elements depending on the configuration
         if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length === 1) {
-          this.wrapper.append(this.input, this.trigger);
+          this.wrapper.append(this.pseudoElem, this.trigger);
           this.orgLabel.after(this.label);
         } else if (this.orgLabel.length === 1) {
           if (this.isInlineLabel) {
@@ -113,9 +131,9 @@
           else {
             this.element.after(this.label);
           }
-          this.wrapper.append(this.input, this.trigger);
+          this.wrapper.append(this.pseudoElem, this.trigger);
         } else {
-          this.wrapper.append(this.input, this.trigger);
+          this.wrapper.append(this.pseudoElem, this.trigger);
         }
 
         // Check for and add the icon
@@ -157,7 +175,7 @@
         for (var i = 0; i < sizingStrings.length; i++) {
           s = sizingStrings[i];
           if (classString.match(s)) {
-            this.input.addClass('dropdown' + s);
+            this.pseudoElem.addClass('dropdown' + s);
           }
         }
 
@@ -195,10 +213,10 @@
           labelStyle = (this.orgLabel[0] === undefined ? null : this.orgLabel[0].style);
 
         if (style.width) {
-          this.input.width(style.width);
+          this.pseudoElem.width(style.width);
         }
         if (style.position === 'absolute') {
-          this.input.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
+          this.pseudoElem.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
         }
         if (labelStyle && labelStyle.position === 'absolute') {
           this.label.css({position: 'absolute', left: labelStyle.left, top: labelStyle.top, bottom: labelStyle.bottom, right: labelStyle.right});
@@ -217,7 +235,16 @@
         } else {
           self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
           self.listUl = $('<ul role="listbox"></ul>').appendTo(self.list);
-          self.list.prepend('<span class="trigger"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></span>');
+
+          // "Close (X)" icon on Mobile.
+          // "Collapse" (up-arrow) icon by default.
+          var isMobile = self.isMobile();
+          self.list.prepend('<span class="trigger">' +
+            '<svg class="icon' + (isMobile ? ' close' : '') + '" focusable="false" aria-hidden="true" role="presentation">' +
+              '<use xlink:href="' + (isMobile ? '#icon-close' : '#icon-dropdown') + '">' +
+            '</svg>' +
+            '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +
+          '</span>');
         }
 
         function setOptions(option, listOption) {
@@ -311,6 +338,10 @@
           setOptions(option, listOption);
         });
 
+        // Add the class that switches the UI view to the enlarged "mobile" view in some
+        // form factors and operating systems.
+        self.list[self.isMobile() ? 'addClass' : 'removeClass']('mobile');
+
         //Add Input Element and
         if (!isOpen) {
           this.searchInput = $('<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">');
@@ -325,14 +356,14 @@
           text = this.getOptionText(opts);
 
         if (this.settings.empty && opts.length === 0) {
-          this.input.val('');
+          this.pseudoElem.text('');
           return;
         }
 
         //Set initial values for the edit box
-        this.input.val(text);
+        this.pseudoElem.text(text);
         if (this.element.attr('maxlength')) {
-           this.input.val(text.substr(0, this.element.attr('maxlength')));
+           this.pseudoElem.text(text.substr(0, this.element.attr('maxlength')));
         }
 
         this.setBadge(opts);
@@ -359,13 +390,13 @@
           this.readonly();
         }
         if (this.isHidden) {
-          this.input.hide().prev('label').hide();
-          this.input.next('svg').hide();
+          this.pseudoElem.hide().prev('label').hide();
+          this.pseudoElem.next('svg').hide();
         }
 
         //TODO: Empty Selection
         if (this.element.attr('placeholder')) {
-          this.input.attr('placeholder', this.element.attr('placeholder'));
+          this.pseudoElem.attr('placeholder', this.element.attr('placeholder'));
           this.element.removeAttr('placeholder');
         }
       },
@@ -374,7 +405,7 @@
       handleEvents: function() {
         var self = this;
 
-        this.input.on('keydown.dropdown', function(e) {
+        this.pseudoElem.on('keydown.dropdown', function(e) {
           self.ignoreKeys($(this), e);
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
@@ -389,6 +420,7 @@
         }).on('touchend.dropdown touchcancel.dropdown', function(e) {
           e.stopPropagation();
           self.toggleList();
+          e.preventDefault();
         });
 
         self.element.on('activated.dropdown', function () {
@@ -525,15 +557,19 @@
 
         //Adjust height / top position
         if (self.list.hasClass('is-ontop')) {
-          self.list.css({'top': self.input.offset().top - self.list.height() + self.input.outerHeight() - 2});
+          self.list.css({'top': self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2});
         }
       },
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
+        var cssClass = 'icon' + (this.isMobile() ? ' close' : ''),
+          icon = this.isMobile() ? '#icon-close' : '#icon-dropdown';
+
+
         this.list.removeClass('search-mode');
-        this.list.find('.icon').attr('class', 'icon') // needs to be 'attr' here because .addClass() doesn't work with SVG
-          .children('use').attr('xlink:href', '#icon-dropdown');
+        this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
+          .children('use').attr('xlink:href', icon);
 
         function stripHtml(obj) {
           if (!obj[0]) {
@@ -551,7 +587,7 @@
 
         //Adjust height / top position
         if (this.list.hasClass('is-ontop')) {
-          this.list.css({'top': this.input.offset().top - this.list.height() + this.input.outerHeight() - 2});
+          this.list.css({'top': this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2});
         }
 
         if (this.settings.multiple) {
@@ -764,22 +800,33 @@
 
       // Focus the Element
       activate: function (useSearchInput) {
-        var input = this.input;
+        var self = this,
+          input = this.pseudoElem;
         if (useSearchInput) {
           input = this.searchInput;
         }
 
-        if (input.hasClass('is-readonly') || input.prop('readonly') === true) {
+        if (useSearchInput && (input.hasClass('is-readonly') || input.prop('readonly') === true)) {
           return;
         }
 
-        if (input[0].setSelectionRange) {
-          input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
-        } else {
-          input[0].select();
+        function selectText() {
+          if (self.isMobile()) {
+            return;
+          }
+
+          if (input[0].setSelectionRange) {
+            input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
+          } else {
+            if (input[0].tagName === 'INPUT') { // using Search Input instead of Pseudo Div
+              input[0].select();
+            }
+          }
         }
 
-        if (document.activeElement !== input[0]) {
+        selectText();
+
+        if (/*!this.isMobile() && */document.activeElement !== input[0]) {
           input[0].focus();
         }
       },
@@ -810,7 +857,7 @@
           return;
         }
 
-        if (this.element.is(':disabled') || this.input.hasClass('is-readonly')) {
+        if (this.element.is(':disabled') || this.pseudoElem.hasClass('is-disabled') || this.pseudoElem.hasClass('is-readonly')) {
           return;
         }
 
@@ -835,11 +882,14 @@
           current = current.eq(0);
         }
 
+        $('head').triggerHandler('disable-zoom');
+
         // Persist the "short" input field
         var isShort = (this.element.closest('.field-short').length === 1);
 
-        this.input.attr('aria-expanded', 'true');
-        this.input.addClass('is-open');
+        this.pseudoElem
+          .attr('aria-expanded', 'true')
+          .addClass('is-open');
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones
@@ -847,7 +897,7 @@
         this.list.appendTo('body').show();
 
         //In a grid cell
-        this.isInGrid = this.input.closest('.datagrid-row').length === 1;
+        this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
 
         if (this.isInGrid) {
           this.list.addClass('datagrid-dropdown-list');
@@ -867,7 +917,7 @@
           this.initialFilter = false;
         } else {
           // Change the values of both inputs and swap out the active descendant
-          this.searchInput.val(this.input.val());
+          this.searchInput.val(this.pseudoElem.val());
         }
 
         var noScroll = this.settings.multiple;
@@ -888,7 +938,7 @@
         this.element.trigger('listopened');
 
         // iOS-specific keypress event that listens for when you click the "done" button
-        if ($('html').is('.ios, .android')) {
+        if (this.isMobile()) {
           self.searchInput.on('keypress.dropdown', function(e) {
             if (e.which === 13) {
               self.closeList();
@@ -896,7 +946,15 @@
           });
         }
 
-        function listItemClickHandler(e, target) {
+        function listItemClickHandler(e) {
+          var target = $(e.target),
+            ddOption = target.closest('li.dropdown-option');
+
+          if (ddOption.length) {
+            target = ddOption;
+          }
+
+          e.preventDefault();
           e.stopPropagation();
 
           var val = target.attr('data-val'),
@@ -911,36 +969,27 @@
 
           //Select the clicked item
           if (cur.is(':disabled')) {
-            return;
+            return false;
           }
           self.selectOption(cur);
+
           if (self.settings.closeOnSelect) {
             self.closeList();
-            self.activate();
-          } else {
-            self.activate(true);
           }
-        }
 
-        function triggerButtonClickHandler() {
-          self.closeList();
+          if (self.isMobile()) {
+            return true;
+          }
+
+          self.activate(!self.settings.closeOnSelect);
+          return true;
         }
 
         self.list
           .removeClass('dropdown-tall')
           .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
-          .on('click.list', 'li', function (e) {
-            var target = $(e.target),
-              ddOption = target.closest('li.dropdown-option');
-
-            if (ddOption.length) {
-              target = ddOption;
-            }
-
-            e.preventDefault();
-            return listItemClickHandler(e, target);
-          })
+          .on('click.list', 'li', listItemClickHandler)
           .on('mouseenter.list', 'li', function() {
             var target = $(this);
 
@@ -949,19 +998,21 @@
             }
           });
 
-        // Some close events are on a timer to prevent immediate list close
+        // Some list-closing events are on a timer to prevent immediate list close
+        // There would be several things to check with a setTimeout, so this is done with a CSS
+        // class to keep things a bit cleaner
         setTimeout(function delayedListCloseEvents() {
-          self.list.on('click.list', '.trigger, svg', function() {
-              triggerButtonClickHandler();
-            });
+          self.list.addClass('is-closable');
         }, 100);
 
         // Is the jQuery Element a component of the current Dropdown list?
         function isDropdownElement(target) {
-          return target.closest('.dropdown, .multiselect').length > 0 || target.is('.dropdown, multiselect') ||
+          return target.closest('.dropdown, .multiselect').length > 0 ||
+            target.closest('.dropdown-list').length > 0 ||
+            self.touchmove === true; /*target.is('.dropdown, multiselect') /||
             target.is('.option-text') || target.is('.dropdown-option') ||
-            target.is('.group-label') || target.is('.dropdown-search') ||
-            self.touchmove === true;
+            target.is('.group-label') || target.is('.dropdown-search')  ||
+            self.touchmove === true;*/
         }
 
         // Triggered when the user scrolls the page.
@@ -977,7 +1028,8 @@
         // Will not close the list if the clicked target is anywhere inside the dropdown list.
 
         function clickDocument(e) {
-          if (touchPrevented || isDropdownElement($(e.target)) || $(e.target).is('svg')) {
+          var target = $(e.target);
+          if (touchPrevented || (isDropdownElement(target) && !target.is('.icon'))) {
             e.preventDefault();
 
             touchPrevented = false;
@@ -988,6 +1040,8 @@
         }
 
         function touchStartCallback(e) {
+          touchPrevented = false;
+
           pos = {
             x: e.originalEvent.touches[0].pageX,
             y: e.originalEvent.touches[0].pageY
@@ -1006,12 +1060,15 @@
           });
         }
 
-        function touchEndCallback() {
+        function touchEndCallback(e) {
           $(document).off('touchmove.dropdown');
+          e.preventDefault();
+
           if (touchPrevented) {
             return false;
           }
-          $(document).triggerHandler('click.dropdown');
+
+          clickDocument(e);
         }
 
         // Need to detect whether or not scrolling is happening on a touch-capable device
@@ -1022,30 +1079,28 @@
           .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
           .on('click.dropdown', clickDocument);
 
-        setTimeout(function() {
-          var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
-          parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
-          parentScroll.on('scroll.dropdown', scrollDocument);
+        var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+        parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
+        parentScroll.on('scroll.dropdown', scrollDocument);
 
-          // In mobile environments, bind against an orientation change.
-          // in desktop environments, bind against window.resize
-          if (window.orientation === undefined) {
-            $('body').on('resize.dropdown', function() {
-              if (document.activeElement !== self.searchInput[0]) {
-                self.closeList();
-              }
-            });
-          }
+        // In mobile environments, bind against an orientation change.
+        // in desktop environments, bind against window.resize
+        if (window.orientation === undefined) {
+          $('body').on('resize.dropdown', function() {
+            if (document.activeElement !== self.searchInput[0]) {
+              self.closeList();
+            }
+          });
+        }
 
-        }, 100);
-
+        $('head').triggerHandler('enable-zoom');
       },
 
       // Set size and positioning of the list
       position: function() {
         var isFixed = false, isAbs = false,
-          top = (this.input.offset().top),
-          left = this.input.offset().left - $(window).scrollLeft();
+          top = (this.pseudoElem.offset().top),
+          left = this.pseudoElem.offset().left - $(window).scrollLeft();
 
         // If we're lower than the Phone Breakpoint, reset everything for full-screen
         if ($(window).width() <= 610) {
@@ -1055,7 +1110,7 @@
         this.list.css({'top': top, 'left': left});
 
         //Fixed and Absolute Positioning use cases
-        this.input.parentsUntil('body').each(function () {
+        this.pseudoElem.parentsUntil('body').each(function () {
           if ($(this).css('position') === 'fixed') {
             isFixed = true;
             return;
@@ -1066,19 +1121,19 @@
           this.list.css('position', 'fixed');
         }
 
-        if (this.input.parent('.field').css('position') === 'absolute') {
+        if (this.pseudoElem.parent('.field').css('position') === 'absolute') {
           isAbs = true;
-          this.list.css({'top': this.input.parent('.field').offset().top + this.input.prev('label').height() , 'left': this.input.parent('.field').offset().left});
+          this.list.css({'top': this.pseudoElem.parent('.field').offset().top + this.pseudoElem.prev('label').height() , 'left': this.pseudoElem.parent('.field').offset().left});
         }
 
         this.list.removeClass('is-ontop');
 
         //Flow up if not enough room on bottom
         var roomTop = top,
-          roomBottom = $(window).height() - top - this.input.outerHeight();
+          roomBottom = $(window).height() - top - this.pseudoElem.outerHeight();
 
         if (roomTop > roomBottom && top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
-          this.list.css({'top': top - this.list.outerHeight() + this.input.outerHeight()});
+          this.list.css({'top': top - this.list.outerHeight() + this.pseudoElem.outerHeight()});
           this.list.addClass('is-ontop');
           this.listUl.prependTo(this.list);
         }
@@ -1098,8 +1153,8 @@
         }
 
         //let grow or to field size.
-        this.list.find('input').outerWidth(this.input.outerWidth()-2);
-        if (this.list.width() > this.input.outerWidth()) {
+        this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-2);
+        if (this.list.width() > this.pseudoElem.outerWidth()) {
            this.list.css('width', '');
            this.list.css({'width': this.list.outerWidth() + 35});
            this.list.find('input').css({'width': this.list.outerWidth() + 35});
@@ -1110,17 +1165,17 @@
             this.list.width(maxWidth - 20);
            }
         } else {
-          this.list.width(this.input.outerWidth()-2);
+          this.list.width(this.pseudoElem.outerWidth()-2);
 
           if (this.isInGrid) {
-            this.list.width(this.input.outerWidth());
+            this.list.width(this.pseudoElem.outerWidth());
           }
         }
       },
 
       //Close list and detach events
       closeList: function() {
-        if (!this.list.is(':visible')) {
+        if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
           return;
         }
 
@@ -1136,19 +1191,22 @@
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
         this.list.hide().remove();
-        this.list.offTouchClick('list')
+        this.list
+          //.offTouchClick('list')
           .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list');
         this.listUl.find('li').show();
-        this.input.removeClass('is-open').attr('aria-expanded', 'false');
+        this.pseudoElem.removeClass('is-open').attr('aria-expanded', 'false');
         this.searchInput.removeAttr('aria-activedescendant');
 
-        $(document).offTouchClick('dropdown')
+        $(document)
+          //.offTouchClick('dropdown')
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
         $(window).off('resize.dropdown');
         this.element.trigger('listclosed');
 
-        this.input.focus();
+        this.activate();
+        //this.pseudoElem.focus();
       },
 
       //Set option into view
@@ -1213,7 +1271,7 @@
           listOption.addClass('is-focused').attr({'tabindex': '0'});
 
           // Set activedescendent for new option
-          //this.input.attr('aria-activedescendant', listOption.attr('id'));
+          //this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
           this.searchInput.attr('aria-activedescendant', listOption.children('a').attr('id'));
 
           if (!noScroll || noScroll === false || noScroll === undefined) {
@@ -1272,7 +1330,7 @@
 
         var code = option.val(),
           val = this.element.val(),
-          oldText = this.input.val(),
+          oldText = this.pseudoElem.text(),
           text = '',
           trimmed = '',
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
@@ -1328,12 +1386,12 @@
         }
 
         // Change the values of both inputs and swap out the active descendant
-        this.input.val(text);
+        this.pseudoElem.text(text);
         this.searchInput.val(text);
 
         if (this.element.attr('maxlength')) {
           trimmed = text.substr(0, this.element.attr('maxlength'));
-          this.input.val(trimmed);
+          this.pseudoElem.text(trimmed);
           this.searchInput.val(trimmed);
         }
 
@@ -1416,14 +1474,14 @@
 
             self.element.append(list);
             self.updateList();
-            self.input.removeClass('is-busy');
+            self.pseudoElem.removeClass('is-busy');
             self.element.trigger('requestend', [searchTerm, data]);
             callback();
             return;
           };
 
           //TODO: show indicator when we have it
-          self.input.addClass('is-busy');
+          self.pseudoElem.addClass('is-busy');
           self.element.trigger('requeststart');
 
           if (sourceType === 'function') {
@@ -1471,24 +1529,54 @@
         }
       },
 
+      isMobile: function() {
+        return $('html').is('.ios, .android');
+      },
+
+      isListClosable: function() {
+        return this.list.hasClass('is-closable');
+      },
+
       disable: function() {
-        this.element.prop('disabled', true);
-        this.input.prop('disabled', true);
-        this.element.prop('readonly', false);
-        this.input.prop('readonly', false).removeClass('is-readonly');
+        this.element
+          .prop('disabled', true)
+          .prop('readonly', false);
+
+        if (this.pseudoElem.is($(document.activeElement))) {
+          this.pseudoElem.blur();
+        }
+
+        this.pseudoElem
+          .addClass('is-disabled')
+          .removeClass('is-readonly')
+          .attr('tabindex', '-1')
+          .prop('readonly', false)
+          .prop('disabled', true);
         this.closeList();
       },
 
       enable: function() {
-        this.element.prop('disabled', false);
-        this.element.prop('readonly', false);
-        this.input.prop('disabled', false).removeClass('is-readonly');
+        this.element
+          .prop('disabled', false)
+          .prop('readonly', false);
+        this.pseudoElem
+          .prop('disabled', false)
+          .prop('readonly', false)
+          .attr('tabindex', '0')
+          .removeClass('is-disabled')
+          .removeClass('is-readonly');
       },
 
       readonly: function() {
-        this.element.prop('disabled', false);
-        this.element.prop('readonly', true);
-        this.input.addClass('is-readonly').prop('readonly', true);
+        this.element
+          .prop('disabled', false)
+          .prop('readonly', true);
+        this.pseudoElem
+          .removeClass('is-disabled')
+          .addClass('is-readonly')
+          .attr('tabindex', '0')
+          .prop('disabled', false)
+          .prop('readonly', true);
         this.closeList();
       },
 
@@ -1507,11 +1595,11 @@
         if (this.element.prop('readonly') === true) {
           this.readonly();
         } else {
-          this.input.removeClass('is-readonly').prop('readonly', false);
+          this.pseudoElem.removeClass('is-readonly')/*.prop('readonly', false)*/;
         }
 
         // update "disabled" prop
-        this.input.prop('disabled', this.element.prop('disabled'));
+        this.pseudoElem[ this.element.prop('disabled') ? 'addClass' : 'removeClass' ]('is-disabled');
 
         // update the list and set a new value, if applicable
         this.updateList();
@@ -1526,7 +1614,7 @@
         $.removeData(this.element[0], pluginName);
         this.closeList();
         this.label.remove();
-        this.input.off().remove();
+        this.pseudoElem.off().remove();
         this.icon.remove();
         this.wrapper.remove();
         this.element.removeAttr('style');

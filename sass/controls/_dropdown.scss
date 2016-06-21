@@ -31,8 +31,9 @@ select.multiselect {
   }
 }
 
-input.dropdown,
-input.multiselect {
+div.dropdown,
+div.multiselect {
+  @include input-style();
   @include css3(touch-callout, none);
   @include css3(user-select, none);
   @include transition(background-color .2s ease);
@@ -40,16 +41,24 @@ input.multiselect {
   border-color: $input-border-color;
   color: $dropdown-color;
   cursor: pointer;
+  overflow: hidden;
   padding: 9px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   text-overflow: ellipsis;
   vertical-align: middle;
+  white-space: nowrap;
 
-  &[disabled] {
+  &:empty {
+    min-height: 34px;
+  }
+
+  &[disabled],
+  &.is-disabled {
     background-color: $input-disabled-bg-color;
     border-color: $input-disabled-border-color;
     color: $input-disabled-color;
     cursor: default;
+    pointer-events: none;
     -webkit-text-fill-color: $input-disabled-color;
 
     + .icon {
@@ -59,7 +68,7 @@ input.multiselect {
     }
   }
 
-  &:active:not([disabled]):not(.is-readonly) {
+  &:active:not([disabled]):not(.is-disabled):not(.is-readonly) {
     border-color: $trigger-active-color;
 
     + .icon {
@@ -67,7 +76,7 @@ input.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-readonly) {
+  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly) {
     border-color: $trigger-hover-color;
 
     + .icon {
@@ -125,6 +134,7 @@ input.multiselect {
 
 // The List
 .dropdown-list {
+  @include unselectable();
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
@@ -275,8 +285,8 @@ input.multiselect {
 
     li::before {
       @include checkbox-unchecked-before-style;
-      margin-left: -28px;
-      top: 6px;
+      margin-left: -27px;
+      top: 8px;
     }
 
     li.is-disabled::before {
@@ -301,7 +311,7 @@ input.multiselect {
       @include checkbox-checked-after-style;
       left: 16px;
       margin-top: 0;
-      top: 8px;
+      top: 9px;
     }
 
     li.is-disabled.is-selected::before {
@@ -374,6 +384,12 @@ input.multiselect {
         height: 18px;
         margin-top: 7px;
         width: 16px;
+      }
+
+      &.close {
+        right: -2px;
+        top: 3px;
+        width: 14px;
       }
     }
   }
@@ -537,6 +553,33 @@ input.dropdown.error:focus {
   }
 }
 
+// Firefox needs a nudge on the list items
+.is-firefox {
+  .dropdown-list.multiple li {
+    &::before {
+      top: 7px;
+    }
+
+    &.is-selected::after {
+      top: 8px;
+    }
+  }
+}
+
+// iOS needs a nudge too
+.ios {
+  .dropdown-list.multiple li {
+    &::before {
+      top: 10px;
+    }
+
+    &.is-selected::after {
+      top: 11px;
+    }
+  }
+}
+
+
 
 //RTL Styles
 html[dir='rtl'] {
@@ -575,7 +618,7 @@ html[dir='rtl'] {
       }
     }
 
-    >.icon {
+    > .icon {
       margin-left: inherit;
       margin-right: -26px;
 
@@ -620,8 +663,7 @@ html[dir='rtl'] {
 }
 
 @include respond-to(phablet) {
-
-  .dropdown-list {
+  .dropdown-list.mobile {
     height: calc(100% - 20px);
     max-height: none;
     width: calc(100% - 20px);
