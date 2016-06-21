@@ -3285,7 +3285,8 @@ $.fn.datagrid = function(options) {
         self.activeCell.node.find('button').focus();
       }
 
-      var headers = self.headerNodes();
+      // var headers = self.headerNodes();
+      var headers = self.headerNodes().not('.is-hidden');
       headers.removeClass('is-active');
       headers.eq(cell).addClass('is-active');
 
