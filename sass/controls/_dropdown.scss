@@ -151,6 +151,10 @@ div.multiselect {
     outline: 0;
   }
 
+  &.mobile {
+    background-color: $white;
+  }
+
   &.is-ontop {
     ul {
       box-shadow: $dropdown-box-shadow-top;
@@ -294,8 +298,6 @@ div.multiselect {
     }
 
     li.is-focused {
-    // li.is-focused,
-    // li:hover:not(.group-label) {
       background-color: $popupmenu-hover-color;
 
       > a {
