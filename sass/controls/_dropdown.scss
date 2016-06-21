@@ -138,9 +138,11 @@ div.multiselect {
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
+  box-shadow: $dropdown-box-shadow;
   max-height: 300px;
   min-height: 30px;
   -webkit-overflow-scrolling: touch;
+  overflow: hidden;
   position: absolute;
   transition: height .3s ease 0s;
   white-space: nowrap;
@@ -151,8 +153,21 @@ div.multiselect {
     outline: 0;
   }
 
+  // Enables certain mobile-specific settings
   &.mobile {
-    background-color: $white;
+    background-color: $body-bg-color;
+  }
+
+  // Enables a full-screen dropdown control that works well with small form-factors
+  &.full-screen {
+    height: calc(100% - 20px);
+    max-height: none;
+    width: calc(100% - 20px);
+
+    ul {
+      height: 100%;
+      max-height: calc(100% - 34px);
+    }
   }
 
   &.is-ontop {
@@ -164,13 +179,13 @@ div.multiselect {
   ul {
     @include font-size(14);
     background-color: $popupmenu-bg-color;
-    box-shadow: $dropdown-box-shadow;
     color: $popupmenu-color;
     height: auto;
     line-height: 32px;
     max-height: 260px;
     min-height: inherit;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 5px 0;
     position: relative;
     text-indent: 10px;
@@ -659,20 +674,6 @@ html[dir='rtl'] {
         margin-left: inherit;
         margin-right: -38px !important;
       }
-    }
-  }
-
-}
-
-@include respond-to(phablet) {
-  .dropdown-list.mobile {
-    height: calc(100% - 20px);
-    max-height: none;
-    width: calc(100% - 20px);
-
-    ul {
-      height: 100%;
-      max-height: calc(100% - 34px);
     }
   }
 
