@@ -97,6 +97,11 @@
             }
           }
         }
+
+        if ((/Android/.test(ua))) {
+          html.addClass('android');
+        }
+
         return this;
       },
 

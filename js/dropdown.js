@@ -341,6 +341,7 @@
         // Add the class that switches the UI view to the enlarged "mobile" view in some
         // form factors and operating systems.
         self.list[self.isMobile() ? 'addClass' : 'removeClass']('mobile');
+        self.list[self.isFullScreen() ? 'addClass' : 'removeClass']('full-screen');
 
         //Add Input Element and
         if (!isOpen) {
@@ -565,7 +566,6 @@
       resetList: function() {
         var cssClass = 'icon' + (this.isMobile() ? ' close' : ''),
           icon = this.isMobile() ? '#icon-close' : '#icon-dropdown';
-
 
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
@@ -826,7 +826,7 @@
 
         selectText();
 
-        if (/*!this.isMobile() && */document.activeElement !== input[0]) {
+        if (document.activeElement !== input[0]) {
           input[0].focus();
         }
       },
@@ -1103,7 +1103,7 @@
           left = this.pseudoElem.offset().left - $(window).scrollLeft();
 
         // If we're lower than the Phone Breakpoint, reset everything for full-screen
-        if ($(window).width() <= 610) {
+        if (this.isFullScreen()) {
           top = 0;
         }
 
@@ -1531,6 +1531,11 @@
 
       isMobile: function() {
         return $('html').is('.ios, .android');
+      },
+
+      // Used to determine whether or not we need to show the full-screen dropdown
+      isFullScreen: function() {
+        return this.isMobile() && $(window).width() < 767;
       },
 
       isListClosable: function() {
