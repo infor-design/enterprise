@@ -18,8 +18,10 @@
 
   &:hover,
   &:active,
+  &:focus,
   &.is-dragging {
     background-color: $splitter-active-bg-color;
+    outline: none;
 
     &::after {
       color: $splitter-active-grip-bg-color;

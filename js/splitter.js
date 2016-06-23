@@ -54,6 +54,12 @@
         var self = this;
         var parentHeight = this.element.parent().height();
 
+        //Restore from local storage
+        if (localStorage) {
+          var w = localStorage[this.uniqueId()];
+          this.splitTo(parseInt(w), parentHeight);
+        }
+
         //Set the height
         this.element.drag({axis: this.settings.axis,
           containment: this.settings.containment ? this.settings.containment :
@@ -90,13 +96,8 @@
         }
 
         //Aria
-        this.element.attr({'aria-hidden': 'true', 'role': 'presentation'});
+        this.element.attr({'aria-dropeffect': 'move', 'tabindex': '0', 'aria-grabbed': 'false'});
 
-        //Restore from local storage
-        if (localStorage) {
-          var w = localStorage[this.uniqueId()];
-          this.splitTo(parseInt(w), this.element.parent().height());
-        }
 
         //move handle to left
         if (this.element.is('.splitter-right')) {
@@ -120,9 +121,30 @@
 
         this.element.on('updated.' + pluginName, function() {
           self.updated();
+        }).on('keydown.' + pluginName, function(e) {
+
+          //Space will toggle selection
+          if (e.which === 32) {
+            self.toggleSelection();
+            e.preventDefault();
+          }
+
+          if (e.which === 37) {
+            self.splitTo(self.split - 15, self.parentHeight);
+          }
+
+          if (e.which === 39) {
+            self.splitTo(self.split + 15, self.parentHeight);
+          }
+
         });
 
+
         return this;
+      },
+
+      toggleSelection: function () {
+        this.element.toggleClass('is-dragging');
       },
 
       //Resize the panel vertically
@@ -200,6 +222,9 @@
         if (localStorage) {
           localStorage[this.uniqueId()] = split;
         }
+
+        this.split = split;
+        this.parentHeight = parentHeight;
       },
 
       //Handle Updating Settings
