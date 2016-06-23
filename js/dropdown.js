@@ -1094,9 +1094,7 @@
         // in desktop environments, bind against window.resize
         if (window.orientation === undefined) {
           $('body').on('resize.dropdown', function() {
-            if (document.activeElement !== self.searchInput[0]) {
-              self.closeList();
-            }
+            self.closeList();
           });
         }
 
