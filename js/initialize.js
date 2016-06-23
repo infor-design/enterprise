@@ -25,7 +25,14 @@
         defaults = {
           locale: 'en-US'
         },
+        settings;
+
+      if (typeof options === 'string') {
+        settings = {};
+        settings.locale = options;
+      } else {
         settings = $.extend({}, defaults, options);
+      }
 
     // Plugin Constructor
     function Initialize(element, settings) {
