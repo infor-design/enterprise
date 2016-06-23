@@ -54,6 +54,7 @@
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
       dayPeriods: ['AM', 'PM']
     }],
+
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
     currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
     currencyFormat: '¤#,##0.00',

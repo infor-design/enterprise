@@ -66,7 +66,7 @@
       group: ' '
     },
     //Resx - Approved By Translation Team
-     messages: {
+    messages: {
       'AboutText': {id: 'AboutText', value: 'Autortiesības &copy; {0} Infor. Visas tiesības paturētas. Šeit norādītie vārdi un dizaina apzīmējumi ir Infor un/vai tā saistīto uzņēmumu un filiāļu preču zīmes un/vai reģistrētas preču zīmes. Visas tiesības paturētas. Visas citas šeit norādītās preču zīmes pieder to attiecīgajiem īpašniekiem.'},
       'Actions': {id: 'Actions', value: 'Darbības', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'Pievienot', comment: 'Add'},
@@ -170,6 +170,8 @@
       'Launch': {id: 'Launch', value: 'Palaist', comment: 'Launch'},
       'LastPage': {id: 'LastPage', value: 'Pēdējā lapa', comment: 'Last Page tooltip'},
       'Left': {id: 'Left', value: 'Pa kreisi', comment: 'Left tooltip'},
+      'LeftAlign': {id: 'LeftAlign', value: 'Līdzināt pa kreisi', comment: 'Left Align tooltip'},
+      'LeftTextAlign': {id: 'LeftTextAlign', value: 'Līdzināt tekstu pa kreisi', comment: 'Left Text Align tooltip'},
       'LessOrEquals': {id: 'LessOrEquals', value: 'Mazāks vai vienāds', comment: 'Less Or Equals in icons for filtering'},
       'LessThan': {id: 'LessThan', value: 'Mazāks par', comment: 'Less Than in icons for filtering'},
       'Link': {id: 'Link', value: 'Saite', comment: 'Link - as in hyperlink - icon tooltop'},
@@ -252,6 +254,9 @@
       'SortZtoA': {id: 'SortZtoA', value: 'Kārtot no Z līdz A', comment: 'Sort Z to A in icons for filtering'},
       'SortDown': {id: 'SortDown', value: 'Kārtot uz leju', comment: 'Sort Down tooltip'},
       'SortUp': {id: 'SortUp', value: 'Kārtot uz augšu', comment: 'Sort Up tooltip'},
+      'StarFilled': {id: 'StarFilled', value: 'Aizpildītā zvaigznīte', comment: 'Star Filled tooltip'},
+      'StarHalf': {id: 'StarHalf', value: 'Dalīji aizpildītā zvaigznīte', comment: 'Star Half tooltip'},
+      'StarOutlined': {id: 'StarOutlined', value: 'Tukša zvaigznīte', comment: 'Star Outlined tooltip'},
       'Subscript': {id: 'Subscript', value: 'Apakšraksts', comment: 'Turn on and off Subscript text in text editor (like word)'},
       'Superscript': {id: 'Superscript', value: 'Augšraksts', comment: 'Turn on and off Superscript text in text editor (like word)'},
       'Tack': {id: 'Tack', value: 'Piespraust', comment: 'Tack tooltip'},

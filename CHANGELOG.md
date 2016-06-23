@@ -7,6 +7,7 @@ Release Date: TBD
 * Datagrid Formatters for Class/ Content Visible
 * Property Sheet pattern
 * Tree - Ability to add nodes with Ajax
+* Splitter - Added keyboard/Aria
 
 ### Breaking Changes
 * 2016-06-14 - Changed font weight of placeholder text to normal (from lighter)

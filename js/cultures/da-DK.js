@@ -66,7 +66,7 @@
       group: '.'
     },
     //Resx - Approved By Translation Team
-    messages: {
+  messages: {
       'AboutText': {id: 'AboutText', value: 'Copyright &copy; {0} Infor. Alle rettigheder forbeholdes. Ord- og designmærkerne anført heri er varemærker og/eller registrerede varemærker tilhørende Infor og/eller dennes affilierede selskaber og datterselskaber. Alle rettigheder forbeholdes. Alle andre varemærker angivet heri tilhører de respektive ejere.'},
       'Actions': {id: 'Actions', value: 'Handlinger', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'Tilføj', comment: 'Add'},
@@ -170,6 +170,8 @@
       'Launch': {id: 'Launch', value: 'Start', comment: 'Launch'},
       'LastPage': {id: 'LastPage', value: 'Sidste side', comment: 'Last Page tooltip'},
       'Left': {id: 'Left', value: 'Venstre', comment: 'Left tooltip'},
+      'LeftAlign': {id: 'LeftAlign', value: 'Venstrejusteret', comment: 'Left Align tooltip'},
+      'LeftTextAlign': {id: 'LeftTextAlign', value: 'Venstrejuster tekst', comment: 'Left Text Align tooltip'},
       'LessOrEquals': {id: 'LessOrEquals', value: 'Mindre end eller lig med', comment: 'Less Or Equals in icons for filtering'},
       'LessThan': {id: 'LessThan', value: 'Mindre end', comment: 'Less Than in icons for filtering'},
       'Link': {id: 'Link', value: 'Link', comment: 'Link - as in hyperlink - icon tooltop'},
@@ -252,6 +254,9 @@
       'SortZtoA': {id: 'SortZtoA', value: 'Sorter Å til A', comment: 'Sort Z to A in icons for filtering'},
       'SortDown': {id: 'SortDown', value: 'Sorter ned', comment: 'Sort Down tooltip'},
       'SortUp': {id: 'SortUp', value: 'Sorter op', comment: 'Sort Up tooltip'},
+      'StarFilled': {id: 'StarFilled', value: 'Star Filled', comment: 'Star Filled tooltip'},
+      'StarHalf': {id: 'StarHalf', value: 'Star Half', comment: 'Star Half tooltip'},
+      'StarOutlined': {id: 'StarOutlined', value: 'Star Outlined', comment: 'Star Outlined tooltip'},
       'Subscript': {id: 'Subscript', value: 'Sænket skrift', comment: 'Turn on and off Subscript text in text editor (like word)'},
       'Superscript': {id: 'Superscript', value: 'Hævet skrift', comment: 'Turn on and off Superscript text in text editor (like word)'},
       'Tack': {id: 'Tack', value: 'Opslagsnål', comment: 'Tack tooltip'},

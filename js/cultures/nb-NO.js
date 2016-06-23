@@ -170,6 +170,8 @@
       'Launch': {id: 'Launch', value: 'Start', comment: 'Launch'},
       'LastPage': {id: 'LastPage', value: 'Siste side', comment: 'Last Page tooltip'},
       'Left': {id: 'Left', value: 'Venstre', comment: 'Left tooltip'},
+      'LeftAlign': {id: 'LeftAlign', value: 'Venstre juster', comment: 'Left Align tooltip'},
+      'LeftTextAlign': {id: 'LeftTextAlign', value: 'Venstre tekst juster', comment: 'Left Text Align tooltip'},
       'LessOrEquals': {id: 'LessOrEquals', value: 'Mindre eller lik', comment: 'Less Or Equals in icons for filtering'},
       'LessThan': {id: 'LessThan', value: 'Mindre enn', comment: 'Less Than in icons for filtering'},
       'Link': {id: 'Link', value: 'Kobling', comment: 'Link - as in hyperlink - icon tooltop'},
@@ -252,6 +254,9 @@
       'SortZtoA': {id: 'SortZtoA', value: 'Sorter Z til A', comment: 'Sort Z to A in icons for filtering'},
       'SortDown': {id: 'SortDown', value: 'Sorter ned', comment: 'Sort Down tooltip'},
       'SortUp': {id: 'SortUp', value: 'Sorter opp', comment: 'Sort Up tooltip'},
+      'StarFilled': {id: 'StarFilled', value: 'Star Filled', comment: 'Star Filled tooltip'},
+      'StarHalf': {id: 'StarHalf', value: 'Star Half', comment: 'Star Half tooltip'},
+      'StarOutlined': {id: 'StarOutlined', value: 'Star Outlined', comment: 'Star Outlined tooltip'},
       'Subscript': {id: 'Subscript', value: 'Senket skrift', comment: 'Turn on and off Subscript text in text editor (like word)'},
       'Superscript': {id: 'Superscript', value: 'Hevet skrift', comment: 'Turn on and off Superscript text in text editor (like word)'},
       'Tack': {id: 'Tack', value: 'Stift', comment: 'Tack tooltip'},
@@ -287,5 +292,4 @@
       'ViewVisual': {id: 'ViewVisual', value: 'Vis visuell', comment: 'Toggle the visual view in the editor'}
     }
   });
-
 }));

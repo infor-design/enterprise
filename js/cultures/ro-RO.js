@@ -65,7 +65,7 @@
       group: '.'
     },
     //Resx - Approved By Translation Team
-    messages: {
+  messages: {
       'AboutText': {id: 'AboutText', value: 'Drepturi de autor &copy; {0} Infor. Toate drepturile rezervate. Grupul de simboluri şi mărcile de design menţionate în acest document sunt mărci comerciale şi/sau mărci comerciale înregistrare ale Infor şi/sau ale afiliaţilor şi filialelor sale. Toate drepturile rezervate. Toate celelalte mărci comerciale menționate în acest document aparţin proprietarilor lor.'},
       'Actions': {id: 'Actions', value: 'Acţiuni', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'Adăugare', comment: 'Add'},
@@ -169,6 +169,8 @@
       'Launch': {id: 'Launch', value: 'Lansare', comment: 'Launch'},
       'LastPage': {id: 'LastPage', value: 'Ultima pagină', comment: 'Last Page tooltip'},
       'Left': {id: 'Left', value: 'Stânga', comment: 'Left tooltip'},
+      'LeftAlign': {id: 'LeftAlign', value: 'Aliniere la stânga', comment: 'Left Align tooltip'},
+      'LeftTextAlign': {id: 'LeftTextAlign', value: 'Aliniere text la stânga', comment: 'Left Text Align tooltip'},
       'LessOrEquals': {id: 'LessOrEquals', value: 'Mai mic sau egal cu', comment: 'Less Or Equals in icons for filtering'},
       'LessThan': {id: 'LessThan', value: 'Mai mic decât', comment: 'Less Than in icons for filtering'},
       'Link': {id: 'Link', value: 'Legătură', comment: 'Link - as in hyperlink - icon tooltop'},
@@ -251,6 +253,9 @@
       'SortZtoA': {id: 'SortZtoA', value: 'Sortare de la Z la A', comment: 'Sort Z to A in icons for filtering'},
       'SortDown': {id: 'SortDown', value: 'Sortare descrescătoare', comment: 'Sort Down tooltip'},
       'SortUp': {id: 'SortUp', value: 'Sortare crescătoare', comment: 'Sort Up tooltip'},
+      'StarFilled': {id: 'StarFilled', value: 'Star Filled', comment: 'Star Filled tooltip'},
+      'StarHalf': {id: 'StarHalf', value: 'Star Half', comment: 'Star Half tooltip'},
+      'StarOutlined': {id: 'StarOutlined', value: 'Star Outlined', comment: 'Star Outlined tooltip'},
       'Subscript': {id: 'Subscript', value: 'Indice', comment: 'Turn on and off Subscript text in text editor (like word)'},
       'Superscript': {id: 'Superscript', value: 'Exponent', comment: 'Turn on and off Superscript text in text editor (like word)'},
       'Tack': {id: 'Tack', value: 'Piuneză', comment: 'Tack tooltip'},
