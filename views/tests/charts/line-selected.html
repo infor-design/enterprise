@@ -1,0 +1,90 @@
+
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+    var dataset = [{
+      data: [{
+          name: 'JAN',
+          value: 12
+      }, {
+          name: 'FEB',
+          value: 11
+      }, {
+          name: 'MAR',
+          value: 14
+      }, {
+          name: 'APR',
+          value: 10
+      }, {
+          name: 'MAY',
+          value: 14
+      }, {
+          name: 'JUN',
+          value: 8
+      }],
+      name: 'Component A',
+      // selected: true
+    }, {
+      data: [{
+          name: 'JAN',
+          value: 22
+      }, {
+          name: 'FEB',
+          value: 21,
+          selected: true
+      }, {
+          name: 'MAR',
+          value: 24
+      }, {
+          name: 'APR',
+          value: 20
+      }, {
+          name: 'MAY',
+          value: 24
+      }, {
+          name: 'JUN',
+          value: 28
+      }],
+      name: 'Component B'
+    }, {
+      data: [{
+          name: 'JAN',
+          value: 32
+      }, {
+          name: 'FEB',
+          value: 31
+      }, {
+          name: 'MAR',
+          value: 34
+      }, {
+          name: 'APR',
+          value: 30
+      }, {
+          name: 'MAY',
+          value: 34
+      }, {
+          name: 'JUN',
+          value: 38
+      }],
+      name: 'Component C',
+      selected: true
+    }];
+
+  $('#line-example').chart({type: 'line', dataset: dataset})
+    .on('selected', function (e, elem, data) {
+      console.log(e, elem, data);
+    });
+</script>

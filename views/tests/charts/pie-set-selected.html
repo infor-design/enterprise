@@ -31,7 +31,8 @@
         shortName: 'After-tax',
         value: 11,
         tooltip: 'After-tax Deductions {{percent}}',
-        id: 2
+        id: 2,
+        selected: true
       }, {
         name: 'Pre-tax Deductions',
         shortName: 'Pre-tax',
@@ -43,7 +44,8 @@
         shortName: 'Af-tax',
         value: 17,
         tooltip: 'Taxes %percent%',
-        id: 4
+        id: 4,
+        selected: true
       }, {
         name: 'Wages',
         shortName: 'Wages',
@@ -59,8 +61,9 @@
     labels: {
       hideLabels: false
     }
-  }).on('selected', function (e, args, d) {
-    console.log('Save this id : '+ d.data.id);
+  }).on('selected', function (e, args, d, i) {
+    var data = d.data || {}
+    console.log('Save this id: '+ data.id);
   });
 
   console.log($('#pie-chart-example').data())
