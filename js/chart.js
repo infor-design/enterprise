@@ -79,7 +79,28 @@ window.Chart = function(container) {
   // Help Function to Select from legend click
   this.selectElem = function (line, series) {
     var idx = $(line).index(),
-      elem = series[idx];
+      elem = series[idx],
+      s = charts.settings,
+      selector;
+
+    if (s.chartType === 'Pie') {
+      selector = d3.select(s.svg.selectAll('.arc')[0][idx]);
+    }
+    else if (['Column', 'HorizontalBar'].indexOf(s.chartType) !== -1) {
+      // Grouped or singlular
+      if (s.isGrouped || s.isSingular) {
+        selector = s.svg.select('.series-'+ idx);
+      }
+      // Stacked
+      else if (s.isStacked && !s.isSingular) {
+        var thisGroup = d3.select(s.svg.selectAll(s.chartType==='HorizontalBar' ? '.series-group' : '.g')[0][idx]);
+        selector = thisGroup.select('.bar');
+      }
+    }
+    if (['Pie', 'Column', 'HorizontalBar'].indexOf(s.chartType) !== -1) {
+      s.isByLegends = true;
+      selector.on('click').call(selector.node(), selector.datum(), idx);
+    }
 
     if (elem.selectionObj) {
       charts.selectElement(d3.select(elem.selectionObj[0][idx]), elem.selectionInverse, elem.data);
@@ -233,11 +254,11 @@ window.Chart = function(container) {
     return symbol + (num * 1).toFixed(2);
   };
 
-  this.HorizontalBar = function(dataset, isNormalized, isStacked) {
+  this.HorizontalBar = function(chartData, isNormalized, isStacked) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
-    var maxTextWidth, width, height, series, rects, svg, stack,
-        xMax, xScale, yScale, yAxis, yMap, xAxis, groups, legendMap, gindex,
-        totalBarsInGroup, totalGroupArea, totalHeight, gap, barHeight;
+    var dataset, maxTextWidth, width, height, series, rects, svg, stack, xMax,
+        xScale, yScale, yAxis, yMap, xAxis, groups, isGrouped, isSingle, legendMap,
+        gindex, totalBarsInGroup, totalGroupArea, totalHeight, gap, barHeight;
 
     var tooltipInterval,
       tooltipDataCache = [],
@@ -256,6 +277,7 @@ window.Chart = function(container) {
       bottom: 30 // 30px plus size of the bottom axis (20)
     };
 
+    dataset = chartData;
     $(container).addClass('chart-vertical-bar');
 
     width =  parseInt($(container).parent().width()) - margins.left - margins.right;
@@ -409,9 +431,23 @@ window.Chart = function(container) {
       .enter()
       .append('g')
       .attr('class', 'series-group')
+      .attr('data-group-id', function (d, i) {
+        return i;
+      })
       .style('fill', function (d, i) {
         return charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
       });
+
+    isGrouped = (svg.selectAll('.series-group')[0].length > 1 && !isStacked);
+    isSingle = (svg.selectAll('.series-group')[0].length === 1 && isStacked);
+
+    $.extend(charts.settings, {
+      svg: svg,
+      chartType: 'HorizontalBar',
+      isSingle: isSingle,
+      isGrouped: isGrouped,
+      isStacked: isStacked
+    });
 
     rects = groups.selectAll('rect')
       .data(function (d, i) {
@@ -535,21 +571,23 @@ window.Chart = function(container) {
       charts.hideTooltip();
     })
     .on('click', function (d, i) {
-      var bar = d3.select(this);
+      var isSelected = this && d3.select(this).classed('is-selected'),
+        thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
 
-      svg.selectAll('.axis.y .tick').style('font-weight', 'normal');
-      svg.selectAll('.bar').style('opacity', 1);
-      d3.select(this.parentNode).style('opacity', 1);
+      charts.setSelectedElement({
+        task: (isSelected ? 'unselected' : 'selected'),
+        container: container,
+        selector: this,
+        isTrigger: !isSelected,
+        triggerGroup: isGrouped,
+        d: d,
+        i: i
+      });
 
-      if (this.classList && this.classList.contains('is-selected')) {
-        svg.selectAll('.is-selected').classed('is-selected', false);
-      } else {
-        svg.selectAll('.is-selected').classed('is-selected', false);
-        bar.classed('is-selected', true);
-        svg.selectAll('.axis.y .tick:nth-child('+ (i+1) +')').style('font-weight', 'bolder');
-        svg.selectAll('.bar:not(.series-' + i + ')').style('opacity', 0.6);
+      if (isSelected) {
+        $(container).triggerHandler('selected', [d3.select(this)[0], {}, (isGrouped ? thisGroupId : i)]);
       }
-      $(container).trigger('selected', [bar, d]);
+      return;
     });
 
     //Adjust the labels
@@ -565,10 +603,74 @@ window.Chart = function(container) {
     //Add Legends
     charts.addLegend(isStacked ? series : legendMap);
     charts.appendTooltip();
-    $(container).trigger('rendered');
 
+    // Set initial selected
+    (function () {
+      var selected = 0,
+        legendsNode = svg.node().parentNode.nextSibling,
+        legends = d3.select(legendsNode),
+        isLegends = legends.node() && legends.classed('chart-legend'),
+        barIndex, selector, isStackedGroup,
+
+        setSelectedBar = function (g) {
+          g = g ? d3.select(g) : svg;
+          g.selectAll('.bar').each(function(d, i) {
+            if (!d) {
+              return;
+            }
+            if (d.selected && selected < 1) {
+              selected++;
+              selector = d3.select(this);
+              barIndex = i;
+            }
+          });
+        },
+
+        setSelectedGroup = function () {
+          var groups = svg.selectAll('.series-group');
+          if (groups[0].length) {
+            groups.each(function() {
+              setSelectedBar(this);
+            });
+          }
+        };
+
+      if (isGrouped || (isStacked && !isSingle)) {
+        chartData.forEach(function(d, i) {
+          if (d.selected && selected < 1) {
+            selected++;
+            selector = svg.select('[data-group-id="'+ i +'"]').select('.bar');
+            barIndex = i;
+            if (isStacked && !isGrouped) {
+              isStackedGroup = true;
+            }
+          }
+        });
+        if (selected < 1) {
+          setSelectedGroup();
+        }
+      }
+      else {
+        setSelectedBar();
+      }
+
+      if (selected > 0) {
+        if (isStackedGroup) {
+          if (isLegends) {
+            $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+          }
+        }
+        else {
+          selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        }
+      }
+
+    })();
+
+    $(container).trigger('rendered');
     return $(container);
   };
+
 
   this.Pie = function(initialData, isDonut, options) {
     var defaults = {
@@ -676,6 +778,11 @@ window.Chart = function(container) {
         .innerRadius(dims.labelRadius)
         .outerRadius(dims.labelRadius);
 
+    $.extend(charts.settings, {
+      svg: svg,
+      chartType: 'Pie'
+    });
+
     // Draw the arcs.
     var enteringArcs = arcs.selectAll('.arc').data(pieData).enter();
     enteringArcs.append('path')
@@ -684,25 +791,32 @@ window.Chart = function(container) {
         self.triggerContextMenu(d3.select(this).select('path')[0][0], d);
       })
       .on('click', function (d, i) {
-        var isSelected = d3.select(this).classed('is-selected'),
-          color = charts.chartColor(i, 'pie', d.data),
-          path = d3.select(this);
+        var isSelected = this && d3.select(this).classed('is-selected');
 
-        d3.select('.chart-container .is-selected')
-          .classed('is-selected', false)
-          .style('stroke', '#fff')
-          .style('stroke-width', '1px')
-          .attr('transform', '');
+        // Make unselected
+        charts.setSelectedElement({
+          task: 'unselected',
+          container: container,
+          selector: '.chart-container .is-selected',
+          isTrigger: false,
+          d: d.data,
+          i: i
+        });
 
-        if (!isSelected) {
-          path.classed('is-selected', true)
-              .style('stroke', color)
-              .style('stroke-width', 0)
-              .attr('transform', 'scale(1.025, 1.025)');
-          $(container).trigger('selected', [path[0], d.data]);
-          return;
+        if (isSelected) {
+          $(container).triggerHandler('selected', [d3.select(this)[0], {}, i]);
         }
-        $(container).trigger('selected', [path[0], d.data]);
+        else {
+          // Make selected
+          charts.setSelectedElement({
+            task: 'selected',
+            container: container,
+            selector: this,
+            isTrigger: true,
+            d: d.data,
+            i: i
+          });
+        }
       })
       .on('mouseenter', function(d, i) {
         var size, x, y, t, tx, ty,
@@ -1033,6 +1147,22 @@ window.Chart = function(container) {
     if (legendshow || charts.legendformatter) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
     }
+
+    // Set initial selected
+    (function () {
+      var selected = 0,
+        selector;
+      arcs.selectAll('.arc').each(function(d, i) {
+        if (!d || !d.data || !d.data.data) {
+          return;
+        }
+        if (d.data.data.selected && selected < 1) {
+          selected++;
+          selector = d3.select(this);
+          selector.on('click').call(selector.node(), selector.datum(), i);
+        }
+      });
+    })();
 
     $(container).trigger('rendered');
     return $(container);
@@ -1448,13 +1578,13 @@ window.Chart = function(container) {
     //Make an Array of objects with name + array of all values
     var dataArray = [];
     chartData.forEach(function(d) {
-      dataArray.push({name: d.name, tooltip: d.tooltip, shortName: d.shortName, abbrName: d.abbrName, values: d.data});
+      dataArray.push($.extend({}, d, {values: d.data}));
     });
 
     if (isSingular) {
       dataArray = [];
       names = dataset[0].data.forEach(function (d) {
-        dataArray.push({name: d.name, tooltip: d.tooltip, shortName: d.shortName, abbrName: d.abbrName, value: d.value});
+        dataArray.push(d);
       });
     }
 
@@ -1466,6 +1596,9 @@ window.Chart = function(container) {
         .data(isStacked ? datasetStacked : dataArray)
         .enter()
         .append('rect')
+        .attr('class', function(d, i) {
+          return 'series-'+ i +' bar';
+        })
         .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
         .attr('x', function(d) {
           return isStacked ? xScale(0) : (x1(d.name) + (x1.rangeBand() - barMaxWidth)/2);
@@ -1493,7 +1626,10 @@ window.Chart = function(container) {
           .data(isStacked ? datasetStacked : dataArray)
           .enter()
           .append('g')
-          .attr('class', 'g')
+          .attr('class', 'series-group g')
+          .attr('data-group-id', function (d, i) {
+            return i;
+          })
           .style('fill', function(d, i) {
             return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), (isStacked ? datasetStacked[i] : dataArray[i]));
           })
@@ -1505,6 +1641,9 @@ window.Chart = function(container) {
           .data(function(d) {return isStacked ? d : d.values;})
           .enter()
           .append('rect')
+            .attr('class', function(d, i) {
+              return 'series-'+ i +' bar';
+            })
             .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
             .attr('x', function(d, i) {
               var width = Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]);
@@ -1526,6 +1665,18 @@ window.Chart = function(container) {
           return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
         });
       }
+
+      var isSingle = isSingular || !isSingular && isStacked,
+        isGrouped = !isSingle;
+
+      $.extend(charts.settings, {
+        svg: svg,
+        chartType: 'Column',
+        isSingle: isSingle,
+        isGrouped: isGrouped,
+        isStacked: isStacked,
+        isSingular: isSingular
+      });
 
       bars.on('mouseenter', function(d, i) {
         var x, y, j, l, size, isTooltipBottom,
@@ -1640,15 +1791,22 @@ window.Chart = function(container) {
 
       // Click
       .on('click', function (d, i) {
-        var bar = d3.select(this);
-        charts.selectElement(bar, svg.selectAll('rect'), d);
+        var isSelected = this && d3.select(this).classed('is-selected'),
+          thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
 
-        if(!isSingular) {
-          var index = isStacked ? i : names.indexOf(d3.select(this.parentNode).datum().name);
-            if (index > -1) {
-              charts.selectElement(svg.selectAll('.x .tick:nth-child('+(index+1)+')'), svg.selectAll('.x .tick'), d);
-            }
-          }
+        charts.setSelectedElement({
+          task: (isSelected ? 'unselected' : 'selected'),
+          container: container,
+          selector: this,
+          isTrigger: !isSelected,
+          triggerGroup: isGrouped,
+          d: d,
+          i: i
+        });
+
+        if (isSelected) {
+          $(container).triggerHandler('selected', [d3.select(this)[0], {}, (isGrouped ? thisGroupId : i)]);
+        }
         return;
       })
 
@@ -1689,6 +1847,69 @@ window.Chart = function(container) {
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, 'abbrName');
     }
+
+    // Set initial selected
+    (function () {
+      var selected = 0,
+        legendsNode = svg.node().parentNode.nextSibling,
+        legends = d3.select(legendsNode),
+        isLegends = legends.node() && legends.classed('chart-legend'),
+        barIndex, selector, isStackedGroup,
+
+        setSelectedBar = function (g) {
+          g = g ? d3.select(g) : svg;
+          g.selectAll('.bar').each(function(d, i) {
+            if (!d) {
+              return;
+            }
+            if ((isSingular && isStacked ? d[0].selected : d.selected) && selected < 1) {
+              selected++;
+              selector = d3.select(this);
+              barIndex = i;
+            }
+          });
+        },
+
+        setSelectedGroup = function () {
+          var groups = svg.selectAll('.series-group');
+          if (groups[0].length) {
+            groups.each(function() {
+              setSelectedBar(this);
+            });
+          }
+        };
+
+      if (isGrouped || (isStacked && !isSingular && !isGrouped)) {
+        chartData.forEach(function(d, i) {
+          if (d.selected && selected < 1) {
+            selected++;
+            selector = svg.select('[data-group-id="'+ i +'"]').select('.bar');
+            barIndex = i;
+            if (isStacked && !isSingular && !isGrouped) {
+              isStackedGroup = true;
+            }
+          }
+        });
+        if (selected < 1) {
+          setSelectedGroup();
+        }
+      }
+      else {
+        setSelectedBar();
+      }
+
+      if (selected > 0) {
+        if (isStackedGroup) {
+          if (isLegends) {
+            $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+          }
+        }
+        else {
+          selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        }
+      }
+
+    })();
 
     $(container).trigger('rendered');
     return $(container);
@@ -1731,6 +1952,21 @@ window.Chart = function(container) {
     });
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   this.Line = function(chartData, options, isArea) {
     $(container).addClass('line-chart');
 
@@ -1749,8 +1985,8 @@ window.Chart = function(container) {
     var svg = d3.select(container).append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     //Calculate the Domain X and Y Ranges
     var x = d3.scale.linear().range([0, width]),
@@ -1916,11 +2152,58 @@ window.Chart = function(container) {
     charts.addLegend(series);
     charts.appendTooltip();
 
+    // Set initial selected
+    (function () {
+      var selected = 0,
+        selector,
+        selectorData,
+
+        setSelected = function (node, d, i) {
+          if (node.selected && selected < 1) {
+            selected++;
+            selector = d3.select(svg.selectAll('.line-group')[0][i]);
+            selectorData = d;
+          }
+        };
+
+      dataset.forEach(function(d, i) {
+        if (d) {
+          setSelected(d, d, i);
+        }
+      });
+      dataset.forEach(function(d, i) {
+        if (d || d.data) {
+          d.data.forEach(function(d2) {
+            setSelected(d2, d, i);
+          });
+        }
+      });
+
+      if (selected > 0) {
+        charts.selectElement(selector, svg.selectAll('.line-group'), selectorData);
+      }
+    })();
+
+
     $(container).trigger('rendered');
-
-
     return $(container);
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   this.Bullet = function(chartData) {
     $(container).addClass('bullet-chart');
@@ -2159,7 +2442,8 @@ window.Chart = function(container) {
 
   //Select the element and fire the event, make the inverse selector opace
   this.selectElement = function(elem, inverse, data) {
-    var isSelected = elem.classed('is-selected');
+    // console.log(elem.node());
+    var isSelected = elem.node() && elem.classed('is-selected');
 
     inverse.classed('is-not-selected', false)
       .classed('is-selected', false)
@@ -2169,7 +2453,121 @@ window.Chart = function(container) {
         .classed('is-selected', !isSelected);
 
     //Fire Events
-     $(container).trigger('selected', [elem, data]);
+     $(container).triggerHandler('selected', [elem, (!isSelected ? data : {})]);
+  };
+
+  // Make bars to be Selected or Unselected
+  this.setSelectedElement = function (o) {
+    var s = charts.settings,
+      isTypeHorizontalBar = s.chartType === 'HorizontalBar',
+      isTypeColumn = s.chartType === 'Column',
+      isTypePie = s.chartType === 'Pie',
+
+      svg = s.svg,
+      isSingle = s.isSingle,
+      isGrouped = s.isGrouped,
+      isStacked = s.isStacked,
+      isSingular = s.isSingular,
+
+      taskSelected = (o.task === 'selected'),
+      selector = d3.select(o.selector),
+      ticksX = svg.selectAll('.axis.x .tick'),
+      ticksY = svg.selectAll('.axis.y .tick'),
+      thisGroup = d3.select(o.selector.parentNode),
+      thisGroupId = parseInt((thisGroup.node() ? thisGroup.attr('data-group-id') : 0), 10),
+      triggerData = [selector[0], o.d, (isGrouped ? thisGroupId : o.i)],
+      selectedBars = [];
+
+    ticksX.style('font-weight', 'normal');
+    ticksY.style('font-weight', 'normal');
+    svg.selectAll('.is-selected').classed('is-selected', false);
+
+    // Task make selected
+    if (taskSelected) {
+      svg.selectAll('.bar').style('opacity', 0.6);
+
+      // By legends only
+      if (s.isByLegends) {
+        // Grouped and stacked only -NOT singular-
+        if (isTypeColumn || isTypeHorizontalBar) {
+          if (isGrouped || isSingular) {
+            s.svg.selectAll('.series-'+ o.i).classed('is-selected', true).style('opacity', 1);
+          }
+          else {
+            thisGroup.classed('is-selected', true)
+              .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
+          }
+          svg.selectAll('.bar.is-selected').each(function(d, i) {
+            selectedBars.push([d3.select(this)[0], d, i]);
+          });
+          triggerData.push(selectedBars);
+        }
+      }
+
+      // Single and stacked only -NOT grouped-
+      else if (isSingular && isStacked && isTypeColumn) {
+        selector.classed('is-selected', true).style('opacity', 1);
+      }
+
+      // Single or groups only -NOT stacked-
+      else if ((isSingle || isGrouped) && !isStacked && (isTypeColumn || isTypeHorizontalBar)) {
+        svg.selectAll((isTypeColumn ? '.axis.x' : '.axis.y') +' .tick:nth-child('+ ((isGrouped ? thisGroupId : o.i) + 1) +')')
+          .style('font-weight', 'bolder');
+
+        selector.classed('is-selected', true).style('opacity', 1);
+
+        if (isGrouped) {
+          thisGroup.classed('is-selected', true)
+            .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
+
+          svg.selectAll('.bar.is-selected').each(function(d, i) {
+            selectedBars.push([d3.select(this)[0], d, i]);
+          });
+          triggerData.push(selectedBars, thisGroup[0]);
+        }
+      }
+
+      // Stacked Only
+      else if (isTypeColumn || isTypeHorizontalBar) {
+        svg.selectAll((isTypeColumn ? '.axis.x' : '.axis.y') +' .tick:nth-child('+ (o.i + 1) +')')
+          .style('font-weight', 'bolder');
+
+        svg.selectAll('.bar:nth-child('+ (o.i + 1) +')')
+          .classed('is-selected', true).style('opacity', 1);
+
+        svg.selectAll('.bar.is-selected').each(function(d, i) {
+          selectedBars.push([d3.select(this)[0], d, i]);
+        });
+        triggerData.push(selectedBars);
+      }
+
+      // Pie
+      else if (isTypePie) {
+        var color = charts.chartColor(o.i, 'pie', o.d.data);
+        selector.classed('is-selected', true)
+          .style({'stroke': color, 'stroke-width': 0})
+          .attr('transform', 'scale(1.025, 1.025)');
+      }
+    }
+    // Task make unselected
+    else {
+      svg.selectAll('.bar').style('opacity', 1);
+
+      if(isTypePie) {
+        selector.classed('is-selected', false)
+          .style('stroke', '#fff')
+          .style('stroke-width', '1px')
+          .attr('transform', '');
+      }
+    }
+
+    if (s.isByLegends) {
+      s.isByLegends = false;
+    }
+
+    if (o.isTrigger) {
+      $(o.container).triggerHandler((taskSelected ? 'selected' : 'unselected'), triggerData);
+    }
   };
 
   this.initChartType = function (options) {
