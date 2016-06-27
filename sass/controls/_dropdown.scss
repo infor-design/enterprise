@@ -85,6 +85,9 @@ div.multiselect {
   }
 
   &.is-open {
+    border-color: transparent;
+    color: transparent;
+
     + .icon {
       display: none;
     }
@@ -119,29 +122,16 @@ div.multiselect {
   }
 }
 
-.inline {
-
-  + .dropdown-wrapper {
-    input.dropdown,
-    input.multiselect {
-      + .icon {
-        // top: 22px;
-      }
-    }
-  }
-
-}
-
 // The List
 .dropdown-list {
   @include unselectable();
+  -webkit-overflow-scrolling: touch;
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
   box-shadow: $dropdown-box-shadow;
   max-height: 300px;
   min-height: 30px;
-  -webkit-overflow-scrolling: touch;
   overflow: hidden;
   position: absolute;
   transition: height .3s ease 0s;
@@ -171,9 +161,7 @@ div.multiselect {
   }
 
   &.is-ontop {
-    ul {
-      box-shadow: $dropdown-box-shadow-top;
-    }
+    box-shadow: $dropdown-box-shadow-top;
   }
 
   ul {
@@ -459,14 +447,14 @@ input.dropdown.error:focus {
 //Shorter Field Size
 .field-short {
 
-  input.dropdown {
+  div.dropdown {
     @include font-size(12);
     margin-bottom: 0;
     padding: 5px 18px 5px 5px;
   }
 
-  input.dropdown,
-  input.multiselect {
+  div.dropdown,
+  div.multiselect {
     + .icon {
       height: 30px;
       right: 4px;
@@ -524,8 +512,7 @@ input.dropdown.error:focus {
     margin-top: 10px;
   }
 
-  > .icon,
-  > .icon.search {
+  > .icon {
     height: 24px;
     margin-left: -21px;
     margin-top: 0;
@@ -535,6 +522,12 @@ input.dropdown.error:focus {
   .trigger .icon {
     height: 24px;
     right: -4px;
+
+    &.icon.search {
+      height: 14px;
+      right: -6px;
+      top: -2px;
+    }
   }
 
   // Multiple
@@ -546,8 +539,8 @@ input.dropdown.error:focus {
       }
 
       &::after {
-        left: 11px;
-        margin-top: 2px;
+        left: 10px;
+        margin-top: 0;
       }
 
       &.is-focused {
@@ -556,8 +549,8 @@ input.dropdown.error:focus {
         }
 
         &::after {
-          left: 11px;
-          margin-top: 2px;
+          left: 10px;
+          margin-top: 0;
         }
       }
 
@@ -595,8 +588,6 @@ input.dropdown.error:focus {
     }
   }
 }
-
-
 
 //RTL Styles
 html[dir='rtl'] {

@@ -439,6 +439,12 @@
             self.element.triggerHandle('updated');
           }, 1);
         });
+
+        //Handle Label click
+        this.label.onTouchClick().on('click', function () {
+          self.pseudoElem.focus();
+        });
+
       },
 
       ignoreKeys: function (input, e) {
@@ -890,6 +896,7 @@
         this.pseudoElem
           .attr('aria-expanded', 'true')
           .addClass('is-open');
+
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         $('#dropdown-list').remove(); //remove old ones

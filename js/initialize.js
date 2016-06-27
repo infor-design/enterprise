@@ -324,7 +324,7 @@
 
           if ($.fn.popupmenu) {
             // Don't double-invoke menu buttons
-            var btnExcludes = ', .btn-actions, .btn-filtering, .btn-menu';
+            var btnExcludes = ', .btn-actions, .btn-filter, .btn-menu';
 
             //Context Menus
             matchedItems('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
@@ -340,7 +340,7 @@
             });
 
             //Button-based Popup-Menus (Action/More Button, Menu Buttons, etc.)
-            matchedItems('.btn-filtering, .btn-menu, .btn-actions').filter(':not('+ noinitExcludes +')').each(function() {
+            matchedItems('.btn-filter, .btn-menu, .btn-actions').filter(':not('+ noinitExcludes +')').each(function() {
               var triggerButton = $(this);
 
               // Don't auto-invoke Toolbar's Popupmenus.

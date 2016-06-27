@@ -294,7 +294,7 @@
             return;
           }
 
-          if (self.element.hasClass('btn-filtering')) {
+          if (self.element.hasClass('btn-filter')) {
             self.iconFilteringUpdate(anchor);
             e.preventDefault();
           }
@@ -459,7 +459,7 @@
 
       // Filtering icon initial setup
       iconFilteringSetup: function(alink) {
-        if (this.element.hasClass('btn-filtering')) {
+        if (this.element.hasClass('btn-filter')) {
           var icon = $('use', this.element),
             link = alink || $('li:first a', this.menu);
 
@@ -473,7 +473,7 @@
 
       // Filtering icon update
       iconFilteringUpdate: function(alink) {
-        if (this.element.hasClass('btn-filtering')) {
+        if (this.element.hasClass('btn-filter')) {
           var link = alink || $('li:first a', this.menu);
 
           $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
@@ -556,7 +556,7 @@
           this.menu.css('overflow', 'hidden');
         }
 
-        if (this.element.hasClass('btn-menu') && !this.element.parent('.field')) {
+        if (this.element.hasClass('btn-menu') && !this.element.parent().is('.field')) {
           wrapper.find('div.arrow').css({'left': '20px'});
 
           if (this.element.closest('.buttonset').length > 0 ) {

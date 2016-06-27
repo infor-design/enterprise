@@ -365,6 +365,7 @@ input.error {
 
 // Shorter/Legacy Inputs
 .field-short {
+  font-size: 0;
   position: relative;
 
   input {
@@ -378,7 +379,7 @@ input.error {
 
   label {
     display: inline-block;
-    padding-right: 5px;
+    padding-right: 10px;
     padding-top: 5px;
     text-align: right;
     vertical-align: top;

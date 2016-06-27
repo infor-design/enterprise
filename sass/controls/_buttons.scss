@@ -228,7 +228,6 @@ a.btn-menu {
 
 // Destructive Actions / Third Level Button
 .btn-tertiary,
-.btn-filtering,
 .btn-icon,
 .btn-actions,
 .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
@@ -287,10 +286,10 @@ a.btn-menu {
 .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary),
 .btn-actions {
   &.is-open {
-    color: $tertiary-btn-hover-color;
+    color: $tertiary-btn-open-color;
 
     span {
-      color: $tertiary-btn-hover-color;
+      color: $tertiary-btn-open-color;
     }
 
     .icon {
@@ -509,4 +508,10 @@ html[dir='rtl'] {
   .ripple-effect {
     background-color: $secondary-border-btn-ripple-color;
   }
+}
+
+//Grid Filter button
+.btn-filter {
+  min-width: 45px;
+  width: 45px;
 }
