@@ -97,6 +97,7 @@
             'id': (orgId ? id : name + prefix)
           });
         }
+        this.pseudoElem.append($('<span></span>'));
 
         // Pass disabled/readonly from the original element, if applicable
         // "disabled" is a stronger setting than "readonly" - should take precedent.
@@ -357,14 +358,14 @@
           text = this.getOptionText(opts);
 
         if (this.settings.empty && opts.length === 0) {
-          this.pseudoElem.text('');
+          this.pseudoElem.find('span').text('');
           return;
         }
 
         //Set initial values for the edit box
-        this.pseudoElem.text(text);
+        this.pseudoElem.find('span').text(text);
         if (this.element.attr('maxlength')) {
-           this.pseudoElem.text(text.substr(0, this.element.attr('maxlength')));
+           this.pseudoElem.find('span').text(text.substr(0, this.element.attr('maxlength')));
         }
 
         this.setBadge(opts);
@@ -924,7 +925,7 @@
           this.initialFilter = false;
         } else {
           // Change the values of both inputs and swap out the active descendant
-          this.searchInput.val(this.pseudoElem.val());
+          this.searchInput.val(this.pseudoElem.text());
         }
 
         var noScroll = this.settings.multiple;
@@ -1391,12 +1392,12 @@
         }
 
         // Change the values of both inputs and swap out the active descendant
-        this.pseudoElem.text(text);
+        this.pseudoElem.find('span').text(text);
         this.searchInput.val(text);
 
         if (this.element.attr('maxlength')) {
           trimmed = text.substr(0, this.element.attr('maxlength'));
-          this.pseudoElem.text(trimmed);
+          this.pseudoElem.find('span').text(trimmed);
           this.searchInput.val(trimmed);
         }
 
