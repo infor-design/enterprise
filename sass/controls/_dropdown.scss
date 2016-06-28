@@ -48,6 +48,14 @@ div.multiselect {
   vertical-align: middle;
   white-space: nowrap;
 
+  > span {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+
   &:empty {
     min-height: 34px;
   }
@@ -401,11 +409,12 @@ div.multiselect {
 }
 
 .dropdown-search {
-  background-color: transparent;
+  background-color: $body-bg-color;
   border: 0;
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
   color: $dropdown-color;
+  height: 35px;
   padding: 9px 32px 8px 10px;
   text-overflow: ellipsis;
   width: 100%;
@@ -466,6 +475,10 @@ input.dropdown.error:focus {
       margin-left: -38px;
       right: auto;
     }
+
+    > span {
+      min-height: 14px;
+    }
   }
 
   .dropdown-wrapper {
@@ -499,13 +512,17 @@ input.dropdown.error:focus {
 .dropdown-list.dropdown-short {
   input {
     @include font-size(12);
+    height: 26px;
     padding: 5px 32px 5px 5px;
   }
 
   ul {
     @include font-size(12);
-    // line-height: 25px;
     text-indent: 5px;
+  }
+
+  li > a {
+    line-height: 25px;
   }
 
   &.is-ontop {
@@ -565,13 +582,35 @@ input.dropdown.error:focus {
 
 // Firefox needs a nudge on the list items
 .is-firefox {
-  .dropdown-list.multiple li {
-    &::before {
-      top: 7px;
+
+  div.dropdown,
+  div.multiselect {
+    > span {
+      padding-top: 1px;
+    }
+  }
+
+  .dropdown-list {
+    &.multiple li {
+      &::before {
+        top: 7px;
+      }
+
+      &.is-selected::after {
+        top: 8px;
+      }
     }
 
-    &.is-selected::after {
-      top: 8px;
+    &.dropdown-short {
+      input {
+        @include font-size(12);
+        height: 25px;
+        padding: 5px 32px 5px 5px;
+
+        &:empty {
+          height: 25px;
+        }
+      }
     }
   }
 }
