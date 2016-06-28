@@ -900,7 +900,13 @@
 
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
-        $('#dropdown-list').remove(); //remove old ones
+        //Close oother drop downs.
+        $('select').each(function () {
+          var data = $(this).data();
+          if (data.dropdown) {
+            data.dropdown.closeList();
+          }
+        });
 
         this.list.appendTo('body').show();
 
