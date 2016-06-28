@@ -129,10 +129,6 @@
               return;
             }
 
-            if (clickObj !== null && clickObj.is('.dropdown-option')) {
-              return;
-            }
-
             if (field.closest('.modal-engaged').length && !field.closest('.modal-body').length) {
               return;
             }
@@ -167,7 +163,7 @@
 
         selects.filter(function() {
           return $(this).data('dropdown') !== undefined;
-        }).data('dropdown').input.on('blur.validate', function(e) {
+        }).data('dropdown').pseudoElem.on('blur.validate', function(e) {
           var selectId = $(this).attr('id');
           selectId = selectId.substring(0, selectId.length - 5);
           self.validate($('#' + selectId), true, e);
@@ -412,14 +408,8 @@
     },
 
     getField: function(field) {
-      if (field.parent().is('.inforTriggerField')) {
-        field = field.parent();
-      } else if (field.is('.inforListBox')) {
-        field = field.next('.inforListBox');
-      } else if (field.is('.inforSwapList')) {
-        field = field.find('.inforSwapListRight div.inforListBox');
-      } else if (field.is('select') && field.data('dropdown') !== undefined) {
-        field = field.data('dropdown').input;
+      if (field.is('select') && field.data('dropdown') !== undefined) {
+        field = field.data('dropdown').pseudoElem;
       }
       return field;
     },
@@ -444,7 +434,7 @@
         return;
       }
 
-      this.showInlineError(field, message);
+      this.showInlineError(loc, message);
     },
 
     showErrorIcon: function(field) {
@@ -486,7 +476,7 @@
 
       //Add error classes to pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect') && field.data('dropdown') !== undefined) {
-        var input = field.data('dropdown').input;
+        var input = field.data('dropdown').pseudoElem;
         input.addClass('error');
       }
 
@@ -525,11 +515,6 @@
           '<pre class="audible">'+ Locale.translate('Error') +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';
-
-      //Do not show message on open list
-      if ($('#dropdown-list').is(':visible')) {
-        return;
-      }
 
       loc.closest('.field, .field-short').find('.formatter-toolbar').addClass('error');
       loc.closest('.field, .field-short').append(markup);
@@ -577,7 +562,7 @@
 
       //Remove error classes from pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect')) {
-        field.data('dropdown').input.removeClass('error').removeAttr('placeholder');
+        field.data('dropdown').pseudoElem.removeClass('error').removeAttr('placeholder');
       }
 
       if (field.parent().is('.editor-container')) {
@@ -668,6 +653,7 @@
           var self = this;
 
           //Check all required fields filled on modal
+
           var allFilled = true;
           field.closest('.modal').find('input.required, textarea.required, select.required').each(function () {
             if (!self.isNotEmpty($(this).val())) {
