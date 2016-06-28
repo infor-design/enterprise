@@ -237,12 +237,18 @@ window.Formatters = {
   },
 
   Dropdown: function (row, cell, value, col) {
-    var formattedValue = value;
+    var formattedValue = value, compareValue, i, option, optionValue;
 
-    if (col.options && value) {
-      for (var i = 0; i < col.options.length; i++) {
-        if (col.options[i].value === value) {
-          formattedValue = col.options[i].label;
+    if (col.options && value !== undefined) {
+      compareValue = col.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
+
+      for (i = 0; i < col.options.length; i++) {
+        option = col.options[i];
+        optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+
+        if (optionValue === compareValue) {
+          formattedValue = option.label;
+          break;
         }
       }
     }
@@ -431,13 +437,15 @@ window.Editors = {
       this.select = this.input;
 
       if (column.options) {
-        var html, opt;
+        var html, opt, optionValue;
+        var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
         for (var i = 0; i < column.options.length; i++) {
           html = $('<option></<option>');
           opt = column.options[i];
+          optionValue = column.caseInsensitive && typeof opt.value === 'string' ? opt.value.toLowerCase() : opt.value;
 
-          if (opt.selected || value === opt.value) {
+          if (opt.selected || compareValue === optionValue) {
             html.attr('selected', 'true');
           }
 
@@ -459,13 +467,15 @@ window.Editors = {
     this.val = function (value) {
       var self = this;
 
-      if (value) {
+      if (value !== undefined) {
+        var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
         this.input.val(value);
 
         this.select.find('option').each(function () {
-          var opt = $(this);
+          var opt = $(this), valueAttr = opt.attr('value');
+          var optionValue = column.caseInsensitive && typeof valueAttr === 'string' ? valueAttr.toLowerCase() : valueAttr;
 
-          if (opt.attr('value') === value) {
+          if (optionValue === compareValue) {
             opt.attr('selected', 'true');
             self.input.val(opt.text());
           }
@@ -475,7 +485,7 @@ window.Editors = {
       var selected = this.select.find(':selected'),
         val = selected.attr('value');
 
-      if (!val) {
+      if (val === undefined) {
         val = selected.text();
       }
 
