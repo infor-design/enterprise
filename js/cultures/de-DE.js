@@ -223,7 +223,7 @@
       'PageOf': {id: 'PageOf', value: 'Seite {0} von {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Sie befinden sich auf Seite ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Einfügen', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Das Kennwort muss die folgenden Bedingungen erfüllen</strong><ul><li>Es muss mindestens 10 umfassen</li><li>Es muss mindestens einen Großbuchstaben enthalten</li><li>Es muss mindestens einen Kleinbuchstaben enthalten</li><li>Es muss ein Sonderzeichen enthalten</li><li>Es darf Ihren Benutzernamen nicht enthalten</li><li>Es darf kein zuvor verwendetes Kennwort sein</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Das Kennwort muss die folgenden Bedingungen erfüllen</strong><br>Es muss mindestens 10 umfassen<br>Es muss mindestens einen Großbuchstaben enthalten<br>Es muss mindestens einen Kleinbuchstaben enthalten<br>Es muss ein Sonderzeichen enthalten<br>Es darf Ihren Benutzernamen nicht enthalten<br>Es darf kein zuvor verwendetes Kennwort sein<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Kennwörter müssen übereinstimmen', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Höchstwert', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Spalten individualisieren', comment: 'Customize Columns in a Grid'},

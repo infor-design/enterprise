@@ -208,7 +208,7 @@
       'PageOf': {id: 'PageOf', value: 'หน้า {0} จาก {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'ขณะนี้คุณอยู่บนเพจ ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'วาง', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>รหัสผ่านต้อง:</strong><ul><li>มีความยาวตัวอักษรอย่างน้อย 10 ตัว</li><li>มีอักษรพิมพ์ใหญ่อย่างน้อยหนึ่งตัว</li><li>มีอักษรพิมพ์เล็กอย่างน้อยหนึ่งตัว</li><li><strong>ประกอบด้วยอักขระพิเศษหนึ่งตัว</strong></li><li>ไม่มีชื่อผู้ใช้ของคุณ</li><li>ไม่สามารถใช้รหัสผ่านที่เคยใช้งานก่อนหน้า</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>รหัสผ่านต้อง:</strong><br>มีความยาวตัวอักษรอย่างน้อย 10 ตัว<br>มีอักษรพิมพ์ใหญ่อย่างน้อยหนึ่งตัว<br>มีอักษรพิมพ์เล็กอย่างน้อยหนึ่งตัว<br><strong>ประกอบด้วยอักขระพิเศษหนึ่งตัว</strong><br>ไม่มีชื่อผู้ใช้ของคุณ<br>ไม่สามารถใช้รหัสผ่านที่เคยใช้งานก่อนหน้า<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'รหัสผ่านต้องตรงกัน', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'สูงสุด', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'ปรับแต่งคอลัมน์', comment: 'Customize Columns in a Grid'},

@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: '{0} puslapis iš {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Dabar esate puslapyje ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Įklijuoti', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Slaptažodyje turi:</strong><ul><li>būti bent 10 simbolių;</li><li>būti bent vienas simbolis didžiąja raide;</li><li>būti bent vienas simbolis mažąja raide;</li><li><strong>būti vienas specialusis simbolis;</strong></li><li>nebūti jūsų vartotojo vardo;</li><li>nebūti jūsų anksčiau naudoto slaptažodžio.</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Slaptažodyje turi:</strong><br>būti bent 10 simbolių;<br>būti bent vienas simbolis didžiąja raide;<br>būti bent vienas simbolis mažąja raide;<br><strong>būti vienas specialusis simbolis;</strong><br>nebūti jūsų vartotojo vardo;<br>nebūti jūsų anksčiau naudoto slaptažodžio.<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Slaptažodžiai turi sutapti', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Didžiausia vertė', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Pritaikyti stulpelius', comment: 'Customize Columns in a Grid'},

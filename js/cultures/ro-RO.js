@@ -208,7 +208,7 @@
       'PageOf': {id: 'PageOf', value: 'Pagina {0} din {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Sunteţi la pagina ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Lipire', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Parola trebuie:</strong><ul><li>să fie alcătuită din cel puţin 10 caractere</li><li>să conţină cel puţin un caracter majusculă</li><li>să conţină cel puţin un caracter minusculă</li><li><strong>să conţină un caracter special</strong></li><li>să nu conţină numele tău de utilizator</li><li>să nu fie o parolă utilizată anterior</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Parola trebuie:</strong><br>să fie alcătuită din cel puţin 10 caractere<br>să conţină cel puţin un caracter majusculă<br>să conţină cel puţin un caracter minusculă<br><strong>să conţină un caracter special</strong><br>să nu conţină numele tău de utilizator<br>să nu fie o parolă utilizată anterior<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Parola trebuie să se potrivească', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Vârf', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Personalizare coloane', comment: 'Customize Columns in a Grid'},

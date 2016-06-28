@@ -222,7 +222,7 @@
       'PageOf': {id: 'PageOf', value: 'Página {0} de {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Se encuentra en la página ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Pegar', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>La contraseña debe:</strong><ul><li>Tener como mínimo 10 caracteres</li><li>Tener al menos una mayúscula</li><li>Tener al menos una minúscula</li><li>Incluir un carácter especial</li><li>Evitar el nombre del usuario</li><li>Evitar una contraseña ya utilizada</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>La contraseña debe:</strong><br>Tener como mínimo 10 caracteres<br>Tener al menos una mayúscula<br>Tener al menos una minúscula<br>Incluir un carácter especial<br>Evitar el nombre del usuario<br>Evitar una contraseña ya utilizada<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Las contraseñas deben coincidir', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Máximo', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Personalizar columnas', comment: 'Customize Columns in a Grid'},

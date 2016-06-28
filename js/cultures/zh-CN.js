@@ -221,7 +221,7 @@
       'PageOf': {id: 'PageOf', value: '第 {0} 页，共 {1} 页', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: '您正在页面 ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: '粘贴', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"密码必须:</strong><ul><li>至少有 10 个字符</li><li>至少有一个大写字符</li><li>至少有一个小写字符</li><li>包含一个特殊字符</li><li>不包含您的用户名</li><li>不能是先前使用过的密码</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"密码必须:</strong><br>至少有 10 个字符<br>至少有一个大写字符<br>至少有一个小写字符<br>包含一个特殊字符<br>不包含您的用户名<br>不能是先前使用过的密码<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: '密码必须匹配', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: '峰值', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: '列个性化设置', comment: 'Customize Columns in a Grid'},

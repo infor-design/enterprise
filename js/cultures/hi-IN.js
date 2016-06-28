@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'पृष्ठ {0} का {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'आप वर्तमान में पृष्ठ पर हैं ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'चिपकाएँ', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>पासवर्ड होना चाहिए:</strong><ul><li>कम से कम 10 अक्षर लंबा</li><li>कम से कम एक अपर केस अक्षर है</li><li>कम से कम एक लोअर केस अक्षर हैr</li><li><strong>एक विशेष अक्षर शामिल</strong></li><li>आपका उपयोगकर्ता नाम शामिल नहीं</li><li>पहले से उपयोग किया पासवर्ड नहीं हो सकता</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>पासवर्ड होना चाहिए:</strong><br>कम से कम 10 अक्षर लंबा<br>कम से कम एक अपर केस अक्षर है<br>कम से कम एक लोअर केस अक्षर हैr<br><strong>एक विशेष अक्षर शामिल</strong><br>आपका उपयोगकर्ता नाम शामिल नहीं<br>पहले से उपयोग किया पासवर्ड नहीं हो सकता<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'पासवर्ड मिलान होना चाहिए', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'पीक', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'स्तंभ वैयक्तिकरण करें', comment: 'Customize Columns in a Grid'},

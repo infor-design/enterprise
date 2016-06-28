@@ -208,7 +208,7 @@
       'PageOf': {id: 'PageOf', value: 'Trang {0} / {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Bạn hiện đang trên trang ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Dán', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Mật khẩu phải:</strong><ul><li>Dài ít nhất 10 ký tự</li><li>Có ít nhất một ký tự viết hoa</li><li>Có ít nhất một ký tự viết thường</li><li><strong>Chứa một ký tự đặc biệt</strong></li><li>Không chứa tên người dùng của bạn</li><li>Không thể là mật khẩu đã sử dụng trước đó</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Mật khẩu phải:</strong><br>Dài ít nhất 10 ký tự<br>Có ít nhất một ký tự viết hoa<br>Có ít nhất một ký tự viết thường<br><strong>Chứa một ký tự đặc biệt</strong><br>Không chứa tên người dùng của bạn<br>Không thể là mật khẩu đã sử dụng trước đó<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Mật khẩu phải khớp', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Cao nhất', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Cá nhân hóa cột', comment: 'Customize Columns in a Grid'},

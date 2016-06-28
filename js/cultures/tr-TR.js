@@ -208,7 +208,7 @@
       'PageOf': {id: 'PageOf', value: 'Sayfa {0} / {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Şu anda bu sayfadasınız: ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Yapıştır', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Parola:</strong><ul><li>En az 10 karakter uzunluğunda olmalıdır</li><li>En az bir büyük harf karakteri içermelidir</li><li>En az bir küçük harf karakteri içermelidir</li><li><strong>Bir özel karakter içermelidir</strong></li><li>Kullanıcı adınızı içermemelidir</li><li>Daha önce kullanılan bir parola olamaz</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Parola:</strong><br>En az 10 karakter uzunluğunda olmalıdır<br>En az bir büyük harf karakteri içermelidir<br>En az bir küçük harf karakteri içermelidir<br><strong>Bir özel karakter içermelidir</strong><br>Kullanıcı adınızı içermemelidir<br>Daha önce kullanılan bir parola olamaz<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Parola eşleşmelidir', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Tepe', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Sütunları Kişiselleştir', comment: 'Customize Columns in a Grid'},

@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'Stránka {0} z {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Jste na stránce ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Vložit', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Pravidla pro hesla:</strong><ul><li>Délka alespoň 10 znaků</li><li>Alespoň jedno velké písmeno</li><li>Alespoň jedno malé písmeno</li><li><strong>Alespoň jeden speciální znak</strong></li><li>Nesmí obsahovat vaše uživatelské jméno</li><li>Nesmí se shodovat s dříve použitým heslem</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Pravidla pro hesla:</strong><br>Délka alespoň 10 znaků<br>Alespoň jedno velké písmeno<br>Alespoň jedno malé písmeno<br><strong>Alespoň jeden speciální znak</strong><br>Nesmí obsahovat vaše uživatelské jméno<br>Nesmí se shodovat s dříve použitým heslem<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Heslo se musí shodovat', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Špička', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Přizpůsobit sloupce', comment: 'Customize Columns in a Grid'},

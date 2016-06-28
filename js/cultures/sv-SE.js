@@ -221,7 +221,7 @@
       'PageOf': {id: 'PageOf', value: 'Sida {0} av {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Du är på sida ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Klistra in', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class=”password-Tooltip”><strong>Lösenordet:</strong><ul><li>Måste bestå av minst 10 tecken</li><li>Måste innehålla minst en versal bokstav</li><li>Måste innehålla minst en gemen bokstav</li><li>Måste innehålla minst ett specialtecken</li><li>Får inte innehålla ditt användarnamn</li><li>Får inte vara ett lösenord som använts tidigare</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<div class=”password-Tooltip”><strong>Lösenordet:</strong><br>Måste bestå av minst 10 tecken<br>Måste innehålla minst en versal bokstav<br>Måste innehålla minst en gemen bokstav<br>Måste innehålla minst ett specialtecken<br>Får inte innehålla ditt användarnamn<br>Får inte vara ett lösenord som använts tidigare<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Lösenorden måste stämma överens', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Topp', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Anpassa kolumner', comment: 'Customize Columns in a Grid'},

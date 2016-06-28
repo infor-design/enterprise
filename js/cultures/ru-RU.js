@@ -221,7 +221,7 @@
       'PageOf': {id: 'PageOf', value: 'Страница {0} из {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Текущая страница: ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Вставить', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Пароль должен соответствовать следующим требованиям:</strong><ul><li>Состоять не менее чем из 10 символов</li><li>Содержать по крайней мере одну прописную букву</li><li>Содержать по крайней мере одну строчную букву</li><li>Содержать один специальный символ</li><li>Не содержать имя пользователя</li><li>Не совпадать с предыдущим паролем</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Пароль должен соответствовать следующим требованиям:</strong><br>Состоять не менее чем из 10 символов<br>Содержать по крайней мере одну прописную букву<br>Содержать по крайней мере одну строчную букву<br>Содержать один специальный символ<br>Не содержать имя пользователя<br>Не совпадать с предыдущим паролем<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Пароль должен совпадать', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Максимальное значение', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Персонализировать столбцы', comment: 'Customize Columns in a Grid'},

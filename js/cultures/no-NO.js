@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'Side {0} av {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Du er for øyeblikket på side ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Lim inn', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Passord må:</strong><ul><li>være minst 10 tegn</li><li>ha minst én stor bokstav</li><li>ha minst én liten bokstav</li><li><strong>inneholde ett spesialtegn</strong></li><li>ikke inneholde brukernavnet</li><li>ikke være et tidligere brukt passord</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Passord må:</strong><br>være minst 10 tegn<br>ha minst én stor bokstav<br>ha minst én liten bokstav<br><strong>inneholde ett spesialtegn</strong><br>ikke inneholde brukernavnet<br>ikke være et tidligere brukt passord<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Passord må stemme overens', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Topp', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Egendefiner kolonner', comment: 'Customize Columns in a Grid'},

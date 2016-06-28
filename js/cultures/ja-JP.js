@@ -222,7 +222,7 @@
       'PageOf': {id: 'PageOf', value: 'ページ {0} / {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: '現在表示中のページ ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: '貼り付け', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>>パスワードは次の要件を満たす必要があります。</strong><ul><li>長さは 10 文字以上にする</li><li>大文字を最低 1 字含む</li><li>小文字を最低 1 字を含む</li><li>特殊文字を 1 字を含む</li><li>自分のユーザー名を含まない</li><li>C以前に使用したパスワードでない</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>>パスワードは次の要件を満たす必要があります。</strong><br>長さは 10 文字以上にする<br>大文字を最低 1 字含む<br>小文字を最低 1 字を含む<br>特殊文字を 1 字を含む<br>自分のユーザー名を含まない<br>C以前に使用したパスワードでない<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'パスワードは一致する必要があります', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'ピーク', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: '列の個人用設定', comment: 'Customize Columns in a Grid'},

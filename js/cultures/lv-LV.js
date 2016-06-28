@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: '{0}. lapa no {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Pašlaik Jūs esat uz { }. lapas ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Ielīmēt', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Parolei jāsatur:</strong><ul><li>vismaz 10 rakstzīmes;</li><li>vismaz vienu lielu rakstzīmi;</li><li>vismaz vienu mazu rakstzīmi;</li><li><strong>vienu speciālu rakstzīmi;</strong></li><li>nevar saturēt Jūsu lietotājvārdu;</li><li>nevar izmantot iepriekš lietoto paroli.</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Parolei jāsatur:</strong><br>vismaz 10 rakstzīmes;<br>vismaz vienu lielu rakstzīmi;<br>vismaz vienu mazu rakstzīmi;<br><strong>vienu speciālu rakstzīmi;</strong><br>nevar saturēt Jūsu lietotājvārdu;<br>nevar izmantot iepriekš lietoto paroli.<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Parolei jāsakrīt', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Maksimālais', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Personalizēt slejas', comment: 'Customize Columns in a Grid'},

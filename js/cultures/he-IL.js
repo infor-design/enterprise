@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'דף {0} מתוך {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'אתה נמצא כרגע בדף ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'הדבק', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>הסיסמה חייבת:</strong><ul><li>להיות באורך 10 תווים לפחות</li><li>להכיל לפחות אות רישית אחת</li><li>להכיל לפחות אות קטנה אחת</li><li><strong>להכיל תו מיוחד אחד</strong></li><li>לא להכיל את שם המשתמש שלך</li><li>אינה יכולה להיות סיסמה שבה השתמשת בעבר</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>הסיסמה חייבת:</strong><br>להיות באורך 10 תווים לפחות<br>להכיל לפחות אות רישית אחת<br>להכיל לפחות אות קטנה אחת<br><strong>להכיל תו מיוחד אחד</strong><br>לא להכיל את שם המשתמש שלך<br>אינה יכולה להיות סיסמה שבה השתמשת בעבר<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'הסיסמה חייבת להיות תואמת', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'שיא', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'התאם אישית עמודות', comment: 'Customize Columns in a Grid'},

@@ -239,7 +239,7 @@
       'PageOf': {id: 'PageOf', value: 'صفحة {0} من {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'أنت موجود حالياً بالصفحة ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'لصق', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>كلمة المرور:</strong><ul><li>يجب ألا تقل عن 10 أحرف</li><li>تضم حرف كبير واحد على الأقل</li><li>وحرف صغير واحد على الأقل</li><li><strong>وتضم حرف واحد خاص</strong></li><li>لا يحتوي على اسم المستخدم</li><li>لا يمكن أن يكون كلمة مرور مستخدمة من قبل</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>كلمة المرور:</strong><br>يجب ألا تقل عن 10 أحرف<br>تضم حرف كبير واحد على الأقل<br>وحرف صغير واحد على الأقل<br><strong>وتضم حرف واحد خاص</strong><br>لا يحتوي على اسم المستخدم<br>لا يمكن أن يكون كلمة مرور مستخدمة من قبل<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'يجب أن تتطابق كلمات المرور', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'ذروة', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'تخصيص الأعمدة', comment: 'Customize Columns in a Grid'},

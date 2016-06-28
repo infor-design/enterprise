@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: '{0}/{1}페이지', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: '현재 페이지 ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: '붙여넣기', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>암호는 다음 요건을 충족해야 합니다.</strong><ul><li>최소 10자</li><li>적어도 하나의 대문자 포함</li><li>적어도 하나의 소문자 포함</li><li><strong>하나의 특수 문자 포함</strong></li><li>사용자 이름은 포함할 수 없음</li><li>이전에 사용한 암호는 사용할 수 없음</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>암호는 다음 요건을 충족해야 합니다.</strong><br>최소 10자<br>적어도 하나의 대문자 포함<br>적어도 하나의 소문자 포함<br><strong>하나의 특수 문자 포함</strong><br>사용자 이름은 포함할 수 없음<br>이전에 사용한 암호는 사용할 수 없음<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: '암호가 일치해야 합니다.', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: '최고점', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: '열 개인 설정', comment: 'Customize Columns in a Grid'},

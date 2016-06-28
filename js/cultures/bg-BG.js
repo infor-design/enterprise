@@ -210,7 +210,7 @@
       'PageOf': {id: 'PageOf', value: 'Страница {0} от {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'В момента сте на страница ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Поставяне', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Паролата трябва:</strong><ul><li>Да бъде най-малко дълга 10 символа</li><li>Да има най-малко една главна буква</li><li>Да има най-малко една малка буква</li><li><strong>Да съдържа един специален символ</strong></li><li>Да не съдържа потребителското Ви име</li><li>Не може да бъде предишно използвана парола</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Паролата трябва:</strong><br>Да бъде най-малко дълга 10 символа<br>Да има най-малко една главна буква<br>Да има най-малко една малка буква<br><strong>Да съдържа един специален символ</strong><br>Да не съдържа потребителското Ви име<br>Не може да бъде предишно използвана парола<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Паролата трябва да съвпада', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Пик', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Персонализиране на колони', comment: 'Customize Columns in a Grid'},

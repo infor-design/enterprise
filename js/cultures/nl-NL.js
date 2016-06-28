@@ -222,7 +222,7 @@
       'PageOf': {id: 'PageOf', value: 'Pagina {0} van {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'U bent nu op pagina ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Plakken', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Wachtwoord moet aan de volgende criteria voldoen:</strong><ul><li>Ten minste 10 tekens lang zijn</li><li>Ten minste één hoofdletter bevatten</li><li>Ten minste één kleine letter bevatten</li><li>Eén speciaal teken bevatten</li><li>Mag niet uw gebruikersnaam bevatten</li><li>Mag geen eerder gebruikt wachtwoord zijn</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Wachtwoord moet aan de volgende criteria voldoen:</strong><br>Ten minste 10 tekens lang zijn<br>Ten minste één hoofdletter bevatten<br>Ten minste één kleine letter bevatten<br>Eén speciaal teken bevatten<br>Mag niet uw gebruikersnaam bevatten<br>Mag geen eerder gebruikt wachtwoord zijn<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Wachtwoord moet overeenkomen', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Maximum', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Kolommen personaliseren', comment: 'Customize Columns in a Grid'},

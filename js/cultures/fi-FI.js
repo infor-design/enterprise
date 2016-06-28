@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'Sivu {0}/{1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Olet tällä hetkellä sivulla ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Liitä', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Salasanan vaatimukset:</strong><ul><li>Vähintään 10 merkkiä pitkä</li><li>Vähintään yksi iso kirjain</li><li>Vähintään yksi pieni kirjain</li><li><strong>Vähintään yksi erikoismerkki</strong></li><li>Ei saa sisältää käyttäjätunnustasi</li><li>Ei voi olla aiemmin käytetty salasana</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Salasanan vaatimukset:</strong><br>Vähintään 10 merkkiä pitkä<br>Vähintään yksi iso kirjain<br>Vähintään yksi pieni kirjain<br><strong>Vähintään yksi erikoismerkki</strong><br>Ei saa sisältää käyttäjätunnustasi<br>Ei voi olla aiemmin käytetty salasana<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Salasanan on täsmättävä', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Huippu', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Mukauta sarakkeet', comment: 'Customize Columns in a Grid'},

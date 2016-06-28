@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'Halaman {0} dari {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Saat ini Anda berada di halaman ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Tempel', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Kata Sandi harus:</strong><ul><li>Paling sedikit 10 karakter</li><li>Memiliki paling sedikit satu karakter huruf besar</li><li>Memiliki paling sedikit satu karakter huruf kecil</li><li><strong>Berisi tau karakter khusus</strong></li><li>Tidak berisi nama pengguna Anda</li><li>Bukan kata sandi yang digunakan sebelumnya</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Kata Sandi harus:</strong><br>Paling sedikit 10 karakter<br>Memiliki paling sedikit satu karakter huruf besar<br>Memiliki paling sedikit satu karakter huruf kecil<br><strong>Berisi tau karakter khusus</strong><br>Tidak berisi nama pengguna Anda<br>Bukan kata sandi yang digunakan sebelumnya<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Kata Sandi harus cocok', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Puncak', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Personalisasi Kolom', comment: 'Customize Columns in a Grid'},

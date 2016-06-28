@@ -208,7 +208,7 @@
       'PageOf': {id: 'PageOf', value: 'Lehekülg {0}/{1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Asute praegu leheküljel ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Kleebi', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Parool peab:</strong> <ul><li>olema vähemalt kümne märgi pikkune;</li><li>sisaldama vähemalt ühte suurtähte;</li><li>sisaldama vähemalt ühte väiketähte;</li><li><strong>sisaldama vähemalt ühte erimärki;</strong></li><li>mitte sisaldama teie kasutajanime;</li><li>mitte olema üks varem kasutatud paroolidest.</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Parool peab:</strong> <br>olema vähemalt kümne märgi pikkune;<br>sisaldama vähemalt ühte suurtähte;<br>sisaldama vähemalt ühte väiketähte;<br><strong>sisaldama vähemalt ühte erimärki;</strong><br>mitte sisaldama teie kasutajanime;<br>mitte olema üks varem kasutatud paroolidest.<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Parool peab olema sama', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Tipp', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Isikupärasta veerud', comment: 'Customize Columns in a Grid'},

@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'Σελίδα {0} από {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Αυτήν τη στιγμή βρίσκεστε στη σελίδα ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Επικόλληση', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Ο κωδικός πρόσβασης πρέπει:</strong><ul><li>Να έχει τουλάχιστον 10 χαρακτήρες</li><li>Να έχει τουλάχιστον έναν κεφαλαίο χαρακτήρα</li><li>Να έχει τουλάχιστον έναν πεζό χαρακτήρα</li><li><strong>Να περιέχει έναν ειδικό χαρακτήρα</strong></li><li>Να μην περιέχει το όνομα χρήστη σας</li><li>Να μην είναι κωδικός πρόσβασης που έχετε χρησιμοποιήσει ήδη</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Ο κωδικός πρόσβασης πρέπει:</strong><br>Να έχει τουλάχιστον 10 χαρακτήρες<br>Να έχει τουλάχιστον έναν κεφαλαίο χαρακτήρα<br>Να έχει τουλάχιστον έναν πεζό χαρακτήρα<br><strong>Να περιέχει έναν ειδικό χαρακτήρα</strong><br>Να μην περιέχει το όνομα χρήστη σας<br>Να μην είναι κωδικός πρόσβασης που έχετε χρησιμοποιήσει ήδη<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Ο κωδικός πρόσβασης πρέπει να συμφωνεί', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Κορύφωση', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Εξατομίκευση στηλών', comment: 'Customize Columns in a Grid'},

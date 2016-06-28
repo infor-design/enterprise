@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: '{0}./{1} oldal', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Jelenleg ezen az oldalon van: ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Beszúrás', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>A jelszó:</strong><ul><li>legalább 10 karakterből álljon,</li><li>tartalmazzon legalább egy nagybetűt,</li><li>tartalmazzon legalább egy kisbetűt,</li><li><strong>tartalmazzon legalább egy speciális karaktert,</strong></li><li>nem tartalmazhatja a felhasználónevet,</li><li>nem lehet korábban már használt jelszó.</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>A jelszó:</strong><br>legalább 10 karakterből álljon,<br>tartalmazzon legalább egy nagybetűt,<br>tartalmazzon legalább egy kisbetűt,<br><strong>tartalmazzon legalább egy speciális karaktert,</strong><br>nem tartalmazhatja a felhasználónevet,<br>nem lehet korábban már használt jelszó.<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'A jelszónak és a jelszó megerősítésének egyeznie kell', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Csúcsérték', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Oszlopok testreszabása', comment: 'Customize Columns in a Grid'},

@@ -209,7 +209,7 @@
       'PageOf': {id: 'PageOf', value: 'Stranica {0} od {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Trenutačno ste na stranici ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Zalijepi', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<div class="password-Tooltip"><strong>Lozinka:</strong><ul><li>mora sadržavati najmanje 10 znakova</li><li>mora sadržavati najmanje jedno veliko slovo</li><li>mora sadržavati najmanje jedno malo slovo</li><li><strong>mora sadržavati jedan poseban znak</strong></li><li>ne smije sadržavati vaše korisničko ime</li><li>ne smije biti lozinka koja se već upotrebljavala</li></ul></div>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>Lozinka:</strong><br>mora sadržavati najmanje 10 znakova<br>mora sadržavati najmanje jedno veliko slovo<br>mora sadržavati najmanje jedno malo slovo<br><strong>mora sadržavati jedan poseban znak</strong><br>ne smije sadržavati vaše korisničko ime<br>ne smije biti lozinka koja se već upotrebljavala<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Lozinka mora odgovarati', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Vrh', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Personaliziraj stupce', comment: 'Customize Columns in a Grid'},
