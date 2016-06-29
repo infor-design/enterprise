@@ -341,12 +341,12 @@
 
           // Set default values based on what's retrieved from the Timepicker's input field.
           hourSelect.val(initValues.hours);
-          hourSelect.data('dropdown').input.val(initValues.hours);
+          hourSelect.data('dropdown').pseudoElem.find('span').text(initValues.hours);
           minuteSelect.val(initValues.minutes);
-          minuteSelect.data('dropdown').input.val(initValues.minutes);
+          minuteSelect.data('dropdown').pseudoElem.find('span').text(initValues.minutes);
           if (!self.is24HourFormat()) {
             periodSelect.val(initValues.period);
-            periodSelect.data('dropdown').input.val(initValues.period);
+            periodSelect.data('dropdown').pseudoElem.find('span').text(initValues.period);
           }
 
           $(this).find('#timepicker-hours-shdo').focus();

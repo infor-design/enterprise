@@ -44,7 +44,40 @@ The project is a simple node project using SASS and Grunt with Grunt Watch and L
 --- | --- | --- | --- | --- |
 IE 9+ ✔ | Latest ✔ | Latest ✔ | No Tested ✔ |No Tested ✔ |
 
-# Getting the Code
+
+# Running the Development Project
+
+## Install
+* Install nodejs as paying attention to your OS directions: http://nodejs.org/
+* Install gruntjs: http://gruntjs.com/ by running the command (`npm install -g grunt-cli`)
+
+## Get The Code
+
+* Clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
+* Move into your new repo folder: `cd controls`
+* Then  `npm install` to install node package dependencies. On mac you may need `sudo npm install` as some packages require elevated permissions.
+* For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
+
+
+## Running The App
+* `cd` into project folder
+* Run `grunt` to compile initial assets
+* Run `node server` to start the web server
+* Make a new terminal window and cd into project folder and run `grunt watch`
+* Go to `http://localhost:4000/`
+* Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
+
+## Running The Unit Tests
+
+* Run the command: `./node_modules/.bin/intern-client config=test2/intern.local.unit`
+
+## Running The Functional Tests
+* Make sure selenium-standalone is installed by running `selenium-standalone start` once
+* Make sure selenium-standalone is started by running `selenium-standalone start`
+* Run the command: `./node_modules/.bin/intern-runner config=test2/intern.local.functional`
+* Note grunt tasks in the works....
+
+# Getting the Code into your project
 
 ## Npm
 This node module is hosted on a private repo [npm.infor.com](http://npm.infor.com:4873). To be able to install it in your project you need to tell npm on your system to fetch packages with the '@infor' scope from the correct registry.
@@ -87,37 +120,6 @@ Run the following to see the versions
 ```bash
 npm info @infor/sohoxi dist-tags
 ```
-
-# Running the Development Project
-
-## Install
-* Install nodejs as paying attention to your OS directions: http://nodejs.org/
-* Install gruntjs: http://gruntjs.com/ by running the command (`npm install -g grunt-cli`)
-
-## Get The Code
-
-* Clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
-* Move into your new repo folder: `cd controls`
-* Then  `npm install` to install node package dependencies. On mac you may need `sudo npm install` as some packages require elevated permissions.
-* For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
-
-
-## Running The App
-* `cd` into project folder and run `node server` to start the web server
-* Run `grunt` to compile initial assests
-* Make a new terminal window and cd into project folder and run `grunt watch`
-* Go to `http://localhost:4000/`
-* Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
-
-## Running The Unit Tests
-
-* Run the command: `./node_modules/.bin/intern-client config=test2/intern.local.unit`
-
-## Running The Functional Tests
-* Make sure selenium-standalone is installed by running `selenium-standalone start` once
-* Make sure selenium-standalone is started by running `selenium-standalone start`
-* Run the command: `./node_modules/.bin/intern-runner config=test2/intern.local.functional`
-* Note grunt tasks in the works....
 
 # Contributing to Soho XI
 
