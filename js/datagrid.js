@@ -1393,17 +1393,9 @@ $.fn.datagrid = function(options) {
         self.tableBody = $('<tbody></tbody>');
         self.table.append(self.tableBody);
       }
-
       //Save the height during render
       self.tableHeight = self.tableBody.height();
       self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
-
-      //Save prev widths - to avoid glitch during sort refresh
-      var cellWidths = [];
-      self.tableBody.find('tr:first td').each(function (i) {
-        cellWidths[i] = $(this).outerWidth();
-      });
-
       self.tableBody.empty();
 
       for (var i = 0; i < self.settings.dataset.length; i++) {
@@ -1485,7 +1477,6 @@ $.fn.datagrid = function(options) {
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
              (col.id === 'rowStatus' && self.settings.dataset[i].rowStatus && self.settings.dataset[i].rowStatus.tooltip ? ' title="' + self.settings.dataset[i].rowStatus.tooltip + '"' : '') +
-             //(cellWidths[i] ? ' style="width: '+cellWidths[i]+'px;" ' : '') +
              (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
              '><div class="datagrid-cell-wrapper">';
 
