@@ -1396,6 +1396,7 @@ $.fn.datagrid = function(options) {
       //Save the height during render
       self.tableHeight = self.tableBody.height();
       self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
+
       self.tableBody.empty();
 
       for (var i = 0; i < self.settings.dataset.length; i++) {
