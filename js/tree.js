@@ -467,8 +467,9 @@
         for (var i = 0; i < dataset.length; i++) {
           self.addNode(dataset[i], 'bottom');
         }
-        self.loading = false;
 
+        self.loading = false;
+        self.syncDataset(self.element);
       },
 
       //Functions to Handle Internal Data Store
