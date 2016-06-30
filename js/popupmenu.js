@@ -755,7 +755,7 @@
 
         wrapper.css({
           'left': li.position().left + li.outerWidth(),
-          'top': (parseInt(li.position().top) - 11) + 'px'
+          'top': (parseInt(li.position().top) - 5) + 'px'
         }).children('.popupmenu').addClass('is-open');
 
         //Handle Case where the menu is off to the right
