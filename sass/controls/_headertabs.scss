@@ -13,6 +13,7 @@
     > .tab {
       color: $header-tab-normal-color;
       font-weight: bold;
+      overflow: hidden;
 
       &:before {
         background-color: rgba($header-tab-normal-color, 0);
@@ -20,8 +21,12 @@
       }
 
       a {
+        display: block;
         line-height: 12px;
+        overflow: hidden;
         padding: 15px 11px 13px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       &:first-child {
