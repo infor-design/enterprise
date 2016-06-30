@@ -11,7 +11,7 @@
     @include font-size(14);
     color: $font-color-extrahighcontrast;
     display: inline-block;
-    text-indent: 42px;
+    padding-left: 42px;
   }
 
   //Invisible Input
@@ -27,7 +27,7 @@
     ~ label {
       @include no-select();
       cursor: pointer;
-      line-height: 15px;
+      line-height: 16px;
       position: relative;
 
       &:hover {
@@ -141,6 +141,11 @@ html[dir='rtl'] {
       width: 0;
     }
 
+    label {
+      padding-left: 0;
+      padding-right: 42px;
+    }
+
     // Unchecked Styling
     input:empty {
       margin-left: 0;
@@ -163,7 +168,7 @@ html[dir='rtl'] {
     input:checked ~ .label-text:after,
     input:checked ~ label:after {
       left: auto;
-      right: 29px;
+      right: 15px;
     }
 
   }
