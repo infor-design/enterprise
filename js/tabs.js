@@ -903,6 +903,10 @@
         return this.element.hasClass('vertical');
       },
 
+      isHeaderTabs: function() {
+        return this.element.hasClass('header-tabs');
+      },
+
       isHidden: function() {
         return this.element.is(':hidden');
       },
@@ -1448,6 +1452,10 @@
           this.adjustModuleTabs();
         }
 
+        if (this.isHeaderTabs()) {
+          this.adjustHeaderTabs();
+        }
+
         if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
           self.element.addClass('has-more-button');
         } else {
@@ -1455,6 +1463,37 @@
         }
         self.setMoreActive();
 
+      },
+
+      adjustHeaderTabs: function() {
+        var self = this,
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(.add-tab-button)'),
+          tabContainerW = this.tablist.width(),
+          totalSize = 0;
+
+        sizeableTabs.add(this.moreButton).removeAttr('style');
+
+        // Remove overflowed tabs
+        sizeableTabs.each(function() {
+          var t = $(this),
+            width = t.outerWidth(true);
+
+          if (self.isTabOverflowed(t)) {
+            sizeableTabs = sizeableTabs.not(t);
+          }
+
+          // Don't let the individual tabs be larger than the tabs container
+          if (width > tabContainerW) {
+            width = tabContainerW;
+          }
+
+          // Set each tab to an explicitly-defined width so we can properly wrap/overflow their text.
+          t.width(width);
+          totalSize = totalSize + width;
+        });
+
+        this.adjustSpilloverNumber();
+        return this;
       },
 
       adjustModuleTabs: function() {
@@ -1797,7 +1836,7 @@
         if (target.is('.tab')) {
           paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
           paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
-          width = target.children('a').width() + (paddingLeft*2);
+          width = target/*.children('a')*/.width() /*+ (paddingLeft*2)*/;
 
           // Dirty hack
           if (target.is(':first-child, :last-child')) {
