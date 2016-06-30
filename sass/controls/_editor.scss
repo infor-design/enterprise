@@ -28,7 +28,9 @@
 
     .hyperlink {
       color: $hyperlink-color;
-      -webkit-text-fill-color: $hyperlink-color;
+      // scss-lint:disable ImportantRule
+      -webkit-text-fill-color: $hyperlink-color !important;
+      // scss-lint:enable ImportantRule
     }
   }
 
@@ -137,7 +139,9 @@
 
     .hyperlink {
       color: $hyperlink-color;
-      -webkit-text-fill-color: $hyperlink-color;
+      // scss-lint:disable ImportantRule
+      -webkit-text-fill-color: $hyperlink-color !important;
+      // scss-lint:enable ImportantRule
     }
   }
 
@@ -229,7 +233,9 @@
     height: 20px;
     margin-top: 6px;
     min-width: 18px;
+    // scss-lint:disable ImportantRule
     padding: 0 !important; //overrides some media queries
+    // scss-lint:enable ImportantRule
     text-align: left;
 
     span:not(.audible) {

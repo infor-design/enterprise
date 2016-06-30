@@ -789,7 +789,11 @@
             }
           }
           else {
-            this.element.prepend(alink[0].outerHTML);
+            var self = this;
+            document.execCommand('insertHtml', null, alink[0].outerHTML);
+            setTimeout(function () {
+              self.getCurrentElement().focus();
+            }, 1);
           }
           this.bindAnchorPreview();
         }
