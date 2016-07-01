@@ -1033,10 +1033,13 @@
                 // only relatively recently standardized and is not supported in
                 // some browsers (IE9, for one)
                 var el = document.createElement('div');
+
+                //IE copy will append a p we should remove
+                html = html.replace('<p>', '').replace('</p>', '');
                 el.innerHTML = html;
                 var frag = document.createDocumentFragment(), node, lastNode;
                 while ( (node = el.firstChild) ) {
-                    lastNode = frag.appendChild(node);
+                  lastNode = frag.appendChild(node);
                 }
                 range.insertNode(frag);
 
