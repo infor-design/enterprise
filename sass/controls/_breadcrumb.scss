@@ -68,6 +68,17 @@
   }
 }
 
+//Breadcrumb on a toolbar (see grid example)
+.toolbar .breadcrumb {
+  padding-top: 6px;
+
+  .hyperlink,
+  .current {
+    @include font-size(14);
+    top: 3px;
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
   .breadcrumb {
