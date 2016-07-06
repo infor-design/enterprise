@@ -220,8 +220,10 @@
 
       // Toggle / Open the List
       toggleList: function () {
-        var self = this;
-        if (self.element.is(':disabled')) {
+        var self = this,
+          isMenu =  !!($('#colorpicker-menu').length);
+
+        if (isMenu || self.element.is(':disabled')) {
           return;
         }
 
@@ -265,7 +267,8 @@
 
       // Refresh and Append the Color Menu
       updateColorMenu: function () {
-        var menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
+        var isMenu =  !!($('#colorpicker-menu').length),
+          menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
           currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, '');
 
         //remove from ? to end
@@ -316,10 +319,15 @@
             .attr('title', text +' #'+ value)
             .tooltip();
 
-          menu.append(li);
+          // menu.append(li);
+          if (!isMenu) {
+            menu.append(li);
+          }
         }
 
-        $('body').append(menu);
+        if (!isMenu) {
+          $('body').append(menu);
+        }
       },
 
       enable: function() {
