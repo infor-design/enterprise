@@ -25,6 +25,7 @@
   position: relative;
 
   > .icon {
+    background-color: rgba($white, 0); // IE 10
     fill: $trigger-icon-fill-color;
     height: 14px;
     position: absolute;
