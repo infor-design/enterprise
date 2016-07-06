@@ -283,7 +283,7 @@
             a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li),
             number = settings.colors[i].number,
             num = parseInt(number, 10),
-            text = Locale.translate(settings.colors[i].label) + (settings.colors[i].number || ''),
+            text = (Locale.translate(settings.colors[i].label) || settings.colors[i].label) + (settings.colors[i].number || ''),
             value = settings.colors[i].value,
             isBorder = false,
             regexp = new RegExp('\\b'+ currentTheme +'\\b');
