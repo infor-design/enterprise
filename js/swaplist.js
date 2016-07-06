@@ -140,6 +140,11 @@
 
         // DRAGGABLE ===============================================================================
         self.element
+        .on('mousedown.swaplist', self.dragElements, function(e) {
+          var target = $(e.target).closest('li');
+          target.attr({ 'draggable': $(e.target).is('.draggable') });
+          e.stopPropagation();
+        })
         .onTouchClick('swaplist', self.dragElements)
 
         // Dragstart - initiate dragging
