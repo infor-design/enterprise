@@ -3590,6 +3590,14 @@ $.fn.datagrid = function(options) {
       this.pager.pagingInfo.type = type;
       this.pager.pagingInfo.activePage = 1;
       this.renderPager(this.pager.pagingInfo, type);
+    },
+
+    destroy: function() {
+      //Remove the toolbar, clean the div out and remove the pager
+      this.element.off().empty().removeClass('datagrid-container').unwrap();
+      this.element.prev('.toolbar').remove();
+      this.element.next('.pager-toolbar').remove();
+      $.removeData(this.element[0], pluginName);
     }
 
   };
