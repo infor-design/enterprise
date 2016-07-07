@@ -466,8 +466,7 @@ window.Editors = {
         editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
       }
       this.input.dropdown(editorOptions);
-      this.input = this.input.parent().find('input');
-
+      this.input = this.input.parent().find('div.dropdown');
     };
 
     this.val = function (value) {
@@ -2273,7 +2272,7 @@ $.fn.datagrid = function(options) {
         });
 
       // Implement Editing Commit Functionality
-      body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea', function () {
+      body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function () {
         //Popups are open
         if ($('#calendar-popup, .autocomplete.popupmenu.is-open').is(':visible')) {
           return;
@@ -2736,6 +2735,7 @@ $.fn.datagrid = function(options) {
 
       if (!status) {
         delete this.settings.dataset[idx].rowStatus;
+        this.updateRow(idx);
         return;
       }
 
