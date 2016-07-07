@@ -23,6 +23,7 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
       //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
@@ -55,7 +56,7 @@
             response(res.data, req);
           });
         },
-        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       });
 
   });

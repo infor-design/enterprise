@@ -62,7 +62,7 @@
       columns.push({ id: 'ordered', name: 'Ordered', field: 'ordered', formatter: Formatters.Checkbox});
       columns.push({ id: '', name: 'Actions', field: '', formatter: Formatters.Actions, menuId: 'grid-actions-menu', selected: function(e, a) { console.log(e, a); }});
       columns.push({ id: 'nested', name: 'Nested Prop', field: 'setting.optionOne', formatter: Formatters.Text});
-      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.TextArea, width: 100});
+      //columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Ellipsis, width: 300});
 
       //Init and get the api for the grid
       grid = $('#readonly-datagrid').datagrid({

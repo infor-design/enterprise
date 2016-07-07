@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="twelve columns">
+    <br />
+    <h3>Grid Example: Api</h3>
+    <p>A visual test showing that the grid cannot be hacked by xss and can hold data as script tags.
+     this example works if you see no alerts and you can past the data in the activity column around.</p><br />
+  </div>
+</div>
 
 <div class="row">
   <div class="twelve columns">
@@ -61,23 +69,15 @@
 
         //Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', width: 10, formatter: Formatters.Readonly});
 
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Formatters.Textarea, editor: Editors.Textarea, width: 150});
+        columns.push({ id: 'description', name: 'Description', field: 'description', formatter: Formatters.Ellipsis, editor: Editors.Input, width: 200});
 
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125, align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
           }});
-        columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, align: 'center', formatter: Formatters.Alert, readonly: true, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
-        columns.push({ id: 'portable', name: 'Portable', field: 'portable', width: 60, align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
-        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 125});
-        columns.push({ id: 'action', name: 'Action', field: 'action', width: 125, align: 'center', formatter: Formatters.Dropdown, editor: Editors.Dropdown,
-          options: [{id: 'oh', label: 'On Hold', value: 'oh'}, {id: 'sh', label: 'Shipped', value: 'sh'} , {id: 'ac', label: 'Action', value: 'ac'}]
-          });
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({
@@ -85,17 +85,9 @@
           dataset: data,
           editable: true,
           clickToSelect: false,
-          selectable: 'multiple',
-          toolbar: {keywordFilter: true, results: true}
-        }).on('cellchange', function (e, args) {
-          console.log(e, args);
-        }).on('rowadd', function (e, args) {
-          console.log(e, args);
-        }).on('rowremove', function (e, args) {
-          console.log(e, args);
+          selectable: 'multiple'
         });
 
-        gridApi = $('#datagrid').data('datagrid');
     });
   });
 
@@ -105,4 +97,3 @@
   });
 
 </script>
-

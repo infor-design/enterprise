@@ -84,6 +84,21 @@
           if (settings.returnFocus) {
             settings.returnFocus.focus();
           }
+
+          $(document).off('keypress.message keydown.message');
+        });
+
+        $(document).on('keypress.message keydown.message', function (e) {
+          var keyCode = e.which || e.keyCode;
+
+          if (keyCode === 27) {
+            setTimeout(function () {
+              var modalData = self.message.data('modal');
+              if (modalData !== undefined) {
+                modalData.close();
+              }
+            }, 0);
+          }
         });
 
         if (settings.isError) {

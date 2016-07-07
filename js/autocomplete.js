@@ -27,7 +27,9 @@
         tags: false, //Allows tags to be shown/generated.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
         filterMode: 'startsWith',  // startsWith and contains Supported
-        delay: 300 // delay is the delay between key strokes on the keypad before it thinks you stopped typing
+        delay: 300, // delay is the delay between key strokes on the keypad before it thinks you stopped typing
+        width: null, //width of the auto complete menu
+        offset: null //left or top offset
       },
       settings = $.extend({}, defaults, options);
 
@@ -86,6 +88,10 @@
 
         this.list.css({'height': 'auto', 'width': this.element.outerWidth()}).addClass('autocomplete');
         this.list.empty();
+
+        if (this.settings.width) {
+          this.list.css({'width': this.settings.width});
+        }
 
         // Pre-compile template.
         // Try to get an element first, and use its contents.
@@ -181,6 +187,8 @@
             self.element.removeClass('is-open');
           });
 
+
+
         this.element.trigger('populated', [matchingOptions]);
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
@@ -221,6 +229,14 @@
 
           self.element.val(text).focus();
         });
+
+        if (this.settings.offset && this.settings.offset.left) {
+          this.list.parent().css('left', parseInt(this.list.parent().css('left')) + this.settings.offset.left + 'px');
+        }
+
+        if (this.settings.offset && this.settings.offset.top) {
+          this.list.parent().css('top', parseInt(this.list.parent().css('top')) + this.settings.offset.top + 'px');
+        }
 
         this.noSelect = true;
         this.element.trigger('listopen', [items]);

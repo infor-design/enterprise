@@ -1,0 +1,17 @@
+
+<div class="row" style="margin-top:30px;">
+  <div class="six columns">
+    <button class="btn" type="button" id="tooltip-btn">Show Tooltip
+    </button>
+  </div>
+</div>
+
+<script>
+  var cnt = 0;
+  $('#tooltip-btn').on('click', function () {
+    $('#tooltip-btn').tooltip({trigger: 'immediate', content: function() {
+      cnt++;
+      return cnt === 2 ? '' : 'Test'+cnt;
+    }});
+  });
+</script>

@@ -32,9 +32,9 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'drillDown', name: 'Drill In', field: '', formatter: Formatters.Drilldown, cssClass: 'l-center-text', width: 50});
-      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 50 });
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 50});
-      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Textarea, width: 200});
+      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 160 });
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 160});
+      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Textarea, width: '60%'});
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({

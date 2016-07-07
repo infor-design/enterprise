@@ -1,12 +1,11 @@
+
 <div class="row">
-  <div class="six columns">
-
-    <h2>Datagrid Test: Selected Event</h2>
-
+  <div class="twelve columns">
+    <br />
+    <h3>Grid Example: Events</h3>
     <p>Displays a toast whenever the "selected" event is fired.</p>
 
-    <p></p>
-
+    <hr class="fieldset-hr">
   </div>
 </div>
 
@@ -25,8 +24,8 @@
       var data = args[0].data;
 
       $('body').toast({
-        title: 'Datagrid Row <span style="font-weight: bold;">#' + data.id + '</span> Selected!',
-        message: 'The row #' + data.id + ' containing the product name <span style="color: #aa1111; font-weight: bold;">' + data.productName + '</span> triggered a selected event on this datagrid'
+        title: 'Datagrid Row #' + data.id + ' Selected!',
+        message: 'The row #' + data.id + ' containing the product name ' + data.productName + ' triggered a selected event'
       });
     }
 
@@ -45,9 +44,9 @@
         data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'drilldown', name: '', field: '', width: 30, formatter: Formatters.Drilldown, align: 'center'});
+        columns.push({ id: 'drilldown', name: '', field: '', width: 75, formatter: Formatters.Drilldown, align: 'center'});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 180, formatter: Formatters.Hyperlink});
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});

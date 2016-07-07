@@ -6,6 +6,7 @@
       Open Panel With Grid
     </button>
     <div class="contextual-action-panel">
+    <div class="full-width">
       <div class="toolbar" role="toolbar">
         <div class="title">
           Custom Grid Toolbar
@@ -44,9 +45,8 @@
         </div>
       </div>
 
-      <div class="datagrid">
+        <div class="datagrid"></div>
       </div>
-
     </div>
 
   </div>
@@ -59,8 +59,8 @@
     var data = [],
       columns = [];
 
-    columns.push({ id: 'date', name: 'Date', field: 'date', width: 125, formatter: Formatters.Date});
-    columns.push({ id: 'description', name: 'Description', field: 'description', width: 140});
+    columns.push({ id: 'date', name: 'Date', field: 'date', formatter: Formatters.Date});
+    columns.push({ id: 'description', name: 'Description', field: 'description'});
     columns.push({ id: 'paidBy', name: 'Paid By', field: 'PaidBy'});
     columns.push({ id: 'category', name: 'Category', field: 'category'});
     columns.push({ id: 'projectWork', name: 'Project Work', field: 'projectWork'});
@@ -75,7 +75,8 @@
     $('.contextual-action-panel .datagrid').datagrid({
       columns: columns,
       dataset: data,
-      toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: false, actions: true, views: false, rowHeight: false}
+      isList: true,
+      toolbar: {results: true}
     });
 
     // Build the Settings-based Contextual Action Panel

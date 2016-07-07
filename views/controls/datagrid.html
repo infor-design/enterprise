@@ -40,21 +40,10 @@
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
+      $('#datagrid').datagrid({
         columns: columns,
         dataset: data
-      }).data('datagrid');
+      });
 
-      //TODO Test: You can focus on hidden columns
-      //grid.setSortColumn('activity');
-
-     // grid.setSortColumn('productId');
-
-      //setColumnWidth(id, width, reset: optional)
-      //grid.setColumnWidth('productId', '15%', true);
-      //grid.setColumnWidth('status', 150, true);
-      //grid.setColumnWidth('productName', '20%', true);
-      //grid.setColumnWidth('activity', '15%', true);
-    //});
  });
 </script>

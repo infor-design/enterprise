@@ -310,9 +310,9 @@ The documentation will be generated created inline in the pages (soon but not ye
 ## QA Documentation
 
 Test Page:
-http://107.170.15.202:4000/
-(Note that each control can be accessed on its own url `http://107.170.15.202:4000/controls/<name>` for example:
-http://107.170.15.202:4000/controls/slider)
+http://usmvvwdev53:421/
+(Note that each control can be accessed on its own url `http://usmvvwdev53:421/controls/<name>` for example:
+http://usmvvwdev53:421/controls/slider)
 
 Jira: For Reporting Issues..
 http://jira.infor.com/browse/HFC

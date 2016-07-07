@@ -37,10 +37,9 @@
 
     //Define Columns for the Grid.
     columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
-    columns.push({ id: 'productName', width: 100, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
     columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
     columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
 
     //Init and get the api for the grid
@@ -52,7 +51,6 @@
         selectable: 'single', //multiselect or single
         toolbar: {
           results: true,
-          dateFilter: false,
           keywordFilter: true,
           advancedFilter: true,
           actions: true,

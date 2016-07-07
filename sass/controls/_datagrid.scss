@@ -88,7 +88,8 @@ $datagrid-short-row-height: 30px;
   //height: 100%;
   min-width: 100%;
   overflow: hidden;
-  //table-layout: fixed; //this lets us resize to lower than content width but it causes layout issues with default col sizes
+  //This lets us resize to lower than content width but it causes layout issues with default col sizes
+  table-layout: fixed;
   width: auto;
 
   //Frozen Headers
@@ -113,6 +114,10 @@ $datagrid-short-row-height: 30px;
 
       .datagrid-alert-icon {
         top: 9px;
+      }
+
+      .hyperlink {
+        margin-top: 8px;
       }
     }
 
@@ -177,6 +182,10 @@ $datagrid-short-row-height: 30px;
         margin-top: 0;
         padding: 0 10px 4px;
       }
+
+      .hyperlink {
+        margin-top: 4px;
+      }
     }
 
     //Resize the headers too
@@ -210,12 +219,32 @@ $datagrid-short-row-height: 30px;
     background-color: $datagrid-header-bg-color;
     border-left: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
-    min-width: 25px;
+    min-width: 40px;
     overflow: hidden;
     text-align: left;
 
     &.hide-border + th {
       border-left: 0;
+    }
+
+    &.l-center-text {
+      text-align: center;
+
+      .datagrid-column-wrapper {
+        display: inline;
+      }
+
+      .datagrid-header-text {
+        display: inline-block;
+        margin-top: 4px;
+      }
+
+      .sort-indicator {
+        margin: 0 6px;
+        position: relative;
+        top: -4px;
+      }
+
     }
 
     &.is-hidden {
@@ -463,7 +492,6 @@ $datagrid-short-row-height: 30px;
       min-height: inherit;
       overflow: hidden;
       padding: 0 20px;
-      width: 100%;
     }
 
     .icon-favorite {
@@ -508,8 +536,11 @@ $datagrid-short-row-height: 30px;
     .hyperlink {
       @include font-size(14);
       color: $hyperlink-color;
+      display: inline-block;
+      //margin-top: 14px;
       overflow: hidden;
-      text-overflow: ellipsis;
+      //text-overflow: ellipsis;
+      vertical-align: middle;
 
       &:focus {
         outline: none;
@@ -551,7 +582,9 @@ $datagrid-short-row-height: 30px;
         border: 1px solid $primary-color;
         left: 0;
         position: absolute;
+        text-overflow: initial;
         top: 0;
+        width: 100%;
       }
 
       .lookup-wrapper {
@@ -633,6 +666,13 @@ $datagrid-short-row-height: 30px;
     &.l-center-text {
       .datagrid-cell-wrapper {
         text-align: center;
+      }
+    }
+
+    &.text-ellipsis {
+      .datagrid-cell-wrapper {
+        cursor: default;
+        text-overflow: ellipsis;
       }
     }
 
@@ -973,6 +1013,9 @@ td .btn-actions {
 
 .datagrid-result-count {
   @include font-size(14);
+  // scss-lint:disable ImportantRule
+  vertical-align: top !important;
+  // scss-lint:enable ImportantRule
 }
 
 .datagrid-row-count {
@@ -1203,8 +1246,11 @@ html[dir='rtl'] {
 }
 
 //Contextual toolbar
-.datagrid-contextual-toolbar {
+.datagrid-contextual-toolbar.contextual-toolbar {
+  margin-left: 1px;
   margin-right: 1px;
+  padding-left: 20px;
+  padding-right: 20px;
 
   .buttonset {
     height: 40px;
@@ -1249,6 +1295,8 @@ html[dir='rtl'] {
   .icon-error,
   .icon-confirm,
   .icon-pending {
+    // scss-lint:disable ImportantRule
     top: 14px !important;
+    // scss-lint:enable ImportantRule
   }
 }

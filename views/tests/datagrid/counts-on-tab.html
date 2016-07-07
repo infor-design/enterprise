@@ -1,88 +1,33 @@
 
 	<div id="maincontent" class="page-container scrollable" role="main">
-		<div id="sce-admin-tabs" class="tab-container" >
-			<ul class="tab-list">
-				<li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
-				<li class="tab"><a href="#second-tab">Second Tab</a></li>
-				<li class="tab"><a href="#third-tab">Third Tab</a></li>
-			</ul>
-			<div id="first-tab" class="tab-panel no-scroll">
-				<div class="full-width">
-<!-- 					<div class="toolbar has-more-button" role="toolbar"> -->
-<!-- 						<div class="title"> -->
-<!-- 							<span class="datagrid-row-count">0</span> Rows -->
-<!-- 						</div> -->
-<!-- 						<div class="more"> -->
-<!-- 							<button class="btn-actions"> -->
-<!-- 								<svg class="icon" focusable="false" aria-hidden="true" role="presentation"> -->
-<!-- 			            			<use xlink:href="#icon-more"></use> -->
-<!-- 			          			</svg> -->
-<!-- 								<span class="audible">More Actions</span> -->
-<!-- 							</button> -->
-<!-- 							<ul class="popupmenu has-icons is-selectable"> -->
-<!-- 								<li><a data-option="personalize-columns" href="#">Personalize Columns</a></li> -->
-<!-- 								<li class="heading">Row Height</li> -->
-<!-- 								<li><a data-option="row-short" href="#">Short</a></li> -->
-<!-- 								<li><a data-option="row-medium" href="#">Medium</a></li> -->
-<!-- 								<li class="is-checked"><a data-option="row-normal" href="#">Normal</a></li> -->
-<!-- 							</ul> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					<div id="first-grid"></div>
+		<div class="row">
+			<div class="twelve columns">
+				<div id="sce-admin-tabs" class="tab-container" >
+					<ul class="tab-list">
+						<li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
+						<li class="tab"><a href="#second-tab">Second Tab</a></li>
+						<li class="tab"><a href="#third-tab">Third Tab</a></li>
+					</ul>
+					<div id="first-tab" class="tab-panel no-scroll">
+						<div class="full-width">
+							<div id="first-grid"></div>
+						</div>
+					</div>
+					<div id="second-tab" class="tab-panel no-scroll">
+						<div class="full-width">
+							<div id="second-grid"></div>
+						</div>
+					</div>
+					<div id="third-tab" class="tab-panel no-scroll">
+						<div class="full-width">
+							<div id="third-grid"></div>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div id="second-tab" class="tab-panel no-scroll">
-				<div class="full-width">
-<!-- 					<div class="toolbar has-more-button" role="toolbar"> -->
-<!-- 						<div class="title"> -->
-<!-- 							<span class="datagrid-row-count">0</span> Rows -->
-<!-- 						</div> -->
-<!-- 						<div class="more"> -->
-<!-- 							<button class="btn-actions"> -->
-<!-- 								<svg class="icon" focusable="false" aria-hidden="true" role="presentation"> -->
-<!-- 			            			<use xlink:href="#icon-more"></use> -->
-<!-- 			          			</svg> -->
-<!-- 								<span class="audible">More Actions</span> -->
-<!-- 							</button> -->
-<!-- 							<ul class="popupmenu has-icons is-selectable"> -->
-<!-- 								<li><a data-option="personalize-columns" href="#">Personalize Columns</a></li> -->
-<!-- 								<li class="heading">Row Height</li> -->
-<!-- 								<li><a data-option="row-short" href="#">Short</a></li> -->
-<!-- 								<li><a data-option="row-medium" href="#">Medium</a></li> -->
-<!-- 								<li class="is-checked"><a data-option="row-normal" href="#">Normal</a></li> -->
-<!-- 							</ul> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					<div id="second-grid"></div>
 				</div>
-			</div>
-			<div id="third-tab" class="tab-panel no-scroll">
-				<div class="full-width">
-<!-- 					<div class="toolbar has-more-button" role="toolbar"> -->
-<!-- 						<div class="title"> -->
-<!-- 							<span class="datagrid-row-count">0</span> Rows -->
-<!-- 						</div> -->
-<!-- 						<div class="more"> -->
-<!-- 							<button class="btn-actions"> -->
-<!-- 								<svg class="icon" focusable="false" aria-hidden="true" role="presentation"> -->
-<!-- 			            			<use xlink:href="#icon-more"></use> -->
-<!-- 			          			</svg> -->
-<!-- 								<span class="audible">More Actions</span> -->
-<!-- 							</button> -->
-<!-- 							<ul class="popupmenu has-icons is-selectable"> -->
-<!-- 								<li><a data-option="personalize-columns" href="#">Personalize Columns</a></li> -->
-<!-- 								<li class="heading">Row Height</li> -->
-<!-- 								<li><a data-option="row-short" href="#">Short</a></li> -->
-<!-- 								<li><a data-option="row-medium" href="#">Medium</a></li> -->
-<!-- 								<li class="is-checked"><a data-option="row-normal" href="#">Normal</a></li> -->
-<!-- 							</ul> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					<div id="third-grid"></div>
-				</div>
-			</div>
 		</div>
-	</div>
+  </div>
+
 	<script>
     $(function() {
         $('body').initialize('en-US');
@@ -105,7 +50,7 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 50});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {
           console.log(e, args);
       }});
@@ -119,9 +64,7 @@
       //Init and get the api for the grid
       $(selector).datagrid({
         columns: columns,
-//        paging: true,
         dataset: data,
-//        toolbar: {results: true, dateFilter: false, keywordFilter: false, advancedFilter: false, actions: false, views: false, rowHeight: true, selectCount: false}
         toolbar: {title: tabName, results: true}
       });
     }

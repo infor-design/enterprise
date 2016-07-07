@@ -5,11 +5,13 @@ Release Date: TBD
 * Datagrid Export to XLS
 * Datagrid Icon Buttons
 * Datagrid Formatters for Class/ Content Visible
+* Datagrid Rendering Performance Boost
 * Property Sheet pattern
 * Tree - Ability to add nodes with Ajax
 * Splitter - Added keyboard/Aria
 
 ### Breaking Changes
+* 2016-07-01 - Changed css table-layout of datagrid. This means that the widths set in columns now work more accurately. In examples previously some of the widths set did not work. Now they do. So this may require update default column widths in grids you use. If you leave width out it will auto size to content as previously.
 * 2016-06-14 - Changed font weight of placeholder text to normal (from lighter)
 * 2016-06-01 - Wizard now longer has disabled style as this conflicts with "not completed" style. If a situation arises where a wizard tab cannot be clicked, use error messages to indicate.
 * 2016-06-01 - Updated to jQuery 3.0 (not really totally required/breaking)

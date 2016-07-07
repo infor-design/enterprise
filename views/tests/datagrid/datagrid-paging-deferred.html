@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="six columns">
+    <br />
+    <h3>Grid Example: Paging</h3>
+    <p>This example is testing a situation where the grid is initialized with zero rows and then has data later. (After 3 seconds)
+    <p></p>
+  </div>
+</div>
 
 <div class="row">
   <div class="twelve columns">
@@ -9,7 +17,6 @@
 <script>
   $('body').one('initialized', function () {
 
-      //This example is testing a situation where teh grid is initialized with zero rows and then having data added.
       var columns = [];
 
       //Define Columns for the Grid.
@@ -21,25 +28,23 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
      $('#datagrid').datagrid({
-      columns: columns,
-      dataset: [],
-      selectable: 'single',
-      paging: true,
-      pagesize: 15,
-      toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
-      });
+        columns: columns,
+        dataset: [],
+        selectable: 'single',
+        paging: true,
+        pagesize: 15
+    });
 
       //Get some data via ajax
       var url = '/api/compressors?pageNum=1&pageSize=1000';
 
       setTimeout(function () {
 
-         $.getJSON(url, function(data) {
-          $('#datagrid').data('datagrid').loadData(data);
-        });
+         $.getJSON(url, function(res) {
+          $('#datagrid').data('datagrid').loadData(res.data);
+         });
 
       }, 3000);
 
   });
 </script>
-

@@ -9,6 +9,12 @@ window.Formatters = {
     return str;
   },
 
+  Ellipsis: function(row, cell, value, col) {
+    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    col.textOverflow = 'ellipsis';
+    return str;
+  },
+
   Password: function(row, cell, value) {
     var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     return str.replace(/./g, '*');
@@ -637,7 +643,16 @@ window.Editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input class="autocomplete" data-autocomplete="source" />').appendTo(container);
+      this.input = $('<input class="autocomplete datagrid-autocomplete" data-autocomplete="source" />').appendTo(container);
+
+      if (!column.editorOptions) {
+        column.editorOptions = {};
+      }
+      column.editorOptions.width = container.parent().width();
+      column.editorOptions.offset = {};
+      column.editorOptions.offset.left = -20;
+      column.editorOptions.offset.top = 11;
+
       this.input.autocomplete(column.editorOptions);
     };
 
@@ -1032,7 +1047,10 @@ $.fn.datagrid = function(options) {
 
       var oldRows = (this.selectedRows() ? this.selectedRows().slice() : []);
       this.settings.dataset = dataset;
-      this.renderRows();
+
+      if (this.pager) {
+        this.pager.settings.dataset = dataset;
+      }
 
       if (!pagerInfo) {
         pagerInfo = {};
@@ -1046,6 +1064,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Update Paging and Clear Rows
+      this.renderRows();
       this.renderPager(pagerInfo);
       this.selectedRows([]);
 
@@ -1137,14 +1156,14 @@ $.fn.datagrid = function(options) {
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable),
           isSelection = column.id === 'selectionCheckbox',
-          alignmentClass = (column.align === undefined ? false : ' l-'+ column.align +'-text');
+          alignmentClass = (column.align === undefined ? false : '');// Disable for now as this was acting wierd ' l-'+ column.align +'-text');
 
-        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + '"' +
+        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') +  (alignmentClass ? alignmentClass : '') + '"' +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (alignmentClass ? alignmentClass : '') +'"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
+         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (column.align === undefined ? false : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
 
         if (isSelection) {
           headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
@@ -1402,6 +1421,20 @@ $.fn.datagrid = function(options) {
       for (var i = 0; i < self.settings.dataset.length; i++) {
         var isEven = (i % 2 === 0);
 
+        //For performance dont render out of page
+        if (self.settings.paging && !self.settings.source) {
+          var activePage = self.pager ? self.pager.activePage : 1,
+            pagesize = self.settings.pagesize;
+
+          if (activePage === 1 && i >= pagesize){
+            continue;
+          }
+
+          if (activePage > 1 && !(i >= pagesize*(activePage-1) && i < pagesize*activePage)){
+            continue;
+          }
+        }
+
         rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row '+
                   (self.settings.rowHeight !== 'normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                   (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
@@ -1437,6 +1470,10 @@ $.fn.datagrid = function(options) {
             cssClass += ' l-'+ col.align +'-text';
           }
 
+          if (col.textOverflow === 'ellipsis') {
+            cssClass += ' text-ellipsis';
+          }
+
           // Add Column Css Classes
 
           //Add a readonly class if set on the column
@@ -1466,7 +1503,7 @@ $.fn.datagrid = function(options) {
 
           var cellValue = self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field);
 
-          //Run a function that dynamically add a class
+          //Run a function that dynamically adds a class
           if (col.cssClass && typeof col.cssClass === 'function') {
             cssClass += col.cssClass(i, j, cellValue, col, self.settings.dataset[i]);
           }
@@ -1478,7 +1515,7 @@ $.fn.datagrid = function(options) {
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
              (col.id === 'rowStatus' && self.settings.dataset[i].rowStatus && self.settings.dataset[i].rowStatus.tooltip ? ' title="' + self.settings.dataset[i].rowStatus.tooltip + '"' : '') +
-             (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+               (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
              '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
@@ -1513,7 +1550,7 @@ $.fn.datagrid = function(options) {
 
       self.tableBody.append(tableHtml);
       self.tableBody.css({'height': '', 'display': ''});
-      self.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
+      self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
 
       //Set Tab Index and active Cell
@@ -1523,8 +1560,29 @@ $.fn.datagrid = function(options) {
       }, 100);
     },
 
+    setupTooltips: function () {
+
+      // Implement Tooltip on cells with title attribute
+      this.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
+
+      // Implement Tooltip on cells with ellipsis
+      this.table.find('td.text-ellipsis').tooltip({content: function() {
+        var cell = $(this),
+          text = cell.text(),
+          inner = cell.children('.datagrid-cell-wrapper');
+
+        if (cell[0] && inner[0] && (inner[0].offsetWidth)< inner[0].scrollWidth) {
+          var w = inner.width();
+          $(this).data('tooltip').settings.maxWidth = w;
+          return text;
+        }
+
+        return '';
+      }});
+    },
+
     setColumnWidths: function () {
-      var total = 0, self = this;
+      var total = 0, self = this, widthProvided, widthPercent;
 
       for (var i = 0; i < self.settings.columns.length; i++) {
         var column = self.settings.columns[i],
@@ -1533,12 +1591,29 @@ $.fn.datagrid = function(options) {
         if (column.hidden) {
           continue;
         }
+
+        if (column.width) {
+          widthProvided = true;
+        }
+
+        if (typeof column.width === 'string') {
+          widthPercent = true;
+        }
+
         total+= column.width || header.outerWidth();
         $('.is-draggable-target, .handle', header).css('left', header.position().left);
         $('.is-draggable-target.last', header)
           .css('left', header.position().left + header.outerWidth());
       }
-      this.table.css('width', total);
+
+      if (widthProvided) {
+        this.table.css('width', total);
+      }
+
+      if (widthPercent) {
+        this.table.css('width', '100%');
+      }
+
     },
 
     //Returns all header nodes (not the groups)
@@ -1847,9 +1922,12 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (reset) {
-        self.table.css('width', self.element.width());
+      //Handles min width on some browsers
+      if (width < 40) {
+        return;
       }
+
+      self.table.css('width', self.element.width());
 
       if (reset && self.fixedHeader) {
         self.clone.css('width', self.element.width());
@@ -1865,7 +1943,6 @@ $.fn.datagrid = function(options) {
         if (col.attr('data-column-id') === id) {
           col.css('width', width);
           total += width;
-
         } else {
           total += col.outerWidth();
         }
@@ -1889,7 +1966,6 @@ $.fn.datagrid = function(options) {
       if (self.fixedHeader) {
         self.clone.css('width', total);
       }
-
     },
 
     // Get child offset
@@ -2208,6 +2284,7 @@ $.fn.datagrid = function(options) {
         }
 
       });
+
     },
 
     //Check if the event is subscribed to
@@ -2230,7 +2307,7 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      //Allow menu to be added manully
+      //Allow menu to be added manually
       if (this.element.parent().parent().find('.toolbar:not(.contextual-toolbar)').length === 1) {
         toolbar = this.element.parent().parent().find('.toolbar:not(.contextual-toolbar)');
       } else {
@@ -2259,7 +2336,7 @@ $.fn.datagrid = function(options) {
           buttonSet.append(labelMarkup);
 
           if (!settings.toolbar.collapsibleFilter) {
-            searchfieldMarkup.attr('data-options', '{ collapsible: false }');
+            searchfieldMarkup.attr('data-options', '{ collapsible: true }');
           }
 
           buttonSet.append(searchfieldMarkup);
@@ -3465,7 +3542,7 @@ $.fn.datagrid = function(options) {
       }
 
       var pagerElem = this.tableBody.addClass('paginated');
-      pagerElem.pager({source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, rowTemplate: this.settings.rowTemplate, pagesizes: this.settings.pagesizes});
+      pagerElem.pager({dataset: this.settings.dataset, source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, rowTemplate: this.settings.rowTemplate, pagesizes: this.settings.pagesizes});
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {
@@ -3480,7 +3557,6 @@ $.fn.datagrid = function(options) {
     },
 
     renderPager: function (pagingInfo) {
-
       if (!this.pager) {
         return;
       }
@@ -3489,13 +3565,12 @@ $.fn.datagrid = function(options) {
         this.pager.activePage = pagingInfo.activePage;
       }
 
-      this.pager.elements = this.pager.element.children();
-      this.pager.renderBar();
-      this.pager.renderPages((pagingInfo.type === 'sorted' ? false : true), 'initial');
-
       if (pagingInfo) {
         this.pager.updatePagingInfo(pagingInfo);
       }
+
+      this.pager.renderBar();
+      this.pager.renderPages((pagingInfo.type === 'sorted' ? false : true), 'initial');
 
       // Update selected and Sync header checkbox
       this.updateSelected();

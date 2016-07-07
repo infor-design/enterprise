@@ -241,6 +241,7 @@
 
       //Set or Get Current Page
       setActivePage: function(pageNum, force, op) {
+
         var lis = this.pagerBar.find(this.buttonExpr);
 
         // Check to make sure our internal active page is set
@@ -285,15 +286,15 @@
       pageCount: function(pages) {
         var self = this;
 
-        if (!pages && this.settings.indeterminate) {
+        if (pages === undefined && this.settings.indeterminate) {
           this._pageCount = this.settings.pagesize;
         }
 
-        if (!pages && !this.settings.source) {
+        if (pages === undefined && !this.settings.source) {
           return this._pageCount;
         }
 
-        if (pages) {
+        if (pages !== undefined) {
           this._pageCount = pages;
         }
 
@@ -404,9 +405,10 @@
         //Adjust Page count numbers
         if (!this.settings.source) {
           pc = Math.ceil(this.getPageableElements().not('.is-filtered').length/this.settings.pagesize);
-          if (this.pageCount() !== pc) {
-            this.pageCount(pc);
+          if (this.isTable) {
+            pc = Math.ceil(this.settings.dataset.length/this.settings.pagesize);
           }
+          this.pageCount(pc);
         }
 
         //Refresh Disabled
@@ -452,7 +454,11 @@
       },
 
       pagerInfo: {},
+      setDatagrid: function() {
+        this.datagrid = this.mainContainer.children('.datagrid-container').data('datagrid');
+      },
 
+      renders: 0,
       // Render Paged Items
       renderPages: function(uiOnly, op) {
       var expr,
@@ -464,6 +470,8 @@
             total: -1
           };
 
+        self.renders ++;
+
         //Make an ajax call and wait
         setTimeout(function () {
           var doPaging = self.element.triggerHandler('beforepaging', request);
@@ -473,18 +481,18 @@
           }
 
           if (self.settings.source && !uiOnly) {
-            var api, response;
+            var response;
 
             // Distinguish between datagrid and listview
             if (self.isTable) {
-              api = self.mainContainer.children('.datagrid-container').data('datagrid');
+              self.setDatagrid();
             } else {
-              api = self.element.data('listview');
+              self.datagrid = self.element.data('listview');
             }
 
             response = function(data, pagingInfo) {
               //Render Data
-              api.loadData(data, pagingInfo, true);
+              self.datagrid.loadData(data, pagingInfo, true);
 
               //Update Paging Info
               self.updatePagingInfo(pagingInfo);
@@ -495,14 +503,14 @@
               return;
             };
 
-            if (api.sortColumn && api.sortColumn.sortId) {
-              request.sortAsc = api.sortColumn.sortAsc;
-              request.sortField = api.sortColumn.sortField;
-              request.sortId = api.sortColumn.sortId;
+            if (self.datagrid.sortColumn && self.datagrid.sortColumn.sortId) {
+              request.sortAsc = self.datagrid.sortColumn.sortAsc;
+              request.sortField = self.datagrid.sortColumn.sortField;
+              request.sortId = self.datagrid.sortColumn.sortId;
             }
 
-            if (api.filterExpr) {
-               request.filterExpr = api.filterExpr;
+            if (self.datagrid.filterExpr) {
+               request.filterExpr = self.datagrid.filterExpr;
             }
             self.settings.source(request, response);
           }
@@ -514,6 +522,14 @@
           //Render page objects
           if (!self.settings.source) {
             var rows = self.settings.pagesize;
+
+            self.updatePagingInfo(request);
+
+            if (self.isTable && self.renders !== 1) {
+              self.setDatagrid();
+              self.datagrid.renderRows();
+            }
+
             elements.hide();
 
             //collapse expanded rows
@@ -532,7 +548,6 @@
 
           if (!self.settings.source) {
             self.element.trigger('afterpaging', request);
-            self.updatePagingInfo(request);
           }
 
         }, 0);
@@ -540,6 +555,10 @@
 
       updatePagingInfo: function(pagingInfo) {
         this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
+
+        if (this.isTable && this.datagrid) {
+          this.datagrid.settings.pagesize = this.settings.pagesize;
+        }
         this.pagerBar.find('.btn-menu span').text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
 
         if (this.settings.source) {

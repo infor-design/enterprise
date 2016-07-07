@@ -1,0 +1,74 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main" initialize>
+
+   <div class="row">
+      <div class="twelve columns">
+         <h3>
+            Grid Example: Performance Test
+         </h3>
+         <p>
+            Test by clicking "Load Data" and see how long it takes to render the rows. IE was very slow (30 + secons)
+         </p>
+
+         <button type="button" id="load" class="btn-primary"><span>Load Data</span></button>
+         <hr class="fieldset-hr">
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="twelve columns">
+         <div id="datagrid"></div>
+      </div>
+   </div>
+
+   <script>
+      $('body').one('initialized', function () {
+         var grid, columns = [],
+            data = [], i;
+
+         // Some Sample Data
+         for (i = 1; i <= 800; i++) {
+            data.push({ id: i, productId: i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action' });
+         }
+
+         //Define Columns for the Grid.
+         columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Formatters.Text, align: 'right' });
+         columns.push({ id: 'productName', name: 'Product Name & Description', field: 'productName', formatter: Formatters.Text });
+         columns.push({ id: 'quantityback', name: 'Quantity Back Ordered', field: 'quantity', formatter: Formatters.Integer });
+         columns.push({ id: 'quantity', name: 'Quantity Available', field: 'quantity', formatter: Formatters.Integer, align: 'right' });
+         columns.push({ id: 'status', name: 'Status Indicator', field: 'status', formatter: Formatters.Checkbox, align: 'center' });
+         columns.push({ id: 'badge', name: 'Badge', field: 'quantity', align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'azure07', sortable: false}]});
+         columns.push({ id: 'tag', name: 'Tag', field: 'price', align: 'center', formatter: Formatters.Tag, ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]});
+         columns.push({ id: 'listprice', name: 'List Price', field: 'price', align: 'right', formatter: Formatters.Decimal});
+         columns.push({ id: 'price', name: 'Final Price', field: 'price', align: 'right', formatter: Formatters.Decimal});
+         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+         columns.push({ id: 'shipDate', name: 'Estimated Ship Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+         columns.push({ id: 'activity', name: 'Activity', field: 'activity' });
+
+         grid = $('#datagrid').datagrid({
+            columns: columns,
+            dataset: [],
+            isList: true,
+            selectable: 'multiple',
+            columnReorder: true,
+            paging: true,
+            pagesize: 10,
+            pagesizes: [5, 10, 25, 50],
+            toolbar: {title: 'Data Grid List', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+         }).data('datagrid');
+
+         // Load function
+         $('#load').click(function () {
+            var start = new Date().getTime();
+            grid.loadData(data);
+            var end = new Date().getTime();
+
+            $('body').toast({
+               title: 'Time to Load Data',
+               message: (end - start) / 1000 + ' seconds'
+            });
+         });
+      });
+
+   </script>
+
+</div>

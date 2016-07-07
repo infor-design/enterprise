@@ -26,7 +26,7 @@
         content: null, //Takes title attribute or feed content. Can be a function or jQuery markup
         offset: {top: 10, left: 0}, //how much room to leave
         placement: 'top',  //can be top/left/bottom/right/offset
-        trigger: 'hover', //supports click and manual and hover (future focus)
+        trigger: 'hover', //supports click and immediate and hover (and maybe in future focus)
         title: null, //Title for Infor Tips
         beforeShow: null, //Call back for ajax tooltip
         popover: null , //force it to be a popover (no content)
@@ -35,7 +35,8 @@
         isErrorColor: false, //Add error color only not description
         tooltipElement: null, // ID selector for an alternate element to use to contain the tooltip classes
         keepOpen: false, // Forces the tooltip to stay open in situations where it would normally close.
-        extraClass: null // Extra css class
+        extraClass: null, // Extra css class
+        maxWidth: null // Toolip max width
       },
       settings = $.extend({}, defaults, options);
 
@@ -162,7 +163,7 @@
       },
 
       setContent: function(content) {
-        if (!content || !content.length) {
+        if ((!content || !content.length) && typeof settings.content !== 'function') {
           return false;
         }
 
@@ -209,7 +210,7 @@
           }
 
           contentArea.initialize();
-          return;
+          return true;
 
         } else {
           this.tooltip.find('.tooltip-title').hide();
@@ -218,6 +219,9 @@
         this.tooltip.removeClass('popover').addClass('tooltip');
         if (typeof settings.content === 'function') {
           content = this.content = settings.content.call(this.element);
+          if (!content) {
+            return false;
+          }
         }
 
         contentArea = this.tooltip.find('.tooltip-content');
@@ -232,7 +236,7 @@
         else {
           contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
         }
-
+        return true;
       },
 
       show: function(newSettings, ajaxReturn) {
@@ -258,8 +262,16 @@
           return;
         }
 
-        this.setContent(this.content);
-        this.element.trigger('beforeshow', [this.tooltip]);
+        var okToShow = true;
+        okToShow = this.setContent(this.content);
+        if (okToShow  === false) {
+          return;
+        }
+
+        okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
+        if (okToShow  === false) {
+          return;
+        }
 
         this.tooltip.removeAttr('style');
         this.tooltip.removeClass('bottom right left top offset is-error').addClass(settings.placement);
@@ -350,6 +362,10 @@
         // Reset adjustments to panel and arrow
         this.tooltip.removeAttr('style');
         this.tooltip.find('.arrow').removeAttr('style');
+
+        if (this.settings.maxWidth) {
+          this.tooltip.css('max-width', this.settings.maxWidth + 'px');
+        }
 
         if (this.scrollparent.length) {
           scrollable.offsetTop = this.scrollparent.scrollTop();
