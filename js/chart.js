@@ -256,6 +256,19 @@ window.Chart = function(container) {
 
   this.HorizontalBar = function(chartData, isNormalized, isStacked) {
     //Original http://jsfiddle.net/datashaman/rBfy5/2/
+
+    var defaults = {
+      // Use d3 Format
+      // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
+      // [null | formatter string] - Only value will be formated
+      formatterString: null,
+    },
+    settings = $.extend(true, defaults, charts.options),
+    isFormatter = !!settings.formatterString,
+    format = function (value) {
+      return isFormatter ? d3.format(settings.formatterString)(value) : value;
+    };
+
     var dataset, maxTextWidth, width, height, series, rects, svg, stack, xMax,
         xScale, yScale, yAxis, yMap, xAxis, groups, isGrouped, isSingle, legendMap,
         gindex, totalBarsInGroup, totalGroupArea, totalHeight, gap, barHeight;
@@ -530,7 +543,7 @@ window.Chart = function(container) {
             for (j=0,l=data.length; j<l; j++) {
               content += '<div class="swatch-row">';
               content += '<div style="background-color:'+charts.colors(j)+';"></div>';
-              content += '<span>'+ data[j].name +'</span><b>'+ data[j].value +'</b></div>';
+              content += '<span>'+ data[j].name +'</span><b>'+ format(data[j].value) +'</b></div>';
             }
           }
           content += '</div>';
@@ -1443,6 +1456,17 @@ window.Chart = function(container) {
 
   // Column Chart - Sames as bar but reverse axis
   this.Column = function(chartData, isStacked) {
+    var defaults = {
+      // Use d3 Format
+      // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
+      // [null | formatter string] - Only value will be formated
+      formatterString: null,
+    },
+    settings = $.extend(true, defaults, charts.options),
+    isFormatter = !!settings.formatterString,
+    format = function (value) {
+      return isFormatter ? d3.format(settings.formatterString)(value) : value;
+    };
 
     var datasetStacked,
       dataset = chartData,
@@ -1715,14 +1739,14 @@ window.Chart = function(container) {
         // Stacked
         if (isStacked) {
           if (isSingular) {
-            content = '<p><b>'+ d[0].value +'</b> '+ d[0].name +'</p>';
+            content = '<p><b>'+ format(d[0].value) +'</b> '+ d[0].name +'</p>';
           } else {
             content = '<div class="chart-swatch">';
             content += '<div class="swatch-caption"><b>'+ datasetStacked[0][i].name +'</b></div>';
             for (j=datasetStacked.length-1,l=0; j>=l; j--) {
               content += '<div class="swatch-row">';
               content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
-              content += '<span>'+ datasetStacked[j][i].parentName +'</span><b>'+ datasetStacked[j][i].value +'</b></div>';
+              content += '<span>'+ datasetStacked[j][i].parentName +'</span><b>'+ format(datasetStacked[j][i].value) +'</b></div>';
             }
             content += '</div>';
           }
@@ -1734,7 +1758,7 @@ window.Chart = function(container) {
         // No Stacked
         else {
           if (dataset.length === 1) {
-            content = '<p><b>'+ d.value + '</b> '+ d.name +'</p>';
+            content = '<p><b>'+ format(d.value) + '</b> '+ d.name +'</p>';
           } else {
             content = '<div class="chart-swatch">';
             var data = d3.select(this.parentNode).datum().values;
@@ -1742,7 +1766,7 @@ window.Chart = function(container) {
             for (j=0,l=data.length; j<l; j++) {
               content += '<div class="swatch-row">';
               content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
-              content += '<span>'+ data[j].name +'</span><b>'+ data[j].value +'</b></div>';
+              content += '<span>'+ data[j].name +'</span><b>'+ format(data[j].value) +'</b></div>';
             }
             content += '</div>';
             isTooltipBottom = data.length > maxBarsForTopTooltip;
@@ -1775,7 +1799,7 @@ window.Chart = function(container) {
 
           content = tooltipDataCache[i] || tooltipData || content || '';
           if (d.tooltip) {
-            var val = d.tooltip.replace('{{value}}', d.value);
+            var val = d.tooltip.replace('{{value}}', format(d.value));
             content = '<p>' + val + '</p>';
           }
           show(isTooltipBottom);
@@ -1952,22 +1976,19 @@ window.Chart = function(container) {
     });
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   this.Line = function(chartData, options, isArea) {
+    var defaults = {
+      // Use d3 Format
+      // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
+      // [null | formatter string] - Only value will be formated
+      formatterString: null,
+    },
+    settings = $.extend(true, defaults, charts.options),
+    isFormatter = !!settings.formatterString,
+    format = function (value) {
+      return isFormatter ? d3.format(settings.formatterString)(value) : value;
+    };
+
     $(container).addClass('line-chart');
 
     var tooltipInterval,
@@ -2100,7 +2121,7 @@ window.Chart = function(container) {
           .style('fill', charts.colors(i))
           .on('mouseenter.chart', function(d2) {
             var rect = this.getBoundingClientRect(),
-              content = '<p><b>' + d2.name + ' </b> ' + d2.value + '</p>',
+              content = '<p><b>' + d2.name + ' </b> ' + format(d2.value) + '</p>',
               show = function() {
               var size = charts.getTooltipSize(content),
                 x = rect.left - (size.width /2) + 6,
@@ -2188,22 +2209,6 @@ window.Chart = function(container) {
     $(container).trigger('rendered');
     return $(container);
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   this.Bullet = function(chartData) {
     $(container).addClass('bullet-chart');

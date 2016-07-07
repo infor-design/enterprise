@@ -1,0 +1,69 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Bar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+var dataset = [{
+      data: [{
+        name: 'Current Metrics',
+        value: 4.578903333,
+        url: '/metrics/viewSingleSupplierReportCard?histPk=10026&supPk=11001&buySupPk=10002&viewChart=false&selectedDate=10026'
+      }, {
+        name: 'Previous Metrics',
+        value: 2.4566600000004,
+        url: '#'
+      }],
+      name: 'Schedule Adherence By Quantity'
+    }, {
+      data: [{
+        name: 'Current Metrics',
+        value: 1.5,
+        url: '/metrics/viewSingleSupplierReportCard?histPk=10026&supPk=11001&buySupPk=10002&viewChart=false&selectedDate=10026'
+      }, {
+        name: 'Previous Metrics',
+        value: 3.33333,
+        url: '#'
+      }],
+      name: 'Schedule Adherence By Date'
+    }, {
+      data: [{
+        name: 'Current Metrics',
+        value: 3,
+        url: '/metrics/viewSingleSupplierReportCard?histPk=10026&supPk=11001&buySupPk=10002&viewChart=false&selectedDate=10026'
+      }, {
+        name: 'Previous Metrics',
+        value: 2.00004,
+        url: '#'
+      }],
+      name: 'Receiving Accuracy'
+    }, {
+      data: [{
+        name: 'Current Metrics',
+        value: 5.166300000000007,
+        url: '/metrics/viewSingleSupplierReportCard?histPk=10026&supPk=11001&buySupPk=10002&viewChart=false&selectedDate=10026'
+      }, {
+        name: 'Previous Metrics',
+        value: 1.700000004558,
+        url: '#'
+      }],
+      name: 'Overall Rating'
+    }];
+
+  $('#bar-grouped-example').chart({
+    type: 'bar-grouped',
+    dataset: dataset,
+    formatterString: '.2f'
+  });
+
+</script>
