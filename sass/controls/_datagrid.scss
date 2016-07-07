@@ -1037,6 +1037,20 @@ td .btn-actions {
     text-indent: 10px;
   }
 
+  &.short-rowheight {
+    input {
+      height: 31px;
+      padding-top: 10px;
+      // scss-lint:disable ImportantRule
+      width: 100% !important;
+      // scss-lint:enable ImportantRule
+    }
+
+    .trigger .icon {
+      margin-top: 0;
+    }
+  }
+
   .icon {
     fill: $graphite10;
     margin-top: 7px;

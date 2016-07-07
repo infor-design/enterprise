@@ -914,7 +914,8 @@
         this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
 
         if (this.isInGrid) {
-          this.list.addClass('datagrid-dropdown-list');
+          var rowHeight = this.pseudoElem.closest('.datagrid-row').attr('class').replace('datagrid-row  ', '');
+          this.list.addClass('datagrid-dropdown-list ' + rowHeight);
         }
         var cssClass = this.settings.cssClass;
         if (cssClass && typeof cssClass === 'string') {
