@@ -652,7 +652,7 @@
           dayCnt = 1, nextMonthDayCnt = 1, exYear, exMonth, exDay;
 
         this.days.find('td').each(function (i) {
-          var th = $(this).removeClass('alternate is-selected is-today');
+          var th = $(this).removeClass('alternate prev-month next-month is-selected is-today');
           th.removeAttr('aria-selected');
 
           if (i < leadDays) {
